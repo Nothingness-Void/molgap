@@ -1,10 +1,11 @@
-"""Source-bound, CPU loader-only diagnostics; not scientific admission.
+"""Source-bound CPU diagnostics, loader-only by default; not scientific admission.
 
 This file also serves as the isolated stdlib bootstrap. Family imports happen
 only in a fresh -I -S interpreter after installing the unpacked-source guard.
 """
 from __future__ import annotations
 
+import copy
 import hashlib
 import importlib
 import importlib.abc
@@ -26,6 +27,10 @@ __all__ = ["run_experiment_preflight", "validate_real_shard_manifest"]
 
 MANIFEST_FORMAT = "molgap-real-shard-preflight-manifest-v1"
 REPORT_FORMAT = "molgap-experiment-preflight-v1"
+LOADER_MODE = "loader-only-v1"
+MODEL_MODE = "model-smoke-v1"
+MODEL_CHECKS = ("forward_checked", "backward_checked", "optimizer_step_checked",
+                "checkpoint_roundtrip_checked")
 CHECKS = (
     "package_verified", "shard_verified", "loader_batch_built", "forward_checked",
     "backward_checked", "optimizer_step_checked", "checkpoint_roundtrip_checked",
@@ -262,6 +267,114 @@ def _origins(root):
     return observed
 
 
+def _exact(left, right):
+    """Compare checkpoint state exactly, including tensor/array byte identity."""
+    import torch
+    import numpy as np
+    if type(left) is not type(right):
+        return False
+    if isinstance(left, torch.Tensor):
+        return (left.dtype == right.dtype and left.shape == right.shape and left.device == right.device
+                and left.detach().contiguous().reshape(-1).view(torch.uint8).numpy().tobytes()
+                == right.detach().contiguous().reshape(-1).view(torch.uint8).numpy().tobytes())
+    if isinstance(left, np.ndarray):
+        return left.dtype == right.dtype and left.shape == right.shape and left.tobytes() == right.tobytes()
+    if isinstance(left, dict):
+        return left.keys() == right.keys() and all(_exact(left[k], right[k]) for k in left)
+    if isinstance(left, (tuple, list)):
+        return len(left) == len(right) and all(_exact(a, b) for a, b in zip(left, right))
+    return left == right
+
+
+def _diagnostic_roundtrip(runtime, model, optimizer, scheduler, generator, path):
+    import torch
+    expected = copy.deepcopy({"model": model.state_dict(), "optimizer": optimizer.state_dict(),
+                              "scheduler": scheduler.state_dict(),
+                              "rng": runtime.capture_rng_state(loader_generator=generator)})
+    temporary = path.with_suffix(".tmp")
+    try:
+        with temporary.open("xb") as handle:
+            torch.save(expected, handle)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+        # This private payload is diagnostic state, never a production checkpoint.
+        with path.open("rb") as handle:
+            observed = torch.load(handle, map_location="cpu", weights_only=False)
+        if not _exact(expected, observed):
+            raise ValueError("Diagnostic checkpoint serialized state mismatch")
+        restored_model = runtime._make_model(initial_state_path=None, variant="reference").to("cpu")
+        restored_optimizer = runtime.make_adamw_compat(
+            restored_model.parameters(), lr=runtime.LEARNING_RATE,
+            weight_decay=runtime.WEIGHT_DECAY, fused=False, foreach=False)
+        restored_scheduler = runtime.FrozenEpochScheduler(restored_optimizer)
+        restored_model.load_state_dict(observed["model"], strict=True)
+        restored_optimizer.load_state_dict(observed["optimizer"])
+        restored_scheduler.load_state_dict(observed["scheduler"])
+        runtime.restore_rng_state(observed["rng"], loader_generator=generator)
+        actual = {"model": restored_model.state_dict(), "optimizer": restored_optimizer.state_dict(),
+                  "scheduler": restored_scheduler.state_dict(),
+                  "rng": runtime.capture_rng_state(loader_generator=generator)}
+        if not _exact(expected, actual):
+            raise ValueError("Diagnostic checkpoint restored state mismatch")
+        return sorted(observed["rng"])
+    finally:
+        temporary.unlink(missing_ok=True)
+        path.unlink(missing_ok=True)
+
+
+def _model_smoke(runtime, arm, batch, stats, generator, path, result):
+    import random
+    import numpy as np
+    import torch
+    result["status"] = "MODEL_SMOKE_FAILED"
+    random.seed(arm["initialization"]["seed"])
+    np.random.seed(arm["initialization"]["seed"])
+    torch.manual_seed(arm["initialization"]["seed"])
+    model = runtime._make_model(initial_state_path=None, variant="reference").to("cpu")
+    identity = runtime._state_sha256(model)
+    if identity != arm["initialization"]["state_sha256"]:
+        raise ValueError("Random initial state differs from declared identity")
+    runtime._verify_model_identity(model)
+    result.update(initial_state_checked=True, initial_state_sha256=identity)
+    optimizer = runtime.make_adamw_compat(model.parameters(), lr=runtime.LEARNING_RATE,
+                                          weight_decay=runtime.WEIGHT_DECAY,
+                                          fused=False, foreach=False)
+    scheduler = runtime.FrozenEpochScheduler(optimizer)
+    scheduler.step(0)
+    mean, std = stats
+    if not math.isfinite(mean) or not math.isfinite(std) or std <= 0:
+        raise ValueError("Invalid real train normalization")
+    model.train()
+    optimizer.zero_grad(set_to_none=True)
+    prediction = runtime._forward(model, batch)
+    target = (batch.y.view(-1).float() - mean) / std
+    if prediction.shape != target.shape or not bool(torch.isfinite(prediction).all()):
+        raise ValueError("Invalid finite forward output")
+    loss = torch.nn.functional.l1_loss(prediction, target)
+    if not bool(torch.isfinite(loss)):
+        raise ValueError("Nonfinite normalized-gap-L1")
+    result.update(forward_checked=True, loss=float(loss.detach()))
+    loss.backward()
+    gradients = [p.grad for p in model.parameters() if p.grad is not None]
+    if not gradients or not all(bool(torch.isfinite(g).all()) for g in gradients):
+        raise ValueError("Missing or nonfinite gradients")
+    norm = torch.nn.utils.clip_grad_norm_(model.parameters(), runtime.GRADIENT_CLIP)
+    if not bool(torch.isfinite(norm)):
+        raise ValueError("Nonfinite gradient norm")
+    result["backward_checked"] = True
+    optimizer.step()
+    if not all(bool(torch.isfinite(p).all()) for p in model.parameters()):
+        raise ValueError("Nonfinite updated parameters")
+    if runtime._state_sha256(model) == identity:
+        raise ValueError("Optimizer did not change model state")
+    result["optimizer_step_checked"] = True
+    result["rng_components"] = _diagnostic_roundtrip(
+        runtime, model, optimizer, scheduler, generator, path)
+    result["checkpoint_roundtrip_checked"] = True
+    result["status"] = "MODEL_SMOKE_VERIFIED_ONLY"
+
+
 def _worker(request):
     root = Path(request["source_root"])
     if any(name == "molgap" or name.startswith("molgap.") for name in sys.modules):
@@ -270,8 +383,18 @@ def _worker(request):
     sys.meta_path.insert(0, _PackageOnly(root))
     result = {"status": "LOADER_FAILED", "shard_verified": False,
               "loader_batch_built": False, "import_origins": {}, "batches": {},
-              "device": None, "error": None}
+              "device": None, "error": None, **{key: False for key in MODEL_CHECKS},
+              "initial_state_checked": False, "initial_state_sha256": None,
+              "loss": None, "rng_components": None}
     try:
+        mode = request.get("mode", LOADER_MODE)
+        if mode not in {LOADER_MODE, MODEL_MODE}:
+            raise ValueError("Unknown versioned preflight mode")
+        if mode == MODEL_MODE:
+            arm = request["arm"]
+            if (arm["family"] != {"name": "gptrans_t", "version": "1"}
+                    or arm["addons"] or arm["initialization"]["kind"] != "random"):
+                raise ValueError("Unsupported fixed model dispatch")
         runtime = importlib.import_module("molgap.pcqm_gptrans_v4")
         result["import_origins"] = _origins(root)
         if (not all(callable(getattr(runtime, name, None)) for name in (
@@ -296,6 +419,7 @@ def _worker(request):
         assets = runtime.validate_fixed_assets(data_root, fixed, verify_content=True)
         result["shard_verified"] = True
         runtime.LOADER_WORKERS = 0
+        train_batch = stats = generator = None
         for role, paths in (("train", assets.train_paths), ("development", assets.development_paths)):
             graphs, shards = runtime._load_datasets(paths)
             expected_rows = runtime.TRAIN_ROWS if role == "train" else runtime.DEVELOPMENT_ROWS
@@ -314,19 +438,30 @@ def _worker(request):
             result["batches"][role] = {"graphs": int(batch.num_graphs), "rows": len(graphs),
                                        "device": str(batch.x.device)}
             result["device"] = str(batch.x.device)
+            if role == "train" and request.get("mode", LOADER_MODE) == MODEL_MODE:
+                train_batch = batch
+                stats = runtime._target_stats(shards)
+                generator = getattr(loader, "generator", None)
             del batch, loader, graphs, shards
         result["import_origins"] = _origins(root)
         result.update(status="LOADER_VERIFIED_ONLY", loader_batch_built=True)
+        if request.get("mode", LOADER_MODE) == MODEL_MODE:
+            _model_smoke(runtime, request["arm"], train_batch, stats, generator,
+                         Path(request["diagnostic_path"]), result)
+            result["import_origins"] = _origins(root)
     except Exception as exc:
+        if result["status"] in {"LOADER_VERIFIED_ONLY", "MODEL_SMOKE_VERIFIED_ONLY"}:
+            result["status"] = "MODEL_SMOKE_FAILED"
         result["error"] = {"type": type(exc).__name__, "message": str(exc)}
     return result
 
 
-def _launch(source_root, data_root, entry, timeout_seconds, workspace):
+def _launch(source_root, data_root, entry, timeout_seconds, workspace, *, mode=LOADER_MODE, arm=None):
     # Copy only this infrastructure bootstrap, never host family source.
     bootstrap = workspace / "bootstrap.py"
     shutil.copyfile(Path(__file__), bootstrap)
     request = {"source_root": str(source_root), "data_root": str(data_root), "entry": entry,
+               "mode": mode, "arm": arm, "diagnostic_path": str(workspace / "diagnostic.pt"),
                "dependency_paths": sorted({sysconfig.get_path("purelib"), sysconfig.get_path("platlib")})}
     request_path = workspace / "request.json"
     response_path = workspace / "response.json"
@@ -342,42 +477,56 @@ def _launch(source_root, data_root, entry, timeout_seconds, workspace):
     if child.returncode != 0:
         raise RuntimeError(f"Isolated loader exited {child.returncode}")
     result = _load(_regular(response_path).read_bytes())
-    _fields(result, "status shard_verified loader_batch_built import_origins batches device error")
-    if result["status"] not in {"LOADER_VERIFIED_ONLY", "LOADER_FAILED", "UNSUPPORTED_FAMILY_PREFLIGHT"}:
+    _fields(result, "status shard_verified loader_batch_built import_origins batches device error "
+                    "forward_checked backward_checked optimizer_step_checked checkpoint_roundtrip_checked "
+                    "initial_state_checked initial_state_sha256 loss rng_components")
+    if result["status"] not in {"LOADER_VERIFIED_ONLY", "LOADER_FAILED", "UNSUPPORTED_FAMILY_PREFLIGHT",
+                                "MODEL_SMOKE_FAILED", "MODEL_SMOKE_VERIFIED_ONLY"}:
         raise ValueError("Invalid worker status")
-    if any(type(result[key]) is not bool for key in ("shard_verified", "loader_batch_built")):
+    if any(type(result[key]) is not bool for key in ("shard_verified", "loader_batch_built",
+                                                    "initial_state_checked", *MODEL_CHECKS)):
         raise ValueError("Invalid worker observations")
-    if result["status"] == "LOADER_VERIFIED_ONLY":
-        if (not result["shard_verified"] or not result["loader_batch_built"] or result["error"] is not None
+    if result["status"] in {"LOADER_VERIFIED_ONLY", "MODEL_SMOKE_VERIFIED_ONLY"} or result["loader_batch_built"]:
+        if (not result["shard_verified"] or not result["loader_batch_built"]
                 or set(result["batches"]) != {"train", "development"}
                 or "molgap.pcqm_gptrans_v4" not in result["import_origins"]
                 or result["device"] != "cpu"):
             raise ValueError("Incomplete worker observations")
-    elif result["loader_batch_built"]:
-        raise ValueError("Failed worker claimed completed loader observation")
+    if result["status"] in {"LOADER_VERIFIED_ONLY", "MODEL_SMOKE_VERIFIED_ONLY"} and result["error"] is not None:
+        raise ValueError("Successful diagnostic contains an error")
+    if mode == LOADER_MODE and (any(result[k] for k in MODEL_CHECKS) or result["initial_state_checked"]):
+        raise ValueError("Default loader mode reported model execution")
+    if result["status"] == "MODEL_SMOKE_VERIFIED_ONLY":
+        if (mode != MODEL_MODE or not all(result[k] for k in MODEL_CHECKS)
+                or not result["initial_state_checked"] or result["loss"] is None
+                or not result["rng_components"]):
+            raise ValueError("Incomplete model smoke observations")
     for name in result["import_origins"].values():
         _regular(_under(source_root, name))
     return result
 
 
-def _blank(spec, arm, package_identity, manifest_digest):
+def _blank(spec, arm, package_identity, manifest_digest, mode=LOADER_MODE):
     from .screen_policy import canonical_fingerprint
     return {"format": REPORT_FORMAT, "spec_identity": spec.identity,
             "package_identity": package_identity, "shard_manifest_sha256": manifest_digest,
             "arm_id": arm["arm_id"], "arm_identity": canonical_fingerprint(arm),
             "status": "NOT_RUN", **{key: False for key in CHECKS},
             "requested_device": "cpu", "device": None,
+            "mode": mode, "initial_state_checked": False, "initial_state_sha256": None,
+            "loss": None, "rng_components": None,
             "import_origins": {}, "batches": {}, "error": None,
             "limitations": list(LIMITATIONS), "missing_evidence": list(CHECKS)}
 
 
 def run_experiment_preflight(spec, package_dir, output_root, *, expected_package_identity,
                              shard_manifest=None, shard_root=None,
-                             expected_shard_manifest_sha256=None, timeout_seconds=300.0):
+                             expected_shard_manifest_sha256=None, timeout_seconds=300.0,
+                             mode=LOADER_MODE):
     """Publish independent arm reports and a summary in a *new* output directory.
 
-    No model is constructed or executed. LOADER_VERIFIED_ONLY is deliberately
-    not PASS: forward/backward/optimizer/checkpoint evidence remains missing.
+    The default constructs no model. Explicit model-smoke-v1 performs one CPU
+    diagnostic step on verified real data; neither mode is scientific admission.
     Invalid output/spec/API arguments raise; artifact failures are structured.
     """
     from .experiment_package import SIDECARS, verify_experiment_source_package
@@ -390,6 +539,8 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
         raise ValueError("Invalid spec identity")
     spec = rebuilt
     _digest(expected_package_identity)
+    if type(mode) is not str or mode not in {LOADER_MODE, MODEL_MODE}:
+        raise ValueError("Unknown versioned preflight mode")
     if type(timeout_seconds) not in (int, float) or not math.isfinite(timeout_seconds) or timeout_seconds <= 0:
         raise ValueError("Invalid timeout")
     output = Path(output_root).absolute()
@@ -409,7 +560,10 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
     if len({a["arm_id"].casefold() for a in arms}) != len(arms):
         raise ValueError("Case-colliding arm IDs")
     output.mkdir(exist_ok=False)
-    reports = [_blank(spec, arm, None, None) for arm in arms]
+    reports = [_blank(spec, arm, None, None, mode) for arm in arms]
+    if mode == MODEL_MODE:
+        for report in reports:
+            report["limitations"][0] = "CPU single-step model diagnostic; no numerical qualification."
     package_error = None
     manifest_error = None
     manifest = None
@@ -449,6 +603,9 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                 report["limitations"].append("No frozen K1 PCQM loader supported by this boundary.")
             elif arm["arm_id"] not in entries or shard_root is None:
                 report["status"] = "MISSING_REAL_SHARD"
+            elif mode == MODEL_MODE and (arm["addons"] or arm["initialization"]["kind"] != "random"):
+                report["status"] = "UNSUPPORTED_MODEL_SMOKE"
+                report["error"] = {"type": "UnsupportedModel", "message": "Only fixed random GPTrans reference dispatch is supported"}
             else:
                 stage = workspace / f"arm-{index}"
                 stage.mkdir()
@@ -462,14 +619,15 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                     else:
                         entry = entries[arm["arm_id"]]
                         _stage_files(entry, Path(shard_root).absolute(), data_root)
-                        report.update(_launch(source_root, data_root, entry, timeout_seconds, stage))
+                        report.update(_launch(source_root, data_root, entry, timeout_seconds, stage,
+                                              mode=mode, arm=arm))
                 except FileNotFoundError as exc:
                     report.update(status="MISSING_REAL_SHARD", error={"type": type(exc).__name__, "message": str(exc)})
                 except Exception as exc:
                     report.update(status="PREFLIGHT_FAILED", error={"type": type(exc).__name__, "message": str(exc)})
             report["missing_evidence"] = [key for key in CHECKS if not report[key]]
-            directory = output / arm["arm_id"]
-            directory.mkdir()
+            directory = output / "arms" / arm["arm_id"]
+            directory.mkdir(parents=True)
             _atomic(directory / "preflight.json", report)
     statuses = {r["status"] for r in reports}
     status = next(iter(statuses)) if len(statuses) == 1 else "MIXED_NONPASS"
@@ -478,10 +636,10 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                "expected_shard_manifest_sha256": expected_shard_manifest_sha256,
                "package_identity": reports[0]["package_identity"],
                "shard_manifest_sha256": reports[0]["shard_manifest_sha256"],
-               "status": status, "requested_device": "cpu", "arms": reports,
-               "limitations": list(LIMITATIONS),
+               "status": status, "requested_device": "cpu", "mode": mode, "arms": reports,
+               "limitations": list(reports[0]["limitations"]),
                "missing_evidence": sorted({item for r in reports for item in r["missing_evidence"]})}
-    _atomic(output / "preflight.json", summary)
+    _atomic(output / "preflight_summary.json", summary)
     return summary
 
 

@@ -1,8 +1,8 @@
 # Experiment Source / Real-Shard Preflight V1
 
-`molgap.experiment_preflight` is a CPU loader-only boundary. It is not a model
+`molgap.experiment_preflight` defaults to CPU loader-only diagnostics. It is not a production
 preflight, training launcher, platform submitter, acceptance transaction, or
-source of scientific authority. No status is named PASS. No model is built;
+source of scientific authority. No status is named PASS. By default no model is built;
 forward, backward, optimizer step and checkpoint round-trip remain unobserved.
 
 ## API
@@ -15,6 +15,7 @@ run_experiment_preflight(
     shard_root=real_dataset_root,
     expected_shard_manifest_sha256=trusted_manifest_digest,
     timeout_seconds=300.0,
+    mode="loader-only-v1",  # Explicit alternative: "model-smoke-v1"
 )
 ```
 
@@ -61,7 +62,7 @@ ordered records, and that manifest's bytes must match the frozen module's
 50K development contract are required. This version does not support tiny
 subshards, 500K/full variants or fabricated fixtures. It constructs one batch
 per role and checks observed size, feature dimensions, CPU placement and finite
-targets. It does not call `_forward`.
+targets. Loader-only mode does not call `_forward`.
 
 For CPU inspection only, `LOADER_WORKERS` is set to zero in the isolated process.
 Sampler, seed, batch size, role and source files are not rewritten. This avoids
@@ -70,6 +71,44 @@ nested DataLoader processes and is explicitly not production runtime parity.
 K1 is `UNSUPPORTED_FAMILY_PREFLIGHT`: this boundary has no approved frozen PCQM
 loader integration for that family. It never borrows code from another checkout.
 Missing package GPTrans loader source is likewise unsupported.
+
+## Explicit Model Smoke V1
+
+`mode="model-smoke-v1"` opts into one bounded CPU diagnostic step. Unknown modes
+raise before creating output. The default remains `loader-only-v1`. Only the
+fixed GPTrans-T reference dispatch is implemented. Add-ons and frozen-state
+initialization remain `UNSUPPORTED_MODEL_SMOKE`; missing real data and K1 retain
+their structured non-pass statuses. No arbitrary recipe dispatch is executed.
+
+Both real train and development batches must first validate. The worker retains
+the train batch and computes normalization from the complete validated train
+shards, using the frozen `_target_stats`. It seeds Python, NumPy and Torch from
+the declared random seed, builds the reference on CPU, compares the initial
+model state digest to the arm declaration, and invokes `_verify_model_identity`
+to check the frozen architecture, parameter count and initial-state identity.
+Neither synthetic declarations nor generated fixture graphs count as real success.
+
+The model path checks finite forward outputs and normalized-gap-L1, calls
+backward, checks finite gradients, clips them with the frozen bound, and takes
+exactly one AdamW step. It uses `FrozenEpochScheduler.step(0)`; the scheduler
+has no `set_epoch` API. Model parameters must remain finite and change after
+the step. This is a diagnostic operation, not evidence of completed training.
+
+A private, atomically written diagnostic checkpoint contains model, optimizer,
+scheduler and available Python/NumPy/Torch RNG states, including the loader
+generator when present. Both decoded bytes/state and freshly instantiated,
+restored objects must compare exactly, including tensor dtype, shape, device
+and bytes. RNG state is restored and captured again for exact comparison.
+No production `_save_checkpoint`, runtime certificate, or fabricated metadata
+is used. The checkpoint is removed after inspection and cannot resume a run.
+
+Only completion of every stage yields `MODEL_SMOKE_VERIFIED_ONLY`. Failures
+yield structured non-pass outcomes; completed stage flags survive a later
+checkpoint failure, while `checkpoint_roundtrip_checked` remains false.
+`initial_state_checked`, `initial_state_sha256`, `loss`, and `rng_components`
+are false/null until observed. Model success is not scientific acceptance,
+cross-platform qualification, or a replay claim. CPU timeout or unavailable
+dependencies remain non-pass and do not permit a synthetic fallback.
 
 ## Isolation And Reports
 
@@ -89,8 +128,8 @@ temporary trees. Failure in one arm does not cancel another. Package or global
 authorization-envelope corruption blocks all arms. An arm's file corruption
 blocks that arm. Temporary copies are removed after completion.
 
-Each `<output>/<arm_id>/preflight.json` and the final `<output>/preflight.json`
-are canonical JSON, written by same-directory temporary file, fsync and atomic
+Each `<output>/arms/<arm_id>/preflight.json` and the final `<output>/preflight_summary.json`
+are canonical JSON. Root `preflight.json` is never written. Reports are written by same-directory temporary file, fsync and atomic
 replace. The summary is published last. Partial output after a crash is not a
 completed summary and cannot be overwritten by a retry. Reports bind observed
 spec/package/manifest/arm identities. Expected pins are separately labeled in
@@ -122,14 +161,14 @@ configuration with `spec`, `package_dir`, `expected_package_identity`,
 `shard_manifest`, `shard_root`, and `expected_shard_manifest_sha256`. It requires
 two GPTrans arms, real frozen artifacts and enough CPU RAM/disk for full private
 copies. It deliberately makes the second arm's shard missing while preserving
-the first arm's real loader result. It does not construct a model.
+the first arm's real observation. It is parameterized over both modes; model mode requires random initialization with the genuine initial-state digest and no add-ons.
 
 Suggested Luna commands, from this worktree, with the project virtualenv:
 
 ```powershell
-$env:PYTHONPATH = 'D:\w\pf2\src'
-& 'D:\文档\molgap\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k 'not real_dual_arm' -q
-& 'D:\文档\molgap\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k real_dual_arm -q
+$env:PYTHONPATH = (Join-Path (Get-Location) 'src')
+& '.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k 'not real_dual_arm' -q
+& '.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k real_dual_arm -q
 ```
 
 Ensure that the test environment resolves `molgap` from this worktree's `src`,
