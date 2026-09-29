@@ -3,7 +3,7 @@
 Kaggle1 created the private kernel under its observed canonical reference
 `nothingnessvoid/molgap-gptrans-init-pair-100k-s42` (the first-create slug
 differs from the locally requested longer ID). The Kaggle status reached
-`KernelWorkerStatus.ERROR`. The downloaded `attempts/kaggle1_pair_v1/kernel.log`
+`KernelWorkerStatus.ERROR`. The downloaded `attempts/kaggle1_pair_v1/kernel_log.json`
 and `submission_binding.json` bind this attempt to source commit
 `e0f8493539e4d70deb96ef378b133ee39354b78a`, source package identity
 `a811a0ba76f2df0f64a00cb10d1035f9fdf80017c7c51d9f8620e386e5bc08f4`,

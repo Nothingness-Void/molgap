@@ -1,0 +1,35 @@
+[{"stream_name":"stdout","time":5.382491759,"data":"     ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 63.1/63.1 kB 1.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":5.543604488,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 1.1/1.1 MB 17.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":5.576580309,"data":"   ©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥©¥ 78.8/78.8 kB 3.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stderr","time":58.198819065,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":58.200977021,"data":"  File \"/kaggle/src/script.py\", line 180, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":58.200994758,"data":"    main()\n"}
+,{"stream_name":"stderr","time":58.20099838,"data":"  File \"/kaggle/src/script.py\", line 155, in main\n"}
+,{"stream_name":"stderr","time":58.201173399,"data":"    worker(arm_id, phase, archive, manifest, initial_state, spec)\n"}
+,{"stream_name":"stderr","time":58.201188218,"data":"  File \"/kaggle/src/script.py\", line 141, in worker\n"}
+,{"stream_name":"stderr","time":58.20119342,"data":"    result = run_preflight(**common)\n"}
+,{"stream_name":"stderr","time":58.201198235,"data":"             ^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":58.201202863,"data":"  File \"/kaggle/temp/molgap-input-init-input-embedding-normal002-preflight/src/molgap/pcqm_gptrans_v4.py\", line 761, in run_preflight\n"}
+,{"stream_name":"stderr","time":58.201208013,"data":"    latency_gate = _input_init_runtime_probe(\n"}
+,{"stream_name":"stderr","time":58.20121247,"data":"                   ^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":58.201216865,"data":"  File \"/kaggle/temp/molgap-input-init-input-embedding-normal002-preflight/src/molgap/pcqm_gptrans_v4.py\", line 573, in _input_init_runtime_probe\n"}
+,{"stream_name":"stderr","time":58.20122176,"data":"    model, optimizer, scheduler, ema = _make_training_state(\n"}
+,{"stream_name":"stderr","time":58.201226283,"data":"                                       ^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":58.201231156,"data":"  File \"/kaggle/temp/molgap-input-init-input-embedding-normal002-preflight/src/molgap/pcqm_gptrans_v4.py\", line 492, in _make_training_state\n"}
+,{"stream_name":"stderr","time":58.201236093,"data":"    _verify_model_identity(\n"}
+,{"stream_name":"stderr","time":58.20124052,"data":"  File \"/kaggle/temp/molgap-input-init-input-embedding-normal002-preflight/src/molgap/pcqm_gptrans_v4.py\", line 418, in _verify_model_identity\n"}
+,{"stream_name":"stderr","time":58.201245535,"data":"    raise RuntimeError(\n"}
+,{"stream_name":"stderr","time":58.201249948,"data":"RuntimeError: Frozen GPTrans-T seed-42 initialization changed: observed=9af1db8997c8ac28dc085ee113fef23c639f700f45d915e40c4339ef2e181c6a expected=8e29d413636f2187a66fdb53d873a5990e57875f87a186a19b8dcf60dfb424b9\n"}
+,{"stream_name":"stderr","time":64.550065665,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":64.550131436,"data":"  File \"/kaggle/src/script.py\", line 180, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":64.550141444,"data":"    main()\n"}
+,{"stream_name":"stderr","time":64.550147912,"data":"  File \"/kaggle/src/script.py\", line 175, in main\n"}
+,{"stream_name":"stderr","time":64.550262505,"data":"    raise RuntimeError(f\"Pair {stage} workers failed: {codes}\")\n"}
+,{"stream_name":"stderr","time":64.550319935,"data":"RuntimeError: Pair preflight workers failed: [0, 1]\n"}
+,{"stream_name":"stderr","time":67.00079059,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":67.000815831,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":67.259592321,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":67.259633059,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":67.884785227,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":69.175389275,"data":"[NbConvertApp] Writing 314762 bytes to __results__.html\n"}
+]
