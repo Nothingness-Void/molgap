@@ -1,4 +1,4 @@
-"""Source-bound, CPU loader-only diagnostics; not scientific admission.
+"""Source-bound, bounded CPU diagnostics; not scientific admission.
 
 This file also serves as the isolated stdlib bootstrap. Family imports happen
 only in a fresh -I -S interpreter after installing the unpacked-source guard.
@@ -22,7 +22,7 @@ import sysconfig
 import tarfile
 import tempfile
 
-__all__ = ["run_experiment_preflight", "validate_real_shard_manifest"]
+__all__ = ["run_real_shard_preflight", "run_experiment_preflight", "validate_real_shard_manifest"]
 
 MANIFEST_FORMAT = "molgap-real-shard-preflight-manifest-v1"
 REPORT_FORMAT = "molgap-experiment-preflight-v1"
@@ -31,7 +31,8 @@ CHECKS = (
     "backward_checked", "optimizer_step_checked", "checkpoint_roundtrip_checked",
 )
 LIMITATIONS = [
-    "CPU loader-only diagnostic; no model construction or numerical qualification.",
+    "Bounded CPU diagnostic only; not runtime qualification or a training run.",
+    "Checkpoint check covers model tensor serialization only, not training resume.",
     "Frozen loader worker count is set to zero for isolated CPU inspection.",
     "No training, platform submission, scientific acceptance or downstream authority.",
     "Source and packed pickle inputs must be trusted; isolation is not a security sandbox.",
@@ -270,7 +271,8 @@ def _worker(request):
     sys.meta_path.insert(0, _PackageOnly(root))
     result = {"status": "LOADER_FAILED", "shard_verified": False,
               "loader_batch_built": False, "import_origins": {}, "batches": {},
-              "device": None, "error": None}
+              "device": None, "error": None,
+              **{key: False for key in CHECKS[3:]}}
     try:
         runtime = importlib.import_module("molgap.pcqm_gptrans_v4")
         result["import_origins"] = _origins(root)
@@ -296,6 +298,8 @@ def _worker(request):
         assets = runtime.validate_fixed_assets(data_root, fixed, verify_content=True)
         result["shard_verified"] = True
         runtime.LOADER_WORKERS = 0
+        train_batch = None
+        target_stats = None
         for role, paths in (("train", assets.train_paths), ("development", assets.development_paths)):
             graphs, shards = runtime._load_datasets(paths)
             expected_rows = runtime.TRAIN_ROWS if role == "train" else runtime.DEVELOPMENT_ROWS
@@ -314,19 +318,90 @@ def _worker(request):
             result["batches"][role] = {"graphs": int(batch.num_graphs), "rows": len(graphs),
                                        "device": str(batch.x.device)}
             result["device"] = str(batch.x.device)
+            if request.get("numerical") and role == "train":
+                train_batch = batch
+                target_stats = runtime._target_stats(shards)
             del batch, loader, graphs, shards
         result["import_origins"] = _origins(root)
         result.update(status="LOADER_VERIFIED_ONLY", loader_batch_built=True)
+        if request.get("numerical"):
+            result["status"] = "PREFLIGHT_FAILED"
+            _numerical_probe(runtime, request, result, train_batch, target_stats)
+            result["import_origins"] = _origins(root)
+            result["status"] = "REAL_SHARD_PASS"
+    except (ImportError, ModuleNotFoundError) as exc:
+        result["status"] = "ENVIRONMENT_BLOCKED"
+        result["error"] = {"type": type(exc).__name__, "message": str(exc)}
     except Exception as exc:
         result["error"] = {"type": type(exc).__name__, "message": str(exc)}
     return result
 
 
-def _launch(source_root, data_root, entry, timeout_seconds, workspace):
+def _numerical_probe(runtime, request, result, batch, target_stats):
+    """One disposable step; dispatch and model imports are frozen, never callbacks."""
+    import torch
+    from molgap.experiment_spec import ExperimentSpec
+    from molgap.gptrans_adapter import build_gptrans_model
+
+    spec = ExperimentSpec.from_json(request["spec_json"])
+    arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == request["entry"]["arm_id"])
+    if arm["initialization"]["kind"] != "random":
+        result["status"] = "ENVIRONMENT_BLOCKED"
+        raise ValueError("Frozen-state initialization artifact is not supported by this manifest")
+    runtime.configure_fp32_determinism(arm["initialization"]["seed"])
+    model = build_gptrans_model(spec, arm["arm_id"]).to("cpu")
+    _origins(Path(request["source_root"]))
+    if runtime._state_sha256(model) != arm["initialization"]["state_sha256"]:
+        raise ValueError("Observed initial tensor state does not match ExperimentSpec")
+    mean, std = target_stats
+    if not math.isfinite(mean) or not math.isfinite(std) or std <= 0:
+        raise ValueError("Invalid frozen target statistics")
+    optimizer = runtime.make_adamw_compat(
+        model.parameters(), lr=runtime.LEARNING_RATE, weight_decay=runtime.WEIGHT_DECAY,
+        fused=False, foreach=False)
+    scheduler = runtime.FrozenEpochScheduler(optimizer)
+    scheduler.set_epoch(0)
+    model.train()
+    optimizer.zero_grad(set_to_none=True)
+    prediction = runtime._forward(model, batch)
+    target = (batch.y.view(-1).float() - mean) / std
+    if prediction.shape != target.shape or not bool(torch.isfinite(prediction).all()):
+        raise ValueError("Invalid forward output")
+    loss = torch.nn.functional.l1_loss(prediction, target)
+    if not bool(torch.isfinite(loss)):
+        raise ValueError("Nonfinite loss")
+    result["forward_checked"] = True
+    loss.backward()
+    gradients = [p.grad for p in model.parameters() if p.grad is not None]
+    if not gradients or not all(bool(torch.isfinite(g).all()) for g in gradients):
+        raise ValueError("Missing or nonfinite gradients")
+    norm = torch.nn.utils.clip_grad_norm_(model.parameters(), runtime.GRADIENT_CLIP)
+    if not bool(torch.isfinite(norm)):
+        raise ValueError("Nonfinite clipped gradient norm")
+    result["backward_checked"] = True
+    before = runtime._state_sha256(model)
+    optimizer.step()
+    if (runtime._state_sha256(model) == before
+            or not all(bool(torch.isfinite(v).all()) for v in model.state_dict().values())):
+        raise ValueError("Optimizer did not produce a finite changed model state")
+    result["optimizer_step_checked"] = True
+    checkpoint = Path(request["data_root"]).parent / "diagnostic_model.pt"
+    torch.save(model.state_dict(), checkpoint)
+    restored = runtime.torch_load_compat(checkpoint, map_location="cpu", weights_only=True)
+    if set(restored) != set(model.state_dict()) or not all(
+        torch.equal(value, restored[name]) for name, value in model.state_dict().items()
+    ):
+        raise ValueError("Checkpoint tensor roundtrip mismatch")
+    model.load_state_dict(restored, strict=True)
+    result["checkpoint_roundtrip_checked"] = True
+
+
+def _launch(source_root, data_root, entry, timeout_seconds, workspace, *, spec_json=None):
     # Copy only this infrastructure bootstrap, never host family source.
     bootstrap = workspace / "bootstrap.py"
     shutil.copyfile(Path(__file__), bootstrap)
     request = {"source_root": str(source_root), "data_root": str(data_root), "entry": entry,
+               "numerical": spec_json is not None, "spec_json": spec_json,
                "dependency_paths": sorted({sysconfig.get_path("purelib"), sysconfig.get_path("platlib")})}
     request_path = workspace / "request.json"
     response_path = workspace / "response.json"
@@ -342,19 +417,23 @@ def _launch(source_root, data_root, entry, timeout_seconds, workspace):
     if child.returncode != 0:
         raise RuntimeError(f"Isolated loader exited {child.returncode}")
     result = _load(_regular(response_path).read_bytes())
-    _fields(result, "status shard_verified loader_batch_built import_origins batches device error")
-    if result["status"] not in {"LOADER_VERIFIED_ONLY", "LOADER_FAILED", "UNSUPPORTED_FAMILY_PREFLIGHT"}:
+    _fields(result, "status shard_verified loader_batch_built import_origins batches device error "
+            + " ".join(CHECKS[3:]))
+    if result["status"] not in {"LOADER_VERIFIED_ONLY", "LOADER_FAILED", "UNSUPPORTED_FAMILY_PREFLIGHT",
+                                "REAL_SHARD_PASS", "ENVIRONMENT_BLOCKED", "PREFLIGHT_FAILED"}:
         raise ValueError("Invalid worker status")
-    if any(type(result[key]) is not bool for key in ("shard_verified", "loader_batch_built")):
+    if any(type(result[key]) is not bool for key in CHECKS[1:]):
         raise ValueError("Invalid worker observations")
-    if result["status"] == "LOADER_VERIFIED_ONLY":
+    if result["status"] in {"LOADER_VERIFIED_ONLY", "REAL_SHARD_PASS"}:
         if (not result["shard_verified"] or not result["loader_batch_built"] or result["error"] is not None
                 or set(result["batches"]) != {"train", "development"}
                 or "molgap.pcqm_gptrans_v4" not in result["import_origins"]
                 or result["device"] != "cpu"):
             raise ValueError("Incomplete worker observations")
-    elif result["loader_batch_built"]:
-        raise ValueError("Failed worker claimed completed loader observation")
+    if result["status"] == "REAL_SHARD_PASS" and (
+        spec_json is None or not all(result[key] for key in CHECKS[1:])
+    ):
+        raise ValueError("Incomplete numerical observations")
     for name in result["import_origins"].values():
         _regular(_under(source_root, name))
     return result
@@ -366,6 +445,7 @@ def _blank(spec, arm, package_identity, manifest_digest):
             "package_identity": package_identity, "shard_manifest_sha256": manifest_digest,
             "arm_id": arm["arm_id"], "arm_identity": canonical_fingerprint(arm),
             "status": "NOT_RUN", **{key: False for key in CHECKS},
+            "real_shard_pass": False, "synthetic_test_only": False,
             "requested_device": "cpu", "device": None,
             "import_origins": {}, "batches": {}, "error": None,
             "limitations": list(LIMITATIONS), "missing_evidence": list(CHECKS)}
@@ -373,11 +453,12 @@ def _blank(spec, arm, package_identity, manifest_digest):
 
 def run_experiment_preflight(spec, package_dir, output_root, *, expected_package_identity,
                              shard_manifest=None, shard_root=None,
-                             expected_shard_manifest_sha256=None, timeout_seconds=300.0):
+                             expected_shard_manifest_sha256=None, timeout_seconds=300.0,
+                             device="cpu", max_batches=1, numerical=False):
     """Publish independent arm reports and a summary in a *new* output directory.
 
-    No model is constructed or executed. LOADER_VERIFIED_ONLY is deliberately
-    not PASS: forward/backward/optimizer/checkpoint evidence remains missing.
+    By default no model is constructed. The real-shard entry enables a bounded
+    numerical probe; it does not confer training or scientific authority.
     Invalid output/spec/API arguments raise; artifact failures are structured.
     """
     from .experiment_package import SIDECARS, verify_experiment_source_package
@@ -389,7 +470,14 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
     if rebuilt.to_json() != spec.to_json() or rebuilt.identity != spec.identity:
         raise ValueError("Invalid spec identity")
     spec = rebuilt
-    _digest(expected_package_identity)
+    if type(device) is not str or not device:
+        raise ValueError("Expected explicit device string")
+    if type(max_batches) is not int or max_batches != 1:
+        raise ValueError("This bounded preflight supports exactly max_batches=1")
+    if type(numerical) is not bool:
+        raise ValueError("numerical must be boolean")
+    if expected_package_identity is not None:
+        _digest(expected_package_identity)
     if type(timeout_seconds) not in (int, float) or not math.isfinite(timeout_seconds) or timeout_seconds <= 0:
         raise ValueError("Invalid timeout")
     output = Path(output_root).absolute()
@@ -425,30 +513,39 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
             for name in SIDECARS:
                 shutil.copyfile(_regular(source / name), snapshot / name)
             receipt = verify_experiment_source_package(snapshot)
-            if receipt["spec_identity"] != spec.identity or receipt["package_identity"] != expected_package_identity:
+            if receipt["spec_identity"] != spec.identity or (
+                expected_package_identity is not None and receipt["package_identity"] != expected_package_identity
+            ):
                 raise ValueError("Pinned package/spec identity mismatch")
             for report in reports:
                 report.update(package_verified=True, package_identity=receipt["package_identity"])
         except Exception as exc:
             package_error = {"type": type(exc).__name__, "message": str(exc)}
-        if shard_manifest is not None:
+        if shard_manifest is not None and package_error is None:
             try:
                 manifest = validate_real_shard_manifest(spec, shard_manifest, expected_shard_manifest_sha256)
                 for report in reports:
                     report["shard_manifest_sha256"] = expected_shard_manifest_sha256
+            except FileNotFoundError as exc:
+                manifest_error = {"type": type(exc).__name__, "message": str(exc)}
             except Exception as exc:
                 manifest_error = {"type": type(exc).__name__, "message": str(exc)}
         entries = {entry["arm_id"]: entry for entry in manifest["arms"]} if manifest else {}
         for index, (arm, report) in enumerate(zip(arms, reports)):
+            report["requested_device"] = device
             if package_error:
                 report.update(status="PACKAGE_INVALID", error=package_error)
             elif manifest_error:
-                report.update(status="SHARD_MANIFEST_INVALID", error=manifest_error)
+                report.update(status=("MISSING_REAL_SHARD" if manifest_error["type"] == "FileNotFoundError"
+                                      else "SHARD_MANIFEST_INVALID"), error=manifest_error)
             elif arm["family"]["name"] != "gptrans_t":
                 report["status"] = "UNSUPPORTED_FAMILY_PREFLIGHT"
                 report["limitations"].append("No frozen K1 PCQM loader supported by this boundary.")
             elif arm["arm_id"] not in entries or shard_root is None:
                 report["status"] = "MISSING_REAL_SHARD"
+            elif device != "cpu":
+                report.update(status="ENVIRONMENT_BLOCKED", error={
+                    "type": "UnsupportedDevice", "message": "Only isolated CPU preflight is supported"})
             else:
                 stage = workspace / f"arm-{index}"
                 stage.mkdir()
@@ -462,14 +559,16 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                     else:
                         entry = entries[arm["arm_id"]]
                         _stage_files(entry, Path(shard_root).absolute(), data_root)
-                        report.update(_launch(source_root, data_root, entry, timeout_seconds, stage))
+                        report.update(_launch(source_root, data_root, entry, timeout_seconds, stage,
+                                              spec_json=spec.to_json() if numerical else None))
                 except FileNotFoundError as exc:
                     report.update(status="MISSING_REAL_SHARD", error={"type": type(exc).__name__, "message": str(exc)})
                 except Exception as exc:
                     report.update(status="PREFLIGHT_FAILED", error={"type": type(exc).__name__, "message": str(exc)})
             report["missing_evidence"] = [key for key in CHECKS if not report[key]]
-            directory = output / arm["arm_id"]
-            directory.mkdir()
+            report["real_shard_pass"] = report["status"] == "REAL_SHARD_PASS" and all(report[k] for k in CHECKS)
+            directory = output / "arms" / arm["arm_id"]
+            directory.mkdir(parents=True)
             _atomic(directory / "preflight.json", report)
     statuses = {r["status"] for r in reports}
     status = next(iter(statuses)) if len(statuses) == 1 else "MIXED_NONPASS"
@@ -478,11 +577,29 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                "expected_shard_manifest_sha256": expected_shard_manifest_sha256,
                "package_identity": reports[0]["package_identity"],
                "shard_manifest_sha256": reports[0]["shard_manifest_sha256"],
-               "status": status, "requested_device": "cpu", "arms": reports,
+               "status": status, "requested_device": device, "max_batches": max_batches, "arms": reports,
+               "real_shard_pass": all(r["real_shard_pass"] for r in reports),
+               "synthetic_test_only": False,
                "limitations": list(LIMITATIONS),
                "missing_evidence": sorted({item for r in reports for item in r["missing_evidence"]})}
-    _atomic(output / "preflight.json", summary)
+    _atomic(output / "preflight_summary.json", summary)
     return summary
+
+
+def run_real_shard_preflight(spec, package_dir: Path, shard_root: Path, output_root: Path,
+                             *, device: str = "cpu", max_batches: int = 1,
+                             expected_shard_manifest_sha256: str | None = None,
+                             expected_package_identity: str | None = None) -> dict:
+    """Require a canonical manifest and separately trusted digest; never infer authorization.
+
+    The root must contain real_shard_manifest.json. Without an external digest,
+    manifest verification blocks rather than trusting a self-signed declaration.
+    """
+    return run_experiment_preflight(
+        spec, package_dir, output_root, expected_package_identity=expected_package_identity,
+        shard_root=shard_root, shard_manifest=Path(shard_root) / "real_shard_manifest.json",
+        expected_shard_manifest_sha256=expected_shard_manifest_sha256,
+        device=device, max_batches=max_batches, numerical=True)
 
 
 if __name__ == "__main__":
