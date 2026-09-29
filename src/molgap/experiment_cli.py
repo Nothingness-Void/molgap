@@ -11,7 +11,11 @@ from .experiment_launch import (
     reconcile_platform_response, write_launch_receipt,
 )
 from .experiment_package import build_experiment_source_package
-from .experiment_preflight import LOADER_MODE, MODEL_MODE, run_experiment_preflight
+from .experiment_preflight import (
+    ALL_ARMS_WITHIN_SCOPE_STATUS, K1_LOADER_STATUS, LOADER_MODE, MODEL_MODE,
+    run_experiment_preflight,
+)
+from .experiment_prospective import plan_prospective
 from .experiment_runner import run_experiment
 from .experiment_spec import ExperimentSpec
 from .experiment_terminal import (
@@ -45,10 +49,10 @@ def _parser() -> argparse.ArgumentParser:
     parser = _Parser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
-                 "launch-receipt", "terminal"):
+                 "launch-receipt", "terminal", "plan-prospective"):
         command = commands.add_parser(name)
         command.add_argument("--spec", required=True, type=_local)
-        if name in {"package", "terminal"}:
+        if name in {"package", "terminal", "plan-prospective"}:
             command.add_argument("--repo-root", required=True, type=_local)
         if name in {"package", "preflight", "run-diagnostic"}:
             command.add_argument("--output", required=True, type=_local)
@@ -80,6 +84,8 @@ def _dispatch(args) -> tuple[dict, int]:
         raise ValueError("Expected canonical ExperimentSpec JSON bytes (no newline)")
     if args.command == "validate-spec":
         return {"spec_identity": spec.identity, "spec": spec.to_dict()}, 0
+    if args.command == "plan-prospective":
+        return plan_prospective(spec, args.repo_root)
     if args.command == "package":
         return build_experiment_source_package(spec, args.repo_root, args.allowlist, args.output), 0
     if args.command == "preflight":
@@ -94,7 +100,8 @@ def _dispatch(args) -> tuple[dict, int]:
             mode=args.mode,
         )
         return result, 0 if result["status"] in {
-            "LOADER_VERIFIED_ONLY", "MODEL_SMOKE_VERIFIED_ONLY",
+            "LOADER_VERIFIED_ONLY", "MODEL_SMOKE_VERIFIED_ONLY", K1_LOADER_STATUS,
+            ALL_ARMS_WITHIN_SCOPE_STATUS,
         } else 1
     if args.command == "run-diagnostic":
         result = run_experiment(spec, args.output, args.device, worker=args.worker)

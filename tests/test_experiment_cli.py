@@ -8,6 +8,7 @@ import pytest
 
 from molgap import experiment_cli as cli
 from molgap.experiment_launch import canonical_json
+from molgap.experiment_preflight import ALL_ARMS_WITHIN_SCOPE_STATUS, K1_LOADER_STATUS
 from molgap.experiment_spec import ExperimentSpec
 from test_experiment_spec import payload
 from test_experiment_terminal import case
@@ -129,6 +130,53 @@ def test_preflight_passthrough(capsys, monkeypatch, spec_file, tmp_path, mode):
         expected_package_identity=SHA, shard_manifest=manifest, shard_root=shard,
         expected_shard_manifest_sha256="1" * 64, mode=mode,
     )
+
+
+def test_k1_selected_shard_preflight_cli_success(capsys, monkeypatch, spec_file, tmp_path):
+    shard = tmp_path / "shard"
+    shard.mkdir()
+    manifest = shard / "shard_manifest.json"
+    manifest.write_bytes(b"{}")
+    report = {"status": K1_LOADER_STATUS, "verification_scope": "selected_real_shards_only"}
+    preflight = Mock(return_value=report)
+    monkeypatch.setattr(cli, "run_experiment_preflight", preflight)
+    observed = invoke(capsys, [
+        "preflight", "--spec", spec_file, "--package", tmp_path / "pkg",
+        "--output", tmp_path / "out", "--shard-root", shard,
+        "--expected-package-identity", SHA,
+        "--expected-shard-manifest-sha256", "1" * 64, "--mode", "loader-only-v1",
+    ])
+    assert observed == report
+    assert observed["status"] == "SELECTED_REAL_SHARDS_LOADER_VERIFIED_ONLY"
+    preflight.assert_called_once_with(
+        ExperimentSpec.from_json(spec_file.read_text()), tmp_path / "pkg", tmp_path / "out",
+        expected_package_identity=SHA, shard_manifest=manifest, shard_root=shard,
+        expected_shard_manifest_sha256="1" * 64, mode="loader-only-v1",
+    )
+
+
+@pytest.mark.parametrize("status,arm_statuses,code", [
+    (ALL_ARMS_WITHIN_SCOPE_STATUS, ["LOADER_VERIFIED_ONLY", K1_LOADER_STATUS], 0),
+    ("LOADER_VERIFIED_ONLY", ["LOADER_VERIFIED_ONLY"], 0),
+    ("MODEL_SMOKE_VERIFIED_ONLY", ["MODEL_SMOKE_VERIFIED_ONLY"], 0),
+    ("MIXED_NONPASS", ["LOADER_VERIFIED_ONLY", "MISSING_REAL_SHARD"], 1),
+    ("MIXED_NONPASS", ["LOADER_VERIFIED_ONLY", "LOADER_VERIFIED_ONLY"], 1),
+])
+def test_preflight_summary_cli_exit_code(
+        capsys, monkeypatch, spec_file, tmp_path, status, arm_statuses, code):
+    report = {"status": status, "arms": [{"status": arm_status} for arm_status in arm_statuses]}
+    preflight = Mock(return_value=report)
+    monkeypatch.setattr(cli, "run_experiment_preflight", preflight)
+    shard = tmp_path / "shard"
+    shard.mkdir()
+    observed = invoke(capsys, [
+        "preflight", "--spec", spec_file, "--package", tmp_path / "pkg",
+        "--output", tmp_path / "out", "--shard-root", shard,
+        "--expected-package-identity", SHA,
+        "--expected-shard-manifest-sha256", "a" * 64,
+    ], code)
+    assert observed == report
+    preflight.assert_called_once()
 
 
 def test_real_core_missing_shard_no_worker(capsys, monkeypatch, package, spec_file, tmp_path):
@@ -305,4 +353,4 @@ def test_no_remote_or_dynamic_dispatch_in_cli():
     commands = next(action for action in parser._actions if hasattr(action, "choices")
                     and isinstance(action.choices, dict)).choices
     assert set(commands) == {"validate-spec", "package", "preflight", "run-diagnostic",
-                             "launch-receipt", "terminal"}
+                             "launch-receipt", "terminal", "plan-prospective"}

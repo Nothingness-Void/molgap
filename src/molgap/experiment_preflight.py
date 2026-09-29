@@ -28,6 +28,11 @@ MANIFEST_FORMAT = "molgap-real-shard-preflight-manifest-v1"
 REPORT_FORMAT = "molgap-experiment-preflight-v1"
 LOADER_MODE = "loader-only-v1"
 MODEL_MODE = "gptrans-model-smoke-v1"
+K1_FAMILY = {"name": "neural_atom_k1", "version": "1"}
+GPTRANS_FAMILY = {"name": "gptrans_t", "version": "1"}
+K1_SCOPE = "selected_real_shards_only"
+K1_LOADER_STATUS = "SELECTED_REAL_SHARDS_LOADER_VERIFIED_ONLY"
+ALL_ARMS_WITHIN_SCOPE_STATUS = "ALL_ARMS_VERIFIED_WITHIN_SCOPE"
 MODEL_CHECKS = ("forward_checked", "backward_checked", "optimizer_step_checked",
                 "checkpoint_roundtrip_checked")
 CHECKS = (
@@ -112,10 +117,13 @@ def _no_links(path):
             raise ValueError("Symlink/junction/reparse paths are forbidden")
 
 
-def _regular(path):
+def _regular(path, *, reject_hardlinks=False):
     _no_links(path)
-    if not stat.S_ISREG(path.stat().st_mode):
+    info = path.stat()
+    if not stat.S_ISREG(info.st_mode):
         raise ValueError("Expected regular file")
+    if reject_hardlinks and info.st_nlink != 1:
+        raise ValueError("Hardlinked input files are forbidden")
     return path
 
 
@@ -154,7 +162,8 @@ def validate_real_shard_manifest(spec, manifest_path, expected_sha256):
     if type(spec) is not ExperimentSpec:
         raise TypeError("Expected exactly ExperimentSpec")
     _digest(expected_sha256)
-    raw = _regular(Path(manifest_path).absolute()).read_bytes()
+    k1_present = any(arm["family"] == K1_FAMILY for arm in spec.to_dict()["arms"])
+    raw = _regular(Path(manifest_path).absolute(), reject_hardlinks=k1_present).read_bytes()
     if _sha(raw) != expected_sha256:
         raise ValueError("Shard manifest digest mismatch")
     manifest = _load(raw)
@@ -172,6 +181,7 @@ def validate_real_shard_manifest(spec, manifest_path, expected_sha256):
             raise ValueError("Unknown or duplicate shard arm")
         seen.add(arm_id)
         arm = arms[arm_id]
+        k1 = arm["family"] == K1_FAMILY
         if entry["arm_identity"] != canonical_fingerprint(arm) or entry["data"] != arm["data"]:
             raise ValueError("Shard arm/data identity mismatch")
         if entry["kind"] != "real-packed-pcqm":
@@ -182,14 +192,18 @@ def validate_real_shard_manifest(spec, manifest_path, expected_sha256):
         if type(entry["files"]) is not list or not entry["files"]:
             raise ValueError("Missing real shard files")
         roles = {role["role"] for role in arm["data"]["roles"]}
+        if k1 and roles != {"train"}:
+            raise ValueError("K1 preflight supports only the frozen train role")
         paths = {entry["fixed_manifest"]["path"].casefold()}
         observed_roles = set()
         for item in entry["files"]:
-            _fields(item, "path sha256 bytes role")
+            _fields(item, "path sha256 bytes rows role" if k1 else "path sha256 bytes role")
             name = _relative(item["path"])
             _digest(item["sha256"])
             if type(item["bytes"]) is not int or item["bytes"] <= 0:
                 raise ValueError("Invalid shard byte count")
+            if k1 and (type(item["rows"]) is not int or item["rows"] <= 0):
+                raise ValueError("Invalid K1 shard row count")
             if type(item["role"]) is not str or item["role"] not in roles & {"train", "development"}:
                 raise ValueError("Protected or undeclared role")
             if name.casefold() in paths:
@@ -198,6 +212,8 @@ def validate_real_shard_manifest(spec, manifest_path, expected_sha256):
             observed_roles.add(item["role"])
         if observed_roles != roles:
             raise ValueError("Incomplete authorized role coverage")
+        if k1 and sum(item["rows"] for item in entry["files"]) < 128:
+            raise ValueError("Selected K1 shards contain less than physical batch 128")
     return manifest
 
 
@@ -220,12 +236,12 @@ def _unpack(package, root):
                 shutil.copyfileobj(stream, handle)
 
 
-def _stage_files(entry, root, destination):
+def _stage_files(entry, root, destination, *, reject_hardlinks=False, items=None):
     _no_links(root)
     if not root.is_dir():
         raise FileNotFoundError("Real shard root missing")
-    for item in [entry["fixed_manifest"], *entry["files"]]:
-        source = _regular(_under(root, item["path"]))
+    for item in ([entry["fixed_manifest"], *entry["files"]] if items is None else items):
+        source = _regular(_under(root, item["path"]), reject_hardlinks=reject_hardlinks)
         target = _under(destination, item["path"])
         target.parent.mkdir(parents=True, exist_ok=True)
         with source.open("rb") as src, target.open("xb") as dst:
@@ -388,6 +404,88 @@ def _model_smoke(runtime, arm, batch, stats, path, generator, result):
     result["checkpoint_roundtrip_checked"] = True
 
 
+def _k1_loader_only(request, root, result):
+    result.update(verification_scope=None, selected_real_shards=[])
+    if request["mode"] != LOADER_MODE:
+        result["status"] = "UNSUPPORTED_MODEL_SMOKE"
+        result["error"] = {"type": "UnsupportedMode",
+                           "message": "K1 has no model smoke; gptrans-model-smoke-v1 is GPTrans-only"}
+        return result
+
+    arm = request["arm"]
+    names = tuple((addon["name"], addon["version"]) for addon in arm["addons"])
+    if names not in ((), (("k1_pair_value", "1"),)):
+        result["status"] = "UNSUPPORTED_FAMILY_PREFLIGHT"
+        result["error"] = {"type": "UnsupportedAddon", "message": "K1 loader addon dispatch is not approved"}
+        return result
+    runtime = importlib.import_module("molgap.pcqm_k1_full_runner")
+    result["import_origins"] = _origins(root)
+    if not all(callable(getattr(runtime, name, None)) for name in (
+            "validate_selected_preflight_shards", "_load_selected_preflight_graphs", "_loader")):
+        result["status"] = "UNSUPPORTED_FAMILY_PREFLIGHT"
+        result["error"] = {"type": "UnsupportedLoader", "message": "Frozen K1 loader contract absent"}
+        return result
+    if names:
+        addon_source = _regular(_under(root, "src/molgap/k1_pair_token.py"))
+        if _file_sha(addon_source) != arm["addons"][0]["source_sha256"]:
+            raise ValueError("K1 addon source digest differs from frozen package")
+        addon = importlib.import_module("molgap.k1_pair_token")
+        if (not callable(getattr(addon, "make_encoder", None))
+                or getattr(addon, "VALUE_DECOUPLED_MODE", None)
+                != "neural_atom_k1_pair_token_value_decoupled"):
+            result["status"] = "UNSUPPORTED_FAMILY_PREFLIGHT"
+            result["error"] = {"type": "UnsupportedAddon", "message": "Frozen K1 addon loader interface incompatible"}
+            return result
+        result["import_origins"] = _origins(root)
+
+    entry = request["entry"]
+    data_root = Path(request["data_root"])
+    fixed = _regular(_under(data_root, entry["fixed_manifest"]["path"]))
+    if _file_sha(fixed) != entry["fixed_manifest"]["sha256"]:
+        raise ValueError("K1 fixed manifest byte digest changed")
+    phase = request.get("phase", "load")
+    if phase not in {"authorize", "load"}:
+        raise ValueError("Unknown K1 preflight phase")
+    matched, paths = runtime.validate_selected_preflight_shards(
+        data_root, fixed, entry["files"], verify_content=phase == "load",
+        metadata_only=phase == "authorize")
+    if phase == "authorize":
+        result["import_origins"] = _origins(root)
+        result["status"] = "SELECTED_SHARDS_AUTHORIZED_ONLY"
+        return result
+    result["shard_verified"] = True
+    runtime.LOADER_WORKERS = 0
+    graphs, shards = runtime._load_selected_preflight_graphs(
+        paths, [item["rows"] for item in matched])
+    if len(graphs) != sum(item["rows"] for item in matched):
+        raise ValueError("Selected K1 loader row count mismatch")
+    batch = next(iter(runtime._loader(graphs, pass_index=0, start_batch=0)))
+    import torch
+    if (int(batch.num_graphs) != runtime.PHYSICAL_BATCH
+            or batch.x.ndim != 2 or batch.x.shape[1] != 9
+            or batch.edge_index.ndim != 2 or batch.edge_index.shape[0] != 2
+            or batch.edge_attr.ndim != 2 or batch.edge_attr.shape[1] != 3
+            or batch.random_walk_pe.ndim != 2
+            or batch.random_walk_pe.shape != (batch.x.shape[0], 16)
+            or batch.batch.numel() != batch.x.shape[0]
+            or batch.y.numel() != batch.num_graphs
+            or not bool(torch.isfinite(batch.y).all())
+            or not bool(torch.isfinite(batch.random_walk_pe).all())
+            or batch.x.device.type != "cpu"):
+        raise ValueError("Invalid selected K1 real loader batch")
+    result["batches"]["train"] = {"graphs": int(batch.num_graphs),
+                                  "rows": len(graphs), "device": str(batch.x.device)}
+    result["device"] = str(batch.x.device)
+    result["selected_real_shards"] = [
+        {"path": item["file"], "sha256": item["sha256"], "rows": item["rows"],
+         "role": item["role"]} for item in matched
+    ]
+    result["import_origins"] = _origins(root)
+    result.update(status=K1_LOADER_STATUS, verification_scope=K1_SCOPE,
+                  loader_batch_built=True)
+    return result
+
+
 def _worker(request):
     root = Path(request["source_root"])
     if any(name == "molgap" or name.startswith("molgap.") for name in sys.modules):
@@ -400,6 +498,8 @@ def _worker(request):
               "initial_state_checked": False, "initial_state_sha256": None,
               "normalized_gap_l1": None}
     try:
+        if request.get("arm") is not None and request["arm"]["family"] == K1_FAMILY:
+            return _k1_loader_only(request, root, result)
         runtime = importlib.import_module("molgap.pcqm_gptrans_v4")
         result["import_origins"] = _origins(root)
         if (not all(callable(getattr(runtime, name, None)) for name in (
@@ -461,12 +561,14 @@ def _worker(request):
     return result
 
 
-def _launch(source_root, data_root, entry, timeout_seconds, workspace, *, mode=LOADER_MODE, arm=None):
+def _launch(source_root, data_root, entry, timeout_seconds, workspace, *,
+            mode=LOADER_MODE, arm=None, phase="load"):
     # Copy only this infrastructure bootstrap, never host family source.
     bootstrap = workspace / "bootstrap.py"
     shutil.copyfile(Path(__file__), bootstrap)
     request = {"source_root": str(source_root), "data_root": str(data_root), "entry": entry,
-               "mode": mode, "arm": arm, "checkpoint_path": str(workspace / "diagnostic.pt"),
+               "mode": mode, "arm": arm, "phase": phase,
+               "checkpoint_path": str(workspace / "diagnostic.pt"),
                "dependency_paths": sorted({sysconfig.get_path("purelib"), sysconfig.get_path("platlib")})}
     request_path = workspace / "request.json"
     response_path = workspace / "response.json"
@@ -482,22 +584,68 @@ def _launch(source_root, data_root, entry, timeout_seconds, workspace, *, mode=L
     if child.returncode != 0:
         raise RuntimeError(f"Isolated loader exited {child.returncode}")
     result = _load(_regular(response_path).read_bytes())
-    _fields(result, "status shard_verified loader_batch_built import_origins batches device error "
-            "forward_checked backward_checked optimizer_step_checked checkpoint_roundtrip_checked "
-            "initial_state_checked initial_state_sha256 normalized_gap_l1")
+    k1 = arm is not None and arm["family"] == K1_FAMILY
+    fields = ("status shard_verified loader_batch_built import_origins batches device error "
+              "forward_checked backward_checked optimizer_step_checked checkpoint_roundtrip_checked "
+              "initial_state_checked initial_state_sha256 normalized_gap_l1")
+    _fields(result, fields + (" verification_scope selected_real_shards" if k1 else ""))
     if result["status"] not in {"LOADER_VERIFIED_ONLY", "LOADER_FAILED", "UNSUPPORTED_FAMILY_PREFLIGHT",
-                               "MODEL_SMOKE_FAILED", "MODEL_SMOKE_VERIFIED_ONLY"}:
+                               "MODEL_SMOKE_FAILED", "MODEL_SMOKE_VERIFIED_ONLY",
+                               "UNSUPPORTED_MODEL_SMOKE", "SELECTED_SHARDS_AUTHORIZED_ONLY",
+                               K1_LOADER_STATUS}:
         raise ValueError("Invalid worker status")
     if any(type(result[key]) is not bool for key in (
             "shard_verified", "loader_batch_built", "initial_state_checked", *MODEL_CHECKS)):
         raise ValueError("Invalid worker observations")
-    if result["status"] in {"LOADER_VERIFIED_ONLY", "MODEL_SMOKE_VERIFIED_ONLY"}:
-        if (not result["shard_verified"] or not result["loader_batch_built"] or result["error"] is not None
-                or set(result["batches"]) != {"train", "development"}
-                or "molgap.pcqm_gptrans_v4" not in result["import_origins"]
-                or result["device"] != "cpu"):
-            raise ValueError("Incomplete worker observations")
-    elif result["loader_batch_built"] and result["status"] != "MODEL_SMOKE_FAILED":
+    if k1:
+        if result["status"] in {"LOADER_VERIFIED_ONLY", "MODEL_SMOKE_VERIFIED_ONLY", "MODEL_SMOKE_FAILED"}:
+            raise ValueError("K1 worker claimed GPTrans observations")
+        if result["status"] == K1_LOADER_STATUS:
+            selected = result["selected_real_shards"]
+            if (mode != LOADER_MODE or result["verification_scope"] != K1_SCOPE
+                    or not result["shard_verified"] or not result["loader_batch_built"]
+                    or result["error"] is not None or set(result["batches"]) != {"train"}
+                    or "molgap.pcqm_k1_full_runner" not in result["import_origins"]
+                    or result["device"] != "cpu" or type(selected) is not list or not selected
+                    or result["batches"]["train"] != {
+                        "graphs": 128, "rows": sum(item["rows"] for item in entry["files"]),
+                        "device": "cpu"}
+                    or selected != [{key: item[key] for key in ("path", "sha256", "rows", "role")}
+                                    for item in entry["files"]]):
+                raise ValueError("Incomplete selected K1 worker observations")
+            if arm["addons"] and "molgap.k1_pair_token" not in result["import_origins"]:
+                raise ValueError("K1 addon did not import from frozen package")
+        elif result["status"] == "SELECTED_SHARDS_AUTHORIZED_ONLY":
+            if (phase != "authorize" or mode != LOADER_MODE or result["error"] is not None
+                    or result["shard_verified"] or result["loader_batch_built"]
+                    or result["device"] is not None or result["batches"]
+                    or result["verification_scope"] is not None or result["selected_real_shards"]
+                    or "molgap.pcqm_k1_full_runner" not in result["import_origins"]
+                    or (arm["addons"] and "molgap.k1_pair_token" not in result["import_origins"])):
+                raise ValueError("Incomplete K1 selection authorization")
+        elif result["verification_scope"] is not None or result["selected_real_shards"]:
+            raise ValueError("Failed K1 worker claimed selected-shard success")
+        if phase == "authorize" and result["status"] == K1_LOADER_STATUS:
+            raise ValueError("K1 selection phase claimed loader observations")
+        if result["status"] == "UNSUPPORTED_MODEL_SMOKE" and (
+                mode != MODEL_MODE or result["loader_batch_built"] or result["shard_verified"]
+                or result["device"] is not None or result["batches"]):
+            raise ValueError("K1 model rejection claimed loader observations")
+        if mode == LOADER_MODE and result["status"] == "UNSUPPORTED_MODEL_SMOKE":
+            raise ValueError("K1 loader request returned a model-only status")
+    else:
+        if result["status"] in {K1_LOADER_STATUS, "UNSUPPORTED_MODEL_SMOKE",
+                                "SELECTED_SHARDS_AUTHORIZED_ONLY"}:
+            raise ValueError("GPTrans worker claimed K1 status")
+        if result["status"] in {"LOADER_VERIFIED_ONLY", "MODEL_SMOKE_VERIFIED_ONLY"}:
+            if (not result["shard_verified"] or not result["loader_batch_built"] or result["error"] is not None
+                    or set(result["batches"]) != {"train", "development"}
+                    or "molgap.pcqm_gptrans_v4" not in result["import_origins"]
+                    or result["device"] != "cpu"):
+                raise ValueError("Incomplete worker observations")
+    if result["loader_batch_built"] and result["status"] not in {
+            "LOADER_VERIFIED_ONLY", "MODEL_SMOKE_FAILED", "MODEL_SMOKE_VERIFIED_ONLY",
+            K1_LOADER_STATUS}:
         raise ValueError("Failed worker claimed completed loader observation")
     if mode == LOADER_MODE and (any(result[key] for key in MODEL_CHECKS)
                                or result["initial_state_checked"]
@@ -505,7 +653,7 @@ def _launch(source_root, data_root, entry, timeout_seconds, workspace, *, mode=L
                                or result["normalized_gap_l1"] is not None
                                or result["status"].startswith("MODEL_")):
         raise ValueError("Loader-only worker claimed model observations")
-    if mode == MODEL_MODE and result["status"] == "LOADER_VERIFIED_ONLY":
+    if mode == MODEL_MODE and result["status"] in {"LOADER_VERIFIED_ONLY", K1_LOADER_STATUS}:
         raise ValueError("Explicit model smoke request returned only loader observations")
     if result["status"] == "MODEL_SMOKE_VERIFIED_ONLY":
         if (mode != MODEL_MODE or not all(result[key] for key in MODEL_CHECKS)
@@ -521,7 +669,7 @@ def _launch(source_root, data_root, entry, timeout_seconds, workspace, *, mode=L
 
 def _blank(spec, arm, package_identity, manifest_digest):
     from .screen_policy import canonical_fingerprint
-    return {"format": REPORT_FORMAT, "spec_identity": spec.identity,
+    report = {"format": REPORT_FORMAT, "spec_identity": spec.identity,
             "package_identity": package_identity, "shard_manifest_sha256": manifest_digest,
             "arm_id": arm["arm_id"], "arm_identity": canonical_fingerprint(arm),
             "status": "NOT_RUN", **{key: False for key in CHECKS},
@@ -530,6 +678,36 @@ def _blank(spec, arm, package_identity, manifest_digest):
             "normalized_gap_l1": None,
             "import_origins": {}, "batches": {}, "error": None,
             "limitations": list(LIMITATIONS), "missing_evidence": list(CHECKS)}
+    if arm["family"] == K1_FAMILY:
+        report.update(verification_scope=None, selected_real_shards=[])
+        report["limitations"].append(
+            "K1 loader inspection is selected train shards only; full-role content and model numerics remain unverified.")
+    return report
+
+
+def _verified_within_scope(arm, report, mode):
+    if mode == LOADER_MODE:
+        return ((arm["family"] == GPTRANS_FAMILY and report["status"] == "LOADER_VERIFIED_ONLY")
+                or (arm["family"] == K1_FAMILY and report["status"] == K1_LOADER_STATUS))
+    return (mode == MODEL_MODE and arm["family"] == GPTRANS_FAMILY
+            and report["status"] == "MODEL_SMOKE_VERIFIED_ONLY")
+
+
+def _summary_status(arms, reports, mode):
+    if not reports or len(arms) != len(reports):
+        return "MIXED_NONPASS"
+    statuses = {report["status"] for report in reports}
+    if len(statuses) == 1:
+        status = next(iter(statuses))
+        if status in {"LOADER_VERIFIED_ONLY", K1_LOADER_STATUS,
+                      "MODEL_SMOKE_VERIFIED_ONLY", ALL_ARMS_WITHIN_SCOPE_STATUS}:
+            return status if all(_verified_within_scope(arm, report, mode)
+                                 for arm, report in zip(arms, reports)) else "MIXED_NONPASS"
+        return status
+    if mode == LOADER_MODE and all(
+            _verified_within_scope(arm, report, mode) for arm, report in zip(arms, reports)):
+        return ALL_ARMS_WITHIN_SCOPE_STATUS
+    return "MIXED_NONPASS"
 
 
 def run_experiment_preflight(spec, package_dir, output_root, *, expected_package_identity,
@@ -611,9 +789,12 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                 report.update(status="PACKAGE_INVALID", error=package_error)
             elif manifest_error:
                 report.update(status="SHARD_MANIFEST_INVALID", error=manifest_error)
-            elif arm["family"]["name"] != "gptrans_t":
+            elif arm["family"] == K1_FAMILY and mode == MODEL_MODE:
+                report.update(status="UNSUPPORTED_MODEL_SMOKE", error={
+                    "type": "UnsupportedMode",
+                    "message": "K1 has no model smoke; gptrans-model-smoke-v1 is GPTrans-only"})
+            elif arm["family"] not in (GPTRANS_FAMILY, K1_FAMILY):
                 report["status"] = "UNSUPPORTED_FAMILY_PREFLIGHT"
-                report["limitations"].append("No frozen K1 PCQM loader supported by this boundary.")
             elif arm["arm_id"] not in entries or shard_root is None:
                 report["status"] = "MISSING_REAL_SHARD"
             else:
@@ -624,23 +805,46 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                 data_root.mkdir()
                 try:
                     _unpack(snapshot, source_root)
-                    if not (source_root / "src/molgap/pcqm_gptrans_v4.py").is_file():
+                    loader_source = ("pcqm_k1_full_runner.py" if arm["family"] == K1_FAMILY
+                                     else "pcqm_gptrans_v4.py")
+                    if not (source_root / "src/molgap" / loader_source).is_file():
                         report["status"] = "UNSUPPORTED_FAMILY_PREFLIGHT"
+                        if arm["family"] == K1_FAMILY:
+                            report["error"] = {"type": "UnsupportedLoader",
+                                               "message": "Frozen K1 loader source is absent from package"}
                     else:
                         entry = entries[arm["arm_id"]]
-                        _stage_files(entry, Path(shard_root).absolute(), data_root)
-                        report.update(_launch(source_root, data_root, entry, timeout_seconds, stage,
-                                              mode=mode, arm=arm))
+                        if arm["family"] == K1_FAMILY:
+                            _stage_files(entry, Path(shard_root).absolute(), data_root,
+                                         reject_hardlinks=True, items=[entry["fixed_manifest"]])
+                            authorization = _launch(source_root, data_root, entry, timeout_seconds,
+                                                    stage, mode=mode, arm=arm, phase="authorize")
+                            if authorization["status"] != "SELECTED_SHARDS_AUTHORIZED_ONLY":
+                                report.update(authorization)
+                            else:
+                                _stage_files(entry, Path(shard_root).absolute(), data_root,
+                                             reject_hardlinks=True, items=entry["files"])
+                                report.update(_launch(source_root, data_root, entry, timeout_seconds,
+                                                      stage, mode=mode, arm=arm))
+                        else:
+                            _stage_files(entry, Path(shard_root).absolute(), data_root)
+                            report.update(_launch(source_root, data_root, entry, timeout_seconds,
+                                                  stage, mode=mode, arm=arm))
                 except FileNotFoundError as exc:
                     report.update(status="MISSING_REAL_SHARD", error={"type": type(exc).__name__, "message": str(exc)})
                 except Exception as exc:
                     report.update(status="PREFLIGHT_FAILED", error={"type": type(exc).__name__, "message": str(exc)})
             report["missing_evidence"] = [key for key in CHECKS if not report[key]]
+            if arm["family"] == K1_FAMILY:
+                report["missing_evidence"].extend(["full_role_content_unverified",
+                                                   "full_role_assembly_unverified",
+                                                   "model_numerics_unverified"])
+                if len(report["selected_real_shards"]) < 68:
+                    report["missing_evidence"].append("remaining_train_shards_unverified")
             directory = output / "arms" / arm["arm_id"]
             directory.mkdir()
             _atomic(directory / "preflight.json", report)
-    statuses = {r["status"] for r in reports}
-    status = next(iter(statuses)) if len(statuses) == 1 else "MIXED_NONPASS"
+    status = _summary_status(arms, reports, mode)
     summary = {"format": REPORT_FORMAT, "spec_identity": spec.identity,
                "expected_package_identity": expected_package_identity,
                "expected_shard_manifest_sha256": expected_shard_manifest_sha256,

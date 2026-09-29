@@ -26,7 +26,8 @@ Invalid API/spec/output arguments raise. Package, manifest and per-arm artifact
 failures produce structured non-passing reports. No existing output is resumed.
 
 `validate_real_shard_manifest(spec, manifest_path, expected_sha256)` checks
-declarations only. Its return value is not real-data verification or a report.
+the caller-pinned authorization-envelope digest and declarations on the host.
+Its return value is not real-data verification or a report.
 
 ## Manifest Contract
 
@@ -44,13 +45,17 @@ Each arm entry has exactly `arm_id`, `arm_identity` (canonical arm fingerprint),
 each role's membership, row-order and usage digests without changing Spec.
 
 `fixed_manifest` has `path` and `sha256`. It points to the frozen family dataset
-manifest, not this authorization envelope. Each `files` record has `path`,
-`sha256`, positive integer `bytes`, and `role`. Roles must cover precisely the
-arm's declared roles and may only be train/development. Paths are relative
-POSIX paths under the explicit root; aliases, traversal, case collisions,
-Windows devices/streams, symlinks, junctions and reparse points are rejected.
-Every listed byte is copied into a private arm directory and hashed there.
-The original data root is never passed to family code.
+manifest, not this authorization envelope. GPTrans `files` records retain the
+original `path`, `sha256`, positive integer `bytes`, and `role` fields. K1 records
+have those fields plus a positive integer `rows`. This is an additive,
+family-specific manifest-v1 record shape; existing GPTrans envelopes and their
+meaning do not change. Roles must cover precisely the family spec's declared
+roles: GPTrans train/development, K1 train only. K1 does not create development,
+official-validation or test roles. Paths are relative POSIX paths under the
+explicit root; aliases, traversal, case collisions, Windows devices/streams,
+symlinks, junctions and reparse points are rejected. K1 also rejects hardlinked
+fixed manifests and shard inputs. The original data root is never passed to
+family code.
 
 ## Loader Support
 
@@ -68,9 +73,39 @@ For CPU inspection only, `LOADER_WORKERS` is set to zero in the isolated process
 Sampler, seed, batch size, role and source files are not rewritten. This avoids
 nested DataLoader processes and is explicitly not production runtime parity.
 
-K1 is `UNSUPPORTED_FAMILY_PREFLIGHT`: this boundary has no approved frozen PCQM
-loader integration for that family. It never borrows code from another checkout.
-Missing package GPTrans loader source is likewise unsupported.
+K1 `neural_atom_k1/1` baseline and `k1_pair_value/1` use only the package's
+`molgap.pcqm_k1_full_runner`. K1 selects one or more topology records from the
+frozen official full-train PCQM4Mv2 manifest. The fixed manifest's parsed
+canonical digest must match `FULL_MANIFEST_CANONICAL_SHA256`; its full identity,
+roles, graph/source contract, 68-shard topology aggregate and 3,378,606-row
+boundaries must match the frozen runner constants. Every selected record's
+path, SHA256, bytes, rows and `train` role must match one of those topology
+records exactly. Selected rows must total at least the frozen physical batch
+128. No unselected shard is needed or represented as loaded.
+
+K1 uses two isolated package-only worker phases after host validation of the
+authorization envelope. The host stages the fixed manifest in a private arm
+directory; the first worker binds its frozen full topology and authorizes the
+selected declarations as metadata only, without reading or verifying shard
+content. The host then copies only the selected files into that private
+directory and checks their hashes. The second worker rebinds the frozen
+topology, matches selected path/SHA256/bytes/rows/train-role declarations, and
+verifies staged file size and SHA256 before using the full trainer's packed-graph
+decoder. It checks actual decoded row counts before collating a batch. Neither
+worker receives the original data root as a family-loader input.
+`_load_selected_preflight_graphs` is separate from the unchanged full-role
+`_load_graphs` row gate. The worker calls the unchanged K1 `_loader`
+with pass 0/start batch 0, the original physical batch and PyG collate path;
+only `LOADER_WORKERS` is set to zero in that private CPU process. It checks
+per-shard decoded rows and one batch's graph count, x/edge/RWSE dimensions,
+finite RWSE/targets and CPU placement. This does not claim full-role sampler
+parity, target statistics, training, or model execution. The pair-value addon
+must be present in the frozen package with the declared source-byte SHA256 and
+its known interface; this is not an addon model smoke.
+
+Missing package K1/GPTrans loader source is unsupported. Missing, synthetic,
+misdeclared, linked, undersized or incompatible K1 inputs cannot become a
+loader-success report.
 
 ## Isolation And Reports
 
@@ -103,9 +138,33 @@ The independent observed flags are `package_verified`, `shard_verified`,
 successful observation, not necessarily that the operation ran and failed.
 `missing_evidence`, error and status preserve that distinction. Successful loader
 inspection is `LOADER_VERIFIED_ONLY`, never complete numerical qualification.
+For K1 alone, loader success is instead
+`SELECTED_REAL_SHARDS_LOADER_VERIFIED_ONLY` with
+`verification_scope="selected_real_shards_only"` and `selected_real_shards`
+listing the validated path/SHA256/rows/train role for each selected record.
+These two report fields are K1-only, preserving GPTrans report fields. Failed
+K1 reports leave scope null and the selected list empty. K1 `missing_evidence`
+retains full-role content/assembly and model numerics, plus remaining train shards when
+fewer than 68 were selected. Even selecting all 68 does not certify full-role
+assembly or the old full-run preflight.
+CLI exit code 0 for this K1 status means only that the selected train-shard
+loader/collate diagnostic completed under this contract; it is not full-role,
+training, model, replay or READY admission.
+When loader-only reports have different success strings, the summary is
+`ALL_ARMS_VERIFIED_WITHIN_SCOPE` only if every GPTrans arm is
+`LOADER_VERIFIED_ONLY` and every K1 arm is
+`SELECTED_REAL_SHARDS_LOADER_VERIFIED_ONLY`. Each arm retains its original
+status and evidence; valid identical-status summaries remain unchanged. An
+identical success string on an arm of the wrong family or in the wrong mode is
+non-passing, not an exception to the family-specific check. The CLI
+returns 0 for this aggregate status, meaning only that every arm completed its
+own declared loader diagnostic. It does not establish full-role coverage,
+training or model success, cross-family fairness, RML, replay or READY status.
+Any missing, failed, invalid or unsupported arm, including K1 model-smoke,
+remains non-passing (`MIXED_NONPASS` for different outcomes).
 `requested_device` is a declaration; `device` remains null until a CPU batch is
 actually observed, including when source verification succeeds without loading.
-Mixed outcomes are `MIXED_NONPASS`. No RML, READY or replay authority fields are
+Other mixed outcomes are `MIXED_NONPASS`. No RML, READY or replay authority fields are
 emitted, and no canonical research records are modified.
 
 This is trusted-code process isolation, not an OS security sandbox. Packed
@@ -117,7 +176,9 @@ Dependencies are host-installed; their versions are not certified here.
 ## Unexecuted Test Handoff
 
 Tests were authored, not run as part of this implementation. Synthetic tests
-exercise rejection and blocked semantics only. The real dual-arm integration
+exercise rejection, routing, mocked cross-family summary statuses and
+decoder/collate interfaces without establishing real-shard preflight evidence.
+The real dual-arm integration
 test skips unless `MOLGAP_PREFLIGHT_REAL_INPUTS` points to a user-authorized JSON
 configuration with `spec`, `package_dir`, `expected_package_identity`,
 `shard_manifest`, `shard_root`, and `expected_shard_manifest_sha256`. It requires
@@ -125,12 +186,19 @@ two GPTrans arms, real frozen artifacts and enough CPU RAM/disk for full private
 copies. It deliberately makes the second arm's shard missing while preserving
 the first arm's real loader result. It is parameterized over both modes; only the explicitly selected smoke case constructs a model.
 
+An optional K1 integration case uses `MOLGAP_PREFLIGHT_K1_REAL_INPUTS` with the
+same pin/configuration keys. It requires an explicitly authorized K1-only spec,
+frozen package and selected real train shards, and asserts shard-scoped loader
+reports only. Synthetic tests exercise topology matching and collate interfaces
+without emitting real-shard success or reading protected data. This case was
+also authored but not run here.
+
 Suggested Luna commands, from this isolated worktree, using a project virtualenv
 with torch, NumPy, PyG and the frozen source package's dependencies installed:
 
 ```powershell
 $env:PYTHONPATH = (Join-Path $PWD 'src')
-& '.\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k 'not real_dual_arm' -q
+& '.\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k 'not real_dual_arm and not real_k1' -q
 & '.\.venv\Scripts\python.exe' -m pytest tests/test_experiment_preflight.py -k real_dual_arm -q
 ```
 
@@ -140,15 +208,18 @@ The real integration cases require explicit authorization and
 must declare random initialization with the correct model state digest. The
 second command runs the real CPU model smoke as well as loader inspection, so
 it requires separate execution authorization and enough time/RAM for GPTrans-T.
-Neither command was executed by the implementer.
+The optional K1 case is excluded from both commands and requires separate
+authorization. Neither command was executed by the implementer.
 
 ## Explicit Model Smoke V1
 
 Set `mode="gptrans-model-smoke-v1"` to request the diagnostic. Unknown versions
 raise before creating output. The mode is recorded in each arm and the summary.
 The device is always CPU; no accelerator selection or fallback is supported.
-Missing real data, missing dependencies, invalid source, and unsupported K1
-remain structured non-pass outcomes. A successful loader cannot satisfy an
+Missing real data, missing dependencies, and invalid source remain structured
+non-pass outcomes. K1 model-mode requests return `UNSUPPORTED_MODEL_SMOKE`
+with a structured `UnsupportedMode` error and no model observations, regardless
+of whether K1 loader-only inputs were provided. A successful loader cannot satisfy an
 explicit model request. `MODEL_SMOKE_FAILED` retains earlier observations but
 never claims the checkpoint passed. Any mixed arm outcomes are `MIXED_NONPASS`.
 

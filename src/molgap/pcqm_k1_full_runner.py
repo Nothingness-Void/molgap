@@ -3,10 +3,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import stat
 import subprocess
 import time
 import zipfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 import numpy as np
 
@@ -206,6 +207,134 @@ def validate_full_manifest(
     return manifest, paths
 
 
+def _preflight_regular_under(root: Path, name: str) -> Path:
+    """Resolve a selected preflight input without following links or aliases."""
+    if (type(name) is not str or not name or "\\" in name or ":" in name
+            or PurePosixPath(name).is_absolute()
+            or any(part in {"", ".", ".."} for part in name.split("/"))):
+        raise ValueError("Unsafe selected K1 shard path")
+    path = root / name
+    for component in (path, *path.parents):
+        if component == root.parent:
+            break
+        info = component.lstat()
+        if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+            raise ValueError("Linked selected K1 shard path")
+    if not path.resolve().is_relative_to(root.resolve()):
+        raise ValueError("Selected K1 shard escaped dataset root")
+    info = path.stat()
+    if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1:
+        raise ValueError("Selected K1 shard must be an unlinked regular file")
+    return path
+
+
+def _preflight_unique_json(pairs):
+    value = {}
+    for key, item in pairs:
+        if key in value:
+            raise ValueError("Duplicate K1 fixed manifest JSON key")
+        value[key] = item
+    return value
+
+
+def validate_selected_preflight_shards(
+    dataset_root: Path, manifest_path: Path, selected: list[dict], *,
+    verify_content: bool, metadata_only: bool = False,
+) -> tuple[list[dict], list[Path]]:
+    """Bind selected train shards to the frozen full manifest, not a partial role."""
+    if type(selected) is not list or not selected:
+        raise ValueError("K1 preflight requires selected real train shards")
+    if metadata_only and verify_content:
+        raise ValueError("Metadata-only K1 selection cannot verify shard content")
+    dataset_root = dataset_root.resolve()
+    manifest_path = manifest_path.absolute()
+    if not manifest_path.is_relative_to(dataset_root):
+        raise ValueError("K1 fixed manifest escaped dataset root")
+    manifest_path = _preflight_regular_under(
+        dataset_root, manifest_path.relative_to(dataset_root).as_posix())
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"),
+                          object_pairs_hook=_preflight_unique_json)
+    if _canonical_manifest_sha256(manifest) != FULL_MANIFEST_CANONICAL_SHA256:
+        raise RuntimeError("Not the frozen K1 full PCQM manifest")
+    if (manifest.get("status") != "complete"
+            or manifest.get("identity") != {
+                "name": "ogb-train-full", "train_rows": TRAIN_ROWS,
+                "development_rows": 0, "kaggle1": False, "scnet_compatible": False,
+            }
+            or manifest.get("roles") != {
+                "train": {"source_idx_start": 0, "source_idx_stop": TRAIN_ROWS, "rows": TRAIN_ROWS},
+                "development": None,
+            }):
+        raise RuntimeError("K1 full train role contract changed")
+    graph_contract = manifest.get("graph_contract", {})
+    if any(graph_contract.get(key) != expected for key, expected in {
+        "feature_schema": "ogb", "node_feature_dim": 9,
+        "edge_feature_dim": 3, "rwse_dim": 16,
+    }.items()):
+        raise RuntimeError("K1 full graph contract changed")
+    source = manifest.get("source", {})
+    if (source.get("official_row_manifest_sha256") != OFFICIAL_ROW_MANIFEST_SHA256
+            or source.get("external_data_used") is not False
+            or any(manifest.get(key) is not False for key in (
+                "official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"
+            ))):
+        raise RuntimeError("K1 official train source or protected role changed")
+
+    records = manifest.get("assets", {}).get("topology", [])
+    if (type(records) is not list or len(records) != 68
+            or sum(item["rows"] for item in records) != TRAIN_ROWS
+            or _aggregate(records) != FULL_TOPOLOGY_AGGREGATE_SHA256):
+        raise RuntimeError("K1 full topology inventory changed")
+    by_path = {}
+    cursor = 0
+    for item in records:
+        if (item.get("role") != "train" or type(item.get("rows")) is not int
+                or item["rows"] <= 0 or type(item.get("source_idx_min")) is not int
+                or type(item.get("source_idx_max")) is not int
+                or item["source_idx_min"] != cursor
+                or item["source_idx_max"] != cursor + item["rows"] - 1):
+            raise RuntimeError("K1 full topology row boundaries changed")
+        name = item["file"]
+        if (type(name) is not str or not name or "\\" in name or ":" in name
+                or PurePosixPath(name).is_absolute()
+                or any(part in {"", ".", ".."} for part in name.split("/"))
+                or name.casefold() in by_path):
+            raise RuntimeError("Unsafe or duplicate K1 full topology path")
+        by_path[name.casefold()] = item
+        cursor += item["rows"]
+    if cursor != TRAIN_ROWS:
+        raise RuntimeError("K1 full topology endpoint changed")
+
+    matched, paths, seen = [], [], set()
+    for declaration in selected:
+        if type(declaration) is not dict or set(declaration) != {
+            "path", "sha256", "bytes", "rows", "role"
+        }:
+            raise ValueError("Invalid selected K1 shard declaration")
+        name = declaration["path"]
+        if type(name) is not str or name.casefold() in seen:
+            raise ValueError("Duplicate selected K1 shard")
+        seen.add(name.casefold())
+        item = by_path.get(name.casefold())
+        if item is None or declaration != {
+            "path": item["file"], "sha256": item["sha256"],
+            "bytes": item["bytes"], "rows": item["rows"], "role": item["role"],
+        }:
+            raise ValueError("Selected K1 shard differs from frozen train topology")
+        path = dataset_root / name
+        if not metadata_only:
+            path = _preflight_regular_under(dataset_root, name)
+            if path.stat().st_size != item["bytes"]:
+                raise RuntimeError("Selected K1 shard byte count changed")
+            if verify_content and sha256_file(path) != item["sha256"]:
+                raise RuntimeError("Selected K1 shard hash changed")
+        matched.append(item)
+        paths.append(path)
+    if sum(item["rows"] for item in matched) < PHYSICAL_BATCH:
+        raise ValueError("Selected K1 shards contain less than physical batch 128")
+    return matched, paths
+
+
 class DeterministicPassBatchSampler:
     """Global random permutation with a resumable, full-batch cursor."""
 
@@ -240,9 +369,7 @@ def progress_from_step(global_step: int) -> tuple[int, int]:
     return divmod(global_step, BATCHES_PER_PASS)
 
 
-def _load_graphs(paths: list[Path]):
-    import torch
-    from torch.utils.data import ConcatDataset
+def _packed_graph_dataset(path: Path):
     from torch_geometric.data import InMemoryDataset
 
     class PackedGraphDataset(InMemoryDataset):
@@ -252,11 +379,29 @@ def _load_graphs(paths: list[Path]):
                 path, map_location="cpu", weights_only=False, mmap=True
             )
 
-    shards = [PackedGraphDataset(path) for path in paths]
+    return PackedGraphDataset(path)
+
+
+def _load_graphs(paths: list[Path]):
+    from torch.utils.data import ConcatDataset
+
+    shards = [_packed_graph_dataset(path) for path in paths]
     graphs = ConcatDataset(shards)
     if len(graphs) != TRAIN_ROWS:
         raise RuntimeError("Loaded full-role row count changed")
     return graphs, shards
+
+
+def _load_selected_preflight_graphs(paths: list[Path], rows: list[int]):
+    """Decode only selected packed shards; never represent them as full train."""
+    from torch.utils.data import ConcatDataset
+
+    if not paths or len(paths) != len(rows) or sum(rows) < PHYSICAL_BATCH:
+        raise ValueError("K1 preflight requires a selected physical batch")
+    shards = [_packed_graph_dataset(path) for path in paths]
+    if any(len(shard) != expected for shard, expected in zip(shards, rows)):
+        raise RuntimeError("Selected K1 packed shard row count changed")
+    return ConcatDataset(shards), shards
 
 
 def _target_stats(shards) -> tuple[float, float]:
