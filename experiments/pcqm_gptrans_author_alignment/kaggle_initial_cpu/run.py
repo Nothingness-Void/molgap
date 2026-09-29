@@ -11,11 +11,25 @@ import tarfile
 import time
 
 
-def mounted(dataset: str, name: str) -> Path:
-    root = Path("/kaggle/input") / dataset
-    matches = list(root.rglob(name))
+SOURCE_SHA256 = "bcbfe2122d8c388f39c3728def4aa6cd1919e530c97578e10b41d5fe4e244411"
+SOURCE_COMMIT = "de62aadeae02bc0fea9f8e4bc215d8fdf2f75c20"
+INITIAL_SHA256 = "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+MANIFEST_SHA256 = "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def mounted(name: str, expected_sha256: str) -> Path:
+    candidates = list(Path("/kaggle/input").rglob(name))
+    matches = [path for path in candidates if sha256_file(path) == expected_sha256]
     if len(matches) != 1:
-        raise RuntimeError(f"Expected exactly one {dataset}/{name}; found {len(matches)}")
+        raise RuntimeError(f"Expected one SHA-matched {name}; found {len(matches)} among {len(candidates)} candidates")
     return matches[0]
 
 
@@ -25,13 +39,12 @@ def main() -> None:
         sys.executable, "-m", "pip", "install", "-q", "--no-deps",
         "torch-geometric==2.6.1", "ogb==1.3.6",
     ])
-    source_dataset = "molgap-gptrans-initial-scale-source-v1"
-    archive = mounted(source_dataset, "source_payload.bin")
-    commit = mounted(source_dataset, "SOURCE_COMMIT.txt").read_text(encoding="ascii").strip()
-    archive_sha = mounted(source_dataset, "SOURCE_ARCHIVE_SHA256.txt").read_text(encoding="ascii").strip()
-    if len(commit) != 40 or hashlib.sha256(archive.read_bytes()).hexdigest() != archive_sha:
+    archive = mounted("source_payload.bin", SOURCE_SHA256)
+    commit = (archive.parent / "SOURCE_COMMIT.txt").read_text(encoding="ascii").strip()
+    archive_sha = (archive.parent / "SOURCE_ARCHIVE_SHA256.txt").read_text(encoding="ascii").strip()
+    if commit != SOURCE_COMMIT or archive_sha != SOURCE_SHA256:
         raise RuntimeError("Source archive identity changed")
-    inventory = json.loads(mounted(source_dataset, "SOURCE_FILES.json").read_text(encoding="utf-8"))
+    inventory = json.loads((archive.parent / "SOURCE_FILES.json").read_text(encoding="utf-8"))
     paths = [entry["path"] for entry in inventory["files"]]
     if ("src/molgap/gptrans_initial_scale_preflight.py" not in paths
             or "src/molgap/__init__.py" not in paths or len(paths) != len(set(paths))):
@@ -52,8 +65,8 @@ def main() -> None:
     if torch.cuda.is_available():
         raise RuntimeError("Initialization input diagnostic must run without a GPU")
     output = Path("/kaggle/working/gptrans_initial_scale_preflight_v1")
-    manifest = mounted("pcqm4mv2-ogb-fixed-100k-v1", "manifest.json")
-    initial = mounted("molgap-gptrans-t-v4-source", "initial_state.pt")
+    manifest = mounted("manifest.json", MANIFEST_SHA256)
+    initial = mounted("initial_state.pt", INITIAL_SHA256)
     result = module.run(manifest.parent, initial, output)
     module.atomic_json(output / "native_cost.json", {
         "format": "molgap-gptrans-initial-scale-preflight-cost-v1",
