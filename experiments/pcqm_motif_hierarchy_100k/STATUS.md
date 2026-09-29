@@ -39,5 +39,13 @@ released version-2 attempt.
 
 The [version-2 protocol](attempt_v2/protocol.md) changes only runtime device
 qualification: accept one actual P100 or T4 after recording its identity.
-The scientific model/data/optimization contract is unchanged. A new source
-commit and prospective RML binding are required before submission.
+The scientific model/data/optimization contract is unchanged. Version 2 was
+submitted on the same private Kaggle2 kernel after source dataset versioning;
+the private v2 source payload was downloaded and matched its frozen SHA.
+The remote latest identity was confirmed as kernel `136356323` version 2, and
+the exact control binding returned `RUNNING`. Its new prospective RML plan
+passed validation. The [version-2 receipt](attempt_v2/submission_receipt.json)
+and [monitor binding](attempt_v2/monitor_binding.json) preserve the exact
+attempt, while v1 is retained separately. The existing Luna B heartbeat is
+active only for v2, silent on normal running, and hands terminal events to A.
+No v2 model result or actual accelerator identity has yet been accepted.

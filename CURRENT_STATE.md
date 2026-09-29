@@ -68,10 +68,11 @@ modify or take custody of the desktop full run.
 
 The server's pure-2D motif-hierarchy CPU sidecar passed its fixed-100K
 full-row and cost/coverage gates. The first separately frozen K1 motif-graph
-GPU attempt stopped at its runtime device gate before model work; no scientific
-result exists. An unchanged-science, new-source retry is being prepared with
-an actual-device qualification gate. No scale-up or production promotion is
-released. The [GPU protocol](experiments/pcqm_motif_hierarchy_100k/gpu_protocol.md),
+GPU attempt stopped at its runtime device gate before model work. Its
+unchanged-science version-2 attempt is now running on Kaggle2 under a new
+prospective RML identity and actual-device qualification gate. Neither a
+scientific result nor scale-up/production promotion exists yet. The
+[GPU protocol](experiments/pcqm_motif_hierarchy_100k/gpu_protocol.md),
 [CPU decision](experiments/pcqm_motif_hierarchy_100k/decision.md) and
 [operational status](experiments/pcqm_motif_hierarchy_100k/STATUS.md) own its boundaries.
 
