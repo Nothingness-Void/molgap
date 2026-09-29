@@ -13,6 +13,14 @@
     },
     {
       "reasons": [
+        "Historical trace has EMA development MAE but no independently evaluated live-model development MAE at each epoch",
+        "canonical_trace_marked_ineligible"
+      ],
+      "run_id": "kaseichou/molgap-pcqm-gptrans-t-v4-s42:v4",
+      "trajectory_id": "TC-gptrans-t-v4-100k-reference-s42"
+    },
+    {
+      "reasons": [
         "canonical_trace_marked_ineligible",
         "undeclared_feature_identity_mismatch"
       ],
@@ -142,5 +150,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 31
+  "trace_count": 32
 }

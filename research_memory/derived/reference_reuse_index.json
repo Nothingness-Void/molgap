@@ -86,6 +86,28 @@
     },
     {
       "artifact_availability": [
+        "local_record_verified"
+      ],
+      "comparison_status": "reference_bundle_structurally_accepted_trace_limited",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_100k_immutable_reference",
+      "source_envelope": "experiments/pcqm_gptrans_author_alignment/recovered_reference/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "paired_endpoint_or_context_only_until_trace_gate",
+      "used_by_trajectory_ids": [
+        "TC-gptrans-v5-audit-reference-100k"
+      ]
+    },
+    {
+      "artifact_availability": [
         "committed_metadata"
       ],
       "comparison_status": "incompatible_with_strict_matched60_v4",

@@ -61,6 +61,21 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-gptrans-t-v4-100k-reference-s42:A001",
+      "target": "experiments/pcqm_gptrans_author_alignment/recovered_reference/reference_acceptance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-t-v4-100k-reference-s42:A001",
+      "target": "experiments/pcqm_gptrans_t_100k_v4/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-v5-audit-reference-100k:A001",
+      "target": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-k1-atom-pair-local-100k-s42:A001",
       "target": "experiments/pcqm_k1_chem_local_100k/source_config.json",
       "type": "action_produced_evidence"
@@ -671,6 +686,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-v5-audit-reference-100k",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-k1-atom-pair-local-100k-s42",
       "target": "TC-k1-chem-local-post100k-audit-s42",
       "type": "parent_trajectory"
@@ -933,6 +953,11 @@
     {
       "source": "pcqm-gptrans-t-500k-partial-reference-s42",
       "target": "TC-gptrans-step-profile-v5",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-v5-audit-reference-100k",
       "type": "prior_evidence"
     },
     {
@@ -1321,6 +1346,11 @@
       "type": "reference_used"
     },
     {
+      "source": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "target": "TC-gptrans-v5-audit-reference-100k",
+      "type": "reference_used"
+    },
+    {
       "source": "pcqm-k1-500k-paired-v3-scalar-reference",
       "target": "TB-k1-pair-token-500k-s42",
       "type": "reference_used"
@@ -1580,6 +1610,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-500k-paired-v3-scalar-reference",
       "type": "evidence"
     },
@@ -1781,6 +1815,14 @@
     },
     {
       "id": "TC-gptrans-step-profile-v5",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-t-v4-100k-reference-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-v5-audit-reference-100k",
       "type": "trajectory"
     },
     {

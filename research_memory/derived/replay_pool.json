@@ -17051,6 +17051,14 @@
     },
     {
       "reasons": [
+        "Historical trace has EMA development MAE but no independently evaluated live-model development MAE at each epoch",
+        "canonical_trace_marked_ineligible"
+      ],
+      "run_id": "kaseichou/molgap-pcqm-gptrans-t-v4-s42:v4",
+      "trajectory_id": "TC-gptrans-t-v4-100k-reference-s42"
+    },
+    {
+      "reasons": [
         "canonical_trace_not_locally_retained"
       ],
       "run_id": "nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42:v1",
@@ -17133,5 +17141,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "e3cfb5ca3d22a4b87ddd4df6e6564187bb501dc41b89ed074a0b0480b2158fb4"
+  "source_digest": "43cd5c5e470b84df09ece803ef48f04b3c808b5eb47a8cd069d91214c484032c"
 }

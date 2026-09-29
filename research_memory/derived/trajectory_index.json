@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "dda8635826252fe22b79c81310fc4962bf38d1068f5a7e205365bd7cd8d45caa",
+  "source_digest": "14533ea38cc16598cecf3f796b69f4510062e100aa8e859759aab5f1f37c8f2b",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -71,6 +71,38 @@
       ],
       "track": "C",
       "trajectory_id": "TC-gptrans-step-profile-v5"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_gptrans_t_100k_v4/decision.md",
+      "family_id": "gptrans-t-v4-reference",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "historical",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/pcqm_gptrans_author_alignment/recovered_reference/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-t-v4-100k-reference-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-t-v4-100k-reference-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_v5_audit_reference/protocol.md",
+      "family_id": "gptrans-v5-audit-reference",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-t-v4-100k-reference-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_v5_audit_reference/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
     },
     {
       "completeness_status": "complete",
