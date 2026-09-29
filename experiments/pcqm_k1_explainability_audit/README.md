@@ -7,3 +7,5 @@
 - `run_causal_audit.py` is the thin frozen-checkpoint Stage-2 CLI.
 - `inspect_cache.py` and `inspect_cache.slurm` are one-off schema probes.
 - `results/` receives compact accepted evidence and the final decision.
+- [Slot-compression reassessment](results/slot_compression_reassessment.md)
+  distinguishes measured exchange effects from unresolved information loss.
