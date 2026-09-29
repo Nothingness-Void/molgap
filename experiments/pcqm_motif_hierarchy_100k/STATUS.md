@@ -11,5 +11,9 @@ Pulled remote metadata confirms `enable_gpu=false` and the accepted fixed-100K
 dataset mount. The Kaggle client resolved the kernel slug from its title;
 local metadata was corrected to the observed remote ID without resubmission.
 
-The CPU sidecar result and independent acceptance remain pending. This status
-does not release GPU training, protected-role access or a scale-up job.
+Version 1 ended `COMPLETE`. The sidecar passed its frozen CPU feasibility and
+remote full-row acceptance gates; locally rehashed downloaded manifest and
+all three shards. The [dated decision](decision.md) and compact
+[evidence](results/sidecar_evidence.json) own the terminal result. The Luna B
+terminal handoff succeeded once and its heartbeat is paused. No GPU training,
+protected-role read or scale-up job is released by this CPU result.
