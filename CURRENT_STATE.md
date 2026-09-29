@@ -301,12 +301,13 @@ excluded). This is mechanism evidence, not an MAE effect. Authority:
 `experiments/pcqm_gptrans_author_alignment/STATUS.md`.
 
 The user authorized one separate matched GPTrans-T 100K reference rerun to
-obtain the missing V5 live-development trace. Kaggle2 T4 segment 1 was
-submitted; its corrected exact run is `kaseichou/molgap-gptrans-v5-audit-reference-s42-v1`.
-At the latest observation it was running without an accepted preflight or
-training result. An earlier wrong-slug package attempt is queued but cannot
-reach training and remains infrastructure-only. No G1/G2 candidate or 500K
-successor is released. Authority:
+obtain the missing V5 live-development trace. Its Kaggle2 T4 first 10-epoch
+segment passed streaming artifact/trace acceptance; version 2 of the exact
+kernel `kaseichou/molgap-gptrans-v5-audit-reference-s42-v1` was queued to
+resume from the SHA-verified checkpoint at epoch 10. A wrong-slug first
+package attempt failed before training and is infrastructure-only. The
+60-epoch reference and final MAE are not yet accepted. No G1/G2 candidate or
+500K successor is released. Authority:
 `experiments/pcqm_gptrans_v5_audit_reference/STATUS.md`.
 
 The user reopened three additional evidence-gated Kaggle2 rounds. Round 1
