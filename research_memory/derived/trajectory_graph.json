@@ -437,6 +437,11 @@
     },
     {
       "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-100k-t4-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-memory-value-k1pair-candidate-100k-s42",
       "type": "parent_trajectory"
     },
@@ -782,6 +787,11 @@
     },
     {
       "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-input-init-100k-t4-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
       "target": "TB-gptrans-reference-k1pair-100k-s42",
       "type": "prior_evidence"
     },
@@ -813,6 +823,11 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-input-init-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-100k-t4-s42",
       "type": "prior_evidence"
     },
     {
@@ -1018,6 +1033,11 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-input-init-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-input-init-100k-t4-s42",
       "type": "reference_used"
     },
     {
@@ -1415,6 +1435,10 @@
     },
     {
       "id": "TB-gptrans-input-init-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-input-init-100k-t4-s42",
       "type": "trajectory"
     },
     {
