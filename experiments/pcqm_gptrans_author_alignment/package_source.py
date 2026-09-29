@@ -11,13 +11,17 @@ from molgap.constants import REPO_ROOT
 from molgap.v4_bundle import build_v4_source_bundle
 
 
-DATASET = "kaseichou/molgap-gptrans-real-path-source-v1"
+DEFAULT_DATASET = "kaseichou/molgap-gptrans-real-path-source-v1"
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--dataset-id", default=DEFAULT_DATASET)
+    parser.add_argument("--title", default="MolGap GPTrans Real Path Preflight Source V1")
     args = parser.parse_args()
+    if not args.dataset_id.startswith("kaseichou/molgap-gptrans-"):
+        raise ValueError("Only the Kaggle2 GPTrans source namespace is allowed")
     if args.output.exists():
         raise FileExistsError(args.output)
     commit = subprocess.check_output(
@@ -33,8 +37,8 @@ def main() -> None:
     )
     shutil.copyfile(args.output / "source.tar.gz", args.output / "source_payload.bin")
     (args.output / "dataset-metadata.json").write_text(json.dumps({
-        "title": "MolGap GPTrans Real Path Preflight Source V1",
-        "id": DATASET,
+        "title": args.title,
+        "id": args.dataset_id,
         "licenses": [{"name": "other"}],
         "isPrivate": True,
     }, indent=2), encoding="utf-8")

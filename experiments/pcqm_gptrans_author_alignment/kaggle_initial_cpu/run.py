@@ -25,7 +25,7 @@ def main() -> None:
         sys.executable, "-m", "pip", "install", "-q", "--no-deps",
         "torch-geometric==2.6.1", "ogb==1.3.6",
     ])
-    source_dataset = "molgap-gptrans-real-path-source-v1"
+    source_dataset = "molgap-gptrans-initial-scale-source-v1"
     archive = mounted(source_dataset, "source_payload.bin")
     commit = mounted(source_dataset, "SOURCE_COMMIT.txt").read_text(encoding="ascii").strip()
     archive_sha = mounted(source_dataset, "SOURCE_ARCHIVE_SHA256.txt").read_text(encoding="ascii").strip()
