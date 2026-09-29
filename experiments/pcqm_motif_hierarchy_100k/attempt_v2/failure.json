@@ -1,0 +1,15 @@
+{
+  "format": "molgap-motif-hierarchy-infrastructure-failure-v2",
+  "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v2",
+  "terminal_status": "ERROR",
+  "elapsed_seconds_approx": 185,
+  "failure_stage": "runtime_device_gate",
+  "failure_message": "Exactly one qualified 16GB P100 or T4 is required",
+  "actual_gpu_identity": null,
+  "actual_gpu_identity_missing_reason": "terminal_log_did_not_print_device_names",
+  "training_epochs_started": 0,
+  "scientific_result": false,
+  "raw_log_ref": "platforms/_records/kaggle/training/motif_hierarchy_gpu_v2/molgap-k1-motif-hierarchy-s42.log",
+  "raw_log_sha256": "fc042dbe48c61439616a782e608c90997a97ee0ac8f2b534ca5b7a4ef34b216f",
+  "automatic_retry": false
+}

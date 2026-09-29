@@ -49,3 +49,12 @@ and [monitor binding](attempt_v2/monitor_binding.json) preserve the exact
 attempt, while v1 is retained separately. The existing Luna B heartbeat is
 active only for v2, silent on normal running, and hands terminal events to A.
 No v2 model result or actual accelerator identity has yet been accepted.
+
+Version 2 subsequently ended `ERROR` after approximately 185 seconds at its
+single-visible-device assertion, again before graph/model/epoch work. The
+retained [failure record](attempt_v2/failure.json) distinguishes this from a
+scientific loss. Its exact-version log is retained locally; the actual GPU
+count/name was not present in the downloaded log. The v2 monitor is paused.
+The user reported P100 is no longer available on Kaggle. Any further attempt
+must request T4, qualify the actual one- or two-T4 allocation, and isolate one
+device for this single candidate without changing the scientific contract.
