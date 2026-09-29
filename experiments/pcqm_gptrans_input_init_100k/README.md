@@ -43,5 +43,8 @@ own the revised paired comparison. `run_pair.py` is its thin entrypoint;
 The first paired Kaggle1 attempt failed in candidate GPU preflight because its
 runtime initialization hash differed from the locally derived hash. It trained
 neither arm; `decision_kaggle1_pair_v1_infra.md` owns the observed failure and
-retained startup evidence. A corrected source/config identity requires a new
-prospective retry record before any second remote push.
+retained startup evidence. The unpublished custom-launcher retry plan closed
+`NO_TRAIN` in `decision_kaggle1_pair_retry2_no_train.md`. The next paired
+source reuses `../pcqm_gptrans_pair_norm_100k/run_candidates.py` for two-T4
+dispatch; this experiment's `run_pair.py` only extracts the frozen source and
+selects its initialization profile.

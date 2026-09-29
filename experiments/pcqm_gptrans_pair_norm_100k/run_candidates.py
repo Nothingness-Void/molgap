@@ -1,6 +1,8 @@
 """Kaggle T4x2 entry point for two frozen GPTrans V4 screen profiles."""
 from __future__ import annotations
 
+import hashlib
+import json
 import os
 import subprocess
 import sys
@@ -12,6 +14,7 @@ PROFILES = {
     "reference-centered-logits-kaggle1-v1": (("reference", "centered_logits"), "kaggle1-t4x2"),
     "reference-memory-value-kaggle1-v1": (("reference", "memory_value"), "kaggle1-t4x2"),
     "memory-value-message-kaggle1-v1": (("memory_value", "memory_message"), "kaggle1-t4x2"),
+    "reference-input-init-kaggle1-v1": (("reference", "input_embedding_normal002"), "kaggle1-t4x2"),
 }
 PROFILE = os.environ.get("MOLGAP_PAIR_PROFILE", "pair-norm-kaggle3-v1")
 if PROFILE not in PROFILES:
@@ -46,6 +49,33 @@ def install_dependencies() -> None:
     )
 
 
+def input_init_candidate_sha256(mode: str) -> str | None:
+    """Bind the one initialization profile to the packaged prospective Spec."""
+    if PROFILE != "reference-input-init-kaggle1-v1":
+        return None
+    spec_bytes = find_one("experiment_spec.json").read_bytes()
+    package = json.loads(find_one("package_manifest.json").read_bytes())
+    if hashlib.sha256(spec_bytes).hexdigest() != package["spec_sha256"]:
+        raise RuntimeError("Input initialization Spec differs from source package")
+    spec = json.loads(spec_bytes)
+    arms = {arm["arm_id"]: arm for arm in spec["arms"]}
+    if (spec["platform"]["accelerator"] != "NvidiaTeslaT4"
+            or spec["platform"]["device_count"] != 2
+            or set(arms) != {"reference", "input-embedding-normal002"}
+            or spec["prospective"].get("same_run_replay") != {
+                "reference_arm_id": "reference",
+                "candidate_arm_ids": ["input-embedding-normal002"],
+            }
+            or arms["reference"]["scientific_role"] != "reference"
+            or arms["input-embedding-normal002"]["scientific_role"] != "candidate"):
+        raise RuntimeError("Frozen input-initialization pair changed")
+    if mode == "reference":
+        return None
+    if mode != "input_embedding_normal002":
+        raise RuntimeError("Unauthorized input-initialization mode")
+    return arms["input-embedding-normal002"]["initialization"]["state_sha256"]
+
+
 def launch(mode: str, device: int, root: Path, phase: str):
     environment = os.environ.copy()
     environment["CUDA_VISIBLE_DEVICES"] = str(device)
@@ -70,6 +100,7 @@ def worker(mode: str, root: Path) -> None:
     output.mkdir(parents=True, exist_ok=True)
     preflight_path = output / "preflight.json"
     phase = os.environ["MOLGAP_PHASE"]
+    candidate_initial_sha256 = input_init_candidate_sha256(mode)
     if phase == "preflight":
         result = run_preflight(
             dataset_root=dataset_root,
@@ -81,6 +112,7 @@ def worker(mode: str, root: Path) -> None:
             platform_id=PLATFORM_ID,
             initial_state_path=initial_state,
             variant=mode,
+            candidate_initial_sha256=candidate_initial_sha256,
         )
         if result.get("accepted") is not True:
             raise RuntimeError(f"Preflight rejected {mode}: {result}")
@@ -98,6 +130,7 @@ def worker(mode: str, root: Path) -> None:
         platform_id=PLATFORM_ID,
         initial_state_path=initial_state,
         variant=mode,
+        candidate_initial_sha256=candidate_initial_sha256,
     )
 
 
