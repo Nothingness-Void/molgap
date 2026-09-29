@@ -1,5 +1,5 @@
 {
-  "status": "PLAN_ONLY",
+  "status": "SUBMISSION_BLOCKED_INPUT_AND_ADAPTER_GATES",
   "owner": "desktop",
   "question": "Short local pretraining followed by longer Gap adaptation on two selected families",
   "train_rows": 100000,
@@ -37,8 +37,8 @@
     "accelerator": "T4",
     "device_count": 2,
     "per_arm_t4_hour_cap": 8,
-    "account": null,
-    "submission_authorized": false
+    "account": "nothingnessvoid",
+    "submission_authorized": true
   },
   "minimum_gain_eV": 0.003,
   "label_cache_sha256": null,

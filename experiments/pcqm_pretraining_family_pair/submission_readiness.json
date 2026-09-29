@@ -1,0 +1,39 @@
+{
+  "observed_at": "2026-09-29T18:37:03.387370+00:00",
+  "user_authorized_submission": true,
+  "account_owner_verified": "nothingnessvoid",
+  "submission_performed": false,
+  "new_kernel_ref": null,
+  "existing_job_observation": {
+    "ref": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1",
+    "status": "RUNNING",
+    "changed": false
+  },
+  "fixed_dataset_verified_by_api": {
+    "ref": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+    "files": [
+      "README.md",
+      "manifest.json",
+      "train/train_shard_0000.pt",
+      "train/train_shard_0001.pt",
+      "train/train_shard_0002.pt"
+    ]
+  },
+  "old_hierarchy_cache": {
+    "train_rows": 100000,
+    "development_rows": 10000,
+    "aggregate_sha256": "e7d0557d7ade3469d25d91512fbe0900c7441db94427bce3ed5bc1faa74218a6",
+    "compatible_with_v4_baseline": false,
+    "reason": "Legacy parent graph/geometry and role identities differ; official fixed V4 uses 100K/50K."
+  },
+  "release_blockers": [
+    "No verified V4-local-hierarchy functional-group sidecar or authenticated SMILES-to-graph atom mapping bound to this run.",
+    "The legacy local hierarchy implementation hardcodes EdgeState hooks and 192/64 heads; reviewed K1/GPTrans stage adapters and resume qualification are not implemented.",
+    "No executable Spec v2 per-arm prospective bindings or source package/preflight certificates exist."
+  ],
+  "resource_claims": {
+    "t4_quota_available": null,
+    "new_gpu_allocated": false
+  },
+  "scientific_result": null
+}
