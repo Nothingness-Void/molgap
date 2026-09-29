@@ -1,17 +1,18 @@
 """One isolated Kaggle2 P100 arm; existing K1 runner owns all training state."""
 from __future__ import annotations
 
-import hashlib
 import json
 from pathlib import Path
+import subprocess
+import sys
 import time
 import traceback
 
 from .k1_motif_hierarchy import MODE
 
 
-RUN_ID = "kaseichou/molgap-k1-motif-hierarchy-s42:v1"
-TRAJECTORY_ID = "TC-k1-motif-hierarchy-100k-s42"
+RUN_ID = "kaseichou/molgap-k1-motif-hierarchy-s42:v2"
+TRAJECTORY_ID = "TC-k1-motif-hierarchy-100k-s42-v2"
 ROOT = Path("/kaggle/working/pcqm_k1_motif_hierarchy")
 
 
@@ -46,13 +47,37 @@ def run(*, source_commit: str, source_archive_sha256: str) -> None:
     if ROOT.exists():
         raise RuntimeError("Refusing unreviewed same-worker restart")
     ROOT.mkdir(parents=True)
-    _pin_runtime(required_devices=1, required_name="P100")
+    try:
+        _pin_runtime(required_devices=1, required_name=None)
+    except BaseException:
+        probe = subprocess.run(
+            [sys.executable, "-c", (
+                "import json,importlib.metadata as m,torch; "
+                "print(json.dumps({'torch':torch.__version__,"
+                "'cuda':torch.version.cuda,"
+                "'pyg':m.version('torch-geometric'),'ogb':m.version('ogb'),"
+                "'device_names':[torch.cuda.get_device_name(i) "
+                "for i in range(torch.cuda.device_count())]}))"
+            )], capture_output=True, text=True, check=False,
+        )
+        atomic_json(ROOT / "runtime_preflight_failure.json", {
+            "run_id": RUN_ID, "failure": traceback.format_exc(),
+            "probe_returncode": probe.returncode,
+            "probe_stdout": probe.stdout[-4000:], "probe_stderr": probe.stderr[-4000:],
+            "scientific_epochs_started": False,
+        })
+        raise
     import torch
-    if torch.cuda.device_count() != 1 or "P100" not in torch.cuda.get_device_name(0):
-        raise RuntimeError("Exactly one P100 is required")
+    gpu = torch.cuda.get_device_name(0) if torch.cuda.device_count() == 1 else None
+    atomic_json(ROOT / "runtime_probe.json", {
+        "run_id": RUN_ID, "torch": torch.__version__, "cuda": torch.version.cuda,
+        "device_count": torch.cuda.device_count(), "actual_gpu_name": gpu,
+        "accepted_gpu_families": ["P100", "T4"],
+    })
+    if gpu is None or not any(name in gpu for name in ("P100", "T4")):
+        raise RuntimeError("Exactly one qualified 16GB P100 or T4 is required")
     output = ROOT / MODE
     output.mkdir()
-    gpu = torch.cuda.get_device_name(0)
     atomic_json(ROOT / "launch_identity.json", {
         "run_id": RUN_ID, "trajectory_id": TRAJECTORY_ID, "mode": MODE,
         "source_commit": source_commit, "source_archive_sha256": source_archive_sha256,

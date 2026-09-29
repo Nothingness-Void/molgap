@@ -35,8 +35,8 @@ def main():
         raise ValueError("Frozen Kaggle slug or input mounts changed")
     reference_path = REPO_ROOT / REFERENCE
     bundle = json.loads(reference_path.read_text())
-    frozen = json.loads((root / "source_config.json").read_text())
-    prelaunch_path = root / "comparison_readiness_prelaunch.json"
+    frozen = json.loads((root / "attempt_v2/source_config.json").read_text())
+    prelaunch_path = root / "attempt_v2/comparison_readiness_prelaunch.json"
     prelaunch = json.loads(prelaunch_path.read_text())
     validate_server_scientific_prelaunch(
         comparison_prelaunch=prelaunch,
