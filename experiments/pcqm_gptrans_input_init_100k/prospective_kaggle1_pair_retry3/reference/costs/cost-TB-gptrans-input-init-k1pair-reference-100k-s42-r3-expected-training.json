@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-002",
+  "category": "training",
+  "cost_event_id": "cost-TB-gptrans-input-init-k1pair-reference-100k-s42-r3-expected-training",
+  "evidence_ref": "experiments/pcqm_gptrans_input_init_100k/training_contract_kaggle1_pair.json",
+  "hardware": "NvidiaTeslaT4_requested",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "nothingnessvoid/molgap-gptrans-init-pair-100k-s42",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3"
+}
