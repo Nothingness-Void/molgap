@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import statistics
 import subprocess
 import time
 from dataclasses import dataclass
@@ -62,6 +63,7 @@ EXPECTED_INITIAL_MODEL_SHA256 = (
 EXPECTED_INITIAL_STATE_ARTIFACT_SHA256 = (
     "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
 )
+INPUT_EMBEDDING_INIT_VARIANT = "input_embedding_normal002"
 EXPECTED_ARCHITECTURE_SHA256 = (
     "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2"
 )
@@ -83,6 +85,7 @@ MAX_ESTIMATED_TRAIN_HOURS = 6.0
 FINITE_CHECK_EVERY_STEPS = 50
 MAX_REPEAT_LOSS_DELTA = 1.0e-7
 MAX_REPEAT_PARAMETER_DELTA = 1.0e-7
+MAX_CANDIDATE_RUNTIME_RATIO = 1.05
 RUN_FORMAT = "molgap-pcqm-gptrans-t-100k-reference-v4"
 CHECKPOINT_FORMAT = "molgap-pcqm-gptrans-t-100k-checkpoint-v4"
 
@@ -256,9 +259,11 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
     import torch
 
     from .gptrans import OGBGPTransTiny
+    if variant == INPUT_EMBEDDING_INIT_VARIANT and initial_state_path is None:
+        raise ValueError("Input initialization candidate requires the frozen initial state")
     if variant in ("memory_value", "memory_message"):
         from .gptrans_memory import apply_memory_variant as apply_variant
-    else:
+    elif variant != INPUT_EMBEDDING_INIT_VARIANT:
         from .gptrans_variants import apply_variant
 
     model = OGBGPTransTiny(
@@ -281,6 +286,14 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
         expected_state_sha256=EXPECTED_INITIAL_MODEL_SHA256,
         expected_format="molgap-gptrans-t-seed42-initial-state-v1",
     )
+    if variant == INPUT_EMBEDDING_INIT_VARIANT:
+        from .gptrans_input_init import normal002_input_embedding_state
+
+        candidate_state = normal002_input_embedding_state(
+            model.state_dict(), expected_reference_sha256=EXPECTED_INITIAL_MODEL_SHA256
+        )
+        model.load_state_dict(candidate_state, strict=True)
+        return model
     return apply_variant(model, variant)
 
 
@@ -377,7 +390,9 @@ def _batch_sha256(batch) -> str:
     return digest.hexdigest()
 
 
-def _verify_model_identity(model) -> tuple[int, str]:
+def _verify_model_identity(
+    model, *, variant: str = "reference", candidate_initial_sha256: str | None = None
+) -> tuple[int, str]:
     architecture_path = Path(__file__).with_name("gptrans.py")
     architecture_sha256 = _source_sha256(architecture_path)
     if architecture_sha256 != EXPECTED_ARCHITECTURE_SHA256:
@@ -386,10 +401,23 @@ def _verify_model_identity(model) -> tuple[int, str]:
     if parameters != EXPECTED_PARAMETERS:
         raise RuntimeError(f"Frozen GPTrans-T parameter count changed: {parameters}")
     initial_sha256 = _state_sha256(model)
-    if initial_sha256 != EXPECTED_INITIAL_MODEL_SHA256:
+    if variant == INPUT_EMBEDDING_INIT_VARIANT:
+        if (
+            candidate_initial_sha256 is None
+            or len(candidate_initial_sha256) != 64
+            or any(character not in "0123456789abcdef" for character in candidate_initial_sha256)
+            or candidate_initial_sha256 == EXPECTED_INITIAL_MODEL_SHA256
+        ):
+            raise RuntimeError("Input initialization candidate requires a distinct pinned state SHA256")
+        expected_sha256 = candidate_initial_sha256
+    else:
+        if candidate_initial_sha256 is not None:
+            raise RuntimeError("Reference initialization cannot use a candidate state SHA256")
+        expected_sha256 = EXPECTED_INITIAL_MODEL_SHA256
+    if initial_sha256 != expected_sha256:
         raise RuntimeError(
             "Frozen GPTrans-T seed-42 initialization changed: "
-            f"observed={initial_sha256} expected={EXPECTED_INITIAL_MODEL_SHA256}"
+            f"observed={initial_sha256} expected={expected_sha256}"
         )
     return parameters, architecture_sha256
 
@@ -452,11 +480,18 @@ class FrozenEpochScheduler:
         self.epoch = int(state["epoch"])
 
 
-def _make_training_state(initial_state_path: Path, variant: str = "reference"):
+def _make_training_state(
+    initial_state_path: Path,
+    variant: str = "reference",
+    *,
+    candidate_initial_sha256: str | None = None,
+):
     import torch
 
     model = _make_model(initial_state_path, variant).to("cuda")
-    _verify_model_identity(model)
+    _verify_model_identity(
+        model, variant=variant, candidate_initial_sha256=candidate_initial_sha256
+    )
     optimizer = make_adamw_compat(
         model.parameters(),
         lr=LEARNING_RATE,
@@ -486,6 +521,99 @@ def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bo
     optimizer.step()
     ema.update(model)
     return loss.detach()
+
+
+def _latency_summary(blocks: dict[str, list[float]]) -> dict:
+    reference = statistics.median(blocks["reference"])
+    candidate = statistics.median(blocks["candidate"])
+    if not all(math.isfinite(value) and value > 0 for values in blocks.values() for value in values):
+        raise RuntimeError("GPU latency probe has non-finite or non-positive block times")
+    if reference <= 0 or not math.isfinite(reference):
+        raise RuntimeError("GPU reference latency is invalid")
+    ratio = candidate / reference
+    return {
+        "reference_block_seconds": blocks["reference"],
+        "candidate_block_seconds": blocks["candidate"],
+        "reference_median_seconds": reference,
+        "candidate_median_seconds": candidate,
+        "candidate_to_reference_ratio": ratio,
+        "accepted": math.isfinite(ratio) and ratio <= MAX_CANDIDATE_RUNTIME_RATIO,
+    }
+
+
+def _input_init_runtime_probe(
+    initial_state_path: Path, candidate_initial_sha256: str,
+    batch, mean, std, fixture_sha256: str,
+) -> dict:
+    """Compare the two initialization arms on the same remote GPU and batch."""
+    import torch
+
+    order = ("reference", "candidate", "candidate", "reference") * 2
+    operations = (
+        ("training_step", 3, 8),
+        ("inference_forward", 5, 20),
+    )
+    result = {
+        "format": "molgap-gptrans-input-init-latency-v1",
+        "accelerator": torch.cuda.get_device_name(0),
+        "physical_batch": int(batch.num_graphs),
+        "fixture_sha256": fixture_sha256,
+        "block_order": list(order),
+        "maximum_candidate_to_reference_ratio": MAX_CANDIDATE_RUNTIME_RATIO,
+    }
+    for operation, warmup_steps, measured_steps in operations:
+        blocks: dict[str, list[float]] = {"reference": [], "candidate": []}
+        initialization: dict[str, list[float]] = {"reference": [], "candidate": []}
+        for arm in order:
+            configure_fp32_determinism(SEED)
+            variant = INPUT_EMBEDDING_INIT_VARIANT if arm == "candidate" else "reference"
+            expected_sha = candidate_initial_sha256 if arm == "candidate" else None
+            started_initialization = time.perf_counter()
+            if operation == "training_step":
+                model, optimizer, scheduler, ema = _make_training_state(
+                    initial_state_path, variant, candidate_initial_sha256=expected_sha
+                )
+                scheduler.step(0)
+                model.train()
+            else:
+                model = _make_model(initial_state_path, variant).to("cuda")
+                _verify_model_identity(
+                    model, variant=variant, candidate_initial_sha256=expected_sha
+                )
+                model.eval()
+            torch.cuda.synchronize()
+            initialization[arm].append(time.perf_counter() - started_initialization)
+            if operation == "training_step":
+                for _ in range(warmup_steps):
+                    _optimizer_step(model, optimizer, ema, batch, mean, std, check_finite=True)
+                torch.cuda.synchronize()
+                started = time.perf_counter()
+                for _ in range(measured_steps):
+                    _optimizer_step(model, optimizer, ema, batch, mean, std, check_finite=False)
+            else:
+                with torch.inference_mode():
+                    for _ in range(warmup_steps):
+                        _forward(model, batch)
+                    torch.cuda.synchronize()
+                    started = time.perf_counter()
+                    for _ in range(measured_steps):
+                        _forward(model, batch)
+            torch.cuda.synchronize()
+            blocks[arm].append((time.perf_counter() - started) / measured_steps)
+            if operation == "training_step":
+                del model, optimizer, scheduler, ema
+            else:
+                del model
+            torch.cuda.empty_cache()
+        result[operation] = {
+            "warmup_steps_per_block": warmup_steps,
+            "measured_steps_per_block": measured_steps,
+            **_latency_summary(blocks),
+            "reference_initialization_seconds": initialization["reference"],
+            "candidate_initialization_seconds": initialization["candidate"],
+        }
+    result["accepted"] = all(result[name]["accepted"] for name, _, _ in operations)
+    return result
 
 
 def _evaluate(model, ema, graphs, mean, std) -> dict:
@@ -592,6 +720,7 @@ def run_preflight(
     initial_state_path: Path,
     variant: str = "reference",
     runtime_calibration_fingerprint: str | None = None,
+    candidate_initial_sha256: str | None = None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
@@ -626,12 +755,28 @@ def run_preflight(
     if int(batch.num_graphs) != PHYSICAL_BATCH:
         raise RuntimeError("Preflight did not receive physical batch 128")
     fixture_sha256 = _batch_sha256(batch)
+    latency_gate = None
+    latency_gate_sha256 = None
+    if variant == INPUT_EMBEDDING_INIT_VARIANT:
+        latency_gate = _input_init_runtime_probe(
+            initial_state_path, candidate_initial_sha256, batch, mean, std, fixture_sha256
+        )
+        output.mkdir(parents=True, exist_ok=True)
+        latency_path = output / "latency_probe.json"
+        atomic_json(latency_path, latency_gate)
+        latency_gate_sha256 = sha256_file(latency_path)
+        if latency_gate["accepted"] is not True:
+            raise RuntimeError(
+                "Input initialization exceeded the same-device 5% training/inference latency cap"
+            )
 
     repeat_losses = []
     repeat_states = []
     for _ in range(2):
         configure_fp32_determinism(SEED)
-        model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+        model, optimizer, scheduler, ema = _make_training_state(
+            initial_state_path, variant, candidate_initial_sha256=candidate_initial_sha256
+        )
         scheduler.step(0)
         repeat_losses.append(
             float(
@@ -655,7 +800,9 @@ def run_preflight(
     repeat_hashes = repeatability["state_sha256"]
 
     configure_fp32_determinism(SEED)
-    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+    model, optimizer, scheduler, ema = _make_training_state(
+        initial_state_path, variant, candidate_initial_sha256=candidate_initial_sha256
+    )
     scheduler.step(0)
     batches = iter(_training_loader(train_graphs, 0))
     torch.cuda.reset_peak_memory_stats()
@@ -728,7 +875,13 @@ def run_preflight(
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
         "variant": variant,
         "parameters": EXPECTED_PARAMETERS,
-        "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
+        "variant_source_sha256": _source_sha256(
+            Path(__file__).with_name(
+                "gptrans_input_init.py" if variant == INPUT_EMBEDDING_INIT_VARIANT
+                else "gptrans_memory.py" if variant in ("memory_value", "memory_message")
+                else "gptrans_variants.py"
+            )
+        ),
         "accepted": True,
         "runtime_certificate_id": certificate_id,
         "runtime_certificate": certificate,
@@ -754,6 +907,10 @@ def run_preflight(
         "test_dev_role_read": False,
         "test_challenge_role_read": False,
     }
+    if variant == INPUT_EMBEDDING_INIT_VARIANT:
+        result["candidate_initial_model_sha256"] = candidate_initial_sha256
+        result["latency_gate"] = latency_gate
+        result["latency_gate_sha256"] = latency_gate_sha256
     output.mkdir(parents=True, exist_ok=True)
     atomic_json(output / "runtime_manifest.json", runtime)
     atomic_json(output / "runtime_certificate.json", certificate)
@@ -797,6 +954,7 @@ def run_training(
     initial_state_path: Path,
     variant: str = "reference",
     runtime_calibration_fingerprint: str | None = None,
+    candidate_initial_sha256: str | None = None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
@@ -808,6 +966,12 @@ def run_training(
     if completion_path.is_file():
         completion = json.loads(completion_path.read_text(encoding="utf-8"))
         if completion.get("complete") is True and completion.get("variant", "reference") == variant:
+            if variant == INPUT_EMBEDDING_INIT_VARIANT and (
+                completion.get("candidate_initial_model_sha256") != candidate_initial_sha256
+                or completion.get("source_archive_sha256") != source_archive_sha256
+                or completion.get("source_commit") != source_commit
+            ):
+                raise RuntimeError("Existing candidate completion identity changed")
             return completion
         raise RuntimeError("Existing completion manifest is incompatible")
     validate_source_archive(source_archive, source_archive_sha256, source_commit)
@@ -817,12 +981,41 @@ def run_training(
         raise RuntimeError("V4 preflight was not accepted")
     if preflight.get("variant", "reference") != variant:
         raise RuntimeError("Preflight model variant changed")
+    if variant == INPUT_EMBEDDING_INIT_VARIANT:
+        if (candidate_initial_sha256 is None
+                or preflight.get("candidate_initial_model_sha256") != candidate_initial_sha256):
+            raise RuntimeError("Preflight candidate initial state SHA256 changed")
+        if preflight.get("variant_source_sha256") != _source_sha256(
+            Path(__file__).with_name("gptrans_input_init.py")
+        ):
+            raise RuntimeError("Preflight input initialization implementation changed")
+        gate = preflight.get("latency_gate")
+        if not isinstance(gate, dict) or gate.get("accepted") is not True:
+            raise RuntimeError("Input initialization latency gate was not accepted")
+        for operation in ("training_step", "inference_forward"):
+            result = gate.get(operation)
+            if (not isinstance(result, dict)
+                    or result.get("accepted") is not True
+                    or not isinstance(result.get("candidate_to_reference_ratio"), (int, float))
+                    or not math.isfinite(result["candidate_to_reference_ratio"])
+                    or result["candidate_to_reference_ratio"] > MAX_CANDIDATE_RUNTIME_RATIO):
+                raise RuntimeError(f"Input initialization {operation} latency cap failed")
+        latency_path = output / "latency_probe.json"
+        if (not latency_path.is_file()
+                or sha256_file(latency_path) != preflight.get("latency_gate_sha256")):
+            raise RuntimeError("Input initialization latency probe artifact changed")
     if preflight.get("source_archive_sha256") != source_archive_sha256:
         raise RuntimeError("Preflight source archive changed")
     if preflight.get("source_commit") != source_commit:
         raise RuntimeError("Preflight source commit changed")
     certificate = preflight["runtime_certificate"]
     certificate_id = preflight["runtime_certificate_id"]
+    if variant == INPUT_EMBEDDING_INIT_VARIANT and (
+        gate.get("accelerator") != certificate["accelerator"]
+        or gate.get("physical_batch") != PHYSICAL_BATCH
+        or gate.get("fixture_sha256") != certificate["calibration_fixture_sha256"]
+    ):
+        raise RuntimeError("Input initialization latency probe fixture or device changed")
     if runtime_calibration_fingerprint is None:
         runtime_calibration_fingerprint = canonical_fingerprint(
             {
@@ -859,7 +1052,9 @@ def run_training(
         raise RuntimeError("Target statistics differ from preflight")
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
-    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+    model, optimizer, scheduler, ema = _make_training_state(
+        initial_state_path, variant, candidate_initial_sha256=candidate_initial_sha256
+    )
     checkpoint_path = output / "last_checkpoint.pt"
     start_epoch = 0
     trace: list[dict] = []
@@ -1016,6 +1211,10 @@ def run_training(
     missing = [field for field in (*REFERENCE_MATCH_FIELDS, *REFERENCE_PROVENANCE_FIELDS) if field not in reference]
     if missing:
         raise RuntimeError(f"Reference record is incomplete: {missing}")
+    if variant == INPUT_EMBEDDING_INIT_VARIANT:
+        reference["frozen_reference"] = False
+        reference["scientific_role"] = "candidate"
+        reference["candidate_initial_model_sha256"] = candidate_initial_sha256
     validate_runtime_certificate(certificate, reference)
     atomic_json(output / "frozen_reference.json", reference)
     completion = {
@@ -1043,5 +1242,8 @@ def run_training(
         "test_dev_role_read": False,
         "test_challenge_role_read": False,
     }
+    if variant == INPUT_EMBEDDING_INIT_VARIANT:
+        completion["candidate_initial_model_sha256"] = candidate_initial_sha256
+        completion["latency_gate_sha256"] = preflight["latency_gate_sha256"]
     atomic_json(completion_path, completion)
     return completion
