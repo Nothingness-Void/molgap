@@ -39,3 +39,9 @@ candidate concurrently. `protocol_kaggle1_pair.md`,
 `training_contract_kaggle1_pair.json`, and `launch_decision_kaggle1_pair.md`
 own the revised paired comparison. `run_pair.py` is its thin entrypoint;
 `prospective_kaggle1_pair/` owns its per-arm canonical plans.
+
+The first paired Kaggle1 attempt failed in candidate GPU preflight because its
+runtime initialization hash differed from the locally derived hash. It trained
+neither arm; `decision_kaggle1_pair_v1_infra.md` owns the observed failure and
+retained startup evidence. A corrected source/config identity requires a new
+prospective retry record before any second remote push.

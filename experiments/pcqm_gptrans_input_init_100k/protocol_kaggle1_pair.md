@@ -38,3 +38,11 @@ seed, 500K, protected evaluation, full-scale training or promotion is released.
 The prospective two-arm Spec declares `same_run_replay`; terminal evidence must
 bind both arms to the same platform job, attempt, source and package. Replay
 qualification and scientific acceptance remain separate decisions.
+
+Attempt 1 exposed a CPU `torch.nn.init.normal_` state-byte difference between
+the local and Kaggle1 runtimes before training. A retry may pin the complete
+candidate state hash observed on the Kaggle1 T4 preflight, provided the same
+frozen source, private seed and 15-table intervention are retained and the
+candidate preflight reproduces that hash exactly. This is a platform-specific
+initial-state declaration; it does not imply identical initialization bytes
+under other Torch builds. A changed runtime or hash fails closed again.

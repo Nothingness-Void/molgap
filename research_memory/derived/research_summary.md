@@ -5,9 +5,8 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 2
 - CLOSED: 8
-- INCONCLUSIVE: 11
+- INCONCLUSIVE: 13
 - INFRASTRUCTURE_ONLY: 4
 - NEGATIVE_UNDER_CONTRACT: 13
 - NO_TRAIN: 10

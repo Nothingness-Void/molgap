@@ -10,18 +10,16 @@
       ],
       "evidence_refs": [],
       "run_ids": [
-        "nothingnessvoid/molgap-gptrans-input-init-pair-100k-s42-v1"
+        "nothingnessvoid/molgap-gptrans-init-pair-100k-s42"
       ],
       "source_commit": "e0f84935",
       "type": "remote_screen_training"
     }
   ],
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_input_init_100k/launch_decision_kaggle1_pair.md",
-    "next_allowed_actions": [
-      "one_paired_100k_attempt_after_preflight"
-    ],
-    "outcome": "ACTIVE",
+    "decision_ref": "experiments/pcqm_gptrans_input_init_100k/decision_kaggle1_pair_v1_infra.md",
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
     "reopen_conditions": []
   },
   "decision_state": {

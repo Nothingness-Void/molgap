@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "503de09a262ebbebe99017052705e18d666206f79f423d12e255edea4eedcef5",
+  "source_digest": "c62c25c55c0b0f00334087f872e56e814b19cf2ccf9da481ead4f71d769cb8f7",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -339,9 +339,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_input_init_100k/launch_decision_kaggle1_pair.md",
+      "decision_ref": "experiments/pcqm_gptrans_input_init_100k/decision_kaggle1_pair_v1_infra.md",
       "family_id": "gptrans-t-input-embedding-initialization-candidate",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-gptrans-t-100k-v4-reference"
@@ -355,9 +355,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_input_init_100k/launch_decision_kaggle1_pair.md",
+      "decision_ref": "experiments/pcqm_gptrans_input_init_100k/decision_kaggle1_pair_v1_infra.md",
       "family_id": "gptrans-t-input-embedding-initialization-reference",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-gptrans-t-100k-v4-reference"

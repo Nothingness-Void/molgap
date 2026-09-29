@@ -1,0 +1,22 @@
+{
+  "action_rule": {
+    "action": "RUN_100K",
+    "field": "remote_initial_hash_corrected_after_preflight_failure",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {"approved_at": null, "approved_by": null, "authority_ref": null},
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {"scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4"},
+  "cost_model": {"assumptions": [], "kind": "measured_only"},
+  "created_from_source_digest": "a3e1495dcfef787af2658da3fbc2600d362d793e21cca4b0ddbbec97f8abb5b7",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-gptrans-input-init-k1pair-launch",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": ["remote_initial_hash_corrected_after_preflight_failure"],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "2"
+}

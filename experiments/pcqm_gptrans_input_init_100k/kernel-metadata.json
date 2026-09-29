@@ -1,5 +1,5 @@
 {
-  "id": "nothingnessvoid/molgap-gptrans-input-init-pair-100k-s42-v1",
+  "id": "nothingnessvoid/molgap-gptrans-init-pair-100k-s42",
   "title": "MolGap GPTrans Init Pair 100K S42",
   "code_file": "run_pair.py",
   "language": "python",
@@ -9,7 +9,7 @@
   "enable_internet": "true",
   "machine_shape": "NvidiaTeslaT4",
   "dataset_sources": [
-    "nothingnessvoid/molgap-gptrans-init-pair-100k-source-v1",
+    "nothingnessvoid/molgap-gptrans-init-pair-100k-source-v2",
     "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
   ],
   "competition_sources": [],
