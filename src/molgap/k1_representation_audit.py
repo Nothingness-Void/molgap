@@ -120,6 +120,8 @@ def run(args):
             model = make_encoder("neural_atom_k1").to("cuda").eval()
             model.load_state_dict(saved["model"], strict=True)
             payload = torch.load(args.inputs500 / "best_predictions.pt", map_location="cpu", weights_only=False)
+            payload = {"source_idx": payload["source_idx"], "prediction_eV": payload["prediction"],
+                       "target_eV": payload["target"]}
             root, role, start = args.cache500, "unseen_500k", 500000
         if sum(p.numel() for p in model.parameters()) != 3658817:
             raise ValueError("Architecture identity differs")

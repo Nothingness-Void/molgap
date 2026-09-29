@@ -16,9 +16,9 @@ def main():
     root = Path.cwd()
     base = Path("experiments/pcqm_k1_explainability_audit")
     dest = base / "representation"
-    if dest.exists():
+    if (dest / "rml_plan").exists():
         raise ValueError("Do not overwrite a frozen diagnostic")
-    dest.mkdir()
+    dest.mkdir(exist_ok=True)
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     timestamp = datetime.now(timezone.utc).isoformat()
     refpath = Path("experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_bundle.json")
@@ -70,6 +70,9 @@ def main():
         budget_snapshot_ref=(dest/"budget_snapshot.json").as_posix())
     trajectory["decision"] = {"decision_ref":(base/"representation_protocol.md").as_posix(), "outcome":"ACTIVE",
         "next_allowed_actions":["one bounded frozen diagnostic and terminal acceptance"], "reopen_conditions":["new explicit authority"]}
+    trajectory["actions"] = [{"action_id":"A001", "type":"planned_NO_TRAIN_representation_diagnostic",
+        "run_ids":[], "attempt_ids":[], "source_commit":commit,
+        "evidence_refs":[(dest/"input_binding.json").as_posix()], "cost_event_ids":[]}]
     plan(root, {"trajectory": trajectory, "decision_state": {"available_actions":["RUN_REPRESENTATION_DIAGNOSTIC","DEFER"],
         "chosen_action":"RUN_REPRESENTATION_DIAGNOSTIC", "policy_id":policy["policy_id"],"policy_version":"v1", "state_timestamp":timestamp}}, dest/"rml_plan")
     print("V5 reference-evidence gate and prospective RML plan PASS")
