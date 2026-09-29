@@ -424,7 +424,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 10
+          "unknown_records": 12
         },
         "device_hours": {
           "estimated": {
@@ -432,8 +432,8 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 10,
-            "known_total": 30.446793472903053
+            "known_records": 12,
+            "known_total": 36.14055301538028
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -448,7 +448,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 10
+          "unknown_records": 12
         },
         "wall_hours": {
           "estimated": {
@@ -456,8 +456,8 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 10,
-            "known_total": 30.446793472903053
+            "known_records": 12,
+            "known_total": 36.14055301538028
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -664,10 +664,10 @@
         }
       }
     },
-    "unknown_events": 71
+    "unknown_events": 73
   },
   "evidence": {
-    "validated": 48,
+    "validated": 50,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
@@ -694,29 +694,28 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 32,
+      "count": 30,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 12,
+      "count": 10,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 205,
-    "explicit_events": 88,
+    "coarse_historical": 215,
+    "explicit_events": 94,
     "repeatedly_selected": 7
   },
-  "source_digest": "f01dbdf45748cb00fe38db2ee91fc275588361b88084041a72ff02f2e518faf7",
+  "source_digest": "23a20538aae81a901569fc30f3319714e60a667dad205f559f7333f83241d082",
   "trajectories": {
     "count": 60,
     "outcomes": {
-      "ACTIVE": 2,
-      "CLOSED": 8,
+      "CLOSED": 9,
       "INCONCLUSIVE": 13,
       "INFRASTRUCTURE_ONLY": 4,
-      "NEGATIVE_UNDER_CONTRACT": 13,
+      "NEGATIVE_UNDER_CONTRACT": 14,
       "NO_TRAIN": 12,
       "POSITIVE_UNDER_CONTRACT": 8
     }

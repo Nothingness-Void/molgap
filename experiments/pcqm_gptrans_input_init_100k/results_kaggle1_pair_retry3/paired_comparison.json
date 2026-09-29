@@ -1,0 +1,45 @@
+{
+  "format": "molgap-gptrans-input-init-kaggle1-paired-result-v1",
+  "platform_run": "nothingnessvoid/molgap-gptrans-init-pair-100k-s42",
+  "source_commit": "c1759bc02408a19062effe14740d9578b5cd4ad3",
+  "source_archive_sha256": "986cc13587763c664839dab535b03a15e1c1e53d6571c40bf5aed1a0f08ce1cc",
+  "spec_identity": "4babafd8327550b591b0c4580a98de9b8c82f97bf3e20385d3770568c36ae3b2",
+  "paired_development_rows": 50000,
+  "reference_mae_eV": 0.15601448806226254,
+  "candidate_mae_eV": 0.15728310253560543,
+  "candidate_minus_reference_eV": 0.0012686144733428954,
+  "paired_row_bootstrap_95_ci_candidate_minus_reference_eV": [
+    8.965466213226318e-05,
+    0.0024497882511615747
+  ],
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 42,
+  "candidate_better_row_fraction": 0.48752,
+  "shortlist_gate": {
+    "required_gain_eV": 0.003,
+    "candidate_gain_eV": -0.0012686144733428954,
+    "requires_candidate_minus_reference_ci_upper_below_zero": true,
+    "passed": false
+  },
+  "parameter_count_per_arm": 5246817,
+  "latency_probe_sha256": "da51637f8318a0eef0ac9c4c4132df774c392e3b0b88098fbbec01055f59b2d4",
+  "training_step_median_ratio": 0.9094269347335768,
+  "inference_forward_median_ratio": 0.9952598021077528,
+  "epoch_interval_hours_per_arm": {
+    "reference": 2.8463708164550012,
+    "input_embedding_normal002": 2.847388726022222
+  },
+  "cost_scope": "sum of 60 observed single-T4 epoch training/development wall intervals per arm; excludes setup and queue",
+  "role_use": {
+    "official_train_prefix": "consumed",
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "limitations": [
+    "one training seed",
+    "row bootstrap does not measure training stochasticity",
+    "epoch-interval hours exclude setup and queue"
+  ]
+}

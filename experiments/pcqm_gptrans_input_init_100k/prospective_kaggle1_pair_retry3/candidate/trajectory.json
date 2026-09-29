@@ -6,9 +6,13 @@
         "attempt-002"
       ],
       "cost_event_ids": [
-        "cost-TB-gptrans-input-init-k1pair-candidate-100k-s42-r3-expected-training"
+        "cost-TB-gptrans-input-init-k1pair-candidate-100k-s42-r3-expected-training",
+        "cost-TB-gptrans-input-init-k1pair-candidate-100k-s42-r3-measured-epoch-intervals"
       ],
-      "evidence_refs": [],
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/v5_evidence.json",
+        "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/observed_metadata.json"
+      ],
       "run_ids": [
         "nothingnessvoid/molgap-gptrans-init-pair-100k-s42"
       ],
@@ -17,12 +21,12 @@
     }
   ],
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_input_init_100k/launch_decision_kaggle1_pair_retry3.md",
-    "next_allowed_actions": [
-      "one_paired_100k_retry_after_preflight"
-    ],
-    "outcome": "ACTIVE",
-    "reopen_conditions": []
+    "decision_ref": "experiments/pcqm_gptrans_input_init_100k/decision_kaggle1_pair_retry3.md",
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "a new prospectively frozen decision-relevant question"
+    ]
   },
   "decision_state": {
     "active_reference_ids": [
@@ -298,8 +302,15 @@
   "question": "Does the platform-pinned Normal(0,0.02) input initialization beat its same-job reference on 100K Gap with negligible overhead?",
   "record_mode": "prospective",
   "result": {
-    "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_ids": [
+      "pcqm-gptrans-input-init-k1pair-candidate-100k-s42-r3"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/v5_evidence.json",
+      "experiments/pcqm_gptrans_input_init_100k/results_kaggle1_pair_retry3/input_embedding_normal002/mechanical_acceptance.json",
+      "experiments/pcqm_gptrans_input_init_100k/results_kaggle1_pair_retry3/paired_comparison.json",
+      "experiments/pcqm_gptrans_input_init_100k/decision_kaggle1_pair_retry3.md"
+    ]
   },
   "schema": "molgap-trajectory-v1",
   "state_at_start": {

@@ -51,5 +51,8 @@ selects its initialization profile.
 
 The shared-runner retry is frozen in `experiment_spec_kaggle1_pair_retry3.json`
 and `prospective_kaggle1_pair_retry3/`. Its Kaggle1 submission and latest dated
-queue observation are recorded in `attempts/kaggle1_pair_retry3/`; GPU runtime
-qualification and paired endpoint acceptance are still pending.
+platform observations are recorded in `attempts/kaggle1_pair_retry3/`.
+`decision_kaggle1_pair_retry3.md` owns the accepted negative 100K result;
+`results_kaggle1_pair_retry3/` owns its paired comparison and per-arm mechanical
+acceptance, and `attribution_kaggle1_pair_retry3.md` owns the failure-mode
+interpretation.

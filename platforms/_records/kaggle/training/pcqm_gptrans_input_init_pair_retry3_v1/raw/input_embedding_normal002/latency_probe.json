@@ -1,0 +1,82 @@
+{
+  "format": "molgap-gptrans-input-init-latency-v1",
+  "accelerator": "Tesla T4",
+  "physical_batch": 128,
+  "fixture_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+  "block_order": [
+    "reference",
+    "candidate",
+    "candidate",
+    "reference",
+    "reference",
+    "candidate",
+    "candidate",
+    "reference"
+  ],
+  "maximum_candidate_to_reference_ratio": 1.05,
+  "training_step": {
+    "warmup_steps_per_block": 3,
+    "measured_steps_per_block": 8,
+    "reference_block_seconds": [
+      0.16846087374999996,
+      0.14149949887499957,
+      0.1439913620000013,
+      0.11294385749999947
+    ],
+    "candidate_block_seconds": [
+      0.16025922112499558,
+      0.14375378025000174,
+      0.11587929825000032,
+      0.11178683737499995
+    ],
+    "reference_median_seconds": 0.14274543043750043,
+    "candidate_median_seconds": 0.12981653925000103,
+    "candidate_to_reference_ratio": 0.9094269347335768,
+    "accepted": true,
+    "reference_initialization_seconds": [
+      3.658261725999978,
+      0.3838341180000384,
+      0.3327969000000053,
+      0.3268092909999609
+    ],
+    "candidate_initialization_seconds": [
+      0.5887059980000231,
+      0.590013569000007,
+      0.45912325300002976,
+      0.39794019400000025
+    ]
+  },
+  "inference_forward": {
+    "warmup_steps_per_block": 5,
+    "measured_steps_per_block": 20,
+    "reference_block_seconds": [
+      0.02752131519999921,
+      0.02763366615000109,
+      0.027184893999998395,
+      0.02747076655000171
+    ],
+    "candidate_block_seconds": [
+      0.02712454130000026,
+      0.02752195024999935,
+      0.02720945814999993,
+      0.02810692705000122
+    ],
+    "reference_median_seconds": 0.02749604087500046,
+    "candidate_median_seconds": 0.02736570419999964,
+    "candidate_to_reference_ratio": 0.9952598021077528,
+    "accepted": true,
+    "reference_initialization_seconds": [
+      0.2993092060000322,
+      0.29604241499998807,
+      0.2921707040000001,
+      0.30153673000000936
+    ],
+    "candidate_initialization_seconds": [
+      0.38537506199998006,
+      0.3821027239999921,
+      0.3818713570000227,
+      0.3805784600000379
+    ]
+  },
+  "accepted": true
+}

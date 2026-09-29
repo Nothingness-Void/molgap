@@ -25,13 +25,20 @@ def require(condition: bool, message: str) -> None:
         raise RuntimeError(message)
 
 
-def accept(output: Path, acceptance_path: Path) -> dict:
+def accept(
+    output: Path,
+    acceptance_path: Path,
+    *,
+    preflight_path: Path | None = None,
+    expected_variant: str = "reference",
+    candidate_initial_sha256: str | None = None,
+) -> dict:
     output = output.resolve()
     completion_path = output / "completion_manifest.json"
     reference_path = output / "frozen_reference.json"
     best_path = output / "best_model.pt"
     predictions_path = output / "development_predictions.pt"
-    preflight_path = output.parent / "preflight" / "preflight.json"
+    preflight_path = preflight_path or output.parent / "preflight" / "preflight.json"
     trace_path = output / "trace.json"
     for path in (completion_path, reference_path, best_path, predictions_path, preflight_path, trace_path):
         require(path.is_file(), f"missing artifact: {path}")
@@ -43,7 +50,10 @@ def accept(output: Path, acceptance_path: Path) -> dict:
     predictions = torch.load(predictions_path, map_location="cpu", weights_only=False)
     best = torch.load(best_path, map_location="cpu", weights_only=False)
 
+    require(expected_variant in {"reference", "input_embedding_normal002"}, "variant")
     require(completion.get("format") == RUN_FORMAT and completion.get("complete") is True, "completion")
+    require(completion.get("variant") == expected_variant, "completion variant")
+    require(preflight.get("accepted") is True and preflight.get("variant") == expected_variant, "preflight variant")
     require(completion.get("epochs") == EPOCHS, "epoch count")
     require(completion.get("optimizer_steps") == BATCHES_PER_EPOCH * EPOCHS, "optimizer steps")
     require(completion.get("sample_presentations") == SAMPLE_PRESENTATIONS, "sample exposure")
@@ -67,7 +77,15 @@ def accept(output: Path, acceptance_path: Path) -> dict:
     require(sha256_file(best_path) == completion["best_model_sha256"], "best model hash")
     require(sha256_file(predictions_path) == completion["development_predictions_sha256"], "prediction hash")
     require(sha256_file(reference_path) == completion["frozen_reference_sha256"], "reference hash")
-    require(reference.get("frozen_reference") is True, "reference freeze")
+    require(reference.get("frozen_reference") is (expected_variant == "reference"), "reference freeze")
+    if expected_variant == "input_embedding_normal002":
+        require(candidate_initial_sha256 is not None, "candidate initial hash pin")
+        require(reference.get("scientific_role") == "candidate", "candidate role")
+        for record in (completion, reference, preflight):
+            require(record.get("candidate_initial_model_sha256") == candidate_initial_sha256,
+                    "candidate initial hash")
+    else:
+        require(candidate_initial_sha256 is None, "reference candidate hash")
     require(reference.get("physical_batch_per_device") == PHYSICAL_BATCH, "reference batch")
     require(reference.get("tail_batch_policy") == "drop_last", "reference tail policy")
     require(reference.get("result_artifact_sha256") == completion["best_model_sha256"], "reference result hash")
@@ -80,7 +98,9 @@ def accept(output: Path, acceptance_path: Path) -> dict:
         require(payload.get("test_challenge_role_read") is False, "test challenge role")
 
     result = {
-        "format": "molgap-pcqm-gptrans-t-100k-reference-acceptance-v4",
+        "format": ("molgap-pcqm-gptrans-t-100k-reference-acceptance-v4"
+                   if expected_variant == "reference" else
+                   "molgap-pcqm-gptrans-t-100k-candidate-acceptance-v4"),
         "accepted": True,
         "best_development_mae_eV": recomputed_mae,
         "best_epoch": int(completion["best_epoch"]),
@@ -93,6 +113,9 @@ def accept(output: Path, acceptance_path: Path) -> dict:
         "test_dev_role_read": False,
         "test_challenge_role_read": False,
     }
+    if expected_variant != "reference":
+        result["variant"] = expected_variant
+        result["candidate_initial_model_sha256"] = candidate_initial_sha256
     atomic_json(acceptance_path, result)
     return result
 

@@ -146,6 +146,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3:A001",
+      "target": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/observed_metadata.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3:A001",
+      "target": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/v5_evidence.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3:A001",
+      "target": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/reference/observed_metadata.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-input-init-k1pair-reference-100k-s42-r3:A001",
+      "target": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/reference/v5_evidence.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-local-selection-probe-20260925:A001",
       "target": "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md",
       "type": "action_produced_evidence"
@@ -1363,6 +1383,14 @@
     },
     {
       "id": "pcqm-gptrans-geometry-distance-only-100k-s42-v1-infra",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-input-init-k1pair-candidate-100k-s42-r3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-input-init-k1pair-reference-100k-s42-r3",
       "type": "evidence"
     },
     {
