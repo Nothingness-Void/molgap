@@ -21,6 +21,9 @@
   T4 runtime calibration. Exact gaps are in `results/gpu_prelaunch_gaps.json`.
   Re-training one baseline with a complete trace would require a separate
   explicit compute decision, not a silent repair to the old record.
+  The user subsequently authorized that separate 100K reference rerun;
+  its live operational state is in
+  `../pcqm_gptrans_v5_audit_reference/STATUS.md`.
 - O1 and S1: not released.
 
 The earlier Kaggle2 synthetic/Cython parity kernel is complete and is not
