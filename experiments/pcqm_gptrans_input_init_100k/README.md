@@ -48,3 +48,8 @@ retained startup evidence. The unpublished custom-launcher retry plan closed
 source reuses `../pcqm_gptrans_pair_norm_100k/run_candidates.py` for two-T4
 dispatch; this experiment's `run_pair.py` only extracts the frozen source and
 selects its initialization profile.
+
+The shared-runner retry is frozen in `experiment_spec_kaggle1_pair_retry3.json`
+and `prospective_kaggle1_pair_retry3/`. Its Kaggle1 submission and latest dated
+queue observation are recorded in `attempts/kaggle1_pair_retry3/`; GPU runtime
+qualification and paired endpoint acceptance are still pending.
