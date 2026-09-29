@@ -8,10 +8,16 @@
     "development_predictions_present_and_sha256_verified": true,
     "trace_present": true,
     "runtime_certificate_present": true,
-    "v5_reusable_reference_bundle_present": false,
-    "required_action": "Recover and validate a repository-bound V5 reference from retained artifacts before claiming a strict new comparison; do not retrain automatically"
+    "v5_reusable_reference_bundle_present": true,
+    "v5_reference_bundle": "experiments/pcqm_gptrans_author_alignment/recovered_reference/reference_bundle.json",
+    "v5_reference_bundle_structural_validation_passed": true,
+    "strict_causal_trace_ready": false,
+    "strict_causal_trace_blocker": "Retained 60-epoch trace contains EMA development MAE but no independently evaluated live-model development MAE per epoch; it cannot be reconstructed from the one retained final checkpoint",
+    "required_action": "Use the historical bundle only for a paired endpoint or contextual claim, or make a separate explicit compute decision to train one matched GPTrans reference with the complete V5 trace; do not silently rerun"
   },
   "initialization_arm": {
+    "real_input_scale_preflight_accepted": true,
+    "observed_degree_component_energy_fraction": 0.965126827799449,
     "frozen_modified_initial_state_identity": false,
     "single_factor_model_and_optimizer_step_test": false,
     "prospective_rml_prelaunch": false
@@ -24,5 +30,6 @@
     "prospective_rml_prelaunch": false
   },
   "t4_resource_release": false,
+  "t4_gptrans_runtime_calibration_present": false,
   "official_evaluation_release": false
 }

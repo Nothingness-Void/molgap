@@ -1,0 +1,14 @@
+{
+  "format": "molgap-aligned-prediction-manifest-v1",
+  "artifact_locator": "external://local-platform-record/platforms/_records/kaggle/training/pcqm_gptrans_t_v4_s42_v4/pcqm_gptrans_t_100k_v4/training/development_predictions.pt",
+  "artifact_sha256": "4fa3d32f83b183503bfafeee33b7b44dc7ee5f396bef5b1b546c956669ce6d29",
+  "prediction_sha256": "209600a20090c8d9d85c27e1d073539ea1123f7247c9ed6b98c8c68c1c6b45c2",
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+  "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137",
+  "ordering_semantics": "source_idx ascending",
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+  "row_count": 50000,
+  "unique_source_idx": 50000,
+  "development_gap_mae_eV": 0.15662720430791377,
+  "tensor_hash_semantics": "sha256-contiguous-c-order-bytes"
+}

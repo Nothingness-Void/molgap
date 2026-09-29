@@ -1,0 +1,70 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-t-v4-100k-reference-s42",
+  "track": "C",
+  "scope": "historical_100k_immutable_reference",
+  "legacy_contract": "molgap-pcqm-gptrans-t-100k-reference-contract-v4",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "complete_local_verified",
+    "comparison_status": "reference_bundle_structurally_accepted_trace_limited",
+    "scientific_status": "frozen_reference",
+    "transfer_status": "paired_endpoint_or_context_only_until_trace_gate",
+    "budget_decision": "closed",
+    "full_handoff_status": "not_applicable"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_t_100k_v4/training_contract.json",
+      "experiments/pcqm_gptrans_t_100k_v4/decision.md",
+      "experiments/pcqm_gptrans_author_alignment/recovered_reference/reference_bundle.json",
+      "experiments/pcqm_gptrans_author_alignment/recovered_reference/reference_acceptance.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "best_model.pt",
+      "locator": "external://local-platform-record/platforms/_records/kaggle/training/pcqm_gptrans_t_v4_s42_v4/pcqm_gptrans_t_100k_v4/training/best_model.pt",
+      "sha256": "f4da386ae1e32f6953b645c0bdb8e208aaba1f1d7b8ebec132776bd63c22d6ab",
+      "availability": "local_record_verified"
+    },
+    {
+      "name": "development_predictions.pt",
+      "locator": "external://local-platform-record/platforms/_records/kaggle/training/pcqm_gptrans_t_v4_s42_v4/pcqm_gptrans_t_100k_v4/training/development_predictions.pt",
+      "sha256": "4fa3d32f83b183503bfafeee33b7b44dc7ee5f396bef5b1b546c956669ce6d29",
+      "availability": "local_record_verified"
+    },
+    {
+      "name": "frozen_reference.json",
+      "locator": "external://local-platform-record/platforms/_records/kaggle/training/pcqm_gptrans_t_v4_s42_v4/pcqm_gptrans_t_100k_v4/training/frozen_reference.json",
+      "sha256": "c523e000925ce3bfab35e01c3e8ca6e7ce27a7876d4cdf7c012d6ccd398436aa",
+      "availability": "local_record_verified"
+    },
+    {
+      "name": "last_checkpoint.pt",
+      "locator": "external://local-platform-record/platforms/_records/kaggle/training/pcqm_gptrans_t_v4_s42_v4/pcqm_gptrans_t_100k_v4/training/last_checkpoint.pt",
+      "sha256": "cfc69d2d79f6b718947ecbb58e8aba0db044abceb5843a3447e36bf7d860f301",
+      "availability": "local_record_verified"
+    },
+    {
+      "name": "trace.json",
+      "locator": "external://local-platform-record/platforms/_records/kaggle/training/pcqm_gptrans_t_v4_s42_v4/pcqm_gptrans_t_100k_v4/training/trace.json",
+      "sha256": "68b884995ab9ef0f7f919dbd3fdac45de989a73440a7825c56ee5fb837edeede",
+      "availability": "local_record_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-29",
+    "verification_scope": "Retained V4 accepted artifact SHA, prediction alignment and MAE, P0 fixed manifest, reused K1 data manifests, runtime, EMA trace and roles; no new graph scan",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}

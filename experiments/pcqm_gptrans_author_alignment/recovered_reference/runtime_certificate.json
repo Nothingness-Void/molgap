@@ -1,0 +1,17 @@
+{
+  "format": "molgap-runtime-certificate-v1",
+  "status": "accepted",
+  "platform_id": "kaggle2-p100",
+  "accelerator": "Tesla P100-PCIE-16GB",
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "deterministic_algorithms": true,
+  "physical_batch_per_device": 128,
+  "tail_batch_policy": "drop_last",
+  "software_fingerprint": "f676c62be355283698bafae975f0accfd2314901d0be494b565555dc816dc65e",
+  "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+  "calibration_fixture_sha256": "345d5deade19644bd1caead9348489272c96358919b45764099566c845d338da",
+  "calibration_output_sha256": "32cae6f46c5c0c6960ef812917cfbf09c46e37a64d2d112a747558f799673f62",
+  "calibration_checks_passed": true,
+  "runtime_fingerprint": "a80231fcbe647e50538b17d8ef0323902be18a8d89d4af801addbf9f08597de1"
+}

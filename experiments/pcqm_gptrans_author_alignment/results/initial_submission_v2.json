@@ -1,0 +1,19 @@
+{
+  "format": "molgap-gptrans-initial-scale-cpu-submission-v1",
+  "kernel": "kaseichou/molgap-gptrans-initial-scale-preflight-v1",
+  "version": 2,
+  "url": "https://www.kaggle.com/code/kaseichou/molgap-gptrans-initial-scale-preflight-v1",
+  "source_dataset": "kaseichou/molgap-gptrans-initial-scale-source-v1",
+  "source_dataset_version": 1,
+  "frozen_initial_state_dataset": "kaseichou/molgap-gptrans-t-v4-source",
+  "frozen_initial_state_dataset_version": 2,
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "fixed_dataset_version": 1,
+  "source_commit": "de62aadeae02bc0fea9f8e4bc215d8fdf2f75c20",
+  "source_archive_sha256": "bcbfe2122d8c388f39c3728def4aa6cd1919e530c97578e10b41d5fe4e244411",
+  "submitted_runner_sha256": "4c5dcebcd8e67725a3a2f410c8cc293ec07bcfd80ea7a4380bf94fb34a99b393",
+  "scheduler_status": "COMPLETE",
+  "scientific_result": null,
+  "gpu_requested": false,
+  "acceptance_ref": "results/initial_acceptance.json"
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TC-gptrans-t-v4-100k-reference-s42",
+  "record_mode": "retrospective_partial",
+  "track": "C",
+  "owner": "historical",
+  "family_id": "gptrans-t-v4-reference",
+  "question": "Which immutable GPTrans-T V4 run anchors same-contract PCQM-100K comparisons?",
+  "hypothesis": {
+    "hypothesis_id": "H-TC-gptrans-t-v4-100k-reference-s42",
+    "supporting_evidence_ids": [],
+    "alternative_explanations": [],
+    "related_closed_family_ids": [],
+    "historical_unknowns": [
+      "native device cost was not captured in the retained V4 record"
+    ]
+  },
+  "state_at_start": {
+    "source_commit": "814d10466d98a583117a20d65329ff9f27836203",
+    "contract_refs": [
+      "experiments/pcqm_gptrans_t_100k_v4/training_contract.json"
+    ],
+    "reference_ids": [],
+    "parent_trajectory_ids": [],
+    "prior_trajectory_ids": [],
+    "prior_evidence_ids": [],
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_t_100k_v4/results/kaggle_acceptance.json"
+    ],
+    "budget_snapshot_ref": null
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "historical_reference_artifact_verification",
+      "run_ids": [
+        "kaseichou/molgap-pcqm-gptrans-t-v4-s42:v4"
+      ],
+      "attempt_ids": [
+        "reference-v4"
+      ],
+      "source_commit": "814d10466d98a583117a20d65329ff9f27836203",
+      "evidence_refs": [
+        "experiments/pcqm_gptrans_t_100k_v4/decision.md",
+        "experiments/pcqm_gptrans_author_alignment/recovered_reference/reference_acceptance.json"
+      ],
+      "cost_event_ids": [
+        "cost-TC-gptrans-t-v4-100k-reference-s42"
+      ]
+    }
+  ],
+  "result": {
+    "evidence_ids": [
+      "pcqm-gptrans-t-v4-100k-reference-s42"
+    ],
+    "evidence_refs": [
+      "experiments/pcqm_gptrans_author_alignment/recovered_reference/v5_evidence.json"
+    ]
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_t_100k_v4/decision.md",
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "next_allowed_actions": [
+      "reuse only for exact GPTrans-T 100K V4 scientific-contract matches"
+    ],
+    "reopen_conditions": []
+  },
+  "comparison_class": "NO_COMPARISON",
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_author_alignment/recovered_reference/reference_acceptance.json",
+  "comparison_blockers": [],
+  "reference_bundle_id": "reference-gptrans-t-v4-100k-s42-v5-recovered"
+}

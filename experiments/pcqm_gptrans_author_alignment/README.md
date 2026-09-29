@@ -7,6 +7,11 @@ gate, not a model result. Its executable is `kaggle_cpu/run.py`; the historical
 synthetic and author-Cython parity result remains in
 `../pcqm_gptrans_parity_cpu/decision.md`.
 
+The separate real-input initialization-scale diagnostic uses
+`kaggle_initial_cpu/run.py` and the same accepted fixed train rows plus the
+frozen GPTrans seed-42 initial weights. It reads no labels and performs no
+training, inference, or protected-role evaluation.
+
 Submission and acceptance status is recorded in [STATUS](STATUS.md). No
 accuracy effect is claimed before a separately frozen paired training arm
 passes its own prelaunch and terminal gates.

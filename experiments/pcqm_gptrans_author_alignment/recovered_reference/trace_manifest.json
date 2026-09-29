@@ -1,0 +1,43 @@
+{
+  "schema": "molgap-trace-manifest-v1",
+  "trajectory_id": "TC-gptrans-t-v4-100k-reference-s42",
+  "run_id": "kaseichou/molgap-pcqm-gptrans-t-v4-s42:v4",
+  "contract_ref": "experiments/pcqm_gptrans_t_100k_v4/training_contract.json",
+  "model_identity": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+  "reference_id": "pcqm-gptrans-t-v4-100k-reference-s42",
+  "comparison_role": "reference",
+  "x_axis": "optimizer_steps",
+  "presentation_semantics_ref": "experiments/pcqm_gptrans_t_100k_v4/training_contract.json",
+  "weight_semantics": "ema",
+  "metric_semantics": "internal_development_ema_gap_mae_eV",
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+  "selection_semantics": "best_internal_development_ema_over_60_epochs",
+  "trace_artifact_ref": "external://local-platform-record/platforms/_records/kaggle/training/pcqm_gptrans_t_v4_s42_v4/pcqm_gptrans_t_100k_v4/training/trace.json",
+  "terminal_evidence_ref": "experiments/pcqm_gptrans_author_alignment/recovered_reference/v5_evidence.json",
+  "comparability_identity": {
+    "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gptrans-t-v4-s42-fp32-bs128-60epochs",
+    "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "row_split_identity": "train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+    "architecture_identity": "gptrans_t_core_12x256_pair32",
+    "optimizer_identity": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+    "lr_schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+    "target_transform_identity": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+    "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+    "ema_semantics": "ema9999-each-step-selection",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "x_axis_semantics": "optimizer_steps",
+    "terminal_endpoint_identity": "46860-optimizer-steps",
+    "matched_architecture_required": false
+  },
+  "exposure": {
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080
+  },
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "Historical trace has EMA development MAE but no independently evaluated live-model development MAE at each epoch"
+    ]
+  }
+}

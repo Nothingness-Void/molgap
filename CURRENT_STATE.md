@@ -290,6 +290,16 @@ Pair PreNorm is the only retained seed42 mechanism shortlist, not a full-scale
 or K1 promotion. Authority and consolidated evidence:
 `experiments/pcqm_gptrans_memory_readback/decision.md`.
 
+The separate GPTrans author/local attribution matrix has completed its Kaggle2
+CPU real-graph path preflight and recovered the retained V4 reference into a
+structurally valid V5 bundle without retraining. The historical EMA trace lacks
+per-epoch live-model development metrics, so strict-causal G1/G2 release is
+blocked; neither T4 candidate was submitted. A separate label-free Kaggle2 CPU
+input-scale diagnostic passed on 512 fixed-train molecules: degree embeddings
+accounted for 96.51% of atom-plus-degree squared input energy (cross term
+excluded). This is mechanism evidence, not an MAE effect. Authority:
+`experiments/pcqm_gptrans_author_alignment/STATUS.md`.
+
 The user reopened three additional evidence-gated Kaggle2 rounds. Round 1
 closed isolated K1 real-bond storage/read normalization: one arm regressed and
 the other was directionally favorable but below the material gate. Round 2

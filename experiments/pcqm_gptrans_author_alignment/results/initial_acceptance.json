@@ -1,0 +1,30 @@
+{
+  "format": "molgap-gptrans-initial-scale-cpu-acceptance-v1",
+  "accepted": true,
+  "kernel": "kaseichou/molgap-gptrans-initial-scale-preflight-v1",
+  "version": 2,
+  "gpu_used": false,
+  "labels_read": false,
+  "training_executed": false,
+  "official_evaluation_read": false,
+  "sampled_train_rows": 512,
+  "sampled_nodes": 7153,
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "initial_state_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+  "source_commit": "de62aadeae02bc0fea9f8e4bc215d8fdf2f75c20",
+  "source_archive_sha256": "bcbfe2122d8c388f39c3728def4aa6cd1919e530c97578e10b41d5fe4e244411",
+  "pulled_runner_normalized_sha256": "4c5dcebcd8e67725a3a2f410c8cc293ec07bcfd80ea7a4380bf94fb34a99b393",
+  "atom_mean_square": 0.06906556500074984,
+  "degree_mean_square": 1.911412855590384,
+  "atom_degree_cross_mean": -0.0025205969608059105,
+  "degree_fraction_without_cross": 0.965126827799449,
+  "native_wall_seconds": 38.72053752099998,
+  "output_sha256": {
+    "summary.json": "cca5df346fd9610495bc36300836caaadaae9a4ff1cd0bc4a599e5b34025f1b9",
+    "train_shard_0.json": "3611036fcc37a2e83239601b6445c0718676e52095461bce58863ce68ad726c1",
+    "train_shard_1.json": "807a5a66be6971bcabd6d58eae8f4f567db32fdc4bb1bed1d16f5cdcb8cb0772",
+    "native_cost.json": "fa642d2dec113b1bee8cb1589f71b1c45b8918fba77d7c"
+  },
+  "mae_effect_established": false,
+  "gpu_training_released": false
+}

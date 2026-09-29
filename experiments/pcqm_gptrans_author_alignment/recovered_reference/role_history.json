@@ -1,0 +1,27 @@
+{
+  "format": "molgap-role-history-index-v1",
+  "trajectory_id": "TC-gptrans-t-v4-100k-reference-s42",
+  "events": [
+    {
+      "ref": "experiments/pcqm_gptrans_author_alignment/recovered_reference/roles/train.json",
+      "sha256": "4953df820694876d4daa424e2d95161772f7a6d0d9e8f1cbf8987ac00100c608"
+    },
+    {
+      "ref": "experiments/pcqm_gptrans_author_alignment/recovered_reference/roles/prediction-input.json",
+      "sha256": "be93f850e9f1967e21855470ad750d8d5d726db39a7e673ce16b035846cf7a08"
+    },
+    {
+      "ref": "experiments/pcqm_gptrans_author_alignment/recovered_reference/roles/labels-read.json",
+      "sha256": "285f97a208234dd5c3d2e402420cdb87afc651396a2f129f6c986dc053af46dc"
+    },
+    {
+      "ref": "experiments/pcqm_gptrans_author_alignment/recovered_reference/roles/metric-computed.json",
+      "sha256": "e1f3b826dff797c73b763b44ad2facec0d0355a89a6bc7abf26525ce61a05365"
+    },
+    {
+      "ref": "experiments/pcqm_gptrans_author_alignment/recovered_reference/roles/selection-used.json",
+      "sha256": "48e6047e3dec7014818b3fe05deab93a16fc9a195b7ed251a9c904dde95cd22f"
+    }
+  ],
+  "protected_roles_read": false
+}
