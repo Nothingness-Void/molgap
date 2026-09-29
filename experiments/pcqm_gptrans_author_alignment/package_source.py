@@ -11,7 +11,6 @@ from molgap.constants import REPO_ROOT
 from molgap.v4_bundle import build_v4_source_bundle
 
 
-SOURCE = "src/molgap/gptrans_path_real_preflight.py"
 DATASET = "kaseichou/molgap-gptrans-real-path-source-v1"
 
 
@@ -24,8 +23,12 @@ def main() -> None:
     commit = subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True,
     ).strip()
+    tracked = subprocess.check_output(
+        ["git", "ls-files", "-z", "--", "src/molgap"], cwd=REPO_ROOT,
+    ).split(b"\0")
+    paths = [item.decode("utf-8") for item in tracked if item.endswith(b".py")]
     package = build_v4_source_bundle(
-        repo_root=REPO_ROOT, relative_paths=[SOURCE], output_dir=args.output,
+        repo_root=REPO_ROOT, relative_paths=paths, output_dir=args.output,
         source_commit=commit,
     )
     shutil.copyfile(args.output / "source.tar.gz", args.output / "source_payload.bin")

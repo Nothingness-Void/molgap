@@ -11,3 +11,8 @@ require their own prospective training identities and inputs after P0 and
 code-level gates; O1 changes the optimizer/target contract and therefore
 cannot use the old reference as a strict comparator. No result in this record
 establishes an MAE contribution or author-score reproduction.
+
+The first physical CPU attempt returned an infrastructure error at graph
+deserialization, before any sampled row was read; its immutable receipt is
+`results/submission_v1.json`. Its partial `summary.json` reported no labels,
+checkpoint, or evaluation role. It is not a failed path hypothesis.

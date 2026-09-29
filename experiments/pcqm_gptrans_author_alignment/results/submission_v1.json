@@ -1,0 +1,19 @@
+{
+  "format": "molgap-gptrans-real-path-cpu-submission-v1",
+  "kernel": "kaseichou/molgap-gptrans-real-path-preflight-v1",
+  "version": 1,
+  "url": "https://www.kaggle.com/code/kaseichou/molgap-gptrans-real-path-preflight-v1",
+  "source_dataset": "kaseichou/molgap-gptrans-real-path-source-v1",
+  "source_dataset_version": 1,
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "fixed_dataset_version": 1,
+  "source_commit": "9ab3fbabd73cdd8296130fc1ad965ef5c42d2a03",
+  "source_archive_sha256": "0379999e081bf64b4289192e95c21813ff33807d2bf003a2cc10e349ea17fab7",
+  "submitted_runner_sha256": "104b6e6ecf1c079ea7ffbbe2ff909acceeb6f26e40c9b94ace0e4990b30b1175",
+  "scheduler_status": "ERROR",
+  "failure_class": "infrastructure_source_layout",
+  "failure_detail": "ModuleNotFoundError: No module named 'molgap' during torch.load of the first accepted train shard",
+  "sampled_rows_processed": 0,
+  "scientific_result": null,
+  "gpu_used": false
+}

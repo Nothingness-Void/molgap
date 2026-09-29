@@ -20,7 +20,8 @@ def one(name: str) -> Path:
 def main() -> None:
     started = time.monotonic()
     subprocess.check_call([
-        sys.executable, "-m", "pip", "install", "-q", "--no-deps", "torch-geometric==2.6.1",
+        sys.executable, "-m", "pip", "install", "-q", "--no-deps",
+        "torch-geometric==2.6.1", "ogb==1.3.6",
     ])
     archive = one("source_payload.bin")
     commit = one("SOURCE_COMMIT.txt").read_text(encoding="ascii").strip()
@@ -29,22 +30,22 @@ def main() -> None:
         raise RuntimeError("Source archive identity changed")
     inventory = json.loads(one("SOURCE_FILES.json").read_text(encoding="utf-8"))
     expected = "src/molgap/gptrans_path_real_preflight.py"
-    if [entry["path"] for entry in inventory["files"]] != [expected]:
-        raise RuntimeError("Source allowlist changed")
+    paths = [entry["path"] for entry in inventory["files"]]
+    if expected not in paths or "src/molgap/__init__.py" not in paths or len(paths) != len(set(paths)):
+        raise RuntimeError("Required source files are absent or duplicated")
     root = Path("/kaggle/working/verified_gptrans_path_source")
     root.mkdir(parents=True, exist_ok=False)
     with tarfile.open(archive, "r:gz") as bundle:
         members = bundle.getmembers()
-        if len(members) != 1 or members[0].name != expected or not members[0].isfile():
+        if {item.name for item in members} != set(paths) or not all(item.isfile() for item in members):
             raise RuntimeError("Unexpected source archive members")
         bundle.extractall(root, filter="data")
-    source = root / expected
-    if hashlib.sha256(source.read_bytes()).hexdigest() != inventory["files"][0]["sha256"]:
-        raise RuntimeError("Mounted GPTrans preflight source changed")
-    import importlib.util
-    spec = importlib.util.spec_from_file_location("gptrans_path_real_preflight", source)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    for entry in inventory["files"]:
+        source = root / entry["path"]
+        if hashlib.sha256(source.read_bytes()).hexdigest() != entry["sha256"]:
+            raise RuntimeError(f"Mounted source changed: {entry['path']}")
+    sys.path.insert(0, str(root / "src"))
+    from molgap import gptrans_path_real_preflight as module
     import torch
     if torch.cuda.is_available():
         raise RuntimeError("Path construction preflight must run without a GPU")
