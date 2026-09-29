@@ -407,31 +407,38 @@ def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bo
     return loss.detach()
 
 
-def _evaluate(model, ema, graphs, mean, std) -> dict:
+def _evaluate(model, ema, graphs, mean, std, *, weights: str = "ema", device: str = "cuda") -> dict:
     import torch
 
-    live_state = {name: value.detach().clone() for name, value in model.state_dict().items()}
-    model.load_state_dict(ema.state_dict(), strict=True)
+    if weights not in {"ema", "live"}:
+        raise ValueError("Evaluation weights must be live or ema")
+    live_state = (
+        {name: value.detach().clone() for name, value in model.state_dict().items()}
+        if weights == "ema" else None
+    )
+    if live_state is not None:
+        model.load_state_dict(ema.state_dict(), strict=True)
     model.eval()
     predictions = []
     targets = []
     source_indices = []
     with torch.no_grad():
         for batch in _development_loader(graphs):
-            batch = batch.to("cuda", non_blocking=True)
+            batch = batch.to(device, non_blocking=True)
             predictions.append((_forward(model, batch) * std + mean).cpu())
             targets.append(batch.y.view(-1).float().cpu())
             source_idx = getattr(batch, "source_idx", getattr(batch, "row_index", None))
             if source_idx is None:
                 raise RuntimeError("Development graphs have no source identity")
             source_indices.append(source_idx.view(-1).long().cpu())
-    model.load_state_dict(live_state, strict=True)
+    if live_state is not None:
+        model.load_state_dict(live_state, strict=True)
     prediction = torch.cat(predictions)
     target = torch.cat(targets)
     source_idx = torch.cat(source_indices)
     if prediction.numel() != DEVELOPMENT_ROWS:
         raise RuntimeError("Development prediction count changed")
-    expected = torch.arange(100_000, 150_000, dtype=torch.long)
+    expected = torch.arange(100_000, 100_000 + DEVELOPMENT_ROWS, dtype=torch.long)
     if not torch.equal(source_idx, expected):
         raise RuntimeError("Development source order changed")
     return {
@@ -699,12 +706,13 @@ def run_preflight(
     return result
 
 
-def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference") -> None:
+def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference", v5_audit: bool = False) -> None:
     atomic_torch_save(
         path,
         {
             "format": CHECKPOINT_FORMAT,
             "variant": variant,
+            **({"v5_audit": True} if v5_audit else {}),
             "epoch": epoch,
             "model": model.state_dict(),
             "optimizer": optimizer.state_dict(),
@@ -722,6 +730,50 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
     )
 
 
+def _v5_audit_recorder(path: Path):
+    from .research_memory.trace import RMLTraceRecorder
+
+    role = "fixed-pcqm4mv2-ogb-train-100k-internal-development-50k"
+    def metric(name: str, weights: str, role_identity: str) -> dict:
+        return {
+            "metric": name, "unit": "eV", "target": "B3LYP/6-31G* gap",
+            "role_identity": role_identity, "weights": weights, "direction": "minimize",
+        }
+    return RMLTraceRecorder(
+        path, trajectory_id="TC-gptrans-v5-audit-reference-100k",
+        run_id="gptrans-t-v5-audit-reference-s42",
+        metric_semantics={
+            "live_train_metric": metric("online batch-weighted MAE", "live", "fixed-pcqm4mv2-ogb-train-100k"),
+            "live_dev_metric": metric("development MAE", "live", role),
+            "ema_dev_metric": metric("development MAE", "ema", role),
+        },
+    )
+
+
+def _v5_append_checkpoint_observation(recorder, row: dict, checkpoint_path: Path) -> None:
+    digest = sha256_file(checkpoint_path)
+    identity = f"sha256:{digest}"
+    existing = recorder.record["observations"]
+    if existing and existing[-1]["checkpoint_identity"] == identity:
+        return
+    if len(existing) != row["epoch"]:
+        raise RuntimeError("V5 audit trace/checkpoint epoch mismatch")
+    recorder.checkpoint_event(
+        identity,
+        optimizer_step=row["cumulative_optimizer_steps"],
+        sample_presentations=row["cumulative_sample_presentations"],
+        epoch_or_pass=row["epoch"] + 1,
+        learning_rate=row["learning_rate"],
+        live_train_metric=row["train_mae_eV"],
+        live_dev_metric=row["live_development_mae_eV"],
+        ema_dev_metric=row["development_mae_eV"],
+        wall_time_seconds=row["elapsed_seconds"],
+        cumulative_wall_time_seconds=row["cumulative_wall_time_seconds"],
+        device_time_seconds=None,
+        cumulative_device_time_seconds=None,
+    )
+
+
 def run_training(
     *,
     dataset_root: Path,
@@ -734,7 +786,13 @@ def run_training(
     platform_id: str,
     initial_state_path: Path,
     variant: str = "reference",
+    v5_audit: bool = False,
+    max_epochs_this_job: int | None = None,
 ) -> dict:
+    if v5_audit and variant != "reference":
+        raise RuntimeError("V5 audit is frozen for the reference arm only")
+    if max_epochs_this_job is not None and (not v5_audit or max_epochs_this_job < 1):
+        raise RuntimeError("Segmented training requires a positive V5 audit epoch limit")
     determinism = configure_fp32_determinism(SEED)
     import torch
 
@@ -793,6 +851,8 @@ def run_training(
             raise RuntimeError("Checkpoint format changed")
         if checkpoint.get("variant", "reference") != variant:
             raise RuntimeError("Checkpoint architecture variant changed")
+        if bool(checkpoint.get("v5_audit", False)) != v5_audit:
+            raise RuntimeError("Checkpoint V5 audit mode changed")
         if checkpoint.get("scientific_fields") != _scientific_fields():
             raise RuntimeError("Checkpoint scientific contract changed")
         if checkpoint.get("runtime_certificate_id") != certificate_id:
@@ -809,7 +869,19 @@ def run_training(
         best = float(checkpoint["best_development_mae_eV"])
         best_epoch = int(checkpoint["best_epoch"])
 
-    for epoch in range(start_epoch, EPOCHS):
+    audit_recorder = None
+    if v5_audit:
+        audit_recorder = _v5_audit_recorder(output / "canonical_trace.json")
+        if trace:
+            if any("live_development_mae_eV" not in row for row in trace):
+                raise RuntimeError("Cannot audit-resume an unobserved V4 checkpoint")
+            if len(audit_recorder.record["observations"]) == len(trace) - 1:
+                _v5_append_checkpoint_observation(audit_recorder, trace[-1], checkpoint_path)
+            elif len(audit_recorder.record["observations"]) != len(trace):
+                raise RuntimeError("V5 audit recorder and checkpoint disagree")
+
+    stop_epoch = min(EPOCHS, start_epoch + max_epochs_this_job) if max_epochs_this_job else EPOCHS
+    for epoch in range(start_epoch, stop_epoch):
         learning_rate = scheduler.step(epoch)
         model.train()
         train_loss_sum = torch.zeros((), device="cuda")
@@ -834,6 +906,7 @@ def run_training(
         if train_count != BATCHES_PER_EPOCH * PHYSICAL_BATCH:
             raise RuntimeError("Epoch sample exposure changed")
         development = _evaluate(model, ema, development_graphs, mean, std)
+        live_development = _evaluate(model, ema, development_graphs, mean, std, weights="live") if v5_audit else None
         improved = development["mae_eV"] < best
         if improved:
             best = development["mae_eV"]
@@ -886,6 +959,15 @@ def run_training(
             "sample_presentations": train_count,
             "elapsed_seconds": time.perf_counter() - epoch_started,
         }
+        if v5_audit:
+            row.update({
+                "live_development_mae_eV": live_development["mae_eV"],
+                "cumulative_optimizer_steps": global_step,
+                "cumulative_sample_presentations": (epoch + 1) * train_count,
+                "cumulative_wall_time_seconds": row["elapsed_seconds"] + (
+                    trace[-1]["cumulative_wall_time_seconds"] if trace else 0.0
+                ),
+            })
         trace.append(row)
         atomic_json(output / "trace.json", {"format": RUN_FORMAT, "rows": trace})
         _save_checkpoint(
@@ -902,6 +984,7 @@ def run_training(
             runtime_certificate_id=certificate_id,
             source_archive_sha256=source_archive_sha256,
             variant=variant,
+            v5_audit=v5_audit,
         )
         print(
             f"gptrans_t_100k_v4/{variant} ep{epoch:02d} train={row['train_mae_eV']:.6f} "
@@ -910,7 +993,9 @@ def run_training(
             + (" *" if improved else ""),
             flush=True,
         )
-        if variant != "reference" and (epoch + 1) % 10 == 0:
+        if v5_audit:
+            _v5_append_checkpoint_observation(audit_recorder, row, checkpoint_path)
+        if (variant != "reference" or v5_audit) and (epoch + 1) % 10 == 0:
             import os
             import shutil
             chunk = output / f"checkpoint_epoch_{epoch:02d}.pt"
@@ -918,12 +1003,28 @@ def run_training(
             shutil.copyfile(checkpoint_path, temporary)
             os.replace(temporary, chunk)
 
+    if stop_epoch < EPOCHS:
+        partial = {
+            "format": RUN_FORMAT,
+            "v5_audit": True,
+            "complete": False,
+            "completed_epochs": stop_epoch,
+            "next_epoch": stop_epoch,
+            "checkpoint_sha256": sha256_file(checkpoint_path),
+            "canonical_trace_sha256": sha256_file(output / "canonical_trace.json"),
+            "source_archive_sha256": source_archive_sha256,
+            "runtime_certificate_id": certificate_id,
+            "manifest_sha256": MANIFEST_SHA256,
+        }
+        atomic_json(output / "partial_manifest.json", partial)
+        return partial
+
     best_model_path = output / "best_model.pt"
     predictions_path = output / "development_predictions.pt"
     result_sha256 = sha256_file(best_model_path)
     reference = {
         **_scientific_fields(),
-        "run_id": f"gptrans-t-100k-v4-{variant}-seed42",
+        "run_id": "gptrans-t-100k-v5-audit-reference-seed42" if v5_audit else f"gptrans-t-100k-v4-{variant}-seed42",
         "model_id": f"gptrans_t_core_12x256_pair32/{variant}",
         "architecture_fingerprint": EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"]}),
         "source_archive_sha256": source_archive_sha256,
@@ -969,5 +1070,8 @@ def run_training(
         "test_dev_role_read": False,
         "test_challenge_role_read": False,
     }
+    if v5_audit:
+        completion["v5_audit"] = True
+        completion["canonical_trace_sha256"] = sha256_file(output / "canonical_trace.json")
     atomic_json(completion_path, completion)
     return completion
