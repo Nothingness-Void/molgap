@@ -88,7 +88,9 @@ def main():
                 run_id=RUN_ID, attempt_id="v2",
                 hardware="actual_P100_or_T4_pending",
                 evidence_ref=f"{REL}/attempt_v2/budget_snapshot.json")
-    save(ATTEMPT / "costs/expected_training.json", cost)
+    # The estimated cost is an input snapshot, not a discovered observed RML
+    # event. Only plan() publishes the canonical cost under gpu_rml_plan/costs.
+    save(ATTEMPT / "gpu_costs/expected_training.json", cost)
     trajectory = copy.deepcopy(load(ROOT / "gpu_rml_plan/trajectory.json"))
     trajectory.update(trajectory_id=TRAJECTORY_ID,
                       question="Can typed motif communication improve K1 after a clean runtime qualification?")
