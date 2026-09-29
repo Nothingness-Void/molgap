@@ -14,3 +14,6 @@
 - [Terminal workflow](representation/terminal_runbook.md) routes retrieval,
   saved-JSON acceptance, interpretation and NO_TRAIN closure; the thin
   `accept_representation.py` CLI never runs a model.
+- [Curve and mechanism review](results/curve_mechanism_review.md) separates
+  exposure catch-up, population instability and larger-scale generalization
+  deficits, with a hash-bound 200-observation trace extract.
