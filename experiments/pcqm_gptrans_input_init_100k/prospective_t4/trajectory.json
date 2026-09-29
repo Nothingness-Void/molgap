@@ -17,11 +17,9 @@
     }
   ],
   "decision": {
-    "decision_ref": "experiments/pcqm_gptrans_input_init_100k/launch_decision_t4.md",
-    "next_allowed_actions": [
-      "remote_preflight_only_after_separate_direction"
-    ],
-    "outcome": "ACTIVE",
+    "decision_ref": "experiments/pcqm_gptrans_input_init_100k/decision_t4_single_no_train.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
     "reopen_conditions": []
   },
   "decision_state": {

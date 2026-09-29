@@ -1,7 +1,7 @@
 {
-  "id": "nvoid912/molgap-gptrans-input-init-100k-s42-v1",
-  "title": "MolGap GPTrans Init100K S42 V1",
-  "code_file": "run_candidate.py",
+  "id": "nothingnessvoid/molgap-gptrans-input-init-pair-100k-s42-v1",
+  "title": "MolGap GPTrans Init Pair 100K S42",
+  "code_file": "run_pair.py",
   "language": "python",
   "kernel_type": "script",
   "is_private": "true",
@@ -9,8 +9,8 @@
   "enable_internet": "true",
   "machine_shape": "NvidiaTeslaT4",
   "dataset_sources": [
-    "nvoid912/molgap-gptrans-input-init-100k-source-v1",
-    "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+    "nothingnessvoid/molgap-gptrans-init-pair-100k-source-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
   ],
   "competition_sources": [],
   "kernel_sources": [],

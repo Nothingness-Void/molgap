@@ -31,3 +31,11 @@ The first P100 planning route closed `NO_TRAIN` after Kaggle retired P100.
 `decision_p100_no_train.md` owns that disposition. `protocol_t4.md` and
 `launch_decision_t4.md` describe the T4x2 planning revision; neither is a
 remote training result.
+
+The later Kaggle3 single-arm T4 declaration closed `NO_TRAIN` before remote
+submission (`decision_t4_single_no_train.md`). The user-directed Kaggle1 T4x2
+route uses an unmodified GPTrans-T control and the input-initialization
+candidate concurrently. `protocol_kaggle1_pair.md`,
+`training_contract_kaggle1_pair.json`, and `launch_decision_kaggle1_pair.md`
+own the revised paired comparison. `run_pair.py` is its thin entrypoint;
+`prospective_kaggle1_pair/` owns its per-arm canonical plans.
