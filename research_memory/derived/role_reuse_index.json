@@ -884,7 +884,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 44,
+  "explicit_role_event_count": 45,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -1147,6 +1147,13 @@
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-frozen-transfer-probe-500k-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-frozen-transfer-probe-100k-to-500k"
+      },
       {
         "access_kind": "selection_used",
         "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-development",
@@ -1445,6 +1452,13 @@
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
       {
         "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-frozen-transfer-probe-500k-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-frozen-transfer-probe-100k-to-500k"
+      },
+      {
+        "access_kind": "selection_used",
         "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-development",
         "selection_used": true,
         "semantics": "explicit",
@@ -1652,6 +1666,13 @@
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-gptrans-frozen-transfer-probe-500k-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-frozen-transfer-probe-100k-to-500k"
+      },
       {
         "access_kind": "selection_used",
         "role_event_id": "role-TB-gptrans-noisy-nodes-500k-s42-development",

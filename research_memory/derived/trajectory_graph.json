@@ -71,6 +71,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-frozen-transfer-probe-100k-to-500k:A001",
+      "target": "experiments/pcqm_gptrans_frozen_transfer_probe/results/full/summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-full-convergence-20260919:A001",
       "target": "experiments/pcqm_gptrans_full_convergence/results/terminal_reconciliation_20260923.json",
       "type": "action_produced_evidence"
@@ -251,6 +256,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-frozen-transfer-probe-100k-to-500k",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-100k-s42",
       "type": "parent_trajectory"
@@ -333,6 +343,11 @@
     {
       "source": "TB-matched-500k-v4-three-arm",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-pcqm-scale-transfer-attribution",
+      "target": "TB-gptrans-frozen-transfer-probe-100k-to-500k",
       "type": "parent_trajectory"
     },
     {
@@ -437,6 +452,11 @@
     },
     {
       "source": "pcqm-gptrans-pair-norm-500k-s42",
+      "target": "TB-gptrans-frozen-transfer-probe-100k-to-500k",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-pair-norm-500k-s42",
       "target": "TB-gptrans-reference-k1pair-100k-s42",
       "type": "prior_evidence"
     },
@@ -448,6 +468,11 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-frozen-transfer-probe-100k-to-500k",
       "type": "prior_evidence"
     },
     {
@@ -578,6 +603,11 @@
     {
       "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "target": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-reference-k1pair-100k-s42",
+      "target": "TB-gptrans-frozen-transfer-probe-100k-to-500k",
       "type": "reference_used"
     },
     {
@@ -847,6 +877,10 @@
     },
     {
       "id": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-frozen-transfer-probe-100k-to-500k",
       "type": "trajectory"
     },
     {

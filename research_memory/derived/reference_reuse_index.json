@@ -393,7 +393,9 @@
       "source_envelope": "experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/prospective/reference/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_ready",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-gptrans-frozen-transfer-probe-100k-to-500k"
+      ]
     },
     {
       "artifact_availability": [
