@@ -51,11 +51,29 @@ Export `export_gap_state_dict(selected_ema_state)` into a fresh original GPTrans
 model with strict loading. Do not hand the training model or its unfiltered
 state to the frozen production loader. Export equivalence requires GPU preflight.
 
-The experiment-owned training addon still must bind label-cache identity and
-row joins, pass this adapter through preflight/train/checkpoint/restore, retain
-separate epoch metrics, and register its Spec addon. `run_training` remains the
-frozen reference entrypoint; adding a config JSON alone does not make it an
-auxiliary trainer. No new remote run or replay qualification is claimed here.
+The opt-in `training_addon=ChemicalTrainingAddon(config, cache)` argument now
+threads through the existing `run_preflight` and `run_training` functions.
+The thin `experiments/pcqm_gptrans_chemical_aux/run_arm.py` CLI exposes config,
+source, dataset, accepted-cache hashes and preflight/train phases. The unchanged
+call without an addon remains the frozen reference path. Candidate source/cache
+identity is included in runtime, completion and checkpoint checks; exported best
+weights exclude the auxiliary head while resumable checkpoints retain it.
+
+`chemical_aux/1` is registered in ExperimentSpec with typed parameters and an
+objective SHA equal to the configuration identity. Structural registry success
+is not a frozen executable launch. Both arms still require their own Spec v2
+prospective records, verified input bindings, exact source package and GPU
+qualification before submission.
+
+CPU cache preparation uses `build_labels.py` and the existing atomic writer and
+hash helpers. Its JSONL input contains exactly source_index and smiles. The
+separately pinned role JSON declares role=train, source_indices, rows_sha256,
+dataset_identity and row_identity_semantics. For the V4 adapter, the latter two
+are pcqm-fixed100k-v4 and pcqm-fixed100k-v4-source_idx. These are declarations,
+not authentication: the input export must be matched to the authoritative
+frozen row mapping before assigning them. Never manufacture a role file to
+make an unrelated SMILES export pass. Cache failures preserve row reason codes;
+no training cache is accepted when any row fails.
 
 Local tests use synthetic SMILES and scalar/tensor loss fixtures, without model
 execution. `tests/test_gptrans_objective_remote.py` is opt-in remote CUDA

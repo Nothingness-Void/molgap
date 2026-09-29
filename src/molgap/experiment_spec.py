@@ -68,6 +68,9 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    ("chemical_aux", "1"): AddonContract(
+        "gptrans_t", "attention-replacement", "molgap.gptrans_objective",
+    ),
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
     ),
@@ -191,7 +194,11 @@ def _arm(arm: dict) -> None:
     _object(training["overrides"], "", "training.overrides")
     if init["seed"] != 42:
         raise ValueError("Frozen recipe initialization requires seed 42")
-    _reference(training["objective"], "training.objective", name="normalized-gap-l1")
+    _list(arm["addons"], "addons", nonempty=False)
+    chemical_aux = any(isinstance(addon, dict) and addon.get("name") == "chemical_aux"
+                       for addon in arm["addons"])
+    _reference(training["objective"], "training.objective",
+               name="normalized-gap-l1+chemical-aux" if chemical_aux else "normalized-gap-l1")
     _reference(training["sampler"], "training.sampler", name=contract.sampler)
     _reference(training["transform"], "training.transform", name=contract.transform)
 
@@ -219,6 +226,13 @@ def _arm(arm: dict) -> None:
                     f"[{EDGE_STATE_MIN_LAYERS}, {EDGE_STATE_MAX_LAYERS}] "
                     f"except {EDGE_STATE_BASE_LAYERS}"
                 )
+        elif addon["name"] == "chemical_aux":
+            from .gptrans_objective import GPTransObjectiveConfig
+            config = GPTransObjectiveConfig.from_dict(addon["config"])
+            if not config.enabled:
+                raise ValueError("chemical_aux addon requires at least one positive weight")
+            if training["objective"]["sha256"] != config.identity:
+                raise ValueError("Chemical objective reference must bind the exact config identity")
         else:
             _object(addon["config"], "", "addon.config")
         _digest(addon["source_sha256"], "addon.source_sha256")

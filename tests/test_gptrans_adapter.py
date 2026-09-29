@@ -85,6 +85,23 @@ def spec(payload):
     return ExperimentSpec(payload)
 
 
+def test_chemical_addon_metadata_and_config_identity(payload):
+    from molgap.gptrans_objective import GPTransObjectiveConfig
+    arm = _arm("chemical_aux")
+    arm["addons"][0]["config"] = GPTransObjectiveConfig(descriptor_weight=.1).to_dict()
+    arm["training"]["objective"] = {"name": "normalized-gap-l1+chemical-aux", "version": "1",
+                                     "sha256": GPTransObjectiveConfig(descriptor_weight=.1).identity}
+    payload["arms"] = [arm]
+    original = ExperimentSpec(payload)
+    assert gptrans_metadata(original, "chemical_aux").variant == "chemical_aux"
+    arm["addons"][0]["config"]["auxiliary_hidden_dim"] = 64
+    arm["training"]["objective"]["sha256"] = GPTransObjectiveConfig.from_dict(arm["addons"][0]["config"]).identity
+    assert ExperimentSpec(payload).identity != original.identity
+    arm["addons"][0]["config"]["descriptor_weight"] = -1
+    with pytest.raises(ValueError):
+        ExperimentSpec(payload)
+
+
 @pytest.fixture
 def synthetic_inputs():
     # Unequal graph sizes exercise attention padding as well as connected edges.

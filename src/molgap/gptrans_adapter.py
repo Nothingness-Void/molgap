@@ -54,7 +54,7 @@ def _resolve(spec: ExperimentSpec, arm_id: str):
     variant = "reference"
     if addons:
         addon_key = (addons[0]["name"], addons[0]["version"])
-        if addon_key not in (("pair_prenorm", "1"), ("centered_logits", "1")):
+        if addon_key not in (("pair_prenorm", "1"), ("centered_logits", "1"), ("chemical_aux", "1")):
             raise ValueError("Unsupported GPTrans addon/version")
         if ADDONS[addon_key].family != key[0]:
             raise ValueError("Incompatible GPTrans addon family")
@@ -92,4 +92,12 @@ def build_gptrans_model(
     metadata = _resolve(spec, arm_id)
     from .pcqm_gptrans_v4 import _make_model
 
+    if metadata.variant == "chemical_aux":
+        from .gptrans_objective import GPTransObjective, GPTransObjectiveConfig
+        arm = next(item for item in spec.to_dict()["arms"] if item["arm_id"] == arm_id)
+        model = _make_model(initial_state_path=initial_state_path)
+        model._training_objective = GPTransObjective(
+            model, GPTransObjectiveConfig.from_dict(arm["addons"][0]["config"])
+        )
+        return model
     return _make_model(initial_state_path=initial_state_path, variant=metadata.variant)

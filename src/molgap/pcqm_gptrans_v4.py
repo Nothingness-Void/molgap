@@ -605,9 +605,13 @@ def run_preflight(
     initial_state_path: Path,
     variant: str = "reference",
     runtime_calibration_fingerprint: str | None = None,
+    training_addon=None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
+
+    addon_identity = {} if training_addon is None else training_addon.identity
+    scientific_fields = _scientific_fields() if training_addon is None else training_addon.scientific_fields(_scientific_fields())
 
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise RuntimeError("V4 preflight requires exactly one visible accelerator")
@@ -621,7 +625,8 @@ def run_preflight(
                 "model_id": "gptrans_t_core_12x256_pair32",
                 "architecture_sha256": EXPECTED_ARCHITECTURE_SHA256,
                 "model_config": _model_config(),
-                "scientific_contract": _scientific_fields(),
+                "scientific_contract": scientific_fields,
+                **({} if not addon_identity else {"training_addon": addon_identity}),
                 "physical_batch_per_device": PHYSICAL_BATCH,
                 "device_count": 1,
                 "gradient_accumulation_steps": 1,
@@ -635,7 +640,11 @@ def run_preflight(
     mean_value, std_value = _target_stats(train_shards)
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
-    batch = next(iter(_training_loader(train_graphs, 0))).to("cuda", non_blocking=True)
+    batch = next(iter(_training_loader(train_graphs, 0)))
+    if training_addon is not None:
+        training_addon.validate_graphs(train_graphs)
+        training_addon.attach(batch)
+    batch = batch.to("cuda", non_blocking=True)
     if int(batch.num_graphs) != PHYSICAL_BATCH:
         raise RuntimeError("Preflight did not receive physical batch 128")
     fixture_sha256 = _batch_sha256(batch)
@@ -644,12 +653,13 @@ def run_preflight(
     repeat_states = []
     for _ in range(2):
         configure_fp32_determinism(SEED)
-        model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+        model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant, objective_config=None if training_addon is None else training_addon.config)
         scheduler.step(0)
         repeat_losses.append(
             float(
                 _optimizer_step(
-                    model, optimizer, ema, batch, mean, std, check_finite=True
+                    model, optimizer, ema, batch, mean, std, check_finite=True,
+                    objective=getattr(model, "_training_objective", None)
                 ).cpu()
             )
         )
@@ -668,7 +678,7 @@ def run_preflight(
     repeat_hashes = repeatability["state_sha256"]
 
     configure_fp32_determinism(SEED)
-    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant, objective_config=None if training_addon is None else training_addon.config)
     scheduler.step(0)
     batches = iter(_training_loader(train_graphs, 0))
     torch.cuda.reset_peak_memory_stats()
@@ -677,10 +687,11 @@ def run_preflight(
             model,
             optimizer,
             ema,
-            next(batches).to("cuda", non_blocking=True),
+            (next(batches) if training_addon is None else training_addon.attach(next(batches))).to("cuda", non_blocking=True),
             mean,
             std,
             check_finite=True,
+            objective=getattr(model, "_training_objective", None),
         )
     torch.cuda.synchronize()
     started = time.perf_counter()
@@ -689,10 +700,11 @@ def run_preflight(
             model,
             optimizer,
             ema,
-            next(batches).to("cuda", non_blocking=True),
+            (next(batches) if training_addon is None else training_addon.attach(next(batches))).to("cuda", non_blocking=True),
             mean,
             std,
             check_finite=False,
+            objective=getattr(model, "_training_objective", None),
         )
     torch.cuda.synchronize()
     elapsed = time.perf_counter() - started
@@ -730,7 +742,7 @@ def run_preflight(
     }
     certificate_id = canonical_fingerprint(certificate)
     provisional_contract = {
-        **_scientific_fields(),
+        **scientific_fields,
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
@@ -740,7 +752,8 @@ def run_preflight(
     result = {
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
         "variant": variant,
-        "parameters": EXPECTED_PARAMETERS,
+        "parameters": sum(p.numel() for p in model.parameters()),
+        "training_addon": addon_identity,
         "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
         "accepted": True,
         "runtime_certificate_id": certificate_id,
@@ -774,7 +787,7 @@ def run_preflight(
     return result
 
 
-def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference", objective=None) -> None:
+def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference", objective=None, training_addon_identity=None) -> None:
     if hasattr(model, "_chemical_aux_head") and objective is None:
         raise RuntimeError("Auxiliary checkpoint requires explicit objective metadata")
     if objective is not None and objective.model is not model:
@@ -799,6 +812,7 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
             "scientific_fields": (_scientific_fields() if objective is None
                                   else objective.scientific_fields(_scientific_fields())),
             **({} if objective is None else objective.checkpoint_metadata()),
+            **({} if not training_addon_identity else {"training_addon": training_addon_identity}),
         },
     )
 
@@ -816,9 +830,13 @@ def run_training(
     initial_state_path: Path,
     variant: str = "reference",
     runtime_calibration_fingerprint: str | None = None,
+    training_addon=None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
+
+    addon_identity = {} if training_addon is None else training_addon.identity
+    scientific_fields = _scientific_fields() if training_addon is None else training_addon.scientific_fields(_scientific_fields())
 
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise RuntimeError("V4 training requires exactly one visible accelerator")
@@ -826,12 +844,18 @@ def run_training(
     completion_path = output / "completion_manifest.json"
     if completion_path.is_file():
         completion = json.loads(completion_path.read_text(encoding="utf-8"))
-        if completion.get("complete") is True and completion.get("variant", "reference") == variant:
+        if (completion.get("complete") is True
+                and completion.get("variant", "reference") == variant
+                and completion.get("training_addon", {}) == addon_identity
+                and completion.get("source_archive_sha256") == source_archive_sha256
+                and completion.get("source_commit") == source_commit):
             return completion
         raise RuntimeError("Existing completion manifest is incompatible")
     validate_source_archive(source_archive, source_archive_sha256, source_commit)
     assets = validate_fixed_assets(dataset_root, manifest_path, verify_content=True)
     preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
+    if preflight.get("training_addon", {}) != addon_identity:
+        raise RuntimeError("Preflight objective/cache identity changed")
     if preflight.get("accepted") is not True:
         raise RuntimeError("V4 preflight was not accepted")
     if preflight.get("variant", "reference") != variant:
@@ -850,7 +874,8 @@ def run_training(
                 "model_id": "gptrans_t_core_12x256_pair32",
                 "architecture_sha256": EXPECTED_ARCHITECTURE_SHA256,
                 "model_config": _model_config(),
-                "scientific_contract": _scientific_fields(),
+                "scientific_contract": scientific_fields,
+                **({} if not addon_identity else {"training_addon": addon_identity}),
                 "physical_batch_per_device": PHYSICAL_BATCH,
                 "device_count": 1,
                 "gradient_accumulation_steps": 1,
@@ -860,7 +885,7 @@ def run_training(
     if runtime["runtime_fingerprint"] != certificate["runtime_fingerprint"]:
         raise RuntimeError("Training runtime differs from certified runtime")
     provisional_contract = {
-        **_scientific_fields(),
+        **scientific_fields,
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
@@ -872,13 +897,15 @@ def run_training(
     development_graphs, _ = _load_datasets(assets.development_paths)
     if len(train_graphs) != TRAIN_ROWS or len(development_graphs) != DEVELOPMENT_ROWS:
         raise RuntimeError("Loaded role count changed")
+    if training_addon is not None:
+        training_addon.validate_graphs(train_graphs)
     mean_value, std_value = _target_stats(train_shards)
     target_stats = {"mean_eV": mean_value, "sample_std_eV": std_value}
     if target_stats != preflight["target_stats"]:
         raise RuntimeError("Target statistics differ from preflight")
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
-    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant, objective_config=None if training_addon is None else training_addon.config)
     checkpoint_path = output / "last_checkpoint.pt"
     start_epoch = 0
     trace: list[dict] = []
@@ -892,12 +919,14 @@ def run_training(
             raise RuntimeError("Checkpoint format changed")
         if checkpoint.get("variant", "reference") != variant:
             raise RuntimeError("Checkpoint architecture variant changed")
+        if checkpoint.get("training_addon", {}) != addon_identity:
+            raise RuntimeError("Checkpoint objective/cache identity changed")
         if "training_objective" in checkpoint:
             from .gptrans_objective import GPTransObjectiveConfig, validate_objective_checkpoint
-            validate_objective_checkpoint(checkpoint, GPTransObjectiveConfig())
-        elif any(name.startswith("_chemical_aux_head.") for name in checkpoint["model"]):
+            validate_objective_checkpoint(checkpoint, GPTransObjectiveConfig() if training_addon is None else training_addon.config)
+        elif training_addon is not None or any(name.startswith("_chemical_aux_head.") for name in checkpoint["model"]):
             raise RuntimeError("Auxiliary checkpoint has no training objective identity")
-        if checkpoint.get("scientific_fields") != _scientific_fields():
+        if checkpoint.get("scientific_fields") != scientific_fields:
             raise RuntimeError("Checkpoint scientific contract changed")
         if checkpoint.get("runtime_certificate_id") != certificate_id:
             raise RuntimeError("Checkpoint runtime certificate changed")
@@ -918,11 +947,15 @@ def run_training(
         model.train()
         train_loss_sum = torch.zeros((), device="cuda")
         train_count = 0
+        objective_sums = {}
         epoch_started = time.perf_counter()
         for batch_index, batch in enumerate(_training_loader(train_graphs, epoch)):
             if int(batch.num_graphs) != PHYSICAL_BATCH:
                 raise RuntimeError("Optimizer received a non-128 batch")
+            if training_addon is not None:
+                training_addon.attach(batch)
             batch = batch.to("cuda", non_blocking=True)
+            objective_metrics = {}
             global_step = epoch * BATCHES_PER_EPOCH + batch_index + 1
             loss = _optimizer_step(
                 model,
@@ -932,7 +965,11 @@ def run_training(
                 mean,
                 std,
                 check_finite=global_step % FINITE_CHECK_EVERY_STEPS == 0,
+                objective=getattr(model, "_training_objective", None),
+                loss_metrics=objective_metrics if training_addon is not None else None,
             )
+            for key, value in objective_metrics.items():
+                objective_sums[key] = objective_sums.get(key, 0) + value * int(batch.num_graphs)
             train_loss_sum.add_(loss * int(batch.num_graphs))
             train_count += int(batch.num_graphs)
         if train_count != BATCHES_PER_EPOCH * PHYSICAL_BATCH:
@@ -948,7 +985,8 @@ def run_training(
                     "variant": variant,
                     **_model_config(),
                 },
-                "model": {name: value.detach().cpu() for name, value in ema.state_dict().items()},
+                "model": {name: value.detach().cpu() for name, value in (ema.state_dict() if training_addon is None else training_addon.export_state(ema.state_dict())).items()},
+                "training_addon": addon_identity,
                 "target_stats": target_stats,
                 "epoch": epoch,
                 "development_mae_eV": best,
@@ -982,6 +1020,8 @@ def run_training(
             "sample_presentations": train_count,
             "elapsed_seconds": time.perf_counter() - epoch_started,
         }
+        if training_addon is not None:
+            row["objective_metrics"] = {key: float(value.cpu()) / train_count for key, value in objective_sums.items()}
         trace.append(row)
         atomic_json(output / "trace.json", {"format": RUN_FORMAT, "rows": trace})
         _save_checkpoint(
@@ -998,6 +1038,8 @@ def run_training(
             runtime_certificate_id=certificate_id,
             source_archive_sha256=source_archive_sha256,
             variant=variant,
+            objective=getattr(model, "_training_objective", None),
+            training_addon_identity=addon_identity,
         )
         print(
             f"gptrans_t_100k_v4/{variant} ep{epoch:02d} train={row['train_mae_eV']:.6f} "
@@ -1018,7 +1060,7 @@ def run_training(
     predictions_path = output / "development_predictions.pt"
     result_sha256 = sha256_file(best_model_path)
     reference = {
-        **_scientific_fields(),
+        **scientific_fields,
         "run_id": f"gptrans-t-100k-v4-{variant}-seed42",
         "model_id": f"gptrans_t_core_12x256_pair32/{variant}",
         "architecture_fingerprint": EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"]}),
@@ -1031,12 +1073,18 @@ def run_training(
         "physical_batch_per_device": PHYSICAL_BATCH,
         "device_count": 1,
         "gradient_accumulation_steps": 1,
-        "frozen_reference": True,
+        "frozen_reference": training_addon is None or not training_addon.config.enabled,
         "stochasticity_floor_eV": STOCHASTICITY_FLOOR_EV,
         "minimum_material_gain_eV": MINIMUM_MATERIAL_GAIN_EV,
         "best_development_mae_eV": best,
         "best_epoch": best_epoch,
     }
+    if training_addon is not None:
+        reference["training_addon"] = addon_identity
+        reference["run_id"] += "-objective-" + training_addon.config.identity[:12]
+        reference["model_id"] += "-objective-" + training_addon.config.identity[:12]
+        if training_addon.config.enabled:
+            reference["architecture_fingerprint"] = canonical_fingerprint({"core": reference["architecture_fingerprint"], "objective": addon_identity})
     missing = [field for field in (*REFERENCE_MATCH_FIELDS, *REFERENCE_PROVENANCE_FIELDS) if field not in reference]
     if missing:
         raise RuntimeError(f"Reference record is incomplete: {missing}")
@@ -1045,7 +1093,8 @@ def run_training(
     completion = {
         "format": RUN_FORMAT,
         "variant": variant,
-        "parameters": EXPECTED_PARAMETERS,
+        "parameters": sum(p.numel() for p in model.parameters()),
+        "training_addon": addon_identity,
         "variant_source_sha256": preflight.get("variant_source_sha256"),
         "checkpoint_sha256": sha256_file(checkpoint_path),
         "checkpoint_chunks": {path.name: sha256_file(path) for path in sorted(output.glob("checkpoint_epoch_*.pt"))},
