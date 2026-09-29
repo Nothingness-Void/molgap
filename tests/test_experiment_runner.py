@@ -78,7 +78,14 @@ def _no_authority(value):
             _no_authority(nested)
 
 
-def test_spawn_dual_probe_order_devices_and_metadata(spec, tmp_path, monkeypatch):
+@pytest.mark.parametrize("variants", [False, True])
+def test_spawn_dual_probe_order_devices_and_metadata(declaration, tmp_path, monkeypatch, variants):
+    if variants:
+        for arm, name in zip(declaration["arms"], ["pair_prenorm", "k1_pair_value"]):
+            arm.update(addons=[{"name": name, "version": "1", "config": {},
+                                "source_sha256": "a" * 64}], addon_semantics="ordered")
+        declaration["arms"].reverse()
+    spec = ExperimentSpec(declaration)
     # Parent-side torch presence must not reject the run. No torch import is needed.
     monkeypatch.setitem(sys.modules, "torch", SimpleNamespace())
     monkeypatch.setenv("CUDA_VISIBLE_DEVICES", "parent-unchanged")
@@ -106,8 +113,13 @@ def test_spawn_dual_probe_order_devices_and_metadata(spec, tmp_path, monkeypatch
         assert metadata["family"]["version"] == "1"
         assert metadata["spec_identity"] == spec.identity
         assert metadata["arm_id"] == arm["arm_id"]
-        assert metadata["addons"] == []
-        assert metadata["addon_semantics"] == "baseline"
+        assert metadata["addons"] == arm["addons"]
+        assert metadata["addon_semantics"] == arm["addon_semantics"]
+        if arm["family"]["name"] == "gptrans_t":
+            assert metadata["variant"] == ("pair_prenorm" if variants else "reference")
+        else:
+            assert metadata["mode"] == (
+                "neural_atom_k1_pair_token_value_decoupled" if variants else "neural_atom_k1")
         assert metadata["factory"] and metadata["source_module"]
         assert metadata["checkpoint_resume_owner"]
         assert metadata["checkpoint_resume_implemented"] is False
@@ -348,6 +360,13 @@ def test_platform_count_mismatch(declaration, tmp_path, forbid_spawn):
         runner.run_experiment(ExperimentSpec(declaration), tmp_path / "run", [0, 1])
 
 
+@pytest.mark.parametrize("devices,expected", [
+    ([None, 0], ["", "0"]), (["CPU", "3"], ["", "3"]), (["cpu", 2], ["", "2"]),
+])
+def test_device_normalization(devices, expected):
+    assert runner._devices(devices, 2) == expected
+
+
 @pytest.mark.parametrize("kind", ["dict", "provider", "subclass", "extra", "noncanonical", "unknown_family"])
 def test_forged_spec_rejected(spec, declaration, tmp_path, forbid_spawn, kind):
     class SubSpec(ExperimentSpec):
@@ -412,9 +431,23 @@ def test_symlink_output_rejected(spec, tmp_path, forbid_spawn):
     assert not (target / "run").exists()
 
 
+def test_reparse_ancestor_rejected_without_windows_privileges(spec, tmp_path, forbid_spawn, monkeypatch):
+    original = Path.lstat
+
+    def lstat(path, *args, **kwargs):
+        if path == tmp_path:
+            return SimpleNamespace(st_mode=0, st_file_attributes=0x400)
+        return original(path, *args, **kwargs)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(Path, "lstat", lstat)
+        with pytest.raises(ValueError, match="Symlink/junction/reparse"):
+            runner.run_experiment(spec, tmp_path / "run", [0, 1])
+
+
 @pytest.mark.parametrize("corruption", [
     "missing", "syntax", "noncanonical", "duplicate", "nan", "identity", "pid", "metadata",
-    "error", "count", "duration", "timestamp", "authority", "status", "exitcode", "running",
+    "error", "count", "duration", "timestamp", "authority", "status", "exitcode", "running", "deep",
 ])
 def test_child_result_fail_closed(spec, tmp_path, monkeypatch, corruption):
     monkeypatch.setenv("CUDA_VISIBLE_DEVICES", "parent")
@@ -431,6 +464,8 @@ def test_child_result_fail_closed(spec, tmp_path, monkeypatch, corruption):
         path.unlink()
     elif corruption == "syntax":
         raw = b"{"
+    elif corruption == "deep":
+        raw = b"[" * 10000 + b"0" + b"]" * 10000
     elif corruption == "noncanonical":
         raw = json.dumps(result, indent=2).encode()
     elif corruption == "duplicate":

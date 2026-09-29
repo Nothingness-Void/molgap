@@ -73,8 +73,9 @@ replacement. Each child writes `RUNNING`, then `SUCCEEDED` or `FAILED`. The pare
 validates exact schema, canonical bytes, identities, PID, observed timing,
 metadata and worker-specific success conditions. Missing, malformed, inconsistent
 or noncanonical child results fail closed. Nonzero exit codes cannot be success.
-The parent repairs failed/missing results with `recorded_by="parent"`; valid
-child results retain `recorded_by="child"`. Unobserved child timing remains null.
+The parent repairs or confirms failures with `recorded_by="parent"`; valid
+successful child results retain `recorded_by="child"`. Unobserved child timing
+remains null.
 
 Timeout is per arm from parent launch, including spawn/import overhead. The
 parent terminates the timed-out child and escalates to kill when necessary;
@@ -115,10 +116,12 @@ worktree with its configured project virtual environment and `src` on PYTHONPATH
 
 ```powershell
 $env:PYTHONPATH = (Join-Path (Get-Location) 'src')
+$env:PYTEST_DISABLE_PLUGIN_AUTOLOAD = '1'
 & .\.venv\Scripts\python.exe -m pytest --noconftest tests/test_experiment_runner.py -q
 ```
 
 `--noconftest` deliberately bypasses the repository's unrelated CLI-import
-conftest so probe checks do not depend on its ML imports. If this worktree lacks
+conftest; plugin autoload is also disabled so probe checks do not depend on
+unrelated ML imports. If this worktree lacks
 a virtual environment, have the verification owner provision/select an approved
 project environment first; do not silently substitute system Python.
