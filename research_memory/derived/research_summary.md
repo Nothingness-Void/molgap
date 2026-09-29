@@ -5,6 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
+- ACTIVE: 1
 - CLOSED: 9
 - INCONCLUSIVE: 14
 - INFRASTRUCTURE_ONLY: 4
@@ -27,6 +28,10 @@
 - A100 device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - A100 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - A100 wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- CPU cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- CPU device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- CPU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- CPU wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Hygon DCU cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - Hygon DCU device_hours: measured=30.974167 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Hygon DCU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
@@ -79,8 +84,8 @@
 - unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
 - unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
 - unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
-- Measurement-missing cost events: 74
-- Cost-event coverage: 50/61 trajectories; incomplete native measurement=45
+- Measurement-missing cost events: 75
+- Cost-event coverage: 51/62 trajectories; incomplete native measurement=46
 
 ## Screening Backtest
 - Status: available
@@ -88,9 +93,9 @@
 - Excluded traces: 10
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 41
+- [INFO] trace_unavailable_for_backtest: 42
 - [WARN] historical_partial_record: 18
-- [WARN] incomplete_native_cost_measurement: 45
+- [WARN] incomplete_native_cost_measurement: 46
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 30
-- [WARN] trajectory_without_v5_evidence: 11
+- [WARN] missing_explicit_role_identity: 31
+- [WARN] trajectory_without_v5_evidence: 12

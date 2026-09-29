@@ -1,7 +1,21 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "d1f9ad285e5bf5a1be6b357354d65a8f5cf5dfb65d4f9edb3704baf39fc23ac7",
+  "source_digest": "b955ce5d0d80d3eea5ce1a7ce85020ca0499280256c56eda8e3e785687f3a482",
   "trajectories": [
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/protocol.md",
+      "family_id": "gptrans-clean-chemical-aux",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_chemical_aux/prospective/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+    },
     {
       "completeness_status": "partial",
       "decision_ref": "experiments/pcqm_distance_angle_500k/decision.md",

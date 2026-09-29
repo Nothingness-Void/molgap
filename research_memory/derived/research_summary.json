@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 61,
+      "trajectories_total": 62,
       "with_complete_native_measurement": 5,
-      "with_cost_event": 50,
-      "with_incomplete_native_measurement": 45,
+      "with_cost_event": 51,
+      "with_incomplete_native_measurement": 46,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -61,6 +61,56 @@
           },
           "not_applicable_records": 0,
           "unknown_records": 2
+        }
+      },
+      "CPU": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
         }
       },
       "Hygon DCU": {
@@ -714,7 +764,7 @@
         }
       }
     },
-    "unknown_events": 74
+    "unknown_events": 75
   },
   "evidence": {
     "validated": 50,
@@ -724,7 +774,7 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 41,
+      "count": 42,
       "severity": "INFO"
     },
     {
@@ -734,7 +784,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 45,
+      "count": 46,
       "severity": "WARN"
     },
     {
@@ -744,12 +794,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 30,
+      "count": 31,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 11,
+      "count": 12,
       "severity": "WARN"
     }
   ],
@@ -758,10 +808,11 @@
     "explicit_events": 95,
     "repeatedly_selected": 7
   },
-  "source_digest": "d1f9ad285e5bf5a1be6b357354d65a8f5cf5dfb65d4f9edb3704baf39fc23ac7",
+  "source_digest": "b955ce5d0d80d3eea5ce1a7ce85020ca0499280256c56eda8e3e785687f3a482",
   "trajectories": {
-    "count": 61,
+    "count": 62,
     "outcomes": {
+      "ACTIVE": 1,
       "CLOSED": 9,
       "INCONCLUSIVE": 14,
       "INFRASTRUCTURE_ONLY": 4,

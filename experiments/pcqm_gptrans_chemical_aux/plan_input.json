@@ -1,0 +1,112 @@
+{
+  "costs": [
+    {
+      "action_id": "A-chemical-aux-cpu-fixtures",
+      "attempt_id": "local-001",
+      "category": "preflight",
+      "cost_event_id": "C-chemical-aux-cpu-prospective",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/protocol.md",
+      "hardware": "CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "chemical-aux-fixtures",
+      "schema": "molgap-cost-event-v1"
+    }
+  ],
+  "decision_state": {
+    "available_actions": [
+      "A-chemical-aux-cpu-fixtures"
+    ],
+    "chosen_action": "A-chemical-aux-cpu-fixtures",
+    "policy_id": "pcqm-chemical-aux-feasibility",
+    "policy_version": "1",
+    "state_timestamp": "2026-09-29T17:58:52.033189+00:00"
+  },
+  "trajectory": {
+    "actions": [
+      {
+        "action_id": "A-chemical-aux-cpu-fixtures",
+        "attempt_ids": [
+          "local-001"
+        ],
+        "cost_event_ids": [
+          "C-chemical-aux-cpu-prospective"
+        ],
+        "evidence_refs": [],
+        "run_ids": [
+          "chemical-aux-fixtures"
+        ],
+        "source_commit": "7dd15425c4292ee6487bb1ac64159a4e47cd67fa",
+        "type": "DIAGNOSTIC"
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/protocol.md",
+      "next_allowed_actions": [
+        "A-chemical-aux-cpu-fixtures"
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": []
+    },
+    "family_id": "gptrans-clean-chemical-aux",
+    "hypothesis": {
+      "alternative_explanations": [
+        "Additional supervision may only improve early optimization; compressed head may remove the paper benefit; labels may be redundant."
+      ],
+      "changed_mechanism": "Clean-input graph-level descriptor and path-fingerprint supervision, removable at inference.",
+      "cheapest_falsifier": "Synthetic CPU label failures or excessive future matched GPU overhead.",
+      "decision_changed_if_negative": "Stop or repair infrastructure without consuming an evaluation role.",
+      "decision_changed_if_positive": "Prepare role-bound cache and GPU equivalence profile after completing the trainer adapter.",
+      "expected_native_cost_ref": "C-chemical-aux-cpu-prospective",
+      "hypothesis_id": "H-chemical-aux-feasibility",
+      "observed_deficiency": "Accepted small GPTrans reference leaves development error; earlier auxiliary-like gains eroded at 500K. A missing chemical representation is unproven.",
+      "related_closed_family_ids": [
+        "gptrans-t-input-embedding-initialization",
+        "pcqm-k1-joint-atom-reconstruction"
+      ],
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ]
+    },
+    "owner": "desktop",
+    "question": "Is clean graph-level chemical auxiliary supervision technically feasible with minimal inference cost?",
+    "state_at_start": {
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_chemical_aux/protocol.md",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_chemical_aux/protocol.md",
+        "experiments/pcqm_gptrans_chemical_aux/pair_contract_draft.md"
+      ],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_chemical_aux/protocol.md"
+      ],
+      "source_commit": "7dd15425c4292ee6487bb1ac64159a4e47cd67fa",
+      "source_config_identity": "dff37a8cc151fe7a58271117a8325195237a356d17f0156477f6f37feb0b634a"
+    },
+    "track": "B",
+    "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+  }
+}

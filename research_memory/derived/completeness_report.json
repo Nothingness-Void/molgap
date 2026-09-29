@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 61,
+    "trajectories_total": 62,
     "with_complete_native_measurement": 5,
-    "with_cost_event": 50,
-    "with_incomplete_native_measurement": 45,
+    "with_cost_event": 51,
+    "with_incomplete_native_measurement": 46,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,8 +15,9 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 41,
+      "count": 42,
       "items": [
+        "T-gptrans-chemical-aux-feasibility",
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -88,8 +89,9 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 45,
+      "count": 46,
       "items": [
+        "T-gptrans-chemical-aux-feasibility",
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-gptrans-100k-local-joint-control-20260925",
@@ -158,8 +160,9 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 30,
+      "count": 31,
       "items": [
+        "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
@@ -195,8 +198,9 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 11,
+      "count": 12,
       "items": [
+        "T-gptrans-chemical-aux-feasibility",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",

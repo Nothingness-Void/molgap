@@ -452,11 +452,14 @@ class FrozenEpochScheduler:
         self.epoch = int(state["epoch"])
 
 
-def _make_training_state(initial_state_path: Path, variant: str = "reference"):
+def _make_training_state(initial_state_path: Path, variant: str = "reference", *, objective_config=None):
     import torch
 
     model = _make_model(initial_state_path, variant).to("cuda")
     _verify_model_identity(model)
+    if objective_config is not None:
+        from .gptrans_objective import GPTransObjective
+        model._training_objective = GPTransObjective(model, objective_config)
     optimizer = make_adamw_compat(
         model.parameters(),
         lr=LEARNING_RATE,
@@ -469,14 +472,21 @@ def _make_training_state(initial_state_path: Path, variant: str = "reference"):
     return model, optimizer, scheduler, ema
 
 
-def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bool):
+def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bool,
+                    objective=None, loss_metrics: dict | None = None):
     import torch
     import torch.nn.functional as functional
 
     optimizer.zero_grad(set_to_none=True)
-    prediction = _forward(model, batch)
-    target = (batch.y.view(-1).float() - mean) / std
-    loss = functional.l1_loss(prediction, target)
+    if objective is None:
+        if hasattr(model, "_chemical_aux_head"):
+            raise RuntimeError("Auxiliary model requires an explicit training objective")
+        prediction = _forward(model, batch)
+        target = (batch.y.view(-1).float() - mean) / std
+        loss = functional.l1_loss(prediction, target)
+        metrics = {"gap_l1_normalized": loss.detach(), "total_loss": loss.detach()}
+    else:
+        loss, metrics = objective.loss(model, batch, mean, std)
     if check_finite and not bool(torch.isfinite(loss)):
         raise RuntimeError("Training loss became non-finite")
     loss.backward()
@@ -485,7 +495,10 @@ def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bo
         raise RuntimeError("Gradient norm became non-finite")
     optimizer.step()
     ema.update(model)
-    return loss.detach()
+    if loss_metrics is not None:
+        loss_metrics.update(metrics)
+    # Existing callers accumulate this as Gap MAE, never as the auxiliary total.
+    return metrics["gap_l1_normalized"]
 
 
 def _evaluate(model, ema, graphs, mean, std) -> dict:
@@ -761,7 +774,11 @@ def run_preflight(
     return result
 
 
-def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference") -> None:
+def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference", objective=None) -> None:
+    if hasattr(model, "_chemical_aux_head") and objective is None:
+        raise RuntimeError("Auxiliary checkpoint requires explicit objective metadata")
+    if objective is not None and objective.model is not model:
+        raise RuntimeError("Checkpoint objective belongs to a different model")
     atomic_torch_save(
         path,
         {
@@ -779,7 +796,9 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
             "runtime_certificate_id": runtime_certificate_id,
             "source_archive_sha256": source_archive_sha256,
             "rng_state": capture_rng_state(),
-            "scientific_fields": _scientific_fields(),
+            "scientific_fields": (_scientific_fields() if objective is None
+                                  else objective.scientific_fields(_scientific_fields())),
+            **({} if objective is None else objective.checkpoint_metadata()),
         },
     )
 
@@ -873,6 +892,11 @@ def run_training(
             raise RuntimeError("Checkpoint format changed")
         if checkpoint.get("variant", "reference") != variant:
             raise RuntimeError("Checkpoint architecture variant changed")
+        if "training_objective" in checkpoint:
+            from .gptrans_objective import GPTransObjectiveConfig, validate_objective_checkpoint
+            validate_objective_checkpoint(checkpoint, GPTransObjectiveConfig())
+        elif any(name.startswith("_chemical_aux_head.") for name in checkpoint["model"]):
+            raise RuntimeError("Auxiliary checkpoint has no training objective identity")
         if checkpoint.get("scientific_fields") != _scientific_fields():
             raise RuntimeError("Checkpoint scientific contract changed")
         if checkpoint.get("runtime_certificate_id") != certificate_id:

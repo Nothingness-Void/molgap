@@ -897,6 +897,11 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "T-gptrans-chemical-aux-feasibility",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-100k-local-joint-control-20260925",
       "type": "prior_evidence"
     },
@@ -1143,6 +1148,11 @@
     {
       "source": "pcqm-gptrans-reference-k1pair-100k-s42",
       "target": "TB-gptrans-frozen-transfer-probe-100k-to-500k",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "T-gptrans-chemical-aux-feasibility",
       "type": "reference_used"
     },
     {
@@ -1542,6 +1552,10 @@
     {
       "id": "pcqm-xian-determinism-audit-20260915",
       "type": "evidence"
+    },
+    {
+      "id": "T-gptrans-chemical-aux-feasibility",
+      "type": "trajectory"
     },
     {
       "id": "TB-distance-angle-triangle-500k-20260911",
