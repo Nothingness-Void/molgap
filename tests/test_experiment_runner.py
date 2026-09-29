@@ -414,7 +414,7 @@ def test_symlink_output_rejected(spec, tmp_path, forbid_spawn):
 
 @pytest.mark.parametrize("corruption", [
     "missing", "syntax", "noncanonical", "duplicate", "nan", "identity", "pid", "metadata",
-    "error", "count", "duration", "timestamp", "authority", "status", "exitcode", "running",
+    "error", "count", "duration", "timestamp", "authority", "status", "exitcode", "running", "deep",
 ])
 def test_child_result_fail_closed(spec, tmp_path, monkeypatch, corruption):
     monkeypatch.setenv("CUDA_VISIBLE_DEVICES", "parent")
@@ -431,6 +431,8 @@ def test_child_result_fail_closed(spec, tmp_path, monkeypatch, corruption):
         path.unlink()
     elif corruption == "syntax":
         raw = b"{"
+    elif corruption == "deep":
+        raw = b"[" * 10000 + b"0" + b"]" * 10000
     elif corruption == "noncanonical":
         raw = json.dumps(result, indent=2).encode()
     elif corruption == "duplicate":

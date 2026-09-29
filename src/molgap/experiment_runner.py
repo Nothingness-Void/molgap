@@ -251,7 +251,7 @@ def _finish(record, spec, worker):
         _check_result(loaded, result, spec, arm, worker,
                       process.pid if process is not None else None)
         result = loaded
-    except (OSError, ValueError, TypeError) as exc:
+    except (OSError, ValueError, TypeError, RecursionError, OverflowError) as exc:
         error = error or {"type": type(exc).__name__, "message": str(exc)}
     exitcode = process.exitcode if process is not None else None
     if record.get("timed_out"):
