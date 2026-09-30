@@ -1,0 +1,28 @@
+{
+  "format": "molgap-gptrans-v5-audit-recheck-v1",
+  "observed_utc": "2026-09-30 03:22:57 UTC",
+  "owner_scope": "server",
+  "kernel_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+  "version": 6,
+  "scheduler_state": "COMPLETE",
+  "related_cpu_kernel": {
+    "kernel_id": "kaseichou/molgap-gptrans-cpu-parity-v1",
+    "scheduler_state": "COMPLETE"
+  },
+  "retained_artifact_hashes_reverified": true,
+  "verified_artifacts": [
+    "last_checkpoint.pt",
+    "canonical_trace.json",
+    "best_model.pt",
+    "development_predictions.pt"
+  ],
+  "trace_observations": 60,
+  "acceptance_ref": "experiments/pcqm_gptrans_v5_audit_reference/results/final_acceptance.json",
+  "selected_ema_mae_eV": 0.15601448806226254,
+  "final_live_mae_eV": 0.14917440712451935,
+  "best_epoch_zero_based": 59,
+  "allocated_t4_device_hours": 5.01555726840833,
+  "strict_rml_finalization": "not_yet_performed",
+  "submitted_successor": null,
+  "local_model_inference_executed": false
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "scale": 100,
+    "role": "original_100k",
+    "purpose": "prediction-reproduction",
+    "rows": 50000
+  },
+  {
+    "scale": 100,
+    "role": "unseen_500k",
+    "purpose": "representation-panel",
+    "rows": 1024
+  },
+  {
+    "scale": 500,
+    "role": "unseen_500k",
+    "purpose": "prediction-reproduction",
+    "rows": 50000
+  },
+  {
+    "scale": 500,
+    "role": "unseen_500k",
+    "purpose": "representation-panel",
+    "rows": 1024
+  }
+]

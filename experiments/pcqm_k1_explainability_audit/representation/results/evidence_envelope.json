@@ -1,0 +1,96 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-representation-100k-500k-123315282",
+  "track": "C",
+  "scope": "frozen_checkpoint_representation_NO_TRAIN_CONTEXT_ONLY",
+  "legacy_contract": "none-prospective-v5",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted",
+    "comparison_status": "context_only",
+    "scientific_status": "no_train_no_supported_collapse_mechanism",
+    "transfer_status": "not_a_causal_transfer_comparison",
+    "budget_decision": "stop_under_contract",
+    "full_handoff_status": "not_authorized"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "consumed",
+    "internal_development_500000_550000": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_explainability_audit/representation/decision.md",
+      "experiments/pcqm_k1_explainability_audit/representation_protocol.md",
+      "experiments/pcqm_k1_explainability_audit/representation/input_binding.json",
+      "experiments/pcqm_k1_explainability_audit/representation/submission.json",
+      "experiments/pcqm_k1_explainability_audit/representation/rml_plan/trajectory.json"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "role_events.json",
+      "locator": "experiments/pcqm_k1_explainability_audit/representation/results/role_events.json",
+      "sha256": "7fcb09bb584e42b7aa5007c0b1045e38940f46eb99dabb342d60bcb0eb4078bd",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "scheduler.json",
+      "locator": "experiments/pcqm_k1_explainability_audit/representation/results/scheduler.json",
+      "sha256": "0762869097e09ded67f2c323edcdec445070c110c9c1a2ae224ce5c1d327cb0f",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "completion_manifest.json",
+      "locator": "experiments/pcqm_k1_explainability_audit/representation/results/completion_manifest.json",
+      "sha256": "2dfbb67c3c20ea36a47e21c8cd725e211cd1fed850ee67c02b2c556e5b8b85c3",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "sacct.txt",
+      "locator": "experiments/pcqm_k1_explainability_audit/representation/results/sacct.txt",
+      "sha256": "e0f8cdffeb7dd2a86d64e76092b8a19e641ef806a0469bc456d55960b87869b9",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "acceptance.json",
+      "locator": "experiments/pcqm_k1_explainability_audit/representation/results/acceptance.json",
+      "sha256": "e3e67753d9f3662892d43019860f0222e27e733f793b9a9ad78241861016d773",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "remote_sha256.txt",
+      "locator": "experiments/pcqm_k1_explainability_audit/representation/results/remote_sha256.txt",
+      "sha256": "8d33d722dae8ea62214c46d0b697bd8732432ea727c183bd0e8eb4a5080ae056",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "analysis.json",
+      "locator": "experiments/pcqm_k1_explainability_audit/representation/results/analysis.json",
+      "sha256": "34b84a60cde96e03375a3cbb0f9ba46d998ced318ed08cc099019ced5c2a5880",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "reproduction.json",
+      "locator": "experiments/pcqm_k1_explainability_audit/representation/results/reproduction.json",
+      "sha256": "174c662754701be70c1b028bb4875a9accdba5bdf8ceee84b432cf46ee038ec1",
+      "availability": "repository_retained"
+    },
+    {
+      "name": "role_row_manifests.json",
+      "locator": "experiments/pcqm_k1_explainability_audit/representation/results/role_row_manifests.json",
+      "sha256": "afb4c803405f3f567be06642086b39a7b468ea263a2c3e75d9bd060bfc6daca6",
+      "availability": "repository_retained"
+    }
+  ],
+  "migration": {
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false,
+    "migrated_at": "2026-09-30T03:11:56Z",
+    "verification_scope": "saved JSON acceptance; actual remote inference declared in terminal metadata; RML publication blocked"
+  }
+}

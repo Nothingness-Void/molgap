@@ -1,0 +1,28 @@
+{
+  "format": "molgap-representation-role-row-manifests-v1",
+  "authority": "experiments/pcqm_k1_explainability_audit/representation/results/role_events.json",
+  "roles": {
+    "internal_development_100000_150000": {
+      "source_idx_start": 100000,
+      "source_idx_stop": 150000,
+      "rows": 50000,
+      "ordering": "ascending",
+      "purpose": "historical_prediction_reproduction_only",
+      "authority_ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json"
+    },
+    "internal_development_500000_550000": {
+      "source_idx_start": 500000,
+      "source_idx_stop": 550000,
+      "rows": 50000,
+      "ordering": "ascending",
+      "purpose": "historical_prediction_reproduction_and_frozen_representation_panel",
+      "authority_ref": "experiments/pcqm_k1_pair_token_scale_attribution/results/round1_terminal.json",
+      "panel_ref": "experiments/pcqm_k1_explainability_audit/representation/row_manifest.json",
+      "panel_rows": 1024,
+      "panel_selection": "predeclared_label_independent_SHA256"
+    }
+  },
+  "training_membership_accessed": false,
+  "selection_used": false,
+  "protected_roles_read": false
+}

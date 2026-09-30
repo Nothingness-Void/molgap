@@ -76,11 +76,14 @@ replay-ready causal comparison, G1/G2, additional seed, 500K, or protected role
 is released. Authority: [decision](experiments/pcqm_gptrans_v5_audit_reference/decision.md)
 and [acceptance](experiments/pcqm_gptrans_v5_audit_reference/results/final_acceptance.json).
 
-The server-owned frozen K1 representation diagnostic is submitted on Kunshan
-as job `123315282` (30-minute cap). It compares accepted 100K/500K checkpoints
-on one predeclared development panel without training or protected-role access.
-It has a prospective NO_TRAIN plan, not a scientific result. Operational and
-terminal authority: [status](experiments/pcqm_k1_explainability_audit/representation/STATUS.md).
+The server-owned frozen K1 representation diagnostic completed on Kunshan as
+job `123315282` and passed independent saved-JSON acceptance. The same-row
+100K/500K checkpoint contrast does not support a general node-representation
+collapse or a new repair mechanism. Scientific interpretation and monitoring
+are closed; NO_TRAIN RML publication is blocked by the original empty
+prospective run binding, without requiring another compute job. Authority:
+[decision](experiments/pcqm_k1_explainability_audit/representation/decision.md)
+and [status](experiments/pcqm_k1_explainability_audit/representation/STATUS.md).
 
 The server's pure-2D motif-hierarchy CPU sidecar passed its fixed-100K
 full-row and cost/coverage gates. The first two separately frozen K1 motif-graph
@@ -319,11 +322,11 @@ excluded). This is mechanism evidence, not an MAE effect. Authority:
 The user authorized one separate matched GPTrans-T 100K reference rerun to
 obtain the missing V5 live-development trace. Its Kaggle2 T4 first five
 10-epoch segments passed streaming artifact/trace acceptance; version 6 of
-the exact kernel `kaseichou/molgap-gptrans-v5-audit-reference-s42-v1` was
-submitted to resume from the SHA-verified checkpoint at epoch 50. A wrong-slug
-first package attempt failed before training and is infrastructure-only. The
-60-epoch reference and final MAE are not yet accepted. No G1/G2 candidate or
-500K successor is released. Authority:
+the exact kernel `kaseichou/molgap-gptrans-v5-audit-reference-s42-v1` completed
+version 6 from the SHA-verified epoch-50 checkpoint. The final prediction and
+60-epoch trace are accepted. A wrong-slug first package attempt failed before
+training and is infrastructure-only. Strict RML/reference-bundle packaging is
+still pending; no G1/G2 candidate or 500K successor is released. Authority:
 `experiments/pcqm_gptrans_v5_audit_reference/STATUS.md`.
 
 The user reopened three additional evidence-gated Kaggle2 rounds. Round 1

@@ -1,0 +1,25 @@
+{
+  "accepted": true,
+  "comparison_class": "CONTEXT_ONLY",
+  "completion_sha256": "2dfbb67c3c20ea36a47e21c8cd725e211cd1fed850ee67c02b2c556e5b8b85c3",
+  "cost_caveat": "native process time differs from allocated Slurm time; no cross-hardware conversion",
+  "job_id": "123315282",
+  "model_inference_executed_by_acceptance": false,
+  "panel_rows": 1024,
+  "runtime_gates": "source-bound completion implies hook, coupling and immutable-state assertions passed; raw per-batch maxima unavailable",
+  "scheduler": {
+    "allocated_cpus": 8,
+    "batch_max_rss_kib": 4378992,
+    "elapsed_seconds": 375,
+    "end_local_scheduler": "2026-09-30T02:44:44",
+    "exit_code": "0:0",
+    "job_id": "123315282",
+    "node": "e06r4n19",
+    "scheduler_timezone": "unknown",
+    "source": "sacct.txt",
+    "start_local_scheduler": "2026-09-30T02:38:29",
+    "state": "COMPLETED",
+    "total_cpu_seconds": 152.876
+  },
+  "training_replay_ready": false
+}
