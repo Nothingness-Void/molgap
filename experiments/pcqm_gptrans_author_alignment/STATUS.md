@@ -52,3 +52,8 @@ RML/comparison admission and a freshly bound GPU release package.
 The request-to-submission five-minute target was missed. The recorded Kaggle
 kernel POST itself took 1.516 seconds; that excludes input engineering,
 preparation, upload and repeated release verification.
+
+The CPU v1 task later ended with ERROR during independent chunk rederivation.
+Its infrastructure diagnosis, original evidence retention and release boundary
+are in [the failure record](results/preparation_failure_v1.md). The local
+chunk-index fix does not qualify complete input acceptance or GPU compute.

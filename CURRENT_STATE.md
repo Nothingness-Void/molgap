@@ -70,8 +70,10 @@ modify or take custody of the desktop full run.
 
 The user authorized one GPTrans G1/G2 input-attribution dual-arm screen.
 CPU-only complete path/state preparation precedes per-arm V5/RML and GPU
-release. The accepted-package CPU dependency is RUNNING on Kaggle2 and bound
-to the existing server B; [physical receipt](experiments/pcqm_gptrans_author_alignment/preparation_submission.json).
+release. The Kaggle2 CPU dependency ended in an independent-rederivation
+indexing error; the local fix is tested, but complete CPU acceptance and GPU
+release remain blocked. [Diagnosis](experiments/pcqm_gptrans_author_alignment/results/preparation_failure_v1.md);
+[physical receipt](experiments/pcqm_gptrans_author_alignment/preparation_submission.json).
 No GPU candidate has been submitted under this authorization yet.
 Authority: [dual-arm protocol](experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md).
 
