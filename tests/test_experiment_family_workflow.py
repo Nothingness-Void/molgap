@@ -100,6 +100,7 @@ def _recipe(family_name):
         "format": "synthetic-family-recipe-v1",
         "family": {"name": family_name, "version": "1"},
         "acceptance_requirements": _expected_requirements(),
+        "metric_semantics": copy.deepcopy(METRIC_SEMANTICS),
     }
 
 
@@ -572,6 +573,52 @@ def test_selected_metric_must_match_predictions_at_selected_trace_row(
     assert result["status"] == "BLOCKED"
     assert any("Selected trace/checkpoint/prediction metric mismatch" in blocker
                for blocker in result["blockers"])
+
+
+@pytest.mark.parametrize("field,value", [
+    ("metric", "RMSE"), ("target", "HOMO"), ("target", "LUMO"),
+    ("role_identity", "train"), ("role_identity", "other-development"),
+    ("direction", "maximize"), ("unit", "hartree"),
+])
+def test_rehashed_trace_cannot_change_frozen_metric_semantics(tmp_path, launch_contexts, field, value):
+    context = launch_contexts[4]["gptrans_t"]
+    root, expected, _, _ = _write_output(tmp_path, context, "gptrans-v1")
+    trace_path = root / "trace.json"
+    trace = json.loads(trace_path.read_bytes())
+    trace["metric_semantics"]["ema_dev_metric"][field] = value
+    trace_path.write_bytes(json_bytes(trace))
+    manifest_path = root / "output_manifest.json"
+    manifest = json.loads(manifest_path.read_bytes())
+    manifest["artifacts"]["trace"]["sha256"] = file_digest(trace_path)
+    manifest_path.write_bytes(json_bytes(manifest))
+    report = inspect_output(root, context=context, expected=expected)
+    assert report["status"] == "BLOCKED"
+    assert "Trace metric semantics disagree with frozen recipe" in report["blockers"]
+
+
+@pytest.mark.parametrize("mutation", ["missing", "wrong_target", "wrong_metric", "same_role", "ema_role"])
+def test_invalid_independent_recipe_metric_semantics_blocks_session(tmp_path, launch_contexts, mutation):
+    from dataclasses import replace
+    recipe = _recipe("gptrans_t")
+    if mutation == "missing":
+        recipe.pop("metric_semantics")
+    elif mutation == "wrong_target":
+        recipe["metric_semantics"]["ema_dev_metric"]["target"] = "HOMO"
+    elif mutation == "wrong_metric":
+        recipe["metric_semantics"]["ema_dev_metric"]["metric"] = "RMSE"
+    elif mutation == "same_role":
+        for field in ("live_dev_metric", "ema_dev_metric"):
+            recipe["metric_semantics"][field]["role_identity"] = "train"
+    else:
+        recipe["metric_semantics"]["ema_dev_metric"]["role_identity"] = "different-development"
+    contract = tmp_path / "bad-contract.json"
+    contract.write_bytes(json_bytes(recipe))
+    context = replace(launch_contexts[4]["gptrans_t"], training_recipe_sha256=file_digest(contract))
+    output = tmp_path / "session"
+    with pytest.raises(ValueError):
+        FamilyOutputSession(output, context, adapter="gptrans-v1", contract=contract,
+                            trajectory_id="synthetic-metrics", metric_semantics=METRIC_SEMANTICS)
+    assert not output.exists()
 
 
 def test_stage_recorder_requires_real_increasing_counts(tmp_path, launch_contexts):
@@ -1084,8 +1131,10 @@ def test_cli_inspect_output_emits_one_blocked_json_object_and_exit_one(
 
 
 @pytest.mark.parametrize("arm_id,adapter,weights", FAMILY_CASES)
+@pytest.mark.parametrize("lifecycle_events", [(), ("checkpoint",), ("checkpoint", "resume"),
+                                             ("checkpoint", "resume", "terminal")])
 def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
-    tmp_path, launch_contexts, arm_id, adapter, weights
+    tmp_path, launch_contexts, arm_id, adapter, weights, lifecycle_events
 ):
     context = launch_contexts[4][arm_id]
     root = tmp_path / f"session-{arm_id}"
@@ -1140,10 +1189,16 @@ def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
         ema_state={"weight": torch.tensor([0.5])} if adapter == "gptrans-v1" else None,
     )
 
+    # Synthetic lifecycle metadata does not create additional completed epochs.
+    for index, event in enumerate(lifecycle_events):
+        session.stage.recorder.append_observation(
+            event=event, checkpoint_identity=f"{index + 1:064x}" if event != "terminal" else None)
     result = session.complete(runtime=_runtime(context), hardware="synthetic-cpu")
 
     assert result["status"] == "MECHANICALLY_VERIFIED", result
     manifest = json.loads((root / "output_manifest.json").read_bytes())
+    assert manifest["progress"]["epochs"] == 2
+    assert len(load_canonical_trace(root / "canonical_trace.json")["observations"]) == 2 + len(lifecycle_events)
     wall, device = manifest["costs"]
     assert (wall["metric"], wall["status"], wall["semantics"]) == (
         "wall_seconds", "measured", "process_wall"

@@ -16,7 +16,7 @@ from .experiment_launch import _safe_local, read_launch_receipt, publish_immutab
 from .experiment_spec import ExperimentSpec, _digest, _identifier, _text
 from .research_memory.paths import repo_local_path
 from .research_memory.trace import (
-    RMLTraceRecorder, file_digest, json_bytes, validate_canonical_trace,
+    RMLTraceRecorder, TRACE_FORMAT, file_digest, json_bytes, validate_canonical_trace,
 )
 from .screen_policy import canonical_fingerprint
 
@@ -45,6 +45,32 @@ def _json(path: Path) -> dict:
 def _positive(value, label):
     if type(value) is not int or value <= 0:
         raise ValueError(f"{label}: expected positive integer")
+
+
+def _metric_semantics(contract: dict) -> dict:
+    """Bind new-protocol metrics to the independently frozen recipe, not outputs."""
+    semantics = contract.get("metric_semantics")
+    validated = validate_canonical_trace({
+        "schema": TRACE_FORMAT, "trajectory_id": "metric-contract",
+        "run_id": "metric-contract", "metric_semantics": semantics, "observations": [],
+    })["metric_semantics"]
+    for name, definition in validated.items():
+        if definition is None:
+            if name != "ema_dev_metric":
+                raise ValueError("Frozen recipe requires train/development metric semantics")
+            continue
+        weights = "ema" if name == "ema_dev_metric" else "live"
+        required = {"metric": "MAE", "unit": "eV", "target": "Gap",
+                    "weights": weights, "direction": "minimize"}
+        if any(definition.get(key) != value for key, value in required.items()):
+            raise ValueError("Frozen recipe requires direct-Gap MAE metric semantics")
+    train_role = validated["live_train_metric"]["role_identity"]
+    development_role = validated["live_dev_metric"]["role_identity"]
+    if train_role == development_role:
+        raise ValueError("Frozen train/development metric roles must differ")
+    if validated["ema_dev_metric"] is not None and validated["ema_dev_metric"]["role_identity"] != development_role:
+        raise ValueError("Frozen live/EMA development metric roles must match")
+    return validated
 
 
 def _artifact_path(root: Path, value: str) -> Path:
@@ -306,9 +332,12 @@ class FamilyOutputSession:
         artifact_adapter(adapter, (context.family_name, context.family_version))
         if file_digest(contract) != context.training_recipe_sha256:
             raise ValueError("Session contract/Spec recipe mismatch")
-        self.expected = _json(Path(contract)).get("acceptance_requirements")
+        declaration = _json(Path(contract))
+        self.expected = declaration.get("acceptance_requirements")
         if not isinstance(self.expected, dict) or set(self.expected) != EXPECTED:
             raise ValueError("Owning recipe lacks frozen acceptance_requirements")
+        if metric_semantics != _metric_semantics(declaration):
+            raise ValueError("Session metric semantics disagree with frozen recipe")
         self.root.mkdir(parents=True, exist_ok=True)
         publish_immutable_bytes(self.root / "training_contract.json", Path(contract).read_bytes())
         self.stage = StageRecorder(self.root / "canonical_trace.json", context, "downstream",
@@ -339,7 +368,8 @@ class FamilyOutputSession:
 
     def complete(self, *, runtime: dict, hardware: str) -> dict:
         import time
-        rows = self.stage.recorder.record["observations"]
+        rows = [row for row in self.stage.recorder.record["observations"]
+                if row["event"] == "observation"]
         if not rows:
             raise ValueError("Cannot complete a session without observed training work")
         progress = {"epochs": len(rows), "optimizer_steps": rows[-1]["optimizer_step"],
@@ -485,6 +515,8 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict) -> 
             raise ValueError("Development target identity mismatch")
         observed["development_mae_eV"] = (prediction.double() - target.double()).abs().mean().item()
         trace = validate_canonical_trace(_json(paths["trace"]))
+        if trace["metric_semantics"] != _metric_semantics(contract):
+            raise ValueError("Trace metric semantics disagree with frozen recipe")
         rows = [r for r in trace["observations"] if r["event"] == "observation"]
         if not rows or any(r["optimizer_step"] is None or r["sample_presentations"] is None or r["epoch_or_pass"] is None for r in rows):
             raise ValueError("Trace missing observed exposure/epoch counters")
@@ -591,8 +623,10 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
                     raise ValueError("Plan artifact hash mismatch")
                 return path
             contract_path = pinned(entry["contract"])
-            if entry["contract"]["sha256"] != arm["training"]["recipe"]["sha256"] or _json(contract_path).get("acceptance_requirements") != entry["expected"]:
+            contract = _json(contract_path)
+            if entry["contract"]["sha256"] != arm["training"]["recipe"]["sha256"] or contract.get("acceptance_requirements") != entry["expected"]:
                 raise ValueError("Acceptance expectations are not pinned by the owning Spec recipe")
+            _metric_semantics(contract)
             comparison = validate_comparison_prelaunch(_json(pinned(entry["comparison_prelaunch"])))
             if not comparison["prelaunch_ready"]:
                 raise ValueError("Owning comparison prelaunch is blocked")

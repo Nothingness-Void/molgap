@@ -36,7 +36,8 @@ def invoke(capsys, args, expected=0):
 
 @pytest.mark.parametrize("command", [None, "validate-spec", "package", "preflight",
                                      "run-diagnostic", "launch-receipt", "terminal",
-                                     "plan-prospective", "check-release", "prepare-release"])
+                                     "plan-prospective", "check-release", "prepare-release",
+                                     "check-acceptance", "inspect-output", "accept-terminal"])
 def test_help(capsys, command):
     with pytest.raises(SystemExit) as error:
         cli.main(([command] if command else []) + ["--help"])
