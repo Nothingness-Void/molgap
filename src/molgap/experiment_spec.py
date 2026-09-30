@@ -82,6 +82,10 @@ ADDONS = MappingProxyType({
         (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_memory")
         for name in ("memory_value", "memory_message")
     },
+    **{
+        (name, "1"): AddonContract("gptrans_t", "input-intervention", "molgap.gptrans_author_variants")
+        for name in ("degree_scale", "path_bond_mean")
+    },
     ("k1_pair_value", "1"): AddonContract(
         "neural_atom_k1", "pair-token-replacement", "molgap.k1_pair_token",
     ),

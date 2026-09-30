@@ -259,6 +259,21 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
         layer_scale=1.0,
         n_targets=1,
     )
+    if variant in ("degree_scale", "path_bond_mean"):
+        if initial_state_path is None:
+            raise RuntimeError("Author input arms require a frozen initialization")
+        from .gptrans_author_variants import DEGREE_INITIAL_SHA256, apply_author_variant
+        payload = torch.load(initial_state_path, map_location="cpu", weights_only=True)
+        model.load_state_dict(payload["model_state"], strict=True)
+        expected = DEGREE_INITIAL_SHA256 if variant == "degree_scale" else EXPECTED_INITIAL_MODEL_SHA256
+        if payload.get("state_sha256") != expected or _state_sha256(model) != expected:
+            raise RuntimeError("Author input initialization differs from frozen tensor identity")
+        if variant == "path_bond_mean":
+            model = apply_author_variant(model, variant)
+        else:
+            # CPU preparation has already scaled these two tables exactly once.
+            model._molgap_author_variant = variant
+        return model
     if initial_state_path is None:
         return apply_variant(model, variant)
     if sha256_file(initial_state_path) != EXPECTED_INITIAL_STATE_ARTIFACT_SHA256:
@@ -306,15 +321,21 @@ def _verify_model_identity(model) -> tuple[int, str]:
     if parameters != EXPECTED_PARAMETERS:
         raise RuntimeError(f"Frozen GPTrans-T parameter count changed: {parameters}")
     initial_sha256 = _state_sha256(model)
-    if initial_sha256 != EXPECTED_INITIAL_MODEL_SHA256:
+    expected_initial = EXPECTED_INITIAL_MODEL_SHA256
+    if getattr(model, "_molgap_author_variant", None) == "degree_scale":
+        from .gptrans_author_variants import DEGREE_INITIAL_SHA256
+        expected_initial = DEGREE_INITIAL_SHA256
+    if initial_sha256 != expected_initial:
         raise RuntimeError(
             "Frozen GPTrans-T seed-42 initialization changed: "
-            f"observed={initial_sha256} expected={EXPECTED_INITIAL_MODEL_SHA256}"
+            f"observed={initial_sha256} expected={expected_initial}"
         )
     return parameters, architecture_sha256
 
 
 def _forward(model, batch):
+    if getattr(model, "_molgap_author_variant", None) == "path_bond_mean":
+        return model.forward_batch(batch).view(-1)
     return model(
         batch.x,
         batch.edge_index,
@@ -546,6 +567,7 @@ def run_preflight(
     platform_id: str,
     initial_state_path: Path,
     variant: str = "reference",
+    path_sidecar_root: Path | None = None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
@@ -557,6 +579,15 @@ def run_preflight(
     assets = validate_fixed_assets(dataset_root, manifest_path, verify_content=True)
     runtime = build_runtime_manifest(determinism)
     train_graphs, train_shards = _load_datasets(assets.train_paths)
+    path_identity = None
+    if variant == "path_bond_mean":
+        if path_sidecar_root is None:
+            raise RuntimeError("Accepted CPU path sidecar is required before GPU training")
+        from .gptrans_author_inputs import attach_paths, validate_sidecar
+        path_identity = validate_sidecar(path_sidecar_root, dataset_root=dataset_root)
+        train_graphs = attach_paths(train_graphs, path_sidecar_root)
+    elif path_sidecar_root is not None:
+        raise RuntimeError("A non-path arm must not consume path inputs")
     if len(train_graphs) != TRAIN_ROWS:
         raise RuntimeError("Loaded training row count changed")
     mean_value, std_value = _target_stats(train_shards)
@@ -673,7 +704,9 @@ def run_preflight(
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
         "variant": variant,
         "parameters": EXPECTED_PARAMETERS,
-        "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
+        "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_author_variants.py" if variant in ("degree_scale", "path_bond_mean") else "gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
+        **({"path_sidecar_identity": path_identity} if path_identity is not None else {}),
+        "initial_state_artifact_sha256": sha256_file(initial_state_path),
         "accepted": True,
         "runtime_certificate_id": certificate_id,
         "runtime_certificate": certificate,
@@ -730,7 +763,7 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
     )
 
 
-def _v5_audit_recorder(path: Path):
+def _v5_audit_recorder(path: Path, *, trajectory_id="TC-gptrans-v5-audit-reference-100k", run_id="gptrans-t-v5-audit-reference-s42"):
     from .research_memory.trace import RMLTraceRecorder
 
     role = "fixed-pcqm4mv2-ogb-train-100k-internal-development-50k"
@@ -740,8 +773,8 @@ def _v5_audit_recorder(path: Path):
             "role_identity": role_identity, "weights": weights, "direction": "minimize",
         }
     return RMLTraceRecorder(
-        path, trajectory_id="TC-gptrans-v5-audit-reference-100k",
-        run_id="gptrans-t-v5-audit-reference-s42",
+        path, trajectory_id=trajectory_id,
+        run_id=run_id,
         metric_semantics={
             "live_train_metric": metric("online batch-weighted MAE", "live", "fixed-pcqm4mv2-ogb-train-100k"),
             "live_dev_metric": metric("development MAE", "live", role),
@@ -788,8 +821,14 @@ def run_training(
     variant: str = "reference",
     v5_audit: bool = False,
     max_epochs_this_job: int | None = None,
+    path_sidecar_root: Path | None = None,
+    trajectory_id: str | None = None,
+    logical_run_id: str | None = None,
 ) -> dict:
-    if v5_audit and variant != "reference":
+    author_arm = variant in ("degree_scale", "path_bond_mean")
+    if author_arm and (not v5_audit or not trajectory_id or not logical_run_id):
+        raise RuntimeError("Author arms require separate prospective live/EMA trace identities")
+    if v5_audit and variant != "reference" and not author_arm:
         raise RuntimeError("V5 audit is frozen for the reference arm only")
     if max_epochs_this_job is not None and (not v5_audit or max_epochs_this_job < 1):
         raise RuntimeError("Segmented training requires a positive V5 audit epoch limit")
@@ -816,6 +855,8 @@ def run_training(
         raise RuntimeError("Preflight source archive changed")
     if preflight.get("source_commit") != source_commit:
         raise RuntimeError("Preflight source commit changed")
+    if author_arm and preflight.get("initial_state_artifact_sha256") != sha256_file(initial_state_path):
+        raise RuntimeError("Author initial-state file differs from preflight")
     certificate = preflight["runtime_certificate"]
     certificate_id = preflight["runtime_certificate_id"]
     runtime = build_runtime_manifest(determinism)
@@ -831,6 +872,16 @@ def run_training(
 
     train_graphs, train_shards = _load_datasets(assets.train_paths)
     development_graphs, _ = _load_datasets(assets.development_paths)
+    if variant == "path_bond_mean":
+        if path_sidecar_root is None:
+            raise RuntimeError("Accepted CPU path sidecar is required")
+        from .gptrans_author_inputs import attach_paths, validate_sidecar
+        if validate_sidecar(path_sidecar_root, dataset_root=dataset_root) != preflight.get("path_sidecar_identity"):
+            raise RuntimeError("CPU path sidecar changed after preflight")
+        train_graphs = attach_paths(train_graphs, path_sidecar_root)
+        development_graphs = attach_paths(development_graphs, path_sidecar_root)
+    elif path_sidecar_root is not None:
+        raise RuntimeError("A non-path arm must not consume path inputs")
     if len(train_graphs) != TRAIN_ROWS or len(development_graphs) != DEVELOPMENT_ROWS:
         raise RuntimeError("Loaded role count changed")
     mean_value, std_value = _target_stats(train_shards)
@@ -871,7 +922,9 @@ def run_training(
 
     audit_recorder = None
     if v5_audit:
-        audit_recorder = _v5_audit_recorder(output / "canonical_trace.json")
+        audit_recorder = (_v5_audit_recorder(output / "canonical_trace.json",
+                          trajectory_id=trajectory_id, run_id=logical_run_id) if author_arm
+                          else _v5_audit_recorder(output / "canonical_trace.json"))
         if trace:
             if any("live_development_mae_eV" not in row for row in trace):
                 raise RuntimeError("Cannot audit-resume an unobserved V4 checkpoint")
@@ -1024,7 +1077,7 @@ def run_training(
     result_sha256 = sha256_file(best_model_path)
     reference = {
         **_scientific_fields(),
-        "run_id": "gptrans-t-100k-v5-audit-reference-seed42" if v5_audit else f"gptrans-t-100k-v4-{variant}-seed42",
+        "run_id": logical_run_id if author_arm else "gptrans-t-100k-v5-audit-reference-seed42" if v5_audit else f"gptrans-t-100k-v4-{variant}-seed42",
         "model_id": f"gptrans_t_core_12x256_pair32/{variant}",
         "architecture_fingerprint": EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"]}),
         "source_archive_sha256": source_archive_sha256,
@@ -1073,5 +1126,10 @@ def run_training(
     if v5_audit:
         completion["v5_audit"] = True
         completion["canonical_trace_sha256"] = sha256_file(output / "canonical_trace.json")
+    if author_arm:
+        completion["trajectory_id"] = trajectory_id
+        completion["logical_run_id"] = logical_run_id
+        completion["initial_state_artifact_sha256"] = sha256_file(initial_state_path)
+        completion["path_sidecar_identity"] = preflight.get("path_sidecar_identity")
     atomic_json(completion_path, completion)
     return completion
