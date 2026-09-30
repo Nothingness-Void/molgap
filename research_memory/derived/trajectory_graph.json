@@ -347,6 +347,11 @@
     },
     {
       "source": "TB-chemical-aux-component-cache-retry2-20260930",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-chemical-aux-component-cache-retry2-20260930",
       "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
       "type": "parent_trajectory"
     },
@@ -358,6 +363,11 @@
     {
       "source": "TB-chemical-aux-component-cache-retry2-20260930",
       "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-chemical-aux-component-cache-retry2-20260930",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4",
       "type": "parent_trajectory"
     },
     {
@@ -421,8 +431,18 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
       "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4",
       "type": "parent_trajectory"
     },
     {
@@ -522,6 +542,11 @@
     },
     {
       "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
       "type": "parent_trajectory"
     },
@@ -533,6 +558,11 @@
     {
       "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4",
       "type": "parent_trajectory"
     },
     {
@@ -1032,6 +1062,11 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
       "type": "prior_evidence"
     },
@@ -1043,6 +1078,11 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4",
       "type": "prior_evidence"
     },
     {
@@ -1332,6 +1372,11 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
       "type": "reference_used"
     },
@@ -1343,6 +1388,11 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4",
       "type": "reference_used"
     },
     {
@@ -1584,11 +1634,19 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v3-inconclusive-trace-failure",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
       "type": "evidence"
     },
     {
       "id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v2-no-train-import-failed",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v3-inconclusive-trace-failure",
       "type": "evidence"
     },
     {
@@ -1816,6 +1874,10 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
       "type": "trajectory"
     },
@@ -1825,6 +1887,10 @@
     },
     {
       "id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4",
       "type": "trajectory"
     },
     {

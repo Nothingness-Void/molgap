@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "1190cf4619f1fd66ba71957af56b227dd4a8c58e757645c62bb4a10996aae563",
+  "source_digest": "5a125987d7bafe6ae588529be93d35383123b28442c983ccf896c63aa966cad0",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -261,9 +261,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/descriptor_aux/decision_inconclusive.md",
       "family_id": "gptrans-clean-chemical-descriptor-aux",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-gptrans-t-100k-v4-reference",
@@ -272,10 +272,30 @@
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/descriptor_aux/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/descriptor_aux/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v3-inconclusive-trace-failure"
+      ],
       "track": "B",
       "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+      "family_id": "gptrans-clean-chemical-descriptor-aux",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-gptrans-t-100k-v4-reference",
+        "TB-chemical-aux-component-cache-retry2-20260930",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v4/descriptor_aux/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4"
     },
     {
       "completeness_status": "complete",
@@ -317,9 +337,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/decision_inconclusive.md",
       "family_id": "gptrans-clean-chemical-fingerprint-aux",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-gptrans-t-100k-v4-reference",
@@ -328,10 +348,30 @@
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v3-inconclusive-trace-failure"
+      ],
       "track": "B",
       "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+      "family_id": "gptrans-clean-chemical-fingerprint-aux",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-gptrans-t-100k-v4-reference",
+        "TB-chemical-aux-component-cache-retry2-20260930",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v4/fingerprint_aux/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4"
     },
     {
       "completeness_status": "complete",

@@ -1,0 +1,21 @@
+{
+  "format": "molgap-pcqm-gptrans-t-100k-reference-v4",
+  "rows": [
+    {
+      "epoch": 0,
+      "train_mae_eV": 0.5526964108366045,
+      "development_mae_eV": 0.779376745223999,
+      "best_development_mae_eV": 0.779376745223999,
+      "best_epoch": 0,
+      "learning_rate": 0.00025,
+      "optimizer_steps": 781,
+      "sample_presentations": 99968,
+      "elapsed_seconds": 189.27392317299996,
+      "objective_metrics": {
+        "gap_l1_normalized": 0.4334567139609675,
+        "descriptor_mse": 0.08043796182747229,
+        "total_loss": 0.44150061613466307
+      }
+    }
+  ]
+}

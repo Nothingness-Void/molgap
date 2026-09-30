@@ -7,9 +7,9 @@ while preserving the exported GPTrans inference graph?
 
 Read [STATUS.md](STATUS.md) for submission routing and remaining gates,
 [training_protocol.md](training_protocol.md) for the frozen independent
-descriptor/fingerprint pair, and `experiment_spec_v3.json` for machine identity.
-Per-arm prospective RML records live in `training_prospective_v3/`; submission
-and release observations live in `submission_v3/`. Scientific acceptance is pending.
+descriptor/fingerprint pair, and `experiment_spec_v4.json` for machine identity.
+Per-arm prospective RML records live in `training_prospective_v4/`; submission
+and release observations live in `submission_v4/`. Scientific acceptance is pending.
 
 The original CPU/static feasibility is preserved in `protocol.md`,
 `feasibility.md` and `prospective/`. The failed strict-cache attempt is preserved

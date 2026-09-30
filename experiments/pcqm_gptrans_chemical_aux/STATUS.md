@@ -4,7 +4,7 @@ Owner: desktop, `codex/exp/gptrans-chemical-aux`.
 
 The authorized two-new-direction 100K pair was submitted to Kaggle1. The
 authenticated scheduler observation is RUNNING; see
-[submission_v3/remote_observation.json](submission_v3/remote_observation.json)
+[submission_v4/remote_observation.json](submission_v4/remote_observation.json)
 for its timestamp, actual kernel/version, source/Spec and reconciled receipt.
 This is submission acceptance, not GPU qualification or scientific acceptance.
 
@@ -22,8 +22,12 @@ filename guard blocked packaging; their decisions stay under
 `training_prospective/`. The first submitted kernel version failed before runtime preflight because
 the nested arm CLI did not inherit PYTHONPATH; its immutable submission_v2
 and training_prospective_v2 records preserve that infrastructure failure.
+Kernel version 2 passed runtime/profile gates and completed one epoch per
+arm before the shared Trace rejected a same-exposure checkpoint marker.
+Its INCONCLUSIVE records and partial artifacts are preserved under
+training_prospective_v3/ and submission_v3/. No terminal module verdict follows.
 The corrected source and active plans are bound in
-`experiment_spec_v3.json` and `training_prospective_v3/`.
+`experiment_spec_v4.json` and `training_prospective_v4/`.
 
 Local release bindings and both full-frozen-shard loaders passed. Remote
 runtime/resume/optimizer-step overhead gates must pass before formal training.
