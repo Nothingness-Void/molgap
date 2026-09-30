@@ -12,5 +12,7 @@ See `implementation_status.md` for the later integration and remaining input gat
 The attempted full train-label cache has a confirmed input blocker; see
 `cache_decision.md` and the finalized `cache_prospective/rml_finalized/` records.
 No Kaggle training submission followed that failed gate.
+See `label_policy.md` for the subsequent explicit adapter repair. It does not
+qualify a new full cache or alter the failed strict-attempt evidence.
 The `prospective/` record is for CPU/static feasibility only. It is not either
 training arm. Future training needs its own Spec v2 and per-arm plans.

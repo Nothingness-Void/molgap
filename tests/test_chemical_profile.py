@@ -12,10 +12,12 @@ import pytest
 import torch
 
 from molgap import experiment_family_workflow, gptrans_chemical_training
+from molgap.gptrans_chemical_training import ChemicalTrainingAddon
 from molgap import pcqm_gptrans_v4 as core
 from molgap import training_reproducibility
 from molgap.experiment_spec import ExperimentSpec
 from molgap.gptrans_objective import GPTransObjectiveConfig
+from molgap.screen_policy import canonical_fingerprint
 
 PROFILE_PARAMETER_NAMES = frozenset(inspect.signature(
     gptrans_chemical_training.profile_training_overhead
@@ -169,7 +171,86 @@ def test_profile_rejects_different_initial_gap_predictions(monkeypatch, tmp_path
 
 
 class _Cache:
-    identity = {"fixture": "cache-identity"}
+    components = ("descriptors", "fingerprints")
+    label_policy = {
+        "components": ["descriptors", "fingerprints"],
+        "parse_policy": "strict",
+        "descriptor_missing_policy": "reject",
+    }
+    identity = {"fixture": "cache-identity", "label_policy": label_policy}
+
+
+class _ComponentCache:
+    def __init__(self, components, label_policy=None):
+        self.components = tuple(components)
+        self.label_policy = label_policy or {
+            "components": list(self.components),
+            "parse_policy": "strict",
+            "descriptor_missing_policy": "reject",
+        }
+        self.identity = {
+            "fixture": "cache", "components": self.components,
+            "label_policy": self.label_policy,
+        }
+
+
+@pytest.mark.parametrize(
+    ("descriptor_weight", "fingerprint_weight", "cache_components", "accepted"),
+    [
+        (0.1, 0.0, ("descriptors",), True),
+        (0.0, 0.1, ("fingerprints",), True),
+        (0.1, 0.1, ("descriptors", "fingerprints"), True),
+        (0.1, 0.0, ("fingerprints",), False),
+        (0.0, 0.1, ("descriptors",), False),
+        (0.1, 0.1, ("descriptors",), False),
+    ],
+)
+def test_addon_requires_cache_components_for_positive_weights(
+    descriptor_weight, fingerprint_weight, cache_components, accepted
+):
+    config = GPTransObjectiveConfig(
+        descriptor_weight=descriptor_weight,
+        fingerprint_weight=fingerprint_weight,
+    )
+    cache = _ComponentCache(cache_components)
+
+    if accepted:
+        addon = ChemicalTrainingAddon(config, cache)
+        assert addon.cache is cache
+    else:
+        with pytest.raises(ValueError):
+            ChemicalTrainingAddon(config, cache)
+
+
+def test_v1_default_label_policy_preserves_legacy_loss_fingerprint():
+    config = GPTransObjectiveConfig(descriptor_weight=0.1)
+    addon = ChemicalTrainingAddon(config, _Cache())
+    base = {"loss_fingerprint": "normalized-gap-l1"}
+
+    fields = addon.scientific_fields(base)
+
+    assert fields["loss_fingerprint"] == f"normalized-gap-l1+chemical-aux:{config.identity}"
+
+
+def test_nondefault_label_policy_is_bound_to_loss_fingerprint():
+    config = GPTransObjectiveConfig(descriptor_weight=0.1)
+    policy = {
+        "components": ["descriptors"],
+        "parse_policy": "strict",
+        "descriptor_missing_policy": "reject",
+    }
+    addon = ChemicalTrainingAddon(
+        config,
+        _ComponentCache(("descriptors",), label_policy=policy),
+    )
+    base = {"loss_fingerprint": "normalized-gap-l1"}
+
+    fields = addon.scientific_fields(base)
+
+    assert fields["loss_fingerprint"] == (
+        f"normalized-gap-l1+chemical-aux:{config.identity}:label-policy:"
+        f"{canonical_fingerprint(policy)}"
+    )
 
 
 def _load_run_arm():

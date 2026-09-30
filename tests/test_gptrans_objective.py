@@ -1,10 +1,12 @@
 import math
+from types import SimpleNamespace
+
 import pytest
 import torch
 
 from molgap.gptrans_objective import (
-    GPTransObjectiveConfig, combine_losses, export_gap_state_dict,
-    validate_objective_checkpoint,
+    GPTransObjective, GPTransObjectiveConfig, combine_losses,
+    export_gap_state_dict, validate_objective_checkpoint,
 )
 
 
@@ -51,6 +53,160 @@ def test_auxiliary_gradients_and_gap_metric_separation():
     assert torch.all(auxiliary.grad[:, :200] != 0)
     assert torch.all(auxiliary.grad[:, 200:] != 0)
     assert all(not value.requires_grad for value in metrics.values())
+
+
+def _masked_loss_inputs():
+    prediction = torch.tensor([1.0, -2.0, 3.0], requires_grad=True)
+    target = torch.zeros(3)
+    auxiliary = torch.zeros(3, 712, requires_grad=True)
+    descriptor_target = torch.ones(3, 200)
+    descriptor_target[1] = float("nan")  # Storage placeholder excluded by the mask.
+    fingerprint_target = torch.zeros(3, 512)
+    fingerprint_target[1, 0] = 1.0
+    valid = torch.ones(3, 200, dtype=torch.bool)
+    valid[1] = False
+    return prediction, target, auxiliary, descriptor_target, fingerprint_target, valid
+
+
+def test_descriptor_mask_excludes_only_descriptors_and_gap_keeps_every_row():
+    prediction, target, auxiliary, descriptors, fingerprints, valid = _masked_loss_inputs()
+    config = GPTransObjectiveConfig(descriptor_weight=0.5, fingerprint_weight=0.2)
+
+    loss, metrics = combine_losses(
+        prediction, target, config, auxiliary, descriptors, fingerprints,
+        descriptor_valid_mask=valid,
+    )
+
+    assert metrics["gap_l1_normalized"].item() == 2.0
+    assert metrics["descriptor_mse"].item() == 1.0
+    assert metrics["fingerprint_bce"].item() == pytest.approx(math.log(2.0))
+    assert loss.item() == pytest.approx(2.0 + 0.5 + 0.2 * math.log(2.0))
+    loss.backward()
+    assert torch.all(prediction.grad != 0)  # Gap remains supervised on the masked row.
+    assert torch.all(auxiliary.grad[1, :200] == 0)
+    assert torch.all(auxiliary.grad[[0, 2], :200] != 0)
+    assert torch.all(auxiliary.grad[:, 200:] != 0)  # Fingerprint supervision is unchanged.
+
+
+def test_all_false_descriptor_mask_returns_connected_zero():
+    prediction = torch.tensor([1.0, -1.0], requires_grad=True)
+    auxiliary = torch.zeros(2, 712, requires_grad=True)
+    descriptor_target = torch.full((2, 200), float("nan"))
+    valid = torch.zeros(2, 200, dtype=torch.bool)
+
+    loss, metrics = combine_losses(
+        prediction, torch.zeros_like(prediction),
+        GPTransObjectiveConfig(descriptor_weight=0.5),
+        auxiliary, descriptor_target, descriptor_valid_mask=valid,
+    )
+
+    assert metrics["descriptor_mse"].item() == 0.0
+    assert loss.item() == 1.0  # The independent Gap term remains present.
+    loss.backward()
+    assert prediction.grad is not None and torch.all(prediction.grad != 0)
+    assert auxiliary.grad is not None
+    assert torch.all(auxiliary.grad[:, :200] == 0)
+
+
+@pytest.mark.parametrize(
+    "bad_mask",
+    [
+        torch.tensor([True, False], dtype=torch.bool),
+        torch.ones(3, 200, dtype=torch.uint8),
+        torch.ones(3, 200, dtype=torch.bool, device="meta"),
+    ],
+    ids=["wrong-shape", "non-bool", "wrong-device"],
+)
+def test_descriptor_mask_shape_dtype_and_device_are_validated(bad_mask):
+    with pytest.raises(ValueError):
+        combine_losses(
+            torch.ones(3), torch.zeros(3),
+            GPTransObjectiveConfig(descriptor_weight=0.1),
+            torch.zeros(3, 712), torch.ones(3, 200),
+            descriptor_valid_mask=bad_mask,
+        )
+
+
+def test_unmasked_descriptor_nan_is_rejected():
+    descriptor_target = torch.ones(3, 200)
+    descriptor_target[0, 0] = float("nan")
+    valid = torch.ones(3, 200, dtype=torch.bool)
+    valid[1:] = False
+
+    with pytest.raises(ValueError):
+        combine_losses(
+            torch.ones(3), torch.zeros(3),
+            GPTransObjectiveConfig(descriptor_weight=0.1),
+            torch.zeros(3, 712), descriptor_target,
+            descriptor_valid_mask=valid,
+        )
+
+
+def test_none_mask_preserves_legacy_descriptor_objective():
+    config = GPTransObjectiveConfig(descriptor_weight=0.1)
+    values = (
+        torch.tensor([1.0, -2.0]), torch.zeros(2), config,
+        torch.zeros(2, 712), torch.ones(2, 200),
+    )
+    legacy_loss, legacy_metrics = combine_losses(*values)
+    explicit_loss, explicit_metrics = combine_losses(
+        *values, descriptor_valid_mask=None
+    )
+
+    torch.testing.assert_close(legacy_loss, explicit_loss, rtol=0, atol=0)
+    assert legacy_metrics.keys() == explicit_metrics.keys()
+    for name in legacy_metrics:
+        torch.testing.assert_close(legacy_metrics[name], explicit_metrics[name], rtol=0, atol=0)
+
+
+def test_gptrans_objective_reads_batch_descriptor_mask(monkeypatch):
+    from molgap import pcqm_gptrans_v4 as core
+
+    count = 3
+    prediction = torch.tensor([1.0, -2.0, 3.0], requires_grad=True)
+    auxiliary = torch.zeros(count, 712, requires_grad=True)
+    descriptor_target = torch.ones(count, 200)
+    descriptor_target[1] = float("nan")
+    valid = torch.ones(count, 200, dtype=torch.bool)
+    valid[1] = False
+
+    class Readout:
+        def register_forward_pre_hook(self, callback):
+            self.callback = callback
+            return SimpleNamespace(remove=lambda: None)
+
+    class Model:
+        def __init__(self):
+            self.readout = Readout()
+
+        def _chemical_aux_head(self, features):
+            assert features.shape == (count, 4)
+            return auxiliary
+
+    model = Model()
+    objective = object.__new__(GPTransObjective)
+    objective.model = model
+    objective.config = GPTransObjectiveConfig(descriptor_weight=0.5)
+
+    def synthetic_forward(observed_model, _batch):
+        observed_model.readout.callback(observed_model.readout, (torch.zeros(count, 4),))
+        return prediction
+
+    monkeypatch.setattr(core, "_forward", synthetic_forward)
+    batch = SimpleNamespace(
+        y=torch.zeros(count),
+        chemical_descriptors=descriptor_target,
+        chemical_fingerprint=None,
+        chemical_descriptor_valid_mask=valid,
+    )
+
+    loss, metrics = objective.loss(model, batch, mean=0.0, std=1.0)
+
+    assert metrics["gap_l1_normalized"].item() == 2.0
+    loss.backward()
+    assert torch.all(prediction.grad != 0)
+    assert torch.all(auxiliary.grad[1, :200] == 0)
+    assert torch.all(auxiliary.grad[[0, 2], :200] != 0)
 
 
 @pytest.mark.parametrize("bad_target", [torch.ones(2, 511), torch.full((2, 512), float('nan')), torch.full((2, 512), .5)])

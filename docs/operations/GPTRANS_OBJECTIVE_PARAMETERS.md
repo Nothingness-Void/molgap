@@ -75,6 +75,13 @@ frozen row mapping before assigning them. Never manufacture a role file to
 make an unrelated SMILES export pass. Cache failures preserve row reason codes;
 no training cache is accepted when any row fails.
 
+The explicit repaired cache-v2 capability is documented in
+`experiments/pcqm_gptrans_chemical_aux/label_policy.md`. Component-specific caches
+and the optional descriptor mask bind a new label-policy/loss identity. Legacy
+strict v1 caches are not upgraded. The owning CPU CLI prioritizes known PCQM
+exceptions and stops with a durable failed manifest; exhaustive failure scans
+require `--collect-all-failures`.
+
 Local tests use synthetic SMILES and scalar/tensor loss fixtures, without model
 execution. `tests/test_gptrans_objective_remote.py` is opt-in remote CUDA
 verification for RNG, gradients, EMA restoration and exported prediction

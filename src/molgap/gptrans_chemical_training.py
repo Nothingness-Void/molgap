@@ -10,13 +10,24 @@ class ChemicalTrainingAddon:
             raise ValueError("Enabled chemical supervision requires an accepted label cache")
         if not config.enabled and cache is not None:
             raise ValueError("Control arm must not attach an auxiliary cache")
+        if cache is not None:
+            required = {name for name, weight in (("descriptors", config.descriptor_weight),
+                        ("fingerprints", config.fingerprint_weight)) if weight > 0}
+            if not required <= set(cache.components):
+                raise ValueError("Auxiliary cache lacks components enabled by the objective")
         self.config, self.cache = config, cache
         self.identity = {"objective": config.to_dict(), "objective_sha256": config.identity,
                          "label_cache": None if cache is None else cache.identity}
 
     def scientific_fields(self, base):
-        return {**base, "loss_fingerprint": ("normalized-gap-l1+chemical-aux:" + self.config.identity
-                                             if self.config.enabled else base["loss_fingerprint"])}
+        fingerprint = ("normalized-gap-l1+chemical-aux:" + self.config.identity
+                       if self.config.enabled else base["loss_fingerprint"])
+        if self.cache is not None and self.cache.label_policy != {
+                "components": ["descriptors", "fingerprints"],
+                "parse_policy": "strict", "descriptor_missing_policy": "reject"}:
+            from .screen_policy import canonical_fingerprint
+            fingerprint += ":label-policy:" + canonical_fingerprint(self.cache.label_policy)
+        return {**base, "loss_fingerprint": fingerprint}
 
     def validate_graphs(self, graphs):
         if self.cache is None:

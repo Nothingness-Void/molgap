@@ -31,9 +31,9 @@ SMILES. The full label build then hit a confirmed parsing blocker, recorded
 in `cache_decision.md`; it produced no accepted cache and released no GPU.
 
 Remaining gates, in order:
-1. Resolve the explicit chemical-label input policy described in
-   `cache_decision.md`, then prospectively prepare and accept a complete CPU
-   cache without silently changing frozen training membership.
+1. Freeze a new prospective cache attempt under `label_policy.md`, then prepare
+   and accept complete component-specific CPU caches. The adapter supports the
+   explicit missingness policy, but full input coverage remains unqualified.
 2. Bind verified assets and frozen source to two Spec v2 arms and prospective
    same-run replay records, using the existing experiment CLI.
 3. Package with the existing source builder and Kaggle adapter. Run actual

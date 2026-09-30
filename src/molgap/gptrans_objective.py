@@ -65,7 +65,8 @@ def validate_objective_checkpoint(checkpoint: Mapping, config: GPTransObjectiveC
 
 
 def combine_losses(prediction, target, config, auxiliary_prediction=None,
-                   descriptor_target=None, fingerprint_target=None):
+                   descriptor_target=None, fingerprint_target=None,
+                   descriptor_valid_mask=None):
     """Return a scalar optimized loss and detached, separately named metrics."""
     import torch
     import torch.nn.functional as F
@@ -86,11 +87,22 @@ def combine_losses(prediction, target, config, auxiliary_prediction=None,
                 continue
             if expected is None or expected.shape != actual.shape:
                 raise ValueError(f"{name} target shape mismatch")
-            if expected.device != actual.device or not bool(torch.isfinite(expected).all()):
+            if expected.device != actual.device:
+                raise ValueError(f"{name} targets must be finite and on the prediction device")
+            mask = None
+            if name == "descriptor_mse" and descriptor_valid_mask is not None:
+                mask = descriptor_valid_mask
+                if mask.dtype != torch.bool or mask.shape != actual.shape or mask.device != actual.device:
+                    raise ValueError("Descriptor mask must be aligned boolean targets on the same device")
+            if not bool(torch.isfinite(expected if mask is None else expected[mask]).all()):
                 raise ValueError(f"{name} targets must be finite and on the prediction device")
             if name == "fingerprint_bce" and not bool(((expected == 0) | (expected == 1)).all()):
                 raise ValueError("fingerprint targets must be binary")
-            value = F.mse_loss(actual, expected.float()) if name == "descriptor_mse" else F.binary_cross_entropy_with_logits(actual, expected.float())
+            if mask is not None:
+                value = (F.mse_loss(actual[mask], expected[mask].float()) if bool(mask.any())
+                         else actual.sum() * 0)
+            else:
+                value = F.mse_loss(actual, expected.float()) if name == "descriptor_mse" else F.binary_cross_entropy_with_logits(actual, expected.float())
             metrics[name] = value.detach()
             total = total + weight * value
     metrics["total_loss"] = total.detach()
@@ -144,7 +156,8 @@ class GPTransObjective:
         return combine_losses(prediction, (batch.y.view(-1).float() - mean) / std,
                               self.config, auxiliary,
                               getattr(batch, "chemical_descriptors", None),
-                              getattr(batch, "chemical_fingerprint", None))
+                              getattr(batch, "chemical_fingerprint", None),
+                              getattr(batch, "chemical_descriptor_valid_mask", None))
 
     def checkpoint_metadata(self) -> dict:
         return {"training_objective": self.config.to_dict(),
