@@ -210,6 +210,3 @@ def test_export_rejects_misaligned_official_csv_indices(monkeypatch, tmp_path):
         export_fixed_training_smiles(archive, graph_root, manifest_path, output)
 
     assert not output.exists()
-
-
-
