@@ -13,6 +13,7 @@ experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/prospective/*/decision_no
 platforms/_records/kaggle/training/**/stage_manifest.json -text
 platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/** -text
 research_memory/derived/** -text
+platforms/_records/**/family_outputs/** -text
 experiments/pcqm_gptrans_feature_denoising_100k/decision.md -text
 platforms/_records/ims/convergence_resume_20260919/remote_outputs/**/*.json -text
 experiments/pcqm_distance_angle_500k/results/*.json -text

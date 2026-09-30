@@ -446,4 +446,5 @@ def test_no_remote_or_dynamic_dispatch_in_cli():
     commands = next(action for action in parser._actions if hasattr(action, "choices")
                     and isinstance(action.choices, dict)).choices
     assert set(commands) == {"validate-spec", "package", "preflight", "run-diagnostic",
-                             "launch-receipt", "terminal", "plan-prospective", "check-release"}
+                             "launch-receipt", "terminal", "plan-prospective", "check-release",
+                             "check-acceptance", "inspect-output", "accept-terminal"}

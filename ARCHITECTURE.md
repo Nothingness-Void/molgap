@@ -20,6 +20,8 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 
 | Module | Owns | Edit when |
 |---|---|---|
+| `experiment_family_workflow.py`, `experiment_family_artifacts.py` | Shared producer events, frozen-recipe output inspection and bridge to existing terminal closure | Adding a compatible family output profile; capability limits are in `docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md` |
+| `experiment_launch.py` | Verified local launch receipts and immutable byte publication | Changing launch binding or the shared atomic no-overwrite publisher |
 | `constants.py` | Repository paths, hyperparameters, model registry | Adding or retargeting an explicit registry entry |
 | `graphs.py` | SMILES-to-2D/3D PyG graphs and ETKDG construction | Changing graph or conformer representation |
 | `gine.py` | `GINEWrapper` local-message-passing baseline | Changing the reusable GINE encoder |
