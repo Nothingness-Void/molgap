@@ -21,6 +21,7 @@ from molgap.evidence_pointers import load_json_object
 from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .paired import accepted_reference_evidence, pair_binding, reference_trajectory, validate_pair_observation
 from .roles import validate_observed_role_truth
+from .run_binding import verify_diagnostic_run_binding
 from molgap.v5_common import validate_v5_evidence_envelope
 from .schemas import validate_cost_event, validate_role_event, validate_trace_manifest, validate_trajectory
 from .trace import atomic_write, file_digest, json_bytes, load_canonical_trace, sync_directory, validate_manifest_trace
@@ -186,7 +187,12 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
     run_id = package["run_id"]
     actions = {row["action_id"]: row for row in frozen["actions"]}
     action_id = package["action_id"]
-    if action_id not in actions or run_id not in actions[action_id]["run_ids"]:
+    run_binding = None
+    if package.get("postlaunch_run_binding_ref") is not None:
+        run_binding = verify_diagnostic_run_binding(
+            root, frozen, frozen_bytes, package, has_trace=trace_bytes is not None,
+        )
+    elif action_id not in actions or run_id not in actions[action_id]["run_ids"]:
         raise ValueError("terminal run/action was not frozen in trajectory")
     evidence = copy.deepcopy(package["evidence"])
     validate_v5_evidence_envelope(evidence, repo_root=root)
@@ -209,6 +215,10 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
             raise ValueError("unbound evidence authority")
     prefix = destination.relative_to(root).as_posix()
     updated = copy.deepcopy(frozen)
+    if run_binding is not None:
+        for action in updated["actions"]:
+            if action["action_id"] == action_id:
+                action["run_ids"] = [run_id]
     updated["decision"] = copy.deepcopy(package["decision"])
     if updated["decision"]["outcome"] == "ACTIVE":
         raise ValueError("terminal decision is still ACTIVE")
@@ -244,6 +254,8 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         _action_replay(root, updated)
     files = {"v5_evidence.json": json_bytes(evidence),
              "prospective_snapshot.json": frozen_bytes, "terminal_input.json": json_bytes(package)}
+    if run_binding is not None:
+        files["postlaunch_run_binding.json"] = json_bytes(run_binding)
     replacements = {"trajectory.json": trajectory_path.relative_to(root).as_posix()}
     original_evidence = repo_local_path(root, trajectory_path.parent / "v5_evidence.json")
     if original_evidence.is_file():

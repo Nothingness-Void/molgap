@@ -66,3 +66,12 @@ live in [policies/](policies/README.md). `backtest-screening` retains its existi
 grouping output; `backtest-policy` supplies evaluated policy reports. Rebuild
 also writes `replay_pool.json` and `policy_backtest.json`. Historical external
 traces without a retained canonical artifact and hash remain explicit exclusions.
+
+For a scheduler-assigned ID absent from an otherwise frozen prospective
+NO_TRAIN diagnostic, terminal packages may supply `postlaunch_run_binding_ref`.
+The binding must hash the original trajectory plus real local submission,
+scheduler and started receipts with the same job/source/archive identity.
+Only completed `NO_TRAIN / context_only` diagnostics qualify; training traces,
+existing frozen run overrides, action replay and causal claims are rejected.
+The terminal overlay adds the ID while the original snapshot remains unchanged.
+This provenance repair does not confer training replay readiness.
