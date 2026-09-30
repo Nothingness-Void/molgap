@@ -1,0 +1,35 @@
+{
+  "format": "molgap-trace-run-alias-v1",
+  "operation_receipts": [
+    {
+      "ref": "experiments/pcqm_gptrans_v5_audit_reference/results/segment_01_operation.json",
+      "sha256": "c84f0493c5bc8727ad513ede8f7cfcaf82e8447d8caeec5f2ead2874d88b0fe9"
+    },
+    {
+      "ref": "experiments/pcqm_gptrans_v5_audit_reference/results/segment_02_operation.json",
+      "sha256": "474a4e3dee4f717f34f2c500d7616cfa58006c85e870b7cc5445914b06e64852"
+    },
+    {
+      "ref": "experiments/pcqm_gptrans_v5_audit_reference/results/segment_03_operation.json",
+      "sha256": "46b8a7e5e1cf73562c51f746cfa3d0426eb78186acef5c89eeedd4ea82b68f5d"
+    },
+    {
+      "ref": "experiments/pcqm_gptrans_v5_audit_reference/results/segment_04_operation.json",
+      "sha256": "b04007219afde152fb8e091f1a8582c5751048aef9fa0a11b13f24e749b5c443"
+    },
+    {
+      "ref": "experiments/pcqm_gptrans_v5_audit_reference/results/segment_05_operation.json",
+      "sha256": "2965c7adb85006dd9391e311137ccf8311b5ffe7008a15b31e81943d5b1ac034"
+    },
+    {
+      "ref": "experiments/pcqm_gptrans_v5_audit_reference/results/segment_06_operation.json",
+      "sha256": "5d58521ccd61b736971340a6d401bf4b43491149c0d87cd569ec8c5dcaf1438a"
+    }
+  ],
+  "prospective_run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+  "raw_run_id": "gptrans-t-v5-audit-reference-s42",
+  "raw_trace_ref": "platforms/_records/kaggle/training/gptrans_v5_audit_reference/segment_06/gptrans_v5_audit_reference/training/canonical_trace.json",
+  "raw_trace_sha256": "99d04d45fb53cfd364c312b1a0abdc9bd2a60ae3ad48a50a70c04a8885a8a9db",
+  "semantics": "Header-only identity reconciliation; all observed rows preserved unchanged",
+  "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+}

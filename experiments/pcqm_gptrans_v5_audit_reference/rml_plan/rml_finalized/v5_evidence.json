@@ -1,0 +1,115 @@
+{
+  "artifacts": [
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/run_alias.json",
+      "name": "run_alias.json",
+      "sha256": "57da96f4247ac9244a5928f9b2fbe9109bf403ce3383e94743fb1bb3d6760bb0"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/canonical_trace.json",
+      "name": "canonical_trace.json",
+      "sha256": "e7c75d5f98a2849073887139fbb4cc617507b27da599a9564365a20f3ccf1f25"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/prediction_manifest.json",
+      "name": "prediction_manifest.json",
+      "sha256": "162e03c05e6e5dafef394e6e5f953c2ddaf248deee632677c44e5abcab410a95"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/runtime_certificate.json",
+      "name": "runtime_certificate.json",
+      "sha256": "a0b6939bad85f1cf58e38695ca40e1b710133bc54ca7e33e2ccc09e900074926"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/observed_metadata.json",
+      "name": "observed_metadata.json",
+      "sha256": "b9a3949824b8bbd02c310780ecec65b5247f7d50737f1ab92972ff976a7b8d54"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/trajectory_analysis.json",
+      "name": "trajectory_analysis.json",
+      "sha256": "b326e5ddb4ed709d8fcd1586ac47d456834a996761d1d0ff6974e69daa2e8cc2"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_v5_audit_reference/results/final_acceptance.json",
+      "name": "final_acceptance.json",
+      "sha256": "843c2dd2324ddafea19fbd401696315ae20fb9ba95630c24049d34d7e51baa15"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_v5_audit_reference/results/final_prediction_acceptance.json",
+      "name": "final_prediction_acceptance.json",
+      "sha256": "414d1459c580da315954ef01609ff23da1160d196960063f678e3eda35c011fe"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/gptrans_v5_audit_reference/segment_06/gptrans_v5_audit_reference/training/completion_manifest.json",
+      "name": "completion_manifest.json",
+      "sha256": "81224096e79969e67794ecfc77d3a8ea99ae56aaed02503afd7dcbe75cf33eb6"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/gptrans_v5_audit_reference/segment_06/gptrans_v5_audit_reference/training/best_model.pt",
+      "name": "best_model.pt",
+      "sha256": "05fde59b10256c29b88b0900ba331830ab77bb447398b61ef076e981eb34ab1c"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/gptrans_v5_audit_reference/segment_06/gptrans_v5_audit_reference/training/development_predictions.pt",
+      "name": "development_predictions.pt",
+      "sha256": "37b57447af7be634dc9c4482a1be569670f23f4247e3066acbe0efe8d7bddcff"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/gptrans_v5_audit_reference/segment_06/gptrans_v5_audit_reference/training/last_checkpoint.pt",
+      "name": "last_checkpoint.pt",
+      "sha256": "ec40f9cb6a522de68a14746d5fdf8723104b4573ae7ba99fe5b5ab33455de23f"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_v5_audit_reference/protocol.md",
+      "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+      "experiments/pcqm_gptrans_v5_audit_reference/role_plan.json",
+      "experiments/pcqm_gptrans_v5_audit_reference/rml_plan/trajectory.json",
+      "experiments/pcqm_gptrans_v5_audit_reference/decision.md",
+      "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-v5-audit-reference-s42",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-30T05:33:05.550618+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "metadata/SHA and saved development tensors only; no local model inference"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "reference_observation_complete",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "matched_reference_observation_rerun_100k",
+  "track": "C"
+}

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v5",
+  "category": "training",
+  "cost_event_id": "cost-TC-gptrans-v5-audit-reference-100k-observed-v5",
+  "evidence_ref": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/observed_metadata.json",
+  "hardware": "Tesla_T4_x2_allocated_x1_used",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.8047330341705556
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.4023665170852778
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+}

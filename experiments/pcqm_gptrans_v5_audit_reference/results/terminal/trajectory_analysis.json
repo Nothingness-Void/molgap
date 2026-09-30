@@ -1,0 +1,68 @@
+{
+  "checkpoints": [
+    {
+      "ema_dev_metric": 1.050013780593872,
+      "epoch_or_pass": 10,
+      "learning_rate": 0.0009797667403204414,
+      "live_dev_metric": 0.21577519178390503,
+      "live_train_metric": 0.20770009864050026,
+      "optimizer_step": 7810,
+      "sample_presentations": 999680
+    },
+    {
+      "ema_dev_metric": 0.34500938653945923,
+      "epoch_or_pass": 20,
+      "learning_rate": 0.0008276029366056701,
+      "live_dev_metric": 0.1805674433708191,
+      "live_train_metric": 0.16463330736853748,
+      "optimizer_step": 15620,
+      "sample_presentations": 1999360
+    },
+    {
+      "ema_dev_metric": 0.2494884729385376,
+      "epoch_or_pass": 30,
+      "learning_rate": 0.0005715862617175061,
+      "live_dev_metric": 0.1753973811864853,
+      "live_train_metric": 0.14237589825344169,
+      "optimizer_step": 23430,
+      "sample_presentations": 2999040
+    },
+    {
+      "ema_dev_metric": 0.1993127018213272,
+      "epoch_or_pass": 40,
+      "learning_rate": 0.0002930002010055578,
+      "live_dev_metric": 0.1579042226076126,
+      "live_train_metric": 0.12284059447395974,
+      "optimizer_step": 31240,
+      "sample_presentations": 3998720
+    },
+    {
+      "ema_dev_metric": 0.1697378307580948,
+      "epoch_or_pass": 50,
+      "learning_rate": 8.029386035082494e-05,
+      "live_dev_metric": 0.1506115198135376,
+      "live_train_metric": 0.10835040988484386,
+      "optimizer_step": 39050,
+      "sample_presentations": 4998400
+    },
+    {
+      "ema_dev_metric": 0.15601448714733124,
+      "epoch_or_pass": 60,
+      "learning_rate": 1e-06,
+      "live_dev_metric": 0.14917440712451935,
+      "live_train_metric": 0.10397376269690176,
+      "optimizer_step": 46860,
+      "sample_presentations": 5998080
+    }
+  ],
+  "ema_decay": 0.9999,
+  "ema_half_life_optimizer_steps": 6931.125226233421,
+  "ema_half_life_train_passes": 8.874680187238695,
+  "final_ema_minus_live_eV": 0.00684008002281189,
+  "final_ten_ema_change_eV": -0.01372334361076355,
+  "format": "molgap-gptrans-live-ema-trajectory-analysis-v1",
+  "interpretation": "EMA lag is consistent with the live/EMA gap; its causal effect or superiority of an alternative selection policy was not tested",
+  "no_successor_release": true,
+  "observations": 60,
+  "scope": "descriptive_single_reference_run"
+}
