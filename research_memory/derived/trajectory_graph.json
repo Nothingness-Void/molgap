@@ -241,6 +241,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-scale-fit-retained-20261001:A001",
+      "target": "experiments/pcqm_scale_fit_retained/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-scale-transfer-attribution:A001",
       "target": "experiments/pcqm_scale_transfer_attribution/analysis.json",
       "type": "action_produced_evidence"
@@ -398,6 +403,11 @@
     {
       "source": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42",
       "target": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-local-selection-probe-20260925",
+      "target": "TB-pcqm-scale-fit-retained-20261001",
       "type": "parent_trajectory"
     },
     {
@@ -651,6 +661,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-pcqm-scale-transfer-reassessment-20260925",
+      "target": "TB-pcqm-scale-fit-retained-20261001",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-gptrans-flow-ablation-100k-s42",
       "target": "TB-gptrans-pair-memory-memory-message-100k-s42",
       "type": "parent_trajectory"
@@ -731,8 +746,18 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+      "target": "TB-pcqm-scale-fit-retained-20261001",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
       "target": "TB-gptrans-local-selection-probe-20260925",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+      "target": "TB-pcqm-scale-fit-retained-20261001",
       "type": "prior_evidence"
     },
     {
@@ -753,6 +778,11 @@
     {
       "source": "pcqm-gptrans-flow-ablation-100k-s42",
       "target": "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-local-selection-probe-20260925",
+      "target": "TB-pcqm-scale-fit-retained-20261001",
       "type": "prior_evidence"
     },
     {
@@ -828,6 +858,11 @@
     {
       "source": "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "target": "TB-gptrans-local-selection-probe-20260925",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-500k-s42",
+      "target": "TB-pcqm-scale-fit-retained-20261001",
       "type": "prior_evidence"
     },
     {
@@ -1102,6 +1137,11 @@
     },
     {
       "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-pcqm-scale-fit-retained-20261001",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-pcqm-scale-transfer-reassessment-20260925",
       "type": "prior_evidence"
     },
@@ -1138,6 +1178,11 @@
     {
       "source": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
       "target": "TB-gptrans-local-selection-probe-20260925",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+      "target": "TB-pcqm-scale-fit-retained-20261001",
       "type": "reference_used"
     },
     {
@@ -1352,6 +1397,11 @@
     },
     {
       "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-pcqm-scale-fit-retained-20261001",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-pcqm-scale-transfer-reassessment-20260925",
       "type": "reference_used"
     }
@@ -1544,6 +1594,10 @@
     },
     {
       "id": "pcqm-route-b-four-encoder-specialist",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-scale-fit-retained-diagnostic-20261001",
       "type": "evidence"
     },
     {
@@ -1768,6 +1822,10 @@
     },
     {
       "id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-scale-fit-retained-20261001",
       "type": "trajectory"
     },
     {

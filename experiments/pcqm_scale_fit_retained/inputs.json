@@ -1,0 +1,132 @@
+{
+  "format": "molgap-scale-fit-retained-inputs-v1",
+  "cache_manifest": {
+    "path": "D:/文档/molgap-exp/molgap-500k-v4-evidence/data/cache/pcqm4mv2_500k_v4/manifest.json",
+    "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+  },
+  "cohorts": {
+    "train": {
+      "start": 0,
+      "stop": 5000,
+      "shard": {
+        "path": "D:/文档/molgap-exp/molgap-500k-v4-evidence/data/cache/pcqm4mv2_500k_v4/train/train_shard_0000.pt",
+        "sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e"
+      }
+    },
+    "development": {
+      "start": 500000,
+      "stop": 505000,
+      "shard": {
+        "path": "D:/文档/molgap-exp/molgap-500k-v4-evidence/data/cache/pcqm4mv2_500k_v4/train/train_shard_0010.pt",
+        "sha256": "1a37dc5d458396b590044d978526822e6d1cb35df223de913a837dc7277d64c1"
+      }
+    }
+  },
+  "source_100k": {
+    "path": "D:/文档/molgap-exp/_staging/gptrans_100k_transfer_pair_20260925/source_v2/source.tar.gz",
+    "sha256": "2be914d332fa37cd92e6bdd880bbf47a0b2cc2040a4fb4a941b34d26830b520c"
+  },
+  "checkpoints": {
+    "reference_100k": {
+      "path": "D:/文档/molgap-exp/_staging/gptrans_100k_transfer_pair_20260925/reference_v2/training/last_checkpoint.pt",
+      "sha256": "be877946ef0599d4565cb5f7b8a28e13050476a85a1e3da3f80358af0d8a5c1c",
+      "factory": "gptrans",
+      "parameters": 5246817,
+      "states": {
+        "live": "model",
+        "ema": "ema"
+      },
+      "authority": {
+        "path": "D:/文档/molgap-exp/_staging/gptrans_100k_transfer_pair_20260925/reference_v2/training/completion_manifest.json",
+        "sha256": "5aaf81195335ca88eb7d56b791023ffbf09295258577e65a05f3600c245e2107"
+      }
+    },
+    "joint_100k": {
+      "path": "D:/文档/molgap-exp/_staging/gptrans_100k_transfer_pair_20260925/joint_v2/training/last_checkpoint.pt",
+      "sha256": "7749309a2dd325a43fd70d4e41384f959bfb3d74e449d291c33fc9dbed3b7568",
+      "factory": "gptrans_noisy_pair_norm",
+      "parameters": 5277400,
+      "states": {
+        "live": "model_state",
+        "ema": "ema_state"
+      },
+      "authority": {
+        "path": "D:/文档/molgap-exp/_staging/gptrans_100k_transfer_pair_20260925/joint_v2/training/completion_manifest.json",
+        "sha256": "cff84dc01e89466c4f14b7074c046c87be1b1e668673651eee08e6e5c955a97a"
+      }
+    },
+    "reference_500k": {
+      "path": "D:/文档/molgap-exp/molgap-500k-v4-evidence/platforms/_records/kaggle/training/pcqm_500k_v4_stage5/gptrans-v7/evidence/gptrans/last_checkpoint.pt",
+      "sha256": "1a74aaad2e3e08da9cad8bdef642e4ca2b2b77c1d240b658049877994a70ae06",
+      "factory": "gptrans",
+      "parameters": 5246817,
+      "states": {
+        "live": "model"
+      },
+      "source_sha256": "4218940805a84dbf69971452e3c113c7f5e8281df8be62371836b8bc3ff2b649",
+      "transform_artifact": {
+        "path": "D:/文档/molgap-exp/molgap-500k-v4-evidence/platforms/_records/kaggle/training/pcqm_500k_v4_stage5/gptrans-v7/evidence/gptrans/best_model.pt",
+        "sha256": "e311f1972ba74ade32e1f16be717c44848235eeafbafd592758775553445c79e"
+      }
+    },
+    "joint_500k": {
+      "path": "D:/文档/molgap/platforms/_records/kaggle/training/pcqm_gptrans_noisy_pair_norm_500k_s42_v1/pcqm_gptrans_noisy_pair_norm_500k/last_checkpoint.pt",
+      "sha256": "7b2e0e0a3b0b8ad2456a6d995d254f53041c8d01b3e3228b83eb5823b3e0e5b4",
+      "factory": "gptrans_noisy_pair_norm",
+      "parameters": 5277400,
+      "states": {
+        "live": "model"
+      },
+      "source_sha256": "684d144d890e9f069df7b50b9f52a3b6e74657cb97b7bf21e13a694229f3bc4c",
+      "transform_artifact": {
+        "path": "D:/文档/molgap/platforms/_records/kaggle/training/pcqm_gptrans_noisy_pair_norm_500k_s42_v1/pcqm_gptrans_noisy_pair_norm_500k/best_model.pt",
+        "sha256": "112153e648928b10784d34b2f01d3f4de097ef51a35e3a9a536ef46bb08c2c72"
+      }
+    }
+  },
+  "missing_states": [
+    "reference_500k.ema",
+    "joint_500k.ema"
+  ],
+  "sources_500k": {
+    "reference": {
+      "path": "D:/\u6587\u6863/molgap-exp/molgap-500k-v4-evidence/platforms/_records/kaggle/staging/pcqm_500k_v4_evidence/source_raw/evidence_source.bin",
+      "sha256": "4218940805a84dbf69971452e3c113c7f5e8281df8be62371836b8bc3ff2b649"
+    },
+    "joint_runner": {
+      "path": "D:/\u6587\u6863/molgap/platforms/_records/kaggle/staging/pcqm_gptrans_noisy_pair_norm_500k/run.py",
+      "sha256": "a33b52a7db0874273fc51753d7c0fd8a29ead6ce44829cdd76ff60d0310834ef"
+    },
+    "joint_payload_sha256": "684d144d890e9f069df7b50b9f52a3b6e74657cb97b7bf21e13a694229f3bc4c"
+  },
+  "saved_100k_commondev_predictions": {
+    "availability": "no_hash_bound_row_payload_locator_in_prior_acceptance",
+    "inspection": "Prior scripts persisted aggregates, not commondev tensors; staged training predictions are historical100Kdev",
+    "action": "bounded5000row development reruns solely for newfixedfitcomparison; preserve oldselectionconclusion"
+  },
+  "authorization": {
+    "authority": "Direct parent instruction approving reduced diagnostic on 2026-10-01; execution requires separate code/run review.",
+    "allowed_roles": [
+      "train_prefix",
+      "reused_internal_development"
+    ],
+    "official_roles_allowed": false,
+    "sealed_roles_allowed": false,
+    "optimizer_updates_allowed": false,
+    "run_review_required": true
+  },
+  "execution": {
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "device_count": 1,
+    "batch_size": 128,
+    "max_inference_seconds": 900,
+    "max_molecule_forwards": 60000
+  },
+  "limitations": [
+    "500K EMA was not retained; no reconstruction.",
+    "Single seed, differing training exposures/platforms and prior development selection; not a causal size-versus-exposure factorial.",
+    "Train prefix is a selected bounded prefix, not a random representative estimate.",
+    "No promotion or new early-stop policy."
+  ]
+}

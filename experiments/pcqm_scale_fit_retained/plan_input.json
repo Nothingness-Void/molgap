@@ -1,0 +1,163 @@
+{
+  "action_inputs_ref": "experiments/pcqm_scale_fit_retained/action_inputs.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "inference",
+      "cost_event_id": "cost-scale-fit-retained-expected",
+      "evidence_ref": "experiments/pcqm_scale_fit_retained/protocol.md",
+      "hardware": "unknown-before-authorized-device-query",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "estimated",
+          "value": 0.25
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "local",
+      "run_id": "local-scale-fit-retained-20261001",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+    }
+  ],
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_scale_fit_retained/protocol.md",
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "known_evidence_ids": [],
+    "known_trajectory_ids": [],
+    "policy_id": "pcqm-scale-fit-retained-diagnostic",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_scale_fit_retained/inputs.json",
+      "experiments/pcqm_500k_v4_evidence/roles/development.json",
+      "experiments/pcqm_gptrans_noisy_pair_norm_500k/roles/development.json"
+    ],
+    "source_commit": "757519915db015c1219148581eb6797c3a9a4765",
+    "state_timestamp": "2026-10-01"
+  },
+  "trajectory": {
+    "actions": [
+      {
+        "action_id": "A001",
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "cost_event_ids": [
+          "cost-scale-fit-retained-expected"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_scale_fit_retained/inputs.json"
+        ],
+        "run_ids": [
+          "local-scale-fit-retained-20261001"
+        ],
+        "source_commit": "757519915db015c1219148581eb6797c3a9a4765",
+        "type": "local_frozen_checkpoint_inference_pending_run_review"
+      }
+    ],
+    "comparison_blockers": [
+      "500K EMA absent.",
+      "Cross-scale exposure/runtime confounded.",
+      "Consumed development role, single seed."
+    ],
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_scale_fit_retained/protocol.md",
+    "decision": {
+      "decision_ref": "experiments/pcqm_scale_fit_retained/decision.md",
+      "next_allowed_actions": [
+        "Parent code/run review; no execution before hash-bound authorization."
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": []
+    },
+    "family_id": "pcqm-scale-fit-retained",
+    "hypothesis": {
+      "alternative_explanations": [
+        "LIVE/EMA weight semantics affect retained fit and relative gains.",
+        "Fixed-cohort train fit and development transfer differ.",
+        "Size, exposure, training runtime and stochasticity remain confounded."
+      ],
+      "changed_mechanism": "No model or optimizer change; six retained terminal states evaluated on two exact 5000-row cohorts.",
+      "cheapest_falsifier": "Evaluate each existing state once per approved cohort; stop on any identity/alignment/finite check or 900-second ceiling failure.",
+      "decision_changed_if_negative": "Keep attribution insufficient_evidence; do not retrain or reconstruct missing EMA.",
+      "decision_changed_if_positive": "Narrow the next unresolved diagnostic to measured fit/weight semantics; no architecture promotion.",
+      "expected_native_cost_ref": "cost-scale-fit-retained-expected",
+      "historical_unknowns": [
+        "500K EMA absent.",
+        "Training-seed variance unknown."
+      ],
+      "hypothesis_id": "H-pcqm-scale-fit-retained-20261001",
+      "observed_deficiency": "Retained evidence does not establish head-only or representation-collapse causality; historical online train metrics and selected development metrics are not same-cohort fit comparisons.",
+      "related_closed_family_ids": [
+        "gptrans-t",
+        "pcqm-scale-transfer-postmortem",
+        "gptrans-500k-frozen-readout"
+      ],
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-local-selection-probe-20260925",
+        "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+        "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+        "pcqm-matched-500k-v4-three-arm",
+        "pcqm-gptrans-noisy-pair-norm-500k-s42"
+      ]
+    },
+    "owner": "desktop",
+    "question": "How does fixed same-training-cohort fit versus development differ between actual100Ktrained and actual500Ktrained reference/joint models? NOT another EMA selection experiment.",
+    "record_mode": "prospective",
+    "reference_bundle_id": null,
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "schema": "molgap-trajectory-v1",
+    "state_at_start": {
+      "budget_snapshot_ref": "experiments/pcqm_scale_fit_retained/protocol.md",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_100k_transfer_control/selection_probe/contract.md",
+        "experiments/pcqm_scale_fit_retained/protocol.md",
+        "experiments/pcqm_scale_fit_retained/inputs.json"
+      ],
+      "parent_trajectory_ids": [
+        "TB-gptrans-local-selection-probe-20260925",
+        "TB-pcqm-scale-transfer-reassessment-20260925"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-local-selection-probe-20260925",
+        "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+        "pcqm-gptrans-100k-local-joint-control-v2-20260925",
+        "pcqm-matched-500k-v4-three-arm",
+        "pcqm-gptrans-noisy-pair-norm-500k-s42"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-100k-local-reference-control-v2-20260925",
+        "pcqm-matched-500k-v4-three-arm"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_scale_fit_retained/inputs.json",
+        "experiments/pcqm_500k_v4_evidence/roles/development.json",
+        "experiments/pcqm_gptrans_noisy_pair_norm_500k/roles/development.json"
+      ],
+      "source_commit": "757519915db015c1219148581eb6797c3a9a4765",
+      "source_config_identity": "Prospective preparation at parent tip plus independently frozen working-source hashes; no commit or replay qualification claimed."
+    },
+    "track": "B",
+    "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+  }
+}

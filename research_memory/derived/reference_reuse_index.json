@@ -195,7 +195,8 @@
       "track": "B",
       "transfer_status": "diagnostic_only",
       "used_by_trajectory_ids": [
-        "TB-gptrans-local-selection-probe-20260925"
+        "TB-gptrans-local-selection-probe-20260925",
+        "TB-pcqm-scale-fit-retained-20261001"
       ]
     },
     {
@@ -979,6 +980,7 @@
         "TB-gptrans-noisy-nodes-500k-s42",
         "TB-gptrans-noisy-pair-norm-500k-s42",
         "TB-gptrans-pair-norm-500k-s42",
+        "TB-pcqm-scale-fit-retained-20261001",
         "TB-pcqm-scale-transfer-reassessment-20260925"
       ]
     },
@@ -1023,6 +1025,27 @@
       "source_envelope": "experiments/pcqm_route_b/v5_evidence.json",
       "track": "B",
       "transfer_status": "task_routed_only",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "fixed_prefix_consumed_role_diagnostic",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-scale-fit-retained-diagnostic-20261001",
+      "role_use": {
+        "internal_development": "selection_used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_prefix": "used"
+      },
+      "scientific_scope": "desktop_retained_same_cohort_fit_diagnostic",
+      "source_envelope": "experiments/pcqm_scale_fit_retained/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "context_only_not_full_qualification",
       "used_by_trajectory_ids": []
     },
     {

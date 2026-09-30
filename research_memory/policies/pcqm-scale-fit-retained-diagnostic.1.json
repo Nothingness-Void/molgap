@@ -1,0 +1,17 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-scale-fit-retained-diagnostic",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {"scientific_contract": "pcqm-scale-fit-retained-diagnostic-v1"},
+  "required_observable_fields": ["user_requested_scope_reviewed"],
+  "action_rule": {"field": "user_requested_scope_reviewed", "operator": "eq", "threshold": 1, "action": "RUN_DIAGNOSTIC"},
+  "borderline_action": "NO_TRAIN",
+  "observation_point": null,
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "cost_model": {"kind": "measured_only", "assumptions": []},
+  "approval": {"approved_by": null, "approved_at": null, "authority_ref": null},
+  "created_from_source_digest": "0b498071d5bee316be4d4c1d0a2ec4892fbdd8aa46e6a3a4580b917bff3aa41f"
+}

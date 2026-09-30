@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 62,
+      "trajectories_total": 63,
       "with_complete_native_measurement": 6,
-      "with_cost_event": 51,
-      "with_incomplete_native_measurement": 45,
+      "with_cost_event": 52,
+      "with_incomplete_native_measurement": 46,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -211,6 +211,56 @@
           },
           "not_applicable_records": 0,
           "unknown_records": 1
+        }
+      },
+      "NVIDIA GeForce RTX 5060": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 1,
+          "unknown_records": 0
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 1,
+            "known_total": 0.006380866722223193
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
         }
       },
       "NVIDIA_GeForce_RTX_5060": {
@@ -712,19 +762,69 @@
           "not_applicable_records": 0,
           "unknown_records": 8
         }
+      },
+      "unknown-before-authorized-device-query": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 0.25
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 1,
+          "unknown_records": 0
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        }
       }
     },
-    "unknown_events": 75
+    "unknown_events": 77
   },
   "evidence": {
-    "validated": 51,
+    "validated": 52,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 42,
+      "count": 43,
       "severity": "INFO"
     },
     {
@@ -734,7 +834,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 45,
+      "count": 46,
       "severity": "WARN"
     },
     {
@@ -754,19 +854,19 @@
     }
   ],
   "roles": {
-    "coarse_historical": 219,
-    "explicit_events": 99,
-    "repeatedly_selected": 8
+    "coarse_historical": 224,
+    "explicit_events": 106,
+    "repeatedly_selected": 9
   },
-  "source_digest": "ff457beb71f8ac924ce05547cbb765703203f23e2bebd06902102b2c34acbd05",
+  "source_digest": "7bf5eb905d2b0493e6b80d551d888026b97fa6b226c9509707b0c66790f3dc13",
   "trajectories": {
-    "count": 62,
+    "count": 63,
     "outcomes": {
       "CLOSED": 9,
       "INCONCLUSIVE": 14,
       "INFRASTRUCTURE_ONLY": 4,
       "NEGATIVE_UNDER_CONTRACT": 14,
-      "NO_TRAIN": 13,
+      "NO_TRAIN": 14,
       "POSITIVE_UNDER_CONTRACT": 8
     }
   },

@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 219,
+  "ambiguous_historical_role_record_count": 224,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -1423,6 +1423,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-scale-fit-retained-diagnostic-20261001",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-scale-fit-retained-diagnostic-20261001",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-fit-retained-diagnostic-20261001",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-fit-retained-diagnostic-20261001",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-scale-fit-retained-diagnostic-20261001",
+      "role_identity": null,
+      "role_name": "train_prefix",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
       "evidence_id": "pcqm-scale-transfer-attribution-no-train",
       "role_identity": null,
       "role_name": "internal_development",
@@ -1535,7 +1570,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 99,
+  "explicit_role_event_count": 106,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -2007,6 +2042,59 @@
         "trajectory_id": "TB-gptrans-500k-frozen-readout-attribution"
       }
     ],
+    "pcqm-fixed500k-dev50k-matched60-v4:5ec13d5aa2bfa0a138ab975f4f0ea560bedf319742d5365394eb374f56cf9490:train_prefix": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-scale-fit-retained-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-scale-fit-retained-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-scale-fit-retained-train-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+      }
+    ],
+    "pcqm-fixed500k-dev50k-matched60-v4:cda1fe04d43255c7d1654462e70556432b649c0bd9b6ceb0f98fdbb8d2c29b8d:internal_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-scale-fit-retained-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-scale-fit-retained-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-scale-fit-retained-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-scale-fit-retained-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+      }
+    ],
     "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [
       {
         "access_kind": "metric_computed",
@@ -2330,6 +2418,7 @@
       "pcqm-matched-500k-v4-three-arm",
       "pcqm-recurrent-graph-state-100k-seed42",
       "pcqm-route-b-four-encoder-specialist",
+      "pcqm-scale-fit-retained-diagnostic-20261001",
       "pcqm-scale-transfer-attribution-no-train",
       "pcqm-scale-transfer-diagnostic-evidence",
       "pcqm-scale-transfer-reassessment-no-train-20260925",
@@ -2382,6 +2471,7 @@
       "pcqm-matched-500k-v4-three-arm",
       "pcqm-recurrent-graph-state-100k-seed42",
       "pcqm-route-b-four-encoder-specialist",
+      "pcqm-scale-fit-retained-diagnostic-20261001",
       "pcqm-scale-transfer-attribution-no-train",
       "pcqm-scale-transfer-diagnostic-evidence",
       "pcqm-scale-transfer-reassessment-no-train-20260925",
@@ -2687,6 +2777,36 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
+      }
+    ],
+    "pcqm-fixed500k-dev50k-matched60-v4:cda1fe04d43255c7d1654462e70556432b649c0bd9b6ceb0f98fdbb8d2c29b8d:internal_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-scale-fit-retained-development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-scale-fit-retained-development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-scale-fit-retained-development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-scale-fit-retained-development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
       }
     ],
     "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [
