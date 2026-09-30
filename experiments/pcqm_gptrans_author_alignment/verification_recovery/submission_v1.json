@@ -1,0 +1,49 @@
+{
+  "status": "submitted",
+  "requested_kernel": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+  "kernel": null,
+  "url": "https://www.kaggle.com/code/kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+  "version_number": 1,
+  "script_version_id": null,
+  "kernel_id": 136535008,
+  "identity_conflicts": [
+    "response_owner_or_ref_conflict",
+    "response_ref_url_conflict"
+  ],
+  "accelerator": "CPU-only",
+  "invalid_dataset_sources": [],
+  "invalid_kernel_sources": [
+    "kaseichou/molgap-gptrans-author-inputs-preparation-v1"
+  ],
+  "invalid_model_sources": [],
+  "invalid_competition_sources": [],
+  "reconciliation_required": true,
+  "release_binding": {
+    "spec_identity": "57af39b2a01a926e9ba90846204406c927ee4b7884e68c9c3fd8562e786e7a63",
+    "package_identity": "7a7273b82eda8169d58d2bc94dcd749aaa0bd8d861f009a632fe0560884a267a",
+    "source_commit": "b509292bc54c79d25db5c655b9f9c9771903f1ea",
+    "source_archive_sha256": "d1917283405080236f66b02ae596f9c095a88498d9298a7d0ec8a27e66dd7d0f"
+  },
+  "platform_response": {
+    "ref": "/code/kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+    "url": "https://www.kaggle.com/code/kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+    "versionNumber": 1,
+    "kernelId": 136535008,
+    "invalidDatasetSources": [],
+    "invalidKernelSources": [
+      "kaseichou/molgap-gptrans-author-inputs-preparation-v1"
+    ],
+    "invalidModelSources": [],
+    "invalidCompetitionSources": []
+  },
+  "authoritative_reconciliation": {
+    "kernel": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+    "kernel_id": 136535008,
+    "version": 1,
+    "status": "ERROR"
+  },
+  "failure_class": "INFRASTRUCTURE_ONLY",
+  "cpu_cost_status": "measurement_missing",
+  "scientific_result": null,
+  "gpu_compute_released": false
+}

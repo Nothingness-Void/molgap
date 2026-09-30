@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "PREPARE_AUTHOR_INPUTS",
+    "field": "user_authorized_dual_arm",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "one-user-authorized-input-preparation",
+    "authority_ref": "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4"
+  },
+  "cost_model": {
+    "assumptions": [
+      "CPU only",
+      "no cross-hardware conversion"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "gptrans-author-input-preparation",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_authorized_dual_arm"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

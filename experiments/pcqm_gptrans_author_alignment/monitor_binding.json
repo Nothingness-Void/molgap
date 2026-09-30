@@ -9,17 +9,17 @@
   "jobs": [
     {
       "slot": "cpu-preparation",
-      "kernel": "kaseichou/molgap-gptrans-author-inputs-preparation-v1",
-      "kernel_id": 136492377,
-      "version": 1,
-      "run_id": "kaseichou/molgap-gptrans-author-inputs-preparation-v1:v1",
+      "kernel": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+      "kernel_id": 136535008,
+      "version": 2,
+      "run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery:v2",
       "closed": false,
-      "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\gptrans_author_inputs_preparation_v1\\monitor\\control_state.json",
-      "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\gptrans_author_inputs_preparation_v1"
+      "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\gptrans_author_inputs_verification_recovery_v2\\monitor\\control_state.json",
+      "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\gptrans_author_inputs_verification_recovery_v2"
     }
   ],
-  "source_commit": "2f64f4f3b75fef0cb71a0b187bb0fc4c890da097",
-  "source_archive_sha256": "ff39f60eb4e2fb05a05f711d0c591da2dceffece1cba1f693834d83de63036bb",
+  "source_commit": "937c392ac9f2f44cd74e9dcbae5211fde7876d8c",
+  "source_archive_sha256": "c94cea87f839d8a2bf636ec64f5e5d31978df78910a3965fda371c5f15eabd02",
   "healthy_action": "SILENT",
   "terminal_action": "durable event and handoff to existing A, without model/thinking override",
   "automatic_training_retry": false,

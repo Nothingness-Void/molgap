@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "d4f5a59d942ac75d0dee70c9f3d15de0b81ddba8ca79b137b5b9ed706b994968",
+  "source_digest": "7b553393120eeb524c7bffd362c535173c30ac3f5bff42f21bf925880b02c875",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -51,6 +51,38 @@
       "result_evidence_ids": [],
       "track": "C",
       "trajectory_id": "TC-gptrans-author-input-preparation"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md",
+      "family_id": "gptrans-author-input-preparation",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-v5-audit-reference-100k"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md",
+      "family_id": "gptrans-author-input-preparation",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-v5-audit-reference-100k"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery-v2"
     },
     {
       "completeness_status": "partial",

@@ -1,0 +1,41 @@
+{
+  "status": "submitted",
+  "requested_kernel": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+  "kernel": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+  "url": "https://www.kaggle.com/code/kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+  "version_number": 2,
+  "script_version_id": null,
+  "kernel_id": 136535008,
+  "identity_conflicts": [],
+  "accelerator": "CPU-only",
+  "invalid_dataset_sources": [],
+  "invalid_kernel_sources": [],
+  "invalid_model_sources": [],
+  "invalid_competition_sources": [],
+  "reconciliation_required": false,
+  "release_binding": {
+    "spec_identity": "15cd565e24cfab9985d56ced73b983de0366172810cb2abb0920a7f309e1fa6c",
+    "package_identity": "bacc10de7459823ccf6816c8fc5dd21fa48a4e3ed7f7b5ed1238f1ba5c22641f",
+    "source_commit": "937c392ac9f2f44cd74e9dcbae5211fde7876d8c",
+    "source_archive_sha256": "c94cea87f839d8a2bf636ec64f5e5d31978df78910a3965fda371c5f15eabd02"
+  },
+  "platform_response": {
+    "ref": "/code/kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+    "url": "https://www.kaggle.com/code/kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+    "versionNumber": 2,
+    "kernelId": 136535008,
+    "invalidDatasetSources": [],
+    "invalidKernelSources": [],
+    "invalidModelSources": [],
+    "invalidCompetitionSources": []
+  },
+  "observed_status_at_qualification": "RUNNING",
+  "remote_entry_sha256": "077339c3d10b202a5c26f2d49963506c6ecabd282bc3d3c2bc41534b1dec50ef",
+  "remote_metadata_sha256": "70aa1e13e8a0e8b1d750bee22672516fa610cfd7020bb715cfbbd39423692fb2",
+  "entry_matches_after_transport_newline_normalization": true,
+  "gpu_enabled": false,
+  "dataset_status_at_release": "ready",
+  "plan_ref": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/trajectory.json",
+  "cpu_acceptance_pending": true,
+  "gpu_compute_released": false
+}
