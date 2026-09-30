@@ -16,7 +16,7 @@ from .research_memory.trace import atomic_write, file_digest, json_bytes
 SOURCE_PIN = b"__PIN_SOURCE_ARCHIVE_SHA256__"
 _MOUNT_SIDECARS = (
     "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json",
-    "experiment_spec.json",
+    "experiment_spec.json", "package_manifest.json",
 )
 
 

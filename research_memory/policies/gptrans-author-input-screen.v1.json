@@ -1,0 +1,17 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "gptrans-author-input-screen",
+  "version": "v1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {"scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4"},
+  "required_observable_fields": ["accepted_complete_author_inputs"],
+  "created_from_source_digest": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "approval": {"activation": "one-user-authorized-G1-G2-screen", "authority_ref": "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md"},
+  "cost_model": {"kind": "measured_only", "assumptions": ["native T4 allocation; no hardware conversion"]},
+  "observation_point": null,
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "action_rule": {"field": "accepted_complete_author_inputs", "operator": "eq", "threshold": true, "action": "RUN_AUTHOR_INPUT_SCREEN"},
+  "borderline_action": "DEFER"
+}

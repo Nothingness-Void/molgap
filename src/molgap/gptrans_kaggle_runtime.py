@@ -63,6 +63,10 @@ def child(stage, variant, context):
     from molgap.gptrans_variant_checks import run_checks
     from molgap.training_reproducibility import atomic_json
     root = ROOT / variant
+    if context.get("author_screen"):
+        from molgap.gptrans_author_screen import author_child
+        author_child(stage, variant, context, root)
+        return
     for key in ("dataset_root", "manifest_path", "source_archive", "initial_state_path"):
         context[key] = Path(context[key])
     common = {**context, "variant": variant, "platform_id": "kaggle2-t4"}
@@ -85,7 +89,8 @@ def worker(variant, device, context, deadline):
     env = os.environ.copy()
     env.update(CUDA_VISIBLE_DEVICES=str(device), MOLGAP_VARIANT=variant,
                MOLGAP_CONTEXT=json.dumps(context), PYTHONUNBUFFERED="1")
-    for stage in ("checks", "preflight", "training"):
+    stages = ("preflight", "training") if context.get("author_screen") else ("checks", "preflight", "training")
+    for stage in stages:
         env["MOLGAP_STAGE"] = stage
         remaining = deadline - time.monotonic()
         if remaining <= 0:
