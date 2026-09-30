@@ -31,6 +31,8 @@ unknown schema fields fail closed. The CLI delegates identity, hash and artifact
 validation to the existing owning modules; it does not reimplement them.
 Spec/descriptor parsers normalize JSON in their library APIs, so this CLI also
 requires their canonical serialization to equal the original input bytes.
+Use `ExperimentSpec(payload).write(path)` to publish canonical immutable Spec
+bytes; identical retries are safe and changed bytes cannot overwrite a frozen file.
 The transport-only `--workflow` file is an exception: readable JSON whitespace
 is allowed; duplicate keys, unknown fields and nonfinite values are rejected.
 
@@ -51,6 +53,13 @@ terminal core. No argument abbreviation, arbitrary worker, callback, dynamic
 import, training shortcut, platform submit command or authority override exists.
 
 ## Commands
+
+`check-preparation --spec ... --workflow ... --repo-root ...` is a read-only
+Spec-v2 input/plan check. It validates transport files and actual prospective
+RML semantics without publication, rebuild, tensor loading or model execution.
+It does not qualify runtime or authorize submission. `prepare-release` runs
+this check automatically before publishing any arm; see the standard workflow
+for capability limits and measured local stage timings.
 
 For GPTrans/EdgeState variant preparation, `prepare-release` composes the
 existing prospective, package, staging and release checks in one local call:

@@ -18,6 +18,7 @@ Everything else uses the following owners:
 
 | Operation | Reusable entry | Input supplied by the experiment |
 |---|---|---|
+| Read-only preparation check | `experiment_cli check-preparation` | Frozen Spec v2 and workflow; no trajectory publication, tensor loading or platform call |
 | Plan + package + upload layout + release check | `experiment_cli prepare-release` | Spec v2 and release workflow configuration |
 | GPTrans arm arguments | `gptrans_screen_adapter.gptrans_screen_arguments` | Actual source package, fixed cache, initialization, transform and optional accepted sidecar |
 | EdgeState arm context | `edge_state_screen_adapter.bind_edge_state_screen` | Actual package, pinned metadata, accepted runtime, train rows and approved statistics |
@@ -39,6 +40,15 @@ effects. Terminal closure can compose the replay-pair check with
 `close_family_replay` without upgrading incomplete records.
 
 ## Local preparation configuration
+
+Construct Specs through `ExperimentSpec(payload).write(path)`. This uses the
+shared canonical UTF-8, no-newline, atomic no-overwrite publisher; identical
+retries are allowed, changed declarations require a distinct reviewed identity.
+Never save CLI stdout (with its framing newline) or generic pretty JSON as a Spec.
+For upload inputs, use `UploadArtifact.from_file(path).to_workflow()` when
+freezing the workflow. This computes **file bytes SHA**, distinct from tensor
+state SHA and target-transform semantic identity. Consumption verifies that
+frozen SHA; it never silently refreshes a changed artifact to make a gate pass.
 
 `prepare-release` accepts `--spec`, `--workflow`, `--repo-root`, and a fresh
 `--output`. The workflow JSON has exactly these fields:
@@ -75,12 +85,37 @@ not silently included as source or rebuilt on a GPU.
 .venv\Scripts\python.exe -m molgap.experiment_cli prepare-release --spec experiments/question/spec.json --workflow experiments/question/release_workflow.json --repo-root . --output platforms/_records/kaggle/packages/question_attempt_v1
 ```
 
-The command first publishes per-arm plans through `plan_prospective`, then uses
+After read-only preparation checks, the command publishes per-arm plans through `plan_prospective`, then uses
 `stage_release_inputs`. Its `workflow.json` retains both results. Upload inputs,
 kernel files, source package and `release.json` are under `release/`.
 The owning platform adapter still rechecks the release report before POST;
 scientific prelaunch and runtime qualification remain separate gates.
 No account selection or platform API call occurs in this command.
+
+Before publication, `prepare-release` automatically executes the same
+read-only checks available independently as:
+
+```powershell
+.venv\Scripts\python.exe -m molgap.experiment_cli check-preparation --spec experiments/question/spec.json --workflow experiments/question/release_workflow.json --repo-root .
+```
+
+The check validates every arm using the actual RML planner's schema, policy,
+reference, closed-route context, pointer and cost rules without writing plans
+or derived files. It also checks selected committed sources, syntax, required
+module presence, LF-normalized recipe SHA, initialization bindings, entry pin,
+and actual upload-file SHA. These failures occur before **any** arm is published.
+It is not a replacement for real-reference scientific prelaunch, dependency
+imports, finite tensor inspection, runtime qualification or platform recheck.
+Run it separately only for a read-only check; do not routinely run it and then
+repeat it via `prepare-release`.
+
+`workflow.json.timings` measures preparation check, prospective publication,
+combined package/stage/release check, and total local preparation with a monotonic
+clock. Failures after publication retain elapsed phase time for reconciliation.
+These measurements exclude addon design, platform upload/POST and monitor handoff;
+they are not an end-to-end submission SLA or a measured five-minute claim.
+Upload and remote restore use the source-package owner's complete sidecar list,
+including `package_manifest.json`; the mount gate checks their exact bytes.
 
 Partial planning or staging failure retains records and diagnostics. Do not
 delete them, retry blindly, or hand-edit canonical RML. Reconcile the retained
