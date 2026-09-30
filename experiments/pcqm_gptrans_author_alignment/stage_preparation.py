@@ -9,7 +9,7 @@ import shutil
 import subprocess
 
 from molgap.constants import REPO_ROOT
-from molgap.experiment_package import build_experiment_source_package
+from molgap.experiment_package import build_experiment_source_package, _name
 from molgap.experiment_preflight import check_release_inputs
 from molgap.experiment_spec import ExperimentSpec
 from molgap.research_memory.plan import plan
@@ -81,14 +81,23 @@ def main():
                                    "wall_hours": {"status": "estimated", "value": 3},
                                    "queue_hours": {"status": "measurement_missing", "value": None}}}],
     }
-    planned = plan(root, proposal, f"{BASE}/preparation_rml")
+    plan_dir = root / BASE / "preparation_rml"
+    if plan_dir.exists():
+        retained = json.loads((plan_dir / "trajectory.json").read_text())
+        if (retained["trajectory_id"] != TRAJECTORY or retained["decision"]["outcome"] != "ACTIVE"
+                or retained["state_at_start"]["source_commit"] != commit
+                or retained["state_at_start"]["source_config_identity"] != canonical_fingerprint(contract)):
+            raise RuntimeError("Existing CPU plan cannot be reused for this package")
+        planned = {"trajectory_id": TRAJECTORY, "status": "PLANNED", "path": f"{BASE}/preparation_rml"}
+    else:
+        planned = plan(root, proposal, f"{BASE}/preparation_rml")
     output.mkdir(parents=True)
     ref_bundle = json.loads((root / "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/reference_bundle.json").read_text())
     reference_contract = json.loads((root / "experiments/pcqm_gptrans_v5_audit_reference/contract.json").read_text())
     def reference(name, value):
         return {"name": name, "version": "1", "sha256": value}
     def hashed(name, value):
-        return reference(name, canonical_fingerprint(value))
+        return reference(name, canonical_fingerprint({"value": value}))
     spec = ExperimentSpec({
         "schema_version": "molgap-experiment-spec-v1", "experiment_id": "gptrans-author-input-preparation",
         "logical_run_id": "gptrans-author-input-preparation-v1",
@@ -119,7 +128,15 @@ def main():
         "terminal_protocol": "molgap-experiment-terminal-descriptor-v1",
     })
     tracked = subprocess.check_output(["git", "ls-files", "-z", "--", "src/molgap"], cwd=root).split(b"\0")
-    paths = [name.decode() for name in tracked if name.endswith(b".py")]
+    paths = []
+    for name in tracked:
+        if not name.endswith(b".py") or b"/archive/" in name:
+            continue
+        try:
+            paths.append(_name(name.decode()))
+        except ValueError:
+            # Package policy remains unchanged; selected dependency checks below fail closed.
+            continue
     paths.append(f"{BASE}/preparation_contract.json")
     source = output / "source"
     package = build_experiment_source_package(spec, root, paths, source)
