@@ -146,8 +146,8 @@ file moves. `tests/test_repository_layout.py` enforces this, checks the
 test-time CLI alias table still resolves, and runs `--help` on one CLI per tree.
 
 The frozen phase 1-7 line and retired production evidence are held on the
-repository's `archive` branch. Do not recreate `production/history/` on the
-desktop delivery branch. Historical model loading, when explicitly needed,
+repository's `archive` branch. Do not recreate retired production history
+directories on the desktop delivery branch. Historical model loading, when explicitly needed,
 uses the local assets under `models/archive/` and `data/cache/archive/`.
 
 ## Asset Map

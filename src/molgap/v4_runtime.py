@@ -123,6 +123,27 @@ def normalized_source_sha256(path: Path) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
+def inspect_frozen_state_artifact(path: Path, *, expected_state_sha256: str) -> dict:
+    """Inspect trusted CPU tensor bytes without constructing or executing a model."""
+    import torch
+
+    payload = torch_load_compat(path, map_location="cpu", weights_only=True)
+    state = payload.get("model_state", payload) if isinstance(payload, Mapping) else None
+    if not isinstance(state, Mapping) or not state or any(
+        not isinstance(k, str) or not torch.is_tensor(v) for k, v in state.items()
+    ):
+        raise ValueError("Initialization must contain a nonempty tensor state dictionary")
+    from .training_reproducibility import assert_finite_state_dict
+    assert_finite_state_dict(state, label="Frozen initialization")
+    observed = state_dict_sha256(state)
+    if observed != expected_state_sha256:
+        raise ValueError("Frozen initialization tensor SHA differs from Spec")
+    if "model_state" in payload and payload.get("state_sha256", observed) != observed:
+        raise ValueError("Initialization envelope tensor SHA is inconsistent")
+    return {"file_sha256": sha256_file(path), "state_sha256": observed,
+            "tensor_count": len(state), "device": "cpu"}
+
+
 def load_frozen_initial_state(
     model,
     path: Path,

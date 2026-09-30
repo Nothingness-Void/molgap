@@ -14,6 +14,8 @@ Reuse these modules instead of copying their logic into an experiment script:
 - `experiment_package.py`: explicit allowlist, source archive and package hash.
 - `experiment_preflight.py`: only the family/mode combinations documented in
   `EXPERIMENT_PREFLIGHT.md`; unsupported means unsupported, not an implicit pass.
+  Its separate `check_release_inputs` checks declared source/recipe/import,
+  serialized dependency and initialization bindings before platform publication.
 - `experiment_runner.py`: metadata probe and model construction diagnostics
   only; it does not train or load a checkpoint.
 - `experiment_launch.py`: local immutable launch/reconciliation receipts only;
@@ -94,7 +96,7 @@ alone and record why two arms were not feasible.
    mapping per independent arm. Supply frozen, SHA-pinned RML plan inputs
    bound to the executable source commit; do not invent missing evidence.
 4. Run `plan-prospective` before any new diagnostic or training experiment,
-   then package the explicit source set and run the supported preflight. A
+   then package the explicit source set, run `check-release`, and run the supported preflight. A
    nonzero planning result may retain published trajectories: reconcile them
    before retrying. If executable source changes before submission, reconcile
    the superseded plan and plan again against the new commit; never hand-edit
