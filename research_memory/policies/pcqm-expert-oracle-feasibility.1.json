@@ -1,0 +1,33 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-expert-oracle-feasibility",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-expert-oracle-feasibility-v1"
+  },
+  "required_observable_fields": [
+    "user_requested_local_oracle_review"
+  ],
+  "action_rule": {
+    "field": "user_requested_local_oracle_review",
+    "operator": "eq",
+    "threshold": 1,
+    "action": "RUN_DIAGNOSTIC"
+  },
+  "borderline_action": "NO_TRAIN",
+  "observation_point": null,
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": []
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  },
+  "created_from_source_digest": "8c63e0423405ee15744440d29ea29377e3b7a49b3e83f6aa4dfe40b4fef8c291"
+}
