@@ -19,6 +19,53 @@ def _pinned_json(path: Path, digest: str) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def export_fixed_training_smiles(archive: Path, graph_root: Path, manifest_path: Path,
+                                 output: Path) -> dict:
+    """Bind a train-only export to the accepted V4 archive and graph row IDs."""
+    import gzip
+    import zipfile
+    import pandas as pd
+    from .pcqm_gptrans_v4 import validate_fixed_assets, TRAIN_ROWS
+    from .pcqm_official_edge_state import load_official_splits, CSV_MEMBER
+
+    assets = validate_fixed_assets(graph_root, manifest_path, verify_content=True)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if sha256_file(archive) != manifest["source"]["official_archive_sha256"]:
+        raise ValueError("Official archive differs from accepted fixed graph provenance")
+    selected = np.arange(TRAIN_ROWS, dtype=np.int64)
+    train = load_official_splits(archive)["train"]
+    if not np.isin(selected, train).all():
+        raise ValueError("Fixed source indices are not exclusively official train rows")
+    # The accepted builder retains official idx as graph source_idx. Only these
+    # frozen train rows and SMILES are parsed; no evaluation targets are read.
+    with zipfile.ZipFile(archive) as bundle, bundle.open(CSV_MEMBER) as member:
+        with gzip.GzipFile(fileobj=member) as stream:
+            frame = pd.read_csv(stream, nrows=TRAIN_ROWS, usecols=["idx", "smiles"])
+    if len(frame) != TRAIN_ROWS or not np.array_equal(frame["idx"].to_numpy(), selected):
+        raise ValueError("Official CSV train row mapping differs from frozen source indices")
+    if frame["smiles"].isna().any():
+        raise ValueError("Training SMILES export has missing rows")
+    output.mkdir(parents=True, exist_ok=False)
+    rows_path = output / "train_smiles.jsonl"
+    payload = b"".join(json_bytes({"source_index": int(i), "smiles": str(s)}) + b"\n"
+                       for i, s in zip(frame["idx"], frame["smiles"], strict=True))
+    atomic_write(rows_path, payload)
+    role = {"role": "train", "source_indices": selected.tolist(),
+            "dataset_identity": "pcqm-fixed100k-v4",
+            "row_identity_semantics": "pcqm-fixed100k-v4-source_idx",
+            "rows_sha256": sha256_file(rows_path),
+            "official_archive_sha256": manifest["source"]["official_archive_sha256"],
+            "fixed_manifest_sha256": sha256_file(manifest_path),
+            "official_row_manifest_sha256": manifest["source"]["official_row_manifest_sha256"],
+            "train_graph_sha256": [sha256_file(p) for p in assets.train_paths],
+            "official_train_membership_verified": True,
+            "protected_target_columns_read": False}
+    role_path = output / "train_role.json"
+    atomic_write(role_path, json_bytes(role))
+    return {"rows": str(rows_path), "rows_sha256": role["rows_sha256"],
+            "role": str(role_path), "role_sha256": sha256_file(role_path)}
+
+
 def build_cache(rows_path: Path, rows_sha256: str, role_path: Path,
                 role_sha256: str, output: Path) -> dict:
     """Rows are a preselected JSONL export, never the entire source dataset.

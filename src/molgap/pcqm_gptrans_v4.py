@@ -831,6 +831,7 @@ def run_training(
     variant: str = "reference",
     runtime_calibration_fingerprint: str | None = None,
     training_addon=None,
+    output_session=None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
@@ -941,6 +942,14 @@ def run_training(
         trace = list(checkpoint["trace"])
         best = float(checkpoint["best_development_mae_eV"])
         best_epoch = int(checkpoint["best_epoch"])
+        if output_session is not None:
+            observations = [r for r in output_session.stage.recorder.record["observations"]
+                            if r["event"] == "observation"]
+            if len(observations) != start_epoch:
+                raise RuntimeError("Family trace and durable training checkpoint disagree")
+            output_session.stage.recorder.resume_event(
+                sha256_file(checkpoint_path), optimizer_step=start_epoch * BATCHES_PER_EPOCH,
+                sample_presentations=start_epoch * BATCHES_PER_EPOCH * PHYSICAL_BATCH)
 
     for epoch in range(start_epoch, EPOCHS):
         learning_rate = scheduler.step(epoch)
@@ -1024,6 +1033,17 @@ def run_training(
             row["objective_metrics"] = {key: float(value.cpu()) / train_count for key, value in objective_sums.items()}
         trace.append(row)
         atomic_json(output / "trace.json", {"format": RUN_FORMAT, "rows": trace})
+        if output_session is not None:
+            output_session.epoch_finished(
+                epoch=epoch + 1, optimizer_step=global_step,
+                sample_presentations=(epoch + 1) * train_count,
+                live_train_metric=row["train_mae_eV"], ema_dev_metric=development["mae_eV"])
+            if improved:
+                output_session.selected(
+                    model_state=best_payload["model"], epoch=epoch + 1,
+                    optimizer_step=global_step, weights="ema",
+                    prediction_eV=development["prediction_eV"],
+                    target_eV=development["target_eV"], source_idx=development["source_idx"])
         _save_checkpoint(
             checkpoint_path,
             epoch=epoch,
@@ -1041,6 +1061,20 @@ def run_training(
             objective=getattr(model, "_training_objective", None),
             training_addon_identity=addon_identity,
         )
+        if output_session is not None:
+            from .experiment_family_workflow import tensor_digest, tensor_safe_rng_state
+            order = torch.tensor([i for batch_ids in DeterministicEpochBatchSampler(TRAIN_ROWS, epoch)
+                                  for i in batch_ids], dtype=torch.int64)
+            output_session.checkpoint(
+                model_state=model.state_dict(), optimizer_state=optimizer.state_dict(),
+                scheduler_state=scheduler.state_dict(), ema_state=ema.state_dict(),
+                rng_state=tensor_safe_rng_state(capture_rng_state()),
+                optimizer_step=global_step, sample_presentations=(epoch + 1) * train_count,
+                cursor={"epoch": epoch + 1, "next_batch": 0,
+                        "sampler_order_sha256": tensor_digest(order, role="source_idx")})
+            output_session.stage.recorder.checkpoint_event(
+                sha256_file(checkpoint_path), optimizer_step=global_step,
+                sample_presentations=(epoch + 1) * train_count)
         print(
             f"gptrans_t_100k_v4/{variant} ep{epoch:02d} train={row['train_mae_eV']:.6f} "
             f"dev={row['development_mae_eV']:.6f}eV best={best:.6f}@{best_epoch} "
