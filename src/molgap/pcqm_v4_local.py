@@ -20,8 +20,8 @@ DATASET_SLUG = "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
 EXPECTED_ROWS = {"train": 500_000, "development": 50_000}
 
 
-def _dataset_file_url(file_name: str) -> str:
-    owner, dataset = DATASET_SLUG.split("/", 1)
+def _dataset_file_url(file_name: str, dataset_slug: str = DATASET_SLUG) -> str:
+    owner, dataset = dataset_slug.split("/", 1)
     encoded = urllib.parse.quote(file_name, safe="")
     return f"https://www.kaggle.com/api/v1/datasets/download/{owner}/{dataset}/{encoded}"
 
@@ -38,6 +38,7 @@ def _download_file(
     expected_sha256: str,
     username: str,
     key: str,
+    dataset_slug: str = DATASET_SLUG,
 ) -> dict:
     destination = Path(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -51,7 +52,7 @@ def _download_file(
     headers = {"Authorization": _authorization(username, key)}
     if offset:
         headers["Range"] = f"bytes={offset}-"
-    request = urllib.request.Request(_dataset_file_url(file_name), headers=headers)
+    request = urllib.request.Request(_dataset_file_url(file_name, dataset_slug), headers=headers)
     with urllib.request.urlopen(request, timeout=120) as response:
         append = offset > 0 and getattr(response, "status", None) == 206
         mode = "ab" if append else "wb"

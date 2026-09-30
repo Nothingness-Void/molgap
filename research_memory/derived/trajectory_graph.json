@@ -311,6 +311,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-v4-100k-reference-s42:A001",
+      "target": "experiments/pcqm_k1_variants_100k/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42:A001",
+      "target": "experiments/v5_legacy_evidence_migration/inventory_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback:A001",
       "target": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_readback/provenance.json",
       "type": "action_produced_evidence"
@@ -1516,6 +1526,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-v4-100k-reference-s42",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-matched-500k-v4-three-arm",
       "type": "evidence"
     },
@@ -1777,6 +1791,10 @@
     },
     {
       "id": "TC-k1-pair-value-decoupled-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-v4-100k-reference-s42",
       "type": "trajectory"
     },
     {

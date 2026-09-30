@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_100K",
+    "field": "matched_pair_unrun",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-two-family-pretraining-v5"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "3c169d7beadb7c4ef87b9b8faa9827151fc9d129e590a306258263258989d8b6",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-two-family-pretraining-v5-launch",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "matched_pair_unrun"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

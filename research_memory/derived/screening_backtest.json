@@ -96,6 +96,13 @@
       ],
       "run_id": "121693799",
       "trajectory_id": "TB-gptrans-t-500k-bridge"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
+      "trajectory_id": "TC-k1-v4-100k-reference-s42"
     }
   ],
   "false_promote_count": null,
@@ -165,5 +172,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 20
+  "trace_count": 21
 }

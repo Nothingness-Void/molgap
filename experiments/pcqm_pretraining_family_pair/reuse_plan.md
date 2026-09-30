@@ -5,9 +5,9 @@ desktop `22af38b37cc60ec1e20ddc93eaff3e467b55007f`. No server merge is proposed.
 
 | Need | Existing owner | Minimal missing adapter |
 |---|---|---|
-| Local atom/bond/group labels, reductions, masking | server `src/molgap/pcqm_local_hierarchy.py`: build_local_label_cache, accept_local_label_cache, LocalHierarchyHeads, _pretrain | Provenance-preserving extraction of local reconstruction into a shared callable; dynamic widths and explicit family feature access |
+| Local atom/bond/group labels, reductions, masking | `qm9_local_hierarchy.pretrain_local_hierarchy`; atom-aligned fixed-cache sidecar | Provenance-preserving extraction of local reconstruction into a shared callable; dynamic widths and explicit family feature access |
 | K1 factory | desktop `src/molgap/qm9_neural_atom.py`; family Spec adapter | Bind exact frozen K1 configuration; no redefinition of model |
-| K1 supervised training and resume | `src/molgap/edge_state_training_core.py`: normalized_gap_step, evaluate_development, save_checkpoint, restore_checkpoint | New pretraining stage and its stage-boundary state; do not copy the training core |
+| K1 supervised training and resume | `src/molgap/pcqm_k1_variants_runner.py`: train_arm | Reuse accepted `pcqm_k1_variants_runner.train_arm` from its original source commit, adding stage/resume hooks only |
 | GPTrans joint factory/objective | `src/molgap/noisy_nodes.py`: make_noisy_nodes_pair_norm_model, _optimizer_step_noisy_nodes | Pretraining feature access and a separate stage; preserve the downstream joint recipe |
 | Immutable config / source / local receipts | experiment_spec, experiment_prospective, experiment_package, experiment_launch | Register the reviewed stage/addon and bind actual assets |
 | Terminal evidence | experiment_terminal plus research_memory terminal pipeline | Per-arm source/cache/reference/role/cost/trace bindings |
@@ -19,7 +19,7 @@ not local hierarchical pretraining. Reuse reviewed configuration/checkpoint
 patterns only if needed; do not wholesale merge that experiment or replace the
 requested pretraining objective with its graph-level targets.
 
-The old hierarchy trainer has hardcoded 192/64 heads and model-specific hooks;
+The reused hierarchy loop has hardcoded legacy defaults and model-specific hooks;
 its cosine horizon changes with epochs and its legacy checkpoints omit some
 RNG/resume identity. It is a scientific implementation reference, not a
 launch-ready template. Extend shared primitives and add static/synthetic tests;

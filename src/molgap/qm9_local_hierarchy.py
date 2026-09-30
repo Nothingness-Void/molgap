@@ -499,14 +499,15 @@ class LocalHierarchyHeads:
             handle.remove()
 
 
-def _make_loader(graphs, *, shuffle: bool, seed: int):
+def _make_loader(graphs, *, shuffle: bool, seed: int, batch_size=BATCH_SIZE, drop_last=False):
     import torch
     from torch_geometric.loader import DataLoader
 
     generator = torch.Generator().manual_seed(seed)
     return DataLoader(
         graphs,
-        batch_size=BATCH_SIZE,
+        batch_size=batch_size,
+        drop_last=drop_last,
         shuffle=shuffle,
         num_workers=0,
         generator=generator,
@@ -563,13 +564,13 @@ def _rng_state(loader, mask_generator=None):
 def _restore_rng(state, loader, mask_generator=None):
     import torch
 
-    torch.set_rng_state(state["torch"])
+    torch.set_rng_state(state["torch"].cpu())
     np.random.set_state(state["numpy"])
     random.setstate(state["python"])
-    loader.generator.set_state(state["loader"])
-    torch.cuda.set_rng_state_all(state["cuda"])
+    loader.generator.set_state(state["loader"].cpu())
+    torch.cuda.set_rng_state_all([value.cpu() for value in state["cuda"]])
     if mask_generator is not None:
-        mask_generator.set_state(state["mask"])
+        mask_generator.set_state(state["mask"].cpu())
 
 
 def train_gap(
@@ -717,6 +718,12 @@ def pretrain_local_hierarchy(
     seed: int,
     source_commit: str,
     cache_sha256: str,
+    family: str | None = None,
+    epochs: int = PRETRAIN_EPOCHS,
+    batch_size: int = BATCH_SIZE,
+    drop_last: bool = False,
+    learning_rate: float = LEARNING_RATE,
+    weight_decay: float = WEIGHT_DECAY,
 ):
     import torch
     import torch.nn.functional as functional
@@ -724,16 +731,18 @@ def pretrain_local_hierarchy(
     output_dir.mkdir(parents=True, exist_ok=True)
     device = torch.device("cuda")
     model = model.to(device)
-    heads = LocalHierarchyHeads(model)
+    from .local_hierarchy_adapter import ExistingLoopHeads
+    heads = LocalHierarchyHeads(model) if family is None else ExistingLoopHeads(model, family)
+    recipe = dict(family=family, epochs=epochs, batch_size=batch_size, drop_last=drop_last, learning_rate=learning_rate, weight_decay=weight_decay)
     heads.module = heads.module.to(device)
     parameters = list(model.parameters()) + list(heads.module.parameters())
     optimizer = torch.optim.AdamW(
-        parameters, lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
+        parameters, lr=learning_rate, weight_decay=weight_decay
     )
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer, T_max=PRETRAIN_EPOCHS, eta_min=1e-6
+        optimizer, T_max=epochs, eta_min=1e-6
     )
-    loader = _make_loader(roles["train"], shuffle=True, seed=seed)
+    loader = _make_loader(roles["train"], shuffle=True, seed=seed, batch_size=batch_size, drop_last=drop_last)
     generator = torch.Generator().manual_seed(seed + 17)
     trace = []
     start_epoch = 0
@@ -746,8 +755,9 @@ def pretrain_local_hierarchy(
             checkpoint.get("source_commit") != source_commit
             or checkpoint.get("cache_sha256") != cache_sha256
             or checkpoint.get("phase") != "local_hierarchy"
-            or checkpoint.get("max_epochs") != PRETRAIN_EPOCHS
+            or checkpoint.get("max_epochs") != epochs
             or checkpoint.get("seed") != seed
+            or (family is not None and checkpoint.get("recipe") != recipe)
         ):
             raise RuntimeError("Pretraining checkpoint contract changed")
         model.load_state_dict(checkpoint["model"])
@@ -757,7 +767,7 @@ def pretrain_local_hierarchy(
         trace = checkpoint["trace"]
         start_epoch = int(checkpoint["epoch"]) + 1
         _restore_rng(checkpoint["rng"], loader, generator)
-    for epoch in range(start_epoch, PRETRAIN_EPOCHS):
+    for epoch in range(start_epoch, epochs):
         model.train()
         heads.module.train()
         totals = {"loss": 0.0, "atom": 0.0, "bond": 0.0, "group": 0.0}
@@ -798,8 +808,10 @@ def pretrain_local_hierarchy(
                 batch.functional_group_y[node_mask].float(),
             )
             loss = atom_loss + bond_loss + 0.5 * group_loss
+            if not bool(torch.isfinite(loss)):
+                raise RuntimeError('Nonfinite hierarchy loss')
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(parameters, 1.0)
+            torch.nn.utils.clip_grad_norm_(parameters, 1.0, error_if_nonfinite=True)
             optimizer.step()
             for key, value in (
                 ("loss", loss), ("atom", atom_loss),
@@ -827,7 +839,8 @@ def pretrain_local_hierarchy(
                 "source_commit": source_commit,
                 "cache_sha256": cache_sha256,
                 "phase": "local_hierarchy",
-                "max_epochs": PRETRAIN_EPOCHS,
+                "max_epochs": epochs,
+                "recipe": recipe,
                 "seed": seed,
                 "rng": _rng_state(loader, generator),
             },

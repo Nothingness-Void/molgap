@@ -39,6 +39,16 @@ class FamilyContract:
 
 
 FAMILIES = MappingProxyType({
+    ("hierarchy_k1", "1"): FamilyContract(
+        "hierarchy_k1", "1", "molgap.hierarchy_stage", "hierarchy10-k1-v4-40",
+        "ogb-atom9-bond3-rwse16-v1", ("train", "development"),
+        "seed42-python-shuffle-v4", "fixed-k1-v4-transform",
+    ),
+    ("hierarchy_gptrans_joint", "1"): FamilyContract(
+        "hierarchy_gptrans_joint", "1", "molgap.hierarchy_stage", "hierarchy10-gptrans-joint-v4-60",
+        "ogb-atom9-bond3-shortest-path-cap20", ("train", "development"),
+        "seed-plus-epoch-global-randperm-v1", "fixed-train-100k-mean-sample-std",
+    ),
     ("edge_state_gps", "1"): FamilyContract(
         "edge_state_gps", "1", "molgap.edge_state_model_only_v1",
         "edge_state_model_only_v1", "ogb-atom9-bond3-rwse16-v1",

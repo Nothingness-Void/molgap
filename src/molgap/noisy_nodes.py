@@ -277,6 +277,7 @@ def run_training_noisy_nodes(
     noise_std: float = 0.15,
     loss_weight: float = 0.1,
     pair_update_norm: bool = False,
+    pretraining: dict | None = None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     if not torch.cuda.is_available():
@@ -317,6 +318,11 @@ def run_training_noisy_nodes(
         model = _make_noisy_nodes_model(
             initial_state_path, noise_std=noise_std, loss_weight=loss_weight
         ).to("cuda")
+    if pretraining is not None and not (output / 'last_checkpoint.pt').is_file():
+        if not pair_update_norm: raise ValueError('Hierarchy arm requires joint variant')
+        from .hierarchy_stage import apply_pretraining
+        model = apply_pretraining(model, train_graphs, family='gptrans_joint',
+            output=output/'pretraining', config=pretraining, source_commit=source_commit)
     optimizer = make_adamw_compat(
         model.parameters(),
         lr=LEARNING_RATE,
@@ -340,6 +346,7 @@ def run_training_noisy_nodes(
         "noise_std": noise_std,
         "loss_weight": loss_weight,
         "pair_update_norm": pair_update_norm,
+        "pretraining": None if pretraining is None else {k:v for k,v in pretraining.items() if k != "label_root"},
     }
     if checkpoint_path.is_file():
         checkpoint = torch_load_compat(checkpoint_path, map_location="cuda", weights_only=False)

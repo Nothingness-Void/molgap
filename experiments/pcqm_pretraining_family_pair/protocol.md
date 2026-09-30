@@ -53,15 +53,15 @@ Noisy Nodes alpha0.1/corruption0.15 plus Pair Update Norm. Reuse their accepted
 reference records; do not repeat scratch training.
 Both arms start from the same seed's own family initialization, not
 from previously Gap-trained checkpoints. Reset optimizer/scheduler at the
-pretrain-to-Gap transition; reinitialize the unused scalar Gap head from a
-separate frozen seed. Reset the downstream RNG/order stream at that boundary.
+pretrain-to-Gap transition; restore the unused scalar Gap head from the exact
+initial family state. Reset the downstream RNG/order stream at that boundary.
 No model-wide reinitialization, EMA contamination, or import of pretrained
 weights from a different family is allowed.
 
-Pretraining: reuse local atom categorical reconstruction, real-bond categorical
-reconstruction and atom-attached functional-group labels. Mask rate0.15;
-loss = atom CE + bond CE + 0.5 * group BCE, retaining the original reduction
-semantics. No graph-level aggregate descriptor replacement. GPTrans uses its
+Pretraining: reuse the existing resumable hierarchy loop with local atom categorical
+reconstruction, directed real-bond categorical reconstruction and atom-attached functional-group labels. Mask rate0.15; independently mask directed bond features, as in that loop;
+loss = atom CE + bond CE + 0.5 * group BCE, using mean-over-categorical-column CE reductions from the reused loop.
+The pretraining recipe is newly frozen; bytewise replay of old PCQM pretraining is not required. No graph-level aggregate descriptor replacement. GPTrans uses its
 256-channel non-token nodes and 32-channel pair states gathered ONLY at real
 bond endpoints; exclude graph token, padding and virtual/nonbonded pairs.
 K1 uses final 192-channel node and 64-channel real-edge states. These dimensions
@@ -93,13 +93,11 @@ not another search over the old EdgeState 10/30 allocation. No extra fresh audit
 protected role or repeated baseline is added merely for bookkeeping. A later
 promotion audit is a separate decision. Do not relabel the reused role as fresh.
 
-Retain development predictions at Gap20/30/40 (plus60 for GPTrans) and each reference-matched
-selected checkpoint. K1 uses its reference weight semantics; GPTrans uses its
+Retain complete epoch traces and each reference-matched selected checkpoint. K1 uses its reference weight semantics; GPTrans uses its
 own reference EMA semantics. Never silently replace EMA with live/raw selection.
 Capture additional raw metrics separately for interpretation. Compare early/tail
 relative gains only where reference trace exposure and metric semantics match.
-Fixed-train-cohort metrics are
-needed for fitting attribution; online training loss alone is insufficient.
+Online training loss is not a fixed-cohort metric; fitting attribution is limited accordingly.
 Row bootstrap does not measure training-seed variability.
 
 ## Cost and acceptance
@@ -112,8 +110,8 @@ with separately recorded CPU cache cost. This is a cap, not a runtime forecast.
 Use measured warmup/profile plus evaluation/save overhead to decide whether
 each arm's frozen exposure fits. If not, STOP_FOR_COST or freeze a new plan before launch; do not
 truncate scientific exposure or silently shrink the batch. Durable checkpoint
-stages must fit the verified platform limit and retain processed step cursor,
-sampler and mask RNG, model/head/optimizer/scheduler, source/config/cache pins,
+stages must fit the verified platform limit and retain completed epoch cursor,
+deterministic sampler and mask RNG, model/head/optimizer/scheduler, source/config/cache pins,
 and immutable remote artifacts.
 
 Mechanical acceptance and scientific interpretation are separate. Candidate

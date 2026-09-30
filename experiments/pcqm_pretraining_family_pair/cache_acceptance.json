@@ -1,0 +1,19 @@
+{
+  "accepted": true,
+  "scope": "100k-train-label-preparation-and-exact-ogb-atom-bond-alignment",
+  "manifest_sha256": "92627d02bf4b544b328153f8a3da4890eb49f758cc902b58354e1da1c1477e9b",
+  "manifest": {
+    "format": "molgap-local-hierarchy-fixed100k-v1",
+    "rows": 100000,
+    "graph_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "labels_sha256": "10f2a01701b8578ca8c4561156aad923cd004ba19357ac86b5c5c8efb507cf7f",
+    "smarts_sha256": "6ef527e2b30e67b53badef4487015832c6b875eca93b2ec051a11d2ed28ccfe8",
+    "rdkit_version": "2026.03.4",
+    "archive_sha256": "628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701",
+    "gap_labels_read": false,
+    "protected_roles_read": false,
+    "atom_and_bond_features_exact": true
+  },
+  "model_forward_executed": false,
+  "protected_labels_read": false
+}

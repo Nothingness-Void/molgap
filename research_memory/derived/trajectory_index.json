@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "d1f9ad285e5bf5a1be6b357354d65a8f5cf5dfb65d4f9edb3704baf39fc23ac7",
+  "source_digest": "7be8d77211242e3d1260aa2e900a3e228ca3636aba30bb20f544f441e86f2c14",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -1041,6 +1041,22 @@
       ],
       "track": "C",
       "trajectory_id": "TC-k1-pair-value-decoupled-100k-s42"
+    },
+    {
+      "completeness_status": "partial",
+      "decision_ref": "experiments/pcqm_k1_variants_100k/decision.md",
+      "family_id": "k1-v4-reference",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "historical",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "retrospective_partial",
+      "record_path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-v4-100k-reference-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-k1-v4-100k-reference-s42"
     },
     {
       "completeness_status": "partial",

@@ -8,10 +8,35 @@ from __future__ import annotations
 from contextlib import contextmanager
 from dataclasses import asdict, dataclass
 import math
+from types import SimpleNamespace
 
 import torch
 from torch import nn
 from torch.nn import functional as F
+
+
+class ExistingLoopHeads:
+    """Expose family states to the existing resumable hierarchy training loop."""
+    def __init__(self, model, family):
+        self.adapter = LocalHierarchyAdapter(model, family)
+        self.module = self.adapter.heads
+        self.atom_heads = self.module['atom']
+        self.bond_heads = self.module['bond']
+        self.group_head = self.module['group']
+        self.context = self.adapter.capture()
+        self.state = self.context.__enter__()
+        self.handle = model.register_forward_hook(self.capture)
+
+    def capture(self, model, args, output):
+        if self.adapter.family == 'k1':
+            self.node_state, self.edge_state = self.state['node'], self.state['edge']
+        else:
+            graph = SimpleNamespace(x=args[0], edge_index=args[1], batch=args[3])
+            self.node_state, self.edge_state = sparse_gptrans_states(*self.state['dense'], graph)
+
+    def close(self):
+        self.handle.remove()
+        self.context.__exit__(None, None, None)
 
 
 @dataclass(frozen=True)
