@@ -15,6 +15,8 @@ GPTrans/EdgeState variant preparation and per-arm wiring:
 [standard workflow](docs/operations/EXPERIMENT_WORKFLOW.md) (local only).
 K1/GPTrans new-protocol output hooks, inspection and terminal integration:
 [family workflow](docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md).
+Supported server screens have opt-in owning-runner hooks; base EdgeState has an
+artifact profile, not a generic epoch trainer. Real remote qualification remains separate.
 Verification and remaining boundaries:
 [integration review](docs/operations/shared_experiment_verification.md).
 

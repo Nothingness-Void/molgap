@@ -22,6 +22,7 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 |---|---|---|
 | `k1_edge_memory.py`, `k1_edge_slot_interaction.py`, `k1_edge_kaggle_runtime.py` | Real-bond storage/read separation, slot interactions, and isolated K1 Kaggle execution | Testing normalized edge reads without modifying the frozen backbone tensors |
 | `experiment_family_workflow.py`, `experiment_family_artifacts.py` | Shared producer events, frozen-recipe output inspection and bridge to existing terminal closure | Adding a compatible family output profile; capability limits are in `docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md` |
+| `experiment_training_hooks.py` | Opt-in K1/GPTrans screen events, frozen trainer binding and retained-prefix guards | Connecting an owning trainer without copying artifacts or changing its scientific loop; see the family workflow |
 | `experiment_launch.py` | Verified local launch receipts and immutable byte publication | Changing launch binding or the shared atomic no-overwrite publisher |
 | `constants.py` | Repository paths, hyperparameters, model registry | Adding or retargeting an explicit registry entry |
 | `graphs.py` | SMILES-to-2D/3D PyG graphs and ETKDG construction | Changing graph or conformer representation |

@@ -274,3 +274,63 @@ did not introduce these evidence gaps. Synthetic portability regressions passed,
 but ordinary frozen validation is not full historical portability. This
 integration did not manufacture records, weaken checks or copy platform payloads
 to conceal the missing committed closure.
+
+## Owning-trainer output wiring
+
+On 2026-09-30, server added opt-in `TrainingOutputHooks` to the existing K1
+direct-Gap baseline and GPTrans reference/degree-scale/path-bond-mean trainers.
+The frozen recipe binds the actual trainer and variant. Source, recipe,
+trajectory and executable exposure identities are checked before use. Existing
+training, evaluation and selection rules are unchanged when hooks are absent;
+unsupported model-only addons are rejected rather than silently substituted.
+The base EdgeState profile describes output artifacts, not a generic epoch loop.
+
+Actual completed-epoch call sites record acknowledged exposure, live metrics
+and GPTrans EMA metrics, selected state/aligned payload, native resume state
+and checkpoint identity. Resume requires the retained family prefix and bound
+native checkpoint, including checkpoint bytes and matching model/EMA,
+optimizer, scheduler and translated RNG state. Construction checks a mandatory
+`native_output/family_outputs` namespace before writing; the owning runner
+rechecks it against its actual output directory.
+Every ten completed epochs the owning output retains a family recovery chunk
+beside its existing native chunks. These chunks do not constitute independent
+platform uploads. Process-wall measurements are not complete allocated-device
+cost records, especially after recovery.
+
+The integrated local lifecycle exposed and repaired two wiring bugs: terminal
+attempt identity was previously invented from a platform version instead of
+read from the prospective action, and default trace manifests always reported
+checkpoint identity unavailable despite observed checkpoint events.
+
+`close_family_replay` delegates terminal closure to existing authority and
+checks compiled replay-pool membership separately. A complete mechanical
+terminal can remain replay-blocked. It does not create scientific comparison,
+reference, runtime, role or device-cost qualifications.
+
+| Test invocation | Passed | Skipped | Deselected |
+|---|---:|---:|---:|
+| Training hooks, integrated lifecycle, family workflow, terminal trace, same-run replay, GPTrans/EdgeState adapters | 111 | 0 | 0 |
+| Workflow/staging and retained K1/GPTrans contracts, excluding model-forward/backward cases | 42 | 0 | 7 |
+| Final CLI and integrated lifecycle, including namespace/state guards and standard `accept-terminal` replay reporting | 79 | 0 | 0 |
+
+Counts are per invocation; the lifecycle test overlaps between the first and
+third selections. The final lifecycle uses the actual CLI entry rather than
+only calling the closure wrapper directly.
+
+The project virtualenv and `--noconftest` were used. The integrated lifecycle
+uses real local planning, packaging, receipt reconciliation, output inspection
+and RML terminal closure with synthetic tensor states in a temporary repository;
+missing scientific qualification remains blocked. A separate test checks the
+wrapper against an existing qualified synthetic reference/candidate pair.
+AST tests verify actual trainer hook sites without executing those trainers.
+Neither test is proof of real remote execution or five-minute submission time.
+Retained-corpus `RML validate` and `check --frozen` passed without rebuild.
+No training, inference, protected-role access, platform request or monitor
+mutation occurred. The user's uncommitted RML test was left untouched.
+
+Independent Luna review returned `PASS_WITH_BOUNDARIES` and reproduced the
+native/family filename collision with a temporary saved-state probe. The
+namespace guard and mutation regressions above addressed that integration
+hazard; resume comparison was extended beyond model/EMA state. The review's
+remaining boundaries are retained: synthetic events/AST are not actual trainer
+execution, and the EdgeState profile is not a generic trainer.

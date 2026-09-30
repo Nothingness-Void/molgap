@@ -32,6 +32,11 @@ The terminal descriptor delegates to existing RML wiring; roles, costs,
 predictions, traces and reference binding must actually be present. Rebuild and
 validate RML using its existing commands; inspect replay eligibility rather
 than assuming every terminal entry is eligible.
+Supported K1/GPTrans server screens can opt into the shared trainer event hooks;
+use the family guide's exact capability limits. Science/cache/runtime/budget
+approval and platform submission remain explicit owning stages, not CLI side
+effects. Terminal closure can compose the replay-pair check with
+`close_family_replay` without upgrading incomplete records.
 
 ## Local preparation configuration
 
