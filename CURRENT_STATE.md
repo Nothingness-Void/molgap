@@ -66,22 +66,18 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-The authorized GPTrans-T 100K V5 evidence-baseline rerun completed six accepted
-Kaggle2 T4 segments and final prediction/trajectory checks. Its selected EMA
-internal-development MAE is `0.1560144881 eV` at epoch 59; the full two-T4
-allocation cost `5.0155572684` device-hours. The result repairs the missing
-live-development trace, not GPTrans architecture or the official benchmark.
-Strict RML terminal/reference-bundle packaging is not yet complete, so no
-replay-ready causal comparison, G1/G2, additional seed, 500K, or protected role
-is released. Authority: [decision](experiments/pcqm_gptrans_v5_audit_reference/decision.md)
-and [acceptance](experiments/pcqm_gptrans_v5_audit_reference/results/final_acceptance.json).
+The authorized GPTrans-T V5 evidence-baseline rerun is accepted and RML-closed,
+with all live/EMA observations and a separate locally verified reference bundle.
+It repairs reference evidence, not architecture; no causal replay pair, G1/G2,
+seed, scale-up or protected role is released. Findings and closure authority:
+[terminal decision](experiments/pcqm_gptrans_v5_audit_reference/results/terminal/decision.md).
 
 The server-owned frozen K1 representation diagnostic completed on Kunshan as
 job `123315282` and passed independent saved-JSON acceptance. The same-row
 100K/500K checkpoint contrast does not support a general node-representation
 collapse or a new repair mechanism. Scientific interpretation and monitoring
-are closed; NO_TRAIN RML publication is blocked by the original empty
-prospective run binding, without requiring another compute job. Authority:
+are closed; receipt-bound NO_TRAIN RML publication is complete and preserves
+the original prospective bytes. It does not qualify a training replay pair. Authority:
 [decision](experiments/pcqm_k1_explainability_audit/representation/decision.md)
 and [status](experiments/pcqm_k1_explainability_audit/representation/STATUS.md).
 
@@ -319,15 +315,10 @@ accounted for 96.51% of atom-plus-degree squared input energy (cross term
 excluded). This is mechanism evidence, not an MAE effect. Authority:
 `experiments/pcqm_gptrans_author_alignment/STATUS.md`.
 
-The user authorized one separate matched GPTrans-T 100K reference rerun to
-obtain the missing V5 live-development trace. Its Kaggle2 T4 first five
-10-epoch segments passed streaming artifact/trace acceptance; version 6 of
-the exact kernel `kaseichou/molgap-gptrans-v5-audit-reference-s42-v1` completed
-version 6 from the SHA-verified epoch-50 checkpoint. The final prediction and
-60-epoch trace are accepted. A wrong-slug first package attempt failed before
-training and is infrastructure-only. Strict RML/reference-bundle packaging is
-still pending; no G1/G2 candidate or 500K successor is released. Authority:
-`experiments/pcqm_gptrans_v5_audit_reference/STATUS.md`.
+The separate GPTrans reference rerun and its infrastructure-attempt history are
+closed. See the reference-evidence state above and
+`experiments/pcqm_gptrans_v5_audit_reference/STATUS.md`; no candidate successor
+is released by reference acceptance.
 
 The user reopened three additional evidence-gated Kaggle2 rounds. Round 1
 closed isolated K1 real-bond storage/read normalization: one arm regressed and

@@ -17059,6 +17059,21 @@
     },
     {
       "reasons": [
+        "Reference observation rerun, not an accepted causal candidate/reference experiment",
+        "canonical_trace_marked_ineligible"
+      ],
+      "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+      "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+    },
+    {
+      "reasons": [
+        "reference_not_frozen_in_trajectory"
+      ],
+      "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+      "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+    },
+    {
+      "reasons": [
         "canonical_trace_not_locally_retained"
       ],
       "run_id": "nothingnessvoid/molgap-pcqm-k1-mose-context-gate-s42:v1",
@@ -17141,5 +17156,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "43cd5c5e470b84df09ece803ef48f04b3c808b5eb47a8cd069d91214c484032c"
+  "source_digest": "3fb29272917dc270784764ad68d598bfd31663743e44ee9e8f394d964b176a35"
 }

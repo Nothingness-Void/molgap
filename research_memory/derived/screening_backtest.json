@@ -21,6 +21,14 @@
     },
     {
       "reasons": [
+        "Reference observation rerun, not an accepted causal candidate/reference experiment",
+        "canonical_trace_marked_ineligible"
+      ],
+      "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+      "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+    },
+    {
+      "reasons": [
         "canonical_trace_marked_ineligible",
         "undeclared_feature_identity_mismatch"
       ],
@@ -150,5 +158,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 32
+  "trace_count": 33
 }

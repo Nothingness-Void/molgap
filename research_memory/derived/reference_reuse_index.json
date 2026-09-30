@@ -108,6 +108,27 @@
     },
     {
       "artifact_availability": [
+        "local_verified"
+      ],
+      "comparison_status": "context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-v5-audit-reference-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "internal_train": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "matched_reference_observation_rerun_100k",
+      "source_envelope": "experiments/pcqm_gptrans_v5_audit_reference/rml_plan/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "committed_metadata"
       ],
       "comparison_status": "incompatible_with_strict_matched60_v4",
@@ -844,6 +865,27 @@
       "source_envelope": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/rml_finalized/v5_evidence.json",
       "track": "C",
       "transfer_status": "frozen_portability_regressed",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "repository_retained"
+      ],
+      "comparison_status": "context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-representation-100k-500k-123315282",
+      "role_use": {
+        "internal_development_100000_150000": "consumed",
+        "internal_development_500000_550000": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "frozen_checkpoint_representation_NO_TRAIN_CONTEXT_ONLY",
+      "source_envelope": "experiments/pcqm_k1_explainability_audit/representation/rml_plan/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_a_causal_transfer_comparison",
       "used_by_trajectory_ids": []
     },
     {
