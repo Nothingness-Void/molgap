@@ -54,6 +54,9 @@ def launch(mode: str, device: int, root: Path, phase: str):
     environment["MOLGAP_OUTPUT"] = str(Path("/kaggle/working") / mode)
     environment["MOLGAP_SOURCE_ROOT"] = str(root)
     environment["MOLGAP_PHASE"] = phase
+    # A worker's sys.path does not propagate to nested arm CLI processes.
+    environment["PYTHONPATH"] = os.pathsep.join(
+        [str(root / "src"), environment.get("PYTHONPATH", "")]).rstrip(os.pathsep)
     return subprocess.Popen([sys.executable, __file__], env=environment)
 
 
