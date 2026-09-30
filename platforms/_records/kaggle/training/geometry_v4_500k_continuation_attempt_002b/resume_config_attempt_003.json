@@ -1,0 +1,28 @@
+{
+  "format": "molgap-geometry-v4-500k-resume-config-v1",
+  "kernel": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1",
+  "title": "molgap-geometry-v4-500k-resume-s42-v1",
+  "dataset": "nothingnessvoid/molgap-geometry-v4-500k-a2-e56-e32-s42",
+  "resume_source_sha256": "8bea0dab3b8b1755352f7f11e7ae7708b87de0731fe32aefabb9725e60112367",
+  "resume_status": "STAGE_COMPLETE",
+  "arm_next_epochs": {
+    "gptrans_distance_only": 56,
+    "k1_distance_angle": 32
+  },
+  "arm_device_second_caps": {
+    "gptrans_distance_only": 57600,
+    "k1_distance_angle": 93600
+  },
+  "files": {
+    "gptrans_distance_only__stage_manifest.json": "cbfb97a38c5af21b2296b7a9df53fd6c21ae8ab941e255bf300db55da34a5c13",
+    "gptrans_distance_only__last_checkpoint.pt": "830e56cb7f65ad4edae5c41fb28e657fcfa10555b1ace6aa861beadc56fa5140",
+    "gptrans_distance_only__best_model.pt": "db03bcd9531bdacc0d87083b8f3b6d13092f40f9aab278d915eab37e9aae39c7",
+    "gptrans_distance_only__best_predictions.pt": "85488eb225721274e37097554a9ceb81371267d5b404e939bcfb96403d982105",
+    "gptrans_distance_only__initial_state.pt": "e6ad385325316eedd67683f34e351cae17eff79f39c4d82f575e226b84184bee",
+    "k1_distance_angle__stage_manifest.json": "42ab26ccdf30d286ba514541992db19d8bed00d8bd74e5a8e361db02d139b607",
+    "k1_distance_angle__last_checkpoint.pt": "a75027838a60c2cf1a83f890ac8d667f6289d40e7ffa012d8433689cfe9d4e16",
+    "k1_distance_angle__best_model.pt": "285f402e019442a244f21d20dce9343f06c661bfc5d275e03eb72902855a0a31",
+    "k1_distance_angle__best_predictions.pt": "b5f9c592abba6603211196fe473d0d71743f3be9207dcac660bf7caa57d9efff",
+    "k1_distance_angle__initial_state.pt": "2e26216bea74470b766b410ac42093e5ddb512a8a61e8f55e2a4799e5a113e15"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "n": 50000,
+  "source_idx_aligned": true,
+  "targets_identical": true,
+  "seed": 20260917,
+  "replicates": 10000,
+  "mae_eV": {
+    "gptrans_distance_only": 0.10601039975881577,
+    "k1_distance_angle": 0.10486314445734024,
+    "fixed_50_50_blend": 0.10029008984565735
+  },
+  "paired": {
+    "gptrans_vs_k1": {
+      "delta_candidate_minus_comparator_eV": 0.001147255301475525,
+      "bootstrap_95pct_percentile_eV": [
+        0.0004775539040565491,
+        0.001804109662771225
+      ],
+      "probability_delta_below_zero": 0.0001
+    },
+    "blend_vs_gptrans": {
+      "delta_candidate_minus_comparator_eV": -0.005720309913158417,
+      "bootstrap_95pct_percentile_eV": [
+        -0.0060816889628767965,
+        -0.005365168489515782
+      ],
+      "probability_delta_below_zero": 1.0
+    },
+    "blend_vs_k1": {
+      "delta_candidate_minus_comparator_eV": -0.004573054611682892,
+      "bootstrap_95pct_percentile_eV": [
+        -0.004936680383980274,
+        -0.004211578518152237
+      ],
+      "probability_delta_below_zero": 1.0
+    }
+  },
+  "reference": {
+    "gptrans_point_delta_candidate_minus_frozen_reference_eV": -0.000857137143611908,
+    "k1_point_delta_candidate_minus_frozen_reference_eV": 3.2782554626464844e-06,
+    "k1_reference_prediction_artifact": "missing; no paired bootstrap claimed"
+  }
+}

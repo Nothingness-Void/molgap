@@ -95,8 +95,11 @@ def prepare_resume():
                 raise RuntimeError("Checkpoint dataset hash mismatch: " + flat_name)
             shutil.copy2(source, arm_dir / name)
         stage = json.loads((arm_dir / "stage_manifest.json").read_text(encoding="utf-8"))
+        expected_epoch = RESUME_CONFIG.get("arm_next_epochs", {}).get(
+            arm, RESUME_CONFIG.get("resume_next_epoch")
+        )
         if (stage["arm"] != arm or stage["status"] != RESUME_CONFIG["resume_status"]
-                or stage["next_epoch"] != RESUME_CONFIG["resume_next_epoch"]
+                or stage["next_epoch"] != expected_epoch
                 or stage["source_sha256"] != RESUME_CONFIG["resume_source_sha256"]):
             raise RuntimeError("Checkpoint stage identity mismatch: " + arm)
     return destination

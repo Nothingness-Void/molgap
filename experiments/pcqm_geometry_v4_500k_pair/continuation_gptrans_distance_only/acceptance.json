@@ -1,0 +1,106 @@
+{
+  "format": "molgap-geometry-v4-continuation-acceptance-v1",
+  "evidence_id": "pcqm-geometry-v4-500k-gptrans_distance_only-s42-continuation-complete",
+  "run_id": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1/gptrans_distance_only/attempt-002",
+  "stage_status": "COMPLETE",
+  "outcome": {
+    "artifact_status": "complete_hash_verified_selected_model_prediction_checkpoint_trace_runtime",
+    "budget_decision": "within_authorized_cumulative_t4_device_hour_cap",
+    "comparison_status": "individual_reference_point_gain_below_3meV; fixed_50_50_blend_nomination_positive_vs_better_candidate",
+    "execution_status": "complete_60_epochs_234360_steps_29998080_presentations",
+    "full_handoff_status": "not_qualified_pending_separate_scale_review",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_qualified"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments\\pcqm_geometry_v4_500k_pair\\continuation_decision.md",
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "Separate review of the fixed 50:50 blend nomination and strict reference comparison; retrieve the accepted K1 50K reference prediction artifact before replay-ready or reference-paired claims."
+    ]
+  },
+  "physical_kernel": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1",
+  "source_commit": "555775ce8fd14966a3566b0e9ff732725279df9f",
+  "source_archive_sha256": "8bea0dab3b8b1755352f7f11e7ae7708b87de0731fe32aefabb9725e60112367",
+  "dataset_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "arm": "gptrans_distance_only",
+  "next_epoch": 60,
+  "optimizer_steps": 234360,
+  "sample_presentations": 29998080,
+  "best_development_mae_eV": 0.10601040720939636,
+  "best_epoch": 53,
+  "cumulative_device_seconds": 45906.469968690995,
+  "cumulative_device_hours": 12.751797213525277,
+  "authorized_cumulative_cap_device_seconds": 57600,
+  "within_cap": true,
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-geometry-v4-500k-gptrans_distance_only-s42-continuation-official_train_prefix_0_500000",
+      "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation",
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1/gptrans_distance_only/attempt-002",
+      "action_id": "A001",
+      "role_name": "official_train_prefix_0_500000",
+      "access_kind": "training_membership",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "selection_used": false,
+      "evidence_ref": "experiments\\pcqm_geometry_v4_500k_pair\\continuation_gptrans_distance_only\\acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-geometry-v4-500k-gptrans_distance_only-s42-continuation-internal_development_500000_550000",
+      "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation",
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1/gptrans_distance_only/attempt-002",
+      "action_id": "A001",
+      "role_name": "internal_development_500000_550000",
+      "access_kind": "selection_used",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "selection_used": true,
+      "evidence_ref": "experiments\\pcqm_geometry_v4_500k_pair\\continuation_gptrans_distance_only\\acceptance.json"
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-geometry-v4-500k-gptrans_distance_only-s42-continuation-observed-training",
+      "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation",
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1/gptrans_distance_only/attempt-002",
+      "action_id": "A001",
+      "attempt_id": "attempt-002",
+      "category": "training",
+      "platform": "kaggle",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "device_hours": {
+          "status": "measured",
+          "value": 11.65364348929861
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 11.653373699731944
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "evidence_ref": "experiments\\pcqm_geometry_v4_500k_pair\\continuation_gptrans_distance_only\\acceptance.json"
+    }
+  ],
+  "role_use": {
+    "official_train_prefix_0_500000": "training_membership",
+    "internal_development_500000_550000": "selection_used",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "v4_stage_acceptance": "accepted",
+  "validation": "accept_stage.py passed; no inference executed"
+}

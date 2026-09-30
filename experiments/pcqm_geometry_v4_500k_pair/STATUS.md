@@ -38,3 +38,14 @@ submission check; the pulled entrypoint matched the frozen local package.
 Its [launch observation](launch/attempt_002b.json) has no startup or training
 acceptance yet. Later remote status must be reconciled before any further
 submission.
+
+## Terminal acceptance review, 2026-09-30
+
+Kaggle1 reports `COMPLETE`. Both checkpoint continuations reached epoch 60;
+the local owning acceptance adapter passed independently for each arm.
+See [terminal review](terminal_review.md) for the accepted mechanical result,
+individual failed point gates, positive predeclared fixed-blend nomination,
+and exact record/replay blockers. The two canonical terminal RML finalizations
+exist and the derived state is current. Neither arm has complete replay-pool
+qualification. The user-requested Luna monitor is paused. Preserve this
+unresolved experiment branch pending strict qualification reconciliation.

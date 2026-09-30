@@ -1,0 +1,36 @@
+{
+  "device_time_semantics": "sum_over_devices",
+  "field_mapping": {
+    "checkpoint_identity": "checkpoint_identity",
+    "cumulative_device_time_seconds": "device_seconds_cumulative",
+    "epoch_or_pass": "epoch",
+    "learning_rate": "lr",
+    "live_dev_metric": "development_mae_eV",
+    "live_train_metric": "train_mae_eV",
+    "optimizer_step": "global_step",
+    "sample_presentations": "sample_presentations",
+    "wall_time_seconds": "seconds"
+  },
+  "metric_semantics": {
+    "ema_dev_metric": null,
+    "live_dev_metric": {
+      "direction": "minimize",
+      "metric": "50K development Gap MAE",
+      "role_identity": "internal_development_500000_550000",
+      "target": "Gap",
+      "unit": "eV",
+      "weights": "live"
+    },
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "epoch training stream Gap MAE",
+      "role_identity": "official_train_prefix_0_500000",
+      "target": "Gap",
+      "unit": "eV",
+      "weights": "live"
+    }
+  },
+  "rows_key": "epochs",
+  "run_id": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1/k1_distance_angle/attempt-002",
+  "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42-continuation"
+}

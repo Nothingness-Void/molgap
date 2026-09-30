@@ -10820,12 +10820,30 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "fixed_blend_is_nomination_only_pending_separate_scale_review",
+        "strict_matched_reference_pairing_not_fully_available_for_both_arms"
+      ],
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1/gptrans_distance_only/attempt-002",
+      "trajectory_id": "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "cost_stopped_after_5_of_60_epochs",
         "no_accepted_60epoch_endpoint",
         "no_strict_paired_comparison"
       ],
       "run_id": "nothingnessvoid/molgap-geometry-v4-500k-paired-s42-v1/k1_distance_angle/attempt-001",
       "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "fixed_blend_is_nomination_only_pending_separate_scale_review",
+        "strict_matched_reference_pairing_not_fully_available_for_both_arms"
+      ],
+      "run_id": "nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1/k1_distance_angle/attempt-002",
+      "trajectory_id": "TB-geometry-v4-500k-k1_distance_angle-s42-continuation"
     },
     {
       "reasons": [
@@ -10924,5 +10942,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "ce88e848873a8ebb555fc4fb10840bde9480d33e77039d9a1e500895ca9511cc"
+  "source_digest": "a86b507c43ecb7c4878e7d72051e69316e2c4df6e61a953d525233de692b59ab"
 }
