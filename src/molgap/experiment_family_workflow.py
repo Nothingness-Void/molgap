@@ -729,6 +729,46 @@ def prepare_terminal_outputs(spec: ExperimentSpec, repo_root: Path, supplied: di
     return outputs
 
 
+def close_family_replay(repo_root: Path, spec: ExperimentSpec, descriptor, *,
+                        outputs: dict, execute: bool = False) -> dict:
+    """Close through existing authority, then check this run's compiled replay pair.
+
+    Terminal inputs must already contain owning scientific acceptance, roles,
+    cost and reference evidence. Nothing here manufactures those qualifications
+    or changes a gate. A completed terminal can truthfully remain replay-blocked.
+    """
+    result = close_verified_outputs(repo_root, spec, descriptor, outputs=outputs, execute=execute)
+    if not execute or result["status"] != "COMPLETE":
+        return {**result, "replay_readiness": "NOT_EVALUATED"}
+    return {**result, **family_replay_status(repo_root,
+        [row["trajectory_id"] for row in descriptor.to_dict()["arms"]])}
+
+
+def family_replay_status(repo_root: Path, trajectory_ids: list[str]) -> dict:
+    """Inspect compiled membership; no new gate, qualification or evidence writes."""
+    if not trajectory_ids or len(set(trajectory_ids)) != len(trajectory_ids):
+        raise ValueError("Replay check requires distinct explicit trajectory IDs")
+    for identity in trajectory_ids:
+        _identifier(identity, "trajectory_id")
+    from .research_memory.compiler import compile_research_memory
+    pool = json.loads(compile_research_memory(repo_root)["replay_pool.json"])
+    by_id = {row["trajectory_id"]: row for row in pool["entries"]}
+    requested = set(trajectory_ids)
+    blockers = []
+    for trajectory_id in sorted(requested):
+        entry = by_id.get(trajectory_id)
+        if entry is None:
+            blockers.append({"trajectory_id": trajectory_id, "reason": "not_in_compiled_replay_pool"})
+            continue
+        peers = [row for row in pool["entries"]
+                 if row["comparability_key"] == entry["comparability_key"]]
+        if not any(row["comparison_role"] == "reference" for row in peers) or not any(
+                row["comparison_role"] == "candidate" for row in peers):
+            blockers.append({"trajectory_id": trajectory_id, "reason": "no_qualified_candidate_reference_pair"})
+    return {"replay_readiness": "BLOCKED" if blockers else "REPLAY_READY",
+            "replay_blockers": blockers, "replay_trajectory_ids": sorted(requested & by_id.keys())}
+
+
 def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *, outputs: dict,
                                        locations: dict):
     """Translate mechanical observations without per-experiment evidence glue.
@@ -758,6 +798,11 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
         where = locations[arm_id]
         if set(where) != {"trajectory_id", "run_id", "trajectory", "terminal", "trace"}:
             raise ValueError("Expected existing per-arm trajectory/terminal/trace locations")
+        prospective = _json(repo_local_path(root, where["trajectory"]))
+        actions = [action for action in prospective["actions"] if where["run_id"] in action["run_ids"]]
+        if len(actions) != 1 or len(actions[0]["attempt_ids"]) != 1:
+            raise ValueError("Closure requires one frozen attempt for the observed run; reconcile recovery separately")
+        attempt_id = actions[0]["attempt_ids"][0]
         observation = report["observed"]
         def binding(role):
             entry = observation["artifacts"][role]
@@ -778,7 +823,7 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
             "feature_identity": fact(arm["data"]["feature_sha256"]), "target": fact(arm["data"]["target"]),
             "initialization_identity": fact(canonical_fingerprint(arm["initialization"])),
             "source_commit": fact(ctx.source_commit), "source_package_sha256": fact(ctx.source_archive_sha256),
-            "attempt_id": fact(ctx.arm_id + "-v" + ctx.platform_version),
+            "attempt_id": fact(attempt_id),
             "platform": {"name": ctx.platform, "run_reference": fact(ctx.run_reference)},
         }
         # A contract binding is a declaration. Completion has independent file,

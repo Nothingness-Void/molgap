@@ -621,7 +621,7 @@ def build_default_trace_manifest(
             "live_train_metric": True,
             "live_dev_metric": bool(has_live_dev),
             "ema_dev_metric": bool(has_ema),
-            "checkpoint_identity": False,
+            "checkpoint_identity": any(o.get("checkpoint_identity") is not None for o in observations),
         },
     }
 

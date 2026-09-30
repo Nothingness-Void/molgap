@@ -1614,7 +1614,16 @@ def train_arm(
     physical_run_id: str | None = None,
     objective_recipe: object | None = None,
     target_transform_asset: Path | None = None,
+    family_outputs=None,
 ) -> dict:
+    if family_outputs is not None:
+        from .experiment_training_hooks import TrainingOutputHooks
+        if type(family_outputs) is not TrainingOutputHooks or mode != "neural_atom_k1_v4" or objective_recipe is not None:
+            raise ValueError("New-protocol K1 wiring supports the unchanged direct-Gap screen only")
+        family_outputs.validate_start(trainer="pcqm_k1_variants_runner", variant=mode,
+            source_commit=source_commit, source_archive_sha256=source_archive_sha256,
+            epochs=EPOCHS, steps=EPOCHS * STEPS_PER_EPOCH, samples=SAMPLE_EXPOSURE,
+            development_rows=DEVELOPMENT_ROWS, trajectory_id=trajectory_id, native_output=output)
     import torch
     import torch.nn.functional as functional
     from .training_reproducibility import capture_rng_state, restore_rng_state
@@ -1861,6 +1870,7 @@ def train_arm(
     best_epoch = -1
     trace = []
     start_epoch = 0
+    checkpoint = None
     if resume_from is not None:
         import shutil
         checkpoint = torch.load(resume_from / "last_checkpoint.pt", map_location="cpu", weights_only=False)
@@ -1907,6 +1917,10 @@ def train_arm(
         # Their initial base-seed draw must not advance the restored model RNG.
         iter(development_loader)
         restore_rng_state(checkpoint["rng_state"])
+    if family_outputs is not None:
+        family_outputs.validate_resume(checkpoint, completed_epochs=start_epoch,
+            optimizer_step=start_epoch * STEPS_PER_EPOCH,
+            sample_presentations=start_epoch * ROWS_PER_EPOCH)
     if joint_objective is not None and resume_from is not None:
         import shutil
 
@@ -2102,12 +2116,26 @@ def train_arm(
                     "physical_run_id": physical_run_id,
                 }
             )
+        if family_outputs is not None:
+            checkpoint["family_output_binding"] = family_outputs.binding
         atomic_torch_save(output / "last_checkpoint.pt", checkpoint)
+        if family_outputs is not None:
+            from .experiment_training_hooks import acknowledged_order_digest
+            family_outputs.completed_epoch(epoch=epoch, optimizer_step=row["optimizer_steps"],
+                sample_presentations=row["sample_presentations"],
+                train_mae_eV=row["train_normalized_mae"] * target_stats["sample_std_eV"],
+                learning_rate=row["learning_rate"], wall_time_seconds=row["seconds"],
+                cumulative_wall_time_seconds=sum(r["seconds"] for r in trace),
+                live_dev_mae_eV=validation_mae, checkpoint=checkpoint,
+                sampler_order_sha256=acknowledged_order_digest(epoch_order(epoch)),
+                selected={"model_state": model.state_dict(), "weights": "live",
+                          "prediction_eV": prediction_eV, "target_eV": target_eV,
+                          "source_idx": source_idx} if improved else None)
         if canonical is not None:
             record_epoch(canonical, output, row, observed_steps=observed_steps,
                          observed_samples=observed_samples, elapsed=time.perf_counter() - started)
         atomic_json(output / "trace.json", {"epochs": trace})
-        if (mode in recovery_chunk_modes or joint_objective is not None) and (epoch + 1) % 10 == 0:
+        if (mode in recovery_chunk_modes or joint_objective is not None or family_outputs is not None) and (epoch + 1) % 10 == 0:
             import tarfile
             chunk = output / f"recovery_epoch_{epoch + 1:02d}.tar"
             temporary = chunk.with_suffix(".tmp")
@@ -2130,12 +2158,18 @@ def train_arm(
                     for name in ("canonical_trace.json", "observed_role_history.json"):
                         archive.add(output / name, arcname=name)
             os.replace(temporary, chunk)
+            if family_outputs is not None:
+                family_outputs.archive_prefix(epoch=epoch)
         print(
             f"{mode} ep{epoch:02d} train={row['train_normalized_mae']:.6f} "
             f"dev={validation_mae:.6f}eV {row['seconds']:.1f}s"
             f"{' *' if improved else ''}",
             flush=True,
         )
+    if family_outputs is not None:
+        family_report = family_outputs.complete(hardware=torch.cuda.get_device_name(0))
+        if family_report["status"] != "MECHANICALLY_VERIFIED":
+            raise RuntimeError("Family output completion blocked: " + str(family_report["blockers"]))
     payload_sha = sha256_file(output / "best_development_payload.pt")
     contract = _contract(
         mode=mode,

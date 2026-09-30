@@ -107,7 +107,7 @@ def _dispatch(args) -> tuple[dict, int]:
         return {"spec_identity": spec.identity, "spec": spec.to_dict()}, 0
     if args.command in {"check-acceptance", "inspect-output", "accept-terminal"}:
         from .experiment_family_workflow import (
-            RunContext, _json, check_acceptance_plan, inspect_output, close_verified_outputs,
+            RunContext, _json, check_acceptance_plan, inspect_output, close_family_replay,
             prepare_terminal_outputs,
         )
         if args.command == "check-acceptance":
@@ -126,7 +126,7 @@ def _dispatch(args) -> tuple[dict, int]:
         descriptor = TerminalDescriptor.from_json(spec, descriptor_raw)
         if descriptor_raw != descriptor.to_json():
             raise ValueError("Expected canonical TerminalDescriptor JSON")
-        result = close_verified_outputs(args.repo_root, spec, descriptor, outputs=outputs, execute=args.execute)
+        result = close_family_replay(args.repo_root, spec, descriptor, outputs=outputs, execute=args.execute)
         return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
     if args.command == "plan-prospective":
         return plan_prospective(spec, args.repo_root)

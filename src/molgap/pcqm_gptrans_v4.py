@@ -754,10 +754,8 @@ def run_preflight(
     return result
 
 
-def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference", v5_audit: bool = False) -> None:
-    atomic_torch_save(
-        path,
-        {
+def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference", v5_audit: bool = False, family_output_binding: dict | None = None) -> dict:
+    payload = {
             "format": CHECKPOINT_FORMAT,
             "variant": variant,
             **({"v5_audit": True} if v5_audit else {}),
@@ -774,8 +772,11 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
             "source_archive_sha256": source_archive_sha256,
             "rng_state": capture_rng_state(),
             "scientific_fields": _scientific_fields(),
-        },
-    )
+        }
+    if family_output_binding is not None:
+        payload["family_output_binding"] = family_output_binding
+    atomic_torch_save(path, payload)
+    return payload
 
 
 def _v5_audit_recorder(path: Path, *, trajectory_id="TC-gptrans-v5-audit-reference-100k", run_id="gptrans-t-v5-audit-reference-s42"):
@@ -840,8 +841,17 @@ def run_training(
     trajectory_id: str | None = None,
     logical_run_id: str | None = None,
     target_transform_path: Path | None = None,
+    family_outputs=None,
 ) -> dict:
     author_arm = variant in ("degree_scale", "path_bond_mean")
+    if family_outputs is not None:
+        from .experiment_training_hooks import TrainingOutputHooks
+        if type(family_outputs) is not TrainingOutputHooks or not v5_audit:
+            raise ValueError("New-protocol outputs require explicit hooks and live/EMA audit")
+        family_outputs.validate_start(trainer="pcqm_gptrans_v4", variant=variant,
+            source_commit=source_commit, source_archive_sha256=source_archive_sha256,
+            epochs=EPOCHS, steps=EPOCHS * BATCHES_PER_EPOCH, samples=SAMPLE_PRESENTATIONS,
+            development_rows=DEVELOPMENT_ROWS, trajectory_id=trajectory_id, native_output=output)
     if author_arm and (not v5_audit or not trajectory_id or not logical_run_id):
         raise RuntimeError("Author arms require separate prospective live/EMA trace identities")
     if v5_audit and variant != "reference" and not author_arm:
@@ -856,6 +866,8 @@ def run_training(
     output.mkdir(parents=True, exist_ok=True)
     completion_path = output / "completion_manifest.json"
     if completion_path.is_file():
+        if family_outputs is not None:
+            raise RuntimeError("Completed legacy run cannot be retrofitted; reconcile retained family output")
         completion = json.loads(completion_path.read_text(encoding="utf-8"))
         if completion.get("complete") is True and completion.get("variant", "reference") == variant:
             return completion
@@ -912,6 +924,7 @@ def run_training(
     trace: list[dict] = []
     best = float("inf")
     best_epoch = -1
+    checkpoint = None
     if checkpoint_path.is_file():
         checkpoint = torch.load(checkpoint_path, map_location="cuda", weights_only=False)
         if checkpoint.get("format") != CHECKPOINT_FORMAT:
@@ -935,6 +948,11 @@ def run_training(
         trace = list(checkpoint["trace"])
         best = float(checkpoint["best_development_mae_eV"])
         best_epoch = int(checkpoint["best_epoch"])
+
+    if family_outputs is not None:
+        family_outputs.validate_resume(checkpoint, completed_epochs=start_epoch,
+            optimizer_step=start_epoch * BATCHES_PER_EPOCH,
+            sample_presentations=start_epoch * BATCHES_PER_EPOCH * PHYSICAL_BATCH)
 
     audit_recorder = None
     if v5_audit:
@@ -1039,7 +1057,7 @@ def run_training(
             })
         trace.append(row)
         atomic_json(output / "trace.json", {"format": RUN_FORMAT, "rows": trace})
-        _save_checkpoint(
+        native_checkpoint = _save_checkpoint(
             checkpoint_path,
             epoch=epoch,
             model=model,
@@ -1054,7 +1072,23 @@ def run_training(
             source_archive_sha256=source_archive_sha256,
             variant=variant,
             v5_audit=v5_audit,
+            family_output_binding=family_outputs.binding if family_outputs is not None else None,
         )
+        if family_outputs is not None:
+            from .experiment_training_hooks import acknowledged_order_digest
+            family_outputs.completed_epoch(epoch=epoch, optimizer_step=global_step,
+                sample_presentations=(epoch + 1) * train_count,
+                train_mae_eV=row["train_mae_eV"],
+                learning_rate=learning_rate, wall_time_seconds=row["elapsed_seconds"],
+                cumulative_wall_time_seconds=row["cumulative_wall_time_seconds"],
+                live_dev_mae_eV=live_development["mae_eV"], ema_dev_mae_eV=development["mae_eV"],
+                checkpoint=native_checkpoint,
+                sampler_order_sha256=acknowledged_order_digest(
+                    DeterministicEpochBatchSampler(TRAIN_ROWS, epoch).indices),
+                selected={"model_state": ema.state_dict(), "weights": "ema",
+                          "prediction_eV": development["prediction_eV"],
+                          "target_eV": development["target_eV"],
+                          "source_idx": development["source_idx"]} if improved else None)
         print(
             f"gptrans_t_100k_v4/{variant} ep{epoch:02d} train={row['train_mae_eV']:.6f} "
             f"dev={row['development_mae_eV']:.6f}eV best={best:.6f}@{best_epoch} "
@@ -1071,6 +1105,8 @@ def run_training(
             temporary = chunk.with_suffix(".pt.tmp")
             shutil.copyfile(checkpoint_path, temporary)
             os.replace(temporary, chunk)
+            if family_outputs is not None:
+                family_outputs.archive_prefix(epoch=epoch)
 
     if stop_epoch < EPOCHS:
         partial = {
@@ -1147,5 +1183,10 @@ def run_training(
         completion["logical_run_id"] = logical_run_id
         completion["initial_state_artifact_sha256"] = sha256_file(initial_state_path)
         completion["path_sidecar_identity"] = preflight.get("path_sidecar_identity")
+    if family_outputs is not None:
+        family_report = family_outputs.complete(hardware=torch.cuda.get_device_name(0))
+        if family_report["status"] != "MECHANICALLY_VERIFIED":
+            raise RuntimeError("Family output completion blocked: " + str(family_report["blockers"]))
+        completion["family_output_manifest_sha256"] = sha256_file(family_outputs.session.root / "output_manifest.json")
     atomic_json(completion_path, completion)
     return completion
