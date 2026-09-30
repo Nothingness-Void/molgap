@@ -1,0 +1,52 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-90e09c8f8f6705f744d709a2de97594674960fca5c3b69e588086e5280503759",
+  "finalized_at": "2026-09-30T05:26:39.781742+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_explainability_audit/representation/decision.md": "98f51874003056411b00b750a6400a574f414e545caee7116174d43a11fb2183",
+    "experiments/pcqm_k1_explainability_audit/representation/input_binding.json": "5210fed5f99492e4f93badae20529cb06b09e1adf86f3f8aeb544d436effa839",
+    "experiments/pcqm_k1_explainability_audit/representation/results/acceptance.json": "e3e67753d9f3662892d43019860f0222e27e733f793b9a9ad78241861016d773",
+    "experiments/pcqm_k1_explainability_audit/representation/results/analysis.json": "34b84a60cde96e03375a3cbb0f9ba46d998ced318ed08cc099019ced5c2a5880",
+    "experiments/pcqm_k1_explainability_audit/representation/results/completion_manifest.json": "2dfbb67c3c20ea36a47e21c8cd725e211cd1fed850ee67c02b2c556e5b8b85c3",
+    "experiments/pcqm_k1_explainability_audit/representation/results/postlaunch_binding.json": "2900556b57cb2840a817b9bb2c378f1811b04f6c52a31680914898199081ee5f",
+    "experiments/pcqm_k1_explainability_audit/representation/results/remote_sha256.txt": "8d33d722dae8ea62214c46d0b697bd8732432ea727c183bd0e8eb4a5080ae056",
+    "experiments/pcqm_k1_explainability_audit/representation/results/reproduction.json": "174c662754701be70c1b028bb4875a9accdba5bdf8ceee84b432cf46ee038ec1",
+    "experiments/pcqm_k1_explainability_audit/representation/results/role_events.json": "7fcb09bb584e42b7aa5007c0b1045e38940f46eb99dabb342d60bcb0eb4078bd",
+    "experiments/pcqm_k1_explainability_audit/representation/results/role_row_manifests.json": "afb4c803405f3f567be06642086b39a7b468ea263a2c3e75d9bd060bfc6daca6",
+    "experiments/pcqm_k1_explainability_audit/representation/results/sacct.txt": "e0f8cdffeb7dd2a86d64e76092b8a19e641ef806a0469bc456d55960b87869b9",
+    "experiments/pcqm_k1_explainability_audit/representation/results/scheduler.json": "0762869097e09ded67f2c323edcdec445070c110c9c1a2ae224ce5c1d327cb0f",
+    "experiments/pcqm_k1_explainability_audit/representation/results/started.json": "72e61ee14aa5ebd64867dde5ac4343c5913608d764092838387ec662ef7b98e0",
+    "experiments/pcqm_k1_explainability_audit/representation/results/terminal_acceptance.json": "bd099bace3fcaf1b33d0297f36f96cf7efee3872c93820526786b10ef7580947",
+    "experiments/pcqm_k1_explainability_audit/representation/results/terminal_decision.md": "235e630a8db3a8db1e6394348296a4c46942dc35b68ba7fc003875b45700b213",
+    "experiments/pcqm_k1_explainability_audit/representation/results/terminal_metadata.json": "5d4926f8f8cbd689e3c109ea34bded5f31a4c42b4841759dc5b6f4d149afd6a2",
+    "experiments/pcqm_k1_explainability_audit/representation/rml_plan/trajectory.json": "2ccd6ff7dd1d075703ebfa95263b89175a4ed0c13cbe27b8e4c49b87561dc5e7",
+    "experiments/pcqm_k1_explainability_audit/representation/role_plan.json": "9649a8f4605b17a6b71bb39c7619c672485cd26da1d10aaf31074d91bd367e84",
+    "experiments/pcqm_k1_explainability_audit/representation/row_manifest.json": "6845f5f08192a4688bc69a863640f33cae712bba0266f2290bd0c8a9d4cd8d03",
+    "experiments/pcqm_k1_explainability_audit/representation/submission.json": "a40b74b24350680988e3021c518465ac4752b17453d9fec5f83120d9ed43495e",
+    "experiments/pcqm_k1_explainability_audit/representation_protocol.md": "d054009d75a5c827f6c8cee07a18ccdbfdb64a7ac0ca460ac9e6ac0762fb08bd"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-k1-representation-observed-123315282.json": "1805f8fac769e0df34e026784fc163a25c8361519392c4e375cfa83ad515cf18",
+    "postlaunch_run_binding.json": "2900556b57cb2840a817b9bb2c378f1811b04f6c52a31680914898199081ee5f",
+    "prospective_snapshot.json": "2ccd6ff7dd1d075703ebfa95263b89175a4ed0c13cbe27b8e4c49b87561dc5e7",
+    "roles/role-TC-k1-representation-100k-500k-internal_development_100000_150000-labels_read.json": "0eb02a0e6879cd4f1b7c3771e77d51b349d1850257d5743da1be382dfab74122",
+    "roles/role-TC-k1-representation-100k-500k-internal_development_100000_150000-metric_computed.json": "2d6806e698490e37ef98e4bbf75ae9c64ae9165c81c7f191f7515abf8086575c",
+    "roles/role-TC-k1-representation-100k-500k-internal_development_100000_150000-prediction_input.json": "3ed6b6a3989c337f639a9f19e6b9ad357c54d3f74e2f183fb69dac802641dd8d",
+    "roles/role-TC-k1-representation-100k-500k-internal_development_500000_550000-labels_read.json": "a9f3d2550114bb7195d4934b8e3f9c57d0de2113547100a057d9c4daf671df19",
+    "roles/role-TC-k1-representation-100k-500k-internal_development_500000_550000-metric_computed.json": "9e7dd2786bda59bc5e3b2cf7709bb21d18f7d37ceb7000ba1d99cf85c282f789",
+    "roles/role-TC-k1-representation-100k-500k-internal_development_500000_550000-prediction_input.json": "295d4e8244a70af40a2ac0a7714c2f54b595889a5665b7b6b5b5f957bd4a4a5f",
+    "terminal_input.json": "376e8f0f09318a07af4f6c51bc19bdfcaa4d60f708c1c2b45f005934b4f42657",
+    "trajectory.json": "f57eb7d275d5921eb1b59eb75a19bc6200581fbc7f044175ac8f10a84886f4b6",
+    "v5_evidence.json": "1f84c55675c86a78b3868372650a53c70ad1a153de9678167cfe0fa9a36f0fef"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_explainability_audit/representation/rml_plan/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "90e09c8f8f6705f744d709a2de97594674960fca5c3b69e588086e5280503759",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-k1-representation-100k-500k"
+}

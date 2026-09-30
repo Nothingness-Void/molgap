@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-123315282",
+  "category": "audit",
+  "cost_event_id": "cost-k1-representation-observed-123315282",
+  "evidence_ref": "experiments/pcqm_k1_explainability_audit/representation/results/terminal_metadata.json",
+  "hardware": "Hygon_DCU_Device_66a1",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.042465555555555555
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.10416666666666667
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.10416666666666667
+    }
+  },
+  "platform": "scnet-kunshan",
+  "run_id": "123315282",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-representation-100k-500k"
+}

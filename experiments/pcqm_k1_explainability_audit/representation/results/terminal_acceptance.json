@@ -1,0 +1,31 @@
+{
+  "accepted": true,
+  "evidence_id": "pcqm-k1-representation-100k-500k-123315282",
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "no_train_no_supported_collapse_mechanism",
+    "transfer_status": "not_a_causal_transfer_comparison"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "consumed",
+    "internal_development_500000_550000": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "run_id": "123315282",
+  "scope": "NO_TRAIN context diagnostic; original empty-run plan retained byte-for-byte",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_explainability_audit/representation/results/terminal_decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "CLOSE"
+    ],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": []
+  }
+}
