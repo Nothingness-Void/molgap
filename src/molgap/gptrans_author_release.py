@@ -14,6 +14,7 @@ from .comparison_readiness import ROLE_EVENT_KINDS, TRACE_FIELD_DECLARATIONS, as
 from .experiment_package import _name
 from .experiment_spec import ExperimentSpec
 from .server_acceptance import write_server_comparison_prelaunch
+from .research_memory.trace import atomic_write
 from .screen_policy import canonical_fingerprint
 from .training_reproducibility import atomic_json, sha256_file
 from .v4_runtime import normalized_source_sha256
@@ -150,7 +151,7 @@ def freeze_screen(root: Path, cpu_output: Path):
         "evidence": {"policy": ref("molgap-v5", sha256_file(root / "docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md")),
             "required_artifacts": ["v5_evidence", "costs", "roles", "trace_manifest", "terminal_artifact"]},
         "terminal_protocol": "molgap-experiment-terminal-descriptor-v1"})
-    atomic_json(root / GPU / "spec.json", spec.to_dict())
+    atomic_write(root / GPU / "spec.json", spec.to_json().encode("utf-8"))
     transform = root / BASE / "recovered_reference/target_transform.json"
     atomic_json(root / GPU / "screen_config.json", {"spec_identity": spec.identity,
         "arms": arm_config, "dataset_manifest_sha256": recipe["manifest_sha256"],
