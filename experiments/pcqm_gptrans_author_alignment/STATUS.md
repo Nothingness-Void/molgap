@@ -57,3 +57,12 @@ The CPU v1 task later ended with ERROR during independent chunk rederivation.
 Its infrastructure diagnosis, original evidence retention and release boundary
 are in [the failure record](results/preparation_failure_v1.md). The local
 chunk-index fix does not qualify complete input acceptance or GPU compute.
+
+## CPU recovery routing
+
+Live recovery status is owned by `../../CURRENT_STATE.md`; physical attempts,
+publication checks, transport failures and monitoring are recorded in
+[verification_recovery/submission_record.md](verification_recovery/submission_record.md).
+For recovery v2, pass `gptrans_author_inputs_verification_recovery_v2` as the
+staged package to the unchanged acceptance entry above. Do not use the original
+preparation package or recovery-v1 package for this attempt.
