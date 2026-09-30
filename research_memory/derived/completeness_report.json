@@ -9,7 +9,7 @@
   },
   "counts_by_severity": {
     "INFO": 1,
-    "WARN": 5
+    "WARN": 6
   },
   "format": "molgap-rml-completeness-report-v1",
   "issues": [
@@ -180,6 +180,14 @@
         "TB-gptrans-centered-logits-100k-s42",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "v5_evidence_without_trajectory",
+      "count": 1,
+      "items": [
+        "pcqm-geometry-v4-500k-fixed-blend-scale-review-20260930"
       ],
       "severity": "WARN"
     }

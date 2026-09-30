@@ -667,8 +667,8 @@
     "unknown_events": 71
   },
   "evidence": {
-    "validated": 52,
-    "without_trajectory": 0
+    "validated": 53,
+    "without_trajectory": 1
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
@@ -701,14 +701,19 @@
       "code": "trajectory_without_v5_evidence",
       "count": 4,
       "severity": "WARN"
+    },
+    {
+      "code": "v5_evidence_without_trajectory",
+      "count": 1,
+      "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 225,
+    "coarse_historical": 229,
     "explicit_events": 96,
     "repeatedly_selected": 8
   },
-  "source_digest": "7970102647df6f2339f977f78ec31215bc3d8edfccfbef9096b295e8e4b91ff3",
+  "source_digest": "540fc4bf3424fccadc2dd023d67f93b391c7636218e91d3149551ca13a547194",
   "trajectories": {
     "count": 56,
     "outcomes": {

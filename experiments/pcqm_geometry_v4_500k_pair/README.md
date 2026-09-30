@@ -11,3 +11,8 @@ checkpoints are reused as references; they are not trained again.
 `STATUS.md` records remote state. Each arm requires its own prospective RML
 trajectory and terminal acceptance. The Kaggle wrapper delegates model training
 to `molgap.pcqm_500k_v4_evidence` and source packaging to `molgap.v4_bundle`.
+
+The completed direct new-versus-original fixed-blend scale review is owned by
+`fixed_blend_scale_decision.md`, with SHA-bound `fixed_blend_review.json` and
+the thin existing-helper caller `compare_fixed_blends.py`. Its supplementary
+V5 evidence is `v5_evidence.json`; this review releases no full training.

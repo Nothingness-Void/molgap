@@ -29,15 +29,13 @@ The Kunshan 500K distance-angle OOF blend is positive nomination evidence, but
 its V4 audit found no runtime certificate or matching V4 reference. It is not
 formal V4 cross-platform/causal evidence. Its decision and binding comparability
 audit are in `experiments/pcqm_geometry_transfer_500k/`; no scale-up is
-authorized without the declared matched bridge. The Kaggle1 matched V4 bridge
-has now completed both 60-epoch arms. Neither arm meets its individual 3 meV
-reference gate; the fixed 50:50 blend improves 4.573 meV over the better arm on
-aligned development rows, with a paired-row 95% interval of [-4.937, -4.212]
-meV. This is nomination evidence for separate scale review only. Strict K1
-reference pairing and replay-ready qualification remain blocked because the
-accepted 50K K1 reference prediction artifact is unavailable. No scale-up or
-protected-role evaluation is authorized. See
-`experiments/pcqm_geometry_v4_500k_pair/continuation_terminal_decision.md`.
+authorized without the declared matched bridge. Both Kaggle1 matched V4
+geometry arms completed 60 epochs. The subsequent direct fixed-blend review
+resolved the K1 prediction recovery blocker and found no reliable incremental
+gain over the accepted pure-2D fixed blend. Full-scale geometry training is
+not released. Independent replay binding and the immutable cost-record
+correction remain technical reconciliation work on the experiment branch;
+see `experiments/pcqm_geometry_v4_500k_pair/fixed_blend_scale_decision.md`.
 
 The older Kaggle2 recurrent screen is closed and missed its comparator by
 `0.0006301 eV`; it is archived at commit `285e1dc`. Do not resume or scale it.

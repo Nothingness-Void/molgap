@@ -25,15 +25,12 @@ exclusions. Its accepted endpoint, exact replay blocker and saved-artifact
 attribution are in `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/`;
 no further pair-memory run is queued.
 
-The separately authorized `B-GEOMETRY-V4-BRIDGE` attempted matched 500K
-GPTrans distance-only and K1 distance-angle candidates on Kaggle1. Both
-preflights passed, but both training arms stopped at epoch five because their
-observed pace projected beyond the frozen native T4-hour caps. The terminal
-cost and role records and partial traces are in
-`experiments/pcqm_geometry_v4_500k_pair/`. Neither arm has an accepted
-60-epoch endpoint, so the earlier geometry and fusion nominations remain
-contextual. Any renewed 500K comparison needs a separately frozen budget or
-exact-recipe cost decision; no continuation is queued.
+The authorized `B-GEOMETRY-V4-BRIDGE` and checkpoint continuation completed.
+Its direct new-versus-original fixed-blend scale review releases no full run.
+The remaining task is independent replay/reference binding, supported
+cost-record correction, and reviewed terminal Git routing; no additional
+training is queued. The exit criteria and evidence are owned by
+`experiments/pcqm_geometry_v4_500k_pair/fixed_blend_scale_decision.md`.
 
 The historical Kaggle recurrent graph-state experiment completed below its
 frozen comparator and is archived at commit `285e1dc`; it is not active.
@@ -42,8 +39,9 @@ The 500K distance-angle OOF fusion is a positive nomination recorded in
 `experiments/pcqm_geometry_transfer_500k/`. Its own audit found that
 runtime certificates and a matching frozen V4 reference were absent, so it is
 not yet eligible as a V4 cross-platform or causal geometry result. The
-subsequent authorized matched bridge ended `STOP_FOR_COST` before a qualifying
-endpoint; see `experiments/pcqm_geometry_v4_500k_pair/decision.md`.
+subsequent authorized matched bridge's original cost stop and completed
+continuation are retained in `experiments/pcqm_geometry_v4_500k_pair/`.
+Its latest fixed-blend scale review supplies no full-scale release.
 
 Completed PCQM, OGB submission, and QM9 screen decisions are indexed in
 `experiments/README.md`; do not reopen closed candidates by changing seeds or

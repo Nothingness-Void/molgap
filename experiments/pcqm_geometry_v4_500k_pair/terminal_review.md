@@ -1,5 +1,9 @@
 # Terminal acceptance review, 2026-09-30
 
+Subsequent reconciliation: `fixed_blend_scale_decision.md` resolves the
+missing-K1-prediction observation below and owns the direct blend-versus-blend
+scale review. The original immutable transactions remain preserved.
+
 The authoritative Kaggle1 scheduler reports COMPLETE for
 `nothingnessvoid/molgap-geometry-v4-500k-resume-s42-v1`. Both independently
 rerun `accept_stage.py` checks passed at epoch cursor 60. Each observed

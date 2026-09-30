@@ -1,0 +1,83 @@
+{
+  "format": "molgap-fixed-blend-review-v1",
+  "n": 50000,
+  "source_idx_and_targets_exactly_aligned": true,
+  "model_inference_executed": false,
+  "training_executed": false,
+  "new_remote_job_submitted": false,
+  "analysis_scope": "supplementary existing-question scale review; same already used development role; hybrid decompositions post-hoc and non-promotional",
+  "bootstrap_seed": 20260917,
+  "bootstrap_replicates": 10000,
+  "bootstrap_semantics": "paired development-row resampling; positive mean is improvement; not training-seed uncertainty",
+  "artifact_sha256": {
+    "gptrans_2d": "0608084eb2a7a90923a652235572ee69578c4e138d5df3c457e5170f7da613bf",
+    "k1_2d": "68fba785a0b028a8445fe8d94d348df2c3a8d7d8caab708acb574d13cac9831b",
+    "gptrans_distance": "85488eb225721274e37097554a9ceb81371267d5b404e939bcfb96403d982105",
+    "k1_geometry": "a5363aaf2654996e169cf62277db68e42221a08102d94b905bec9aeb66ff0a23"
+  },
+  "artifact_paths": {
+    "gptrans_2d": "platforms/_records/kaggle/training/pcqm_500k_v4_evidence_reference_predictions/gptrans__best_predictions.pt",
+    "k1_2d": "platforms/_records/kaggle/training/pcqm_500k_v4_evidence_reference_predictions/neural_atom_k1__best_predictions.pt",
+    "gptrans_distance": "platforms/_records/kaggle/training/geometry_v4_500k_continuation_attempt_003/output/evidence/gptrans_distance_only/best_predictions.pt",
+    "k1_geometry": "platforms/_records/kaggle/training/geometry_v4_500k_continuation_attempt_003/output/evidence/k1_distance_angle/best_predictions.pt"
+  },
+  "mae_eV": {
+    "gptrans_2d": 0.10686753690242767,
+    "k1_2d": 0.10485987365245819,
+    "gptrans_distance": 0.10601039975881577,
+    "k1_geometry": 0.10486314445734024,
+    "original_2d_fixed_50_50": 0.10065561532974243,
+    "geometry_fixed_50_50": 0.10029008984565735,
+    "distance_with_original_k1_fixed_50_50": 0.10046180337667465,
+    "original_gptrans_with_geometry_k1_fixed_50_50": 0.10039620846509933
+  },
+  "paired_improvements": {
+    "geometry_fixed_50_50__over__original_2d_fixed_50_50": {
+      "mean_eV": 0.00036553008249029517,
+      "bootstrap_95pct_eV": [
+        -3.362801817274884e-05,
+        0.0007679599744733422
+      ],
+      "probability_mean_ge_0p003": 0.0,
+      "candidate_lower_row_error_fraction": 0.50356
+    },
+    "gptrans_distance__over__gptrans_2d": {
+      "mean_eV": 0.0008571259095333517,
+      "bootstrap_95pct_eV": [
+        0.000340817600954324,
+        0.0013773504440905526
+      ],
+      "probability_mean_ge_0p003": 0.0,
+      "candidate_lower_row_error_fraction": 0.50554
+    },
+    "k1_geometry__over__k1_2d": {
+      "mean_eV": -3.2809496133268112e-06,
+      "bootstrap_95pct_eV": [
+        -0.0005685342039214447,
+        0.0005671947918017388
+      ],
+      "probability_mean_ge_0p003": 0.0,
+      "candidate_lower_row_error_fraction": 0.49886
+    },
+    "distance_with_original_k1_fixed_50_50__over__original_2d_fixed_50_50": {
+      "mean_eV": 0.00019381908350624144,
+      "bootstrap_95pct_eV": [
+        -7.848644891055301e-05,
+        0.00046926592258387243
+      ],
+      "probability_mean_ge_0p003": 0.0,
+      "candidate_lower_row_error_fraction": 0.5002
+    },
+    "geometry_fixed_50_50__over__distance_with_original_k1_fixed_50_50": {
+      "mean_eV": 0.00017171099898405373,
+      "bootstrap_95pct_eV": [
+        -0.0001329145048657665,
+        0.00047600071629858574
+      ],
+      "probability_mean_ge_0p003": 0.0,
+      "candidate_lower_row_error_fraction": 0.5033
+    }
+  },
+  "materiality_context_eV": 0.003,
+  "materiality_context": "existing individual-arm promotion floor; not a retrospectively preregistered blend-versus-blend gate"
+}

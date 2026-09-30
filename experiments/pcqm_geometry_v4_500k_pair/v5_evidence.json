@@ -1,0 +1,104 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "legacy_contract": "molgap-geometry-v4-500k-pair-contract-v1",
+  "evidence_id": "pcqm-geometry-v4-500k-fixed-blend-scale-review-20260930",
+  "track": "B",
+  "scope": "supplementary_direct_fixed_blend_review_of_existing_geometry_question",
+  "outcome": {
+    "execution_status": "complete_saved_prediction_analysis_no_training_no_inference",
+    "artifact_status": "accepted_four_prediction_hashes_exact_50k_row_target_alignment",
+    "comparison_status": "geometry_vs_original_fixed_blend_improvement_interval_crosses_zero",
+    "scientific_status": "incremental_geometry_blend_advantage_not_demonstrated",
+    "transfer_status": "no_full_scale_release",
+    "budget_decision": "no_accelerator_work_executed_local_cpu_cost_unmeasured",
+    "full_handoff_status": "not_qualified"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_geometry_v4_500k_pair/protocol.md",
+      "experiments/pcqm_geometry_v4_500k_pair/fixed_blend_scale_decision.md",
+      "experiments/pcqm_geometry_v4_500k_pair/fixed_blend_review.json",
+      "experiments/pcqm_500k_v4_evidence/stage5_edge_k1_acceptance.md",
+      "experiments/pcqm_500k_v4_evidence/stage5_gptrans_acceptance.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "fixed_blend_review.json",
+      "locator": "experiments/pcqm_geometry_v4_500k_pair/fixed_blend_review.json",
+      "sha256": "ca889d6de64e03f884fc9708405eba48b19b50e765418d9ba6721b703a1c3f86",
+      "availability": "locally_retained_sha256_verified"
+    },
+    {
+      "name": "fixed_blend_scale_decision.md",
+      "locator": "experiments/pcqm_geometry_v4_500k_pair/fixed_blend_scale_decision.md",
+      "sha256": "01063693d40b233d92e95bb9aa51f5d9098a3a2811537eb246bbfff5fc212507",
+      "availability": "locally_retained_sha256_verified"
+    },
+    {
+      "name": "compare_fixed_blends.py",
+      "locator": "experiments/pcqm_geometry_v4_500k_pair/compare_fixed_blends.py",
+      "sha256": "b7476c7c575308fbb13894fe77be30e7ae6053162c2a6fcc6af6ed4effb24304",
+      "availability": "locally_retained_sha256_verified"
+    },
+    {
+      "name": "neural_atom_k1__stage_manifest.json",
+      "locator": "platforms/_records/kaggle/training/pcqm_500k_v4_evidence_reference_predictions/neural_atom_k1__stage_manifest.json",
+      "sha256": "6de0d6a576729030138a5f0a6914f7afe9cac75860b4355fe49c1e3c5e09f7e1",
+      "availability": "locally_retained_sha256_verified"
+    },
+    {
+      "name": "k1_recovery_receipt.json",
+      "locator": "platforms/_records/kaggle/training/pcqm_500k_v4_evidence_reference_predictions/k1_recovery_receipt.json",
+      "sha256": "c3ea7c58844e8f7be32f7124fccd555f57e051a55eb1eca1460243509892fdaa",
+      "availability": "locally_retained_sha256_verified"
+    },
+    {
+      "name": "gptrans__best_predictions.pt",
+      "locator": "platforms/_records/kaggle/training/pcqm_500k_v4_evidence_reference_predictions/gptrans__best_predictions.pt",
+      "sha256": "0608084eb2a7a90923a652235572ee69578c4e138d5df3c457e5170f7da613bf",
+      "availability": "locally_retained_sha256_verified"
+    },
+    {
+      "name": "neural_atom_k1__best_predictions.pt",
+      "locator": "platforms/_records/kaggle/training/pcqm_500k_v4_evidence_reference_predictions/neural_atom_k1__best_predictions.pt",
+      "sha256": "68fba785a0b028a8445fe8d94d348df2c3a8d7d8caab708acb574d13cac9831b",
+      "availability": "locally_retained_sha256_verified"
+    },
+    {
+      "name": "best_predictions.pt",
+      "locator": "platforms/_records/kaggle/training/geometry_v4_500k_continuation_attempt_003/output/evidence/gptrans_distance_only/best_predictions.pt",
+      "sha256": "85488eb225721274e37097554a9ceb81371267d5b404e939bcfb96403d982105",
+      "availability": "locally_retained_sha256_verified"
+    },
+    {
+      "name": "best_predictions.pt",
+      "locator": "platforms/_records/kaggle/training/geometry_v4_500k_continuation_attempt_003/output/evidence/k1_distance_angle/best_predictions.pt",
+      "sha256": "a5363aaf2654996e169cf62277db68e42221a08102d94b905bec9aeb66ff0a23",
+      "availability": "locally_retained_sha256_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development_500000_550000": "metric_computed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "migration": {
+    "migrated_at": "2026-09-30",
+    "verification_scope": "Supplementary SHA-bound saved-prediction comparison; migration does not alter historical scientific outcomes",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  },
+  "notes": {
+    "owning_trajectory_ids": [
+      "TB-geometry-v4-500k-gptrans_distance_only-s42-continuation",
+      "TB-geometry-v4-500k-k1_distance_angle-s42-continuation"
+    ],
+    "historical_finalizations_preserved": true,
+    "replay_qualification_changed": false,
+    "new_scientific_route_launched": false
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 225,
+  "ambiguous_historical_role_record_count": 229,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -143,6 +143,34 @@
     },
     {
       "evidence_id": "pcqm-geometry-transfer-500k-contextual",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-fixed-blend-scale-review-20260930",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "metric_computed"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-fixed-blend-scale-review-20260930",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-fixed-blend-scale-review-20260930",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-geometry-v4-500k-fixed-blend-scale-review-20260930",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -2311,6 +2339,7 @@
       "pcqm-geometry-component-attribution-no-train-20260928",
       "pcqm-geometry-reliability-screen-positive-20260928",
       "pcqm-geometry-transfer-500k-contextual",
+      "pcqm-geometry-v4-500k-fixed-blend-scale-review-20260930",
       "pcqm-geometry-v4-500k-gptrans_distance_only-s42-continuation-complete",
       "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop",
       "pcqm-geometry-v4-500k-k1_distance_angle-s42-continuation-complete",
@@ -2364,6 +2393,7 @@
       "pcqm-geometry-component-attribution-no-train-20260928",
       "pcqm-geometry-reliability-screen-positive-20260928",
       "pcqm-geometry-transfer-500k-contextual",
+      "pcqm-geometry-v4-500k-fixed-blend-scale-review-20260930",
       "pcqm-geometry-v4-500k-gptrans_distance_only-s42-continuation-complete",
       "pcqm-geometry-v4-500k-gptrans_distance_only-s42-cost-stop",
       "pcqm-geometry-v4-500k-k1_distance_angle-s42-continuation-complete",

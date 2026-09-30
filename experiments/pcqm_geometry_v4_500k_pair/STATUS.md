@@ -49,3 +49,12 @@ and exact record/replay blockers. The two canonical terminal RML finalizations
 exist and the derived state is current. Neither arm has complete replay-pool
 qualification. The user-requested Luna monitor is paused. Preserve this
 unresolved experiment branch pending strict qualification reconciliation.
+
+## Direct fixed-blend scale review, 2026-09-30
+
+The accepted K1 reference prediction bytes were recovered from the historical
+desktop artifact checkout and verified against both accepted hashes. The
+direct paired new-versus-original fixed-blend analysis is complete and releases
+no full run. Its authority is [fixed-blend scale decision](fixed_blend_scale_decision.md).
+The previous missing-prediction blocker is resolved; independent replay
+binding and the immutable GPTrans cost correction remain unresolved.

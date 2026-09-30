@@ -1,8 +1,8 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 52
-- Evidence without trajectory: 0
+- Validated V5 evidence: 53
+- Evidence without trajectory: 1
 
 ## Trajectories
 - CLOSED: 8
@@ -20,7 +20,7 @@
 
 ## Roles
 - Explicit role events: 96
-- Coarse historical role records: 225
+- Coarse historical role records: 229
 - Repeatedly selected role identities: 8
 
 ## Cost
@@ -91,3 +91,4 @@
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 24
 - [WARN] trajectory_without_v5_evidence: 4
+- [WARN] v5_evidence_without_trajectory: 1
