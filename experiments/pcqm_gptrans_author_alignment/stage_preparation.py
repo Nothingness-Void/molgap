@@ -27,18 +27,20 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--verification-recovery", action="store_true",
                         help="Reverify the pinned failed CPU output under a separate prospective attempt")
+    parser.add_argument("--recovery-attempt", type=int, choices=(1, 2), default=1)
     args = parser.parse_args()
     root, output = Path(REPO_ROOT), args.output.absolute()
     if output.exists():
         raise FileExistsError(output)
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     recovery = args.verification_recovery
-    trajectory = TRAJECTORY + "-verification-recovery" if recovery else TRAJECTORY
+    fallback = recovery and args.recovery_attempt == 2
+    trajectory = TRAJECTORY + "-verification-recovery" + ("-v2" if fallback else "") if recovery else TRAJECTORY
     run = "kaseichou/molgap-gptrans-author-inputs-verification-recovery" if recovery else RUN
-    attempt = "recovery-v1" if recovery else "v1"
-    plan_ref = f"{BASE}/verification_recovery/rml_plan" if recovery else f"{BASE}/preparation_rml"
-    contract_ref = f"{BASE}/verification_recovery/contract.json" if recovery else f"{BASE}/preparation_contract.json"
-    metadata_ref = f"{BASE}/verification_recovery/kernel-metadata.json" if recovery else f"{BASE}/kaggle_prepare/kernel-metadata.json"
+    attempt = f"recovery-v{args.recovery_attempt}" if recovery else "v1"
+    plan_ref = f"{BASE}/verification_recovery/rml_plan_v2" if fallback else (f"{BASE}/verification_recovery/rml_plan" if recovery else f"{BASE}/preparation_rml")
+    contract_ref = f"{BASE}/verification_recovery/fixed_cache_contract.json" if fallback else (f"{BASE}/verification_recovery/contract.json" if recovery else f"{BASE}/preparation_contract.json")
+    metadata_ref = f"{BASE}/verification_recovery/fixed_cache_kernel-metadata.json" if fallback else (f"{BASE}/verification_recovery/kernel-metadata.json" if recovery else f"{BASE}/kaggle_prepare/kernel-metadata.json")
     contract_path = root / contract_ref
     contract = json.loads(contract_path.read_text())
     budget_ref, role_ref = f"{BASE}/preparation_budget.json", f"{BASE}/preparation_role_plan.json"
@@ -50,7 +52,7 @@ def main():
             "question": "Are the complete path inputs and degree-only initial state valid before G1/G2 compute release?",
             "hypothesis": {
                 "hypothesis_id": "H-" + trajectory,
-                "observed_deficiency": "Only sampled input diagnostics exist; the complete path sidecar and scaled state were absent.",
+                "observed_deficiency": "Kaggle rejected the failed-kernel output mount; independently rebuild paths from the unchanged fixed graph cache." if fallback else "Only sampled input diagnostics exist; the complete path sidecar and scaled state were absent.",
                 "supporting_evidence_ids": [REFERENCE],
                 "alternative_explanations": ["BFS tie or row/serialization errors may invalidate the intended input comparison."],
                 "changed_mechanism": "CPU-only deterministic path derivation and two-table initial-state transform",

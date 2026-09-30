@@ -19,6 +19,8 @@ def _observed_identity(result: dict, owner: str) -> dict:
     import re
 
     ref, url = result.get("ref") or None, result.get("url") or None
+    if isinstance(ref, str) and re.fullmatch(r"/code/[\w-]+/[\w-]+/?", ref):
+        ref = ref.removeprefix("/code/").rstrip("/")
     url_ref, script_version = None, None
     conflicts = []
     if url:

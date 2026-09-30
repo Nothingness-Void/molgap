@@ -104,6 +104,13 @@ def test_conflicting_response_identity_is_not_guessed():
     assert result["identity_conflicts"] == ["response_ref_url_conflict"]
 
 
+def test_code_path_response_ref_normalizes_without_weakening_owner_check():
+    payload = {"ref": "/code/owner/kernel", "url": "https://www.kaggle.com/code/owner/kernel",
+               "versionNumber": 1, "kernelId": 77}
+    assert kaggle_accelerator_push._observed_identity(payload, "owner")["kernel"] == "owner/kernel"
+    assert kaggle_accelerator_push._observed_identity(payload, "other")["kernel"] is None
+
+
 def test_push_kernel_rejects_unverified_tpu_batch_path(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match="executed both script and notebook"):
         kaggle_accelerator_push.push_kernel_with_accelerator(
@@ -113,21 +120,21 @@ def test_push_kernel_rejects_unverified_tpu_batch_path(tmp_path: Path) -> None:
         )
 
 
-@pytest.mark.parametrize("status", ["submitted", "submission_unknown"])
-def test_platform_wrapper_persists_response_before_unknown_exit(tmp_path, monkeypatch, capsys, status):
+@pytest.mark.parametrize("status,reconciliation", [("submitted", False), ("submitted", True), ("submission_unknown", True)])
+def test_platform_wrapper_persists_response_before_unknown_exit(tmp_path, monkeypatch, capsys, status, reconciliation):
     import runpy
     import sys
 
     receipt = tmp_path / "response.json"
     observed = {"status": status, "kernel": None,
-                "reconciliation_required": status == "submission_unknown"}
+                "reconciliation_required": reconciliation}
     monkeypatch.setattr(kaggle_accelerator_push, "push_kernel_with_accelerator",
                         lambda **kwargs: observed)
     monkeypatch.setattr(sys, "argv", ["push_kernel_with_accelerator.py",
         "--package", str(tmp_path), "--credentials", str(tmp_path / "unused.json"),
         "--accelerator", "NvidiaTeslaT4", "--response-output", str(receipt)])
     script = Path(__file__).resolve().parents[1] / "platforms/kaggle/push_kernel_with_accelerator.py"
-    if status == "submission_unknown":
+    if reconciliation:
         with pytest.raises(SystemExit) as error:
             runpy.run_path(str(script), run_name="__main__")
         assert error.value.code == 1

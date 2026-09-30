@@ -30,7 +30,7 @@ def main() -> None:
         from molgap.training_reproducibility import atomic_json
         atomic_json(args.response_output, result)
     print(json.dumps(result, indent=2))
-    if result["status"] != "submitted":
+    if result["status"] != "submitted" or result.get("reconciliation_required", False):
         raise SystemExit(1)
 
 

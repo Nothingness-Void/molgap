@@ -32,3 +32,14 @@ def test_entry_reuses_verified_chunks_without_building_in_recovery_branch():
     assert "build_sidecar" not in calls
     assert 'dataset_root=manifest.parent, rederive=True' in entry
     ast.parse((BASE / "stage_preparation.py").read_text())
+
+
+def test_fixed_cache_retry_preserves_science_without_failed_kernel_mount():
+    original = json.loads((BASE / "preparation_contract.json").read_text())
+    retry = json.loads((BASE / "verification_recovery/fixed_cache_contract.json").read_text())
+    assert all(retry[k] == v for k, v in original.items())
+    assert "recovery_sidecar_manifest_sha256" not in retry
+    metadata = json.loads((BASE / "verification_recovery/fixed_cache_kernel-metadata.json").read_text())
+    assert metadata["kernel_sources"] == []
+    assert metadata["enable_gpu"] is False
+    assert "kaseichou/pcqm4mv2-ogb-fixed-100k-v1" in metadata["dataset_sources"]
