@@ -1,0 +1,14 @@
+{
+  "id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+  "title": "MolGap GPTrans Author Inputs Verification Recovery",
+  "code_file": "run.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": ["kaseichou/molgap-gptrans-author-inputs-verification-source", "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"],
+  "competition_sources": [],
+  "kernel_sources": ["kaseichou/molgap-gptrans-author-inputs-preparation-v1"],
+  "model_sources": []
+}

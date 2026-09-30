@@ -25,22 +25,31 @@ RUN = "kaseichou/molgap-gptrans-author-inputs-preparation-v1"
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--verification-recovery", action="store_true",
+                        help="Reverify the pinned failed CPU output under a separate prospective attempt")
     args = parser.parse_args()
     root, output = Path(REPO_ROOT), args.output.absolute()
     if output.exists():
         raise FileExistsError(output)
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
-    contract_path = root / BASE / "preparation_contract.json"
+    recovery = args.verification_recovery
+    trajectory = TRAJECTORY + "-verification-recovery" if recovery else TRAJECTORY
+    run = "kaseichou/molgap-gptrans-author-inputs-verification-recovery" if recovery else RUN
+    attempt = "recovery-v1" if recovery else "v1"
+    plan_ref = f"{BASE}/verification_recovery/rml_plan" if recovery else f"{BASE}/preparation_rml"
+    contract_ref = f"{BASE}/verification_recovery/contract.json" if recovery else f"{BASE}/preparation_contract.json"
+    metadata_ref = f"{BASE}/verification_recovery/kernel-metadata.json" if recovery else f"{BASE}/kaggle_prepare/kernel-metadata.json"
+    contract_path = root / contract_ref
     contract = json.loads(contract_path.read_text())
     budget_ref, role_ref = f"{BASE}/preparation_budget.json", f"{BASE}/preparation_role_plan.json"
-    cost_id = "cost-" + TRAJECTORY
+    cost_id = "cost-" + trajectory
     proposal = {
         "trajectory": {
-            "trajectory_id": TRAJECTORY, "record_mode": "prospective", "owner": "server", "track": "C",
+            "trajectory_id": trajectory, "record_mode": "prospective", "owner": "server", "track": "C",
             "family_id": "gptrans-author-input-preparation",
             "question": "Are the complete path inputs and degree-only initial state valid before G1/G2 compute release?",
             "hypothesis": {
-                "hypothesis_id": "H-" + TRAJECTORY,
+                "hypothesis_id": "H-" + trajectory,
                 "observed_deficiency": "Only sampled input diagnostics exist; the complete path sidecar and scaled state were absent.",
                 "supporting_evidence_ids": [REFERENCE],
                 "alternative_explanations": ["BFS tie or row/serialization errors may invalidate the intended input comparison."],
@@ -54,14 +63,14 @@ def main():
             },
             "state_at_start": {
                 "source_commit": commit, "source_config_identity": canonical_fingerprint(contract),
-                "contract_refs": [f"{BASE}/preparation_contract.json", f"{BASE}/dual_arm_protocol.md"],
+                "contract_refs": [contract_ref, f"{BASE}/dual_arm_protocol.md"],
                 "reference_ids": [REFERENCE], "parent_trajectory_ids": ["TC-gptrans-v5-audit-reference-100k"],
-                "prior_trajectory_ids": [], "prior_evidence_ids": [REFERENCE],
+                "prior_trajectory_ids": [TRAJECTORY] if recovery else [], "prior_evidence_ids": [REFERENCE],
                 "role_snapshot_refs": [role_ref], "budget_snapshot_ref": budget_ref,
             },
             "actions": [{"action_id": "A001", "type": "cpu_input_preparation", "source_commit": commit,
-                         "run_ids": [RUN], "attempt_ids": ["v1"],
-                         "evidence_refs": [f"{BASE}/preparation_contract.json"], "cost_event_ids": [cost_id]}],
+                         "run_ids": [run], "attempt_ids": [attempt],
+                         "evidence_refs": [contract_ref], "cost_event_ids": [cost_id]}],
             "result": {"evidence_ids": [], "evidence_refs": []},
             "decision": {"decision_ref": f"{BASE}/dual_arm_protocol.md", "outcome": "ACTIVE",
                          "next_allowed_actions": ["one CPU preparation and independent acceptance"],
@@ -72,24 +81,24 @@ def main():
                            "policy_id": "gptrans-author-input-preparation", "policy_version": "v1",
                            "budget_snapshot_ref": budget_ref, "role_snapshot_refs": [role_ref],
                            "state_timestamp": datetime.now(timezone.utc).isoformat(), "source_commit": commit},
-        "costs": [{"schema": "molgap-cost-event-v1", "cost_event_id": cost_id, "trajectory_id": TRAJECTORY,
-                   "action_id": "A001", "run_id": RUN, "attempt_id": "v1", "category": "cache_build",
+        "costs": [{"schema": "molgap-cost-event-v1", "cost_event_id": cost_id, "trajectory_id": trajectory,
+                   "action_id": "A001", "run_id": run, "attempt_id": attempt, "category": "cache_build",
                    "platform": "kaggle2", "hardware": "CPU-only", "evidence_ref": budget_ref,
                    "measurement": {"device_hours": {"status": "not_applicable", "value": None},
                                    "cpu_hours": {"status": "measurement_missing", "value": None},
                                    "wall_hours": {"status": "estimated", "value": 3},
                                    "queue_hours": {"status": "measurement_missing", "value": None}}}],
     }
-    plan_dir = root / BASE / "preparation_rml"
+    plan_dir = root / plan_ref
     if plan_dir.exists():
         retained = json.loads((plan_dir / "trajectory.json").read_text())
-        if (retained["trajectory_id"] != TRAJECTORY or retained["decision"]["outcome"] != "ACTIVE"
+        if (retained["trajectory_id"] != trajectory or retained["decision"]["outcome"] != "ACTIVE"
                 or retained["state_at_start"]["source_commit"] != commit
                 or retained["state_at_start"]["source_config_identity"] != canonical_fingerprint(contract)):
             raise RuntimeError("Existing CPU plan cannot be reused for this package")
-        planned = {"trajectory_id": TRAJECTORY, "status": "PLANNED", "path": f"{BASE}/preparation_rml"}
+        planned = {"trajectory_id": trajectory, "status": "PLANNED", "path": plan_ref}
     else:
-        planned = plan(root, proposal, f"{BASE}/preparation_rml")
+        planned = plan(root, proposal, plan_ref)
     ref_bundle = json.loads((root / "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/reference_bundle.json").read_text())
     reference_contract = json.loads((root / "experiments/pcqm_gptrans_v5_audit_reference/contract.json").read_text())
     def reference(name, value):
@@ -98,7 +107,7 @@ def main():
         return reference(name, canonical_fingerprint({"value": value}))
     spec = ExperimentSpec({
         "schema_version": "molgap-experiment-spec-v1", "experiment_id": "gptrans-author-input-preparation",
-        "logical_run_id": "gptrans-author-input-preparation-v1",
+        "logical_run_id": "gptrans-author-input-verification-recovery" if recovery else "gptrans-author-input-preparation-v1",
         "arms": [{"arm_id": "input-preparation", "scientific_role": "ablation", "family": {"name": "gptrans_t", "version": "1"},
                   "base": reference("gptrans_t_frozen_core", reference_contract["architecture_sha256"]),
                   "initialization": {"kind": "frozen_state", "seed": 42, "state_sha256": contract["base_initial_tensor_sha256"]},
@@ -118,7 +127,7 @@ def main():
                   "addons": [], "addon_semantics": "baseline"}],
         "platform": {"name": "kaggle", "accelerator": "CPU-only", "device_count": 1, "cpu_cores": 4,
                      "memory_gib": 16, "atomic_checkpoints": True, "retrievable_chunks": True},
-        "prospective": {"trajectory_id": TRAJECTORY, "hypothesis": proposal["trajectory"]["question"],
+        "prospective": {"trajectory_id": trajectory, "hypothesis": proposal["trajectory"]["question"],
                         "cheapest_falsifier": "CPU-only independent full input verification", "stop_rule": "No GPU release from this CPU stage alone",
                         "budget_sha256": sha256_file(root / budget_ref)},
         "evidence": {"policy": reference("molgap-v5", sha256_file(root / "docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md")),
@@ -135,18 +144,18 @@ def main():
         except ValueError:
             # Package policy remains unchanged; selected dependency checks below fail closed.
             continue
-    paths.append(f"{BASE}/preparation_contract.json")
-    paths.extend((f"{BASE}/kaggle_prepare/run.py", f"{BASE}/kaggle_prepare/kernel-metadata.json"))
+    paths.append(contract_ref)
+    paths.extend((f"{BASE}/kaggle_prepare/run.py", metadata_ref))
     initial = root / "platforms/_records/kaggle/packages/gptrans_t_v4_source_814d104/initial_state.pt"
     staged = stage_release_inputs(spec, root, paths, output,
         artifacts={"initial_state.pt": UploadArtifact(initial, contract["initial_file_sha256"])},
-        recipe_files={"input-preparation": f"{BASE}/preparation_contract.json"},
+        recipe_files={"input-preparation": contract_ref},
         initial_states={"input-preparation": "initial_state.pt"},
         required_modules=["molgap.gptrans_author_inputs", "molgap.pcqm_gptrans_v4"],
         entry_template=root / BASE / "kaggle_prepare/run.py",
-        kernel_metadata=root / BASE / "kaggle_prepare/kernel-metadata.json",
-        dataset_metadata={"title": "MolGap GPTrans Author Inputs Source V1",
-                          "id": "kaseichou/molgap-gptrans-author-inputs-source-v1",
+        kernel_metadata=root / metadata_ref,
+        dataset_metadata={"title": "MolGap GPTrans Author Input Verification Source" if recovery else "MolGap GPTrans Author Inputs Source V1",
+                          "id": "kaseichou/molgap-gptrans-author-inputs-verification-source" if recovery else "kaseichou/molgap-gptrans-author-inputs-source-v1",
                           "licenses": [{"name": "other"}], "isPrivate": True})
     atomic_json(output / "plan_binding.json", planned)
     print(json.dumps({"plan": planned, "release_status": staged["release_status"], "errors": staged["errors"]}))

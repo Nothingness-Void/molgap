@@ -79,8 +79,21 @@ def main():
         "labels_read": False, "official_validation_role_read": False,
         "test_dev_role_read": False, "test_challenge_role_read": False,
     })
+    contracts = list(source.rglob("*contract.json"))
+    if len(contracts) != 1:
+        raise RuntimeError("Expected exactly one frozen preparation contract")
+    contract = json.loads(contracts[0].read_text())
     degree = prepare_degree_initial_state(initial, OUTPUT / "degree_initial_state.pt")
-    build_sidecar(manifest.parent, OUTPUT / "paths")
+    recovery = contract.get("recovery_sidecar_manifest_sha256")
+    if recovery:
+        retained = mounted("manifest.json", recovery).parent
+        # Keep old immutable chunks; this attempt supplies new verification/source/cost.
+        from molgap.gptrans_author_inputs import validate_sidecar
+        validate_sidecar(retained)
+        import shutil
+        shutil.copytree(retained, OUTPUT / "paths")
+    else:
+        build_sidecar(manifest.parent, OUTPUT / "paths")
     accepted = validate_sidecar(OUTPUT / "paths", dataset_root=manifest.parent, rederive=True)
     usage = resource.getrusage(resource.RUSAGE_SELF)
     atomic_json(OUTPUT / "preparation_result.json", {

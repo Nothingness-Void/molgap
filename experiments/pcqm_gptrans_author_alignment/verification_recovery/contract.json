@@ -1,0 +1,23 @@
+{
+  "format": "molgap-gptrans-author-input-preparation-v1",
+  "purpose": "diagnostic",
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "initial_file_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+  "base_initial_tensor_sha256": "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6",
+  "degree_scale": 0.0897,
+  "degree_initial_tensor_sha256": "d10738efd0851fd53513b51c0a85c42327f87ee0ea35a0af1b6a381b8ce179d1",
+  "path_policy": "sorted-neighbor-bfs-cap20-directed-ogb-bond3",
+  "rows": {"train": 100000, "internal_development": 50000},
+  "training_executed": false,
+  "model_inference_executed": false,
+  "labels_read": false,
+  "geometry_read": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "gpu_authorized_in_this_stage": false,
+  "wall_hours_ceiling": 3,
+  "recovery_sidecar_manifest_sha256": "e99dddaa87e411ba0b6291697cfbcff0457db09a198ce0212d47d0b4af295844",
+  "recovery_source": {"kernel": "kaseichou/molgap-gptrans-author-inputs-preparation-v1", "kernel_id": 136492377, "version": 1},
+  "recovery_semantics": "copy hash-verified retained chunks and independently rederive every source row; no rebuild or GPU release"
+}
