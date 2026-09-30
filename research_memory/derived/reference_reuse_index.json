@@ -989,6 +989,27 @@
       "artifact_availability": [
         "local_verified"
       ],
+      "comparison_status": "pending_strict_reference_qualification",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "two_family_pretraining_100k_terminal_attempt",
+      "source_envelope": "experiments/pcqm_pretraining_family_pair/prospective_release2/gptrans_joint/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_qualified",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_verified"
+      ],
       "comparison_status": "not_applicable",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
@@ -1002,6 +1023,27 @@
       "source_envelope": "experiments/pcqm_pretraining_family_pair/prospective/gptrans_joint/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_applicable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_verified"
+      ],
+      "comparison_status": "pending_strict_reference_qualification",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-pretraining-k1-100k-s42-release3-terminal",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "two_family_pretraining_100k_terminal_attempt",
+      "source_envelope": "experiments/pcqm_pretraining_family_pair/prospective_release2/k1/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_qualified",
       "used_by_trajectory_ids": []
     },
     {

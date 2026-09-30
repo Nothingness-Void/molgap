@@ -1,0 +1,54 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "closure_synthesized_manifest_not_prelaunch_calibrated"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "ema",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "experiments/pcqm_pretraining_family_pair/protocol.md",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_60",
+    "x_axis_semantics": "epochs"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_pretraining_family_pair/protocol.md",
+  "evaluation_role_identity": "internal_development",
+  "exposure": {
+    "optimizer_steps": null,
+    "sample_presentations": null
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "unspecified_in_contract",
+  "presentation_semantics_ref": "experiments/pcqm_pretraining_family_pair/protocol.md",
+  "reference_id": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+  "run_id": "kaggle1-pretraining-family-pair-100k-s42-v2",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/pcqm_pretraining_family_pair/prospective_release2/gptrans_joint/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_pretraining_family_pair/prospective_release2/gptrans_joint/rml_finalized/trace.json",
+  "trace_artifact_sha256": "0db31001f477dff57e15ed6f5e6a8d4b48040ddcbfb1e091539a15b74261bc64",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": false,
+    "sample_presentations": false
+  },
+  "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2",
+  "weight_semantics": "ema_and_live",
+  "x_axis": "epochs"
+}

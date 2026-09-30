@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 225,
+  "ambiguous_historical_role_record_count": 235,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -1367,6 +1367,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
       "evidence_id": "pcqm-pretraining-gptrans_joint-package1-no-train",
       "role_identity": null,
       "role_name": "official_validation",
@@ -1386,6 +1421,41 @@
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-k1-100k-s42-release3-terminal",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-k1-100k-s42-release3-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-k1-100k-s42-release3-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-k1-100k-s42-release3-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-k1-100k-s42-release3-terminal",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
     },
     {
       "evidence_id": "pcqm-pretraining-k1-package1-no-train",
@@ -1577,13 +1647,29 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 100,
+  "explicit_role_event_count": 104,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
     "official_validation"
   ],
   "identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-internal_development-release3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-internal_development-release3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
+      }
+    ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:internal_development": [
       {
         "access_kind": "metric_computed",
@@ -1826,6 +1912,22 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-train-release3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-train-release3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d:official_train_prefix": [
@@ -2375,7 +2477,9 @@
       "pcqm-k1-residual-reconciliation",
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-matched-500k-v4-three-arm",
+      "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
       "pcqm-pretraining-gptrans_joint-package1-no-train",
+      "pcqm-pretraining-k1-100k-s42-release3-terminal",
       "pcqm-pretraining-k1-package1-no-train",
       "pcqm-recurrent-graph-state-100k-seed42",
       "pcqm-route-b-four-encoder-specialist",
@@ -2429,7 +2533,9 @@
       "pcqm-k1-residual-reconciliation",
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-matched-500k-v4-three-arm",
+      "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
       "pcqm-pretraining-gptrans_joint-package1-no-train",
+      "pcqm-pretraining-k1-100k-s42-release3-terminal",
       "pcqm-pretraining-k1-package1-no-train",
       "pcqm-recurrent-graph-state-100k-seed42",
       "pcqm-route-b-four-encoder-specialist",
@@ -2440,6 +2546,22 @@
     ]
   },
   "repeatedly_selected_role_identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-internal_development-release3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-internal_development-release3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
+      }
+    ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:internal_development": [
       {
         "access_kind": "metric_computed",
@@ -2897,6 +3019,22 @@
     ]
   },
   "reused_role_identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development": [
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-internal_development-release3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-internal_development-release3",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
+      }
+    ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:internal_development": [
       {
         "access_kind": "metric_computed",
@@ -3139,6 +3277,22 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-train-release3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-train-release3",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d:official_train_prefix": [

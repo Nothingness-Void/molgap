@@ -1,0 +1,32 @@
+{
+  "arms": [
+    {
+      "trajectory_id": "TB-pretraining-k1-100k-s42-release2",
+      "finalization_status": "ALREADY_FINALIZED",
+      "finalization_id": "finalize-4c70c50a22757e80bdf47a6c9bbf2597abf07b9a506db4313df234e54b215090",
+      "outcome": "INCONCLUSIVE",
+      "validation_status": "VALID",
+      "replay_pool_delta": {
+        "added": [],
+        "removed": []
+      },
+      "candidate_policy_deltas": [],
+      "next_decision": "SOL_REQUIRED",
+      "pipeline_status": "COMPLETE"
+    },
+    {
+      "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2",
+      "finalization_status": "ALREADY_FINALIZED",
+      "finalization_id": "finalize-bea9cee717cc94fe222ebaaf2235f94213beb765afd507007c59533c13cc1359",
+      "outcome": "INCONCLUSIVE",
+      "validation_status": "VALID",
+      "replay_pool_delta": {
+        "added": [],
+        "removed": []
+      },
+      "candidate_policy_deltas": [],
+      "next_decision": "SOL_REQUIRED",
+      "pipeline_status": "COMPLETE"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "7b1dbda8a738454641537bba604f41ff256acc7beccea61b4f9cdd277b903eef",
+  "source_digest": "cb10cd4ee3c3ad702322db13a0bef92596f07999ceb3400a1b92bae35cb2cb14",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -978,15 +978,17 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_pretraining_family_pair/launch_decision.md",
+      "decision_ref": "experiments/pcqm_pretraining_family_pair/terminal_decision.md",
       "family_id": "pretraining-gptrans_joint",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_pretraining_family_pair/prospective_release2/gptrans_joint/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_pretraining_family_pair/prospective_release2/gptrans_joint/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal"
+      ],
       "track": "B",
       "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
     },
@@ -1008,15 +1010,17 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_pretraining_family_pair/launch_decision.md",
+      "decision_ref": "experiments/pcqm_pretraining_family_pair/terminal_decision.md",
       "family_id": "pretraining-k1",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_pretraining_family_pair/prospective_release2/k1/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_pretraining_family_pair/prospective_release2/k1/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-pretraining-k1-100k-s42-release3-terminal"
+      ],
       "track": "B",
       "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
     },

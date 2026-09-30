@@ -1,0 +1,139 @@
+{
+  "format": "molgap-pretraining-retained-result-review-v1",
+  "observed_at_utc": "2026-09-30T07:33:48.645111+00:00",
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-pretraining-100k-s42-v1",
+  "script_version_id_from_launch_record": "354038275",
+  "scheduler_observation": "COMPLETE",
+  "source_commit": "e24318f78f9c900d1c7ff9bbec44e164f9d91e8c",
+  "source_archive_sha256": "08e6015dc12df7630711da408c7c8d95d4e89ec9f9153ee1269e24728db07678",
+  "pulled_entrypoint_matches_frozen_local_bytes": true,
+  "observed_mounts": [
+    "nothingnessvoid/molgap-pretraining-family-pair-100k-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "independent_exit_codes": {
+    "k1": 0,
+    "gptrans_joint": 0
+  },
+  "prediction_rows": 50000,
+  "exact_paired_rows_and_targets_verified": true,
+  "arms": {
+    "k1": {
+      "pretraining_epochs": 10,
+      "downstream_epochs": 40,
+      "downstream_checkpoint_epoch_zero_based": 39,
+      "observed_downstream_optimizer_steps": [
+        31240
+      ],
+      "observed_pretraining_optimizer_steps": 7810,
+      "selected_epoch_one_based": 38,
+      "prediction_mae_eV": 0.14117644904553892,
+      "historical_reference_reported_mae_eV": 0.1413736343383789,
+      "point_gain_vs_historical_reference_eV": 0.00019718529283999087,
+      "three_mev_point_gate_passed": false,
+      "reference_pair_qualification": "pending_retained_reference_artifacts_and_readiness",
+      "assigned_T4_process_wall_seconds": 6765.609005689621,
+      "assigned_T4_process_wall_hours": 1.8793358349137836,
+      "artifact_hash_checks_passed": true,
+      "trace_last": {
+        "epoch": 39,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720,
+        "train_normalized_mae": 0.07223081416074811,
+        "development_gap_mae_eV": 0.1413150280714035,
+        "learning_rate": 1.6149919202409713e-06,
+        "seconds": 140.12120711200077,
+        "improved": false
+      }
+    },
+    "gptrans_joint": {
+      "pretraining_epochs": 10,
+      "downstream_epochs": 60,
+      "downstream_checkpoint_epoch_zero_based": 59,
+      "observed_downstream_optimizer_steps": [
+        46860
+      ],
+      "observed_pretraining_optimizer_steps": 7810,
+      "selected_epoch_one_based": 60,
+      "prediction_mae_eV": 0.1463582455009222,
+      "historical_reference_reported_mae_eV": 0.14724504947662354,
+      "point_gain_vs_historical_reference_eV": 0.0008868039757013446,
+      "three_mev_point_gate_passed": false,
+      "reference_pair_qualification": "pending_retained_reference_artifacts_and_readiness",
+      "assigned_T4_process_wall_seconds": 10331.888753652573,
+      "assigned_T4_process_wall_hours": 2.8699690982368256,
+      "artifact_hash_checks_passed": true,
+      "trace_last": {
+        "epoch": 59,
+        "train_normalized_gap_mae": 0.07176391531864751,
+        "train_aux_ce_loss": 8.377871947835276e-05,
+        "development_gap_mae_eV": 0.14635825157165527,
+        "epoch_seconds": 115.66333642800055,
+        "best_so_far_eV": 0.14635825157165527
+      }
+    }
+  },
+  "two_family_endpoint_comparison": {
+    "rows": 50000,
+    "reference_mae_eV": 0.14117644904553892,
+    "candidate_mae_eV": 0.1463582455009222,
+    "paired_gain_eV": -0.005181796455383301,
+    "row_bootstrap_95pct_eV": [
+      -0.006325081257104874,
+      -0.003912195169329644
+    ],
+    "candidate_better_row_fraction": 0.48496,
+    "material_3mev_point_gain": false
+  },
+  "exploratory_fixed_50_50_fusion_vs_pretrained_k1": {
+    "rows": 50000,
+    "reference_mae_eV": 0.14117644904553892,
+    "candidate_mae_eV": 0.13409661881387233,
+    "paired_gain_eV": 0.007079830231666565,
+    "row_bootstrap_95pct_eV": [
+      0.0064999532226920126,
+      0.007720365533232688
+    ],
+    "candidate_better_row_fraction": 0.54964,
+    "material_3mev_point_gain": true
+  },
+  "fusion_vs_unpretrained_fusion": "not_measured_missing_verified_reference_predictions",
+  "training_or_inference_executed_locally": false,
+  "new_role_consumption": "retained predictions on already consumed internal development only; protected roles untouched",
+  "formal_terminal_RML_status": "pending_owning_per_arm_acceptance_translation_and_strict_reference_qualification",
+  "replay_ready": false,
+  "provenance_blockers": [
+    "K1 raw arm_record/runtime_certificate retain legacy kaggle2 and kaseichou labels despite authoritative Kaggle1 receipt/mounts; preserve raw bytes and reconcile explicit mapping",
+    "Historical K1 reference trace already recorded missing at release; full strict reference prediction/trace/readiness qualification not completed",
+    "No owning per-arm trained-pretraining acceptance exporter or terminal descriptor retained in this checkout; shared CLI terminal requires validated input, not raw logs"
+  ],
+  "artifact_sha256": {
+    "k1/arm_record.json": "aebd913ed4e041c8798418d973cb7259de693f2c44881d59710ea3d149ef1206",
+    "k1/best_development_payload.pt": "7df45b9a9e0dab598bdd5235d8f6644b6573d4c1cf76c01aa416b2135fad3101",
+    "k1/best_model.pt": "c6ee622f6690479a2b8d3673ec00eca9d730f4c86510b994e38b93b2494e109e",
+    "k1/completion_manifest.json": "5cca8393848b6f361616e201969e1c3add1bed1ce786ae0b4bd6adb99614ee31",
+    "k1/last_checkpoint.pt": "372361c2e8cf84a89900053da8bf2469b250879908a3f241372872b79652a3cc",
+    "k1/native_cost_observation.json": "1f1829df33358cccd69e68c8bbdf6bdb98ed2d433fb3add0f546aa6f4c4ddb97",
+    "k1/preflight.json": "55e75a66174c04ad3cf2a1e4d417df09d71fe3aaa2c3167c1102d1f1f78585e5",
+    "k1/runtime_certificate.json": "ea0e5fb2fcd378c336a5ae938e7e9aebe150c9a31765fd23b51946b109ad2a1d",
+    "k1/runtime_manifest.json": "95d0929f43150ada28ace12e13c5489d4b832393e3f64c436586c9e46d8fb148",
+    "k1/trace.json": "097aa6eec8a487291b4e9b376753d068d99cdf59283bc333de9796f5b1f73462",
+    "k1/pretraining/hierarchy_preflight.json": "9d8e5d445071187b14c1eeb263a9bd3e8949695b0c16677f5f2bcf41b3dffd4d",
+    "k1/pretraining/last_checkpoint.pt": "aa41015dfd277c12618e17e3d438e3e5ecdb0fe05961e66372eba9f0046d7de0",
+    "k1/pretraining/stage_complete.json": "50949d0332bf6fd40814f5a261f2f044aac7055a5c60d155688995f634ae7191",
+    "k1/pretraining/trace.json": "ef555987a97ceb6600730e2a6c44fb57f912e5fd4f586485aa54d2a2d278c63a",
+    "gptrans_joint/best_model.pt": "3713ba95807b359659d1dd4648bea984b31d4e740515a8502b17bd21f05544a5",
+    "gptrans_joint/completion_manifest.json": "d9b86cfeaafeecb7133bfde041077d76c0455c6b2efd2a7e449c63a1e7744b4c",
+    "gptrans_joint/development_predictions.pt": "c27433865ee32d17ca3294a5d6015e811538e2bcb5636a8ce7dd2def614420bd",
+    "gptrans_joint/last_checkpoint.pt": "bddb6351f4d531a06f5255dedd8a3db6f520576082cd3e78d16d42f890a92738",
+    "gptrans_joint/native_cost_observation.json": "46af368da728702598e898fe5ad3f09615197e347b822c5dde82d0fa0e27e146",
+    "gptrans_joint/trace.json": "17ba9159a7494f38374e81a87f8d0a338f4e05bad50444d3c70ea853fc4f8d11",
+    "gptrans_joint/downstream_preflight/preflight.json": "092f51367c0fdb128c595784b347bd352c785fe38d4ab52e3f48879791d536ca",
+    "gptrans_joint/downstream_preflight/runtime_certificate.json": "4e6a260f205d330dc9fd9431d06dae1e917e9156639ec7a0f59a635ba41b77aa",
+    "gptrans_joint/downstream_preflight/runtime_manifest.json": "95d0929f43150ada28ace12e13c5489d4b832393e3f64c436586c9e46d8fb148",
+    "gptrans_joint/pretraining/hierarchy_preflight.json": "5a22449c0eea7d5ea030ce0a964640152599ce73a5d7f542910aea4e282a3851",
+    "gptrans_joint/pretraining/last_checkpoint.pt": "e4c34cb8a8c7c4a779c55abe52c73b2e065903b23c06267cc9c82fd6deb1a55b",
+    "gptrans_joint/pretraining/stage_complete.json": "f636460852213dc46c492ec47fc5072c313884bd9a0de441daec01e50c5c875e",
+    "gptrans_joint/pretraining/trace.json": "16130e06634163d6b611b4fd6f92e3a7ecc43d5034f9266e64a308e13afcce76"
+  }
+}

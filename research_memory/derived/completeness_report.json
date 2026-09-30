@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 45,
+      "count": 43,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -53,9 +53,7 @@
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-pcqm-scale-transfer-reassessment-20260925",
         "TB-pretraining-gptrans_joint-100k-s42",
-        "TB-pretraining-gptrans_joint-100k-s42-release2",
         "TB-pretraining-k1-100k-s42",
-        "TB-pretraining-k1-100k-s42-release2",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
         "TB-xian-determinism-audit-20260915",
@@ -168,7 +166,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 34,
+      "count": 32,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -195,9 +193,7 @@
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-pcqm-scale-transfer-reassessment-20260925",
         "TB-pretraining-gptrans_joint-100k-s42",
-        "TB-pretraining-gptrans_joint-100k-s42-release2",
         "TB-pretraining-k1-100k-s42",
-        "TB-pretraining-k1-100k-s42-release2",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
         "TB-xian-determinism-audit-20260915",
@@ -209,7 +205,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 13,
+      "count": 11,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -220,8 +216,6 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
-        "TB-pretraining-gptrans_joint-100k-s42-release2",
-        "TB-pretraining-k1-100k-s42-release2",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],

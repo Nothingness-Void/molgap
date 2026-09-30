@@ -1,7 +1,7 @@
 {
   "backtest": {
     "eligible": 10,
-    "excluded": 11,
+    "excluded": 13,
     "status": "available"
   },
   "cost": {
@@ -358,6 +358,56 @@
           "measured": {
             "known_records": 0,
             "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
+      "Nvidia Tesla T4": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 4
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 4
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 4
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 4,
+            "known_total": 4.770014787647459
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -764,17 +814,17 @@
         }
       }
     },
-    "unknown_events": 81
+    "unknown_events": 85
   },
   "evidence": {
-    "validated": 53,
+    "validated": 55,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 45,
+      "count": 43,
       "severity": "INFO"
     },
     {
@@ -794,27 +844,26 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 34,
+      "count": 32,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 13,
+      "count": 11,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 225,
-    "explicit_events": 100,
-    "repeatedly_selected": 7
+    "coarse_historical": 235,
+    "explicit_events": 104,
+    "repeatedly_selected": 8
   },
-  "source_digest": "7b1dbda8a738454641537bba604f41ff256acc7beccea61b4f9cdd277b903eef",
+  "source_digest": "cb10cd4ee3c3ad702322db13a0bef92596f07999ceb3400a1b92bae35cb2cb14",
   "trajectories": {
     "count": 66,
     "outcomes": {
-      "ACTIVE": 2,
       "CLOSED": 9,
-      "INCONCLUSIVE": 14,
+      "INCONCLUSIVE": 16,
       "INFRASTRUCTURE_ONLY": 5,
       "NEGATIVE_UNDER_CONTRACT": 14,
       "NO_TRAIN": 14,

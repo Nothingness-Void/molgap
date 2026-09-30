@@ -1,5 +1,7 @@
 # K1 / GPTrans pretraining pair
 
+Terminal-attempt acceptance and remaining comparison gaps: [STATUS](STATUS.md).
+
 Desktop-owned `codex/exp/pretraining-family-pair`, based on desktop `22af38b37`.
 The user selected K1-v4 and GPTrans Noisy Nodes + Pair Update Norm, each with
 a 10-pass local-reconstruction stage. Their existing 40/60-pass downstream

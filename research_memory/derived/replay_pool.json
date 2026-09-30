@@ -10904,6 +10904,24 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "epoch_axis_not_cross_scale_comparable",
+        "missing_optimizer_step_and_presentation_exposure"
+      ],
+      "run_id": "kaggle1-pretraining-family-pair-100k-s42-v2",
+      "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated"
+      ],
+      "run_id": "kaggle1-pretraining-family-pair-100k-s42-v2",
+      "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
+    },
+    {
+      "reasons": [
         "no_compatible_candidate_reference_trace_pair"
       ],
       "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
@@ -10911,5 +10929,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "9ab09522b6b348e1b92c887d4d7a53c877ea5695854b75c6141acb078d8ff0a0"
+  "source_digest": "184d1cddbd1c58e2e0c510ad500b18a0727e3246c144d7c42a7b641c8c322384"
 }

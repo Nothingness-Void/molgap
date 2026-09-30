@@ -1,0 +1,48 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-4c70c50a22757e80bdf47a6c9bbf2597abf07b9a506db4313df234e54b215090",
+  "finalized_at": "2026-09-30T07:33:48.645111+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_pretraining_family_pair/acceptance/k1/acceptance.json": "eb0a0c460439ade4ac11552285fe3fd9a96e9e3cb51e1c3edc5a37889815f63d",
+    "experiments/pcqm_pretraining_family_pair/acceptance/k1/canonical_downstream_trace.json": "3afc3ac9da430b46cbc85c01ca98d4f5031328a3d4d688153bd8b11c66f36637",
+    "experiments/pcqm_pretraining_family_pair/attempts/release2/k1/native_cost_observation.json": "b482403949c7abab3b825fb73bb9ac2f7382bd2f3a7d3290f289b6a1646abf11",
+    "experiments/pcqm_pretraining_family_pair/protocol.md": "bf6288e37fdb40cc007cb63b7331100b5fdb1ab0a901358508a2eb878775a169",
+    "experiments/pcqm_pretraining_family_pair/result_review.json": "05d95d8b649712a30782280a51361318b96ffe3070e785e54aaa973e37e43779",
+    "experiments/pcqm_pretraining_family_pair/retry_release3_binding.json": "c876ce5923d2e6cfb3bc7c16f2909916fd4d5376fb80f63a83d4fbc7218dfe7b",
+    "experiments/pcqm_pretraining_family_pair/submission_readiness.json": "8fc3cd886eb38c9e451a57dd9dcb28bbb0c1ebe6be96e6915e4e98d1b053213c",
+    "experiments/pcqm_pretraining_family_pair/terminal_decision.md": "267f4c6462077e43debe6167607b08da79292b938ee1a4f23273f5de71d13f5b",
+    "experiments/pcqm_pretraining_family_pair/training_contract.json": "f24475202e5b5da349870ea9d0650420c92cbe2d976505de17e8d2ef596d0dc7",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/best_development_payload.pt": "7df45b9a9e0dab598bdd5235d8f6644b6573d4c1cf76c01aa416b2135fad3101",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/best_model.pt": "c6ee622f6690479a2b8d3673ec00eca9d730f4c86510b994e38b93b2494e109e",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/last_checkpoint.pt": "372361c2e8cf84a89900053da8bf2469b250879908a3f241372872b79652a3cc",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/native_cost_observation.json": "1f1829df33358cccd69e68c8bbdf6bdb98ed2d433fb3add0f546aa6f4c4ddb97",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/pretraining/last_checkpoint.pt": "aa41015dfd277c12618e17e3d438e3e5ecdb0fe05961e66372eba9f0046d7de0",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/pretraining/stage_complete.json": "50949d0332bf6fd40814f5a261f2f044aac7055a5c60d155688995f634ae7191",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/pretraining/trace.json": "ef555987a97ceb6600730e2a6c44fb57f912e5fd4f586485aa54d2a2d278c63a",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/trace.json": "097aa6eec8a487291b4e9b376753d068d99cdf59283bc333de9796f5b1f73462",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/pulled_source/kernel-metadata.json": "78694be70844faec0520cae06d3f2d71d74b4650b9d8dbe4d7345f7b815c1dec",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/worker_exits.json": "051bb67318d3c055a06148ab7f650deeb8d672bddaad8be3ed57ebf1dea5bb6a"
+  },
+  "outcome": "INCONCLUSIVE",
+  "published_hashes": {
+    "costs/cost-TB-pretraining-k1-100k-s42-release2-attempt-001-observed.json": "27ae2057473132d5f0d275a0b8ec4fd80522d5c71ecb49ea2395b82cf990a2c8",
+    "costs/cost-TB-pretraining-k1-100k-s42-release2-attempt-002-observed.json": "6da02eaff4747fd47f18d5596e4312ebdb6a466e6bf8f97c17968c69a421567f",
+    "prospective_snapshot.json": "b25020735bc20749c3133b49af17005580f5feca606959de77747f4df4b80250",
+    "roles/role-TB-pretraining-k1-100k-s42-release2-internal_development-release3.json": "c4a7f1508f97426add2faea87e2a2b8af0d387cba5d94552149149f7b45c0267",
+    "roles/role-TB-pretraining-k1-100k-s42-release2-train-release3.json": "9caecdd8162ba69d38644e31b08526cd86950b8a32dd8b32e6b0afb298c40114",
+    "terminal_input.json": "9353d252e25f7f52a243f94b7d85aacda1a476173eecf5f618347c39487a2da2",
+    "trace.json": "3afc3ac9da430b46cbc85c01ca98d4f5031328a3d4d688153bd8b11c66f36637",
+    "trace_manifest.json": "cc6cf37d5cf61a6a573b444ddc8fe5641cf7a967eb2e848cd75a969bd6e500f1",
+    "trajectory.json": "59b901b25504bfb78a350a834b7480376bb3a7535d376bf29edc042439e9bd59",
+    "v5_evidence.json": "d906e29dc2c855d5f6a370d9fcd5bc7b16a80388d7f1666973ddc0323ebc84eb"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_pretraining_family_pair/prospective_release2/k1/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "4c70c50a22757e80bdf47a6c9bbf2597abf07b9a506db4313df234e54b215090",
+  "trace_status": "available",
+  "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
+}

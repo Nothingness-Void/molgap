@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "infrastructure_failure",
+  "cost_event_id": "cost-TB-pretraining-gptrans_joint-100k-s42-release2-attempt-001-observed",
+  "evidence_ref": "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/acceptance.json",
+  "hardware": "Nvidia Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.01149554193019867
+    }
+  },
+  "platform": "kaggle1",
+  "run_id": "kaggle1-pretraining-family-pair-100k-s42-v2",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+}

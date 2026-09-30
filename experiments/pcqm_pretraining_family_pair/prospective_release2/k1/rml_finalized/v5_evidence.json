@@ -1,0 +1,114 @@
+{
+  "artifacts": [
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_pretraining_family_pair/acceptance/k1/canonical_downstream_trace.json",
+      "name": "downstream_training_trace",
+      "sha256": "3afc3ac9da430b46cbc85c01ca98d4f5031328a3d4d688153bd8b11c66f36637"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/best_model.pt",
+      "name": "best_model.pt",
+      "sha256": "c6ee622f6690479a2b8d3673ec00eca9d730f4c86510b994e38b93b2494e109e"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/last_checkpoint.pt",
+      "name": "last_checkpoint.pt",
+      "sha256": "372361c2e8cf84a89900053da8bf2469b250879908a3f241372872b79652a3cc"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/pretraining/last_checkpoint.pt",
+      "name": "pretraining/last_checkpoint.pt",
+      "sha256": "aa41015dfd277c12618e17e3d438e3e5ecdb0fe05961e66372eba9f0046d7de0"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/pretraining/stage_complete.json",
+      "name": "pretraining/stage_complete.json",
+      "sha256": "50949d0332bf6fd40814f5a261f2f044aac7055a5c60d155688995f634ae7191"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/best_development_payload.pt",
+      "name": "best_development_payload.pt",
+      "sha256": "7df45b9a9e0dab598bdd5235d8f6644b6573d4c1cf76c01aa416b2135fad3101"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_pretraining_family_pair/acceptance/k1/acceptance.json",
+      "experiments/pcqm_pretraining_family_pair/terminal_decision.md",
+      "experiments/pcqm_pretraining_family_pair/result_review.json",
+      "experiments/pcqm_pretraining_family_pair/protocol.md",
+      "experiments/pcqm_pretraining_family_pair/training_contract.json",
+      "experiments/pcqm_pretraining_family_pair/retry_release3_binding.json",
+      "experiments/pcqm_pretraining_family_pair/submission_readiness.json",
+      "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/trace.json",
+      "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/pretraining/trace.json",
+      "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/native_cost_observation.json",
+      "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/pulled_source/kernel-metadata.json",
+      "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/worker_exits.json",
+      "experiments/pcqm_pretraining_family_pair/attempts/release2/k1/native_cost_observation.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-pretraining-k1-100k-s42-release3-terminal",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "molgap-pretraining-family-pair-contract-v1",
+  "metrics": {
+    "artifact_hash_checks_passed": true,
+    "assigned_T4_process_wall_hours": 1.8793358349137836,
+    "assigned_T4_process_wall_seconds": 6765.609005689621,
+    "downstream_checkpoint_epoch_zero_based": 39,
+    "downstream_epochs": 40,
+    "historical_reference_reported_mae_eV": 0.1413736343383789,
+    "observed_downstream_optimizer_steps": [
+      31240
+    ],
+    "observed_pretraining_optimizer_steps": 7810,
+    "point_gain_vs_historical_reference_eV": 0.00019718529283999087,
+    "prediction_mae_eV": 0.14117644904553892,
+    "pretraining_epochs": 10,
+    "reference_pair_qualification": "pending_retained_reference_artifacts_and_readiness",
+    "selected_epoch_one_based": 38,
+    "three_mev_point_gate_passed": false,
+    "trace_last": {
+      "development_gap_mae_eV": 0.1413150280714035,
+      "epoch": 39,
+      "improved": false,
+      "learning_rate": 1.6149919202409713e-06,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720,
+      "seconds": 140.12120711200077,
+      "train_normalized_mae": 0.07223081416074811
+    }
+  },
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-30",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Retained remote source, checkpoints, predictions and metadata; strict reference pending"
+  },
+  "outcome": {
+    "artifact_status": "complete_local_verified",
+    "budget_decision": "no_scaleup",
+    "comparison_status": "pending_strict_reference_qualification",
+    "execution_status": "complete",
+    "full_handoff_status": "not_released",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_qualified"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "two_family_pretraining_100k_terminal_attempt",
+  "track": "B"
+}

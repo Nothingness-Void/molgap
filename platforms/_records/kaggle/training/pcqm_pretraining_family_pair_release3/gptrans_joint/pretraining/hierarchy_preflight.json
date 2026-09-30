@@ -1,0 +1,24 @@
+{
+  "accepted": true,
+  "family": "gptrans_joint",
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      6.6445841789245605,
+      6.6445841789245605
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "0e6567b73efe93d3ce9e9e99d9a999f0fd20869644d1d19bf846dee9aa35455d",
+      "0e6567b73efe93d3ce9e9e99d9a999f0fd20869644d1d19bf846dee9aa35455d"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "peak_bytes": 824526336,
+  "total_bytes": 15636037632,
+  "wall_seconds": 0.6958647740000288,
+  "scope": "training-role-first-batch-hierarchy-path-only"
+}

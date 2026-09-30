@@ -1,0 +1,48 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-bea9cee717cc94fe222ebaaf2235f94213beb765afd507007c59533c13cc1359",
+  "finalized_at": "2026-09-30T07:33:48.645111+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/acceptance.json": "b16c106e34ddb16e350d550a0224bd26d997ae4732d6d9ba5322defb21ccca93",
+    "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/canonical_downstream_trace.json": "0db31001f477dff57e15ed6f5e6a8d4b48040ddcbfb1e091539a15b74261bc64",
+    "experiments/pcqm_pretraining_family_pair/attempts/release2/gptrans_joint/native_cost_observation.json": "3370238b1db42d97e03c1fcd13160e664c1e30c691ddcf2aeb0b9603b8a50c21",
+    "experiments/pcqm_pretraining_family_pair/protocol.md": "bf6288e37fdb40cc007cb63b7331100b5fdb1ab0a901358508a2eb878775a169",
+    "experiments/pcqm_pretraining_family_pair/result_review.json": "05d95d8b649712a30782280a51361318b96ffe3070e785e54aaa973e37e43779",
+    "experiments/pcqm_pretraining_family_pair/retry_release3_binding.json": "c876ce5923d2e6cfb3bc7c16f2909916fd4d5376fb80f63a83d4fbc7218dfe7b",
+    "experiments/pcqm_pretraining_family_pair/submission_readiness.json": "8fc3cd886eb38c9e451a57dd9dcb28bbb0c1ebe6be96e6915e4e98d1b053213c",
+    "experiments/pcqm_pretraining_family_pair/terminal_decision.md": "267f4c6462077e43debe6167607b08da79292b938ee1a4f23273f5de71d13f5b",
+    "experiments/pcqm_pretraining_family_pair/training_contract.json": "f24475202e5b5da349870ea9d0650420c92cbe2d976505de17e8d2ef596d0dc7",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/best_model.pt": "3713ba95807b359659d1dd4648bea984b31d4e740515a8502b17bd21f05544a5",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/development_predictions.pt": "c27433865ee32d17ca3294a5d6015e811538e2bcb5636a8ce7dd2def614420bd",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/last_checkpoint.pt": "bddb6351f4d531a06f5255dedd8a3db6f520576082cd3e78d16d42f890a92738",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/native_cost_observation.json": "46af368da728702598e898fe5ad3f09615197e347b822c5dde82d0fa0e27e146",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/pretraining/last_checkpoint.pt": "e4c34cb8a8c7c4a779c55abe52c73b2e065903b23c06267cc9c82fd6deb1a55b",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/pretraining/stage_complete.json": "f636460852213dc46c492ec47fc5072c313884bd9a0de441daec01e50c5c875e",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/pretraining/trace.json": "16130e06634163d6b611b4fd6f92e3a7ecc43d5034f9266e64a308e13afcce76",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/trace.json": "17ba9159a7494f38374e81a87f8d0a338f4e05bad50444d3c70ea853fc4f8d11",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/pulled_source/kernel-metadata.json": "78694be70844faec0520cae06d3f2d71d74b4650b9d8dbe4d7345f7b815c1dec",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/worker_exits.json": "051bb67318d3c055a06148ab7f650deeb8d672bddaad8be3ed57ebf1dea5bb6a"
+  },
+  "outcome": "INCONCLUSIVE",
+  "published_hashes": {
+    "costs/cost-TB-pretraining-gptrans_joint-100k-s42-release2-attempt-001-observed.json": "ec38009f61eee9cc89f296a5ebf4a1d40f122215522bc0b1937cb474e32ee4ce",
+    "costs/cost-TB-pretraining-gptrans_joint-100k-s42-release2-attempt-002-observed.json": "f56ccaab6e60ed0943871124c50de18033cd1c3d6a9d74613c2bf0ca120e076d",
+    "prospective_snapshot.json": "7dba26e5a40377bd906070b92dc4e1ed43458c18a89bb51749ecbc652d591111",
+    "roles/role-TB-pretraining-gptrans_joint-100k-s42-release2-internal_development-release3.json": "02fcbfebd149f4b7676f9d6c6552361b673cd29c5bd35581e3191845f077db71",
+    "roles/role-TB-pretraining-gptrans_joint-100k-s42-release2-train-release3.json": "ce00c18cbf2027f9282ec2d5f371e44d22703359347bf4862e0b73039fe3de9f",
+    "terminal_input.json": "ce065eb709eb12dccf18e03b06497b5b91c4fb01fcd08b0c650ddb718285bdb4",
+    "trace.json": "0db31001f477dff57e15ed6f5e6a8d4b48040ddcbfb1e091539a15b74261bc64",
+    "trace_manifest.json": "8fe1d8f670bd5a4e5d5ed4e76a5e94d5e6ef0b5e85bc39e3c93ec2cbbbd56530",
+    "trajectory.json": "b198961412e60f1153d7a11e0d0fb18b54ae0dedf44e3d84b7dd935249386252",
+    "v5_evidence.json": "4a7fcc6c2c24efb3a63133606b002fbd4a101d1585fa03bc7c201f72196c0042"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_pretraining_family_pair/prospective_release2/gptrans_joint/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "bea9cee717cc94fe222ebaaf2235f94213beb765afd507007c59533c13cc1359",
+  "trace_status": "available",
+  "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+}

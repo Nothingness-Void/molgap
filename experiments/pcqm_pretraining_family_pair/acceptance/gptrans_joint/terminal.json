@@ -1,0 +1,248 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2",
+  "run_id": "kaggle1-pretraining-family-pair-100k-s42-v2",
+  "action_id": "A001",
+  "finalized_at": "2026-09-30T07:33:48.645111+00:00",
+  "acceptance_ref": "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/acceptance.json": "b16c106e34ddb16e350d550a0224bd26d997ae4732d6d9ba5322defb21ccca93",
+    "experiments/pcqm_pretraining_family_pair/terminal_decision.md": "267f4c6462077e43debe6167607b08da79292b938ee1a4f23273f5de71d13f5b",
+    "experiments/pcqm_pretraining_family_pair/result_review.json": "05d95d8b649712a30782280a51361318b96ffe3070e785e54aaa973e37e43779",
+    "experiments/pcqm_pretraining_family_pair/protocol.md": "bf6288e37fdb40cc007cb63b7331100b5fdb1ab0a901358508a2eb878775a169",
+    "experiments/pcqm_pretraining_family_pair/training_contract.json": "f24475202e5b5da349870ea9d0650420c92cbe2d976505de17e8d2ef596d0dc7",
+    "experiments/pcqm_pretraining_family_pair/retry_release3_binding.json": "c876ce5923d2e6cfb3bc7c16f2909916fd4d5376fb80f63a83d4fbc7218dfe7b",
+    "experiments/pcqm_pretraining_family_pair/submission_readiness.json": "8fc3cd886eb38c9e451a57dd9dcb28bbb0c1ebe6be96e6915e4e98d1b053213c",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/trace.json": "17ba9159a7494f38374e81a87f8d0a338f4e05bad50444d3c70ea853fc4f8d11",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/pretraining/trace.json": "16130e06634163d6b611b4fd6f92e3a7ecc43d5034f9266e64a308e13afcce76",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/native_cost_observation.json": "46af368da728702598e898fe5ad3f09615197e347b822c5dde82d0fa0e27e146",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/pulled_source/kernel-metadata.json": "78694be70844faec0520cae06d3f2d71d74b4650b9d8dbe4d7345f7b815c1dec",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/worker_exits.json": "051bb67318d3c055a06148ab7f650deeb8d672bddaad8be3ed57ebf1dea5bb6a",
+    "experiments/pcqm_pretraining_family_pair/attempts/release2/gptrans_joint/native_cost_observation.json": "3370238b1db42d97e03c1fcd13160e664c1e30c691ddcf2aeb0b9603b8a50c21",
+    "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/canonical_downstream_trace.json": "0db31001f477dff57e15ed6f5e6a8d4b48040ddcbfb1e091539a15b74261bc64",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/best_model.pt": "3713ba95807b359659d1dd4648bea984b31d4e740515a8502b17bd21f05544a5",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/last_checkpoint.pt": "bddb6351f4d531a06f5255dedd8a3db6f520576082cd3e78d16d42f890a92738",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/pretraining/last_checkpoint.pt": "e4c34cb8a8c7c4a779c55abe52c73b2e065903b23c06267cc9c82fd6deb1a55b",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/pretraining/stage_complete.json": "f636460852213dc46c492ec47fc5072c313884bd9a0de441daec01e50c5c875e",
+    "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/development_predictions.pt": "c27433865ee32d17ca3294a5d6015e811538e2bcb5636a8ce7dd2def614420bd"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
+    "track": "B",
+    "scope": "two_family_pretraining_100k_terminal_attempt",
+    "legacy_contract": "molgap-pretraining-family-pair-contract-v1",
+    "outcome": {
+      "execution_status": "complete",
+      "artifact_status": "complete_local_verified",
+      "comparison_status": "pending_strict_reference_qualification",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "not_qualified",
+      "budget_decision": "no_scaleup",
+      "full_handoff_status": "not_released"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/acceptance.json",
+        "experiments/pcqm_pretraining_family_pair/terminal_decision.md",
+        "experiments/pcqm_pretraining_family_pair/result_review.json",
+        "experiments/pcqm_pretraining_family_pair/protocol.md",
+        "experiments/pcqm_pretraining_family_pair/training_contract.json",
+        "experiments/pcqm_pretraining_family_pair/retry_release3_binding.json",
+        "experiments/pcqm_pretraining_family_pair/submission_readiness.json",
+        "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/trace.json",
+        "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/pretraining/trace.json",
+        "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/native_cost_observation.json",
+        "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/pulled_source/kernel-metadata.json",
+        "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/worker_exits.json",
+        "experiments/pcqm_pretraining_family_pair/attempts/release2/gptrans_joint/native_cost_observation.json"
+      ]
+    },
+    "artifacts": [
+      {
+        "name": "downstream_training_trace",
+        "locator": "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/canonical_downstream_trace.json",
+        "sha256": "0db31001f477dff57e15ed6f5e6a8d4b48040ddcbfb1e091539a15b74261bc64",
+        "availability": "local_verified"
+      },
+      {
+        "name": "best_model.pt",
+        "locator": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/best_model.pt",
+        "sha256": "3713ba95807b359659d1dd4648bea984b31d4e740515a8502b17bd21f05544a5",
+        "availability": "local_verified"
+      },
+      {
+        "name": "last_checkpoint.pt",
+        "locator": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/last_checkpoint.pt",
+        "sha256": "bddb6351f4d531a06f5255dedd8a3db6f520576082cd3e78d16d42f890a92738",
+        "availability": "local_verified"
+      },
+      {
+        "name": "pretraining/last_checkpoint.pt",
+        "locator": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/pretraining/last_checkpoint.pt",
+        "sha256": "e4c34cb8a8c7c4a779c55abe52c73b2e065903b23c06267cc9c82fd6deb1a55b",
+        "availability": "local_verified"
+      },
+      {
+        "name": "pretraining/stage_complete.json",
+        "locator": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/pretraining/stage_complete.json",
+        "sha256": "f636460852213dc46c492ec47fc5072c313884bd9a0de441daec01e50c5c875e",
+        "availability": "local_verified"
+      },
+      {
+        "name": "development_predictions.pt",
+        "locator": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/development_predictions.pt",
+        "sha256": "c27433865ee32d17ca3294a5d6015e811538e2bcb5636a8ce7dd2def614420bd",
+        "availability": "local_verified"
+      }
+    ],
+    "role_use": {
+      "train": "consumed",
+      "internal_development": "consumed",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "metrics": {
+      "pretraining_epochs": 10,
+      "downstream_epochs": 60,
+      "downstream_checkpoint_epoch_zero_based": 59,
+      "observed_downstream_optimizer_steps": [
+        46860
+      ],
+      "observed_pretraining_optimizer_steps": 7810,
+      "selected_epoch_one_based": 60,
+      "prediction_mae_eV": 0.1463582455009222,
+      "historical_reference_reported_mae_eV": 0.14724504947662354,
+      "point_gain_vs_historical_reference_eV": 0.0008868039757013446,
+      "three_mev_point_gate_passed": false,
+      "reference_pair_qualification": "pending_retained_reference_artifacts_and_readiness",
+      "assigned_T4_process_wall_seconds": 10331.888753652573,
+      "assigned_T4_process_wall_hours": 2.8699690982368256,
+      "artifact_hash_checks_passed": true,
+      "trace_last": {
+        "epoch": 59,
+        "train_normalized_gap_mae": 0.07176391531864751,
+        "train_aux_ce_loss": 8.377871947835276e-05,
+        "development_gap_mae_eV": 0.14635825157165527,
+        "epoch_seconds": 115.66333642800055,
+        "best_so_far_eV": 0.14635825157165527
+      }
+    },
+    "migration": {
+      "migrated_at": "2026-09-30",
+      "verification_scope": "Retained remote source, checkpoints, predictions and metadata; strict reference pending",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false
+    }
+  },
+  "decision": {
+    "outcome": "INCONCLUSIVE",
+    "decision_ref": "experiments/pcqm_pretraining_family_pair/terminal_decision.md",
+    "next_allowed_actions": [
+      "reconcile_retained_reference_artifacts_and_readiness_without_training"
+    ],
+    "reopen_conditions": [
+      "Verified historical reference artifacts and strict V5 comparison; no automatic training or scale-up."
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-pretraining-gptrans_joint-100k-s42-release2-attempt-001-observed",
+      "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2",
+      "action_id": "A001",
+      "run_id": "kaggle1-pretraining-family-pair-100k-s42-v2",
+      "attempt_id": "attempt-001",
+      "category": "infrastructure_failure",
+      "platform": "kaggle1",
+      "hardware": "Nvidia Tesla T4",
+      "evidence_ref": "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "wall_hours": {
+          "value": 0.01149554193019867,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-pretraining-gptrans_joint-100k-s42-release2-attempt-002-observed",
+      "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2",
+      "action_id": "A001",
+      "run_id": "kaggle1-pretraining-family-pair-100k-s42-v2",
+      "attempt_id": "attempt-002",
+      "category": "training",
+      "platform": "kaggle1",
+      "hardware": "Nvidia Tesla T4",
+      "evidence_ref": "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "wall_hours": {
+          "value": 2.8699690982368256,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-train-release3",
+      "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2",
+      "action_id": "A001",
+      "run_id": "kaggle1-pretraining-family-pair-100k-s42-v2",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "train",
+      "access_kind": "training_membership",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-internal_development-release3",
+      "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2",
+      "action_id": "A001",
+      "run_id": "kaggle1-pretraining-family-pair-100k-s42-v2",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_pretraining_family_pair/acceptance/gptrans_joint/acceptance.json"
+    }
+  ],
+  "role_use": {
+    "train": "consumed",
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  }
+}
