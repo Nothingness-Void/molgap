@@ -1,5 +1,10 @@
 # Current State
 
+The accepted desktop expert Oracle study is in
+`experiments/pcqm_expert_oracle_feasibility/decision.md`. Prediction-only routing
+did not clear its nomination rule. Await the separately owned pretraining pair
+and follow its conditional plan; no specialist training is released by the study.
+
 This file owns the live recommendation, blockers and branch routing.
 Dated decisions and canonical RML evidence own historical results.
 Task ordering belongs to `ROADMAP.md`; checkout ownership to `BRANCHES.md`.

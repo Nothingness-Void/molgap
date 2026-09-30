@@ -705,6 +705,161 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
     return summary
 
 
+def _release_imports(request):
+    root = Path(request["source_root"])
+    sys.path[:] = [str(root / "src"), *request["dependency_paths"], *sys.path]
+    sys.meta_path.insert(0, _PackageOnly(root))
+    errors = []
+    for name in request["modules"]:
+        try:
+            importlib.import_module(name)
+        except Exception as exc:
+            errors.append({"check": "import", "item": name, "message": str(exc)})
+    for module, symbol in request["pickle_globals"]:
+        try:
+            value = importlib.import_module(module)
+            for part in symbol.split("."):
+                value = getattr(value, part)
+        except Exception as exc:
+            errors.append({"check": "pickle_symbol", "item": f"{module}.{symbol}", "message": str(exc)})
+    return {"errors": errors, "import_origins": _origins(root)}
+
+
+def check_release_inputs(spec, package_dir, *, expected_package_identity,
+                         recipe_files, initial_states, required_modules,
+                         pickle_inputs=(), entry_script=None, input_root=None):
+    """Collect source/recipe/serialization/init defects before platform publication.
+
+    Only caller-selected trusted training shards are inspected. Pickle opcodes
+    are read, never executed. Selected modules are imported in the existing
+    package-only CPU bootstrap; no model is constructed or run.
+    """
+    import ast
+    import pickletools
+    import zipfile
+    from .experiment_package import verify_experiment_source_package
+    from .v4_runtime import inspect_frozen_state_artifact
+
+    package = Path(package_dir).absolute()
+    manifest = verify_experiment_source_package(package)
+    if manifest["package_identity"] != expected_package_identity or manifest["spec_identity"] != spec.identity:
+        raise ValueError("Pinned package/Spec identity mismatch")
+    arms = {a["arm_id"]: a for a in spec.to_dict()["arms"]}
+    errors, checked = [], {}
+    inputs = {"package": str(package), "recipe_files": dict(recipe_files),
+              "initial_states": {k: str(Path(v).absolute()) for k, v in initial_states.items()},
+              "required_modules": list(required_modules),
+              "pickle_inputs": [str(Path(p).absolute()) for p in pickle_inputs],
+              "entry_script": str(Path(entry_script).absolute()) if entry_script else None,
+              "input_root": str(Path(input_root).absolute()) if input_root else None}
+
+    def check(kind, item, operation):
+        try:
+            checked[f"{kind}:{item}"] = operation()
+        except Exception as exc:
+            errors.append({"check": kind, "item": item, "message": str(exc)})
+
+    modules = set(required_modules)
+    pickle_globals = set()
+    if not modules:
+        errors.append({"check": "import", "item": "required_modules", "message": "Declare the family loader/trainer modules"})
+    with tempfile.TemporaryDirectory(prefix="molgap-release-") as temporary:
+        workspace = Path(temporary)
+        source = workspace / "source"
+        source.mkdir()
+        _unpack(package, source)
+        for path in source.rglob("*.py"):
+            check("syntax", path.relative_to(source).as_posix(),
+                  lambda p=path: bool(ast.parse(p.read_bytes(), filename=str(p))))
+        for arm_id, arm in arms.items():
+            def recipe(a=arm_id, declaration=arm):
+                if a not in recipe_files:
+                    raise ValueError("Missing packaged recipe binding")
+                p = _under(source, _relative(recipe_files[a]))
+                observed = _file_sha(_regular(p))
+                if observed != declaration["training"]["recipe"]["sha256"]:
+                    raise ValueError(f"Recipe SHA differs from packaged LF bytes: {observed}")
+                return observed
+            check("recipe", arm_id, recipe)
+            if arm["initialization"]["state_sha256"] is not None:
+                def initialization(a=arm_id, declaration=arm):
+                    if a not in initial_states:
+                        raise ValueError("Missing frozen initialization artifact; a constructor seed is insufficient")
+                    p = _regular(Path(initial_states[a]).absolute())
+                    result = inspect_frozen_state_artifact(p,
+                        expected_state_sha256=declaration["initialization"]["state_sha256"])
+                    if input_root and not p.resolve().is_relative_to(Path(input_root).resolve()):
+                        raise ValueError("Initialization is outside the staged input root")
+                    return result
+                check("initialization", arm_id, initialization)
+        for kind, supplied in (("recipe", recipe_files), ("initialization", initial_states)):
+            for unknown in set(supplied) - set(arms):
+                errors.append({"check": kind, "item": unknown, "message": "Unknown arm"})
+        for path in pickle_inputs:
+            def serialization(p=Path(path).absolute()):
+                with zipfile.ZipFile(_regular(p)) as archive:
+                    members = [m for m in archive.infolist() if m.filename.endswith("/data.pkl")]
+                    if len(members) != 1 or members[0].file_size > 128 * 1024 * 1024:
+                        raise ValueError("Expected one bounded PyTorch data.pkl")
+                    globals_seen = []
+                    for opcode, arg, _ in pickletools.genops(archive.read(members[0])):
+                        if opcode.name == "STACK_GLOBAL":
+                            raise ValueError("STACK_GLOBAL dependency inspection unsupported; use owning loader preflight")
+                        if opcode.name == "GLOBAL":
+                            name, symbol = arg.split(" ", 1)
+                            if name == "molgap" or name.startswith("molgap."):
+                                modules.add(name)
+                                pickle_globals.add((name, symbol))
+                                globals_seen.append(f"{name}.{symbol}")
+                    return {"file_sha256": _file_sha(p), "globals": sorted(set(globals_seen))}
+            check("pickle_dependencies", str(path), serialization)
+        for name in sorted(modules):
+            def present(n=name):
+                if not re.fullmatch(r"molgap(?:\.[A-Za-z_]\w*)*", n):
+                    raise ValueError("Only selected molgap modules are supported")
+                base = source / "src" / Path(*n.split("."))
+                if not base.with_suffix(".py").is_file() and not (base / "__init__.py").is_file():
+                    raise ValueError("Required module is absent from frozen source package")
+                return True
+            check("module", name, present)
+        if not any(e["check"] in {"syntax", "module"} for e in errors):
+            def imports():
+                bootstrap = workspace / "bootstrap.py"
+                shutil.copyfile(Path(__file__), bootstrap)
+                request, response = workspace / "request.json", workspace / "response.json"
+                _atomic(request, {"mode": "release-imports", "source_root": str(source),
+                    "modules": sorted(modules), "pickle_globals": sorted(pickle_globals), "dependency_paths": sorted({
+                        sysconfig.get_path("purelib"), sysconfig.get_path("platlib")})})
+                env = {k: v for k, v in os.environ.items() if not k.upper().startswith("PYTHON")}
+                env.update(CUDA_VISIBLE_DEVICES="", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
+                with (workspace / "worker.log").open("wb") as log:
+                    subprocess.run([sys.executable, "-I", "-S", str(bootstrap), str(request), str(response)],
+                        cwd=workspace, env=env, stdout=log, stderr=log, timeout=60, check=True)
+                result = _load(response.read_bytes())
+                errors.extend(result["errors"])
+                return result["import_origins"]
+            check("clean_import", "package", imports)
+    if entry_script:
+        check("entry_script", "kernel", lambda: _file_sha(_regular(Path(entry_script).absolute())))
+    if input_root:
+        def layout():
+            root = Path(input_root).absolute()
+            for name in ("SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json", "experiment_spec.json"):
+                if _regular(root / name).read_bytes() != (package / name).read_bytes():
+                    raise ValueError(f"Staged sidecar differs: {name}")
+            if _file_sha(_regular(root / "source_payload.bin")) != manifest["archive_sha256"]:
+                raise ValueError("Staged source_payload.bin differs from frozen archive")
+            return True
+        check("input_layout", "mount", layout)
+    return {"status": "RELEASE_INPUTS_FAILED" if errors else "LOCAL_RELEASE_INPUTS_VERIFIED",
+            "spec_identity": spec.identity, "package_identity": manifest["package_identity"],
+            "source_commit": manifest["source_commit"], "source_archive_sha256": manifest["archive_sha256"],
+            "inputs": inputs, "checks": checked, "errors": errors,
+            "limitations": ["Selected imports and trusted pickle GLOBAL dependencies only; dynamic paths are not proven.",
+                "No model execution, GPU qualification, scientific acceptance or submission authority."]}
+
+
 if __name__ == "__main__":
     # Internal bootstrap only, not a public CLI or a platform entrypoint.
-    _atomic(Path(sys.argv[2]), _worker(_load(Path(sys.argv[1]).read_bytes())))
+    request = _load(Path(sys.argv[1]).read_bytes())
+    _atomic(Path(sys.argv[2]), _release_imports(request) if request.get("mode") == "release-imports" else _worker(request))

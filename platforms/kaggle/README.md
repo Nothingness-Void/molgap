@@ -1,5 +1,10 @@
 # Kaggle Adapter
 
+For the new family output protocol, `retrieve_family_outputs.py` streams only
+the pinned manifest's required files through an authenticated owning account.
+Source/job/version reconciliation and obtaining the small manifest belong to
+the platform skill. See [family workflow](../../docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md).
+
 Cross-experiment Kaggle packages are grouped by workload role:
 `acquisition/`, `training/`, and `evaluation/`. Experiment-specific kernels
 stay with their owning experiment.
@@ -22,6 +27,22 @@ Startup success is not contract acceptance. A retry with a new source commit
 requires a new prospective authorization before another GPU submission; do not
 silently edit the old frozen contract. If any identity is unavailable, stop
 before submission and report the exact mismatch.
+
+For new ExperimentSpec source packages, use the shared CLI's `check-release`
+and pass its report to `push_kernel_with_accelerator.py --release-report`.
+Include the kernel entry script and staged input root when producing the report.
+The adapter rechecks the bytes before POST; a stale or failed report blocks the
+request. Existing legacy call signatures remain supported. See
+`docs/operations/EXPERIMENT_CLI.md` for scoped checks and limitations.
+
+Use `--response-output` to retain the returned source binding and platform
+identity. `requested_kernel` is the submitted metadata ID; `kernel` is only the
+response's actual ref or URL. Title-generated slugs can differ. `version_number`
+and `script_version_id` are separate fields and are never guessed. A response
+without sufficient identity sets `reconciliation_required`; reconcile the same
+submission before considering another push. A timeout/connection failure is
+`submission_unknown`, persists a response observation, and exits nonzero.
+Neither the response nor a successful local check is scientific acceptance.
 
 Keep packaging to the existing model-family adapter. Do not create a new
 experiment-specific packaging or acceptance framework merely to resubmit a

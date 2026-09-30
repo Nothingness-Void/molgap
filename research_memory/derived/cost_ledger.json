@@ -1,11 +1,11 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 12,
-  "event_count": 86,
+  "estimated_event_count": 13,
+  "event_count": 88,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 75,
-  "not_applicable_event_count": 31,
+  "measurement_missing_event_count": 76,
+  "not_applicable_event_count": 33,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -15,11 +15,11 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 0,
-          "known_total": null
+          "known_records": 1,
+          "known_total": 0.001388888888888889
         },
         "not_applicable_records": 0,
-        "unknown_records": 4
+        "unknown_records": 5
       },
       "LOCAL_CPU_UNSPECIFIED:device_hours": {
         "estimated": {
@@ -30,7 +30,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 4,
+        "not_applicable_records": 6,
         "unknown_records": 0
       },
       "LOCAL_CPU_UNSPECIFIED:queue_hours": {
@@ -42,17 +42,17 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 4,
+        "not_applicable_records": 6,
         "unknown_records": 0
       },
       "LOCAL_CPU_UNSPECIFIED:wall_hours": {
         "estimated": {
-          "known_records": 0,
-          "known_total": null
+          "known_records": 1,
+          "known_total": 0.25
         },
         "measured": {
-          "known_records": 3,
-          "known_total": 0.0073372306666666795
+          "known_records": 4,
+          "known_total": 0.008734271861111262
         },
         "not_applicable_records": 0,
         "unknown_records": 1
@@ -1091,11 +1091,11 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 0,
-          "known_total": null
+          "known_records": 1,
+          "known_total": 0.001388888888888889
         },
         "not_applicable_records": 0,
-        "unknown_records": 4
+        "unknown_records": 5
       },
       "device_hours": {
         "estimated": {
@@ -1106,7 +1106,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 4,
+        "not_applicable_records": 6,
         "unknown_records": 0
       },
       "queue_hours": {
@@ -1118,17 +1118,17 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 4,
+        "not_applicable_records": 6,
         "unknown_records": 0
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 0,
-          "known_total": null
+          "known_records": 1,
+          "known_total": 0.25
         },
         "measured": {
-          "known_records": 3,
-          "known_total": 0.0073372306666666795
+          "known_records": 4,
+          "known_total": 0.008734271861111262
         },
         "not_applicable_records": 0,
         "unknown_records": 1
@@ -4791,6 +4791,56 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.007305555555555556
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-pcqm-expert-oracle-feasibility-20260930": {
+      "LOCAL_CPU_UNSPECIFIED:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.001388888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "LOCAL_CPU_UNSPECIFIED:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "LOCAL_CPU_UNSPECIFIED:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "LOCAL_CPU_UNSPECIFIED:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0013970411944445812
         },
         "not_applicable_records": 0,
         "unknown_records": 0

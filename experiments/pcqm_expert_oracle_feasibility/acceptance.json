@@ -1,0 +1,141 @@
+{
+  "format": "molgap-expert-oracle-acceptance-v1",
+  "evidence_id": "pcqm-expert-oracle-feasibility-no-train-20260930",
+  "run_id": "local-expert-oracle-feasibility-20260930",
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "hash_verified_saved_predictions",
+    "comparison_status": "exploratory_gate_crossfit_consumed_development",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_v5_qualified",
+    "budget_decision": "no_accelerator_release",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_expert_oracle_feasibility/decision.md",
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": [
+      "await_separate_pretraining_acceptance",
+      "review_conditional_experiment_plan"
+    ],
+    "reopen_conditions": [
+      "new_accepted_pretraining_artifacts_and_independently_qualified_role"
+    ]
+  },
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "checks": {
+    "input_hashes": true,
+    "ordered_50k_rows": true,
+    "target_alignment": true,
+    "oof_mae_recomputed": true,
+    "frozen_execution_source_verified": true,
+    "nomination_rule_failed": true,
+    "protected_roles_untouched": true
+  },
+  "observed_execution": {
+    "source_commit": "719760424c1fa9bb9bae145c7975fec09f30b233",
+    "analyzer_sha256": "8b43cf0f050bbc3bd801a2befe2ed782d742d3a1871da4cc06da2e190c467a30",
+    "shared_oracle_sha256": {
+      "src/molgap/hierarchical_oracle.py": "802be772e5b7d095a413a1b74fb86c5223f5c875f19b8ae2b1d2e1747f93c127",
+      "src/molgap/multi2d.py": "2b7841fb9e6482947596a26a8a31e03e3ded5e5bdb1cbe3d04e04ec11d78edae"
+    }
+  },
+  "provenance_discrepancy": {
+    "field": "prospective.actions.A001.source_commit",
+    "declared": "e77ac57e87c1a8ccb4fccc0e33ed9f8a5b88a0d0",
+    "planned_desktop_base": "f3e9c8fc80773813d473de37206f6f380111e053",
+    "observed_execution_source": "719760424c1fa9bb9bae145c7975fec09f30b233",
+    "reason": "Example action scalar was not rebound; preserved original snapshot, actual source independently verified; no training replay claim"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-pcqm-expert-oracle-feasibility-measured",
+      "trajectory_id": "TB-pcqm-expert-oracle-feasibility-20260930",
+      "action_id": "A001",
+      "run_id": "local-expert-oracle-feasibility-20260930",
+      "attempt_id": "attempt-001",
+      "category": "audit",
+      "platform": "local-windows",
+      "hardware": "LOCAL_CPU_UNSPECIFIED",
+      "evidence_ref": "experiments/pcqm_expert_oracle_feasibility/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "cpu_hours": {
+          "value": 0.001388888888888889,
+          "status": "measured"
+        },
+        "wall_hours": {
+          "value": 0.0013970411944445812,
+          "status": "measured"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-expert-oracle-feasibility-20260930-prediction_input",
+      "trajectory_id": "TB-pcqm-expert-oracle-feasibility-20260930",
+      "action_id": "A001",
+      "run_id": "local-expert-oracle-feasibility-20260930",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-v1",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "role_name": "fixed50k_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_expert_oracle_feasibility/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-expert-oracle-feasibility-20260930-labels_read",
+      "trajectory_id": "TB-pcqm-expert-oracle-feasibility-20260930",
+      "action_id": "A001",
+      "run_id": "local-expert-oracle-feasibility-20260930",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-v1",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "role_name": "fixed50k_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_expert_oracle_feasibility/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-expert-oracle-feasibility-20260930-metric_computed",
+      "trajectory_id": "TB-pcqm-expert-oracle-feasibility-20260930",
+      "action_id": "A001",
+      "run_id": "local-expert-oracle-feasibility-20260930",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-v1",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "role_name": "fixed50k_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_expert_oracle_feasibility/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-pcqm-expert-oracle-feasibility-20260930-selection_used",
+      "trajectory_id": "TB-pcqm-expert-oracle-feasibility-20260930",
+      "action_id": "A001",
+      "run_id": "local-expert-oracle-feasibility-20260930",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-v1",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "role_name": "fixed50k_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_expert_oracle_feasibility/acceptance.json"
+    }
+  ]
+}

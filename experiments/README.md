@@ -109,3 +109,9 @@ work, and pointers here for the rest.
 
 Live status and the recommended model are in `CURRENT_STATE.md`; task order is in
 `ROADMAP.md`. Compute-environment adapters are in `platforms/`.
+# Accepted expert Oracle feasibility diagnostic
+
+The desktop [expert Oracle feasibility study](pcqm_expert_oracle_feasibility/README.md)
+contains the paper review, executed saved-prediction bounds and conditional
+specialist plan. It closed NO_TRAIN for a new prediction-only router; the
+diagnostic implementation/evidence are reusable, with no model promotion.

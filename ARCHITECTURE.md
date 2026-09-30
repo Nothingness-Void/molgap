@@ -20,6 +20,8 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 
 | Module | Owns | Edit when |
 |---|---|---|
+| `experiment_family_workflow.py`, `experiment_family_artifacts.py` | Shared producer events, frozen-recipe output inspection and bridge to existing terminal closure | Adding a compatible family output profile; capability limits are in `docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md` |
+| `experiment_launch.py` | Verified local launch receipts and immutable byte publication | Changing launch binding or the shared atomic no-overwrite publisher |
 | `constants.py` | Repository paths, hyperparameters, model registry | Adding or retargeting an explicit registry entry |
 | `graphs.py` | SMILES-to-2D/3D PyG graphs and ETKDG construction | Changing graph or conformer representation |
 | `gine.py` | `GINEWrapper` local-message-passing baseline | Changing the reusable GINE encoder |
@@ -146,8 +148,8 @@ file moves. `tests/test_repository_layout.py` enforces this, checks the
 test-time CLI alias table still resolves, and runs `--help` on one CLI per tree.
 
 The frozen phase 1-7 line and retired production evidence are held on the
-repository's `archive` branch. Do not recreate `production/history/` on the
-desktop delivery branch. Historical model loading, when explicitly needed,
+repository's `archive` branch. Do not recreate retired production history
+directories on the desktop delivery branch. Historical model loading, when explicitly needed,
 uses the local assets under `models/archive/` and `data/cache/archive/`.
 
 ## Asset Map

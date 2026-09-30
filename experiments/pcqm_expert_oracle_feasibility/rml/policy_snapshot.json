@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_DIAGNOSTIC",
+    "field": "user_requested_local_oracle_review",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-expert-oracle-feasibility-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "8c63e0423405ee15744440d29ea29377e3b7a49b3e83f6aa4dfe40b4fef8c291",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-expert-oracle-feasibility",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_requested_local_oracle_review"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

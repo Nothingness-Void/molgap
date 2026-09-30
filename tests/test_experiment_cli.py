@@ -36,7 +36,7 @@ def invoke(capsys, args, expected=0):
 
 @pytest.mark.parametrize("command", [None, "validate-spec", "package", "preflight",
                                      "run-diagnostic", "launch-receipt", "terminal",
-                                     "plan-prospective"])
+                                     "plan-prospective", "check-release"])
 def test_help(capsys, command):
     with pytest.raises(SystemExit) as error:
         cli.main(([command] if command else []) + ["--help"])
@@ -122,6 +122,16 @@ def test_package_passthrough(capsys, monkeypatch, spec_file, tmp_path):
                     "--allowlist", "src/b.py"])
     build.assert_called_once_with(ExperimentSpec.from_json(spec_file.read_text()), tmp_path,
                                   ["src/a.py", "README.md", "src/b.py"], tmp_path / "pkg")
+
+
+def test_release_command_reports_nonpass_and_rejects_duplicate_binding(capsys, monkeypatch, spec_file, tmp_path):
+    monkeypatch.setattr(cli, "check_release_inputs", Mock(return_value={
+        "status": "RELEASE_INPUTS_FAILED", "errors": [{"check": "initialization"}]}))
+    args = ["check-release", "--spec", spec_file, "--package", tmp_path,
+            "--expected-package-identity", SHA, "--recipe-file", "arm=recipe.json",
+            "--required-module", "molgap.loader"]
+    assert invoke(capsys, args, 1)["status"] == "RELEASE_INPUTS_FAILED"
+    assert invoke(capsys, args + ["--recipe-file", "arm=other.json"], 2)["status"] == "ERROR"
 
 
 @pytest.fixture
@@ -436,4 +446,5 @@ def test_no_remote_or_dynamic_dispatch_in_cli():
     commands = next(action for action in parser._actions if hasattr(action, "choices")
                     and isinstance(action.choices, dict)).choices
     assert set(commands) == {"validate-spec", "package", "preflight", "run-diagnostic",
-                             "launch-receipt", "terminal", "plan-prospective"}
+                             "launch-receipt", "terminal", "plan-prospective", "check-release",
+                             "check-acceptance", "inspect-output", "accept-terminal"}

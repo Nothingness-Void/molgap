@@ -11,7 +11,7 @@ from .experiment_launch import (
     reconcile_platform_response, write_launch_receipt,
 )
 from .experiment_package import build_experiment_source_package
-from .experiment_preflight import LOADER_MODE, MODEL_MODE, run_experiment_preflight
+from .experiment_preflight import LOADER_MODE, MODEL_MODE, run_experiment_preflight, check_release_inputs, _atomic
 from .experiment_prospective import plan_prospective
 from .experiment_runner import run_experiment
 from .experiment_spec import ExperimentSpec
@@ -46,18 +46,39 @@ def _parser() -> argparse.ArgumentParser:
     parser = _Parser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
-                 "launch-receipt", "terminal", "plan-prospective"):
+                 "launch-receipt", "terminal", "plan-prospective", "check-release",
+                 "check-acceptance", "inspect-output", "accept-terminal"):
         command = commands.add_parser(name)
         command.add_argument("--spec", required=True, type=_local)
-        if name in {"package", "terminal", "plan-prospective"}:
+        if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal"}:
             command.add_argument("--repo-root", required=True, type=_local)
         if name in {"package", "preflight", "run-diagnostic"}:
             command.add_argument("--output", required=True, type=_local)
-        if name in {"preflight", "launch-receipt"}:
+        if name in {"preflight", "launch-receipt", "check-release", "inspect-output", "accept-terminal"}:
             command.add_argument("--package", required=True, type=_local)
             command.add_argument("--expected-package-identity", required=True)
-        if name == "package":
+        if name == "check-acceptance":
+            command.add_argument("--plan", required=True, type=_local)
+        elif name in {"inspect-output", "accept-terminal"}:
+            command.add_argument("--receipt", required=True, type=_local)
+            if name == "inspect-output":
+                command.add_argument("--arm", required=True)
+                command.add_argument("--artifact-root", required=True, type=_local)
+                command.add_argument("--expectations", required=True, type=_local)
+            else:
+                command.add_argument("--descriptor", required=True, type=_local)
+                command.add_argument("--outputs", required=True, type=_local)
+                command.add_argument("--execute", action="store_true")
+        elif name == "package":
             command.add_argument("--allowlist", required=True, nargs="+", action="extend")
+        elif name == "check-release":
+            command.add_argument("--recipe-file", required=True, action="append", metavar="ARM=PACKAGED_PATH")
+            command.add_argument("--initial-state", action="append", default=[], metavar="ARM=LOCAL_PATH")
+            command.add_argument("--required-module", required=True, action="append")
+            command.add_argument("--pickle-input", action="append", default=[], type=_local)
+            command.add_argument("--entry-script", type=_local)
+            command.add_argument("--input-root", type=_local)
+            command.add_argument("--output-report", type=_local)
         elif name == "preflight":
             command.add_argument("--shard-root", required=True, type=_local)
             command.add_argument("--expected-shard-manifest-sha256", required=True)
@@ -81,10 +102,50 @@ def _dispatch(args) -> tuple[dict, int]:
         raise ValueError("Expected canonical ExperimentSpec JSON bytes (no newline)")
     if args.command == "validate-spec":
         return {"spec_identity": spec.identity, "spec": spec.to_dict()}, 0
+    if args.command in {"check-acceptance", "inspect-output", "accept-terminal"}:
+        from .experiment_family_workflow import (
+            RunContext, _json, check_acceptance_plan, inspect_output, close_verified_outputs,
+            prepare_terminal_outputs,
+        )
+        if args.command == "check-acceptance":
+            result = check_acceptance_plan(spec, args.repo_root, _json(args.plan))
+            return result, 1 if result["status"] == "BLOCKED" else 0
+        def context(arm_id):
+            return RunContext.from_launch(spec, args.receipt, args.package,
+                expected_package_identity=args.expected_package_identity, arm_id=arm_id)
+        if args.command == "inspect-output":
+            result = inspect_output(args.artifact_root, context=context(args.arm), expected=_json(args.expectations))
+            return result, 1 if result["status"] == "BLOCKED" else 0
+        outputs = prepare_terminal_outputs(spec, args.repo_root, _json(args.outputs),
+            receipt_path=args.receipt, package_dir=args.package,
+            expected_package_identity=args.expected_package_identity)
+        descriptor_raw = _read(args.descriptor)
+        descriptor = TerminalDescriptor.from_json(spec, descriptor_raw)
+        if descriptor_raw != descriptor.to_json():
+            raise ValueError("Expected canonical TerminalDescriptor JSON")
+        result = close_verified_outputs(args.repo_root, spec, descriptor, outputs=outputs, execute=args.execute)
+        return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
     if args.command == "plan-prospective":
         return plan_prospective(spec, args.repo_root)
     if args.command == "package":
         return build_experiment_source_package(spec, args.repo_root, args.allowlist, args.output), 0
+    if args.command == "check-release":
+        def bindings(values, local=False):
+            result = {}
+            for entry in values:
+                arm, separator, value = entry.partition("=")
+                if not separator or not arm or not value or arm in result:
+                    raise ValueError("Expected unique ARM=PATH bindings")
+                result[arm] = _local(value) if local else value
+            return result
+        result = check_release_inputs(spec, args.package,
+            expected_package_identity=args.expected_package_identity,
+            recipe_files=bindings(args.recipe_file), initial_states=bindings(args.initial_state, True),
+            required_modules=args.required_module, pickle_inputs=args.pickle_input,
+            entry_script=args.entry_script, input_root=args.input_root)
+        if args.output_report:
+            _atomic(args.output_report, result)
+        return result, 1 if result["errors"] else 0
     if args.command == "preflight":
         manifest = args.shard_root / "shard_manifest.json"
         _safe_local(manifest)
