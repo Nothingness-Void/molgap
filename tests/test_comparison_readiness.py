@@ -506,6 +506,24 @@ def test_scalar_metric_cannot_validate_as_reference_bundle():
         validate_reference_bundle({"mae_eV": 0.1})
 
 
+@pytest.mark.parametrize("shared_field", ["cost_records_ref", "acceptance_ref", "decision_ref"])
+def test_strict_release_blocks_reference_with_shared_terminal_pointer(tmp_path, shared_field):
+    bundle = _reference_bundle()
+    bundle[shared_field] = bundle["role_history_ref"]
+    bundle_path = _write_reference_bundle_tree(tmp_path, bundle)
+    planned = _prelaunch(bundle)
+    assert validate_server_comparison_prelaunch(planned, experiment_purpose="architecture_comparison",
+        reference_bundle=bundle)["gate"] == "PASS"  # Historical plan validation is unchanged.
+    kwargs = dict(comparison_prelaunch=planned, experiment_purpose="architecture_comparison",
+        reference_bundle=bundle, repo_root=tmp_path, reference_bundle_path=bundle_path)
+    with pytest.raises(ValueError, match="distinct terminal evidence"):
+        validate_server_scientific_prelaunch(**kwargs)
+    output = tmp_path / "comparison_readiness_prelaunch.json"
+    with pytest.raises(ValueError, match="distinct terminal evidence"):
+        write_server_comparison_prelaunch(output, **kwargs)
+    assert not output.exists()
+
+
 def test_server_prelaunch_requires_planned_identity_and_real_reference_bundle(tmp_path):
     bundle = _reference_bundle()
     bundle_path = _write_reference_bundle_tree(tmp_path, bundle)

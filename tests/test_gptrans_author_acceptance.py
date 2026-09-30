@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from molgap.gptrans_author_acceptance import accept_prepared_inputs, NO_READ
+from molgap.gptrans_author_acceptance import accept_prepared_inputs, accept_training_outputs, NO_READ
 
 
 def fixture_inputs(tmp_path):
@@ -55,3 +55,28 @@ def test_rejects_invalid_or_excess_cost(tmp_path, wall):
     (output / "native_cost.json").write_text(json.dumps(cost))
     with pytest.raises(ValueError, match="CPU"):
         accept_prepared_inputs(output, package)
+
+
+def test_training_acceptance_rejects_incomplete_actual_source_package(tmp_path, monkeypatch):
+    from pathlib import Path
+    import shutil
+    root = Path(__file__).resolve().parents[1]
+    gpu = tmp_path / "experiments/pcqm_gptrans_author_alignment/gpu"
+    gpu.mkdir(parents=True)
+    for name in ("spec.json", "submission_v1.json", "screen_config.json"):
+        shutil.copyfile(root / "experiments/pcqm_gptrans_author_alignment/gpu" / name, gpu / name)
+    package = tmp_path / "incomplete_package"
+    package.mkdir()
+    monkeypatch.setattr("torch.load", lambda *a, **k: pytest.fail("No tensor read before package acceptance"))
+    with pytest.raises(ValueError, match="six declared files"):
+        accept_training_outputs(tmp_path, tmp_path / "records", package)
+
+
+def test_terminal_adapter_rejects_unaccepted_outputs_before_closure(tmp_path, monkeypatch):
+    from molgap.gptrans_author_terminal import close_author_outputs
+    acceptance = tmp_path / "acceptance.json"
+    acceptance.write_text('{"accepted":false}')
+    monkeypatch.setattr("molgap.gptrans_author_terminal.close_terminal_arm",
+        lambda *a, **k: pytest.fail("Unaccepted outputs cannot finalize"))
+    with pytest.raises(ValueError, match="Independent saved-output"):
+        close_author_outputs(tmp_path, tmp_path / "records", acceptance)

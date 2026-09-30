@@ -17,7 +17,7 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any, Optional
 
-from .comparison_readiness import validate_server_comparison_prelaunch
+from .comparison_readiness import INTERVENTION_FIELDS_BY_PURPOSE, validate_server_comparison_prelaunch
 from .evidence_pointers import validate_release_reference_bundle_evidence
 
 from .screen_policy import (
@@ -55,6 +55,15 @@ def validate_server_scientific_prelaunch(
         repo_root=repo_root,
         reference_bundle_path=reference_bundle_path,
     )
+    if experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE:
+        # Check closure feasibility only at a new compute release. Historical
+        # planned records remain valid provenance, not retroactive permission.
+        fields = ("runtime_certificate_ref", "row_manifest_ref", "target_manifest_ref",
+            "trace_manifest_ref", "role_history_ref", "target_transform_asset_ref",
+            "cost_records_ref", "acceptance_ref", "decision_ref")
+        pointers = [validated_reference_bundle[field] for field in fields]
+        if len(pointers) != len(set(pointers)):
+            raise ValueError("strict prelaunch reference requires distinct terminal evidence pointers")
 
     gate = validate_server_comparison_prelaunch(
         comparison_prelaunch,
