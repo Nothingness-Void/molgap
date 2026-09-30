@@ -41,6 +41,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-gptrans-author-degree-scale-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-gptrans-author-input-preparation-verification-recovery-v2:A001",
       "target": "experiments/pcqm_gptrans_author_alignment/verification_recovery/fixed_cache_contract.json",
       "type": "action_produced_evidence"
@@ -53,6 +58,11 @@
     {
       "source": "TC-gptrans-author-input-preparation:A001",
       "target": "experiments/pcqm_gptrans_author_alignment/preparation_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-author-path-bond-mean-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
       "type": "action_produced_evidence"
     },
     {
@@ -712,6 +722,11 @@
     },
     {
       "source": "TC-gptrans-v5-audit-reference-100k",
+      "target": "TC-gptrans-author-degree-scale-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-v5-audit-reference-100k",
       "target": "TC-gptrans-author-input-preparation",
       "type": "parent_trajectory"
     },
@@ -723,6 +738,11 @@
     {
       "source": "TC-gptrans-v5-audit-reference-100k",
       "target": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-v5-audit-reference-100k",
+      "target": "TC-gptrans-author-path-bond-mean-100k-s42",
       "type": "parent_trajectory"
     },
     {
@@ -997,6 +1017,11 @@
     },
     {
       "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-degree-scale-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
       "target": "TC-gptrans-author-input-preparation",
       "type": "prior_evidence"
     },
@@ -1008,6 +1033,11 @@
     {
       "source": "pcqm-gptrans-v5-audit-reference-s42",
       "target": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-path-bond-mean-100k-s42",
       "type": "prior_evidence"
     },
     {
@@ -1407,6 +1437,11 @@
     },
     {
       "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-degree-scale-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
       "target": "TC-gptrans-author-input-preparation",
       "type": "reference_used"
     },
@@ -1418,6 +1453,11 @@
     {
       "source": "pcqm-gptrans-v5-audit-reference-s42",
       "target": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-path-bond-mean-100k-s42",
       "type": "reference_used"
     },
     {
@@ -1893,6 +1933,10 @@
       "type": "trajectory"
     },
     {
+      "id": "TC-gptrans-author-degree-scale-100k-s42",
+      "type": "trajectory"
+    },
+    {
       "id": "TC-gptrans-author-input-preparation",
       "type": "trajectory"
     },
@@ -1902,6 +1946,10 @@
     },
     {
       "id": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-author-path-bond-mean-100k-s42",
       "type": "trajectory"
     },
     {

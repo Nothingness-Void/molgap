@@ -72,13 +72,15 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-The user authorized one GPTrans G1/G2 input-attribution dual-arm screen.
-CPU-only complete path/state preparation precedes per-arm V5/RML and GPU
-release. The corrected Kaggle2 CPU recovery is qualified RUNNING and bound to
-the existing Luna B; complete CPU acceptance and GPU release remain blocked.
-The old failed attempts remain distinct. [Recovery record](experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_record.md);
-[physical receipt](experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v2.json).
-No GPU candidate has been submitted under this authorization yet.
+The authorized GPTrans G1/G2 input-attribution dual-arm screen is submitted on
+Kaggle2 and its exact returned version is API RUNNING. Complete CPU input
+acceptance, distinct prospective plans, real-reference comparison prelaunch
+and source/input release checks passed. Existing Luna B monitors only this
+server-owned GPU job; training preflight and terminal science remain unaccepted.
+The failed CPU attempts remain distinct; their closure and the accepted CPU
+NO_TRAIN RML terminal remain separate bookkeeping, not training replay entries.
+[Submission record](experiments/pcqm_gptrans_author_alignment/gpu/submission_record.md);
+[physical receipt](experiments/pcqm_gptrans_author_alignment/gpu/submission_v1.json).
 Authority: [dual-arm protocol](experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md).
 
 The authorized GPTrans-T V5 evidence-baseline rerun is accepted and RML-closed,

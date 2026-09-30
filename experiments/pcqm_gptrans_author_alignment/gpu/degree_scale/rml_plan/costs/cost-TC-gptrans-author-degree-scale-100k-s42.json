@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "training",
+  "cost_event_id": "cost-TC-gptrans-author-degree-scale-100k-s42",
+  "evidence_ref": "experiments/pcqm_gptrans_author_alignment/gpu/budget.json",
+  "hardware": "one-of-two-independent-T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 6
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 6
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "gptrans-author-inputs-dual-s42:degree_scale",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-gptrans-author-degree-scale-100k-s42"
+}

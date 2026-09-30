@@ -16,7 +16,7 @@
   live-model development metric at each epoch. This fails the V5 strict causal
   trace requirement; the bundle supports a paired endpoint or historical context,
   not an automatic strict-causal GPU release.
-- G1 initialization and G2 path-input training: not submitted; prospective
+- On the initial 2026-09-29 audit, G1 initialization and G2 path-input training were not submitted; prospective
   source/data/role/RML and model-state gates remain incomplete, as does a GPTrans
   T4 runtime calibration. Exact gaps are in `results/gpu_prelaunch_gaps.json`.
   Re-training one baseline with a complete trace would require a separate
@@ -28,6 +28,16 @@
 
 The earlier Kaggle2 synthetic/Cython parity kernel is complete and is not
 resubmitted under this matrix.
+
+## 2026-10-01 independent GPU-arm release
+
+The recovered complete CPU input cache passed independent acceptance. Both
+prospective plans and real-reference strict prelaunch gates were frozen, and
+the shared source/input release check passed before a single T4x2 GPU POST.
+The returned version 1, kernel 136543794, was observed RUNNING and its pulled
+entry/mounts matched the package. See [release receipt](gpu/submission_record.md).
+This did not establish completed training or Replay-Ready status. The separate
+CPU NO_TRAIN terminal bookkeeping was not promoted to training evidence.
 
 ## 2026-09-30 input-dependency release
 

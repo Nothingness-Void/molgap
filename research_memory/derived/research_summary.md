@@ -5,7 +5,7 @@
 - Evidence without trajectory: 2
 
 ## Trajectories
-- ACTIVE: 7
+- ACTIVE: 9
 - CLOSED: 3
 - INFRASTRUCTURE_ONLY: 13
 - NEGATIVE_UNDER_CONTRACT: 14
@@ -97,6 +97,10 @@
 - one allocated Hygon DCU; eight allocated CPUs device_hours: measured=0.158611 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - one allocated Hygon DCU; eight allocated CPUs queue_hours: measured=0.068889 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - one allocated Hygon DCU; eight allocated CPUs wall_hours: measured=0.158611 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- one-of-two-independent-T4 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- one-of-two-independent-T4 device_hours: measured=unknown (0 measured records), estimated=12.000000 (2 estimated records), measurement_missing=0, not_applicable=0
+- one-of-two-independent-T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- one-of-two-independent-T4 wall_hours: measured=unknown (0 measured records), estimated=12.000000 (2 estimated records), measurement_missing=0, not_applicable=0
 - requested_Tesla_T4_actual_pending cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=0
 - requested_Tesla_T4_actual_pending device_hours: measured=unknown (0 measured records), estimated=13.000000 (5 estimated records), measurement_missing=0, not_applicable=0
 - requested_Tesla_T4_actual_pending queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=0
@@ -105,8 +109,8 @@
 - unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
-- Measurement-missing cost events: 78
-- Cost-event coverage: 60/60 trajectories; incomplete native measurement=54
+- Measurement-missing cost events: 80
+- Cost-event coverage: 62/62 trajectories; incomplete native measurement=56
 
 ## Screening Backtest
 - Status: available
@@ -114,9 +118,9 @@
 - Excluded traces: 6
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 28
+- [INFO] trace_unavailable_for_backtest: 30
 - [WARN] historical_partial_record: 15
-- [WARN] incomplete_native_cost_measurement: 54
-- [WARN] missing_explicit_role_identity: 15
-- [WARN] trajectory_without_v5_evidence: 8
+- [WARN] incomplete_native_cost_measurement: 56
+- [WARN] missing_explicit_role_identity: 17
+- [WARN] trajectory_without_v5_evidence: 10
 - [WARN] v5_evidence_without_trajectory: 2

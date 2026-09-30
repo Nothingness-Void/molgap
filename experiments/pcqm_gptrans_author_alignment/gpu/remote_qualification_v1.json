@@ -1,0 +1,25 @@
+{
+  "qualified_at": "2026-09-30T15:50:58.186799+00:00",
+  "physical_identity": {
+    "kernel": "kaseichou/molgap-gptrans-author-inputs-dual-s42",
+    "kernel_id": 136543794,
+    "version": 1
+  },
+  "scheduler_status": "RUNNING",
+  "release_status": "LOCAL_RELEASE_INPUTS_VERIFIED",
+  "release_report_sha256": "458222a856a680d168d2f69a5bf752ea9802f1fdd2b68b2bfc48dd688ed1b5e7",
+  "local_entry_sha256": "0fd34fd1c8e7e996246f5ee14fc0dc0902278b6044e920501c51bc35ec06674f",
+  "pulled_entry_sha256": "9bba173ab7a5cfd4b14954c5f66685714872f7b102f7734a30cc8dd6ca6239ad",
+  "entry_transport_equivalent": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "kaseichou/molgap-gptrans-author-dual-source",
+    "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "kernel_sources": [
+    "kaseichou/molgap-gptrans-author-inputs-verification-recovery"
+  ],
+  "preflight_or_first_epoch_observed": false,
+  "scientific_acceptance": false,
+  "replay_ready": false
+}
