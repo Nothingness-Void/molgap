@@ -9,6 +9,7 @@ import os
 import random
 import subprocess
 import sys
+from dataclasses import replace
 from pathlib import Path
 from unittest.mock import Mock
 
@@ -73,11 +74,15 @@ def metric(weight, role):
     }
 
 
-METRIC_SEMANTICS = {
-    "live_train_metric": metric("live", "train"),
-    "live_dev_metric": metric("live", "dev"),
-    "ema_dev_metric": metric("ema", "dev"),
-}
+def _metric_semantics(development_role_identity="dev"):
+    return {
+        "live_train_metric": metric("live", "train"),
+        "live_dev_metric": metric("live", development_role_identity),
+        "ema_dev_metric": metric("ema", development_role_identity),
+    }
+
+
+METRIC_SEMANTICS = _metric_semantics()
 
 SOURCE_IDX = torch.tensor([101, 103, 108], dtype=torch.int64)
 TARGET = torch.tensor([0.0, 0.0, 0.0], dtype=torch.float64)
@@ -95,12 +100,26 @@ def _expected_requirements():
     }
 
 
-def _recipe(family_name):
-    return {
+def _recipe(family_name, *, development_role_identity="dev"):
+    recipe = {
         "format": "synthetic-family-recipe-v1",
         "family": {"name": family_name, "version": "1"},
         "acceptance_requirements": _expected_requirements(),
     }
+    if development_role_identity is not None:
+        recipe["development_role_identity"] = development_role_identity
+    return recipe
+
+
+def _context_for_recipe(context, *, development_role_identity):
+    recipe = _recipe(
+        context.family_name,
+        development_role_identity=development_role_identity,
+    )
+    return replace(
+        context,
+        training_recipe_sha256=hashlib.sha256(json_bytes(recipe)).hexdigest(),
+    )
 
 
 @pytest.fixture
@@ -206,14 +225,15 @@ def _costs(*, status="measured"):
     }]
 
 
-def _write_trace(path, context, *, partial=False):
+def _write_trace(path, context, *, partial=False, metric_semantics=None):
     trajectory_id = f"{context.experiment_id}-{context.arm_id}"
     run_id = f"{context.logical_run_id}:{context.arm_id}:downstream"
+    semantics = copy.deepcopy(metric_semantics or METRIC_SEMANTICS)
     if partial:
         trace = canonicalize_trace({
             "trajectory_id": trajectory_id,
             "run_id": run_id,
-            "metric_semantics": copy.deepcopy(METRIC_SEMANTICS),
+            "metric_semantics": semantics,
             "observations": [{
                 "epoch_or_pass": 1,
                 "optimizer_step": None,
@@ -226,7 +246,7 @@ def _write_trace(path, context, *, partial=False):
         path.write_bytes(json_bytes(trace))
         return
 
-    recorder = StageRecorder(path, context, "downstream", METRIC_SEMANTICS)
+    recorder = StageRecorder(path, context, "downstream", semantics)
     recorder.observe(
         optimizer_step=2,
         sample_presentations=4,
@@ -259,6 +279,8 @@ def _write_output(
     selected_overrides=None,
     costs=None,
     publish=True,
+    development_role_identity="dev",
+    metric_semantics=None,
 ):
     root = tmp_path / f"output-{context.arm_id}"
     root.mkdir()
@@ -290,7 +312,9 @@ def _write_output(
         "prediction_eV": prediction,
         **protected,
     }, prediction_path)
-    (root / "contract.json").write_bytes(json_bytes(_recipe(context.family_name)))
+    (root / "contract.json").write_bytes(json_bytes(_recipe(
+        context.family_name, development_role_identity=development_role_identity
+    )))
 
     selected_weights = "ema" if adapter == "gptrans-v1" else "live"
     selected = {
@@ -362,7 +386,12 @@ def _write_output(
         torch.save(saved, resume_path)
 
     trace_path = root / "trace.json"
-    _write_trace(trace_path, context, partial=(variant == "partial_trace"))
+    _write_trace(
+        trace_path,
+        context,
+        partial=(variant == "partial_trace"),
+        metric_semantics=metric_semantics,
+    )
     artifacts = {
         "contract": "contract.json",
         "predictions": "predictions.pt",
@@ -572,6 +601,117 @@ def test_selected_metric_must_match_predictions_at_selected_trace_row(
     assert result["status"] == "BLOCKED"
     assert any("Selected trace/checkpoint/prediction metric mismatch" in blocker
                for blocker in result["blockers"])
+
+
+@pytest.mark.parametrize("arm_id,adapter,selected_weights", FAMILY_CASES)
+@pytest.mark.parametrize(
+    "field,replacement",
+    [
+        ("metric", "RMSE"),
+        ("target", "HOMO"),
+        ("role_identity", "train"),
+        ("role_identity", "another-development-split"),
+        ("direction", "maximize"),
+        ("unit", "Hartree"),
+        ("weights", None),
+    ],
+)
+def test_selected_development_metric_semantics_must_match_frozen_gap_mae(
+    tmp_path, launch_contexts, arm_id, adapter, selected_weights, field, replacement
+):
+    context = launch_contexts[4][arm_id]
+    selected_metric = "ema_dev_metric" if selected_weights == "ema" else "live_dev_metric"
+    semantics = _metric_semantics()
+    semantics[selected_metric][field] = (
+        ("live" if selected_weights == "ema" else "ema")
+        if replacement is None else replacement
+    )
+    if field == "weights":
+        root, expected, artifacts, progress = _write_output(
+            tmp_path, context, adapter, publish=False
+        )
+        trace_path = root / artifacts["trace"]
+        trace = json.loads(trace_path.read_bytes())
+        trace["metric_semantics"][selected_metric][field] = semantics[selected_metric][field]
+        trace_path.write_bytes(json_bytes(trace))
+        write_output_manifest(
+            root,
+            context,
+            adapter=adapter,
+            artifacts=artifacts,
+            progress=progress,
+            runtime=_runtime(context),
+            costs=_costs(),
+        )
+    else:
+        root, expected, _, _ = _write_output(
+            tmp_path,
+            context,
+            adapter,
+            metric_semantics=semantics,
+        )
+
+    result = inspect_output(root, context=context, expected=expected)
+
+    assert result["status"] == "BLOCKED"
+
+
+@pytest.mark.parametrize("arm_id,adapter,selected_weights", FAMILY_CASES)
+def test_unselected_development_metric_semantics_are_also_frozen(
+    tmp_path, launch_contexts, arm_id, adapter, selected_weights
+):
+    context = launch_contexts[4][arm_id]
+    selected_metric = "ema_dev_metric" if selected_weights == "ema" else "live_dev_metric"
+    unselected_metric = "live_dev_metric" if selected_metric == "ema_dev_metric" else "ema_dev_metric"
+    semantics = _metric_semantics()
+    semantics[unselected_metric]["metric"] = "RMSE"
+    root, expected, _, _ = _write_output(
+        tmp_path,
+        context,
+        adapter,
+        metric_semantics=semantics,
+    )
+
+    result = inspect_output(root, context=context, expected=expected)
+
+    assert result["status"] == "BLOCKED"
+
+
+@pytest.mark.parametrize("arm_id,adapter,_weights", FAMILY_CASES)
+def test_development_role_identity_is_required_and_may_be_opaque(
+    tmp_path, launch_contexts, arm_id, adapter, _weights
+):
+    context = launch_contexts[4][arm_id]
+    missing_context = _context_for_recipe(context, development_role_identity=None)
+    missing_tmp = tmp_path / "missing-role"
+    missing_tmp.mkdir()
+    missing_root, expected, _, _ = _write_output(
+        missing_tmp,
+        missing_context,
+        adapter,
+        development_role_identity=None,
+    )
+
+    missing = inspect_output(missing_root, context=missing_context, expected=expected)
+
+    assert missing["status"] == "BLOCKED"
+    assert any("development_role_identity" in blocker for blocker in missing["blockers"])
+
+    opaque_role = "screen-cohort-2026Q3-dev"
+    opaque_context = _context_for_recipe(context, development_role_identity=opaque_role)
+    opaque_tmp = tmp_path / "opaque-role"
+    opaque_tmp.mkdir()
+    opaque_root, opaque_expected, _, _ = _write_output(
+        opaque_tmp,
+        opaque_context,
+        adapter,
+        development_role_identity=opaque_role,
+        metric_semantics=_metric_semantics(opaque_role),
+    )
+
+    accepted = inspect_output(opaque_root, context=opaque_context, expected=opaque_expected)
+
+    assert accepted["status"] == "MECHANICALLY_VERIFIED", accepted
 
 
 def test_stage_recorder_requires_real_increasing_counts(tmp_path, launch_contexts):
@@ -1139,10 +1279,38 @@ def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
         scheduler_state={"last_epoch": 2} if adapter == "k1-v1" else None,
         ema_state={"weight": torch.tensor([0.5])} if adapter == "gptrans-v1" else None,
     )
+    recorder = session.stage.recorder
+    recorder.checkpoint_event(
+        "checkpoint-before-resume",
+        optimizer_step=None,
+        sample_presentations=None,
+    )
+    recorder.resume_event(
+        "different-resumed-checkpoint",
+        optimizer_step=None,
+        sample_presentations=None,
+    )
+    recorder.checkpoint_event(
+        "checkpoint-at-terminal",
+        optimizer_step=None,
+        sample_presentations=None,
+    )
+    recorder.terminal_event()
 
     result = session.complete(runtime=_runtime(context), hardware="synthetic-cpu")
 
     assert result["status"] == "MECHANICALLY_VERIFIED", result
+    trace = load_canonical_trace(root / "canonical_trace.json")
+    assert [row["event"] for row in trace["observations"]] == [
+        "observation", "observation", "checkpoint", "resume", "checkpoint", "terminal"
+    ]
+    assert trace["observations"][-2]["optimizer_step"] is None
+    assert trace["observations"][-2]["sample_presentations"] is None
+    assert result["observed"]["progress"] == {
+        "epochs": 2,
+        "optimizer_steps": 4,
+        "sample_presentations": 8,
+    }
     manifest = json.loads((root / "output_manifest.json").read_bytes())
     wall, device = manifest["costs"]
     assert (wall["metric"], wall["status"], wall["semantics"]) == (
@@ -1152,6 +1320,31 @@ def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
     assert (device["metric"], device["status"], device["value"]) == (
         "device_seconds", "missing", None
     )
+
+
+def test_checkpoint_without_completed_observation_cannot_complete(tmp_path, launch_contexts):
+    context = launch_contexts[4]["gptrans_t"]
+    root = tmp_path / "checkpoint-only-session"
+    contract = tmp_path / "checkpoint-only-contract.json"
+    contract.write_bytes(json_bytes(_recipe(context.family_name)))
+    session = FamilyOutputSession(
+        root,
+        context,
+        adapter="gptrans-v1",
+        contract=contract,
+        trajectory_id=f"{context.experiment_id}-{context.arm_id}",
+        metric_semantics=METRIC_SEMANTICS,
+    )
+    session.stage.recorder.checkpoint_event(
+        "checkpoint-only",
+        optimizer_step=None,
+        sample_presentations=None,
+    )
+
+    with pytest.raises(ValueError, match="without observed training work"):
+        session.complete(runtime=_runtime(context), hardware="synthetic-cpu")
+
+    assert not (root / "output_manifest.json").exists()
 
 
 def test_repeated_rml_finalization_reports_existing_receipt_without_overwrite(tmp_path):

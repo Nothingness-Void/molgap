@@ -289,6 +289,25 @@ def _finite_tree(value, label):
         raise ValueError("Nonfinite checkpoint state: " + label)
 
 
+def _development_role(contract: dict) -> str:
+    """The retained recipe owns the exact development-role identity."""
+    identity = contract.get("development_role_identity")
+    _text(identity, "contract.development_role_identity")
+    return identity
+
+
+def _validate_development_semantics(contract: dict, semantics: dict) -> None:
+    role = _development_role(contract)
+    for field, weights in (("live_dev_metric", "live"), ("ema_dev_metric", "ema")):
+        definition = semantics.get(field)
+        if definition is None:
+            continue  # The selected metric still requires an observation below.
+        expected = {"metric": "MAE", "unit": "eV", "target": "Gap",
+                    "role_identity": role, "weights": weights, "direction": "minimize"}
+        if definition != expected:
+            raise ValueError("Development metric semantics disagree with the frozen Gap MAE contract: " + field)
+
+
 class FamilyOutputSession:
     """Small event adapter for an existing trainer; no replacement training loop.
 
@@ -306,9 +325,11 @@ class FamilyOutputSession:
         artifact_adapter(adapter, (context.family_name, context.family_version))
         if file_digest(contract) != context.training_recipe_sha256:
             raise ValueError("Session contract/Spec recipe mismatch")
-        self.expected = _json(Path(contract)).get("acceptance_requirements")
+        contract_record = _json(Path(contract))
+        self.expected = contract_record.get("acceptance_requirements")
         if not isinstance(self.expected, dict) or set(self.expected) != EXPECTED:
             raise ValueError("Owning recipe lacks frozen acceptance_requirements")
+        _validate_development_semantics(contract_record, metric_semantics)
         self.root.mkdir(parents=True, exist_ok=True)
         publish_immutable_bytes(self.root / "training_contract.json", Path(contract).read_bytes())
         self.stage = StageRecorder(self.root / "canonical_trace.json", context, "downstream",
@@ -339,7 +360,8 @@ class FamilyOutputSession:
 
     def complete(self, *, runtime: dict, hardware: str) -> dict:
         import time
-        rows = self.stage.recorder.record["observations"]
+        rows = [row for row in self.stage.recorder.record["observations"]
+                if row["event"] == "observation"]
         if not rows:
             raise ValueError("Cannot complete a session without observed training work")
         progress = {"epochs": len(rows), "optimizer_steps": rows[-1]["optimizer_step"],
@@ -457,6 +479,7 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict) -> 
         contract = _json(paths["contract"])
         if contract.get("acceptance_requirements") != expected:
             raise ValueError("Supplied expectations disagree with the frozen recipe contract")
+        _development_role(contract)
         _runtime(manifest["runtime"], context, expected["precision"])
         _costs(manifest["costs"])
         progress = manifest["progress"]
@@ -485,6 +508,7 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict) -> 
             raise ValueError("Development target identity mismatch")
         observed["development_mae_eV"] = (prediction.double() - target.double()).abs().mean().item()
         trace = validate_canonical_trace(_json(paths["trace"]))
+        _validate_development_semantics(contract, trace["metric_semantics"])
         rows = [r for r in trace["observations"] if r["event"] == "observation"]
         if not rows or any(r["optimizer_step"] is None or r["sample_presentations"] is None or r["epoch_or_pass"] is None for r in rows):
             raise ValueError("Trace missing observed exposure/epoch counters")
@@ -591,8 +615,10 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
                     raise ValueError("Plan artifact hash mismatch")
                 return path
             contract_path = pinned(entry["contract"])
-            if entry["contract"]["sha256"] != arm["training"]["recipe"]["sha256"] or _json(contract_path).get("acceptance_requirements") != entry["expected"]:
+            contract_record = _json(contract_path)
+            if entry["contract"]["sha256"] != arm["training"]["recipe"]["sha256"] or contract_record.get("acceptance_requirements") != entry["expected"]:
                 raise ValueError("Acceptance expectations are not pinned by the owning Spec recipe")
+            _development_role(contract_record)
             comparison = validate_comparison_prelaunch(_json(pinned(entry["comparison_prelaunch"])))
             if not comparison["prelaunch_ready"]:
                 raise ValueError("Owning comparison prelaunch is blocked")

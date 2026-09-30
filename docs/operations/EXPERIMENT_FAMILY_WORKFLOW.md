@@ -35,6 +35,9 @@ Read [the addon guide](EXPERIMENT_ADDON_GUIDE.md), then add event hooks:
    `source_idx_sha256`, `target_sha256`, `precision`. Pin the whole file in
    `Spec.arms[].training.recipe.sha256`. Requirements must precede training;
    do not infer them from outputs. Missing independent requirements fail closed.
+   The recipe also requires `development_role_identity`: the exact frozen
+   development-role identity used by its development metrics. It is not inferred
+   from a trace label. Missing identity blocks prelaunch and output inspection.
 2. Package through the existing core. Call `RunContext.for_training(spec,
    package_dir, expected_package_identity=..., arm_id=..., account=...,
    run_reference=...)`. Account/reference are frozen declarations. Platform
@@ -78,8 +81,12 @@ Retain new protocol bundles under a `family_outputs/` subdirectory of the
 owning `platforms/_records/` attempt/arm. The scoped `.gitattributes` rule keeps
 their hash-bound bytes unchanged across Git checkout line-ending conversion.
 
-The trace requires one observation per completed epoch with observed steps and
-presentations. Selected epoch/step and live/EMA metric must match the trace row
+The trace requires one `observation` per completed epoch with observed steps and
+presentations. Checkpoint, resume and terminal events are retained as metadata;
+they neither increment epoch count nor supply completed-epoch exposure counters.
+All declared development metrics require MAE, Gap, eV, minimize, the frozen
+development-role identity and the matching live/EMA weights. Selected epoch/step
+and live/EMA metric must match the trace row
 and aligned prediction MAE. Sampler cursor, RNG and resume metadata are checked;
 scientific validity and an executable resume are separate qualifications.
 
