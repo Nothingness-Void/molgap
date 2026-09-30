@@ -1,5 +1,15 @@
 # GPTrans author/local attribution matrix status
 
+## 2026-10-01 terminal acceptance
+
+Both GPU arms completed and passed independent saved-output checks and per-arm
+RML finalization. They are favorable paired endpoints but not STRICT_CAUSAL or
+Replay-Ready: the immutable reference's combined evidence bindings and replay
+enrollment prevent those claims. The controller closed the bound job; the
+existing monitor was paused. No successor was released. See
+[terminal decision](gpu/results/decision.md) and
+[release repair](../../docs/operations/RELEASE_FAST_PATH_REVIEW.md).
+
 - P0 CPU real-graph path preflight: v1 ended in an infrastructure-only
   source-layout failure; v2 completed and passed independent output
   acceptance. The v1 and v2 receipts and `results/acceptance.json` retain

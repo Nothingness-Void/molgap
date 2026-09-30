@@ -1,0 +1,389 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/observed_metadata.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md": "941ee4271f27d02aa3f43be4218ed5e636f28e6b99959451801962fd40e7cd19",
+    "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/comparison_readiness_prelaunch.json": "f47b9e6b6e4a9ce79771dc85c5d7b11557e8ee9360b82140f735b7afc5068dca",
+    "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/candidate_trace_manifest.json": "e1e6272af19606619ca248e352a88ed7d26306734eb5d7e950d34bc9845774d3",
+    "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/comparison_readiness.json": "18fd64dca7aec34b99e5e78be12213515dc286dff05ecf42c1b74d4e4dca89f3",
+    "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/cost_records.json": "da0dc221f8f4a6d7891af110ec016ab05766d9e57e07280e039b1a3369c35cf2",
+    "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/decision.md": "2816681f02b950e89e5faddaaaad7118f3168a05c42bf3f16338b39c9d93e595",
+    "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/observed_metadata.json": "b37f73c20870666fd117287ec8972220c934e1bc3516fb4c45bb3db6458082b3",
+    "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/paired_analysis.json": "168cb43ba2d46bca24fb7f557d4afca89671a848304b9ede9318029a6ef99254",
+    "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/prediction_manifest.json": "22d596fbea5733685d217b6d4d3259199d2a0db16ba1f662a04e97fb21795ec5",
+    "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/role_history.json": "0f28182e43261b8345f10a9581088ca4e96612a1af756c26e335829acf78ec96",
+    "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/runtime_certificate.json": "d7e96a55925cb33a93e18149388c25a371c6ed500f1bd47305634912c1524e97",
+    "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/trajectory.json": "a4c4534e25158c5db7ea37a697456d59dc624d47dfdc5fe1bf2003b540201beb",
+    "experiments/pcqm_gptrans_author_alignment/gpu/results/acceptance.json": "a4bc6bafeb4207f33718bc98b09eef104ba176610db18c7f4cbdbf6524b33cdd",
+    "experiments/pcqm_gptrans_author_alignment/gpu/screen_config.json": "325628fb2eba30aa7206105533593244d7e703dd08d8a236739261f5af96cd1f",
+    "experiments/pcqm_gptrans_author_alignment/gpu/submission_v1.json": "b0a52727d1e6a8f1d009138de45d4f1c19db27c6f79b88319d24c8798ca96ca9",
+    "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+    "experiments/pcqm_gptrans_v5_audit_reference/contract.json": "41ea6de825a020068bdd650666621db39cbd299406b03e3024b0665939c38565",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/native_cost.json": "8fe5d0c83feb0243edff5d1ddfc35babeb29a2bd4a4bdafd29e31fbe4c415e0e",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/path_bond_mean/training/best_model.pt": "c174e2285a6a2f61f099f2e43e1e7795c73b8d3aef51229e1f09517b3214139e",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/path_bond_mean/training/canonical_trace.json": "63026afcc717920874bd05a7ea1662d07b2664c62df288d231e76a78f70d1f0b",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/path_bond_mean/training/completion_manifest.json": "97a43ca17a6c19699454dea9922431411b3a89e31615cc2ec7c598d86fa3c8b0",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/path_bond_mean/training/last_checkpoint.pt": "d8d1922986933c55ea9f28bf49f15d192df111a95c2919a8b00b7bf41e4a2a90"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-author-path-bond-mean-100k-s42-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/observed_metadata.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.5761888530141666
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.5761888530141666
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "CLOSE"
+    ],
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "explicit scale/combination compute authorization"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/candidate_trace_manifest.json",
+        "name": "candidate_trace_manifest.json",
+        "sha256": "e1e6272af19606619ca248e352a88ed7d26306734eb5d7e950d34bc9845774d3"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/comparison_readiness.json",
+        "name": "comparison_readiness.json",
+        "sha256": "18fd64dca7aec34b99e5e78be12213515dc286dff05ecf42c1b74d4e4dca89f3"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/cost_records.json",
+        "name": "cost_records.json",
+        "sha256": "da0dc221f8f4a6d7891af110ec016ab05766d9e57e07280e039b1a3369c35cf2"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/decision.md",
+        "name": "decision.md",
+        "sha256": "2816681f02b950e89e5faddaaaad7118f3168a05c42bf3f16338b39c9d93e595"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/observed_metadata.json",
+        "name": "observed_metadata.json",
+        "sha256": "b37f73c20870666fd117287ec8972220c934e1bc3516fb4c45bb3db6458082b3"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/paired_analysis.json",
+        "name": "paired_analysis.json",
+        "sha256": "168cb43ba2d46bca24fb7f557d4afca89671a848304b9ede9318029a6ef99254"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/prediction_manifest.json",
+        "name": "prediction_manifest.json",
+        "sha256": "22d596fbea5733685d217b6d4d3259199d2a0db16ba1f662a04e97fb21795ec5"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/role_history.json",
+        "name": "role_history.json",
+        "sha256": "0f28182e43261b8345f10a9581088ca4e96612a1af756c26e335829acf78ec96"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/runtime_certificate.json",
+        "name": "runtime_certificate.json",
+        "sha256": "d7e96a55925cb33a93e18149388c25a371c6ed500f1bd47305634912c1524e97"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/gpu/screen_config.json",
+        "name": "screen_config.json",
+        "sha256": "325628fb2eba30aa7206105533593244d7e703dd08d8a236739261f5af96cd1f"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json",
+        "name": "target_transform.json",
+        "sha256": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json",
+        "name": "row_manifest.json",
+        "sha256": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json",
+        "name": "target_manifest.json",
+        "sha256": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/native_cost.json",
+        "name": "native_cost.json",
+        "sha256": "8fe5d0c83feb0243edff5d1ddfc35babeb29a2bd4a4bdafd29e31fbe4c415e0e"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/path_bond_mean/training/best_model.pt",
+        "name": "best_model.pt",
+        "sha256": "c174e2285a6a2f61f099f2e43e1e7795c73b8d3aef51229e1f09517b3214139e"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/path_bond_mean/training/canonical_trace.json",
+        "name": "canonical_trace.json",
+        "sha256": "63026afcc717920874bd05a7ea1662d07b2664c62df288d231e76a78f70d1f0b"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/path_bond_mean/training/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "97a43ca17a6c19699454dea9922431411b3a89e31615cc2ec7c598d86fa3c8b0"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/path_bond_mean/training/last_checkpoint.pt",
+        "name": "last_checkpoint.pt",
+        "sha256": "d8d1922986933c55ea9f28bf49f15d192df111a95c2919a8b00b7bf41e4a2a90"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/gpu/results/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "a4bc6bafeb4207f33718bc98b09eef104ba176610db18c7f4cbdbf6524b33cdd"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md",
+        "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+        "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/trajectory.json",
+        "experiments/pcqm_gptrans_author_alignment/gpu/submission_v1.json",
+        "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/comparison_readiness_prelaunch.json",
+        "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-author-path-bond-mean-100k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-30T20:22:58.452338+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "verified native artifacts and saved prediction tensors"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "paired_endpoint",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "POSITIVE_UNDER_CONTRACT",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "internal_development": "consumed",
+      "internal_train": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "single_mechanism_screen_100k",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-30T20:22:58.452338+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development": "consumed",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-author-path-bond-mean-100k-s42-internal_train-training_membership",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-author-path-bond-mean-100k-s42-internal_train-labels_read",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-author-path-bond-mean-100k-s42-internal_train-metric_computed",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-author-path-bond-mean-100k-s42-internal_development-prediction_input",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-author-path-bond-mean-100k-s42-internal_development-labels_read",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-author-path-bond-mean-100k-s42-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-author-path-bond-mean-100k-s42-internal_development-selection_used",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+    }
+  ],
+  "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "canonical_reference_not_replay_enrolled; historical eligibility left unchanged"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "1e7521c568ba13f243a0e9dda438e44c6d113c6853f712aa14d059b70a67e39c",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "ema9999-each-step-selection",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+      "scientific_contract": "gptrans-v5-observation-reference-fp32-bs128-60epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+      "terminal_endpoint_identity": "46860-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "internal_development_ema_gap_mae_eV",
+    "model_identity": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+    "reference_id": "pcqm-gptrans-v5-audit-reference-s42",
+    "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_ema_over_60_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/terminal_evidence.json",
+    "trace_artifact_ref": "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/path_bond_mean/training/canonical_trace.json",
+    "trace_artifact_sha256": "63026afcc717920874bd05a7ea1662d07b2664c62df288d231e76a78f70d1f0b",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42",
+    "weight_semantics": "ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+}

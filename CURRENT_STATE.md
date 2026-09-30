@@ -72,13 +72,13 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
-The authorized GPTrans G1/G2 input-attribution dual-arm screen is submitted on
-Kaggle2 and its exact returned version is API RUNNING. Complete CPU input
-acceptance, distinct prospective plans, real-reference comparison prelaunch
-and source/input release checks passed. Existing Luna B monitors only this
-server-owned GPU job; training preflight and terminal science remain unaccepted.
-The failed CPU attempts remain distinct; their closure and the accepted CPU
-NO_TRAIN RML terminal remain separate bookkeeping, not training replay entries.
+The authorized GPTrans G1/G2 input-attribution dual-arm screen is terminal.
+Both independent arms passed saved-output acceptance and RML finalization.
+They are favorable paired endpoints, not STRICT_CAUSAL or Replay-Ready: the
+immutable reference has shared evidence pointers and lacks replay enrollment.
+No server-owned GPU job remains in this chain; existing Luna B is paused.
+No seed, successor, scale bridge or full training was released.
+Authority: [terminal decision](experiments/pcqm_gptrans_author_alignment/gpu/results/decision.md).
 [Submission record](experiments/pcqm_gptrans_author_alignment/gpu/submission_record.md);
 [physical receipt](experiments/pcqm_gptrans_author_alignment/gpu/submission_v1.json).
 Authority: [dual-arm protocol](experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md).
