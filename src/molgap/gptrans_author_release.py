@@ -159,7 +159,8 @@ def freeze_screen(root: Path, cpu_output: Path):
     atomic_json(root / GPU / "screen_config.json", {"spec_identity": spec.identity,
         "arms": arm_config, "dataset_manifest_sha256": recipe["manifest_sha256"],
         "path_manifest_sha256": paths["sidecar_manifest_sha256"],
-        "target_transform_sha256": identity["target_transform_asset_sha256"],
+        "target_transform_sha256": sha256_file(transform),
+        "target_transform_asset_sha256": identity["target_transform_asset_sha256"],
         "cpu_acceptance_ref": BASE + "/verification_recovery/acceptance_v2.json",
         "cpu_acceptance_sha256": sha256_file(root / BASE / "verification_recovery/acceptance_v2.json"),
         "maximum_wall_seconds": 21600, "training_estimate_cap_hours": 4.5,
@@ -181,7 +182,7 @@ def freeze_screen(root: Path, cpu_output: Path):
         "source_paths": sources, "artifacts": {
             "initial_state.pt": {"path": str(initial), "sha256": recipe["initial_state_sha256"]},
             "degree_initial_state.pt": {"path": str(degree), "sha256": accepted["degree_initial_file_sha256"]},
-            "target_transform.json": {"path": str(transform), "sha256": identity["target_transform_asset_sha256"]}},
+            "target_transform.json": {"path": str(transform), "sha256": sha256_file(transform)}},
         "recipe_files": {mode: RECIPE for mode in MODES},
         "initial_states": {mode: arm_config[mode]["initial_file"] for mode in MODES},
         "required_modules": ["molgap.gptrans_author_screen", "molgap.gptrans_screen_adapter", "molgap.pcqm_gptrans_v4"],
