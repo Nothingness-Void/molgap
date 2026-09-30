@@ -195,3 +195,16 @@ network responses. Repository `RML validate` and `check --frozen` passed.
 No training, inference, protected-role access or platform submission occurred.
 Independent in-progress RML work in this checkout was not edited or staged by
 this integration, and the pre-existing uncommitted RML test was preserved.
+
+After implementation commit `7389d21e0d50c366ada4cbab652e00e9b80ecb8f`, the
+repository-wide `check --frozen --portable` remained blocked by ten historical
+closure files absent from Git. Nine belong to the old
+`platforms/_records/kaggle/training/k1_joint_atom_s42_v1/` observation: its
+execution summary, launch identity, two arm logs, both arm failure/native-cost
+records and terminal observation. The tenth is the retained K1 reference trace
+path already recorded in the earlier review above. Representative paths are
+also absent from pre-integration HEAD `9e339f6d`; the new release-input code
+did not introduce these evidence gaps. Synthetic portability regressions passed,
+but ordinary frozen validation is not full historical portability. This
+integration did not manufacture records, weaken checks or copy platform payloads
+to conceal the missing committed closure.
