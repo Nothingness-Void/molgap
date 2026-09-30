@@ -38,6 +38,8 @@ def main():
     if phase == "preflight":
         args.pop("preflight_path")
         result = run_preflight(**args)
+        if result.get("accepted") is not True:
+            raise RuntimeError("Chemical arm runtime preflight rejected")
         from molgap.gptrans_chemical_training import profile_training_overhead
         from molgap.training_reproducibility import atomic_json
         profile = profile_training_overhead(addon=args["training_addon"],

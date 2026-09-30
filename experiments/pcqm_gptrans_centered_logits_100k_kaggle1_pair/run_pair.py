@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 import runpy
 import shutil
@@ -38,7 +39,11 @@ with tarfile.open(archive, "r:gz") as bundle:
         with stream, destination.open("xb") as target:
             shutil.copyfileobj(stream, target)
 
-os.environ["MOLGAP_PAIR_PROFILE"] = "reference-centered-logits-kaggle1-v1"
+chemical_binding = root / "experiments/pcqm_gptrans_chemical_aux/release_inputs.json"
+os.environ["MOLGAP_PAIR_PROFILE"] = (
+    json.loads(chemical_binding.read_text())["pair_profile"] if chemical_binding.is_file()
+    else "reference-centered-logits-kaggle1-v1"
+)
 os.environ["MOLGAP_SOURCE_ROOT"] = str(root)
 runpy.run_path(
     str(root / "experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py"),
