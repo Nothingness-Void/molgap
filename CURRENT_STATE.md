@@ -28,6 +28,12 @@ and calibration. Test-dev and challenge remain sealed.
 
 ## Active work and unresolved acceptance
 
+- The authorized K1-v4 / GPTrans joint pretraining pair belongs to
+  `codex/exp/pretraining-family-pair`. Kaggle1 script version `354038275`
+  was submitted after an initialization portability repair. See
+  `experiments/pcqm_pretraining_family_pair/submission_readiness.json` and
+  its immutable launch receipts; reconcile Kaggle before any further attempt.
+
 - The authorized geometry V4 500K continuation belongs to the separate branch
   `codex/exp/geometry-v4-500k-pair` and the chat
   "Geometry V4 500K 双臂续训监控". Its branch-local STATUS and launch records
