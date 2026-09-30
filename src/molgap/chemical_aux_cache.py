@@ -47,7 +47,8 @@ def export_fixed_training_smiles(archive: Path, graph_root: Path, manifest_path:
         raise ValueError("Training SMILES export has missing rows")
     output.mkdir(parents=True, exist_ok=False)
     rows_path = output / "train_smiles.jsonl"
-    payload = b"".join(json_bytes({"source_index": int(i), "smiles": str(s)}) + b"\n"
+    payload = b"".join(json.dumps({"source_index": int(i), "smiles": str(s)},
+                                 sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8") + b"\n"
                        for i, s in zip(frame["idx"], frame["smiles"], strict=True))
     atomic_write(rows_path, payload)
     role = {"role": "train", "source_indices": selected.tolist(),
