@@ -1,0 +1,30 @@
+{
+  "action_id": "A-chemical-aux-fixed-cache",
+  "attempt_id": "local-cache-001",
+  "category": "preflight",
+  "cost_event_id": "C-chemical-aux-fixed-cache-prospective",
+  "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/cache_protocol.md",
+  "hardware": "CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "chemical-aux-fixed-cache",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-chemical-aux-fixed-train-cache-20260930"
+}

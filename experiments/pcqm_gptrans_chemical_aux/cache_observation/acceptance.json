@@ -1,0 +1,92 @@
+{
+  "accepted_blocker": true,
+  "actual_source_commit": "8ad7dbe9",
+  "cache_accepted": false,
+  "costs": [
+    {
+      "action_id": "A-chemical-aux-fixed-cache",
+      "attempt_id": "local-cache-001",
+      "category": "preflight",
+      "cost_event_id": "C-chemical-aux-fixed-cache-observed-process-interval",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/cache_observation/acceptance.json",
+      "hardware": "CPU_MODEL_UNRECORDED",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.33036458333333335
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.3418125362777778
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "chemical-aux-fixed-cache",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-chemical-aux-fixed-train-cache-20260930"
+    }
+  ],
+  "evidence_id": "pcqm-chemical-aux-fixed-cache-no-train-20260930",
+  "failure_inventory_complete": false,
+  "format": "molgap-chemical-cache-acceptance-v1",
+  "inference_executed": false,
+  "input_source_mapping_verified": true,
+  "native_cost_scope": "Measured OS process interval before cancellation only; final tail, first export attempt, confirmation probe and aggregate task totals unavailable.",
+  "observed_failed_source_indices": [
+    51128
+  ],
+  "outcome": {
+    "artifact_status": "confirmed_input_blocker_hash_verified_cache_incomplete",
+    "budget_decision": "no_accelerator_release",
+    "comparison_status": "not_applicable_no_model_execution",
+    "execution_status": "stopped_before_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "planned_adapter_source_commit": "1584fae7",
+  "role_access_scope": "SMILES and derived chemical labels from the exact 100K train prefix; no Gap target columns parsed by this adapter, no model execution, no development selection.",
+  "role_use": {
+    "fixed50k_development": "untouched",
+    "official_train_prefix_0_100000": "labels_read",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A-chemical-aux-fixed-cache",
+      "dataset_identity": "pcqm-fixed100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/cache_observation/acceptance.json",
+      "role_event_id": "R-chemical-aux-fixed-cache-train-chemical-labels",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+      "run_id": "chemical-aux-fixed-cache",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-chemical-aux-fixed-train-cache-20260930"
+    }
+  ],
+  "run_id": "chemical-aux-fixed-cache",
+  "submission_executed": false,
+  "training_executed": false,
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_chemical_aux/cache_decision.md",
+    "next_allowed_actions": [
+      "resolve_missing_chemical_label_policy_before_new_prospective_cache_attempt"
+    ],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "explicit_prospective_input_policy_and_complete_CPU_cache_acceptance"
+    ]
+  }
+}

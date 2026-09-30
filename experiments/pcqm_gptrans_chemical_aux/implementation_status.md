@@ -24,22 +24,28 @@ tests and one dedicated addon-metadata test passed. Local tests use synthetic
 data and tensor fixtures, not model execution. Python compilation and diff
 whitespace checks passed. No hardware throughput or scientific result exists.
 
-Input discovery found `D:/文档/molgap/data/raw/pcqm4m-v2.zip` and the retained
-fixed-subset metadata under `platforms/_records/ims/pcqm_fixed_datasets_v1/`.
-That metadata identifies an official row-manifest hash, but this pass did not
-locate the authenticated train-only SMILES-to-graph row mapping or graph shard
-mount for this experiment. No PCQM rows or official targets were read.
-Do not take the first 100K archive rows or substitute an unrelated local CSV.
+The 2026-09-30 submission preparation verified the accepted archive, fixed
+graph shards and their source-index mapping, official train membership and
+exact CSV prefix order. The narrow adapter exported only the frozen train
+SMILES. The full label build then hit a confirmed parsing blocker, recorded
+in `cache_decision.md`; it produced no accepted cache and released no GPU.
 
 Remaining gates, in order:
-1. Locate/verify the frozen row mapping and exact graph/source assets; export
-   only authorized train rows, then build/accept the full label cache on CPU.
+1. Resolve the explicit chemical-label input policy described in
+   `cache_decision.md`, then prospectively prepare and accept a complete CPU
+   cache without silently changing frozen training membership.
 2. Bind verified assets and frozen source to two Spec v2 arms and prospective
    same-run replay records, using the existing experiment CLI.
 3. Package with the existing source builder and Kaggle adapter. Run actual
    T4 equivalence, resume and timing preflight; <=5% overhead is unmeasured.
 4. Decide whether to release the bounded 100K pair. No 500K successor is implied.
 
-The experiment remains active, not submission-ready. The initial feasibility
+The experiment remains unresolved, not submission-ready. The initial feasibility
 record does not substitute for either training-arm trajectory. The independent
 geometry continuation and its running source were not modified.
+
+The GPTrans trainer can now emit the shared family epoch/selection/checkpoint
+events without a copied training loop. The owning arm wrapper binds those
+outputs to Spec/package/contract identities. Its short execution profile is
+GPU-resident optimizer-step timing only, not end-to-end pipeline overhead;
+actual CUDA validation and the frozen wall-time gate remain unmeasured.

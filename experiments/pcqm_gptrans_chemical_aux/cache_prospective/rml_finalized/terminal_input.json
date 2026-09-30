@@ -1,0 +1,167 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_chemical_aux/cache_observation/acceptance.json",
+  "action_id": "A-chemical-aux-fixed-cache",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_chemical_aux/cache_decision.md": "1e7076383597df5aa295a28ae476f817e83e72dad058d930268af74bb645d3fc",
+    "experiments/pcqm_gptrans_chemical_aux/cache_observation/acceptance.json": "2fbc8d8043d9c64166c41864829835581c6987166e16b480da01d1d9e13dc255",
+    "experiments/pcqm_gptrans_chemical_aux/cache_observation/confirmed_blocker.json": "5b55a45aa19a632167205cd149908b613ec876756ce4707050c9ae348cd94949",
+    "experiments/pcqm_gptrans_chemical_aux/cache_observation/export_receipt_attempt2.json": "aec67074419633bcc8bb6df11c4bc1425cd027e0ad579434fd4af07f2f2b093f",
+    "experiments/pcqm_gptrans_chemical_aux/cache_observation/process_before_cancel.json": "ab692a1b25ffee9ecae2652ad156fe05744f5b7975a141af600b0f19a3a6938e",
+    "experiments/pcqm_gptrans_chemical_aux/cache_observation/train_export_binding.json": "0c348d34306b82fa9bdb2c33919a01ac1b9807c899300a20d34a59fd62fdbf10",
+    "experiments/pcqm_gptrans_chemical_aux/cache_protocol.md": "3ba6a0cf4f1f5b68f12ebfa3ca6c48f16bdbb9b955871bc69a9391284689161e"
+  },
+  "costs": [
+    {
+      "action_id": "A-chemical-aux-fixed-cache",
+      "attempt_id": "local-cache-001",
+      "category": "preflight",
+      "cost_event_id": "C-chemical-aux-fixed-cache-observed-process-interval",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/cache_observation/acceptance.json",
+      "hardware": "CPU_MODEL_UNRECORDED",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.33036458333333335
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.3418125362777778
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "chemical-aux-fixed-cache",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-chemical-aux-fixed-train-cache-20260930"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_chemical_aux/cache_decision.md",
+    "next_allowed_actions": [
+      "resolve_missing_chemical_label_policy_before_new_prospective_cache_attempt"
+    ],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "explicit_prospective_input_policy_and_complete_CPU_cache_acceptance"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/cache_protocol.md",
+        "name": "cache_protocol.md",
+        "sha256": "3ba6a0cf4f1f5b68f12ebfa3ca6c48f16bdbb9b955871bc69a9391284689161e"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/cache_decision.md",
+        "name": "cache_decision.md",
+        "sha256": "1e7076383597df5aa295a28ae476f817e83e72dad058d930268af74bb645d3fc"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/cache_observation/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "2fbc8d8043d9c64166c41864829835581c6987166e16b480da01d1d9e13dc255"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/cache_observation/confirmed_blocker.json",
+        "name": "confirmed_blocker.json",
+        "sha256": "5b55a45aa19a632167205cd149908b613ec876756ce4707050c9ae348cd94949"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/cache_observation/train_export_binding.json",
+        "name": "train_export_binding.json",
+        "sha256": "0c348d34306b82fa9bdb2c33919a01ac1b9807c899300a20d34a59fd62fdbf10"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/cache_observation/export_receipt_attempt2.json",
+        "name": "export_receipt_attempt2.json",
+        "sha256": "aec67074419633bcc8bb6df11c4bc1425cd027e0ad579434fd4af07f2f2b093f"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/cache_observation/process_before_cancel.json",
+        "name": "process_before_cancel.json",
+        "sha256": "ab692a1b25ffee9ecae2652ad156fe05744f5b7975a141af600b0f19a3a6938e"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_chemical_aux/cache_protocol.md",
+        "experiments/pcqm_gptrans_chemical_aux/cache_decision.md",
+        "experiments/pcqm_gptrans_chemical_aux/cache_observation/acceptance.json",
+        "experiments/pcqm_gptrans_chemical_aux/cache_observation/confirmed_blocker.json",
+        "experiments/pcqm_gptrans_chemical_aux/cache_observation/train_export_binding.json",
+        "experiments/pcqm_gptrans_chemical_aux/cache_observation/export_receipt_attempt2.json",
+        "experiments/pcqm_gptrans_chemical_aux/cache_observation/process_before_cancel.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-chemical-aux-fixed-cache-no-train-20260930",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-chemical-aux-fixed-cache-20260930",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-30T13:28:39.045442+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Train-only CPU export and failed chemical label preparation; no full cache or scientific accuracy evidence"
+    },
+    "outcome": {
+      "artifact_status": "confirmed_input_blocker_hash_verified_cache_incomplete",
+      "budget_decision": "no_accelerator_release",
+      "comparison_status": "not_applicable_no_model_execution",
+      "execution_status": "stopped_before_training",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "fixed50k_development": "untouched",
+      "official_train_prefix_0_100000": "labels_read",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "desktop_train_only_chemical_cache_blocker",
+    "track": "B"
+  },
+  "finalized_at": "2026-09-30T13:28:39.045442+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "fixed50k_development": "untouched",
+    "official_train_prefix_0_100000": "labels_read",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A-chemical-aux-fixed-cache",
+      "dataset_identity": "pcqm-fixed100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/cache_observation/acceptance.json",
+      "role_event_id": "R-chemical-aux-fixed-cache-train-chemical-labels",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+      "run_id": "chemical-aux-fixed-cache",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-chemical-aux-fixed-train-cache-20260930"
+    }
+  ],
+  "run_id": "chemical-aux-fixed-cache",
+  "trajectory_id": "TB-chemical-aux-fixed-train-cache-20260930"
+}

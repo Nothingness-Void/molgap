@@ -907,6 +907,11 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-chemical-aux-fixed-train-cache-20260930",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-100k-local-joint-control-20260925",
       "type": "prior_evidence"
     },
@@ -1167,6 +1172,11 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-chemical-aux-fixed-train-cache-20260930",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-100k-local-joint-control-20260925",
       "type": "reference_used"
     },
@@ -1368,6 +1378,10 @@
   ],
   "format": "molgap-rml-trajectory-graph-v1",
   "nodes": [
+    {
+      "id": "pcqm-chemical-aux-fixed-cache-no-train-20260930",
+      "type": "evidence"
+    },
     {
       "id": "pcqm-distance-angle-triangle-500k-20260911",
       "type": "evidence"
@@ -1574,6 +1588,10 @@
     },
     {
       "id": "T-gptrans-chemical-aux-feasibility",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-chemical-aux-fixed-train-cache-20260930",
       "type": "trajectory"
     },
     {
