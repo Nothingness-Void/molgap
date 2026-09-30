@@ -203,6 +203,25 @@ def test_path_dataset_loads_compact_chunks_once_and_caps_cache(tmp_path, monkeyp
         author_inputs.PathDataset(graphs, tmp_path, {})
 
 
+@pytest.mark.parametrize("start,source_base", [(1000, 0), (2000, 50000), (1000, 100000)])
+def test_rederive_nonzero_chunk_uses_local_tensor_positions(start, source_base):
+    graphs = [Data(
+        x=torch.zeros((2 + index % 3, 9), dtype=torch.long),
+        edge_index=torch.tensor([[0, 1], [1, 0]]),
+        edge_attr=torch.zeros((2, 3), dtype=torch.long),
+        source_idx=torch.tensor([source_base + index]),
+    ) for index in range(start + 2)]
+    chunk = {"rows": 2, "source_idx_min": source_base + start, "source_idx_max": source_base + start + 1}
+    payload = author_inputs._build_shard_payload(graphs, chunk, include_path_hist=True, start=start, end=start + 2)
+    author_inputs._validate_payload(payload, chunk, include_path_hist=True)
+    author_inputs._rederive_shard(payload, graphs, {"source_idx_min": source_base},
+                                 include_path_hist=True, start=start, end=start + 2)
+    payload["graph_node_count"][0] += 1
+    with pytest.raises(RuntimeError, match="independent node count changed"):
+        author_inputs._rederive_shard(payload, graphs, {"source_idx_min": source_base},
+                                     include_path_hist=True, start=start, end=start + 2)
+
+
 def test_prepare_degree_initial_state_scales_only_pinned_tables(tmp_path, monkeypatch):
     state = {
         "in_degree_encoder.weight": torch.arange(12, dtype=torch.float32).reshape(3, 4),

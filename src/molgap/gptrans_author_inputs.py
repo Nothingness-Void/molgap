@@ -902,7 +902,8 @@ def _rederive_shard(
         if _source_index(graph) != expected_source:
             raise RuntimeError("independent source identity changed")
         node_count = _graph_node_count(graph)
-        if int(graph_node_count[position]) != node_count:
+        # Source shard positions and chunk-local tensor positions differ after chunk zero.
+        if int(graph_node_count[local_position]) != node_count:
             raise RuntimeError("independent node count changed")
         paths = graph_paths(
             node_count,
