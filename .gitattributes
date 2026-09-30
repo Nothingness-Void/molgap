@@ -47,3 +47,9 @@ experiments/pcqm_k1_chem_local_100k/results/raw_acceptance.json text eol=crlf
 experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md text eol=lf
 experiments/pcqm_motif_hierarchy_100k/attempt_v3/results/** text eol=lf
 experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/rml_finalized/** text eol=lf
+
+# These terminal receipts bind exact retained bytes, including frozen CRLF plans.
+# Disable conversion only for these two evidence trees, not the wider corpus.
+experiments/pcqm_gptrans_v5_audit_reference/** -text
+experiments/pcqm_k1_explainability_audit/representation/** -text
+experiments/pcqm_k1_explainability_audit/representation_protocol.md -text

@@ -85,6 +85,10 @@ T4s and used one. The measured total is 5.0155572684 allocated T4-device-hours.
 The accepted EMA development MAE is 0.1560144881 eV at epoch 59. The exact
 [final acceptance](results/final_acceptance.json), [final segment operation](results/segment_06_operation.json),
 and [decision](decision.md) retain the evidence and scope. No successor was
-submitted. Strict RML terminal/reference-bundle packaging remains separate
-from the completed artifact and trajectory checks; neither G1 nor G2 is
-released by this baseline.
+submitted. RML terminal publication completed on 2026-09-30 with all 60 observed
+rows retained and an explicit receipt-bound runner/kernel ID alias. The
+[terminal decision](results/terminal/decision.md),
+[reference bundle](results/terminal/reference_bundle.json), and
+[finalization receipt](rml_plan/rml_finalized/finalization.json) bind the closure.
+This is a reference observation run, not a causal candidate/reference replay
+pair; neither G1 nor G2 is released by this baseline.

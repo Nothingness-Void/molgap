@@ -15,5 +15,6 @@ allocated T4, if present, remains idle and is still counted as allocated cost.
 
 The historical reference remains in
 [`../pcqm_gptrans_t_100k_v4/decision.md`](../pcqm_gptrans_t_100k_v4/decision.md).
-Do not interpret this rerun as candidate gain until all 60 epochs and its
-independent acceptance have completed.
+Its completed independent acceptance and RML closure are in
+[results/terminal/decision.md](results/terminal/decision.md). Even after
+acceptance, this observation-only rerun is not candidate gain.
