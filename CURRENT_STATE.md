@@ -13,6 +13,8 @@ models. Schema/loader success alone cannot release training.
 Capability routing: [addon guide](docs/operations/EXPERIMENT_ADDON_GUIDE.md).
 GPTrans/EdgeState variant preparation and per-arm wiring:
 [standard workflow](docs/operations/EXPERIMENT_WORKFLOW.md) (local only).
+K1/GPTrans new-protocol output hooks, inspection and terminal integration:
+[family workflow](docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md).
 Verification and remaining boundaries:
 [integration review](docs/operations/shared_experiment_verification.md).
 

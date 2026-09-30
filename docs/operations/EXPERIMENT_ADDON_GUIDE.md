@@ -57,6 +57,7 @@ not an executable training contract.
 | Repeated variant preparation | `prepare-release` plus family screen adapters | Scientific delta, explicit per-arm plans and independently accepted inputs |
 | Family diagnostics | Metadata probes and reviewed construction adapters | Supported-mode checks and actual accelerator qualification |
 | EdgeState training primitives | Target statistics, sampler, step, evaluation and checkpoint helpers | Accepted graph loader, frozen training loop, selection, native cost and trace |
+| New-protocol K1/GPTrans outputs | Family session, inspector and selective Kaggle retrieval | One-time owning-runner integration; frozen metric/endpoint requirements and actual receipts |
 | Terminal closure | Descriptor translation and explicit RML execution | Independent acceptance, actual artifacts and eligible candidate/reference evidence |
 
 Read [K1 adapter compatibility](K1_ADAPTER.md) before selecting its registered

@@ -23,6 +23,7 @@ Everything else uses the following owners:
 | EdgeState arm context | `edge_state_screen_adapter.bind_edge_state_screen` | Actual package, pinned metadata, accepted runtime, train rows and approved statistics |
 | Remote submit/reconcile/retrieve | Owning platform adapter and workload skill | Account, budget/role authority, staged inputs and returned physical identity |
 | Monitoring | Existing server A/B binding | Exact returned job/version; no new conversation or cron |
+| New-protocol output events, inspection and terminal translation | [Family output workflow](EXPERIMENT_FAMILY_WORKFLOW.md) | One-time owning-trainer hooks, frozen metric/exposure requirements and observed launch receipt |
 | Saved-artifact acceptance | Owning family/experiment acceptance | Actual retrieved artifacts and frozen comparison conditions |
 | RML closure | `experiment_cli terminal --execute` | Independently accepted per-arm terminal descriptor |
 

@@ -18,6 +18,7 @@ for the operation needed. A direct call to the same library is equivalent.
 | Variant preparation | [experiment_workflow.py](../../../../src/molgap/experiment_workflow.py): `prepare_experiment_release`; [experiment_staging.py](../../../../src/molgap/experiment_staging.py): `stage_release_inputs`, `UploadArtifact` | Shared local plan/package/layout/release path; read [configuration](../../../../docs/operations/EXPERIMENT_WORKFLOW.md). No platform POST or compute authority. |
 | Release inputs | [experiment_preflight.py](../../../../src/molgap/experiment_preflight.py): `check_release_inputs` | Selected imports, packaged recipe hashes, finite frozen CPU initialization and optional upload bindings; no model execution or scientific release. |
 | Local receipt | [experiment_launch.py](../../../../src/molgap/experiment_launch.py): `build_launch_receipt`, `reconcile_platform_response` | No network submission or automatic platform authentication. |
+| New-protocol family outputs | [experiment_family_workflow.py](../../../../src/molgap/experiment_family_workflow.py): `RunContext`, `FamilyOutputSession`, `inspect_output`, `check_acceptance_plan`, `build_verified_terminal_descriptor`, `close_verified_outputs` | Read [output integration](../../../../docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md); one-time owning-trainer hooks, frozen metric/endpoint requirements and receipt binding. Mechanical verification is not scientific acceptance or replay readiness. |
 | IO / digest | [RML trace](../../../../src/molgap/research_memory/trace.py): `atomic_write`, `file_digest`, `json_bytes` | Integrity primitives, not scientific acceptance. |
 | Terminal translation | [experiment_terminal.py](../../../../src/molgap/experiment_terminal.py): `translate_terminal_descriptor`, `execute_terminal_descriptor` | Translation alone does not finalize evidence. |
 | RML closure | [terminal_wiring.py](../../../../src/molgap/research_memory/terminal_wiring.py): `close_terminal_multi_arm` | Existing per-arm transactions; no fabricated missing evidence. |
@@ -75,6 +76,10 @@ platform adapter and retain `--response-output`. The adapter repeats selected
 checks before POST. Bind the returned ref/URL and version; `submission_unknown`
 requires authoritative reconciliation before retrying.
 Do not read all platform instructions or credentials when only one is needed.
+For the new family output protocol, the Kaggle retriever in
+`platforms/kaggle/retrieve_family_outputs.py` streams only manifest-bound files.
+Reconcile the actual attempt and pin its small manifest first; historical
+formats still use their owning retriever, not this profile as a fallback.
 
 Use explicit authorized credentials without printing them. Check installed SDK
 signatures before making a new wrapper. In the tested Kaggle SDK, status accepts

@@ -3,6 +3,9 @@
 The shared module connects an owning trainer's outputs to mechanical inspection
 and existing terminal/RML closure. Training, submission, runtime qualification
 and scientific decisions remain with their existing owners.
+For server-side prospective planning, packaging and release preparation, use
+the [standard variant workflow](EXPERIMENT_WORKFLOW.md); this guide owns the
+producer-output and post-run half, not another submission implementation.
 
 ## Capability matrix
 
@@ -35,6 +38,13 @@ Read [the addon guide](EXPERIMENT_ADDON_GUIDE.md), then add event hooks:
    `source_idx_sha256`, `target_sha256`, `precision`. Pin the whole file in
    `Spec.arms[].training.recipe.sha256`. Requirements must precede training;
    do not infer them from outputs. Missing independent requirements fail closed.
+   Also freeze `metric_semantics` in that recipe using the canonical RML metric
+   map (`live_train_metric`, `live_dev_metric`, `ema_dev_metric`). These new
+   profiles use `MAE`, `eV`, target `Gap`, direction `minimize` and the field's
+   live/EMA weights. Pin actual role identities: train and development must
+   differ; live/EMA development must agree. Unused EMA may be explicitly null.
+   Session and inspector compare the full definitions to these recipe bytes;
+   historical metric labels are not silently normalized or rewritten.
 2. Package through the existing core. Call `RunContext.for_training(spec,
    package_dir, expected_package_identity=..., arm_id=..., account=...,
    run_reference=...)`. Account/reference are frozen declarations. Platform
@@ -82,6 +92,10 @@ The trace requires one observation per completed epoch with observed steps and
 presentations. Selected epoch/step and live/EMA metric must match the trace row
 and aligned prediction MAE. Sampler cursor, RNG and resume metadata are checked;
 scientific validity and an executable resume are separate qualifications.
+Checkpoint, resume and terminal events remain in the canonical trace but are
+not counted as completed epochs. The completion hook does not synthesize those
+events: the owning trainer records actual lifecycle identities through the
+existing recorder, without duplicating acknowledged exposure observations.
 
 `tensor_digest(tensor, role="source_idx" | "target")` hashes little-endian int64
 rows or float64 targets. Freeze requirements with these same bytes; a legacy

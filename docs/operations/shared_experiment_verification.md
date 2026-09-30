@@ -5,6 +5,45 @@ This record contains two dated review stages. The
 missing-factory and unsupported-loader findings below; historical verification
 scope is retained rather than rewritten.
 
+## Family output integration review (2026-09-30)
+
+On 2026-09-30, server selectively integrated desktop
+`2e2f33c749cf5331c1b5ca7b3ed5f22de3c7574b` as `4f4b7809`. This added the
+new-protocol K1/GPTrans producer session, receipt-bound output inspector,
+mechanical acceptance plan, selective Kaggle retrieval and existing-terminal
+translation. The server's `prepare-release`, input-arm registrations, RML
+server-owner boundary and historical byte-conversion rules were retained.
+No desktop experiment records, jobs or control-plane custody were adopted.
+
+Two independently reproduced integration defects were corrected: completion
+counted only epoch observations rather than checkpoint/resume/terminal events;
+the recipe independently pinned canonical metric semantics, which both producer
+and inspector checked before accepting the new output format. Gap MAE, eV,
+minimization, weight semantics and exact declared role identities could not be
+changed by rehashing the produced trace. Missing or invalid independent metric
+definitions failed closed. Historical recipes, metrics and scientific thresholds
+were not edited or upgraded.
+
+The following checks used the project Python, synthetic tensor/source fixtures
+and mocked network transport; the CLI-help recheck overlapped the first suite.
+
+| Test selection | Passed | Skipped | Deselected |
+|---|---:|---:|---:|
+| Family outputs, selective retrieval, CLI and launch receipts | 238 | 1 | 0 |
+| Server workflow/staging, GPTrans/EdgeState wiring, prospective/terminal and skill integrity | 367 | 4 | 0 |
+| Final CLI help, including all added commands | 13 | 0 | 65 |
+
+Skill validation, `git diff --check`, repository `RML validate` and
+`check --frozen` passed. RML evidence and derived bytes were unchanged. The
+uncommitted user `tests/test_research_memory.py` was excluded from all commits.
+No training, inference, protected-role access or remote job operation occurred.
+Synthetic two-arm terminal closure was not a real remote protocol validation
+or replay-ready qualification. The owning trainer still needed one-time hook
+integration; base EdgeState had no new output profile merely from construction
+registration. Detailed capability and format ownership remained in the
+[family output guide](EXPERIMENT_FAMILY_WORKFLOW.md), with preparation routed
+through the [standard workflow](EXPERIMENT_WORKFLOW.md).
+
 ## Variant workflow composition review (2026-09-30)
 
 The server added local `prepare-release` composition over the existing per-arm
