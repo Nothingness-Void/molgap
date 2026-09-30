@@ -1,0 +1,26 @@
+{
+  "spec_identity": "913c9e0ce697f335d587fb642806e7f3cfd32e57640fc46fb6fe11c09fc0693b",
+  "arms": {
+    "degree_scale": {
+      "trajectory_id": "TC-gptrans-author-degree-scale-100k-s42",
+      "initial_file": "degree_initial_state.pt",
+      "initial_file_sha256": "fce207ab71ec5f8e239f69fa86c0a5db53f80544f9cc84ed80e3d2868595e31b"
+    },
+    "path_bond_mean": {
+      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42",
+      "initial_file": "initial_state.pt",
+      "initial_file_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+    }
+  },
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "path_manifest_sha256": "e99dddaa87e411ba0b6291697cfbcff0457db09a198ce0212d47d0b4af295844",
+  "target_transform_sha256": "9462cf73ea022b030675a7f18f2e7682eda6f90b7a42b47affc2f0f4071353be",
+  "cpu_acceptance_ref": "experiments/pcqm_gptrans_author_alignment/verification_recovery/acceptance_v2.json",
+  "cpu_acceptance_sha256": "f5ea2f25cbafd77d2b705492ebac253d6ab8d619ad1fff6436a35a165fa6b336",
+  "maximum_wall_seconds": 21600,
+  "training_estimate_cap_hours": 4.5,
+  "recording_owner": "pcqm_gptrans_v4.native_v5",
+  "family_output_hooks_enabled": false,
+  "reference_bundle_ref": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/reference_bundle.json",
+  "reference_bundle_sha256": "3b5c9edc9e55b64ff9901ab0bba89ee7f7a85700ccfc2039f90b67ea655c7b5d"
+}

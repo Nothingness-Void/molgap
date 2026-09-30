@@ -1,0 +1,137 @@
+{
+  "trajectory": {
+    "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42",
+    "record_mode": "prospective",
+    "owner": "server",
+    "track": "C",
+    "family_id": "gptrans-author-input-path-bond-mean",
+    "question": "Does chemical content on existing shortest paths improve the unchanged GPTrans core?",
+    "hypothesis": {
+      "hypothesis_id": "H-TC-gptrans-author-path-bond-mean-100k-s42",
+      "observed_deficiency": "Input audit found dominant degree-table energy and absent multihop chemical edge content.",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-v5-audit-reference-s42"
+      ],
+      "alternative_explanations": [
+        "LayerNorm may erase the scale change; path-mean pooling may lose chemical sequence information."
+      ],
+      "changed_mechanism": "path_bond_mean",
+      "cheapest_falsifier": "one matched seed42 100K screen against the immutable accepted reference",
+      "related_closed_family_ids": [],
+      "expected_native_cost_ref": "cost-TC-gptrans-author-path-bond-mean-100k-s42",
+      "decision_changed_if_positive": "independent saved-prediction acceptance and controller review; no automatic scale-up",
+      "decision_changed_if_negative": "close this exact input hypothesis without a seed or width retry",
+      "historical_unknowns": [
+        "training stochasticity is unmeasured; the 0.003 gate is not a measured variance"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "b1697d05b24f237d5abeb78da2924e8472d6fbdb",
+      "source_config_identity": "02ee03d95cc1d2f7168c9f4aca93dcb4d4ee1ec6dfbd774a5cfa318a77710a94",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+        "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md",
+        "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/comparison_readiness_prelaunch.json"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-v5-audit-reference-s42"
+      ],
+      "parent_trajectory_ids": [
+        "TC-gptrans-v5-audit-reference-100k"
+      ],
+      "prior_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-v5-audit-reference-s42"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_author_alignment/gpu/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_author_alignment/gpu/budget.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "single_mechanism_screen",
+        "source_commit": "b1697d05b24f237d5abeb78da2924e8472d6fbdb",
+        "run_ids": [
+          "gptrans-author-inputs-dual-s42:path_bond_mean"
+        ],
+        "attempt_ids": [
+          "v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_v5_audit_reference/contract.json"
+        ],
+        "cost_event_ids": [
+          "cost-TC-gptrans-author-path-bond-mean-100k-s42"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one isolated T4 arm, then complete saved-artifact acceptance"
+      ],
+      "reopen_conditions": [
+        "terminal evidence or an infrastructure fault requiring controller diagnosis"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [
+      "pcqm-gptrans-v5-audit-reference-s42"
+    ],
+    "available_actions": [
+      "RUN_AUTHOR_INPUT_SCREEN",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_AUTHOR_INPUT_SCREEN",
+    "policy_id": "gptrans-author-input-screen",
+    "policy_version": "v1",
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_author_alignment/gpu/budget.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_author_alignment/gpu/role_plan.json"
+    ],
+    "state_timestamp": "2026-09-30T15:36:25.418790+00:00",
+    "source_commit": "b1697d05b24f237d5abeb78da2924e8472d6fbdb"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-author-path-bond-mean-100k-s42",
+      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42",
+      "action_id": "A001",
+      "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+      "attempt_id": "v1",
+      "category": "training",
+      "platform": "kaggle2",
+      "hardware": "one-of-two-independent-T4",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/gpu/budget.json",
+      "measurement": {
+        "device_hours": {
+          "status": "estimated",
+          "value": 6
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 6
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}
