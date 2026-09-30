@@ -58,6 +58,7 @@ $shardManifestSha = '<independently-pinned-manifest-sha256>'
 .\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec $spec
 .\.venv\Scripts\python.exe -m molgap.experiment_cli plan-prospective --spec $spec --repo-root .
 .\.venv\Scripts\python.exe -m molgap.experiment_cli package --spec $spec --repo-root . --output $package --allowlist src/molgap/__init__.py src/molgap/experiment_spec.py
+.\.venv\Scripts\python.exe -m molgap.experiment_cli check-release --spec $spec --package $package --expected-package-identity $packageIdentity --recipe-file arm_id=experiments/question/training_contract.json --initial-state arm_id=D:\local-inputs\family_initial_state.pt --required-module molgap.family_trainer --entry-script D:\local-work\kernel\run.py --input-root D:\local-work\input --output-report D:\local-work\release.json
 .\.venv\Scripts\python.exe -m molgap.experiment_cli preflight --spec $spec --package $package --shard-root $shardRoot --output D:\local-work\preflight-new --expected-package-identity $packageIdentity --expected-shard-manifest-sha256 $shardManifestSha
 .\.venv\Scripts\python.exe -m molgap.experiment_cli run-diagnostic --spec $spec --output D:\local-work\diagnostic-new --device 0 1 --worker adapter_probe
 .\.venv\Scripts\python.exe -m molgap.experiment_cli launch-receipt --spec $spec --package $package --expected-package-identity $packageIdentity --output-dir D:\local-work\receipts
@@ -77,6 +78,21 @@ $shardManifestSha = '<independently-pinned-manifest-sha256>'
   allowlist. Repeat `--allowlist` or provide multiple names. No dependency
   discovery or automatic file additions occur. The short list above illustrates
   syntax only; it is not a complete runnable family source package.
+- `check-release` calls `experiment_preflight.check_release_inputs`. Supply one
+  `--recipe-file ARM=PACKAGED_PATH` per arm and `--initial-state ARM=LOCAL_PATH`
+  for every pinned initialization. Recipe hashes use the archive's LF-normalized
+  bytes. Initialization checks inspect finite CPU tensors without constructing
+  a model. Repeat `--required-module` for the selected loader/trainer imports.
+  Optional trusted `--pickle-input` files are scanned for package GLOBAL
+  dependencies and symbols without unpickling; STACK_GLOBAL is unsupported.
+  Package-only imports reject fallback to the host checkout. Failures are
+  collected and return exit 1; invalid outer package/Spec pins return exit 2.
+  `--entry-script` hashes the actual kernel bootstrap; `--input-root` checks
+  staged source payload/sidecars and initialization placement. Save the report
+  with `--output-report` and pass it to the platform adapter as
+  `--release-report` for rechecking before POST. This is a selected-input check,
+  not scientific acceptance, accelerator qualification or submission authority.
+  Dynamic imports and unselected data/model paths remain outside this scope.
 - `preflight` reads the fixed `shard_manifest.json` under `--shard-root` and
   passes its path and both independent pins to `run_experiment_preflight`.
   Missing manifests are passed as absent, producing core nonpass reports, never

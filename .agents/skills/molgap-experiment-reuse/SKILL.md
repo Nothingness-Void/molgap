@@ -63,6 +63,9 @@ experiment CLI is not a submitter. Verify executable inputs/mounts, entrypoint,
 explicit accelerator request and account identity before uploading. Check
 title/slug consistency and local artifact shape; avoid discovering packaging
 mistakes after provisioning an accelerator.
+For new ExperimentSpec source packages, reuse `check-release` with the actual
+entry script and staged input root, then pass its report to the owning adapter
+for a pre-submission recheck. Retain the platform response observation.
 
 After submission, bind the actual returned job ID/version and pulled source,
 not an assumed slug. A logical ID may differ only with an explicit receipt

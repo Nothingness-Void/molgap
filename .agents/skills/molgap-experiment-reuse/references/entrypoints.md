@@ -15,6 +15,7 @@ for the operation needed. A direct call to the same library is equivalent.
 | Identity | [experiment_spec.py](../../../../src/molgap/experiment_spec.py): `ExperimentSpec` | Static registry; do not invent compatible family/mode names. |
 | Prospective plan | [experiment_prospective.py](../../../../src/molgap/experiment_prospective.py): `plan_prospective`; [RML plan](../../../../src/molgap/research_memory/plan.py): `plan` | Spec-bound path when supported; existing direct RML API for scoped adapters. Freeze actual authority and source, not placeholder hashes. |
 | Source archive | [experiment_package.py](../../../../src/molgap/experiment_package.py): `build_experiment_source_package` | Explicit source allowlist; retained checkpoint/prediction input bundles are not automatically source packages. |
+| Release inputs | [experiment_preflight.py](../../../../src/molgap/experiment_preflight.py): `check_release_inputs` | Selected imports, packaged recipe hashes, finite frozen CPU initialization and optional upload bindings; no model execution or scientific release. |
 | Local receipt | [experiment_launch.py](../../../../src/molgap/experiment_launch.py): `build_launch_receipt`, `reconcile_platform_response` | No network submission or automatic platform authentication. |
 | IO / digest | [RML trace](../../../../src/molgap/research_memory/trace.py): `atomic_write`, `file_digest`, `json_bytes` | Integrity primitives, not scientific acceptance. |
 | Terminal translation | [experiment_terminal.py](../../../../src/molgap/experiment_terminal.py): `translate_terminal_descriptor`, `execute_terminal_descriptor` | Translation alone does not finalize evidence. |
@@ -60,6 +61,11 @@ entries against their bound paths just to start a different experiment.
 Actual submission stays outside the common CLI. Read the selected platform's
 workload skill and [platform routing](../../../../platforms/README.md).
 For Kaggle, use the [owning adapter](../../../../platforms/kaggle/README.md).
+For new ExperimentSpec source packages, run `check-release` with the actual
+entry script and staged inputs; pass the report as `--release-report` to the
+platform adapter and retain `--response-output`. The adapter repeats selected
+checks before POST. Bind the returned ref/URL and version; `submission_unknown`
+requires authoritative reconciliation before retrying.
 Do not read all platform instructions or credentials when only one is needed.
 
 Use explicit authorized credentials without printing them. Check installed SDK

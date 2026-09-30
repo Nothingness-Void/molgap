@@ -149,3 +149,49 @@ source trace is separate evidence maintenance, not a reason to retrain K1.
 The existing uncommitted `tests/test_research_memory.py` was preserved byte for
 byte and excluded from the integration commit. No desktop branch, remote job,
 monitor, protected role or training/inference run was changed.
+
+## Release-input and Kaggle receipt completion
+
+On 2026-09-30, server selectively integrated the reusable release checks and
+Kaggle response adapter from desktop
+`f3e9c8fc80773813d473de37206f6f380111e053`. The existing server Spec, topology
+preflight, owner boundaries, historical models and scientific V5/RML gates
+were retained. No branch-wide merge was performed.
+
+The CLI gained `check-release`, backed by the donor's `check_release_inputs`
+and CPU tensor-state inspector. It verifies selected source imports and pickle
+GLOBAL symbols, packaged LF-normalized recipe hashes, frozen initialization,
+and optional entry-script/staged-input bindings. Dynamic imports, STACK_GLOBAL,
+unselected paths, accelerator qualification and scientific release are outside
+its scope. A legacy platform call without a release report is not qualification.
+
+The platform-specific `kaggle_accelerator_push.py` and thin Kaggle wrapper were
+added separately from the shared CLI. A supplied release report is recomputed
+before POST; failed/stale inputs block publication. Response ref/URL and version
+fields remain distinct from the requested slug. Timeout/connection failures
+return `submission_unknown`, with reconciliation required before retrying.
+`--response-output` persists the platform observation, including unknown outcomes.
+
+The three shared implementation files match the donor's normalized contents.
+Donor CLI/release/Kaggle tests were reused; five additional tests cover failed
+report rejection before credentials/network, initialization outside staged inputs,
+unsupported STACK_GLOBAL and wrapper response persistence for success/unknown.
+The repository reuse skill and local Kaggle skill route new packages through
+these checks; neither skill grants resource or role authorization.
+
+All commands used the project `.venv\Scripts\python.exe`, `PYTHONPATH=src;tests`
+and `pytest --noconftest`. These are counts per test invocation; the release and
+Kaggle tests overlap between the first two selections.
+
+| Test selection | Passed | Skipped | Deselected |
+|---|---:|---:|---:|
+| Initial release, Kaggle, CLI, package, preflight (`not real_dual_arm`) | 226 | 1 | 2 |
+| Extended release/Kaggle, Spec/launch/prospective/terminal, RML planning/portability/run-binding, runtime, V5, comparison, screen policy, topology and skill integrity | 680 | 5 | 0 |
+| Retained desktop integration guards and shared runner | 81 | 1 | 0 |
+
+Real-input dual-arm tests were deselected; skips required Windows symlink
+capability. Executed cases used synthetic tensor/source packages and mocked
+network responses. Repository `RML validate` and `check --frozen` passed.
+No training, inference, protected-role access or platform submission occurred.
+Independent in-progress RML work in this checkout was not edited or staged by
+this integration, and the pre-existing uncommitted RML test was preserved.

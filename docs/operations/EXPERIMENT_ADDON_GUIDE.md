@@ -21,6 +21,8 @@ Reuse these modules instead of copying their logic into an experiment script:
 - `experiment_package.py`: explicit allowlist, source archive and package hash.
 - `experiment_preflight.py`: only the family/mode combinations documented in
   `EXPERIMENT_PREFLIGHT.md`; unsupported means unsupported, not an implicit pass.
+  Its `check_release_inputs` checks selected source dependencies, packaged
+  recipes, frozen initialization and upload bindings before platform publication.
 - `experiment_runner.py`: metadata probe and model construction diagnostics
   only; it does not train or load a checkpoint.
 - `experiment_launch.py`: local immutable launch/reconciliation receipts only;
@@ -134,8 +136,11 @@ alone and record why two arms were not feasible.
    canonical RML records. Use only a preflight mode supported by that family,
    or implement a scoped addon diagnostic without relabeling it as shared-core
    acceptance.
-5. Use the owning trainer/platform addon and its tests. Follow
-   `platforms/README.md`, `platforms/REMOTE_HANDOFF.md`, and the specific
+5. Use the owning trainer/platform addon and its tests. Run
+   `check-release` with the actual entry script and staged inputs for new
+   ExperimentSpec source packages; retain the report for the platform adapter's
+   pre-submission recheck. This does not replace the owning scientific gate.
+   Follow `platforms/README.md`, `platforms/REMOTE_HANDOFF.md`, and the specific
    platform instructions before touching remote resources.
 6. Submit only under the owning experiment's explicit resource/role authority.
    Reconcile the authoritative platform state and durable artifacts before
