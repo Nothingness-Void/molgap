@@ -1224,8 +1224,9 @@ def test_cli_inspect_output_emits_one_blocked_json_object_and_exit_one(
 
 
 @pytest.mark.parametrize("arm_id,adapter,weights", FAMILY_CASES)
+@pytest.mark.parametrize("marker_coordinates", (False, True))
 def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
-    tmp_path, launch_contexts, arm_id, adapter, weights
+    tmp_path, launch_contexts, arm_id, adapter, weights, marker_coordinates
 ):
     context = launch_contexts[4][arm_id]
     root = tmp_path / f"session-{arm_id}"
@@ -1282,20 +1283,23 @@ def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
     recorder = session.stage.recorder
     recorder.checkpoint_event(
         "checkpoint-before-resume",
-        optimizer_step=None,
-        sample_presentations=None,
+        optimizer_step=4 if marker_coordinates else None,
+        sample_presentations=8 if marker_coordinates else None,
     )
     recorder.resume_event(
         "different-resumed-checkpoint",
-        optimizer_step=None,
-        sample_presentations=None,
+        optimizer_step=4 if marker_coordinates else None,
+        sample_presentations=8 if marker_coordinates else None,
     )
     recorder.checkpoint_event(
         "checkpoint-at-terminal",
-        optimizer_step=None,
-        sample_presentations=None,
+        optimizer_step=4 if marker_coordinates else None,
+        sample_presentations=8 if marker_coordinates else None,
     )
-    recorder.terminal_event()
+    with pytest.raises(ValueError, match="duplicate x-axis observation"):
+        recorder.append_observation(optimizer_step=4, sample_presentations=8)
+    recorder.terminal_event(optimizer_step=4 if marker_coordinates else None,
+                            sample_presentations=8 if marker_coordinates else None)
 
     result = session.complete(runtime=_runtime(context), hardware="synthetic-cpu")
 
@@ -1304,8 +1308,8 @@ def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
     assert [row["event"] for row in trace["observations"]] == [
         "observation", "observation", "checkpoint", "resume", "checkpoint", "terminal"
     ]
-    assert trace["observations"][-2]["optimizer_step"] is None
-    assert trace["observations"][-2]["sample_presentations"] is None
+    assert trace["observations"][-2]["optimizer_step"] == (4 if marker_coordinates else None)
+    assert trace["observations"][-2]["sample_presentations"] == (8 if marker_coordinates else None)
     assert result["observed"]["progress"] == {
         "epochs": 2,
         "optimizer_steps": 4,

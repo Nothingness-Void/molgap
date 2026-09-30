@@ -91,6 +91,7 @@ def validate_canonical_trace(record: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(rows, list):
         raise ValueError("observations must be ordered array")
     last: dict[str, float] = {}
+    last_observation: dict[str, float] = {}
     checkpoints: set[str] = set()
     terminal_count = 0
     terminal = False
@@ -121,8 +122,12 @@ def validate_canonical_trace(record: dict[str, Any]) -> dict[str, Any]:
                          "cumulative_device_time_seconds"}:
                 if value < last.get(field, 0):
                     raise ValueError(f"non-monotonic {field}")
-                if field in {"optimizer_step", "sample_presentations"} and value == last.get(field):
-                    raise ValueError(f"duplicate x-axis observation: {field}")
+                if field in {"optimizer_step", "sample_presentations"} and row["event"] == "observation":
+                    # Checkpoints and terminal markers describe the same acknowledged
+                    # work; only a second metric observation duplicates exposure.
+                    if value == last_observation.get(field):
+                        raise ValueError(f"duplicate x-axis observation: {field}")
+                    last_observation[field] = value
                 last[field] = value
             if field in METRICS and semantics[field] is None:
                 raise ValueError(f"observed metric without semantics: {field}")
