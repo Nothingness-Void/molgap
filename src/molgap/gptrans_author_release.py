@@ -30,6 +30,8 @@ MODES = ("degree_scale", "path_bond_mean")
 
 def freeze_screen(root: Path, cpu_output: Path):
     root, cpu_output = Path(root).resolve(), Path(cpu_output).resolve()
+    if any((root / GPU / mode / "rml_plan").exists() for mode in MODES):
+        raise ValueError("Published prospective plans are immutable; reconcile before any re-freeze")
     def read(ref):
         return json.loads((root / ref).read_text())
     accepted = read(BASE + "/verification_recovery/acceptance_v2.json")
@@ -110,7 +112,8 @@ def freeze_screen(root: Path, cpu_output: Path):
                 "supporting_evidence_ids": [REFERENCE], "alternative_explanations": [
                     "LayerNorm may erase the scale change; path-mean pooling may lose chemical sequence information."],
                 "changed_mechanism": mode, "cheapest_falsifier": "one matched seed42 100K screen against the immutable accepted reference",
-                "related_closed_family_ids": [], "expected_native_cost_ref": cost_id,
+                "related_closed_family_ids": ["gptrans-pair-prenorm", "gptrans-runtime-profiling"],
+                "expected_native_cost_ref": cost_id,
                 "decision_changed_if_positive": "independent saved-prediction acceptance and controller review; no automatic scale-up",
                 "decision_changed_if_negative": "close this exact input hypothesis without a seed or width retry",
                 "historical_unknowns": ["training stochasticity is unmeasured; the 0.003 gate is not a measured variance"]},

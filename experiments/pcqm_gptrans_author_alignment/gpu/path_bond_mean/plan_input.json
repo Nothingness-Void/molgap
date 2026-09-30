@@ -17,7 +17,10 @@
       ],
       "changed_mechanism": "path_bond_mean",
       "cheapest_falsifier": "one matched seed42 100K screen against the immutable accepted reference",
-      "related_closed_family_ids": [],
+      "related_closed_family_ids": [
+        "gptrans-pair-prenorm",
+        "gptrans-runtime-profiling"
+      ],
       "expected_native_cost_ref": "cost-TC-gptrans-author-path-bond-mean-100k-s42",
       "decision_changed_if_positive": "independent saved-prediction acceptance and controller review; no automatic scale-up",
       "decision_changed_if_negative": "close this exact input hypothesis without a seed or width retry",
@@ -26,8 +29,8 @@
       ]
     },
     "state_at_start": {
-      "source_commit": "b1697d05b24f237d5abeb78da2924e8472d6fbdb",
-      "source_config_identity": "02ee03d95cc1d2f7168c9f4aca93dcb4d4ee1ec6dfbd774a5cfa318a77710a94",
+      "source_commit": "9afc2ca7623d8c7223fb1a1539941b13127add4f",
+      "source_config_identity": "97c840c922953a5069bbb75d73875c9c91371e54945d9fb81138522af3b66985",
       "contract_refs": [
         "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
         "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md",
@@ -52,7 +55,7 @@
       {
         "action_id": "A001",
         "type": "single_mechanism_screen",
-        "source_commit": "b1697d05b24f237d5abeb78da2924e8472d6fbdb",
+        "source_commit": "9afc2ca7623d8c7223fb1a1539941b13127add4f",
         "run_ids": [
           "gptrans-author-inputs-dual-s42:path_bond_mean"
         ],
@@ -99,8 +102,8 @@
     "role_snapshot_refs": [
       "experiments/pcqm_gptrans_author_alignment/gpu/role_plan.json"
     ],
-    "state_timestamp": "2026-09-30T15:36:25.418790+00:00",
-    "source_commit": "b1697d05b24f237d5abeb78da2924e8472d6fbdb"
+    "state_timestamp": "2026-09-30T15:39:06.272191+00:00",
+    "source_commit": "9afc2ca7623d8c7223fb1a1539941b13127add4f"
   },
   "costs": [
     {
