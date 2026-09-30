@@ -4,6 +4,30 @@ This is the short handoff for extending the shared experiment core. It defines
 ownership boundaries; the linked contracts remain authoritative for field-level
 schemas and safety checks.
 
+## Pick the Operation
+
+Select the existing owner before adding plumbing. Paths below are reuse
+entry points, not universal APIs or permission to execute a closed experiment.
+Read the owning contract and inspect the callable's signature and nearest
+caller/test; direct library reuse is valid without the shared CLI.
+
+| Operation | Reuse owner | Boundary / next pointer |
+|---|---|---|
+| Train GPTrans | [pcqm_gptrans_v4.py](../../src/molgap/pcqm_gptrans_v4.py): `run_training`; [pcqm_gptrans_full_runner.py](../../src/molgap/pcqm_gptrans_full_runner.py): `train_full` | Fixed V4 screen and full-role recipes are distinct. Start at the [V4 reference](../../experiments/pcqm_gptrans_t_100k_v4/README.md) or [full-run contract](../../experiments/pcqm_k1_gptrans_full_fusion/README.md), not a copied launcher. |
+| Train EdgeState | [edge_state_training_core.py](../../src/molgap/edge_state_training_core.py): statistics, sampler, step, evaluation, `save_checkpoint` / `restore_checkpoint`; [pcqm_official_edge_state.py](../../src/molgap/pcqm_official_edge_state.py): `train_official_edge_state` | The Spec-bound core supplies primitives, not a complete recipe. The official trainer has its [own experiment](../../experiments/pcqm_edge_state_full/README.md); the [model-only adapter](EDGE_STATE_ADAPTER.md) is not a trainer. |
+| Resume or infer from a checkpoint | Matching family trainer's resume loader and model factory; public [inference.py](../../src/molgap/inference.py), lazily exported by [__init__.py](../../src/molgap/__init__.py) | Use the accepted checkpoint's owner and [asset map](../../models/README.md), not an arbitrary constructor. GPTrans full scoring uses [pcqm_gptrans_official_eval.py](../../src/molgap/pcqm_gptrans_official_eval.py); public loaders are not universal Track B adapters. |
+| Analyze saved predictions | Owning artifact/row-alignment analysis; [analyze_pair.py](../../experiments/pcqm_gptrans_100k_transfer_control/analyze_pair.py): `paired_metrics`, tested by [test_gptrans_local_pair_analysis.py](../../tests/test_gptrans_local_pair_analysis.py) | This callable compares retained aligned rows/targets without model execution. The script's full CLI also performs checkpoint inference: do not run it as prediction-only analysis. Match identities and roles before reusing the example; row bootstrap is not training variance. |
+| Bind source and local observations | [local CLI](EXPERIMENT_CLI.md) and the shared core below | Spec, package, preflight and receipts do not train or submit. `run-diagnostic` probes metadata or constructs a random model; it does not load checkpoints or run inference. |
+| Accept artifacts and qualify a comparison | Owning family acceptance; [family output hooks](EXPERIMENT_FAMILY_WORKFLOW.md); [pcqm_gptrans_full_acceptance.py](../../src/molgap/pcqm_gptrans_full_acceptance.py): `accept`; [comparison_readiness.py](../../src/molgap/comparison_readiness.py) | Output hooks support only their capability matrix. V5 readiness does not generate predictions. Mechanical acceptance, scientific decision, runtime qualification and promotion remain separate under the [V5 contract](MOLGAP_COMMON_DIRECTION_V5_FINAL.md). |
+| Close and index evidence | [RML entry point](../../research_memory/README.md), [lifecycle](../../research_memory/LIFECYCLE.md), [experiment_terminal.py](../../src/molgap/experiment_terminal.py), [terminal_wiring.py](../../src/molgap/research_memory/terminal_wiring.py) | Query RML first and follow canonical evidence. Terminal translation is read-only by default, not acceptance; explicit closure retains existing gates. Rebuild/check after accepted milestones, never hand-edit derived indexes. |
+
+Platform submission, authoritative status reconciliation and retrieval stay in
+the `kaggle-molgap-workloads`, `ims-molgap-workloads`, and
+`scnet-bw-dcu-molgap` skills and their existing adapters. This guide does not
+duplicate their remote commands; [platforms/README.md](../../platforms/README.md)
+routes repository boundaries. A missing capability is a gap to report, not a
+reason to alter a frozen recipe or silently retrain a reference.
+
 ## Shared Core
 
 Reuse these modules instead of copying their logic into an experiment script:
@@ -25,9 +49,6 @@ Reuse these modules instead of copying their logic into an experiment script:
 - `experiment_family_workflow.py` and `experiment_family_artifacts.py`: producer
   event hooks, frozen-contract output inspection and terminal translation;
   see the [family workflow](EXPERIMENT_FAMILY_WORKFLOW.md) capability matrix.
-- `edge_state_training_core.py`: Spec-bound EdgeState target statistics,
-  deterministic full-batch sampler, OGB batch checks, normalized Gap step,
-  source-aligned development predictions, and SHA-pinned checkpoint/resume.
 
 Start with the [local CLI](EXPERIMENT_CLI.md), then read only the relevant
 detailed contract: [spec](EXPERIMENT_SPEC.md),

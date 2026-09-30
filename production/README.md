@@ -20,9 +20,11 @@ only in `TRACKS.md`.
 | `06_uq/` | How much do we trust a row? | Reusable calibration/OOD interfaces; historical outputs are on the archive branch |
 | `07_database/` | The deliverable. | Predicted-property database build |
 
-Phase 1-7 history, retired v2/v3 production records, and historical Delta/UQ
-outputs are deliberately absent from this tree. They are preserved on the
-`archive` branch. Large ignored legacy runtime assets are under
+Phase 1-7 source/evidence histories, retired v2/v3 production records and
+historical Delta/UQ outputs are preserved on the `archive` branch, not active
+delivery entries. [history/](history/README.md) is a navigation stub; local
+ignored legacy assets are not a substitute for archived evidence.
+Large ignored legacy runtime assets are under
 `models/archive/`, `data/raw/archive/`, and `data/cache/archive/`.
 
 Stage directories are numbered because the order is a dependency, not a calendar.

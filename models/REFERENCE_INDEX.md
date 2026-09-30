@@ -28,9 +28,12 @@ remains authoritative for deployable model identity.
 - The historical Route B specialist, recurrent graph-state screen, and GPTrans-T
   500K bridge now have pointer-only V5 envelopes. Their specialist, negative,
   and pre-V4 context boundaries remain unchanged.
-- The matched 500K three-arm result remains indexed by its V4 authority. Its V5
-  envelope stays pending until the accepted K1 artifacts have a second durable
-  copy outside the desktop-only retrieval tree.
+- The matched 500K three-arm result has a validated
+  [V5 envelope](../experiments/pcqm_500k_v4_evidence/v5_evidence.json).
+  Its migration records recovery of the second K1 prediction copy; the linked
+  [identity audit](../experiments/pcqm_k1_residual_reconciliation/analysis.json)
+  binds aligned rows, targets and frozen prediction hashes. It remains historical
+  nomination evidence, not READY_FOR_DESKTOP or full-scale authorization.
 
 ## V4 audit disposition
 

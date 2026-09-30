@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -611,10 +612,25 @@ def test_full_runner_checkpoint_retains_resume_state(tmp_path):
 
 def test_desktop_agents_patch_has_no_server_style_monitor():
     text = (REPO_ROOT / "AGENTS.md").read_text(encoding="utf-8")
-    section = text.split("## Desktop offline behavior", maxsplit=1)[1]
+    heading = re.search(
+        r"^##\s+Desktop offline(?:\s*/\s*V5|\s+behavior)\s*$",
+        text,
+        flags=re.MULTILINE | re.IGNORECASE,
+    )
+    assert heading is not None, "missing desktop offline/V5 section"
+    section = re.split(r"^#{1,2}\s+", text[heading.end():], maxsplit=1,
+                       flags=re.MULTILINE)[0]
+    section = " ".join(section.lower().split())
 
-    assert "no default heartbeat monitor" in section
-    assert "server agent automatically monitors" in section
+    assert "no default heartbeat, conversation b, server fallback or takeover" in section
+    assert "offline silent time is accepted" in section
+    assert "no server agent automatically monitors, adopts, repairs or advances desktop jobs" in section
+    assert "never duplicate/take over its jobs" in section
+    assert (
+        "do not add desktop-to-server monitor handoff, server-to-desktop wakeup, "
+        "automatic takeover in either direction, shared cross-machine live db/sqlite, "
+        "owner leases, fallback polling or automatic conversation bridges"
+    ) in section
     assert "30-minute" not in section
 
 
@@ -667,14 +683,61 @@ def test_gine_migration_preserves_specialist_only_boundary():
     assert evidence["migration"]["scientific_reinterpretation"] is False
 
 
-def test_matched_500k_migration_waits_for_second_durable_k1_copy():
-    envelope = REPO_ROOT / "experiments/pcqm_500k_v4_evidence/v5_evidence.json"
-    reference_index = (REPO_ROOT / "models/REFERENCE_INDEX.md").read_text(
-        encoding="utf-8"
-    )
+def test_matched_500k_migration_binds_recovered_k1_copies_without_ready_promotion():
+    experiment = REPO_ROOT / "experiments/pcqm_500k_v4_evidence"
+    evidence = json.loads((experiment / "v5_evidence.json").read_text(encoding="utf-8"))
+    result = v5.validate_v5_evidence_envelope(evidence, repo_root=REPO_ROOT)
+    assert result["valid"] is True
+    assert result["evidence_id"] == "pcqm-matched-500k-v4-three-arm"
+    assert {artifact["name"] for artifact in evidence["artifacts"]} == {
+        "paired_three_arm_comparison", "recovered_prediction_identity_audit"
+    }
+    for artifact in evidence["artifacts"]:
+        assert artifact["availability"] == "committed_metadata_verified"
+        assert artifact["locator"].startswith("repo://")
+        path = REPO_ROOT / artifact["locator"].removeprefix("repo://")
+        # These historical JSON hashes bind Windows CRLF bytes, while Git
+        # retains LF blobs. Verify the original serialization, not parsed JSON.
+        payload = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
+        assert hashlib.sha256(payload).hexdigest() == artifact["sha256"]
 
-    assert not envelope.exists()
-    assert "second durable" in reference_index
+    prediction_sha = "68fba785a0b028a8445fe8d94d348df2c3a8d7d8caab708acb574d13cac9831b"
+    manifest_sha = "6de0d6a576729030138a5f0a6914f7afe9cac75860b4355fe49c1e3c5e09f7e1"
+    acceptance = (experiment / "stage5_edge_k1_acceptance.md").read_text(encoding="utf-8")
+    assert f"Best predictions: `{prediction_sha}`" in acceptance
+    assert f"Stage manifest: `{manifest_sha}`" in acceptance
+    analysis = json.loads(
+        (REPO_ROOT / "experiments/pcqm_k1_residual_reconciliation/analysis.json")
+        .read_text(encoding="utf-8")
+    )
+    assert analysis["identity"]["prediction_sha256"]["k1"] == prediction_sha
+    assert analysis["identity"]["source_idx_and_target_alignment"] is True
+    assert analysis["rows"] == 50000
+
+    # Physical retrieval copies are checked in the local acceptance audit, not
+    # required from another machine's worktree by this portable metadata test.
+    recovery_decision = (
+        REPO_ROOT / "experiments/pcqm_k1_residual_reconciliation/decision.md"
+    ).read_text(encoding="utf-8")
+    assert "Two original local Stage-5 K1 prediction copies matched the frozen SHA256" in recovery_decision
+    assert f"`{prediction_sha}`" in recovery_decision
+    assert "reconstructed copy had a different hash and was excluded" in recovery_decision
+    for role in ("official_validation", "test_dev", "test_challenge"):
+        assert analysis[f"{role}_role_read"] is False
+        assert evidence["role_use"][role] == "untouched"
+
+    assert evidence["scope"] == "historical_matched_500k_architecture_comparison"
+    assert evidence["migration"]["migrated_at"] == "2026-09-21"
+    assert evidence["outcome"]["scientific_status"] == "positive_nomination_under_contract"
+    assert evidence["outcome"]["transfer_status"] == "nomination_only_not_full_scale_promotion"
+    assert evidence["outcome"]["full_handoff_status"] == "not_applicable"
+    assert "recovered second K1 prediction copy" in evidence["migration"]["verification_scope"]
+    for field in ("training_executed", "inference_executed", "scientific_reinterpretation"):
+        assert evidence["migration"][field] is False
+    trajectory = json.loads((experiment / "trajectory.json").read_text(encoding="utf-8"))
+    assert trajectory["record_mode"] == "retrospective_partial"
+    assert trajectory["decision"]["next_allowed_actions"] == []
+    assert not (experiment / "handoff/READY_FOR_DESKTOP.json").exists()
 
 
 def test_v5_evidence_rejects_overloaded_accepted_flag():

@@ -1,9 +1,11 @@
 # Unified Local Experiment CLI
 
-Run from the selected checkout using its configured project environment:
+Run from the selected checkout using its configured project environment.
+These examples assume PowerShell is already at that checkout's root; use its
+own `.venv`, not an old worktree path or system Python:
 
 ```powershell
-Set-Location D:\w\cli
+$repoRoot = (Get-Location).Path
 .\.venv\Scripts\python.exe -m molgap.experiment_cli --help
 .\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/gptrans_t_v1.json
 .\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/k1_v1.json
@@ -16,6 +18,11 @@ deleted or redirected. No package-level export or installation entry point is
 required for `python -m molgap.experiment_cli` in an installed checkout.
 For new family/platform work, start with the short [addon guide](EXPERIMENT_ADDON_GUIDE.md);
 this CLI remains a shared local core, not a trainer or submitter.
+Its [operation-oriented reuse map](EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
+locates actual GPTrans/EdgeState trainers, checkpoint/inference owners,
+saved-prediction analysis, and acceptance/V5/RML. `run-diagnostic` is not
+frozen-checkpoint inference. Platform submission and retrieval stay in the
+applicable workload skill and existing adapter.
 For producer output inspection and guarded terminal closure, see the
 [family workflow](EXPERIMENT_FAMILY_WORKFLOW.md). Its additional local commands
 are `check-acceptance`, `inspect-output`, and `accept-terminal`, retaining the
@@ -56,19 +63,20 @@ local paths. They are not an instruction to run an experiment or access a role.
 
 ```powershell
 $spec = 'D:\local-inputs\experiment_spec_v2.json'
+$repoRoot = (Get-Location).Path
 $package = 'D:\local-work\source-package'
 $packageIdentity = '<independently-pinned-package-sha256>'
 $shardRoot = 'D:\local-inputs\real-shard'
 $shardManifestSha = '<independently-pinned-manifest-sha256>'
 
 .\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec $spec
-.\.venv\Scripts\python.exe -m molgap.experiment_cli plan-prospective --spec $spec --repo-root D:\w\cli
-.\.venv\Scripts\python.exe -m molgap.experiment_cli package --spec $spec --repo-root D:\w\cli --output $package --allowlist src/molgap/__init__.py src/molgap/experiment_spec.py
+.\.venv\Scripts\python.exe -m molgap.experiment_cli plan-prospective --spec $spec --repo-root $repoRoot
+.\.venv\Scripts\python.exe -m molgap.experiment_cli package --spec $spec --repo-root $repoRoot --output $package --allowlist src/molgap/__init__.py src/molgap/experiment_spec.py
 .\.venv\Scripts\python.exe -m molgap.experiment_cli check-release --spec $spec --package $package --expected-package-identity $packageIdentity --recipe-file arm_id=experiments/question/training_contract.json --initial-state arm_id=D:\local-inputs\family_initial_state.pt --required-module molgap.family_trainer --pickle-input D:\local-inputs\train_shard.pt --entry-script D:\local-work\kernel\run.py --input-root D:\local-work\input --output-report D:\local-work\release.json
 .\.venv\Scripts\python.exe -m molgap.experiment_cli preflight --spec $spec --package $package --shard-root $shardRoot --output D:\local-work\preflight-new --expected-package-identity $packageIdentity --expected-shard-manifest-sha256 $shardManifestSha
 .\.venv\Scripts\python.exe -m molgap.experiment_cli run-diagnostic --spec $spec --output D:\local-work\diagnostic-new --device 0 1 --worker adapter_probe
 .\.venv\Scripts\python.exe -m molgap.experiment_cli launch-receipt --spec $spec --package $package --expected-package-identity $packageIdentity --output-dir D:\local-work\receipts
-.\.venv\Scripts\python.exe -m molgap.experiment_cli terminal --spec $spec --descriptor D:\local-inputs\terminal_descriptor.json --repo-root D:\w\cli
+.\.venv\Scripts\python.exe -m molgap.experiment_cli terminal --spec $spec --descriptor D:\local-inputs\terminal_descriptor.json --repo-root $repoRoot
 ```
 
 - `validate-spec` returns the canonical declaration and its identity. This is
@@ -197,7 +205,6 @@ local package fixtures use temporary local Git repositories. They do not submit
 remotely or train models.
 
 ```powershell
-Set-Location D:\w\cli
 $env:PYTHONPATH = (Resolve-Path src).Path
 .\.venv\Scripts\python.exe -m pytest tests/test_experiment_cli.py tests/test_experiment_prospective.py -q
 .\.venv\Scripts\python.exe -m pytest tests/test_experiment_spec.py tests/test_experiment_package.py tests/test_experiment_launch.py tests/test_experiment_terminal.py -q

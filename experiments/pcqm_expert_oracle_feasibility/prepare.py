@@ -5,10 +5,11 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
+from molgap.constants import REPO_ROOT
 from molgap.research_memory.plan import plan
 from molgap.training_reproducibility import atomic_json, sha256_file
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = REPO_ROOT
 HERE = Path(__file__).resolve().parent
 REL = HERE.relative_to(ROOT).as_posix()
 TID = "TB-pcqm-expert-oracle-feasibility-20260930"

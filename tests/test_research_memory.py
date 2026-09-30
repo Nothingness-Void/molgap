@@ -483,12 +483,66 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
         (item["items"] for item in report["issues"] if item["code"] == "trajectory_without_v5_evidence"),
         [],
     )
+    # NO_TRAIN and infrastructure attempts retain their own empty bindings;
+    # retry3's terminal envelopes do not retroactively supply their evidence.
+    input_init_gaps = {
+        "TB-gptrans-input-init-100k-s42": "NO_TRAIN",
+        "TB-gptrans-input-init-100k-t4-s42": "NO_TRAIN",
+        "TB-gptrans-input-init-k1pair-candidate-100k-s42": "INCONCLUSIVE",
+        "TB-gptrans-input-init-k1pair-reference-100k-s42": "INCONCLUSIVE",
+        "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2": "NO_TRAIN",
+        "TB-gptrans-input-init-k1pair-reference-100k-s42-r2": "NO_TRAIN",
+    }
     assert set(no_evidence_trajectories) == {
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
+        "TB-gptrans-frozen-transfer-probe-100k-to-500k",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
-    }
+    } | set(input_init_gaps)
+    # Saved-array reconciliation did not recover immutable executed source or
+    # prospective chronology, so it remains context-only without a V5 envelope.
+    frozen = trajectories["TB-gptrans-frozen-transfer-probe-100k-to-500k"]
+    frozen_path = REPO_ROOT / frozen["record_path"]
+    frozen_canonical = json.loads(frozen_path.read_text(encoding="utf-8"))
+    assert frozen_canonical["record_mode"] == "retrospective_partial"
+    assert frozen_canonical["comparison_class"] == "CONTEXT_ONLY"
+    assert frozen_canonical["decision"]["outcome"] == "INCONCLUSIVE"
+    assert frozen_canonical["result"]["evidence_ids"] == []
+    assert frozen["result_evidence_ids"] == []
+    assert not (frozen_path.parent / "v5_evidence.json").exists()
+    for trajectory_id, outcome in input_init_gaps.items():
+        indexed = trajectories[trajectory_id]
+        canonical_path = REPO_ROOT / indexed["record_path"]
+        canonical = json.loads(canonical_path.read_text(encoding="utf-8"))
+        assert canonical["trajectory_id"] == trajectory_id
+        assert canonical["record_mode"] == "prospective"
+        assert canonical["owner"] == "desktop"
+        assert canonical["decision"]["outcome"] == outcome
+        assert canonical["decision"]["next_allowed_actions"] == []
+        assert canonical["result"] == {"evidence_ids": [], "evidence_refs": []}
+        assert indexed["result_evidence_ids"] == []
+        assert not (canonical_path.parent / "v5_evidence.json").exists()
+
+    for arm, outcome in (("reference", "CLOSED"), ("candidate", "NEGATIVE_UNDER_CONTRACT")):
+        trajectory_id = f"TB-gptrans-input-init-k1pair-{arm}-100k-s42-r3"
+        evidence_id = f"pcqm-gptrans-input-init-k1pair-{arm}-100k-s42-r3"
+        indexed = trajectories[trajectory_id]
+        canonical_path = REPO_ROOT / indexed["record_path"]
+        canonical = json.loads(canonical_path.read_text(encoding="utf-8"))
+        envelope_path = canonical_path.parent / "v5_evidence.json"
+        envelope = json.loads(envelope_path.read_text(encoding="utf-8"))
+        assert canonical["record_mode"] == "prospective"
+        assert canonical["result"]["evidence_ids"] == [evidence_id]
+        assert envelope_path.relative_to(REPO_ROOT).as_posix() in canonical["result"]["evidence_refs"]
+        assert envelope["evidence_id"] == evidence_id
+        assert envelope["outcome"]["scientific_status"] == outcome
+        assert envelope["outcome"]["comparison_status"] == "paired_endpoint_only_not_strict"
+        assert envelope["outcome"]["transfer_status"] == "not_ready"
+        assert indexed["result_evidence_ids"] == [evidence_id]
+        assert indexed["outcome"] == outcome
+        assert indexed["completeness_status"] == "complete"
+        assert trajectory_id not in no_evidence_trajectories
     for arm in ("reference", "joint"):
         trajectory_id = f"TB-gptrans-100k-local-{arm}-control-20260925"
         assert trajectories[trajectory_id]["completeness_status"] == "complete"

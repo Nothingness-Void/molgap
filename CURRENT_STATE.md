@@ -1,13 +1,23 @@
 # Current State
 
-The accepted desktop expert Oracle study is in
-`experiments/pcqm_expert_oracle_feasibility/decision.md`. Prediction-only routing
-did not clear its nomination rule. Await the separately owned pretraining pair
-and follow its conditional plan; no specialist training is released by the study.
+## Reuse Navigation
+
+Start with the [operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
+and [local CLI](docs/operations/EXPERIMENT_CLI.md), not a copied launcher.
+Remote operations belong to `kaggle-molgap-workloads`, `ims-molgap-workloads`
+and `scnet-bw-dcu-molgap`; reuse does not authorize execution.
+
+The accepted expert Oracle study closed NO_TRAIN; prediction-only routing did
+not clear nomination. See
+[decision](experiments/pcqm_expert_oracle_feasibility/decision.md).
+The pretraining pair has terminal review, not a waiting-for-training blocker;
+its owner and local-only supplementary review are mapped below.
 
 This file owns the live recommendation, blockers and branch routing.
 Dated decisions and canonical RML evidence own historical results.
 Task ordering belongs to `ROADMAP.md`; checkout ownership to `BRANCHES.md`.
+The dated [local audit](docs/operations/LOCAL_AUDIT_20261001.md) records
+maintenance verification and its scientific limits, not live queue authority.
 
 ## Production identity
 
@@ -28,30 +38,46 @@ See `experiments/pcqm_scale_transfer_reassessment/decision.md`.
 New screens use the frozen V4 row, recipe and runtime contract. The accepted
 GPTrans-T 100K reference is reusable but closed for 100K promotion:
 `experiments/pcqm_gptrans_t_100k_v4/decision.md`.
-Official validation has been consumed for the recorded full-model selection
-and calibration. Test-dev and challenge remain sealed.
+Official validation has been consumed for recorded full-model selection and
+calibration. External test roles were used by the recorded EdgeState submission;
+that does not authorize exploratory reuse or another submission. See its
+role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 
-## Active work and unresolved acceptance
+## Active Work and Unresolved Acceptance
 
-- The authorized geometry V4 500K continuation belongs to the separate branch
-  `codex/exp/geometry-v4-500k-pair` and the chat
-  "Geometry V4 500K 双臂续训监控". Its branch-local STATUS and launch records
-  own observations; query Kaggle before resuming any action. Do not duplicate
-  the earlier feasibility audit or replace the frozen checkpoint continuation.
-- The FP32/FP16 100K pair is retained on
-  `codex/exp/gptrans-fp16-precision-100k`. Its measured speed gate failed,
-  but formal terminal acceptance remains incomplete. The missing adapter and
-  prospective same-run reference binding are recorded on that branch; neither
-  a new run nor a replay-ready claim is released by its endpoint observation.
-- The centered-logits pair is scientifically closed. Its frozen historical
-  reference binding excludes strict causal replay; the gap is not a training
-  retry trigger. See
-  `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md`.
-- Server DSAR/DSMR material on `codex/fix/rml-500k-reference` remains separate
-  from desktop integration. Its old local status is not remote scheduler truth.
-- Kaggle TPU probes ran on CPU despite requested metadata. TPU execution needs
-  actual allocation and compatibility qualification; retained observations are
-  under `platforms/_records/kaggle/preflight/`.
+Branch-local records absent here are linked through the
+[retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
+
+- **Chemical auxiliary:** the authenticated read-only Kaggle query in the
+  2026-10-01 maintenance pass returned RUNNING. The submission_v4 observation binds
+  kernel 136542008, version 3 and source/Spec identity via the checkout map.
+  Keep the dedicated owner through acceptance;
+  no terminal result, GPU qualification, replay or promotion follows from RUNNING.
+- **Pretraining pair:** branch-local terminal attempts are INCONCLUSIVE; neither
+  arm clears its 3 meV nomination gate and strict reference qualification is
+  incomplete. No scale-up is released. The uncommitted fusion local review
+  reports only 0.383527 meV extra pretrained-blend gain, with interval spanning
+  zero. The parent reran the retained prediction-only analyzer and hash bindings,
+  matching stored JSON; the report remains uncommitted, pending integration,
+  not canonical promotion evidence.
+- **Scale-fit retained diagnostic:** the parent created the mapped dedicated
+  `codex/exp/scale-fit-retained` branch for a proposed bounded retained-checkpoint,
+  same-cohort diagnostic. Execution is not approved; no diagnostic or new training
+  is released. Prospective/role/resource requirements still apply before execution.
+- **Geometry V4 500K:** owning fixed-blend scale decision does not release full
+  geometry training. Pure-2D reference recovery resolved that retrieval blocker;
+  reference/readiness binding, cost correction and final Git routing remain.
+  Preserve its terminal decisions and replay exclusions; do not rerun references.
+- **FP32/FP16 pair:** speed gate failed; formal terminal acceptance remains
+  incomplete on the mapped precision branch. Missing adapter/prospective
+  same-run reference binding does not release a retry or replay-ready claim.
+- **Centered logits:** scientifically closed; historical reference binding
+  excludes strict causal replay, not a training retry trigger. See
+  [STATUS](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md).
+- **Server DSAR/DSMR:** old mapped drafts have incomplete job identity.
+  Remote state is UNKNOWN here; desktop must not take over that server question.
+- **TPU probes:** requested TPU metadata still executed on CPU; actual allocation
+  and compatibility qualification are required. See `platforms/_records/kaggle/preflight/`.
 
 ## Closed evidence entrypoints
 

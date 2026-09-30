@@ -150,7 +150,8 @@ platforms/_records/kaggle/source_packages/
 platforms/_records/kaggle/staging/
 platforms/_records/kaggle/.kaggle*-runtime/
 platforms/_records/local/
-platforms/_staging/
+platforms/_staging/*
+!platforms/_staging/README.md
 
 # Split upload payloads and row ledgers: transport artifacts, not evidence.
 experiments/**/upload_parts/

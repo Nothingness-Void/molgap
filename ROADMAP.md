@@ -4,57 +4,50 @@ This file owns task order, triggers, and exit conditions. Live state is in
 `CURRENT_STATE.md`; completed evidence belongs to experiment decisions, and
 track ownership is defined in `TRACKS.md`.
 
-## Goal
+## Reuse Navigation
 
-Select and validate a direct-Gap PCQM4Mv2 model using the fixed V4 comparison
-contract for new screens. The desktop integration branch owns Kunshan screens,
-full training, official evaluation, and submission; the server integration branch owns its separately authorized discovery.
-Branch and worktree routing is defined in `BRANCHES.md`.
-## Active Queue
+First use the [operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
+and [local CLI](docs/operations/EXPERIMENT_CLI.md). Platform work stays in
+`kaggle-molgap-workloads`, `ims-molgap-workloads` and `scnet-bw-dcu-molgap`.
+Reuse existing family, analysis and acceptance owners; this is not execution authority.
 
-| Priority | ID | Task | Exit condition | Owner |
-|---|---|---|---|---|
-| P0 blocked | B-GPTRANS-CENTER-PAIR-REPLAY | Resolve replay qualification for the terminally accepted Kaggle1 pair | Existing frozen reference identity cannot satisfy strict causal replay entrance for the same-job control; no training successor is released | `experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md` |
-| P1 active on dedicated branch | B-GEOMETRY-V4-BRIDGE | Finish the authorized frozen-checkpoint geometry continuation | Per-arm terminal acceptance and scientific disposition under its existing contract | `codex/exp/geometry-v4-500k-pair` |
-| P2 | B-OGB-TESTDEV | Produce the final official test-dev submission | Explicit user authorization after full-run and official-validation acceptance | Relevant frozen submission experiment |
+## Goal and Active Queue
 
-The accepted V4 reference and runtime policy are documented in
-`experiments/pcqm_gptrans_t_100k_v4/` and `platforms/V4_EXECUTION_CONTRACT.md`.
+Select a direct-Gap PCQM4Mv2 model under the applicable frozen contract.
+Desktop owns its screens/full/evaluation/submission; server discovery stays independent.
+Use [BRANCHES](BRANCHES.md#retained-checkout-map) for branch-local evidence missing
+from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers.
 
-The Kaggle1 pair-memory dual screen is closed negative with two replay
-exclusions. Its accepted endpoint, exact replay blocker and saved-artifact
-attribution are in `experiments/pcqm_gptrans_pair_memory_dual_100k_kaggle1/`;
-no further pair-memory run is queued.
+| Priority | Task | Exit condition / owner |
+|---|---|---|
+| P0 | Chemical auxiliary reconciliation when actionable | Query exact owning attempt, then per-arm acceptance and scientific disposition on its dedicated branch; no automatic successor |
+| P1 | Pretraining evidence review / integration | Review branch-local terminal decision and uncommitted fusion supplement; retain INCONCLUSIVE and qualification gaps, no scale-up or reference retraining |
+| P1 | Geometry technical closure / Git routing | Resolve reference/readiness binding and supported cost correction under owning records; preserve no-full fixed-blend decision, no new geometry run |
+| P1 | Precision acceptance bookkeeping | Resolve existing adapter/reference-binding gaps on owning branch; failed speed gate does not release another run |
+| Proposed, not released | Scale-fit retained-checkpoint same-cohort diagnostic | Dedicated branch in BRANCHES; execution requires approval and prospective/role/resource checks, no new training |
+| Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |
 
-The geometry bridge has advanced to an authorized continuation on the dedicated
-branch above. Its branch-local protocol, continuation contract, STATUS and launch
-records own execution. Keep its source and checkpoints isolated until terminal
-acceptance; do not repeat the earlier feasibility audit or retrain references.
-The older geometry scores remain contextual because their recipe/runtime
-contracts differ; see `experiments/pcqm_geometry_transfer_500k/`.
-V4 requires fixed data and
-row order, seed, FP32/no-TF32, physical BS128, optimizer, schedule, loss,
-selection rule, sample exposure, role access, and a runtime certificate for
-each platform/software tuple.
+Centered-logit replay exclusions are closed evidence, not an active training queue.
+Server DSAR/DSMR drafts are not desktop tasks; incomplete job identity must not
+be replaced with stale RUNNING claims or automatic takeover.
+Completed evidence is indexed by [experiments](experiments/README.md) and
+[RML](research_memory/README.md); review canonical decisions/attribution before
+another module. Do not reopen a closed candidate through seed/schedule changes.
 
-The historical Kaggle recurrent graph-state experiment completed below its
-frozen comparator and is archived at commit `285e1dc`; it is not active.
-
-The 500K distance-angle OOF fusion is a positive nomination recorded in
-`experiments/pcqm_geometry_transfer_500k/`. Its own audit found that
-runtime certificates and a matching frozen V4 reference were absent, so it is
-not yet eligible as a V4 cross-platform or causal geometry result. Do not
-launch a bridge until it is separately authorized.
-
-Completed PCQM, OGB submission, and QM9 screen decisions are indexed in
-`experiments/README.md`; do not reopen closed candidates by changing seeds or
-training schedules.
+New screens follow the [V4 reference](experiments/pcqm_gptrans_t_100k_v4/README.md)
+and [execution contract](platforms/V4_EXECUTION_CONTRACT.md): fixed data/row order,
+seed, FP32/no-TF32, physical BS128, optimizer, schedule, loss, selection, exposure,
+roles and runtime certificate for each platform/software tuple.
+Historical geometry, pretraining, full fusion and precision work retain their
+separate frozen contracts; this navigation cleanup does not amend them.
 
 ## Mandatory Gates
 
 1. **Before remote GPU submission:** local syntax/AST/manifest checks and
-   immutable CPU-cache acceptance must pass. Forward/backward and memory checks
-   run only in the remote GPU preflight; models are not executed locally.
+   immutable CPU-cache acceptance must pass. Authorized local diagnostics may
+   execute models within their declared data/role/resource scope; they do not
+   replace the owning contract's remote GPU runtime or memory qualification.
+   New research diagnostics still require a prospective trajectory first.
 2. **Before external evaluation:** the standalone full-scale candidate and its
    aligned predictions must be complete and frozen.
 3. **Before production promotion:** the fixed Track A external gate must pass;
@@ -79,7 +72,7 @@ training schedules.
   command and preserve its declared dependencies and output isolation.
 - Architecture screens predict Gap directly. Any separately authorized full
   K1/GPTrans-T fusion must obey its own frozen 20/80 official-valid contract;
-  test-dev and challenge-test stay sealed until separate explicit authority.
+  further test-dev/challenge access requires separate explicit authority.
 - Continued pure-2D discovery tests one materially new architecture at a time.
   Every failure gets a decision record and cannot be retried as a seed or
   schedule variation; the next attempt must change the information flow.

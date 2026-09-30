@@ -9,6 +9,11 @@ Desktop saved-prediction diagnostic; no remote training or inference.
 - [Canonical analysis](analysis.json), [acceptance](acceptance.json), and
   [terminal RML evidence](rml/rml_finalized/v5_evidence.json).
 
+Supplementary machine-evidence navigation for the immutable [decision](decision.md):
+[analysis JSON](analysis.json). The decision and analyzer remain frozen under the
+[finalization receipt](rml/rml_finalized/finalization.json); this navigation does
+not amend their scientific content or release another diagnostic.
+
 The five prediction payloads and OOF outputs are minimally retained under
 platforms/_records/local/expert_oracle_feasibility_20260930; analysis.json binds
 their exact hashes. Reproduce with the project Python and PYTHONPATH for the

@@ -13,6 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Can prediction-only routing realize expert Oracle headroom? | Accepted saved-prediction diagnostic; NO_TRAIN for a new prediction-only router, no model promotion | `pcqm_expert_oracle_feasibility/` |
 | How is frozen K1 trained and packaged for the full role? | Exact exposure and resumable artifact contract; used by the full comparison | `pcqm_k1_full/` |
 | Which architecture family survives cheap elimination? | Track C complete; GPS9/GPS11-160 advance, TensorNet and EGNN eliminated | `qm9_architecture/` |
 | Can bounded pure-2D pair-state repairs beat PairGPS2D? | R3 validation selected persistent EdgeState; its one-time QM9 test remains sealed | `top20_architecture_qm9/` |

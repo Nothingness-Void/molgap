@@ -7,6 +7,15 @@ This file answers one question: **to change behavior X, which code owns it?**
 Model recommendations and job status belong in `CURRENT_STATE.md`.
 Track A/B/C ownership belongs in `TRACKS.md`.
 
+## Reuse Entry Point
+
+Choose an operation in the [addon reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
+before creating a runner or helper. It routes actual GPTrans/EdgeState trainers,
+checkpoint/inference, saved-prediction analysis, and acceptance/V5/RML to their
+owners. The [local CLI](docs/operations/EXPERIMENT_CLI.md) supplies identity and
+evidence plumbing, not a trainer or submitter. The package map below is a code
+ownership index, not execution authority or a copy of the scientific contracts.
+
 ## Boundary
 
 - Reusable behavior lives in `src/molgap/`.

@@ -7,6 +7,21 @@ Predictions are electronic-structure values, not experimental solid-state
 IP/EA. The current recommended model, open decision gate, and remote jobs are
 listed only in `CURRENT_STATE.md`.
 
+## Navigation
+
+Start with [AGENTS.md](AGENTS.md) for the reading protocol and constraints;
+[ARCHITECTURE.md](ARCHITECTURE.md) maps code ownership. Track definitions live
+in [TRACKS.md](TRACKS.md), not in historical results.
+
+Before writing experiment plumbing, use the
+[operation-oriented reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
+for family trainers, checkpoint/inference owners, saved-prediction analysis,
+and acceptance/V5/RML. The [local experiment CLI](docs/operations/EXPERIMENT_CLI.md)
+handles identity and evidence flow, not training or platform submission.
+Query [RML](research_memory/README.md) before opening a new research question;
+follow its pointers to canonical evidence. Platform submission and retrieval
+remain in the applicable workload skills and existing adapters.
+
 ## Install
 
 Use the repository virtual environment:
@@ -41,12 +56,6 @@ Outputs are ordered as `homo`, `lumo`, and `gap` in eV. `predictions[i]` belongs
 to the input at `valid_idx[i]`; rows whose graph cannot be built are omitted
 rather than filled, so join on `valid_idx` instead of assuming positional
 alignment. Runtime constraints are defined in `AGENTS.md`.
-
-## Navigation
-
-The complete reading protocol, document map, and hard constraints are in
-`AGENTS.md`. Do not reconstruct live status by scanning phase or result files.
-Track A/B/C ownership is defined only in `TRACKS.md`.
 
 ## Public API
 

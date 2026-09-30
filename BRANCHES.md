@@ -45,105 +45,38 @@ deleting its temporary ref. An archive preservation merge may retain ancestry
 without changing the archive tree; it does not turn an old branch into a live
 work entry point. Promotion from `molgap-desktop` to `master` is separate.
 
-## Retained branch awaiting reconciliation
+## Retained Checkout Map
 
-The 2026-09-30 local reconciliation is recorded in
-`docs/operations/LOCAL_RECONCILIATION_20260930.md`. It preserves eight old
-infrastructure drafts and the inconclusive frozen-transfer history in archive,
-and identifies the geometry, precision and DSAR/DSMR branches still in use or
-awaiting acceptance. Historical downloaded payloads remain retained locally.
+These branch-local records are not present in the integration checkout.
+Use the mapped owner; do not create substitute experiment directories here.
+Paths are local checkout locators, not portable artifact provenance.
+Check branch/HEAD/status before reading or integrating; fetch before comparing
+remote Git snapshots. Inspect only the question required by the task.
 
-The 2026-09-24 local branch audit found one retained desktop temporary ref:
-`codex/fix/rml-500k-reference` at `b78b978d`. It contains prospective DSAR/DSMR
-work and its checkout is clean. The committed tip is also at
-`origin/codex/fix/rml-500k-reference`; reconcile its evidence before
-integrating it into `molgap-desktop`. This routing statement does not assert a
-remote job's current state.
+| Question / owner | Retained checkout | Branch-local entry |
+|---|---|---|
+| Desktop pretraining pair: `codex/exp/pretraining-family-pair` | `C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap` | [terminal decision](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/terminal_decision.md); [fusion local review](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/fusion_comparison.md) |
+| Desktop geometry: `codex/exp/geometry-v4-500k-pair` | `C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap` | [fixed-blend scale decision](C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap/experiments/pcqm_geometry_v4_500k_pair/fixed_blend_scale_decision.md) |
+| Desktop chemical auxiliary: `codex/exp/gptrans-chemical-aux` | `C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap` | [STATUS](C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap/experiments/pcqm_gptrans_chemical_aux/STATUS.md), its linked submission_v4 observation and frozen training protocol |
+| Desktop precision: `codex/exp/gptrans-fp16-precision-100k` | `D:/文档/molgap-exp/molgap-gptrans-fp16-precision-100k` | Branch-local acceptance / reference-binding records |
+| Server DSAR/DSMR: `codex/fix/rml-500k-reference` | `D:/w/rml-500k-fix` | Old branch-local drafts; job/attempt identity incomplete, not live scheduler evidence |
+| Desktop scale-fit: `codex/exp/scale-fit-retained` | `D:/w/scale-fit` | Parent-created proposal for bounded retained-checkpoint same-cohort diagnosis; execution not approved, no training release |
 
-The superseded shared experiment-infrastructure tips were patch-equivalent to
-the desktop implementation. Archive merge `bbd98fb3` preserves their original
-commit ancestry without changing the archive tree. Their local `codex/` refs
-were retired after the archive push. Dirty worktrees were detached at their
-original commits with their tracked and untracked changes retained. The four
-closed GPTrans flow / K1 pair-screen tips were already in `archive`; their
-remaining local refs were retired under the same preservation rule.
+The pretraining fusion review is uncommitted other-agent work pending review
+and integration; its local presence is not a committed desktop evidence claim.
+Geometry retains technical reconciliation and final Git routing; chemical
+auxiliary retains its dedicated owner through terminal acceptance and disposition.
+DSAR/DSMR remains server-owned despite the historical desktop-ref audit wording.
+Do not adopt, monitor or submit successors from its stale local RUNNING text.
+Retained refs/checkouts are not authority to reopen a closed question.
 
-At the earlier PairNorm cleanup snapshot, no desktop temporary experiment
-branch had an unresolved terminal job. The PairNorm 100K shortlist and
-training-only 500K profile source history was Git-merged into
-`molgap-desktop` at `43db4a9d`. The later standalone
-PairNorm 500K experiment closed negative at `0460ba6`; its source history is
-preserved by archive merge `234f511`. Its selected canonical evidence remains
-indexed on `molgap-desktop`. The temporary refs were retired.
+## Historical Audit Pointer
 
-Inspect retained branches only when working on their question. Their old root
-documents do not override the integration branch. Do not wholesale merge
-server discovery history to obtain one desktop implementation.
-
-The separate Noisy Nodes + Pair Update Norm 500K experiment was landed in RML
-at `507ced7` and merged into `molgap-desktop` at `5e3c1ed`. The later tip of
-`codex/exp/gptrans-noisy-pair-norm-500k` contains server DSAR/DSMR work; that
-tip was not merged and does not add desktop acceptance tasks. The standalone
-PairNorm bridge closed above is a different experiment.
-
-The GPTrans-T/K1 convergence branch reached terminal acceptance at `cac804c`.
-Its source tip `30872aa` was Git-merged into `molgap-desktop` at `91bccb87`;
-the desktop IMS resource-repair tip `e777ebc` was merged at `430e4dc6`. The
-positive distance-angle tip `86a4489` was Git-merged at `63876d32`. The
-negative Xi'an audit tip `3fc1d80` remains in `archive`; its accepted evidence
-is indexed on `molgap-desktop`. These temporary refs were retired.
-
-## Cleanup evidence
-
-The full-run branch through fb05260 was integrated with explicit resolution of
-CURRENT_STATE.md and ROADMAP.md. Superseded scratch-control, submission-backup
-and EdgeState304 tips were preserved as archive merge parents (b2f65e0); that
-merge intentionally retained the archive tree rather than activating their
-code. Earlier retired tips were already reachable from origin/archive.
-Archive merge `234f511` similarly preserves the closed desktop PairNorm,
-GPTrans-T/K1 convergence, feature-denoising, PairValue, Xi'an audit, and
-distance-angle source tips without changing the archive tree. The PairNorm
-profile and 100K normalization tips are ancestors of its 500K tip. Their eight
-local and remote temporary refs were retired only after remote archive
-reachability was verified. The positive/operational desktop tips listed above
-were later Git-merged into `molgap-desktop`; the negative and inconclusive
-500K, feature-denoising, PairValue, and Xi'an tips remain archived.
-Archive merge `b0177970` also preserves the terminal desktop conditional-flow,
-K1 structural-lite no-train, K1 sparse-pair, and 500K module-attribution tips.
-Their four refs, plus the merged IMS resource-repair ref, were retired after
-remote ancestry checks. Server-based research refs and the mixed, dirty
-Noisy Nodes + PairNorm checkout were not merged into desktop or cleaned here.
-Working directories and untracked payloads were retained when branch refs were
-removed. Detached old worktrees are historical snapshots, not work entrypoints.
-Completed historical ESGPS6-304 (03f5253) and GPTrans-T 500K (c86970d) histories
-were also preserved in archive. Their positive results retain their original
-contracts; archival does not reclassify them as rejected. GPTrans full execution
-is integrated separately. Retrieve an old file with `git show <commit>:<path>`.
-
-The old local master tip 36a8156 was already reachable from remote desktop.
-The local master ref was aligned to origin/master after verifying that
-preservation; no submission-process history was promoted to delivery.
-
-Use a clean `molgap-desktop` worktree for desktop integration. Check branch and
-status before using the primary local checkout; it may contain unrelated work.
-
-The completed matched-500K V4, geometry-transfer, and IMS V4 infrastructure
-branches were integrated or preserved in `archive` before their local and
-remote branch refs were removed. Xi'an remains archived; the distance-angle
-tip is also an ancestor of `molgap-desktop` through merge `63876d32`.
-No remote scheduler was queried and no compute workload was changed by this audit.
-
-The completed GPTrans-T 100K V4 branch was integrated into `molgap-desktop` by
-merge `65f0f53`. Its accepted reference and closed promotion decision remain in
-`experiments/pcqm_gptrans_t_100k_v4/`. The OGB-rich EdgeGPS9 100K V4 branch
-contained reusable reference infrastructure but no terminal experiment
-disposition; merge `becbcf8` preserves that history in `archive` without
-activating its tree. Both temporary branch refs were then retired.
-
-The terminal GPTrans-T input-initialization 100K history is preserved by
-archive ancestry merge `fc9d0d14`. Its accepted negative decision, canonical
-RML records, and artifact provenance are indexed on `molgap-desktop` without
-merging the rejected model or launcher implementation.
+The [branch history](docs/operations/BRANCH_HISTORY.md) preserves the previous
+audit and cleanup records intact, including dated commit/reachability claims.
+The [2026-09-30 reconciliation](docs/operations/LOCAL_RECONCILIATION_20260930.md)
+owns that inventory. Neither audit is current remote scheduler truth.
+Use a clean desktop worktree for integration and preserve unrelated changes.
 
 ## V5 workflow boundary
 

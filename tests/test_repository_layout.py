@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import importlib.util
+import json
 import re
 from pathlib import Path
 
@@ -93,6 +95,59 @@ TOP_LEVEL_POINTER_DOCS = (
     "production/README.md",
     "platforms/README.md",
 )
+
+ORACLE_DIR = "experiments/pcqm_expert_oracle_feasibility"
+ORACLE_FINALIZATION = f"{ORACLE_DIR}/rml/rml_finalized/finalization.json"
+# Only these named historical artifacts can receive the two allowances below.
+FROZEN_ARTIFACT_DIGESTS = {
+    f"{ORACLE_DIR}/analyze.py": "8b43cf0f050bbc3bd801a2befe2ed782d742d3a1871da4cc06da2e190c467a30",
+    f"{ORACLE_DIR}/decision.md": "81dae767d7d1b7fabcc6f9d5c362bccac64feb007e84b83574e7e35432ca7ac1",
+    f"{ORACLE_DIR}/analysis.json": "58bbd71c011ceb3bd57a696736198e18eea5a52dd6fff05c8de4f74a3428ab3d",
+}
+FROZEN_ROOT_DEPTH_SCRIPTS = {f"{ORACLE_DIR}/analyze.py"}
+# This exact Windows checkout variant predates maintenance. Do not normalize
+# arbitrary sources: both its raw bytes and the receipt-bound LF bytes must match.
+FROZEN_CRLF_DIGESTS = {
+    f"{ORACLE_DIR}/analyze.py": "1d077d1194f372e7816f24605c5b119ea49ea17d984b62ca06273c1bae946d8f",
+}
+IMMUTABLE_DECISION_NAVIGATION = {
+    f"{ORACLE_DIR}/decision.md": f"{ORACLE_DIR}/analysis.json",
+}
+
+
+def verified_frozen_artifact(relative: str) -> bool:
+    expected = FROZEN_ARTIFACT_DIGESTS.get(relative)
+    if expected is None:
+        return False
+    try:
+        receipt = json.loads((REPO_ROOT / ORACLE_FINALIZATION).read_text(encoding="utf-8"))
+        if receipt.get("input_artifact_hashes", {}).get(relative) != expected:
+            return False
+        payload = (REPO_ROOT / relative).read_bytes()
+    except (OSError, ValueError):
+        return False
+    actual = hashlib.sha256(payload).hexdigest()
+    return actual == expected or (
+        actual == FROZEN_CRLF_DIGESTS.get(relative)
+        and hashlib.sha256(payload.replace(b"\r\n", b"\n")).hexdigest() == expected
+    )
+
+
+def frozen_root_depth_snapshot(path: Path) -> bool:
+    relative = path.relative_to(REPO_ROOT).as_posix()
+    return relative in FROZEN_ROOT_DEPTH_SCRIPTS and verified_frozen_artifact(relative)
+
+
+def supplementary_machine_evidence(decision: Path, readme: Path) -> bool:
+    relative = decision.relative_to(REPO_ROOT).as_posix()
+    evidence = IMMUTABLE_DECISION_NAVIGATION.get(relative)
+    if evidence is None or not all(
+        verified_frozen_artifact(item) for item in (relative, evidence)
+    ):
+        return False
+    pointers = MARKDOWN_LINK.findall(readme.read_text(encoding="utf-8"))
+    resolved = {resolve_doc_pointer(readme, pointer) for pointer in pointers}
+    return decision in resolved and REPO_ROOT / evidence in resolved
 
 
 def active_python_files() -> list[Path]:
@@ -202,6 +257,11 @@ def test_active_experiments_are_indexed_and_traceable() -> None:
                         break
                 if reachable_evidence:
                     break
+            if not reachable_evidence:
+                reachable_evidence = any(
+                    supplementary_machine_evidence(decision, readme_path)
+                    for decision in decisions
+                )
             if not reachable_evidence:
                 failures.append(
                     f"{experiment.name}: no decision points to reachable JSON evidence"
@@ -339,6 +399,8 @@ def test_active_sources_do_not_infer_repo_root_from_parent_depth() -> None:
     for path in active_python_files():
         source = path.read_text(encoding="utf-8", errors="ignore")
         tree = ast.parse(source, filename=str(path))
+        if frozen_root_depth_snapshot(path):
+            continue
         for node in ast.walk(tree):
             if not isinstance(node, ast.Subscript):
                 continue
@@ -351,6 +413,46 @@ def test_active_sources_do_not_infer_repo_root_from_parent_depth() -> None:
         "active code derives repository roots from directory depth; "
         "import REPO_ROOT from molgap.constants instead:\n" + "\n".join(failures)
     )
+
+
+def test_named_frozen_layout_allowances_are_verified() -> None:
+    for relative in FROZEN_ARTIFACT_DIGESTS:
+        assert verified_frozen_artifact(relative), relative
+    assert frozen_root_depth_snapshot(REPO_ROOT / ORACLE_DIR / "analyze.py")
+    assert not frozen_root_depth_snapshot(REPO_ROOT / ORACLE_DIR / "prepare.py")
+    assert not frozen_root_depth_snapshot(REPO_ROOT / ORACLE_DIR / "finalize_diagnostic.py")
+    assert supplementary_machine_evidence(
+        REPO_ROOT / ORACLE_DIR / "decision.md", REPO_ROOT / ORACLE_DIR / "README.md"
+    )
+
+
+@pytest.mark.parametrize("relative", list(FROZEN_ARTIFACT_DIGESTS))
+@pytest.mark.parametrize("mutation", ["artifact", "receipt"])
+def test_changed_hash_invalidates_frozen_allowances(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, relative: str, mutation: str
+) -> None:
+    original_root = REPO_ROOT
+    for name in (*FROZEN_ARTIFACT_DIGESTS, ORACLE_FINALIZATION, f"{ORACLE_DIR}/README.md"):
+        destination = tmp_path / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes((original_root / name).read_bytes())
+    monkeypatch.setitem(globals(), "REPO_ROOT", tmp_path)
+    assert verified_frozen_artifact(relative)
+    if mutation == "artifact":
+        artifact = tmp_path / relative
+        artifact.write_bytes(artifact.read_bytes() + b"\n# altered\n")
+    else:
+        receipt_path = tmp_path / ORACLE_FINALIZATION
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        receipt["input_artifact_hashes"][relative] = "0" * 64
+        receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+    assert not verified_frozen_artifact(relative)
+    if relative.endswith("analyze.py"):
+        assert not frozen_root_depth_snapshot(tmp_path / relative)
+    else:
+        assert not supplementary_machine_evidence(
+            tmp_path / ORACLE_DIR / "decision.md", tmp_path / ORACLE_DIR / "README.md"
+        )
 
 
 def test_argparse_clis_have_a_guarded_entrypoint() -> None:
