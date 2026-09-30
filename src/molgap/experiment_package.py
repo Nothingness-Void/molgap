@@ -70,7 +70,17 @@ def _name(value) -> str:
         raise ValueError(f"Unsafe source path: {value}")
     lowered = [part.lower() for part in path.parts]
     tokens = {token for part in lowered for token in re.split(r"[._-]+", part)}
-    if (set(lowered) & _BLOCKED_PARTS or tokens & _BLOCKED_PARTS
+    # Shared executable modules may describe artifact handling. Storage paths
+    # remain blocked, as do credential-related words in Python module names.
+    module_tokens = tokens
+    if (len(path.parts) >= 3 and path.parts[:2] == ("src", "molgap")
+            and path.suffix == ".py"):
+        directory_tokens = {token for part in lowered[:-1] for token in re.split(r"[._-]+", part)}
+        filename_tokens = set(re.split(r"[._-]+", lowered[-1]))
+        module_tokens = directory_tokens | (filename_tokens - {
+            "data", "dataset", "datasets", "checkpoint", "checkpoints", "output", "outputs",
+            "result", "results", "artifacts", "receipt", "receipts", "records"})
+    if (set(lowered) & _BLOCKED_PARTS or module_tokens & _BLOCKED_PARTS
             or any(part == ".env" or part.startswith(".env.") for part in lowered)
             or path.suffix.lower() in _BLOCKED_SUFFIXES
             or path.name.lower() in {name.lower() for name in SIDECARS}
