@@ -21,8 +21,9 @@ class _Response:
     {"error": None, "ref": "owner/actual-title-slug", "versionNumber": 2,
      "url": "https://www.kaggle.com/code/owner/actual-title-slug", "invalidDatasetSources": []},
 ])
+@pytest.mark.parametrize("accelerator", ["NvidiaTeslaT4", "CPU-only"])
 def test_push_kernel_sends_machine_shape_without_exposing_key(
-    tmp_path: Path, monkeypatch, response_payload
+    tmp_path: Path, monkeypatch, response_payload, accelerator
 ) -> None:
     package = tmp_path / "package"
     package.mkdir()
@@ -58,13 +59,16 @@ def test_push_kernel_sends_machine_shape_without_exposing_key(
     result = kaggle_accelerator_push.push_kernel_with_accelerator(
         package_dir=package,
         credential_path=credentials,
-        accelerator="NvidiaTeslaT4",
+        accelerator=accelerator,
     )
 
     assert result["status"] == "submitted"
-    assert captured["json"]["machineShape"] == "NvidiaTeslaT4"
+    if accelerator == "CPU-only":
+        assert "machineShape" not in captured["json"]
+    else:
+        assert captured["json"]["machineShape"] == "NvidiaTeslaT4"
     assert captured["json"]["enableTpu"] is False
-    assert captured["json"]["enableGpu"] is True
+    assert captured["json"]["enableGpu"] is (accelerator != "CPU-only")
     assert "secret-value" not in json.dumps(result)
     assert result["kernel"] == response_payload.get("ref")
     assert result["requested_kernel"] == "owner/kernel"
@@ -74,7 +78,7 @@ def test_push_kernel_sends_machine_shape_without_exposing_key(
         raise kaggle_accelerator_push.requests.Timeout("response lost")
     monkeypatch.setattr(kaggle_accelerator_push.requests, "post", timeout)
     unknown = kaggle_accelerator_push.push_kernel_with_accelerator(package_dir=package,
-        credential_path=credentials, accelerator="NvidiaTeslaT4")
+        credential_path=credentials, accelerator=accelerator)
     assert unknown["status"] == "submission_unknown"
     assert unknown["kernel"] is None and unknown["reconciliation_required"]
     assert "secret-value" not in json.dumps(unknown)

@@ -10,7 +10,7 @@ from requests.auth import HTTPBasicAuth
 
 
 KAGGLE_KERNEL_PUSH_URL = "https://www.kaggle.com/api/v1/kernels/push"
-ALLOWED_ACCELERATORS = {"NvidiaTeslaT4"}
+ALLOWED_ACCELERATORS = {"NvidiaTeslaT4", "CPU-only"}
 UNSUPPORTED_BATCH_ACCELERATORS = {"TpuV5E8"}
 
 
@@ -86,6 +86,8 @@ def push_kernel_with_accelerator(
         raise ValueError(f"Unsupported accelerator: {accelerator}")
     package = package_dir.resolve()
     metadata = json.loads((package / "kernel-metadata.json").read_text(encoding="utf-8"))
+    if accelerator == "CPU-only" and str(metadata.get("enable_gpu", False)).lower() == "true":
+        raise ValueError("CPU-only publication requires GPU-disabled metadata")
     code_path = package / metadata["code_file"]
     if not code_path.is_file():
         raise FileNotFoundError(code_path)
@@ -111,13 +113,14 @@ def push_kernel_with_accelerator(
         "enableTpu": accelerator.startswith("Tpu"),
         "enableInternet": str(metadata.get("enable_internet", "false")).lower()
         == "true",
-        "machineShape": accelerator,
         "datasetDataSources": list(metadata.get("dataset_sources", [])),
         "competitionDataSources": list(metadata.get("competition_sources", [])),
         "kernelDataSources": list(metadata.get("kernel_sources", [])),
         "modelDataSources": list(metadata.get("model_sources", [])),
         "categoryIds": list(metadata.get("keywords", [])),
     }
+    if accelerator != "CPU-only":
+        request["machineShape"] = accelerator
     try:
         response = requests.post(
             KAGGLE_KERNEL_PUSH_URL,
