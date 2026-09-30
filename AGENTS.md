@@ -16,6 +16,14 @@ Platform operations stay in `kaggle-molgap-workloads`,
 `ims-molgap-workloads`, and `scnet-bw-dcu-molgap` skills and existing adapters.
 Reuse navigation is not scientific, resource, role or submission authorization.
 
+## Delegation Preference
+
+For simple, repetitive or bulk subtasks, use `gpt-6-luna` with `max` reasoning.
+For other execution subtasks, use `gpt-6.1-sol` with `medium` reasoning unless
+the user specifies otherwise. Do not silently substitute the older `gpt-6-sol`;
+report unavailable model/effort combinations instead. The parent owns integration
+and acceptance; delegation does not release training or protected-role access.
+
 ## Read in This Order
 
 1. This file: navigation and hard boundaries.

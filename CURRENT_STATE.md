@@ -60,10 +60,6 @@ Branch-local records absent here are linked through the
   zero. The parent reran the retained prediction-only analyzer and hash bindings,
   matching stored JSON; the report remains uncommitted, pending integration,
   not canonical promotion evidence.
-- **Scale-fit retained diagnostic:** the parent created the mapped dedicated
-  `codex/exp/scale-fit-retained` branch for a proposed bounded retained-checkpoint,
-  same-cohort diagnostic. Execution is not approved; no diagnostic or new training
-  is released. Prospective/role/resource requirements still apply before execution.
 - **Geometry V4 500K:** owning fixed-blend scale decision does not release full
   geometry training. Pure-2D reference recovery resolved that retrieval blocker;
   reference/readiness binding, cost correction and final Git routing remain.
@@ -93,6 +89,10 @@ before selecting another module. No closed negative screen releases a successor.
   `experiments/pcqm_scale_transfer_reassessment/decision.md`.
 - Retrospectively recovered frozen-weight diagnostic:
   `experiments/pcqm_gptrans_frozen_transfer_probe/reconciliation_decision.md`.
+- Retained same-cohort training/development fit diagnostic: accepted `NO_TRAIN`;
+  no model promotion or causal size-versus-exposure conclusion. Read
+  [terminal navigation](experiments/pcqm_scale_fit_retained/STATUS.md), not its
+  frozen preparation README.
 - Full K1/GPTrans fusion and convergence: see
   `experiments/pcqm_k1_gptrans_full_fusion/README.md`,
   `experiments/pcqm_k1_full_convergence/decision.md`, and

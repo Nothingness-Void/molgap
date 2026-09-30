@@ -60,7 +60,7 @@ remote Git snapshots. Inspect only the question required by the task.
 | Desktop chemical auxiliary: `codex/exp/gptrans-chemical-aux` | `C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap` | [STATUS](C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap/experiments/pcqm_gptrans_chemical_aux/STATUS.md), its linked submission_v4 observation and frozen training protocol |
 | Desktop precision: `codex/exp/gptrans-fp16-precision-100k` | `D:/文档/molgap-exp/molgap-gptrans-fp16-precision-100k` | Branch-local acceptance / reference-binding records |
 | Server DSAR/DSMR: `codex/fix/rml-500k-reference` | `D:/w/rml-500k-fix` | Old branch-local drafts; job/attempt identity incomplete, not live scheduler evidence |
-| Desktop scale-fit: `codex/exp/scale-fit-retained` | `D:/w/scale-fit` | Parent-created proposal for bounded retained-checkpoint same-cohort diagnosis; execution not approved, no training release |
+| Desktop retained scale-fit cache | `D:/w/scale-fit` | [Accepted terminal navigation](experiments/pcqm_scale_fit_retained/STATUS.md); diagnostic implementation/evidence integrated into desktop, ignored predictions retained here; no training release |
 
 The pretraining fusion review is uncommitted other-agent work pending review
 and integration; its local presence is not a committed desktop evidence claim.

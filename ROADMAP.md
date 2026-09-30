@@ -24,7 +24,6 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 | P1 | Pretraining evidence review / integration | Review branch-local terminal decision and uncommitted fusion supplement; retain INCONCLUSIVE and qualification gaps, no scale-up or reference retraining |
 | P1 | Geometry technical closure / Git routing | Resolve reference/readiness binding and supported cost correction under owning records; preserve no-full fixed-blend decision, no new geometry run |
 | P1 | Precision acceptance bookkeeping | Resolve existing adapter/reference-binding gaps on owning branch; failed speed gate does not release another run |
-| Proposed, not released | Scale-fit retained-checkpoint same-cohort diagnostic | Dedicated branch in BRANCHES; execution requires approval and prospective/role/resource checks, no new training |
 | Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |
 
 Centered-logit replay exclusions are closed evidence, not an active training queue.

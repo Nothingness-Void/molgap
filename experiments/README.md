@@ -67,6 +67,7 @@ Track C.
 | Historical scale-transfer diagnostic? | Follow the owning decision; historical evidence does not release a successor | `pcqm_scale_transfer_diagnostic/` |
 | Scale-transfer reassessment? | Follow the owning decision; historical evidence does not release a successor | `pcqm_scale_transfer_reassessment/` |
 | Frozen 500K readout probe? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_500k_frozen_readout/` |
+| Does retained joint-model training fit transfer equally to the same development prefix at 100K/500K? | Accepted NO_TRAIN diagnostic; follow [STATUS](pcqm_scale_fit_retained/STATUS.md) and terminal decision, not the frozen preparation README. No causal scale or promotion claim | `pcqm_scale_fit_retained/` |
 | Conditional-flow historical arm views? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_conditional_flow_history/` |
 | Historical flow ablation? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_flow_ablation_100k/` |
 | Frozen 100K weights on the 500K development cohort? | Follow the owning decision; historical evidence does not release a successor | `pcqm_gptrans_frozen_transfer_probe/` |
