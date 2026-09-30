@@ -36,7 +36,7 @@ def invoke(capsys, args, expected=0):
 
 @pytest.mark.parametrize("command", [None, "validate-spec", "package", "preflight",
                                      "run-diagnostic", "launch-receipt", "terminal",
-                                     "plan-prospective", "check-release"])
+                                     "plan-prospective", "check-release", "prepare-release"])
 def test_help(capsys, command):
     with pytest.raises(SystemExit) as error:
         cli.main(([command] if command else []) + ["--help"])
@@ -446,4 +446,15 @@ def test_no_remote_or_dynamic_dispatch_in_cli():
     commands = next(action for action in parser._actions if hasattr(action, "choices")
                     and isinstance(action.choices, dict)).choices
     assert set(commands) == {"validate-spec", "package", "preflight", "run-diagnostic",
-                             "launch-receipt", "terminal", "plan-prospective", "check-release"}
+                             "launch-receipt", "terminal", "plan-prospective", "check-release", "prepare-release"}
+
+
+def test_prepare_release_delegates_local_workflow(spec_file, tmp_path, capsys, monkeypatch):
+    workflow_file = tmp_path / "workflow.json"
+    workflow_file.write_text("{}")
+    delegated = Mock(return_value=({"status": "LOCAL_PREPARATION_COMPLETE", "submitted": False}, 0))
+    monkeypatch.setattr(cli, "prepare_experiment_release", delegated)
+    result = invoke(capsys, ["prepare-release", "--spec", spec_file, "--workflow", workflow_file,
+                             "--repo-root", tmp_path, "--output", tmp_path / "fresh"])
+    assert result["submitted"] is False
+    assert delegated.call_args.args[1:] == (tmp_path, "{}", tmp_path / "fresh")

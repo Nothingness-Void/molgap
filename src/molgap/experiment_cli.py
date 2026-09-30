@@ -15,6 +15,7 @@ from .experiment_preflight import LOADER_MODE, MODEL_MODE, run_experiment_prefli
 from .experiment_prospective import plan_prospective
 from .experiment_runner import run_experiment
 from .experiment_spec import ExperimentSpec
+from .experiment_workflow import prepare_experiment_release
 from .experiment_terminal import (
     TerminalDescriptor, execute_terminal_descriptor, translate_terminal_descriptor,
 )
@@ -46,17 +47,19 @@ def _parser() -> argparse.ArgumentParser:
     parser = _Parser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
-                 "launch-receipt", "terminal", "plan-prospective", "check-release"):
+                 "launch-receipt", "terminal", "plan-prospective", "check-release", "prepare-release"):
         command = commands.add_parser(name)
         command.add_argument("--spec", required=True, type=_local)
-        if name in {"package", "terminal", "plan-prospective"}:
+        if name in {"package", "terminal", "plan-prospective", "prepare-release"}:
             command.add_argument("--repo-root", required=True, type=_local)
-        if name in {"package", "preflight", "run-diagnostic"}:
+        if name in {"package", "preflight", "run-diagnostic", "prepare-release"}:
             command.add_argument("--output", required=True, type=_local)
         if name in {"preflight", "launch-receipt", "check-release"}:
             command.add_argument("--package", required=True, type=_local)
             command.add_argument("--expected-package-identity", required=True)
-        if name == "package":
+        if name == "prepare-release":
+            command.add_argument("--workflow", required=True, type=_local)
+        elif name == "package":
             command.add_argument("--allowlist", required=True, nargs="+", action="extend")
         elif name == "check-release":
             command.add_argument("--recipe-file", required=True, action="append", metavar="ARM=PACKAGED_PATH")
@@ -91,6 +94,8 @@ def _dispatch(args) -> tuple[dict, int]:
         return {"spec_identity": spec.identity, "spec": spec.to_dict()}, 0
     if args.command == "plan-prospective":
         return plan_prospective(spec, args.repo_root)
+    if args.command == "prepare-release":
+        return prepare_experiment_release(spec, args.repo_root, _read(args.workflow), args.output)
     if args.command == "package":
         return build_experiment_source_package(spec, args.repo_root, args.allowlist, args.output), 0
     if args.command == "check-release":
