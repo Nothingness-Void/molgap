@@ -1,0 +1,64 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_scale_fit_retained/results/analysis.json",
+      "name": "results/analysis.json",
+      "sha256": "361d8117bffac0f7677c027c78abce71a53eb27a7a5716744bd8a315467538bb"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_scale_fit_retained/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "ac880cee8cb75400067a8b74f395da4f538b129eae6fe8419776ecc0d2642f84"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_scale_fit_retained/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "3175f07a5534b976c631c4e5c3584f78b4ab25686d6f4f15c12a5fdf05b36289"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_scale_fit_retained/protocol.md",
+      "experiments/pcqm_scale_fit_retained/terminal_decision.md",
+      "experiments/pcqm_scale_fit_retained/acceptance.json",
+      "experiments/pcqm_scale_fit_retained/results/analysis.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-scale-fit-retained-diagnostic-20261001",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-scale-fit-retained-diagnostic-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-01",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata-only export of a separately executed prospective inference diagnostic; export runs no inference and does not reinterpret historical decisions"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_scale_fit_retained/results/execution.json",
+    "inference_executed": true,
+    "training_executed": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_training_release",
+    "comparison_status": "fixed_prefix_consumed_role_diagnostic",
+    "execution_status": "complete_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "context_only_not_full_qualification"
+  },
+  "role_use": {
+    "internal_development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_prefix": "used"
+  },
+  "scope": "desktop_retained_same_cohort_fit_diagnostic",
+  "track": "B"
+}

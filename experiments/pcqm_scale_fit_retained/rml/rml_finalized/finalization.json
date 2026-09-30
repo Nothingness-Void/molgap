@@ -1,0 +1,53 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-598637eba77bf0f70bb3dcbc50096d983a4f5dd8bf7879e7aeac60d018040ff0",
+  "finalized_at": "2026-09-30T18:51:23.307214+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_scale_fit_retained/acceptance.json": "ac880cee8cb75400067a8b74f395da4f538b129eae6fe8419776ecc0d2642f84",
+    "experiments/pcqm_scale_fit_retained/finalize_diagnostic.py": "d9dde8754c45f369076994e38f837ac50b1b4b21eed2ae5f741e392d2978bb2f",
+    "experiments/pcqm_scale_fit_retained/frozen_plan.json": "f42dcf900f78c2818af021b701252c7c9122b633b3a4f6088bde0f554814c107",
+    "experiments/pcqm_scale_fit_retained/inputs.json": "56aaa4a0feda72f2e1f30a14e31c2e87dc42cd829592716a463ed9353e785cfc",
+    "experiments/pcqm_scale_fit_retained/protocol.md": "0b498071d5bee316be4d4c1d0a2ec4892fbdd8aa46e6a3a4580b917bff3aa41f",
+    "experiments/pcqm_scale_fit_retained/results/analysis.json": "361d8117bffac0f7677c027c78abce71a53eb27a7a5716744bd8a315467538bb",
+    "experiments/pcqm_scale_fit_retained/results/execution.json": "a23df3fc93487d4cd78add338e591ed6aa1c4f885b72529a76e156f66d29695f",
+    "experiments/pcqm_scale_fit_retained/results/joint_100k.ema.development.pt": "4636d05e27a3df10d4bd3452b23835c29db69a712c954140bb6971e8a6bbdcc4",
+    "experiments/pcqm_scale_fit_retained/results/joint_100k.ema.train.pt": "25f02ac40eed55df9a69a52e876905cb0fa222c3937bf84de857ef606aadd201",
+    "experiments/pcqm_scale_fit_retained/results/joint_100k.live.development.pt": "4ecb7541bee61591fc4829e77b20821122725c14e22b5fb0664fdde7c7cd7ef2",
+    "experiments/pcqm_scale_fit_retained/results/joint_100k.live.train.pt": "cb0473462dd4ebefa61ae2f84be99d16baa010748c6b5fc1d5e3416786f20b59",
+    "experiments/pcqm_scale_fit_retained/results/joint_500k.live.development.pt": "0ae6614d7a2f830e46a6c1eaceeec808b058aec9dc39b168c74167fcb0c7c26d",
+    "experiments/pcqm_scale_fit_retained/results/joint_500k.live.train.pt": "81a7462f57ace2fc19ab60bfb8b2084d9f71035083f830ba7f9f91992341930e",
+    "experiments/pcqm_scale_fit_retained/results/reference_100k.ema.development.pt": "2c3321654d24c181c54aaec04e25c82496f5fec87e4865fb386a460728ea7df6",
+    "experiments/pcqm_scale_fit_retained/results/reference_100k.ema.train.pt": "d00623b8f4c2dfd1f061570121060732c54087542e23f620af4051f213e0c06c",
+    "experiments/pcqm_scale_fit_retained/results/reference_100k.live.development.pt": "6bfd8225768db90cee1efabaf7cbf984241ef791300d17f17222432fd225b3c8",
+    "experiments/pcqm_scale_fit_retained/results/reference_100k.live.train.pt": "390ab35564d0f0eaba3aafdd626ca1a8a693b6ebabb498b0aa423479f9eeb174",
+    "experiments/pcqm_scale_fit_retained/results/reference_500k.live.development.pt": "86aa47a3eb29eb4a25ba7db937d8d71ddcc1004ff640c38c5f4f0da77f5d9327",
+    "experiments/pcqm_scale_fit_retained/results/reference_500k.live.train.pt": "1ab2605618aa3002be8f11f795246227bfd82104306c99fff1567a56f65036de",
+    "experiments/pcqm_scale_fit_retained/run_diagnostic.py": "53babcecf4a34d28b150c2f3163e757ed18885441e3543219912a16a1018885c",
+    "experiments/pcqm_scale_fit_retained/run_review.json": "2ea825bc3f28d3bcbb5503098ebc47fda57ead2d5e28a5a9a82dc384cfe81e5f",
+    "experiments/pcqm_scale_fit_retained/terminal_decision.md": "3175f07a5534b976c631c4e5c3584f78b4ab25686d6f4f15c12a5fdf05b36289"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-scale-fit-retained-observed.json": "f6756484d3bb7ff97ffb42081bf6b9ba50736af3d2d2be50f0d6c25fa4a52561",
+    "prospective_snapshot.json": "77146673f439f88b53eb8591e072e7c4853b6a4af555ebc34aaabf6f91ce13a7",
+    "roles/role-scale-fit-retained-development-labels_read.json": "ec5ed7c5991bdd5fbe5cb9bfbac1f0208936bf9f9b450fab8c90a915116168d7",
+    "roles/role-scale-fit-retained-development-metric_computed.json": "a1ec88c396c6d37bce907866c707b90e9503651e1e0e23993b0df10733c39be5",
+    "roles/role-scale-fit-retained-development-prediction_input.json": "5c5cc995035faf9bbcfc1c881dd8322ac16c9b082e85cd6b6691359b2fdea6be",
+    "roles/role-scale-fit-retained-development-selection_used.json": "2c66091959aab5929a89c77e399928d80398073567bb611eb5b2e60786c009d4",
+    "roles/role-scale-fit-retained-train-labels_read.json": "54699155a23619a10fee02c2aeb759dc4168e654c866891cd06528206627a7ab",
+    "roles/role-scale-fit-retained-train-metric_computed.json": "917522d4ed85feb3d2cd3a6a5b845d59849d971b5bdb4a53207cc46c1d0cce0d",
+    "roles/role-scale-fit-retained-train-prediction_input.json": "6c59e1a3bb965f9911dab06ed622dc98b26e997f4e645c30a5009a76e7ed6ba7",
+    "terminal_input.json": "db7764752755b62dd6829f2abe1df436080a66e5f4ee30ee6ac052db978f8588",
+    "trajectory.json": "c99735964e56f74cb6b68ec76cf3493342e7844c09b7c9cd6cfd19b43221eafe",
+    "v5_evidence.json": "7b123bda1bc22c4e0ca02aad03989942f5a4c32648dc153ae05e9570f1b68adf"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_scale_fit_retained/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "598637eba77bf0f70bb3dcbc50096d983a4f5dd8bf7879e7aeac60d018040ff0",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-pcqm-scale-fit-retained-20261001"
+}
