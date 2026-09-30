@@ -83,7 +83,7 @@ def validate_decision_state(state: dict[str, Any]) -> None:
 
 
 def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
-         *, _snapshot: _PlanningSnapshot | None = None) -> dict[str, Any]:
+         *, _snapshot: _PlanningSnapshot | None = None, validate_only: bool = False) -> dict[str, Any]:
     from .policy import load_policy_registry
 
     root = Path(repo_root).resolve()
@@ -188,6 +188,13 @@ def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
     required_costs.update(c for a in trajectory["actions"] for c in a["cost_event_ids"])
     if not required_costs <= cost_ids:
         raise ValueError("plan spec must supply its referenced prospective cost events")
+    if validate_only:
+        # Exercise the publication validator, without staging, publishing or rebuilding.
+        for pointer, digest in decision_state["source_hashes"].items():
+            if file_digest(resolve_repo_pointer(root, pointer)) != digest:
+                raise ValueError("decision source changed during planning validation")
+        return {"trajectory_id": trajectory["trajectory_id"], "status": "VALIDATED",
+                "path": destination.relative_to(root).as_posix()}
     staging_root = repo_local_path(root, "research_memory/.staging")
     staging_root.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix="plan-", dir=staging_root))
@@ -207,7 +214,8 @@ def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
             "path": destination.relative_to(root).as_posix()}
 
 
-def plan_many(repo_root: str | Path, plans: list[dict[str, Any]]) -> dict[str, Any]:
+def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
+              validate_only: bool = False) -> dict[str, Any]:
     """Publish independent prospective plans against one pre-publication snapshot."""
     from .policy import load_policy_registry
 
@@ -328,11 +336,11 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]]) -> dict[str, A
     results = []
     for index, (spec, output, _) in enumerate(prepared):
         try:
-            results.append(plan(root, spec, output, _snapshot=snapshot))
+            results.append(plan(root, spec, output, _snapshot=snapshot, validate_only=validate_only))
         except Exception as exc:
-            raise PlanBatchError(index, len(prepared), results, exc) from exc
+            raise PlanBatchError(index, len(prepared), [] if validate_only else results, exc) from exc
     return {
-        "status": "PLANNED",
+        "status": "VALIDATED" if validate_only else "PLANNED",
         "results": results,
         "batch": {
             "size": len(results),

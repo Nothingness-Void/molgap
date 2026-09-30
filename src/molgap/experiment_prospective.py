@@ -15,7 +15,7 @@ from .research_memory.paired import PAIR_SCHEMA
 from .screen_policy import canonical_fingerprint
 
 
-def plan_prospective(spec: ExperimentSpec, repo_root: Path) -> tuple[dict, int]:
+def _prospective_inputs(spec: ExperimentSpec, repo_root: Path) -> tuple[list, list]:
     declaration = spec.to_dict()
     if declaration["schema_version"] != SCHEMA_VERSION_V2:
         raise ValueError("plan-prospective requires molgap-experiment-spec-v2")
@@ -76,6 +76,23 @@ def plan_prospective(spec: ExperimentSpec, repo_root: Path) -> tuple[dict, int]:
                 "reference_trajectory_id": reference["trajectory_id"],
                 "reference_trajectory_ref": reference_ref,
             }
+
+    return plans, bindings
+
+
+def check_prospective(spec: ExperimentSpec, repo_root: Path) -> dict:
+    """Use actual RML validation for every arm, without publication or rebuild."""
+    plans, _ = _prospective_inputs(spec, repo_root)
+    result = plan_many(repo_root, plans, validate_only=True)
+    if result.get("status") != "VALIDATED" or len(result.get("results", [])) != len(plans):
+        raise ValueError("Prospective dry-validation result mismatch")
+    return {"status": "PROSPECTIVE_VALIDATED_ONLY", "batch": result["batch"],
+            "records": result["results"], "published": False, "rml_rebuilt": False,
+            "submission_authorized": False}
+
+
+def plan_prospective(spec: ExperimentSpec, repo_root: Path) -> tuple[dict, int]:
+    plans, bindings = _prospective_inputs(spec, repo_root)
 
     try:
         result = plan_many(repo_root, plans)

@@ -62,6 +62,9 @@ def test_real_package_release_and_mount_layout(staging):
     assert report["checks"]["recipe:gptrans_t"] == digest(staging["repo_root"] / "recipe.json")
     assert result["compute_released"] is result["submitted"] is False
     assert digest(root / "inputs/source_payload.bin") == result["package"]["archive_sha256"]
+    from molgap.gptrans_author_screen import restore_source_package
+    restored = restore_source_package(root / "inputs", root / "restored", result["package"]["archive_sha256"])
+    assert restored["package_identity"] == result["package"]["package_identity"]
     assert digest(root / "inputs/optional.bin") == staging["artifacts"]["optional.bin"].sha256
     assert result["package"]["archive_sha256"] in (root / "kernel/run.py").read_text()
     assert "__PIN_SOURCE_ARCHIVE_SHA256__" not in (root / "kernel/run.py").read_text()
@@ -157,3 +160,23 @@ def test_initialization_mapping_delegated_using_uploaded_path(staging, monkeypat
     assert observed["initial_states"] == {"gptrans_t": staging["output"] / "inputs/optional.bin"}
     assert observed["entry_script"] == staging["output"] / "kernel/run.py"
     assert observed["input_root"] == staging["output"] / "inputs"
+
+
+@pytest.mark.parametrize("fault", ["missing", "changed"])
+def test_release_gate_checks_uploaded_package_manifest(staging, fault):
+    from molgap.experiment_preflight import check_release_inputs
+    result = stage_release_inputs(**staging)
+    root = staging["output"]
+    manifest = root / "inputs/package_manifest.json"
+    if fault == "missing":
+        manifest.unlink()
+    else:
+        manifest.write_bytes(b'{"fabricated":true}')
+    report = check_release_inputs(staging["spec"], root / "source",
+        expected_package_identity=result["package"]["package_identity"],
+        recipe_files=staging["recipe_files"],
+        initial_states={"gptrans_t": root / "inputs/initial.pt"},
+        required_modules=staging["required_modules"], entry_script=root / "kernel/run.py",
+        input_root=root / "inputs")
+    assert report["status"] == "RELEASE_INPUTS_FAILED"
+    assert any(error["check"] == "input_layout" for error in report["errors"])

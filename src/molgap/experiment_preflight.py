@@ -737,7 +737,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
     import ast
     import pickletools
     import zipfile
-    from .experiment_package import verify_experiment_source_package
+    from .experiment_package import SIDECARS, verify_experiment_source_package
     from .v4_runtime import inspect_frozen_state_artifact
 
     package = Path(package_dir).absolute()
@@ -844,7 +844,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
     if input_root:
         def layout():
             root = Path(input_root).absolute()
-            for name in ("SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json", "experiment_spec.json"):
+            for name in sorted(SIDECARS - {"source.tar.gz"}):
                 if _regular(root / name).read_bytes() != (package / name).read_bytes():
                     raise ValueError(f"Staged sidecar differs: {name}")
             if _file_sha(_regular(root / "source_payload.bin")) != manifest["archive_sha256"]:

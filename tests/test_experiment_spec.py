@@ -76,6 +76,19 @@ def test_canonical_round_trip_and_detachment(payload):
     assert len(spec.to_dict()["arms"]) == 2
 
 
+def test_write_is_canonical_immutable_and_idempotent(payload, tmp_path):
+    spec = ExperimentSpec(payload)
+    path = tmp_path / "input/spec.json"
+    spec.write(path)
+    assert path.read_bytes() == spec.to_json().encode("utf-8")
+    assert not path.read_bytes().endswith(b"\n")
+    spec.write(path)
+    other = {**payload, "logical_run_id": "different-run"}
+    with pytest.raises(ValueError, match="refusing overwrite"):
+        ExperimentSpec(other).write(path)
+    assert path.read_bytes() == spec.to_json().encode("utf-8")
+
+
 @pytest.mark.parametrize("device_count", [1, 2, 4])
 def test_positive_device_count_declaration_accepted(payload, device_count):
     """Schema acceptance for two synthetic arms, not real device execution."""

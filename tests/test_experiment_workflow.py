@@ -29,22 +29,47 @@ def case(payload, tmp_path):
     return spec, tmp_path, config, tmp_path / "workflow"
 
 
-def test_one_entry_plans_before_staging(case, monkeypatch):
+@pytest.fixture(autouse=True)
+def mocked_precheck(monkeypatch):
+    # Composition tests isolate preparation; real validation is covered separately.
+    check = Mock(return_value={"status": "LOCAL_PREPARATION_CHECKED_ONLY"})
+    monkeypatch.setattr(workflow, "check_experiment_preparation", check)
+    return check
+
+
+def test_one_entry_checks_then_plans_before_staging(case, monkeypatch, mocked_precheck):
     spec, root, config, output = case
     ordered = []
+    mocked_precheck.side_effect = lambda *_, **__: ordered.append("check") or {"status": "CHECKED_ONLY"}
     plan = Mock(side_effect=lambda *_: (ordered.append("plan") or {"status": "PLANNED"}, 0))
     stage = Mock(side_effect=lambda *_, **__: ordered.append("stage") or {"errors": [], "release_status": "VERIFIED"})
     monkeypatch.setattr(workflow, "plan_prospective", plan)
     monkeypatch.setattr(workflow, "stage_release_inputs", stage)
     result, code = workflow.prepare_experiment_release(spec, root, json.dumps(config), output)
-    assert code == 0 and ordered == ["plan", "stage"]
+    assert code == 0 and ordered == ["check", "plan", "stage"]
     assert result["submitted"] is result["compute_released"] is False
     assert stage.call_args.kwargs["artifacts"]["initial.pt"].path == root / "local/initial.pt"
     assert stage.call_args.kwargs["output"] == output / "release"
     assert json.loads((output / "workflow.json").read_text()) == result
+    assert set(result["timings"]) == {"preparation_check_seconds", "prospective_publication_seconds",
+        "package_stage_release_check_seconds", "total_local_preparation_seconds"}
+    assert all(value >= 0 for value in result["timings"].values())
     with pytest.raises(FileExistsError):
         workflow.prepare_experiment_release(spec, root, json.dumps(config), output)
     assert plan.call_count == 1
+
+
+def test_preparation_failure_never_publishes_or_stages(case, monkeypatch, mocked_precheck):
+    spec, root, config, output = case
+    mocked_precheck.side_effect = ValueError("wrong upload file SHA")
+    plan, stage = Mock(), Mock()
+    monkeypatch.setattr(workflow, "plan_prospective", plan)
+    monkeypatch.setattr(workflow, "stage_release_inputs", stage)
+    with pytest.raises(ValueError, match="upload file SHA"):
+        workflow.prepare_experiment_release(spec, root, json.dumps(config), output)
+    plan.assert_not_called()
+    stage.assert_not_called()
+    assert not output.exists()
 
 
 def test_partial_plan_blocks_packaging_and_retains_receipt(case, monkeypatch):

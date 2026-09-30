@@ -313,3 +313,31 @@ def test_second_arm_failure_reports_partial_publication_without_rollback(plannin
     assert (root / "experiments/arm-a/costs/C-a.json").is_file()
     assert not (root / "experiments/arm-b").exists()
     assert len(discovery_calls) == 1
+
+
+def test_validate_only_uses_real_schema_without_any_publication(planning_root):
+    root, discovery_calls = planning_root
+    before = {p.relative_to(root): p.read_bytes() for p in root.rglob("*") if p.is_file()}
+    result = plan_module.plan_many(root, [_item("a"), _item("b")], validate_only=True)
+    assert result["status"] == "VALIDATED"
+    assert all(r["status"] == "VALIDATED" for r in result["results"])
+    assert len(discovery_calls) == 1
+    assert not (root / "research_memory/.staging").exists()
+    assert before == {p.relative_to(root): p.read_bytes() for p in root.rglob("*") if p.is_file()}
+
+
+@pytest.mark.parametrize("fault", ["closed_context", "measured_cost"])
+def test_validate_only_rejects_invalid_second_arm_before_any_publication(planning_root, fault):
+    root, _ = planning_root
+    second = _item("b")
+    if fault == "closed_context":
+        second["spec"]["trajectory"]["hypothesis"]["related_closed_family_ids"] = []
+    else:
+        second["spec"]["costs"][0]["measurement"]["device_hours"] = {"value": 1, "status": "measured"}
+    with pytest.raises(plan_module.PlanBatchError) as caught:
+        plan_module.plan_many(root, [_item("a"), second], validate_only=True)
+    assert caught.value.completed_results == ()
+    assert caught.value.failed_index == 1
+    assert not (root / "experiments/arm-a").exists()
+    assert not (root / "experiments/arm-b").exists()
+    assert not (root / "research_memory/.staging").exists()

@@ -338,6 +338,13 @@ class ExperimentSpec:
     def to_json(self) -> str:
         return self._canonical_json
 
+    def write(self, path) -> None:
+        """Publish canonical wire bytes once; a retry cannot replace a frozen Spec."""
+        from pathlib import Path
+        from .experiment_launch import publish_immutable_bytes
+
+        publish_immutable_bytes(Path(path).absolute(), self.to_json().encode("utf-8"))
+
     @property
     def identity(self) -> str:
         return canonical_fingerprint(self.to_dict())

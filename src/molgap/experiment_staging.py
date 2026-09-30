@@ -14,10 +14,7 @@ from .experiment_preflight import check_release_inputs
 from .research_memory.trace import atomic_write, file_digest, json_bytes
 
 SOURCE_PIN = b"__PIN_SOURCE_ARCHIVE_SHA256__"
-_MOUNT_SIDECARS = (
-    "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json",
-    "experiment_spec.json", "package_manifest.json",
-)
+_MOUNT_SIDECARS = tuple(sorted(SIDECARS - {"source.tar.gz"}))
 
 
 @dataclass(frozen=True)
@@ -26,6 +23,15 @@ class UploadArtifact:
 
     path: Path
     sha256: str
+
+    @classmethod
+    def from_file(cls, path: Path) -> "UploadArtifact":
+        """File transport identity, never a semantic or tensor-state digest."""
+        path = _trusted_file(path)
+        return cls(path, file_digest(path))
+
+    def to_workflow(self) -> dict:
+        return {"path": str(self.path), "sha256": self.sha256}
 
 
 def _artifact_name(name: str) -> str:
@@ -47,27 +53,19 @@ def _trusted_file(path: Path) -> Path:
     return _source(path.parent.resolve(), path.name)
 
 
-def stage_release_inputs(
-    spec, repo_root: Path, relative_paths, output: Path, *,
+def validate_staging_inputs(spec, repo_root: Path, relative_paths, *,
     artifacts: dict[str, UploadArtifact], recipe_files: dict[str, str],
-    initial_states: dict[str, str], required_modules,
-    entry_template: Path, kernel_metadata: Path,
-    dataset_metadata: dict | None = None, pickle_inputs=(),
-) -> dict:
-    """Assemble once and run the existing release check against actual upload bytes.
-
-    ``initial_states`` maps arm IDs to artifact names, not independent paths.
-    Metadata belongs to the platform caller; this function never chooses an
-    account, accelerator, scientific protocol or RML outcome. Failed/partial
-    output is retained and cannot be overwritten on retry.
-    """
+    initial_states: dict[str, str], entry_template: Path, kernel_metadata: Path,
+    output: Path | None = None) -> dict:
+    """Check transport bytes before any prospective publication; no output writes."""
     spec = _spec(spec)
     repo_root = Path(repo_root).resolve()
     relative_paths = list(relative_paths)
-    output = Path(output).absolute()
-    _no_links(output)
-    if output.exists():
-        raise FileExistsError(output)
+    if output is not None:
+        output = Path(output).absolute()
+        _no_links(output)
+        if output.exists():
+            raise FileExistsError(output)
     names = [_artifact_name(name) for name in artifacts]
     if len({name.casefold() for name in names}) != len(names):
         raise ValueError("Case-colliding upload artifacts")
@@ -90,9 +88,30 @@ def stage_release_inputs(
                 or not re.fullmatch(r"[0-9a-f]{64}", artifact.sha256)):
             raise ValueError("Upload inputs require an explicit SHA256")
         path = _trusted_file(artifact.path)
-        if path.is_relative_to(output.resolve()) or file_digest(path) != artifact.sha256:
+        if ((output is not None and path.is_relative_to(output.resolve()))
+                or file_digest(path) != artifact.sha256):
             raise ValueError(f"Input file SHA/boundary mismatch: {name}")
         trusted[name] = path
+    return {"names": names, "template_path": template_path,
+            "metadata_path": metadata_path, "trusted": trusted}
+
+
+def stage_release_inputs(
+    spec, repo_root: Path, relative_paths, output: Path, *,
+    artifacts: dict[str, UploadArtifact], recipe_files: dict[str, str],
+    initial_states: dict[str, str], required_modules,
+    entry_template: Path, kernel_metadata: Path,
+    dataset_metadata: dict | None = None, pickle_inputs=(),
+) -> dict:
+    """Assemble once and retain existing release checks against actual upload bytes."""
+    spec = _spec(spec)
+    repo_root, output = Path(repo_root).resolve(), Path(output).absolute()
+    relative_paths = list(relative_paths)
+    checked = validate_staging_inputs(spec, repo_root, relative_paths, artifacts=artifacts,
+        recipe_files=recipe_files, initial_states=initial_states, entry_template=entry_template,
+        kernel_metadata=kernel_metadata, output=output)
+    names, trusted = checked["names"], checked["trusted"]
+    template_path, metadata_path = checked["template_path"], checked["metadata_path"]
     output.mkdir(parents=True)
     source, inputs, kernel = (output / name for name in ("source", "inputs", "kernel"))
     try:

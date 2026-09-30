@@ -36,7 +36,7 @@ def invoke(capsys, args, expected=0):
 
 @pytest.mark.parametrize("command", [None, "validate-spec", "package", "preflight",
                                      "run-diagnostic", "launch-receipt", "terminal",
-                                     "plan-prospective", "check-release", "prepare-release",
+                                     "plan-prospective", "check-release", "prepare-release", "check-preparation",
                                      "check-acceptance", "inspect-output", "accept-terminal"])
 def test_help(capsys, command):
     with pytest.raises(SystemExit) as error:
@@ -448,7 +448,7 @@ def test_no_remote_or_dynamic_dispatch_in_cli():
                     and isinstance(action.choices, dict)).choices
     assert set(commands) == {"validate-spec", "package", "preflight", "run-diagnostic",
                              "launch-receipt", "terminal", "plan-prospective", "check-release",
-                             "prepare-release", "check-acceptance", "inspect-output", "accept-terminal"}
+                             "prepare-release", "check-preparation", "check-acceptance", "inspect-output", "accept-terminal"}
 
 
 def test_prepare_release_delegates_local_workflow(spec_file, tmp_path, capsys, monkeypatch):

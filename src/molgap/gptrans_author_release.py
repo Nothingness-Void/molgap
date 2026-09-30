@@ -13,8 +13,8 @@ import subprocess
 from .comparison_readiness import ROLE_EVENT_KINDS, TRACE_FIELD_DECLARATIONS, assess_comparison_prelaunch
 from .experiment_package import _name
 from .experiment_spec import ExperimentSpec
+from .experiment_staging import UploadArtifact
 from .server_acceptance import write_server_comparison_prelaunch
-from .research_memory.trace import atomic_write
 from .screen_policy import canonical_fingerprint
 from .training_reproducibility import atomic_json, sha256_file
 from .v4_runtime import normalized_source_sha256
@@ -154,7 +154,7 @@ def freeze_screen(root: Path, cpu_output: Path):
         "evidence": {"policy": ref("molgap-v5", sha256_file(root / "docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md")),
             "required_artifacts": ["v5_evidence", "costs", "roles", "trace_manifest", "terminal_artifact"]},
         "terminal_protocol": "molgap-experiment-terminal-descriptor-v1"})
-    atomic_write(root / GPU / "spec.json", spec.to_json().encode("utf-8"))
+    spec.write(root / GPU / "spec.json")
     transform = root / BASE / "recovered_reference/target_transform.json"
     atomic_json(root / GPU / "screen_config.json", {"spec_identity": spec.identity,
         "arms": arm_config, "dataset_manifest_sha256": recipe["manifest_sha256"],
@@ -180,9 +180,9 @@ def freeze_screen(root: Path, cpu_output: Path):
         sources.append(file)
     workflow = {"format": "molgap-release-workflow-v1", "spec_identity": spec.identity,
         "source_paths": sources, "artifacts": {
-            "initial_state.pt": {"path": str(initial), "sha256": recipe["initial_state_sha256"]},
-            "degree_initial_state.pt": {"path": str(degree), "sha256": accepted["degree_initial_file_sha256"]},
-            "target_transform.json": {"path": str(transform), "sha256": sha256_file(transform)}},
+            "initial_state.pt": UploadArtifact.from_file(initial).to_workflow(),
+            "degree_initial_state.pt": UploadArtifact.from_file(degree).to_workflow(),
+            "target_transform.json": UploadArtifact.from_file(transform).to_workflow()},
         "recipe_files": {mode: RECIPE for mode in MODES},
         "initial_states": {mode: arm_config[mode]["initial_file"] for mode in MODES},
         "required_modules": ["molgap.gptrans_author_screen", "molgap.gptrans_screen_adapter", "molgap.pcqm_gptrans_v4"],

@@ -150,7 +150,8 @@ def test_staged_source_payload_is_bound_to_the_verified_archive(release, tmp_pat
     spec, package, options = release
     inputs = tmp_path / "input"
     inputs.mkdir()
-    for name in ("SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json", "experiment_spec.json"):
+    from molgap.experiment_package import SIDECARS
+    for name in sorted(SIDECARS - {"source.tar.gz"}):
         shutil.copyfile(package / name, inputs / name)
     shutil.copyfile(package / "source.tar.gz", inputs / "source_payload.bin")
     for arm, path in list(options["initial_states"].items()):

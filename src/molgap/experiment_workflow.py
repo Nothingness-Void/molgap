@@ -1,15 +1,19 @@
 """Compose existing prospective and release staging APIs, without a submitter."""
 from __future__ import annotations
 
+import ast
+import hashlib
 import json
 from pathlib import Path
+from time import perf_counter
 
 from .experiment_launch import _safe_local
-from .experiment_package import _allowlist, _name, _spec
-from .experiment_prospective import plan_prospective
+from .experiment_package import _allowlist, _name, _source, _spec
+from .experiment_prospective import check_prospective, plan_prospective
 from .experiment_spec import SCHEMA_VERSION_V2, _digest, _unique_object
-from .experiment_staging import UploadArtifact, _artifact_name, stage_release_inputs
+from .experiment_staging import UploadArtifact, _artifact_name, stage_release_inputs, validate_staging_inputs
 from .research_memory.trace import atomic_write, json_bytes
+from .v4_bundle import _assert_clean_paths, _payload, _tracked_paths
 
 WORKFLOW_FORMAT = "molgap-release-workflow-v1"
 _FIELDS = {
@@ -82,6 +86,7 @@ def prepare_experiment_release(spec, repo_root: Path, workflow_raw: str, output:
     automatically replanned. Caller must reconcile before a retry. This does
     not select an account, POST a kernel, release compute or finalize evidence.
     """
+    started = perf_counter()
     spec = _spec(spec)
     if spec.to_dict()["schema_version"] != SCHEMA_VERSION_V2:
         raise ValueError("prepare-release requires per-arm Spec v2 planning")
@@ -89,22 +94,83 @@ def prepare_experiment_release(spec, repo_root: Path, workflow_raw: str, output:
     _safe_local(repo_root)
     _safe_local(output)
     inputs = release_workflow_inputs(spec, repo_root, workflow_raw)
+    precheck = check_experiment_preparation(spec, repo_root, workflow_raw, output=output)
+    timings = {"preparation_check_seconds": perf_counter() - started}
     output.mkdir(parents=True, exist_ok=False)
-    result = {"spec_identity": spec.identity, "submitted": False, "compute_released": False}
+    result = {"spec_identity": spec.identity, "submitted": False, "compute_released": False,
+              "preparation_check": precheck, "timings": timings}
+    phase_started = perf_counter()
+    phase = "prospective_publication_seconds"
     try:
         planned, code = plan_prospective(spec, repo_root)
+        timings[phase] = perf_counter() - phase_started
         result["prospective"] = planned
         if code:
             result["status"] = "PLANNING_BLOCKED_RECONCILE_BEFORE_RETRY"
         else:
+            phase, phase_started = "package_stage_release_check_seconds", perf_counter()
             staged = stage_release_inputs(spec, repo_root, output=output / "release", **inputs)
+            timings[phase] = perf_counter() - phase_started
             result["staging"] = staged
             code = 1 if staged["errors"] else 0
             result["status"] = "LOCAL_PREPARATION_BLOCKED" if code else "LOCAL_PREPARATION_COMPLETE"
+        timings["total_local_preparation_seconds"] = perf_counter() - started
         atomic_write(output / "workflow.json", json_bytes(result))
         return result, code
     except Exception as exc:
+        timings[phase] = perf_counter() - phase_started
+        timings["total_local_preparation_seconds"] = perf_counter() - started
         atomic_write(output / "workflow.json", json_bytes({
             **result, "status": "PREPARATION_ERROR_RECONCILE_BEFORE_RETRY", "error": str(exc),
         }))
         raise
+
+
+def check_experiment_preparation(spec, repo_root: Path, workflow_raw: str, *,
+                                output: Path | None = None) -> dict:
+    """Read-only integrated input/plan check; not a replacement for check-release.
+
+    Validate actual prospective semantics, selected source and upload file bytes
+    before publishing RML. No cache loading, tensor deserialization, model
+    execution or platform API calls occur; upload files are streamed for SHA.
+    """
+    started = perf_counter()
+    spec = _spec(spec)
+    if spec.to_dict()["schema_version"] != SCHEMA_VERSION_V2:
+        raise ValueError("check-preparation requires per-arm Spec v2 planning")
+    root = Path(repo_root).absolute()
+    _safe_local(root)
+    inputs = release_workflow_inputs(spec, root, workflow_raw)
+    validate_staging_inputs(spec, root, inputs["relative_paths"],
+        artifacts=inputs["artifacts"], recipe_files=inputs["recipe_files"],
+        initial_states=inputs["initial_states"], entry_template=inputs["entry_template"],
+        kernel_metadata=inputs["kernel_metadata"], output=output)
+    names = _allowlist(inputs["relative_paths"])
+    for name in names:
+        path = _source(root.resolve(), name)
+        if path.suffix == ".py":
+            ast.parse(_payload(path), filename=name)
+    for arm in spec.to_dict()["arms"]:
+        arm_id = arm["arm_id"]
+        recipe = _source(root.resolve(), inputs["recipe_files"][arm_id])
+        if hashlib.sha256(_payload(recipe)).hexdigest() != arm["training"]["recipe"]["sha256"]:
+            raise ValueError(f"Preparation recipe SHA differs from packaged LF bytes: {arm_id}")
+        if arm["initialization"]["state_sha256"] is not None and arm_id not in inputs["initial_states"]:
+            raise ValueError(f"Preparation missing pinned initialization binding: {arm_id}")
+    for module in inputs["required_modules"]:
+        base = "src/" + module.replace(".", "/")
+        if base + ".py" not in names and base + "/__init__.py" not in names:
+            raise ValueError(f"Preparation required module absent from source allowlist: {module}")
+    missing = set(names) - _tracked_paths(root)
+    if missing:
+        raise ValueError(f"Preparation source is untracked: {sorted(missing)}")
+    source_commit = _assert_clean_paths(root, names)
+    prospective = check_prospective(spec, root)
+    if prospective["batch"]["source_commit"] != source_commit:
+        raise ValueError("HEAD changed during preparation check")
+    return {"status": "LOCAL_PREPARATION_CHECKED_ONLY", "spec_identity": spec.identity,
+            "source_commit": source_commit, "prospective": prospective,
+            "upload_file_sha256": {name: artifact.sha256 for name, artifact in inputs["artifacts"].items()},
+            "elapsed_seconds": perf_counter() - started,
+            "published": False, "submitted": False, "compute_released": False,
+            "release_report_required": True}

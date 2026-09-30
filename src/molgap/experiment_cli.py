@@ -15,7 +15,7 @@ from .experiment_preflight import LOADER_MODE, MODEL_MODE, run_experiment_prefli
 from .experiment_prospective import plan_prospective
 from .experiment_runner import run_experiment
 from .experiment_spec import ExperimentSpec
-from .experiment_workflow import prepare_experiment_release
+from .experiment_workflow import check_experiment_preparation, prepare_experiment_release
 from .experiment_terminal import (
     TerminalDescriptor, execute_terminal_descriptor, translate_terminal_descriptor,
 )
@@ -48,17 +48,17 @@ def _parser() -> argparse.ArgumentParser:
     commands = parser.add_subparsers(dest="command", required=True)
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
                  "launch-receipt", "terminal", "plan-prospective", "check-release",
-                 "prepare-release", "check-acceptance", "inspect-output", "accept-terminal"):
+                 "prepare-release", "check-preparation", "check-acceptance", "inspect-output", "accept-terminal"):
         command = commands.add_parser(name)
         command.add_argument("--spec", required=True, type=_local)
-        if name in {"package", "terminal", "plan-prospective", "prepare-release", "check-acceptance", "accept-terminal"}:
+        if name in {"package", "terminal", "plan-prospective", "prepare-release", "check-preparation", "check-acceptance", "accept-terminal"}:
             command.add_argument("--repo-root", required=True, type=_local)
         if name in {"package", "preflight", "run-diagnostic", "prepare-release"}:
             command.add_argument("--output", required=True, type=_local)
         if name in {"preflight", "launch-receipt", "check-release", "inspect-output", "accept-terminal"}:
             command.add_argument("--package", required=True, type=_local)
             command.add_argument("--expected-package-identity", required=True)
-        if name == "prepare-release":
+        if name in {"prepare-release", "check-preparation"}:
             command.add_argument("--workflow", required=True, type=_local)
         elif name == "check-acceptance":
             command.add_argument("--plan", required=True, type=_local)
@@ -132,6 +132,8 @@ def _dispatch(args) -> tuple[dict, int]:
         return plan_prospective(spec, args.repo_root)
     if args.command == "prepare-release":
         return prepare_experiment_release(spec, args.repo_root, _read(args.workflow), args.output)
+    if args.command == "check-preparation":
+        return check_experiment_preparation(spec, args.repo_root, _read(args.workflow)), 0
     if args.command == "package":
         return build_experiment_source_package(spec, args.repo_root, args.allowlist, args.output), 0
     if args.command == "check-release":
