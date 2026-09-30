@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 62,
+    "trajectories_total": 66,
     "with_complete_native_measurement": 5,
-    "with_cost_event": 51,
-    "with_incomplete_native_measurement": 46,
+    "with_cost_event": 55,
+    "with_incomplete_native_measurement": 50,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 41,
+      "count": 45,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -52,6 +52,10 @@
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-pcqm-scale-transfer-reassessment-20260925",
+        "TB-pretraining-gptrans_joint-100k-s42",
+        "TB-pretraining-gptrans_joint-100k-s42-release2",
+        "TB-pretraining-k1-100k-s42",
+        "TB-pretraining-k1-100k-s42-release2",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
         "TB-xian-determinism-audit-20260915",
@@ -89,7 +93,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 46,
+      "count": 50,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -134,6 +138,10 @@
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-pcqm-scale-transfer-reassessment-20260925",
+        "TB-pretraining-gptrans_joint-100k-s42",
+        "TB-pretraining-gptrans_joint-100k-s42-release2",
+        "TB-pretraining-k1-100k-s42",
+        "TB-pretraining-k1-100k-s42-release2",
         "TB-xian-determinism-audit-20260915",
         "TC-k1-pair-value-decoupled-100k-s42",
         "TC-k1-v4-100k-reference-s42"
@@ -160,7 +168,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 30,
+      "count": 34,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -186,6 +194,10 @@
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-pcqm-scale-transfer-reassessment-20260925",
+        "TB-pretraining-gptrans_joint-100k-s42",
+        "TB-pretraining-gptrans_joint-100k-s42-release2",
+        "TB-pretraining-k1-100k-s42",
+        "TB-pretraining-k1-100k-s42-release2",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
         "TB-xian-determinism-audit-20260915",
@@ -197,7 +209,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 11,
+      "count": 13,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -208,6 +220,8 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
+        "TB-pretraining-gptrans_joint-100k-s42-release2",
+        "TB-pretraining-k1-100k-s42-release2",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],

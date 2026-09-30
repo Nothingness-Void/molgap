@@ -59,3 +59,13 @@ def test_stage_keeps_encoder_but_restores_gap_head_and_rng(tmp_path,monkeypatch)
     assert all(torch.equal(v,model.head.state_dict()[k]) for k,v in original.items())
     assert torch.equal(rng,torch.get_rng_state())
     assert (tmp_path/'stage_complete.json').is_file()
+
+
+def test_stage_rejects_wrong_frozen_initialization(tmp_path):
+    model=nn.Linear(3,1)
+    torch.save(model.state_dict(),tmp_path/'k1_initial_state.pt')
+    import pytest
+    with pytest.raises(ValueError,match='artifact changed'):
+        hierarchy_stage.apply_pretraining(model,[],family='k1',output=tmp_path,
+            config={'label_root':str(tmp_path),'label_manifest_sha256':'a'*64,
+                    'epochs':10,'initialization_sha256':'b'*64},source_commit='c'*40)

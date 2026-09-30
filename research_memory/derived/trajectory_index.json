@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "7be8d77211242e3d1260aa2e900a3e228ca3636aba30bb20f544f441e86f2c14",
+  "source_digest": "7b1dbda8a738454641537bba604f41ff256acc7beccea61b4f9cdd277b903eef",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -959,6 +959,66 @@
       ],
       "track": "B",
       "trajectory_id": "TB-pcqm-scale-transfer-reassessment-20260925"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_pretraining_family_pair/prospective/gptrans_joint/decision_no_train.md",
+      "family_id": "pretraining-gptrans_joint",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_pretraining_family_pair/prospective/gptrans_joint/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-pretraining-gptrans_joint-package1-no-train"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_pretraining_family_pair/launch_decision.md",
+      "family_id": "pretraining-gptrans_joint",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_pretraining_family_pair/prospective_release2/gptrans_joint/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_pretraining_family_pair/prospective/k1/decision_no_train.md",
+      "family_id": "pretraining-k1",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_pretraining_family_pair/prospective/k1/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-pretraining-k1-package1-no-train"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-pretraining-k1-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_pretraining_family_pair/launch_decision.md",
+      "family_id": "pretraining-k1",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_pretraining_family_pair/prospective_release2/k1/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
     },
     {
       "completeness_status": "partial",

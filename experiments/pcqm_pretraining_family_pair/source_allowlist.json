@@ -5,7 +5,6 @@
   "src/molgap/training_reproducibility.py",
   "src/molgap/v4_runtime.py",
   "src/molgap/experiment_spec.py",
-  "src/molgap/pcqm_gap_data.py",
   "src/molgap/pcqm_gptrans_v4.py",
   "src/molgap/gptrans.py",
   "src/molgap/gptrans_variants.py",
@@ -21,5 +20,6 @@
   "src/molgap/hierarchy_stage.py",
   "experiments/pcqm_pretraining_family_pair/run_families.py",
   "experiments/pcqm_pretraining_family_pair/run_pair.py",
-  "experiments/pcqm_pretraining_family_pair/training_contract.json"
+  "experiments/pcqm_pretraining_family_pair/training_contract.json",
+  "src/molgap/pcqm_wedge.py"
 ]

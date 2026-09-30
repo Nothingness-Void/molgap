@@ -816,6 +816,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-pretraining-gptrans_joint-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-pretraining-gptrans_joint-100k-s42-release2",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-gptrans-noisy-pair-norm-500k-s42",
       "target": "TB-gptrans-100k-local-joint-control-20260925",
       "type": "prior_evidence"
@@ -1091,6 +1101,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-pretraining-k1-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-pretraining-k1-100k-s42-release2",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-gptrans-500k-frozen-readout-attribution",
       "type": "prior_evidence"
@@ -1148,6 +1168,16 @@
     {
       "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
       "target": "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-pretraining-gptrans_joint-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-noisy-pair-norm-100k-s42",
+      "target": "TB-pretraining-gptrans_joint-100k-s42-release2",
       "type": "reference_used"
     },
     {
@@ -1323,6 +1353,16 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-k1-full-convergence-20260919",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-pretraining-k1-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-pretraining-k1-100k-s42-release2",
       "type": "reference_used"
     },
     {
@@ -1531,6 +1571,14 @@
     },
     {
       "id": "pcqm-matched-500k-v4-three-arm",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-pretraining-gptrans_joint-package1-no-train",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-pretraining-k1-package1-no-train",
       "type": "evidence"
     },
     {
@@ -1771,6 +1819,22 @@
     },
     {
       "id": "TB-pcqm-scale-transfer-reassessment-20260925",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pretraining-gptrans_joint-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pretraining-gptrans_joint-100k-s42-release2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pretraining-k1-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pretraining-k1-100k-s42-release2",
       "type": "trajectory"
     },
     {

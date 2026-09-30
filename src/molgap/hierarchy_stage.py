@@ -62,6 +62,15 @@ def qualify_stage(model, graphs, *, family, output):
 def apply_pretraining(model, graphs, *, family, output, config, source_commit):
     if set(config) != {'label_root','label_manifest_sha256','epochs','initialization_sha256'} or config['epochs'] != 10:
         raise ValueError('Unsupported frozen pretraining configuration')
+    # Seeded constructors may differ across torch releases; the frozen tensor
+    # artifact, rather than a second platform's RNG implementation, owns identity.
+    initialization = Path(config['label_root']) / f'{family}_initial_state.pt'
+    if initialization.is_file():
+        from .v4_runtime import state_dict_sha256, torch_load_compat
+        state = torch_load_compat(initialization, map_location='cpu', weights_only=False)
+        if state_dict_sha256(state) != config['initialization_sha256']:
+            raise ValueError('Frozen family initialization artifact changed')
+        model.load_state_dict(state, strict=True)
     if model_state_sha256(model)!=config['initialization_sha256']:
         raise ValueError('Frozen family initialization changed before pretraining')
     labelled=LabelledTrainingGraphs(graphs,Path(config['label_root']),config['label_manifest_sha256'])

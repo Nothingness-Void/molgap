@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 219,
+  "ambiguous_historical_role_record_count": 225,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -1367,6 +1367,48 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-pretraining-gptrans_joint-package1-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-gptrans_joint-package1-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-gptrans_joint-package1-no-train",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-k1-package1-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-k1-package1-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-k1-package1-no-train",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-recurrent-graph-state-100k-seed42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -2333,6 +2375,8 @@
       "pcqm-k1-residual-reconciliation",
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-matched-500k-v4-three-arm",
+      "pcqm-pretraining-gptrans_joint-package1-no-train",
+      "pcqm-pretraining-k1-package1-no-train",
       "pcqm-recurrent-graph-state-100k-seed42",
       "pcqm-route-b-four-encoder-specialist",
       "pcqm-scale-transfer-attribution-no-train",
@@ -2385,6 +2429,8 @@
       "pcqm-k1-residual-reconciliation",
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-matched-500k-v4-three-arm",
+      "pcqm-pretraining-gptrans_joint-package1-no-train",
+      "pcqm-pretraining-k1-package1-no-train",
       "pcqm-recurrent-graph-state-100k-seed42",
       "pcqm-route-b-four-encoder-specialist",
       "pcqm-scale-transfer-attribution-no-train",

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "unknown",
+  "category": "other",
+  "cost_event_id": "cost-finalize-a07d3f6af37543f53ef26a41",
+  "evidence_ref": "experiments/pcqm_pretraining_family_pair/prospective/k1/rml_finalized/v5_evidence.json",
+  "hardware": "unknown",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "unknown",
+  "run_id": "kaggle1-pretraining-family-pair-100k-s42-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pretraining-k1-100k-s42"
+}

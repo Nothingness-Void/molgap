@@ -1,0 +1,26 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-e34179db6f62da089e5294d65357dd95575e837c70fd54295a79bb86529d8a8c",
+  "finalized_at": "2026-09-30T03:27:28.529453+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_pretraining_family_pair/prospective/gptrans_joint/acceptance_no_train.json": "05554786028e2db9705987a6204596dcddb384221dfbcc20c268511197ae04f6",
+    "experiments/pcqm_pretraining_family_pair/prospective/gptrans_joint/decision_no_train.md": "ba74f94bafb5c1bedf0bc6070229743fdb97d827fe60f188c0fefc9af8edfacc"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/measurement_missing.json": "fbd9f0340a20b0c8a82d8eaabe0117cad6d66304a2c80c516ad7e2746773e99f",
+    "prospective_snapshot.json": "e856584c6d586131e452558d4ea74f093a6528c612425875eed28691522d45ce",
+    "terminal_input.json": "69b95d8001baad5d3d065d5efa8aff02c3dcdcc6aa017621c0a1536f992434ce",
+    "trajectory.json": "501e0bbce53dd2056297091a9a581ad07c9ff2b234acb06cede6e68e7284530e",
+    "v5_evidence.json": "a20bc30a00ca34753b44fa525b95da2338fee9d854942ea2f0cafd1df452233a"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_pretraining_family_pair/prospective/gptrans_joint/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "e34179db6f62da089e5294d65357dd95575e837c70fd54295a79bb86529d8a8c",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42"
+}

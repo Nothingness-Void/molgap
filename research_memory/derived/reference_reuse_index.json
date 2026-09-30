@@ -629,7 +629,9 @@
       "transfer_status": "qualified_for_500k",
       "used_by_trajectory_ids": [
         "TB-gptrans-feature-denoise-full-atom-100k-s42",
-        "TB-gptrans-feature-denoise-full-atom-bond-100k-s42"
+        "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
+        "TB-pretraining-gptrans_joint-100k-s42",
+        "TB-pretraining-gptrans_joint-100k-s42-release2"
       ]
     },
     {
@@ -952,7 +954,10 @@
       "source_envelope": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json",
       "track": "C",
       "transfer_status": "reusable_same_contract_only",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-pretraining-k1-100k-s42",
+        "TB-pretraining-k1-100k-s42-release2"
+      ]
     },
     {
       "artifact_availability": [
@@ -979,6 +984,44 @@
         "TB-gptrans-pair-norm-500k-s42",
         "TB-pcqm-scale-transfer-reassessment-20260925"
       ]
+    },
+    {
+      "artifact_availability": [
+        "local_verified"
+      ],
+      "comparison_status": "not_applicable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-pretraining-gptrans_joint-package1-no-train",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "unsubmitted_source_manifest_correction",
+      "source_envelope": "experiments/pcqm_pretraining_family_pair/prospective/gptrans_joint/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_applicable",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_verified"
+      ],
+      "comparison_status": "not_applicable",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-pretraining-k1-package1-no-train",
+      "role_use": {
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "unsubmitted_source_manifest_correction",
+      "source_envelope": "experiments/pcqm_pretraining_family_pair/prospective/k1/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_applicable",
+      "used_by_trajectory_ids": []
     },
     {
       "artifact_availability": [
