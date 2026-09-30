@@ -1,0 +1,128 @@
+{
+  "artifacts": [
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "186091ec1d49d15ca04a4f66a9b514f3ca1ea75c92c0ed167929029583df8cf8"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/decision.md",
+      "name": "decision.md",
+      "sha256": "b42de017eae65f961aed32b18883f1af4b1ff46cbb9e0e81f78e8d25e56eec52"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/descriptors_retry2_manifest.json",
+      "name": "descriptors_retry2_manifest.json",
+      "sha256": "824d41f6f541a7f06d51fc73ffb048fd8fb61ed3e01eca0a1571b4ccaf3cbb78"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/fingerprints_retry2_manifest.json",
+      "name": "fingerprints_retry2_manifest.json",
+      "sha256": "bf4599bf295c0e6dc348248d2de8c3d82fc1bde7efd7db95096e9a900d4053e5"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "experiments/pcqm_gptrans_chemical_aux/cache_retry_protocol.md",
+      "name": "cache_retry_protocol.md",
+      "sha256": "7004a2bb97d79be443cc1646f861c50dc7dc58737261cfb56decffc548f24d46"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "experiments/pcqm_gptrans_chemical_aux/label_policy.md",
+      "name": "label_policy.md",
+      "sha256": "5e7be2e06dfcdd1214d55492b7e77ea0dd4ea6110edd00917632c90078cd3ffa"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "experiments/pcqm_gptrans_chemical_aux/cache_retry_plan.json",
+      "name": "cache_retry_plan.json",
+      "sha256": "b4681eed80b631fc4ce9a3f43caaa2df15db28085d86c81c1edcd0c1126fab3b"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "experiments/pcqm_gptrans_chemical_aux/cache_observation/export_receipt_attempt2.json",
+      "name": "export_receipt_attempt2.json",
+      "sha256": "aec67074419633bcc8bb6df11c4bc1425cd027e0ad579434fd4af07f2f2b093f"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "experiments/pcqm_gptrans_chemical_aux/build_labels.py",
+      "name": "build_labels.py",
+      "sha256": "2feb24da7552caf28ca4b87b453888c58c8ee1cddc155280a02ebb6cb3afb93a"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "src/molgap/chemical_aux_cache.py",
+      "name": "chemical_aux_cache.py",
+      "sha256": "b3a5c2e164a85ac8820372bb8d354d767737e3a636a421ee1d3f139052fda2a7"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "src/molgap/chemical_aux_labels.py",
+      "name": "chemical_aux_labels.py",
+      "sha256": "4ecb8da12b9267f3b015e3248d5ed62cee62c7764f15720666973303a35ba019"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "src/molgap/pcqm_official_edge_state.py",
+      "name": "pcqm_official_edge_state.py",
+      "sha256": "49d770c1db3cc1f05aec4e7ab8a834915ad71fdc0e3c5c994e0ec586e2eb88cc"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "src/molgap/pcqm_gptrans_v4.py",
+      "name": "pcqm_gptrans_v4.py",
+      "sha256": "d04e8420726c233b73b84d6674d29fc195d1ff31039db3ec3ef0163cb3372d0a"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/acceptance.json",
+      "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/decision.md",
+      "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/descriptors_retry2_manifest.json",
+      "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/fingerprints_retry2_manifest.json",
+      "experiments/pcqm_gptrans_chemical_aux/cache_retry_protocol.md",
+      "experiments/pcqm_gptrans_chemical_aux/label_policy.md",
+      "experiments/pcqm_gptrans_chemical_aux/cache_retry_plan.json",
+      "experiments/pcqm_gptrans_chemical_aux/cache_observation/export_receipt_attempt2.json",
+      "experiments/pcqm_gptrans_chemical_aux/build_labels.py",
+      "src/molgap/chemical_aux_cache.py",
+      "src/molgap/chemical_aux_labels.py",
+      "src/molgap/pcqm_official_edge_state.py",
+      "src/molgap/pcqm_gptrans_v4.py"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-chemical-aux-component-cache-retry2-20260930",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-01T00:12:07+09:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Prospective train-only component-cache acceptance; no model training, inference, comparison or accuracy evidence."
+  },
+  "outcome": {
+    "artifact_status": "accepted_hash_verified_component_caches_with_masked_descriptor_missingness",
+    "budget_decision": "no_accelerator_release_for_cache_diagnostic",
+    "comparison_status": "not_applicable_no_model_execution",
+    "execution_status": "cpu_cache_diagnostic_complete_stopped_before_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "fixed50k_development": "untouched",
+    "official_train_prefix_0_100000": "labels_read",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "desktop_train_only_chemical_component_cache_retry2",
+  "track": "B"
+}

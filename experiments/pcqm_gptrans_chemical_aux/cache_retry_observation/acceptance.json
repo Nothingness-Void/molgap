@@ -1,0 +1,487 @@
+{
+  "accepted_blocker": false,
+  "action_id": "A-chemical-aux-component-cache-retry2",
+  "actual_source_commit": "d9fe982088117bc51f226d920e29885c5509d265",
+  "attempt_id": "local-component-cache-002",
+  "cache_accepted": true,
+  "cache_builder_invocation": "Command line not retained; effective component, parse and missingness parameters are bound from each accepted manifest.",
+  "caches": {
+    "descriptors": {
+      "accepted": true,
+      "cache_root": "D:\\w\\chemical-inputs-20260930\\descriptors_retry2",
+      "cpu_stage_wall_seconds": 1115.8016178000034,
+      "descriptor_columns_with_missing": 5,
+      "descriptor_missing_by_column": [
+        {
+          "column_index": 39,
+          "column_name": "MaxAbsPartialCharge",
+          "missing_cells": 92
+        },
+        {
+          "column_index": 41,
+          "column_name": "MaxPartialCharge",
+          "missing_cells": 92
+        },
+        {
+          "column_index": 43,
+          "column_name": "MinAbsPartialCharge",
+          "missing_cells": 92
+        },
+        {
+          "column_index": 45,
+          "column_name": "MinPartialCharge",
+          "missing_cells": 92
+        },
+        {
+          "column_index": 199,
+          "column_name": "qed",
+          "missing_cells": 1
+        }
+      ],
+      "descriptor_missing_cells": 369,
+      "descriptor_rows_with_missing": 92,
+      "encoder": {
+        "components": [
+          "descriptors"
+        ],
+        "descriptastorus": "2.8.0",
+        "descriptor_failure_detection": "raw-and-cdf-failure-to-nan-v1",
+        "descriptor_missing_policy": "mask_nonfinite",
+        "descriptor_names": [
+          "BalabanJ",
+          "BertzCT",
+          "Chi0",
+          "Chi0n",
+          "Chi0v",
+          "Chi1",
+          "Chi1n",
+          "Chi1v",
+          "Chi2n",
+          "Chi2v",
+          "Chi3n",
+          "Chi3v",
+          "Chi4n",
+          "Chi4v",
+          "EState_VSA1",
+          "EState_VSA10",
+          "EState_VSA11",
+          "EState_VSA2",
+          "EState_VSA3",
+          "EState_VSA4",
+          "EState_VSA5",
+          "EState_VSA6",
+          "EState_VSA7",
+          "EState_VSA8",
+          "EState_VSA9",
+          "ExactMolWt",
+          "FpDensityMorgan1",
+          "FpDensityMorgan2",
+          "FpDensityMorgan3",
+          "FractionCSP3",
+          "HallKierAlpha",
+          "HeavyAtomCount",
+          "HeavyAtomMolWt",
+          "Ipc",
+          "Kappa1",
+          "Kappa2",
+          "Kappa3",
+          "LabuteASA",
+          "MaxAbsEStateIndex",
+          "MaxAbsPartialCharge",
+          "MaxEStateIndex",
+          "MaxPartialCharge",
+          "MinAbsEStateIndex",
+          "MinAbsPartialCharge",
+          "MinEStateIndex",
+          "MinPartialCharge",
+          "MolLogP",
+          "MolMR",
+          "MolWt",
+          "NHOHCount",
+          "NOCount",
+          "NumAliphaticCarbocycles",
+          "NumAliphaticHeterocycles",
+          "NumAliphaticRings",
+          "NumAromaticCarbocycles",
+          "NumAromaticHeterocycles",
+          "NumAromaticRings",
+          "NumHAcceptors",
+          "NumHDonors",
+          "NumHeteroatoms",
+          "NumRadicalElectrons",
+          "NumRotatableBonds",
+          "NumSaturatedCarbocycles",
+          "NumSaturatedHeterocycles",
+          "NumSaturatedRings",
+          "NumValenceElectrons",
+          "PEOE_VSA1",
+          "PEOE_VSA10",
+          "PEOE_VSA11",
+          "PEOE_VSA12",
+          "PEOE_VSA13",
+          "PEOE_VSA14",
+          "PEOE_VSA2",
+          "PEOE_VSA3",
+          "PEOE_VSA4",
+          "PEOE_VSA5",
+          "PEOE_VSA6",
+          "PEOE_VSA7",
+          "PEOE_VSA8",
+          "PEOE_VSA9",
+          "RingCount",
+          "SMR_VSA1",
+          "SMR_VSA10",
+          "SMR_VSA2",
+          "SMR_VSA3",
+          "SMR_VSA4",
+          "SMR_VSA5",
+          "SMR_VSA6",
+          "SMR_VSA7",
+          "SMR_VSA8",
+          "SMR_VSA9",
+          "SlogP_VSA1",
+          "SlogP_VSA10",
+          "SlogP_VSA11",
+          "SlogP_VSA12",
+          "SlogP_VSA2",
+          "SlogP_VSA3",
+          "SlogP_VSA4",
+          "SlogP_VSA5",
+          "SlogP_VSA6",
+          "SlogP_VSA7",
+          "SlogP_VSA8",
+          "SlogP_VSA9",
+          "TPSA",
+          "VSA_EState1",
+          "VSA_EState10",
+          "VSA_EState2",
+          "VSA_EState3",
+          "VSA_EState4",
+          "VSA_EState5",
+          "VSA_EState6",
+          "VSA_EState7",
+          "VSA_EState8",
+          "VSA_EState9",
+          "fr_Al_COO",
+          "fr_Al_OH",
+          "fr_Al_OH_noTert",
+          "fr_ArN",
+          "fr_Ar_COO",
+          "fr_Ar_N",
+          "fr_Ar_NH",
+          "fr_Ar_OH",
+          "fr_COO",
+          "fr_COO2",
+          "fr_C_O",
+          "fr_C_O_noCOO",
+          "fr_C_S",
+          "fr_HOCCN",
+          "fr_Imine",
+          "fr_NH0",
+          "fr_NH1",
+          "fr_NH2",
+          "fr_N_O",
+          "fr_Ndealkylation1",
+          "fr_Ndealkylation2",
+          "fr_Nhpyrrole",
+          "fr_SH",
+          "fr_aldehyde",
+          "fr_alkyl_carbamate",
+          "fr_alkyl_halide",
+          "fr_allylic_oxid",
+          "fr_amide",
+          "fr_amidine",
+          "fr_aniline",
+          "fr_aryl_methyl",
+          "fr_azide",
+          "fr_azo",
+          "fr_barbitur",
+          "fr_benzene",
+          "fr_benzodiazepine",
+          "fr_bicyclic",
+          "fr_diazo",
+          "fr_dihydropyridine",
+          "fr_epoxide",
+          "fr_ester",
+          "fr_ether",
+          "fr_furan",
+          "fr_guanido",
+          "fr_halogen",
+          "fr_hdrzine",
+          "fr_hdrzone",
+          "fr_imidazole",
+          "fr_imide",
+          "fr_isocyan",
+          "fr_isothiocyan",
+          "fr_ketone",
+          "fr_ketone_Topliss",
+          "fr_lactam",
+          "fr_lactone",
+          "fr_methoxy",
+          "fr_morpholine",
+          "fr_nitrile",
+          "fr_nitro",
+          "fr_nitro_arom",
+          "fr_nitro_arom_nonortho",
+          "fr_nitroso",
+          "fr_oxazole",
+          "fr_oxime",
+          "fr_para_hydroxylation",
+          "fr_phenol",
+          "fr_phenol_noOrthoHbond",
+          "fr_phos_acid",
+          "fr_phos_ester",
+          "fr_piperdine",
+          "fr_piperzine",
+          "fr_priamide",
+          "fr_prisulfonamd",
+          "fr_pyridine",
+          "fr_quatN",
+          "fr_sulfide",
+          "fr_sulfonamd",
+          "fr_sulfone",
+          "fr_term_acetylene",
+          "fr_tetrazole",
+          "fr_thiazole",
+          "fr_thiocyan",
+          "fr_thiophene",
+          "fr_unbrch_alkane",
+          "fr_urea",
+          "qed"
+        ],
+        "fingerprint": {
+          "fpSize": 512,
+          "kind": "RDKFingerprint",
+          "maxPath": 7,
+          "minPath": 1
+        },
+        "normalization": "RDKit2DNormalized library distributions; no PCQM fitting",
+        "parse_policy": "pcqm_topology",
+        "rdkit": "2026.3.4"
+      },
+      "expected_row_count": 100000,
+      "export_coverage_complete": true,
+      "export_row_count": 100000,
+      "failure_inventory_complete": true,
+      "failures": [],
+      "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "label_policy": {
+        "components": [
+          "descriptors"
+        ],
+        "descriptor_missing_policy": "mask_nonfinite",
+        "parse_policy": "pcqm_topology"
+      },
+      "labels_path": "D:\\w\\chemical-inputs-20260930\\descriptors_retry2\\labels.npz",
+      "labels_sha256": "8a56d81fa9c5d7aaf74b6d76bc0bcb16c0ad3b10c79aadc64b5d1ec67eb4803b",
+      "manifest": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/descriptors_retry2_manifest.json",
+      "manifest_sha256": "824d41f6f541a7f06d51fc73ffb048fd8fb61ed3e01eca0a1571b4ccaf3cbb78",
+      "official_archive_sha256": "628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701",
+      "official_row_manifest_sha256": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+      "official_train_membership_verified": true,
+      "protected_target_columns_read": false,
+      "role_sha256": "626fb2ff7dc44e9e6a88dfd301b3b295d1414c89b1dbac708af8379c66d4932c",
+      "row_count": 100000,
+      "rows_sha256": "64c10233a76f1f36d9f0da3b3c26a83c4166a44bbf70c3e58fcc6d24cb78df46",
+      "schema": "molgap-chemical-cache-v2",
+      "train_graph_sha256": [
+        "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+        "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd"
+      ]
+    },
+    "fingerprints": {
+      "accepted": true,
+      "cache_root": "D:\\w\\chemical-inputs-20260930\\fingerprints_retry2",
+      "cpu_stage_wall_seconds": 54.36206579999998,
+      "descriptor_columns_with_missing": 0,
+      "descriptor_missing_by_column": [],
+      "descriptor_missing_cells": 0,
+      "descriptor_rows_with_missing": 0,
+      "encoder": {
+        "components": [
+          "fingerprints"
+        ],
+        "descriptastorus": null,
+        "descriptor_missing_policy": "reject",
+        "descriptor_names": [],
+        "fingerprint": {
+          "fpSize": 512,
+          "kind": "RDKFingerprint",
+          "maxPath": 7,
+          "minPath": 1
+        },
+        "normalization": "RDKit2DNormalized library distributions; no PCQM fitting",
+        "parse_policy": "pcqm_topology",
+        "rdkit": "2026.3.4"
+      },
+      "expected_row_count": 100000,
+      "export_coverage_complete": true,
+      "export_row_count": 100000,
+      "failure_inventory_complete": true,
+      "failures": [],
+      "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "label_policy": {
+        "components": [
+          "fingerprints"
+        ],
+        "descriptor_missing_policy": "reject",
+        "parse_policy": "pcqm_topology"
+      },
+      "labels_path": "D:\\w\\chemical-inputs-20260930\\fingerprints_retry2\\labels.npz",
+      "labels_sha256": "9eb7f434b534497404e8d4435c1d6dcdde1371c27948c7603da0469b131c46f7",
+      "manifest": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/fingerprints_retry2_manifest.json",
+      "manifest_sha256": "bf4599bf295c0e6dc348248d2de8c3d82fc1bde7efd7db95096e9a900d4053e5",
+      "official_archive_sha256": "628ae612a3de752160929d93d1584a75257ae156e7b13d91b133d8db62e6d701",
+      "official_row_manifest_sha256": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+      "official_train_membership_verified": true,
+      "protected_target_columns_read": false,
+      "role_sha256": "626fb2ff7dc44e9e6a88dfd301b3b295d1414c89b1dbac708af8379c66d4932c",
+      "row_count": 100000,
+      "rows_sha256": "64c10233a76f1f36d9f0da3b3c26a83c4166a44bbf70c3e58fcc6d24cb78df46",
+      "schema": "molgap-chemical-cache-v2",
+      "train_graph_sha256": [
+        "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+        "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd"
+      ]
+    }
+  },
+  "costs": [
+    {
+      "action_id": "A-chemical-aux-component-cache-retry2",
+      "attempt_id": "local-component-cache-002-descriptors",
+      "category": "cache_build",
+      "cost_event_id": "C-chemical-aux-component-cache-retry2-descriptors-wall",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/acceptance.json",
+      "hardware": "CPU_MODEL_UNRECORDED",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.3099448938333343
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "chemical-aux-component-cache-retry2",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-chemical-aux-component-cache-retry2-20260930"
+    },
+    {
+      "action_id": "A-chemical-aux-component-cache-retry2",
+      "attempt_id": "local-component-cache-002-fingerprints",
+      "category": "cache_build",
+      "cost_event_id": "C-chemical-aux-component-cache-retry2-fingerprints-wall",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/acceptance.json",
+      "hardware": "CPU_MODEL_UNRECORDED",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.015100573833333329
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "chemical-aux-component-cache-retry2",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-chemical-aux-component-cache-retry2-20260930"
+    }
+  ],
+  "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
+  "failure_inventory_complete": true,
+  "finalized_at": "2026-10-01T00:12:07+09:00",
+  "format": "molgap-chemical-cache-acceptance-v1",
+  "inference_executed": false,
+  "inherited_prospective_source_config_identity": "3ba6a0cf4f1f5b68f12ebfa3ca6c48f16bdbb9b955871bc69a9391284689161e",
+  "input_source_mapping_verified": true,
+  "native_cost_scope": "Per-cache cpu_stage_wall_seconds are measured elapsed wall durations from the manifests. CPU busy time and aggregate end-to-end task wall time are unknown; no accelerator or queue allocation occurred.",
+  "outcome": {
+    "artifact_status": "accepted_hash_verified_component_caches_with_masked_descriptor_missingness",
+    "budget_decision": "no_accelerator_release_for_cache_diagnostic",
+    "comparison_status": "not_applicable_no_model_execution",
+    "execution_status": "cpu_cache_diagnostic_complete_stopped_before_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_access_scope": "SMILES and derived chemical labels from the exact 100K official-train prefix only; no target columns were read by this adapter and no model execution or development selection occurred.",
+  "role_use": {
+    "fixed50k_development": "untouched",
+    "official_train_prefix_0_100000": "labels_read",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A-chemical-aux-component-cache-retry2",
+      "dataset_identity": "pcqm-fixed100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/acceptance.json",
+      "role_event_id": "R-chemical-aux-component-cache-retry2-train-chemical-labels",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b",
+      "run_id": "chemical-aux-component-cache-retry2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-chemical-aux-component-cache-retry2-20260930"
+    }
+  ],
+  "run_id": "chemical-aux-component-cache-retry2",
+  "source_config_identity_interpretation": "Inherited opaque digest preserved as frozen prospective state; it is not treated as binding the retry's effective label policies. Effective policies and actual cache and source hashes are recorded in this acceptance.",
+  "source_file_bindings": [
+    {
+      "path": "experiments/pcqm_gptrans_chemical_aux/build_labels.py",
+      "sha256": "2feb24da7552caf28ca4b87b453888c58c8ee1cddc155280a02ebb6cb3afb93a"
+    },
+    {
+      "path": "src/molgap/chemical_aux_cache.py",
+      "sha256": "b3a5c2e164a85ac8820372bb8d354d767737e3a636a421ee1d3f139052fda2a7"
+    },
+    {
+      "path": "src/molgap/chemical_aux_labels.py",
+      "sha256": "4ecb8da12b9267f3b015e3248d5ed62cee62c7764f15720666973303a35ba019"
+    },
+    {
+      "path": "src/molgap/pcqm_official_edge_state.py",
+      "sha256": "49d770c1db3cc1f05aec4e7ab8a834915ad71fdc0e3c5c994e0ec586e2eb88cc"
+    },
+    {
+      "path": "src/molgap/pcqm_gptrans_v4.py",
+      "sha256": "d04e8420726c233b73b84d6674d29fc195d1ff31039db3ec3ef0163cb3372d0a"
+    }
+  ],
+  "submission_executed": false,
+  "training_executed": false,
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/decision.md",
+    "next_allowed_actions": [
+      "freeze independent descriptor and fingerprint training-arm plans under separate prospective records"
+    ],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "a separate training prospective and explicit launch authorization"
+    ]
+  },
+  "trajectory_id": "TB-chemical-aux-component-cache-retry2-20260930"
+}

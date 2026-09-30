@@ -1,0 +1,35 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-e0a88230278efd2319dea14081885387985b9c4d2aee528358675578a1f7a0f0",
+  "finalized_at": "2026-10-01T00:22:14+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/acceptance.json": "186091ec1d49d15ca04a4f66a9b514f3ca1ea75c92c0ed167929029583df8cf8",
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/descriptors_retry2_manifest.json": "824d41f6f541a7f06d51fc73ffb048fd8fb61ed3e01eca0a1571b4ccaf3cbb78",
+    "experiments/pcqm_gptrans_chemical_aux/objective_descriptor_aux.json": "4394dca2d88a44a63c64c19c8151b7967dcbf6b21ee3894d3dc93c3948ad09b0",
+    "experiments/pcqm_gptrans_chemical_aux/training_contract_descriptor_aux.json": "a1c4f5f9750dadafac87a4a05618dd0e6b20f028fa78189329c93d0ec23dba4d",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/descriptor_aux/acceptance.json": "24bcfb1bc1ca3b6869b7bd5443942242f37bce9bdd5735fdf0e05501fdc48a63",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/descriptor_aux/costs/cost-TB-gptrans-chemical-descriptor-aux-100k-s42-v1-expected-training.json": "ae0d8cd96dc9240c634adcd59e1c9a9b7d7f1957f7e6ee26ce984561eb129288",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/descriptor_aux/decision_no_train.md": "ed8430a34fb7dab9e5a68f520c7c78963ec0fcb047086032bf8bdce5fad0a91c",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/descriptor_aux/decision_state.json": "dd06db17f0f535841424f5d007c3b93cb508bdab50120c6834bdd8bdbca7a8d4",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/descriptor_aux/policy_snapshot.json": "9b2ed121994097a0f17637618d77290db2a4308c11aba5fdb311b8dd25a97221",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/descriptor_aux/trajectory.json": "a1545406c51ba92daa0ea38b1f703b042185658f476adb9deb159b07c8d10ab0",
+    "experiments/pcqm_gptrans_chemical_aux/training_protocol.md": "58c613e8cf9c151172f33a4b76058cca7def50a47cdab60293a3fa3b75d1c8ff"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/measurement_missing.json": "7f982e0fb7f1b91a0dac0864f64d346930a0a1c4dd0249561ad0751b31ebbe63",
+    "prospective_snapshot.json": "a1545406c51ba92daa0ea38b1f703b042185658f476adb9deb159b07c8d10ab0",
+    "terminal_input.json": "18f979927e8f11ab6bdb4ee4e8d290a85ae8140dffd0fada97ade5028931a390",
+    "trajectory.json": "f083fe718dfd81f76391b3dd2472e1f462c539c8cf9d7b300246961086a62521",
+    "v5_evidence.json": "38ab3b0c2c1fd71f80ff9c2ca38daa3b796329f99efacbfa4525b2f2ede40b5f"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_chemical_aux/training_prospective/descriptor_aux/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "e0a88230278efd2319dea14081885387985b9c4d2aee528358675578a1f7a0f0",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v1"
+}

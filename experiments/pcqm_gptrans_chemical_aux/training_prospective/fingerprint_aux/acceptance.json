@@ -1,0 +1,65 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle1-v1",
+  "cache_labels_sha256": "9eb7f434b534497404e8d4435c1d6dcdde1371c27948c7603da0469b131c46f7",
+  "cache_manifest_sha256": "bf4599bf295c0e6dc348248d2de8c3d82fc1bde7efd7db95096e9a900d4053e5",
+  "costs": [],
+  "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
+  "finalized_at": "2026-10-01T00:22:22+09:00",
+  "native_cost": {
+    "cpu_busy_time": null,
+    "device_time": null,
+    "note": "The frozen six-hour T4 amount is an estimate only; no actual attempt-specific cost was recorded.",
+    "queue_time": null,
+    "status": "measurement_missing",
+    "wall_time": null
+  },
+  "outcome": {
+    "artifact_status": "source_package_allowlist_blocked_before_publication",
+    "budget_decision": "no_gpu_allocated",
+    "comparison_status": "not_applicable_no_model_execution",
+    "execution_status": "stopped_before_publication_no_remote_job_created",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "package_release": {
+    "cause": "experiment_package._name classified required src/molgap/experiment_family_artifacts.py as a sensitive data file",
+    "gpu_allocated": false,
+    "inference_executed": false,
+    "planned_run_id_is_platform_job_id": false,
+    "platform_job_id": null,
+    "source_of_observation": "experiment-owner report",
+    "status": "blocked_before_publication",
+    "training_executed": false
+  },
+  "role_access": {
+    "development_role_consumed": false,
+    "official_train_prefix_consumed_by_this_training_attempt": false,
+    "official_validation_consumed": false,
+    "test_challenge_consumed": false,
+    "test_dev_consumed": false
+  },
+  "role_use": {
+    "fixed50k_development": "untouched",
+    "official_train_prefix_0_100000": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [],
+  "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+  "source_commit": "d813dfbaf006657364fb1680c63c2ef762f0bbca",
+  "source_config_identity": "41a753151e391e080cdf711265547e310356f458eb671f1060fc9c4853f3ab08",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective/fingerprint_aux/decision_no_train.md",
+    "next_allowed_actions": [
+      "continue only under the separately frozen v2 prospective plan"
+    ],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "fresh prospective source/package identity after the package allowlist repair"
+    ]
+  },
+  "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1"
+}

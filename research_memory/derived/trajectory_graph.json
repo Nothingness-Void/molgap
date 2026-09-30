@@ -331,6 +331,31 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-chemical-aux-component-cache-retry2-20260930",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-chemical-aux-component-cache-retry2-20260930",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-chemical-aux-component-cache-retry2-20260930",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-chemical-aux-component-cache-retry2-20260930",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-chemical-aux-fixed-train-cache-20260930",
+      "target": "TB-chemical-aux-component-cache-retry2-20260930",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-distance-angle-triangle-500k-20260911",
       "target": "TB-pcqm-geometry-component-attribution-20260928",
       "type": "parent_trajectory"
@@ -458,6 +483,26 @@
     {
       "source": "TB-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
       "type": "parent_trajectory"
     },
     {
@@ -907,6 +952,11 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-chemical-aux-component-cache-retry2-20260930",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-chemical-aux-fixed-train-cache-20260930",
       "type": "prior_evidence"
     },
@@ -933,6 +983,26 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
       "type": "prior_evidence"
     },
     {
@@ -1172,6 +1242,11 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-chemical-aux-component-cache-retry2-20260930",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-chemical-aux-fixed-train-cache-20260930",
       "type": "reference_used"
     },
@@ -1198,6 +1273,26 @@
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-descriptor-aux-100k-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
       "type": "reference_used"
     },
     {
@@ -1379,6 +1474,10 @@
   "format": "molgap-rml-trajectory-graph-v1",
   "nodes": [
     {
+      "id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-chemical-aux-fixed-cache-no-train-20260930",
       "type": "evidence"
     },
@@ -1424,6 +1523,14 @@
     },
     {
       "id": "pcqm-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v1-no-train-package-blocked",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
       "type": "evidence"
     },
     {
@@ -1591,6 +1698,10 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-chemical-aux-component-cache-retry2-20260930",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-chemical-aux-fixed-train-cache-20260930",
       "type": "trajectory"
     },
@@ -1632,6 +1743,22 @@
     },
     {
       "id": "TB-gptrans-centered-logits-k1pair-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
       "type": "trajectory"
     },
     {

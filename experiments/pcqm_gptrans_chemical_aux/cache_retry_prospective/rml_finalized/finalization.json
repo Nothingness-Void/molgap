@@ -1,0 +1,39 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-53c89f7915102d73017d7fbf1882721a6f77fbc1cb517ef5cb56671701120329",
+  "finalized_at": "2026-10-01T00:12:07+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_chemical_aux/build_labels.py": "2feb24da7552caf28ca4b87b453888c58c8ee1cddc155280a02ebb6cb3afb93a",
+    "experiments/pcqm_gptrans_chemical_aux/cache_observation/export_receipt_attempt2.json": "aec67074419633bcc8bb6df11c4bc1425cd027e0ad579434fd4af07f2f2b093f",
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/acceptance.json": "186091ec1d49d15ca04a4f66a9b514f3ca1ea75c92c0ed167929029583df8cf8",
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/decision.md": "b42de017eae65f961aed32b18883f1af4b1ff46cbb9e0e81f78e8d25e56eec52",
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/descriptors_retry2_manifest.json": "824d41f6f541a7f06d51fc73ffb048fd8fb61ed3e01eca0a1571b4ccaf3cbb78",
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/fingerprints_retry2_manifest.json": "bf4599bf295c0e6dc348248d2de8c3d82fc1bde7efd7db95096e9a900d4053e5",
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_plan.json": "b4681eed80b631fc4ce9a3f43caaa2df15db28085d86c81c1edcd0c1126fab3b",
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_protocol.md": "7004a2bb97d79be443cc1646f861c50dc7dc58737261cfb56decffc548f24d46",
+    "experiments/pcqm_gptrans_chemical_aux/label_policy.md": "5e7be2e06dfcdd1214d55492b7e77ea0dd4ea6110edd00917632c90078cd3ffa",
+    "src/molgap/chemical_aux_cache.py": "b3a5c2e164a85ac8820372bb8d354d767737e3a636a421ee1d3f139052fda2a7",
+    "src/molgap/chemical_aux_labels.py": "4ecb8da12b9267f3b015e3248d5ed62cee62c7764f15720666973303a35ba019",
+    "src/molgap/pcqm_gptrans_v4.py": "d04e8420726c233b73b84d6674d29fc195d1ff31039db3ec3ef0163cb3372d0a",
+    "src/molgap/pcqm_official_edge_state.py": "49d770c1db3cc1f05aec4e7ab8a834915ad71fdc0e3c5c994e0ec586e2eb88cc"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/C-chemical-aux-component-cache-retry2-descriptors-wall.json": "43dbaebf219881bcc2c1e5df39597202c5298acb0e5119dc3b251a6bb738b789",
+    "costs/C-chemical-aux-component-cache-retry2-fingerprints-wall.json": "eee3e1e1f5cd6145c6d63d717860126f2205a3a96dc998e0511e7159084afb25",
+    "prospective_snapshot.json": "4fc08f5fa3129e8692b2839d09555e46c19bf74e9ce106a776fdd0c0b0bf4fe7",
+    "roles/R-chemical-aux-component-cache-retry2-train-chemical-labels.json": "ea2f3fd7e8f18b70a406be7fbe925e5728860e6599dd31747c96fc48359f3d24",
+    "terminal_input.json": "e4d613e2bbe32b43823b7cb00b5ad03787cf6e5aafa8607058436427463386d7",
+    "trajectory.json": "294e7f1ec4950dfe935c1ee581ae6a423ed35a31c6f0f5dd8d4014063690dfb4",
+    "v5_evidence.json": "2b997c0eff5f87622b64ed69802cc9876f89b54cb11fb5a2ae4a11ab198fba0d"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_chemical_aux/cache_retry_prospective/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "53c89f7915102d73017d7fbf1882721a6f77fbc1cb517ef5cb56671701120329",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-chemical-aux-component-cache-retry2-20260930"
+}

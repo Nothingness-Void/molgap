@@ -1,6 +1,41 @@
 {
-  "ambiguous_historical_role_record_count": 224,
+  "ambiguous_historical_role_record_count": 239,
   "coarse_historical_role_records": [
+    {
+      "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
+      "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
     {
       "evidence_id": "pcqm-chemical-aux-fixed-cache-no-train-20260930",
       "role_identity": null,
@@ -374,6 +409,76 @@
     },
     {
       "evidence_id": "pcqm-gptrans-centered-logits-k1pair-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v1-no-train-package-blocked",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v1-no-train-package-blocked",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v1-no-train-package-blocked",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v1-no-train-package-blocked",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v1-no-train-package-blocked",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1570,11 +1675,12 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 100,
+  "explicit_role_event_count": 101,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "fixed50k_development",
     "internal_development",
+    "official_train_prefix_0_100000",
     "official_validation"
   ],
   "identities": {
@@ -2046,6 +2152,13 @@
     "pcqm-fixed100k-v4:c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b:official_train_prefix_0_100000": [
       {
         "access_kind": "labels_read",
+        "role_event_id": "R-chemical-aux-component-cache-retry2-train-chemical-labels",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-chemical-aux-component-cache-retry2-20260930"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "R-chemical-aux-fixed-cache-train-chemical-labels",
         "selection_used": false,
         "semantics": "explicit",
@@ -2329,6 +2442,7 @@
   },
   "protected_roles_reported_untouched": {
     "test_challenge": [
+      "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-expert-oracle-feasibility-no-train-20260930",
@@ -2340,6 +2454,8 @@
       "pcqm-gptrans-100k-local-reference-control-v2-20260925",
       "pcqm-gptrans-500k-frozen-readout-attribution",
       "pcqm-gptrans-centered-logits-k1pair-100k-s42",
+      "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v1-no-train-package-blocked",
+      "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
@@ -2382,6 +2498,7 @@
       "pcqm-xian-determinism-audit-20260915"
     ],
     "test_dev": [
+      "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-expert-oracle-feasibility-no-train-20260930",
@@ -2393,6 +2510,8 @@
       "pcqm-gptrans-100k-local-reference-control-v2-20260925",
       "pcqm-gptrans-500k-frozen-readout-attribution",
       "pcqm-gptrans-centered-logits-k1pair-100k-s42",
+      "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v1-no-train-package-blocked",
+      "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
@@ -3281,6 +3400,22 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
+      }
+    ],
+    "pcqm-fixed100k-v4:c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b:official_train_prefix_0_100000": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "R-chemical-aux-component-cache-retry2-train-chemical-labels",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-chemical-aux-component-cache-retry2-20260930"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "R-chemical-aux-fixed-cache-train-chemical-labels",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-chemical-aux-fixed-train-cache-20260930"
       }
     ],
     "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [
