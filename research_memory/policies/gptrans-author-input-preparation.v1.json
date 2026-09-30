@@ -1,0 +1,17 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "gptrans-author-input-preparation",
+  "version": "v1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {"scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4"},
+  "required_observable_fields": ["user_authorized_dual_arm"],
+  "created_from_source_digest": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "approval": {"activation": "one-user-authorized-input-preparation", "authority_ref": "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md"},
+  "cost_model": {"kind": "measured_only", "assumptions": ["CPU only", "no cross-hardware conversion"]},
+  "observation_point": null,
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "action_rule": {"field": "user_authorized_dual_arm", "operator": "eq", "threshold": true, "action": "PREPARE_AUTHOR_INPUTS"},
+  "borderline_action": "DEFER"
+}

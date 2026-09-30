@@ -1,0 +1,11 @@
+{
+  "format": "molgap-v5-role-applicability-plan-v1",
+  "training_membership": "not_applicable",
+  "prediction_input": "not_applicable",
+  "labels_read": "not_applicable",
+  "metric_computed": "not_applicable",
+  "selection_used": "not_applicable",
+  "external_submission": "not_applicable",
+  "graph_structure_read": ["fixed100k-train", "fixed100k-internal-development"],
+  "protected_roles": {"official_validation": "forbidden", "test_dev": "forbidden", "test_challenge": "forbidden"}
+}

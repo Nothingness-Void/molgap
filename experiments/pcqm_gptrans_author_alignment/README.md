@@ -15,3 +15,8 @@ training, inference, or protected-role evaluation.
 Submission and acceptance status is recorded in [STATUS](STATUS.md). No
 accuracy effect is claimed before a separately frozen paired training arm
 passes its own prelaunch and terminal gates.
+
+The separately authorized [G1/G2 dual-arm protocol](dual_arm_protocol.md)
+freezes degree-only initialization scaling and parameter-free chemical path
+input. Its CPU preparation uses `stage_preparation.py` and
+`kaggle_prepare/run.py`; this stage never releases GPU training by itself.

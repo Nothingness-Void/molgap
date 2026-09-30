@@ -66,6 +66,11 @@ modify or take custody of the desktop full run.
 
 ## Discovery state
 
+The user authorized one GPTrans G1/G2 input-attribution dual-arm screen.
+CPU-only complete path/state preparation precedes per-arm V5/RML and GPU
+release; no GPU candidate has been submitted under this authorization yet.
+Authority: [dual-arm protocol](experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md).
+
 The authorized GPTrans-T V5 evidence-baseline rerun is accepted and RML-closed,
 with all live/EMA observations and a separate locally verified reference bundle.
 It repairs reference evidence, not architecture; no causal replay pair, G1/G2,
