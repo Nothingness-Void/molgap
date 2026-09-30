@@ -32,6 +32,9 @@ Reuse these modules instead of copying their logic into an experiment script:
   it does not contact a platform.
 - `experiment_terminal.py`: validates terminal bindings and delegates explicit
   closure to the existing RML pipeline.
+- `experiment_family_workflow.py` and `experiment_family_artifacts.py`: producer
+  event hooks, frozen-contract output inspection and terminal translation;
+  see the [family workflow](EXPERIMENT_FAMILY_WORKFLOW.md) capability matrix.
 - `edge_state_training_core.py`: Spec-bound EdgeState target statistics,
   deterministic full-batch sampler, OGB batch checks, normalized Gap step,
   source-aligned development predictions, and SHA-pinned checkpoint/resume.
@@ -146,6 +149,9 @@ alone and record why two arms were not feasible.
    pre-submission recheck. This does not replace the owning scientific gate.
    Follow `platforms/README.md`, `platforms/REMOTE_HANDOFF.md`, and the specific
    platform instructions before touching remote resources.
+   For a trainer emitting the family output protocol, run `check-acceptance`
+   before release to check frozen expectations and retained reference inputs.
+   This availability check is separate from executable bootstrap preflight.
 6. Submit only under the owning experiment's explicit resource/role authority.
    Reconcile the authoritative platform state and durable artifacts before
    creating terminal evidence or considering a retry.

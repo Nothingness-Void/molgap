@@ -1,5 +1,10 @@
 # Kaggle Adapter
 
+For the new family output protocol, `retrieve_family_outputs.py` streams only
+the pinned manifest's required files through an authenticated owning account.
+Source/job/version reconciliation and obtaining the small manifest belong to
+the platform skill. See [family workflow](../../docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md).
+
 Cross-experiment Kaggle packages are grouped by workload role:
 `acquisition/`, `training/`, and `evaluation/`. Experiment-specific kernels
 stay with their owning experiment.

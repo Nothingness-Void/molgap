@@ -53,3 +53,6 @@ experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/rml_finalized/** t
 experiments/pcqm_gptrans_v5_audit_reference/** -text
 experiments/pcqm_k1_explainability_audit/representation/** -text
 experiments/pcqm_k1_explainability_audit/representation_protocol.md -text
+
+# Shared family outputs retain their exact manifest-bound bytes.
+platforms/_records/**/family_outputs/** -text

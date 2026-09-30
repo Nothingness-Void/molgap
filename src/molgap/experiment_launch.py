@@ -325,8 +325,16 @@ def write_launch_receipt(receipt_json: str, output_dir: Path, spec: ExperimentSp
             or any(p.casefold() in {"research_memory", "ready_for_desktop"} for p in output_dir.parts)):
         raise ValueError("Expected existing dedicated receipt directory outside package/evidence indexes")
     path = output_dir / (receipt["launch_identity"] + ".json")
+    return publish_immutable_bytes(path, receipt_json.encode("utf-8"))
+
+
+def publish_immutable_bytes(path: Path, payload: bytes) -> Path:
+    """Share the receipt's atomic no-overwrite publication with producer metadata."""
     _safe_local(path)
-    payload = receipt_json.encode("utf-8")
+    if not isinstance(payload, bytes):
+        raise TypeError("Immutable publication requires exact bytes")
+    output_dir = path.parent
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     def identical():
         _safe_local(path)

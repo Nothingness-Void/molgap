@@ -16,12 +16,18 @@ deleted or redirected. No package-level export or installation entry point is
 required for `python -m molgap.experiment_cli` in an installed checkout.
 For new family/platform work, start with the short [addon guide](EXPERIMENT_ADDON_GUIDE.md);
 this CLI remains a shared local core, not a trainer or submitter.
+For producer output inspection and guarded terminal closure, see the
+[family workflow](EXPERIMENT_FAMILY_WORKFLOW.md). Its additional local commands
+are `check-acceptance`, `inspect-output`, and `accept-terminal`, retaining the
+existing V5/RML authority and applying only to that output protocol.
 
 ## Input and Output Contract
 
-All input JSON is UTF-8 canonical JSON: sorted keys, compact separators, ASCII
-escaping, finite numbers, no BOM or trailing newline. Duplicate keys and unknown
-schema fields fail closed. The CLI delegates schema, identity, hash and artifact
+Spec, terminal descriptor and launch-response JSON is UTF-8 canonical JSON:
+sorted keys, compact separators, ASCII escaping, finite numbers, no BOM or
+trailing newline. Family plans/expectations/output maps accept ordinary UTF-8
+JSON objects and retain their owning artifact byte hashes. Duplicate keys and
+unknown schema fields fail closed. The CLI delegates identity, hash and artifact
 validation to the existing owning modules; it does not reimplement them.
 Spec/descriptor parsers normalize JSON in their library APIs, so this CLI also
 requires their canonical serialization to equal the original input bytes.

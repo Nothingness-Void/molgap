@@ -47,18 +47,31 @@ def _parser() -> argparse.ArgumentParser:
     parser = _Parser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
-                 "launch-receipt", "terminal", "plan-prospective", "check-release", "prepare-release"):
+                 "launch-receipt", "terminal", "plan-prospective", "check-release",
+                 "prepare-release", "check-acceptance", "inspect-output", "accept-terminal"):
         command = commands.add_parser(name)
         command.add_argument("--spec", required=True, type=_local)
-        if name in {"package", "terminal", "plan-prospective", "prepare-release"}:
+        if name in {"package", "terminal", "plan-prospective", "prepare-release", "check-acceptance", "accept-terminal"}:
             command.add_argument("--repo-root", required=True, type=_local)
         if name in {"package", "preflight", "run-diagnostic", "prepare-release"}:
             command.add_argument("--output", required=True, type=_local)
-        if name in {"preflight", "launch-receipt", "check-release"}:
+        if name in {"preflight", "launch-receipt", "check-release", "inspect-output", "accept-terminal"}:
             command.add_argument("--package", required=True, type=_local)
             command.add_argument("--expected-package-identity", required=True)
         if name == "prepare-release":
             command.add_argument("--workflow", required=True, type=_local)
+        elif name == "check-acceptance":
+            command.add_argument("--plan", required=True, type=_local)
+        elif name in {"inspect-output", "accept-terminal"}:
+            command.add_argument("--receipt", required=True, type=_local)
+            if name == "inspect-output":
+                command.add_argument("--arm", required=True)
+                command.add_argument("--artifact-root", required=True, type=_local)
+                command.add_argument("--expectations", required=True, type=_local)
+            else:
+                command.add_argument("--descriptor", required=True, type=_local)
+                command.add_argument("--outputs", required=True, type=_local)
+                command.add_argument("--execute", action="store_true")
         elif name == "package":
             command.add_argument("--allowlist", required=True, nargs="+", action="extend")
         elif name == "check-release":
@@ -92,6 +105,29 @@ def _dispatch(args) -> tuple[dict, int]:
         raise ValueError("Expected canonical ExperimentSpec JSON bytes (no newline)")
     if args.command == "validate-spec":
         return {"spec_identity": spec.identity, "spec": spec.to_dict()}, 0
+    if args.command in {"check-acceptance", "inspect-output", "accept-terminal"}:
+        from .experiment_family_workflow import (
+            RunContext, _json, check_acceptance_plan, inspect_output, close_verified_outputs,
+            prepare_terminal_outputs,
+        )
+        if args.command == "check-acceptance":
+            result = check_acceptance_plan(spec, args.repo_root, _json(args.plan))
+            return result, 1 if result["status"] == "BLOCKED" else 0
+        def context(arm_id):
+            return RunContext.from_launch(spec, args.receipt, args.package,
+                expected_package_identity=args.expected_package_identity, arm_id=arm_id)
+        if args.command == "inspect-output":
+            result = inspect_output(args.artifact_root, context=context(args.arm), expected=_json(args.expectations))
+            return result, 1 if result["status"] == "BLOCKED" else 0
+        outputs = prepare_terminal_outputs(spec, args.repo_root, _json(args.outputs),
+            receipt_path=args.receipt, package_dir=args.package,
+            expected_package_identity=args.expected_package_identity)
+        descriptor_raw = _read(args.descriptor)
+        descriptor = TerminalDescriptor.from_json(spec, descriptor_raw)
+        if descriptor_raw != descriptor.to_json():
+            raise ValueError("Expected canonical TerminalDescriptor JSON")
+        result = close_verified_outputs(args.repo_root, spec, descriptor, outputs=outputs, execute=args.execute)
+        return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
     if args.command == "plan-prospective":
         return plan_prospective(spec, args.repo_root)
     if args.command == "prepare-release":
