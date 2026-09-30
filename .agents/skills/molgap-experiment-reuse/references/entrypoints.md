@@ -15,6 +15,7 @@ for the operation needed. A direct call to the same library is equivalent.
 | Identity | [experiment_spec.py](../../../../src/molgap/experiment_spec.py): `ExperimentSpec` | Static registry; do not invent compatible family/mode names. |
 | Prospective plan | [experiment_prospective.py](../../../../src/molgap/experiment_prospective.py): `plan_prospective`; [RML plan](../../../../src/molgap/research_memory/plan.py): `plan` | Spec-bound path when supported; existing direct RML API for scoped adapters. Freeze actual authority and source, not placeholder hashes. |
 | Source archive | [experiment_package.py](../../../../src/molgap/experiment_package.py): `build_experiment_source_package` | Explicit source allowlist; retained checkpoint/prediction input bundles are not automatically source packages. |
+| Variant preparation | [experiment_workflow.py](../../../../src/molgap/experiment_workflow.py): `prepare_experiment_release`; [experiment_staging.py](../../../../src/molgap/experiment_staging.py): `stage_release_inputs`, `UploadArtifact` | Shared local plan/package/layout/release path; read [configuration](../../../../docs/operations/EXPERIMENT_WORKFLOW.md). No platform POST or compute authority. |
 | Release inputs | [experiment_preflight.py](../../../../src/molgap/experiment_preflight.py): `check_release_inputs` | Selected imports, packaged recipe hashes, finite frozen CPU initialization and optional upload bindings; no model execution or scientific release. |
 | Local receipt | [experiment_launch.py](../../../../src/molgap/experiment_launch.py): `build_launch_receipt`, `reconcile_platform_response` | No network submission or automatic platform authentication. |
 | IO / digest | [RML trace](../../../../src/molgap/research_memory/trace.py): `atomic_write`, `file_digest`, `json_bytes` | Integrity primitives, not scientific acceptance. |
@@ -23,6 +24,13 @@ for the operation needed. A direct call to the same library is equivalent.
 | Monitor state | [server_control.py](../../../../src/molgap/server_control.py): `LocalServerControlStore` | Server-owned exact job identity, durable idempotent event; not candidate selection. |
 
 ## Training / construction
+
+For repeated GPTrans or EdgeState variants, read only the selected family
+section of [the standard workflow](../../../../docs/operations/EXPERIMENT_WORKFLOW.md).
+Use `gptrans_screen_adapter.gptrans_screen_arguments` for its explicitly
+supported V5 input arms, or `edge_state_screen_adapter.bind_edge_state_screen`
+for base/depth/K1 primitive wiring. Neither creates a new scientific recipe,
+qualifies an arbitrary registered addon or redirects historical trainers.
 
 Read the relevant [EdgeState adapter](../../../../docs/operations/EDGE_STATE_ADAPTER.md)
 or [K1 compatibility](../../../../docs/operations/K1_ADAPTER.md), then the owning

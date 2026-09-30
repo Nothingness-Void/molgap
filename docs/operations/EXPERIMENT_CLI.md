@@ -25,6 +25,8 @@ schema fields fail closed. The CLI delegates schema, identity, hash and artifact
 validation to the existing owning modules; it does not reimplement them.
 Spec/descriptor parsers normalize JSON in their library APIs, so this CLI also
 requires their canonical serialization to equal the original input bytes.
+The transport-only `--workflow` file is an exception: readable JSON whitespace
+is allowed; duplicate keys, unknown fields and nonfinite values are rejected.
 
 Every stdout response, including help and errors, is one canonical JSON object
 followed by a framing newline. Do not save that framing newline as input JSON.
@@ -43,6 +45,13 @@ terminal core. No argument abbreviation, arbitrary worker, callback, dynamic
 import, training shortcut, platform submit command or authority override exists.
 
 ## Commands
+
+For GPTrans/EdgeState variant preparation, `prepare-release` composes the
+existing prospective, package, staging and release checks in one local call:
+see [configuration and boundaries](EXPERIMENT_WORKFLOW.md). It accepts
+`--spec`, `--workflow`, `--repo-root`, and fresh `--output`; it does not submit
+a job. Planning/staging failure retains a reconciliation receipt rather than
+silently retrying or authorizing training.
 
 The following templates require caller-owned real inputs and fresh output paths.
 Replace the variables with independently verified identities and authorized

@@ -35,6 +35,13 @@ verification by the experiment's frozen training addon.
 
 ## Shared training primitives
 
+For repeated base/depth/K1 variant experiments,
+`edge_state_screen_adapter.bind_edge_state_screen()` wires these primitives
+to one Spec-v2 arm, its actual source package, pinned metadata and independent
+output/checkpoint/trace directory. See [the standard variant
+workflow](EXPERIMENT_WORKFLOW.md); the adapter does not supply an optimizer,
+epoch loop, acceptance certificate or executable model-only recipe.
+
 `molgap.edge_state_training_core` provides the reusable model-facing part of a
 new EdgeState experiment, including the base, depth-only, and K1 variants:
 

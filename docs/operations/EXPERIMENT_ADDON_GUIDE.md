@@ -19,6 +19,9 @@ Reuse these modules instead of copying their logic into an experiment script:
 - `experiment_prospective.py` and `research_memory/plan.py`: per-arm prospective
   RML planning against one frozen evidence snapshot.
 - `experiment_package.py`: explicit allowlist, source archive and package hash.
+- `experiment_workflow.py` and `experiment_staging.py`: compose prospective
+  planning, immutable upload layout and existing release checks. For GPTrans
+  or EdgeState variants, start with [the standard workflow](EXPERIMENT_WORKFLOW.md).
 - `experiment_preflight.py`: only the family/mode combinations documented in
   `EXPERIMENT_PREFLIGHT.md`; unsupported means unsupported, not an implicit pass.
   Its `check_release_inputs` checks selected source dependencies, packaged
@@ -48,6 +51,7 @@ not an executable training contract.
 |---|---|---|
 | Identity and prospective records | Spec v2 and per-arm RML planning | Authenticated scientific, role, budget and source inputs |
 | Source and receipts | Explicit source package and local launch receipts | Platform submission, verified responses and server A/B binding |
+| Repeated variant preparation | `prepare-release` plus family screen adapters | Scientific delta, explicit per-arm plans and independently accepted inputs |
 | Family diagnostics | Metadata probes and reviewed construction adapters | Supported-mode checks and actual accelerator qualification |
 | EdgeState training primitives | Target statistics, sampler, step, evaluation and checkpoint helpers | Accepted graph loader, frozen training loop, selection, native cost and trace |
 | Terminal closure | Descriptor translation and explicit RML execution | Independent acceptance, actual artifacts and eligible candidate/reference evidence |

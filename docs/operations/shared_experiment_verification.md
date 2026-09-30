@@ -5,6 +5,33 @@ This record contains two dated review stages. The
 missing-factory and unsupported-loader findings below; historical verification
 scope is retained rather than rewritten.
 
+## Variant workflow composition review (2026-09-30)
+
+The server added local `prepare-release` composition over the existing per-arm
+prospective API, source package builder and release checker. Upload assembly
+renders entry/metadata from immutable archive bytes and separately pins trusted
+input files. The GPTrans CPU preparation wrapper delegates its repeated staging
+to this component; no retained remote package or job was changed.
+
+GPTrans's screen adapter exposes call arguments for its existing V5 input arms.
+EdgeState's adapter wires base/depth/K1 construction metadata to the existing
+training primitives, distinct output/trace/checkpoint identities and BS128. It
+does not supply a new optimizer, epoch loop, model-only executable contract or
+historical-factory migration. Supported modes and remaining responsibilities
+are documented only in [the workflow guide](EXPERIMENT_WORKFLOW.md).
+
+Targeted source/staging/family-wiring/workflow/CLI/skill/release/package/planning
+tests passed: **228 passed, 2 skipped**. Both skipped cases required symlinks
+unavailable on the Windows host. A final parser/EdgeState/CLI recheck passed
+**99 tests**. The skill metadata validator and `git diff --check` also passed.
+Tests used temporary source repositories, small trusted CPU tensors, synthetic
+metadata and mocked dispatch. No training, inference, protected-role access,
+remote submission or native accelerator qualification occurred. No new real
+trajectory was published and no historical replay status was upgraded.
+
+This demonstrated local composition and failure retention, not a timed remote
+submission, universal addon support or a complete autonomous scientific gate.
+
 ## Scope and source
 
 On 2026-09-27, the `molgap-server` checkout was reviewed after these integrations:

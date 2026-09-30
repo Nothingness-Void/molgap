@@ -11,6 +11,8 @@ with their owning adapters. Desktop's K1 value-decoupled factory and selected
 topology-shard loader checks are integrated without replacing historical server
 models. Schema/loader success alone cannot release training.
 Capability routing: [addon guide](docs/operations/EXPERIMENT_ADDON_GUIDE.md).
+GPTrans/EdgeState variant preparation and per-arm wiring:
+[standard workflow](docs/operations/EXPERIMENT_WORKFLOW.md) (local only).
 Verification and remaining boundaries:
 [integration review](docs/operations/shared_experiment_verification.md).
 
