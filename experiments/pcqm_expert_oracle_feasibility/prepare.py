@@ -1,6 +1,7 @@
 """Publish the new saved-prediction question with the existing RML planner."""
 import copy
 import json
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -20,6 +21,8 @@ def main():
     atomic_json(ROOT / "research_memory/policies/pcqm-expert-oracle-feasibility.1.json", policy)
     spec = json.loads((ROOT / "experiments/pcqm_geometry_reliability_gate/plan_input.json").read_text())
     t = spec["trajectory"]
+    # The planner binds state_at_start; caller-owned action provenance needs the same base.
+    t["state_at_start"]["source_commit"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     costid = "cost-TB-pcqm-expert-oracle-feasibility-estimate"
     t.update(trajectory_id=TID, family_id="pcqm-prediction-disagreement-expert-routing", question="Does label-free prediction disagreement realize Oracle complementarity beyond the existing global blend?")
     t["hypothesis"] = dict(hypothesis_id="H-pcqm-expert-oracle-feasibility-20260930", observed_deficiency="Coarse molecular summaries fail to predict expert winners although accepted errors differ", supporting_evidence_ids=["pcqm-k1-residual-reconciliation"], alternative_explanations=["Fusion succeeds by cancellation rather than winner selection", "Winner identity depends on latent features absent from retained predictions", "Consumed development selection overstates learnability"], changed_mechanism="Saved-prediction-only postdispatch hard/soft gate diagnostic; encoders unchanged", cheapest_falsifier="Hash-gated Oracle bounds and fixed five-fold prediction-space gate comparison", related_closed_family_ids=["k1-existing-prediction-attribution", "k1-gptrans-fusion"], expected_native_cost_ref=costid, decision_changed_if_positive="Propose one independent-role specialist diagnostic after pretraining acceptance", decision_changed_if_negative="Keep fixed fusion comparator and do not train a prediction-only router")

@@ -1,0 +1,364 @@
+{
+  "format": "molgap-expert-oracle-feasibility-v1",
+  "rows": 50000,
+  "identity": {
+    "ordered_source_idx": [
+      500000,
+      549999
+    ],
+    "exact_target_alignment": true,
+    "inputs": {
+      "gptrans_2d": {
+        "sha256": "0608084eb2a7a90923a652235572ee69578c4e138d5df3c457e5170f7da613bf",
+        "retained_path": "platforms/_records/local/expert_oracle_feasibility_20260930/gptrans_2d.pt",
+        "source_path": "C:\\Users\\17449\\.codex\\worktrees\\geometry-v4-500k\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_500k_v4_evidence_reference_predictions\\gptrans__best_predictions.pt"
+      },
+      "k1_2d": {
+        "sha256": "68fba785a0b028a8445fe8d94d348df2c3a8d7d8caab708acb574d13cac9831b",
+        "retained_path": "platforms/_records/local/expert_oracle_feasibility_20260930/k1_2d.pt",
+        "source_path": "C:\\Users\\17449\\.codex\\worktrees\\geometry-v4-500k\\molgap\\platforms\\_records\\kaggle\\training\\pcqm_500k_v4_evidence_reference_predictions\\neural_atom_k1__best_predictions.pt"
+      },
+      "edge_state": {
+        "sha256": "c31fafb651fcfef08381627ac86f6639cae91f664ae7a39574d4ca0383b91ce0",
+        "retained_path": "platforms/_records/local/expert_oracle_feasibility_20260930/edge_state.pt",
+        "source_path": "D:\\\u6587\u6863\\molgap-exp\\molgap-500k-v4-evidence\\platforms\\_records\\kaggle\\training\\pcqm_500k_v4_stage6\\full-gps-final-epoch-v8\\evidence\\full_gps\\best_predictions.pt"
+      },
+      "gptrans_distance": {
+        "sha256": "85488eb225721274e37097554a9ceb81371267d5b404e939bcfb96403d982105",
+        "retained_path": "platforms/_records/local/expert_oracle_feasibility_20260930/gptrans_distance.pt",
+        "source_path": "C:\\Users\\17449\\.codex\\worktrees\\geometry-v4-500k\\molgap\\platforms\\_records\\kaggle\\training\\geometry_v4_500k_continuation_attempt_003\\output\\evidence\\gptrans_distance_only\\best_predictions.pt"
+      },
+      "k1_geometry": {
+        "sha256": "a5363aaf2654996e169cf62277db68e42221a08102d94b905bec9aeb66ff0a23",
+        "retained_path": "platforms/_records/local/expert_oracle_feasibility_20260930/k1_geometry.pt",
+        "source_path": "C:\\Users\\17449\\.codex\\worktrees\\geometry-v4-500k\\molgap\\platforms\\_records\\kaggle\\training\\geometry_v4_500k_continuation_attempt_003\\output\\evidence\\k1_distance_angle\\best_predictions.pt"
+      }
+    }
+  },
+  "scope": {
+    "encoder_training": false,
+    "model_inference": false,
+    "diagnostic_fit": true,
+    "consumed_development": true,
+    "official_validation_read": false,
+    "test_dev_read": false,
+    "test_challenge_read": false,
+    "geometry_training_replay_qualified": false
+  },
+  "individual_mae_eV": {
+    "gptrans_2d": 0.10686752763271332,
+    "k1_2d": 0.10485986978054046,
+    "edge_state": 0.1113488057088852,
+    "gptrans_distance": 0.10601040170669555,
+    "k1_geometry": 0.10486315071105957
+  },
+  "fixed_blend_mae_eV": {
+    "original": 0.10065562107563018,
+    "geometry": 0.10029008993387223
+  },
+  "oracles": {
+    "original_pair": {
+      "mae_eV": 0.08024455418109894,
+      "chosen_fraction": {
+        "k1_2d": 0.50932,
+        "gptrans_2d": 0.49068
+      },
+      "label_informed_not_deployable": true
+    },
+    "five_arms": {
+      "mae_eV": 0.05982482009410858,
+      "chosen_fraction": {
+        "gptrans_2d": 0.2034,
+        "k1_2d": 0.2036,
+        "edge_state": 0.19126,
+        "gptrans_distance": 0.19148,
+        "k1_geometry": 0.21026
+      },
+      "label_informed_not_deployable": true
+    },
+    "five_arms_with_original_blend_fallback": {
+      "mae_eV": 0.05887862154245377,
+      "chosen_fraction": {
+        "gptrans_2d": 0.18816,
+        "k1_2d": 0.18796,
+        "edge_state": 0.1783,
+        "gptrans_distance": 0.17504,
+        "k1_geometry": 0.19542,
+        "original_blend": 0.07512
+      },
+      "label_informed_not_deployable": true
+    }
+  },
+  "conditional_pair_oracle": {
+    "n": 50000,
+    "target_names": [
+      "gap"
+    ],
+    "cost_contract": {
+      "base_encoder_passes": 1.0,
+      "hard_teacher_encoder_passes_when_called": 1.0
+    },
+    "methods": {
+      "base": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.10485986978054046
+          }
+        },
+        "average_mae_eV": 0.10485986978054046
+      },
+      "expert": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.10686752763271332
+          }
+        },
+        "average_mae_eV": 0.10686752763271332
+      },
+      "unconstrained_switch": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.08024455418109894
+          }
+        },
+        "average_mae_eV": 0.08024455418109894
+      },
+      "unconstrained_residual": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.07503647655010223
+          }
+        },
+        "average_mae_eV": 0.07503647655010223
+      },
+      "switch_5pct": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.09587264848232269
+          }
+        },
+        "average_mae_eV": 0.09587264848232269
+      },
+      "residual_5pct": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.09533981412649155
+          }
+        },
+        "average_mae_eV": 0.09533981412649155
+      },
+      "switch_10pct": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.0912179437828064
+          }
+        },
+        "average_mae_eV": 0.0912179437828064
+      },
+      "residual_10pct": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.09019828346729279
+          }
+        },
+        "average_mae_eV": 0.09019828346729279
+      },
+      "switch_20pct": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.0854596941614151
+          }
+        },
+        "average_mae_eV": 0.0854596941614151
+      },
+      "residual_20pct": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.08349086335659027
+          }
+        },
+        "average_mae_eV": 0.08349086335659027
+      },
+      "switch_50pct": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.08024455418109894
+          }
+        },
+        "average_mae_eV": 0.08024455418109894
+      },
+      "residual_50pct": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.07546419622421265
+          }
+        },
+        "average_mae_eV": 0.07546419622421265
+      },
+      "switch_100pct": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.08024455418109894
+          }
+        },
+        "average_mae_eV": 0.08024455418109894
+      },
+      "residual_100pct": {
+        "targets": {
+          "gap": {
+            "mae_eV": 0.07503647655010223
+          }
+        },
+        "average_mae_eV": 0.07503647655010223
+      }
+    },
+    "budgets": {
+      "5pct": {
+        "requested_fraction": 0.05,
+        "called_molecules": 2500,
+        "actual_fraction": 0.05,
+        "expected_encoder_passes_per_molecule": 1.05
+      },
+      "10pct": {
+        "requested_fraction": 0.1,
+        "called_molecules": 5000,
+        "actual_fraction": 0.1,
+        "expected_encoder_passes_per_molecule": 1.1
+      },
+      "20pct": {
+        "requested_fraction": 0.2,
+        "called_molecules": 10000,
+        "actual_fraction": 0.2,
+        "expected_encoder_passes_per_molecule": 1.2
+      },
+      "50pct": {
+        "requested_fraction": 0.5,
+        "called_molecules": 25000,
+        "actual_fraction": 0.5,
+        "expected_encoder_passes_per_molecule": 1.5
+      },
+      "100pct": {
+        "requested_fraction": 1.0,
+        "called_molecules": 50000,
+        "actual_fraction": 1.0,
+        "expected_encoder_passes_per_molecule": 2.0
+      }
+    },
+    "expert_win_rate_by_target": {
+      "gap": 0.49068
+    },
+    "unconstrained_any_target_call_fraction": 0.49068,
+    "mean_optimal_alpha_by_target": {
+      "gap": 0.49165871376075077
+    }
+  },
+  "crossfit": {
+    "global_mae_eV": 0.10059919480541803,
+    "gates": {
+      "hard_gate": {
+        "mae_eV": 0.10456199524402618,
+        "improvement_over_global": {
+          "mean_eV": -0.003962800438608164,
+          "bootstrap_95pct_eV": [
+            -0.004308040333868177,
+            -0.0036212116607346407
+          ],
+          "probability_mean_ge_0p003": 0.0
+        },
+        "improving_folds": 0,
+        "nomination_rule_pass": false
+      },
+      "soft_gate": {
+        "mae_eV": 0.10031986040195508,
+        "improvement_over_global": {
+          "mean_eV": 0.00027933440346293847,
+          "bootstrap_95pct_eV": [
+            0.00019355927205544539,
+            0.0003656844857828166
+          ],
+          "probability_mean_ge_0p003": 0.0
+        },
+        "improving_folds": 5,
+        "nomination_rule_pass": false
+      }
+    },
+    "hard_winner_auc": 0.5136743031311531,
+    "folds": [
+      {
+        "fold": 0,
+        "n": 10000,
+        "global_weight_k1": 0.5539179749921748,
+        "mae_eV": {
+          "global_crossfit": 0.10055897238174406,
+          "hard_gate": 0.10506121835708618,
+          "soft_gate": 0.10034600864480453
+        }
+      },
+      {
+        "fold": 1,
+        "n": 10000,
+        "global_weight_k1": 0.5510728708593512,
+        "mae_eV": {
+          "global_crossfit": 0.09885557276934555,
+          "hard_gate": 0.10302724618911743,
+          "soft_gate": 0.09852257557545685
+        }
+      },
+      {
+        "fold": 2,
+        "n": 10000,
+        "global_weight_k1": 0.5455688053707735,
+        "mae_eV": {
+          "global_crossfit": 0.10188726347170617,
+          "hard_gate": 0.10518625501394271,
+          "soft_gate": 0.10184901169818038
+        }
+      },
+      {
+        "fold": 3,
+        "n": 10000,
+        "global_weight_k1": 0.5500833024943189,
+        "mae_eV": {
+          "global_crossfit": 0.10082010387069895,
+          "hard_gate": 0.1047564643740654,
+          "soft_gate": 0.10039954514434268
+        }
+      },
+      {
+        "fold": 4,
+        "n": 10000,
+        "global_weight_k1": 0.5532871179667852,
+        "mae_eV": {
+          "global_crossfit": 0.10087406153359536,
+          "hard_gate": 0.10477879228591919,
+          "soft_gate": 0.10048216094699096
+        }
+      }
+    ],
+    "semantics": "Only gate labels cross-fitted; models were selected on this consumed development role; exploratory, not independent promotion"
+  },
+  "complementarity": {
+    "opposite_signed_error_fraction": 0.21518,
+    "signed_residual_correlation": 0.839531231536692,
+    "fixed_blend_minus_discrete_oracle_eV": 0.020411066894531246,
+    "fixed_blend_better_than_both_fraction": 0.11308
+  },
+  "provenance": {
+    "analyzer_sha256": "8b43cf0f050bbc3bd801a2befe2ed782d742d3a1871da4cc06da2e190c467a30",
+    "protocol_sha256": "8c63e0423405ee15744440d29ea29377e3b7a49b3e83f6aa4dfe40b4fef8c291",
+    "helper_sha256": "66464febb3d727d9cbcc7b190c2dd083850047b467725f058f56e2115a64a39a",
+    "bootstrap_seed": 20260917,
+    "bootstrap_replicates": 10000,
+    "bootstrap_semantics": "paired row sampling, not training-seed uncertainty",
+    "encoder_passes_semantics": "hypothetical workload counts, not measured native timing"
+  },
+  "retained_oof": {
+    "path": "platforms/_records/local/expert_oracle_feasibility_20260930/gate_oof_predictions.npz",
+    "sha256": "6f126790c005c1f0dea1de9fe27ee08a73a98c34f1df691ec4b62f407e298a81"
+  },
+  "local_cost": {
+    "wall_seconds": 5.029348300000493,
+    "process_cpu_seconds": 5.0,
+    "timing_scope": "loading/copying/analysis/output prediction writing; imports and literature review excluded"
+  }
+}

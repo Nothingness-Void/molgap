@@ -56,6 +56,26 @@
       "artifact_availability": [
         "committed_metadata_verified"
       ],
+      "comparison_status": "exploratory_gate_crossfit_consumed_development",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-expert-oracle-feasibility-no-train-20260930",
+      "role_use": {
+        "fixed50k_development": "selection_used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_saved_prediction_oracle_and_gate_feasibility",
+      "source_envelope": "experiments/pcqm_expert_oracle_feasibility/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_v5_qualified",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata_verified"
+      ],
       "comparison_status": "legacy_pair_endpoint_recomputed_strict_component_comparison_not_available",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
@@ -932,7 +952,9 @@
       "source_envelope": "experiments/pcqm_k1_residual_reconciliation/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_applicable",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-pcqm-expert-oracle-feasibility-20260930"
+      ]
     },
     {
       "artifact_availability": [

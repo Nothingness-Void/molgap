@@ -1,0 +1,72 @@
+{
+  "artifacts": [
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_expert_oracle_feasibility/analysis.json",
+      "name": "analysis.json",
+      "sha256": "58bbd71c011ceb3bd57a696736198e18eea5a52dd6fff05c8de4f74a3428ab3d"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_expert_oracle_feasibility/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "0e5d4bacfc42192e716c11c2ad0308795acac80c52a6db2598afb4590f757f57"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_expert_oracle_feasibility/decision.md",
+      "name": "decision.md",
+      "sha256": "81dae767d7d1b7fabcc6f9d5c362bccac64feb007e84b83574e7e35432ca7ac1"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_expert_oracle_feasibility/paper_review.md",
+      "name": "paper_review.md",
+      "sha256": "03c5ada629d941027285caa9b5e129cf37485697dc53b6581994e035c8922cd9"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_expert_oracle_feasibility/experiment_plan.md",
+      "name": "experiment_plan.md",
+      "sha256": "831ddbe144587957b5ed0d6fe2eedee111fd5cf22afd84e91a9076022a321458"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_expert_oracle_feasibility/protocol.md",
+      "experiments/pcqm_expert_oracle_feasibility/decision.md",
+      "experiments/pcqm_expert_oracle_feasibility/acceptance.json",
+      "experiments/pcqm_expert_oracle_feasibility/analysis.json",
+      "experiments/pcqm_expert_oracle_feasibility/experiment_plan.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-expert-oracle-feasibility-no-train-20260930",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-expert-oracle-feasibility-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-30",
+    "observed_source_commit": "719760424c1fa9bb9bae145c7975fec09f30b233",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "CPU saved-prediction diagnostic; source transcription discrepancy retained in acceptance"
+  },
+  "outcome": {
+    "artifact_status": "hash_verified_saved_predictions",
+    "budget_decision": "no_accelerator_release",
+    "comparison_status": "exploratory_gate_crossfit_consumed_development",
+    "execution_status": "complete_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_v5_qualified"
+  },
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "desktop_saved_prediction_oracle_and_gate_feasibility",
+  "track": "B"
+}
