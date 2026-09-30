@@ -239,6 +239,20 @@ def _target_stats(shards) -> tuple[float, float]:
     return float(values.mean()), float(values.std(unbiased=True).clamp_min(1e-6))
 
 
+def _run_target_stats(shards, variant: str, target_transform_path: Path | None):
+    if variant not in ("degree_scale", "path_bond_mean"):
+        if target_transform_path is not None:
+            raise RuntimeError("Frozen historical callers retain their original target reduction")
+        return _target_stats(shards)
+    if target_transform_path is None:
+        raise RuntimeError("Prospective author arms require the frozen portable target transform")
+    from .comparison_readiness import validate_target_transform_asset
+    asset = validate_target_transform_asset(json.loads(Path(target_transform_path).read_text()))
+    if asset["asset_sha256"] != "9462cf73ea022b030675a7f18f2e7682eda6f90b7a42b47affc2f0f4071353be":
+        raise RuntimeError("Author arm target transform differs from its frozen comparator")
+    return float(asset["mean"]), float(asset["std"])
+
+
 def _make_model(initial_state_path: Path | None = None, variant: str = "reference"):
     import torch
 
@@ -568,6 +582,7 @@ def run_preflight(
     initial_state_path: Path,
     variant: str = "reference",
     path_sidecar_root: Path | None = None,
+    target_transform_path: Path | None = None,
 ) -> dict:
     determinism = configure_fp32_determinism(SEED)
     import torch
@@ -590,7 +605,7 @@ def run_preflight(
         raise RuntimeError("A non-path arm must not consume path inputs")
     if len(train_graphs) != TRAIN_ROWS:
         raise RuntimeError("Loaded training row count changed")
-    mean_value, std_value = _target_stats(train_shards)
+    mean_value, std_value = _run_target_stats(train_shards, variant, target_transform_path)
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
     batch = next(iter(_training_loader(train_graphs, 0))).to("cuda", non_blocking=True)
@@ -824,6 +839,7 @@ def run_training(
     path_sidecar_root: Path | None = None,
     trajectory_id: str | None = None,
     logical_run_id: str | None = None,
+    target_transform_path: Path | None = None,
 ) -> dict:
     author_arm = variant in ("degree_scale", "path_bond_mean")
     if author_arm and (not v5_audit or not trajectory_id or not logical_run_id):
@@ -884,7 +900,7 @@ def run_training(
         raise RuntimeError("A non-path arm must not consume path inputs")
     if len(train_graphs) != TRAIN_ROWS or len(development_graphs) != DEVELOPMENT_ROWS:
         raise RuntimeError("Loaded role count changed")
-    mean_value, std_value = _target_stats(train_shards)
+    mean_value, std_value = _run_target_stats(train_shards, variant, target_transform_path)
     target_stats = {"mean_eV": mean_value, "sample_std_eV": std_value}
     if target_stats != preflight["target_stats"]:
         raise RuntimeError("Target statistics differ from preflight")
