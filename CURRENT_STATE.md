@@ -68,13 +68,15 @@ modify or take custody of the desktop full run.
 
 The user authorized one GPTrans G1/G2 input-attribution dual-arm screen.
 CPU-only complete path/state preparation precedes per-arm V5/RML and GPU
-release; no GPU candidate has been submitted under this authorization yet.
+release. The accepted-package CPU dependency is RUNNING on Kaggle2 and bound
+to the existing server B; [physical receipt](experiments/pcqm_gptrans_author_alignment/preparation_submission.json).
+No GPU candidate has been submitted under this authorization yet.
 Authority: [dual-arm protocol](experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md).
 
 The authorized GPTrans-T V5 evidence-baseline rerun is accepted and RML-closed,
 with all live/EMA observations and a separate locally verified reference bundle.
-It repairs reference evidence, not architecture; no causal replay pair, G1/G2,
-seed, scale-up or protected role is released. Findings and closure authority:
+It repairs reference evidence, not architecture; that acceptance alone did not
+release a candidate, seed, scale-up or protected role. Findings and closure authority:
 [terminal decision](experiments/pcqm_gptrans_v5_audit_reference/results/terminal/decision.md).
 
 The server-owned frozen K1 representation diagnostic completed on Kunshan as
@@ -310,15 +312,11 @@ Pair PreNorm is the only retained seed42 mechanism shortlist, not a full-scale
 or K1 promotion. Authority and consolidated evidence:
 `experiments/pcqm_gptrans_memory_readback/decision.md`.
 
-The separate GPTrans author/local attribution matrix has completed its Kaggle2
-CPU real-graph path preflight and recovered the retained V4 reference into a
-structurally valid V5 bundle without retraining. The historical EMA trace lacks
-per-epoch live-model development metrics, so strict-causal G1/G2 release is
-blocked; neither T4 candidate was submitted. A separate label-free Kaggle2 CPU
-input-scale diagnostic passed on 512 fixed-train molecules: degree embeddings
-accounted for 96.51% of atom-plus-degree squared input energy (cross term
-excluded). This is mechanism evidence, not an MAE effect. Authority:
-`experiments/pcqm_gptrans_author_alignment/STATUS.md`.
+The earlier GPTrans author/local matrix established path-content distinctions
+and degree-input scale imbalance, not an MAE effect. Its historical V4 trace
+limitation remains unchanged; the separately accepted complete V5 reference
+above is the proposed G1/G2 comparator. Historical diagnostic authority:
+`experiments/pcqm_gptrans_author_alignment/decision.md`.
 
 The separate GPTrans reference rerun and its infrastructure-attempt history are
 closed. See the reference-evidence state above and

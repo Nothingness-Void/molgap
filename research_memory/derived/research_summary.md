@@ -5,7 +5,7 @@
 - Evidence without trajectory: 2
 
 ## Trajectories
-- ACTIVE: 4
+- ACTIVE: 5
 - CLOSED: 3
 - INFRASTRUCTURE_ONLY: 13
 - NEGATIVE_UNDER_CONTRACT: 14
@@ -25,6 +25,10 @@
 - Repeatedly selected role identities: 3
 
 ## Cost
+- CPU-only cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- CPU-only device_hours: not applicable (1 records); measurement_missing=0
+- CPU-only queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- CPU-only wall_hours: measured=unknown (0 measured records), estimated=3.000000 (1 estimated record), measurement_missing=0, not_applicable=0
 - Hygon_DCU_Device_66a1 cpu_hours: measured=0.042466 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Hygon_DCU_Device_66a1 device_hours: measured=0.104167 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Hygon_DCU_Device_66a1 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -101,8 +105,8 @@
 - unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
-- Measurement-missing cost events: 75
-- Cost-event coverage: 57/57 trajectories; incomplete native measurement=51
+- Measurement-missing cost events: 76
+- Cost-event coverage: 58/58 trajectories; incomplete native measurement=52
 
 ## Screening Backtest
 - Status: available
@@ -110,9 +114,9 @@
 - Excluded traces: 6
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 25
+- [INFO] trace_unavailable_for_backtest: 26
 - [WARN] historical_partial_record: 15
-- [WARN] incomplete_native_cost_measurement: 51
-- [WARN] missing_explicit_role_identity: 12
-- [WARN] trajectory_without_v5_evidence: 5
+- [WARN] incomplete_native_cost_measurement: 52
+- [WARN] missing_explicit_role_identity: 13
+- [WARN] trajectory_without_v5_evidence: 6
 - [WARN] v5_evidence_without_trajectory: 2

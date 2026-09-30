@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "cache_build",
+  "cost_event_id": "cost-TC-gptrans-author-input-preparation",
+  "evidence_ref": "experiments/pcqm_gptrans_author_alignment/preparation_budget.json",
+  "hardware": "CPU-only",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 3
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-gptrans-author-inputs-preparation-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-gptrans-author-input-preparation"
+}

@@ -41,6 +41,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-gptrans-author-input-preparation:A001",
+      "target": "experiments/pcqm_gptrans_author_alignment/preparation_contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-gptrans-shortest-path-profile-v5:A001",
       "target": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/summary_122484011.json",
       "type": "action_produced_evidence"
@@ -696,6 +701,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-gptrans-v5-audit-reference-100k",
+      "target": "TC-gptrans-author-input-preparation",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-k1-atom-pair-local-100k-s42",
       "target": "TC-k1-chem-local-post100k-audit-s42",
       "type": "parent_trajectory"
@@ -963,6 +973,11 @@
     {
       "source": "pcqm-gptrans-t-v4-100k-reference-s42",
       "target": "TC-gptrans-v5-audit-reference-100k",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-input-preparation",
       "type": "prior_evidence"
     },
     {
@@ -1358,6 +1373,11 @@
     {
       "source": "pcqm-gptrans-t-v4-100k-reference-s42",
       "target": "TC-gptrans-v5-audit-reference-100k",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-v5-audit-reference-s42",
+      "target": "TC-gptrans-author-input-preparation",
       "type": "reference_used"
     },
     {
@@ -1830,6 +1850,10 @@
     },
     {
       "id": "TB-k1-pair-token-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-author-input-preparation",
       "type": "trajectory"
     },
     {

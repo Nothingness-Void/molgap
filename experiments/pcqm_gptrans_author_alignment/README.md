@@ -20,3 +20,8 @@ The separately authorized [G1/G2 dual-arm protocol](dual_arm_protocol.md)
 freezes degree-only initialization scaling and parameter-free chemical path
 input. Its CPU preparation uses `stage_preparation.py` and
 `kaggle_prepare/run.py`; this stage never releases GPU training by itself.
+Saved CPU artifacts are independently checked with `accept_preparation.py`;
+the accepted path hashes and exact degree-only tensor changes remain separate
+from candidate comparison admission. The physical receipt is
+[preparation_submission.json](preparation_submission.json), and the existing
+server B reads [monitor_binding.json](monitor_binding.json).
