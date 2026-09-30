@@ -5,12 +5,11 @@ import argparse
 from datetime import datetime, timezone
 import json
 from pathlib import Path
-import shutil
 import subprocess
 
 from molgap.constants import REPO_ROOT
-from molgap.experiment_package import build_experiment_source_package, _name
-from molgap.experiment_preflight import check_release_inputs
+from molgap.experiment_package import _name
+from molgap.experiment_staging import UploadArtifact, stage_release_inputs
 from molgap.experiment_spec import ExperimentSpec
 from molgap.research_memory.plan import plan
 from molgap.screen_policy import canonical_fingerprint
@@ -91,7 +90,6 @@ def main():
         planned = {"trajectory_id": TRAJECTORY, "status": "PLANNED", "path": f"{BASE}/preparation_rml"}
     else:
         planned = plan(root, proposal, f"{BASE}/preparation_rml")
-    output.mkdir(parents=True)
     ref_bundle = json.loads((root / "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/reference_bundle.json").read_text())
     reference_contract = json.loads((root / "experiments/pcqm_gptrans_v5_audit_reference/contract.json").read_text())
     def reference(name, value):
@@ -138,35 +136,21 @@ def main():
             # Package policy remains unchanged; selected dependency checks below fail closed.
             continue
     paths.append(f"{BASE}/preparation_contract.json")
-    source = output / "source"
-    package = build_experiment_source_package(spec, root, paths, source)
-    inputs = output / "inputs"
-    inputs.mkdir()
-    for name in ("SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json", "experiment_spec.json"):
-        shutil.copyfile(source / name, inputs / name)
-    shutil.copyfile(source / "source.tar.gz", inputs / "source_payload.bin")
+    paths.extend((f"{BASE}/kaggle_prepare/run.py", f"{BASE}/kaggle_prepare/kernel-metadata.json"))
     initial = root / "platforms/_records/kaggle/packages/gptrans_t_v4_source_814d104/initial_state.pt"
-    if sha256_file(initial) != contract["initial_file_sha256"]:
-        raise RuntimeError("Frozen base initialization file changed")
-    shutil.copyfile(initial, inputs / "initial_state.pt")
-    atomic_json(inputs / "dataset-metadata.json", {"title": "MolGap GPTrans Author Inputs Source V1",
-                "id": "kaseichou/molgap-gptrans-author-inputs-source-v1", "licenses": [{"name": "other"}], "isPrivate": True})
-    kernel = output / "kernel"
-    kernel.mkdir()
-    template = (root / BASE / "kaggle_prepare/run.py").read_bytes().replace(b"\r\n", b"\n")
-    if template.count(b"__PIN_SOURCE_ARCHIVE_SHA256__") != 1:
-        raise RuntimeError("Invalid source pin template")
-    (kernel / "run.py").write_bytes(template.replace(b"__PIN_SOURCE_ARCHIVE_SHA256__", package["archive_sha256"].encode()))
-    shutil.copyfile(root / BASE / "kaggle_prepare/kernel-metadata.json", kernel / "kernel-metadata.json")
-    report = check_release_inputs(spec, source, expected_package_identity=package["package_identity"],
+    staged = stage_release_inputs(spec, root, paths, output,
+        artifacts={"initial_state.pt": UploadArtifact(initial, contract["initial_file_sha256"])},
         recipe_files={"input-preparation": f"{BASE}/preparation_contract.json"},
-        initial_states={"input-preparation": inputs / "initial_state.pt"},
+        initial_states={"input-preparation": "initial_state.pt"},
         required_modules=["molgap.gptrans_author_inputs", "molgap.pcqm_gptrans_v4"],
-        entry_script=kernel / "run.py", input_root=inputs)
-    atomic_json(output / "release.json", report)
-    atomic_json(output / "staging.json", {"plan": planned, "package": package, "release_status": report["status"]})
-    print(json.dumps({"plan": planned, "release_status": report["status"], "errors": report["errors"]}))
-    if report["errors"]:
+        entry_template=root / BASE / "kaggle_prepare/run.py",
+        kernel_metadata=root / BASE / "kaggle_prepare/kernel-metadata.json",
+        dataset_metadata={"title": "MolGap GPTrans Author Inputs Source V1",
+                          "id": "kaseichou/molgap-gptrans-author-inputs-source-v1",
+                          "licenses": [{"name": "other"}], "isPrivate": True})
+    atomic_json(output / "plan_binding.json", planned)
+    print(json.dumps({"plan": planned, "release_status": staged["release_status"], "errors": staged["errors"]}))
+    if staged["errors"]:
         raise SystemExit(1)
 
 

@@ -71,7 +71,8 @@ def gptrans_metadata(spec: ExperimentSpec, arm_id: str) -> GPTransAdapterMetadat
 
     A future runner must persist/compare these identities in addition to the
     existing trainer's checkpoint guards. This function implements neither.
-    The frozen V4 runner still rejects architecture variants.
+    Construction support is not V5 training qualification. See
+    gptrans_screen_adapter for the separately supported per-arm argument wiring.
     """
     return _resolve(spec, arm_id)
 
