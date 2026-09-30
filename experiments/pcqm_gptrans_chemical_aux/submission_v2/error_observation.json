@@ -1,0 +1,17 @@
+{
+  "kernel": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+  "kernel_id": 136542008,
+  "version_number": 1,
+  "scheduler_state": "ERROR",
+  "scheduler_observation": "authenticated Kaggle CLI before version2 submission",
+  "failure_stage": "nested arm CLI import, before runtime preflight or training",
+  "error": "ModuleNotFoundError: No module named molgap",
+  "gpu_allocation_observed": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "native_device_cost": "measurement_missing",
+  "log_sha256": "e5acabe282b14f8c4dcd1f0203ed70463ca5aa79fae813170729666262b611ff",
+  "source_commit": "24bc46fe3fe387f41d42149ec78341f16ba02c94",
+  "replacement_kernel_version": 2
+}

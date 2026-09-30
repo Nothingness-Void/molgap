@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 69,
+    "trajectories_total": 71,
     "with_complete_native_measurement": 7,
-    "with_cost_event": 58,
-    "with_incomplete_native_measurement": 51,
+    "with_cost_event": 60,
+    "with_incomplete_native_measurement": 53,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 49,
+      "count": 51,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -30,8 +30,10 @@
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
         "TB-gptrans-chemical-descriptor-aux-100k-s42-v2",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v3",
         "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
         "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",
         "TB-gptrans-full-convergence-20260919",
         "TB-gptrans-geometry-distance-100k-s42",
@@ -96,7 +98,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 51,
+      "count": 53,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -110,8 +112,10 @@
         "TB-gptrans-centered-logits-k1pair-100k-s42",
         "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
         "TB-gptrans-chemical-descriptor-aux-100k-s42-v2",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v3",
         "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
         "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
         "TB-gptrans-feature-denoise-full-atom-100k-s42",
         "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",
@@ -181,9 +185,9 @@
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
-        "TB-gptrans-chemical-descriptor-aux-100k-s42-v2",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v3",
         "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
-        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
         "TB-gptrans-geometry-distance-100k-s42",
         "TB-gptrans-geometry-distance-angle-100k-s42",
         "TB-gptrans-input-init-100k-s42",
@@ -219,8 +223,8 @@
         "T-gptrans-chemical-aux-feasibility",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
-        "TB-gptrans-chemical-descriptor-aux-100k-s42-v2",
-        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v3",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",
         "TB-gptrans-input-init-100k-s42",
         "TB-gptrans-input-init-100k-t4-s42",

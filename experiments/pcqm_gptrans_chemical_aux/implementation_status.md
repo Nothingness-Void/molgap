@@ -31,7 +31,7 @@ SMILES. The full label build then hit a confirmed parsing blocker, recorded
 in `cache_decision.md`; it produced no accepted cache and released no GPU.
 
 The component-specific full cache gate and local release/loader gates have
-since passed, and the v2 pair has been submitted. [STATUS.md](STATUS.md) owns
+since passed, and the v3 plans were submitted as kernel version 2. [STATUS.md](STATUS.md) owns
 the operational routing; [training_protocol.md](training_protocol.md) owns
 the submitted recipe. GPU runtime qualification and terminal acceptance remain
 pending. The earlier baseline-plus-joint draft is not the submitted pair.

@@ -4,7 +4,7 @@ Owner: desktop, `codex/exp/gptrans-chemical-aux`.
 
 The authorized two-new-direction 100K pair was submitted to Kaggle1. The
 authenticated scheduler observation is RUNNING; see
-[submission_v2/remote_observation.json](submission_v2/remote_observation.json)
+[submission_v3/remote_observation.json](submission_v3/remote_observation.json)
 for its timestamp, actual kernel/version, source/Spec and reconciled receipt.
 This is submission acceptance, not GPU qualification or scientific acceptance.
 
@@ -19,8 +19,11 @@ NO_TRAIN diagnostic closure are owned by
 [cache_retry_observation/decision.md](cache_retry_observation/decision.md).
 The unsubmitted v1 training plans closed NO_TRAIN after a source packager
 filename guard blocked packaging; their decisions stay under
-`training_prospective/`. The corrected source and active plans are bound in
-`experiment_spec_v2.json` and `training_prospective_v2/`.
+`training_prospective/`. The first submitted kernel version failed before runtime preflight because
+the nested arm CLI did not inherit PYTHONPATH; its immutable submission_v2
+and training_prospective_v2 records preserve that infrastructure failure.
+The corrected source and active plans are bound in
+`experiment_spec_v3.json` and `training_prospective_v3/`.
 
 Local release bindings and both full-frozen-shard loaders passed. Remote
 runtime/resume/optimizer-step overhead gates must pass before formal training.
