@@ -8,6 +8,8 @@ from molgap.gptrans_author_variants import MODES, PATH_MODES, SCALED_MODES
 from molgap.pcqm_gptrans_v4 import _ema_decay, _scientific_fields
 from molgap.research_memory.candidate_reference import verify_candidate_reference
 from molgap.server_acceptance import validate_server_scientific_prelaunch
+from molgap.research_memory.ema_replay import ema_intervention_worlds
+from molgap.research_memory.backtest import _comparison_key
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "experiments/pcqm_gptrans_input_ema_100k"
@@ -50,3 +52,21 @@ def test_each_arm_passes_real_reference_release(mode, purpose, fields):
         experiment_purpose=purpose, reference_bundle=json.loads((BASE / "reference/reference_bundle.json").read_text()),
         repo_root=ROOT, reference_bundle_path=BASE / "reference/reference_bundle.json")
     assert result["gate"] == "PASS"
+
+
+def test_ema_worlds_do_not_relax_default_grouping():
+    reference = json.loads((BASE / "reference/reference_view.json").read_text())
+    candidate = deepcopy(reference)
+    candidate["comparison_role"] = "candidate"
+    candidate["comparability_identity"]["ema_semantics"] = "ema999-each-step-selection"
+    assert _comparison_key(candidate) != _comparison_key(reference)
+    records = {"trajectories": [], "reference_bundles": [], "comparison_readiness": []}
+    assert ema_intervention_worlds(ROOT, [candidate, reference], records) == [candidate, reference]
+
+
+def test_forged_ema_world_fails_closed():
+    records = {"trajectories": [], "reference_bundles": [], "comparison_readiness": [
+        (BASE / "forged.json", {"experiment_purpose": "ema_comparison", "strict_ready": True,
+            "comparison_class": "STRICT_CAUSAL", "mismatched_fields": {"ema_decay": {"candidate": .999, "reference": .9999}}})]}
+    with pytest.raises((ValueError, KeyError)):
+        ema_intervention_worlds(ROOT, [], records)

@@ -44,9 +44,15 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
     require(receipt["status"] == "submitted" and receipt["reconciliation_required"] is False,
             "Unqualified physical submission")
     legacy = experiment_ref == "experiments/pcqm_gptrans_author_alignment/gpu"
-    require((receipt["kernel_id"], receipt["version_number"]) == (136543794, 1) if legacy
-            else receipt["kernel_id"] > 0 and receipt["version_number"] == 1
-            and receipt["kernel"] == "nvoid912/molgap-gptrans-g1-path-ema-dual-s42", "Physical run identity")
+    if legacy:
+        require((receipt["kernel_id"], receipt["version_number"]) == (136543794, 1), "Physical run identity")
+    else:
+        from .kaggle_accelerator_push import _observed_identity
+        actual = _observed_identity(receipt["platform_response"], "nvoid912")
+        require(receipt["requested_kernel"] == "nvoid912/molgap-gptrans-g1-path-ema-dual-s42"
+            and receipt["kernel_id"] > 0 and receipt["version_number"] == 1
+            and not actual["identity_conflicts"]
+            and all(receipt[k] == actual[k] for k in ("kernel", "kernel_id", "version_number")), "Physical run identity")
     for key in ("spec_identity", "package_identity", "source_commit"):
         require(frozen[key] == receipt["release_binding"][key], "Package receipt binding: " + key)
     source_sha = receipt["release_binding"]["source_archive_sha256"]

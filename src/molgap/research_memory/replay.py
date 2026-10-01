@@ -103,12 +103,14 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
         if pointer and any(m["comparison_role"] == "candidate" and m["reference_id"] == bundle["reference_id"]
                            for m in manifests):
             manifests.append(verify_candidate_reference(root, pointer, expected_bundle=bundle))
+    from .ema_replay import ema_intervention_worlds
+    manifests = ema_intervention_worlds(root, manifests, records)
     grouping = build_screening_backtest(manifests)
     keys = {g["comparability_key"] for g in grouping["included_comparable_groups"]}
     excluded = list(grouping["excluded_traces"])
     eligible = []
     from collections import Counter
-    identities = Counter((m["trajectory_id"], m["run_id"], m["reference_id"], m["comparison_role"]) for m in manifests)
+    identities = Counter((m["trajectory_id"], m["run_id"], m["reference_id"], m["comparison_role"], _comparison_key(m)) for m in manifests)
     for manifest in sorted(manifests, key=lambda m: (m["trajectory_id"], m["run_id"])):
         key = _comparison_key(manifest)
         identity = (manifest["trajectory_id"], manifest["run_id"])
@@ -117,7 +119,7 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
             excluded.append({"trajectory_id": identity[0], "run_id": identity[1],
                              "reasons": ["reference_not_frozen_in_trajectory"]})
             continue
-        if identities[(*identity, manifest["reference_id"], manifest["comparison_role"])] > 1:
+        if identities[(*identity, manifest["reference_id"], manifest["comparison_role"], key)] > 1:
             excluded.append({"trajectory_id": identity[0], "run_id": identity[1],
                              "reasons": ["ambiguous_duplicate_replay_run_identity"]})
             continue
@@ -177,6 +179,8 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
         eligible.append({
             "trajectory_id": identity[0], "run_id": identity[1], "family_id": trajectory["family_id"],
             "comparability_key": key, "comparability_identity": manifest["comparability_identity"],
+            **({"observed_comparability_identity": manifest["_observed_comparability_identity"],
+                "intervention_world": manifest["_intervention_world"]} if "_intervention_world" in manifest else {}),
             "reference_id": manifest["reference_id"], "comparison_role": manifest["comparison_role"],
             "model_identity": manifest["model_identity"], "axis": axis,
             "prefix_observations": observations, "metric_semantics": canonical["metric_semantics"],
