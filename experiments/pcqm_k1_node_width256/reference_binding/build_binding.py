@@ -53,7 +53,7 @@ def main():
     assert all(all(r.get(f) is not None for f in fields) for r in rows)
     assert rows[-1]['checkpoint_identity'] == 'sha256:' + manifest['artifacts']['resume']['sha256']
     trace_plan = {f: True for f in fields} | {'ema_dev_metric': False}
-    trace_ref = write('trace_manifest.json', {'format': 'molgap-k1-retained-trace-binding-v1', 'trace_ref': ref(REMOTE / 'canonical_trace.json'), 'sha256': manifest['artifacts']['trace']['sha256'], 'field_availability': trace_plan, 'epochs': len(rows), 'final_checkpoint_identity': rows[-1]['checkpoint_identity']})
+    trace_ref = write('retained_trace_binding.json', {'format': 'molgap-k1-retained-trace-binding-v1', 'trace_ref': ref(REMOTE / 'canonical_trace.json'), 'sha256': manifest['artifacts']['trace']['sha256'], 'field_availability': trace_plan, 'epochs': len(rows), 'final_checkpoint_identity': rows[-1]['checkpoint_identity']})
     import torch
     payload = torch.load(REMOTE / 'development_predictions.pt', map_location='cpu', weights_only=True)
     prediction_manifest = {'prediction_sha256': manifest['artifacts']['predictions']['sha256'], 'source_idx_sha256': contract['acceptance_requirements']['source_idx_sha256'], 'target_sha256': contract['acceptance_requirements']['target_sha256'], 'target_encoding': 'little-endian-float32-contiguous-raw-bytes', 'ordering_semantics': 'source_idx-ascending-100000-to-149999', 'evaluation_role_identity': contract['development_role_identity'], 'row_count': len(payload['source_idx']), 'unique_source_idx': len(torch.unique(payload['source_idx']))}

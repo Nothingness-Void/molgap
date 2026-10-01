@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle3-width256-001",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-node-width256-kaggle3-100k-s42-v1-expected-training",
+  "evidence_ref": "experiments/pcqm_k1_node_width256/training_protocol_kaggle3_v1.md",
+  "hardware": "Tesla T4 x2 allocation; one assigned T4 width256 arm; useful-device estimate recorded separately in protocol",
+  "measurement": {
+    "cpu_hours": {
+      "status": "estimated",
+      "value": 0.1
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 8.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4.0
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "nvoid912/molgap-k1-node256-100k-s42-v1:width256:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-node-width256-kaggle3-100k-s42-v1"
+}

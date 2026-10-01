@@ -571,6 +571,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-k1-node-width256-qualification-20261001",
+      "target": "TB-k1-node-width256-kaggle3-100k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-k1-residual-reconciliation",
       "target": "TB-pcqm-expert-oracle-feasibility-20260930",
       "type": "parent_trajectory"
@@ -1103,6 +1108,11 @@
     {
       "source": "pcqm-gptrans-t-500k-bridge",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-full-convergence-20260919",
+      "target": "TB-k1-node-width256-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
     },
     {
@@ -1812,6 +1822,10 @@
     },
     {
       "id": "TB-k1-gptrans-full-fusion-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-node-width256-kaggle3-100k-s42-v1",
       "type": "trajectory"
     },
     {
