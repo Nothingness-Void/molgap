@@ -5,11 +5,12 @@
 
 ## Server active screen
 
-One Kaggle3 T4x2 dual-arm screen tests GPTrans G1 optimizer grouping and
-shortest-path endpoint contrast separately against accepted G1 EMA0.999.
-No baseline retraining or protected-role access. Actual identity and Luna B:
-[execution record](experiments/pcqm_gptrans_recipe_paths_100k/STATUS.md).
-Prospective release passed; terminal acceptance and Replay admission are pending.
+The G1 recipe/path screen ended with one complete replay pair and one
+infrastructure-only failure. Endpoint contrast did not improve the accepted
+EMA0.999 reference; grouped decay remains scientifically unanswered.
+The diagnostic writer is repaired locally; no recovery or successor is released.
+Luna monitoring is paused. Authority:
+[controller decision](experiments/pcqm_gptrans_recipe_paths_100k/gpu/results/decision.md).
 
 ## Shared experiment infrastructure
 
