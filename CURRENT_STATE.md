@@ -63,9 +63,11 @@ Branch-local records absent here are linked through the
 - **K1 V4 / SSMA:** the retained owner closed both arms NO_TRAIN at `b7f283b0`
   after the frozen runtime cost gate blocked formal training. See
   [STATUS](D:/w/k1-local-aux/experiments/pcqm_k1_local_mixing_clean_aux/STATUS.md).
-  The 2026-10-01 status recheck returned CLI 403, so present
-  scheduler state is UNKNOWN; the accepted historical terminal observation is
-  unchanged. Keep the owner for evidence integration and Git routing, not a retry.
+  The 2026-10-01 authenticated recheck with Kaggle3 (`nvoid912`) confirmed ERROR.
+  The earlier CLI 403 came from the SDK preferring a global cached access token
+  over the selected account key; isolating token lookup resolved the query.
+  Accepted NO_TRAIN evidence is unchanged. Keep the owner for evidence integration
+  and Git routing, not a retry.
 - **Centered logits:** scientifically closed; historical reference binding
   excludes strict causal replay, not a training retry trigger. See
   [STATUS](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md).
