@@ -74,8 +74,11 @@ modify or take custody of the desktop full run.
 
 The authorized GPTrans G1/G2 input-attribution dual-arm screen is terminal.
 Both independent arms passed saved-output acceptance and RML finalization.
-They are favorable paired endpoints, not STRICT_CAUSAL or Replay-Ready: the
-immutable reference has shared evidence pointers and lacks replay enrollment.
+They are favorable paired endpoints, not STRICT_CAUSAL or Replay-Ready.
+The original reference remains immutable; an additive qualified bundle now
+provides distinct bindings and control enrollment for future reuse. It does not
+upgrade the old candidate transactions. Authority:
+`experiments/pcqm_gptrans_v5_audit_reference/results/reference_qualification/decision.md`.
 No server-owned GPU job remains in this chain; existing Luna B is paused.
 No seed, successor, scale bridge or full training was released.
 Authority: [terminal decision](experiments/pcqm_gptrans_author_alignment/gpu/results/decision.md).

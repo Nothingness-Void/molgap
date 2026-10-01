@@ -13,6 +13,22 @@
     },
     {
       "reasons": [
+        "canonical_reference_not_replay_enrolled; historical eligibility left unchanged",
+        "canonical_trace_marked_ineligible"
+      ],
+      "run_id": "gptrans-author-inputs-dual-s42:degree_scale",
+      "trajectory_id": "TC-gptrans-author-degree-scale-100k-s42"
+    },
+    {
+      "reasons": [
+        "canonical_reference_not_replay_enrolled; historical eligibility left unchanged",
+        "canonical_trace_marked_ineligible"
+      ],
+      "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
+      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+    },
+    {
+      "reasons": [
         "Historical trace has EMA development MAE but no independently evaluated live-model development MAE at each epoch",
         "canonical_trace_marked_ineligible"
       ],
@@ -21,8 +37,7 @@
     },
     {
       "reasons": [
-        "Reference observation rerun, not an accepted causal candidate/reference experiment",
-        "canonical_trace_marked_ineligible"
+        "no_compatible_candidate_reference_trace_pair"
       ],
       "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
       "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
@@ -158,5 +173,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 33
+  "trace_count": 35
 }

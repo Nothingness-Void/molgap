@@ -18,3 +18,7 @@ The historical reference remains in
 Its completed independent acceptance and RML closure are in
 [results/terminal/decision.md](results/terminal/decision.md). Even after
 acceptance, this observation-only rerun is not candidate gain.
+
+The additive [reference qualification](results/reference_qualification/decision.md)
+provides distinct evidence bindings and canonical control enrollment for future
+reuse without rewriting the original transaction or upgrading old candidates.

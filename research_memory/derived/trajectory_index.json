@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "f4a569a03e89d4ca2e5999ffa30b2bad416d7d0237b34429d14cf686efc29c33",
+  "source_digest": "5a240635ae8dfa0c0b6af6050c6741b1a5e10c97d7b1d753c655c64b4f022db0",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -38,17 +38,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/results/decision.md",
       "family_id": "gptrans-author-input-degree-scale",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-gptrans-v5-audit-reference-100k"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-author-degree-scale-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-gptrans-author-degree-scale-100k-s42"
     },
@@ -102,17 +104,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/results/decision.md",
       "family_id": "gptrans-author-input-path-bond-mean",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-gptrans-v5-audit-reference-100k"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-author-path-bond-mean-100k-s42"
+      ],
       "track": "C",
       "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
     },

@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P0 | C-GPTRANS-REFERENCE-QUALIFICATION | Resolve reference evidence binding and canonical replay enrollment before any new strict screen | [Release review](docs/operations/RELEASE_FAST_PATH_REVIEW.md); no automatic reference retraining or scale-up |
+| P0 | C-GPTRANS-COMPARISON-QUALIFICATION | Reference sidecar qualified; review existing candidate binding limitations before any new strict screen | [Qualification](experiments/pcqm_gptrans_v5_audit_reference/results/reference_qualification/decision.md); no automatic outcome upgrade, retraining or scale-up |
 | P0 | C-K1-REPRESENTATION-DIAGNOSTIC | Completed: accepted and RML-closed NO_TRAIN diagnostic found no supported representation-collapse repair | Preserve [closure](experiments/pcqm_k1_explainability_audit/representation/results/terminal_decision.md) and immutable prospective snapshot; no compute rerun or automatic training |
 | P0 | C-MOTIF-HIERARCHY-PREFLIGHT | Completed: pure-2D motif partition passed the accepted-cache CPU feasibility gate | Preserve the [infrastructure-only decision](experiments/pcqm_motif_hierarchy_100k/decision.md); any GPU model requires a separate prospective release, not an automatic successor |
 | P0 | C-MOTIF-K1-100K | Completed: v1/v2 were infrastructure failures; T4-only v3 was a strict, replay-ready negative versus K1-v4 | Preserve the [v3 decision](experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md); no repeat seed, 500K audit, protected role, full run or automatic successor |

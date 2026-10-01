@@ -1,17 +1,17 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 54
+- Validated V5 evidence: 56
 - Evidence without trajectory: 2
 
 ## Trajectories
-- ACTIVE: 9
+- ACTIVE: 7
 - CLOSED: 3
 - INFRASTRUCTURE_ONLY: 13
 - NEGATIVE_UNDER_CONTRACT: 14
 - NO_TRAIN: 8
 - POSITIVE_BELOW_GATE: 13
-- POSITIVE_UNDER_CONTRACT: 1
+- POSITIVE_UNDER_CONTRACT: 3
 - STOP_FOR_COST: 1
 
 ## Transfer
@@ -20,9 +20,9 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 218
-- Coarse historical role records: 247
-- Repeatedly selected role identities: 3
+- Explicit role events: 232
+- Coarse historical role records: 257
+- Repeatedly selected role identities: 4
 
 ## Cost
 - CPU-only cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
@@ -61,6 +61,10 @@
 - Tesla_P100_PCIE_16GB device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - Tesla_P100_PCIE_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - Tesla_P100_PCIE_16GB wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- Tesla_T4 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- Tesla_T4 device_hours: measured=7.152378 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- Tesla_T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- Tesla_T4 wall_hours: measured=7.152378 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Tesla_T4_16GB cpu_hours: measured=1.836618 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=30, not_applicable=0
 - Tesla_T4_16GB device_hours: measured=35.504374 (25 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
 - Tesla_T4_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=33, not_applicable=0
@@ -109,18 +113,18 @@
 - unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
-- Measurement-missing cost events: 80
+- Measurement-missing cost events: 82
 - Cost-event coverage: 62/62 trajectories; incomplete native measurement=56
 
 ## Screening Backtest
 - Status: available
 - Eligible traces: 27
-- Excluded traces: 6
+- Excluded traces: 8
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 30
+- [INFO] trace_unavailable_for_backtest: 28
 - [WARN] historical_partial_record: 15
 - [WARN] incomplete_native_cost_measurement: 56
-- [WARN] missing_explicit_role_identity: 17
-- [WARN] trajectory_without_v5_evidence: 10
+- [WARN] missing_explicit_role_identity: 15
+- [WARN] trajectory_without_v5_evidence: 8
 - [WARN] v5_evidence_without_trajectory: 2

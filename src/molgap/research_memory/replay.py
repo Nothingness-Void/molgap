@@ -54,6 +54,8 @@ def _reference_binding_is_valid(
 
 def _canonical_reference_manifest(root: Path, path: Path, manifest: dict[str, Any]) -> dict[str, Any]:
     """Use a hash-bound migration sidecar without rewriting accepted V5 bytes."""
+    from .reference_qualification import qualified_reference_manifest
+    manifest = qualified_reference_manifest(root, path, manifest)
     binding_path = repo_local_path(root, path.parent / "trace_migration.json")
     if manifest["comparison_role"] != "reference" or not binding_path.is_file():
         return manifest

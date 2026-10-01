@@ -30,6 +30,11 @@ STRICT_CAUSAL or Replay-Ready. No historical authority was rewritten and no
 replacement reference training was submitted. A future reference needs distinct,
 frozen evidence bindings and separately valid canonical replay enrollment.
 
+The later metadata-only [reference qualification](../../experiments/pcqm_gptrans_v5_audit_reference/results/reference_qualification/decision.md)
+recovered those bindings in a separate bundle and enrolled the accepted control
+under its own evidence ID. Original G1/G2 releases and outcomes were preserved;
+the qualified control alone does not create an eligible replay pair.
+
 These repairs reduce repeated preparation work. They do not establish a measured
 five-minute end-to-end submission time: addon design, upload, platform readiness
 and monitor handoff remain outside local preparation timings.

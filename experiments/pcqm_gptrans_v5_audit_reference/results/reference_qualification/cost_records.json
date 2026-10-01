@@ -1,0 +1,187 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-v5-audit-reference-100k-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/observed_metadata.json",
+      "hardware": "Tesla_T4_x2_allocated_x1_used",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.7927922613594444
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.3963961306797222
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "v2",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-v5-audit-reference-100k-observed-v2",
+      "evidence_ref": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/observed_metadata.json",
+      "hardware": "Tesla_T4_x2_allocated_x1_used",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.801408163735
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.4007040818675
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "v3",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-v5-audit-reference-100k-observed-v3",
+      "evidence_ref": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/observed_metadata.json",
+      "hardware": "Tesla_T4_x2_allocated_x1_used",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.8680383021661111
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.43401915108305555
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "v4",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-v5-audit-reference-100k-observed-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/observed_metadata.json",
+      "hardware": "Tesla_T4_x2_allocated_x1_used",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.9194066508233334
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.4597033254116667
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "v5",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-v5-audit-reference-100k-observed-v5",
+      "evidence_ref": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/observed_metadata.json",
+      "hardware": "Tesla_T4_x2_allocated_x1_used",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.8047330341705556
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.4023665170852778
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "v6",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-v5-audit-reference-100k-observed-v6",
+      "evidence_ref": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/observed_metadata.json",
+      "hardware": "Tesla_T4_x2_allocated_x1_used",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.829178856153889
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.4145894280769445
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
+    }
+  ],
+  "semantics": "exact existing accepted events; no new access or cost",
+  "source_ref": "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/observed_metadata.json",
+  "source_sha256": "b9a3949824b8bbd02c310780ecec65b5247f7d50737f1ab92972ff976a7b8d54"
+}

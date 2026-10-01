@@ -123,6 +123,8 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         records["roles"].append((path, record))
     for path in discovered.traces:
         record = validate_trace_manifest(load_json(path))
+        from .reference_qualification import qualified_reference_manifest
+        record = qualified_reference_manifest(root, path, record)
         _validate_pointers(
             root,
             [
