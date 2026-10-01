@@ -1,55 +1,45 @@
 # Status
 
-The single K1 atom-width256 candidate was submitted to Kaggle3 (`nvoid912`)
-as [kernel version 1](https://www.kaggle.com/code/nvoid912/molgap-k1-node256-100k-s42-v1),
-kernel ID `136660752`. The authenticated scheduler observation at
-`2026-10-01T12:46:32.729914+00:00` reported `running`, without a failure message.
-This platform state does not establish that GPU qualification or training has
-started; no runtime log or result was returned at that observation.
+The width256 single-candidate 100K screen is scientifically closed as
+**NEGATIVE_UNDER_CONTRACT**. Read the [terminal decision](terminal_decision.md)
+for the authoritative numbers, scope and disposition, and the
+[attribution](kaggle3_reconciliation_v1/attribution.md) for the unresolved causes.
+The width192 reference remains preferred for this screen; no scale-up or
+successor is authorized.
 
-## Frozen launch
+## Accepted execution
 
-- One candidate, original pure-2D V4 100K training / 50K internal development,
-  40 epochs, seed42, FP32, batch128, 9 layers; atom256, edge64, slot64.
-- 6,035,201 parameters: 1.649495 times the 3,658,817-parameter width192 reference.
-- Source `1d869a0474bb37cb4fb120da0d509c48a542b03b`.
-- Spec `c5e0b09a3144566079baebb633fd8a3b3e69ad0e2c60449f2d46cb2aefa1d232`.
-- Package `475390043d4c5600f55f1aaa888218a65ce83c74d85ae1cc1aae5b72a289bc95`.
-- Archive `905c12f632605608886524ef38ecd96d2b60f176ace05d2a627827b61dbc0b1e`.
+[Kaggle3 kernel](https://www.kaggle.com/code/nvoid912/molgap-k1-node256-100k-s42-v1),
+ID136660752, actual version1, returned COMPLETE at the authenticated
+`2026-10-01T15:46:22.922962+00:00` observation (October2 Asia/Tokyo).
+The remote entry text, account, kernel ID, version and source mounts matched
+in [remote identity](kaggle3_reconciliation_v1/remote_entry_identity.json).
+Both runtime phases returned0, and the retained trace confirms40epochs,
+31240updates and3998720sample presentations.
 
-[Training protocol](training_protocol_kaggle3_v1.md) owns authorization and
-comparison gates; [prospective record](kaggle3_v1/width256/trajectory.json)
-was published before submission. The earlier [protocol](protocol.md) and
-[preparation](preparation_report.json) retain the preceding blocked stage.
+[Mechanical acceptance](kaggle3_reconciliation_v1/mechanical_acceptance.json)
+and [runtime qualification](kaggle3_reconciliation_v1/runtime_qualification.json)
+passed. The [retrieval receipt](kaggle3_reconciliation_v1/retrieval_receipt.json)
+binds the manifest, predictions, selected model, resumable checkpoint, trace
+and recipe to the frozen source/package. Additional small runtime/cost/log
+files are separately retained. [Terminal acceptance](kaggle3_reconciliation_v1/acceptance.json)
+records distinct execution, artifacts, science, roles and cost outcomes.
 
-## Qualification and retained evidence
+## Canonical evidence and remaining gaps
 
-The completed, separately authorized K1/SSMA run supplied its width192 reference
-arm. Its 40-epoch checkpoint-bound trace, runtime qualification, predictions,
-roles and measured T4 cost were inspected. The
-[prelaunch comparison](reference_binding/comparison_prelaunch.json) permits
-the planned width-only comparison; this reuse does not decide the SSMA question.
-Reference MAE is 0.1412944608205557 eV, with training-seed variability unknown.
+The original [prospective record](kaggle3_v1/width256/trajectory.json) remains
+unchanged. Its [finalized overlay](kaggle3_v1/width256/rml_finalized/trajectory.json)
+and V5 evidence retain the negative decision, measured assigned-T4 invocation
+costs, and observed training/development role events. The complete canonical
+trace is a retained hashed artifact. Strict RML trace/replay admission is
+excluded because no canonical reference evidence ID was frozen; the reference
+bundle remains pinned. Full software equivalence and training-seed variability
+are unestablished. Bootstrap/queue/full allocation and CPU costs remain unknown.
 
-[CPU qualification](qualification_result.json) verifies initialization and
-parameter counts. [Real-shard loader qualification](cpu_loader_qualification.json)
-verifies the original 100K/50K input using the family dataset and sampler.
-The Windows CPU inspection uses zero loader workers; the frozen Linux run keeps
-two workers and must pass its actual remote preflight.
-
-The [release report](kaggle3_submission_v1/release_report.json) passed 69 checks,
-including trusted real-shard pickle dependencies. All nine uploaded private
-source files, including initialization, were downloaded and matched byte hashes
-in [source acceptance](kaggle3_submission_v1/source_dataset_acceptance.json).
-The [submission response](kaggle3_submission_v1/submission-response.json),
-local launch receipt, and
-[scheduler observation](kaggle3_submission_v1/scheduler_observation.json)
-retain the actual platform identity. GPU qualification, predictions,
-comparison, measured candidate cost and scientific acceptance remain pending.
-
-Keep the experiment ACTIVE on `codex/exp/k1-node-width256`. Reconcile this exact
-version and retrieve its durable outputs before deciding another action.
-No baseline retraining, extra seed or scale-up is authorized by this submission.
+Keep `codex/exp/k1-node-width256` until terminal Git routing is reviewed.
+No desktop integration, archive transition or master promotion has occurred.
+The CPU-only engineering qualification trajectory has separate earlier records;
+this training acceptance does not manufacture its terminal inputs.
 
 The inherited portable RML check has unrelated historical artifacts declared
 locally retained that are absent in this worktree. Their declarations were

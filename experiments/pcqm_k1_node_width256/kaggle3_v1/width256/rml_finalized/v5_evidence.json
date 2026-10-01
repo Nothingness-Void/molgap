@@ -1,0 +1,88 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_node_width256/kaggle3_reconciliation_v1/scientific_metrics.json",
+      "name": "scientific_metrics.json",
+      "sha256": "b6babc6b8eb954d69cea6aea1a14377f4a4d1ed8bbd5328d992f3ef7a3c7c4b9"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_node_width256/kaggle3_reconciliation_v1/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "6c4a396067a6ab337c4a803783d5b98d77fa2c17b8750d446650821a61ae0ae6"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_node_width256/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "7e040041be9d1f9fcd768ded2612f87330793ea243f8b55349a02c82a2199772"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_node_width256_kaggle3_v1/experiment/width256/development_predictions.pt",
+      "name": "development_predictions.pt",
+      "sha256": "a43b162b691ac4e69da97d70f71a97f471fde44759c6321adf60c0aa9b52581f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_node_width256_kaggle3_v1/experiment/width256/selected_model.pt",
+      "name": "selected_model.pt",
+      "sha256": "bcdcfcd5c38b3a97d9c45bba67463492ee6ef28dcd79f0d9c3323640403750dd"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_node_width256_kaggle3_v1/experiment/width256/last_checkpoint.pt",
+      "name": "last_checkpoint.pt",
+      "sha256": "25b86bc19e68925d22cc5b22e67126ca1edcd8c8342fc3129a3fd1d9f378a633"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_node_width256_kaggle3_v1/experiment/width256/canonical_trace.json",
+      "name": "canonical_trace.json",
+      "sha256": "ac788030775e10118295190f02feab4a58ce4a75b4f942c9f3a1f5eb24e4a82f"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_node_width256/training_protocol_kaggle3_v1.md",
+      "experiments/pcqm_k1_node_width256/terminal_decision.md",
+      "experiments/pcqm_k1_node_width256/kaggle3_reconciliation_v1/acceptance.json",
+      "experiments/pcqm_k1_node_width256/kaggle3_reconciliation_v1/scientific_metrics.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-node-width256-kaggle3-100k-s42-v1-terminal",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "k1-width256-kaggle3-single-candidate-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-02",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata export of separately executed prospective training; no training or inference during acceptance"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_k1_node_width256/kaggle3_reconciliation_v1/scheduler_observation.json",
+    "inference_executed": false,
+    "training_executed": true
+  },
+  "outcome": {
+    "artifact_status": "hash_verified_retained",
+    "budget_decision": "no_successor_or_scale_up",
+    "comparison_status": "PAIRED_ENDPOINT_single_seed",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "desktop_k1_atom_width256_100k_saved_prediction_comparison",
+  "track": "B"
+}

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle3-width256-001",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-node-width256-kaggle3-100k-s42-v1-observed-training",
+  "evidence_ref": "experiments/pcqm_k1_node_width256/kaggle3_reconciliation_v1/acceptance.json",
+  "hardware": "Tesla T4; one assigned device; invocation lower bound",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 1.212877254175
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 1.212877254175
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "nvoid912/molgap-k1-node256-100k-s42-v1:width256:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-node-width256-kaggle3-100k-s42-v1"
+}
