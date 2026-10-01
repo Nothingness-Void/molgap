@@ -1,0 +1,144 @@
+{
+  "trajectory": {
+    "trajectory_id": "TC-gptrans-g1-path-endpoints-100k-s42",
+    "record_mode": "prospective",
+    "owner": "server",
+    "track": "C",
+    "family_id": "gptrans-g1-degree_path_endpoints_ema999",
+    "question": "Does all-shortest-path endpoint bond contrast improve G1 EMA999 while avoiding atom-index tie choices?",
+    "hypothesis": {
+      "hypothesis_id": "H-TC-gptrans-g1-path-endpoints-100k-s42",
+      "observed_deficiency": "Does all-shortest-path endpoint bond contrast improve G1 EMA999 while avoiding atom-index tie choices?",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+        "pcqm-gptrans-author-path-bond-mean-100k-s42"
+      ],
+      "alternative_explanations": [
+        "Optimizer grouping may change convergence without improving generalization; endpoint contrast may duplicate existing pair information."
+      ],
+      "changed_mechanism": "degree_path_endpoints_ema999",
+      "cheapest_falsifier": "one matched seed42 screen against accepted G1; no baseline retraining",
+      "related_closed_family_ids": [
+        "gptrans-pair-prenorm",
+        "gptrans-runtime-profiling"
+      ],
+      "expected_native_cost_ref": "cost-TC-gptrans-g1-path-endpoints-100k-s42",
+      "decision_changed_if_positive": "controller interpretation only; no automatic scale or seed release",
+      "decision_changed_if_negative": "close this exact follow-up hypothesis",
+      "historical_unknowns": [
+        "training stochasticity unmeasured; material gate is a policy choice"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "a2a980ec0a351368877d8d87f6b70588305844fd",
+      "source_config_identity": "2b477b934aafd2b1f9eef05e32d862be40c37863a91d4ac6112ab36a57dc179c",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/contract.json",
+        "experiments/pcqm_gptrans_recipe_paths_100k/protocol.md",
+        "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/comparison_readiness_prelaunch.json"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-g1-degree-scale-ema999-100k-s42"
+      ],
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "prior_trajectory_ids": [
+        "TC-gptrans-author-path-bond-mean-100k-s42"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+        "pcqm-gptrans-author-path-bond-mean-100k-s42"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_recipe_paths_100k/gpu/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/budget.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "single_mechanism_screen",
+        "source_commit": "a2a980ec0a351368877d8d87f6b70588305844fd",
+        "run_ids": [
+          "gptrans-g1-group-path-dual-s42:degree_path_endpoints_ema999"
+        ],
+        "attempt_ids": [
+          "v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/contract.json"
+        ],
+        "cost_event_ids": [
+          "cost-TC-gptrans-g1-path-endpoints-100k-s42"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_recipe_paths_100k/protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one isolated T4 arm then full saved-artifact acceptance"
+      ],
+      "reopen_conditions": [
+        "terminal evidence or an infrastructure fault requiring controller diagnosis"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [
+      "pcqm-gptrans-g1-degree-scale-ema999-100k-s42"
+    ],
+    "available_actions": [
+      "RUN_G1_FOLLOWUP",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_G1_FOLLOWUP",
+    "policy_id": "gptrans-g1-followup",
+    "policy_version": "v1",
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/budget.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_recipe_paths_100k/gpu/role_plan.json"
+    ],
+    "state_timestamp": "2026-10-01T14:40:41.736018+00:00",
+    "source_commit": "a2a980ec0a351368877d8d87f6b70588305844fd"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-g1-path-endpoints-100k-s42",
+      "trajectory_id": "TC-gptrans-g1-path-endpoints-100k-s42",
+      "action_id": "A001",
+      "run_id": "gptrans-g1-group-path-dual-s42:degree_path_endpoints_ema999",
+      "attempt_id": "v1",
+      "category": "training",
+      "platform": "kaggle3",
+      "hardware": "one-of-two-independent-T4",
+      "evidence_ref": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/budget.json",
+      "measurement": {
+        "device_hours": {
+          "status": "estimated",
+          "value": 4
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 4
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}
