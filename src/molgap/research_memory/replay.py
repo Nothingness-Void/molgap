@@ -95,12 +95,20 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
     trajectories = {t["trajectory_id"]: t for _, t in records["trajectories"]}
     evidence_by_path = {p.resolve(): e for p, e in records["evidence"]}
     manifests = [_canonical_reference_manifest(root, p, m) for p, m in records["traces"]]
+    # An accepted candidate may supply a later world's control, without adding
+    # another trajectory or pretending it originally trained as a control.
+    from .candidate_reference import verify_candidate_reference
+    for _, bundle in records.get("reference_bundles", []):
+        pointer = bundle.get("candidate_reference_qualification_ref")
+        if pointer and any(m["comparison_role"] == "candidate" and m["reference_id"] == bundle["reference_id"]
+                           for m in manifests):
+            manifests.append(verify_candidate_reference(root, pointer, expected_bundle=bundle))
     grouping = build_screening_backtest(manifests)
     keys = {g["comparability_key"] for g in grouping["included_comparable_groups"]}
     excluded = list(grouping["excluded_traces"])
     eligible = []
     from collections import Counter
-    identities = Counter((m["trajectory_id"], m["run_id"]) for m in manifests)
+    identities = Counter((m["trajectory_id"], m["run_id"], m["reference_id"], m["comparison_role"]) for m in manifests)
     for manifest in sorted(manifests, key=lambda m: (m["trajectory_id"], m["run_id"])):
         key = _comparison_key(manifest)
         identity = (manifest["trajectory_id"], manifest["run_id"])
@@ -109,7 +117,7 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
             excluded.append({"trajectory_id": identity[0], "run_id": identity[1],
                              "reasons": ["reference_not_frozen_in_trajectory"]})
             continue
-        if identities[identity] > 1:
+        if identities[(*identity, manifest["reference_id"], manifest["comparison_role"])] > 1:
             excluded.append({"trajectory_id": identity[0], "run_id": identity[1],
                              "reasons": ["ambiguous_duplicate_replay_run_identity"]})
             continue

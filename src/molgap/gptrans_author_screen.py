@@ -18,7 +18,7 @@ from .experiment_spec import ExperimentSpec
 from .gptrans_screen_adapter import gptrans_screen_arguments
 from .training_reproducibility import atomic_json, sha256_file
 
-MODES = ("degree_scale", "path_bond_mean")
+MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999")
 
 
 def mounted(input_root: Path, name: str, sha256: str) -> Path:
@@ -44,7 +44,8 @@ def author_child(stage: str, variant: str, context: dict, root: Path):
     """Bind calls, and prevent an unrelated retained prefix from being resumed."""
     from .pcqm_gptrans_v4 import run_preflight, run_training
     import torch
-    if variant not in MODES or torch.cuda.device_count() != 1 or "T4" not in torch.cuda.get_device_name(0):
+    from .gptrans_author_variants import MODES as supported_modes, PATH_MODES
+    if variant not in supported_modes or torch.cuda.device_count() != 1 or "T4" not in torch.cuda.get_device_name(0):
         raise RuntimeError("Each released author arm requires exactly one visible T4")
     package_dir = Path(context["package_dir"])
     spec = ExperimentSpec.from_json((package_dir / "experiment_spec.json").read_text())
@@ -67,8 +68,8 @@ def author_child(stage: str, variant: str, context: dict, root: Path):
     arguments = gptrans_screen_arguments(spec, variant, package_dir=package_dir,
         dataset_root=Path(context["dataset_root"]), manifest_path=Path(context["manifest_path"]),
         initial_state_path=initial, target_transform_path=Path(context["target_transform_path"]),
-        platform_id="kaggle2-t4-gptrans-author-inputs",
-        path_sidecar_root=Path(context["path_sidecar_root"]) if variant == "path_bond_mean" else None)
+        platform_id=config.get("platform_id", "kaggle2-t4-gptrans-author-inputs"),
+        path_sidecar_root=Path(context["path_sidecar_root"]) if variant in PATH_MODES else None)
     if arguments["training"]["trajectory_id"] != arm["trajectory_id"]:
         raise ValueError("Executable arm and prospective trajectory disagree")
     if stage == "preflight":
@@ -84,14 +85,18 @@ def author_child(stage: str, variant: str, context: dict, root: Path):
 
 
 def run_author_screen(upload_root: Path, source_root: Path, output: Path, archive_sha256: str,
-                      *, input_root: Path = Path("/kaggle/input")):
+                      *, input_root: Path = Path("/kaggle/input"),
+                      config_ref: str = "experiments/pcqm_gptrans_author_alignment/gpu/screen_config.json"):
     """Reuse isolated workers and native durability; no source graphs are built."""
     from . import gptrans_kaggle_runtime as scheduler
     started = time.monotonic()
     package_dir = output / "source_package"
     package = restore_source_package(upload_root, package_dir, archive_sha256)
-    config_path = source_root / "experiments/pcqm_gptrans_author_alignment/gpu/screen_config.json"
+    config_path = source_root / config_ref
     config = json.loads(config_path.read_text())
+    modes = tuple(config["arms"])
+    if len(modes) != 2 or any(mode not in MODES for mode in modes):
+        raise ValueError("Exactly two supported independent arms are required")
     manifest = mounted(input_root, "manifest.json", config["dataset_manifest_sha256"])
     paths = mounted(input_root, "manifest.json", config["path_manifest_sha256"])
     transform = upload_root / "target_transform.json"
@@ -107,7 +112,7 @@ def run_author_screen(upload_root: Path, source_root: Path, output: Path, archiv
     scheduler.ROOT = output
     # Child processes import the scheduler anew, so pin its output/mode settings.
     import os
-    os.environ.update(MOLGAP_SCREEN_ROOT=str(output), MOLGAP_SCREEN_MODES=json.dumps(list(MODES)))
+    os.environ.update(MOLGAP_SCREEN_ROOT=str(output), MOLGAP_SCREEN_MODES=json.dumps(list(modes)))
     context = {"author_screen": True, "python_root": str(source_root / "src"),
                "package_dir": str(package_dir), "upload_root": str(upload_root),
                "screen_config": str(config_path), "archive_sha256": archive_sha256,
@@ -116,13 +121,13 @@ def run_author_screen(upload_root: Path, source_root: Path, output: Path, archiv
     atomic_json(output / "startup.json", {"package_identity": package["package_identity"],
         "spec_identity": package["spec_identity"], "source_commit": package["source_commit"],
         "source_archive_sha256": archive_sha256, "allocated_gpu_inventory": allocation,
-        "arms": list(MODES), "maximum_wall_seconds": config["maximum_wall_seconds"],
+        "arms": list(modes), "maximum_wall_seconds": config["maximum_wall_seconds"],
         "official_validation_role_read": False, "test_dev_role_read": False, "test_challenge_role_read": False})
     outcomes = []
     try:
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
             futures = {executor.submit(scheduler.worker, arm, device, context,
-                       started + config["maximum_wall_seconds"]): arm for device, arm in enumerate(MODES)}
+                       started + config["maximum_wall_seconds"]): arm for device, arm in enumerate(modes)}
             for future in concurrent.futures.as_completed(futures):
                 try:
                     outcomes.append(future.result())

@@ -45,6 +45,12 @@ MIN_LEARNING_RATE = 1.0e-6
 WEIGHT_DECAY = 0.05
 GRADIENT_CLIP = 1.0
 EMA_DECAY = 0.9999
+AUTHOR_MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999")
+PATH_MODES = ("path_bond_mean", "degree_path_bond_mean")
+
+
+def _ema_decay(variant: str) -> float:
+    return 0.999 if variant == "degree_scale_ema999" else EMA_DECAY
 LOADER_WORKERS = 4
 EXPECTED_PARAMETERS = 5_246_817
 EXPECTED_INITIAL_MODEL_SHA256 = (
@@ -240,7 +246,7 @@ def _target_stats(shards) -> tuple[float, float]:
 
 
 def _run_target_stats(shards, variant: str, target_transform_path: Path | None):
-    if variant not in ("degree_scale", "path_bond_mean"):
+    if variant not in AUTHOR_MODES:
         if target_transform_path is not None:
             raise RuntimeError("Frozen historical callers retain their original target reduction")
         return _target_stats(shards)
@@ -273,20 +279,21 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
         layer_scale=1.0,
         n_targets=1,
     )
-    if variant in ("degree_scale", "path_bond_mean"):
+    if variant in AUTHOR_MODES:
         if initial_state_path is None:
             raise RuntimeError("Author input arms require a frozen initialization")
         from .gptrans_author_variants import DEGREE_INITIAL_SHA256, apply_author_variant
         payload = torch.load(initial_state_path, map_location="cpu", weights_only=True)
         model.load_state_dict(payload["model_state"], strict=True)
-        expected = DEGREE_INITIAL_SHA256 if variant == "degree_scale" else EXPECTED_INITIAL_MODEL_SHA256
+        expected = EXPECTED_INITIAL_MODEL_SHA256 if variant == "path_bond_mean" else DEGREE_INITIAL_SHA256
         if payload.get("state_sha256") != expected or _state_sha256(model) != expected:
             raise RuntimeError("Author input initialization differs from frozen tensor identity")
-        if variant == "path_bond_mean":
-            model = apply_author_variant(model, variant)
-        else:
-            # CPU preparation has already scaled these two tables exactly once.
-            model._molgap_author_variant = variant
+        # Accepted preparation already scaled the degree tables exactly once.
+        # Changing the path method must not rescale them a second time.
+        if variant in PATH_MODES:
+            from .gptrans_author_variants import PathInputGPTrans
+            model.__class__ = PathInputGPTrans
+        model._molgap_author_variant = variant
         return model
     if initial_state_path is None:
         return apply_variant(model, variant)
@@ -336,7 +343,7 @@ def _verify_model_identity(model) -> tuple[int, str]:
         raise RuntimeError(f"Frozen GPTrans-T parameter count changed: {parameters}")
     initial_sha256 = _state_sha256(model)
     expected_initial = EXPECTED_INITIAL_MODEL_SHA256
-    if getattr(model, "_molgap_author_variant", None) == "degree_scale":
+    if getattr(model, "_molgap_author_variant", None) in ("degree_scale", "degree_path_bond_mean", "degree_scale_ema999"):
         from .gptrans_author_variants import DEGREE_INITIAL_SHA256
         expected_initial = DEGREE_INITIAL_SHA256
     if initial_sha256 != expected_initial:
@@ -348,7 +355,7 @@ def _verify_model_identity(model) -> tuple[int, str]:
 
 
 def _forward(model, batch):
-    if getattr(model, "_molgap_author_variant", None) == "path_bond_mean":
+    if getattr(model, "_molgap_author_variant", None) in PATH_MODES:
         return model.forward_batch(batch).view(-1)
     return model(
         batch.x,
@@ -360,14 +367,17 @@ def _forward(model, batch):
 
 
 class ExponentialMovingAverage:
-    def __init__(self, model) -> None:
+    def __init__(self, model, decay: float = EMA_DECAY) -> None:
+        if decay not in (EMA_DECAY, 0.999):
+            raise ValueError("EMA decay must be a reviewed frozen value")
+        self.decay = decay
         self.state = {name: value.detach().clone() for name, value in model.state_dict().items()}
 
     def update(self, model) -> None:
         for name, value in model.state_dict().items():
             target = self.state[name]
             if value.is_floating_point():
-                target.mul_(EMA_DECAY).add_(value.detach(), alpha=1.0 - EMA_DECAY)
+                target.mul_(self.decay).add_(value.detach(), alpha=1.0 - self.decay)
             else:
                 target.copy_(value)
 
@@ -419,7 +429,7 @@ def _make_training_state(initial_state_path: Path, variant: str = "reference"):
         foreach=False,
     )
     scheduler = FrozenEpochScheduler(optimizer)
-    ema = ExponentialMovingAverage(model)
+    ema = ExponentialMovingAverage(model, _ema_decay(variant))
     return model, optimizer, scheduler, ema
 
 
@@ -484,7 +494,7 @@ def _evaluate(model, ema, graphs, mean, std, *, weights: str = "ema", device: st
     }
 
 
-def _scientific_fields() -> dict:
+def _scientific_fields(variant: str = "reference") -> dict:
     return {
         "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
         "data_role_fingerprint": canonical_fingerprint(
@@ -509,7 +519,7 @@ def _scientific_fields() -> dict:
         "target_transform_fingerprint": canonical_fingerprint(
             {"source": "fixed-train-100k", "mean": "population-mean", "std": "sample-std-correction1"}
         ),
-        "selection_fingerprint": "best-development-ema9999-60epochs",
+        "selection_fingerprint": "best-development-ema999-60epochs" if variant == "degree_scale_ema999" else "best-development-ema9999-60epochs",
         "role_access_fingerprint": canonical_fingerprint(
             {"train": True, "development": True, "official_validation": False, "test_dev": False, "test_challenge": False}
         ),
@@ -595,7 +605,7 @@ def run_preflight(
     runtime = build_runtime_manifest(determinism)
     train_graphs, train_shards = _load_datasets(assets.train_paths)
     path_identity = None
-    if variant == "path_bond_mean":
+    if variant in PATH_MODES:
         if path_sidecar_root is None:
             raise RuntimeError("Accepted CPU path sidecar is required before GPU training")
         from .gptrans_author_inputs import attach_paths, validate_sidecar
@@ -709,7 +719,7 @@ def run_preflight(
     }
     certificate_id = canonical_fingerprint(certificate)
     provisional_contract = {
-        **_scientific_fields(),
+        **_scientific_fields(variant),
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
@@ -719,7 +729,8 @@ def run_preflight(
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
         "variant": variant,
         "parameters": EXPECTED_PARAMETERS,
-        "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_author_variants.py" if variant in ("degree_scale", "path_bond_mean") else "gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
+        "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_author_variants.py" if variant in AUTHOR_MODES else "gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
+        "ema_decay": _ema_decay(variant),
         **({"path_sidecar_identity": path_identity} if path_identity is not None else {}),
         "initial_state_artifact_sha256": sha256_file(initial_state_path),
         "accepted": True,
@@ -771,7 +782,8 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
             "runtime_certificate_id": runtime_certificate_id,
             "source_archive_sha256": source_archive_sha256,
             "rng_state": capture_rng_state(),
-            "scientific_fields": _scientific_fields(),
+            "scientific_fields": _scientific_fields(variant),
+            "ema_decay": ema.decay,
         }
     if family_output_binding is not None:
         payload["family_output_binding"] = family_output_binding
@@ -843,7 +855,7 @@ def run_training(
     target_transform_path: Path | None = None,
     family_outputs=None,
 ) -> dict:
-    author_arm = variant in ("degree_scale", "path_bond_mean")
+    author_arm = variant in AUTHOR_MODES
     if family_outputs is not None:
         from .experiment_training_hooks import TrainingOutputHooks
         if type(family_outputs) is not TrainingOutputHooks or not v5_audit:
@@ -891,7 +903,7 @@ def run_training(
     if runtime["runtime_fingerprint"] != certificate["runtime_fingerprint"]:
         raise RuntimeError("Training runtime differs from certified runtime")
     provisional_contract = {
-        **_scientific_fields(),
+        **_scientific_fields(variant),
         "platform_id": platform_id,
         "accelerator": certificate["accelerator"],
         "runtime_certificate_id": certificate_id,
@@ -900,7 +912,7 @@ def run_training(
 
     train_graphs, train_shards = _load_datasets(assets.train_paths)
     development_graphs, _ = _load_datasets(assets.development_paths)
-    if variant == "path_bond_mean":
+    if variant in PATH_MODES:
         if path_sidecar_root is None:
             raise RuntimeError("Accepted CPU path sidecar is required")
         from .gptrans_author_inputs import attach_paths, validate_sidecar
@@ -933,8 +945,10 @@ def run_training(
             raise RuntimeError("Checkpoint architecture variant changed")
         if bool(checkpoint.get("v5_audit", False)) != v5_audit:
             raise RuntimeError("Checkpoint V5 audit mode changed")
-        if checkpoint.get("scientific_fields") != _scientific_fields():
+        if checkpoint.get("scientific_fields") != _scientific_fields(variant):
             raise RuntimeError("Checkpoint scientific contract changed")
+        if checkpoint.get("ema_decay", EMA_DECAY) != _ema_decay(variant):
+            raise RuntimeError("Checkpoint EMA time scale changed")
         if checkpoint.get("runtime_certificate_id") != certificate_id:
             raise RuntimeError("Checkpoint runtime certificate changed")
         if checkpoint.get("source_archive_sha256") != source_archive_sha256:
@@ -1128,10 +1142,11 @@ def run_training(
     predictions_path = output / "development_predictions.pt"
     result_sha256 = sha256_file(best_model_path)
     reference = {
-        **_scientific_fields(),
+        **_scientific_fields(variant),
         "run_id": logical_run_id if author_arm else "gptrans-t-100k-v5-audit-reference-seed42" if v5_audit else f"gptrans-t-100k-v4-{variant}-seed42",
         "model_id": f"gptrans_t_core_12x256_pair32/{variant}",
-        "architecture_fingerprint": EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"]}),
+        "architecture_fingerprint": ("f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896" if variant == "degree_scale_ema999" else EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"]})),
+        "ema_decay": _ema_decay(variant),
         "source_archive_sha256": source_archive_sha256,
         "result_artifact_sha256": result_sha256,
         "platform_id": platform_id,
@@ -1156,6 +1171,7 @@ def run_training(
         "variant": variant,
         "parameters": EXPECTED_PARAMETERS,
         "variant_source_sha256": preflight.get("variant_source_sha256"),
+        "ema_decay": _ema_decay(variant),
         "checkpoint_sha256": sha256_file(checkpoint_path),
         "checkpoint_chunks": {path.name: sha256_file(path) for path in sorted(output.glob("checkpoint_epoch_*.pt"))},
         "complete": True,

@@ -59,6 +59,10 @@ def validate_server_scientific_prelaunch(
         from .research_memory.reference_qualification import verify_reference_qualification
         verify_reference_qualification(Path(repo_root), validated_reference_bundle["qualification_ref"],
             expected_bundle=validated_reference_bundle, expected_bundle_path=reference_bundle_path)
+    if validated_reference_bundle.get("candidate_reference_qualification_ref") is not None:
+        from .research_memory.candidate_reference import verify_candidate_reference
+        verify_candidate_reference(Path(repo_root), validated_reference_bundle["candidate_reference_qualification_ref"],
+            expected_bundle=validated_reference_bundle)
     if experiment_purpose in INTERVENTION_FIELDS_BY_PURPOSE:
         # Check closure feasibility only at a new compute release. Historical
         # planned records remain valid provenance, not retroactive permission.

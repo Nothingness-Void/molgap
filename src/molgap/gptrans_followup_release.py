@@ -1,0 +1,139 @@
+"""Question-specific declarations over the standard prospective release path."""
+from copy import deepcopy
+from datetime import datetime, timezone
+from pathlib import Path
+import subprocess
+
+from .comparison_readiness import ROLE_EVENT_KINDS, TRACE_FIELD_DECLARATIONS, assess_comparison_prelaunch
+from .evidence_pointers import load_json_object
+from .experiment_spec import ExperimentSpec
+from .experiment_staging import UploadArtifact
+from .research_memory.candidate_reference import enroll_candidate_reference
+from .server_acceptance import write_server_comparison_prelaunch
+from .screen_policy import canonical_fingerprint
+from .training_reproducibility import atomic_json, sha256_file
+from .v4_runtime import normalized_source_sha256
+
+BASE = "experiments/pcqm_gptrans_input_ema_100k"
+OLD = "experiments/pcqm_gptrans_author_alignment"
+MODES = ("degree_path_bond_mean", "degree_scale_ema999")
+RUN = "gptrans-g1-path-ema-dual-s42"
+
+
+def freeze_followup(root: Path):
+    root = root.resolve()
+    read = lambda ref: load_json_object(root / ref)
+    bundle = enroll_candidate_reference(root, OLD + "/gpu/degree_scale/rml_plan/candidate_qualification.json",
+        BASE + "/reference", "reference-gptrans-g1-100k-s42-v1")
+    bundle_ref = BASE + "/reference/reference_bundle.json"
+    identity = bundle["comparison_identity"]
+    accepted = read(OLD + "/verification_recovery/acceptance_v2.json")
+    initial = root / "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/degree_initial_state.pt"
+    if sha256_file(initial) != accepted["degree_initial_file_sha256"]:
+        raise ValueError("Accepted G1 initialization changed")
+    old_spec = ExperimentSpec.from_json((root / OLD / "gpu/spec.json").read_text()).to_dict()
+    declaration = deepcopy(old_spec)
+    declaration.update(experiment_id="gptrans-g1-input-ema", logical_run_id=RUN, arms=[], prospective={"arms": []})
+    budget_ref, role_ref = BASE + "/gpu/budget.json", BASE + "/gpu/role_plan.json"
+    atomic_json(root / budget_ref, {"estimated_wall_hours": 4, "estimated_allocated_t4_hours": 8,
+        "maximum_wall_hours": 6, "maximum_allocated_t4_hours": 12, "allocated_devices": 2,
+        "baseline_retraining": False, "automatic_successor_authorized": False, "authority_ref": BASE + "/protocol.md"})
+    roles = {kind: "not_applicable" if kind == "external_submission" else "applicable" for kind in ROLE_EVENT_KINDS}
+    atomic_json(root / role_ref, {"role_applicability": roles, "train_rows": [0,100000], "development_rows": [100000,150000],
+        "official_validation": "forbidden", "test_dev": "forbidden", "test_challenge": "forbidden"})
+    commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+    implementation = normalized_source_sha256(root / "src/molgap/gptrans_author_variants.py")
+    source_arm = next(a for a in old_spec["arms"] if a["arm_id"] == "degree_scale")
+    source_plan = read(OLD + "/gpu/degree_scale/plan_input.json")
+    arms_config, recipes = {}, {}
+    for mode in MODES:
+        folder = BASE + "/gpu/" + mode
+        if (root / folder / "rml_plan").exists():
+            raise ValueError("Prospective plan is immutable; reconcile before refreezing")
+        ema = mode == "degree_scale_ema999"
+        trajectory = "TC-gptrans-g1-" + ("ema999" if ema else "path-mean") + "-100k-s42"
+        recipe_ref = folder + "/contract.json"
+        recipe = read("experiments/pcqm_gptrans_v5_audit_reference/contract.json")
+        recipe.update(initial_state_sha256=accepted["degree_initial_file_sha256"], ema_decay=.999 if ema else .9999,
+            platform="kaggle3", independent_models=1, variant=mode, reference_id=bundle["reference_id"])
+        atomic_json(root / recipe_ref, recipe)
+        recipes[mode] = recipe_ref
+        arm = deepcopy(source_arm)
+        arm.update(arm_id=mode, addons=[{"name": mode, "version": "1", "config": {}, "source_sha256": implementation}])
+        arm["training"]["recipe"]["sha256"] = normalized_source_sha256(root / recipe_ref)
+        for role in arm["data"]["roles"]:
+            role["usage_sha256"] = sha256_file(root / role_ref)
+        candidate = dict(identity)
+        if ema:
+            candidate.update(ema_decay=.999, checkpoint_selection_identity="best-development-ema999-60epochs")
+            purpose, fields = "ema_comparison", ["ema_decay", "checkpoint_selection_identity"]
+        else:
+            candidate["architecture_config_identity"] = canonical_fingerprint({"core": recipe["architecture_sha256"], "variant": mode, "implementation": implementation})
+            purpose, fields = "mechanism_comparison", ["architecture_config_identity"]
+        prelaunch = assess_comparison_prelaunch(candidate_id=trajectory,
+            candidate_plan={"comparison_identity": candidate, "source_config_status": "frozen", "source_commit_or_archive": commit},
+            reference_id=bundle["reference_id"], reference_bundle=bundle, experiment_purpose=purpose,
+            intervention_group_id="gptrans-g1-followup", mechanism_id=mode,
+            declared_intervention_fields=fields, role_applicability_plan=roles,
+            trace_plan={k: True for k in TRACE_FIELD_DECLARATIONS}, runtime_qualification_plan={"status": "declared",
+                "runtime_certificate_required": True, "qualification_scope": identity["runtime_certificate_scope"]})
+        write_server_comparison_prelaunch(root / folder / "comparison_readiness_prelaunch.json",
+            comparison_prelaunch=prelaunch, experiment_purpose=purpose, reference_bundle=bundle,
+            repo_root=root, reference_bundle_path=root / bundle_ref)
+        plan = deepcopy(source_plan)
+        question = ("Does reducing G1 EMA lag improve selected predictions without changing live optimization?" if ema
+                    else "Does accepted chemical path mean add information to degree-scaled G1?")
+        cost = "cost-" + trajectory
+        t = plan["trajectory"]
+        t.update(trajectory_id=trajectory, family_id="gptrans-g1-" + mode, question=question)
+        t["hypothesis"].update(hypothesis_id="H-" + trajectory, observed_deficiency=question,
+            supporting_evidence_ids=[bundle["reference_id"], "pcqm-gptrans-author-path-bond-mean-100k-s42"],
+            alternative_explanations=["EMA lag can coexist with overfitting; chemical path content may duplicate the degree-scaled core."],
+            changed_mechanism=mode, cheapest_falsifier="one matched seed42 screen against accepted G1; no baseline retraining",
+            expected_native_cost_ref=cost, related_closed_family_ids=["gptrans-pair-prenorm", "gptrans-runtime-profiling"],
+            decision_changed_if_positive="controller interpretation only; no automatic scale or seed release",
+            decision_changed_if_negative="close this exact follow-up hypothesis",
+            historical_unknowns=["training stochasticity unmeasured; material gate is a policy choice"])
+        t["state_at_start"].update(source_commit=commit, source_config_identity=canonical_fingerprint(arm),
+            contract_refs=[recipe_ref, BASE + "/protocol.md", folder + "/comparison_readiness_prelaunch.json"],
+            reference_ids=[bundle["reference_id"]], parent_trajectory_ids=["TC-gptrans-author-degree-scale-100k-s42"],
+            prior_trajectory_ids=["TC-gptrans-author-path-bond-mean-100k-s42"],
+            prior_evidence_ids=[bundle["reference_id"], "pcqm-gptrans-author-path-bond-mean-100k-s42"],
+            role_snapshot_refs=[role_ref], budget_snapshot_ref=budget_ref)
+        t["actions"] = [{"action_id": "A001", "type": "single_mechanism_screen", "source_commit": commit,
+            "run_ids": [RUN + ":" + mode], "attempt_ids": ["v1"], "evidence_refs": [recipe_ref], "cost_event_ids": [cost]}]
+        t["decision"].update(decision_ref=BASE + "/protocol.md", next_allowed_actions=["one isolated T4 arm then full saved-artifact acceptance"])
+        plan["decision_state"].update(active_reference_ids=[bundle["reference_id"]], available_actions=["RUN_G1_FOLLOWUP", "DEFER"],
+            chosen_action="RUN_G1_FOLLOWUP", policy_id="gptrans-g1-followup", budget_snapshot_ref=budget_ref,
+            role_snapshot_refs=[role_ref], state_timestamp=datetime.now(timezone.utc).isoformat(), source_commit=commit)
+        plan["costs"][0].update(cost_event_id=cost, trajectory_id=trajectory, run_id=RUN + ":" + mode,
+            platform="kaggle3", evidence_ref=budget_ref)
+        for unit in ("device_hours", "wall_hours"):
+            plan["costs"][0]["measurement"][unit] = {"status": "estimated", "value": 4}
+        plan_ref = folder + "/plan_input.json"
+        atomic_json(root / plan_ref, plan)
+        declaration["arms"].append(arm)
+        declaration["prospective"]["arms"].append({"arm_id": mode, "trajectory_id": trajectory,
+            "plan_spec_ref": plan_ref, "plan_spec_sha256": sha256_file(root / plan_ref), "output": folder + "/rml_plan"})
+        arms_config[mode] = {"trajectory_id": trajectory, "initial_file": "degree_initial_state.pt",
+            "initial_file_sha256": accepted["degree_initial_file_sha256"], "comparison_identity": candidate,
+            "experiment_purpose": purpose, "declared_intervention_fields": fields}
+    spec = ExperimentSpec(declaration)
+    spec.write(root / BASE / "gpu/spec.json")
+    config = read(OLD + "/gpu/screen_config.json")
+    config.update(spec_identity=spec.identity, arms=arms_config, platform_id="kaggle3-t4-gptrans-g1-followup",
+        reference_bundle_ref=bundle_ref, reference_bundle_sha256=sha256_file(root / bundle_ref), material_gate_eV=.003)
+    atomic_json(root / BASE / "gpu/screen_config.json", config)
+    workflow = read(OLD + "/gpu/release_workflow.json")
+    workflow.update(spec_identity=spec.identity, recipe_files=recipes,
+        initial_states={mode: "degree_initial_state.pt" for mode in MODES},
+        artifacts={"degree_initial_state.pt": UploadArtifact.from_file(initial).to_workflow(),
+            "target_transform.json": UploadArtifact.from_file(root / bundle["target_transform_asset_ref"]).to_workflow()},
+        entry_template=BASE + "/gpu/run.py", kernel_metadata=BASE + "/gpu/kernel-metadata.json",
+        dataset_metadata={"title": "MolGap GPTrans G1 Path EMA Source", "id": "nvoid912/molgap-gptrans-g1-path-ema-source",
+            "licenses": [{"name": "other"}], "isPrivate": True})
+    tracked = subprocess.check_output(["git", "ls-files", "-z", "--", "src/molgap"], cwd=root).decode().split("\0")
+    workflow["source_paths"] = [p for p in tracked if p.endswith(".py") and "/archive/" not in p] + [
+        *recipes.values(), BASE + "/gpu/run.py", BASE + "/gpu/kernel-metadata.json", BASE + "/gpu/screen_config.json"]
+    atomic_json(root / BASE / "gpu/release_workflow.json", workflow)
+    return {"spec_identity": spec.identity, "prelaunch_validated": True, "compute_released": False}

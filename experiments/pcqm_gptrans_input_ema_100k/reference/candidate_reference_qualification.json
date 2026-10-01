@@ -1,0 +1,24 @@
+{
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/results/cost_records.json": "5e19f4f6cd2ba3baaa7ec79aa24dfab4a25a7bfa8d1a6489780043431cbd8f39",
+    "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/results/decision.md": "00739ffaf4f2c282eb6f5a0861f635e82081867be90d3d06743d0d217fc72af2",
+    "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/results/role_history.json": "b2cabe201dd81ffcba91e819b17e09f2d8c269272b7ec20d1f12b0c0f44c05ea",
+    "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/results/runtime_certificate.json": "2ee26e054e1564c2b26115dc400fc6dfe19992bddb9b71fdf1660b553eb16a20",
+    "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/candidate_qualification.json": "e16e2625ca27ebbc4ee563a7d7c71fc46d08e8e4ca9a5fba8319b77c98466155",
+    "experiments/pcqm_gptrans_author_alignment/gpu/results/acceptance.json": "a4bc6bafeb4207f33718bc98b09eef104ba176610db18c7f4cbdbf6524b33cdd",
+    "experiments/pcqm_gptrans_author_alignment/gpu/screen_config.json": "325628fb2eba30aa7206105533593244d7e703dd08d8a236739261f5af96cd1f",
+    "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+    "experiments/pcqm_gptrans_input_ema_100k/reference/reference_bundle.json": "2669804e16c59c18fbc5e00840efe268a2b09ea99647fc198d413108786367e2",
+    "experiments/pcqm_gptrans_input_ema_100k/reference/reference_view.json": "1a311b531d68d5b922e951cc3b470256bb58c19eb7e28fa2de26463bcc0d4abf",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/degree_scale/training/best_model.pt": "5fceb2bc34d8d269dcc90cbe1b2697fe2ad3b6e5136e0262e59cf6165ea1152c",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/degree_scale/training/development_predictions.pt": "67518aa94b471acdfa8294681cef8f5b45e6d5db2a701eb022fd6f5b7f412c60"
+  },
+  "bundle_ref": "experiments/pcqm_gptrans_input_ema_100k/reference/reference_bundle.json",
+  "candidate_qualification_ref": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/candidate_qualification.json",
+  "format": "molgap-accepted-candidate-reference-v1",
+  "qualification_ref": "experiments/pcqm_gptrans_input_ema_100k/reference/candidate_reference_qualification.json",
+  "reference_bundle_id": "reference-gptrans-g1-100k-s42-v1",
+  "reference_view_ref": "experiments/pcqm_gptrans_input_ema_100k/reference/reference_view.json"
+}

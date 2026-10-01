@@ -164,6 +164,7 @@ INTERVENTION_FIELDS_BY_PURPOSE = {
             "ema_update_frequency",
             "weight_semantics",
             "evaluation_weight_source",
+            "checkpoint_selection_identity",
         }
     ),
     "schedule_comparison": frozenset({"schedule_identity"}),

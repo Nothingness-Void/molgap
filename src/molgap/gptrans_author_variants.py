@@ -9,7 +9,10 @@ import torch
 
 from .gptrans import OGBGPTransTiny
 
-MODES = ("degree_scale", "path_bond_mean")
+MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999")
+PATH_MODES = frozenset({"path_bond_mean", "degree_path_bond_mean"})
+SCALED_MODES = frozenset({"degree_scale", "degree_path_bond_mean", "degree_scale_ema999"})
+G1_ARCHITECTURE_ID = "f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896"
 DEGREE_SCALE = 0.0897
 DEGREE_INITIAL_SHA256 = "d10738efd0851fd53513b51c0a85c42327f87ee0ea35a0af1b6a381b8ce179d1"
 
@@ -70,11 +73,11 @@ def apply_author_variant(model, variant):
     if variant not in MODES:
         raise ValueError(variant)
     before = set(model.state_dict())
-    if variant == "degree_scale":
+    if variant in SCALED_MODES:
         with torch.no_grad():
             model.in_degree_encoder.weight.mul_(DEGREE_SCALE)
             model.out_degree_encoder.weight.mul_(DEGREE_SCALE)
-    else:
+    if variant in PATH_MODES:
         # No constructor or RNG consumption: only the input method changes.
         model.__class__ = PathInputGPTrans
     if set(model.state_dict()) != before:

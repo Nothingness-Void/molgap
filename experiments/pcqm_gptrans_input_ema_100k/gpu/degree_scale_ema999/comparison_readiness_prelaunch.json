@@ -1,0 +1,87 @@
+{
+  "blocker_codes": [],
+  "candidate_id": "TC-gptrans-g1-ema999-100k-s42",
+  "candidate_source_commit_or_archive": "181c915153e41fbffd2679be569468b8dffb87b9",
+  "candidate_source_config_status": "frozen",
+  "declared_intervention_fields": [
+    "ema_decay",
+    "checkpoint_selection_identity"
+  ],
+  "experiment_purpose": "ema_comparison",
+  "format": "molgap-comparison-prelaunch-v1",
+  "intervention_group_id": "gptrans-g1-followup",
+  "matched_fields": {
+    "architecture_config_identity": "f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896",
+    "benchmark_identity": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+    "data_role_identity": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+    "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_enabled": true,
+    "ema_update_frequency": "each_optimizer_step",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "evaluation_weight_source": "ema",
+    "feature_identity": "8e2a76b9e8c53d1c91983c87ee6f7605ea9d48013ef70a8ad34191a6b6041979",
+    "gradient_accumulation_steps": 1,
+    "loss_identity": "normalized-gap-l1",
+    "optimizer_fused": false,
+    "optimizer_identity": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+    "optimizer_mode": "adamw-single-parameter-group",
+    "optimizer_steps": 46860,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "row_order_identity": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+    "runtime_certificate_scope": "single-device-fp32-no-tf32-bs128-optimizer-inclusive",
+    "sample_presentations": 5998080,
+    "schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+    "seed": 42,
+    "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+    "target_transform_asset_sha256": "9462cf73ea022b030675a7f18f2e7682eda6f90b7a42b47affc2f0f4071353be",
+    "target_transform_identity": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+    "tf32_enabled": false,
+    "weight_semantics": "ema"
+  },
+  "mechanism_id": "degree_scale_ema999",
+  "mismatched_fields": {
+    "checkpoint_selection_identity": {
+      "candidate": "best-development-ema999-60epochs",
+      "reference": "best-development-ema9999-60epochs"
+    },
+    "ema_decay": {
+      "candidate": 0.999,
+      "reference": 0.9999
+    }
+  },
+  "missing_fields": [],
+  "planned_status": "PRELAUNCH_STRICT_PLANNED",
+  "prelaunch_ready": true,
+  "reference_bundle_id": "reference-gptrans-g1-100k-s42-v1",
+  "reference_bundle_sha256": "a381502850e7376e8d91754130b9f5f7b096cc3fbb86583b0a0f85711cdba0ca",
+  "reference_id": "pcqm-gptrans-author-degree-scale-100k-s42",
+  "role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "runtime_qualification_plan": {
+    "qualification_scope": "single-device-fp32-no-tf32-bs128-optimizer-inclusive",
+    "runtime_certificate_required": true,
+    "status": "declared"
+  },
+  "terminal_candidate_artifacts_required": false,
+  "trace_plan": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  }
+}

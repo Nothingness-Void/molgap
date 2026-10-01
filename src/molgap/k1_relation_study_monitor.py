@@ -27,8 +27,10 @@ def tick(binding_path):
     if binding.get("owner") != "server" or binding.get("closed") is True:
         return {"events": [], "closed": True}
     credential = json.loads(Path(binding["credential_file"]).read_text(encoding="utf-8"))
-    if credential.get("username") != "kaseichou":
-        raise RuntimeError("Kaggle2 credential owner mismatch")
+    owner = binding.get("credential_owner", "kaseichou")
+    if credential.get("username") != owner or any(
+        not job["kernel"].startswith(owner + "/") for job in binding["jobs"] if not job.get("closed")):
+        raise RuntimeError("Bound Kaggle credential owner mismatch")
     os.environ["KAGGLE_USERNAME"] = credential["username"]
     os.environ["KAGGLE_KEY"] = credential["key"]
     from kaggle.api.kaggle_api_extended import KaggleApi
