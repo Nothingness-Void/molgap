@@ -241,6 +241,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-slot-width96-kaggle3-100k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_slot_width96/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-slot96-cpu-qualification-20261002:A001",
+      "target": "experiments/pcqm_k1_slot_width96/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-v4-192-kaggle3-reference-custody-20261002:A001",
+      "target": "experiments/pcqm_k1_slot_width96/reference_binding/mechanical_acceptance.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-v4-192-kaggle3-reference-custody-20261002:A001",
+      "target": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/output_manifest.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-matched-500k-v4-three-arm:A001",
       "target": "experiments/pcqm_500k_v4_evidence/final_comparison.json",
       "type": "action_produced_evidence"
@@ -573,6 +593,16 @@
     {
       "source": "TB-k1-residual-reconciliation",
       "target": "TB-pcqm-expert-oracle-feasibility-20260930",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-slot-readout-diagnostic-20261002",
+      "target": "TB-k1-slot96-cpu-qualification-20261002",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-slot96-cpu-qualification-20261002",
+      "target": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
       "type": "parent_trajectory"
     },
     {
@@ -1131,6 +1161,31 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-slot-readout-diagnostic-20261002",
+      "target": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-slot-readout-diagnostic-20261002",
+      "target": "TB-k1-slot96-cpu-qualification-20261002",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-slot96-cpu-qualification-20261002",
+      "target": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-slot96-cpu-qualification-20261002",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-gptrans-500k-frozen-readout-attribution",
       "type": "prior_evidence"
@@ -1386,6 +1441,16 @@
       "type": "reference_used"
     },
     {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-slot96-cpu-qualification-20261002",
+      "type": "reference_used"
+    },
+    {
       "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-gptrans-500k-frozen-readout-attribution",
       "type": "reference_used"
@@ -1596,6 +1661,14 @@
     },
     {
       "id": "pcqm-k1-slot-readout-diagnostic-20261002",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-slot96-cpu-qualification-20261002",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
       "type": "evidence"
     },
     {
@@ -1824,6 +1897,18 @@
     },
     {
       "id": "TB-k1-slot-readout-diagnostic-20261002",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-slot96-cpu-qualification-20261002",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-v4-192-kaggle3-reference-custody-20261002",
       "type": "trajectory"
     },
     {

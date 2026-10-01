@@ -171,7 +171,7 @@ def main():
             "historical_unknowns": ["Training stochasticity is unavailable from a single seed."]},
         "state_at_start": {"source_commit": commit, "source_config_identity": canonical_fingerprint(arm),
             "contract_refs": [protocol, f"{REL}/training_recipe.json", f"{REL}/evidence_review.md", cpu_ref],
-            "reference_ids": [bundle["reference_id"]], "prior_evidence_ids": refs,
+            "reference_ids": [custody["reference_evidence_id"]], "prior_evidence_ids": refs,
             "parent_trajectory_ids": [report["trajectory_id"]],
             "role_snapshot_refs": [f"{REL}/role_plan.json"], "budget_snapshot_ref": protocol},
         "actions": [{"action_id": "A001", "type": "authorized_single_candidate_100k_training",

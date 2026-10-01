@@ -55,6 +55,7 @@ remote Git snapshots. Inspect only the question required by the task.
 
 | Question / owner | Retained checkout | Branch-local entry |
 |---|---|---|
+| Desktop K1 isolated slot96 screen: `codex/exp/k1-slot-width96` | `D:/w/k1-slot96` | [STATUS](D:/w/k1-slot96/experiments/pcqm_k1_slot_width96/STATUS.md); exact Kaggle3 version1 receipt and frozen100K contract; reconcile after desktop returns |
 | Archived desktop pretraining pair | `C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap` | [terminal decision](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/terminal_decision.md); [unreviewed fusion supplement](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/fusion_comparison.md) |
 | Archived desktop geometry | `C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap` | [fixed-blend scale decision](C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap/experiments/pcqm_geometry_v4_500k_pair/fixed_blend_scale_decision.md) |
 | Desktop chemical auxiliary: `codex/exp/gptrans-chemical-aux` | `C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap` | [STATUS](C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap/experiments/pcqm_gptrans_chemical_aux/STATUS.md), its linked submission_v4 observation and frozen training protocol |
