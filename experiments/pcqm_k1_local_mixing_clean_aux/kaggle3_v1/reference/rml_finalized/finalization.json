@@ -1,0 +1,26 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-0a71e52fcb46c7ad991403c1e163f35142bc43e1699d6f391bf1523892ae21a0",
+  "finalized_at": "2026-10-01T05:14:08.142276+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/reference/acceptance.json": "88d75f511f76f5d60a8b3650308ee98a763f2151e20c1b1cc7cdad26676a8ebc",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/reference/decision.md": "23d81e9ffb9c1933c595897f47c28df2a02a38028a8d93970768c39d398050e1"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TB-k1-reference-kaggle3-100k-s42-v1-unsubmitted-source-release.json": "9d74d9b20f3bd209ed3f38093a1fedf0e9cebf18fc0a2a335f6eb112bbf7742f",
+    "prospective_snapshot.json": "09ef9b3e2bbe2895fa528526eda32db00a6b5dbc8e51c5a0c9f45a3f458d5fc2",
+    "terminal_input.json": "9a1446403a47b921d91bd0be7d254e366fad649a5fc981d7cf814a37fa265007",
+    "trajectory.json": "aabec9dba26f035748dd6b2fb0418e55ffc7cde52095dad3874ddb9cb06456b3",
+    "v5_evidence.json": "edbe6366271198505bced069de48ca70e39eabd66e5d82619167ac1642dfb010"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/reference/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "0a71e52fcb46c7ad991403c1e163f35142bc43e1699d6f391bf1523892ae21a0",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-reference-kaggle3-100k-s42-v1"
+}

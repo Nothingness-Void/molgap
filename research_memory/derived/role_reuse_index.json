@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 238,
+  "ambiguous_historical_role_record_count": 243,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -1346,6 +1346,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
       "evidence_id": "pcqm-k1-residual-reconciliation",
       "role_identity": null,
       "role_name": "internal_development",
@@ -2550,6 +2585,7 @@
       "pcqm-k1-full-convergence-20260919",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-pair-value-decoupled-100k-s42",
+      "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-residual-reconciliation",
       "pcqm-k1-ssma-qualification-no-train-s42-v1",
       "pcqm-k1-v4-100k-reference-s42",
@@ -2606,6 +2642,7 @@
       "pcqm-k1-full-convergence-20260919",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-pair-value-decoupled-100k-s42",
+      "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-residual-reconciliation",
       "pcqm-k1-ssma-qualification-no-train-s42-v1",
       "pcqm-k1-v4-100k-reference-s42",

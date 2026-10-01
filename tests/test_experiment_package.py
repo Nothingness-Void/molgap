@@ -89,6 +89,16 @@ def test_binding_and_reproducibility(package, repo, payload, tmp_path):
     assert manifest["package_identity"] == canonical_fingerprint(identity_fields)
 
 
+def test_family_artifact_owner_is_source_but_output_paths_stay_blocked():
+    from molgap.experiment_package import _name
+
+    assert _name("src/molgap/experiment_family_artifacts.py") == "src/molgap/experiment_family_artifacts.py"
+    for path in ("artifacts/experiment_family_artifacts.py", "src/molgap/artifacts/model.pt",
+                 "src/molgap/other_artifacts.py"):
+        with pytest.raises(ValueError):
+            _name(path)
+
+
 @pytest.mark.parametrize("sidecar", [
     "experiment_spec.json", "SOURCE_FILES.json", "source.tar.gz",
     "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "package_manifest.json",

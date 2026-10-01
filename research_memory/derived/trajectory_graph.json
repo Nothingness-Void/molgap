@@ -1142,6 +1142,16 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-reference-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-ssma-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TB-k1-ssma-qualification-s42-v1",
       "type": "prior_evidence"
     },
@@ -1615,6 +1625,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-residual-reconciliation",
       "type": "evidence"
     },
@@ -1851,7 +1865,15 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-k1-reference-kaggle3-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-k1-residual-reconciliation",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-ssma-kaggle3-100k-s42-v1",
       "type": "trajectory"
     },
     {
