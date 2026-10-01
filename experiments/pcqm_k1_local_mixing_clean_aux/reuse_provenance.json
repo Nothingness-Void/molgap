@@ -1,0 +1,156 @@
+{
+  "desktop_base": "316680b0050677bb7887d603887771d0de5a6b61",
+  "imports": [
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/canonical_trace_manifest.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "b7a57f089bc7c0274895e881c564cd6f1f28741af0007c7b86767a94a8619ba5"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/checkpoint_manifest.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "7b29c3c623997ad72a47aa923294d55191412a75b611e5d137ef88011e7d284d"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/cost_records.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "64415bac8bf9f9b48205a6ead02cb7b1c677c4e06d62cc083b8169f3c1d101e5"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/costs/cost-TC-k1-v4-100k-reference-s42.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "ff679a3f53358f5cef04bc6c55dd3b23475a7d917a976981ee2329de4675f967"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/prediction_manifest.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "548ed130fba26c1e26f335e5f2d07ef8b12caef52d75811f567ef40f01881210"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_acceptance.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "da27c4a0ac4a5745b5c6cb7f88c56888800bfe835d34b029bdb5041f16d32f23"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_bundle.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "0c48f773b1bd6c54f7b254d41c7b70959253f1b4986c8cf4fb900822ddffce08"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/role_history.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "3ba68f9c66dd122cf780d399c369b5e2020697b71bbfef83ae243e4c6c5c8cab"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/roles/development.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "95a3acfe20b5866ef97f831d87633430c966b280edff5ed5322aafb4fc6601e3"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/roles/labels-read.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "b85a1db9caf53fcc3dc09ee75f74f8bd6a12daebcf56c7d8b2c3919c8e068471"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/roles/metric-computed.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "bfaa1e89b15464e799257163b2a226ad76d9bdbcbe956d086f5ea9bccf20a713"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/roles/prediction-input.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "c3fa1c3f89c641267164b22855a6201ca3e2d6a16aa2c66773e1de1b4ac4bb93"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/roles/train.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "1436a634c90e11da707e1d55bcbc851f5c36ee9987b3200f37fffbddcc670bcc"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "82be67fdace9a40df0a8c7302d0b9c231065f8d4a64c4007f245e99e11e4036f"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/runtime_certificate.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "c2ca38a1672ac763331bcad2a1d6c62cb49bc99badbb09882314a4192ecf99e8"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/source_config_binding.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "569990839c31d9b004037a2f0ccd1b6e4fbcc03f2a4a27f2ea8035efa7dddf0f"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "75019f020f454488966deea1feaa7f88eb5352d65e3f4e8646677274fb97c3d9"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_transform.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "3dfb50af4a82e5435740a20e77e0179f3af056ed7f7232b0470d6acb757fb47a"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "9d183603f3685ed1f425ae3aaa439feadbacc5632668910498af92d10b4e19e6"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace_manifest.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "1446269714005e075bd4c9ebca2bf32090ada928b88de52ac31aea7693b61d30"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace_migration.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "01dedc26fcbc736c0f4f298ed1548d96d3b0c6304b2e7bf54c975ce748936d3f"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace_migration.md",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "587b6959d63b2aacd6e4abf0f39917645086ca5cd90a419c0fda1de7f0ffd2b6"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace_recovery_spec.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "77e2209f6fa8f0fdf558279b19b27c04aa5e6d3adb99cdb9f53c537006daadf1"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trajectory.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "724623575f3a223eb7fc2eb4ed4bbeecf77a3c4deea694050c389deac608a6e4"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "bfb20f300820315e3d4a869d3709c22fc61fe94a43582eb5d674b47b3918b9b2"
+    },
+    {
+      "path": "experiments/pcqm_k1_variants_100k/training_contract.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "2684248a438cc610ca549f486eb86f7a1e660deb56b925ebb5e5de05ac3a5f96"
+    },
+    {
+      "path": "experiments/pcqm_k1_variants_100k/decision.md",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "a5e0b220c3f18ee78859949673bf24a96c6f24a96ccf03c2823e2391e790e0e4"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/inventory_summary.json",
+      "source_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+      "sha256": "579f838da0877f16136fdb8a8976f24d8c4462123f2d19b70b03d236a4369a70"
+    },
+    {
+      "path": "src/molgap/chemical_aux_labels.py",
+      "source_commit": "edbf052794fafc6cb804d1b3561d40428941a484",
+      "sha256": "4ecb8da12b9267f3b015e3248d5ed62cee62c7764f15720666973303a35ba019"
+    },
+    {
+      "path": "src/molgap/chemical_aux_cache.py",
+      "source_commit": "edbf052794fafc6cb804d1b3561d40428941a484",
+      "sha256": "b3a5c2e164a85ac8820372bb8d354d767737e3a636a421ee1d3f139052fda2a7"
+    }
+  ],
+  "reference_import_semantics": "Exact retained immutable reference metadata, no reference retraining or scientific promotion."
+}

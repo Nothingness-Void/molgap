@@ -152,6 +152,9 @@ CAUSAL_REQUIRED_TRACE_FIELDS = frozenset(
 )
 
 INTERVENTION_FIELDS_BY_PURPOSE = {
+    # A train-only auxiliary head and its loss are one declared objective.
+    # Other recipe/runtime differences remain confounders.
+    "objective_comparison": frozenset({"loss_identity", "architecture_config_identity"}),
     "architecture_comparison": frozenset({"architecture_config_identity"}),
     "mechanism_comparison": frozenset({"architecture_config_identity"}),
     "optimizer_comparison": frozenset(

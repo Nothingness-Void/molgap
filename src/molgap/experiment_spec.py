@@ -56,6 +56,12 @@ FAMILIES = MappingProxyType({
         "seed42-global-randperm-by-pass-v1", "full-train-mean-sample-std",
         "ogb_edge_state_structural_gps9",
     ),
+    ("neural_atom_k1", "2"): FamilyContract(
+        "neural_atom_k1", "2", "molgap.k1_screen_training", "pcqm_k1_v4_100k",
+        "ogb-atom9-bond3-rwse16-v1", ("train", "development"),
+        "seed42-python-epoch-shuffle-v4", "fixed-train-100k-mean-sample-std",
+        "ogb_edge_state_structural_gps9",
+    ),
 })
 
 
@@ -84,6 +90,12 @@ ADDONS = MappingProxyType({
     },
     ("k1_pair_value", "1"): AddonContract(
         "neural_atom_k1", "pair-token-replacement", "molgap.k1_pair_token",
+    ),
+    ("k1_joint_aggregation", "1"): AddonContract(
+        "neural_atom_k1", "k1-local-aggregation", "molgap.k1_joint_aggregation",
+    ),
+    ("k1_clean_fingerprint", "1"): AddonContract(
+        "neural_atom_k1", "k1-training-objective", "molgap.k1_screen_training",
     ),
 })
 
@@ -191,7 +203,10 @@ def _arm(arm: dict) -> None:
     _object(training["overrides"], "", "training.overrides")
     if init["seed"] != 42:
         raise ValueError("Frozen recipe initialization requires seed 42")
-    _reference(training["objective"], "training.objective", name="normalized-gap-l1")
+    objective_name = ("normalized-gap-l1+clean-fingerprint" if any(
+        item.get("name") == "k1_clean_fingerprint" for item in arm["addons"])
+        else "normalized-gap-l1")
+    _reference(training["objective"], "training.objective", name=objective_name)
     _reference(training["sampler"], "training.sampler", name=contract.sampler)
     _reference(training["transform"], "training.transform", name=contract.transform)
 
@@ -219,6 +234,16 @@ def _arm(arm: dict) -> None:
                     f"[{EDGE_STATE_MIN_LAYERS}, {EDGE_STATE_MAX_LAYERS}] "
                     f"except {EDGE_STATE_BASE_LAYERS}"
                 )
+        elif addon["name"] in {"k1_joint_aggregation", "k1_clean_fingerprint"}:
+            if family["version"] != "2" or len(arm["addons"]) != 1:
+                raise ValueError("K1 screen extensions require family/version 2 and one extension")
+            expected_config = ({"layer": 6, "latent_channels": 64, "kappa": 4,
+                                "seed": 42, "degree_policy": "original-sum-above-four"}
+                               if addon["name"] == "k1_joint_aggregation" else
+                               {"weight": 0.1, "hidden_channels": 32, "bits": 512,
+                                "seed": 42, "input_corruption": False})
+            if addon["config"] != expected_config:
+                raise ValueError("K1 screen extension differs from the bounded frozen configuration")
         else:
             _object(addon["config"], "", "addon.config")
         _digest(addon["source_sha256"], "addon.source_sha256")

@@ -358,7 +358,7 @@ class FamilyOutputSession:
             cursor=cursor, optimizer_step=optimizer_step, sample_presentations=sample_presentations,
             scheduler_state=scheduler_state, ema_state=ema_state)
 
-    def complete(self, *, runtime: dict, hardware: str) -> dict:
+    def complete(self, *, runtime: dict, hardware: str, observed_costs: list | None = None) -> dict:
         import time
         rows = [row for row in self.stage.recorder.record["observations"]
                 if row["event"] == "observation"]
@@ -366,12 +366,13 @@ class FamilyOutputSession:
             raise ValueError("Cannot complete a session without observed training work")
         progress = {"epochs": len(rows), "optimizer_steps": rows[-1]["optimizer_step"],
                     "sample_presentations": rows[-1]["sample_presentations"]}
-        costs = [
+        costs = observed_costs if observed_costs is not None else [
             {"metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - self.started,
              "status": "measured", "semantics": "process_wall", "hardware": hardware},
             {"metric": "device_seconds", "unit": "seconds", "value": None,
              "status": "missing", "semantics": "allocated_device", "hardware": hardware},
         ]
+        _costs(costs)
         write_output_manifest(self.root, self.context, adapter=self.adapter,
             artifacts={"predictions": "development_predictions.pt", "selected_model": "selected_model.pt",
                        "resume": "last_checkpoint.pt", "trace": "canonical_trace.json", "contract": "training_contract.json"},
