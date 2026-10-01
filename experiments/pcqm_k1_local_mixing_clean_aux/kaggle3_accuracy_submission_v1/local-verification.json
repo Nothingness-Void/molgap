@@ -1,0 +1,12 @@
+{
+  "focused_tests": {
+    "suite": "tests/test_k1_screen_training.py",
+    "passed": 15,
+    "exit_code": 0,
+    "executor": "gpt-6-luna max",
+    "runs": 1
+  },
+  "release_check": "LOCAL_RELEASE_INPUTS_VERIFIED",
+  "rml_frozen_check": "passed",
+  "scope": "local checks; remote runtime and scientific acceptance pending"
+}

@@ -576,8 +576,18 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-k1-reference-kaggle3-100k-s42-v2",
+      "target": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-k1-residual-reconciliation",
       "target": "TB-pcqm-expert-oracle-feasibility-20260930",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-ssma-kaggle3-100k-s42-v2",
+      "target": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1",
       "type": "parent_trajectory"
     },
     {
@@ -1142,12 +1152,22 @@
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TB-k1-reference-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
     },
     {
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TB-k1-reference-kaggle3-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
     },
     {
@@ -1887,6 +1907,10 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-k1-reference-kaggle3-100k-s42-v1",
       "type": "trajectory"
     },
@@ -1896,6 +1920,10 @@
     },
     {
       "id": "TB-k1-residual-reconciliation",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1",
       "type": "trajectory"
     },
     {

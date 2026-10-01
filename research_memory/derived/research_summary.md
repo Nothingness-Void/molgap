@@ -5,6 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
+- ACTIVE: 2
 - CLOSED: 9
 - INCONCLUSIVE: 14
 - INFRASTRUCTURE_ONLY: 5
@@ -71,10 +72,10 @@
 - Tesla T4; exclusive assigned diagnostic window only device_hours: measured=0.006206 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4; exclusive assigned diagnostic window only queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - Tesla T4; exclusive assigned diagnostic window only wall_hours: measured=0.006206 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
-- Tesla T4; one exclusive assigned device per arm cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
-- Tesla T4; one exclusive assigned device per arm device_hours: measured=unknown (0 measured records), estimated=24.000000 (4 estimated records), measurement_missing=0, not_applicable=0
-- Tesla T4; one exclusive assigned device per arm queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
-- Tesla T4; one exclusive assigned device per arm wall_hours: measured=unknown (0 measured records), estimated=24.000000 (4 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4; one exclusive assigned device per arm cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=6, not_applicable=0
+- Tesla T4; one exclusive assigned device per arm device_hours: measured=unknown (0 measured records), estimated=36.000000 (6 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4; one exclusive assigned device per arm queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=6, not_applicable=0
+- Tesla T4; one exclusive assigned device per arm wall_hours: measured=unknown (0 measured records), estimated=36.000000 (6 estimated records), measurement_missing=0, not_applicable=0
 - Tesla_P100_PCIE_16GB cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_P100_PCIE_16GB device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_P100_PCIE_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -103,8 +104,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 88
-- Cost-event coverage: 59/70 trajectories; incomplete native measurement=53
+- Measurement-missing cost events: 90
+- Cost-event coverage: 61/72 trajectories; incomplete native measurement=55
 
 ## Screening Backtest
 - Status: available
@@ -112,9 +113,9 @@
 - Excluded traces: 11
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 49
+- [INFO] trace_unavailable_for_backtest: 51
 - [WARN] historical_partial_record: 19
-- [WARN] incomplete_native_cost_measurement: 53
+- [WARN] incomplete_native_cost_measurement: 55
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 34
-- [WARN] trajectory_without_v5_evidence: 11
+- [WARN] missing_explicit_role_identity: 36
+- [WARN] trajectory_without_v5_evidence: 13

@@ -1,0 +1,36 @@
+{
+  "action_rule": {
+    "action": "TRAIN_100K_PAIR",
+    "field": "paired_training_requested",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4"
+  },
+  "cost_model": {
+    "assumptions": [
+      "Prospective allowances are estimates; actual exclusive T4 allocation is measured on return.",
+      "This authorized accuracy attempt reports overhead; the historical25% veto remains unchanged for other attempts."
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "e01ced59712fa498f69754e877b628f5395bd25f3f8cfdbd91459cd28a1f6e6c",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "k1-ssma-accuracy-kaggle3",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "paired_training_requested"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

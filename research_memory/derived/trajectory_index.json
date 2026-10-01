@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "49a98788f5f87778705a8d4367a0c65953d439eef597af0fba230fb04ef04e2f",
+  "source_digest": "622d628862f39af6a3bfcf973758f7bb4c8eb0ee964823d4d161511b96dcafa4",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -846,6 +846,22 @@
     },
     {
       "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_local_mixing_clean_aux/training_protocol_kaggle3_accuracy_v1.md",
+      "family_id": "k1-original-v4-reference",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-k1-reference-kaggle3-100k-s42-v2"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_v1/reference/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+    },
+    {
+      "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/reference/decision.md",
       "family_id": "k1-original-v4-reference",
       "outcome": "NO_TRAIN",
@@ -893,6 +909,22 @@
       ],
       "track": "B",
       "trajectory_id": "TB-k1-residual-reconciliation"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_local_mixing_clean_aux/training_protocol_kaggle3_accuracy_v1.md",
+      "family_id": "k1-ssma",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-k1-ssma-kaggle3-100k-s42-v2"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_v1/ssma/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
     },
     {
       "completeness_status": "complete",
