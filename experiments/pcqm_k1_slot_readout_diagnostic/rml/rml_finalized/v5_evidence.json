@@ -1,0 +1,83 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_readout_diagnostic/results/analysis.json",
+      "name": "results/analysis.json",
+      "sha256": "d0c7544ec13a1316c31264175b0259e25818cbd41e504581e52e96b7118952e2"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_readout_diagnostic/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "20eb107eb5f593c06214a8571bba7e59cd6f4f5008d60052fe7bae12cfcf7125"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_readout_diagnostic/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "db39710b327f5b2ec0713e07e82b7790dd052cbc0e1e4f9c42e4396b2e463dd5"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_readout_diagnostic/results/measurement/reference_rows.npz",
+      "name": "results/measurement/reference_rows.npz",
+      "sha256": "35c167b300bc3a2dfc0e70097eee1696738e405d0ccc658f4f56133fb04dc67b"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_readout_diagnostic/results/measurement/candidate_rows.npz",
+      "name": "results/measurement/candidate_rows.npz",
+      "sha256": "aebbef39e1268c67a41a7ea8d837c9f55f7c737a5984fe67f0ffe1eb86ba7eb4"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_readout_diagnostic/results/structure/structure_perrow.npz",
+      "name": "results/structure/structure_perrow.npz",
+      "sha256": "4bed2fefd6d0bb27855553a0fe65d5215e9e40fcf27737640c8dbf5f5eb781e9"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_slot_readout_diagnostic/protocol.md",
+      "experiments/pcqm_k1_slot_readout_diagnostic/terminal_decision.md",
+      "experiments/pcqm_k1_slot_readout_diagnostic/attribution.md",
+      "experiments/pcqm_k1_slot_readout_diagnostic/acceptance.json",
+      "experiments/pcqm_k1_slot_readout_diagnostic/results/analysis.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-slot-readout-diagnostic-20261002",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-k1-slot-readout-diagnostic-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-02",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata export of separately executed prospective frozen inference; no inference during publication"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_k1_slot_readout_diagnostic/results/execution.json",
+    "inference_executed": true,
+    "training_executed": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "no_training_release",
+    "comparison_status": "consumed_role_observational_diagnostic",
+    "execution_status": "complete_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_prefix": "untouched"
+  },
+  "scope": "desktop_k1_retained_slot_readout_observational_diagnostic",
+  "track": "B"
+}

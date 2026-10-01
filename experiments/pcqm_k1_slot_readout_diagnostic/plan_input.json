@@ -1,0 +1,142 @@
+{
+  "action_inputs_ref": "experiments/pcqm_k1_slot_readout_diagnostic/action_inputs.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "inference",
+      "cost_event_id": "cost-k1-slot-expected",
+      "evidence_ref": "experiments/pcqm_k1_slot_readout_diagnostic/protocol.md",
+      "hardware": "local Windows CPU, four intra-op threads",
+      "measurement": {
+        "cpu_hours": {
+          "status": "estimated",
+          "value": 1.3333333333333333
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 0.3333333333333333
+        }
+      },
+      "platform": "local",
+      "run_id": "local-k1-slot-readout-20261002",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-slot-readout-diagnostic-20261002"
+    }
+  ],
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_slot_readout_diagnostic/protocol.md",
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "known_evidence_ids": [],
+    "known_trajectory_ids": [],
+    "policy_id": "pcqm-k1-slot-readout-diagnostic",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_slot_readout_diagnostic/roles.json"
+    ],
+    "source_commit": "f073b66d8f470af9d727b8803dec30ea6c779648",
+    "state_timestamp": "2026-10-02"
+  },
+  "trajectory": {
+    "actions": [
+      {
+        "action_id": "A001",
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "cost_event_ids": [
+          "cost-k1-slot-expected"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_k1_slot_readout_diagnostic/inputs.json"
+        ],
+        "run_ids": [
+          "local-k1-slot-readout-20261002"
+        ],
+        "source_commit": "f073b66d8f470af9d727b8803dec30ea6c779648",
+        "type": "local_frozen_checkpoint_observational_diagnostic"
+      }
+    ],
+    "comparison_blockers": [
+      "Consumed development role, single seed; observational not causal.",
+      "Reference external owner identity hash-bound, not a strict replay reference ID."
+    ],
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_slot_readout_diagnostic/protocol.md",
+    "decision": {
+      "decision_ref": "experiments/pcqm_k1_slot_readout_diagnostic/decision.md",
+      "next_allowed_actions": [
+        "Bounded authorized observational diagnostic; no training"
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": []
+    },
+    "family_id": "k1-slot-readout-diagnostic",
+    "hypothesis": {
+      "alternative_explanations": [
+        "Learned u scales with N or head compensates.",
+        "Width regression reflects local representation/optimization or single-seed variance.",
+        "Observed structure association is confounded by correlated graph features and repeated selection."
+      ],
+      "changed_mechanism": "No change: observational hooks and exact retained-prediction/graph joins only.",
+      "cheapest_falsifier": "2048 retained graph forwards per checkpoint plus full50K graph metadata; fail closed on reconstruction or cost ceiling.",
+      "decision_changed_if_negative": "Reject numerical-negligibility shortcut; prioritize unresolved conditional information or local-path diagnosis.",
+      "decision_changed_if_positive": "Prioritize a separately frozen slot/readout intervention question, not training.",
+      "expected_native_cost_ref": "cost-k1-slot-expected",
+      "historical_unknowns": [
+        "Single-seed training variance.",
+        "Slot contribution causal utility without intervention."
+      ],
+      "hypothesis_id": "H-k1-slot-readout-20261002",
+      "observed_deficiency": "Width256 accepted negative bounded endpoint; final K1 update has eval u/N mean identity, but its learned magnitude and size association are unknown.",
+      "related_closed_family_ids": [
+        "neural-atom-k1",
+        "gptrans-500k-frozen-readout"
+      ],
+      "supporting_evidence_ids": [
+        "pcqm-matched-500k-v4-three-arm"
+      ]
+    },
+    "owner": "desktop",
+    "question": "Measure retained K1 slot contribution through mean readout and describe width256 regressions by pure2D structure.",
+    "record_mode": "prospective",
+    "reference_bundle_id": null,
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "schema": "molgap-trajectory-v1",
+    "state_at_start": {
+      "budget_snapshot_ref": "experiments/pcqm_k1_slot_readout_diagnostic/protocol.md",
+      "contract_refs": [
+        "experiments/pcqm_k1_slot_readout_diagnostic/protocol.md",
+        "experiments/pcqm_k1_slot_readout_diagnostic/inputs.json"
+      ],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-matched-500k-v4-three-arm"
+      ],
+      "reference_ids": [],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_slot_readout_diagnostic/roles.json"
+      ],
+      "source_commit": "f073b66d8f470af9d727b8803dec30ea6c779648",
+      "source_config_identity": "Verified desktop tip plus separately frozen worker/source file hashes; external accepted checkpoint identity in inputs."
+    },
+    "track": "B",
+    "trajectory_id": "TB-k1-slot-readout-diagnostic-20261002"
+  }
+}

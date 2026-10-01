@@ -13,6 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does retained K1 global return become negligible after mean readout? | Accepted observational NO_TRAIN diagnostic; magnitude remains substantial; causal utility unresolved | [K1 slot/readout](pcqm_k1_slot_readout_diagnostic/README.md) |
 | Can prediction-only routing realize expert Oracle headroom? | Accepted saved-prediction diagnostic; NO_TRAIN for a new prediction-only router, no model promotion | `pcqm_expert_oracle_feasibility/` |
 | Does clean-input chemical auxiliary supervision improve GPTrans Gap? | Owner endpoint acceptance and terminal RML complete; strict qualification INCONCLUSIVE and replay excluded. Evidence integration / Git routing remain under review | [Retained chemical owner](../BRANCHES.md#retained-checkout-map) |
 | Does bounded SSMA aggregation qualify beside original K1 V4? | Owner NO_TRAIN terminal closure complete; frozen runtime cost gate blocked both formal arms. Evidence integration / Git routing remain under review | [Retained K1 owner](../BRANCHES.md#retained-checkout-map) |

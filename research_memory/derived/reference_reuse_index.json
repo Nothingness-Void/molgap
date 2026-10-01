@@ -959,6 +959,27 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "consumed_role_observational_diagnostic",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-slot-readout-diagnostic-20261002",
+      "role_use": {
+        "internal_development": "selection_used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_prefix": "untouched"
+      },
+      "scientific_scope": "desktop_k1_retained_slot_readout_observational_diagnostic",
+      "source_envelope": "experiments/pcqm_k1_slot_readout_diagnostic/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "committed_metadata_verified"
       ],
       "comparison_status": "paired_three_arm_comparison_complete",

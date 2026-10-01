@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "inference",
+  "cost_event_id": "cost-k1-slot-expected",
+  "evidence_ref": "experiments/pcqm_k1_slot_readout_diagnostic/protocol.md",
+  "hardware": "local Windows CPU, four intra-op threads",
+  "measurement": {
+    "cpu_hours": {
+      "status": "estimated",
+      "value": 1.3333333333333333
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.3333333333333333
+    }
+  },
+  "platform": "local",
+  "run_id": "local-k1-slot-readout-20261002",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-slot-readout-diagnostic-20261002"
+}

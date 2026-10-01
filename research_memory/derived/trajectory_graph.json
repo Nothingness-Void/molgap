@@ -236,6 +236,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-slot-readout-diagnostic-20261002:A001",
+      "target": "experiments/pcqm_k1_slot_readout_diagnostic/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-matched-500k-v4-three-arm:A001",
       "target": "experiments/pcqm_500k_v4_evidence/final_comparison.json",
       "type": "action_produced_evidence"
@@ -1137,6 +1142,11 @@
     },
     {
       "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-k1-slot-readout-diagnostic-20261002",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-pcqm-scale-fit-retained-20261001",
       "type": "prior_evidence"
     },
@@ -1585,6 +1595,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-slot-readout-diagnostic-20261002",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-matched-500k-v4-three-arm",
       "type": "evidence"
     },
@@ -1806,6 +1820,10 @@
     },
     {
       "id": "TB-k1-residual-reconciliation",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-slot-readout-diagnostic-20261002",
       "type": "trajectory"
     },
     {

@@ -1,0 +1,301 @@
+{
+  "format": "molgap-k1-slot-structure-diagnostic-v1",
+  "status": "complete",
+  "scope": "retained_internal_development_50k_pure2d_only",
+  "identities": {
+    "trajectory": {
+      "path": "D:\\w\\k1-slot-diagnostic\\experiments\\pcqm_k1_slot_readout_diagnostic\\rml\\trajectory.json",
+      "sha256": "b40c2911fe5961edad4d94c747e29b65f6cfa18f00900db886e46c0abccd1b51"
+    },
+    "loader": {
+      "path": "D:\\w\\k1-width256\\platforms\\_records\\kaggle\\staging\\k1_width256_v1\\cpu_source\\src\\molgap\\k1_screen_training.py",
+      "sha256": "6551b45cb29f8354109967012d809a96db76218464e46c5858a4eda7b222eb82"
+    },
+    "manifest": {
+      "path": "D:\\\u6587\u6863\\molgap\\data\\pcqm_fixed_100k_v1\\manifest.json",
+      "sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
+    },
+    "official_OGB_feature_encoder": {
+      "path": "D:\\\u6587\u6863\\molgap\\.venv\\Lib\\site-packages\\ogb\\utils\\features.py",
+      "sha256": "16cdbc628fbeef698e3a89309de7c18d8618524354a368b55fd32f24e9281958"
+    },
+    "reference": {
+      "prediction": {
+        "path": "D:\\w\\k1-width256\\platforms\\_records\\kaggle\\training\\pcqm_k1_width256_reference_kaggle3_v1\\k1_pair\\reference\\development_predictions.pt",
+        "sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82"
+      },
+      "output_manifest": {
+        "path": "D:\\w\\k1-width256\\platforms\\_records\\kaggle\\training\\pcqm_k1_width256_reference_kaggle3_v1\\k1_pair\\reference\\output_manifest.json",
+        "sha256": "998259659abd79feed98e740225e534605c26deb5239591e2d51003d364b0e7e"
+      }
+    },
+    "candidate": {
+      "prediction": {
+        "path": "D:\\w\\k1-width256\\platforms\\_records\\kaggle\\training\\pcqm_k1_node_width256_kaggle3_v1\\experiment\\width256\\development_predictions.pt",
+        "sha256": "a43b162b691ac4e69da97d70f71a97f471fde44759c6321adf60c0aa9b52581f"
+      },
+      "output_manifest": {
+        "path": "D:\\w\\k1-width256\\platforms\\_records\\kaggle\\training\\pcqm_k1_node_width256_kaggle3_v1\\experiment\\width256\\output_manifest.json",
+        "sha256": "e914cc6bc592aaf5ea4cb9ddae9d023bf7744c3c989d007d4fcad050724aaa8e"
+      }
+    },
+    "development_shard": {
+      "path": "D:\\\u6587\u6863\\molgap\\data\\pcqm_fixed_100k_v1\\train\\train_shard_0002.pt",
+      "sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a"
+    }
+  },
+  "script": {
+    "path": "D:\\w\\k1-slot-diagnostic\\experiments\\pcqm_k1_slot_readout_diagnostic\\structure.py",
+    "sha256": "26dda13958d94825dac8d826c14598b79d58c857aa8c7b6a67b3fd9d8a63f769"
+  },
+  "alignment": {
+    "rows": 50000,
+    "source_idx_start": 100000,
+    "source_idx_stop_exclusive": 150000,
+    "exact_order": true,
+    "identical_graph_and_prediction_targets": true,
+    "target_float32_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137"
+  },
+  "feature_mapping": {
+    "aromatic_atom_fraction": "OGB x[:,7]: False=0 True=1",
+    "cyclic_atom_fraction": "OGB x[:,8]: False=0 True=1",
+    "conjugated_bond_fraction": "OGB edge_attr[:,2]: False=0 True=1; unique real bonds",
+    "cycle_rank": "E-N+C, independent cycle count; not SSSR ring count",
+    "zero_bond_conjugated_fraction": 0.0
+  },
+  "overall": {
+    "n": 50000,
+    "reference_mean_AE_eV": 0.1412944608205557,
+    "candidate_mean_AE_eV": 0.14279833381593227,
+    "reference_minus_candidate_mean_AE_eV": -0.001503872995376587,
+    "paired_row_bootstrap_95pct_eV": [
+      -0.002382676223993301,
+      -0.0006207802581787111
+    ]
+  },
+  "cohorts": {
+    "n_atoms": [
+      {
+        "bin": "<=15",
+        "n": 34837,
+        "reference_mean_AE_eV": 0.14296826774646199,
+        "candidate_mean_AE_eV": 0.14429227594383193,
+        "reference_minus_candidate_mean_AE_eV": -0.0013240081973699613,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.0025130419750371306,
+          -7.763957769926812e-05
+        ]
+      },
+      {
+        "bin": "16-25",
+        "n": 15163,
+        "reference_mean_AE_eV": 0.13744888858037912,
+        "candidate_mean_AE_eV": 0.13936600103814156,
+        "reference_minus_candidate_mean_AE_eV": -0.0019171124577624483,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.0033201956885758658,
+          -0.000502119501528746
+        ]
+      },
+      {
+        "bin": "26-35",
+        "n": 0,
+        "reference_mean_AE_eV": null,
+        "candidate_mean_AE_eV": null,
+        "reference_minus_candidate_mean_AE_eV": null,
+        "paired_row_bootstrap_95pct_eV": null
+      },
+      {
+        "bin": ">=36",
+        "n": 0,
+        "reference_mean_AE_eV": null,
+        "candidate_mean_AE_eV": null,
+        "reference_minus_candidate_mean_AE_eV": null,
+        "paired_row_bootstrap_95pct_eV": null
+      }
+    ],
+    "cycle_rank": [
+      {
+        "bin": "0",
+        "n": 4669,
+        "reference_mean_AE_eV": 0.18942630431411556,
+        "candidate_mean_AE_eV": 0.1947314627396777,
+        "reference_minus_candidate_mean_AE_eV": -0.00530515842556213,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.010164657367274092,
+          -0.0008192135974155256
+        ]
+      },
+      {
+        "bin": "1",
+        "n": 18275,
+        "reference_mean_AE_eV": 0.14098697060925527,
+        "candidate_mean_AE_eV": 0.14132046784323968,
+        "reference_minus_candidate_mean_AE_eV": -0.0003334972339844084,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.0019011853537057232,
+          0.0012381980755097558
+        ]
+      },
+      {
+        "bin": "2",
+        "n": 23464,
+        "reference_mean_AE_eV": 0.13010889623394162,
+        "candidate_mean_AE_eV": 0.13138168590302723,
+        "reference_minus_candidate_mean_AE_eV": -0.0012727896690856383,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.0024490107593888354,
+          -4.4442706910002376e-05
+        ]
+      },
+      {
+        "bin": ">=3",
+        "n": 3592,
+        "reference_mean_AE_eV": 0.15336291677834993,
+        "candidate_mean_AE_eV": 0.1573897726618102,
+        "reference_minus_candidate_mean_AE_eV": -0.004026855883460268,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.007893046318555462,
+          -0.0001745196602790571
+        ]
+      }
+    ],
+    "aromatic_atom_fraction": [
+      {
+        "bin": "Q1",
+        "n": 15634,
+        "reference_mean_AE_eV": 0.18207468643538616,
+        "candidate_mean_AE_eV": 0.18354380431955422,
+        "reference_minus_candidate_mean_AE_eV": -0.0014691178841680552,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.0038754292696931716,
+          0.0006674583944591759
+        ]
+      },
+      {
+        "bin": "Q2",
+        "n": 11004,
+        "reference_mean_AE_eV": 0.13473578514033602,
+        "candidate_mean_AE_eV": 0.13646411147173082,
+        "reference_minus_candidate_mean_AE_eV": -0.001728326331394796,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.0033945255222558018,
+          -3.55106317013354e-06
+        ]
+      },
+      {
+        "bin": "Q3",
+        "n": 12683,
+        "reference_mean_AE_eV": 0.11626478361141641,
+        "candidate_mean_AE_eV": 0.1162730563770641,
+        "reference_minus_candidate_mean_AE_eV": -8.272765647685463e-06,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.001411384855884112,
+          0.0013676436637503054
+        ]
+      },
+      {
+        "bin": "Q4",
+        "n": 10679,
+        "reference_mean_AE_eV": 0.11807740079306163,
+        "candidate_mean_AE_eV": 0.12117713244680899,
+        "reference_minus_candidate_mean_AE_eV": -0.0030997316537473584,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.004822205090658954,
+          -0.0015084694806908122
+        ]
+      }
+    ],
+    "conjugated_bond_fraction": [
+      {
+        "bin": "Q1",
+        "n": 12876,
+        "reference_mean_AE_eV": 0.18506035715128627,
+        "candidate_mean_AE_eV": 0.18608097250174943,
+        "reference_minus_candidate_mean_AE_eV": -0.0010206153504631467,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.003595839795876675,
+          0.001431818377271725
+        ]
+      },
+      {
+        "bin": "Q2",
+        "n": 12886,
+        "reference_mean_AE_eV": 0.12837790316090752,
+        "candidate_mean_AE_eV": 0.12783096605588354,
+        "reference_minus_candidate_mean_AE_eV": 0.0005469371050240071,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.0011677678269146946,
+          0.0019986899557199495
+        ]
+      },
+      {
+        "bin": "Q3",
+        "n": 11803,
+        "reference_mean_AE_eV": 0.12081892118912112,
+        "candidate_mean_AE_eV": 0.12236258267124134,
+        "reference_minus_candidate_mean_AE_eV": -0.0015436614821202207,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.0031420424001091444,
+          5.5213620134867057e-05
+        ]
+      },
+      {
+        "bin": "Q4",
+        "n": 12435,
+        "reference_mean_AE_eV": 0.12879634060483885,
+        "candidate_mean_AE_eV": 0.1328880335343234,
+        "reference_minus_candidate_mean_AE_eV": -0.004091692929484541,
+        "paired_row_bootstrap_95pct_eV": [
+          -0.005781314966426493,
+          -0.0024403887203432832
+        ]
+      }
+    ]
+  },
+  "quartile_boundaries": {
+    "aromatic_atom_fraction": {
+      "boundaries": [
+        0.0,
+        0.375,
+        0.46153846153846156
+      ],
+      "method": "numpy_linear_full50k_posthoc",
+      "tie_rule": "searchsorted_side_left; ties stay together; empty bins retained"
+    },
+    "conjugated_bond_fraction": {
+      "boundaries": [
+        0.35294117647058826,
+        0.5333333333333333,
+        0.6875
+      ],
+      "method": "numpy_linear_full50k_posthoc",
+      "tie_rule": "searchsorted_side_left; ties stay together; empty bins retained"
+    }
+  },
+  "bootstrap": {
+    "replicates": 1000,
+    "seed": 42,
+    "unit": "paired_row",
+    "training_stochasticity": "unknown_single_seed",
+    "multiple_comparison_correction": false
+  },
+  "perrow": {
+    "path": "D:\\w\\k1-slot-diagnostic\\experiments\\pcqm_k1_slot_readout_diagnostic\\results\\structure\\structure_perrow.npz",
+    "sha256": "4bed2fefd6d0bb27855553a0fe65d5215e9e40fcf27737640c8dbf5f5eb781e9"
+  },
+  "costs": {
+    "wall_seconds": 16.184656199999154,
+    "process_cpu_seconds": 16.046875,
+    "CPU_threads": 1,
+    "accelerator_used": false,
+    "cutoff_seconds": 600
+  },
+  "limitations": [
+    "Descriptive posthoc bins; overlapping features are not causal proof",
+    "No cohort-selected training or promotion claim",
+    "Row bootstrap excludes training variability; intervals unadjusted for multiple comparisons",
+    "Conjugation includes aromatic bonds under retained OGB features",
+    "Retained geometry stripped by frozen loader; no 3D constructed or consumed"
+  ]
+}

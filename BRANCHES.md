@@ -62,6 +62,7 @@ remote Git snapshots. Inspect only the question required by the task.
 | Archived desktop precision | `D:/文档/molgap-exp/molgap-gptrans-fp16-precision-100k` | Retained acceptance / reference-binding records |
 | Archived server DSAR/DSMR draft | `D:/w/rml-500k-fix` | Old draft snapshot; job/attempt identity incomplete, not live scheduler evidence |
 | Desktop retained scale-fit cache | `D:/w/scale-fit` | [Accepted terminal navigation](experiments/pcqm_scale_fit_retained/STATUS.md); diagnostic implementation/evidence integrated into desktop, ignored predictions retained here; no training release |
+| Desktop K1 slot/readout diagnostic: `codex/exp/k1-slot-readout-diagnostic` | `D:/w/k1-slot-diagnostic` | [Accepted NO_TRAIN diagnostic](experiments/pcqm_k1_slot_readout_diagnostic/README.md); evidence retained on owner branch, no model promotion |
 
 The user-directed [archive custody record](https://github.com/Nothingness-Void/molgap/blob/b1435ba939c39d88b6af55aca04c0b62f82314c3/docs/operations/BRANCH_ARCHIVE_20261001.md)
 owns exact source/supplement tips and preserved qualification gaps. Four old

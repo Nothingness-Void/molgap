@@ -1,7 +1,7 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 52
+- Validated V5 evidence: 53
 - Evidence without trajectory: 0
 
 ## Trajectories
@@ -9,7 +9,7 @@
 - INCONCLUSIVE: 14
 - INFRASTRUCTURE_ONLY: 4
 - NEGATIVE_UNDER_CONTRACT: 14
-- NO_TRAIN: 14
+- NO_TRAIN: 15
 - POSITIVE_UNDER_CONTRACT: 8
 
 ## Transfer
@@ -18,15 +18,19 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 106
-- Coarse historical role records: 224
-- Repeatedly selected role identities: 9
+- Explicit role events: 110
+- Coarse historical role records: 229
+- Repeatedly selected role identities: 10
 
 ## Cost
 - A100 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - A100 device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - A100 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - A100 wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- CPU; inference4threads, structure1thread; no accelerator cpu_hours: measured=0.011207 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- CPU; inference4threads, structure1thread; no accelerator device_hours: not applicable (1 records); measurement_missing=0
+- CPU; inference4threads, structure1thread; no accelerator queue_hours: not applicable (1 records); measurement_missing=0
+- CPU; inference4threads, structure1thread; no accelerator wall_hours: measured=0.014255 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Hygon DCU cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - Hygon DCU device_hours: measured=30.974167 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Hygon DCU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
@@ -75,6 +79,10 @@
 - Z100SM DCU device_hours: measured=0.073889 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Z100SM DCU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Z100SM DCU wall_hours: measured=0.073889 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- local Windows CPU, four intra-op threads cpu_hours: measured=unknown (0 measured records), estimated=1.333333 (1 estimated record), measurement_missing=0, not_applicable=0
+- local Windows CPU, four intra-op threads device_hours: not applicable (1 records); measurement_missing=0
+- local Windows CPU, four intra-op threads queue_hours: not applicable (1 records); measurement_missing=0
+- local Windows CPU, four intra-op threads wall_hours: measured=unknown (0 measured records), estimated=0.333333 (1 estimated record), measurement_missing=0, not_applicable=0
 - not_applicable cpu_hours: not applicable (2 records); measurement_missing=0
 - not_applicable device_hours: not applicable (2 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (2 records); measurement_missing=0
@@ -88,7 +96,7 @@
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Measurement-missing cost events: 77
-- Cost-event coverage: 52/63 trajectories; incomplete native measurement=46
+- Cost-event coverage: 53/64 trajectories; incomplete native measurement=46
 
 ## Screening Backtest
 - Status: available
@@ -96,7 +104,7 @@
 - Excluded traces: 10
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 43
+- [INFO] trace_unavailable_for_backtest: 44
 - [WARN] historical_partial_record: 18
 - [WARN] incomplete_native_cost_measurement: 46
 - [WARN] missing_cost_event: 11

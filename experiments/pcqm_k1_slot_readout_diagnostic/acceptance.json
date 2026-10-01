@@ -1,0 +1,140 @@
+{
+  "format": "molgap-k1-slot-observational-acceptance-v1",
+  "evidence_id": "pcqm-k1-slot-readout-diagnostic-20261002",
+  "run_id": "local-k1-slot-readout-20261002",
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "consumed_role_observational_diagnostic",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "no_training_release",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_slot_readout_diagnostic/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately authorized prospective slot utility or isolated capacity diagnostic"
+    ]
+  },
+  "role_use": {
+    "internal_development": "selection_used",
+    "train_prefix": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-slot-observed",
+      "trajectory_id": "TB-k1-slot-readout-diagnostic-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-slot-readout-20261002",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU; inference4threads, structure1thread; no accelerator",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_slot_readout_diagnostic/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "wall_hours": {
+          "value": 0.014254614638889001,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.011206597222222222,
+          "status": "measured"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-slot-prediction_input",
+      "trajectory_id": "TB-k1-slot-readout-diagnostic-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-slot-readout-20261002",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_slot_readout_diagnostic/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-slot-labels_read",
+      "trajectory_id": "TB-k1-slot-readout-diagnostic-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-slot-readout-20261002",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_slot_readout_diagnostic/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-slot-metric_computed",
+      "trajectory_id": "TB-k1-slot-readout-diagnostic-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-slot-readout-20261002",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_slot_readout_diagnostic/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-slot-selection_used",
+      "trajectory_id": "TB-k1-slot-readout-diagnostic-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-slot-readout-20261002",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_slot_readout_diagnostic/acceptance.json"
+    }
+  ],
+  "checks": {
+    "prospective_before_inference": true,
+    "source_archive_and_files_hash_verified": true,
+    "strict_checkpoint_loading": true,
+    "prediction_reconstruction": true,
+    "observational_forward_unchanged": true,
+    "slot_numerical_identity": true,
+    "aligned_graph_rows_targets": true,
+    "finite_artifacts": true,
+    "no_optimizer_updates": true,
+    "geometry_stripped": true,
+    "protected_roles_untouched": true
+  },
+  "measured_molecule_forwards": 4096,
+  "structure_rows": 50000,
+  "comparison_class": "CONTEXT_ONLY",
+  "scope": "Observational slot magnitude and descriptive retained structure analysis; no causal utility claim",
+  "cost_scope": "Launcher wall includes worker imports. Process CPU measured within worker timers only; imports/planning/summary/Git overhead outside CPU window unknown.",
+  "input_authority_snapshot_layout": "reference_bundle.snapshot.json preserves frozen reference_bundle.json hash without importing a foreign canonical bundle",
+  "limitations": [
+    "Norm magnitude does not establish information quality or causal contribution to prediction.",
+    "Size associations may follow the mean-return algebra; no harmful-attenuation cause is identified.",
+    "Both models are one seed with different learned feature bases and runtime distributions.",
+    "Consumed development, overlapping posthoc cohorts; row bootstrap is not seed uncertainty."
+  ]
+}
