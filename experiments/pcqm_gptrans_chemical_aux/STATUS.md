@@ -1,37 +1,13 @@
-# Chemical auxiliary pair status
+# Chemical auxiliary pair terminal status
 
 Owner: desktop, `codex/exp/gptrans-chemical-aux`.
 
-The authorized two-new-direction 100K pair was submitted to Kaggle1. The
-authenticated scheduler observation is RUNNING; see
-[submission_v4/remote_observation.json](submission_v4/remote_observation.json)
-for its timestamp, actual kernel/version, source/Spec and reconciled receipt.
-This is submission acceptance, not GPU qualification or scientific acceptance.
+Authenticated Kaggle1 reconciliation found the exact kernel COMPLETE at actual platform version 3, bound to submission_v4. See [terminal_remote_observation](submission_v4/terminal_remote_observation.json). Both independent arms mechanically verified full 60-epoch exposure, finite aligned 50K predictions, selected EMA and complete resume state.
 
-Arms: `descriptor_aux` (Gap L1 + 0.1 masked descriptor MSE) and
-`fingerprint_aux` (Gap L1 + 0.1 fingerprint BCE). Each uses one isolated T4,
-FP32, seed42, 100K train rows, 50K internal development rows and 60 epochs.
-The retained GPTrans-T reference is reused; no reference training is launched.
-Read [training_protocol.md](training_protocol.md) for the frozen recipe and gate.
+Descriptor MAE is 0.154182950925231 eV, a 2.444253 meV paired improvement over the retained reference; fingerprint MAE is 0.15526362029969693 eV, a 1.363584 meV improvement. Both paired row intervals are positive, but neither point estimate clears the frozen 3 meV nomination gate. No scale-up or adoption follows.
 
-Both complete train-only caches were accepted. Their CPU-stage result and
-NO_TRAIN diagnostic closure are owned by
-[cache_retry_observation/decision.md](cache_retry_observation/decision.md).
-The unsubmitted v1 training plans closed NO_TRAIN after a source packager
-filename guard blocked packaging; their decisions stay under
-`training_prospective/`. The first submitted kernel version failed before runtime preflight because
-the nested arm CLI did not inherit PYTHONPATH; its immutable submission_v2
-and training_prospective_v2 records preserve that infrastructure failure.
-Kernel version 2 passed runtime/profile gates and completed one epoch per
-arm before the shared Trace rejected a same-exposure checkpoint marker.
-Its INCONCLUSIVE records and partial artifacts are preserved under
-training_prospective_v3/ and submission_v3/. No terminal module verdict follows.
-The corrected source and active plans are bound in
-`experiment_spec_v4.json` and `training_prospective_v4/`.
+Each terminal decision is INCONCLUSIVE for strict qualification. The historical reference is contextual-only; complete prospectively pinned V5 comparison/reference qualification and native allocated T4 costs are absent. The producer trace logical arm run_id differs from the physical Kaggle run_id frozen in the prospective action. Physical traces remain retained and mechanically verified, with canonical replay publication explicitly excluded.
 
-Local release bindings and both full-frozen-shard loaders passed. Remote
-runtime/resume/optimizer-step overhead gates must pass before formal training.
-No terminal training result, scientific promotion, replay-ready claim or
-successor is authorized by this status. On return, query the actual Kaggle job
-before retrieving the minimum acceptance artifacts for each arm. No automatic
-monitor or server handoff was created.
+The independent decisions, concise attribution, cost and role records, terminal packages and finalization receipts live under [descriptor](training_prospective_v4/descriptor_aux/decision.md) and [fingerprint](training_prospective_v4/fingerprint_aux/decision.md). Only process wall is measured; allocated device, CPU and queue time remain unknown. Official validation, test-dev and challenge remain untouched.
+
+Earlier cache and attempt dispositions remain at their original pointers: `cache_retry_observation/`, `training_prospective/`, `training_prospective_v2/`, and `training_prospective_v3/`. Their original records are unchanged. Training recipe and nominal gate remain owned by [training_protocol.md](training_protocol.md).

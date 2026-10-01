@@ -180,7 +180,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 35,
+      "count": 33,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
@@ -189,9 +189,7 @@
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
-        "TB-gptrans-chemical-descriptor-aux-100k-s42-v4",
         "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
-        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4",
         "TB-gptrans-geometry-distance-100k-s42",
         "TB-gptrans-geometry-distance-angle-100k-s42",
         "TB-gptrans-input-init-100k-s42",
@@ -222,13 +220,11 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 14,
+      "count": 12,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
-        "TB-gptrans-chemical-descriptor-aux-100k-s42-v4",
-        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",
         "TB-gptrans-input-init-100k-s42",
         "TB-gptrans-input-init-100k-t4-s42",

@@ -1,0 +1,73 @@
+{
+  "adapter": "gptrans-v1",
+  "artifacts": {
+    "contract": {
+      "path": "training_contract.json",
+      "sha256": "a1c4f5f9750dadafac87a4a05618dd0e6b20f028fa78189329c93d0ec23dba4d"
+    },
+    "predictions": {
+      "path": "development_predictions.pt",
+      "sha256": "5843147b577c217a8c0829347ebc7ec616109b6fd12e2e0010cccf23925436ad"
+    },
+    "resume": {
+      "path": "last_checkpoint.pt",
+      "sha256": "ff9ce68333957ebe92c42f926139862cb4e1367e436258c26674fc15da540c25"
+    },
+    "selected_model": {
+      "path": "selected_model.pt",
+      "sha256": "ced94c8852bdad652030eb94b28524cd4e245a0e5e635f4cb09b182ce061b9b6"
+    },
+    "trace": {
+      "path": "canonical_trace.json",
+      "sha256": "11eccca4ae37bd473c536b738aa88b3eab8d16f406c0f4b8d108eaa64e282116"
+    }
+  },
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "descriptor_aux",
+    "arm_identity": "c8778d292e9e90590ff7cafa5d13bbc52154df5918f1c7b8de78726920b97d2e",
+    "experiment_id": "pcqm-gptrans-chemical-components-100k-v4",
+    "family_name": "gptrans_t",
+    "family_version": "1",
+    "logical_run_id": "gptrans-chemical-components-100k-s42-v4",
+    "package_identity": "2fa7cb09d255041f35b2f193e25c698f23b6eafeede16658c3e10bedd623a799",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+    "source_archive_sha256": "61f2f11958cc69ca74d7a4c65e1fbe45194961daea2e709447db00ac568ee9fa",
+    "source_commit": "3aabc3d05a3cc0644ff984426fe6c4d8fe109899",
+    "spec_identity": "84a944ccfbb13e81809cdd5fe7dc73c1564ece95e8bdec1fa0388280a27e5b63",
+    "training_recipe_sha256": "a1c4f5f9750dadafac87a4a05618dd0e6b20f028fa78189329c93d0ec23dba4d"
+  },
+  "costs": [
+    {
+      "hardware": "Tesla T4",
+      "metric": "wall_seconds",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 10389.514405128
+    },
+    {
+      "hardware": "Tesla T4",
+      "metric": "device_seconds",
+      "semantics": "allocated_device",
+      "status": "missing",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "format": "molgap-family-output-v1",
+  "progress": {
+    "epochs": 60,
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080
+  },
+  "runtime": {
+    "account": "nothingnessvoid",
+    "platform": "kaggle",
+    "precision": "fp32",
+    "source_archive_sha256": "61f2f11958cc69ca74d7a4c65e1fbe45194961daea2e709447db00ac568ee9fa",
+    "source_commit": "3aabc3d05a3cc0644ff984426fe6c4d8fe109899"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle1-kernel-version3",
+  "category": "training",
+  "cost_event_id": "C-TB-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal-process-wall",
+  "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v4/descriptor_aux/acceptance.json",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 2.885976223646667
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4"
+}

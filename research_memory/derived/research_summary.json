@@ -624,7 +624,7 @@
             "known_total": null
           },
           "not_applicable_records": 11,
-          "unknown_records": 3
+          "unknown_records": 5
         },
         "device_hours": {
           "estimated": {
@@ -636,7 +636,7 @@
             "known_total": 32.2865
           },
           "not_applicable_records": 0,
-          "unknown_records": 3
+          "unknown_records": 5
         },
         "queue_hours": {
           "estimated": {
@@ -648,7 +648,7 @@
             "known_total": null
           },
           "not_applicable_records": 9,
-          "unknown_records": 5
+          "unknown_records": 7
         },
         "wall_hours": {
           "estimated": {
@@ -656,8 +656,8 @@
             "known_total": 32.0
           },
           "measured": {
-            "known_records": 7,
-            "known_total": 32.993003499676384
+            "known_records": 9,
+            "known_total": 38.76453821167194
           },
           "not_applicable_records": 0,
           "unknown_records": 1
@@ -814,10 +814,10 @@
         }
       }
     },
-    "unknown_events": 94
+    "unknown_events": 96
   },
   "evidence": {
-    "validated": 59,
+    "validated": 61,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
@@ -844,27 +844,27 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 35,
+      "count": 33,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 14,
+      "count": 12,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 259,
-    "explicit_events": 109,
+    "coarse_historical": 269,
+    "explicit_events": 113,
     "repeatedly_selected": 9
   },
-  "source_digest": "5a125987d7bafe6ae588529be93d35383123b28442c983ccf896c63aa966cad0",
+  "source_digest": "c98cac17fe8cb88dbcef271b24104bde4c7a15ef0cbb1b645dcf6a30989b3ead",
   "trajectories": {
     "count": 73,
     "outcomes": {
-      "ACTIVE": 3,
+      "ACTIVE": 1,
       "CLOSED": 9,
-      "INCONCLUSIVE": 16,
+      "INCONCLUSIVE": 18,
       "INFRASTRUCTURE_ONLY": 4,
       "NEGATIVE_UNDER_CONTRACT": 14,
       "NO_TRAIN": 19,

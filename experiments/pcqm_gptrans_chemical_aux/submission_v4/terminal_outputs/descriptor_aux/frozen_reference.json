@@ -1,0 +1,49 @@
+{
+  "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+  "data_role_fingerprint": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+  "row_order_fingerprint": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+  "feature_fingerprint": "8e2a76b9e8c53d1c91983c87ee6f7605ea9d48013ef70a8ad34191a6b6041979",
+  "target_fingerprint": "pcqm4mv2-gap-eV-direct",
+  "seed": 42,
+  "precision": "fp32",
+  "optimizer_fingerprint": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+  "schedule_fingerprint": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+  "loss_fingerprint": "normalized-gap-l1+chemical-aux:1eb9e0e75c40d2b69eea82a2d4ddfadfde82ae463df395c11a978649860c722b:label-policy:1b4161ca874b104c8601c5eb683d1cac1f1f9ad42ce9673d6f875ff391dfba4a",
+  "target_transform_fingerprint": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+  "selection_fingerprint": "best-development-ema9999-60epochs",
+  "role_access_fingerprint": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+  "sample_exposure": 5998080,
+  "tail_batch_policy": "drop_last",
+  "run_id": "gptrans-t-100k-v4-reference-seed42-objective-1eb9e0e75c40",
+  "model_id": "gptrans_t_core_12x256_pair32/reference-objective-1eb9e0e75c40",
+  "architecture_fingerprint": "2dc41c2bfeb6c85ba8fcec316bfc9df7bf965eadc80f97c6f1cf26b9dd72e3aa",
+  "source_archive_sha256": "61f2f11958cc69ca74d7a4c65e1fbe45194961daea2e709447db00ac568ee9fa",
+  "result_artifact_sha256": "04af87e043a7b885678afd0c9627a38ae35a9335eb44072b78149e7d38d9499a",
+  "platform_id": "kaggle1-t4x2",
+  "accelerator": "Tesla T4",
+  "runtime_certificate_id": "d2fa3b8a8f9fe37fdedf8dc9e958e8f375ffbfd6d2e9b36a0ddfca64040c38fc",
+  "runtime_calibration_fingerprint": "0ce7a7effcf81d08f8acd8a5226c6c71f6db85318d1ff703c311565b747fa934",
+  "physical_batch_per_device": 128,
+  "device_count": 1,
+  "gradient_accumulation_steps": 1,
+  "frozen_reference": false,
+  "stochasticity_floor_eV": 0.003,
+  "minimum_material_gain_eV": 0.003,
+  "best_development_mae_eV": 0.15418295562267303,
+  "best_epoch": 59,
+  "training_addon": {
+    "objective": {
+      "schema": "molgap-gptrans-objective-v1",
+      "auxiliary_hidden_dim": 32,
+      "descriptor_weight": 0.1,
+      "fingerprint_weight": 0.0,
+      "auxiliary_seed": 42
+    },
+    "objective_sha256": "1eb9e0e75c40d2b69eea82a2d4ddfadfde82ae463df395c11a978649860c722b",
+    "label_cache": {
+      "manifest_sha256": "824d41f6f541a7f06d51fc73ffb048fd8fb61ed3e01eca0a1571b4ccaf3cbb78",
+      "role_sha256": "626fb2ff7dc44e9e6a88dfd301b3b295d1414c89b1dbac708af8379c66d4932c",
+      "rows_sha256": "64c10233a76f1f36d9f0da3b3c26a83c4166a44bbf70c3e58fcc6d24cb78df46"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 259,
+  "ambiguous_historical_role_record_count": 269,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
@@ -520,6 +520,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "training_membership"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
       "role_identity": null,
       "role_name": "fixed50k_development",
@@ -619,6 +654,41 @@
     },
     {
       "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v3-inconclusive-trace-failure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "training_membership"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1815,7 +1885,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 109,
+  "explicit_role_event_count": 113,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "fixed50k_development",
@@ -2305,6 +2375,13 @@
         "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
       },
       {
+        "access_kind": "selection_used",
+        "role_event_id": "R-TB-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4"
+      },
+      {
         "access_kind": "labels_read",
         "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v2-local-loader-development",
         "selection_used": false,
@@ -2317,6 +2394,13 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4"
       }
     ],
     "pcqm-fixed100k-v4:95d71c7700f92cd861b885c27092ff9caf2a05b320c36e8b58da8bf3b0703966:official_train_prefix_0_100000": [
@@ -2335,6 +2419,13 @@
         "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
       },
       {
+        "access_kind": "training_membership",
+        "role_event_id": "R-TB-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4"
+      },
+      {
         "access_kind": "labels_read",
         "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v2-local-loader-train",
         "selection_used": false,
@@ -2347,6 +2438,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4"
       }
     ],
     "pcqm-fixed100k-v4:c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b:official_train_prefix_0_100000": [
@@ -2657,9 +2755,11 @@
       "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v1-no-train-package-blocked",
       "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v2-no-train-import-failed",
       "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v3-inconclusive-trace-failure",
+      "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal",
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v2-no-train-import-failed",
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v3-inconclusive-trace-failure",
+      "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
@@ -2717,9 +2817,11 @@
       "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v1-no-train-package-blocked",
       "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v2-no-train-import-failed",
       "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v3-inconclusive-trace-failure",
+      "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal",
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v1-no-train-package-blocked",
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v2-no-train-import-failed",
       "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v3-inconclusive-trace-failure",
+      "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal",
       "pcqm-gptrans-feature-denoising-full_atom-100k-s42",
       "pcqm-gptrans-feature-denoising-full_atom_bond-100k-s42",
       "pcqm-gptrans-flow-ablation-100k-s42",
@@ -3079,6 +3181,13 @@
         "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
       },
       {
+        "access_kind": "selection_used",
+        "role_event_id": "R-TB-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4"
+      },
+      {
         "access_kind": "labels_read",
         "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v2-local-loader-development",
         "selection_used": false,
@@ -3091,6 +3200,13 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4"
       }
     ],
     "pcqm4mv2-fixed-v1:83cd367290b0cc5ceb3f49278816d15998bba285afe5286aeacbb6d89e5555ed:official_validation": [
@@ -3656,6 +3772,13 @@
         "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
       },
       {
+        "access_kind": "selection_used",
+        "role_event_id": "R-TB-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4"
+      },
+      {
         "access_kind": "labels_read",
         "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v2-local-loader-development",
         "selection_used": false,
@@ -3668,6 +3791,13 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal-development",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4"
       }
     ],
     "pcqm-fixed100k-v4:95d71c7700f92cd861b885c27092ff9caf2a05b320c36e8b58da8bf3b0703966:official_train_prefix_0_100000": [
@@ -3686,6 +3816,13 @@
         "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
       },
       {
+        "access_kind": "training_membership",
+        "role_event_id": "R-TB-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4"
+      },
+      {
         "access_kind": "labels_read",
         "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v2-local-loader-train",
         "selection_used": false,
@@ -3698,6 +3835,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4"
       }
     ],
     "pcqm-fixed100k-v4:c329fbde935324118f4f62aa6e2b01b209d6f54642549637853419deb1761c4b:official_train_prefix_0_100000": [

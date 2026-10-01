@@ -348,6 +348,27 @@
       "artifact_availability": [
         "retained_local_metadata_verified"
       ],
+      "comparison_status": "paired_endpoint_only_strict_replay_unqualified",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal",
+      "role_use": {
+        "fixed50k_development": "selection_used",
+        "official_train_prefix_0_100000": "training_membership",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_descriptor_aux_terminal_100k_training",
+      "source_envelope": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v4/descriptor_aux/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "retained_local_metadata_verified"
+      ],
       "comparison_status": "not_applicable_no_model_execution",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
@@ -403,6 +424,27 @@
       },
       "scientific_scope": "desktop_fingerprint_aux_partial_100k_training",
       "source_envelope": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "retained_local_metadata_verified"
+      ],
+      "comparison_status": "paired_endpoint_only_strict_replay_unqualified",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v4-terminal",
+      "role_use": {
+        "fixed50k_development": "selection_used",
+        "official_train_prefix_0_100000": "training_membership",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_fingerprint_aux_terminal_100k_training",
+      "source_envelope": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v4/fingerprint_aux/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_evaluated",
       "used_by_trajectory_ids": []

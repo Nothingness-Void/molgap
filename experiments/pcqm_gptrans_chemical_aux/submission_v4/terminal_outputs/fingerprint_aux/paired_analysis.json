@@ -1,0 +1,20 @@
+{
+  "delta": -0.001363584008216858,
+  "ci95": [
+    -0.002282787963986397,
+    -0.0004444501973390583
+  ],
+  "probability_better": 0.9986,
+  "n_bootstrap": 10000,
+  "seed": 42,
+  "reference_mae_eV": 0.15662720430791377,
+  "candidate_mae_eV": 0.15526362029969693,
+  "material_gain_eV": 0.003,
+  "material_gate_passed": false,
+  "interval_gate_passed": true,
+  "rows": 50000,
+  "reference_sha256": "4fa3d32f83b183503bfafeee33b7b44dc7ee5f396bef5b1b546c956669ce6d29",
+  "comparison_class": "PAIRED_ENDPOINT",
+  "training_stochasticity": "not_estimated",
+  "strict_replay_qualified": false
+}

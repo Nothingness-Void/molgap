@@ -1,0 +1,197 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle1-kernel-version3",
+  "cache_labels_sha256": "8a56d81fa9c5d7aaf74b6d76bc0bcb16c0ad3b10c79aadc64b5d1ec67eb4803b",
+  "cache_manifest_sha256": "824d41f6f541a7f06d51fc73ffb048fd8fb61ed3e01eca0a1571b4ccaf3cbb78",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-kernel-version3",
+      "category": "training",
+      "cost_event_id": "C-TB-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal-process-wall",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v4/descriptor_aux/acceptance.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.885976223646667
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4"
+    }
+  ],
+  "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal",
+  "finalized_at": "2026-10-01T03:58:53.485089+00:00",
+  "local_loader_evidence_ref": "experiments/pcqm_gptrans_chemical_aux/submission_v4/loader_preflight.json",
+  "native_cost": {
+    "allocated_T4_hours": null,
+    "cpu_hours": null,
+    "note": "Process wall is not device busy or allocated time.",
+    "process_wall_seconds": 10389.514405128,
+    "queue_hours": null
+  },
+  "observed_training": {
+    "artifacts": {
+      "contract": {
+        "path": "training_contract.json",
+        "sha256": "a1c4f5f9750dadafac87a4a05618dd0e6b20f028fa78189329c93d0ec23dba4d"
+      },
+      "predictions": {
+        "path": "development_predictions.pt",
+        "sha256": "5843147b577c217a8c0829347ebc7ec616109b6fd12e2e0010cccf23925436ad"
+      },
+      "resume": {
+        "path": "last_checkpoint.pt",
+        "sha256": "ff9ce68333957ebe92c42f926139862cb4e1367e436258c26674fc15da540c25"
+      },
+      "selected_model": {
+        "path": "selected_model.pt",
+        "sha256": "ced94c8852bdad652030eb94b28524cd4e245a0e5e635f4cb09b182ce061b9b6"
+      },
+      "trace": {
+        "path": "canonical_trace.json",
+        "sha256": "11eccca4ae37bd473c536b738aa88b3eab8d16f406c0f4b8d108eaa64e282116"
+      }
+    },
+    "costs": [
+      {
+        "hardware": "Tesla T4",
+        "metric": "wall_seconds",
+        "semantics": "process_wall",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 10389.514405128
+      },
+      {
+        "hardware": "Tesla T4",
+        "metric": "device_seconds",
+        "semantics": "allocated_device",
+        "status": "missing",
+        "unit": "seconds",
+        "value": null
+      }
+    ],
+    "development_mae_eV": 0.154182950925231,
+    "producer_platform_version": null,
+    "progress": {
+      "epochs": 60,
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "selected_epoch": 60,
+    "selected_optimizer_step": 46860,
+    "selected_weights": "ema"
+  },
+  "outcome": {
+    "artifact_status": "retained_local_hash_verified_and_durable_remote",
+    "budget_decision": "process_wall_measured_native_device_cost_unknown",
+    "comparison_status": "paired_endpoint_only_strict_replay_unqualified",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated"
+  },
+  "package_release": {
+    "gpu_allocated": true,
+    "inference_executed": true,
+    "platform_job_id": "136542008",
+    "platform_version": 3,
+    "source_of_observation": "authenticated Kaggle scheduler and independently pinned source/Spec family manifests",
+    "status": "remote_COMPLETE",
+    "training_executed": true
+  },
+  "paired_analysis": {
+    "candidate_mae_eV": 0.154182950925231,
+    "ci95": [
+      -0.0033494549756050112,
+      -0.0015044658374786383
+    ],
+    "comparison_class": "PAIRED_ENDPOINT",
+    "delta": -0.0024442533826828003,
+    "interval_gate_passed": true,
+    "material_gain_eV": 0.003,
+    "material_gate_passed": false,
+    "n_bootstrap": 10000,
+    "probability_better": 1.0,
+    "reference_mae_eV": 0.15662720430791377,
+    "reference_sha256": "4fa3d32f83b183503bfafeee33b7b44dc7ee5f396bef5b1b546c956669ce6d29",
+    "rows": 50000,
+    "seed": 42,
+    "strict_replay_qualified": false,
+    "training_stochasticity": "not_estimated"
+  },
+  "role_access": {
+    "internal_development_selection_used": true,
+    "official_validation_consumed": false,
+    "test_challenge_consumed": false,
+    "test_dev_consumed": false,
+    "training_membership": true
+  },
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_train_prefix_0_100000": "training_membership",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm-fixed100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v4/descriptor_aux/acceptance.json",
+      "role_event_id": "R-TB-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal-train",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "95d71c7700f92cd861b885c27092ff9caf2a05b320c36e8b58da8bf3b0703966",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm-fixed100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v4/descriptor_aux/acceptance.json",
+      "role_event_id": "R-TB-gptrans-chemical-descriptor-aux-100k-s42-v4-terminal-development",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "0635ba2d1b9a7fca5167dd4cc9864f26768dbbac7cfec55c616e630ed39ff6a1",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4"
+    }
+  ],
+  "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+  "source_commit": "3aabc3d05a3cc0644ff984426fe6c4d8fe109899",
+  "source_config_identity": "c8778d292e9e90590ff7cafa5d13bbc52154df5918f1c7b8de78726920b97d2e",
+  "trace_publication": {
+    "canonical_trace_retained": true,
+    "reason": "Producer canonical trace uses logical arm downstream run_id, while frozen prospective action binds physical Kaggle slug. Existing terminal wiring cannot bind these without changing frozen identity. Trace is retained as physical evidence but excluded from canonical replay publication.",
+    "status": "excluded"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v4/descriptor_aux/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "Only a separately authorized materially new question or recoverable authoritative qualification metadata; no automatic retraining."
+    ]
+  },
+  "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v4"
+}
