@@ -3,6 +3,14 @@
 > Live truth only. Historical methods, metrics, and failures live in experiment
 > decisions; task order lives in `ROADMAP.md`.
 
+## Server active screen
+
+One Kaggle3 T4x2 dual-arm screen tests GPTrans G1 optimizer grouping and
+shortest-path endpoint contrast separately against accepted G1 EMA0.999.
+No baseline retraining or protected-role access. Actual identity and Luna B:
+[execution record](experiments/pcqm_gptrans_recipe_paths_100k/STATUS.md).
+Prospective release passed; terminal acceptance and Replay admission are pending.
+
 ## Shared experiment infrastructure
 
 The shared local experiment CLI, packaging, planning and terminal/RML helpers
