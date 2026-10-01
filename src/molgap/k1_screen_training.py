@@ -340,7 +340,8 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
         raise ValueError("Historical K1 initialization cannot be overridden")
     return {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
         "initialization_sha256": initialization_sha256 or INITIAL_STATE_SHA256,
-        "development_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+        "development_role_identity": ("pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000"
+                                      if mode == "width256" else "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000"),
         "training_recipe": {"seed": SEED, "batch_size": BATCH_SIZE, "drop_last": True,
             "optimizer": "AdamW", "learning_rate": LEARNING_RATE, "weight_decay": WEIGHT_DECAY,
             "clip_grad_norm": 1.0, "scheduler": "CosineAnnealingLR", "scheduler_t_max": EPOCHS,
@@ -466,7 +467,9 @@ def validate_screen_recipe(spec, arm_id, recipe):
     mode = training_adapter(arm).mode(arm)
     validate_recipe(recipe, mode=mode)
     _validate_arm_binding(spec, SimpleNamespace(arm_id=arm_id), mode, recipe)
-    if recipe.get("development_role_identity") != "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000":
+    development_identity = ("pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000"
+                            if mode == "width256" else "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000")
+    if recipe.get("development_role_identity") != development_identity:
         raise ValueError("K1 recipe lacks the fixed development role identity")
     from .experiment_family_workflow import EXPECTED
     if set(recipe["acceptance_requirements"]) != EXPECTED:

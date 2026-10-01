@@ -380,8 +380,8 @@ class FamilyOutputSession:
         return inspect_output(self.root, context=self.context, expected=self.expected)
 
 
-def tensor_digest(tensor, *, role: str) -> str:
-    """Canonical row/target identity: little-endian int64 or float64 CPU bytes."""
+def tensor_digest(tensor, *, role: str, target_encoding: str = "float64-le") -> str:
+    """Hash rows canonically; target encoding is fixed by the family adapter."""
     import torch
     if not isinstance(tensor, torch.Tensor) or tensor.ndim != 1:
         raise ValueError("Expected one-dimensional tensor")
@@ -392,7 +392,15 @@ def tensor_digest(tensor, *, role: str) -> str:
     elif role == "target":
         if not tensor.is_floating_point() or not torch.isfinite(tensor).all():
             raise ValueError("target must be finite floating point")
-        array = tensor.detach().cpu().double().contiguous().numpy().astype("<f8", copy=False)
+        if target_encoding == "float64-le":
+            array = tensor.detach().cpu().double().contiguous().numpy().astype("<f8", copy=False)
+        elif target_encoding == "float32-le":
+            # K1 V4 froze raw float32 target bytes; do not recast to fit a pin.
+            if tensor.dtype != torch.float32:
+                raise ValueError("K1 target identity requires the retained float32 dtype")
+            array = tensor.detach().cpu().contiguous().numpy().astype("<f4", copy=False)
+        else:
+            raise ValueError("Unsupported target hash encoding")
     else:
         raise ValueError("Unknown digest role")
     return hashlib.sha256(array.tobytes()).hexdigest()
@@ -515,7 +523,7 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict) -> 
             raise ValueError("Nonfinite or nonfloating predictions")
         if tensor_digest(idx, role="source_idx") != expected["source_idx_sha256"]:
             raise ValueError("Development row identity mismatch")
-        if tensor_digest(target, role="target") != expected["target_sha256"]:
+        if tensor_digest(target, role="target", target_encoding=profile.target_hash_encoding) != expected["target_sha256"]:
             raise ValueError("Development target identity mismatch")
         observed["development_mae_eV"] = (prediction.double() - target.double()).abs().mean().item()
         trace = validate_canonical_trace(_json(paths["trace"]))

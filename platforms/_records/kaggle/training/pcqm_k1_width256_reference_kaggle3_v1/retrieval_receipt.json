@@ -1,0 +1,40 @@
+{
+  "kernel": "nvoid912/molgap-k1-v4-ssma-accuracy-100k-s42-v1",
+  "receipt_version": "1",
+  "producer_version": null,
+  "files": [
+    {
+      "path": "training_contract.json",
+      "sha256": "fcd6a444e7b865a0861b96436743a7c432d63972135026dd037e362d54d6af3d",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "development_predictions.pt",
+      "sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82",
+      "state": "RETAINED"
+    },
+    {
+      "path": "last_checkpoint.pt",
+      "sha256": "fa279b97533a3f274367a28e3f036e123b6512f43d2e992e6105733febe2d590",
+      "state": "RETAINED"
+    },
+    {
+      "path": "selected_model.pt",
+      "sha256": "4a7dab43f50f5f3216b224374c213a01cc82cfb4160dcd6d54aab1ef614fce17",
+      "state": "RETAINED"
+    },
+    {
+      "path": "canonical_trace.json",
+      "sha256": "c18bd76b9f55114005020ab65bcb663636dfd496f971966d5f0007a44a79f149",
+      "state": "RETAINED"
+    },
+    {
+      "path": "output_manifest.json",
+      "sha256": "998259659abd79feed98e740225e534605c26deb5239591e2d51003d364b0e7e",
+      "state": "ALREADY_RETAINED"
+    }
+  ],
+  "manifest_sha256": "998259659abd79feed98e740225e534605c26deb5239591e2d51003d364b0e7e",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": false
+}
