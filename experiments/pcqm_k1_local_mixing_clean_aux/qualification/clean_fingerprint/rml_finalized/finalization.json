@@ -1,0 +1,30 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-9df9d77e183ce7ae09edb749a701494197cc479341715c7f2d4a786568bdc7ee",
+  "finalized_at": "2026-10-01T04:27:36.045113+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_local_mixing_clean_aux/protocol.md": "d9bc4266076606d9b7c740d1793116decfe64f2ca1c7b0b90dc9c7f1c255f63f",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification/clean_fingerprint/acceptance.json": "a2b87d1e9b4a7d73b5e06698dea24fc635792681847de7d5eb0e6c849b16af10",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification/clean_fingerprint/decision.md": "c994140ec41b39cb23c3b0af3f3517449d65e052a054319cd5ddd2b44563c95c",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification_check/pytest-final-synthetic.log": "5702b1ac5eac76250094abf7bc9aa91b36028e4d1a8093653471cab0ea489715",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification_check/run-metadata.json": "0e1e368a21666e838040fa18ffe16871c1f1f7c8d89d1edfc65361c6436b2f90",
+    "experiments/pcqm_k1_local_mixing_clean_aux/reference_gate.json": "39cc8b231a87573eaeab19600eb3b2d4926a2d0da7e5be90273f97c492bd9035"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TB-k1-clean-fingerprint-qualification-s42-v1-observed-qualification.json": "2f2001ae4a88918946b74180c34fb2c45d36c49ef81f68f12293af71718bb8c6",
+    "prospective_snapshot.json": "a218ac841168c06aed4f55eafb4264002800bc8345b93f3fb99c066bab5063b8",
+    "terminal_input.json": "9ae3562f1fe3185a03f49933ec62f19ece193db5edabab7e3d07e6d67dca48c1",
+    "trajectory.json": "5a60e0a61bdcf2b3b0a59f8b22de69e27b3b8776e363c167130348d55422c878",
+    "v5_evidence.json": "d6f12cdefb8d1ff71dddd21b8c0e92aa14c60c678cf8d0fd7041b7dd029663e5"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_local_mixing_clean_aux/qualification/clean_fingerprint/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "9df9d77e183ce7ae09edb749a701494197cc479341715c7f2d4a786568bdc7ee",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-clean-fingerprint-qualification-s42-v1"
+}

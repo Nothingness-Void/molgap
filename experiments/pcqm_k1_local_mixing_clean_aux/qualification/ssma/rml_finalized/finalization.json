@@ -1,0 +1,30 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-17d849fb858cebbec52403a7acaf7b9b8c9a404ed25319f4b3fb730059be74e1",
+  "finalized_at": "2026-10-01T04:27:19.526514+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_local_mixing_clean_aux/protocol.md": "d9bc4266076606d9b7c740d1793116decfe64f2ca1c7b0b90dc9c7f1c255f63f",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/acceptance.json": "63757854c1c6e5ff31d5f19453fc7fba6f57fcfb6383ec0f629b45fa9e8612ea",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/decision.md": "e3ac67d3f53c85330f73224d411d5529987164d2fc6dba67492c63876bd21c07",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification_check/pytest-final-synthetic.log": "5702b1ac5eac76250094abf7bc9aa91b36028e4d1a8093653471cab0ea489715",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification_check/run-metadata.json": "0e1e368a21666e838040fa18ffe16871c1f1f7c8d89d1edfc65361c6436b2f90",
+    "experiments/pcqm_k1_local_mixing_clean_aux/reference_gate.json": "39cc8b231a87573eaeab19600eb3b2d4926a2d0da7e5be90273f97c492bd9035"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TB-k1-ssma-qualification-s42-v1-observed-qualification.json": "f7b48f0e040e503b8c4e8d103dd567223cc8b04ffc290543f02ece22ee948fda",
+    "prospective_snapshot.json": "6d737adaaa203f9c7552d53d61f5d4854e458f3d59c216e4c2cf21ceb9e251ca",
+    "terminal_input.json": "8dd0a8451f21712a8da7d010c76bded8362630dcde097dd4ca5b60de6dccfbbd",
+    "trajectory.json": "c44a98f3f22d911549137af315888a32702abde6e5a561215fb5d9cc79e9703c",
+    "v5_evidence.json": "74666742b40b26d37b2ce09f30aa82e7f8338cbc7970f6e2ecbc35325e543695"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "17d849fb858cebbec52403a7acaf7b9b8c9a404ed25319f4b3fb730059be74e1",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-ssma-qualification-s42-v1"
+}

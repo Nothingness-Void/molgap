@@ -1,0 +1,147 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_local_mixing_clean_aux/protocol.md": "d9bc4266076606d9b7c740d1793116decfe64f2ca1c7b0b90dc9c7f1c255f63f",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/acceptance.json": "63757854c1c6e5ff31d5f19453fc7fba6f57fcfb6383ec0f629b45fa9e8612ea",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/decision.md": "e3ac67d3f53c85330f73224d411d5529987164d2fc6dba67492c63876bd21c07",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification_check/pytest-final-synthetic.log": "5702b1ac5eac76250094abf7bc9aa91b36028e4d1a8093653471cab0ea489715",
+    "experiments/pcqm_k1_local_mixing_clean_aux/qualification_check/run-metadata.json": "0e1e368a21666e838040fa18ffe16871c1f1f7c8d89d1edfc65361c6436b2f90",
+    "experiments/pcqm_k1_local_mixing_clean_aux/reference_gate.json": "39cc8b231a87573eaeab19600eb3b2d4926a2d0da7e5be90273f97c492bd9035"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "local-qualification-001",
+      "category": "preflight",
+      "cost_event_id": "cost-TB-k1-ssma-qualification-s42-v1-observed-qualification",
+      "evidence_ref": "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/acceptance.json",
+      "hardware": "desktop CPU; synthetic-only",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "k1-local-clean-aux-qualification-s42-v1:ssma:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-ssma-qualification-s42-v1"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/decision.md",
+    "next_allowed_actions": [
+      "recover_existing_reference_and_review_release_capability"
+    ],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "exact_reference_artifacts_accessible_and_strict_V5_trace_qualification_passes",
+      "runtime_cost_and_platform_release_hooks_reviewed_before_new_prospective_training"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/protocol.md",
+        "name": "protocol.md",
+        "sha256": "d9bc4266076606d9b7c740d1793116decfe64f2ca1c7b0b90dc9c7f1c255f63f"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/decision.md",
+        "name": "decision.md",
+        "sha256": "e3ac67d3f53c85330f73224d411d5529987164d2fc6dba67492c63876bd21c07"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "63757854c1c6e5ff31d5f19453fc7fba6f57fcfb6383ec0f629b45fa9e8612ea"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/reference_gate.json",
+        "name": "reference_gate.json",
+        "sha256": "39cc8b231a87573eaeab19600eb3b2d4926a2d0da7e5be90273f97c492bd9035"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/qualification_check/run-metadata.json",
+        "name": "run-metadata.json",
+        "sha256": "0e1e368a21666e838040fa18ffe16871c1f1f7c8d89d1edfc65361c6436b2f90"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/qualification_check/pytest-final-synthetic.log",
+        "name": "pytest-final-synthetic.log",
+        "sha256": "5702b1ac5eac76250094abf7bc9aa91b36028e4d1a8093653471cab0ea489715"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_local_mixing_clean_aux/protocol.md",
+        "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/decision.md",
+        "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/acceptance.json",
+        "experiments/pcqm_k1_local_mixing_clean_aux/reference_gate.json",
+        "experiments/pcqm_k1_local_mixing_clean_aux/qualification_check/run-metadata.json",
+        "experiments/pcqm_k1_local_mixing_clean_aux/qualification_check/pytest-final-synthetic.log"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-ssma-qualification-no-train-s42-v1",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-k1-v4-100k-local-qualification-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-01T04:27:19.526514+00:00",
+      "scientific_reinterpretation": false,
+      "synthetic_model_checks_executed": true,
+      "training_executed": false,
+      "verification_scope": "Combined synthetic code regressions and existing reference metadata checks; no new molecular model execution."
+    },
+    "outcome": {
+      "artifact_status": "synthetic_checks_and_reference_blocker_retained",
+      "budget_decision": "no_accelerator_release",
+      "comparison_status": "strict_reference_blocked",
+      "execution_status": "local_synthetic_qualification_complete_remote_not_submitted",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "fixed50k_development": "untouched",
+      "official_train_prefix_0_100000": "untouched",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "desktop_synthetic_qualification_and_strict_reference_blocker",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-01T04:27:19.526514+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "fixed50k_development": "untouched",
+    "official_train_prefix_0_100000": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [],
+  "run_id": "k1-local-clean-aux-qualification-s42-v1:ssma:downstream",
+  "trajectory_id": "TB-k1-ssma-qualification-s42-v1"
+}

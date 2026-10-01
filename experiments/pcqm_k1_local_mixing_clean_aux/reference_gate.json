@@ -1,0 +1,52 @@
+{
+  "accelerator_allocated": false,
+  "checked_at": "2026-10-01T04:23:25.013633+00:00",
+  "checked_raw_artifact_locations": [
+    {
+      "desktop_exists": false,
+      "new_worktree_exists": false,
+      "path": "platforms/_records/kaggle/training/pcqm_k1_v4_reference_s42_v2/pcqm_k1_v4_reference/neural_atom_k1_v4/trace.json",
+      "retained_owner_exists": false
+    },
+    {
+      "desktop_exists": false,
+      "new_worktree_exists": false,
+      "path": "platforms/_records/kaggle/training/pcqm_k1_v4_reference_s42_v2/pcqm_k1_v4_reference/neural_atom_k1_v4/best_model.pt",
+      "retained_owner_exists": false
+    },
+    {
+      "desktop_exists": false,
+      "new_worktree_exists": false,
+      "path": "platforms/_records/kaggle/training/pcqm_k1_v4_reference_s42_v2/pcqm_k1_v4_reference/neural_atom_k1_v4/last_checkpoint.pt",
+      "retained_owner_exists": false
+    }
+  ],
+  "gate_owner": "molgap.comparison_readiness.validate_trace_plan",
+  "original_kernel": "kaseichou/molgap-pcqm-k1-v4-reference-s42",
+  "read_only_reconciliation": {
+    "configured_owner": "kaseichou",
+    "file_listing_http_status": 403,
+    "interpretation": "Access unavailable through this authenticated configuration; cause unknown. No secret retained.",
+    "status_query_http_status": 403
+  },
+  "recovery_limits": "Raw file recovery is necessary but may not recover per-checkpoint identities absent from the original trace. Do not manufacture missing events or retrain the reference.",
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "remote_submission_performed": false,
+  "retained_prediction_sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91",
+  "retained_trace_manifest_sha256": "b7a57f089bc7c0274895e881c564cd6f1f28741af0007c7b86767a94a8619ba5",
+  "scientific_rejection": false,
+  "source_metadata_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+  "strict_reference_release_status": "BLOCKED",
+  "trace_checks": [
+    {
+      "error": "causal comparison requires trace fields: ['checkpoint_identity']",
+      "purpose": "architecture_comparison",
+      "status": "BLOCKED"
+    },
+    {
+      "error": "causal comparison requires trace fields: ['checkpoint_identity']",
+      "purpose": "objective_comparison",
+      "status": "BLOCKED"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "started_utc": "2026-10-01T04:21:30.8003065+00:00",
+  "ended_utc": "2026-10-01T04:23:55.5642503+00:00",
+  "elapsed_seconds": 144.762294,
+  "returncode": 0,
+  "command": [
+    "D:\\文档\\molgap\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "-q",
+    "-ra",
+    "tests/test_k1_joint_aggregation.py",
+    "tests/test_k1_screen_training.py",
+    "tests/test_experiment_spec.py",
+    "tests/test_artifact_acceptance.py",
+    "tests/test_experiment_family_workflow.py",
+    "tests/test_comparison_readiness.py"
+  ],
+  "workdir": "D:\\w\\k1-local-aux",
+  "environment": {
+    "PYTHONPATH": "D:\\w\\k1-local-aux\\src",
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4"
+  },
+  "raw_log": "D:\\w\\k1-local-aux\\experiments\\pcqm_k1_local_mixing_clean_aux\\qualification_check\\pytest-final-synthetic.log"
+}

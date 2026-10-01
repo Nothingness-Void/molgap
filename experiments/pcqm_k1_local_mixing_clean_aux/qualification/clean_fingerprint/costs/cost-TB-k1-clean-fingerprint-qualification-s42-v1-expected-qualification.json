@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "local-qualification-001",
+  "category": "preflight",
+  "cost_event_id": "cost-TB-k1-clean-fingerprint-qualification-s42-v1-expected-qualification",
+  "evidence_ref": "experiments/pcqm_k1_local_mixing_clean_aux/protocol.md",
+  "hardware": "desktop CPU; synthetic-only",
+  "measurement": {
+    "cpu_hours": {
+      "status": "estimated",
+      "value": 0.05
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.1
+    }
+  },
+  "platform": "local",
+  "run_id": "k1-local-clean-aux-qualification-s42-v1:clean_fingerprint:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-clean-fingerprint-qualification-s42-v1"
+}

@@ -1,0 +1,66 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "local-qualification-001",
+      "category": "preflight",
+      "cost_event_id": "cost-TB-k1-ssma-qualification-s42-v1-observed-qualification",
+      "evidence_ref": "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/acceptance.json",
+      "hardware": "desktop CPU; synthetic-only",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "k1-local-clean-aux-qualification-s42-v1:ssma:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-ssma-qualification-s42-v1"
+    }
+  ],
+  "evidence_id": "pcqm-k1-ssma-qualification-no-train-s42-v1",
+  "outcome": {
+    "artifact_status": "synthetic_checks_and_reference_blocker_retained",
+    "budget_decision": "no_accelerator_release",
+    "comparison_status": "strict_reference_blocked",
+    "execution_status": "local_synthetic_qualification_complete_remote_not_submitted",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "roles": [],
+  "run_id": "k1-local-clean-aux-qualification-s42-v1:ssma:downstream",
+  "scientific_interpretation": "insufficient_evidence; no molecular endpoint",
+  "strict_reference_gate_ref": "experiments/pcqm_k1_local_mixing_clean_aux/reference_gate.json",
+  "synthetic_tests": {
+    "passed": 215,
+    "returncode": 0,
+    "scope": "one combined synthetic regression; not per-arm molecular acceptance"
+  },
+  "training_released": false,
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_local_mixing_clean_aux/qualification/ssma/decision.md",
+    "next_allowed_actions": [
+      "recover_existing_reference_and_review_release_capability"
+    ],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "exact_reference_artifacts_accessible_and_strict_V5_trace_qualification_passes",
+      "runtime_cost_and_platform_release_hooks_reviewed_before_new_prospective_training"
+    ]
+  },
+  "trajectory_id": "TB-k1-ssma-qualification-s42-v1"
+}

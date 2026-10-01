@@ -316,6 +316,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-v4-100k-reference-s42:A001",
+      "target": "experiments/pcqm_k1_variants_100k/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42:A001",
+      "target": "experiments/v5_legacy_evidence_migration/inventory_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback:A001",
       "target": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_readback/provenance.json",
       "type": "action_produced_evidence"
@@ -1126,6 +1136,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-clean-fingerprint-qualification-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-ssma-qualification-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-gptrans-500k-frozen-readout-attribution",
       "type": "prior_evidence"
@@ -1376,6 +1396,16 @@
       "type": "reference_used"
     },
     {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-clean-fingerprint-qualification-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-ssma-qualification-s42-v1",
+      "type": "reference_used"
+    },
+    {
       "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-gptrans-500k-frozen-readout-attribution",
       "type": "reference_used"
@@ -1569,6 +1599,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-clean-fingerprint-qualification-no-train-s42-v1",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-full-convergence-20260919",
       "type": "evidence"
     },
@@ -1582,6 +1616,14 @@
     },
     {
       "id": "pcqm-k1-residual-reconciliation",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-ssma-qualification-no-train-s42-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-v4-100k-reference-s42",
       "type": "evidence"
     },
     {
@@ -1797,6 +1839,10 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-k1-clean-fingerprint-qualification-s42-v1",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-k1-full-convergence-20260919",
       "type": "trajectory"
     },
@@ -1806,6 +1852,10 @@
     },
     {
       "id": "TB-k1-residual-reconciliation",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-ssma-qualification-s42-v1",
       "type": "trajectory"
     },
     {
@@ -1858,6 +1908,10 @@
     },
     {
       "id": "TC-k1-pair-value-decoupled-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-v4-100k-reference-s42",
       "type": "trajectory"
     },
     {
