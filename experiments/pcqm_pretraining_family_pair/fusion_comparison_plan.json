@@ -1,0 +1,20 @@
+{
+  "question": "Does the retained fixed 50:50 pretrained K1/GPTrans blend outperform the corresponding unpretrained blend on exactly the same internal development rows?",
+  "authorization": "User requested local unpretrained fusion; retained-prediction analysis only.",
+  "owning_prospective_trajectories": ["TB-pretraining-k1-100k-s42-release2", "TB-pretraining-gptrans_joint-100k-s42-release2"],
+  "weights": [0.5, 0.5],
+  "weight_fitting": false,
+  "row_start": 100000,
+  "row_stop": 150000,
+  "role": "already consumed internal development",
+  "protected_roles": "untouched",
+  "training": false,
+  "model_inference": false,
+  "interpretation": "Post-hoc single-seed retained-prediction comparison; strict V5 reference qualification, compute matching and seed variability remain separate. No automatic nomination or scale-up.",
+  "inputs": {
+    "scratch_k1": {"path": "D:/文档/molgap/platforms/_records/scnet/k1_v4_reference_payload/neural_atom_k1_v4.pt", "sha256": "966ed31ba25e024aa82d8032e7ab6e2797402e5845a01888c8f3cfd4c084da91", "authority": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/prediction_manifest.json"},
+    "scratch_gptrans": {"path": "D:/文档/molgap/platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/reference/development_predictions.pt", "sha256": "5b1d78898dfccf0725e2cdfe099aa5e70a19753b3e0ab3fc090072b14ac98add", "authority": "D:/文档/molgap/platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/reference/completion_manifest.json"},
+    "pretrained_k1": {"path": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/k1/best_development_payload.pt", "sha256": "7df45b9a9e0dab598bdd5235d8f6644b6573d4c1cf76c01aa416b2135fad3101", "authority": "experiments/pcqm_pretraining_family_pair/result_review.json"},
+    "pretrained_gptrans": {"path": "platforms/_records/kaggle/training/pcqm_pretraining_family_pair_release3/gptrans_joint/development_predictions.pt", "sha256": "c27433865ee32d17ca3294a5d6015e811538e2bcb5636a8ce7dd2def614420bd", "authority": "experiments/pcqm_pretraining_family_pair/result_review.json"}
+  }
+}

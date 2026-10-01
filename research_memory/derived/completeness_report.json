@@ -9,7 +9,7 @@
   },
   "counts_by_severity": {
     "INFO": 1,
-    "WARN": 5
+    "WARN": 6
   },
   "format": "molgap-rml-completeness-report-v1",
   "issues": [
@@ -218,6 +218,14 @@
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
+      ],
+      "severity": "WARN"
+    },
+    {
+      "code": "v5_evidence_without_trajectory",
+      "count": 1,
+      "items": [
+        "pcqm-pretraining-fixed-fusion-retained-comparison-20261001"
       ],
       "severity": "WARN"
     }

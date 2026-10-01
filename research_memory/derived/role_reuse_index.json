@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 235,
+  "ambiguous_historical_role_record_count": 239,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -1367,6 +1367,34 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-pretraining-fixed-fusion-retained-comparison-20261001",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-fixed-fusion-retained-comparison-20261001",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-fixed-fusion-retained-comparison-20261001",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-pretraining-fixed-fusion-retained-comparison-20261001",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
       "role_identity": null,
       "role_name": "internal_development",
@@ -1647,7 +1675,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 104,
+  "explicit_role_event_count": 110,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -1656,11 +1684,53 @@
   "identities": {
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development": [
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-fusion-20261001-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-fusion-20261001-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-fusion-20261001-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-internal_development-release3",
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-fusion-20261001-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-fusion-20261001-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-fusion-20261001-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
       },
       {
         "access_kind": "selection_used",
@@ -2477,6 +2547,7 @@
       "pcqm-k1-residual-reconciliation",
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-matched-500k-v4-three-arm",
+      "pcqm-pretraining-fixed-fusion-retained-comparison-20261001",
       "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
       "pcqm-pretraining-gptrans_joint-package1-no-train",
       "pcqm-pretraining-k1-100k-s42-release3-terminal",
@@ -2533,6 +2604,7 @@
       "pcqm-k1-residual-reconciliation",
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-matched-500k-v4-three-arm",
+      "pcqm-pretraining-fixed-fusion-retained-comparison-20261001",
       "pcqm-pretraining-gptrans_joint-100k-s42-release3-terminal",
       "pcqm-pretraining-gptrans_joint-package1-no-train",
       "pcqm-pretraining-k1-100k-s42-release3-terminal",
@@ -2548,11 +2620,53 @@
   "repeatedly_selected_role_identities": {
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development": [
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-fusion-20261001-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-fusion-20261001-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-fusion-20261001-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-internal_development-release3",
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-fusion-20261001-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-fusion-20261001-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-fusion-20261001-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
       },
       {
         "access_kind": "selection_used",
@@ -3021,11 +3135,53 @@
   "reused_role_identities": {
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:internal_development": [
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-fusion-20261001-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-fusion-20261001-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-fusion-20261001-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
         "access_kind": "selection_used",
         "role_event_id": "role-TB-pretraining-gptrans_joint-100k-s42-release2-internal_development-release3",
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-pretraining-gptrans_joint-100k-s42-release2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-fusion-20261001-labels-read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-fusion-20261001-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-pretraining-k1-100k-s42-release2-fusion-20261001-prediction-input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-pretraining-k1-100k-s42-release2"
       },
       {
         "access_kind": "selection_used",
