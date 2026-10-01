@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "fef47f1a75a60dc96b77eeb8554d1d1b840b836ef5d349543e6b2ae21858bde5",
+  "source_digest": "36164b78b54fe61811d00bf8f619dc81b8893d58d5845b352ea0274895333d54",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -119,6 +119,38 @@
       ],
       "track": "C",
       "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_input_ema_100k/protocol.md",
+      "family_id": "gptrans-g1-degree_scale_ema999",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-author-degree-scale-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_input_ema_100k/protocol.md",
+      "family_id": "gptrans-g1-degree_path_bond_mean",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-author-degree-scale-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
     },
     {
       "completeness_status": "partial",

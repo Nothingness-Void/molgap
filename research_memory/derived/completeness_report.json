@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 62,
+    "trajectories_total": 64,
     "with_complete_native_measurement": 6,
-    "with_cost_event": 62,
-    "with_incomplete_native_measurement": 56,
+    "with_cost_event": 64,
+    "with_incomplete_native_measurement": 58,
     "without_cost_event": 0
   },
   "counts_by_severity": {
@@ -15,12 +15,14 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 28,
+      "count": 30,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-author-input-preparation",
         "TC-gptrans-author-input-preparation-verification-recovery",
         "TC-gptrans-author-input-preparation-verification-recovery-v2",
+        "TC-gptrans-g1-ema999-100k-s42",
+        "TC-gptrans-g1-path-mean-100k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
         "TC-k1-chem-local-post100k-audit-s42",
@@ -72,7 +74,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 56,
+      "count": 58,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-author-degree-scale-100k-s42",
@@ -80,6 +82,8 @@
         "TC-gptrans-author-input-preparation-verification-recovery",
         "TC-gptrans-author-input-preparation-verification-recovery-v2",
         "TC-gptrans-author-path-bond-mean-100k-s42",
+        "TC-gptrans-g1-ema999-100k-s42",
+        "TC-gptrans-g1-path-mean-100k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
         "TC-gptrans-t-v4-100k-reference-s42",
@@ -135,11 +139,13 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 15,
+      "count": 17,
       "items": [
         "TC-gptrans-author-input-preparation",
         "TC-gptrans-author-input-preparation-verification-recovery",
         "TC-gptrans-author-input-preparation-verification-recovery-v2",
+        "TC-gptrans-g1-ema999-100k-s42",
+        "TC-gptrans-g1-path-mean-100k-s42",
         "TC-k1-chem-local-post100k-audit-s42",
         "TC-k1-corrupt-gap-100k-s42",
         "TC-k1-corrupt-gap-100k-s42-v2",
@@ -157,11 +163,13 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 8,
+      "count": 10,
       "items": [
         "TC-gptrans-author-input-preparation",
         "TC-gptrans-author-input-preparation-verification-recovery",
         "TC-gptrans-author-input-preparation-verification-recovery-v2",
+        "TC-gptrans-g1-ema999-100k-s42",
+        "TC-gptrans-g1-path-mean-100k-s42",
         "TC-k1-chem-local-post100k-audit-s42",
         "TC-k1-motif-hierarchy-100k-s42",
         "TC-k1-motif-hierarchy-100k-s42-v2",

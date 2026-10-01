@@ -66,6 +66,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-gptrans-g1-ema999-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-path-mean-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-gptrans-shortest-path-profile-v5:A001",
       "target": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/summary_122484011.json",
       "type": "action_produced_evidence"
@@ -711,6 +721,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema999-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-gptrans-shortest-path-profile-v5",
       "target": "TC-gptrans-step-profile-v5",
       "type": "parent_trajectory"
@@ -994,6 +1014,26 @@
       "source": "TC-k1-v4-100k-reference-s42",
       "target": "TC-metagin-2d-3hop-100k-s42-v2",
       "type": "parent_trajectory"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema999-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "target": "TC-gptrans-g1-ema999-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-100k-s42",
+      "type": "prior_evidence"
     },
     {
       "source": "pcqm-gptrans-t-500k-partial-reference-s42",
@@ -1424,6 +1464,16 @@
       "source": "pcqm-k1-v4-100k-reference-s42",
       "target": "TC-metagin-2d-3hop-100k-s42-v2",
       "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema999-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-100k-s42",
+      "type": "reference_used"
     },
     {
       "source": "pcqm-gptrans-t-500k-partial-reference-s42",
@@ -1958,6 +2008,14 @@
     },
     {
       "id": "TC-gptrans-author-path-bond-mean-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ema999-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-path-mean-100k-s42",
       "type": "trajectory"
     },
     {

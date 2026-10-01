@@ -78,8 +78,12 @@ An additive, verified same-reference qualification now admits both arms and
 their control to one Replay-Ready group with STRICT_CAUSAL reassessment.
 Original prospective snapshots and terminal receipts remain immutable. Authority:
 [qualification](experiments/pcqm_gptrans_author_alignment/gpu/results/qualification_decision.md).
-No server-owned GPU job remains in this chain; existing Luna B is paused.
-No seed, successor, scale bridge or full training was released.
+The separately authorized G1 path/EMA follow-up is RUNNING on Kaggle3 with
+two isolated T4 arms, each against accepted G1 without comparator retraining.
+Physical identity, prospective RML, budget and existing Luna B binding:
+[follow-up release](experiments/pcqm_gptrans_input_ema_100k/gpu/submission_record.md).
+Terminal acceptance and actual Replay admission are pending; no extra seed,
+successor, scale bridge or full training was released.
 Authority: [terminal decision](experiments/pcqm_gptrans_author_alignment/gpu/results/decision.md).
 [Submission record](experiments/pcqm_gptrans_author_alignment/gpu/submission_record.md);
 [physical receipt](experiments/pcqm_gptrans_author_alignment/gpu/submission_v1.json).

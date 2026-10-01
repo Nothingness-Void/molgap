@@ -23,7 +23,10 @@
       "source_envelope": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/rml_finalized/v5_evidence.json",
       "track": "C",
       "transfer_status": "not_evaluated",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42",
+        "TC-gptrans-g1-path-mean-100k-s42"
+      ]
     },
     {
       "artifact_availability": [

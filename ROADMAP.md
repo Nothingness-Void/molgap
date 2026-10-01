@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | C-GPTRANS-G1-FOLLOWUP | Accept Kaggle3 G1+path and G1 EMA-horizon arms independently against qualified G1 | [Protocol](experiments/pcqm_gptrans_input_ema_100k/protocol.md); saved-output acceptance, strict terminal evidence and both actual Replay pairs; no automatic successor |
 | Closed | C-GPTRANS-COMPARISON-QUALIFICATION | Reference and both candidate bindings qualified; actual Replay pair verified | [Qualification](experiments/pcqm_gptrans_author_alignment/gpu/results/qualification_decision.md); no automatic retraining or scale-up |
 | P0 | C-K1-REPRESENTATION-DIAGNOSTIC | Completed: accepted and RML-closed NO_TRAIN diagnostic found no supported representation-collapse repair | Preserve [closure](experiments/pcqm_k1_explainability_audit/representation/results/terminal_decision.md) and immutable prospective snapshot; no compute rerun or automatic training |
 | P0 | C-MOTIF-HIERARCHY-PREFLIGHT | Completed: pure-2D motif partition passed the accepted-cache CPU feasibility gate | Preserve the [infrastructure-only decision](experiments/pcqm_motif_hierarchy_100k/decision.md); any GPU model requires a separate prospective release, not an automatic successor |
