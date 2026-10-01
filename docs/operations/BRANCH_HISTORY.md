@@ -1,5 +1,10 @@
 # Branch History
 
+The [2026-10-01 archive custody record](https://github.com/Nothingness-Void/molgap/blob/b1435ba939c39d88b6af55aca04c0b62f82314c3/docs/operations/BRANCH_ARCHIVE_20261001.md)
+preserves four retired temporary histories and an unreviewed pretraining snapshot;
+the pending chemical-aux working ref remains active. This is administrative custody,
+not scientific acceptance or a change to historical qualification gaps.
+
 Historical audit records moved intact from BRANCHES.md. These dated snapshots
 are not live routing or scheduler truth; use [BRANCHES.md](../../BRANCHES.md)
 for checkout ownership and CURRENT_STATE.md for the desktop summary.
@@ -103,4 +108,3 @@ The terminal GPTrans-T input-initialization 100K history is preserved by
 archive ancestry merge `fc9d0d14`. Its accepted negative decision, canonical
 RML records, and artifact provenance are indexed on `molgap-desktop` without
 merging the rejected model or launcher implementation.
-

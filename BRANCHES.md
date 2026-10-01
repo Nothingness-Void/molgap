@@ -47,28 +47,30 @@ work entry point. Promotion from `molgap-desktop` to `master` is separate.
 
 ## Retained Checkout Map
 
-These branch-local records are not present in the integration checkout.
-Use the mapped owner; do not create substitute experiment directories here.
+These retained records are not present in the integration checkout.
+Use the mapped owner or archived source; do not create substitute directories.
 Paths are local checkout locators, not portable artifact provenance.
 Check branch/HEAD/status before reading or integrating; fetch before comparing
 remote Git snapshots. Inspect only the question required by the task.
 
 | Question / owner | Retained checkout | Branch-local entry |
 |---|---|---|
-| Desktop pretraining pair: `codex/exp/pretraining-family-pair` | `C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap` | [terminal decision](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/terminal_decision.md); [fusion local review](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/fusion_comparison.md) |
-| Desktop geometry: `codex/exp/geometry-v4-500k-pair` | `C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap` | [fixed-blend scale decision](C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap/experiments/pcqm_geometry_v4_500k_pair/fixed_blend_scale_decision.md) |
+| Archived desktop pretraining pair | `C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap` | [terminal decision](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/terminal_decision.md); [unreviewed fusion supplement](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/fusion_comparison.md) |
+| Archived desktop geometry | `C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap` | [fixed-blend scale decision](C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap/experiments/pcqm_geometry_v4_500k_pair/fixed_blend_scale_decision.md) |
 | Desktop chemical auxiliary: `codex/exp/gptrans-chemical-aux` | `C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap` | [STATUS](C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap/experiments/pcqm_gptrans_chemical_aux/STATUS.md), its linked submission_v4 observation and frozen training protocol |
-| Desktop precision: `codex/exp/gptrans-fp16-precision-100k` | `D:/文档/molgap-exp/molgap-gptrans-fp16-precision-100k` | Branch-local acceptance / reference-binding records |
-| Server DSAR/DSMR: `codex/fix/rml-500k-reference` | `D:/w/rml-500k-fix` | Old branch-local drafts; job/attempt identity incomplete, not live scheduler evidence |
+| Archived desktop precision | `D:/文档/molgap-exp/molgap-gptrans-fp16-precision-100k` | Retained acceptance / reference-binding records |
+| Archived server DSAR/DSMR draft | `D:/w/rml-500k-fix` | Old draft snapshot; job/attempt identity incomplete, not live scheduler evidence |
 | Desktop retained scale-fit cache | `D:/w/scale-fit` | [Accepted terminal navigation](experiments/pcqm_scale_fit_retained/STATUS.md); diagnostic implementation/evidence integrated into desktop, ignored predictions retained here; no training release |
 
-The pretraining fusion review is uncommitted other-agent work pending review
-and integration; its local presence is not a committed desktop evidence claim.
-Geometry retains technical reconciliation and final Git routing; chemical
-auxiliary retains its dedicated owner through terminal acceptance and disposition.
-DSAR/DSMR remains server-owned despite the historical desktop-ref audit wording.
-Do not adopt, monitor or submit successors from its stale local RUNNING text.
-Retained refs/checkouts are not authority to reopen a closed question.
+The user-directed [archive custody record](https://github.com/Nothingness-Void/molgap/blob/b1435ba939c39d88b6af55aca04c0b62f82314c3/docs/operations/BRANCH_ARCHIVE_20261001.md)
+owns exact source/supplement tips and preserved qualification gaps. Four old
+temporary refs were retired locally/remotely after their archive push; detached
+worktrees and ignored artifacts remain. The pretraining supplement was saved
+as an unreviewed snapshot, not accepted Desktop evidence. Administrative archival
+does not finalize a scientific trajectory or qualify replay. Chemical auxiliary
+keeps its dedicated working ref through acceptance. DSAR/DSMR stays server-owned;
+do not adopt jobs or infer scheduler state from the archived draft. Reopening
+archived qualification work requires explicit routing, not a successor by default.
 
 ## Historical Audit Pointer
 

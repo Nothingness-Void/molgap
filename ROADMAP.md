@@ -20,15 +20,15 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 
 | Priority | Task | Exit condition / owner |
 |---|---|---|
-| P0 | Chemical auxiliary reconciliation when actionable | Query exact owning attempt, then per-arm acceptance and scientific disposition on its dedicated branch; no automatic successor |
-| P1 | Pretraining evidence review / integration | Review branch-local terminal decision and uncommitted fusion supplement; retain INCONCLUSIVE and qualification gaps, no scale-up or reference retraining |
-| P1 | Geometry technical closure / Git routing | Resolve reference/readiness binding and supported cost correction under owning records; preserve no-full fixed-blend decision, no new geometry run |
-| P1 | Precision acceptance bookkeeping | Resolve existing adapter/reference-binding gaps on owning branch; failed speed gate does not release another run |
+| P0 | Chemical auxiliary terminal reconciliation | Reconcile exact completed attempt/source and minimal durable artifacts, then per-arm acceptance and scientific disposition on its dedicated branch; no automatic successor |
 | Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |
 
 Centered-logit replay exclusions are closed evidence, not an active training queue.
 Server DSAR/DSMR drafts are not desktop tasks; incomplete job identity must not
 be replaced with stale RUNNING claims or automatic takeover.
+Old pretraining/geometry/precision qualification work is administratively paused
+in archive, not an automatic active queue. See [custody routing](BRANCHES.md#retained-checkout-map);
+reopen only with explicit direction, preserving original scientific blockers.
 Completed evidence is indexed by [experiments](experiments/README.md) and
 [RML](research_memory/README.md); review canonical decisions/attribution before
 another module. Do not reopen a closed candidate through seed/schedule changes.

@@ -10,8 +10,6 @@ and `scnet-bw-dcu-molgap`; reuse does not authorize execution.
 The accepted expert Oracle study closed NO_TRAIN; prediction-only routing did
 not clear nomination. See
 [decision](experiments/pcqm_expert_oracle_feasibility/decision.md).
-The pretraining pair has terminal review, not a waiting-for-training blocker;
-its owner and local-only supplementary review are mapped below.
 
 This file owns the live recommendation, blockers and branch routing.
 Dated decisions and canonical RML evidence own historical results.
@@ -48,32 +46,26 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
 
-- **Chemical auxiliary:** the authenticated read-only Kaggle query in the
-  2026-10-01 maintenance pass returned RUNNING. The submission_v4 observation binds
-  kernel 136542008, version 3 and source/Spec identity via the checkout map.
-  Keep the dedicated owner through acceptance;
-  no terminal result, GPU qualification, replay or promotion follows from RUNNING.
-- **Pretraining pair:** branch-local terminal attempts are INCONCLUSIVE; neither
-  arm clears its 3 meV nomination gate and strict reference qualification is
-  incomplete. No scale-up is released. The uncommitted fusion local review
-  reports only 0.383527 meV extra pretrained-blend gain, with interval spanning
-  zero. The parent reran the retained prediction-only analyzer and hash bindings,
-  matching stored JSON; the report remains uncommitted, pending integration,
-  not canonical promotion evidence.
-- **Geometry V4 500K:** owning fixed-blend scale decision does not release full
-  geometry training. Pure-2D reference recovery resolved that retrieval blocker;
-  reference/readiness binding, cost correction and final Git routing remain.
-  Preserve its terminal decisions and replay exclusions; do not rerun references.
-- **FP32/FP16 pair:** speed gate failed; formal terminal acceptance remains
-  incomplete on the mapped precision branch. Missing adapter/prospective
-  same-run reference binding does not release a retry or replay-ready claim.
+- **Chemical auxiliary:** the latest authenticated read-only Kaggle query in
+  the 2026-10-01 branch archival pass returned COMPLETE for the canonical kernel.
+  Submission_v4 binds the previously recorded kernel/version/source identity;
+  exact version/source and per-arm durable outputs still require reconciliation.
+  Keep the dedicated owner through acceptance; scheduler completion alone does
+  not establish a scientific outcome, replay qualification or promotion.
 - **Centered logits:** scientifically closed; historical reference binding
   excludes strict causal replay, not a training retry trigger. See
   [STATUS](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md).
-- **Server DSAR/DSMR:** old mapped drafts have incomplete job identity.
-  Remote state is UNKNOWN here; desktop must not take over that server question.
 - **TPU probes:** requested TPU metadata still executed on CPU; actual allocation
   and compatibility qualification are required. See `platforms/_records/kaggle/preflight/`.
+
+## Archived Qualification Work
+
+The user paused/archived the old pretraining, geometry, precision and server
+DSAR/DSMR draft refs. Their original conclusions, unresolved acceptance gaps
+and replay exclusions remain unchanged; no scientific closure was manufactured.
+The [checkout/custody map](BRANCHES.md#retained-checkout-map) links exact archived
+source history and the unreviewed pretraining supplement. No automatic reopening,
+training retry or server job takeover is released. DSAR/DSMR remote state is UNKNOWN.
 
 ## Closed evidence entrypoints
 
