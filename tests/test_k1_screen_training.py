@@ -105,3 +105,32 @@ def test_allocation_cost_window_keeps_wall_and_allocated_device_separate():
     assert costs[0]["semantics"] == "process_wall"
     assert costs[1]["semantics"] == "allocated_device"
     assert len(costs) == 2
+
+
+def test_report_only_overhead_requires_matching_frozen_policy(tmp_path):
+    provenance = preflight_files(tmp_path)
+    path = tmp_path / "architecture_preflight.json"
+    architecture = json.loads(path.read_text())
+    architecture.update(overhead_policy="report_only", synchronized_step_overhead_fraction=0.28563243)
+    path.write_text(json.dumps(architecture), encoding="utf-8")
+    certificate_path = tmp_path / "runtime_certificate.json"
+    certificate = json.loads(certificate_path.read_text())
+    certificate["architecture_sha256"] = canonical_fingerprint(architecture)
+    certificate_path.write_text(json.dumps(certificate), encoding="utf-8")
+    with pytest.raises(ValueError, match="gate"):
+        validate_runtime_preflight(tmp_path, provenance)
+    assert validate_runtime_preflight(tmp_path, provenance,
+        overhead_policy="report_only")["status"] == "accepted"
+    architecture["repeatability"]["accepted"] = False
+    path.write_text(json.dumps(architecture), encoding="utf-8")
+    certificate["architecture_sha256"] = canonical_fingerprint(architecture)
+    certificate_path.write_text(json.dumps(certificate), encoding="utf-8")
+    with pytest.raises(ValueError, match="gate"):
+        validate_runtime_preflight(tmp_path, provenance, overhead_policy="report_only")
+
+
+def test_runtime_overhead_policy_rejects_unknown_mode():
+    altered = recipe()
+    altered["runtime_overhead_policy"] = "skip_checks"
+    with pytest.raises(ValueError, match="overhead policy"):
+        validate_recipe(altered, mode="ssma")

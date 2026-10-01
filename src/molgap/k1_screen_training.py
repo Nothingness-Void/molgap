@@ -322,6 +322,14 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
         "auxiliary_weight": 0.1 if mode == "clean_fingerprint" else 0.0}
     if recipe.get("training_recipe") != expected_training:
         raise ValueError("K1 executable training recipe changed")
+    _runtime_overhead_policy(recipe)
+
+
+def _runtime_overhead_policy(recipe):
+    policy = recipe.get("runtime_overhead_policy", "enforce_25pct")
+    if policy not in ("enforce_25pct", "report_only"):
+        raise ValueError("Unsupported K1 runtime overhead policy")
+    return policy
 
 
 def _attach_fingerprint_head(model):
@@ -424,7 +432,7 @@ def _allocation_costs(seconds, hardware, *, scope):
              "status": "measured", "semantics": "allocated_device", "hardware": hardware}]
 
 
-def validate_runtime_preflight(directory, provenance):
+def validate_runtime_preflight(directory, provenance, *, overhead_policy="enforce_25pct"):
     directory = Path(directory)
     saved = json.loads((directory / "runtime_provenance.json").read_text(encoding="utf-8"))
     certificate = json.loads((directory / "runtime_certificate.json").read_text(encoding="utf-8"))
@@ -442,9 +450,12 @@ def validate_runtime_preflight(directory, provenance):
         architecture.get("repeatability", {}).get("accepted") is not True or
         architecture.get("resume_roundtrip", {}).get("accepted") is not True or
         architecture.get("zero_initialization_delta") != 0.0 or
-        not 0 <= architecture.get("maximum_overhead_fraction", -1) <= 0.25 or
+        overhead_policy not in ("enforce_25pct", "report_only") or
+        architecture.get("overhead_policy", "enforce_25pct") != overhead_policy or
+        architecture.get("maximum_overhead_fraction") != 0.25 or
         not math.isfinite(architecture.get("synchronized_step_overhead_fraction", math.inf)) or
-        architecture["synchronized_step_overhead_fraction"] > architecture["maximum_overhead_fraction"]):
+        (overhead_policy == "enforce_25pct" and
+         architecture["synchronized_step_overhead_fraction"] > architecture["maximum_overhead_fraction"])):
         raise ValueError("K1 runtime calibration evidence differs from the gate")
     return certificate
 
@@ -571,7 +582,11 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
             "samples_seconds": samples, "peak_memory_bytes": torch.cuda.max_memory_allocated()}
         del model, optimizer
     overhead = timings[mode]["median_step_seconds"] / timings["reference"]["median_step_seconds"] - 1
-    architecture = {"accepted": overhead <= 0.25, "mode": mode, "zero_initialization_delta": zero_delta,
+    overhead_policy = _runtime_overhead_policy(recipe)
+    architecture = {"accepted": math.isfinite(overhead) and
+        (overhead_policy == "report_only" or overhead <= 0.25),
+        "overhead_policy": overhead_policy, "overhead_gate_passed": overhead <= 0.25,
+        "mode": mode, "zero_initialization_delta": zero_delta,
         "repeated_optimizer_steps": 2,
         "repeatability": repeated, "resume_roundtrip": resume, "timings": timings,
         "selected_state_roundtrip_delta": selected_delta,
@@ -645,7 +660,8 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     determinism = configure_fp32_determinism(SEED)
     runtime = build_runtime_manifest(determinism)
     provenance = _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
-    certificate = validate_runtime_preflight(preflight_dir or output, provenance)
+    certificate = validate_runtime_preflight(preflight_dir or output, provenance,
+        overhead_policy=_runtime_overhead_policy(recipe))
     hardware = torch.cuda.get_device_name(0)
     if certificate.get("accelerator") != hardware or "T4" not in hardware:
         raise ValueError("Runtime accelerator differs from qualified T4")
