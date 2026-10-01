@@ -1,0 +1,17 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "gptrans-g1-followup",
+  "version": "v1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {"scientific_contract": "gptrans-v5-observation-reference-fp32-bs128-60epochs"},
+  "required_observable_fields": ["accepted_g1_reference_and_path_cache"],
+  "created_from_source_digest": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "approval": {"activation": "one-user-authorized-G1-path-and-EMA-screen", "authority_ref": "experiments/pcqm_gptrans_input_ema_100k/protocol.md"},
+  "cost_model": {"kind": "measured_only", "assumptions": ["native T4 allocation; no hardware conversion"]},
+  "observation_point": null,
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "action_rule": {"field": "accepted_g1_reference_and_path_cache", "operator": "eq", "threshold": true, "action": "RUN_G1_FOLLOWUP"},
+  "borderline_action": "DEFER"
+}
