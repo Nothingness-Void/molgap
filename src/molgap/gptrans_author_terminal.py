@@ -19,8 +19,8 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         *, experiment_ref: str = "experiments/pcqm_gptrans_author_alignment") -> list[dict]:
     root = Path(repo_root).resolve()
     base = root / experiment_ref
-    followup = experiment_ref == "experiments/pcqm_gptrans_input_ema_100k"
-    if experiment_ref not in {"experiments/pcqm_gptrans_author_alignment", "experiments/pcqm_gptrans_input_ema_100k"}:
+    followup = experiment_ref in {"experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k"}
+    if experiment_ref not in {"experiments/pcqm_gptrans_author_alignment", "experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k"}:
         raise ValueError("Unsupported terminal experiment adapter")
     gpu = base / "gpu"
     load = lambda p: json.loads(p.read_bytes())
@@ -29,8 +29,8 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
     result = load(acceptance)
     if result.get("accepted") is not True:
         raise ValueError("Independent saved-output acceptance is required")
-    screen = Path(records).resolve() / ("gptrans_input_ema_screen" if followup else "gptrans_author_screen")
     config = load(gpu / "screen_config.json")
+    screen = Path(records).resolve() / config.get("output_subdirectory", "gptrans_input_ema_screen" if followup else "gptrans_author_screen")
     bundle = load(root / config["reference_bundle_ref"])
     reference_manifest = load(root / bundle["trace_manifest_ref"])
     ref_metadata = load(root / bundle["role_history_ref"])
@@ -38,8 +38,11 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         from .research_memory.candidate_reference import verify_candidate_reference
         verify_candidate_reference(root, bundle["candidate_reference_qualification_ref"], expected_bundle=bundle)
         proof = load(root / bundle["candidate_reference_qualification_ref"])
-        qualified = load(root / proof["candidate_qualification_ref"])
-        ref_bindings = load(root / qualified["qualified_readiness_ref"])["candidate_artifact_bindings"]
+        ready_ref = proof.get("terminal_readiness_ref")
+        if ready_ref is None:
+            qualified = load(root / proof["candidate_qualification_ref"])
+            ready_ref = qualified["qualified_readiness_ref"]
+        ref_bindings = load(root / ready_ref)["candidate_artifact_bindings"]
         ref_prediction = root / ref_bindings["prediction_manifest"]["ref"]
         ref_checkpoint = root / ref_bindings["checkpoint"]["ref"]
     else:
@@ -84,8 +87,9 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         manifest["comparability_identity"]["matched_architecture_required"] = False
         manifest["contract_ref"] = rel(gpu / mode / "contract.json") if followup else manifest["contract_ref"]
         manifest["model_identity"] = arm["comparison_identity"]["architecture_config_identity"]
-        if followup and mode == "degree_scale_ema999":
+        if followup and arm["comparison_identity"]["ema_decay"] == .999:
             manifest["comparability_identity"]["ema_semantics"] = "ema999-each-step-selection"
+        manifest["comparability_identity"]["optimizer_identity"] = arm["comparison_identity"]["optimizer_identity"]
         manifest["backtest_eligibility"] = ({"eligible": True, "exclusion_reasons": []} if followup else
             {"eligible": False, "exclusion_reasons": ["canonical_reference_not_replay_enrolled; historical eligibility left unchanged"]})
         save(target / "candidate_trace_manifest.json", manifest)

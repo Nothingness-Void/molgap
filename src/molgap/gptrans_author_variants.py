@@ -9,9 +9,10 @@ import torch
 
 from .gptrans import OGBGPTransTiny
 
-MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999")
+MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
+         "degree_group_decay_ema999", "degree_path_endpoints_ema999")
 PATH_MODES = frozenset({"path_bond_mean", "degree_path_bond_mean"})
-SCALED_MODES = frozenset({"degree_scale", "degree_path_bond_mean", "degree_scale_ema999"})
+SCALED_MODES = frozenset(set(MODES) - {"path_bond_mean"})
 G1_ARCHITECTURE_ID = "f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896"
 DEGREE_SCALE = 0.0897
 DEGREE_INITIAL_SHA256 = "d10738efd0851fd53513b51c0a85c42327f87ee0ea35a0af1b6a381b8ce179d1"
@@ -80,6 +81,9 @@ def apply_author_variant(model, variant):
     if variant in PATH_MODES:
         # No constructor or RNG consumption: only the input method changes.
         model.__class__ = PathInputGPTrans
+    elif variant == "degree_path_endpoints_ema999":
+        from .gptrans_endpoint_paths import EndpointPathGPTrans
+        model.__class__ = EndpointPathGPTrans
     if set(model.state_dict()) != before:
         raise RuntimeError("Author input arm unexpectedly changed tensor keys")
     model._molgap_author_variant = variant

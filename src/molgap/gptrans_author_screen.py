@@ -18,7 +18,8 @@ from .experiment_spec import ExperimentSpec
 from .gptrans_screen_adapter import gptrans_screen_arguments
 from .training_reproducibility import atomic_json, sha256_file
 
-MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999")
+MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
+         "degree_group_decay_ema999", "degree_path_endpoints_ema999")
 
 
 def mounted(input_root: Path, name: str, sha256: str) -> Path:
@@ -98,7 +99,7 @@ def run_author_screen(upload_root: Path, source_root: Path, output: Path, archiv
     if len(modes) != 2 or any(mode not in MODES for mode in modes):
         raise ValueError("Exactly two supported independent arms are required")
     manifest = mounted(input_root, "manifest.json", config["dataset_manifest_sha256"])
-    paths = mounted(input_root, "manifest.json", config["path_manifest_sha256"])
+    paths = mounted(input_root, "manifest.json", config["path_manifest_sha256"]) if config.get("path_manifest_sha256") else None
     transform = upload_root / "target_transform.json"
     if sha256_file(transform) != config["target_transform_sha256"]:
         raise ValueError("Portable train-only target transform changed")
@@ -117,7 +118,7 @@ def run_author_screen(upload_root: Path, source_root: Path, output: Path, archiv
                "package_dir": str(package_dir), "upload_root": str(upload_root),
                "screen_config": str(config_path), "archive_sha256": archive_sha256,
                "dataset_root": str(manifest.parent), "manifest_path": str(manifest),
-               "path_sidecar_root": str(paths.parent), "target_transform_path": str(transform)}
+               "path_sidecar_root": str(paths.parent) if paths else None, "target_transform_path": str(transform)}
     atomic_json(output / "startup.json", {"package_identity": package["package_identity"],
         "spec_identity": package["spec_identity"], "source_commit": package["source_commit"],
         "source_archive_sha256": archive_sha256, "allocated_gpu_inventory": allocation,

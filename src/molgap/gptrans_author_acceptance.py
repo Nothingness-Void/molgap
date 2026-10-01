@@ -49,7 +49,7 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
     else:
         from .kaggle_accelerator_push import _observed_identity
         actual = _observed_identity(receipt["platform_response"], "nvoid912")
-        require(receipt["requested_kernel"] == "nvoid912/molgap-gptrans-g1-path-ema-dual-s42"
+        require(receipt["requested_kernel"] == config.get("requested_kernel", "nvoid912/molgap-gptrans-g1-path-ema-dual-s42")
             and receipt["kernel_id"] > 0 and receipt["version_number"] == 1
             and not actual["identity_conflicts"]
             and all(receipt[k] == actual[k] for k in ("kernel", "kernel_id", "version_number")), "Physical run identity")
@@ -62,7 +62,7 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         variant_sha = hashlib.sha256(archive.extractfile("src/molgap/gptrans_author_variants.py").read()).hexdigest()
         archived_config = json.loads(archive.extractfile(experiment_ref + "/screen_config.json").read())
     require(config == archived_config, "Question configuration changed since release")
-    screen = records / ("gptrans_author_screen" if legacy else "gptrans_input_ema_screen")
+    screen = records / config.get("output_subdirectory", "gptrans_author_screen" if legacy else "gptrans_input_ema_screen")
     startup, cost, summary = load(screen / "startup.json"), load(screen / "native_cost.json"), load(screen / "job_summary.json")
     require(startup["spec_identity"] == spec.identity and startup["source_archive_sha256"] == source_sha,
             "Startup identity")
@@ -153,6 +153,16 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
                     if legacy else arm["comparison_identity"])
         require(identity["architecture_config_identity"] == observed["architecture_fingerprint"], "Architecture identity")
         require(manifest.get("ema_decay", .9999) == identity["ema_decay"], "EMA identity")
+        if mode in {"degree_group_decay_ema999", "degree_path_endpoints_ema999"}:
+            with tarfile.open(package / "source.tar.gz", "r:gz") as archive:
+                endpoint_sha = hashlib.sha256(archive.extractfile("src/molgap/gptrans_endpoint_paths.py").read()).hexdigest()
+            require(preflight["endpoint_implementation_sha256"] == endpoint_sha, "Endpoint/optimizer implementation binding")
+        if mode == "degree_group_decay_ema999":
+            require(all("optimizer_diagnostics" in row and math.isfinite(row["optimizer_diagnostics"]["mean_preclip_gradient_norm"])
+                        and 0 <= row["optimizer_diagnostics"]["clip_frequency"] <= 1 for row in rows), "Grouped optimizer diagnostic coverage")
+            require(all(row["optimizer_diagnostics"]["parameter_groups_sha256"] == canonical_fingerprint(preflight["optimizer_parameter_groups"])
+                        and all(math.isfinite(v) for k in ("group_weight_norms", "group_adam_first_moment_norms") for v in row["optimizer_diagnostics"][k])
+                        for row in rows), "Grouped optimizer identity and finite norms")
         declared = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == mode)
         require(plan["state_at_start"]["source_config_identity"] == canonical_fingerprint(declared), "Frozen full-arm declaration")
         prelaunch = load(base / mode / "comparison_readiness_prelaunch.json")

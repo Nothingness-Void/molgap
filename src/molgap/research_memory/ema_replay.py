@@ -1,4 +1,4 @@
-"""Qualified EMA intervention worlds; ordinary matched-contract keys stay strict."""
+"""Qualified EMA/optimizer intervention worlds; ordinary match keys stay strict."""
 from copy import deepcopy
 import hashlib
 
@@ -19,11 +19,13 @@ def ema_intervention_worlds(root, manifests, records):
     trajectories = {t['trajectory_id']: t for _, t in records['trajectories']}
     bundles = [b for _, b in records.get('reference_bundles', [])]
     for path, ready in records.get('comparison_readiness', []):
-        if ready.get('experiment_purpose') != 'ema_comparison' or not ready.get('strict_ready'):
+        purpose = ready.get('experiment_purpose')
+        if purpose not in {'ema_comparison', 'optimizer_comparison'} or not ready.get('strict_ready'):
             continue
         validate_comparison_readiness(ready, evidence_verifier=lambda p, s: verify_bound_artifact(root, p, s))
-        if ready['comparison_class'] != 'STRICT_CAUSAL' or set(ready['mismatched_fields']) != {
-                'ema_decay', 'checkpoint_selection_identity'}:
+        expected_fields = {'ema_decay', 'checkpoint_selection_identity'} if purpose == 'ema_comparison' else {'optimizer_identity', 'optimizer_mode'}
+        world_field = 'ema_semantics' if purpose == 'ema_comparison' else 'optimizer_identity'
+        if ready['comparison_class'] != 'STRICT_CAUSAL' or set(ready['mismatched_fields']) != expected_fields:
             continue
         candidates = [m for m in manifests if m['comparison_role'] == 'candidate'
             and m['reference_id'] == ready['reference_id']
@@ -53,7 +55,7 @@ def ema_intervention_worlds(root, manifests, records):
             from .candidate_reference import verify_candidate_reference
             reference = verify_candidate_reference(root, bound[0]['candidate_reference_qualification_ref'], expected_bundle=bound[0])
             if any(candidate['comparability_identity'][k] != reference['comparability_identity'][k]
-                   for k in (*BASE_COMPARABILITY_FIELDS, 'architecture_identity') if k != 'ema_semantics'):
+                   for k in (*BASE_COMPARABILITY_FIELDS, 'architecture_identity') if k != world_field):
                 raise ValueError('EMA intervention has an undeclared replay-world mismatch')
             accepted = load_json_object(resolve_repo_pointer(root, ready['candidate_artifact_bindings']['acceptance']['ref']))
             arms = [a for a in accepted['arms'].values() if a['trajectory_id'] == candidate['trajectory_id']]
@@ -61,14 +63,14 @@ def ema_intervention_worlds(root, manifests, records):
             expected.update({k: v['candidate'] for k, v in ready['mismatched_fields'].items()})
             if len(arms) != 1 or not arms[0]['accepted'] or arms[0]['comparison_identity'] != expected:
                 raise ValueError('EMA replay intervention is not independently observed')
-            world = {'purpose': 'ema_comparison', 'reference_id': ready['reference_id'],
+            world = {'purpose': purpose, 'reference_id': ready['reference_id'],
                 'intervention': ready['mismatched_fields'], 'prelaunch_bundle_sha256': ready['reference_bundle_sha256']}
-            world_id = 'qualified-ema-intervention:' + hashlib.sha256(json_bytes(world)).hexdigest()
+            world_id = ('qualified-ema-intervention:' if purpose == 'ema_comparison' else 'qualified-optimizer-intervention:') + hashlib.sha256(json_bytes(world)).hexdigest()
             for manifest in (candidate, reference):
                 view = deepcopy(manifest)
                 view['_observed_comparability_identity'] = deepcopy(manifest['comparability_identity'])
                 view['_intervention_world'] = {**world, 'readiness_ref': pointer}
-                view['comparability_identity']['ema_semantics'] = world_id
+                view['comparability_identity'][world_field] = world_id
                 view['comparability_identity']['matched_architecture_required'] = True
                 if manifest is candidate:
                     replacements[(manifest['trajectory_id'], manifest['run_id'])] = view

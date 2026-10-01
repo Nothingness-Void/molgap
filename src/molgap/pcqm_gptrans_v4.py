@@ -45,12 +45,13 @@ MIN_LEARNING_RATE = 1.0e-6
 WEIGHT_DECAY = 0.05
 GRADIENT_CLIP = 1.0
 EMA_DECAY = 0.9999
-AUTHOR_MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999")
+AUTHOR_MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
+                "degree_group_decay_ema999", "degree_path_endpoints_ema999")
 PATH_MODES = ("path_bond_mean", "degree_path_bond_mean")
 
 
 def _ema_decay(variant: str) -> float:
-    return 0.999 if variant == "degree_scale_ema999" else EMA_DECAY
+    return 0.999 if variant in {"degree_scale_ema999", "degree_group_decay_ema999", "degree_path_endpoints_ema999"} else EMA_DECAY
 LOADER_WORKERS = 4
 EXPECTED_PARAMETERS = 5_246_817
 EXPECTED_INITIAL_MODEL_SHA256 = (
@@ -293,6 +294,9 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
         if variant in PATH_MODES:
             from .gptrans_author_variants import PathInputGPTrans
             model.__class__ = PathInputGPTrans
+        elif variant == "degree_path_endpoints_ema999":
+            from .gptrans_endpoint_paths import EndpointPathGPTrans
+            model.__class__ = EndpointPathGPTrans
         model._molgap_author_variant = variant
         return model
     if initial_state_path is None:
@@ -343,7 +347,7 @@ def _verify_model_identity(model) -> tuple[int, str]:
         raise RuntimeError(f"Frozen GPTrans-T parameter count changed: {parameters}")
     initial_sha256 = _state_sha256(model)
     expected_initial = EXPECTED_INITIAL_MODEL_SHA256
-    if getattr(model, "_molgap_author_variant", None) in ("degree_scale", "degree_path_bond_mean", "degree_scale_ema999"):
+    if getattr(model, "_molgap_author_variant", None) in set(AUTHOR_MODES) - {"path_bond_mean"}:
         from .gptrans_author_variants import DEGREE_INITIAL_SHA256
         expected_initial = DEGREE_INITIAL_SHA256
     if initial_sha256 != expected_initial:
@@ -422,8 +426,12 @@ def _make_training_state(initial_state_path: Path, variant: str = "reference"):
 
     model = _make_model(initial_state_path, variant).to("cuda")
     _verify_model_identity(model)
+    parameters = model.parameters()
+    if variant == "degree_group_decay_ema999":
+        from .gptrans_endpoint_paths import parameter_groups
+        parameters, _ = parameter_groups(model, WEIGHT_DECAY)
     optimizer = torch.optim.AdamW(
-        model.parameters(),
+        parameters,
         lr=LEARNING_RATE,
         weight_decay=WEIGHT_DECAY,
         foreach=False,
@@ -445,6 +453,9 @@ def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bo
         raise RuntimeError("Training loss became non-finite")
     loss.backward()
     gradient_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), GRADIENT_CLIP)
+    if hasattr(model, "_group_diagnostics"):
+        model._group_diagnostics[0].add_(gradient_norm.detach())
+        model._group_diagnostics[1].add_((gradient_norm.detach() > GRADIENT_CLIP).to(gradient_norm.dtype))
     if check_finite and not bool(torch.isfinite(gradient_norm)):
         raise RuntimeError("Gradient norm became non-finite")
     optimizer.step()
@@ -510,7 +521,8 @@ def _scientific_fields(variant: str = "reference") -> dict:
         "seed": SEED,
         "precision": "fp32",
         "optimizer_fingerprint": canonical_fingerprint(
-            {"name": "torch-adamw", "foreach": False, "fused": False, "lr": LEARNING_RATE, "weight_decay": WEIGHT_DECAY}
+            {"name": "torch-adamw", "foreach": False, "fused": False, "lr": LEARNING_RATE, "weight_decay": WEIGHT_DECAY,
+             **({"parameter_groups": "bias-and-1d-no-decay-v1"} if variant == "degree_group_decay_ema999" else {})}
         ),
         "schedule_fingerprint": canonical_fingerprint(
             {"name": "epoch-warmup-cosine-v1", "epochs": EPOCHS, "warmup_epochs": WARMUP_EPOCHS, "minimum_lr": MIN_LEARNING_RATE}
@@ -519,7 +531,7 @@ def _scientific_fields(variant: str = "reference") -> dict:
         "target_transform_fingerprint": canonical_fingerprint(
             {"source": "fixed-train-100k", "mean": "population-mean", "std": "sample-std-correction1"}
         ),
-        "selection_fingerprint": "best-development-ema999-60epochs" if variant == "degree_scale_ema999" else "best-development-ema9999-60epochs",
+        "selection_fingerprint": "best-development-ema999-60epochs" if _ema_decay(variant) == .999 else "best-development-ema9999-60epochs",
         "role_access_fingerprint": canonical_fingerprint(
             {"train": True, "development": True, "official_validation": False, "test_dev": False, "test_challenge": False}
         ),
@@ -731,6 +743,10 @@ def run_preflight(
         "parameters": EXPECTED_PARAMETERS,
         "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_author_variants.py" if variant in AUTHOR_MODES else "gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
         "ema_decay": _ema_decay(variant),
+        **({"endpoint_implementation_sha256": _source_sha256(Path(__file__).with_name("gptrans_endpoint_paths.py"))}
+           if variant in {"degree_group_decay_ema999", "degree_path_endpoints_ema999"} else {}),
+        **({"optimizer_parameter_groups": __import__("molgap.gptrans_endpoint_paths", fromlist=["parameter_groups"]).parameter_groups(model, WEIGHT_DECAY)[1]}
+           if variant == "degree_group_decay_ema999" else {}),
         **({"path_sidecar_identity": path_identity} if path_identity is not None else {}),
         "initial_state_artifact_sha256": sha256_file(initial_state_path),
         "accepted": True,
@@ -985,6 +1001,8 @@ def run_training(
     for epoch in range(start_epoch, stop_epoch):
         learning_rate = scheduler.step(epoch)
         model.train()
+        if variant == "degree_group_decay_ema999":
+            model._group_diagnostics = torch.zeros(2, device="cuda")
         train_loss_sum = torch.zeros((), device="cuda")
         train_count = 0
         epoch_started = time.perf_counter()
@@ -1069,6 +1087,17 @@ def run_training(
                     trace[-1]["cumulative_wall_time_seconds"] if trace else 0.0
                 ),
             })
+        if variant == "degree_group_decay_ema999":
+            from .gptrans_endpoint_paths import parameter_groups
+            _, inventory = parameter_groups(model, WEIGHT_DECAY)
+            diagnostic = model._group_diagnostics.detach().cpu().tolist()
+            row["optimizer_diagnostics"] = {
+                "parameter_groups_sha256": canonical_fingerprint(inventory),
+                "mean_preclip_gradient_norm": diagnostic[0] / BATCHES_PER_EPOCH,
+                "clip_frequency": diagnostic[1] / BATCHES_PER_EPOCH,
+                "group_weight_norms": [float(torch.stack([p.detach().square().sum() for p in g["params"]]).sum().sqrt().cpu()) for g in optimizer.param_groups],
+                "group_adam_first_moment_norms": [float(torch.stack([optimizer.state[p]["exp_avg"].detach().square().sum() for p in g["params"] if "exp_avg" in optimizer.state[p]]).sum().sqrt().cpu()) for g in optimizer.param_groups],
+            }
         trace.append(row)
         atomic_json(output / "trace.json", {"format": RUN_FORMAT, "rows": trace})
         native_checkpoint = _save_checkpoint(
@@ -1145,7 +1174,7 @@ def run_training(
         **_scientific_fields(variant),
         "run_id": logical_run_id if author_arm else "gptrans-t-100k-v5-audit-reference-seed42" if v5_audit else f"gptrans-t-100k-v4-{variant}-seed42",
         "model_id": f"gptrans_t_core_12x256_pair32/{variant}",
-        "architecture_fingerprint": ("f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896" if variant == "degree_scale_ema999" else EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"]})),
+        "architecture_fingerprint": ("f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896" if variant in {"degree_scale_ema999", "degree_group_decay_ema999"} else EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"], **({"endpoint_module": preflight["endpoint_implementation_sha256"]} if variant == "degree_path_endpoints_ema999" else {})})),
         "ema_decay": _ema_decay(variant),
         "source_archive_sha256": source_archive_sha256,
         "result_artifact_sha256": result_sha256,
