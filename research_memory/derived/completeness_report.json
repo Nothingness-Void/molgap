@@ -15,14 +15,12 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 30,
+      "count": 28,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-author-input-preparation",
         "TC-gptrans-author-input-preparation-verification-recovery",
         "TC-gptrans-author-input-preparation-verification-recovery-v2",
-        "TC-gptrans-g1-ema999-100k-s42",
-        "TC-gptrans-g1-path-mean-100k-s42",
         "TC-gptrans-shortest-path-profile-v5",
         "TC-gptrans-step-profile-v5",
         "TC-k1-chem-local-post100k-audit-s42",
@@ -139,13 +137,11 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 17,
+      "count": 15,
       "items": [
         "TC-gptrans-author-input-preparation",
         "TC-gptrans-author-input-preparation-verification-recovery",
         "TC-gptrans-author-input-preparation-verification-recovery-v2",
-        "TC-gptrans-g1-ema999-100k-s42",
-        "TC-gptrans-g1-path-mean-100k-s42",
         "TC-k1-chem-local-post100k-audit-s42",
         "TC-k1-corrupt-gap-100k-s42",
         "TC-k1-corrupt-gap-100k-s42-v2",
@@ -163,13 +159,11 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 10,
+      "count": 8,
       "items": [
         "TC-gptrans-author-input-preparation",
         "TC-gptrans-author-input-preparation-verification-recovery",
         "TC-gptrans-author-input-preparation-verification-recovery-v2",
-        "TC-gptrans-g1-ema999-100k-s42",
-        "TC-gptrans-g1-path-mean-100k-s42",
         "TC-k1-chem-local-post100k-audit-s42",
         "TC-k1-motif-hierarchy-100k-s42",
         "TC-k1-motif-hierarchy-100k-s42-v2",

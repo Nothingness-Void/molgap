@@ -1,7 +1,5 @@
 {
-  "format": "molgap-rml-policy-backtest-v1",
-  "policy_activated": false,
-  "reports": [
+  "candidate_policy_deltas": [
     {
       "action_match_count": 0,
       "action_match_rate": null,
@@ -519,5 +517,20 @@
       "winner_retention_rate": null
     }
   ],
-  "source_digest": "2be39ddd225ac82d88bb638c9e6b23c07249ae4072a07b807ff00852e3823288"
+  "finalization_id": "finalize-7830d20dae47d7e81ac21e7e2a85e380df8204759f81db431a2d235cfab71417",
+  "finalization_status": "FINALIZED",
+  "next_decision": "SOL_REQUIRED",
+  "outcome": "POSITIVE_UNDER_CONTRACT",
+  "pipeline_status": "COMPLETE",
+  "replay_pool_delta": {
+    "added": [
+      [
+        "TC-gptrans-g1-ema999-100k-s42",
+        "gptrans-g1-path-ema-dual-s42:degree_scale_ema999"
+      ]
+    ],
+    "removed": []
+  },
+  "trajectory_id": "TC-gptrans-g1-ema999-100k-s42",
+  "validation_status": "VALID"
 }

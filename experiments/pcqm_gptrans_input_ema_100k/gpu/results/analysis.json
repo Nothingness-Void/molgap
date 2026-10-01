@@ -1,0 +1,217 @@
+{
+  "format": "molgap-gptrans-g1-followup-terminal-analysis-v1",
+  "acceptance_ref": "experiments/pcqm_gptrans_input_ema_100k/gpu/results/acceptance.json",
+  "acceptance_sha256": "8aaa5247f875f9c09552e1f1736b9c5622eb17cd1ae788206119490a6f5f308a",
+  "arms": {
+    "degree_path_bond_mean": {
+      "parameters": 5246817,
+      "best_epoch": 59,
+      "material_gain_eV": -0.0002471074151992798,
+      "material_gate_passed": false,
+      "epoch_mean_seconds": 212.5180018630666,
+      "final_live_dev_eV": 0.14499446749687195,
+      "final_ten_ema_change_eV": -0.01208987832069397,
+      "paired_analysis": {
+        "rows": 50000,
+        "reference_mae_eV": 0.15088489169538022,
+        "candidate_mae_eV": 0.15113199911057948,
+        "candidate_minus_reference_eV": 0.0002471074151992798,
+        "paired_row_bootstrap": {
+          "delta": 0.0002471074151992798,
+          "ci95": [
+            -0.0007235881514549255,
+            0.0011776905932426452
+          ],
+          "probability_better": 0.3006,
+          "n_bootstrap": 5000,
+          "seed": 20260912
+        },
+        "candidate_win_fraction": 0.4967,
+        "absolute_error_delta_quantiles_eV": [
+          -3.5325334072113037,
+          -0.10209603309631346,
+          -0.04418027400970459,
+          0.0005311965942382812,
+          0.0450817346572876,
+          0.10143575668334959,
+          2.7603821754455566
+        ],
+        "posthoc_reference_error_quintiles": [
+          {
+            "reference_error_quintile": 1,
+            "rows": 10000,
+            "reference_mae_eV": 0.017594510054588317,
+            "candidate_mae_eV": 0.059111823296546934,
+            "candidate_minus_reference_eV": 0.04151731324195862
+          },
+          {
+            "reference_error_quintile": 2,
+            "rows": 10000,
+            "reference_mae_eV": 0.05553122673034668,
+            "candidate_mae_eV": 0.07412016422748566,
+            "candidate_minus_reference_eV": 0.018588937497138976
+          },
+          {
+            "reference_error_quintile": 3,
+            "rows": 10000,
+            "reference_mae_eV": 0.1025269382238388,
+            "candidate_mae_eV": 0.1052376999616623,
+            "candidate_minus_reference_eV": 0.0027107617378234862
+          },
+          {
+            "reference_error_quintile": 4,
+            "rows": 10000,
+            "reference_mae_eV": 0.17494496957063674,
+            "candidate_mae_eV": 0.1583113546013832,
+            "candidate_minus_reference_eV": -0.01663361496925354
+          },
+          {
+            "reference_error_quintile": 5,
+            "rows": 10000,
+            "reference_mae_eV": 0.4038268138974905,
+            "candidate_mae_eV": 0.3588789534658194,
+            "candidate_minus_reference_eV": -0.04494786043167114
+          }
+        ],
+        "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+      },
+      "negative_control_drift": {
+        "live_train_metric": 0.011590244388574977,
+        "live_dev_metric": 0.027469545602798462,
+        "learning_rate": 0.0,
+        "optimizer_step": 0,
+        "sample_presentations": 0
+      },
+      "last_epoch_ema_dev_eV": 0.1511320024728775,
+      "final_train_loss_normalized": 0.09795138630403184
+    },
+    "degree_scale_ema999": {
+      "parameters": 5246817,
+      "best_epoch": 58,
+      "material_gain_eV": 0.00665226254940033,
+      "material_gate_passed": true,
+      "epoch_mean_seconds": 185.94583645914997,
+      "final_live_dev_eV": 0.14429225027561188,
+      "final_ten_ema_change_eV": -0.0005608499050140381,
+      "paired_analysis": {
+        "rows": 50000,
+        "reference_mae_eV": 0.15088489169538022,
+        "candidate_mae_eV": 0.14423262914597987,
+        "candidate_minus_reference_eV": -0.00665226254940033,
+        "paired_row_bootstrap": {
+          "delta": -0.00665226254940033,
+          "ci95": [
+            -0.007045725899815559,
+            -0.006262433205246926
+          ],
+          "probability_better": 1.0,
+          "n_bootstrap": 5000,
+          "seed": 20260912
+        },
+        "candidate_win_fraction": 0.56146,
+        "absolute_error_delta_quantiles_eV": [
+          -0.5453271865844727,
+          -0.06004772186279296,
+          -0.030840396881103516,
+          -0.005194425582885742,
+          0.01825714111328125,
+          0.04404125213623047,
+          1.1365571022033691
+        ],
+        "posthoc_reference_error_quintiles": [
+          {
+            "reference_error_quintile": 1,
+            "rows": 10000,
+            "reference_mae_eV": 0.017594510054588317,
+            "candidate_mae_eV": 0.03149943311214447,
+            "candidate_minus_reference_eV": 0.013904923057556152
+          },
+          {
+            "reference_error_quintile": 2,
+            "rows": 10000,
+            "reference_mae_eV": 0.05553122673034668,
+            "candidate_mae_eV": 0.05332193331718445,
+            "candidate_minus_reference_eV": -0.0022092934131622316
+          },
+          {
+            "reference_error_quintile": 3,
+            "rows": 10000,
+            "reference_mae_eV": 0.1025269382238388,
+            "candidate_mae_eV": 0.09153563969135284,
+            "candidate_minus_reference_eV": -0.010991298532485962
+          },
+          {
+            "reference_error_quintile": 4,
+            "rows": 10000,
+            "reference_mae_eV": 0.17494496957063674,
+            "candidate_mae_eV": 0.15971456912755966,
+            "candidate_minus_reference_eV": -0.015230400443077087
+          },
+          {
+            "reference_error_quintile": 5,
+            "rows": 10000,
+            "reference_mae_eV": 0.4038268138974905,
+            "candidate_mae_eV": 0.385091570481658,
+            "candidate_minus_reference_eV": -0.01873524341583252
+          }
+        ],
+        "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+      },
+      "negative_control_drift": {
+        "live_train_metric": 0.0,
+        "live_dev_metric": 0.0,
+        "learning_rate": 0.0,
+        "optimizer_step": 0,
+        "sample_presentations": 0
+      },
+      "last_epoch_ema_dev_eV": 0.14424195885658264,
+      "final_train_loss_normalized": 0.09714278386591209
+    }
+  },
+  "native_cost": {
+    "allocated_gpu_inventory": [
+      "GPU 0: Tesla T4 (UUID: GPU-880b9ed8-12c2-7894-17be-e2b8e4f37016)",
+      "GPU 1: Tesla T4 (UUID: GPU-12535479-7bd9-4b76-2e5d-a0cb290078e8)"
+    ],
+    "allocated_gpu_count": 2,
+    "used_gpu_count": 2,
+    "wall_seconds": 13083.698225375,
+    "allocated_device_hours": 7.268721236319444,
+    "source_archive_sha256": "f9122f3230b2cb6b1790852f21c2d30bd33cc28bd72ddebb11c03ceb651bd392"
+  },
+  "replay_admissions": [
+    {
+      "trajectory_id": "TC-gptrans-g1-ema999-100k-s42",
+      "run_id": "gptrans-g1-path-ema-dual-s42:degree_scale_ema999",
+      "reference_id": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "capability": "complete",
+      "comparison_world": "qualified EMA intervention"
+    },
+    {
+      "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42",
+      "run_id": "gptrans-g1-path-ema-dual-s42:degree_path_bond_mean",
+      "reference_id": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "capability": "complete",
+      "comparison_world": "matched recipe"
+    }
+  ],
+  "reference_trace_ref": "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/degree_scale/training/canonical_trace.json",
+  "reference_trace_sha256": "7ba59dad95db49dcff73f7eaa544c0914f7d45d46b2267e134f6cb257ca0dc10",
+  "derived_not_observed_ema_memory": {
+    "0.9999": {
+      "half_life_optimizer_steps": 6931.125226233421,
+      "half_life_epochs_at_781_steps": 8.874680187238695,
+      "initial_state_weight_after_46860_updates": 0.009221345533982937
+    },
+    "0.999": {
+      "half_life_optimizer_steps": 692.8005491785002,
+      "half_life_epochs_at_781_steps": 0.8870685648892448,
+      "initial_state_weight_after_46860_updates": 4.352895784247924e-21
+    }
+  },
+  "preflight_log_note": "two zero-byte optional text logs; mandatory accepted preflight JSON and runtime certificates present",
+  "protected_roles_read": false,
+  "model_inference_executed": false,
+  "local_training_executed": false,
+  "successor_authorized": false
+}

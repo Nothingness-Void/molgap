@@ -51,6 +51,48 @@
     },
     {
       "artifact_availability": [
+        "local_verified"
+      ],
+      "comparison_status": "strict_causal",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "internal_train": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "single_mechanism_screen_100k",
+      "source_envelope": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/rml_plan/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_verified"
+      ],
+      "comparison_status": "strict_causal",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "internal_train": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "single_mechanism_screen_100k",
+      "source_envelope": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "committed_metadata"
       ],
       "comparison_status": "matched_curve_only_no_terminal_payload",

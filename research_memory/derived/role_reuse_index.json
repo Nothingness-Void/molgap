@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 257,
+  "ambiguous_historical_role_record_count": 267,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-author-degree-scale-100k-s42",
@@ -66,6 +66,76 @@
     },
     {
       "evidence_id": "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "role_identity": null,
+      "role_name": "internal_train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1801,7 +1871,7 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 232,
+  "explicit_role_event_count": 246,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [],
   "identities": {
@@ -2014,6 +2084,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TC-gptrans-v5-audit-reference-100k-internal_development-labels_read",
         "selection_used": false,
         "semantics": "explicit",
@@ -2083,6 +2209,48 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
       },
       {
         "access_kind": "labels_read",
@@ -3468,6 +3636,8 @@
     "official_validation": [
       "pcqm-gptrans-author-degree-scale-100k-s42",
       "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
       "pcqm-gptrans-pair-prenorm-500k-partial-s42",
       "pcqm-gptrans-shortest-path-profile-122484011",
       "pcqm-gptrans-step-profile-122499114",
@@ -3522,6 +3692,8 @@
     "test_challenge": [
       "pcqm-gptrans-author-degree-scale-100k-s42",
       "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
       "pcqm-gptrans-pair-prenorm-500k-partial-s42",
       "pcqm-gptrans-shortest-path-profile-122484011",
       "pcqm-gptrans-step-profile-122499114",
@@ -3576,6 +3748,8 @@
     "test_dev": [
       "pcqm-gptrans-author-degree-scale-100k-s42",
       "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
       "pcqm-gptrans-pair-prenorm-500k-partial-s42",
       "pcqm-gptrans-shortest-path-profile-122484011",
       "pcqm-gptrans-step-profile-122499114",
@@ -3750,6 +3924,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
       },
       {
         "access_kind": "labels_read",
@@ -4762,6 +4992,62 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TC-gptrans-v5-audit-reference-100k-internal_development-labels_read",
         "selection_used": false,
         "semantics": "explicit",
@@ -4831,6 +5117,48 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-g1-ema999-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TC-gptrans-g1-path-mean-100k-s42-internal_train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
       },
       {
         "access_kind": "labels_read",
