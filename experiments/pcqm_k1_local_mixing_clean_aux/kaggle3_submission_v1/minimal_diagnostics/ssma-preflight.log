@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/kaggle/temp/k1_source/experiments/pcqm_k1_local_mixing_clean_aux/run_arm.py", line 46, in <module>
+    main()
+  File "/kaggle/temp/k1_source/experiments/pcqm_k1_local_mixing_clean_aux/run_arm.py", line 36, in main
+    runner(spec=ExperimentSpec.from_json(arguments.spec.read_text(encoding="utf-8")),
+  File "/kaggle/temp/k1_source/src/molgap/k1_screen_training.py", line 589, in run_screen_preflight
+    raise RuntimeError("SSMA exceeds synchronized optimizer-inclusive overhead gate")
+RuntimeError: SSMA exceeds synchronized optimizer-inclusive overhead gate

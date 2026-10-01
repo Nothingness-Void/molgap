@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle3-pair-002",
+  "category": "preflight",
+  "cost_event_id": "cost-TB-k1-reference-kaggle3-100k-s42-v2-measured-diagnostic-window",
+  "evidence_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/reference/acceptance.json",
+  "hardware": "Tesla T4; exclusive assigned diagnostic window only",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.002878811767777781
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.002878811767777781
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "k1-v4-ssma-pair-100k-s42-v2:reference:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-reference-kaggle3-100k-s42-v2"
+}

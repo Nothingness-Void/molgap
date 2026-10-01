@@ -1,0 +1,36 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-ca8355c6743e2c738a7138b6e3aa846f2c545faccc572b07e0eef0050d3c2484",
+  "finalized_at": "2026-10-01T05:34:05.537036+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_local_mixing_clean_aux/attribution_kaggle3_v1.md": "f69aefdbb025314c16ad30eea2c5c9742d13433f63a9e84afa8fd66c08f1fd37",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/pair_state.json": "a8fd49225bbd2c07476f7f1957e58c50a126d49aa9ef15b1aaab8a158be08dd9",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/reference/architecture_preflight.json": "53342310318505cbb70944bd757e8640db763c4429a39b63e745739d039e5a5a",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/reference/diagnostic_cost.json": "70521fe6656e6cfbca0e6896290d9489e0430c98ffb9fc24b6d682ee3ab77678",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/reference/runtime_certificate.json": "010af7decaf5839190ab67cf550a0fefec253f732b3f47628865e61f3036383d",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/reference/runtime_manifest.json": "95d0929f43150ada28ace12e13c5489d4b832393e3f64c436586c9e46d8fb148",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/reference/runtime_provenance.json": "5b33ecc81a169358918832e5d0496d8b077e4cc1d2a34b242370fbe6e409329e",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/remote-status-final.json": "043e158d40dc1d81e81040463c554a671abc15d89a40560f9967224f84249cde",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/submission-response.json": "63304ed18fd245759da9e5e088373ef526670c1699e56d35ae8ca78ac80aa326",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/reference/acceptance.json": "41712322b629d71cea7e567d501c766b185a3dd18b1264bda93b4e4d89d7c256",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/reference/decision.md": "ad225c294b452d09fd6b3bbcc78ce175ac06c7fa3a16b7968d435b7783b263e6"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TB-k1-reference-kaggle3-100k-s42-v2-measured-diagnostic-window.json": "7c66d161904e58abffab3de13056baf9f76605685ed3ebddacde6ddce0f2884e",
+    "prospective_snapshot.json": "8362302ecc556aa6bacbca1f3bcc84a5217b41e08ff2b63ea73beaa252d6e363",
+    "roles/role-TB-k1-reference-kaggle3-100k-s42-v2-calibration-train-labels.json": "e9780ed7dabf305888122bd4849784793d5cf42fbb045eadd87f8311fe6f0aa8",
+    "terminal_input.json": "20e3979884686f8479a38f840595c4dd310b39f23e7154962cd4debcb1594e35",
+    "trajectory.json": "ca541a85262f49e331cc1c8c27e7fdf00c35492161805d01084a21b4a42029cb",
+    "v5_evidence.json": "60c0119ea59e021f96542856d9a025bed7d26f8840222f010739edbf3966f3b2"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/reference/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "ca8355c6743e2c738a7138b6e3aa846f2c545faccc572b07e0eef0050d3c2484",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-reference-kaggle3-100k-s42-v2"
+}

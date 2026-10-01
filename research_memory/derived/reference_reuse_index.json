@@ -960,6 +960,27 @@
       "artifact_availability": [
         "retained_local_metadata_verified"
       ],
+      "comparison_status": "no_formal_accuracy_comparison",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
+      "role_use": {
+        "fixed50k_development": "unknown",
+        "official_train_prefix_0_100000": "labels_read",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_same_job_runtime_qualification_no_formal_training",
+      "source_envelope": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/reference/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "retained_local_metadata_verified"
+      ],
       "comparison_status": "not_run",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
@@ -998,6 +1019,27 @@
       "used_by_trajectory_ids": [
         "TB-pcqm-expert-oracle-feasibility-20260930"
       ]
+    },
+    {
+      "artifact_availability": [
+        "retained_local_metadata_verified"
+      ],
+      "comparison_status": "no_formal_accuracy_comparison",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
+      "role_use": {
+        "fixed50k_development": "unknown",
+        "official_train_prefix_0_100000": "labels_read",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_same_job_runtime_qualification_no_formal_training",
+      "source_envelope": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
     },
     {
       "artifact_availability": [

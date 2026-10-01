@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 248,
+  "ambiguous_historical_role_record_count": 258,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -1346,6 +1346,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
       "role_identity": null,
       "role_name": "development",
@@ -1403,6 +1438,41 @@
     },
     {
       "evidence_id": "pcqm-k1-residual-reconciliation",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
+      "evidence_id": "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1738,7 +1808,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 111,
+  "explicit_role_event_count": 113,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "fixed50k_development",
@@ -2408,6 +2478,20 @@
         "trajectory_id": "TB-gptrans-t-100k-v4-reference"
       },
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-reference-kaggle3-100k-s42-v2-calibration-train-labels",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-kaggle3-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-ssma-kaggle3-100k-s42-v2-calibration-train-labels",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v2"
+      },
+      {
         "access_kind": "training_membership",
         "role_event_id": "role-TC-k1-v4-100k-reference-s42-train",
         "selection_used": false,
@@ -2620,8 +2704,10 @@
       "pcqm-k1-full-convergence-20260919",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-pair-value-decoupled-100k-s42",
+      "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-residual-reconciliation",
+      "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-ssma-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-ssma-qualification-no-train-s42-v1",
       "pcqm-k1-v4-100k-reference-s42",
@@ -2678,8 +2764,10 @@
       "pcqm-k1-full-convergence-20260919",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-pair-value-decoupled-100k-s42",
+      "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-residual-reconciliation",
+      "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-ssma-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-ssma-qualification-no-train-s42-v1",
       "pcqm-k1-v4-100k-reference-s42",
@@ -3740,6 +3828,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-t-100k-v4-reference"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-reference-kaggle3-100k-s42-v2-calibration-train-labels",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-kaggle3-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-ssma-kaggle3-100k-s42-v2-calibration-train-labels",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v2"
       },
       {
         "access_kind": "training_membership",

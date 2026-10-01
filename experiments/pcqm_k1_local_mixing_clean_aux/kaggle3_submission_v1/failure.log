@@ -1,0 +1,18 @@
+[{"stream_name":"stdout","time":5.043650836,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.1/63.1 kB 2.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":5.193881698,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 25.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":5.230428694,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 3.7 MB/s eta 0:00:00\n"}
+,{"stream_name":"stderr","time":60.733202893,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":60.733286169,"data":"  File \"/kaggle/src/script.py\", line 78, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":60.733535392,"data":"    main()\n"}
+,{"stream_name":"stderr","time":60.733549459,"data":"  File \"/kaggle/src/script.py\", line 74, in main\n"}
+,{"stream_name":"stderr","time":60.7335552,"data":"    run_two_phase_pair(source_root=source_root, jobs=jobs, output=arguments.output)\n"}
+,{"stream_name":"stderr","time":60.733560306,"data":"  File \"/kaggle/temp/k1_source/src/molgap/kaggle_pair_runtime.py\", line 62, in run_two_phase_pair\n"}
+,{"stream_name":"stderr","time":60.733701359,"data":"    raise RuntimeError(f\"Paired {phase} worker failed; see retained logs\")\n"}
+,{"stream_name":"stderr","time":60.733725209,"data":"RuntimeError: Paired preflight worker failed; see retained logs\n"}
+,{"stream_name":"stderr","time":63.111491242,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":63.111529658,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":63.407571875,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":63.407601714,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":64.077050212,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":65.516293216,"data":"[NbConvertApp] Writing 289628 bytes to __results__.html\n"}
+]
