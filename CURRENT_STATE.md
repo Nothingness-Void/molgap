@@ -46,12 +46,26 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
 
-- **Chemical auxiliary:** the latest authenticated read-only Kaggle query in
-  the 2026-10-01 branch archival pass returned COMPLETE for the canonical kernel.
-  Submission_v4 binds the previously recorded kernel/version/source identity;
-  exact version/source and per-arm durable outputs still require reconciliation.
-  Keep the dedicated owner through acceptance; scheduler completion alone does
-  not establish a scientific outcome, replay qualification or promotion.
+- **Chemical auxiliary:** endpoint acceptance and independent terminal RML
+  closure are complete on the dedicated owner at `17b1987a`. The 2026-10-01
+  authenticated recheck returned COMPLETE; pulled entry bytes match the accepted
+  submission_v4 source. Both arms remain INCONCLUSIVE for strict qualification,
+  with nomination and replay exclusions preserved. Read the owning
+  [STATUS](C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap/experiments/pcqm_gptrans_chemical_aux/STATUS.md)
+  and decisions through [BRANCHES](BRANCHES.md#retained-checkout-map).
+  Review evidence integration and terminal Git routing; do not repeat acceptance
+  or treat branch-local closure as evidence already imported into desktop RML.
+  The separate early `T-gptrans-chemical-aux-feasibility` CPU DIAGNOSTIC still
+  has ACTIVE status: its fixture summary exists, but independently bound
+  terminal/acceptance/V5 inputs and raw test receipt are absent. Reconcile that
+  limited engineering record separately; do not borrow another trajectory's
+  training terminal or claim an active GPU job from this planning status.
+- **K1 V4 / SSMA:** the retained owner closed both arms NO_TRAIN at `b7f283b0`
+  after the frozen runtime cost gate blocked formal training. See
+  [STATUS](D:/w/k1-local-aux/experiments/pcqm_k1_local_mixing_clean_aux/STATUS.md).
+  The 2026-10-01 status recheck returned CLI 403, so present
+  scheduler state is UNKNOWN; the accepted historical terminal observation is
+  unchanged. Keep the owner for evidence integration and Git routing, not a retry.
 - **Centered logits:** scientifically closed; historical reference binding
   excludes strict causal replay, not a training retry trigger. See
   [STATUS](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md).

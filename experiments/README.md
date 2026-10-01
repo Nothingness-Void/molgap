@@ -14,6 +14,8 @@ Track C.
 | Question | Verdict | Directory |
 |---|---|---|
 | Can prediction-only routing realize expert Oracle headroom? | Accepted saved-prediction diagnostic; NO_TRAIN for a new prediction-only router, no model promotion | `pcqm_expert_oracle_feasibility/` |
+| Does clean-input chemical auxiliary supervision improve GPTrans Gap? | Owner endpoint acceptance and terminal RML complete; strict qualification INCONCLUSIVE and replay excluded. Evidence integration / Git routing remain under review | [Retained chemical owner](../BRANCHES.md#retained-checkout-map) |
+| Does bounded SSMA aggregation qualify beside original K1 V4? | Owner NO_TRAIN terminal closure complete; frozen runtime cost gate blocked both formal arms. Evidence integration / Git routing remain under review | [Retained K1 owner](../BRANCHES.md#retained-checkout-map) |
 | How is frozen K1 trained and packaged for the full role? | Exact exposure and resumable artifact contract; used by the full comparison | `pcqm_k1_full/` |
 | Which architecture family survives cheap elimination? | Track C complete; GPS9/GPS11-160 advance, TensorNet and EGNN eliminated | `qm9_architecture/` |
 | Can bounded pure-2D pair-state repairs beat PairGPS2D? | R3 validation selected persistent EdgeState; its one-time QM9 test remains sealed | `top20_architecture_qm9/` |
