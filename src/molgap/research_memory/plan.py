@@ -81,8 +81,8 @@ def validate_decision_state(state: dict[str, Any]) -> None:
         raise ValueError("reference unknown at decision time")
 
 
-def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
-         *, _snapshot: _PlanningSnapshot | None = None) -> dict[str, Any]:
+def _prepare_plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
+                  *, _snapshot: _PlanningSnapshot | None = None) -> dict[str, Any]:
     from .policy import load_policy_registry
 
     root = Path(repo_root).resolve()
@@ -188,13 +188,23 @@ def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
     required_costs.update(c for a in trajectory["actions"] for c in a["cost_event_ids"])
     if not required_costs <= cost_ids:
         raise ValueError("plan spec must supply its referenced prospective cost events")
+    return {"trajectory_id": trajectory["trajectory_id"], "destination": destination,
+            "files": files, "source_hashes": decision_state["source_hashes"]}
+
+
+def _publish_plan(repo_root: str | Path, prepared: dict) -> dict[str, Any]:
+    """Publish previously validated bytes, rechecking the frozen source set."""
+    root = Path(repo_root).resolve()
+    destination = prepared["destination"]
+    if destination.exists():
+        raise ValueError("plan output must be a new experiment directory")
     staging_root = repo_local_path(root, "research_memory/.staging")
     staging_root.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix="plan-", dir=staging_root))
     try:
-        for name, data in files.items():
+        for name, data in prepared["files"].items():
             atomic_write(staging / name, data)
-        for pointer, digest in decision_state["source_hashes"].items():
+        for pointer, digest in prepared["source_hashes"].items():
             if file_digest(resolve_repo_pointer(root, pointer)) != digest:
                 raise ValueError("decision source changed during planning")
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -203,8 +213,13 @@ def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
     finally:
         if staging.exists():
             shutil.rmtree(staging)
-    return {"trajectory_id": trajectory["trajectory_id"], "status": "PLANNED",
+    return {"trajectory_id": prepared["trajectory_id"], "status": "PLANNED",
             "path": destination.relative_to(root).as_posix()}
+
+
+def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
+         *, _snapshot: _PlanningSnapshot | None = None) -> dict[str, Any]:
+    return _publish_plan(repo_root, _prepare_plan(repo_root, spec, output, _snapshot=_snapshot))
 
 
 def plan_many(repo_root: str | Path, plans: list[dict[str, Any]]) -> dict[str, Any]:
@@ -320,10 +335,14 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]]) -> dict[str, A
         policies=policies,
         source_hashes=bindings,
     )
+    # Deep schema/evidence/action/cost checks for every arm precede all writes.
+    # Partial publication now means an actual publish failure, not a bad plan.
+    validated = [_prepare_plan(root, spec, output, _snapshot=snapshot)
+                 for spec, output, _ in prepared]
     results = []
-    for index, (spec, output, _) in enumerate(prepared):
+    for index, item in enumerate(validated):
         try:
-            results.append(plan(root, spec, output, _snapshot=snapshot))
+            results.append(_publish_plan(root, item))
         except Exception as exc:
             raise PlanBatchError(index, len(prepared), results, exc) from exc
     return {

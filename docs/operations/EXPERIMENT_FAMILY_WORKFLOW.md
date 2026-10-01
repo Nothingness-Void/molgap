@@ -17,13 +17,20 @@ and scientific decisions remain with their existing owners.
 | `close_verified_outputs` | Inspect every arm before existing terminal/RML closure |
 | Kaggle `retrieve_family_outputs` | Stream only manifest-bound files through the owning account |
 
-Static profiles: `k1-v1` for `neural_atom_k1/1`, `gptrans-v1` for `gptrans_t/1`.
-K1 requires scheduler state; GPTrans requires EMA state. Both require model,
-optimizer, Python/NumPy/Torch/CUDA RNG and the acknowledged sampler cursor.
-These profiles cover the **new output protocol**. Existing historical runners
-are not automatically migrated. Keep their frozen payloads and acceptance
-loaders intact. Missing historical counters and wrong account labels remain
-missing/wrong, not repaired by relabeling.
+Static profiles: `k1-screen-v1` for `neural_atom_k1/2`, `k1-v1` for
+`neural_atom_k1/1`, and `gptrans-v1` for `gptrans_t/1`. `k1-screen-v1` is a
+separate output adapter; it does not reinterpret the retained `k1-v1` recipe
+or manifest contract. The screen profile adds the registered K1 family trainer
+to this protocol. K1 resume state requires model, optimizer, scheduler and RNG
+state; GPTrans requires model, EMA, optimizer and RNG state. Both retain the
+acknowledged sampler cursor. GPTrans screen output normalizes the existing V4
+trainer's selected model, predictions, trace and resume checkpoint into the
+shared manifest after checking source, variant, exposure and hashes. It records
+an optional `runtime_certificate_id` in runtime metadata and retains
+`runtime_certificate.json`. These profiles cover the **new output protocol**;
+historical runners are not automatically migrated. Keep their frozen payloads
+and acceptance loaders intact. Missing historical counters and wrong account
+labels remain missing/wrong, not repaired by relabeling.
 
 ## Integrate once in an owning trainer
 
@@ -56,12 +63,31 @@ Read [the addon guide](EXPERIMENT_ADDON_GUIDE.md), then add event hooks:
    DataLoader prefetch. `tensor_safe_rng_state` translates the existing capture
    helper's NumPy array to primitive data for `weights_only=True` loading.
    The owning resume loader can pass that state to `restore_rng_state`.
-7. Call `complete(runtime=..., hardware=...)`. Runtime keys are exactly
-   `platform`, `account`, `precision`, `source_commit`, `source_archive_sha256`.
-   The hook freezes a manifest and inspects outputs. Cost is measured session
-   **process wall seconds**; device allocation/busy seconds remain null. After
-   resume it measures only that process segment. Retain other attempts' costs
-   separately; never label this value complete-trajectory GPU cost.
+7. Call `complete(runtime=..., hardware=..., observed_costs=...)`. Required
+   runtime keys are `platform`, `account`, `precision`, `source_commit`, and
+   `source_archive_sha256`; optional `runtime_certificate_id` is a SHA256
+   identity. Without `observed_costs`, the hook records measured session
+   **process wall seconds** and missing allocated-device seconds. A family
+   trainer may pass separately observed native costs. After resume, report only
+   the measured process segment and retain other attempts' costs separately;
+   never label one segment a complete-trajectory GPU cost.
+
+The `output_manifest.json` `costs` array records native observations. Each
+entry requires `metric`, `unit`, `value`, `status`, `semantics`, and `hardware`;
+optional `scope` and `reason` retain how the measurement applies. Supported
+metrics are `wall_seconds` / `seconds` / `process_wall` and
+`device_seconds` / `seconds` / `allocated_device` or `device_busy`. Status is
+`measured`, `estimated`, or `missing`; a missing value stays null and its reason
+is retained. K1's training invocation records measured process wall and
+allocated-device seconds with an explicit scope. GPTrans `run_screen_arm`
+records current-invocation process wall and allocated-device seconds on a fresh
+invocation; its scope excludes bootstrap, queue time and prior history. After a
+resume, allocated-device cost remains missing when prior allocation segments
+have no retained ledger. Conservative normalization of older observations also
+keeps unavailable allocated-device cost missing. These are invocation costs,
+not a complete multi-attempt trajectory total or a device-busy measurement.
+Canonical RML cost conversion retains its existing
+[cost owner](../../src/molgap/research_memory/cost.py).
 
 Pretraining/downstream use separate `StageRecorder` identities and semantics.
 This first inspector covers completed downstream epochs. It does not qualify
@@ -123,6 +149,11 @@ Existing comparison/reference validators apply; row/target/prediction identities
 must agree. This availability check does not prove trainer execution or causal
 qualification. Missing strict reference blocks rather than triggers retraining.
 
+The modular K1 and GPTrans candidate workflows pin their retained family
+reference through this plan by default. Add a reference training arm only when
+the owning contract explicitly justifies retraining; preparation never silently
+recreates a reference.
+
 `outputs` maps every arm to `{output_dir, expected}` under the selected repo.
 `build_verified_terminal_descriptor` accepts those inputs and existing per-arm
 `locations`: `trajectory_id`, `run_id`, `trajectory`, `terminal`, `trace`.
@@ -137,6 +168,10 @@ two independently qualified replay entries are still required for pair readiness
 
 ## Retrieval and a new family
 
+Executable family registration and the same-family addon boundary are owned by
+the [modular workflow](EXPERIMENT_WORKFLOW.md). This section owns the output
+profile and event interface.
+
 The platform skill first reconciles the job/source/version and retrieves/pins
 the small manifest. Kaggle's adapter receives an authenticated owning account,
 receipt context, that manifest/path/hash and a dedicated destination. It lists
@@ -145,9 +180,10 @@ Missing files, wrong accounts and hash conflicts fail closed. A diagnostic log
 requires a separate justified action. The latest-session API cannot select a
 version; matching a slug alone never proves an attempt.
 
-Add a genuine shared model/trainer, reviewed Spec contract and one static
-`ArtifactAdapter` entry for a new compatible family. Hook this session into its
-events and test the family-specific state/weight behavior. Genuine differences
-in sampling, selection, roles, data or phase semantics need a reviewed adapter
-extension. A constructor, arbitrary import string or schema test does not make
-an unsupported trainer executable or scientifically qualified.
+For a new compatible family, register the output `ArtifactAdapter` with its
+family/version and resume requirements, then add the family's event hooks to
+its shared trainer. Pair it with the static execution and package-source
+registrations described in the modular workflow. Genuine differences in
+sampling, selection, roles, data or phase semantics need a reviewed adapter
+extension. A constructor, arbitrary import string or synthetic schema/output
+test does not make a trainer GPU-qualified or scientifically accepted.

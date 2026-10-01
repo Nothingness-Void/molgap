@@ -47,17 +47,32 @@ def _parser() -> argparse.ArgumentParser:
     commands = parser.add_subparsers(dest="command", required=True)
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
                  "launch-receipt", "terminal", "plan-prospective", "check-release",
-                 "check-acceptance", "inspect-output", "accept-terminal"):
+                 "check-acceptance", "inspect-output", "accept-terminal",
+                 "prepare-workflow", "accept-workflow", "build-terminal"):
         command = commands.add_parser(name)
         command.add_argument("--spec", required=True, type=_local)
-        if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal"}:
+        if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal", "prepare-workflow", "accept-workflow"}:
             command.add_argument("--repo-root", required=True, type=_local)
-        if name in {"package", "preflight", "run-diagnostic"}:
+        if name in {"package", "preflight", "run-diagnostic", "prepare-workflow"}:
             command.add_argument("--output", required=True, type=_local)
-        if name in {"preflight", "launch-receipt", "check-release", "inspect-output", "accept-terminal"}:
+        if name in {"preflight", "launch-receipt", "check-release", "inspect-output", "accept-terminal", "accept-workflow", "build-terminal"}:
             command.add_argument("--package", required=True, type=_local)
             command.add_argument("--expected-package-identity", required=True)
-        if name == "check-acceptance":
+        if name == "build-terminal":
+            command.add_argument("--receipt", required=True, type=_local)
+            source = command.add_mutually_exclusive_group(required=True)
+            source.add_argument("--observations", type=_local)
+            source.add_argument("--execution-state", type=_local)
+            command.add_argument("--locations", required=True, type=_local)
+            command.add_argument("--output", required=True, type=_local)
+        elif name == "prepare-workflow":
+            command.add_argument("--plan", required=True, type=_local)
+        elif name == "accept-workflow":
+            command.add_argument("--receipt", required=True, type=_local)
+            command.add_argument("--outputs", required=True, type=_local)
+            command.add_argument("--locations", required=True, type=_local)
+            command.add_argument("--execute", action="store_true")
+        elif name == "check-acceptance":
             command.add_argument("--plan", required=True, type=_local)
         elif name in {"inspect-output", "accept-terminal"}:
             command.add_argument("--receipt", required=True, type=_local)
@@ -102,6 +117,30 @@ def _dispatch(args) -> tuple[dict, int]:
         raise ValueError("Expected canonical ExperimentSpec JSON bytes (no newline)")
     if args.command == "validate-spec":
         return {"spec_identity": spec.identity, "spec": spec.to_dict()}, 0
+    if args.command == "build-terminal":
+        from .experiment_family_workflow import (RunContext, _json, build_incomplete_terminal_descriptor,
+                                                 incomplete_observations_from_execution)
+        from .experiment_launch import publish_immutable_bytes
+        contexts = {arm["arm_id"]: RunContext.from_launch(spec, args.receipt, args.package,
+            expected_package_identity=args.expected_package_identity, arm_id=arm["arm_id"])
+            for arm in spec.to_dict()["arms"]}
+        observations = (_json(args.observations) if args.observations else
+                        incomplete_observations_from_execution(spec, _json(args.execution_state)))
+        descriptor = build_incomplete_terminal_descriptor(spec, contexts=contexts,
+            observations=observations, locations=_json(args.locations))
+        publish_immutable_bytes(args.output, descriptor.to_json().encode())
+        return {"status": "DESCRIPTOR_BUILT", "descriptor": descriptor.to_dict(), "executed": False}, 0
+    if args.command in {"prepare-workflow", "accept-workflow"}:
+        from .experiment_workflow import prepare_workflow, accept_workflow
+        from .experiment_family_workflow import _json
+        if args.command == "prepare-workflow":
+            result = prepare_workflow(spec, args.repo_root, _json(args.plan), args.output)
+            return result, 0 if result["status"] == "PREPARED_FOR_PLATFORM" else 1
+        result = accept_workflow(spec, args.repo_root, _json(args.outputs),
+            receipt_path=args.receipt, package_dir=args.package,
+            expected_package_identity=args.expected_package_identity,
+            locations=_json(args.locations), execute=args.execute)
+        return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
     if args.command in {"check-acceptance", "inspect-output", "accept-terminal"}:
         from .experiment_family_workflow import (
             RunContext, _json, check_acceptance_plan, inspect_output, close_verified_outputs,

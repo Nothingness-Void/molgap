@@ -56,6 +56,12 @@ FAMILIES = MappingProxyType({
         "seed42-global-randperm-by-pass-v1", "full-train-mean-sample-std",
         "ogb_edge_state_structural_gps9",
     ),
+    ("neural_atom_k1", "2"): FamilyContract(
+        "neural_atom_k1", "2", "molgap.k1_screen_training", "pcqm_k1_v4_100k",
+        "ogb-atom9-bond3-rwse16-v1", ("train", "development"),
+        "seed42-python-epoch-shuffle-v4", "fixed-train-100k-mean-sample-std",
+        "ogb_edge_state_structural_gps9",
+    ),
 })
 
 
@@ -84,6 +90,9 @@ ADDONS = MappingProxyType({
     },
     ("k1_pair_value", "1"): AddonContract(
         "neural_atom_k1", "pair-token-replacement", "molgap.k1_pair_token",
+    ),
+    ("k1_joint_aggregation", "1"): AddonContract(
+        "neural_atom_k1", "k1-local-aggregation", "molgap.k1_joint_aggregation",
     ),
 })
 
@@ -219,6 +228,12 @@ def _arm(arm: dict) -> None:
                     f"[{EDGE_STATE_MIN_LAYERS}, {EDGE_STATE_MAX_LAYERS}] "
                     f"except {EDGE_STATE_BASE_LAYERS}"
                 )
+        elif addon["name"] == "k1_joint_aggregation":
+            if family["version"] != "2" or len(arm["addons"]) != 1:
+                raise ValueError("K1 screen extension requires family/version 2 and one extension")
+            if addon["config"] != {"layer": 6, "latent_channels": 64, "kappa": 4,
+                                    "seed": 42, "degree_policy": "original-sum-above-four"}:
+                raise ValueError("K1 extension differs from the bounded frozen configuration")
         else:
             _object(addon["config"], "", "addon.config")
         _digest(addon["source_sha256"], "addon.source_sha256")

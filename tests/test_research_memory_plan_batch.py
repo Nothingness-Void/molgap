@@ -294,22 +294,43 @@ def test_single_plan_still_discovers_each_time(planning_root):
     assert str(Path("experiments/arm-a/trajectory.json")) in second_state["source_hashes"]
 
 
-def test_second_arm_failure_reports_partial_publication_without_rollback(planning_root):
+def test_bad_second_arm_is_rejected_before_any_publication(planning_root, monkeypatch):
     root, discovery_calls = planning_root
     second = _item("b")
     second["spec"]["costs"][0]["measurement"]["device_hours"] = {
         "value": 1.0, "status": "measured",
     }
-    with pytest.raises(plan_module.PlanBatchError, match="item 2/2") as caught:
+    publish_calls = []
+    monkeypatch.setattr(plan_module, "_publish_plan",
+                        lambda *args, **kwargs: publish_calls.append((args, kwargs)))
+    with pytest.raises(ValueError, match="prospective cost cannot be measured"):
         plan_module.plan_many(root, [_item("a"), second])
-    error = caught.value
-    assert error.failed_index == 1
-    assert error.completed_results == (
-        {"trajectory_id": "T-a", "status": "PLANNED", "path": "experiments/arm-a"},
-    )
-    assert isinstance(error.__cause__, ValueError)
-    assert "prospective cost cannot be measured" in str(error.__cause__)
-    assert (root / "experiments/arm-a/trajectory.json").is_file()
-    assert (root / "experiments/arm-a/costs/C-a.json").is_file()
+    assert publish_calls == []
+    assert not (root / "experiments/arm-a").exists()
     assert not (root / "experiments/arm-b").exists()
     assert len(discovery_calls) == 1
+
+
+def test_publish_failure_preserves_only_the_completed_arm(planning_root, monkeypatch):
+    root, _ = planning_root
+    publish = plan_module._publish_plan
+    calls = 0
+
+    def fail_second_publish(repo_root, prepared):
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            raise OSError("synthetic publication failure")
+        return publish(repo_root, prepared)
+
+    monkeypatch.setattr(plan_module, "_publish_plan", fail_second_publish)
+    with pytest.raises(plan_module.PlanBatchError, match="item 2/2") as caught:
+        plan_module.plan_many(root, [_item("a"), _item("b")])
+
+    assert caught.value.failed_index == 1
+    assert caught.value.completed_results == (
+        {"trajectory_id": "T-a", "status": "PLANNED", "path": "experiments/arm-a"},
+    )
+    assert isinstance(caught.value.__cause__, OSError)
+    assert (root / "experiments/arm-a/trajectory.json").is_file()
+    assert not (root / "experiments/arm-b").exists()

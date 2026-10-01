@@ -16,13 +16,13 @@ The module is a new unified local entry point, not a complete migration. Existin
 scripts remain available as family/platform-specific entry points and are not
 deleted or redirected. No package-level export or installation entry point is
 required for `python -m molgap.experiment_cli` in an installed checkout.
-For new family/platform work, start with the short [addon guide](EXPERIMENT_ADDON_GUIDE.md);
-this CLI remains a shared local core, not a trainer or submitter.
-Its [operation-oriented reuse map](EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
-locates actual GPTrans/EdgeState trainers, checkpoint/inference owners,
-saved-prediction analysis, and acceptance/V5/RML. `run-diagnostic` is not
-frozen-checkpoint inference. Platform submission and retrieval stay in the
-applicable workload skill and existing adapter.
+For the registered prepare-to-accept lifecycle, start with the
+[modular workflow](EXPERIMENT_WORKFLOW.md), then use the short
+[addon guide](EXPERIMENT_ADDON_GUIDE.md#pick-the-operation) for owners. The CLI stages local
+identity/evidence and the frozen execution payload; Kaggle executes it only
+after the platform skill and existing adapter submit the kernel. This CLI does
+not submit. `run-diagnostic` is not frozen-checkpoint inference. Platform
+submission and retrieval stay in the applicable workload skill and adapter.
 For producer output inspection and guarded terminal closure, see the
 [family workflow](EXPERIMENT_FAMILY_WORKFLOW.md). Its additional local commands
 are `check-acceptance`, `inspect-output`, and `accept-terminal`, retaining the
@@ -60,6 +60,9 @@ import, training shortcut, platform submit command or authority override exists.
 The following templates require caller-owned real inputs and fresh output paths.
 Replace the variables with independently verified identities and authorized
 local paths. They are not an instruction to run an experiment or access a role.
+For a registered training family, use `prepare-workflow` and `accept-workflow`
+below instead of composing a per-experiment launcher from these lower-level
+commands.
 
 ```powershell
 $spec = 'D:\local-inputs\experiment_spec_v2.json'
@@ -77,6 +80,92 @@ $shardManifestSha = '<independently-pinned-manifest-sha256>'
 .\.venv\Scripts\python.exe -m molgap.experiment_cli run-diagnostic --spec $spec --output D:\local-work\diagnostic-new --device 0 1 --worker adapter_probe
 .\.venv\Scripts\python.exe -m molgap.experiment_cli launch-receipt --spec $spec --package $package --expected-package-identity $packageIdentity --output-dir D:\local-work\receipts
 .\.venv\Scripts\python.exe -m molgap.experiment_cli terminal --spec $spec --descriptor D:\local-inputs\terminal_descriptor.json --repo-root $repoRoot
+```
+
+## Registered workflow commands
+
+The end-to-end workflow owns the preparation plan and concise recipe. Its
+canonical plan format and example are in
+[EXPERIMENT_WORKFLOW.md](EXPERIMENT_WORKFLOW.md). The command accepts a Spec v2
+and a plan with the exact top-level keys `format`, `spec_identity`,
+`source_files`, `arms`, `acceptance_plan`, and `kaggle`. Each arm has
+`arm_id`, `device`, `recipe`, and `initial_state`; Kaggle metadata has
+`account`, `kernel`, `title`, `datasets`, `source_dataset`, and `accelerator`.
+The registered family validator checks each pinned recipe; `check_release_inputs`
+checks packaged source, required modules, initialization and staged inputs
+before prospective publication. After publication, the platform preparation
+adapter freezes the launch config/entrypoint and binds the final release report.
+
+```powershell
+$workflowPlan = 'D:\local-inputs\workflow_plan.json'
+$freshOutput = 'D:\local-work\workflow-attempt-01'
+$outputs = 'D:\local-inputs\workflow_outputs.json'
+$locations = 'D:\local-inputs\workflow_locations.json'
+$receipt = 'D:\local-inputs\reconciled_launch_receipt.json'
+
+$prepareJson = & .\.venv\Scripts\python.exe -m molgap.experiment_cli prepare-workflow --spec $spec --repo-root $repoRoot --plan $workflowPlan --output $freshOutput
+$prepared = $prepareJson | ConvertFrom-Json
+$packageIdentity = $prepared.package_identity
+.\.venv\Scripts\python.exe -m molgap.experiment_cli accept-workflow --spec $spec --repo-root $repoRoot --package $freshOutput\package --expected-package-identity $packageIdentity --receipt $receipt --outputs $outputs --locations $locations
+.\.venv\Scripts\python.exe -m molgap.experiment_cli accept-workflow --spec $spec --repo-root $repoRoot --package $freshOutput\package --expected-package-identity $packageIdentity --receipt $receipt --outputs $outputs --locations $locations --execute
+```
+
+`prepare-workflow` requires a fresh `--output` directory. It returns
+`PREPARED_FOR_PLATFORM` only after local package, family-recipe, acceptance,
+release and final workflow-binding gates pass and prospective records are
+published. The JSON response includes `package_identity`; use that value for
+the later acceptance command. It creates `package/`, `source_dataset/`,
+`kernel/`, `release_report.json`, and `workflow_report.json`; it does not
+contact Kaggle or submit. The final report binds the launch config, dataset
+mounts, T4/device shape, kernel metadata, prospective bytes and entrypoint hash.
+Pass this `release_report.json` to the platform adapter, which fails closed on
+a missing or stale report and rechecks it before POST. A partial prospective
+publication requires reconciliation before retry.
+
+`accept-workflow` requires `--package`, `--expected-package-identity`, a
+reconciled `--receipt`, `--outputs`, and `--locations`. `outputs.json` maps
+every Spec arm to exactly `output_dir` and `expected`; `expected` contains
+`epochs`, `optimizer_steps`, `sample_presentations`, `development_rows`,
+`source_idx_sha256`, `target_sha256`, and `precision`, matching the frozen
+family recipe. `locations.json` maps every arm to existing `trajectory_id`,
+`run_id`, `trajectory`, `terminal`, and `trace` locations. Without
+`--execute`, the command inspects all arms and returns a mechanical descriptor
+without terminal/RML writes. `--execute` delegates to the existing per-arm
+terminal pipeline; it does not set scientific acceptance or replay readiness.
+
+Use `accept-workflow` for completed outputs. For an all-incomplete failed,
+cancelled or interrupted pair, `build-terminal` writes the existing descriptor
+to `--output`; it never executes terminal closure or writes RML. It requires
+`--receipt`, `--package`, `--expected-package-identity`, `--locations`,
+`--output`, and exactly one of `--observations` or `--execution-state`.
+
+Prefer `--execution-state` with the runtime's retained `pair_state.json`. It
+requires format `molgap-kaggle-two-phase-pair-v2`, the exact Spec identity,
+top-level `status: failed`, and every arm with a retained `training_started`,
+`terminal_status`, `exit_reason` and `worker_wall_seconds`. The runtime saves
+`training_started` before spawning each formal training worker. If training
+never started, progress is observed as zero; once it started, unretained epoch,
+step and sample counters stay unknown. The helper maps retained worker time and
+facts into the descriptor; it does not create scientific role, decision or
+acceptance records.
+
+With `--observations`, supply every arm as an object with required `status` and
+`exit_reason` (`failed`, `cancelled`, or `interrupted`) and optional observed
+`progress` (`epoch`, `step`, `samples`), `costs`, `artifacts` (`metrics`,
+`predictions`, `checkpoint`, `trace`), and `missing_evidence`. `locations.json`
+maps every arm to existing `trajectory_id`, `run_id`, `trajectory`, and
+`terminal`, with optional `trace`. Unknown counters/costs/artifacts remain
+missing. A pair state containing any completed or unknown arm fails closed;
+use the existing per-arm output inspection and terminal path so completed-arm
+evidence is retained. Descriptor schema and later path/evidence validation
+remain with [`experiment_terminal.py`](../../src/molgap/experiment_terminal.py).
+
+Example using retained Kaggle execution state:
+
+```powershell
+$pairState = 'D:\local-work\attempt-01\pair_state.json'
+$incompleteDescriptor = 'D:\local-work\attempt-01\terminal_descriptor.json'
+.\.venv\Scripts\python.exe -m molgap.experiment_cli build-terminal --spec $spec --package $freshOutput\package --expected-package-identity $packageIdentity --receipt $receipt --execution-state $pairState --locations $locations --output $incompleteDescriptor
 ```
 
 - `validate-spec` returns the canonical declaration and its identity. This is
@@ -133,44 +222,14 @@ $shardManifestSha = '<independently-pinned-manifest-sha256>'
   replay or scientific authority; all existing contract gates remain in force.
   Validation/translation alone is not an acceptance dry run.
 
-## Desktop Kaggle GPTrans Paired Route
+## Registered Kaggle training
 
-For a desktop-owned GPTrans two-arm screen, use the owning experiment's contract
-and the [addon handoff sequence](EXPERIMENT_ADDON_GUIDE.md). The submitted
-Kaggle1 paired example is under
-`experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/`: its `run_pair.py`
-bootstraps the frozen source and delegates training to the existing
-`experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py` profile. The shared
-model implementation is `src/molgap/pcqm_gptrans_v4.py`. Actual Kaggle
-submission uses `platforms/kaggle/push_kernel_with_accelerator.py`, outside
-this CLI. `launch-receipt` records a local observation; it does not push a
-kernel.
-
-Before freezing the source commit or publishing prospective trajectories,
-verify the Kaggle dataset metadata and the files the kernel will actually
-see. In the paired example, the staged source directory could not be relied
-on as a mounted directory: `-r skip` omitted it and `-r zip` mounted an
-archive. The frozen entry point therefore opens the explicitly mounted
-`source_payload.bin`. Check slug/title length and archive bootstrap locally
-before publication. Changing that entry point after `plan-prospective` changes
-source identity and requires reconciling the old unsubmitted plan and
-planning again from the new commit.
-
-After a real remote completion, use the existing per-arm acceptance and RML
-pipeline. A two-arm launch yields two replay-ready entries only when each arm
-independently satisfies its V5 artifact, role, cost, trace, and replay gates.
-The paired launch receipt and a queue state do not establish either result.
-For a newly planned pair with explicit `prospective.same_run_replay`, `plan-prospective`
-freezes the peer binding in both trajectories. Terminal execution verifies that
-the observed arms belong to one platform run and closes the reference first.
-Each replay-eligible terminal package must retain `same_run_observation`
-(Spec/logical run, platform run/attempt, source commit/package), matching the
-terminal descriptor and the other arm's accepted terminal input.
-Supply explicit calibrated trace manifests: the reference names its own accepted
-evidence ID and the candidate names that same ID. The candidate also needs a
-strict V5 comparison-readiness record and its verified reference bundle after
-the control arm has been accepted. The synthesized default manifest remains
-replay-ineligible. Older terminal records are not upgraded by this workflow.
+Use the [modular workflow](EXPERIMENT_WORKFLOW.md) for the frozen source
+package, standard `run_experiment.py` bootstrap, all-arm preflight barrier and
+mechanical output acceptance. `platforms/kaggle/README.md` and the
+`kaggle-molgap-workloads` skill own publication, submission, authoritative run
+reconciliation and retrieval. Older experiment-specific launchers remain tied
+to their owning contracts; they are not the generic extension path.
 
 ## Structural Examples and Limitations
 
@@ -185,17 +244,19 @@ READY evidence or replay-ready specs. The prospective fields are declarations,
 not canonical trajectory records. No experiment directory, trajectory or
 evidence package is created for either example.
 
-Platform submission is unimplemented within this shared CLI
-(`SUBMIT_UNIMPLEMENTED`); family/platform-specific adapters remain available.
+This CLI has no platform submit command (`SUBMIT_UNIMPLEMENTED`).
+`prepare-workflow` stages the registered Kaggle payload; the platform skill and
+existing adapter publish and submit it. Family/platform-specific legacy
+adapters remain available for their owning contracts.
 K1 and EdgeState now have selected-topology-shard CPU loader-only preflight
 under the accepted fixed manifests; the result is explicitly partial, not a
 full-role or model check. Their model smoke remains unsupported. See
 [EXPERIMENT_PREFLIGHT.md](EXPERIMENT_PREFLIGHT.md) for the family-specific
 shard selection and required packaged modules. EdgeState's recipe is model-only; a platform-specific trainer
 addon must freeze and enforce its own executable training contract.
-No credentials, monitoring daemon, remote APIs, GPU canary, official role access,
-training launch or production promotion is provided. Local CLI success cannot
-release any of those operations.
+No credentials, monitoring daemon, remote API client, GPU qualification,
+official role access or production promotion is provided. Local CLI success
+cannot release any of those operations.
 
 ## Local Verification
 
@@ -210,4 +271,6 @@ $env:PYTHONPATH = (Resolve-Path src).Path
 .\.venv\Scripts\python.exe -m pytest tests/test_experiment_spec.py tests/test_experiment_package.py tests/test_experiment_launch.py tests/test_experiment_terminal.py -q
 ```
 
-These local tests do not confer formal training authorization.
+Workflow and training-adapter fixtures are synthetic; they establish schema and
+mechanical behavior only. No GPU training qualification is claimed. Local tests
+do not confer formal training authorization.

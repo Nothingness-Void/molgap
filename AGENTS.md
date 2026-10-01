@@ -6,10 +6,12 @@ One fact has one authoritative owner: follow pointers rather than copy facts.
 
 ## Reuse First
 
-Start with the [operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
-and [local CLI](docs/operations/EXPERIMENT_CLI.md) before adding plumbing.
-Read both before a desktop multi-arm runner, source package or prospective record.
-The CLI owns local identity/evidence flow, not training or remote submission.
+Start with the [modular experiment workflow](docs/operations/EXPERIMENT_WORKFLOW.md),
+then use its [reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md) and
+[local CLI](docs/operations/EXPERIMENT_CLI.md) before adding plumbing. Read them
+before a desktop multi-arm runner, source package or prospective record. The
+workflow and CLI stage local identity/evidence and registered training; the
+platform skill owns remote submission and reconciliation.
 Reuse family trainers, checkpoint/inference owners, saved-prediction analysis,
 acceptance and V5/RML helpers; inspect the callable and its nearest caller/test.
 Platform operations stay in `kaggle-molgap-workloads`,

@@ -9,12 +9,13 @@ Track A/B/C ownership belongs in `TRACKS.md`.
 
 ## Reuse Entry Point
 
-Choose an operation in the [addon reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
-before creating a runner or helper. It routes actual GPTrans/EdgeState trainers,
-checkpoint/inference, saved-prediction analysis, and acceptance/V5/RML to their
-owners. The [local CLI](docs/operations/EXPERIMENT_CLI.md) supplies identity and
-evidence plumbing, not a trainer or submitter. The package map below is a code
-ownership index, not execution authority or a copy of the scientific contracts.
+Start with the [modular experiment workflow](docs/operations/EXPERIMENT_WORKFLOW.md)
+for preparation, family dispatch, platform handoff and acceptance. The
+[addon reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation) routes existing
+family trainers, checkpoint/inference, saved-prediction analysis and RML
+owners. The [local CLI](docs/operations/EXPERIMENT_CLI.md) exposes those local
+stages; it does not submit to a platform. The package map below is a code
+ownership index, not execution authority or a copy of scientific contracts.
 
 ## Boundary
 
@@ -29,6 +30,10 @@ ownership index, not execution authority or a copy of the scientific contracts.
 
 | Module | Owns | Edit when |
 |---|---|---|
+| `experiment_workflow.py`, `kaggle_workflow.py` | Local lifecycle and static platform dispatch; Kaggle plan validation, staging, freezing and final release binding | Changing local orchestration or the registered Kaggle preparation adapter; only Kaggle is registered here |
+| `experiment_execution.py`, `experiment_training_worker.py` | Static family/addon/mode dispatch and fixed per-arm training subprocess | Registering an executable family/mode or changing worker bindings |
+| `experiment_source_inventory.py` | Reviewed shared bootstrap paths; family serialized-module dependencies live in `experiment_execution.py` | Adding/removing a reviewed packaged dependency |
+| `kaggle_pair_runtime.py`, `platforms/kaggle/run_experiment.py` | Frozen Kaggle bootstrap and all-arm preflight barrier before training | Changing the generic Kaggle launch and phase barrier |
 | `experiment_family_workflow.py`, `experiment_family_artifacts.py` | Shared producer events, frozen-recipe output inspection and bridge to existing terminal closure | Adding a compatible family output profile; capability limits are in `docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md` |
 | `experiment_launch.py` | Verified local launch receipts and immutable byte publication | Changing launch binding or the shared atomic no-overwrite publisher |
 | `constants.py` | Repository paths, hyperparameters, model registry | Adding or retargeting an explicit registry entry |

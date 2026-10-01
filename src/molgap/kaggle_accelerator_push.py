@@ -19,6 +19,8 @@ def _observed_identity(result: dict, owner: str) -> dict:
     import re
 
     ref, url = result.get("ref") or None, result.get("url") or None
+    if ref and re.fullmatch(r"/code/[\w-]+/[\w-]+", ref):
+        ref = ref.removeprefix("/code/")
     url_ref, script_version = None, None
     conflicts = []
     if url:
@@ -60,7 +62,8 @@ def _verify_release_report(path: Path, code_path: Path) -> dict:
     observed = check_release_inputs(spec, package, expected_package_identity=report["package_identity"],
         recipe_files=inputs["recipe_files"], initial_states=inputs["initial_states"],
         required_modules=inputs["required_modules"], pickle_inputs=inputs["pickle_inputs"],
-        entry_script=inputs["entry_script"], input_root=inputs["input_root"])
+        entry_script=inputs["entry_script"], input_root=inputs["input_root"],
+        launch_config=inputs.get("launch_config"), kernel_metadata=inputs.get("kernel_metadata"))
     if observed != report or observed["errors"]:
         raise ValueError("Release inputs changed after verification")
     if report["checks"].get("entry_script:kernel") != sha256_file(code_path):
@@ -91,7 +94,17 @@ def push_kernel_with_accelerator(
         raise FileNotFoundError(code_path)
     if not code_path.resolve().is_relative_to(package):
         raise ValueError("Kernel entry script is outside the package")
+    if "EXPECTED_LAUNCH_SHA256" in code_path.read_text(encoding="utf-8") and release_report_path is None:
+        raise ValueError("Prepared workflow entry requires its verified release report")
     release_binding = _verify_release_report(release_report_path, code_path) if release_report_path else None
+    if release_report_path:
+        report_inputs = json.loads(release_report_path.read_text(encoding="utf-8"))["inputs"]
+        if report_inputs.get("kernel_metadata") and Path(report_inputs["kernel_metadata"]).resolve() != (package / "kernel-metadata.json").resolve():
+            raise ValueError("Submission metadata differs from the prepared workflow metadata")
+        if report_inputs.get("launch_config"):
+            launch = json.loads(Path(report_inputs["launch_config"]).read_text(encoding="utf-8"))
+            if launch["accelerator"] != accelerator:
+                raise ValueError("Submission accelerator differs from the prepared workflow")
     credentials = json.loads(credential_path.read_text(encoding="utf-8"))
     username = str(credentials.get("username", ""))
     key = str(credentials.get("key", ""))
