@@ -16,6 +16,25 @@ class _Response:
         return {"error": None, "invalidDatasetSources": []}
 
 
+def test_observed_identity_normalizes_returned_code_path():
+    result = kaggle_accelerator_push._observed_identity({
+        "ref": "/code/nvoid912/example", "versionNumber": 1,
+        "url": "https://www.kaggle.com/code/nvoid912/example",
+    }, "nvoid912")
+    assert result["kernel"] == "nvoid912/example"
+    assert result["identity_conflicts"] == []
+    assert result["version_number"] == 1
+
+
+def test_observed_identity_code_path_still_rejects_another_owner():
+    result = kaggle_accelerator_push._observed_identity({
+        "ref": "/code/other/example",
+        "url": "https://www.kaggle.com/code/other/example",
+    }, "nvoid912")
+    assert result["kernel"] is None
+    assert "response_owner_or_ref_conflict" in result["identity_conflicts"]
+
+
 @pytest.mark.parametrize("response_payload", [
     {"error": None, "invalidDatasetSources": []},
     {"error": None, "ref": "owner/actual-title-slug", "versionNumber": 2,

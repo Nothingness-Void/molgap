@@ -1,0 +1,114 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/acceptance.json": "fb0bc64161715bd9e23e51a4c9fba69e49228a58aa8e4da7e530e7930e84dde3",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/decision.md": "23d81e9ffb9c1933c595897f47c28df2a02a38028a8d93970768c39d398050e1"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle3-pair-001",
+      "category": "preflight",
+      "cost_event_id": "cost-TB-k1-ssma-kaggle3-100k-s42-v1-unsubmitted-source-release",
+      "evidence_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/acceptance.json",
+      "hardware": "desktop CPU; synthetic-only",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "k1-v4-ssma-pair-100k-s42-v1:ssma:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v1"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/decision.md",
+    "next_allowed_actions": [
+      "repair_source_packager_and_publish_new_prospective_source"
+    ],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "reviewed_packager_fix"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/decision.md",
+        "name": "decision.md",
+        "sha256": "23d81e9ffb9c1933c595897f47c28df2a02a38028a8d93970768c39d398050e1"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "fb0bc64161715bd9e23e51a4c9fba69e49228a58aa8e4da7e530e7930e84dde3"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/decision.md",
+        "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/acceptance.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-ssma-kaggle3-unsubmitted-source-v1",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-k1-v4-100k-local-qualification-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-01T05:14:08.142276+00:00",
+      "scientific_reinterpretation": false,
+      "synthetic_model_checks_executed": false,
+      "training_executed": false,
+      "verification_scope": "Source packager failure before remote create/push; separate local qualification results remain in their report."
+    },
+    "outcome": {
+      "artifact_status": "release_failure_record_retained",
+      "budget_decision": "no_accelerator_release",
+      "comparison_status": "not_run",
+      "execution_status": "not_submitted",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "development": "unknown",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "unknown"
+    },
+    "scope": "source_release_infrastructure_only",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-01T05:14:08.142276+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "development": "unknown",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "unknown"
+  },
+  "roles": [],
+  "run_id": "k1-v4-ssma-pair-100k-s42-v1:ssma:downstream",
+  "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v1"
+}

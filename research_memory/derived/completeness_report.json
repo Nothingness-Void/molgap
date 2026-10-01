@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 68,
+    "trajectories_total": 70,
     "with_complete_native_measurement": 6,
-    "with_cost_event": 57,
-    "with_incomplete_native_measurement": 51,
+    "with_cost_event": 59,
+    "with_incomplete_native_measurement": 53,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 47,
+      "count": 49,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -48,8 +48,10 @@
         "TB-k1-full-convergence-20260919",
         "TB-k1-gptrans-full-fusion-r3",
         "TB-k1-reference-kaggle3-100k-s42-v1",
+        "TB-k1-reference-kaggle3-100k-s42-v2",
         "TB-k1-residual-reconciliation",
         "TB-k1-ssma-kaggle3-100k-s42-v1",
+        "TB-k1-ssma-kaggle3-100k-s42-v2",
         "TB-k1-ssma-qualification-s42-v1",
         "TB-pcqm-expert-oracle-feasibility-20260930",
         "TB-pcqm-geometry-component-attribution-20260928",
@@ -95,7 +97,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 51,
+      "count": 53,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -136,8 +138,10 @@
         "TB-k1-clean-fingerprint-qualification-s42-v1",
         "TB-k1-full-convergence-20260919",
         "TB-k1-reference-kaggle3-100k-s42-v1",
+        "TB-k1-reference-kaggle3-100k-s42-v2",
         "TB-k1-residual-reconciliation",
         "TB-k1-ssma-kaggle3-100k-s42-v1",
+        "TB-k1-ssma-kaggle3-100k-s42-v2",
         "TB-k1-ssma-qualification-s42-v1",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
@@ -171,7 +175,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 34,
+      "count": 36,
       "items": [
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -196,7 +200,9 @@
         "TB-k1-clean-fingerprint-qualification-s42-v1",
         "TB-k1-gptrans-full-fusion-r3",
         "TB-k1-reference-kaggle3-100k-s42-v1",
+        "TB-k1-reference-kaggle3-100k-s42-v2",
         "TB-k1-ssma-kaggle3-100k-s42-v1",
+        "TB-k1-ssma-kaggle3-100k-s42-v2",
         "TB-k1-ssma-qualification-s42-v1",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
@@ -212,7 +218,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 12,
+      "count": 13,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -223,7 +229,8 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
-        "TB-k1-ssma-kaggle3-100k-s42-v1",
+        "TB-k1-reference-kaggle3-100k-s42-v2",
+        "TB-k1-ssma-kaggle3-100k-s42-v2",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],

@@ -1,0 +1,26 @@
+{
+  "main_suite": {
+    "passed": 220,
+    "wall_seconds": 146.76,
+    "log": "qualification_check/pytest-kaggle3-final.log"
+  },
+  "packager_corefix": {
+    "passed": 61,
+    "skipped": 1,
+    "wall_seconds": 70.415,
+    "log": "qualification_check/pytest-experiment-package-corefix.log"
+  },
+  "response_identity_corefix": {
+    "passed": 3,
+    "deselected": 4,
+    "wall_seconds": 11.103,
+    "log": "qualification_check/pytest-kaggle-response-format.log"
+  },
+  "CPU_loader": "qualification_check/kaggle3-real-loader.json",
+  "release_status": "LOCAL_RELEASE_INPUTS_VERIFIED",
+  "remote_state": "RUNNING",
+  "remote_training_accepted": false,
+  "replay_ready": false,
+  "owning_source_commit": "70e0b3af981df106de31eef5dcbdb3870eb74a7e",
+  "package_identity": "e35ed2642302b308424cd74a7fd32c411f5ac10f2273f8c1d37d9c0aa2e3c4e6"
+}

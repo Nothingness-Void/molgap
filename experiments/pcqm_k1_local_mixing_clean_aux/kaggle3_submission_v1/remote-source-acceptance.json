@@ -1,0 +1,35 @@
+{
+  "status": "RECONCILED_EXISTING",
+  "canonical_reference": "nvoid912/molgap-k1-v4-ssma-pair-100k-s42-v1",
+  "platform_version": "1",
+  "kernel_id": 136612854,
+  "returned_ref_format": "/code/owner/slug",
+  "returned_ref_matches_url": true,
+  "local_entry_sha256": "df122cce86faa986e36ad7d3ecdcb0198b204f661a48843e360f302cca13e519",
+  "pulled_entry_sha256": "0c32bde1bc0cd754c87786e9020f7c23ff29e00da7514f5e88675fc7a7eb93c2",
+  "entry_equal_after_CRLF_to_LF": true,
+  "pulled_metadata": {
+    "id": "nvoid912/molgap-k1-v4-ssma-pair-100k-s42-v1",
+    "id_no": 136612854,
+    "title": "molgap-k1-v4-ssma-pair-100k-s42-v1",
+    "code_file": "molgap-k1-v4-ssma-pair-100k-s42-v1.py",
+    "language": "python",
+    "kernel_type": "script",
+    "is_private": true,
+    "enable_gpu": true,
+    "enable_tpu": false,
+    "enable_internet": true,
+    "keywords": [],
+    "dataset_sources": [
+      "nvoid912/molgap-k1-ssma-source-s42-v1",
+      "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "kernel_sources": [],
+    "competition_sources": [],
+    "model_sources": []
+  },
+  "scheduler_observation": {
+    "status": "RUNNING"
+  },
+  "observed_at": "2026-10-01T05:25:10.843855+00:00"
+}

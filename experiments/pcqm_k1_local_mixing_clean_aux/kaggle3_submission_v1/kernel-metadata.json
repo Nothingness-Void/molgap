@@ -1,0 +1,16 @@
+{
+  "id": "nvoid912/molgap-k1-v4-ssma-pair-100k-s42-v1",
+  "title": "molgap-k1-v4-ssma-pair-100k-s42-v1",
+  "code_file": "run_pair.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "nvoid912/pcqm4mv2-ogb-fixed-100k-v1",
+    "nvoid912/molgap-k1-ssma-source-s42-v1"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}

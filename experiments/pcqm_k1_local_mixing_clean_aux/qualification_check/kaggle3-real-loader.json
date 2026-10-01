@@ -1,0 +1,115 @@
+{
+  "authorized_roles": [
+    "train",
+    "development"
+  ],
+  "batches": {
+    "development": {
+      "fields": [
+        "batch",
+        "edge_attr",
+        "edge_index",
+        "mmff_converged",
+        "ptr",
+        "random_walk_pe",
+        "smiles_sanitized",
+        "source_idx",
+        "split_code",
+        "x",
+        "y"
+      ],
+      "geometry_fields_absent": [
+        "pos",
+        "edge_distance",
+        "wedge_angle_cos",
+        "wedge_edge_ids",
+        "geometry_valid"
+      ],
+      "graphs": 128
+    },
+    "train": {
+      "fields": [
+        "batch",
+        "edge_attr",
+        "edge_index",
+        "mmff_converged",
+        "ptr",
+        "random_walk_pe",
+        "smiles_sanitized",
+        "source_idx",
+        "split_code",
+        "x",
+        "y"
+      ],
+      "geometry_fields_absent": [
+        "pos",
+        "edge_distance",
+        "wedge_angle_cos",
+        "wedge_edge_ids",
+        "geometry_valid"
+      ],
+      "graphs": 128
+    }
+  },
+  "cache_root": "D:\\\u6587\u6863\\molgap\\data\\pcqm_fixed_100k_v1",
+  "device": "cpu",
+  "experiment_context": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1",
+  "frozen_training_runtime_head": "409b3d7a",
+  "geometry_fields_absent_by_role": {
+    "development": {
+      "edge_distance": true,
+      "geometry_valid": true,
+      "pos": true,
+      "wedge_angle_cos": true,
+      "wedge_edge_ids": true
+    },
+    "train": {
+      "edge_distance": true,
+      "geometry_valid": true,
+      "pos": true,
+      "wedge_angle_cos": true,
+      "wedge_edge_ids": true
+    }
+  },
+  "initial_model": {
+    "expected_parameter_count": 3658817,
+    "mode": "neural_atom_k1",
+    "parameter_count": 3658817,
+    "strict_load_state_dict": true
+  },
+  "initial_state": {
+    "expected_tensor_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+    "file_sha256": "16cd1588daeb5cc031e6748688e7402879adb7f3307bac311e0f3891e257c9a6",
+    "path": "C:\\Users\\17449\\.codex\\worktrees\\hierarchy-exposure\\molgap\\platforms\\_staging\\pretraining_family_pair_initializations\\k1_initial_state.pt",
+    "tensor_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
+  },
+  "input_root": "D:/\u6587\u6863/molgap/data/pcqm_fixed_100k_v1",
+  "loader_num_workers": 0,
+  "manifest_role_read_flags": {
+    "official_validation_role_read": false,
+    "test_challenge_role_read": false,
+    "test_dev_role_read": false
+  },
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "observed_execution_seconds": 1.595,
+  "official_validation_role_read": false,
+  "rowcounts": {
+    "development": 50000,
+    "train": 100000
+  },
+  "source_head": "70e0b3af981df106de31eef5dcbdb3870eb74a7e",
+  "status": "passed",
+  "test_challenge_role_read": false,
+  "test_dev_role_read": false,
+  "training_runtime_files_compared": [
+    "src/molgap/k1_screen_training.py",
+    "src/molgap/qm9_neural_atom.py"
+  ],
+  "training_runtime_files_unchanged_from_frozen_head": true,
+  "training_target_stats": {
+    "mean": 5.3383002281188965,
+    "std": 1.275090217590332,
+    "target": "gap",
+    "unit": "eV"
+  }
+}

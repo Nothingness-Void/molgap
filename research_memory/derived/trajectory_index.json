@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "6aca707ded0a2ef0c5759609e73fe5a7504597522ed39ee69d5d84f76ce94c85",
+  "source_digest": "3eeea800c3b925d1db3baa073d4a68dd89077dad03c7e90896ecb47425c97412",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -861,6 +861,20 @@
       "trajectory_id": "TB-k1-reference-kaggle3-100k-s42-v1"
     },
     {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_local_mixing_clean_aux/training_protocol_kaggle3_v1.md",
+      "family_id": "k1-original-v4-reference",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/reference/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-k1-reference-kaggle3-100k-s42-v2"
+    },
+    {
       "completeness_status": "partial",
       "decision_ref": "experiments/pcqm_k1_residual_reconciliation/decision.md",
       "family_id": "k1-existing-prediction-attribution",
@@ -880,6 +894,22 @@
     },
     {
       "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/decision.md",
+      "family_id": "k1-ssma",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-ssma-kaggle3-unsubmitted-source-v1"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v1"
+    },
+    {
+      "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_local_mixing_clean_aux/training_protocol_kaggle3_v1.md",
       "family_id": "k1-ssma",
       "outcome": "ACTIVE",
@@ -887,10 +917,10 @@
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/trajectory.json",
+      "record_path": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/trajectory.json",
       "result_evidence_ids": [],
       "track": "B",
-      "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v1"
+      "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v2"
     },
     {
       "completeness_status": "complete",

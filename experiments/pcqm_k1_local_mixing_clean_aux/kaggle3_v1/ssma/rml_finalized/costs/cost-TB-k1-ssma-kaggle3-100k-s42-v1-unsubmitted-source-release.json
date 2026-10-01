@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle3-pair-001",
+  "category": "preflight",
+  "cost_event_id": "cost-TB-k1-ssma-kaggle3-100k-s42-v1-unsubmitted-source-release",
+  "evidence_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/acceptance.json",
+  "hardware": "desktop CPU; synthetic-only",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "k1-v4-ssma-pair-100k-s42-v1:ssma:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v1"
+}

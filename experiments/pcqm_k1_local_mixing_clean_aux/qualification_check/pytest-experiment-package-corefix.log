@@ -1,0 +1,19 @@
+...........................................................s..           [100%]
+============================== warnings summary ===============================
+..\..\文档\molgap\.venv\lib\site-packages\torch_geometric\llm\utils\backend_utils.py:26
+  D:\文档\molgap\.venv\lib\site-packages\torch_geometric\llm\utils\backend_utils.py:26: DeprecationWarning: `torch_geometric.distributed` has been deprecated since 2.7.0 and will no longer be maintained. For distributed training, refer to our tutorials on distributed training at https://pytorch-geometric.readthedocs.io/en/latest/tutorial/distributed.html or cuGraph examples at https://github.com/rapidsai/cugraph-gnn/tree/main/python/cugraph-pyg/cugraph_pyg/examples
+    from torch_geometric.distributed import (
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+SKIPPED [1] tests\test_experiment_package.py:290: Host does not permit creating symlinks
+61 passed, 1 skipped, 1 warning in 59.66s
+
+Observed execution_seconds=70.415
+Observed exit_code=0
+Python=D:\文档\molgap\.venv\Scripts\python.exe
+PYTHONPATH=D:\w\k1-local-aux\src
+OMP_NUM_THREADS=4
+MKL_NUM_THREADS=4
+PYTHONIOENCODING=utf-8
+Test_file=tests/test_experiment_package.py
