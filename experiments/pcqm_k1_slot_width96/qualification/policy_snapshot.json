@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "QUALIFY_CPU",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "k1-slot96-cpu-qualification-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "e06f4719703ed28d764f448e005215448037f93561efdf1282eb648f089d93be",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "k1-slot96-cpu-qualification",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

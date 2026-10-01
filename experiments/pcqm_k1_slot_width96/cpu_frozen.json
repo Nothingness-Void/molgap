@@ -1,0 +1,43 @@
+{
+  "source_sha256": {
+    "experiments/pcqm_k1_slot_width96/qualify.py": "0d2448df12d6721bd0df712c20f4469dea60302fc7ce516b3f37943f1099847a",
+    "src/molgap/k1_slot_width96.py": "d0af96c2963e04c1f13c7475451fd205da90b2f03583b0537ade9ba7ab4d1772",
+    "src/molgap/qm9_neural_atom.py": "c86217e218e912150c820b6b87a66ec9437f14a83aad4a44d1aca37e7b093284",
+    "src/molgap/k1_screen_training.py": "f444183a77aabd9f9ce006ea88706b221b8f7253f2daa29a6b0af5d4fdb90478",
+    "src/molgap/training_reproducibility.py": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa",
+    "src/molgap/v4_runtime.py": "34bb7430c6c48add83f4fe49fe1070f1175fce5c421464f121a196c4b3b57a1f",
+    "experiments/pcqm_k1_slot_width96/protocol.md": "e06f4719703ed28d764f448e005215448037f93561efdf1282eb648f089d93be",
+    "experiments/pcqm_k1_slot_width96/role_plan.json": "39f08df5f05673a37f23a3a9d9db6c4f23fc1c77d09baf7d4e34c909e5a41af4"
+  },
+  "model_declarations": {
+    "config": {
+      "hidden_channels": 192,
+      "num_layers": 9,
+      "edge_state_channels": 64,
+      "latent_channels": 96,
+      "active_slots": 1
+    },
+    "expected_parameter_count": 3853793,
+    "reference_parameter_count": 3658817
+  },
+  "development_shard": {
+    "path": "D:/\u6587\u6863/molgap/data/pcqm_fixed_100k_v1/train/train_shard_0002.pt",
+    "sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a"
+  },
+  "reference_checkpoint": {
+    "path": "D:/w/k1-slot96/platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/selected_model.pt",
+    "sha256": "4a7dab43f50f5f3216b224374c213a01cc82cfb4160dcd6d54aab1ef614fce17"
+  },
+  "reference_predictions": {
+    "path": "D:/w/k1-slot96/platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/development_predictions.pt",
+    "sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82"
+  },
+  "target_transform": {
+    "path": "D:/w/k1-slot96/experiments/pcqm_k1_slot_width96/reference_binding/target_transform.json",
+    "sha256": "7633713dd6128407cdd3035275ec56f44153ac316f42d7bca283ec25ef75de3d"
+  },
+  "trajectory_sha256": "f199e117c0d91acb86d1640be0ba69ea979590226448a575eb33c60aa1cbd88a",
+  "max_wall_seconds": 300,
+  "source_commit": "13e0812998c7c1b15b2aa11849251e4db92e206c",
+  "prepared_at_utc": "2026-10-01T17:12:41.472982+00:00"
+}

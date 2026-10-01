@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "cpu-001",
+  "category": "inference",
+  "cost_event_id": "cost-k1-slot96-cpu-observed-20261002",
+  "evidence_ref": "experiments/pcqm_k1_slot_width96/cpu_acceptance.json",
+  "hardware": "CPU4threads; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.006840277777777778
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.003573472166665144
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-slot96-qualification-20261002",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002"
+}

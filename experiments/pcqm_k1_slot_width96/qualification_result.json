@@ -1,0 +1,45 @@
+{
+  "schema": "molgap-k1-slot96-cpu-initialization-v1",
+  "status": "CPU_INITIALIZATION_QUALIFIED",
+  "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002",
+  "action_id": "A001",
+  "candidate_parameters": 3853793,
+  "reference_parameters": 3658817,
+  "reference_default_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "reference_default_matches_explicit_latent64": true,
+  "initial_state_sha256": "84d0658ac90271548a84e5e8421a44e1158bbf222a6969434a9414dff913ed30",
+  "initial_state_file_sha256": "31f9984c6fcdb7a0e02e8b14ae30c4cbf5925123be4e040f18d536c6dd36d119",
+  "finite": true,
+  "saved_state_roundtrip": true,
+  "runtime": {
+    "seed": 42,
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "float32_matmul_precision": "highest"
+  },
+  "cost": {
+    "wall_seconds": 8.788014999998268,
+    "process_cpu_seconds": 8.453125,
+    "cpu_threads": 4,
+    "device_seconds": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_seconds": {
+      "status": "not_applicable",
+      "value": null
+    }
+  },
+  "data_access": true,
+  "label_access": false,
+  "gpu_qualification": "pending",
+  "training_submission": "not_performed",
+  "real_pure2d_forward_finite": true,
+  "fixture_rows": 64,
+  "fixture_role": "development-input-only-no-label-metric",
+  "candidate_forward_cost_included_in": "ablation inference cost"
+}

@@ -1,0 +1,207 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002",
+  "run_id": "local-k1-slot96-qualification-20261002",
+  "action_id": "A001",
+  "finalized_at": "2026-10-01T17:18:21.167320+00:00",
+  "acceptance_ref": "experiments/pcqm_k1_slot_width96/cpu_acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_slot_width96/cpu_frozen.json": "b348cd7801131c581749748f2ca46e557f3b4863101139739d105dd88a1209e0",
+    "experiments/pcqm_k1_slot_width96/qualification/trajectory.json": "f199e117c0d91acb86d1640be0ba69ea979590226448a575eb33c60aa1cbd88a",
+    "experiments/pcqm_k1_slot_width96/qualification_result.json": "97f31ca1f9727bd514a0cf2071a3bc31d4f747dd2744a9a1bd087b0ef9ce2cd4",
+    "experiments/pcqm_k1_slot_width96/ablation_result.json": "f968b6e9cd14ea69e39e763ca59fb5ba5ca9f4428c011bf17c495563431d4c32",
+    "experiments/pcqm_k1_slot_width96/ablation_rows.npz": "b9187e7482b73024cff55861e8a8af6e39f917ddb43374b5c5db94de5391e6eb",
+    "experiments/pcqm_k1_slot_width96/qualification_initial_state.pt": "31f9984c6fcdb7a0e02e8b14ae30c4cbf5925123be4e040f18d536c6dd36d119",
+    "experiments/pcqm_k1_slot_width96/protocol.md": "e06f4719703ed28d764f448e005215448037f93561efdf1282eb648f089d93be",
+    "experiments/pcqm_k1_slot_width96/role_plan.json": "39f08df5f05673a37f23a3a9d9db6c4f23fc1c77d09baf7d4e34c909e5a41af4",
+    "experiments/pcqm_k1_slot_width96/evidence_review.md": "056685abb29a73b52e4451b1bfd89e264174637794fbb3ba0c7c5e7762087739",
+    "experiments/pcqm_k1_slot_width96/cpu_decision.md": "28fa5b91061765275c01c72bf056299798cf03e0c6e6db70bb38584e264309e8",
+    "experiments/pcqm_k1_slot_width96/cpu_attribution.md": "2ea3eb5b7ecb42122f892f2abf7df04aa7cbc36a6fae9ab267ee622083edf83f",
+    "experiments/pcqm_k1_slot_width96/cpu_acceptance.json": "f01729e5499fe9a6763fad7a33c50bc1ecb97ca223843b4bba0650c36e315018",
+    "experiments/pcqm_k1_slot_width96/finalize_cpu.py": "8ee50f5e7782258195373f51a61f06b65f52afb29ced10bb43290cfd35b5b6ca",
+    "experiments/pcqm_k1_slot_width96/qualify.py": "0d2448df12d6721bd0df712c20f4469dea60302fc7ce516b3f37943f1099847a",
+    "src/molgap/k1_slot_width96.py": "d0af96c2963e04c1f13c7475451fd205da90b2f03583b0537ade9ba7ab4d1772",
+    "src/molgap/qm9_neural_atom.py": "c86217e218e912150c820b6b87a66ec9437f14a83aad4a44d1aca37e7b093284",
+    "src/molgap/k1_screen_training.py": "f444183a77aabd9f9ce006ea88706b221b8f7253f2daa29a6b0af5d4fdb90478",
+    "src/molgap/training_reproducibility.py": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa",
+    "src/molgap/v4_runtime.py": "34bb7430c6c48add83f4fe49fe1070f1175fce5c421464f121a196c4b3b57a1f"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-slot96-cpu-qualification-20261002",
+    "track": "B",
+    "scope": "desktop_k1_slot96_cpu_qualification",
+    "legacy_contract": "k1-slot96-cpu-qualification-v1",
+    "outcome": {
+      "execution_status": "complete_no_training",
+      "artifact_status": "local_hash_verified",
+      "comparison_status": "consumed_role_frozen_final_slot_intervention",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "cpu_closure_no_training_release",
+      "full_handoff_status": "not_applicable"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_slot_width96/protocol.md",
+        "experiments/pcqm_k1_slot_width96/cpu_decision.md",
+        "experiments/pcqm_k1_slot_width96/cpu_attribution.md",
+        "experiments/pcqm_k1_slot_width96/cpu_acceptance.json",
+        "experiments/pcqm_k1_slot_width96/qualification_result.json",
+        "experiments/pcqm_k1_slot_width96/ablation_result.json"
+      ]
+    },
+    "role_use": {
+      "internal_development": "selection_used",
+      "train_prefix": "untouched",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "migration": {
+      "migrated_at": "2026-10-02",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Metadata publication of separately executed prospective CPU qualification; no model execution in finalizer."
+    },
+    "observed_execution": {
+      "training_executed": false,
+      "inference_executed": true,
+      "execution_ref": "experiments/pcqm_k1_slot_width96/ablation_result.json"
+    },
+    "artifacts": [
+      {
+        "name": "qualification_result.json",
+        "locator": "experiments/pcqm_k1_slot_width96/qualification_result.json",
+        "sha256": "97f31ca1f9727bd514a0cf2071a3bc31d4f747dd2744a9a1bd087b0ef9ce2cd4",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "ablation_result.json",
+        "locator": "experiments/pcqm_k1_slot_width96/ablation_result.json",
+        "sha256": "f968b6e9cd14ea69e39e763ca59fb5ba5ca9f4428c011bf17c495563431d4c32",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "ablation_rows.npz",
+        "locator": "experiments/pcqm_k1_slot_width96/ablation_rows.npz",
+        "sha256": "b9187e7482b73024cff55861e8a8af6e39f917ddb43374b5c5db94de5391e6eb",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "qualification_initial_state.pt",
+        "locator": "experiments/pcqm_k1_slot_width96/qualification_initial_state.pt",
+        "sha256": "31f9984c6fcdb7a0e02e8b14ae30c4cbf5925123be4e040f18d536c6dd36d119",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "cpu_acceptance.json",
+        "locator": "experiments/pcqm_k1_slot_width96/cpu_acceptance.json",
+        "sha256": "f01729e5499fe9a6763fad7a33c50bc1ecb97ca223843b4bba0650c36e315018",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "cpu_decision.md",
+        "locator": "experiments/pcqm_k1_slot_width96/cpu_decision.md",
+        "sha256": "28fa5b91061765275c01c72bf056299798cf03e0c6e6db70bb38584e264309e8",
+        "availability": "locally_retained_hash_verified"
+      }
+    ]
+  },
+  "decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_slot_width96/cpu_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate candidate training prospective and applicable release authority; CPU gate alone is not qualification or promotion."
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-slot96-cpu-observed-20261002",
+      "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-slot96-qualification-20261002",
+      "attempt_id": "cpu-001",
+      "platform": "local-windows",
+      "hardware": "CPU4threads; no accelerator",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_slot_width96/cpu_acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "wall_hours": {
+          "value": 0.003573472166665144,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.006840277777777778,
+          "status": "measured"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-slot96-cpu-prediction_input-20261002",
+      "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-slot96-qualification-20261002",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_slot_width96/cpu_acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-slot96-cpu-labels_read-20261002",
+      "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-slot96-qualification-20261002",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_slot_width96/cpu_acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-slot96-cpu-metric_computed-20261002",
+      "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-slot96-qualification-20261002",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_slot_width96/cpu_acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-slot96-cpu-selection_used-20261002",
+      "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-slot96-qualification-20261002",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_slot_width96/cpu_acceptance.json"
+    }
+  ]
+}
