@@ -226,6 +226,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-node-width256-qualification-20261001:A001",
+      "target": "experiments/pcqm_k1_node_width256/qualification_result.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-residual-reconciliation:A001",
       "target": "experiments/pcqm_k1_residual_reconciliation/analysis.json",
       "type": "action_produced_evidence"
@@ -1101,6 +1106,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-full-convergence-20260919",
+      "target": "TB-k1-node-width256-qualification-20261001",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-gptrans-full-convergence-20260919",
       "type": "prior_evidence"
@@ -1802,6 +1812,10 @@
     },
     {
       "id": "TB-k1-gptrans-full-fusion-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-node-width256-qualification-20261001",
       "type": "trajectory"
     },
     {

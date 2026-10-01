@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "7bf5eb905d2b0493e6b80d551d888026b97fa6b226c9509707b0c66790f3dc13",
+  "source_digest": "fc64112ec4eb18502d84a9290e37c1c508997e0c32c032b4fb0a38e05d9e5057",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -827,6 +827,20 @@
       ],
       "track": "B",
       "trajectory_id": "TB-k1-gptrans-full-fusion-r3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_node_width256/protocol.md",
+      "family_id": "k1-node-width",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_node_width256/qualification/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-k1-node-width256-qualification-20261001"
     },
     {
       "completeness_status": "partial",

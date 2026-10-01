@@ -1,11 +1,11 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 14,
-  "event_count": 89,
+  "estimated_event_count": 15,
+  "event_count": 91,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
   "measurement_missing_event_count": 77,
-  "not_applicable_event_count": 35,
+  "not_applicable_event_count": 37,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -447,6 +447,54 @@
       }
     },
     "preflight": {
+      "CPU; no accelerator allocation:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.002690972222222222
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "CPU; no accelerator allocation:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "CPU; no accelerator allocation:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "CPU; no accelerator allocation:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0021604776944443276
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
       "Hygon DCU:cpu_hours": {
         "estimated": {
           "known_records": 0,
@@ -980,6 +1028,56 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 2
+      }
+    },
+    "CPU; no accelerator allocation": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.002690972222222222
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0021604776944443276
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "Hygon DCU": {
@@ -4792,6 +4890,56 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      }
+    },
+    "TB-k1-node-width256-qualification-20261001": {
+      "CPU; no accelerator allocation:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.002690972222222222
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "CPU; no accelerator allocation:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "CPU; no accelerator allocation:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "CPU; no accelerator allocation:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0021604776944443276
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "TB-k1-residual-reconciliation": {
