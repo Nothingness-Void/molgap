@@ -46,6 +46,15 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
 
+- **K1 isolated slot96:** user-authorized single100K candidate submitted to Kaggle3.
+  The authenticated submission observation is RUNNING/version1; source bytes match.
+  Runtime qualification, endpoint acceptance and science remain pending. Reconcile
+  that exact attempt after desktop returns through the owning
+  [STATUS](D:/w/k1-slot96/experiments/pcqm_k1_slot_width96/STATUS.md).
+  Atom192/edge64 remain fixed, latent64 becomes96; measured parameters increase5.329%.
+  CPU final-slot utility/initialization evidence is closed separately on the owner.
+  No model promotion, automatic successor, monitoring or server handoff is released.
+
 - **Chemical auxiliary:** endpoint acceptance and independent terminal RML
   closure are complete on the dedicated owner at `17b1987a`. The 2026-10-01
   authenticated recheck returned COMPLETE; pulled entry bytes match the accepted
@@ -60,8 +69,9 @@ Branch-local records absent here are linked through the
   terminal/acceptance/V5 inputs and raw test receipt are absent. Reconcile that
   limited engineering record separately; do not borrow another trajectory's
   training terminal or claim an active GPU job from this planning status.
-- **K1 V4 / SSMA:** user-authorized paired100K accuracy execution is active on
-  the retained owner (`96e19ef1`); reconcile that exact Kaggle3 attempt from
+- **K1 V4 / SSMA:** the authenticated Kaggle3 recheck returned COMPLETE; original
+  pair acceptance/closure remains with the retained owner (`96e19ef1`), separately
+  from the new slot96 question. Reconcile the exact attempt from
   [STATUS](D:/w/k1-local-aux/experiments/pcqm_k1_local_mixing_clean_aux/STATUS.md).
   The new contract records overhead without the25% veto and retains all other
   correctness gates. The previous cost-gated attempt remains accepted NO_TRAIN.
