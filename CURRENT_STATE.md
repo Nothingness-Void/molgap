@@ -60,14 +60,13 @@ Branch-local records absent here are linked through the
   terminal/acceptance/V5 inputs and raw test receipt are absent. Reconcile that
   limited engineering record separately; do not borrow another trajectory's
   training terminal or claim an active GPU job from this planning status.
-- **K1 V4 / SSMA:** the retained owner closed both arms NO_TRAIN at `b7f283b0`
-  after the frozen runtime cost gate blocked formal training. See
+- **K1 V4 / SSMA:** user-authorized paired100K accuracy execution is active on
+  the retained owner (`96e19ef1`); reconcile that exact Kaggle3 attempt from
   [STATUS](D:/w/k1-local-aux/experiments/pcqm_k1_local_mixing_clean_aux/STATUS.md).
-  The 2026-10-01 authenticated recheck with Kaggle3 (`nvoid912`) confirmed ERROR.
-  The earlier CLI 403 came from the SDK preferring a global cached access token
-  over the selected account key; isolating token lookup resolved the query.
-  Accepted NO_TRAIN evidence is unchanged. Keep the owner for evidence integration
-  and Git routing, not a retry.
+  The new contract records overhead without the25% veto and retains all other
+  correctness gates. The previous cost-gated attempt remains accepted NO_TRAIN.
+  Runtime/scientific acceptance and per-arm replay qualification are pending;
+  no automatic monitoring, retry, successor or promotion is released.
 - **Centered logits:** scientifically closed; historical reference binding
   excludes strict causal replay, not a training retry trigger. See
   [STATUS](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md).
