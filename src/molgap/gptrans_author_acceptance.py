@@ -126,11 +126,11 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         require(trace["metric_semantics"] == ref_trace["metric_semantics"], "Trace metric semantics")
         for i, (row, native, ref_row) in enumerate(zip(rows, trace["observations"], ref_trace["observations"])):
             require(row["epoch"] == i and native["epoch_or_pass"] == i + 1, "Epoch order")
-            for legacy, canonical in (("train_mae_eV", "live_train_metric"), ("development_mae_eV", "ema_dev_metric"),
+            for native_name, canonical in (("train_mae_eV", "live_train_metric"), ("development_mae_eV", "ema_dev_metric"),
                                      ("live_development_mae_eV", "live_dev_metric"), ("learning_rate", "learning_rate"),
                                      ("cumulative_optimizer_steps", "optimizer_step"), ("cumulative_sample_presentations", "sample_presentations"),
                                      ("cumulative_wall_time_seconds", "cumulative_wall_time_seconds")):
-                require(math.isfinite(row[legacy]) and row[legacy] == native[canonical], "Native metric/counter: " + canonical)
+                require(math.isfinite(row[native_name]) and row[native_name] == native[canonical], "Native metric/counter: " + canonical)
             require(native["optimizer_step"] == (i+1)*BATCHES_PER_EPOCH
                 and native["sample_presentations"] == (i+1)*BATCHES_PER_EPOCH*PHYSICAL_BATCH
                 and native["learning_rate"] == ref_row["learning_rate"], "Matched exposure/schedule")
@@ -168,7 +168,8 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
             "parameters": manifest["parameters"], "best_epoch": manifest["best_epoch"], "comparison_identity": identity,
             "prediction_manifest": prediction_manifest, "paired_analysis": analysis,
             "material_gain_eV": gain, "material_gate_eV": config.get("material_gate_eV", .003),
-            "material_gate_passed": gain > config.get("material_gate_eV", .003),
+            "material_gate_passed": (gain > config.get("material_gate_eV", .003) if legacy
+                else _followup_material_gate(analysis, config["material_gate_eV"])),
             "runtime_certificate": preflight["runtime_certificate"], "completion_manifest_sha256": sha256_file(training / "completion_manifest.json"),
             "epoch_mean_seconds": sum(r["elapsed_seconds"] for r in rows)/EPOCHS,
             "final_live_dev_eV": rows[-1]["live_development_mae_eV"],
@@ -186,6 +187,14 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
 def _require(condition, message):
     if not condition:
         raise ValueError(message)
+
+
+def _followup_material_gate(analysis: dict, threshold: float) -> bool:
+    """Apply both prospectively frozen criteria, not a point estimate alone."""
+    interval = analysis["paired_row_bootstrap"]["ci95"]
+    if len(interval) != 2 or not all(math.isfinite(v) for v in interval) or interval[0] > interval[1]:
+        raise ValueError("Malformed paired confidence interval")
+    return -analysis["candidate_minus_reference_eV"] > threshold and interval[1] < 0
 
 
 def accept_prepared_inputs(output: Path, staged_package: Path) -> dict:

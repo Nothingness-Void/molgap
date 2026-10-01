@@ -46,7 +46,10 @@ def test_actual_replay_pool_contains_both_candidates_and_exact_reference():
     pool = build_replay_pool(ROOT, records)
     ids = {"TC-gptrans-author-degree-scale-100k-s42", "TC-gptrans-author-path-bond-mean-100k-s42",
            "TC-gptrans-v5-audit-reference-100k"}
-    entries = [e for e in pool["entries"] if e["trajectory_id"] in ids]
+    # Later accepted candidates can serve as controls in additional worlds;
+    # this regression protects the original frozen comparison, not pool size.
+    entries = [e for e in pool["entries"] if e["trajectory_id"] in ids
+               and e["reference_id"] == "pcqm-gptrans-v5-audit-reference-s42"]
     assert len(entries) == 3
     assert {e["trajectory_id"] for e in entries} == ids
     assert len({e["comparability_key"] for e in entries}) == 1

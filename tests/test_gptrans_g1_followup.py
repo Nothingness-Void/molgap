@@ -70,3 +70,44 @@ def test_forged_ema_world_fails_closed():
             "comparison_class": "STRICT_CAUSAL", "mismatched_fields": {"ema_decay": {"candidate": .999, "reference": .9999}}})]}
     with pytest.raises((ValueError, KeyError)):
         ema_intervention_worlds(ROOT, [], records)
+
+
+def test_acceptance_mode_flag_is_not_shadowed_by_native_field_loop():
+    import ast
+    import inspect
+    from molgap.gptrans_author_acceptance import accept_training_outputs
+    tree = ast.parse(inspect.getsource(accept_training_outputs))
+    assert all(not any(isinstance(n, ast.Name) and n.id == "legacy" for n in ast.walk(loop.target))
+               for loop in ast.walk(tree) if isinstance(loop, ast.For))
+
+
+@pytest.mark.parametrize("delta,interval,passed", [
+    (-.006, [-.007, -.005], True),
+    (-.006, [-.012, .001], False),
+    (-.002, [-.003, -.001], False),
+    (-.003, [-.004, -.002], False),
+])
+def test_followup_gate_requires_magnitude_and_paired_sign(delta, interval, passed):
+    from molgap.gptrans_author_acceptance import _followup_material_gate
+    assert _followup_material_gate({"candidate_minus_reference_eV": delta,
+        "paired_row_bootstrap": {"ci95": interval}}, .003) is passed
+
+
+def test_terminal_followups_admit_actual_distinct_replay_worlds():
+    if not (BASE / "gpu/results/acceptance.json").is_file():
+        pytest.skip("actual terminal outputs not yet accepted")
+    from molgap.research_memory.validate import validate_repository_records
+    from molgap.research_memory.replay import build_replay_pool
+    pool = build_replay_pool(ROOT, validate_repository_records(ROOT)["records"])
+    ids = {"TC-gptrans-g1-path-mean-100k-s42", "TC-gptrans-g1-ema999-100k-s42"}
+    candidates = [e for e in pool["entries"] if e["trajectory_id"] in ids]
+    assert {e["trajectory_id"] for e in candidates} == ids
+    assert len(candidates) == 2
+    for entry in candidates:
+        assert entry["capability"] == "complete" and len(entry["prefix_observations"]) == 60
+        assert any(e["comparison_role"] == "reference" and e["comparability_key"] == entry["comparability_key"]
+                   for e in pool["entries"])
+    ema = next(e for e in candidates if "ema999" in e["trajectory_id"])
+    assert ema["intervention_world"]["purpose"] == "ema_comparison"
+    assert ema["observed_comparability_identity"]["ema_semantics"] == "ema999-each-step-selection"
+    assert ema["terminal_label"] == {"winner": True, "promotion_passed": True}
