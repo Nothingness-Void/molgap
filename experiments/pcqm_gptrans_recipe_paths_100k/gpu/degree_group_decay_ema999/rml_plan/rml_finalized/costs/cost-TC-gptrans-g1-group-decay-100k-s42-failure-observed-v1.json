@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "infrastructure_failure",
+  "cost_event_id": "cost-TC-gptrans-g1-group-decay-100k-s42-failure-observed-v1",
+  "evidence_ref": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/failure_results/acceptance.json",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 2.3743644475247225
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 2.3743644475247225
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "gptrans-g1-group-path-dual-s42:degree_group_decay_ema999",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-gptrans-g1-group-decay-100k-s42"
+}

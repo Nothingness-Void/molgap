@@ -1,0 +1,92 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "infrastructure_failure",
+      "cost_event_id": "cost-TC-gptrans-g1-group-decay-100k-s42-failure-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/failure_results/acceptance.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.3743644475247225
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.3743644475247225
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "gptrans-g1-group-path-dual-s42:degree_group_decay_ema999",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-group-decay-100k-s42"
+    }
+  ],
+  "error": "degree_group_decay_ema999 failed training",
+  "evidence_id": "pcqm-gptrans-g1-group-decay-infrastructure-failure-100k-s42-v1",
+  "local_training_executed": false,
+  "model_inference_executed": false,
+  "outcome": {
+    "artifact_status": "retained_partial",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "not_evaluated",
+    "execution_status": "infrastructure_failed",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/failure_results/acceptance.json",
+      "role_event_id": "role-TC-gptrans-g1-group-decay-100k-s42-failure-internal_train-labels",
+      "role_name": "internal_train",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "gptrans-g1-group-path-dual-s42:degree_group_decay_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-group-decay-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/failure_results/acceptance.json",
+      "role_event_id": "role-TC-gptrans-g1-group-decay-100k-s42-failure-internal_development-labels",
+      "role_name": "internal_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "gptrans-g1-group-path-dual-s42:degree_group_decay_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-group-decay-100k-s42"
+    }
+  ],
+  "run_id": "gptrans-g1-group-path-dual-s42:degree_group_decay_ema999",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/failure_results/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "A separately qualified failed-arm recovery; never rerun the completed companion"
+    ]
+  }
+}
