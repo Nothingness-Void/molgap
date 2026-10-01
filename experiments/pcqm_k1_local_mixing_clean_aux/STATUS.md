@@ -2,7 +2,28 @@
 
 Desktop-owned branch: `codex/exp/k1-local-mixing-clean-aux`.
 
-## Kaggle3 terminal pair
+## Kaggle3 authorized accuracy attempt
+
+- Kernel: `nvoid912/molgap-k1-v4-ssma-accuracy-100k-s42-v1`, ID136643751,
+  actual version1. Authenticated observation: RUNNING at2026-10-01T09:33:34Z;
+  [scheduler record](kaggle3_accuracy_submission_v1/remote-status.json).
+- Original K1 V4 reference and identical bounded SSMA, each100K/40epochs/FP32.
+  [Frozen protocol](training_protocol_kaggle3_accuracy_v1.md),
+  [Spec](experiment_spec_kaggle3_accuracy_v1.json),
+  [submission](kaggle3_accuracy_submission_v1/submission-response.json).
+- User-authorized accuracy execution reports overhead without the25% veto.
+  Other identity, equivalence, determinism and resume gates remain fail-closed.
+  Previous NO_TRAIN records are unchanged; no accuracy result exists yet.
+- Two independent prospective RML trajectories:
+  [reference](kaggle3_accuracy_v1/reference/trajectory.json),
+  [SSMA](kaggle3_accuracy_v1/ssma/trajectory.json). Replay acceptance is pending.
+- Frozen source `f21920ba5d9f3fe148cfa18803d53c0a5ec8f670`; local release
+  and focused15 tests passed. Pulled entry matches after LF normalization and
+  exact mounts were checked. RUNNING does not confirm formal worker progress.
+- Reconcile this exact attempt when desktop returns; no automatic heartbeat,
+  server takeover, retry, successor or scale-up. Retrieve only required evidence.
+
+## Previous Kaggle3 cost-gated terminal pair
 
 - Kernel: `nvoid912/molgap-k1-v4-ssma-pair-100k-s42-v1`, kernel ID 136612854, actual version1.
 - Authoritative terminal state: ERROR, 2026-10-01; see
