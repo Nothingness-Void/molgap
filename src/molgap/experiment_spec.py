@@ -94,6 +94,9 @@ ADDONS = MappingProxyType({
     ("k1_joint_aggregation", "1"): AddonContract(
         "neural_atom_k1", "k1-local-aggregation", "molgap.k1_joint_aggregation",
     ),
+    ("k1_node_width256", "1"): AddonContract(
+        "neural_atom_k1", "k1-node-width", "molgap.k1_node_width256",
+    ),
 })
 
 
@@ -228,6 +231,10 @@ def _arm(arm: dict) -> None:
                     f"[{EDGE_STATE_MIN_LAYERS}, {EDGE_STATE_MAX_LAYERS}] "
                     f"except {EDGE_STATE_BASE_LAYERS}"
                 )
+        elif addon["name"] == "k1_node_width256":
+            from .k1_node_width256 import CONFIG
+            if family["version"] != "2" or len(arm["addons"]) != 1 or addon["config"] != CONFIG:
+                raise ValueError("K1 width256 requires family/version 2 and fixed single addon")
         elif addon["name"] == "k1_joint_aggregation":
             if family["version"] != "2" or len(arm["addons"]) != 1:
                 raise ValueError("K1 screen extension requires family/version 2 and one extension")

@@ -190,8 +190,12 @@ class _NeuralAtomMixerFactory:
         return NeuralAtomMixer()
 
 
-def make_encoder(mode: str):
+def make_encoder(mode: str, *, hidden_channels: int = 192):
     """Build the full-GPS baseline or a parameter-matched mixer arm."""
+    if type(hidden_channels) is not int or hidden_channels not in (192, 256):
+        raise ValueError("Reviewed Neural-Atom widths are 192 and 256")
+    if hidden_channels != 192 and mode != "neural_atom_k1":
+        raise ValueError("Width256 is registered only for Neural-Atom K1")
     if mode == "full_gps":
         from .qm9_local_hierarchy import make_encoder as make_baseline
 
@@ -210,7 +214,7 @@ def make_encoder(mode: str):
             super().__init__(
                 in_channels=9,
                 edge_dim=3,
-                hidden_channels=192,
+                hidden_channels=hidden_channels,
                 num_layers=9,
                 num_heads=4,
                 dropout=0.05,
@@ -226,7 +230,7 @@ def make_encoder(mode: str):
             self.neural_atom_mixers = nn.ModuleDict(
                 {
                     str(layer): _NeuralAtomMixerFactory.make(
-                        hidden_channels=192,
+                        hidden_channels=hidden_channels,
                         latent_channels=LATENT_CHANNELS,
                         num_heads=4,
                         max_slots=MAX_SLOTS,
