@@ -1,0 +1,158 @@
+{
+  "account": "nvoid912",
+  "observed_at_utc": "2026-10-01T16:59:08.392739+00:00",
+  "statuses": {
+    "molgap-k1-node256-100k-s42-v1": {
+      "status": "COMPLETE"
+    },
+    "molgap-k1-v4-ssma-accuracy-100k-s42-v1": {
+      "status": "COMPLETE"
+    },
+    "molgap-gptrans-g1-group-path-dual-s42": {
+      "status": "RUNNING"
+    },
+    "molgap-gptrans-g1-path-and-ema-dual-s42": {
+      "status": "COMPLETE"
+    },
+    "molgap-k1-v4-ssma-pair-100k-s42-v1": {
+      "status": "ERROR"
+    },
+    "molgap-gptrans-centered-logits-100k-s42-v1": {
+      "status": "CANCEL_ACKNOWLEDGED"
+    },
+    "molgap-pcqm-gptrans-dsar-noisy-pair-norm-500k-s42": {
+      "status": "COMPLETE"
+    },
+    "molgap-k1-one-shot-triplet-pairtoken-s42": {
+      "status": "COMPLETE"
+    }
+  },
+  "kernel_listing": {
+    "kernels": [
+      {
+        "ref": "nvoid912/molgap-gptrans-g1-group-path-dual-s42",
+        "title": "MolGap GPTrans G1 Group Path Dual S42",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-10-01T14:43:16.127Z"
+      },
+      {
+        "ref": "nvoid912/molgap-k1-node256-100k-s42-v1",
+        "title": "molgap-k1-node256-100k-s42-v1",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-10-01T12:46:14.680Z"
+      },
+      {
+        "ref": "nvoid912/molgap-k1-v4-ssma-accuracy-100k-s42-v1",
+        "title": "molgap-k1-v4-ssma-accuracy-100k-s42-v1",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-10-01T09:32:59.860Z"
+      },
+      {
+        "ref": "nvoid912/molgap-gptrans-g1-path-and-ema-dual-s42",
+        "title": "MolGap GPTrans G1 Path and EMA Dual S42",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-10-01T06:53:53.797Z"
+      },
+      {
+        "ref": "nvoid912/molgap-k1-v4-ssma-pair-100k-s42-v1",
+        "title": "molgap-k1-v4-ssma-pair-100k-s42-v1",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-10-01T05:23:04.910Z"
+      },
+      {
+        "ref": "nvoid912/molgap-gptrans-centered-logits-100k-s42-v1",
+        "title": "MolGap GPTrans Centered Logits 100K S42 V1",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-23T15:59:22.457Z"
+      },
+      {
+        "ref": "nvoid912/molgap-pcqm-gptrans-dsar-noisy-pair-norm-500k-s42",
+        "title": "MolGap PCQM GPTrans DSAR Noisy Pair Norm 500K S42",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-22T04:25:31.037Z"
+      },
+      {
+        "ref": "nvoid912/molgap-k1-one-shot-triplet-pairtoken-s42",
+        "title": "MolGap K1 One-Shot Triplet PairToken S42",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-21T16:00:47.107Z"
+      },
+      {
+        "ref": "nvoid912/molgap-pcqm-gptrans-noisy-pair-norm-500k-s42",
+        "title": "MolGap PCQM GPTrans Noisy Pair Norm 500K S42",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-21T15:54:15.067Z"
+      },
+      {
+        "ref": "nvoid912/molgap-k1-spd-pairtoken-s42",
+        "title": "MolGap K1 SPD PairToken S42",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-21T06:49:11.100Z"
+      },
+      {
+        "ref": "nvoid912/molgap-k1-sparse-triplet-s42",
+        "title": "MolGap K1 Sparse Triplet S42",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-21T04:25:52.943Z"
+      },
+      {
+        "ref": "nvoid912/molgap-k1-multiplicative-pairvalue-s42",
+        "title": "MolGap K1 Multiplicative PairValue S42",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-20T17:15:13.830Z"
+      },
+      {
+        "ref": "nvoid912/molgap-k1-node-adaptive-pairtoken-s42",
+        "title": "MolGap K1 Node Adaptive PairToken S42",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-19T18:07:23.510Z"
+      },
+      {
+        "ref": "nvoid912/molgap-gptrans-pair-update-norm-500k-v1",
+        "title": "MolGap GPTrans Pair Update Norm 500K V1",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-18T08:11:26.487Z"
+      },
+      {
+        "ref": "nvoid912/molgap-gptrans-pair-update-500k-profile-v1",
+        "title": "MolGap GPTrans Pair Update 500K Profile V1",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-18T07:50:57.580Z"
+      },
+      {
+        "ref": "nvoid912/molgap-gptrans-pair-norm-v5-s42",
+        "title": "MolGap GPTrans Pair Norm V5 S42",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-17T19:07:18.630Z"
+      },
+      {
+        "ref": "nvoid912/molgap-v5-tpu-notebook-preflight",
+        "title": "MolGap V5 TPU Notebook Preflight",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-17T18:38:53.020Z"
+      },
+      {
+        "ref": "nvoid912/molgap-v5-tpu-preflight",
+        "title": "MolGap V5 TPU Preflight",
+        "author": "Nvoid912",
+        "lastRunTime": "2026-09-17T18:43:50.897Z"
+      }
+    ]
+  },
+  "accelerator_quota": {
+    "quotaRefreshTime": "2026-10-03T00:00:00Z",
+    "gpuQuota": {
+      "timeUsed": "32661.938903700s",
+      "timeReserved": "0s",
+      "totalTimeAllowed": "108000s",
+      "minimumTimeAllowed": "108000s",
+      "hasEverRun": true
+    },
+    "tpuQuota": {
+      "timeUsed": "0s",
+      "timeReserved": "0s",
+      "totalTimeAllowed": "72000s",
+      "minimumTimeAllowed": "72000s"
+    }
+  }
+}

@@ -190,8 +190,12 @@ class _NeuralAtomMixerFactory:
         return NeuralAtomMixer()
 
 
-def make_encoder(mode: str):
-    """Build the full-GPS baseline or a parameter-matched mixer arm."""
+def make_encoder(mode: str, *, latent_channels: int = LATENT_CHANNELS):
+    """Build the frozen defaults or the reviewed K1 latent-width variant."""
+    if type(latent_channels) is not int or latent_channels not in {64, 96}:
+        raise ValueError("Reviewed Neural-Atom latent widths are 64 and 96")
+    if latent_channels != LATENT_CHANNELS and mode != "neural_atom_k1":
+        raise ValueError("Latent width96 is reviewed only for neural_atom_k1")
     if mode == "full_gps":
         from .qm9_local_hierarchy import make_encoder as make_baseline
 
@@ -227,7 +231,7 @@ def make_encoder(mode: str):
                 {
                     str(layer): _NeuralAtomMixerFactory.make(
                         hidden_channels=192,
-                        latent_channels=LATENT_CHANNELS,
+                        latent_channels=latent_channels,
                         num_heads=4,
                         max_slots=MAX_SLOTS,
                         active_slots=active_slots,
