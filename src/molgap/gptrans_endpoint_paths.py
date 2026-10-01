@@ -57,3 +57,9 @@ def parameter_groups(model, weight_decay):
         raise ValueError("Both optimizer groups must be populated")
     return [{"params": decay, "weight_decay": weight_decay},
             {"params": no_decay, "weight_decay": 0.0}], inventory
+
+
+def parameter_groups_fingerprint(inventory):
+    """Bind the ordered inventory using the mapping-only hash API."""
+    from .screen_policy import canonical_fingerprint
+    return canonical_fingerprint({"parameters": inventory})

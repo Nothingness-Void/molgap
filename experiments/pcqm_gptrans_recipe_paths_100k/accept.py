@@ -12,9 +12,10 @@ if __name__ == "__main__":
     parser.add_argument("--package", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--close-rml", action="store_true")
+    parser.add_argument("--arm", action="append", help="Explicit completed-arm acceptance; never qualifies the failed companion")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[2]
-    result = accept_training_outputs(root, args.records, args.package, experiment_ref=BASE + "/gpu")
+    result = accept_training_outputs(root, args.records, args.package, experiment_ref=BASE + "/gpu", selected_arms=args.arm)
     atomic_json(args.output, result)
     if args.close_rml:
         closures = close_author_outputs(root, args.records, args.output, experiment_ref=BASE)

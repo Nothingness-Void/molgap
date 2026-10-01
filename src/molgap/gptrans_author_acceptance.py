@@ -17,7 +17,7 @@ NO_READ = ("training_executed", "model_inference_executed", "labels_read",
 
 
 def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
-                            experiment_ref="experiments/pcqm_gptrans_author_alignment/gpu") -> dict:
+                            experiment_ref="experiments/pcqm_gptrans_author_alignment/gpu", selected_arms=None) -> dict:
     """Verify native G1/G2 tensors and telemetry without loading model weights.
 
     Reuse saved-error analysis, runtime and canonical-trace validators. The
@@ -66,8 +66,7 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
     startup, cost, summary = load(screen / "startup.json"), load(screen / "native_cost.json"), load(screen / "job_summary.json")
     require(startup["spec_identity"] == spec.identity and startup["source_archive_sha256"] == source_sha,
             "Startup identity")
-    require({r["variant"] for r in summary["outcomes"]} == set(config["arms"])
-            and len(summary["outcomes"]) == 2 and all(r["complete"] is True for r in summary["outcomes"]), "Dual completion")
+    selected = _selected_completed_arms(config["arms"], summary["outcomes"], selected_arms)
     require(cost["allocated_gpu_count"] == cost["used_gpu_count"] == 2
             and len(cost["allocated_gpu_inventory"]) == 2 and all("T4" in v for v in cost["allocated_gpu_inventory"]), "T4x2 cost")
     require(cost["source_archive_sha256"] == source_sha and math.isfinite(cost["wall_seconds"])
@@ -85,6 +84,8 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
     ref_trace = load_canonical_trace(root / ref_manifest["trace_artifact_ref"])
     arms = {}
     for mode, arm in config["arms"].items():
+        if mode not in selected:
+            continue
         folder = screen / mode
         training = folder / "training"
         manifest, observed, preflight = (load(training / "completion_manifest.json"),
@@ -160,7 +161,8 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         if mode == "degree_group_decay_ema999":
             require(all("optimizer_diagnostics" in row and math.isfinite(row["optimizer_diagnostics"]["mean_preclip_gradient_norm"])
                         and 0 <= row["optimizer_diagnostics"]["clip_frequency"] <= 1 for row in rows), "Grouped optimizer diagnostic coverage")
-            require(all(row["optimizer_diagnostics"]["parameter_groups_sha256"] == canonical_fingerprint(preflight["optimizer_parameter_groups"])
+            from .gptrans_endpoint_paths import parameter_groups_fingerprint
+            require(all(row["optimizer_diagnostics"]["parameter_groups_sha256"] == parameter_groups_fingerprint(preflight["optimizer_parameter_groups"])
                         and all(math.isfinite(v) for k in ("group_weight_norms", "group_adam_first_moment_norms") for v in row["optimizer_diagnostics"][k])
                         for row in rows), "Grouped optimizer identity and finite norms")
         declared = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == mode)
@@ -188,6 +190,9 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
                 "gain_eV": b["ema_dev_metric"]-r["ema_dev_metric"], "candidate_live_dev_eV": r["live_dev_metric"], "reference_live_dev_eV": b["live_dev_metric"]}
                 for i,(r,b) in enumerate(zip(trace["observations"], ref_trace["observations"]))]}
     return {"format": "molgap-gptrans-author-dual-acceptance-v1", "accepted": True, "arms": arms,
+        "acceptance_scope": "selected_completed_arms" if selected_arms is not None else "all_arms",
+        "all_arms_complete": all(r["complete"] is True for r in summary["outcomes"]),
+        "unaccepted_outcomes": [r for r in summary["outcomes"] if r["variant"] not in selected],
         "physical_run_id": receipt["kernel"]+":v1", "source_commit": frozen["source_commit"],
         "source_archive_sha256": source_sha, "spec_identity": spec.identity, "native_cost": cost,
         "model_inference_executed": False, "local_training_executed": False,
@@ -197,6 +202,16 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
 def _require(condition, message):
     if not condition:
         raise ValueError(message)
+
+
+def _selected_completed_arms(declared, outcomes, selected=None):
+    """An ERROR parent may retain a complete child, never an incomplete one."""
+    declared = set(declared)
+    _require(len(outcomes) == len(declared) and {r["variant"] for r in outcomes} == declared, "Worker outcome identity")
+    chosen = declared if selected is None else set(selected)
+    _require(bool(chosen) and chosen <= declared, "Selected arm identity")
+    _require(all(r["complete"] is True for r in outcomes if r["variant"] in chosen), "Selected arm completion")
+    return chosen
 
 
 def _followup_material_gate(analysis: dict, threshold: float) -> bool:

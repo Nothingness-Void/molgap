@@ -1088,11 +1088,11 @@ def run_training(
                 ),
             })
         if variant == "degree_group_decay_ema999":
-            from .gptrans_endpoint_paths import parameter_groups
+            from .gptrans_endpoint_paths import parameter_groups, parameter_groups_fingerprint
             _, inventory = parameter_groups(model, WEIGHT_DECAY)
             diagnostic = model._group_diagnostics.detach().cpu().tolist()
             row["optimizer_diagnostics"] = {
-                "parameter_groups_sha256": canonical_fingerprint(inventory),
+                "parameter_groups_sha256": parameter_groups_fingerprint(inventory),
                 "mean_preclip_gradient_norm": diagnostic[0] / BATCHES_PER_EPOCH,
                 "clip_frequency": diagnostic[1] / BATCHES_PER_EPOCH,
                 "group_weight_norms": [float(torch.stack([p.detach().square().sum() for p in g["params"]]).sum().sqrt().cpu()) for g in optimizer.param_groups],

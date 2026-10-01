@@ -192,3 +192,85 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         save(target / "closure.json", closure)
         closures.append(closure)
     return closures
+
+
+def close_author_failed_arm(repo_root: Path, records: Path, acceptance: Path, *, experiment_ref: str, mode: str):
+    """Close an observed failed companion without inventing a training trace."""
+    from .research_memory.pipeline import finalize_rebuild_backtest
+    root = Path(repo_root).resolve()
+    base, gpu = root / experiment_ref, root / experiment_ref / "gpu"
+    load = lambda p: json.loads(p.read_bytes())
+    rel = lambda p: p.resolve().relative_to(root).as_posix()
+    result, config = load(acceptance), load(gpu / "screen_config.json")
+    if (not result.get("accepted") or result.get("acceptance_scope") != "selected_completed_arms"
+            or mode in result["arms"] or mode not in config["arms"]):
+        raise ValueError("Failure closure requires independently accepted partial run identity")
+    screen = Path(records).resolve() / config["output_subdirectory"]
+    outcomes = [r for r in load(screen / "job_summary.json")["outcomes"] if r["variant"] == mode]
+    folder, target = screen / mode, gpu / mode / "failure_results"
+    if len(outcomes) != 1 or outcomes[0]["complete"] is not False or (folder / "training/completion_manifest.json").exists():
+        raise ValueError("Worker is not a retained incomplete attempt")
+    preflight = load(folder / "preflight/preflight.json")
+    log = (folder / "training.log").read_text()
+    if (preflight.get("accepted") is not True or preflight["source_archive_sha256"] != result["source_archive_sha256"]
+            or "ValueError: dictionary update sequence element" not in log
+            or "canonical_fingerprint(inventory)" not in log):
+        raise ValueError("Failure cause/source not established by retained artifacts")
+    if any(preflight[k] is not False for k in ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")):
+        raise ValueError("Failure attempt protected-role access")
+    declaration = config["arms"][mode]
+    tid = declaration["trajectory_id"]
+    plan_path = gpu / mode / "rml_plan/trajectory.json"
+    run = load(plan_path)["actions"][0]["run_ids"][0]
+    metadata = target / "acceptance.json"
+    timestamp = load(target / "terminal.json")["finalized_at"] if (target / "terminal.json").exists() else datetime.now(timezone.utc).isoformat()
+    evidence_id = "pcqm-gptrans-g1-group-decay-infrastructure-failure-100k-s42-v1"
+    outcome = {"execution_status": "infrastructure_failed", "artifact_status": "retained_partial",
+        "comparison_status": "not_evaluated", "scientific_status": "not_evaluated", "transfer_status": "not_evaluated",
+        "budget_decision": "stop_under_contract", "full_handoff_status": "not_authorized"}
+    decision = {"outcome": "INFRASTRUCTURE_ONLY", "final": True, "decision_ref": rel(target / "decision.md"),
+        "next_allowed_actions": [], "reopen_conditions": ["A separately qualified failed-arm recovery; never rerun the completed companion"]}
+    role_use = {"internal_train": "consumed", "internal_development": "consumed",
+        "official_validation": "untouched", "test_dev": "untouched", "test_challenge": "untouched"}
+    # The retained prediction payload and reached epoch-end stack establish role
+    # consumption, but do not establish a checkpointed optimizer/exposure cursor.
+    if not (folder / "training/development_predictions.pt").is_file():
+        raise ValueError("Failed worker development-role evidence missing")
+    roles = [{"schema": "molgap-role-event-v1", "role_event_id": f"role-{tid}-failure-{role}-labels",
+        "trajectory_id": tid, "action_id": "A001", "run_id": run, "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+        "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "role_name": role, "access_kind": "labels_read", "selection_used": False, "evidence_ref": rel(metadata)}
+        for role in ("internal_train", "internal_development")]
+    native = result["native_cost"]
+    cost = {"schema": "molgap-cost-event-v1", "cost_event_id": f"cost-{tid}-failure-observed-v1",
+        "trajectory_id": tid, "action_id": "A001", "run_id": run, "attempt_id": "v1", "category": "infrastructure_failure",
+        "platform": "kaggle3", "hardware": "Tesla_T4", "evidence_ref": rel(metadata),
+        "measurement": {"device_hours": {"status": "measured", "value": native["allocated_device_hours"] / 2},
+                        "wall_hours": {"status": "measured", "value": native["wall_seconds"] / 3600},
+                        "cpu_hours": {"status": "measurement_missing", "value": None},
+                        "queue_hours": {"status": "measurement_missing", "value": None}}}
+    atomic_write(target / "decision.md", ("# Failed diagnostic writer, not a scientific loss\n\n"
+        f"On {timestamp[:10]}, the grouped arm failed because a list inventory was sent to a mapping-only digest API. "
+        "The first epoch reached evaluation but no canonical observation or optimizer/RNG continuation checkpoint was retained. "
+        "The selected model alone cannot resume the original contract. No full-epoch exposure or scientific metric was fabricated. "
+        "One T4 was reserved throughout the parent wall time; this includes idle allocation, not measured busy time. "
+        "The complete companion was accepted independently. No retry or successor was released.\n").encode())
+    atomic_write(metadata, json_bytes({"evidence_id": evidence_id, "run_id": run, "outcome": outcome,
+        "trajectory_decision": decision, "role_use": role_use, "roles": roles, "costs": [cost],
+        "error": outcomes[0]["error"], "local_training_executed": False, "model_inference_executed": False}))
+    artifacts = [metadata, target / "decision.md", acceptance, screen / "job_summary.json", screen / "native_cost.json",
+        folder / "training.log", folder / "preflight/preflight.json", folder / "training/canonical_trace.json",
+        folder / "training/development_predictions.pt", folder / "arm_binding.json"]
+    authorities = [plan_path, gpu / "submission_v1.json", base / "protocol.md", gpu / mode / "comparison_readiness_prelaunch.json"]
+    hashes = {rel(p): file_digest(p) for p in artifacts + authorities}
+    evidence = {"format": "molgap-v5-evidence-envelope-v1", "contract": "MOLGAP-COMMON-V5-FINAL",
+        "evidence_id": evidence_id, "track": "C", "scope": "failed_companion_execution", "legacy_contract": "none-prospective-v5",
+        "outcome": outcome, "role_use": role_use, "authority": {"pointers": [rel(p) for p in authorities]},
+        "artifacts": [{"name": p.name, "locator": rel(p), "sha256": hashes[rel(p)], "availability": "local_verified"} for p in artifacts],
+        "migration": {"migrated_at": timestamp, "verification_scope": "Retained failure stack, native cost and partial artifacts only",
+                      "training_executed": False, "inference_executed": False, "scientific_reinterpretation": False}}
+    terminal = {"format": "molgap-rml-terminal-package-v1", "trajectory_id": tid, "run_id": run,
+        "action_id": "A001", "finalized_at": timestamp, "acceptance_ref": rel(metadata), "artifact_hashes": hashes,
+        "evidence": evidence, "decision": decision, "roles": roles, "costs": [cost], "role_use": role_use}
+    atomic_write(target / "terminal.json", json_bytes(terminal))
+    return finalize_rebuild_backtest(root, plan_path, target / "terminal.json")
