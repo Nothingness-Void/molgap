@@ -16,7 +16,8 @@ NO_READ = ("training_executed", "model_inference_executed", "labels_read",
            "official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")
 
 
-def accept_training_outputs(repo_root: Path, records: Path, package: Path) -> dict:
+def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
+                            experiment_ref="experiments/pcqm_gptrans_author_alignment/gpu") -> dict:
     """Verify native G1/G2 tensors and telemetry without loading model weights.
 
     Reuse saved-error analysis, runtime and canonical-trace validators. The
@@ -34,7 +35,7 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path) -> di
     from .pcqm_gptrans_v4 import BATCHES_PER_EPOCH, EPOCHS, EXPECTED_PARAMETERS, PHYSICAL_BATCH, RUN_FORMAT
 
     root, records = Path(repo_root).resolve(), Path(records).resolve()
-    base = root / "experiments/pcqm_gptrans_author_alignment/gpu"
+    base = root / experiment_ref
     load = lambda p: json.loads(p.read_bytes())
     require = lambda condition, message: _require(condition, message)
     spec = ExperimentSpec.from_json((base / "spec.json").read_text())
@@ -42,7 +43,10 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path) -> di
     frozen = verify_experiment_source_package(package)
     require(receipt["status"] == "submitted" and receipt["reconciliation_required"] is False,
             "Unqualified physical submission")
-    require((receipt["kernel_id"], receipt["version_number"]) == (136543794, 1), "Physical run identity")
+    legacy = experiment_ref == "experiments/pcqm_gptrans_author_alignment/gpu"
+    require((receipt["kernel_id"], receipt["version_number"]) == (136543794, 1) if legacy
+            else receipt["kernel_id"] > 0 and receipt["version_number"] == 1
+            and receipt["kernel"] == "nvoid912/molgap-gptrans-g1-path-ema-dual-s42", "Physical run identity")
     for key in ("spec_identity", "package_identity", "source_commit"):
         require(frozen[key] == receipt["release_binding"][key], "Package receipt binding: " + key)
     source_sha = receipt["release_binding"]["source_archive_sha256"]
@@ -50,13 +54,13 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path) -> di
             "Executable source binding")
     with tarfile.open(package / "source.tar.gz", "r:gz") as archive:
         variant_sha = hashlib.sha256(archive.extractfile("src/molgap/gptrans_author_variants.py").read()).hexdigest()
-        archived_config = json.loads(archive.extractfile("experiments/pcqm_gptrans_author_alignment/gpu/screen_config.json").read())
+        archived_config = json.loads(archive.extractfile(experiment_ref + "/screen_config.json").read())
     require(config == archived_config, "Question configuration changed since release")
-    screen = records / "gptrans_author_screen"
+    screen = records / ("gptrans_author_screen" if legacy else "gptrans_input_ema_screen")
     startup, cost, summary = load(screen / "startup.json"), load(screen / "native_cost.json"), load(screen / "job_summary.json")
     require(startup["spec_identity"] == spec.identity and startup["source_archive_sha256"] == source_sha,
             "Startup identity")
-    require({r["variant"] for r in summary["outcomes"]} == {"degree_scale", "path_bond_mean"}
+    require({r["variant"] for r in summary["outcomes"]} == set(config["arms"])
             and len(summary["outcomes"]) == 2 and all(r["complete"] is True for r in summary["outcomes"]), "Dual completion")
     require(cost["allocated_gpu_count"] == cost["used_gpu_count"] == 2
             and len(cost["allocated_gpu_inventory"]) == 2 and all("T4" in v for v in cost["allocated_gpu_inventory"]), "T4x2 cost")
@@ -66,11 +70,13 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path) -> di
     require(abs(cost["allocated_device_hours"] - cost["wall_seconds"] * 2 / 3600) < 1e-12, "Native allocation total")
     bundle = load(root / config["reference_bundle_ref"])
     require(sha256_file(root / config["reference_bundle_ref"]) == config["reference_bundle_sha256"], "Reference bundle changed")
-    ref_meta = load(root / "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/prediction_manifest.json")
+    ref_meta = (load(root / "experiments/pcqm_gptrans_v5_audit_reference/results/terminal/prediction_manifest.json")
+                if legacy else bundle["prediction_manifest"])
     ref_path = root / ref_meta["artifact_locator"]
     require(sha256_file(ref_path) == ref_meta["artifact_sha256"], "Reference prediction artifact")
     reference = torch.load(ref_path, map_location="cpu", weights_only=True)
-    ref_trace = load_canonical_trace(root / bundle["trace_manifest_ref"].replace("trace_manifest.json", "trace.json"))
+    ref_manifest = load(root / bundle["trace_manifest_ref"])
+    ref_trace = load_canonical_trace(root / ref_manifest["trace_artifact_ref"])
     arms = {}
     for mode, arm in config["arms"].items():
         folder = screen / mode
@@ -93,7 +99,7 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path) -> di
         require(preflight["accepted"] is True and preflight["parameters"] == EXPECTED_PARAMETERS, "Preflight")
         validate_runtime_certificate(preflight["runtime_certificate"], observed)
         require(observed["runtime_certificate_id"] == manifest["runtime_certificate_id"] == preflight["runtime_certificate_id"], "Runtime binding")
-        if mode == "path_bond_mean":
+        if mode in {"path_bond_mean", "degree_path_bond_mean"}:
             sidecar = manifest["path_sidecar_identity"]
             require(sidecar["valid"] is True and sidecar["content_hashes_checked"] is True
                 and sidecar["sidecar_manifest_sha256"] == config["path_manifest_sha256"]
@@ -137,11 +143,15 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path) -> di
         for field, tensor in (("prediction_sha256", "prediction_eV"), ("source_idx_sha256", "source_idx"), ("target_sha256", "target_eV")):
             prediction_manifest[field] = hashlib.sha256(payload[tensor].contiguous().numpy().tobytes()).hexdigest()
         require(all(prediction_manifest[k] == bundle["prediction_manifest"][k] for k in ("source_idx_sha256", "target_sha256")), "Reference row/target hashes")
-        identity = {**bundle["comparison_identity"], "architecture_config_identity": observed["architecture_fingerprint"]}
+        identity = ({**bundle["comparison_identity"], "architecture_config_identity": observed["architecture_fingerprint"]}
+                    if legacy else arm["comparison_identity"])
+        require(identity["architecture_config_identity"] == observed["architecture_fingerprint"], "Architecture identity")
+        require(manifest.get("ema_decay", .9999) == identity["ema_decay"], "EMA identity")
         declared = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == mode)
         require(plan["state_at_start"]["source_config_identity"] == canonical_fingerprint(declared), "Frozen full-arm declaration")
         prelaunch = load(base / mode / "comparison_readiness_prelaunch.json")
-        require(prelaunch["mismatched_fields"]["architecture_config_identity"]["candidate"] == identity["architecture_config_identity"], "Prelaunch intervention binding")
+        for field, mismatch in prelaunch["mismatched_fields"].items():
+            require(mismatch["candidate"] == identity[field], "Prelaunch intervention binding: " + field)
         fields = {"data_role_fingerprint": "data_role_identity", "row_order_fingerprint": "row_order_identity", "feature_fingerprint": "feature_identity",
             "optimizer_fingerprint": "optimizer_identity", "schedule_fingerprint": "schedule_identity", "target_transform_fingerprint": "target_transform_identity",
             "selection_fingerprint": "checkpoint_selection_identity", "physical_batch_per_device": "physical_batch_per_device",
@@ -151,7 +161,8 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path) -> di
         arms[mode] = {"accepted": True, "trajectory_id": arm["trajectory_id"], "run_id": observed["run_id"],
             "parameters": manifest["parameters"], "best_epoch": manifest["best_epoch"], "comparison_identity": identity,
             "prediction_manifest": prediction_manifest, "paired_analysis": analysis,
-            "material_gain_eV": gain, "material_gate_eV": .003, "material_gate_passed": gain > .003,
+            "material_gain_eV": gain, "material_gate_eV": config.get("material_gate_eV", .003),
+            "material_gate_passed": gain > config.get("material_gate_eV", .003),
             "runtime_certificate": preflight["runtime_certificate"], "completion_manifest_sha256": sha256_file(training / "completion_manifest.json"),
             "epoch_mean_seconds": sum(r["elapsed_seconds"] for r in rows)/EPOCHS,
             "final_live_dev_eV": rows[-1]["live_development_mae_eV"],
