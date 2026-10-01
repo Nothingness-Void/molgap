@@ -62,3 +62,13 @@ The pre-existing unrelated GPTrans run remains outside this question. The user
 authorized local shutdown after verified submission; remote execution is independent.
 Large raw reference weights and CPU paired rows remain locally retained/ignored;
 the published private source dataset retains the exact initial state and source.
+
+## Handoff checks
+
+RML validation and frozen generated-index checks passed. Repository-wide portable
+checking remains blocked by missing unrelated historical large artifacts in this
+new checkout; no slot96/reference-custody path was reported missing. These old
+retention gaps were not repaired by fabricating files or downloading unrelated runs.
+Owner source/evidence and desktop navigation were pushed and remote tips verified.
+The final authenticated recheck still returned RUNNING with identical entry bytes;
+the output API still had no log. No formal-training progress is claimed.
