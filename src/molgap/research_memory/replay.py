@@ -56,6 +56,9 @@ def _canonical_reference_manifest(root: Path, path: Path, manifest: dict[str, An
     """Use a hash-bound migration sidecar without rewriting accepted V5 bytes."""
     from .reference_qualification import qualified_reference_manifest
     manifest = qualified_reference_manifest(root, path, manifest)
+    if manifest["comparison_role"] == "candidate":
+        from .candidate_qualification import qualified_candidate_record
+        manifest = qualified_candidate_record(root, path, manifest, kind="manifest")
     binding_path = repo_local_path(root, path.parent / "trace_migration.json")
     if manifest["comparison_role"] != "reference" or not binding_path.is_file():
         return manifest
@@ -155,7 +158,11 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
         expected = manifest["exposure"]["optimizer_steps" if axis == "optimizer_step" else "sample_presentations"]
         if observations[-1][axis] > expected:
             raise ValueError("trace exceeds manifest terminal exposure")
-        costs = [c for _, c in records["costs"] if c["trajectory_id"] == identity[0] and c["run_id"] == identity[1]]
+        run_costs = [c for _, c in records["costs"] if c["trajectory_id"] == identity[0] and c["run_id"] == identity[1]]
+        # A prospective reservation is not another incurred event. Keep its
+        # estimate separately; unknown OBSERVED cost must still remain unknown.
+        planned_costs = [c for c in run_costs if c["measurement"]["device_hours"]["status"] == "estimated"]
+        costs = [c for c in run_costs if c not in planned_costs]
         hardware = sorted({c["hardware"] for c in costs})
         measurement_complete = bool(costs) and all(c["measurement"]["device_hours"]["status"] == "measured" for c in costs)
         native_cost = sum(c["measurement"]["device_hours"]["value"] for c in costs) if measurement_complete and len(hardware) == 1 else None
@@ -168,6 +175,9 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
             "terminal_endpoint": expected, "terminal_outcome": trajectory["decision"]["outcome"],
             "terminal_label": _terminal_label(trajectory, evidence),
             "native_cost": {"device_hours": native_cost, "hardware": hardware,
+                            "planned_measurements": [{"cost_event_id": c["cost_event_id"],
+                                                      **c["measurement"]["device_hours"]}
+                                                     for c in sorted(planned_costs, key=lambda c: c["cost_event_id"])],
                             "measurements": [{"cost_event_id": c["cost_event_id"],
                                               **c["measurement"]["device_hours"]}
                                              for c in sorted(costs, key=lambda c: c["cost_event_id"])],

@@ -125,6 +125,9 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         record = validate_trace_manifest(load_json(path))
         from .reference_qualification import qualified_reference_manifest
         record = qualified_reference_manifest(root, path, record)
+        from .candidate_qualification import qualified_candidate_record
+        if record["comparison_role"] == "candidate":
+            record = qualified_candidate_record(root, path, record, kind="manifest")
         _validate_pointers(
             root,
             [
@@ -157,8 +160,9 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
         record = validate_comparison_prelaunch(load_json(path))
         records["comparison_prelaunch"].append((path, record))
     for path in discovered.comparison_readiness:
+        from .candidate_qualification import qualified_candidate_record
         record = validate_comparison_readiness(
-            load_json(path),
+            qualified_candidate_record(root, path, load_json(path), kind="readiness"),
             evidence_verifier=lambda pointer, digest: verify_bound_artifact(
                 root, pointer, digest
             ),

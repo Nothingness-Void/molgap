@@ -13,34 +13,11 @@
     },
     {
       "reasons": [
-        "canonical_reference_not_replay_enrolled; historical eligibility left unchanged",
-        "canonical_trace_marked_ineligible"
-      ],
-      "run_id": "gptrans-author-inputs-dual-s42:degree_scale",
-      "trajectory_id": "TC-gptrans-author-degree-scale-100k-s42"
-    },
-    {
-      "reasons": [
-        "canonical_reference_not_replay_enrolled; historical eligibility left unchanged",
-        "canonical_trace_marked_ineligible"
-      ],
-      "run_id": "gptrans-author-inputs-dual-s42:path_bond_mean",
-      "trajectory_id": "TC-gptrans-author-path-bond-mean-100k-s42"
-    },
-    {
-      "reasons": [
         "Historical trace has EMA development MAE but no independently evaluated live-model development MAE at each epoch",
         "canonical_trace_marked_ineligible"
       ],
       "run_id": "kaseichou/molgap-pcqm-gptrans-t-v4-s42:v4",
       "trajectory_id": "TC-gptrans-t-v4-100k-reference-s42"
-    },
-    {
-      "reasons": [
-        "no_compatible_candidate_reference_trace_pair"
-      ],
-      "run_id": "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1",
-      "trajectory_id": "TC-gptrans-v5-audit-reference-100k"
     },
     {
       "reasons": [
@@ -76,6 +53,19 @@
   "family_coverage": [],
   "format": "molgap-rml-screening-backtest-v1",
   "included_comparable_groups": [
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"ema9999-each-step-selection\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"gptrans-v5-observation-reference-fp32-bs128-60epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"46860-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-v5-audit-reference-s42\"}",
+      "run_ids": [
+        "gptrans-author-inputs-dual-s42:degree_scale",
+        "gptrans-author-inputs-dual-s42:path_bond_mean",
+        "kaseichou/molgap-gptrans-v5-audit-reference-s42-v1"
+      ],
+      "trajectory_ids": [
+        "TC-gptrans-author-degree-scale-100k-s42",
+        "TC-gptrans-author-path-bond-mean-100k-s42",
+        "TC-gptrans-v5-audit-reference-100k"
+      ]
+    },
     {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"none\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f\",\"optimizer_identity\":\"1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34\",\"scientific_contract\":\"pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7\",\"terminal_endpoint_identity\":\"31240-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-k1-v4-100k-reference-s42\"}",
       "run_ids": [
@@ -139,6 +129,9 @@
     }
   ],
   "included_trajectory_ids": [
+    "TC-gptrans-author-degree-scale-100k-s42",
+    "TC-gptrans-author-path-bond-mean-100k-s42",
+    "TC-gptrans-v5-audit-reference-100k",
     "TC-k1-atom-pair-local-100k-s42",
     "TC-k1-bond-type-local-100k-s42",
     "TC-k1-chem-typed-pair-token-100k-s42",

@@ -49,13 +49,20 @@ def _relative(root: Path, path: Path) -> str:
 def _source_digest(records: dict[str, list[tuple[Path, dict[str, Any]]]], root: Path) -> str:
     digest = hashlib.sha256()
     for kind in sorted(records):
-        for path, _ in sorted(records[kind], key=lambda item: str(item[0])):
+        for path, record in sorted(records[kind], key=lambda item: str(item[0])):
             digest.update(kind.encode("utf-8"))
             digest.update(b"\0")
             digest.update(_relative(root, path).encode("utf-8"))
             digest.update(b"\0")
-            digest.update(path.read_bytes())
+            payload = path.read_bytes()
+            digest.update(payload)
             digest.update(b"\0")
+            # Additive verified overlays leave the original bytes immutable.
+            # Their effective semantics must still invalidate derived indexes.
+            if record != json.loads(payload):
+                digest.update(b"verified-overlay\0")
+                digest.update(stable_json(record))
+                digest.update(b"\0")
     return digest.hexdigest()
 
 

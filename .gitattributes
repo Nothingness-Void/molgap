@@ -56,3 +56,11 @@ experiments/pcqm_k1_explainability_audit/representation_protocol.md -text
 
 # Shared family outputs retain their exact manifest-bound bytes.
 platforms/_records/**/family_outputs/** -text
+
+# G1/G2 qualification and its frozen inputs bind exact retained file bytes.
+experiments/pcqm_gptrans_author_alignment/gpu/** -text
+experiments/pcqm_gptrans_author_alignment/gpu/screen_config.json whitespace=cr-at-eol
+experiments/pcqm_gptrans_author_alignment/gpu/submission_v1.json whitespace=cr-at-eol
+experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json -text whitespace=cr-at-eol
+experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json -text whitespace=cr-at-eol
+experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json -text whitespace=cr-at-eol

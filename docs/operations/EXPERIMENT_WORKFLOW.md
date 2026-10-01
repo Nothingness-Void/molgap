@@ -39,6 +39,34 @@ approval and platform submission remain explicit owning stages, not CLI side
 effects. Terminal closure can compose the replay-pair check with
 `close_family_replay` without upgrading incomplete records.
 
+### Replay-first release and closure
+
+For a server training screen, submission requires a Replay-capable **planned**
+closure, not a promise that a future job already has terminal evidence. Before
+releasing compute, freeze the exact reference bundle and verify its accepted
+canonical reference trace, own evidence identity, enrollment eligibility,
+distinct role/cost/acceptance pointers and retained artifact hashes. Use
+`server_acceptance.validate_server_scientific_prelaunch` with the actual bundle
+path/root; a valid JSON prelaunch alone does not release compute. The GPTrans
+qualified reference has a hash-bound `qualification_ref`, reverified by this
+release gate; the original shared-pointer bundle is rejected for new strict runs.
+
+Each arm must plan the full live/EMA trace, cumulative steps/presentations,
+atomic checkpoints, aligned predictions/rows/targets, measured native costs,
+role history and independently accepted terminal decision. Preserve budget
+estimates separately from incurred measurements. At closure, require the actual
+candidate AND its frozen control in the rebuilt Replay pool, with a shared
+comparability key and complete trace capability; do not infer success from
+`accepted=true`, `strict_ready=true` or manifest eligibility alone. Failed or
+incomplete jobs remain explicitly incomplete, never fabricated Replay-Ready.
+
+Existing finalized records are immutable. A binding-only recovery can use
+`research_memory.candidate_qualification` after verifying the original prospective
+bundle and the reference's additive qualification prove identical scientific
+and observed identities. It recomputes the strict assessor and is not a recipe,
+checkpoint, gate or prospective-information replacement. G1/G2's owning wrapper
+is `experiments/pcqm_gptrans_author_alignment/qualify_candidates.py`.
+
 ## Local preparation configuration
 
 Construct Specs through `ExperimentSpec(payload).write(path)`. This uses the

@@ -118,8 +118,8 @@
 
 ## Screening Backtest
 - Status: available
-- Eligible traces: 27
-- Excluded traces: 8
+- Eligible traces: 30
+- Excluded traces: 5
 
 ## Memory Gaps
 - [INFO] trace_unavailable_for_backtest: 28

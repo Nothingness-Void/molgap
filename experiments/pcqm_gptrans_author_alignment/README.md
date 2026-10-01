@@ -25,3 +25,8 @@ the accepted path hashes and exact degree-only tensor changes remain separate
 from candidate comparison admission. The physical receipt is
 [preparation_submission.json](preparation_submission.json), and the existing
 server B reads [monitor_binding.json](monitor_binding.json).
+
+The GPU arms' immutable terminal records were followed by an additive
+[candidate/reference qualification](gpu/results/qualification_decision.md).
+`qualify_candidates.py` verifies retained metadata only and publishes hash-bound
+sidecars; it never repeats training/inference or rewrites the prospective record.
