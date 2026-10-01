@@ -24,3 +24,10 @@ Keep this experiment ACTIVE on its owning branch. Next action: reconcile the
 existing reference attempt, inspect its accepted trace/runtime/role/cost inputs,
 then freeze and prepare the one-arm width256 training Spec through the modular
 workflow. No baseline retraining or release-gate bypass is authorized.
+
+RML was rebuilt after the qualification record; `check --frozen` passed.
+The portable check found historical artifacts marked locally retained that
+are absent in this new worktree, including other families' checkpoints and
+predictions. Those inherited availability declarations were preserved; no
+portable pass is claimed. This is separate from the width256 candidate's
+retained initialization and its strict-reference training-release blocker.
