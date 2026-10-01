@@ -26,6 +26,7 @@ from .training_reproducibility import (
     configure_fp32_determinism,
     sha256_file,
 )
+from .v4_runtime import state_dict_sha256, certify_numerical_repeatability
 
 
 SEED = 42
@@ -275,11 +276,7 @@ def _forward(model, batch):
 
 
 def _state_sha256(model) -> str:
-    digest = hashlib.sha256()
-    for name, value in sorted(model.state_dict().items()):
-        digest.update(name.encode("utf-8") + b"\0")
-        digest.update(value.detach().cpu().contiguous().numpy().tobytes())
-    return digest.hexdigest()
+    return state_dict_sha256(model.state_dict())
 
 
 def _batch_sha256(batch) -> str:
@@ -294,15 +291,11 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("ssma", "clean_fingerprint")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint")
 
 
 def _state_digest(state: dict) -> str:
-    digest = hashlib.sha256()
-    for name, value in sorted(state.items()):
-        digest.update(name.encode("utf-8") + b"\0")
-        digest.update(value.detach().cpu().contiguous().numpy().tobytes())
-    return digest.hexdigest()
+    return state_dict_sha256(state)
 
 
 def validate_recipe(recipe: dict, *, mode: str) -> None:
@@ -361,10 +354,258 @@ def _evaluate(model, loader, mean, std):
     return float((prediction - target).abs().mean()), target, prediction, source_idx
 
 
+def _make_screen_model(state, mode):
+    model = make_encoder("neural_atom_k1")
+    model.load_state_dict(state, strict=True)
+    if mode == "ssma":
+        from .k1_joint_aggregation import attach_k1_joint_aggregation
+        attach_k1_joint_aggregation(model, mode="ssma", layer=6, seed=SEED)
+    elif mode == "clean_fingerprint":
+        _attach_fingerprint_head(model)
+    return model.to("cuda")
+
+
+def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
+    """Original V4 optimizer-inclusive step, with optional clean auxiliary loss."""
+    import torch
+    import torch.nn.functional as functional
+    optimizer.zero_grad(set_to_none=True)
+    if mode == "clean_fingerprint":
+        representation = model.encode(batch.x, batch.edge_index, batch.edge_attr,
+                                       batch.batch, batch.random_walk_pe)
+        prediction = model.head(representation).view(-1)
+    else:
+        prediction = _forward(model, batch)
+    target = (batch.y.view(-1) - mean) / std
+    loss = functional.l1_loss(prediction, target)
+    if mode == "clean_fingerprint":
+        loss = loss + 0.1 * functional.binary_cross_entropy_with_logits(
+            model.clean_fingerprint_head(representation), batch.chemical_fingerprint.float())
+    loss.backward()
+    torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+    optimizer.step()
+    return loss.detach(), (prediction.detach() - target).abs().sum(), int(target.numel())
+
+
+def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode):
+    if sha256_file(recipe_path) != context.training_recipe_sha256:
+        raise ValueError("Runtime recipe bytes differ from Spec")
+    return {"format": "molgap-k1-runtime-provenance-v1", "context": context.to_dict(),
+        "mode": mode, "recipe_sha256": sha256_file(recipe_path),
+        "initial_state_file_sha256": sha256_file(initial_state_path),
+        "initialization_sha256": INITIAL_STATE_SHA256,
+        "runtime_fingerprint": runtime["runtime_fingerprint"],
+        "row_order_fingerprint": ROW_ORDER_FINGERPRINT}
+
+
+def _validate_arm_binding(spec, context, mode):
+    declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == context.arm_id)
+    if (declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
+                                          "state_sha256": INITIAL_STATE_SHA256} or
+        declaration["training"]["sampler"]["sha256"] != ROW_ORDER_FINGERPRINT or
+        declaration["training"]["overrides"]):
+        raise ValueError("K1 executable initialization/sampler/overrides differ from Spec")
+    addons = declaration["addons"]
+    if mode == "reference" and addons:
+        raise ValueError("Reference must declare no addon")
+    if mode == "ssma":
+        expected = {"name": "k1_joint_aggregation", "version": "1",
+            "source_sha256": sha256_file(Path(__file__).with_name("k1_joint_aggregation.py")),
+            "config": {"degree_policy": "original-sum-above-four", "kappa": 4,
+                       "latent_channels": 64, "layer": 6, "seed": SEED}}
+        if addons != [expected]:
+            raise ValueError("SSMA executable addon differs from Spec")
+
+
+def _allocation_costs(seconds, hardware, *, scope):
+    return [{"metric": "wall_seconds", "unit": "seconds", "value": seconds,
+             "status": "measured", "semantics": "process_wall", "hardware": hardware},
+            {"metric": "device_seconds", "unit": "seconds", "value": seconds,
+             "status": "measured", "semantics": "allocated_device", "hardware": hardware}]
+
+
+def validate_runtime_preflight(directory, provenance):
+    directory = Path(directory)
+    saved = json.loads((directory / "runtime_provenance.json").read_text(encoding="utf-8"))
+    certificate = json.loads((directory / "runtime_certificate.json").read_text(encoding="utf-8"))
+    architecture = json.loads((directory / "architecture_preflight.json").read_text(encoding="utf-8"))
+    runtime = json.loads((directory / "runtime_manifest.json").read_text(encoding="utf-8"))
+    if saved != provenance or certificate.get("provenance_sha256") != canonical_fingerprint(provenance):
+        raise ValueError("K1 runtime preflight identity changed")
+    if (certificate.get("status") != "accepted" or
+        certificate.get("calibration_checks_passed") is not True or
+        certificate.get("architecture_sha256") != canonical_fingerprint(architecture) or
+        architecture.get("accepted") is not True):
+        raise ValueError("K1 runtime preflight is not qualified")
+    if (runtime.get("runtime_fingerprint") != provenance["runtime_fingerprint"] or
+        certificate.get("runtime_fingerprint") != provenance["runtime_fingerprint"] or
+        architecture.get("repeatability", {}).get("accepted") is not True or
+        architecture.get("resume_roundtrip", {}).get("accepted") is not True or
+        architecture.get("zero_initialization_delta") != 0.0 or
+        not 0 <= architecture.get("maximum_overhead_fraction", -1) <= 0.25 or
+        not math.isfinite(architecture.get("synchronized_step_overhead_fraction", math.inf)) or
+        architecture["synchronized_step_overhead_fraction"] > architecture["maximum_overhead_fraction"]):
+        raise ValueError("K1 runtime calibration evidence differs from the gate")
+    return certificate
+
+
+def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: str,
+                         arm_id: str, mode: str, recipe_path: Path, initial_state_path: Path,
+                         input_root: Path, output: Path, account: str, run_reference: str,
+                         trajectory_id: str, label_cache=None) -> dict:
+    """Isolated real-training-batch qualification; never counts as formal exposure."""
+    import torch
+    from .experiment_family_workflow import RunContext
+    from .training_reproducibility import capture_rng_state, restore_rng_state
+    if mode not in ("reference", "ssma") or label_cache is not None:
+        raise ValueError("This paired GPU qualification supports reference and SSMA only")
+    recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
+    validate_recipe(recipe, mode=mode)
+    context = RunContext.for_training(spec, package_dir,
+        expected_package_identity=expected_package_identity, arm_id=arm_id,
+        account=account, run_reference=run_reference)
+    _validate_arm_binding(spec, context, mode)
+    declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
+    if ((context.family_name, context.family_version) != ("neural_atom_k1", "2") or
+        declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
+                                          "state_sha256": INITIAL_STATE_SHA256}):
+        raise ValueError("Preflight requires frozen K1 family/initialization")
+    determinism = configure_fp32_determinism(SEED)
+    runtime = build_runtime_manifest(determinism)
+    hardware = torch.cuda.get_device_name(0)
+    if "T4" not in hardware:
+        raise RuntimeError("Paired qualification requires an exclusive assigned T4")
+    output = Path(output)
+    output.mkdir(parents=True, exist_ok=True)
+    provenance = _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
+    atomic_json(output / "runtime_provenance.json", provenance)
+    atomic_json(output / "runtime_manifest.json", runtime)
+    state = torch.load(initial_state_path, map_location="cpu", weights_only=True)
+    if state_dict_sha256(state) != INITIAL_STATE_SHA256:
+        raise ValueError("Pinned K1 initial tensor identity mismatch")
+    if compute_row_order_fingerprint() != ROW_ORDER_FINGERPRINT:
+        raise RuntimeError("Frozen row-order implementation changed")
+    root, manifest = find_fixed_cache(input_root)
+    roles = load_roles(root, manifest)
+    mean_value, std_value = _target_stats(roles["train"])
+    batch = next(iter(_train_loader(roles["train"], 0))).to("cuda")
+    if int(batch.num_graphs) != BATCH_SIZE:
+        raise RuntimeError("Runtime calibration requires physical train batch128")
+    mean, std = torch.tensor(mean_value, device="cuda"), torch.tensor(std_value, device="cuda")
+    torch.cuda.synchronize()
+    started = time.perf_counter()
+    reference = _make_screen_model(state, "reference").eval()
+    candidate = _make_screen_model(state, mode).eval()
+    with torch.no_grad():
+        zero_delta = float((_forward(reference, batch) - _forward(candidate, batch)).abs().max())
+    if zero_delta != 0.0:
+        raise RuntimeError("Zero-added initialization differs from frozen reference")
+    del reference, candidate
+    losses, states = [], []
+    for _ in range(2):
+        configure_fp32_determinism(SEED)
+        model = _make_screen_model(state, mode).train()
+        optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
+        _optimizer_step(model, optimizer, batch, mean, std, mode)
+        loss, _, _ = _optimizer_step(model, optimizer, batch, mean, std, mode)
+        if mode == "ssma" and not any(
+            parameter.grad is not None and bool(torch.isfinite(parameter.grad).all())
+            and float(parameter.grad.abs().sum()) > 0
+            for parameter in model.k1_joint_aggregation.parameters()):
+            raise RuntimeError("SSMA mechanism has no finite nonzero training gradient")
+        losses.append(float(loss.cpu()))
+        states.append({key: value.detach().cpu().clone() for key, value in model.state_dict().items()})
+        del model, optimizer
+    repeated = certify_numerical_repeatability(losses=losses, states=states)
+    del states
+    # Check the same model/optimizer/scheduler/RNG serialization as epoch resume.
+    configure_fp32_determinism(SEED)
+    model = _make_screen_model(state, mode).train()
+    optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
+    _optimizer_step(model, optimizer, batch, mean, std, mode)
+    scheduler.step()
+    snapshot = output / "diagnostic_resume.pt"
+    atomic_torch_save(snapshot, {"model": model.state_dict(), "optimizer": optimizer.state_dict(),
+        "scheduler": scheduler.state_dict(), "rng_state": capture_rng_state(),
+        "cursor": {"epoch": 1, "next_batch": 0, "sampler_order_sha256": ROW_ORDER_FINGERPRINT}})
+    uninterrupted, _, _ = _optimizer_step(model, optimizer, batch, mean, std, mode)
+    continuous_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
+    restored = torch.load(snapshot, map_location="cpu", weights_only=False)
+    model.load_state_dict(restored["model"], strict=True)
+    optimizer.load_state_dict(restored["optimizer"])
+    scheduler.load_state_dict(restored["scheduler"])
+    restore_rng_state(restored["rng_state"])
+    resumed, _, _ = _optimizer_step(model, optimizer, batch, mean, std, mode)
+    resume = certify_numerical_repeatability(losses=[float(uninterrupted.cpu()), float(resumed.cpu())],
+        states=[continuous_state, model.state_dict()])
+    selected_path = output / "diagnostic_selected.pt"
+    atomic_torch_save(selected_path, _clean_gap_state(model))
+    selected_state = torch.load(selected_path, map_location="cpu", weights_only=True)
+    selected_model = _make_screen_model(state, mode).eval()
+    selected_model.load_state_dict(selected_state, strict=True)
+    model.eval()
+    with torch.no_grad():
+        selected_delta = float((_forward(model, batch) - _forward(selected_model, batch)).abs().max())
+    if selected_delta != 0.0:
+        raise RuntimeError("Selected Gap state roundtrip changed inference")
+    del selected_model, selected_state
+    del model, optimizer, scheduler, continuous_state, restored
+    timings = {}
+    for profile_mode in ("reference", mode):
+        configure_fp32_determinism(SEED)
+        model = _make_screen_model(state, profile_mode).train()
+        optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
+        for _ in range(2):
+            _optimizer_step(model, optimizer, batch, mean, std, profile_mode)
+        torch.cuda.synchronize()
+        torch.cuda.reset_peak_memory_stats()
+        samples = []
+        for _ in range(5):
+            torch.cuda.synchronize()
+            tick = time.perf_counter()
+            _optimizer_step(model, optimizer, batch, mean, std, profile_mode)
+            torch.cuda.synchronize()
+            samples.append(time.perf_counter() - tick)
+        timings[profile_mode] = {"median_step_seconds": float(np.median(samples)),
+            "samples_seconds": samples, "peak_memory_bytes": torch.cuda.max_memory_allocated()}
+        del model, optimizer
+    overhead = timings[mode]["median_step_seconds"] / timings["reference"]["median_step_seconds"] - 1
+    architecture = {"accepted": overhead <= 0.25, "mode": mode, "zero_initialization_delta": zero_delta,
+        "repeated_optimizer_steps": 2,
+        "repeatability": repeated, "resume_roundtrip": resume, "timings": timings,
+        "selected_state_roundtrip_delta": selected_delta,
+        "synchronized_step_overhead_fraction": overhead, "maximum_overhead_fraction": 0.25,
+        "formal_sample_presentations": 0, "fixture_sha256": _batch_sha256(batch),
+        "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"}
+    atomic_json(output / "architecture_preflight.json", architecture)
+    torch.cuda.synchronize()
+    atomic_json(output / "diagnostic_cost.json", {"costs": _allocation_costs(
+        time.perf_counter() - started, hardware, scope="diagnostic_window_excludes_bootstrap_queue"),
+        "scope": "one exclusive assigned T4 diagnostic window; bootstrap and queue excluded",
+        "cpu_allocation_seconds": {"status": "missing", "value": None},
+        "queue_seconds": {"status": "missing", "value": None}})
+    if not architecture["accepted"]:
+        raise RuntimeError("SSMA exceeds synchronized optimizer-inclusive overhead gate")
+    certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
+        "platform_id": recipe.get("runtime_platform_id", context.platform + "-t4x2"),
+        "accelerator": hardware, "precision": "fp32", "tf32_enabled": False,
+        "deterministic_algorithms": True, "physical_batch_per_device": BATCH_SIZE,
+        "tail_batch_policy": "drop_last", "runtime_fingerprint": runtime["runtime_fingerprint"],
+        "software_fingerprint": runtime["installed_distributions_sha256"],
+        "determinism_fingerprint": canonical_fingerprint(determinism),
+        "calibration_fixture_sha256": architecture["fixture_sha256"],
+        "calibration_output_sha256": repeated["state_sha256"][0],
+        "calibration_checks_passed": True, "provenance_sha256": canonical_fingerprint(provenance),
+        "architecture_sha256": canonical_fingerprint(architecture)}
+    atomic_json(output / "runtime_certificate.json", certificate)
+    return certificate
+
+
 def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
                    arm_id: str, mode: str, recipe_path: Path, initial_state_path: Path,
                    input_root: Path, output: Path, account: str, run_reference: str,
-                   trajectory_id: str, label_cache=None) -> dict:
+                   trajectory_id: str, label_cache=None, preflight_dir: Path | None = None) -> dict:
     """Execute the owning V4 epoch loop with shared durable-output hooks.
 
     Resume is restricted to acknowledged complete epochs. Re-created epoch
@@ -372,7 +613,6 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     corruption, pretraining, alternate geometry cache or protected role is used.
     """
     import torch
-    import torch.nn.functional as functional
     from .experiment_family_workflow import FamilyOutputSession, RunContext
     from .training_reproducibility import capture_rng_state, restore_rng_state
 
@@ -381,14 +621,15 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     context = RunContext.for_training(spec, package_dir,
         expected_package_identity=expected_package_identity, arm_id=arm_id,
         account=account, run_reference=run_reference)
+    _validate_arm_binding(spec, context, mode)
     if (context.family_name, context.family_version) != ("neural_atom_k1", "2"):
         raise ValueError("Expected registered K1 family output adapter")
     declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
     if declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
                                         "state_sha256": INITIAL_STATE_SHA256}:
         raise ValueError("K1 Spec initialization differs from executable state")
-    if mode == "ssma" and label_cache is not None:
-        raise ValueError("SSMA does not consume chemical auxiliary labels")
+    if mode in ("reference", "ssma") and label_cache is not None:
+        raise ValueError("Reference/SSMA does not consume chemical auxiliary labels")
     if mode == "clean_fingerprint":
         if label_cache is None or label_cache.components != ("fingerprints",):
             raise ValueError("Clean fingerprint requires accepted fingerprint-only cache")
@@ -402,6 +643,14 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     if compute_row_order_fingerprint() != ROW_ORDER_FINGERPRINT:
         raise RuntimeError("Frozen row-order implementation changed")
     determinism = configure_fp32_determinism(SEED)
+    runtime = build_runtime_manifest(determinism)
+    provenance = _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
+    certificate = validate_runtime_preflight(preflight_dir or output, provenance)
+    hardware = torch.cuda.get_device_name(0)
+    if certificate.get("accelerator") != hardware or "T4" not in hardware:
+        raise ValueError("Runtime accelerator differs from qualified T4")
+    Path(output).mkdir(parents=True, exist_ok=True)
+    atomic_json(Path(output) / "runtime_provenance.json", provenance)
     root, manifest = find_fixed_cache(input_root)
     roles = load_roles(root, manifest)
     mean_value, std_value = _target_stats(roles["train"])
@@ -409,14 +658,7 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     state = torch.load(initial_state_path, map_location="cpu", weights_only=True)
     if _state_digest(state) != INITIAL_STATE_SHA256:
         raise ValueError("Pinned K1 initial tensor identity mismatch")
-    model = make_encoder("neural_atom_k1")
-    model.load_state_dict(state, strict=True)
-    if mode == "ssma":
-        from .k1_joint_aggregation import attach_k1_joint_aggregation
-        attach_k1_joint_aggregation(model, mode="ssma", layer=6, seed=SEED)
-    else:
-        _attach_fingerprint_head(model)
-    model = model.to("cuda")
+    model = _make_screen_model(state, mode)
     optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE,
                                  weight_decay=WEIGHT_DECAY)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
@@ -433,11 +675,12 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
                      "weights": "live", "direction": "minimize"}}
     session = FamilyOutputSession(output, context, adapter="k1-screen-v1", contract=recipe_path,
                                  trajectory_id=trajectory_id, metric_semantics=semantics)
-    atomic_json(session.root / "runtime_manifest.json", build_runtime_manifest(determinism))
+    atomic_json(session.root / "runtime_manifest.json", runtime)
+    atomic_json(session.root / "runtime_certificate.json", certificate)
     start_epoch, best = 0, math.inf
     checkpoint = session.root / "last_checkpoint.pt"
     if checkpoint.exists():
-        saved = torch.load(checkpoint, map_location="cpu", weights_only=True)
+        saved = torch.load(checkpoint, map_location="cpu", weights_only=False)
         if saved["context"] != context.to_dict():
             raise ValueError("K1 resume source/arm identity mismatch")
         cursor = saved["cursor"]
@@ -456,6 +699,8 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         scheduler.load_state_dict(saved["scheduler"])
         best = min(row["live_dev_metric"] for row in observations)
         restore_rng_state(saved["rng_state"])
+    torch.cuda.synchronize()
+    allocation_started = time.perf_counter()
     for epoch in range(start_epoch, EPOCHS):
         model.train()
         absolute, rows = 0.0, 0
@@ -464,23 +709,9 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
             if label_cache is not None:
                 label_cache.attach(batch)
             batch = batch.to("cuda", non_blocking=True)
-            optimizer.zero_grad(set_to_none=True)
-            if mode == "clean_fingerprint":
-                representation = model.encode(batch.x, batch.edge_index, batch.edge_attr,
-                                               batch.batch, batch.random_walk_pe)
-                prediction = model.head(representation).view(-1)
-            else:
-                prediction = _forward(model, batch)
-            target = (batch.y.view(-1) - mean) / std
-            loss = functional.l1_loss(prediction, target)
-            if mode == "clean_fingerprint":
-                loss = loss + 0.1 * functional.binary_cross_entropy_with_logits(
-                    model.clean_fingerprint_head(representation), batch.chemical_fingerprint.float())
-            loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-            optimizer.step()
-            absolute += float((prediction.detach() - target).abs().sum())
-            rows += int(target.numel())
+            _, batch_absolute, batch_rows = _optimizer_step(model, optimizer, batch, mean, std, mode)
+            absolute += float(batch_absolute)
+            rows += batch_rows
         if rows != ROWS_PER_EPOCH:
             raise RuntimeError("Frozen optimizer exposure changed")
         validation_mae, target_eV, prediction_eV, source_idx = _evaluate(
@@ -491,21 +722,34 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
             session.selected(model_state=_clean_gap_state(model), epoch=epoch + 1,
                 optimizer_step=step, weights="live", prediction_eV=prediction_eV,
                 target_eV=target_eV, source_idx=source_idx)
-        session.epoch_finished(epoch=epoch + 1, optimizer_step=step,
-            sample_presentations=presentations, live_dev_metric=validation_mae,
-            live_train_metric=absolute / rows * std_value,
-            learning_rate=optimizer.param_groups[0]["lr"],
-            wall_time_seconds=time.perf_counter() - started)
+        observed_lr = optimizer.param_groups[0]["lr"]
         scheduler.step()
         session.checkpoint(model_state=model.state_dict(), optimizer_state=optimizer.state_dict(),
             scheduler_state=scheduler.state_dict(), rng_state=capture_rng_state(),
             cursor={"epoch": epoch + 1, "next_batch": 0,
                     "sampler_order_sha256": ROW_ORDER_FINGERPRINT},
             optimizer_step=step, sample_presentations=presentations)
+        torch.cuda.synchronize()
+        session.epoch_finished(epoch=epoch + 1, optimizer_step=step,
+            sample_presentations=presentations, live_dev_metric=validation_mae,
+            live_train_metric=absolute / rows * std_value, learning_rate=observed_lr,
+            checkpoint_identity="sha256:" + sha256_file(checkpoint),
+            wall_time_seconds=time.perf_counter() - started)
         print(f"{arm_id} epoch={epoch+1} train_normalized_mae={absolute/rows:.6f} "
               f"dev={validation_mae:.6f}eV seconds={time.perf_counter()-started:.1f}", flush=True)
+    torch.cuda.synchronize()
+    costs = _allocation_costs(time.perf_counter() - allocation_started, hardware,
+        scope="training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue")
+    atomic_json(session.root / "allocation_cost.json", {"costs": costs,
+        "start_epoch": start_epoch, "end_epoch": EPOCHS,
+        "cpu_allocation_seconds": {"status": "missing", "value": None},
+        "queue_seconds": {"status": "missing", "value": None},
+        "scope": "one exclusive assigned T4 training window including development/checkpoint; "
+                 "lower bound excludes bootstrap/queue and earlier resume allocations"})
     return session.complete(runtime={"platform": context.platform, "account": context.account,
         "precision": "fp32", "source_commit": context.source_commit,
-        "source_archive_sha256": context.source_archive_sha256}, hardware=torch.cuda.get_device_name(0))
+        "source_archive_sha256": context.source_archive_sha256,
+        "runtime_certificate_id": canonical_fingerprint(certificate)}, hardware=hardware,
+        observed_costs=costs)
 
 
