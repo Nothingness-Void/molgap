@@ -7,6 +7,7 @@ import subprocess
 from .comparison_readiness import ROLE_EVENT_KINDS, TRACE_FIELD_DECLARATIONS, assess_comparison_prelaunch
 from .evidence_pointers import load_json_object
 from .experiment_spec import ExperimentSpec
+from .experiment_package import _name
 from .experiment_staging import UploadArtifact
 from .research_memory.candidate_reference import enroll_candidate_reference
 from .server_acceptance import write_server_comparison_prelaunch
@@ -133,7 +134,14 @@ def freeze_followup(root: Path):
         dataset_metadata={"title": "MolGap GPTrans G1 Path EMA Source", "id": "nvoid912/molgap-gptrans-g1-path-ema-source",
             "licenses": [{"name": "other"}], "isPrivate": True})
     tracked = subprocess.check_output(["git", "ls-files", "-z", "--", "src/molgap"], cwd=root).decode().split("\0")
-    workflow["source_paths"] = [p for p in tracked if p.endswith(".py") and "/archive/" not in p] + [
+    sources = []
+    for p in tracked:
+        if p.endswith(".py") and "/archive/" not in p:
+            try:
+                sources.append(_name(p))
+            except ValueError:
+                continue
+    workflow["source_paths"] = sources + [
         *recipes.values(), BASE + "/gpu/run.py", BASE + "/gpu/kernel-metadata.json", BASE + "/gpu/screen_config.json"]
     atomic_json(root / BASE / "gpu/release_workflow.json", workflow)
     return {"spec_identity": spec.identity, "prelaunch_validated": True, "compute_released": False}
