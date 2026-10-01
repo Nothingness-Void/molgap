@@ -1,0 +1,92 @@
+{
+  "scope": "posthoc_descriptive_tabulation_of_already_accepted_saved_predictions_no_fit_no_model_execution",
+  "sign_definition": "positive means candidate worse",
+  "rows": 50000,
+  "mean_delta_eV": 0.001503872995376587,
+  "source_artifacts": {
+    "reference": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/development_predictions.pt",
+      "sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82"
+    },
+    "candidate": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_node_width256_kaggle3_v1/experiment/width256/development_predictions.pt",
+      "sha256": "a43b162b691ac4e69da97d70f71a97f471fde44759c6321adf60c0aa9b52581f"
+    }
+  },
+  "groups": {
+    "candidate_better": {
+      "rows": 24842,
+      "fraction": 0.49684,
+      "mean_delta_eV": -0.06681290182281487,
+      "contribution_to_full_mean_eV": -0.03319532214164734
+    },
+    "candidate_worse": {
+      "rows": 25158,
+      "fraction": 0.50316,
+      "mean_delta_eV": 0.06896254697715225,
+      "contribution_to_full_mean_eV": 0.03469919513702393
+    },
+    "ties": {
+      "rows": 0,
+      "fraction": 0.0,
+      "mean_delta_eV": null,
+      "contribution_to_full_mean_eV": 0.0
+    }
+  },
+  "gap_bins": [
+    {
+      "lower_eV": null,
+      "upper_eV": 2.0,
+      "rows": 25,
+      "reference_mae_eV": 0.7723108470439911,
+      "candidate_mae_eV": 0.7877041137218476,
+      "candidate_worse_by_eV": 0.015393266677856446,
+      "candidate_better_fraction": 0.56
+    },
+    {
+      "lower_eV": 2.0,
+      "upper_eV": 4.0,
+      "rows": 3700,
+      "reference_mae_eV": 0.20098061052528587,
+      "candidate_mae_eV": 0.21032914561194344,
+      "candidate_worse_by_eV": 0.009348535086657549,
+      "candidate_better_fraction": 0.4689189189189189
+    },
+    {
+      "lower_eV": 4.0,
+      "upper_eV": 6.0,
+      "rows": 34837,
+      "reference_mae_eV": 0.12731511510670568,
+      "candidate_mae_eV": 0.12858543312638218,
+      "candidate_worse_by_eV": 0.0012703180196765205,
+      "candidate_better_fraction": 0.4979475844647932
+    },
+    {
+      "lower_eV": 6.0,
+      "upper_eV": 8.0,
+      "rows": 10451,
+      "reference_mae_eV": 0.15813484685567678,
+      "candidate_mae_eV": 0.15676249596345096,
+      "candidate_worse_by_eV": -0.0013723508922258252,
+      "candidate_better_fraction": 0.5033011195100947
+    },
+    {
+      "lower_eV": 8.0,
+      "upper_eV": null,
+      "rows": 987,
+      "reference_mae_eV": 0.21665963672456287,
+      "candidate_mae_eV": 0.22710300917079504,
+      "candidate_worse_by_eV": 0.01044337244623217,
+      "candidate_better_fraction": 0.49240121580547114
+    }
+  ],
+  "prediction_change": {
+    "mean_absolute_eV": 0.08103557239055634,
+    "pearson_correlation": 0.9925682283645554
+  },
+  "limitations": [
+    "posthoc bins are descriptive, not chemical structure slices or causal evidence",
+    "single seed and runtime differences remain",
+    "no calibration, routing or new model comparison"
+  ]
+}

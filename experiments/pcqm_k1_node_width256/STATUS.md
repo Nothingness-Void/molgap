@@ -7,6 +7,11 @@ for the authoritative numbers, scope and disposition, and the
 The width192 reference remains preferred for this screen; no scale-up or
 successor is authorized.
 
+The [follow-up interpretation](followup_analysis/README.md) tabulates the
+accepted predictions and explains the single-slot return/mean-pooling structure.
+Its Gap bins are post-hoc descriptions; it introduces no new gate or training
+release and does not rewrite the immutable terminal evidence.
+
 ## Accepted execution
 
 [Kaggle3 kernel](https://www.kaggle.com/code/nvoid912/molgap-k1-node256-100k-s42-v1),
