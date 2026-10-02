@@ -32,7 +32,7 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             finalized_ref=prior + "/gpu/degree_scale_ema999/rml_plan/rml_finalized",
             readiness_ref=prior + "/gpu/degree_scale_ema999/results/comparison_readiness.json",
             acceptance_ref=prior + "/gpu/results/acceptance.json", acceptance_arm="degree_scale_ema999",
-            destination=BASE + "/reference", bundle_id="reference-gptrans-g1-ema999-100k-s42-v1")
+            destination=BASE + "/reference", bundle_id=("reference-" + study["experiment_id"] + "-100k-s42-v1") if study else "reference-gptrans-g1-ema999-100k-s42-v1")
     else:
         bundle = enroll_candidate_reference(root, OLD + "/gpu/degree_scale/rml_plan/candidate_qualification.json",
             BASE + "/reference", "reference-gptrans-g1-100k-s42-v1")
