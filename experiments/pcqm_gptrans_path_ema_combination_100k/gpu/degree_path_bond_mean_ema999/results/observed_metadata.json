@@ -1,0 +1,166 @@
+{
+  "cost_attribution": "full allocated T4 cost divided among declared arms; includes idle devices, not utilization",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/results/observed_metadata.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 6.237423259335555
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.1187116296677777
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "gptrans-g1-path-ema-combined-s42:degree_path_bond_mean_ema999",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
+    }
+  ],
+  "evidence_id": "pcqm-gptrans-g1-degree-path-bond-mean-ema999-100k-s42",
+  "local_training_executed": false,
+  "model_inference_executed": false,
+  "native_cost_ref": "platforms/_records/kaggle/training/gptrans_path_ema_combination_v1/gptrans_path_ema_combination_screen/native_cost.json",
+  "observed_role_sources": [
+    "platforms/_records/kaggle/training/gptrans_path_ema_combination_v1/gptrans_path_ema_combination_screen/degree_path_bond_mean_ema999/training/completion_manifest.json",
+    "platforms/_records/kaggle/training/gptrans_path_ema_combination_v1/gptrans_path_ema_combination_screen/degree_path_bond_mean_ema999/training/canonical_trace.json",
+    "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/acceptance.json"
+  ],
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "strict_causal",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_train-training_membership",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-path-ema-combined-s42:degree_path_bond_mean_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_train-labels_read",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-path-ema-combined-s42:degree_path_bond_mean_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_train-metric_computed",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-path-ema-combined-s42:degree_path_bond_mean_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_development-prediction_input",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-path-ema-combined-s42:degree_path_bond_mean_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_development-labels_read",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-path-ema-combined-s42:degree_path_bond_mean_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-path-ema-combined-s42:degree_path_bond_mean_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_development-selection_used",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-path-ema-combined-s42:degree_path_bond_mean_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
+    }
+  ],
+  "run_id": "gptrans-g1-path-ema-combined-s42:degree_path_bond_mean_ema999",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/results/decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "CLOSE"
+    ],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "explicit scale/combination compute authorization"
+    ]
+  },
+  "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
+}

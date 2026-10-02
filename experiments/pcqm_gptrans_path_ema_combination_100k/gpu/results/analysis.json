@@ -1,0 +1,160 @@
+{
+  "analysis_mode": "saved_records_only",
+  "model_inference_executed": false,
+  "paired_analysis": {
+    "rows": 50000,
+    "reference_mae_eV": 0.14423262914597987,
+    "candidate_mae_eV": 0.14501232706010342,
+    "candidate_minus_reference_eV": 0.0007796979141235352,
+    "paired_row_bootstrap": {
+      "delta": 0.0007796979141235352,
+      "ci95": [
+        -0.00015664672720432283,
+        0.0016660978543758386
+      ],
+      "probability_better": 0.0506,
+      "n_bootstrap": 5000,
+      "seed": 20260912
+    },
+    "candidate_win_fraction": 0.49222,
+    "absolute_error_delta_quantiles_eV": [
+      -3.669332504272461,
+      -0.09975695610046387,
+      -0.04235970973968506,
+      0.0010237693786621094,
+      0.044873833656311035,
+      0.100403356552124,
+      2.360764503479004
+    ],
+    "posthoc_reference_error_quintiles": [
+      {
+        "reference_error_quintile": 1,
+        "rows": 10000,
+        "reference_mae_eV": 0.015788019275665283,
+        "candidate_mae_eV": 0.056478612327575686,
+        "candidate_minus_reference_eV": 0.040690593051910404
+      },
+      {
+        "reference_error_quintile": 2,
+        "rows": 10000,
+        "reference_mae_eV": 0.05045005625486374,
+        "candidate_mae_eV": 0.0706685690522194,
+        "candidate_minus_reference_eV": 0.02021851279735565
+      },
+      {
+        "reference_error_quintile": 3,
+        "rows": 10000,
+        "reference_mae_eV": 0.09522396845817566,
+        "candidate_mae_eV": 0.09979032742977142,
+        "candidate_minus_reference_eV": 0.004566358971595764
+      },
+      {
+        "reference_error_quintile": 4,
+        "rows": 10000,
+        "reference_mae_eV": 0.16574542496204375,
+        "candidate_mae_eV": 0.1499429957151413,
+        "candidate_minus_reference_eV": -0.015802429246902467
+      },
+      {
+        "reference_error_quintile": 5,
+        "rows": 10000,
+        "reference_mae_eV": 0.39395567677915094,
+        "candidate_mae_eV": 0.3481811307758093,
+        "candidate_minus_reference_eV": -0.04577454600334167
+      }
+    ],
+    "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+  },
+  "material_gate_passed": false,
+  "native_cost": {
+    "allocated_gpu_inventory": [
+      "GPU 0: Tesla T4 (UUID: GPU-f64cee42-f6c3-16ba-db3a-9dd594183c58)",
+      "GPU 1: Tesla T4 (UUID: GPU-7de289e6-874f-47a2-d334-7414288f68b3)"
+    ],
+    "allocated_gpu_count": 2,
+    "used_gpu_count": 1,
+    "wall_seconds": 11227.361866804,
+    "allocated_device_hours": 6.237423259335555,
+    "source_archive_sha256": "0eb2da27634ab26e8e933b10caa87cb1f3580aa4f6b1fd31878b3e863349557c"
+  },
+  "checkpoints": [
+    {
+      "epoch": 9,
+      "candidate_minus_reference": {
+        "live_train_metric": -0.00039581554267606456,
+        "live_dev_metric": 0.007158711552619934,
+        "ema_dev_metric": -0.0002733170986175537
+      }
+    },
+    {
+      "epoch": 19,
+      "candidate_minus_reference": {
+        "live_train_metric": 1.3577082214083491e-05,
+        "live_dev_metric": 0.002391830086708069,
+        "ema_dev_metric": 0.0008545666933059692
+      }
+    },
+    {
+      "epoch": 29,
+      "candidate_minus_reference": {
+        "live_train_metric": 0.0005120677521293082,
+        "live_dev_metric": 0.005023330450057983,
+        "ema_dev_metric": 0.00012159347534179688
+      }
+    },
+    {
+      "epoch": 39,
+      "candidate_minus_reference": {
+        "live_train_metric": 0.0004894974099532434,
+        "live_dev_metric": -0.002471640706062317,
+        "ema_dev_metric": 0.0007667094469070435
+      }
+    },
+    {
+      "epoch": 49,
+      "candidate_minus_reference": {
+        "live_train_metric": 0.0003941526615058172,
+        "live_dev_metric": 0.0002062767744064331,
+        "ema_dev_metric": 0.00026991963386535645
+      }
+    },
+    {
+      "epoch": 59,
+      "candidate_minus_reference": {
+        "live_train_metric": 0.0008086024381197543,
+        "live_dev_metric": 0.0007022172212600708,
+        "ema_dev_metric": 0.0007703602313995361
+      }
+    }
+  ],
+  "live_path_training_matches_previous_ema9999_path_arm": true,
+  "late_ema_improvement_epoch49_to59": 6.04093074798584e-05,
+  "actual_replay_pair": {
+    "candidate": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+    "reference_id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+    "capability": "complete",
+    "comparability_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"ema999-each-step-selection\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"gptrans-v5-observation-reference-fp32-bs128-60epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"46860-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-g1-degree-scale-ema999-100k-s42\"}",
+    "group_members": [
+      {
+        "trajectory_id": "TC-gptrans-g1-ema999-100k-s42",
+        "comparison_role": "reference",
+        "capability": "complete"
+      },
+      {
+        "trajectory_id": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+        "comparison_role": "candidate",
+        "capability": "complete"
+      },
+      {
+        "trajectory_id": "TC-gptrans-g1-path-endpoints-100k-s42",
+        "comparison_role": "candidate",
+        "capability": "complete"
+      },
+      {
+        "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+        "comparison_role": "candidate",
+        "capability": "complete"
+      }
+    ]
+  }
+}

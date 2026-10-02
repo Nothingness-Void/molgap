@@ -5,12 +5,13 @@
 
 ## Server active screen
 
-Two separately authorized Kaggle3 screens are API-observed RUNNING: the unchanged
-[chemical-path + EMA combination](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/submission_record.md)
-and the T4x2 [final atom/bond readout dual](experiments/pcqm_gptrans_readout_100k/gpu/submission_record.md).
-Both reuse frozen G1+EMA without baseline retraining. Existing Luna B monitors
-both exact jobs through [one binding](experiments/pcqm_gptrans_readout_100k/monitor_binding.json);
-no successor or scale run is released. Remote preflight/terminal evidence is pending.
+The authorized T4x2 [final atom/bond readout dual](experiments/pcqm_gptrans_readout_100k/gpu/submission_record.md)
+is API-observed RUNNING and reuses frozen G1+EMA without baseline retraining.
+Luna B monitors the exact job through [one binding](experiments/pcqm_gptrans_readout_100k/monitor_binding.json);
+no successor or scale run is released. Terminal evidence is pending.
+The path + corrected-EMA combination is closed with a strict/complete Replay
+pair but no supported additive gain; preserve its
+[decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).
 The prior pair-scale dual is closed with both actual Replay pairs and no promotion;
 preserve its [terminal decision](experiments/pcqm_gptrans_pair_scale_100k/gpu/results/decision.md).
 
