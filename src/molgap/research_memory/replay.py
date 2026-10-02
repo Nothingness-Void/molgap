@@ -102,7 +102,12 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
         pointer = bundle.get("candidate_reference_qualification_ref")
         if pointer and any(m["comparison_role"] == "candidate" and m["reference_id"] == bundle["reference_id"]
                            for m in manifests):
-            manifests.append(verify_candidate_reference(root, pointer, expected_bundle=bundle))
+            view = verify_candidate_reference(root, pointer, expected_bundle=bundle)
+            # Multiple prospectively frozen bundles may reuse the same accepted
+            # run. Collapse only identical verified views, never conflicting
+            # identities or unqualified records from the general trace corpus.
+            if not any(existing == view for existing in manifests):
+                manifests.append(view)
     from .ema_replay import ema_intervention_worlds
     manifests = ema_intervention_worlds(root, manifests, records)
     grouping = build_screening_backtest(manifests)
