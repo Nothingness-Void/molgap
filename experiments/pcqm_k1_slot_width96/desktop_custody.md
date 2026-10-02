@@ -24,3 +24,6 @@ during result acceptance/import. Production and full-scale recommendation unchan
 Terminal authority: [decision](terminal_decision.md) and
 [RML receipt](kaggle3_v1/slot96/rml_finalized/finalization.json).
 Desktop RML is rebuilt and validated from canonical inputs, not copied indexes.
+The desktop `check --frozen --portable` passed after the evidence import;
+its [receipt](reconciliation_v1/desktop_portable_check.txt) is retained. Historical
+missing-artifact limitations in the isolated owner worktree remain unchanged.
