@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | C-GPTRANS-FINAL-READOUT | Authorized atom-mean and real-bond pair-mean isolated T4 arms; frozen G1+EMA comparator | [Protocol](experiments/pcqm_gptrans_readout_100k/protocol.md); independent acceptance and both actual complete Replay pairs; 5 wall-hour cap, no automatic successor |
 | P0 | C-GPTRANS-PATH-EMA-COMBINATION | One authorized chemical-path interaction on corrected-EMA G1; reuse frozen reference | [Protocol](experiments/pcqm_gptrans_path_ema_combination_100k/protocol.md); independent acceptance and actual complete Replay pair, no automatic successor |
 | Closed | C-GPTRANS-G1-PAIR-SCALE | Both strict comparisons and actual replay pairs accepted; neither arm promoted | Preserve [decision](experiments/pcqm_gptrans_pair_scale_100k/gpu/results/decision.md); no automatic successor |
 | Closed | C-GPTRANS-G1-RECIPE-PATH | Complete endpoint-path arm failed advancement; grouped arm had a repaired diagnostic-writer failure | Preserve [decision](experiments/pcqm_gptrans_recipe_paths_100k/gpu/results/decision.md); no baseline/completed-arm rerun |
