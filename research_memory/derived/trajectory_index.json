@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "a44a4a5ab2a1762b803459e75522fe66b6523093baae58ea0fddcb1b37becad9",
+  "source_digest": "349ededf4bf6b4b2550eb203c7281b35cf85c6535135cc68ed7aef92f20b22b4",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -794,17 +794,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_flag/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_flag/cpu_decision.md",
       "family_id": "k1-flag",
-      "outcome": "ACTIVE",
+      "outcome": "NO_TRAIN",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-k1-slot-width96-kaggle3-100k-s42-v1"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_flag/cpu_prospective/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_flag/cpu_prospective/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-flag-cpu-qualification-20261002"
+      ],
       "track": "B",
       "trajectory_id": "TB-k1-flag-cpu-qualification-20261002"
     },

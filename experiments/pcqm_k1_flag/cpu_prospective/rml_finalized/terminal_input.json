@@ -1,0 +1,184 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_flag/cpu_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_flag/cpu_acceptance.json": "ccf393098cb3ad62d642052ac6eda4206e96b192f20528be44cf5180d4e1f8eb",
+    "experiments/pcqm_k1_flag/cpu_attribution.md": "bc76e7a9f06b1503b8477256ac28afce82d0cf113838a3b2ee3dd79db5b41be0",
+    "experiments/pcqm_k1_flag/cpu_decision.md": "99c878dea27b2d8b7900c3e7113be91cda14d4cdb90787b061ee9b579c2ad107",
+    "experiments/pcqm_k1_flag/cpu_frozen.json": "692a11f030363db454209bad85e35fd41e1a98782f7ae86f935f8080cc0aba3c",
+    "experiments/pcqm_k1_flag/cpu_prospective/trajectory.json": "bd9f681a683be1efeaa2ae63dd3b970ef91d4dd4246131ce9de50e7038d4bbde",
+    "experiments/pcqm_k1_flag/evidence_review.md": "a924be38b739ca35eed858139f912c03d02fdeae3a562c3addbc4b51fc479e7c",
+    "experiments/pcqm_k1_flag/finalize_cpu.py": "beadffa4bd47af2846cddda225a9ea468a0130a3fae7947d61a12235939fef6c",
+    "experiments/pcqm_k1_flag/protocol.md": "8f80da58c5184ca1d49436957ee41116535f1edc5cb4534099d06573fc6dc60b",
+    "experiments/pcqm_k1_flag/qualification/cpu_resume.pt": "d0cb1ea9e3bb8df1e740018356b9a3266d9208b65968ccaeb9ebcd3f85053de9",
+    "experiments/pcqm_k1_flag/qualification/initial_state.pt": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+    "experiments/pcqm_k1_flag/qualification/qualification_result.json": "ac25119d74c0c9f0d0571c36281e5c74c547dc71cd55003deb7af5035b3b0eb6",
+    "experiments/pcqm_k1_flag/qualification/sensitivity.json": "3b55d30168add983809f30fa8bffb116654f666e5111452794f2ed0c579dbcc4",
+    "experiments/pcqm_k1_flag/rml_inventory.json": "780237c1d672b723db7883a6a4a61e8b5330dc1dbbe2b27dd4d01cf57271c99d",
+    "experiments/pcqm_k1_flag/rml_review.md": "d0ac864d23731bf3dd7c476c3dbba37e71ba1af39f4ae9d3d7b5d2b1b2865c11",
+    "experiments/pcqm_k1_flag/role_plan.json": "1b0aa3c60b011eb2112840caeec0571eedd89294211379fd2b1a3cdbb4c8f80a"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "cpu-001",
+      "category": "preflight",
+      "cost_event_id": "cost-k1-flag-cpu-observed-20261002",
+      "evidence_ref": "experiments/pcqm_k1_flag/cpu_acceptance.json",
+      "hardware": "CPU4threads; no accelerator",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.0125390625
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.005622891333333529
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "local-k1-flag-qualification-20261002",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-flag-cpu-qualification-20261002"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_flag/cpu_decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Separate authorized training prospective and actual T4 qualification."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_flag/qualification/qualification_result.json",
+        "name": "qualification/qualification_result.json",
+        "sha256": "ac25119d74c0c9f0d0571c36281e5c74c547dc71cd55003deb7af5035b3b0eb6"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_flag/qualification/sensitivity.json",
+        "name": "qualification/sensitivity.json",
+        "sha256": "3b55d30168add983809f30fa8bffb116654f666e5111452794f2ed0c579dbcc4"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_flag/qualification/initial_state.pt",
+        "name": "qualification/initial_state.pt",
+        "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_flag/cpu_acceptance.json",
+        "name": "cpu_acceptance.json",
+        "sha256": "ccf393098cb3ad62d642052ac6eda4206e96b192f20528be44cf5180d4e1f8eb"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_flag/cpu_decision.md",
+        "name": "cpu_decision.md",
+        "sha256": "99c878dea27b2d8b7900c3e7113be91cda14d4cdb90787b061ee9b579c2ad107"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_flag/protocol.md",
+        "experiments/pcqm_k1_flag/cpu_decision.md",
+        "experiments/pcqm_k1_flag/cpu_attribution.md",
+        "experiments/pcqm_k1_flag/cpu_acceptance.json",
+        "experiments/pcqm_k1_flag/qualification/qualification_result.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-flag-cpu-qualification-20261002",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "k1-flag-cpu-qualification-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-02",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Publication of independently executed engineering diagnostic."
+    },
+    "observed_execution": {
+      "diagnostic_optimizer_updates_executed": true,
+      "execution_ref": "experiments/pcqm_k1_flag/qualification/qualification_result.json",
+      "inference_executed": true,
+      "training_executed": false
+    },
+    "outcome": {
+      "artifact_status": "local_hash_verified",
+      "budget_decision": "cpu_closure_no_training_release",
+      "comparison_status": "engineering_checks_only",
+      "execution_status": "complete_no_training",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "internal_development": "untouched",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train_prefix_0_256": "read"
+    },
+    "scope": "desktop_k1_flag_cpu_qualification",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-02T06:27:14.414482+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_flag/cpu_acceptance.json",
+      "role_event_id": "role-k1-flag-cpu-prediction_input-20261002",
+      "role_name": "train_prefix_0_256",
+      "row_manifest_hash": "bbd330b12e8159e117376ef24fa106413bc9fc18032a0d43e95c5dae5e47953f",
+      "run_id": "local-k1-flag-qualification-20261002",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-flag-cpu-qualification-20261002"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_flag/cpu_acceptance.json",
+      "role_event_id": "role-k1-flag-cpu-labels_read-20261002",
+      "role_name": "train_prefix_0_256",
+      "row_manifest_hash": "bbd330b12e8159e117376ef24fa106413bc9fc18032a0d43e95c5dae5e47953f",
+      "run_id": "local-k1-flag-qualification-20261002",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-flag-cpu-qualification-20261002"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_flag/cpu_acceptance.json",
+      "role_event_id": "role-k1-flag-cpu-metric_computed-20261002",
+      "role_name": "train_prefix_0_256",
+      "row_manifest_hash": "bbd330b12e8159e117376ef24fa106413bc9fc18032a0d43e95c5dae5e47953f",
+      "run_id": "local-k1-flag-qualification-20261002",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-flag-cpu-qualification-20261002"
+    }
+  ],
+  "run_id": "local-k1-flag-qualification-20261002",
+  "trajectory_id": "TB-k1-flag-cpu-qualification-20261002"
+}

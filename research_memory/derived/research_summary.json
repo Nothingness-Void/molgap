@@ -7,9 +7,9 @@
   "cost": {
     "completeness": {
       "trajectories_total": 68,
-      "with_complete_native_measurement": 8,
+      "with_complete_native_measurement": 9,
       "with_cost_event": 57,
-      "with_incomplete_native_measurement": 49,
+      "with_incomplete_native_measurement": 48,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -70,8 +70,8 @@
             "known_total": 0.6666666666666666
           },
           "measured": {
-            "known_records": 1,
-            "known_total": 0.006840277777777778
+            "known_records": 2,
+            "known_total": 0.01937934027777778
           },
           "not_applicable_records": 0,
           "unknown_records": 1
@@ -85,7 +85,7 @@
             "known_records": 0,
             "known_total": null
           },
-          "not_applicable_records": 4,
+          "not_applicable_records": 5,
           "unknown_records": 0
         },
         "queue_hours": {
@@ -97,7 +97,7 @@
             "known_records": 0,
             "known_total": null
           },
-          "not_applicable_records": 4,
+          "not_applicable_records": 5,
           "unknown_records": 0
         },
         "wall_hours": {
@@ -106,8 +106,8 @@
             "known_total": 0.16666666666666666
           },
           "measured": {
-            "known_records": 2,
-            "known_total": 0.007997758888888913
+            "known_records": 3,
+            "known_total": 0.013620650222222443
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -1067,7 +1067,7 @@
     "unknown_events": 82
   },
   "evidence": {
-    "validated": 56,
+    "validated": 57,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
@@ -1084,7 +1084,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 49,
+      "count": 48,
       "severity": "WARN"
     },
     {
@@ -1094,30 +1094,29 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 31,
+      "count": 30,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 12,
+      "count": 11,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 244,
-    "explicit_events": 126,
+    "coarse_historical": 249,
+    "explicit_events": 129,
     "repeatedly_selected": 11
   },
-  "source_digest": "a44a4a5ab2a1762b803459e75522fe66b6523093baae58ea0fddcb1b37becad9",
+  "source_digest": "349ededf4bf6b4b2550eb203c7281b35cf85c6535135cc68ed7aef92f20b22b4",
   "trajectories": {
     "count": 68,
     "outcomes": {
-      "ACTIVE": 1,
       "CLOSED": 10,
       "INCONCLUSIVE": 14,
       "INFRASTRUCTURE_ONLY": 4,
       "NEGATIVE_UNDER_CONTRACT": 15,
-      "NO_TRAIN": 16,
+      "NO_TRAIN": 17,
       "POSITIVE_UNDER_CONTRACT": 8
     }
   },

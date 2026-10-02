@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "cpu-001",
+  "category": "preflight",
+  "cost_event_id": "cost-k1-flag-cpu-observed-20261002",
+  "evidence_ref": "experiments/pcqm_k1_flag/cpu_acceptance.json",
+  "hardware": "CPU4threads; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.0125390625
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.005622891333333529
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-flag-qualification-20261002",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-flag-cpu-qualification-20261002"
+}

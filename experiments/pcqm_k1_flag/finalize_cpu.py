@@ -43,7 +43,7 @@ def main():
             "cpu_hours": dict(status="measured", value=result["process_cpu_seconds"] / 3600),
             "device_hours": dict(status="not_applicable", value=None),
             "queue_hours": dict(status="not_applicable", value=None)})
-    role_use = dict(train_prefix="diagnostic_labels_used_no_selection", internal_development="untouched",
+    role_use = dict(train_prefix_0_256="read", internal_development="untouched",
         official_validation="untouched", test_dev="untouched", test_challenge="untouched")
     roles = [dict(schema="molgap-role-event-v1", role_event_id=f"role-k1-flag-cpu-{kind}-20261002",
         trajectory_id=TID, action_id="A001", run_id=RUN, dataset_identity="pcqm4mv2-ogb-fixed-100k-v1",
