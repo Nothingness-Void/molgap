@@ -19,7 +19,7 @@ from .gptrans_screen_adapter import gptrans_screen_arguments
 from .training_reproducibility import atomic_json, sha256_file
 
 MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
-         "degree_group_decay_ema999", "degree_path_endpoints_ema999")
+         "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999")
 
 
 def mounted(input_root: Path, name: str, sha256: str) -> Path:

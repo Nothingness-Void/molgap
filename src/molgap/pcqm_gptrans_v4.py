@@ -46,12 +46,12 @@ WEIGHT_DECAY = 0.05
 GRADIENT_CLIP = 1.0
 EMA_DECAY = 0.9999
 AUTHOR_MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
-                "degree_group_decay_ema999", "degree_path_endpoints_ema999")
+                "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999")
 PATH_MODES = ("path_bond_mean", "degree_path_bond_mean")
 
 
 def _ema_decay(variant: str) -> float:
-    return 0.999 if variant in {"degree_scale_ema999", "degree_group_decay_ema999", "degree_path_endpoints_ema999"} else EMA_DECAY
+    return 0.999 if variant in {"degree_scale_ema999", "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999"} else EMA_DECAY
 LOADER_WORKERS = 4
 EXPECTED_PARAMETERS = 5_246_817
 EXPECTED_INITIAL_MODEL_SHA256 = (
@@ -297,6 +297,9 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
         elif variant == "degree_path_endpoints_ema999":
             from .gptrans_endpoint_paths import EndpointPathGPTrans
             model.__class__ = EndpointPathGPTrans
+        elif variant == "degree_pair_depth_scale_ema999":
+            from .gptrans_pair_scale import apply_pair_depth_scale
+            apply_pair_depth_scale(model)
         model._molgap_author_variant = variant
         return model
     if initial_state_path is None:
@@ -743,6 +746,8 @@ def run_preflight(
         "parameters": EXPECTED_PARAMETERS,
         "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_author_variants.py" if variant in AUTHOR_MODES else "gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
         "ema_decay": _ema_decay(variant),
+        **({"pair_scale_implementation_sha256": _source_sha256(Path(__file__).with_name("gptrans_pair_scale.py"))}
+           if variant == "degree_pair_depth_scale_ema999" else {}),
         **({"endpoint_implementation_sha256": _source_sha256(Path(__file__).with_name("gptrans_endpoint_paths.py"))}
            if variant in {"degree_group_decay_ema999", "degree_path_endpoints_ema999"} else {}),
         **({"optimizer_parameter_groups": __import__("molgap.gptrans_endpoint_paths", fromlist=["parameter_groups"]).parameter_groups(model, WEIGHT_DECAY)[1]}
@@ -1007,6 +1012,9 @@ def run_training(
         train_count = 0
         epoch_started = time.perf_counter()
         for batch_index, batch in enumerate(_training_loader(train_graphs, epoch)):
+            if variant == "degree_pair_depth_scale_ema999" and batch_index == 0:
+                for block in model.blocks:
+                    block._capture_pair_diagnostics = True
             if int(batch.num_graphs) != PHYSICAL_BATCH:
                 raise RuntimeError("Optimizer received a non-128 batch")
             batch = batch.to("cuda", non_blocking=True)
@@ -1098,6 +1106,12 @@ def run_training(
                 "group_weight_norms": [float(torch.stack([p.detach().square().sum() for p in g["params"]]).sum().sqrt().cpu()) for g in optimizer.param_groups],
                 "group_adam_first_moment_norms": [float(torch.stack([optimizer.state[p]["exp_avg"].detach().square().sum() for p in g["params"] if "exp_avg" in optimizer.state[p]]).sum().sqrt().cpu()) for g in optimizer.param_groups],
             }
+        if variant == "degree_pair_depth_scale_ema999":
+            row["pair_scale_diagnostics"] = {
+                "source": "first_scheduled_training_batch_before_update",
+                "scale": 12 ** -0.5,
+                "layer_input_raw_update_output_rms": torch.stack([b._pair_diagnostics for b in model.blocks]).cpu().tolist(),
+            }
         trace.append(row)
         atomic_json(output / "trace.json", {"format": RUN_FORMAT, "rows": trace})
         native_checkpoint = _save_checkpoint(
@@ -1174,7 +1188,7 @@ def run_training(
         **_scientific_fields(variant),
         "run_id": logical_run_id if author_arm else "gptrans-t-100k-v5-audit-reference-seed42" if v5_audit else f"gptrans-t-100k-v4-{variant}-seed42",
         "model_id": f"gptrans_t_core_12x256_pair32/{variant}",
-        "architecture_fingerprint": ("f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896" if variant in {"degree_scale_ema999", "degree_group_decay_ema999"} else EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"], **({"endpoint_module": preflight["endpoint_implementation_sha256"]} if variant == "degree_path_endpoints_ema999" else {})})),
+        "architecture_fingerprint": ("f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896" if variant in {"degree_scale_ema999", "degree_group_decay_ema999"} else EXPECTED_ARCHITECTURE_SHA256 if variant == "reference" else canonical_fingerprint({"core": EXPECTED_ARCHITECTURE_SHA256, "variant": variant, "implementation": preflight["variant_source_sha256"], **({"endpoint_module": preflight["endpoint_implementation_sha256"]} if variant == "degree_path_endpoints_ema999" else {}), **({"pair_scale_module": preflight["pair_scale_implementation_sha256"]} if variant == "degree_pair_depth_scale_ema999" else {})})),
         "ema_decay": _ema_decay(variant),
         "source_archive_sha256": source_archive_sha256,
         "result_artifact_sha256": result_sha256,

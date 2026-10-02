@@ -29,7 +29,7 @@ def gptrans_screen_arguments(
     if declaration["schema_version"] != "molgap-experiment-spec-v2":
         raise ValueError("Training argument wiring requires per-arm Spec v2 plans")
     if metadata.variant not in {"degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
-                                "degree_group_decay_ema999", "degree_path_endpoints_ema999"}:
+                                "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999"}:
         raise ValueError("This variant has no qualified per-arm V5 trace wiring")
     arm = next(item for item in declaration["arms"] if item["arm_id"] == arm_id)
     if arm["training"]["overrides"]:

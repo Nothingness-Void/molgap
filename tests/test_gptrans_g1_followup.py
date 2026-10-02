@@ -100,7 +100,7 @@ def test_terminal_followups_admit_actual_distinct_replay_worlds():
     from molgap.research_memory.replay import build_replay_pool
     pool = build_replay_pool(ROOT, validate_repository_records(ROOT)["records"])
     ids = {"TC-gptrans-g1-path-mean-100k-s42", "TC-gptrans-g1-ema999-100k-s42"}
-    candidates = [e for e in pool["entries"] if e["trajectory_id"] in ids]
+    candidates = [e for e in pool["entries"] if e["trajectory_id"] in ids and e["comparison_role"] == "candidate"]
     assert {e["trajectory_id"] for e in candidates} == ids
     assert len(candidates) == 2
     for entry in candidates:

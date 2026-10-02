@@ -57,7 +57,8 @@ def _resolve(spec: ExperimentSpec, arm_id: str):
         if addon_key not in (("pair_prenorm", "1"), ("centered_logits", "1"),
                              ("degree_scale", "1"), ("path_bond_mean", "1"),
                              ("degree_path_bond_mean", "1"), ("degree_scale_ema999", "1"),
-                             ("degree_group_decay_ema999", "1"), ("degree_path_endpoints_ema999", "1")):
+                             ("degree_group_decay_ema999", "1"), ("degree_path_endpoints_ema999", "1"),
+                             ("degree_pair_depth_scale_ema999", "1")):
             raise ValueError("Unsupported GPTrans addon/version")
         if ADDONS[addon_key].family != key[0]:
             raise ValueError("Incompatible GPTrans addon family")

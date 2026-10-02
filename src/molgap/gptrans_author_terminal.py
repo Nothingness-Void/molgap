@@ -19,8 +19,8 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         *, experiment_ref: str = "experiments/pcqm_gptrans_author_alignment") -> list[dict]:
     root = Path(repo_root).resolve()
     base = root / experiment_ref
-    followup = experiment_ref in {"experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k"}
-    if experiment_ref not in {"experiments/pcqm_gptrans_author_alignment", "experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k"}:
+    followup = experiment_ref in {"experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k"}
+    if experiment_ref not in {"experiments/pcqm_gptrans_author_alignment", "experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k"}:
         raise ValueError("Unsupported terminal experiment adapter")
     gpu = base / "gpu"
     load = lambda p: json.loads(p.read_bytes())

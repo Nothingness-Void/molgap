@@ -21,7 +21,7 @@ MODES = ("degree_path_bond_mean", "degree_scale_ema999")
 RUN = "gptrans-g1-path-ema-dual-s42"
 
 
-def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_reference=False):
+def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_reference=False, study=None):
     BASE, MODES, RUN = base, modes, run
     root = root.resolve()
     read = lambda ref: load_json_object(root / ref)
@@ -44,7 +44,7 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         raise ValueError("Accepted G1 initialization changed")
     old_spec = ExperimentSpec.from_json((root / OLD / "gpu/spec.json").read_text()).to_dict()
     declaration = deepcopy(old_spec)
-    declaration.update(experiment_id="gptrans-g1-recipe-path" if terminal_reference else "gptrans-g1-input-ema", logical_run_id=RUN, arms=[], prospective={"arms": []})
+    declaration.update(experiment_id=study["experiment_id"] if study else "gptrans-g1-recipe-path" if terminal_reference else "gptrans-g1-input-ema", logical_run_id=RUN, arms=[], prospective={"arms": []})
     budget_ref, role_ref = BASE + "/gpu/budget.json", BASE + "/gpu/role_plan.json"
     atomic_json(root / budget_ref, {"estimated_wall_hours": 4, "estimated_allocated_t4_hours": 8,
         "maximum_wall_hours": 6, "maximum_allocated_t4_hours": 12, "allocated_devices": 2,
@@ -63,6 +63,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             raise ValueError("Prospective plan is immutable; reconcile before refreezing")
         ema = mode == "degree_scale_ema999"
         suffix = {"degree_group_decay_ema999": "group-decay", "degree_path_endpoints_ema999": "path-endpoints"}.get(mode, "ema999" if ema else "path-mean")
+        if study:
+            suffix = study["arms"][mode]["suffix"]
         trajectory = "TC-gptrans-g1-" + suffix + "-100k-s42"
         recipe_ref = folder + "/contract.json"
         recipe = read("experiments/pcqm_gptrans_v5_audit_reference/contract.json")
@@ -71,6 +73,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         if terminal_reference:
             recipe.update(optimizer_parameter_groups="bias-and-1d-no-decay-v1" if "group_decay" in mode else "single-group",
                           endpoint_path_encoding="all-shortest-first-minus-last-half-v1" if "path_endpoints" in mode else "none")
+        if mode == "degree_pair_depth_scale_ema999":
+            recipe["pair_residual_scale"] = 12 ** -0.5
         atomic_json(root / recipe_ref, recipe)
         recipes[mode] = recipe_ref
         arm = deepcopy(source_arm)
@@ -84,8 +88,10 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             candidate.update(optimizer_identity=_scientific_fields(mode)["optimizer_fingerprint"], optimizer_mode="adamw-bias-and-1d-no-decay-v1")
             purpose, fields = "optimizer_comparison", ["optimizer_identity", "optimizer_mode"]
         elif terminal_reference:
+            module_key, module = (("pair_scale_module", "gptrans_pair_scale.py") if mode == "degree_pair_depth_scale_ema999"
+                                  else ("endpoint_module", "gptrans_endpoint_paths.py"))
             candidate["architecture_config_identity"] = canonical_fingerprint({"core": recipe["architecture_sha256"], "variant": mode, "implementation": implementation,
-                "endpoint_module": normalized_source_sha256(root / "src/molgap/gptrans_endpoint_paths.py")})
+                module_key: normalized_source_sha256(root / "src/molgap" / module)})
             purpose, fields = "mechanism_comparison", ["architecture_config_identity"]
         elif ema:
             candidate.update(ema_decay=.999, checkpoint_selection_identity="best-development-ema999-60epochs")
@@ -104,9 +110,9 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             comparison_prelaunch=prelaunch, experiment_purpose=purpose, reference_bundle=bundle,
             repo_root=root, reference_bundle_path=root / bundle_ref)
         plan = deepcopy(source_plan)
-        question = ({"degree_group_decay_ema999": "Does exempting bias and 1D tensors from AdamW decay improve G1 EMA999 without adding inference capacity?",
+        question = (study["arms"][mode]["question"] if study else {"degree_group_decay_ema999": "Does exempting bias and 1D tensors from AdamW decay improve G1 EMA999 without adding inference capacity?",
                      "degree_path_endpoints_ema999": "Does all-shortest-path endpoint bond contrast improve G1 EMA999 while avoiding atom-index tie choices?"}[mode]
-                    if terminal_reference else "Does reducing G1 EMA lag improve selected predictions without changing live optimization?" if ema
+                    if terminal_reference or study else "Does reducing G1 EMA lag improve selected predictions without changing live optimization?" if ema
                     else "Does accepted chemical path mean add information to degree-scaled G1?")
         cost = "cost-" + trajectory
         t = plan["trajectory"]
@@ -125,6 +131,12 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             prior_trajectory_ids=["TC-gptrans-author-path-bond-mean-100k-s42"],
             prior_evidence_ids=[bundle["reference_id"], "pcqm-gptrans-author-path-bond-mean-100k-s42"],
             role_snapshot_refs=[role_ref], budget_snapshot_ref=budget_ref)
+        if study:
+            facts = study["arms"][mode]
+            t["hypothesis"].update(supporting_evidence_ids=study["supporting_evidence_ids"],
+                alternative_explanations=facts["alternative_explanations"])
+            t["state_at_start"].update(prior_trajectory_ids=study["prior_trajectory_ids"],
+                prior_evidence_ids=study["supporting_evidence_ids"])
         t["actions"] = [{"action_id": "A001", "type": "single_mechanism_screen", "source_commit": commit,
             "run_ids": [RUN + ":" + mode], "attempt_ids": ["v1"], "evidence_refs": [recipe_ref], "cost_event_ids": [cost]}]
         t["decision"].update(decision_ref=BASE + "/protocol.md", next_allowed_actions=["one isolated T4 arm then full saved-artifact acceptance"])
@@ -151,6 +163,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
     if terminal_reference:
         config.update(path_manifest_sha256=None, requested_kernel="nvoid912/molgap-gptrans-g1-group-path-dual-s42",
             output_subdirectory="gptrans_recipe_path_screen")
+    if study:
+        config.update(requested_kernel=study["kernel"], output_subdirectory=study["output_subdirectory"])
     atomic_json(root / BASE / "gpu/screen_config.json", config)
     workflow = read(OLD + "/gpu/release_workflow.json")
     workflow.update(spec_identity=spec.identity, recipe_files=recipes,
@@ -160,6 +174,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         entry_template=BASE + "/gpu/run.py", kernel_metadata=BASE + "/gpu/kernel-metadata.json",
         dataset_metadata={"title": "MolGap GPTrans G1 Group Path Source" if terminal_reference else "MolGap GPTrans G1 Path EMA Source", "id": "nvoid912/molgap-gptrans-g1-group-path-source" if terminal_reference else "nvoid912/molgap-gptrans-g1-path-ema-source",
             "licenses": [{"name": "other"}], "isPrivate": True})
+    if study:
+        workflow["dataset_metadata"].update(title=study["dataset_title"], id=study["dataset"])
     tracked = subprocess.check_output(["git", "ls-files", "-z", "--", "src/molgap"], cwd=root).decode().split("\0")
     sources = []
     for p in tracked:
@@ -172,5 +188,7 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         *recipes.values(), BASE + "/gpu/run.py", BASE + "/gpu/kernel-metadata.json", BASE + "/gpu/screen_config.json"]
     if terminal_reference:
         workflow["required_modules"].append("molgap.gptrans_endpoint_paths")
+    if "degree_pair_depth_scale_ema999" in MODES:
+        workflow["required_modules"].append("molgap.gptrans_pair_scale")
     atomic_json(root / BASE / "gpu/release_workflow.json", workflow)
     return {"spec_identity": spec.identity, "prelaunch_validated": True, "compute_released": False}
