@@ -19,7 +19,8 @@ from .gptrans_screen_adapter import gptrans_screen_arguments
 from .training_reproducibility import atomic_json, sha256_file
 
 MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
-         "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999")
+         "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999",
+         "degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999")
 
 
 def validate_arm_allocation(config):
@@ -96,12 +97,18 @@ def author_child(stage: str, variant: str, context: dict, root: Path):
 
 def run_author_screen(upload_root: Path, source_root: Path, output: Path, archive_sha256: str,
                       *, input_root: Path = Path("/kaggle/input"),
-                      config_ref: str = "experiments/pcqm_gptrans_author_alignment/gpu/screen_config.json"):
+                      config_ref: str = "experiments/pcqm_gptrans_author_alignment/gpu/screen_config.json",
+                      package_dir: Path | None = None):
     """Reuse isolated workers and native durability; no source graphs are built."""
     from . import gptrans_kaggle_runtime as scheduler
     started = time.monotonic()
-    package_dir = output / "source_package"
-    package = restore_source_package(upload_root, package_dir, archive_sha256)
+    if package_dir is None:
+        package_dir = output / "source_package"
+        package = restore_source_package(upload_root, package_dir, archive_sha256)
+    else:
+        package = verify_experiment_source_package(package_dir)
+        if package["archive_sha256"] != archive_sha256:
+            raise ValueError("Pre-restored package differs from the frozen source archive")
     config_path = source_root / config_ref
     config = json.loads(config_path.read_text())
     modes = validate_arm_allocation(config)

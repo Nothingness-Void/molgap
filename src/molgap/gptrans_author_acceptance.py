@@ -169,6 +169,10 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
                 and all(len(layer) == 3 and all(math.isfinite(v) and v >= 0 for v in layer)
                         for layer in row["pair_scale_diagnostics"]["layer_input_raw_update_output_rms"])
                 for row in rows), "Finite observed pair scaling diagnostics")
+        if mode in {"degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999"}:
+            with tarfile.open(package / "source.tar.gz", "r:gz") as archive:
+                readout_sha = hashlib.sha256(archive.extractfile("src/molgap/gptrans_readout.py").read()).hexdigest()
+            require(preflight["readout_implementation_sha256"] == readout_sha, "Readout implementation binding")
         if mode in {"degree_group_decay_ema999", "degree_path_endpoints_ema999"}:
             with tarfile.open(package / "source.tar.gz", "r:gz") as archive:
                 endpoint_sha = hashlib.sha256(archive.extractfile("src/molgap/gptrans_endpoint_paths.py").read()).hexdigest()

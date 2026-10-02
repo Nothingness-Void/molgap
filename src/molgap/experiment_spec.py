@@ -111,6 +111,8 @@ ADDONS = MappingProxyType({
     ("k1_pair_value", "1"): AddonContract(
         "neural_atom_k1", "pair-token-replacement", "molgap.k1_pair_token",
     ),
+    **{(name, "1"): AddonContract("gptrans_t", "readout-intervention", "molgap.gptrans_readout")
+       for name in ("degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999")},
     ("k1_joint_aggregation", "1"): AddonContract(
         "neural_atom_k1", "k1-local-aggregation", "molgap.k1_joint_aggregation",
         tuple(AddonConfigField(name, value=value) for name, value in

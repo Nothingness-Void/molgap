@@ -47,10 +47,12 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
     declaration.update(experiment_id=study["experiment_id"] if study else "gptrans-g1-recipe-path" if terminal_reference else "gptrans-g1-input-ema", logical_run_id=RUN, arms=[], prospective={"arms": []})
     budget_ref, role_ref = BASE + "/gpu/budget.json", BASE + "/gpu/role_plan.json"
     single_reason = study.get("single_arm_reason") if study else None
+    wall_cap = (study or {}).get("maximum_wall_hours", 6)
+    estimate = (study or {}).get("estimated_wall_hours", 4)
     if len(MODES) == 1 and not single_reason:
         raise ValueError("Single-arm study needs an explicit allocation justification")
-    atomic_json(root / budget_ref, {"estimated_wall_hours": 4, "estimated_allocated_t4_hours": 8,
-        "maximum_wall_hours": 6, "maximum_allocated_t4_hours": 12, "allocated_devices": 2,
+    atomic_json(root / budget_ref, {"estimated_wall_hours": estimate, "estimated_allocated_t4_hours": estimate * 2,
+        "maximum_wall_hours": wall_cap, "maximum_allocated_t4_hours": wall_cap * 2, "allocated_devices": 2,
         "baseline_retraining": False, "automatic_successor_authorized": False,
         "single_arm_reason": single_reason, "authority_ref": BASE + "/protocol.md"})
     roles = {kind: "not_applicable" if kind == "external_submission" else "applicable" for kind in ROLE_EVENT_KINDS}
@@ -79,10 +81,14 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
                           endpoint_path_encoding="all-shortest-first-minus-last-half-v1" if "path_endpoints" in mode else "none")
         if mode == "degree_pair_depth_scale_ema999":
             recipe["pair_residual_scale"] = 12 ** -0.5
+        if mode in {"degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999"}:
+            recipe["readout_intervention"] = mode
         atomic_json(root / recipe_ref, recipe)
         recipes[mode] = recipe_ref
         arm = deepcopy(source_arm)
         arm.update(arm_id=mode, addons=[{"name": mode, "version": "1", "config": {}, "source_sha256": implementation}])
+        if "readout" in mode:
+            arm["addons"][0]["source_sha256"] = normalized_source_sha256(root / "src/molgap/gptrans_readout.py")
         arm["training"]["recipe"]["sha256"] = normalized_source_sha256(root / recipe_ref)
         for role in arm["data"]["roles"]:
             role["usage_sha256"] = sha256_file(root / role_ref)
@@ -92,7 +98,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             candidate.update(optimizer_identity=_scientific_fields(mode)["optimizer_fingerprint"], optimizer_mode="adamw-bias-and-1d-no-decay-v1")
             purpose, fields = "optimizer_comparison", ["optimizer_identity", "optimizer_mode"]
         elif terminal_reference and mode != "degree_path_bond_mean_ema999":
-            module_key, module = (("pair_scale_module", "gptrans_pair_scale.py") if mode == "degree_pair_depth_scale_ema999"
+            module_key, module = (("readout_module", "gptrans_readout.py") if "readout" in mode else
+                                 ("pair_scale_module", "gptrans_pair_scale.py") if mode == "degree_pair_depth_scale_ema999"
                                   else ("endpoint_module", "gptrans_endpoint_paths.py"))
             candidate["architecture_config_identity"] = canonical_fingerprint({"core": recipe["architecture_sha256"], "variant": mode, "implementation": implementation,
                 module_key: normalized_source_sha256(root / "src/molgap" / module)})
@@ -150,7 +157,7 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         plan["costs"][0].update(cost_event_id=cost, trajectory_id=trajectory, run_id=RUN + ":" + mode,
             platform="kaggle3", evidence_ref=budget_ref)
         for unit in ("device_hours", "wall_hours"):
-            plan["costs"][0]["measurement"][unit] = {"status": "estimated", "value": 4}
+            plan["costs"][0]["measurement"][unit] = {"status": "estimated", "value": estimate}
         plan_ref = folder + "/plan_input.json"
         atomic_json(root / plan_ref, plan)
         declaration["arms"].append(arm)
@@ -169,6 +176,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             output_subdirectory="gptrans_recipe_path_screen")
     if study:
         config.update(requested_kernel=study["kernel"], output_subdirectory=study["output_subdirectory"])
+        config.update(maximum_wall_seconds=int(wall_cap * 3600),
+                      training_estimate_cap_hours=study.get("training_estimate_cap_hours", 4.5))
     if single_reason:
         config["single_arm_reason"] = single_reason
     atomic_json(root / BASE / "gpu/screen_config.json", config)
@@ -182,6 +191,7 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             "licenses": [{"name": "other"}], "isPrivate": True})
     if study:
         workflow["dataset_metadata"].update(title=study["dataset_title"], id=study["dataset"])
+        workflow["entry_template"] = study.get("entry_template", workflow["entry_template"])
     tracked = subprocess.check_output(["git", "ls-files", "-z", "--", "src/molgap"], cwd=root).decode().split("\0")
     sources = []
     for p in tracked:
@@ -191,10 +201,12 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             except ValueError:
                 continue
     workflow["source_paths"] = sources + [
-        *recipes.values(), BASE + "/gpu/run.py", BASE + "/gpu/kernel-metadata.json", BASE + "/gpu/screen_config.json"]
+        *recipes.values(), workflow["entry_template"], BASE + "/gpu/kernel-metadata.json", BASE + "/gpu/screen_config.json"]
     if terminal_reference and any(mode in {"degree_path_endpoints_ema999", "degree_group_decay_ema999"} for mode in MODES):
         workflow["required_modules"].append("molgap.gptrans_endpoint_paths")
     if "degree_pair_depth_scale_ema999" in MODES:
         workflow["required_modules"].append("molgap.gptrans_pair_scale")
+    if any("readout" in mode for mode in MODES):
+        workflow["required_modules"].append("molgap.gptrans_readout")
     atomic_json(root / BASE / "gpu/release_workflow.json", workflow)
     return {"spec_identity": spec.identity, "prelaunch_validated": True, "compute_released": False}
