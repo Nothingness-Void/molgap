@@ -291,7 +291,7 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("reference", "ssma", "clean_fingerprint")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint", "flag")
 
 
 def _state_digest(state: dict) -> str:
@@ -322,6 +322,16 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
         "auxiliary_weight": 0.1 if mode == "clean_fingerprint" else 0.0}
     if recipe.get("training_recipe") != expected_training:
         raise ValueError("K1 executable training recipe changed")
+    if mode == "flag":
+        from .k1_flag import CONFIG, validate_config
+        validate_config(recipe.get("flag_config"))
+        if recipe.get("training_pass_accounting") != {
+            "passes_per_optimizer_batch": CONFIG["passes"],
+            "forward_backward_passes": EPOCHS * STEPS_PER_EPOCH * CONFIG["passes"],
+            "perturbed_row_evaluations": SAMPLE_EXPOSURE * CONFIG["passes"]}:
+            raise ValueError("FLAG repeated pass accounting changed")
+    elif "flag_config" in recipe or "training_pass_accounting" in recipe:
+        raise ValueError("Non-FLAG recipe declares FLAG training")
 
 
 def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str) -> dict:
@@ -329,11 +339,13 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
     from .experiment_spec import _digest
     for name, value in (("source_idx_sha256", source_idx_sha256), ("target_sha256", target_sha256)):
         _digest(value, name)
-    if mode not in {"reference", "ssma"}:
+    if mode not in {"reference", "ssma", "flag"}:
         raise ValueError("No executable screen recipe for this K1 addon")
-    return {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
+    recipe = {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
         "initialization_sha256": INITIAL_STATE_SHA256,
-        "development_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+        "development_role_identity": (
+            "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000" if mode == "flag"
+            else "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000"),
         "training_recipe": {"seed": SEED, "batch_size": BATCH_SIZE, "drop_last": True,
             "optimizer": "AdamW", "learning_rate": LEARNING_RATE, "weight_decay": WEIGHT_DECAY,
             "clip_grad_norm": 1.0, "scheduler": "CosineAnnealingLR", "scheduler_t_max": EPOCHS,
@@ -341,6 +353,14 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
         "acceptance_requirements": {"epochs": EPOCHS, "optimizer_steps": EPOCHS * STEPS_PER_EPOCH,
             "sample_presentations": SAMPLE_EXPOSURE, "development_rows": DEVELOPMENT_ROWS,
             "precision": "fp32", "source_idx_sha256": source_idx_sha256, "target_sha256": target_sha256}}
+    if mode == "flag":
+        from .k1_flag import CONFIG
+        recipe["flag_config"] = dict(CONFIG)
+        recipe["training_pass_accounting"] = {
+            "passes_per_optimizer_batch": CONFIG["passes"],
+            "forward_backward_passes": EPOCHS * STEPS_PER_EPOCH * CONFIG["passes"],
+            "perturbed_row_evaluations": SAMPLE_EXPOSURE * CONFIG["passes"]}
+    return recipe
 
 
 def _attach_fingerprint_head(model):
@@ -388,6 +408,9 @@ def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
     """Original V4 optimizer-inclusive step, with optional clean auxiliary loss."""
     import torch
     import torch.nn.functional as functional
+    if mode == "flag":
+        from .k1_flag import adversarial_optimizer_step
+        return adversarial_optimizer_step(model, optimizer, batch, mean, std, _forward)
     optimizer.zero_grad(set_to_none=True)
     if mode == "clean_fingerprint":
         representation = model.encode(batch.x, batch.edge_index, batch.edge_attr,
@@ -434,6 +457,13 @@ def _validate_arm_binding(spec, context, mode):
                        "latent_channels": 64, "layer": 6, "seed": SEED}}
         if addons != [expected]:
             raise ValueError("SSMA executable addon differs from Spec")
+    if mode == "flag":
+        from .k1_flag import CONFIG
+        expected = {"name": "k1_flag", "version": "1",
+            "source_sha256": normalized_source_sha256(Path(__file__).with_name("k1_flag.py")),
+            "config": CONFIG}
+        if addons != [expected]:
+            raise ValueError("FLAG executable addon differs from Spec")
 
 
 def validate_screen_recipe(spec, arm_id, recipe):
@@ -444,7 +474,9 @@ def validate_screen_recipe(spec, arm_id, recipe):
     mode = training_adapter(arm).mode(arm)
     validate_recipe(recipe, mode=mode)
     _validate_arm_binding(spec, SimpleNamespace(arm_id=arm_id), mode)
-    if recipe.get("development_role_identity") != "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000":
+    expected_role = ("pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000" if mode == "flag"
+                     else "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000")
+    if recipe.get("development_role_identity") != expected_role:
         raise ValueError("K1 recipe lacks the fixed development role identity")
     from .experiment_family_workflow import EXPECTED
     if set(recipe["acceptance_requirements"]) != EXPECTED:
@@ -485,10 +517,19 @@ def validate_runtime_preflight(directory, provenance):
         architecture.get("repeatability", {}).get("accepted") is not True or
         architecture.get("resume_roundtrip", {}).get("accepted") is not True or
         architecture.get("zero_initialization_delta") != 0.0 or
-        not 0 <= architecture.get("maximum_overhead_fraction", -1) <= 0.25 or
-        not math.isfinite(architecture.get("synchronized_step_overhead_fraction", math.inf)) or
-        architecture["synchronized_step_overhead_fraction"] > architecture["maximum_overhead_fraction"]):
+        architecture.get("selected_state_roundtrip_delta") != 0.0 or
+        architecture.get("mode") != provenance["mode"] or
+        not math.isfinite(architecture.get("synchronized_step_overhead_fraction", math.inf))):
         raise ValueError("K1 runtime calibration evidence differs from the gate")
+    if provenance["mode"] == "flag":
+        if (architecture.get("maximum_overhead_fraction") != 3.0 or
+                architecture.get("synchronized_step_overhead_fraction", math.inf) > 3.0 or
+                architecture.get("flag_gradient_checks_passed") is not True):
+            raise ValueError("FLAG runtime calibration exceeds its four-times step resource gate")
+    elif (not isinstance(architecture.get("maximum_overhead_fraction"), (int, float)) or
+          not 0 <= architecture["maximum_overhead_fraction"] <= 0.25 or
+          architecture["synchronized_step_overhead_fraction"] > architecture["maximum_overhead_fraction"]):
+        raise ValueError("K1 runtime overhead differs from the gate")
     return certificate
 
 
@@ -500,8 +541,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     import torch
     from .experiment_family_workflow import RunContext
     from .training_reproducibility import capture_rng_state, restore_rng_state
-    if mode not in ("reference", "ssma") or label_cache is not None:
-        raise ValueError("This paired GPU qualification supports reference and SSMA only")
+    if mode not in ("reference", "ssma", "flag") or label_cache is not None:
+        raise ValueError("This GPU qualification supports reference, SSMA and FLAG only")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
     context = RunContext.for_training(spec, package_dir,
@@ -542,8 +583,24 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     candidate = _make_screen_model(state, mode).eval()
     with torch.no_grad():
         zero_delta = float((_forward(reference, batch) - _forward(candidate, batch)).abs().max())
+        if mode == "flag":
+            from .k1_flag import embedding_perturbation
+            with embedding_perturbation(candidate, torch.zeros((batch.x.shape[0], 192), device=batch.x.device)):
+                zero_delta = max(zero_delta, float((_forward(reference, batch) - _forward(candidate, batch)).abs().max()))
     if zero_delta != 0.0:
         raise RuntimeError("Zero-added initialization differs from frozen reference")
+    if mode == "flag":
+        perturbation = torch.empty((batch.x.shape[0], 192), device=batch.x.device).uniform_(-0.001, 0.001).requires_grad_()
+        with embedding_perturbation(candidate, perturbation):
+            gradient_loss = (_forward(candidate, batch) - (batch.y.view(-1) - mean) / std).abs().mean()
+            gradient_loss.backward()
+        gradients = [parameter.grad for parameter in candidate.parameters() if parameter.grad is not None]
+        if (perturbation.grad is None or not bool(torch.isfinite(perturbation.grad).all()) or
+                float(perturbation.grad.abs().sum()) == 0 or not gradients or
+                not all(bool(torch.isfinite(gradient).all()) for gradient in gradients) or
+                not any(float(gradient.abs().sum()) > 0 for gradient in gradients)):
+            raise RuntimeError("FLAG requires finite nonzero perturbation and model gradients")
+        del perturbation, gradient_loss, gradients
     del reference, candidate
     losses, states = [], []
     for _ in range(2):
@@ -557,6 +614,10 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
             and float(parameter.grad.abs().sum()) > 0
             for parameter in model.k1_joint_aggregation.parameters()):
             raise RuntimeError("SSMA mechanism has no finite nonzero training gradient")
+        if mode == "flag" and not any(
+            parameter.grad is not None and bool(torch.isfinite(parameter.grad).all())
+            and float(parameter.grad.abs().sum()) > 0 for parameter in model.node_emb.parameters()):
+            raise RuntimeError("FLAG atom encoder has no finite nonzero training gradient")
         losses.append(float(loss.cpu()))
         states.append({key: value.detach().cpu().clone() for key, value in model.state_dict().items()})
         del model, optimizer
@@ -615,13 +676,17 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
             "samples_seconds": samples, "peak_memory_bytes": torch.cuda.max_memory_allocated()}
         del model, optimizer
     overhead = timings[mode]["median_step_seconds"] / timings["reference"]["median_step_seconds"] - 1
-    architecture = {"accepted": overhead <= 0.25, "mode": mode, "zero_initialization_delta": zero_delta,
+    overhead_limit = 3.0 if mode == "flag" else 0.25
+    architecture = {"accepted": math.isfinite(overhead) and overhead <= overhead_limit, "mode": mode, "zero_initialization_delta": zero_delta,
         "repeated_optimizer_steps": 2,
         "repeatability": repeated, "resume_roundtrip": resume, "timings": timings,
         "selected_state_roundtrip_delta": selected_delta,
-        "synchronized_step_overhead_fraction": overhead, "maximum_overhead_fraction": 0.25,
+        "synchronized_step_overhead_fraction": overhead,
+        "maximum_overhead_fraction": overhead_limit,
         "formal_sample_presentations": 0, "fixture_sha256": _batch_sha256(batch),
         "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"}
+    if mode == "flag":
+        architecture["flag_gradient_checks_passed"] = True
     atomic_json(output / "architecture_preflight.json", architecture)
     torch.cuda.synchronize()
     atomic_json(output / "diagnostic_cost.json", {"costs": _allocation_costs(
@@ -630,7 +695,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         "cpu_allocation_seconds": {"status": "missing", "value": None},
         "queue_seconds": {"status": "missing", "value": None}})
     if not architecture["accepted"]:
-        raise RuntimeError("SSMA exceeds synchronized optimizer-inclusive overhead gate")
+        raise RuntimeError(f"{mode} exceeds synchronized optimizer-inclusive overhead gate")
     certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
         "platform_id": recipe.get("runtime_platform_id", context.platform + "-t4x2"),
         "accelerator": hardware, "precision": "fp32", "tf32_enabled": False,
@@ -673,8 +738,8 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     if declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
                                         "state_sha256": INITIAL_STATE_SHA256}:
         raise ValueError("K1 Spec initialization differs from executable state")
-    if mode in ("reference", "ssma") and label_cache is not None:
-        raise ValueError("Reference/SSMA does not consume chemical auxiliary labels")
+    if mode in ("reference", "ssma", "flag") and label_cache is not None:
+        raise ValueError("Reference/SSMA/FLAG does not consume chemical auxiliary labels")
     if mode == "clean_fingerprint":
         if label_cache is None or label_cache.components != ("fingerprints",):
             raise ValueError("Clean fingerprint requires accepted fingerprint-only cache")
@@ -718,6 +783,8 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
                  "live_dev_metric": {"metric": "MAE", "unit": "eV", "target": "Gap",
                      "role_identity": recipe["development_role_identity"],
                      "weights": "live", "direction": "minimize"}}
+    if mode == "flag":
+        semantics["live_train_metric"]["timing"] = "online-pre-update; mean of three adversarial/dropout passes; not clean training MAE"
     session = FamilyOutputSession(output, context, adapter="k1-screen-v1", contract=recipe_path,
                                  trajectory_id=trajectory_id, metric_semantics=semantics)
     atomic_json(session.root / "runtime_manifest.json", runtime)

@@ -1,0 +1,10 @@
+{
+  "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+  "cpu_qualification": {"source_idx_start": 0, "source_idx_stop": 256, "role": "official_train_prefix_0_100000", "usage": ["prediction_input", "labels_read", "metric_computed"], "selection_used": false},
+  "training": {"source_idx_start": 0, "source_idx_stop": 100000, "role": "official_train_prefix_0_100000", "usage": ["training_membership", "labels_read"]},
+  "development": {"source_idx_start": 100000, "source_idx_stop": 150000, "role": "fixed50k_development", "already_consumed": true, "usage": ["prediction_input", "labels_read", "metric_computed", "selection_used"]},
+  "official_validation": "untouched_by_this_question",
+  "test_dev": "untouched_by_this_question",
+  "test_challenge": "untouched_by_this_question",
+  "historical_note": "Earlier separately authorized official/test role consumption remains recorded; globally untouched is not asserted."
+}

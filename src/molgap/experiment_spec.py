@@ -74,6 +74,9 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    ("k1_flag", "1"): AddonContract(
+        "neural_atom_k1", "k1-training-objective", "molgap.k1_flag",
+    ),
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
     ),
@@ -234,6 +237,11 @@ def _arm(arm: dict) -> None:
             if addon["config"] != {"layer": 6, "latent_channels": 64, "kappa": 4,
                                     "seed": 42, "degree_policy": "original-sum-above-four"}:
                 raise ValueError("K1 extension differs from the bounded frozen configuration")
+        elif addon["name"] == "k1_flag":
+            from .k1_flag import validate_config
+            if family["version"] != "2" or len(arm["addons"]) != 1:
+                raise ValueError("FLAG requires K1 family/version 2 and one addon")
+            validate_config(addon["config"])
         else:
             _object(addon["config"], "", "addon.config")
         _digest(addon["source_sha256"], "addon.source_sha256")

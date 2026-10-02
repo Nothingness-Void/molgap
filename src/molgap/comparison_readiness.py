@@ -154,6 +154,10 @@ CAUSAL_REQUIRED_TRACE_FIELDS = frozenset(
 INTERVENTION_FIELDS_BY_PURPOSE = {
     "architecture_comparison": frozenset({"architecture_config_identity"}),
     "mechanism_comparison": frozenset({"architecture_config_identity"}),
+    # Training addons bind their objective in both loss and Spec config identity.
+    "training_objective_comparison": frozenset(
+        {"loss_identity", "architecture_config_identity"}
+    ),
     "optimizer_comparison": frozenset(
         {"optimizer_identity", "optimizer_mode", "optimizer_fused"}
     ),

@@ -18,7 +18,7 @@
     "reference_id": {"type": ["string", "null"]},
     "reference_bundle_id": {"type": ["string", "null"]},
     "reference_bundle_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
-    "experiment_purpose": {"enum": ["architecture_comparison", "mechanism_comparison", "optimizer_comparison", "ema_comparison", "schedule_comparison", "diagnostic", "transfer_study", "delivery_experiment", "contextual_experiment", "NO_TRAIN"]},
+    "experiment_purpose": {"enum": ["architecture_comparison", "mechanism_comparison", "training_objective_comparison", "optimizer_comparison", "ema_comparison", "schedule_comparison", "diagnostic", "transfer_study", "delivery_experiment", "contextual_experiment", "NO_TRAIN"]},
     "intervention_group_id": {"type": "string", "minLength": 1},
     "mechanism_id": {"type": ["string", "null"]},
     "planned_status": {"enum": ["PRELAUNCH_STRICT_PLANNED", "PRELAUNCH_NONCAUSAL_PLANNED", "PRELAUNCH_BLOCKED"]},
