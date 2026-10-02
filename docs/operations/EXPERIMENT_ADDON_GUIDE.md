@@ -97,8 +97,17 @@ the independent desktop checkout; this shared code does not transfer custody.
 `ExperimentSpec` uses reviewed static family/addon registries. A new family or
 addon must add its small contract entry and focused tests; arbitrary import
 strings, callbacks and runtime plugin discovery are deliberately unsupported.
-The addon owns execution and platform behavior, while the shared core retains
-canonical identity, path confinement, immutable packaging and evidence rules.
+The addon owns its model delta and scientific configuration. The family owner
+implements execution hooks, the platform adapter implements platform behavior,
+and the shared core retains canonical identity, path confinement, immutable
+packaging and evidence rules.
+
+For an addon within a registered training family, follow the
+[three-step registration contract](REGISTERED_EXPERIMENT_WORKFLOW.md#add-an-addon).
+Typed config fields and a small execution descriptor bind the model delta,
+mode and extra dependencies. The lifecycle, launch validation, recovery
+transport and acceptance orchestration stay reusable. Platform operations
+remain with the owning workload adapter.
 
 ## Desktop arm packing
 

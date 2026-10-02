@@ -182,3 +182,19 @@ adapters. `kaggle_workflow.py` owns local platform staging,
 `kaggle_pair_runtime.py` the assigned-device all-arm barrier, and
 `experiment_source_inventory.py` reviewed bootstrap dependencies. Existing
 server GPTrans, EdgeState and historical model sources retain their owners.
+
+Addon config fields belong to `AddonContract` / `AddonConfigField` in
+`experiment_spec.py`; executable mode/dependency bindings belong to
+`TrainingAddon` / `TrainingAdapter` in `experiment_execution.py`.
+`experiment_launch_config.py` owns the shared strict launch boundary;
+`experiment_inspection.py` owns immutable output inspection snapshots.
+`experiment_resume.py` owns portable checkpoint transport and delegates native
+state checks to family owners; `experiment_workflow_resume.py` stages recovery
+against an existing immutable release. `training_reproducibility.py` owns shared
+native RNG structure checks. `experiment_allocation.py` measures the
+whole observed physical allocation; `experiment_retention.py` separately binds
+its compact execution files. See the registered workflow for addon extension
+and recovery APIs.
+`kaggle_output_retrieval.py` owns bounded hash-pinned file transport; the thin
+`platforms/kaggle/retrieve_family_outputs.py` adapter selects family or execution
+retention files through their owning manifest validators.

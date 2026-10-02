@@ -4,12 +4,20 @@ This is the entry point for the registered local-to-Kaggle training path. It
 owns preparation and acceptance orchestration. It does not own scientific
 authorization, a trainer loop, or platform submission.
 
+For a supported Spec, query `workflow-info` before selecting the preparation
+entry. Registration and local preparation still require the owning scientific
+contract and the platform's actual runtime qualification.
+
 ## Owners
 
 | Layer | Owner | Responsibility |
 |---|---|---|
 | Lifecycle | `experiment_workflow.py`; `prepare-workflow` / `accept-workflow` in the local CLI | Reuse package, release-check, prospective-planning, family-output inspection and existing terminal closure owners. |
 | Family execution | `experiment_execution.py`; `experiment_training_worker.py` | Static family/addon-to-trainer dispatch and one isolated subprocess per arm/phase. No caller-selected import or callback. |
+| Launch boundary | `experiment_launch_config.py` | Complete schema, immutable package/archive, per-arm recipe/init/prospective and unique device assignments; reused locally and by the frozen bootstrap. |
+| Inspection | `experiment_inspection.py`; `experiment_family_workflow.py` | One CPU inspection produces an immutable snapshot; descriptor/closure recheck file hashes without deserializing tensors again. |
+| Recovery | `experiment_resume.py`; `experiment_workflow_resume.py` | Hash-bound incomplete checkpoint transport and local staging against the original frozen release; family owners validate optimizer/RNG/cursor semantics. |
+| Allocation retention | `experiment_allocation.py`; `experiment_retention.py` | Account for the full observed physical allocation and seal its compact execution records separately from scientific artifacts. |
 | Platform preparation | Static platform registry in `experiment_workflow.py`; `kaggle_workflow.py` | Platform-owned plan validation, input staging/freezing and final release binding. Kaggle is the only registered preparation adapter in this entry point. |
 | Kaggle runtime | `platforms/kaggle/run_experiment.py`; `kaggle_pair_runtime.py` | Verify the frozen launch/package and observed T4 allocation; preflight every arm before spawning any training arm. |
 | Platform operations | `kaggle-molgap-workloads` skill and existing Kaggle adapters | Publish the prepared dataset/kernel, submit, reconcile the exact run/version, and retrieve retained outputs. |
@@ -32,8 +40,10 @@ the static training registry, its mode, and its output profile.
 
 The executable registry is in `experiment_execution.py`; the output profiles
 are in `experiment_family_artifacts.py`. `experiment_source_inventory.py`
-owns reviewed shared bootstrap files, while each family adapter declares its
-serialized-module dependencies in the execution registry. The family trainer owns its model,
+owns reviewed common bootstrap files. Each family adapter declares its source
+and serialized-module dependencies; an addon declares only additional reviewed
+dependencies. Packaging selects the registered families/addons in the Spec.
+The family trainer owns its model,
 loader, optimizer, selection and resume behavior. A same-family variant adds a
 registered addon/mode once; each experiment then supplies only that addon,
 its frozen contract/recipe and config. It does not add an experiment-specific
@@ -42,6 +52,28 @@ contract, model/trainer adapter, output profile and reviewed source inventory
 once. A new addon within an existing family adds its reviewed mode hook and
 source path only when it introduces a new dependency. Unsupported families,
 addon versions, modes and platform allocations stop before execution.
+
+## Add an addon
+
+1. Implement the model delta under `src/molgap/` and add an `AddonContract` in
+   `experiment_spec.py`. Declare configuration with `AddonConfigField` (frozen
+   literals or bounded integers), applicable family versions, source module and
+   zero-initialization contract. Configuration validation uses these fields;
+   it does not require an addon-name branch in the Spec parser.
+2. Add one `TrainingAddon(name, version, mode, extra_source_files=...)` to the
+   owning `TrainingAdapter` in `experiment_execution.py`. Reuse the family's
+   recipe, preflight, training, output and resume hooks. A new dependency belongs
+   in that descriptor; do not copy the full source inventory into an experiment.
+3. Add focused checks for configuration, zero initialization, the owning mode
+   and source dependency selection. No lifecycle, package, receipt, closure or
+   platform launcher changes are needed for an existing-family addon.
+
+Use `build_addon_declaration(family, addon, repo_root=..., config=..., version="1")`
+to obtain the validated config and actual source digest. Use
+`build_family_recipe(..., addon=..., addon_version="1")` for the recipe, then
+freeze both in the Spec. `workflow-info --spec SPEC` reports the registered
+execution support and preparation route. A declaration-only arm stays on its
+owning `prepare-release` route; this query does not qualify execution.
 
 Build the family's fixed recipe before freezing the Spec. This helper uses the
 registered family builder; do not copy an old recipe JSON and edit constants.
@@ -130,6 +162,10 @@ adapter rejects a missing, failed or stale report and repeats the byte checks
 before POST. The output contains `package/`, `source_dataset/`, `kernel/`,
 `release_report.json`, and `workflow_report.json`.
 
+`workflow_report.json.timings` records local validation, packaging, release
+checking, prospective publication and final binding durations. Static family
+recipe and all-arm prospective checks precede packaging and publication.
+
 ```powershell
 $repoRoot = (Get-Location).Path
 $python = '.\.venv\Scripts\python.exe'
@@ -187,6 +223,61 @@ when the runtime recorded that training never started; counters after training
 starts remain unknown if they were not retained. Mixed complete/incomplete
 pairs use the existing per-arm inspection and terminal route. See
 [terminal evidence](EXPERIMENT_CLI.md) for command fields and limits.
+
+## Recover an incomplete workflow
+
+Reconcile the exact original platform run/version and retrieve each arm's
+checkpoint, trace, available selected state/predictions, runtime/provenance
+sidecars and allocation ledger using the owning workload skill. Recovery uses
+the original package and exact ACTIVE canonical prospective bytes. It never
+creates another prospective action or changes the scientific contract.
+
+```powershell
+& $python -m molgap.experiment_cli build-resume --spec $spec --repo-root $repoRoot --prepared $originalPrepared --package $package --expected-package-identity $packageIdentity --receipt $originalReceipt --arm $armId --source-output $retainedArm --output $freshArmBundle
+& $python -m molgap.experiment_cli prepare-resume --spec $spec --repo-root $repoRoot --prepared $originalPrepared --package $package --expected-package-identity $packageIdentity --receipt $originalReceipt --resume-plan $resumePlan --output $freshRecovery
+```
+
+The resume plan has exactly `format: "molgap-workflow-resume-v1"`,
+`spec_identity`, and `arms: {"<arm-id>": "<bundle-directory-or-manifest-path>"}`.
+Every Spec arm must appear. The transport validates hashes and identity; the
+registered family validates model/optimizer/scheduler/RNG/cursor and native
+runtime consistency. Preparation stages those exact bytes and freezes each
+manifest digest into the launch. The final release gate and frozen bootstrap
+repeat resume validation before any arm starts. Runtime restores fresh arm
+outputs before the all-arm preflight barrier and retains prior cost segments.
+Recovery uses a captured prospective byte snapshot and rejects canonical
+changes during preparation. Restoration verifies the copied bytes against the
+manifest before atomic publication and rejects concurrent destination conflicts.
+
+Supported recovery requires all arms to be incomplete and checkpoint-bearing.
+Completed arms, missing checkpoints, mixed completed/incomplete sets, changed
+prospective records and legacy packages without the recovery runtime are
+rejected. Use the existing owning per-arm route for those cases. Never modify
+an old archive to add recovery support.
+The local family validator must match its frozen packaged source, and the new
+worker runtime must match the retained certificate. Releases with additional
+pickled input staging remain with their owning preparation adapter.
+
+## Retain allocation observations
+
+Runtime writes `allocation_ledger.json` at the execution root and each arm,
+then seals `execution_retention.json` and `execution_report.json` separately
+from family scientific manifests. The ledger measures the Python bootstrap and
+runtime observation window for every physical device, including unassigned
+and idle devices. Queue and provisioning before Python remain explicitly
+unmeasured. A prior running ledger is preserved as an incomplete observation;
+recovery does not invent the unobserved interval after its last write.
+The running ledger is written atomically on a 30-second interval while the
+parent orchestrator is alive; terminal retention is sealed after completion or
+a handled failure.
+Prior invocations are flattened and deduplicated, preserving incomplete
+observation flags across repeated recovery.
+
+Retrieve the independently pinned execution retention manifest and only its
+bound compact files through the Kaggle adapter. Supply `--execution-root ROOT`
+to `accept-workflow` to validate their source/package/Spec identity and hashes
+alongside scientific output inspection. Execution retention is a cost
+observation, not a replacement for the existing scientific/native-cost gate.
 
 ## Evidence boundary
 

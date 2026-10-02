@@ -251,3 +251,10 @@ server `prepare-release`, `check-preparation` and replay-closure entries.
 New K1/GPTrans recipe builders freeze full `metric_semantics` independently;
 the inspector retains exact recipe-to-trace checks, including the declared
 development role. Missing live or EMA observations remain null.
+
+`workflow-info --spec SPEC` reports declaration versus executable capability
+and the preparation entry. `build-resume` and `prepare-resume` compose portable
+incomplete checkpoint transport over the original prepared package and a
+reconciled receipt. Their fields, supported limits and allocation-retention
+option `accept-workflow --execution-root ROOT` are defined once in the
+[registered workflow](REGISTERED_EXPERIMENT_WORKFLOW.md#recover-an-incomplete-workflow).
