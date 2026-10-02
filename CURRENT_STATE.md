@@ -5,12 +5,12 @@
 
 ## Server active screen
 
-The G1 recipe/path screen ended with one complete replay pair and one
-infrastructure-only failure. Endpoint contrast did not improve the accepted
-EMA0.999 reference; grouped decay remains scientifically unanswered.
-The diagnostic writer is repaired locally; no recovery or successor is released.
-Luna monitoring is paused. Authority:
-[controller decision](experiments/pcqm_gptrans_recipe_paths_100k/gpu/results/decision.md).
+The sole server-owned group is Kaggle3's G1 pair-scale dual screen, version1:
+grouped-decay recovery and an isolated depth-scaled pair-update mechanism.
+The accepted EMA0.999 comparator is reused without baseline retraining.
+Existing Luna B monitors the exact returned job; no successor or scale is released.
+Authority: [protocol](experiments/pcqm_gptrans_pair_scale_100k/protocol.md) and
+[physical receipt](experiments/pcqm_gptrans_pair_scale_100k/gpu/submission_v1.json).
 
 ## Shared experiment infrastructure
 

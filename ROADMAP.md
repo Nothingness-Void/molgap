@@ -13,7 +13,8 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| Paused | C-GPTRANS-G1-RECIPE-PATH | Complete endpoint-path arm failed advancement; grouped arm had a repaired diagnostic-writer failure | Preserve [decision](experiments/pcqm_gptrans_recipe_paths_100k/gpu/results/decision.md); failed-arm recovery requires qualification, no baseline/completed-arm rerun |
+| P0 | C-GPTRANS-G1-PAIR-SCALE | One authorized Kaggle3 dual: decay recovery and depth-scaled pair recurrence | Independent saved-artifact/RML acceptance and actual replay pairs; [protocol](experiments/pcqm_gptrans_pair_scale_100k/protocol.md), no automatic successor |
+| Closed | C-GPTRANS-G1-RECIPE-PATH | Complete endpoint-path arm failed advancement; grouped arm had a repaired diagnostic-writer failure | Preserve [decision](experiments/pcqm_gptrans_recipe_paths_100k/gpu/results/decision.md); no baseline/completed-arm rerun |
 | Closed | C-GPTRANS-G1-FOLLOWUP | Two accepted strict/Replay pairs: EMA correction positive; path additivity unsupported | Preserve [decision](experiments/pcqm_gptrans_input_ema_100k/gpu/results/decision.md); any transfer audit requires a separate authorization and role plan |
 | Closed | C-GPTRANS-COMPARISON-QUALIFICATION | Reference and both candidate bindings qualified; actual Replay pair verified | [Qualification](experiments/pcqm_gptrans_author_alignment/gpu/results/qualification_decision.md); no automatic retraining or scale-up |
 | P0 | C-K1-REPRESENTATION-DIAGNOSTIC | Completed: accepted and RML-closed NO_TRAIN diagnostic found no supported representation-collapse repair | Preserve [closure](experiments/pcqm_k1_explainability_audit/representation/results/terminal_decision.md) and immutable prospective snapshot; no compute rerun or automatic training |
