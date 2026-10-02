@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 258,
+  "ambiguous_historical_role_record_count": 268,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-distance-angle-triangle-500k-20260911",
@@ -1346,6 +1346,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
       "role_identity": null,
       "role_name": "fixed50k_development",
@@ -1438,6 +1473,41 @@
     },
     {
       "evidence_id": "pcqm-k1-residual-reconciliation",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -1808,7 +1878,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 113,
+  "explicit_role_event_count": 125,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "fixed50k_development",
@@ -2479,10 +2549,38 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TB-k1-reference-kaggle3-100k-s42-v2-calibration-train-labels",
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-reference-kaggle3-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
       },
       {
         "access_kind": "labels_read",
@@ -2513,6 +2611,64 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:fixed50k_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
@@ -2704,9 +2860,11 @@
       "pcqm-k1-full-convergence-20260919",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-pair-value-decoupled-100k-s42",
+      "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-residual-reconciliation",
+      "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-ssma-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-ssma-qualification-no-train-s42-v1",
@@ -2764,9 +2922,11 @@
       "pcqm-k1-full-convergence-20260919",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-pair-value-decoupled-100k-s42",
+      "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-residual-reconciliation",
+      "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-ssma-kaggle3-unsubmitted-source-v1",
       "pcqm-k1-ssma-qualification-no-train-s42-v1",
@@ -3214,6 +3374,64 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-v4-100k-reference-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:fixed50k_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [
@@ -3831,10 +4049,38 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TB-k1-reference-kaggle3-100k-s42-v2-calibration-train-labels",
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-reference-kaggle3-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
       },
       {
         "access_kind": "labels_read",
@@ -3865,6 +4111,64 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:fixed50k_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-ssma-accuracy-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_549999": [

@@ -1,0 +1,106 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/ssma_acceptance.json",
+      "name": "ssma_acceptance.json",
+      "sha256": "abd7d58a08184d7352ea75a090e3c698b4696c1a223fe51c77e4a3db5940a0ff"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "1c6eb7e262f039aeae05e6b128bd76f82a45856d4bc4f9d091325c927223f54f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/attribution.md",
+      "name": "attribution.md",
+      "sha256": "3d0ba20c26bf4e5004616eea3a6b18956d8814ad1d01e69da50e69518d795ee9"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/scientific_metrics.json",
+      "name": "scientific_metrics.json",
+      "sha256": "b846bdd495b20ac05493463987a235027ddd8b3e5a92ea57411e7c4f6964d87a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/canonical_trace.json",
+      "name": "canonical_trace.json",
+      "sha256": "725fc7952367e8c6d807df944c000f7f3f6f2d2a44398c485f89d215c605e142"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/development_predictions.pt",
+      "name": "development_predictions.pt",
+      "sha256": "34c8f67326cc5ff797ca1e405c9338b7e2dec4383f1b709e8977e6bced1201a6"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/last_checkpoint.pt",
+      "name": "last_checkpoint.pt",
+      "sha256": "ede3a6dc3424877c1d1a2d61abeef57517a9bcc095ab615e4fb6a98942c7f594"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/output_manifest.json",
+      "name": "output_manifest.json",
+      "sha256": "aedac4a52921234090b4e90817a5ab7107022f9bd328117c9c900e03b39a8fd0"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/selected_model.pt",
+      "name": "selected_model.pt",
+      "sha256": "e8245422a788057da89521a27c7a452bd89f0ea9124d1f83e56473e1497afeb0"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/training_contract.json",
+      "name": "training_contract.json",
+      "sha256": "ff15907f63560d04633156a54a40043ab50a81d80fbcc19a779f79cb3e11d3b8"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/terminal_decision.md",
+      "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/ssma_acceptance.json",
+      "experiments/pcqm_k1_local_mixing_clean_aux/training_protocol_kaggle3_accuracy_v1.md",
+      "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/scientific_metrics.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "k1-ssma-kaggle3-accuracy-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-02",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "No-inference metadata export of independently executed prospective training"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/remote_observation.json",
+    "inference_executed": false,
+    "training_executed": true
+  },
+  "outcome": {
+    "artifact_status": "hash_verified_retained",
+    "budget_decision": "no_successor_or_scale_up",
+    "comparison_status": "PAIRED_ENDPOINT_single_seed",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "desktop_same_job_k1_ssma_accuracy_100k_saved_artifacts",
+  "track": "B"
+}

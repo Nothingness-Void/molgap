@@ -1,0 +1,44 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v1",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "mode": "reference",
+          "device": 0,
+          "returncode": 0
+        },
+        {
+          "mode": "ssma",
+          "device": 1,
+          "returncode": 0
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "train",
+      "workers": [
+        {
+          "mode": "reference",
+          "device": 0,
+          "returncode": 0
+        },
+        {
+          "mode": "ssma",
+          "device": 1,
+          "returncode": 0
+        }
+      ],
+      "status": "complete"
+    }
+  ],
+  "status": "complete",
+  "pair_process_wall_seconds": 6888.451503595999,
+  "scope": "pair orchestration window; excludes kernel bootstrap and queue; per-arm assigned T4 allocation measured by trainer"
+}

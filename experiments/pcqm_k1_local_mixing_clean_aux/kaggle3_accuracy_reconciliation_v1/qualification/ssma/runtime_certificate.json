@@ -1,0 +1,19 @@
+{
+  "format": "molgap-runtime-certificate-v1",
+  "status": "accepted",
+  "platform_id": "kaggle3-t4x2",
+  "accelerator": "Tesla T4",
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "deterministic_algorithms": true,
+  "physical_batch_per_device": 128,
+  "tail_batch_policy": "drop_last",
+  "runtime_fingerprint": "c6653bd92ee5d532a18e609c6846d8ed54e6724323cdc78b0014d6986244f630",
+  "software_fingerprint": "01a422b3553be49b84623a1b965dcba1f5a269a081152e05f5fb0b8bc90c3b98",
+  "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+  "calibration_fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+  "calibration_output_sha256": "ac14a3a676960d81b2ae46ccdb1b36b009c79db14cff44b362f6f032baa2ac59",
+  "calibration_checks_passed": true,
+  "provenance_sha256": "635c6de79fd43b2352b378935e12880f4fe053f46ca3dae20cc64c73f94030ec",
+  "architecture_sha256": "a4bab9a0957641df55877d2d1da68282a5e4850af2c0c68e67d8b4115c549f6a"
+}

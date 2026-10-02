@@ -1,0 +1,74 @@
+{
+  "adapter": "k1-screen-v1",
+  "artifacts": {
+    "contract": {
+      "path": "training_contract.json",
+      "sha256": "ff15907f63560d04633156a54a40043ab50a81d80fbcc19a779f79cb3e11d3b8"
+    },
+    "predictions": {
+      "path": "development_predictions.pt",
+      "sha256": "34c8f67326cc5ff797ca1e405c9338b7e2dec4383f1b709e8977e6bced1201a6"
+    },
+    "resume": {
+      "path": "last_checkpoint.pt",
+      "sha256": "ede3a6dc3424877c1d1a2d61abeef57517a9bcc095ab615e4fb6a98942c7f594"
+    },
+    "selected_model": {
+      "path": "selected_model.pt",
+      "sha256": "e8245422a788057da89521a27c7a452bd89f0ea9124d1f83e56473e1497afeb0"
+    },
+    "trace": {
+      "path": "canonical_trace.json",
+      "sha256": "725fc7952367e8c6d807df944c000f7f3f6f2d2a44398c485f89d215c605e142"
+    }
+  },
+  "context": {
+    "account": "nvoid912",
+    "arm_id": "ssma",
+    "arm_identity": "4aa04b9b2c7eca754ffbfe62ea53862b58ff0fbbc6a49b497bad93e5d22e65a0",
+    "experiment_id": "pcqm-k1-ssma-accuracy-kaggle3-100k",
+    "family_name": "neural_atom_k1",
+    "family_version": "2",
+    "logical_run_id": "molgap-k1-v4-ssma-accuracy-100k-s42-v1",
+    "package_identity": "deae476a1e9122966bf45ff60151f0e734dcbcfec7433577d21b89e85b11569c",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "nvoid912/molgap-k1-v4-ssma-accuracy-100k-s42-v1",
+    "source_archive_sha256": "2073ea91ea96ef88859a0db6d7b68e0ffff4a12fd9e11e3dc5f3e689d1c22c11",
+    "source_commit": "f21920ba5d9f3fe148cfa18803d53c0a5ec8f670",
+    "spec_identity": "ac7f233504dedc9e37a57ec400df4a84415319caee62a9f85baa365cecb8b85b",
+    "training_recipe_sha256": "ff15907f63560d04633156a54a40043ab50a81d80fbcc19a779f79cb3e11d3b8"
+  },
+  "costs": [
+    {
+      "hardware": "Tesla T4",
+      "metric": "wall_seconds",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 6831.826150291
+    },
+    {
+      "hardware": "Tesla T4",
+      "metric": "device_seconds",
+      "semantics": "allocated_device",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 6831.826150291
+    }
+  ],
+  "format": "molgap-family-output-v1",
+  "progress": {
+    "epochs": 40,
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "runtime": {
+    "account": "nvoid912",
+    "platform": "kaggle",
+    "precision": "fp32",
+    "runtime_certificate_id": "9425e42a76b8f1e0d9a8ad166702721be10140c25854b306b0c84a4ab13b623d",
+    "source_archive_sha256": "2073ea91ea96ef88859a0db6d7b68e0ffff4a12fd9e11e3dc5f3e689d1c22c11",
+    "source_commit": "f21920ba5d9f3fe148cfa18803d53c0a5ec8f670"
+  }
+}

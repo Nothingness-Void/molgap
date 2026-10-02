@@ -1,0 +1,40 @@
+{
+  "files": [
+    {
+      "path": "training_contract.json",
+      "sha256": "ff15907f63560d04633156a54a40043ab50a81d80fbcc19a779f79cb3e11d3b8",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "development_predictions.pt",
+      "sha256": "34c8f67326cc5ff797ca1e405c9338b7e2dec4383f1b709e8977e6bced1201a6",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "last_checkpoint.pt",
+      "sha256": "ede3a6dc3424877c1d1a2d61abeef57517a9bcc095ab615e4fb6a98942c7f594",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "selected_model.pt",
+      "sha256": "e8245422a788057da89521a27c7a452bd89f0ea9124d1f83e56473e1497afeb0",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "canonical_trace.json",
+      "sha256": "725fc7952367e8c6d807df944c000f7f3f6f2d2a44398c485f89d215c605e142",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "output_manifest.json",
+      "sha256": "aedac4a52921234090b4e90817a5ab7107022f9bd328117c9c900e03b39a8fd0",
+      "state": "ALREADY_RETAINED"
+    }
+  ],
+  "kernel": "nvoid912/molgap-k1-v4-ssma-accuracy-100k-s42-v1",
+  "manifest_sha256": "aedac4a52921234090b4e90817a5ab7107022f9bd328117c9c900e03b39a8fd0",
+  "platform_version_verified_by_output_api": false,
+  "producer_version": null,
+  "receipt_version": "1",
+  "unselected_outputs_downloaded": false
+}

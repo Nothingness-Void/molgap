@@ -2,26 +2,24 @@
 
 Desktop-owned branch: `codex/exp/k1-local-mixing-clean-aux`.
 
-## Kaggle3 authorized accuracy attempt
+## Kaggle3 accepted accuracy terminal
 
-- Kernel: `nvoid912/molgap-k1-v4-ssma-accuracy-100k-s42-v1`, ID136643751,
-  actual version1. Authenticated observation: RUNNING at2026-10-01T09:33:34Z;
-  [scheduler record](kaggle3_accuracy_submission_v1/remote-status.json).
-- Original K1 V4 reference and identical bounded SSMA, each100K/40epochs/FP32.
-  [Frozen protocol](training_protocol_kaggle3_accuracy_v1.md),
-  [Spec](experiment_spec_kaggle3_accuracy_v1.json),
-  [submission](kaggle3_accuracy_submission_v1/submission-response.json).
-- User-authorized accuracy execution reports overhead without the25% veto.
-  Other identity, equivalence, determinism and resume gates remain fail-closed.
-  Previous NO_TRAIN records are unchanged; no accuracy result exists yet.
-- Two independent prospective RML trajectories:
-  [reference](kaggle3_accuracy_v1/reference/trajectory.json),
-  [SSMA](kaggle3_accuracy_v1/ssma/trajectory.json). Replay acceptance is pending.
-- Frozen source `f21920ba5d9f3fe148cfa18803d53c0a5ec8f670`; local release
-  and focused15 tests passed. Pulled entry matches after LF normalization and
-  exact mounts were checked. RUNNING does not confirm formal worker progress.
-- Reconcile this exact attempt when desktop returns; no automatic heartbeat,
-  server takeover, retry, successor or scale-up. Retrieve only required evidence.
+- Exact kernel `nvoid912/molgap-k1-v4-ssma-accuracy-100k-s42-v1`, ID136643751,
+  actual version1 is authenticated COMPLETE. Entry matches source `f21920ba`;
+  [observation](kaggle3_accuracy_reconciliation_v1/remote_observation.json).
+- Original reference and bounded SSMA each completed100K/40epochs/FP32,
+  31240steps and3998720 presentations; both selected epoch40. Independently
+  accepted manifest-bound predictions, selected/resume states and traces retained.
+- SSMA is **NEGATIVE_UNDER_CONTRACT**: MAE0.143361512 versus reference0.141294461eV;
+  gain−2.067051meV, paired95% row interval[−3.005820,−1.105339]meV.
+  [Decision](kaggle3_accuracy_reconciliation_v1/terminal_decision.md) and
+  [attribution](kaggle3_accuracy_reconciliation_v1/attribution.md) own interpretation.
+- The48.977% synchronized optimizer-step overhead is reported under the
+  explicitly authorized report_only policy. Other execution gates passed.
+  [Frozen protocol](training_protocol_kaggle3_accuracy_v1.md) is unchanged.
+- Independent reference/SSMA terminal RML is finalized; strict replay/readiness
+  admission remains unevaluated. No retry,successor,scale-up or adoption.
+  Prior cost-gated NO_TRAIN records retain their original authority.
 
 ## Previous Kaggle3 cost-gated terminal pair
 
