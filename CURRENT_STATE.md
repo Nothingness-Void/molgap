@@ -5,12 +5,10 @@
 
 ## Server active screen
 
-The sole server-owned group is Kaggle3's G1 pair-scale dual screen, version1:
-grouped-decay recovery and an isolated depth-scaled pair-update mechanism.
-The accepted EMA0.999 comparator is reused without baseline retraining.
-Existing Luna B monitors the exact returned job; no successor or scale is released.
-Authority: [protocol](experiments/pcqm_gptrans_pair_scale_100k/protocol.md) and
-[physical receipt](experiments/pcqm_gptrans_pair_scale_100k/gpu/submission_v1.json).
+The Kaggle3 G1 pair-scale dual is closed: neither arm qualified for promotion.
+Both candidate/reference trajectories are complete and admitted to replay.
+The existing Luna heartbeat is paused; no server successor or scale run is released.
+Authority: [terminal decision](experiments/pcqm_gptrans_pair_scale_100k/gpu/results/decision.md).
 
 ## Shared experiment infrastructure
 
