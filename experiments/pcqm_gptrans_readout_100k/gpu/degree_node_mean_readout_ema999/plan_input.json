@@ -1,0 +1,148 @@
+{
+  "trajectory": {
+    "trajectory_id": "TC-gptrans-g1-node-mean-readout-100k-s42",
+    "record_mode": "prospective",
+    "owner": "server",
+    "track": "C",
+    "family_id": "gptrans-g1-degree_node_mean_readout_ema999",
+    "question": "Does final real-atom masked-mean readout improve G1 EMA999 while retaining its virtual pair readout?",
+    "hypothesis": {
+      "hypothesis_id": "H-TC-gptrans-g1-node-mean-readout-100k-s42",
+      "observed_deficiency": "Does final real-atom masked-mean readout improve G1 EMA999 while retaining its virtual pair readout?",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+        "pcqm-gptrans-g1-degree-group-decay-ema999-100k-s42",
+        "pcqm-gptrans-g1-degree-pair-depth-scale-ema999-100k-s42"
+      ],
+      "alternative_explanations": [
+        "Virtual pooling may already retain the relevant signal; mean pooling may dilute rare chemical sites."
+      ],
+      "changed_mechanism": "degree_node_mean_readout_ema999",
+      "cheapest_falsifier": "one matched seed42 screen against accepted G1; no baseline retraining",
+      "related_closed_family_ids": [
+        "gptrans-pair-prenorm",
+        "gptrans-runtime-profiling"
+      ],
+      "expected_native_cost_ref": "cost-TC-gptrans-g1-node-mean-readout-100k-s42",
+      "decision_changed_if_positive": "controller interpretation only; no automatic scale or seed release",
+      "decision_changed_if_negative": "close this exact follow-up hypothesis",
+      "historical_unknowns": [
+        "training stochasticity unmeasured; material gate is a policy choice"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "de7b2a6e04a4c3d198b471079f033fee8d682dac",
+      "source_config_identity": "041ea7600b09339686f917464d5e32f480b531698a3f0096d2a77726ab3f98ba",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/contract.json",
+        "experiments/pcqm_gptrans_readout_100k/protocol.md",
+        "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/comparison_readiness_prelaunch.json"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-g1-degree-scale-ema999-100k-s42"
+      ],
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "prior_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42",
+        "TC-gptrans-g1-group-decay-recovery-100k-s42",
+        "TC-gptrans-g1-pair-depth-scale-100k-s42"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+        "pcqm-gptrans-g1-degree-group-decay-ema999-100k-s42",
+        "pcqm-gptrans-g1-degree-pair-depth-scale-ema999-100k-s42"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_readout_100k/gpu/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_readout_100k/gpu/budget.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "single_mechanism_screen",
+        "source_commit": "de7b2a6e04a4c3d198b471079f033fee8d682dac",
+        "run_ids": [
+          "gptrans-g1-readout-dual-s42:degree_node_mean_readout_ema999"
+        ],
+        "attempt_ids": [
+          "v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/contract.json"
+        ],
+        "cost_event_ids": [
+          "cost-TC-gptrans-g1-node-mean-readout-100k-s42"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_readout_100k/protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one isolated T4 arm then full saved-artifact acceptance"
+      ],
+      "reopen_conditions": [
+        "terminal evidence or an infrastructure fault requiring controller diagnosis"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [
+      "pcqm-gptrans-g1-degree-scale-ema999-100k-s42"
+    ],
+    "available_actions": [
+      "RUN_G1_FOLLOWUP",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_G1_FOLLOWUP",
+    "policy_id": "gptrans-g1-followup",
+    "policy_version": "v1",
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_readout_100k/gpu/budget.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_readout_100k/gpu/role_plan.json"
+    ],
+    "state_timestamp": "2026-10-02T16:52:53.788263+00:00",
+    "source_commit": "de7b2a6e04a4c3d198b471079f033fee8d682dac"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-g1-node-mean-readout-100k-s42",
+      "trajectory_id": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "action_id": "A001",
+      "run_id": "gptrans-g1-readout-dual-s42:degree_node_mean_readout_ema999",
+      "attempt_id": "v1",
+      "category": "training",
+      "platform": "kaggle3",
+      "hardware": "one-of-two-independent-T4",
+      "evidence_ref": "experiments/pcqm_gptrans_readout_100k/gpu/budget.json",
+      "measurement": {
+        "device_hours": {
+          "status": "estimated",
+          "value": 3.5
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 3.5
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}
