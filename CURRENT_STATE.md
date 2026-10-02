@@ -5,10 +5,12 @@
 
 ## Server active screen
 
-The Kaggle3 G1 pair-scale dual is closed: neither arm qualified for promotion.
-Both candidate/reference trajectories are complete and admitted to replay.
-The existing Luna heartbeat is paused; no server successor or scale run is released.
-Authority: [terminal decision](experiments/pcqm_gptrans_pair_scale_100k/gpu/results/decision.md).
+The user-authorized Kaggle3 chemical-path + corrected-EMA combination screen
+is submitted and API-observed RUNNING. It reuses frozen G1+EMA without baseline
+retraining. Exact identity and evidence boundary: [submission](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/submission_record.md).
+Existing Luna B monitors this server-owned job; no successor or scale run is released.
+The prior pair-scale dual is closed with both actual Replay pairs and no promotion;
+preserve its [terminal decision](experiments/pcqm_gptrans_pair_scale_100k/gpu/results/decision.md).
 
 ## Shared experiment infrastructure
 
@@ -88,8 +90,8 @@ Original prospective snapshots and terminal receipts remain immutable. Authority
 The G1 path/EMA follow-up is terminal, independently accepted and Replay-Ready
 per arm. EMA correction passed its material gate with identical live training
 observations; path additivity did not establish a gain. This is a 100K EMA
-finding, not a new architecture or proven scale benefit. Existing Luna B is
-paused; no successor, seed, scale bridge or full training was released.
+finding, not a new architecture or proven scale benefit. That terminal decision
+released no successor, seed, scale bridge or full training; live ownership is above.
 Authority: [follow-up decision](experiments/pcqm_gptrans_input_ema_100k/gpu/results/decision.md).
 Authority: [terminal decision](experiments/pcqm_gptrans_author_alignment/gpu/results/decision.md).
 [Submission record](experiments/pcqm_gptrans_author_alignment/gpu/submission_record.md);
