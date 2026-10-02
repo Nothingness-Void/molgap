@@ -46,14 +46,11 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
 
-- **K1 isolated slot96:** user-authorized single100K candidate submitted to Kaggle3.
-  The authenticated submission observation is RUNNING/version1; source bytes match.
-  Runtime qualification, endpoint acceptance and science remain pending. Reconcile
-  that exact attempt after desktop returns through the owning
-  [STATUS](D:/w/k1-slot96/experiments/pcqm_k1_slot_width96/STATUS.md).
-  Atom192/edge64 remain fixed, latent64 becomes96; measured parameters increase5.329%.
-  CPU final-slot utility/initialization evidence is closed separately on the owner.
-  No model promotion, automatic successor, monitoring or server handoff is released.
+- **K1 isolated slot96:** accepted terminal NEGATIVE_UNDER_CONTRACT; no adoption
+  or successor. Complete experiment history is routed to archive; accepted canonical
+  evidence is discoverable in desktop RML. Read the
+  [decision](experiments/pcqm_k1_slot_width96/terminal_decision.md) and
+  [STATUS](experiments/pcqm_k1_slot_width96/STATUS.md) before selecting another module.
 
 - **Chemical auxiliary:** endpoint acceptance and independent terminal RML
   closure are complete on the dedicated owner at `17b1987a`. The 2026-10-01

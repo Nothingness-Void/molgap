@@ -1,0 +1,74 @@
+{
+  "accepted": true,
+  "mode": "slot96",
+  "zero_initialization_delta": null,
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      0.7801382541656494,
+      0.7801382541656494
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "35724f64cfa45dd89104b326648c7c8d9b209a459b5d7a21ccf48c0bdfa66a79",
+      "35724f64cfa45dd89104b326648c7c8d9b209a459b5d7a21ccf48c0bdfa66a79"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      0.7801382541656494,
+      0.7801382541656494
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "ec6292f62fc00944d1b30793f83f679ddebd2875e4312e5aba6016d3a25cd57b",
+      "ec6292f62fc00944d1b30793f83f679ddebd2875e4312e5aba6016d3a25cd57b"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.10448847100002467,
+      "samples_seconds": [
+        0.10622186500000907,
+        0.10466165700000829,
+        0.10448847100002467,
+        0.10411933799997541,
+        0.10217354899998554
+      ],
+      "peak_memory_bytes": 576284672
+    },
+    "slot96": {
+      "median_step_seconds": 0.10777098900001647,
+      "samples_seconds": [
+        0.10899305800001002,
+        0.10777098900001647,
+        0.10850244099998463,
+        0.10481896400000323,
+        0.10581766800004289
+      ],
+      "peak_memory_bytes": 605709312
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": 0.03141512138684677,
+  "maximum_overhead_fraction": null,
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption",
+  "initialization_equivalence": "not_applicable_width_change",
+  "overhead_policy": "report_only_width_change",
+  "parameter_count": 3853793,
+  "reference_parameter_count": 3658817,
+  "finite_nonzero_gradient_check": true,
+  "reference_profile_initialization": "seed42-random-latent64-execution-calibration-only"
+}

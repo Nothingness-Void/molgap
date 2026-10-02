@@ -20,7 +20,6 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 
 | Priority | Task | Exit condition / owner |
 |---|---|---|
-| P0 | Reconcile the submitted K1 latent96 candidate after desktop returns | Exact Kaggle3 version1/source receipt on `codex/exp/k1-slot-width96`; runtime and endpoint acceptance, paired retained-reference comparison, cost/roles and terminal attribution; no automatic successor |
 | P0 | Reconcile the authorized K1 / SSMA100K accuracy attempt | Follow the retained owner STATUS and exact Kaggle3 receipt; independent per-arm acceptance, paired accuracy/cost comparison and terminal attribution; no automatic successor |
 | P0 | Review prior chemical auxiliary and cost-gated K1 terminal evidence integration / Git routing | Prior attempts' terminal closure is complete. Reconcile the separate early chemical CPU feasibility record's missing terminal evidence, preserve qualification exclusions and artifacts, then review desktop discovery and terminal custody; no duplicate training acceptance |
 | Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |

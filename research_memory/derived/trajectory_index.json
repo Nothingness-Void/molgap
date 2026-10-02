@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "8310505783109626839299549fdc30e18108522e9247e9b32c5dc27da70bc021",
+  "source_digest": "4a796c19b6b7838839a2a0eb43b7c3326ddfa3f9043a95ee85434e37115495ce",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -864,17 +864,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_slot_width96/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_slot_width96/terminal_decision.md",
       "family_id": "k1-slot-width96",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-k1-slot96-cpu-qualification-20261002"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_slot_width96/kaggle3_v1/slot96/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_slot_width96/kaggle3_v1/slot96/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal"
+      ],
       "track": "B",
       "trajectory_id": "TB-k1-slot-width96-kaggle3-100k-s42-v1"
     },

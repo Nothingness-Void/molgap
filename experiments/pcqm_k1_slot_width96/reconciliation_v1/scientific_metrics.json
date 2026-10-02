@@ -1,0 +1,749 @@
+{
+  "scope": "Retained50K predictions and40epoch traces; no model execution",
+  "helper": {
+    "path": "experiments/pcqm_gptrans_100k_transfer_control/analyze_pair.py",
+    "sha256": "cc24d6825741a5ec36095372688254d42056d333c79501cca9a435e4d36b44d0",
+    "callable": "paired_metrics"
+  },
+  "endpoint": {
+    "rows": 50000,
+    "reference_mae_eV": 0.1412944608205557,
+    "candidate_mae_eV": 0.1407475805991888,
+    "paired_gain_eV": 0.0005468802213668823,
+    "row_bootstrap_95pct_eV": [
+      -0.00042656656229496,
+      0.0014540387780666352
+    ],
+    "candidate_better_row_fraction": 0.50232,
+    "material_3mev_point_gain": false,
+    "gate_eV": 0.003,
+    "gain_definition": "reference MAE minus candidate MAE",
+    "bootstrap_replicates": 1000,
+    "bootstrap_seed": 42,
+    "training_stochasticity": "unknown_single_seed42"
+  },
+  "alignment": {
+    "rows": 50000,
+    "source_idx_start": 100000,
+    "source_idx_stop": 150000,
+    "exact_order": true,
+    "identical_targets": true,
+    "finite_predictions": true
+  },
+  "selection": {
+    "reference": {
+      "epoch": 40,
+      "development_mae_eV": 0.141294464468956,
+      "epochs": 40,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "candidate": {
+      "epoch": 37,
+      "development_mae_eV": 0.1407475769519806,
+      "epochs": 40,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    }
+  },
+  "paired_curve": [
+    {
+      "epoch": 1,
+      "optimizer_step": 781,
+      "sample_presentations": 99968,
+      "learning_rate": 0.0004,
+      "reference_online_train_mae_eV": 0.34996190768321994,
+      "candidate_online_train_mae_eV": 0.3523726026569093,
+      "reference_development_mae_eV": 0.36178702116012573,
+      "candidate_development_mae_eV": 0.3623308539390564,
+      "development_gain_eV": -0.0005438327789306641
+    },
+    {
+      "epoch": 2,
+      "optimizer_step": 1562,
+      "sample_presentations": 199936,
+      "learning_rate": 0.00039938500807975907,
+      "reference_online_train_mae_eV": 0.28202630377190424,
+      "candidate_online_train_mae_eV": 0.28258301908067807,
+      "reference_development_mae_eV": 0.3206275701522827,
+      "candidate_development_mae_eV": 0.3538862466812134,
+      "development_gain_eV": -0.033258676528930664
+    },
+    {
+      "epoch": 3,
+      "optimizer_step": 2343,
+      "sample_presentations": 299904,
+      "learning_rate": 0.00039754382394873003,
+      "reference_online_train_mae_eV": 0.25745867952968216,
+      "candidate_online_train_mae_eV": 0.2572500295421943,
+      "reference_development_mae_eV": 0.29656797647476196,
+      "candidate_development_mae_eV": 0.2749307155609131,
+      "development_gain_eV": 0.021637260913848877
+    },
+    {
+      "epoch": 4,
+      "optimizer_step": 3124,
+      "sample_presentations": 399872,
+      "learning_rate": 0.0003944877991193365,
+      "reference_online_train_mae_eV": 0.23994467295477642,
+      "candidate_online_train_mae_eV": 0.2415133576085333,
+      "reference_development_mae_eV": 0.2445930540561676,
+      "candidate_development_mae_eV": 0.25237342715263367,
+      "development_gain_eV": -0.0077803730964660645
+    },
+    {
+      "epoch": 5,
+      "optimizer_step": 3905,
+      "sample_presentations": 499840,
+      "learning_rate": 0.0003902357750008832,
+      "reference_online_train_mae_eV": 0.223415147315034,
+      "candidate_online_train_mae_eV": 0.2248011924042642,
+      "reference_development_mae_eV": 0.23159879446029663,
+      "candidate_development_mae_eV": 0.2497405856847763,
+      "development_gain_eV": -0.018141791224479675
+    },
+    {
+      "epoch": 6,
+      "optimizer_step": 4686,
+      "sample_presentations": 599808,
+      "learning_rate": 0.0003848139667360017,
+      "reference_online_train_mae_eV": 0.2133166041948238,
+      "candidate_online_train_mae_eV": 0.21429752939313448,
+      "reference_development_mae_eV": 0.20752070844173431,
+      "candidate_development_mae_eV": 0.20998398959636688,
+      "development_gain_eV": -0.0024632811546325684
+    },
+    {
+      "epoch": 7,
+      "optimizer_step": 5467,
+      "sample_presentations": 699776,
+      "learning_rate": 0.0003782558015755794,
+      "reference_online_train_mae_eV": 0.20369920131399039,
+      "candidate_online_train_mae_eV": 0.20256561906379633,
+      "reference_development_mae_eV": 0.23473352193832397,
+      "candidate_development_mae_eV": 0.24692051112651825,
+      "development_gain_eV": -0.012186989188194275
+    },
+    {
+      "epoch": 8,
+      "optimizer_step": 6248,
+      "sample_presentations": 799744,
+      "learning_rate": 0.0003706017127886414,
+      "reference_online_train_mae_eV": 0.19331726736306673,
+      "candidate_online_train_mae_eV": 0.19364829338277012,
+      "reference_development_mae_eV": 0.20916856825351715,
+      "candidate_development_mae_eV": 0.19783134758472443,
+      "development_gain_eV": 0.011337220668792725
+    },
+    {
+      "epoch": 9,
+      "optimizer_step": 7029,
+      "sample_presentations": 899712,
+      "learning_rate": 0.000361898890377802,
+      "reference_online_train_mae_eV": 0.18564437233841258,
+      "candidate_online_train_mae_eV": 0.18491211053453332,
+      "reference_development_mae_eV": 0.19817142188549042,
+      "candidate_development_mae_eV": 0.19241547584533691,
+      "development_gain_eV": 0.005755946040153503
+    },
+    {
+      "epoch": 10,
+      "optimizer_step": 7810,
+      "sample_presentations": 999680,
+      "learning_rate": 0.00035220099013720616,
+      "reference_online_train_mae_eV": 0.17747588206026327,
+      "candidate_online_train_mae_eV": 0.17688904202834801,
+      "reference_development_mae_eV": 0.18810626864433289,
+      "candidate_development_mae_eV": 0.18992172181606293,
+      "development_gain_eV": -0.0018154531717300415
+    },
+    {
+      "epoch": 11,
+      "optimizer_step": 8591,
+      "sample_presentations": 1099648,
+      "learning_rate": 0.00034156780284671617,
+      "reference_online_train_mae_eV": 0.17212730544983898,
+      "candidate_online_train_mae_eV": 0.17176788593825942,
+      "reference_development_mae_eV": 0.19534902274608612,
+      "candidate_development_mae_eV": 0.18168988823890686,
+      "development_gain_eV": 0.01365913450717926
+    },
+    {
+      "epoch": 12,
+      "optimizer_step": 9372,
+      "sample_presentations": 1199616,
+      "learning_rate": 0.0003300648856418716,
+      "reference_online_train_mae_eV": 0.1666887741976501,
+      "candidate_online_train_mae_eV": 0.1669070322431433,
+      "reference_development_mae_eV": 0.17916418612003326,
+      "candidate_development_mae_eV": 0.17796319723129272,
+      "development_gain_eV": 0.0012009888887405396
+    },
+    {
+      "epoch": 13,
+      "optimizer_step": 10153,
+      "sample_presentations": 1299584,
+      "learning_rate": 0.0003177631578323483,
+      "reference_online_train_mae_eV": 0.1617787967074259,
+      "candidate_online_train_mae_eV": 0.1611892843564517,
+      "reference_development_mae_eV": 0.1803247630596161,
+      "candidate_development_mae_eV": 0.17172615230083466,
+      "development_gain_eV": 0.008598610758781433
+    },
+    {
+      "epoch": 14,
+      "optimizer_step": 10934,
+      "sample_presentations": 1399552,
+      "learning_rate": 0.0003047384636608317,
+      "reference_online_train_mae_eV": 0.15781399265249751,
+      "candidate_online_train_mae_eV": 0.15734470233916314,
+      "reference_development_mae_eV": 0.16913513839244843,
+      "candidate_development_mae_eV": 0.17402087152004242,
+      "development_gain_eV": -0.004885733127593994
+    },
+    {
+      "epoch": 15,
+      "optimizer_step": 11715,
+      "sample_presentations": 1499520,
+      "learning_rate": 0.0002910711046980395,
+      "reference_online_train_mae_eV": 0.15344877519173092,
+      "candidate_online_train_mae_eV": 0.15310692730709685,
+      "reference_development_mae_eV": 0.17451627552509308,
+      "candidate_development_mae_eV": 0.17702645063400269,
+      "development_gain_eV": -0.002510175108909607
+    },
+    {
+      "epoch": 16,
+      "optimizer_step": 12496,
+      "sample_presentations": 1599488,
+      "learning_rate": 0.0002768453447568354,
+      "reference_online_train_mae_eV": 0.14942837100432899,
+      "candidate_online_train_mae_eV": 0.14958673462497446,
+      "reference_development_mae_eV": 0.17700165510177612,
+      "candidate_development_mae_eV": 0.1706792116165161,
+      "development_gain_eV": 0.00632244348526001
+    },
+    {
+      "epoch": 17,
+      "optimizer_step": 13277,
+      "sample_presentations": 1699456,
+      "learning_rate": 0.000262148890377802,
+      "reference_online_train_mae_eV": 0.14607217393351446,
+      "candidate_online_train_mae_eV": 0.14501414181631156,
+      "reference_development_mae_eV": 0.16553162038326263,
+      "candidate_development_mae_eV": 0.16320861876010895,
+      "development_gain_eV": 0.0023230016231536865
+    },
+    {
+      "epoch": 18,
+      "optimizer_step": 14058,
+      "sample_presentations": 1799424,
+      "learning_rate": 0.00024707235008925314,
+      "reference_online_train_mae_eV": 0.14201850539566596,
+      "candidate_online_train_mae_eV": 0.14207702109271472,
+      "reference_development_mae_eV": 0.16245222091674805,
+      "candidate_development_mae_eV": 0.1638215184211731,
+      "development_gain_eV": -0.0013692975044250488
+    },
+    {
+      "epoch": 19,
+      "optimizer_step": 14839,
+      "sample_presentations": 1899392,
+      "learning_rate": 0.00023170867577552602,
+      "reference_online_train_mae_eV": 0.13873122858520157,
+      "candidate_online_train_mae_eV": 0.13816601940136522,
+      "reference_development_mae_eV": 0.16536769270896912,
+      "candidate_development_mae_eV": 0.15875685214996338,
+      "development_gain_eV": 0.006610840559005737
+    },
+    {
+      "epoch": 20,
+      "optimizer_step": 15620,
+      "sample_presentations": 1999360,
+      "learning_rate": 0.00021615258959770502,
+      "reference_online_train_mae_eV": 0.13519188923191788,
+      "candidate_online_train_mae_eV": 0.13499629897540874,
+      "reference_development_mae_eV": 0.16028012335300446,
+      "candidate_development_mae_eV": 0.1565895676612854,
+      "development_gain_eV": 0.003690555691719055
+    },
+    {
+      "epoch": 21,
+      "optimizer_step": 16401,
+      "sample_presentations": 2099328,
+      "learning_rate": 0.00020049999999999994,
+      "reference_online_train_mae_eV": 0.13266667583347444,
+      "candidate_online_train_mae_eV": 0.1317375554466626,
+      "reference_development_mae_eV": 0.15681374073028564,
+      "candidate_development_mae_eV": 0.1543685346841812,
+      "development_gain_eV": 0.002445206046104431
+    },
+    {
+      "epoch": 22,
+      "optimizer_step": 17182,
+      "sample_presentations": 2199296,
+      "learning_rate": 0.0001848474104022949,
+      "reference_online_train_mae_eV": 0.1288535675137366,
+      "candidate_online_train_mae_eV": 0.12804680960833242,
+      "reference_development_mae_eV": 0.15449583530426025,
+      "candidate_development_mae_eV": 0.15466634929180145,
+      "development_gain_eV": -0.00017051398754119873
+    },
+    {
+      "epoch": 23,
+      "optimizer_step": 17963,
+      "sample_presentations": 2299264,
+      "learning_rate": 0.00016929132422447395,
+      "reference_online_train_mae_eV": 0.1263107462271643,
+      "candidate_online_train_mae_eV": 0.12600719620989814,
+      "reference_development_mae_eV": 0.15311293303966522,
+      "candidate_development_mae_eV": 0.15340662002563477,
+      "development_gain_eV": -0.00029368698596954346
+    },
+    {
+      "epoch": 24,
+      "optimizer_step": 18744,
+      "sample_presentations": 2399232,
+      "learning_rate": 0.00015392764991074685,
+      "reference_online_train_mae_eV": 0.12326711271121278,
+      "candidate_online_train_mae_eV": 0.12303244053807855,
+      "reference_development_mae_eV": 0.15124216675758362,
+      "candidate_development_mae_eV": 0.15132133662700653,
+      "development_gain_eV": -7.91698694229126e-05
+    },
+    {
+      "epoch": 25,
+      "optimizer_step": 19525,
+      "sample_presentations": 2499200,
+      "learning_rate": 0.00013885110962219796,
+      "reference_online_train_mae_eV": 0.12025766882017103,
+      "candidate_online_train_mae_eV": 0.11994156163173532,
+      "reference_development_mae_eV": 0.15098537504673004,
+      "candidate_development_mae_eV": 0.14804835617542267,
+      "development_gain_eV": 0.002937018871307373
+    },
+    {
+      "epoch": 26,
+      "optimizer_step": 20306,
+      "sample_presentations": 2599168,
+      "learning_rate": 0.00012415465524316457,
+      "reference_online_train_mae_eV": 0.11832874911272141,
+      "candidate_online_train_mae_eV": 0.11760574529620126,
+      "reference_development_mae_eV": 0.1478661298751831,
+      "candidate_development_mae_eV": 0.14711175858974457,
+      "development_gain_eV": 0.0007543712854385376
+    },
+    {
+      "epoch": 27,
+      "optimizer_step": 21087,
+      "sample_presentations": 2699136,
+      "learning_rate": 0.00010992889530196038,
+      "reference_online_train_mae_eV": 0.11550045337018097,
+      "candidate_online_train_mae_eV": 0.11497053157266163,
+      "reference_development_mae_eV": 0.14926591515541077,
+      "candidate_development_mae_eV": 0.145618736743927,
+      "development_gain_eV": 0.0036471784114837646
+    },
+    {
+      "epoch": 28,
+      "optimizer_step": 21868,
+      "sample_presentations": 2799104,
+      "learning_rate": 9.626153633916818e-05,
+      "reference_online_train_mae_eV": 0.1130813084399138,
+      "candidate_online_train_mae_eV": 0.11253436624990602,
+      "reference_development_mae_eV": 0.14677834510803223,
+      "candidate_development_mae_eV": 0.14654555916786194,
+      "development_gain_eV": 0.00023278594017028809
+    },
+    {
+      "epoch": 29,
+      "optimizer_step": 22649,
+      "sample_presentations": 2899072,
+      "learning_rate": 8.32368421676516e-05,
+      "reference_online_train_mae_eV": 0.1109324452352977,
+      "candidate_online_train_mae_eV": 0.11084275781449136,
+      "reference_development_mae_eV": 0.14528751373291016,
+      "candidate_development_mae_eV": 0.14394806325435638,
+      "development_gain_eV": 0.001339450478553772
+    },
+    {
+      "epoch": 30,
+      "optimizer_step": 23430,
+      "sample_presentations": 2999040,
+      "learning_rate": 7.093511435812837e-05,
+      "reference_online_train_mae_eV": 0.10822117802829122,
+      "candidate_online_train_mae_eV": 0.10823100494279142,
+      "reference_development_mae_eV": 0.14530746638774872,
+      "candidate_development_mae_eV": 0.14396324753761292,
+      "development_gain_eV": 0.0013442188501358032
+    },
+    {
+      "epoch": 31,
+      "optimizer_step": 24211,
+      "sample_presentations": 3099008,
+      "learning_rate": 5.9432197153283766e-05,
+      "reference_online_train_mae_eV": 0.10672874876990425,
+      "candidate_online_train_mae_eV": 0.10629874339203113,
+      "reference_development_mae_eV": 0.14357006549835205,
+      "candidate_development_mae_eV": 0.1433604657649994,
+      "development_gain_eV": 0.00020959973335266113
+    },
+    {
+      "epoch": 32,
+      "optimizer_step": 24992,
+      "sample_presentations": 3198976,
+      "learning_rate": 4.8799009862793814e-05,
+      "reference_online_train_mae_eV": 0.1055321765624214,
+      "candidate_online_train_mae_eV": 0.10496780305836655,
+      "reference_development_mae_eV": 0.14392787218093872,
+      "candidate_development_mae_eV": 0.14332643151283264,
+      "development_gain_eV": 0.0006014406681060791
+    },
+    {
+      "epoch": 33,
+      "optimizer_step": 25773,
+      "sample_presentations": 3298944,
+      "learning_rate": 3.9101109622197994e-05,
+      "reference_online_train_mae_eV": 0.10398073973942075,
+      "candidate_online_train_mae_eV": 0.10349882222010863,
+      "reference_development_mae_eV": 0.14283107221126556,
+      "candidate_development_mae_eV": 0.14166241884231567,
+      "development_gain_eV": 0.0011686533689498901
+    },
+    {
+      "epoch": 34,
+      "optimizer_step": 26554,
+      "sample_presentations": 3398912,
+      "learning_rate": 3.0398287211358604e-05,
+      "reference_online_train_mae_eV": 0.10232779408830478,
+      "candidate_online_train_mae_eV": 0.1017767935529788,
+      "reference_development_mae_eV": 0.1425507366657257,
+      "candidate_development_mae_eV": 0.14184707403182983,
+      "development_gain_eV": 0.000703662633895874
+    },
+    {
+      "epoch": 35,
+      "optimizer_step": 27335,
+      "sample_presentations": 3498880,
+      "learning_rate": 2.2744198424420623e-05,
+      "reference_online_train_mae_eV": 0.10102814868248897,
+      "candidate_online_train_mae_eV": 0.10080790471987781,
+      "reference_development_mae_eV": 0.14226216077804565,
+      "candidate_development_mae_eV": 0.14150592684745789,
+      "development_gain_eV": 0.0007562339305877686
+    },
+    {
+      "epoch": 36,
+      "optimizer_step": 28116,
+      "sample_presentations": 3598848,
+      "learning_rate": 1.6186033263998293e-05,
+      "reference_online_train_mae_eV": 0.10044205074584853,
+      "candidate_online_train_mae_eV": 0.10005013243148289,
+      "reference_development_mae_eV": 0.14167173206806183,
+      "candidate_development_mae_eV": 0.14101409912109375,
+      "development_gain_eV": 0.0006576329469680786
+    },
+    {
+      "epoch": 37,
+      "optimizer_step": 28897,
+      "sample_presentations": 3698816,
+      "learning_rate": 1.076422499911687e-05,
+      "reference_online_train_mae_eV": 0.09930918668847197,
+      "candidate_online_train_mae_eV": 0.09925216528425826,
+      "reference_development_mae_eV": 0.14152076840400696,
+      "candidate_development_mae_eV": 0.1407475769519806,
+      "development_gain_eV": 0.0007731914520263672
+    },
+    {
+      "epoch": 38,
+      "optimizer_step": 29678,
+      "sample_presentations": 3798784,
+      "learning_rate": 6.512200880663526e-06,
+      "reference_online_train_mae_eV": 0.09870672559785333,
+      "candidate_online_train_mae_eV": 0.0984567993995,
+      "reference_development_mae_eV": 0.14147232472896576,
+      "candidate_development_mae_eV": 0.14100176095962524,
+      "development_gain_eV": 0.00047056376934051514
+    },
+    {
+      "epoch": 39,
+      "optimizer_step": 30459,
+      "sample_presentations": 3898752,
+      "learning_rate": 3.4561760512700363e-06,
+      "reference_online_train_mae_eV": 0.09835670712345389,
+      "candidate_online_train_mae_eV": 0.09807477016426978,
+      "reference_development_mae_eV": 0.1416756957769394,
+      "candidate_development_mae_eV": 0.14086046814918518,
+      "development_gain_eV": 0.0008152276277542114
+    },
+    {
+      "epoch": 40,
+      "optimizer_step": 31240,
+      "sample_presentations": 3998720,
+      "learning_rate": 1.6149919202409713e-06,
+      "reference_online_train_mae_eV": 0.09823122263444056,
+      "candidate_online_train_mae_eV": 0.09802540869480345,
+      "reference_development_mae_eV": 0.141294464468956,
+      "candidate_development_mae_eV": 0.14076626300811768,
+      "development_gain_eV": 0.0005282014608383179
+    }
+  ],
+  "posthoc_descriptive_residuals": {
+    "reference": {
+      "mean_prediction_minus_target_eV": 0.0038683849519491197,
+      "residual_quantiles_eV": [
+        -0.30153851509094237,
+        -0.0020842552185058594,
+        0.3293924331665038
+      ]
+    },
+    "candidate": {
+      "mean_prediction_minus_target_eV": 0.006698168677687645,
+      "residual_quantiles_eV": [
+        -0.30121412277221676,
+        0.0015363693237304688,
+        0.3302825450897214
+      ]
+    }
+  },
+  "trace_metric_semantics_as_recorded": {
+    "reference": {
+      "ema_dev_metric": null,
+      "live_dev_metric": {
+        "direction": "minimize",
+        "metric": "MAE",
+        "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+        "target": "Gap",
+        "unit": "eV",
+        "weights": "live"
+      },
+      "live_train_metric": {
+        "direction": "minimize",
+        "metric": "MAE",
+        "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:training-0-100000",
+        "target": "Gap",
+        "timing": "online-pre-update; includes dropout; no auxiliary BCE",
+        "unit": "eV",
+        "weights": "live"
+      }
+    },
+    "candidate": {
+      "ema_dev_metric": null,
+      "live_dev_metric": {
+        "direction": "minimize",
+        "metric": "MAE",
+        "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+        "target": "Gap",
+        "unit": "eV",
+        "weights": "live"
+      },
+      "live_train_metric": {
+        "direction": "minimize",
+        "metric": "MAE",
+        "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:training-0-100000",
+        "target": "Gap",
+        "timing": "online-pre-update; includes dropout; no auxiliary BCE",
+        "unit": "eV",
+        "weights": "live"
+      }
+    }
+  },
+  "development_role_labels_as_recorded": {
+    "reference": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "candidate": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000"
+  },
+  "role_label_reconciliation": "Literal labels differ; exact50K rows and targets justify descriptive pairing only. No frozen metadata relabelled.",
+  "runtime_summary": {
+    "reference": {
+      "python": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+      "platform": "Linux-6.12.90+-x86_64-with-glibc2.35",
+      "torch": "2.10.0+cu128",
+      "torch_cuda": "12.8",
+      "cudnn": 91002,
+      "accelerator": {
+        "name": "Tesla T4",
+        "capability": [
+          7,
+          5
+        ],
+        "total_memory_bytes": 15636037632,
+        "device_count_visible": 1
+      },
+      "determinism": {
+        "seed": 42,
+        "precision": "fp32",
+        "tf32_enabled": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true,
+        "cublas_workspace_config": ":4096:8",
+        "float32_matmul_precision": "highest"
+      },
+      "runtime_fingerprint": "c6653bd92ee5d532a18e609c6846d8ed54e6724323cdc78b0014d6986244f630",
+      "installed_distributions_sha256": "01a422b3553be49b84623a1b965dcba1f5a269a081152e05f5fb0b8bc90c3b98"
+    },
+    "candidate": {
+      "python": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+      "platform": "Linux-6.18.48+-x86_64-with-glibc2.35",
+      "torch": "2.10.0+cu128",
+      "torch_cuda": "12.8",
+      "cudnn": 91002,
+      "accelerator": {
+        "name": "Tesla T4",
+        "capability": [
+          7,
+          5
+        ],
+        "total_memory_bytes": 15636037632,
+        "device_count_visible": 1
+      },
+      "determinism": {
+        "seed": 42,
+        "precision": "fp32",
+        "tf32_enabled": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true,
+        "cublas_workspace_config": ":4096:8",
+        "float32_matmul_precision": "highest"
+      },
+      "runtime_fingerprint": "0e3e1a2a2fd838a60d6ba810ee696ea5da513183b1d2c8e593587a318404ed6b",
+      "installed_distributions_sha256": "00dcfce5144bddf7ad1e8d3b07a655001ced66a9b6bd187e912ca9197e759071"
+    }
+  },
+  "installed_distribution_differences": {
+    "reference_only": [
+      "numpy==2.0.2"
+    ],
+    "candidate_only": [
+      "littleutils==0.2.4",
+      "numpy==1.26.4",
+      "outdated==0.2.2"
+    ]
+  },
+  "native_costs": {
+    "reference": [
+      {
+        "hardware": "Tesla T4",
+        "metric": "wall_seconds",
+        "semantics": "process_wall",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 5553.813137542
+      },
+      {
+        "hardware": "Tesla T4",
+        "metric": "device_seconds",
+        "semantics": "allocated_device",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 5553.813137542
+      }
+    ],
+    "candidate": [
+      {
+        "hardware": "Tesla T4",
+        "metric": "wall_seconds",
+        "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+        "semantics": "process_wall",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 5104.429500053
+      },
+      {
+        "hardware": "Tesla T4",
+        "metric": "device_seconds",
+        "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+        "semantics": "allocated_device",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 5104.429500053
+      }
+    ]
+  },
+  "candidate_allocation": {
+    "costs": [
+      {
+        "metric": "wall_seconds",
+        "unit": "seconds",
+        "value": 5104.429500053,
+        "status": "measured",
+        "semantics": "process_wall",
+        "hardware": "Tesla T4",
+        "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue"
+      },
+      {
+        "metric": "device_seconds",
+        "unit": "seconds",
+        "value": 5104.429500053,
+        "status": "measured",
+        "semantics": "allocated_device",
+        "hardware": "Tesla T4",
+        "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue"
+      }
+    ],
+    "start_epoch": 0,
+    "end_epoch": 40,
+    "cpu_allocation_seconds": {
+      "status": "missing",
+      "value": null
+    },
+    "queue_seconds": {
+      "status": "missing",
+      "value": null
+    },
+    "scope": "one exclusive assigned T4 training window including development/checkpoint; lower bound excludes bootstrap/queue and earlier resume allocations"
+  },
+  "artifacts": {
+    "reference": {
+      "contract": {
+        "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/training_contract.json",
+        "sha256": "fcd6a444e7b865a0861b96436743a7c432d63972135026dd037e362d54d6af3d"
+      },
+      "predictions": {
+        "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/development_predictions.pt",
+        "sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82"
+      },
+      "resume": {
+        "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/last_checkpoint.pt",
+        "sha256": "fa279b97533a3f274367a28e3f036e123b6512f43d2e992e6105733febe2d590"
+      },
+      "selected_model": {
+        "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/selected_model.pt",
+        "sha256": "4a7dab43f50f5f3216b224374c213a01cc82cfb4160dcd6d54aab1ef614fce17"
+      },
+      "trace": {
+        "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/canonical_trace.json",
+        "sha256": "c18bd76b9f55114005020ab65bcb663636dfd496f971966d5f0007a44a79f149"
+      }
+    },
+    "candidate": {
+      "contract": {
+        "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/family_outputs/slot96/training_contract.json",
+        "sha256": "168112ce60649b06318230cdeb7af30f048ca1c6a9f434d84382e55a055ba082"
+      },
+      "predictions": {
+        "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/family_outputs/slot96/development_predictions.pt",
+        "sha256": "071dd0479d8c0d968e0200954eaa7595f28fe4e4595302be4ffa6a38c9d7c749"
+      },
+      "resume": {
+        "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/family_outputs/slot96/last_checkpoint.pt",
+        "sha256": "9210381078767342e7b0dba367aef821b1fee9a4e979db90a3bf6a78dd4eac5e"
+      },
+      "selected_model": {
+        "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/family_outputs/slot96/selected_model.pt",
+        "sha256": "5c1e44ed33928d23ada7eddf410a43117cbb43edb83579f156c420007faf5d4d"
+      },
+      "trace": {
+        "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/family_outputs/slot96/canonical_trace.json",
+        "sha256": "d4680149a03c794a1307f2189dd57bfa707582bd7c648b08b29e7d0752154d99"
+      }
+    }
+  },
+  "limitations": [
+    "Row bootstrap excludes training stochasticity.",
+    "Online pre-update dropout training MAE is not fixed-cohort evaluation.",
+    "Cross-job software distributions and cost scopes differ; no causal architecture-speedup claim.",
+    "Development was already selection-used; no protected role was read."
+  ]
+}
