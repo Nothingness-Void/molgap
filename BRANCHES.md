@@ -55,6 +55,7 @@ remote Git snapshots. Inspect only the question required by the task.
 
 | Question / owner | Retained checkout | Branch-local entry |
 |---|---|---|
+| Desktop K1 FLAG training objective: `codex/exp/k1-flag` | `D:/w/k1-flag` | [STATUS](D:/w/k1-flag/experiments/pcqm_k1_flag/STATUS.md), [detailed RML analysis](D:/w/k1-flag/experiments/pcqm_k1_flag/analysis_report_zh.md); live owner, one Kaggle3 candidate, qualification/results pending; no implementation promotion |
 | Archived desktop K1 isolated slot96 screen: `codex/exp/k1-slot-width96` | `D:/w/k1-slot96` | [STATUS](D:/w/k1-slot96/experiments/pcqm_k1_slot_width96/STATUS.md); accepted NEGATIVE_UNDER_CONTRACT; complete history archived, canonical desktop discovery, no successor |
 | Archived desktop pretraining pair | `C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap` | [terminal decision](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/terminal_decision.md); [unreviewed fusion supplement](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/fusion_comparison.md) |
 | Archived desktop geometry | `C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap` | [fixed-blend scale decision](C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap/experiments/pcqm_geometry_v4_500k_pair/fixed_blend_scale_decision.md) |

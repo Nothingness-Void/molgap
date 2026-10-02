@@ -20,7 +20,7 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 
 | Priority | Task | Exit condition / owner |
 |---|---|---|
-| P0 | Reconcile the authorized K1 / SSMA100K accuracy attempt | Follow the retained owner STATUS and exact Kaggle3 receipt; independent per-arm acceptance, paired accuracy/cost comparison and terminal attribution; no automatic successor |
+| P0 | Reconcile the user-authorized K1 FLAG100K objective experiment | Exact Kaggle3 attempt on `codex/exp/k1-flag`; retrieve actual qualification, complete exposure, aligned predictions and native cost, then acceptance and attribution. One original-width single model; no automatic successor or scale-up |
 | P0 | Review prior chemical auxiliary and cost-gated K1 terminal evidence integration / Git routing | Prior attempts' terminal closure is complete. Reconcile the separate early chemical CPU feasibility record's missing terminal evidence, preserve qualification exclusions and artifacts, then review desktop discovery and terminal custody; no duplicate training acceptance |
 | Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |
 
@@ -73,9 +73,13 @@ separate frozen contracts; this navigation cleanup does not amend them.
 - Architecture screens predict Gap directly. Any separately authorized full
   K1/GPTrans-T fusion must obey its own frozen 20/80 official-valid contract;
   further test-dev/challenge access requires separate explicit authority.
-- Continued pure-2D discovery tests one materially new architecture at a time.
+- Continued pure-2D discovery tests one materially new architecture or explicitly
+  authorized training objective at a time. The FLAG question preserves the K1
+  architecture and changes the supervised embedding objective; its prospective
+  and resource/endpoint stop rules live on the mapped experiment owner.
   Every failure gets a decision record and cannot be retried as a seed or
-  schedule variation; the next attempt must change the information flow.
+  schedule variation; a new question must change information flow or declare a
+  distinct learning constraint with evidence review and a cheapest falsifier.
 - Do not rerun the rejected `0.10 eV` frozen-2D plus dual-SchNet residual.
 - Geometry paths must preserve ETKDGv3+MMFF train-inference consistency.
 - Router, MoE, OOF gain labels, and dataset replacement remain closed unless a
