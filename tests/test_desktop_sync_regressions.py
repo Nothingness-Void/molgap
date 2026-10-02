@@ -52,6 +52,7 @@ def test_incomplete_attempt_uses_frozen_plan_instead_of_platform_version(tmp_pat
 
 
 def test_training_spawn_failure_retains_terminal_state(tmp_path, monkeypatch):
+    from molgap import experiment_package
     spec = fixtures._candidate_pair_spec()
     jobs = fixtures._jobs(spec)
     source, package, inputs, output = [tmp_path / name for name in
@@ -60,8 +61,22 @@ def test_training_spawn_failure_retains_terminal_state(tmp_path, monkeypatch):
         path.mkdir()
     (package / "experiment_spec.json").write_text(spec.to_json(), encoding="utf-8")
     launch = inputs / "experiment_launch.json"
-    launch.write_text(json.dumps({"jobs": jobs}), encoding="utf-8")
+    launch.write_text(json.dumps({
+        "expected_package_identity": fixtures.HEX_A,
+        "expected_source_archive_sha256": fixtures.HEX_B,
+        "jobs": jobs,
+    }), encoding="utf-8")
     monkeypatch.setattr(runtime.subprocess, "check_output", lambda *a, **k: "Tesla T4\nTesla T4\n")
+    monkeypatch.setattr(
+        experiment_package,
+        "verify_experiment_source_package",
+        lambda _package: {
+            "package_identity": fixtures.HEX_A,
+            "spec_identity": spec.identity,
+            "archive_sha256": fixtures.HEX_B,
+            "source_commit": "c" * 40,
+        },
+    )
 
     class Process:
         def __init__(self, phase):
@@ -88,4 +103,9 @@ def test_training_spawn_failure_retains_terminal_state(tmp_path, monkeypatch):
                                   launch_path=launch, output=output)
     state = json.loads((output / "pair_state.json").read_text())
     assert state["arms"][jobs[1]["arm_id"]]["terminal_status"] == "failed"
+    from molgap.experiment_retention import validate_execution_retention
+    assert validate_execution_retention(
+        output, spec, package_identity=fixtures.HEX_A, source_commit="c" * 40,
+        source_archive_sha256=fixtures.HEX_B,
+    )["status"] == "EXECUTION_RETENTION_VERIFIED"
     assert incomplete_observations_from_execution(spec, state)

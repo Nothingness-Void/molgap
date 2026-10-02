@@ -14,17 +14,22 @@ def main(argv=None):
         parser.add_argument("--" + name, required=True, type=Path)
     parser.add_argument("--arm", required=True)
     parser.add_argument("--phase", required=True, choices=("preflight", "train"))
+    parser.add_argument("--preflight-output", type=Path)
+    parser.add_argument("--resume-output", type=Path)
     args = parser.parse_args(argv)
     config = _json(args.launch)
     spec = ExperimentSpec.from_json((args.package_dir / "experiment_spec.json").read_text(encoding="utf-8"))
     jobs = validate_execution_plan(spec, config["jobs"])
     job = next(j for j in jobs if j["arm_id"] == args.arm)
+    if "resume" in config and args.phase == "preflight" and args.resume_output is None:
+        raise ValueError("Resume launch requires its restored output preflight hook")
     result = execute_training_phase(spec=spec, job=job, phase=args.phase,
         source_root=args.source_root, package_dir=args.package_dir,
         expected_package_identity=config["expected_package_identity"],
         input_root=args.input_root, output=args.output, account=config["account"],
         run_reference=config["run_reference"], staged_root=args.launch.parent,
-        prospective_sha256=config["prospective_sha256"][job["arm_id"]])
+        prospective_sha256=config["prospective_sha256"][job["arm_id"]],
+        preflight_dir=args.preflight_output, resume_output=args.resume_output)
     passed = (result.get("status") == "MECHANICALLY_VERIFIED" if args.phase == "train" else
               result.get("status") == "accepted" or result.get("accepted") is True)
     if not passed:

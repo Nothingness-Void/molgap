@@ -49,17 +49,26 @@ def _parser() -> argparse.ArgumentParser:
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
                  "launch-receipt", "terminal", "plan-prospective", "check-release",
                  "check-acceptance", "inspect-output", "accept-terminal",
-                 "prepare-workflow", "accept-workflow", "build-terminal", "prepare-release", "check-preparation"):
+                 "prepare-workflow", "accept-workflow", "build-terminal", "prepare-release", "check-preparation",
+                 "workflow-info", "build-resume", "prepare-resume"):
         command = commands.add_parser(name)
         command.add_argument("--spec", required=True, type=_local)
-        if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal", "prepare-workflow", "accept-workflow", "prepare-release", "check-preparation", "build-terminal"}:
+        if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal", "prepare-workflow", "accept-workflow", "prepare-release", "check-preparation", "build-terminal", "build-resume", "prepare-resume"}:
             command.add_argument("--repo-root", required=True, type=_local)
-        if name in {"package", "preflight", "run-diagnostic", "prepare-workflow", "prepare-release"}:
+        if name in {"package", "preflight", "run-diagnostic", "prepare-workflow", "prepare-release", "build-resume", "prepare-resume"}:
             command.add_argument("--output", required=True, type=_local)
-        if name in {"preflight", "launch-receipt", "check-release", "inspect-output", "accept-terminal", "accept-workflow", "build-terminal"}:
+        if name in {"preflight", "launch-receipt", "check-release", "inspect-output", "accept-terminal", "accept-workflow", "build-terminal", "build-resume", "prepare-resume"}:
             command.add_argument("--package", required=True, type=_local)
             command.add_argument("--expected-package-identity", required=True)
-        if name in {"prepare-release", "check-preparation"}:
+        if name in {"build-resume", "prepare-resume"}:
+            command.add_argument("--prepared", required=True, type=_local)
+            command.add_argument("--receipt", required=True, type=_local)
+            if name == "build-resume":
+                command.add_argument("--arm", required=True)
+                command.add_argument("--source-output", required=True, type=_local)
+            else:
+                command.add_argument("--resume-plan", required=True, type=_local)
+        elif name in {"prepare-release", "check-preparation"}:
             command.add_argument("--workflow", required=True, type=_local)
         elif name == "build-terminal":
             command.add_argument("--receipt", required=True, type=_local)
@@ -75,6 +84,7 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--outputs", required=True, type=_local)
             command.add_argument("--locations", required=True, type=_local)
             command.add_argument("--execute", action="store_true")
+            command.add_argument("--execution-root", type=_local)
         elif name == "check-acceptance":
             command.add_argument("--plan", required=True, type=_local)
         elif name in {"inspect-output", "accept-terminal"}:
@@ -120,6 +130,19 @@ def _dispatch(args) -> tuple[dict, int]:
         raise ValueError("Expected canonical ExperimentSpec JSON bytes (no newline)")
     if args.command == "validate-spec":
         return {"spec_identity": spec.identity, "spec": spec.to_dict()}, 0
+    if args.command == "workflow-info":
+        from .experiment_execution import workflow_capabilities
+        return workflow_capabilities(spec), 0
+    if args.command in {"build-resume", "prepare-resume"}:
+        from .experiment_workflow_resume import build_workflow_resume, prepare_resumed_workflow
+        from .experiment_family_workflow import _json
+        options = dict(spec=spec, repo_root=args.repo_root, prepared=args.prepared,
+                       package_dir=args.package, expected_package_identity=args.expected_package_identity,
+                       receipt_path=args.receipt, output=args.output)
+        if args.command == "build-resume":
+            return build_workflow_resume(**options, arm_id=args.arm, source_output=args.source_output), 0
+        result = prepare_resumed_workflow(**options, plan=_json(args.resume_plan))
+        return result, 0 if result["status"] == "PREPARED_FOR_PLATFORM" else 1
     if args.command == "build-terminal":
         from .experiment_family_workflow import (RunContext, _json, build_incomplete_terminal_descriptor,
                                                  incomplete_observations_from_execution)
@@ -142,7 +165,7 @@ def _dispatch(args) -> tuple[dict, int]:
         result = accept_workflow(spec, args.repo_root, _json(args.outputs),
             receipt_path=args.receipt, package_dir=args.package,
             expected_package_identity=args.expected_package_identity,
-            locations=_json(args.locations), execute=args.execute)
+            locations=_json(args.locations), execute=args.execute, execution_root=args.execution_root)
         return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
     if args.command in {"check-acceptance", "inspect-output", "accept-terminal"}:
         from .experiment_family_workflow import (

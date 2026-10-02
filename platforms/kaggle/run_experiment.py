@@ -3,18 +3,24 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
 import sys
 import tarfile
 import types
+import time
 
 # Local preparation replaces this marker and binds the resulting entry bytes.
 EXPECTED_LAUNCH_SHA256 = None
 
 
 def main():
+    allocation_started = time.perf_counter()
+    # The parent verifies CPU artifacts. Each worker declares one physical
+    # device before importing its owning trainer; nvidia-smi still sees the full allocation.
+    os.environ["CUDA_VISIBLE_DEVICES"] = ""
     mounted = Path("/kaggle/input")
     configs = list(mounted.rglob("experiment_launch.json"))
     if len(configs) != 1:
@@ -52,12 +58,18 @@ def main():
     bootstrap._unpack(package, source)
     sys.path.insert(0, str(source / "src"))
     from molgap.experiment_package import verify_experiment_source_package
+    from molgap.experiment_spec import ExperimentSpec
+    from molgap.experiment_launch_config import validate_launch_config
     from molgap.kaggle_pair_runtime import run_two_phase_pair
     manifest = verify_experiment_source_package(package)
     if manifest["package_identity"] != config["expected_package_identity"] or manifest["spec_identity"] != config["spec_identity"]:
         raise RuntimeError("Frozen launch/Spec/package binding mismatch")
+    spec = ExperimentSpec.from_json((package / "experiment_spec.json").read_text(encoding="utf-8"))
+    validate_launch_config(spec, launch, manifest=manifest, package_dir=package,
+                           staged_root=launch.parent)
     run_two_phase_pair(source_root=source, package_dir=package, input_root=mounted,
-                       launch_path=launch, output=Path("/kaggle/working/experiment"))
+                       launch_path=launch, output=Path("/kaggle/working/experiment"),
+                       allocation_started=allocation_started, manifest=manifest)
 
 
 if __name__ == "__main__":

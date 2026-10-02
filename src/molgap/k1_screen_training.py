@@ -25,6 +25,7 @@ from .training_reproducibility import (
     build_runtime_manifest,
     configure_fp32_determinism,
     sha256_file,
+    validate_rng_state,
 )
 from .v4_runtime import state_dict_sha256, certify_numerical_repeatability, normalized_source_sha256
 
@@ -462,6 +463,230 @@ def validate_screen_recipe(spec, arm_id, recipe):
     if set(recipe["acceptance_requirements"]) != EXPECTED:
         raise ValueError("K1 recipe lacks frozen development row/target hashes")
     return {"family": arm["family"], "mode": mode, "recipe": "frozen_recipe_verified"}
+
+
+def validate_screen_resume(spec, arm_id, manifest, bundle_root, artifacts,
+                           sidecars, trajectory, context=None):
+    """Validate a transported K1 prefix before the owning loop restores it.
+
+    The transport layer has already checked hashes, source/Spec/arm identity,
+    and safe CPU loading.  This owner gate binds the K1 one-based acknowledged
+    cursor to its canonical trace and retains the original preflight evidence
+    for the worker to reuse in an isolated preflight directory.
+    """
+    from .experiment_resume import safe_cpu_torch_load
+    from .experiment_execution import training_adapter
+    from .experiment_family_workflow import _json
+    from .research_memory.trace import validate_canonical_trace
+
+    declaration = spec.to_dict()
+    arm = next((item for item in declaration["arms"] if item["arm_id"] == arm_id), None)
+    if arm is None:
+        raise ValueError("K1 resume arm is absent from Spec")
+    mode = training_adapter(arm).mode(arm)
+    if mode not in {"reference", "ssma"}:
+        raise ValueError("K1 resume mode has no owning screen implementation")
+    if context is not None and context.get("arm_id") != arm_id:
+        raise ValueError("K1 resume context/arm mismatch")
+    if not sidecars.get("context"):
+        raise ValueError("K1 resume requires retained context evidence")
+    if context is not None:
+        for path in sidecars["context"]:
+            payload = _json(path)
+            observed = payload.get("context") if isinstance(payload.get("context"), dict) else payload
+            if observed != context:
+                raise ValueError("K1 resume context evidence changed")
+    checkpoint = safe_cpu_torch_load(artifacts["checkpoint"])
+    if context is not None and checkpoint.get("context") != context:
+        raise ValueError("K1 resume checkpoint context mismatch")
+    required_checkpoint = {"context", "model", "optimizer", "scheduler", "rng_state",
+                           "cursor", "optimizer_step", "sample_presentations"}
+    if not required_checkpoint <= set(checkpoint):
+        raise ValueError("K1 resume checkpoint state is incomplete")
+    if any(type(checkpoint[key]) is not dict or not checkpoint[key]
+           for key in ("context", "model", "optimizer", "scheduler", "rng_state")):
+        raise ValueError("K1 resume checkpoint state mapping is incomplete")
+    rng = checkpoint["rng_state"]
+    try:
+        validate_rng_state(rng, cuda_devices=1, label="K1 resume checkpoint")
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"K1 resume checkpoint RNG state schema changed: {exc}") from exc
+    optimizer = checkpoint["optimizer"]
+    scheduler = checkpoint["scheduler"]
+    if (set(optimizer) != {"state", "param_groups"} or type(optimizer["state"]) is not dict
+            or type(optimizer["param_groups"]) is not list or not optimizer["param_groups"]):
+        raise ValueError("K1 resume optimizer state schema changed")
+    if type(scheduler.get("last_epoch")) is not int:
+        raise ValueError("K1 resume scheduler state schema changed")
+    if checkpoint.get("family_output_binding") is not None:
+        # A future family binding is accepted only when it identifies this
+        # exact registered adapter; arbitrary callback/model bindings are not.
+        binding = checkpoint["family_output_binding"]
+        if type(binding) is not dict or binding.get("adapter") != "k1-screen-v1":
+            raise ValueError("K1 resume checkpoint family binding mismatch")
+    cursor = checkpoint.get("cursor")
+    if (type(cursor) is not dict or set(cursor) != {"epoch", "next_batch", "sampler_order_sha256"}
+            or type(cursor["epoch"]) is not int or not 1 <= cursor["epoch"] < EPOCHS
+            or cursor["next_batch"] != 0 or cursor["sampler_order_sha256"] != ROW_ORDER_FINGERPRINT):
+        raise ValueError("K1 resume cursor is not an acknowledged complete epoch")
+    epoch = cursor["epoch"]
+    if checkpoint.get("optimizer_step") != epoch * STEPS_PER_EPOCH:
+        raise ValueError("K1 resume checkpoint/cursor optimizer step mismatch")
+    if checkpoint.get("sample_presentations") != epoch * ROWS_PER_EPOCH:
+        raise ValueError("K1 resume checkpoint/cursor sample count mismatch")
+    trace = validate_canonical_trace(_json(artifacts["trace"]))
+    if trace["trajectory_id"] != manifest["trajectory"]["id"]:
+        raise ValueError("K1 resume trace/trajectory identity mismatch")
+    expected_run = declaration["logical_run_id"] + ":" + arm_id + ":downstream"
+    if trace["run_id"] != expected_run:
+        raise ValueError("K1 resume trace/run identity mismatch")
+    rows = [row for row in trace["observations"] if row["event"] == "observation"]
+    if len(rows) != epoch:
+        raise ValueError("K1 resume trace/cursor epoch mismatch")
+    last = rows[-1]
+    if (last.get("optimizer_step") != checkpoint["optimizer_step"]
+            or last.get("sample_presentations") != checkpoint["sample_presentations"]
+            or last.get("epoch_or_pass") != epoch):
+        raise ValueError("K1 resume trace/checkpoint counters disagree")
+    if artifacts.get("selected_model") is None:
+        if artifacts.get("predictions") is not None:
+            raise ValueError("K1 resume predictions have no selected model")
+        if rows:
+            raise ValueError("K1 resume checkpoint has completed epochs but no selected model")
+    else:
+        selected = safe_cpu_torch_load(artifacts["selected_model"])
+        predictions = safe_cpu_torch_load(artifacts["predictions"])
+        if ({"context", "model", "epoch", "optimizer_step", "weights", "development_mae_eV"}
+                - set(selected)):
+            raise ValueError("K1 selected model state is incomplete")
+        if type(selected["model"]) is not dict or not selected["model"]:
+            raise ValueError("K1 selected model state is incomplete")
+        if {"context", "prediction_eV", "target_eV", "source_idx"} - set(predictions):
+            raise ValueError("K1 development predictions are incomplete")
+        if context is not None and selected.get("context") != context:
+            raise ValueError("K1 selected model context mismatch")
+        if context is not None and predictions.get("context") != context:
+            raise ValueError("K1 prediction context mismatch")
+        selected_epoch = selected.get("epoch")
+        selected_step = selected.get("optimizer_step")
+        if (type(selected_epoch) is not int or not 1 <= selected_epoch <= epoch
+                or selected_step not in {row.get("optimizer_step") for row in rows}):
+            raise ValueError("K1 selected model is outside the retained prefix")
+    runtime_certificate = None
+    runtime_manifest = None
+    architecture_preflight = None
+    provenance = None
+    for path in sidecars.get("provenance", ()):
+        payload = _json(path)
+        if payload.get("format") == "molgap-k1-runtime-provenance-v1":
+            provenance = payload
+            if context is not None and payload.get("context") != context:
+                raise ValueError("K1 runtime provenance context mismatch")
+            if context is not None and payload.get("recipe_sha256") != context.get("training_recipe_sha256"):
+                raise ValueError("K1 runtime provenance recipe mismatch")
+    for path in sidecars.get("runtime", ()):
+        payload = _json(path)
+        if path.name == "runtime_certificate.json" or payload.get("format") == "molgap-runtime-certificate-v1":
+            runtime_certificate = payload
+            if payload.get("status") != "accepted":
+                raise ValueError("K1 retained runtime certificate is not accepted")
+            if provenance is not None and payload.get("runtime_fingerprint") != provenance.get("runtime_fingerprint"):
+                raise ValueError("K1 runtime certificate/provenance mismatch")
+        elif path.name == "runtime_manifest.json":
+            runtime_manifest = payload
+        elif path.name == "architecture_preflight.json":
+            architecture_preflight = payload
+    if runtime_certificate is None:
+        raise ValueError("K1 resume requires the retained runtime certificate")
+    if provenance is None:
+        raise ValueError("K1 resume requires retained runtime provenance")
+    if runtime_manifest is None or architecture_preflight is None:
+        raise ValueError("K1 resume requires retained runtime preflight evidence")
+    if runtime_manifest.get("runtime_fingerprint") != provenance.get("runtime_fingerprint"):
+        raise ValueError("K1 runtime manifest/provenance mismatch")
+    return {"family": "neural_atom_k1", "version": "2", "mode": mode,
+            "completed_epochs": epoch,
+            "cursor": {"epoch": epoch, "next_batch": 0,
+                       "optimizer_step": checkpoint["optimizer_step"],
+                       "sample_presentations": checkpoint["sample_presentations"],
+                       "sampler_order_sha256": ROW_ORDER_FINGERPRINT},
+            "preflight": {"reuse_existing_certificate": runtime_certificate is not None,
+                          "certificate_id": None if runtime_certificate is None else
+                              canonical_fingerprint(runtime_certificate),
+                          "provenance_retained": provenance is not None}}
+
+
+def run_screen_resume_preflight(*, spec, package_dir: Path, expected_package_identity: str,
+                                arm_id: str, mode: str, recipe_path: Path,
+                                initial_state_path: Path, input_root: Path, output: Path,
+                                account: str, run_reference: str, trajectory_id: str,
+                                resume_output: Path, label_cache=None) -> dict:
+    """Reuse K1's accepted preflight evidence for an incomplete prefix.
+
+    K1's training loop validates the preflight directory before loading the
+    restored optimizer state.  This hook checks the current assigned T4 and
+    runtime fingerprint against the retained certificate, then republishes the
+    original evidence into the isolated preflight directory.  It does not run
+    a diagnostic batch or create a replacement certificate.
+    """
+    import torch
+    from .experiment_family_workflow import RunContext
+    if mode not in ("reference", "ssma") or label_cache is not None:
+        raise ValueError("K1 resume preflight supports reference and SSMA only")
+    recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
+    validate_recipe(recipe, mode=mode)
+    context = RunContext.for_training(spec, package_dir,
+        expected_package_identity=expected_package_identity, arm_id=arm_id,
+        account=account, run_reference=run_reference)
+    _validate_arm_binding(spec, context, mode)
+    _validate_prospective(spec, context, input_root, trajectory_id)
+    declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
+    if ((context.family_name, context.family_version) != ("neural_atom_k1", "2") or
+        declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
+                                          "state_sha256": INITIAL_STATE_SHA256}):
+        raise ValueError("Resume preflight requires frozen K1 family/initialization")
+    retained = Path(resume_output).absolute()
+    destination = Path(output).absolute()
+    from .experiment_launch import _safe_local, publish_immutable_bytes
+    _safe_local(retained)
+    _safe_local(destination)
+    if retained == destination or destination.is_relative_to(retained):
+        raise ValueError("Resume preflight output must be separate from retained arm output")
+    required = tuple(retained / name for name in
+                     ("runtime_provenance.json", "runtime_manifest.json",
+                      "runtime_certificate.json", "architecture_preflight.json"))
+    checkpoint_path = retained / "last_checkpoint.pt"
+    trace_path = retained / "canonical_trace.json"
+    selected_path = retained / "selected_model.pt"
+    predictions_path = retained / "development_predictions.pt"
+    context_paths = sorted(retained.glob("*.context.json"), key=lambda path: path.name.casefold())
+    if any(not path.is_file() for path in required) or not checkpoint_path.is_file() \
+            or not trace_path.is_file() or not selected_path.is_file() \
+            or not predictions_path.is_file() or not context_paths:
+        raise ValueError("K1 resume preflight lacks retained runtime evidence")
+    validate_screen_resume(spec, arm_id, {"trajectory": {"id": trajectory_id}}, retained,
+        {"checkpoint": checkpoint_path, "trace": trace_path,
+         "selected_model": selected_path, "predictions": predictions_path},
+        {"runtime": [retained / "runtime_manifest.json", retained / "runtime_certificate.json",
+                      retained / "architecture_preflight.json"],
+         "provenance": [retained / "runtime_provenance.json"],
+         "context": context_paths, "cost_segments": []},
+        {"trajectory_id": trajectory_id}, context=context.to_dict())
+    determinism = configure_fp32_determinism(SEED)
+    runtime = build_runtime_manifest(determinism)
+    provenance = _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
+    certificate = validate_runtime_preflight(retained, provenance)
+    hardware = torch.cuda.get_device_name(0) if torch.cuda.is_available() else ""
+    if torch.cuda.device_count() != 1 or "T4" not in hardware or certificate.get("accelerator") != hardware:
+        raise RuntimeError("K1 resume hardware differs from the retained certificate")
+    if sha256_file(initial_state_path) != INITIAL_STATE_SHA256:
+        raise ValueError("Pinned K1 initial state differs from retained preflight")
+    if runtime.get("runtime_fingerprint") != certificate.get("runtime_fingerprint"):
+        raise ValueError("K1 resume runtime fingerprint differs from retained certificate")
+    destination.mkdir(parents=True, exist_ok=True)
+    for path in required:
+        publish_immutable_bytes(destination / path.name, path.read_bytes())
+    return {**certificate, "resume_reused": True}
 
 
 def _validate_prospective(spec, context, input_root, trajectory_id):

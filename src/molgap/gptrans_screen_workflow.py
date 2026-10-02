@@ -6,6 +6,7 @@ translation, not scientific acceptance or a new resume loader.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 import tarfile
 import time
@@ -100,10 +101,289 @@ def validate_screen_recipe(spec, arm_id, recipe):
     return {"family": arm["family"], "mode": mode, "recipe": "frozen_recipe_verified"}
 
 
+def validate_screen_resume(spec, arm_id, manifest, bundle_root, artifacts,
+                           sidecars, trajectory, context=None):
+    """Validate a raw GPTrans prefix before the unchanged V4 loop resumes.
+
+    GPTrans stores a zero-based historical trace and a NumPy RNG inside its
+    checkpoint.  The shared transport loads that checkpoint with a restricted
+    weights-only CPU unpickler; this hook binds the owner-specific epoch/trace
+    contract and the retained runtime certificate without creating a new one.
+    """
+    from .experiment_execution import training_adapter
+    from .experiment_family_workflow import _json
+    from .experiment_resume import safe_cpu_torch_load
+    from .training_reproducibility import validate_rng_state
+
+    declaration = spec.to_dict()
+    arm = next((item for item in declaration["arms"] if item["arm_id"] == arm_id), None)
+    if arm is None:
+        raise ValueError("GPTrans resume arm is absent from Spec")
+    mode = training_adapter(arm).mode(arm)
+    if mode not in VARIANTS:
+        raise ValueError("GPTrans resume mode has no owning screen implementation")
+    if context is not None and context.get("arm_id") != arm_id:
+        raise ValueError("GPTrans resume context/arm mismatch")
+    if not sidecars.get("context"):
+        raise ValueError("GPTrans resume requires retained context evidence")
+    if context is not None:
+        for path in sidecars["context"]:
+            payload = _json(path)
+            observed = payload.get("context") if isinstance(payload.get("context"), dict) else payload
+            if observed != context:
+                raise ValueError("GPTrans resume context evidence changed")
+    checkpoint = safe_cpu_torch_load(artifacts["checkpoint"])
+    if checkpoint.get("format") != owner.CHECKPOINT_FORMAT:
+        raise ValueError("GPTrans resume checkpoint format changed")
+    if checkpoint.get("variant", "reference") != mode:
+        raise ValueError("GPTrans resume checkpoint variant mismatch")
+    required_checkpoint = {
+        "format", "variant", "epoch", "model", "optimizer", "scheduler", "ema",
+        "trace", "best_development_mae_eV", "best_epoch", "target_stats",
+        "runtime_certificate_id", "source_archive_sha256", "rng_state",
+        "scientific_fields", "ema_decay",
+    }
+    if not required_checkpoint <= set(checkpoint):
+        raise ValueError("GPTrans resume checkpoint state is incomplete")
+    if any(type(checkpoint[key]) is not dict or not checkpoint[key]
+           for key in ("model", "optimizer", "scheduler", "ema", "target_stats")):
+        raise ValueError("GPTrans resume checkpoint state mapping is incomplete")
+    optimizer = checkpoint["optimizer"]
+    scheduler = checkpoint["scheduler"]
+    if (set(optimizer) != {"state", "param_groups"} or type(optimizer["state"]) is not dict
+            or type(optimizer["param_groups"]) is not list or not optimizer["param_groups"]):
+        raise ValueError("GPTrans resume optimizer state schema changed")
+    if type(scheduler.get("epoch")) is not int:
+        raise ValueError("GPTrans resume scheduler state schema changed")
+    if type(checkpoint["rng_state"]) is not dict or not checkpoint["rng_state"]:
+        raise ValueError("GPTrans resume checkpoint RNG state is incomplete")
+    rng = checkpoint["rng_state"]
+    try:
+        validate_rng_state(rng, cuda_devices=1, label="GPTrans resume checkpoint")
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"GPTrans resume checkpoint RNG state schema changed: {exc}") from exc
+    if checkpoint["scientific_fields"] != owner._scientific_fields(mode):
+        raise ValueError("GPTrans resume checkpoint scientific contract changed")
+    if checkpoint["ema_decay"] != owner._ema_decay(mode):
+        raise ValueError("GPTrans resume checkpoint EMA decay changed")
+    if (type(checkpoint["best_epoch"]) is not int or checkpoint["best_epoch"] < -1
+            or not isinstance(checkpoint["best_development_mae_eV"], (int, float))
+            or isinstance(checkpoint["best_development_mae_eV"], bool)
+            or not math.isfinite(checkpoint["best_development_mae_eV"])):
+        raise ValueError("GPTrans resume checkpoint selection state is invalid")
+    certificate_id = checkpoint["runtime_certificate_id"]
+    if (type(certificate_id) is not str or len(certificate_id) != 64
+            or any(char not in "0123456789abcdef" for char in certificate_id)):
+        raise ValueError("GPTrans resume checkpoint certificate identity is invalid")
+    if context is not None and checkpoint.get("source_archive_sha256") != context["source_archive_sha256"]:
+        raise ValueError("GPTrans resume checkpoint/source mismatch")
+    trace = _json(artifacts["trace"])
+    if trace.get("format") != owner.RUN_FORMAT or type(trace.get("rows")) is not list or not trace["rows"]:
+        raise ValueError("GPTrans resume trace format changed")
+    rows = trace["rows"]
+    if checkpoint.get("trace") != rows or checkpoint.get("epoch") != len(rows) - 1:
+        raise ValueError("GPTrans resume checkpoint/trace identity mismatch")
+    if len(rows) >= owner.EPOCHS:
+        raise ValueError("GPTrans resume bundle is already complete")
+    for index, row in enumerate(rows):
+        if type(row) is not dict or row.get("epoch") != index:
+            raise ValueError("GPTrans resume trace is not a contiguous epoch prefix")
+        if not {"train_mae_eV", "development_mae_eV", "best_development_mae_eV",
+                "best_epoch", "learning_rate", "elapsed_seconds"} <= set(row):
+            raise ValueError("GPTrans resume trace row is incomplete")
+        if (row.get("optimizer_steps") != owner.BATCHES_PER_EPOCH
+                or row.get("sample_presentations") != owner.BATCHES_PER_EPOCH * owner.PHYSICAL_BATCH):
+            raise ValueError("GPTrans resume trace exposure changed")
+    if checkpoint["best_epoch"] >= len(rows):
+        raise ValueError("GPTrans resume checkpoint selection is outside the retained prefix")
+    binding = checkpoint.get("family_output_binding")
+    if binding is not None:
+        if (type(binding) is not dict or binding.get("adapter") != "gptrans-v1"
+                or binding.get("trainer") != "pcqm_gptrans_v4"
+                or binding.get("variant") != mode):
+            raise ValueError("GPTrans resume family output binding changed")
+        if context is not None and binding.get("context") != context:
+            raise ValueError("GPTrans resume family output context changed")
+    if artifacts.get("selected_model") is None:
+        if artifacts.get("predictions") is not None:
+            raise ValueError("GPTrans predictions have no selected model")
+        if checkpoint["best_epoch"] >= 0:
+            raise ValueError("GPTrans resume checkpoint has a best epoch but no selected model")
+    else:
+        selected = safe_cpu_torch_load(artifacts["selected_model"])
+        predictions = safe_cpu_torch_load(artifacts["predictions"])
+        if (selected.get("format") != owner.RUN_FORMAT
+                or type(selected.get("model")) is not dict or not selected["model"]
+                or type(selected.get("model_config")) is not dict
+                or type(selected.get("target_stats")) is not dict):
+            raise ValueError("GPTrans selected model format changed")
+        if (selected.get("variant", selected["model_config"].get("variant", mode)) != mode
+                or selected["model_config"].get("variant", mode) != mode
+                or type(selected.get("epoch")) is not int
+                or not 0 <= selected["epoch"] <= rows[-1]["epoch"]):
+            raise ValueError("GPTrans selected model is outside the retained prefix")
+        if context is not None and selected.get("source_archive_sha256") != context["source_archive_sha256"]:
+            raise ValueError("GPTrans selected model/source mismatch")
+        if selected.get("source_commit") != (None if context is None else context["source_commit"]):
+            raise ValueError("GPTrans selected model/source commit mismatch")
+        if selected.get("runtime_certificate_id") != certificate_id:
+            raise ValueError("GPTrans selected model/checkpoint certificate mismatch")
+        if type(predictions) is not dict:
+            raise ValueError("GPTrans development predictions are incomplete")
+        if {"prediction_eV", "target_eV", "source_idx"} - set(predictions):
+            raise ValueError("GPTrans development predictions are incomplete")
+        if any(predictions.get(key) is not False
+                for key in ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")):
+            raise ValueError("GPTrans selected predictions consume a protected role")
+    certificate = None
+    preflight = None
+    provenance = None
+    for path in sidecars.get("runtime", ()):
+        payload = _json(path)
+        if path.name == "runtime_certificate.json" or payload.get("format") == "molgap-runtime-certificate-v1":
+            certificate = payload
+        elif path.name == "preflight.json":
+            preflight = payload
+    for path in sidecars.get("provenance", ()):
+        payload = _json(path)
+        if payload.get("format") == "molgap-gptrans-runtime-provenance-v1":
+            provenance = payload
+    if certificate is not None and certificate.get("status") not in {"accepted", "ACCEPTED"}:
+        raise ValueError("GPTrans retained runtime certificate is not accepted")
+    if certificate is None:
+        raise ValueError("GPTrans resume requires the retained runtime certificate")
+    if owner.canonical_fingerprint(certificate) != certificate_id:
+        raise ValueError("GPTrans checkpoint/runtime certificate identity mismatch")
+    if preflight is None:
+        raise ValueError("GPTrans resume requires the retained preflight record")
+    if (preflight.get("accepted") is not True
+            or preflight.get("runtime_certificate_id") != certificate_id
+            or preflight.get("runtime_certificate") != certificate
+            or preflight.get("variant", "reference") != mode
+            or preflight.get("source_archive_sha256") != (None if context is None else context["source_archive_sha256"])
+            or preflight.get("source_commit") != (None if context is None else context["source_commit"])):
+        raise ValueError("GPTrans retained preflight/certificate identity mismatch")
+    runtime_manifest = None
+    for path in sidecars.get("runtime", ()):
+        if path.name == "runtime_manifest.json":
+            runtime_manifest = _json(path)
+            if (runtime_manifest.get("runtime_fingerprint") != certificate.get("runtime_fingerprint")
+                    or preflight.get("runtime_manifest") != runtime_manifest):
+                raise ValueError("GPTrans retained runtime manifest/certificate mismatch")
+    if runtime_manifest is None:
+        raise ValueError("GPTrans resume requires the retained runtime manifest")
+    if preflight is not None:
+        if context is not None and preflight.get("source_archive_sha256") != context["source_archive_sha256"]:
+            raise ValueError("GPTrans preflight/source mismatch")
+        if context is not None and preflight.get("source_commit") != context["source_commit"]:
+            raise ValueError("GPTrans preflight/source commit mismatch")
+        if preflight.get("variant", "reference") != mode:
+            raise ValueError("GPTrans preflight variant mismatch")
+    return {"family": "gptrans_t", "version": "1", "mode": mode,
+            "completed_epochs": len(rows),
+            "cursor": {"epoch": len(rows), "next_batch": 0,
+                       "optimizer_step": len(rows) * owner.BATCHES_PER_EPOCH,
+                       "sample_presentations": len(rows) * owner.BATCHES_PER_EPOCH * owner.PHYSICAL_BATCH},
+            "preflight": {"reuse_existing_certificate": certificate is not None,
+                          "certificate_id": certificate_id,
+                          "provenance_retained": provenance is not None,
+                          "requires_new_diagnostic": False}}
+
+
 def _read(path: Path) -> dict:
     from .experiment_family_workflow import _json
     _safe_local(Path(path).absolute())
     return _json(Path(path))
+
+
+def run_screen_resume_preflight(*, spec, package_dir: Path, expected_package_identity: str,
+                                arm_id: str, mode: str, recipe_path: Path,
+                                initial_state_path: Path, input_root: Path, output: Path,
+                                account: str, run_reference: str, trajectory_id: str,
+                                resume_output: Path) -> dict:
+    """Reuse an accepted GPTrans preflight for a restored native prefix.
+
+    A resumed checkpoint carries the original certificate identity and the
+    frozen V4 loop compares that identity before loading model state.  Running
+    ``owner.run_preflight`` here would create a new certificate and make every
+    valid resume fail.  This hook therefore performs only source/state/
+    hardware/runtime compatibility checks and republishes the retained
+    preflight bytes into the isolated directory consumed by ``run_screen_arm``.
+    No model, dataset, or new diagnostic is executed.
+    """
+    import torch
+    from .experiment_resume import safe_cpu_torch_load
+    from .experiment_family_workflow import RunContext
+    from .training_reproducibility import configure_fp32_determinism, build_runtime_manifest
+
+    context, recipe = _validate_request(spec=spec, package_dir=package_dir,
+        expected_package_identity=expected_package_identity, arm_id=arm_id, mode=mode,
+        recipe_path=recipe_path, initial_state_path=initial_state_path, input_root=input_root,
+        account=account, run_reference=run_reference, trajectory_id=trajectory_id)
+    retained = Path(resume_output).absolute()
+    destination = Path(output).absolute()
+    _safe_local(retained)
+    _safe_local(destination)
+    if retained == destination or destination.is_relative_to(retained):
+        raise ValueError("Resume preflight output must be separate from retained arm output")
+    if not retained.is_dir():
+        raise ValueError("Resume preflight requires the restored native arm output")
+    checkpoint_path = retained / "last_checkpoint.pt"
+    trace_path = retained / "trace.json"
+    certificate_path = retained / "runtime_certificate.json"
+    preflight_path = retained / "preflight.json"
+    runtime_path = retained / "runtime_manifest.json"
+    context_path = retained / "workflow_context.json"
+    required = (checkpoint_path, trace_path, certificate_path, preflight_path, runtime_path,
+                context_path)
+    if any(not path.is_file() for path in required):
+        raise ValueError("GPTrans resume preflight lacks retained runtime evidence")
+    checkpoint = safe_cpu_torch_load(checkpoint_path)
+    trace = _read(trace_path)
+    certificate = _read(certificate_path)
+    preflight = _read(preflight_path)
+    runtime = _read(runtime_path)
+    artifacts = {"checkpoint": checkpoint_path, "trace": trace_path,
+                 "selected_model": (retained / "best_model.pt") if (retained / "best_model.pt").is_file() else None,
+                 "predictions": (retained / "development_predictions.pt") if (retained / "development_predictions.pt").is_file() else None}
+    sidecars = {"runtime": [runtime_path, certificate_path, preflight_path],
+                "provenance": [], "context": [context_path], "cost_segments": []}
+    # Reuse the same owner state gate used for exported bundles.  The runtime
+    # worker has already restored exact bytes, so no transport manifest is
+    # needed here; the trajectory ID is the original staged prospective ID.
+    validate_screen_resume(spec, arm_id,
+        {"trajectory": {"id": trajectory_id}}, retained, artifacts, sidecars,
+        {"trajectory_id": trajectory_id}, context=context.to_dict())
+    if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
+        raise RuntimeError("GPTrans resume preflight requires exactly one visible accelerator")
+    hardware = torch.cuda.get_device_name(0)
+    if "T4" not in hardware or certificate.get("accelerator") != hardware:
+        raise RuntimeError("GPTrans resume hardware differs from the retained certificate")
+    owner.validate_source_archive(Path(package_dir) / "source.tar.gz",
+        context.source_archive_sha256, context.source_commit)
+    determinism = owner.configure_fp32_determinism(owner.SEED)
+    current_runtime = build_runtime_manifest(determinism)
+    if (runtime.get("runtime_fingerprint") != certificate.get("runtime_fingerprint")
+            or current_runtime.get("runtime_fingerprint") != certificate.get("runtime_fingerprint")):
+        raise ValueError("GPTrans resume runtime fingerprint differs from the retained certificate")
+    certificate_id = owner.canonical_fingerprint(certificate)
+    if (preflight.get("accepted") is not True
+            or preflight.get("runtime_certificate_id") != certificate_id
+            or preflight.get("runtime_certificate") != certificate
+            or preflight.get("runtime_manifest") != runtime
+            or preflight.get("source_archive_sha256") != context.source_archive_sha256
+            or preflight.get("source_commit") != context.source_commit
+            or preflight.get("variant", "reference") != mode):
+        raise ValueError("GPTrans retained preflight evidence is inconsistent")
+    owner.validate_runtime_certificate(certificate, {
+        **owner._scientific_fields(mode), "platform_id": certificate.get("platform_id"),
+        "accelerator": certificate.get("accelerator"),
+        "runtime_certificate_id": certificate_id})
+    destination.mkdir(parents=True, exist_ok=True)
+    for name in ("runtime_manifest.json", "runtime_certificate.json", "preflight.json"):
+        publish_immutable_bytes(destination / name, (retained / name).read_bytes())
+    publish_immutable_bytes(destination / "workflow_context.json", json_bytes(context.to_dict()))
+    return {**preflight, "resume_reused": True}
 
 
 def _validate_request(*, spec, package_dir, expected_package_identity, arm_id, mode,

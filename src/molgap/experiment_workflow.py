@@ -7,8 +7,8 @@ import json
 from pathlib import Path
 from time import perf_counter
 
-from .experiment_launch import _safe_local
-from .experiment_package import _allowlist, _name, _source, _spec
+from .experiment_launch import _safe_local, build_launch_receipt
+from .experiment_package import _allowlist, _name, _source, _spec, build_experiment_source_package
 from .experiment_prospective import check_prospective, plan_prospective
 from .experiment_spec import SCHEMA_VERSION_V2, _digest, _unique_object
 from .experiment_staging import UploadArtifact, _artifact_name, stage_release_inputs, validate_staging_inputs
@@ -22,8 +22,6 @@ from .experiment_family_workflow import (
     _json, _artifact_path, check_acceptance_plan, prepare_terminal_outputs,
     build_verified_terminal_descriptor, close_verified_outputs,
 )
-from .experiment_launch import _safe_local, build_launch_receipt
-from .experiment_package import build_experiment_source_package, _allowlist
 from .experiment_preflight import check_release_inputs, _atomic
 from .experiment_spec import ExperimentSpec
 
@@ -207,10 +205,13 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
     it never discovers files at runtime or silently copies another experiment.
     Caller supplies existing contract, initialization and scientific plan inputs.
     """
+    started = perf_counter()
     platform_name = spec.to_dict()["platform"]["name"]
     backend = _platform_adapter(platform_name)
     if type(plan) is not dict or set(plan) != {"format", "spec_identity", "source_files", "arms", "acceptance_plan", platform_name} or plan["format"] != "molgap-experiment-workflow-v1" or plan["spec_identity"] != spec.identity:
         raise ValueError("Workflow plan/Spec mismatch")
+    if type(plan["source_files"]) is not list:
+        raise ValueError("Workflow source_files must be an explicit path list")
     repo_root, output = Path(repo_root).absolute(), Path(output).absolute()
     _safe_local(repo_root)
     _safe_local(output)
@@ -228,7 +229,7 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         arm_id = arm["arm_id"]
         if arm_id in initial_states:
             raise ValueError("Duplicate workflow arm")
-        initial = Path(arm["initial_state"]).absolute()
+        initial = _path(repo_root, arm["initial_state"])
         _safe_local(initial)
         if not initial.is_file():
             raise ValueError("Missing frozen initialization file")
@@ -242,19 +243,25 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         return {"status": "BLOCKED", "stage": "acceptance_plan", "acceptance": acceptance,
                 "prospective_published": False, "submitted": False}
     # The inventory is maintained with adapters, not assembled by each caller.
-    from .experiment_source_inventory import SHARED_SOURCE_FILES
-    source_files = _allowlist(sorted(set(SHARED_SOURCE_FILES) | set(plan["source_files"]) | set(recipes.values())))
+    from .experiment_source_inventory import registered_source_files
+    source_files = registered_source_files(spec, [*plan["source_files"], *recipes.values()])
     output.mkdir(parents=True)
     report = {"format": "molgap-workflow-preparation-v1", "status": "PREPARING",
-              "spec_identity": spec.identity, "submitted": False, "stages": []}
+              "spec_identity": spec.identity, "submitted": False, "stages": [],
+              "prospective_published": False, "timings": {"input_validation_seconds": perf_counter() - started}}
+    phase_started = perf_counter()
     def record(stage, result):
+        nonlocal phase_started
+        report["timings"][stage + "_seconds"] = perf_counter() - phase_started
+        phase_started = perf_counter()
         report["stages"].append({"stage": stage, "result": result})
         _atomic(output / "workflow_report.json", report)
     try:
+        record("family_recipes", check_family_recipes(spec, repo_root, recipes))
+        record("prospective_check", check_prospective(spec, repo_root))
         package = output / "package"
         manifest = build_experiment_source_package(spec, repo_root, source_files, package)
         record("package", manifest)
-        record("family_recipes", check_family_recipes(spec, repo_root, recipes))
         stage = backend.stage_inputs(repo_root=repo_root, output=output, package=package,
             manifest=manifest, spec=spec, platform_plan=plan[platform_name], metadata=metadata,
             initial_states=initial_states, jobs=jobs)
@@ -270,7 +277,9 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         if release["errors"]:
             report.update(status="BLOCKED", stage="check_release", prospective_published=False)
             return report
+        report["prospective_published"] = "inspect_plan_result"
         prospective, code = plan_prospective(spec, repo_root)
+        report["prospective_published"] = True if not code else "inspect_plan_result"
         record("prospective", prospective)
         if code:
             report.update(status="RECONCILIATION_REQUIRED", stage="prospective", prospective_published="inspect_plan_result")
@@ -292,22 +301,42 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
                                    "Remote all-arm runtime qualification is still mandatory."])
         return report
     except Exception as exc:
-        report.update(status="ERROR_REQUIRES_RECONCILIATION", error=str(exc))
+        status = "ERROR_BEFORE_PUBLICATION" if report["prospective_published"] is False else "ERROR_REQUIRES_RECONCILIATION"
+        report.update(status=status, error=str(exc))
         raise
     finally:
+        report["timings"]["total_local_preparation_seconds"] = perf_counter() - started
         _atomic(output / "workflow_report.json", report)
 
 
 def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
-                    expected_package_identity, locations, execute=False):
+                    expected_package_identity, locations, execute=False, execution_root=None):
     """Inspect every arm, build the existing descriptor, then delegate closure."""
-    from .experiment_family_workflow import inspect_output
+    from .experiment_family_workflow import capture_output_inspection
     outputs = prepare_terminal_outputs(spec, repo_root, supplied, receipt_path=receipt_path,
         package_dir=package_dir, expected_package_identity=expected_package_identity)
-    reports = {arm_id: inspect_output(item["output_dir"], context=item["context"], expected=item["expected"])
-               for arm_id, item in outputs.items()}
+    retention = None
+    if execution_root is not None:
+        from .experiment_retention import validate_execution_retention
+        context = next(iter(outputs.values()))["context"]
+        retention = validate_execution_retention(Path(execution_root), spec,
+            package_identity=expected_package_identity, source_commit=context.source_commit,
+            source_archive_sha256=context.source_archive_sha256)
+    inspections, reports = {}, {}
+    for arm_id, item in outputs.items():
+        try:
+            inspections[arm_id] = capture_output_inspection(item["output_dir"],
+                context=item["context"], expected=item["expected"])
+            reports[arm_id] = inspections[arm_id].report
+        except (ValueError, TypeError, OSError, RuntimeError) as exc:
+            reports[arm_id] = {"status": "BLOCKED", "blockers": [str(exc)]}
     if any(r["status"] == "BLOCKED" for r in reports.values()):
         return {"status": "BLOCKED", "arms": reports, "executed": False}
-    descriptor = build_verified_terminal_descriptor(repo_root, spec, outputs=outputs, locations=locations)
-    result = close_verified_outputs(repo_root, spec, descriptor, outputs=outputs, execute=execute)
-    return {**result, "descriptor": descriptor.to_dict()}
+    descriptor = build_verified_terminal_descriptor(repo_root, spec, outputs=outputs, locations=locations,
+                                                  inspections=inspections)
+    result = close_verified_outputs(repo_root, spec, descriptor, outputs=outputs,
+                                    inspections=inspections, execute=execute)
+    result = {**result, "descriptor": descriptor.to_dict()}
+    if retention is not None:
+        result["execution_retention"] = {"status": retention["status"], "manifest": retention["manifest"]}
+    return result

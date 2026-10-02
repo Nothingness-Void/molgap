@@ -19,6 +19,7 @@ from .research_memory.trace import (
     RMLTraceRecorder, TRACE_FORMAT, file_digest, json_bytes, validate_canonical_trace,
 )
 from .screen_policy import canonical_fingerprint
+from .experiment_inspection import InspectionSnapshot, validate_snapshot
 
 
 OUTPUT_FORMAT = "molgap-family-output-v1"
@@ -601,6 +602,81 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict) -> 
             "runtime_qualification": "NOT_EVALUATED"}
 
 
+def capture_output_inspection(output_dir: Path, *, context: RunContext,
+                              expected: dict) -> InspectionSnapshot:
+    """Inspect an output once and return a digest-bound immutable snapshot.
+
+    The snapshot is the only accepted hand-off from the owning inspector to
+    descriptor construction and terminal closure.  A blocked report cannot be
+    wrapped, and the snapshot is validated immediately so a concurrent output
+    mutation cannot become an accepted snapshot.
+    """
+    root = Path(output_dir).absolute()
+    _safe_local(root)
+    manifest_path = root / "output_manifest.json"
+    try:
+        manifest_sha256 = file_digest(manifest_path)
+        manifest = _json(manifest_path)
+    except (OSError, ValueError, TypeError, KeyError) as exc:
+        report = inspect_output(output_dir, context=context, expected=expected)
+        blockers = report.get("blockers", [str(exc)])
+        raise ValueError("Output inspection blocked: " + "; ".join(blockers)) from exc
+    report = inspect_output(output_dir, context=context, expected=expected)
+    if report["status"] != "MECHANICALLY_VERIFIED":
+        raise ValueError("Output inspection blocked: " + "; ".join(report["blockers"]))
+    _check_context(manifest["context"], context)
+    if file_digest(manifest_path) != manifest_sha256:
+        raise ValueError("Output manifest changed during inspection")
+    observed = report.get("observed")
+    bindings = observed.get("artifacts") if isinstance(observed, dict) else None
+    snapshot = InspectionSnapshot._from_owner(
+        output_dir=root,
+        manifest_sha256=manifest_sha256,
+        manifest_context=manifest["context"],
+        context=context.to_dict(),
+        expected=expected,
+        report=report,
+        artifact_bindings=bindings,
+    )
+    validate_snapshot(snapshot, output_dir=root, context=context.to_dict(), expected=expected,
+                      file_digest=file_digest, load_json=_json, safe_local=_safe_local)
+    return snapshot
+
+
+# Descriptive alias for callers that use the inspector's verb directly.
+inspect_output_snapshot = capture_output_inspection
+
+
+def _coalesce_snapshot_inputs(inspection_snapshots, inspections):
+    if inspection_snapshots is not None and inspections is not None:
+        raise ValueError("Supply only one inspection snapshot mapping")
+    return inspection_snapshots if inspection_snapshots is not None else inspections
+
+
+def _validate_snapshot_inputs(ids: set[str], inspection_snapshots):
+    if inspection_snapshots is None:
+        return
+    if type(inspection_snapshots) is not dict or set(inspection_snapshots) != ids:
+        raise ValueError("Inspection snapshots must cover exactly every Spec arm")
+    if any(type(snapshot) is not InspectionSnapshot for snapshot in inspection_snapshots.values()):
+        raise TypeError("Inspection snapshots must come from capture_output_inspection")
+
+
+def _inspection_report(item: dict, arm_id: str, inspection_snapshots):
+    if inspection_snapshots is None:
+        return inspect_output(item["output_dir"], context=item["context"], expected=item["expected"])
+    snapshot = inspection_snapshots[arm_id]
+    return validate_snapshot(
+        snapshot,
+        output_dir=item["output_dir"],
+        context=item["context"].to_dict(),
+        expected=item["expected"],
+        file_digest=file_digest,
+        load_json=_json,
+        safe_local=_safe_local,
+    )
+
+
 def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> dict:
     """Prelaunch capability and retained-reference check, without execution.
 
@@ -676,11 +752,16 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
 
 
 def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *, outputs: dict,
-                           execute: bool = False) -> dict:
+                           execute: bool = False,
+                           inspection_snapshots: dict | None = None,
+                           inspections: dict | None = None) -> dict:
     """Reinspect every arm, then delegate the unchanged terminal/RML transaction.
 
-    outputs maps arm_id to {context, output_dir, expected}. Descriptor artifact
-    paths and SHA must agree with the inspected raw files before any RML write.
+    outputs maps arm_id to {context, output_dir, expected}. When supplied,
+    ``inspection_snapshots`` must contain snapshots from the owner inspector
+    for every arm; closure rechecks their manifest and artifact byte digests
+    without deserializing tensors again. Descriptor artifact paths and SHA must
+    agree with the inspected raw files before any RML write.
     """
     from .experiment_terminal import execute_terminal_descriptor, translate_terminal_descriptor
     if type(execute) is not bool:
@@ -688,12 +769,14 @@ def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *,
     arms = spec.to_dict()["arms"]
     if set(outputs) != {a["arm_id"] for a in arms}:
         raise ValueError("Closure requires independent output inputs for every arm")
+    inspection_snapshots = _coalesce_snapshot_inputs(inspection_snapshots, inspections)
+    _validate_snapshot_inputs(set(outputs), inspection_snapshots)
     # Existing translator verifies prospective, evidence, terminal, path and SHA.
     translate_terminal_descriptor(repo_root, spec, descriptor)
     reports = {}
     for arm in descriptor.to_dict()["arms"]:
         item = outputs[arm["arm_id"]]
-        report = inspect_output(item["output_dir"], context=item["context"], expected=item["expected"])
+        report = _inspection_report(item, arm["arm_id"], inspection_snapshots)
         reports[arm["arm_id"]] = report
         if report["status"] == "BLOCKED":
             continue
@@ -747,14 +830,18 @@ def prepare_terminal_outputs(spec: ExperimentSpec, repo_root: Path, supplied: di
 
 
 def close_family_replay(repo_root: Path, spec: ExperimentSpec, descriptor, *,
-                        outputs: dict, execute: bool = False) -> dict:
+                        outputs: dict, execute: bool = False,
+                        inspection_snapshots: dict | None = None,
+                        inspections: dict | None = None) -> dict:
     """Close through existing authority, then check this run's compiled replay pair.
 
     Terminal inputs must already contain owning scientific acceptance, roles,
     cost and reference evidence. Nothing here manufactures those qualifications
     or changes a gate. A completed terminal can truthfully remain replay-blocked.
     """
-    result = close_verified_outputs(repo_root, spec, descriptor, outputs=outputs, execute=execute)
+    result = close_verified_outputs(repo_root, spec, descriptor, outputs=outputs, execute=execute,
+                                    inspection_snapshots=inspection_snapshots,
+                                    inspections=inspections)
     if not execute or result["status"] != "COMPLETE":
         return {**result, "replay_readiness": "NOT_EVALUATED"}
     return {**result, **family_replay_status(repo_root,
@@ -787,7 +874,9 @@ def family_replay_status(repo_root: Path, trajectory_ids: list[str]) -> dict:
 
 
 def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *, outputs: dict,
-                                       locations: dict):
+                                       locations: dict,
+                                       inspection_snapshots: dict | None = None,
+                                       inspections: dict | None = None):
     """Translate mechanical observations without per-experiment evidence glue.
 
     locations supplies existing trajectory, terminal, canonical trace and run ID.
@@ -801,6 +890,8 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
     ids = {a["arm_id"] for a in declaration["arms"]}
     if set(outputs) != ids or set(locations) != ids:
         raise ValueError("Descriptor requires every independently inspected arm")
+    inspection_snapshots = _coalesce_snapshot_inputs(inspection_snapshots, inspections)
+    _validate_snapshot_inputs(ids, inspection_snapshots)
     entries = []
     fact = lambda value: {"value": value, "missing_reason": None}
     for arm in declaration["arms"]:
@@ -809,7 +900,7 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
         ctx = item["context"]
         if ctx.spec_identity != spec.identity or ctx.arm_identity != canonical_fingerprint(arm):
             raise ValueError("Output/Spec arm binding mismatch")
-        report = inspect_output(item["output_dir"], context=ctx, expected=item["expected"])
+        report = _inspection_report(item, arm_id, inspection_snapshots)
         if report["status"] != "MECHANICALLY_VERIFIED":
             raise ValueError("Output inspection blocked: " + "; ".join(report["blockers"]))
         where = locations[arm_id]

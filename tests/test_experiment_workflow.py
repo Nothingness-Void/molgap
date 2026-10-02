@@ -555,6 +555,7 @@ def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates
     monkeypatch.setattr(workflow, "build_experiment_source_package", package)
     monkeypatch.setattr(workflow, "check_family_recipes",
         lambda *_args: {"status": "synthetic_family_recipe_stub"})
+    monkeypatch.setattr(workflow, "check_prospective", lambda *_args: {"status": "synthetic_prospective_check"})
 
     def release(release_spec, package_dir, **kwargs):
         events.append("release")
@@ -621,6 +622,7 @@ def test_release_static_failure_never_starts_prospective_planning(
 ):
     repo, spec, plan = workflow_case["repo"], workflow_case["spec"], workflow_case["plan"]
     monkeypatch.setattr(workflow, "check_family_recipes", lambda *_args: {"status": "stub"})
+    monkeypatch.setattr(workflow, "check_prospective", lambda *_args: {"status": "synthetic_prospective_check"})
     monkeypatch.setattr(workflow, "check_release_inputs", lambda *_args, **_kwargs: {
         "status": "RELEASE_INPUTS_FAILED", "errors": [{"check": "synthetic", "item": "fixture"}],
         "inputs": {}, "checks": {}, "limitations": [],
@@ -645,6 +647,7 @@ def test_partial_prospective_plan_returns_without_platform_handoff(
 ):
     repo, spec, plan = workflow_case["repo"], workflow_case["spec"], workflow_case["plan"]
     monkeypatch.setattr(workflow, "check_family_recipes", lambda *_args: {"status": "stub"})
+    monkeypatch.setattr(workflow, "check_prospective", lambda *_args: {"status": "synthetic_prospective_check"})
     monkeypatch.setattr(workflow, "check_release_inputs", lambda *_args, **_kwargs: {
         "status": "LOCAL_RELEASE_INPUTS_VERIFIED", "errors": [],
         "inputs": {}, "checks": {}, "limitations": [],
@@ -684,7 +687,12 @@ def test_accept_workflow_blocks_all_arm_closure_when_one_output_is_missing(
                 "blockers": [] if Path(output_dir).is_dir() else ["output missing"]}
 
     from molgap import experiment_family_workflow as family_workflow
-    monkeypatch.setattr(family_workflow, "inspect_output", inspect)
+    def capture(output_dir, **kwargs):
+        report = inspect(output_dir, **kwargs)
+        if report["status"] == "BLOCKED":
+            raise ValueError("output missing")
+        return SimpleNamespace(report=report)
+    monkeypatch.setattr(family_workflow, "capture_output_inspection", capture)
     descriptor, close = Mock(), Mock()
     monkeypatch.setattr(workflow, "build_verified_terminal_descriptor", descriptor)
     monkeypatch.setattr(workflow, "close_verified_outputs", close)
@@ -796,6 +804,7 @@ def test_pair_runtime_preflight_failure_terminates_peer_and_never_starts_trainin
     tmp_path, monkeypatch,
 ):
     from molgap import kaggle_pair_runtime as pair_runtime
+    from molgap import experiment_package
 
     spec = _candidate_pair_spec()
     source_root = tmp_path / "source"
@@ -818,6 +827,20 @@ def test_pair_runtime_preflight_failure_terminates_peer_and_never_starts_trainin
     })
     monkeypatch.setattr(pair_runtime.subprocess, "check_output",
         lambda *_args, **_kwargs: "NVIDIA Tesla T4\nNVIDIA Tesla T4\n")
+    # This unit test supplies only a minimal Spec sidecar and exercises the
+    # orchestration failure path.  Keep retention validation real while
+    # treating package verification as the trusted bootstrap primitive that
+    # normally ran before the runtime was entered.
+    monkeypatch.setattr(
+        experiment_package,
+        "verify_experiment_source_package",
+        lambda _package: {
+            "package_identity": HEX_A,
+            "spec_identity": spec.identity,
+            "archive_sha256": HEX_B,
+            "source_commit": "c" * 40,
+        },
+    )
 
     processes = {}
     commands = []
@@ -875,6 +898,17 @@ def test_pair_runtime_preflight_failure_terminates_peer_and_never_starts_trainin
     assert all((output / arm["arm_id"] / "preflight.log").is_file()
                for arm in spec.to_dict()["arms"])
     assert all(not arm["training_started"] for arm in state["arms"].values())
+    from molgap.experiment_retention import validate_execution_retention
+    retained = validate_execution_retention(
+        output, spec, package_identity=HEX_A, source_commit="c" * 40,
+        source_archive_sha256=HEX_B,
+    )
+    assert retained["status"] == "EXECUTION_RETENTION_VERIFIED"
+    assert retained["ledgers"]["root"]["allocation_device_count"] == 2
+    assert {item["device"] for item in retained["ledgers"]["root"]["devices"]} == {0, 1}
+    assert retained["ledgers"]["root"]["allocated_device_seconds"] == (
+        2 * retained["ledgers"]["root"]["wall_seconds"]
+    )
     from molgap.experiment_family_workflow import incomplete_observations_from_execution
     observations = incomplete_observations_from_execution(spec, state)
     assert all(observed["progress"] == {key: 0 for key in ("epoch", "step", "samples")}
@@ -904,37 +938,20 @@ def test_pair_runtime_preflight_failure_terminates_peer_and_never_starts_trainin
     assert "training_progress_not_retained" in unknown["missing_evidence"]
 
 
-def test_check_workflow_binding_rejects_tampered_final_prospective_identity(tmp_path):
-    spec = _candidate_pair_spec()
-    staged = tmp_path / "source-dataset"
-    staged.mkdir()
+def test_check_workflow_binding_rejects_tampered_final_prospective_identity(tmp_path, monkeypatch):
+    from test_experiment_launch_config import launch_case
+    spec, staged, launch_path, launch, manifest, recipes, initial_states = launch_case.__wrapped__(tmp_path, monkeypatch)
     metadata_path = tmp_path / "kernel-metadata.json"
     entry_path = tmp_path / "run.py"
     arm_ids = [arm["arm_id"] for arm in spec.to_dict()["arms"]]
-    prospective_hashes = {}
-    for arm_id in arm_ids:
-        trajectory = staged / "prospective" / arm_id / "trajectory.json"
-        trajectory.parent.mkdir(parents=True)
-        _write_json(trajectory, {"synthetic": True, "arm_id": arm_id})
-        prospective_hashes[arm_id] = _sha(trajectory.read_bytes())
+    prospective_hashes = launch["prospective_sha256"]
     metadata = {
-        "id": "synthetic-account/synthetic-pair-run",
-        "dataset_sources": ["synthetic-account/source-data"],
+        "id": launch["run_reference"],
+        "dataset_sources": launch["dataset_sources"],
         "enable_gpu": True,
         "enable_tpu": False,
     }
     _write_json(metadata_path, metadata)
-    launch = {
-        "spec_identity": spec.identity,
-        "run_reference": metadata["id"],
-        "account": "synthetic-account",
-        "dataset_sources": metadata["dataset_sources"],
-        "accelerator": "NvidiaTeslaT4",
-        "device_count": 2,
-        "prospective_sha256": prospective_hashes,
-    }
-    launch_path = staged / "experiment_launch.json"
-    _write_json(launch_path, launch)
     entry_path.write_text(
         "EXPECTED_LAUNCH_SHA256 = " + repr(_sha(launch_path.read_bytes())) + "\n",
         encoding="utf-8",
@@ -942,7 +959,7 @@ def test_check_workflow_binding_rejects_tampered_final_prospective_identity(tmp_
 
     checked = check_workflow_binding(
         spec, launch_config=launch_path, kernel_metadata=metadata_path,
-        entry_script=entry_path,
+        entry_script=entry_path, manifest=manifest, recipe_files=recipes, initial_states=initial_states,
     )
     assert checked["prospective_sha256"] == prospective_hashes
 
@@ -951,7 +968,7 @@ def test_check_workflow_binding_rejects_tampered_final_prospective_identity(tmp_
     with pytest.raises(ValueError, match="Published prospective record changed"):
         check_workflow_binding(
             spec, launch_config=launch_path, kernel_metadata=metadata_path,
-            entry_script=entry_path,
+            entry_script=entry_path, manifest=manifest, recipe_files=recipes, initial_states=initial_states,
         )
 
 
@@ -1061,5 +1078,5 @@ def test_prepare_and_accept_workflow_cli_json_dispatch(tmp_path, capsys, monkeyp
     accept.assert_called_once_with(
         spec, repo, {"synthetic": True}, receipt_path=tmp_path / "receipt.json",
         package_dir=tmp_path / "package", expected_package_identity=HEX_A,
-        locations={"synthetic": True}, execute=False,
+        locations={"synthetic": True}, execute=False, execution_root=None,
     )

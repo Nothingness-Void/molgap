@@ -93,6 +93,20 @@ def _allowlist(relative_paths) -> list[str]:
     return names
 
 
+def read_packaged_text(package_dir: Path, relative_path: str) -> str:
+    """Read a reviewed source member from an already verified immutable package."""
+    name = _name(relative_path)
+    with tarfile.open(Path(package_dir) / "source.tar.gz", "r:gz") as archive:
+        members = [member for member in archive.getmembers() if member.name == name]
+        if len(members) != 1 or not members[0].isfile() or members[0].linkname:
+            raise ValueError("Expected one regular packaged text source")
+        stream = archive.extractfile(members[0])
+        if stream is None:
+            raise ValueError("Missing packaged text source")
+        with stream:
+            return stream.read().decode("utf-8")
+
+
 def _no_links(path: Path) -> None:
     for part in (path, *path.parents):
         if part.is_symlink() or (hasattr(part, "is_junction") and part.is_junction()):

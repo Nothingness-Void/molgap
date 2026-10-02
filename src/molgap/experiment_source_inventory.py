@@ -4,13 +4,18 @@ Explicit tracked paths; update once when an adapter gains a dependency.
 This is not runtime dependency discovery. Extra addon paths remain explicit.
 """
 
-SHARED_SOURCE_FILES = (
+COMMON_SOURCE_FILES = (
     'platforms/kaggle/run_experiment.py',
     'src/molgap/__init__.py',
     'src/molgap/comparison_readiness.py',
     'src/molgap/constants.py',
     'src/molgap/evidence_pointers.py',
     'src/molgap/experiment_execution.py',
+    'src/molgap/experiment_launch_config.py',
+    'src/molgap/experiment_inspection.py',
+    'src/molgap/experiment_resume.py',
+    'src/molgap/experiment_allocation.py',
+    'src/molgap/experiment_retention.py',
     'src/molgap/experiment_family_artifacts.py',
     'src/molgap/experiment_family_workflow.py',
     'src/molgap/experiment_launch.py',
@@ -23,21 +28,9 @@ SHARED_SOURCE_FILES = (
     'src/molgap/experiment_terminal.py',
     'src/molgap/experiment_training_worker.py',
     'src/molgap/experiment_workflow.py',
-    'src/molgap/gps.py',
-    'src/molgap/gptrans.py',
-    'src/molgap/gptrans_memory.py',
-    'src/molgap/gptrans_screen_workflow.py',
-    'src/molgap/gptrans_variants.py',
-    'src/molgap/k1_joint_aggregation.py',
-    'src/molgap/k1_screen_training.py',
+    'src/molgap/experiment_workflow_resume.py',
     'src/molgap/kaggle_pair_runtime.py',
     'src/molgap/kaggle_workflow.py',
-    'src/molgap/pcqm_gap_architecture.py',
-    'src/molgap/pcqm_gptrans_v4.py',
-    'src/molgap/pcqm_wedge.py',
-    'src/molgap/qm9_gape.py',
-    'src/molgap/qm9_local_hierarchy.py',
-    'src/molgap/qm9_neural_atom.py',
     'src/molgap/research_memory/__init__.py',
     'src/molgap/research_memory/backtest.py',
     'src/molgap/research_memory/compiler.py',
@@ -66,3 +59,38 @@ SHARED_SOURCE_FILES = (
     'src/molgap/v4_runtime.py',
     'src/molgap/v5_common.py',
 )
+
+
+def registered_source_files(spec, extras=()):
+    """Select reviewed common, family and addon paths; never scan a checkout."""
+    from .experiment_execution import training_adapter, validate_training_registry
+    from .experiment_package import _allowlist
+    from .experiment_spec import ADDONS
+    validate_training_registry()
+    names = set(COMMON_SOURCE_FILES)
+    names.update(_allowlist(extras) if extras else ())
+    for arm in spec.to_dict()["arms"]:
+        adapter = training_adapter(arm)
+        names.update(adapter.source_files)
+        for addon in arm["addons"]:
+            execution = adapter.addon(addon["name"], addon["version"])
+            declaration = ADDONS[(addon["name"], addon["version"])]
+            names.add("src/" + declaration.source_module.replace(".", "/") + ".py")
+            names.update(execution.extra_source_files)
+    return _allowlist(sorted(names))
+
+
+def _all_registered_sources():
+    from .experiment_execution import TRAINING_ADAPTERS
+    from .experiment_spec import ADDONS
+    names = set(COMMON_SOURCE_FILES)
+    for adapter in TRAINING_ADAPTERS.values():
+        names.update(adapter.source_files)
+        for addon in adapter.addons:
+            names.add("src/" + ADDONS[(addon.name, addon.version)].source_module.replace(".", "/") + ".py")
+            names.update(addon.extra_source_files)
+    return tuple(sorted(names))
+
+
+# Retain the full reviewed inventory for compatibility and inventory tests.
+SHARED_SOURCE_FILES = _all_registered_sources()

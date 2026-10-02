@@ -66,16 +66,31 @@ FAMILIES = MappingProxyType({
 
 
 @dataclass(frozen=True)
+class AddonConfigField:
+    name: str
+    kind: str = "literal"
+    value: object = None
+    minimum: int | None = None
+    maximum: int | None = None
+    excluded: tuple[int, ...] = ()
+
+
+@dataclass(frozen=True)
 class AddonContract:
     family: str
     exclusive_group: str
     source_module: str
+    config_fields: tuple[AddonConfigField, ...] = ()
+    family_versions: tuple[str, ...] = ()
+    single_addon: bool = False
 
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
+        (AddonConfigField("num_layers", "integer", minimum=EDGE_STATE_MIN_LAYERS,
+                          maximum=EDGE_STATE_MAX_LAYERS, excluded=(EDGE_STATE_BASE_LAYERS,)),),
     ),
     ("neural_atom_k1", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.qm9_neural_atom",
@@ -98,8 +113,27 @@ ADDONS = MappingProxyType({
     ),
     ("k1_joint_aggregation", "1"): AddonContract(
         "neural_atom_k1", "k1-local-aggregation", "molgap.k1_joint_aggregation",
+        tuple(AddonConfigField(name, value=value) for name, value in
+              (("layer", 6), ("latent_channels", 64), ("kappa", 4),
+               ("seed", 42), ("degree_policy", "original-sum-above-four"))), ("2",), True,
     ),
 })
+
+
+def validate_addon_config(contract: AddonContract, config: dict, *, name="addon") -> None:
+    """Validate reviewed configuration fields without addon-specific dispatch."""
+    _object(config, " ".join(field.name for field in contract.config_fields), "addon.config")
+    for field in contract.config_fields:
+        value = config[field.name]
+        if field.kind == "literal":
+            if type(value) is not type(field.value) or value != field.value:
+                raise ValueError("Addon configuration differs from the bounded frozen configuration")
+        elif field.kind == "integer":
+            _integer(value, "addon.config." + field.name, field.minimum or 0)
+            if (field.maximum is not None and value > field.maximum) or value in field.excluded:
+                raise ValueError(f"{name} requires {field.name} in [{field.minimum}, {field.maximum}] except {field.excluded}")
+        else:
+            raise ValueError("Unsupported reviewed addon configuration field kind")
 
 
 def _object(value, fields: str, path: str) -> dict:
@@ -223,24 +257,10 @@ def _arm(arm: dict) -> None:
         if extension.family != contract.name or extension.exclusive_group in groups:
             raise ValueError("Incompatible addon combination/family")
         groups.add(extension.exclusive_group)
-        if addon["name"] == "edge_state_depth":
-            config = _object(addon["config"], "num_layers", "addon.config")
-            _integer(config["num_layers"], "addon.config.num_layers")
-            if (not EDGE_STATE_MIN_LAYERS <= config["num_layers"] <= EDGE_STATE_MAX_LAYERS
-                    or config["num_layers"] == EDGE_STATE_BASE_LAYERS):
-                raise ValueError(
-                    f"edge_state_depth requires num_layers in "
-                    f"[{EDGE_STATE_MIN_LAYERS}, {EDGE_STATE_MAX_LAYERS}] "
-                    f"except {EDGE_STATE_BASE_LAYERS}"
-                )
-        elif addon["name"] == "k1_joint_aggregation":
-            if family["version"] != "2" or len(arm["addons"]) != 1:
-                raise ValueError("K1 screen extension requires family/version 2 and one extension")
-            if addon["config"] != {"layer": 6, "latent_channels": 64, "kappa": 4,
-                                    "seed": 42, "degree_policy": "original-sum-above-four"}:
-                raise ValueError("K1 extension differs from the bounded frozen configuration")
-        else:
-            _object(addon["config"], "", "addon.config")
+        if ((extension.family_versions and family["version"] not in extension.family_versions)
+                or (extension.single_addon and len(arm["addons"]) != 1)):
+            raise ValueError("Addon requires its registered family/version and one extension")
+        validate_addon_config(extension, addon["config"], name=addon["name"])
         _digest(addon["source_sha256"], "addon.source_sha256")
 
 

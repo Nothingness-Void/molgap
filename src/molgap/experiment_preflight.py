@@ -847,7 +847,10 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
         check("entry_script", "kernel", lambda: _file_sha(_regular(Path(entry_script).absolute())))
     if launch_config is not None or kernel_metadata is not None:
         check("workflow", "launch", lambda: check_workflow_binding(spec,
-            launch_config=launch_config, kernel_metadata=kernel_metadata, entry_script=entry_script))
+            launch_config=launch_config, kernel_metadata=kernel_metadata, entry_script=entry_script,
+            package_dir=package, expected_package_identity=expected_package_identity,
+            recipe_files=recipe_files, initial_states=initial_states, input_root=input_root,
+            manifest=manifest))
     if input_root:
         def layout():
             root = Path(input_root).absolute()
@@ -866,7 +869,10 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                 "No model execution, GPU qualification, scientific acceptance or submission authority."]}
 
 
-def check_workflow_binding(spec, *, launch_config, kernel_metadata, entry_script):
+def check_workflow_binding(spec, *, launch_config, kernel_metadata, entry_script,
+                           package_dir=None, expected_package_identity=None,
+                           recipe_files=None, initial_states=None, input_root=None,
+                           manifest=None, staged_root=None):
     """Bind final configuration, per-arm prospective bytes and platform metadata."""
     import ast
     if any(value is None for value in (launch_config, kernel_metadata, entry_script)):
@@ -874,9 +880,21 @@ def check_workflow_binding(spec, *, launch_config, kernel_metadata, entry_script
     launch_path, metadata_path, entry_path = [
         _regular(Path(value).absolute()) for value in (launch_config, kernel_metadata, entry_script)]
     launch, metadata = _load(launch_path.read_bytes()), _load(metadata_path.read_bytes())
-    if (launch.get("spec_identity") != spec.identity or
-        launch.get("run_reference") != metadata.get("id") or
-        launch.get("account") != metadata["id"].split("/")[0] or
+    # A supplied launch file belongs to the registered execution workflow and
+    # must carry the complete strict schema.  Compatibility for older server
+    # releases is provided by check_release_inputs omitting launch_config
+    # entirely; a partial launch must never fall back to the old generic pins.
+    from .experiment_launch_config import validate_launch_config
+    strict = validate_launch_config(spec, launch_path, manifest=manifest,
+        staged_root=staged_root, package_dir=package_dir,
+        expected_package_identity=expected_package_identity,
+        input_root=input_root, recipe_files=recipe_files,
+        initial_states=initial_states)
+    metadata_id = metadata.get("id") if type(metadata) is dict else None
+    if (type(metadata_id) is not str or "/" not in metadata_id or
+        launch.get("spec_identity") != spec.identity or
+        launch.get("run_reference") != metadata_id or
+        launch.get("account") != metadata_id.split("/", 1)[0] or
         launch.get("dataset_sources") != metadata.get("dataset_sources") or
         launch.get("accelerator") != "NvidiaTeslaT4" or
         launch.get("device_count") != spec.to_dict()["platform"]["device_count"] or
@@ -898,7 +916,8 @@ def check_workflow_binding(spec, *, launch_config, kernel_metadata, entry_script
     if pins_in_entry != [_file_sha(launch_path)]:
         raise ValueError("Entrypoint does not pin the prepared launch bytes")
     return {"launch_sha256": _file_sha(launch_path), "metadata_sha256": _file_sha(metadata_path),
-            "prospective_sha256": pins, "run_reference": metadata["id"]}
+            "prospective_sha256": pins, "run_reference": metadata_id,
+            "strict_launch": strict}
 
 
 if __name__ == "__main__":

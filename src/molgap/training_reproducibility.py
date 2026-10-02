@@ -82,6 +82,50 @@ def restore_rng_state(state: Mapping, *, loader_generator=None) -> None:
         loader_generator.set_state(state["loader_generator"].cpu())
 
 
+def validate_rng_state(state: Mapping, *, cuda_devices: int = 1,
+                       label: str = "RNG state") -> None:
+    """Validate the portable RNG schema before a checkpoint is resumed.
+
+    The trainer owners share this structural gate while retaining their own
+    optimizer, cursor, scientific-contract, and certificate rules.  The
+    accepted representation is :func:`capture_rng_state` without a loader generator:
+    NumPy still carries its native array and torch/CUDA states are CPU uint8
+    tensors.  No RNG state is mutated by this check.
+    """
+    import torch
+
+    if type(cuda_devices) is not int or cuda_devices < 0:
+        raise ValueError(f"{label}: invalid CUDA device count")
+    if not isinstance(state, Mapping) or set(state) != {"python", "numpy", "torch", "cuda"}:
+        raise ValueError(f"{label}: RNG keys schema changed")
+    python = state["python"]
+    numpy_state = state["numpy"]
+    if (type(python) is not tuple or len(python) != 3
+            or not isinstance(python[1], tuple)):
+        raise ValueError(f"{label}: Python RNG schema changed")
+    if (type(numpy_state) is not tuple or len(numpy_state) != 5
+            or not isinstance(numpy_state[1], np.ndarray)
+            or numpy_state[1].dtype.hasobject or numpy_state[1].ndim != 1
+            or not numpy_state[1].size
+            or numpy_state[1].dtype.kind not in "iu"):
+        raise ValueError(f"{label}: NumPy RNG schema changed")
+    values = numpy_state[1]
+    if not bool(np.all((values >= 0) & (values < 2 ** 32))):
+        raise ValueError(f"{label}: NumPy RNG values changed")
+    torch_state = state["torch"]
+    if (not torch.is_tensor(torch_state) or torch_state.device.type != "cpu"
+            or torch_state.dtype != torch.uint8 or torch_state.ndim != 1
+            or not torch_state.numel()):
+        raise ValueError(f"{label}: Torch RNG schema changed")
+    cuda_state = state["cuda"]
+    if type(cuda_state) is not list or len(cuda_state) != cuda_devices:
+        raise ValueError(f"{label}: CUDA RNG schema changed")
+    if any(not torch.is_tensor(item) or item.device.type != "cpu"
+           or item.dtype != torch.uint8 or item.ndim != 1 or not item.numel()
+           for item in cuda_state):
+        raise ValueError(f"{label}: CUDA RNG schema changed")
+
+
 def _installed_distributions() -> list[str]:
     values = []
     for distribution in importlib.metadata.distributions():

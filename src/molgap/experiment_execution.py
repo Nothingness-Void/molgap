@@ -10,7 +10,16 @@ from importlib import import_module
 from pathlib import Path
 from types import MappingProxyType
 
-from .experiment_spec import ExperimentSpec, SCHEMA_VERSION_V2
+from .experiment_spec import ADDONS, FAMILIES, ExperimentSpec, SCHEMA_VERSION_V2, validate_addon_config
+
+
+@dataclass(frozen=True)
+class TrainingAddon:
+    """Reviewed execution delta; declaration and source identity stay with Spec."""
+    name: str
+    version: str
+    mode: str
+    extra_source_files: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -18,30 +27,104 @@ class TrainingAdapter:
     family: tuple[str, str]
     module: str
     artifact_adapter: str
-    addon_modes: tuple[tuple[str, str], ...]
+    addons: tuple[TrainingAddon, ...]
     serialization_modules: tuple[str, ...] = ()
+    source_files: tuple[str, ...] = ()
+
+    @property
+    def addon_modes(self) -> tuple[tuple[str, str], ...]:
+        return tuple((addon.name, addon.mode) for addon in self.addons)
+
+    def addon(self, name: str, version: str = "1") -> TrainingAddon:
+        match = next((a for a in self.addons if (a.name, a.version) == (name, version)), None)
+        if match is None:
+            raise ValueError("Addon has no executable family adapter")
+        return match
 
     def mode(self, arm: dict) -> str:
         addons = arm["addons"]
         if not addons:
             return "reference"
-        if len(addons) != 1 or addons[0]["version"] != "1":
+        if len(addons) != 1:
             raise ValueError("Execution requires one supported addon")
-        modes = dict(self.addon_modes)
-        if addons[0]["name"] not in modes:
-            raise ValueError("Addon has no executable family adapter")
-        return modes[addons[0]["name"]]
+        return self.addon(addons[0]["name"], addons[0]["version"]).mode
 
 
 TRAINING_ADAPTERS = MappingProxyType({
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
-        (("k1_joint_aggregation", "ssma"),), ("molgap.pcqm_wedge",)),
+        (TrainingAddon("k1_joint_aggregation", "1", "ssma"),), ("molgap.pcqm_wedge",),
+        ("src/molgap/k1_screen_training.py", "src/molgap/qm9_neural_atom.py",
+         "src/molgap/qm9_local_hierarchy.py", "src/molgap/qm9_gape.py",
+         "src/molgap/pcqm_gap_architecture.py", "src/molgap/gps.py", "src/molgap/pcqm_wedge.py")),
     ("gptrans_t", "1"): TrainingAdapter(
         ("gptrans_t", "1"), "molgap.gptrans_screen_workflow", "gptrans-v1",
-        (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),
-         ("memory_value", "memory_value"), ("memory_message", "memory_message")), ("molgap.pcqm_wedge",)),
+        tuple(TrainingAddon(name, "1", name) for name in
+              ("pair_prenorm", "centered_logits", "memory_value", "memory_message")),
+        ("molgap.pcqm_wedge",),
+        ("src/molgap/gptrans_screen_workflow.py", "src/molgap/pcqm_gptrans_v4.py",
+         "src/molgap/gptrans.py", "src/molgap/gptrans_variants.py", "src/molgap/pcqm_wedge.py")),
 })
+
+
+def validate_training_registry() -> None:
+    """Check cross-owner registrations without importing or executing trainers."""
+    from .experiment_family_artifacts import artifact_adapter
+    for family, adapter in TRAINING_ADAPTERS.items():
+        if family != adapter.family or family not in FAMILIES:
+            raise ValueError("Training registration differs from its family contract")
+        artifact_adapter(adapter.artifact_adapter, family)
+        if "src/" + adapter.module.replace(".", "/") + ".py" not in adapter.source_files:
+            raise ValueError("Training registration omits its owning source module")
+        if len({(a.name, a.version) for a in adapter.addons}) != len(adapter.addons):
+            raise ValueError("Duplicate executable addon registration")
+        for addon in adapter.addons:
+            contract = ADDONS.get((addon.name, addon.version))
+            if contract is None or contract.family != family[0]:
+                raise ValueError("Executable addon differs from its declaration contract")
+            if contract.family_versions and family[1] not in contract.family_versions:
+                raise ValueError("Executable addon differs from its declared family version")
+            if type(addon.mode) is not str or not addon.mode:
+                raise ValueError("Executable addon requires an explicit owning mode")
+
+
+def build_addon_declaration(family, addon, *, repo_root, config=None, version="1") -> dict:
+    """Bind a reviewed addon source; its owning Spec validates configuration."""
+    from .experiment_package import _source
+    from .v4_runtime import normalized_source_sha256
+    adapter = TRAINING_ADAPTERS.get(tuple(family))
+    if adapter is None:
+        raise ValueError("No executable family adapter")
+    adapter.addon(addon, version)
+    contract = ADDONS[(addon, version)]
+    if type(config) is not dict and config is not None:
+        raise ValueError("Addon configuration must be an explicit mapping")
+    if config is None:
+        if any(field.kind != "literal" for field in contract.config_fields):
+            raise ValueError("This addon requires an explicit bounded configuration")
+        config = {field.name: field.value for field in contract.config_fields}
+    validate_addon_config(contract, config, name=addon)
+    source = _source(Path(repo_root).resolve(), "src/" + contract.source_module.replace(".", "/") + ".py")
+    return {"name": addon, "version": version, "config": dict(config),
+            "source_sha256": normalized_source_sha256(source)}
+
+
+def workflow_capabilities(spec: ExperimentSpec) -> dict:
+    """Expose route selection without claiming scientific or platform authority."""
+    supported, unsupported = {}, {}
+    for arm in spec.to_dict()["arms"]:
+        try:
+            adapter = training_adapter(arm)
+            supported[arm["arm_id"]] = {"mode": adapter.mode(arm), "trainer": adapter.module,
+                                        "artifact_profile": adapter.artifact_adapter}
+        except ValueError as exc:
+            unsupported[arm["arm_id"]] = str(exc)
+    registered = not unsupported and spec.to_dict()["platform"]["name"] == "kaggle"
+    return {"spec_identity": spec.identity, "registered_training_arms": supported,
+            "unsupported_training_arms": unsupported,
+            "preparation_entry": "prepare-workflow" if registered else "prepare-release",
+            "execution_qualification": "requires_owning_contract_and_runtime",
+            "submitted": False}
 
 
 def training_adapter(arm: dict) -> TrainingAdapter:
@@ -55,14 +138,13 @@ def training_adapter(arm: dict) -> TrainingAdapter:
 
 
 def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
-                        source_idx_sha256: str, target_sha256: str) -> dict:
+                        source_idx_sha256: str, target_sha256: str,
+                        addon_version: str = "1") -> dict:
     """Build owned constants before freezing the Spec; never read development rows."""
     adapter = TRAINING_ADAPTERS.get(family)
     if adapter is None:
         raise ValueError("No executable family recipe builder")
-    mode = "reference" if addon is None else dict(adapter.addon_modes).get(addon)
-    if mode is None:
-        raise ValueError("No executable recipe for this addon")
+    mode = "reference" if addon is None else adapter.addon(addon, addon_version).mode
     return import_module(adapter.module).build_screen_recipe(mode,
         source_idx_sha256=source_idx_sha256, target_sha256=target_sha256)
 
@@ -149,7 +231,8 @@ def validate_staged_trajectory(spec, arm_id, input_root: Path, *, expected_sha25
 
 def execute_training_phase(*, spec, job, phase, source_root, package_dir,
                            expected_package_identity, input_root, output,
-                           account, run_reference, staged_root=None, prospective_sha256=None):
+                           account, run_reference, staged_root=None, prospective_sha256=None,
+                           preflight_dir=None, resume_output=None):
     """Static dispatch; each owning trainer retains its recipe/runtime gates."""
     from .experiment_family_workflow import RunContext, _artifact_path
     from .research_memory.trace import file_digest
@@ -178,7 +261,12 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     # A new family extends that registry, never this orchestration function.
     owner = import_module(adapter.module)
     runner = owner.run_screen_preflight if phase == "preflight" else owner.run_screen_arm
-    options = {} if phase == "preflight" else {"preflight_dir": output}
+    options = {} if phase == "preflight" else {"preflight_dir": preflight_dir or output}
+    if phase == "preflight" and resume_output is not None:
+        runner = getattr(owner, "run_screen_resume_preflight", None)
+        if not callable(runner):
+            raise ValueError("Owning family has no portable resume preflight hook")
+        options["resume_output"] = resume_output
     return runner(spec=spec, package_dir=package_dir,
         expected_package_identity=expected_package_identity, arm_id=job["arm_id"],
         mode=adapter.mode(arm), recipe_path=recipe, initial_state_path=initial,
