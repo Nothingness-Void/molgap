@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "TRAIN_SINGLE_100K",
+    "field": "cpu_qualification_passed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "k1-flag-100k-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "8f80da58c5184ca1d49436957ee41116535f1edc5cb4534099d06573fc6dc60b",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-k1-flag-kaggle3-100k-launch",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "cpu_qualification_passed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

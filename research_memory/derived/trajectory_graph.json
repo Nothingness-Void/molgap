@@ -221,6 +221,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-flag-kaggle3-100k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_flag/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-full-convergence-20260919:A001",
       "target": "experiments/pcqm_k1_full_convergence/results/terminal_reconciliation_20260923.json",
       "type": "action_produced_evidence"
@@ -583,6 +588,11 @@
     {
       "source": "TB-gptrans-t-500k-bridge",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-flag-cpu-qualification-20261002",
+      "target": "TB-k1-flag-kaggle3-100k-s42-v1",
       "type": "parent_trajectory"
     },
     {
@@ -1146,6 +1156,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-flag-cpu-qualification-20261002",
+      "target": "TB-k1-flag-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-gptrans-full-convergence-20260919",
       "type": "prior_evidence"
@@ -1177,6 +1192,11 @@
     },
     {
       "source": "pcqm-k1-slot-readout-diagnostic-20261002",
+      "target": "TB-k1-flag-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-slot-readout-diagnostic-20261002",
       "target": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
     },
@@ -1191,6 +1211,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-flag-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-slot96-cpu-qualification-20261002",
       "target": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
@@ -1198,6 +1223,11 @@
     {
       "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
       "target": "TB-k1-flag-cpu-qualification-20261002",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-flag-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
     },
     {
@@ -1468,6 +1498,11 @@
     {
       "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
       "target": "TB-k1-flag-cpu-qualification-20261002",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-flag-kaggle3-100k-s42-v1",
       "type": "reference_used"
     },
     {
@@ -1923,6 +1958,10 @@
     },
     {
       "id": "TB-k1-flag-cpu-qualification-20261002",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-flag-kaggle3-100k-s42-v1",
       "type": "trajectory"
     },
     {

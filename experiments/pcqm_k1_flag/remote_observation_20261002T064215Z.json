@@ -1,0 +1,35 @@
+{
+  "account": "nvoid912",
+  "kernel": "nvoid912/molgap-k1-flag-100k-s42-v1",
+  "observed_at_utc": "2026-10-02T06:42:15.233397+00:00",
+  "status": {
+    "status": "RUNNING"
+  },
+  "remote_entry_sha256": "a2cbc39a28b3828d1500f91e42109252dc6b845aaaad56800aaa1ac0a85aa1c7",
+  "submitted_entry_sha256": "a2cbc39a28b3828d1500f91e42109252dc6b845aaaad56800aaa1ac0a85aa1c7",
+  "remote_entry_normalized_match": true,
+  "remote_metadata": {
+    "id": 136744623,
+    "ref": "nvoid912/molgap-k1-flag-100k-s42-v1",
+    "title": "molgap-k1-flag-100k-s42-v1",
+    "author": "Nvoid912",
+    "slug": "molgap-k1-flag-100k-s42-v1",
+    "lastRunTime": "2026-09-29T06:42:15.941Z",
+    "language": "python",
+    "kernelType": "script",
+    "isPrivate": true,
+    "enableGpu": true,
+    "enableInternet": true,
+    "datasetDataSources": [
+      "nvoid912/molgap-k1-flag-source-s42-v1",
+      "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "enableTpu": false,
+    "currentVersionNumber": 1,
+    "dockerImage": "gcr.io/kaggle-private-byod/python@sha256:37c64f7dd9c54116ecd1bcc88817c5469b88387388fade02bfa8bf3fc647d461",
+    "machineShape": "NvidiaTeslaT4"
+  },
+  "output_file_names": [],
+  "log_available": false,
+  "log_error": null
+}
