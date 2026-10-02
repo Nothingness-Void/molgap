@@ -448,7 +448,7 @@ def test_no_remote_or_dynamic_dispatch_in_cli():
                     and isinstance(action.choices, dict)).choices
     assert set(commands) == {"validate-spec", "package", "preflight", "run-diagnostic",
                              "launch-receipt", "terminal", "plan-prospective", "check-release",
-                             "prepare-release", "check-preparation", "check-acceptance", "inspect-output", "accept-terminal"}
+                             "prepare-release", "check-preparation", "check-acceptance", "inspect-output", "accept-terminal", "prepare-workflow", "accept-workflow", "build-terminal"}
 
 
 def test_prepare_release_delegates_local_workflow(spec_file, tmp_path, capsys, monkeypatch):

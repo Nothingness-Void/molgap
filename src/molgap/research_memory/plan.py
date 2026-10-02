@@ -82,8 +82,8 @@ def validate_decision_state(state: dict[str, Any]) -> None:
         raise ValueError("reference unknown at decision time")
 
 
-def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
-         *, _snapshot: _PlanningSnapshot | None = None, validate_only: bool = False) -> dict[str, Any]:
+def _prepare_plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
+                  *, _snapshot: _PlanningSnapshot | None = None) -> dict[str, Any]:
     from .policy import load_policy_registry
 
     root = Path(repo_root).resolve()
@@ -188,20 +188,23 @@ def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
     required_costs.update(c for a in trajectory["actions"] for c in a["cost_event_ids"])
     if not required_costs <= cost_ids:
         raise ValueError("plan spec must supply its referenced prospective cost events")
-    if validate_only:
-        # Exercise the publication validator, without staging, publishing or rebuilding.
-        for pointer, digest in decision_state["source_hashes"].items():
-            if file_digest(resolve_repo_pointer(root, pointer)) != digest:
-                raise ValueError("decision source changed during planning validation")
-        return {"trajectory_id": trajectory["trajectory_id"], "status": "VALIDATED",
-                "path": destination.relative_to(root).as_posix()}
+    return {"trajectory_id": trajectory["trajectory_id"], "destination": destination,
+            "files": files, "source_hashes": decision_state["source_hashes"]}
+
+
+def _publish_plan(repo_root: str | Path, prepared: dict) -> dict[str, Any]:
+    """Publish previously validated bytes, rechecking the frozen source set."""
+    root = Path(repo_root).resolve()
+    destination = prepared["destination"]
+    if destination.exists():
+        raise ValueError("plan output must be a new experiment directory")
     staging_root = repo_local_path(root, "research_memory/.staging")
     staging_root.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix="plan-", dir=staging_root))
     try:
-        for name, data in files.items():
+        for name, data in prepared["files"].items():
             atomic_write(staging / name, data)
-        for pointer, digest in decision_state["source_hashes"].items():
+        for pointer, digest in prepared["source_hashes"].items():
             if file_digest(resolve_repo_pointer(root, pointer)) != digest:
                 raise ValueError("decision source changed during planning")
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -210,8 +213,21 @@ def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
     finally:
         if staging.exists():
             shutil.rmtree(staging)
-    return {"trajectory_id": trajectory["trajectory_id"], "status": "PLANNED",
+    return {"trajectory_id": prepared["trajectory_id"], "status": "PLANNED",
             "path": destination.relative_to(root).as_posix()}
+
+
+def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
+         *, _snapshot: _PlanningSnapshot | None = None, validate_only: bool = False) -> dict[str, Any]:
+    prepared = _prepare_plan(repo_root, spec, output, _snapshot=_snapshot)
+    if validate_only:
+        root = Path(repo_root).resolve()
+        for pointer, digest in prepared["source_hashes"].items():
+            if file_digest(resolve_repo_pointer(root, pointer)) != digest:
+                raise ValueError("decision source changed during planning validation")
+        return {"trajectory_id": prepared["trajectory_id"], "status": "VALIDATED",
+                "path": prepared["destination"].relative_to(root).as_posix()}
+    return _publish_plan(repo_root, prepared)
 
 
 def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
@@ -333,10 +349,27 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
         policies=policies,
         source_hashes=bindings,
     )
-    results = []
+    # Deep schema/evidence/action/cost checks for every arm precede all writes.
+    # Partial publication now means an actual publish failure, not a bad plan.
+    validated = []
     for index, (spec, output, _) in enumerate(prepared):
         try:
-            results.append(plan(root, spec, output, _snapshot=snapshot, validate_only=validate_only))
+            validated.append(_prepare_plan(root, spec, output, _snapshot=snapshot))
+        except Exception as exc:
+            if validate_only:
+                raise PlanBatchError(index, len(prepared), [], exc) from exc
+            raise
+    results = []
+    for index, item in enumerate(validated):
+        try:
+            if validate_only:
+                for pointer, digest in item["source_hashes"].items():
+                    if file_digest(resolve_repo_pointer(root, pointer)) != digest:
+                        raise ValueError("decision source changed during planning validation")
+                results.append({"trajectory_id": item["trajectory_id"], "status": "VALIDATED",
+                                "path": item["destination"].relative_to(root).as_posix()})
+            else:
+                results.append(_publish_plan(root, item))
         except Exception as exc:
             raise PlanBatchError(index, len(prepared), [] if validate_only else results, exc) from exc
     return {

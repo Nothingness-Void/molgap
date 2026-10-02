@@ -56,7 +56,7 @@ def _metric_semantics(contract: dict) -> dict:
     })["metric_semantics"]
     for name, definition in validated.items():
         if definition is None:
-            if name != "ema_dev_metric":
+            if name == "live_train_metric":
                 raise ValueError("Frozen recipe requires train/development metric semantics")
             continue
         weights = "ema" if name == "ema_dev_metric" else "live"
@@ -65,11 +65,17 @@ def _metric_semantics(contract: dict) -> dict:
         if any(definition.get(key) != value for key, value in required.items()):
             raise ValueError("Frozen recipe requires direct-Gap MAE metric semantics")
     train_role = validated["live_train_metric"]["role_identity"]
-    development_role = validated["live_dev_metric"]["role_identity"]
+    development = [validated[name] for name in ("live_dev_metric", "ema_dev_metric")
+                   if validated[name] is not None]
+    if not development:
+        raise ValueError("Frozen recipe requires development metric semantics")
+    development_role = development[0]["role_identity"]
     if train_role == development_role:
         raise ValueError("Frozen train/development metric roles must differ")
-    if validated["ema_dev_metric"] is not None and validated["ema_dev_metric"]["role_identity"] != development_role:
+    if any(definition["role_identity"] != development_role for definition in development):
         raise ValueError("Frozen live/EMA development metric roles must match")
+    if "development_role_identity" in contract and contract["development_role_identity"] != development_role:
+        raise ValueError("Frozen development metric role differs from recipe role identity")
     return validated
 
 
@@ -366,7 +372,7 @@ class FamilyOutputSession:
             cursor=cursor, optimizer_step=optimizer_step, sample_presentations=sample_presentations,
             scheduler_state=scheduler_state, ema_state=ema_state)
 
-    def complete(self, *, runtime: dict, hardware: str) -> dict:
+    def complete(self, *, runtime: dict, hardware: str, observed_costs: list | None = None) -> dict:
         import time
         rows = [row for row in self.stage.recorder.record["observations"]
                 if row["event"] == "observation"]
@@ -374,12 +380,13 @@ class FamilyOutputSession:
             raise ValueError("Cannot complete a session without observed training work")
         progress = {"epochs": len(rows), "optimizer_steps": rows[-1]["optimizer_step"],
                     "sample_presentations": rows[-1]["sample_presentations"]}
-        costs = [
+        costs = observed_costs if observed_costs is not None else [
             {"metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - self.started,
              "status": "measured", "semantics": "process_wall", "hardware": hardware},
             {"metric": "device_seconds", "unit": "seconds", "value": None,
              "status": "missing", "semantics": "allocated_device", "hardware": hardware},
         ]
+        _costs(costs)
         write_output_manifest(self.root, self.context, adapter=self.adapter,
             artifacts={"predictions": "development_predictions.pt", "selected_model": "selected_model.pt",
                        "resume": "last_checkpoint.pt", "trace": "canonical_trace.json", "contract": "training_contract.json"},
@@ -407,13 +414,15 @@ def tensor_digest(tensor, *, role: str) -> str:
 
 def _runtime(runtime: dict, context: RunContext, precision: str):
     required = {"platform", "account", "precision", "source_commit", "source_archive_sha256"}
-    if type(runtime) is not dict or set(runtime) != required:
+    if type(runtime) is not dict or not required <= set(runtime) or set(runtime) - required - {"runtime_certificate_id"}:
         raise ValueError("Runtime requires explicit platform/account/precision/source identity")
     for key in required - {"precision"}:
         if runtime[key] != getattr(context, key):
             raise ValueError(f"Runtime identity mismatch: {key}")
     if runtime["precision"] != precision:
         raise ValueError("Runtime precision mismatch")
+    if "runtime_certificate_id" in runtime:
+        _digest(runtime["runtime_certificate_id"], "runtime.runtime_certificate_id")
 
 
 def _costs(costs):
@@ -421,7 +430,8 @@ def _costs(costs):
         raise ValueError("Missing native cost observations")
     seen = set()
     for cost in costs:
-        if type(cost) is not dict or set(cost) != {"metric", "unit", "value", "status", "semantics", "hardware"}:
+        required = {"metric", "unit", "value", "status", "semantics", "hardware"}
+        if type(cost) is not dict or not required <= set(cost) or set(cost) - required - {"scope", "reason"}:
             raise ValueError("Cost requires native metric/unit/status/semantics/hardware")
         if cost["metric"] in seen:
             raise ValueError("Duplicate native cost metric")
@@ -440,6 +450,13 @@ def _costs(costs):
         if (cost["metric"], cost["unit"], cost["semantics"]) not in allowed:
             raise ValueError("Unsupported or conflated native cost semantics")
         _text(cost["hardware"], "cost.hardware")
+        if "scope" in cost:
+            _text(cost["scope"], "cost.scope")
+        if "reason" in cost:
+            if cost["status"] == "measured" and cost["reason"] is not None:
+                raise ValueError("Measured cost cannot have a missing/estimate reason")
+            if cost["status"] != "measured":
+                _text(cost["reason"], "cost.reason")
 
 
 def inspect_output(output_dir: Path, *, context: RunContext, expected: dict) -> dict:
@@ -659,7 +676,7 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
 
 
 def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *, outputs: dict,
-                           execute: bool = True) -> dict:
+                           execute: bool = False) -> dict:
     """Reinspect every arm, then delegate the unchanged terminal/RML transaction.
 
     outputs maps arm_id to {context, output_dir, expected}. Descriptor artifact
@@ -830,7 +847,8 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
         # shape and exposure checks above; causal validity is still unevaluated.
         costs = [{"metric": c["metric"], "unit": c["unit"], "value": c["value"],
                   "status": "measurement_missing" if c["status"] == "missing" else c["status"],
-                  "reason": None if c["status"] == "measured" else "Native " + c["hardware"] + ": " + c["semantics"]}
+                  "reason": None if c["status"] == "measured" else c.get("reason",
+                      "Producer retained no native " + c["hardware"] + " " + c["metric"] + " measurement (" + c["semantics"] + ")")}
                  for c in observation["costs"]]
         missing = ["runtime_qualification_not_evaluated", "scientific_comparison_not_evaluated"]
         if observation.get("producer_platform_version") is None:
@@ -853,3 +871,120 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
         "logical_run_id": declaration["logical_run_id"], "arms": entries})
     translate_terminal_descriptor(root, spec, descriptor)
     return descriptor
+
+
+def _terminal_identity(spec, context, *, attempt_id=None):
+    """One translator owns identity fields for complete and incomplete runs."""
+    arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == context.arm_id)
+    if context.spec_identity != spec.identity or context.arm_identity != canonical_fingerprint(arm):
+        raise ValueError("Terminal context/Spec mismatch")
+    fact = lambda value: {"value": value, "missing_reason": None}
+    return {
+        "experiment_id": context.experiment_id, "logical_run_id": context.logical_run_id,
+        "arm_id": context.arm_id, "spec_identity": context.spec_identity,
+        "family": fact(arm["family"]),
+        "recipe_identity": fact(canonical_fingerprint(arm["training"]["recipe"])),
+        "data_identity": fact(canonical_fingerprint(arm["data"])),
+        "split_identity": fact(canonical_fingerprint({"split": arm["data"]["split"], "roles": arm["data"]["roles"]})),
+        "feature_identity": fact(arm["data"]["feature_sha256"]), "target": fact(arm["data"]["target"]),
+        "initialization_identity": fact(canonical_fingerprint(arm["initialization"])),
+        "source_commit": fact(context.source_commit), "source_package_sha256": fact(context.source_archive_sha256),
+        "attempt_id": fact(attempt_id) if attempt_id is not None else
+            {"value": None, "missing_reason": "Frozen prospective attempt binding not supplied"},
+        "platform": {"name": context.platform, "run_reference": fact(context.run_reference)},
+    }
+
+
+def build_incomplete_terminal_descriptor(spec: ExperimentSpec, *, contexts: dict,
+                                         locations: dict, observations: dict, repo_root=None):
+    """Build the existing descriptor for truthful failures/cancellation/interrupts.
+
+    The caller supplies scheduler observations and existing canonical terminal
+    inputs. Missing progress/cost/artifacts stay unknown; zero requires an
+    explicit observation. This never fabricates acceptance or finalizes RML.
+    """
+    from .experiment_terminal import TerminalDescriptor
+    from .experiment_spec import TERMINAL_PROTOCOL
+    ids = {a["arm_id"] for a in spec.to_dict()["arms"]}
+    if any(set(mapping) != ids for mapping in (contexts, locations, observations)):
+        raise ValueError("Incomplete closure requires every independent arm")
+    entries = []
+    fact = lambda value, reason: {"value": value, "missing_reason": reason if value is None else None}
+    for arm in spec.to_dict()["arms"]:
+        arm_id = arm["arm_id"]
+        observed, where = observations[arm_id], locations[arm_id]
+        if type(observed) is not dict or not {"status", "exit_reason"} <= set(observed) or set(observed) - {"status", "exit_reason", "progress", "costs", "artifacts", "missing_evidence"}:
+            raise ValueError("Expected terminal status/exit_reason and optional observed progress/cost/artifacts")
+        if observed["status"] not in {"failed", "cancelled", "interrupted"}:
+            raise ValueError("Complete runs require independently verified family outputs")
+        if set(where) not in ({"trajectory_id", "run_id", "trajectory", "terminal"},
+                              {"trajectory_id", "run_id", "trajectory", "terminal", "trace"}):
+            raise ValueError("Expected existing canonical terminal locations")
+        attempt_id = None
+        if repo_root is not None:
+            prospective = _json(repo_local_path(repo_root, where["trajectory"]))
+            actions = [action for action in prospective["actions"] if where["run_id"] in action["run_ids"]]
+            if (prospective["trajectory_id"] != where["trajectory_id"] or
+                len(actions) != 1 or len(actions[0]["attempt_ids"]) != 1):
+                raise ValueError("Incomplete closure requires the exact frozen prospective attempt")
+            attempt_id = actions[0]["attempt_ids"][0]
+        progress = observed.get("progress", {})
+        if type(progress) is not dict or set(progress) - {"epoch", "step", "samples"}:
+            raise ValueError("Unsupported observed progress counters")
+        artifacts = observed.get("artifacts", {})
+        if type(artifacts) is not dict or set(artifacts) - {"metrics", "predictions", "checkpoint", "trace"}:
+            raise ValueError("Unsupported terminal artifact roles")
+        missing_artifact = {"status": "missing", "locator": None, "sha256": None,
+                            "missing_reason": "Not retained for this incomplete attempt"}
+        costs = observed.get("costs", [{"metric": "wall_seconds", "unit": "seconds", "value": None,
+            "status": "measurement_missing", "reason": "No retained native cost measurement for this attempt"}])
+        entries.append({"arm_id": arm_id, "arm_identity": contexts[arm_id].arm_identity, **where,
+            "observed": {"identity": _terminal_identity(spec, contexts[arm_id], attempt_id=attempt_id),
+                "terminal": {"status": fact(observed["status"], "Terminal state not observed"),
+                             "exit_reason": fact(observed["exit_reason"], "Exit reason not retained")},
+                "artifacts": {role: artifacts.get(role, dict(missing_artifact)) for role in
+                              ("metrics", "predictions", "checkpoint", "trace")},
+                "progress": {key: fact(progress.get(key), "Progress counter not retained")
+                             for key in ("epoch", "step", "samples")},
+                "costs": costs, "missing_evidence": observed.get("missing_evidence", ["incomplete_attempt"])} })
+    declaration = spec.to_dict()
+    return TerminalDescriptor(spec, {"schema_version": TERMINAL_PROTOCOL,
+        "spec_identity": spec.identity, "experiment_id": declaration["experiment_id"],
+        "logical_run_id": declaration["logical_run_id"], "arms": entries})
+
+
+def incomplete_observations_from_execution(spec: ExperimentSpec, state: dict) -> dict:
+    """Translate retained failed orchestration facts; no scientific disposition."""
+    ids = {a["arm_id"] for a in spec.to_dict()["arms"]}
+    if (state.get("format") != "molgap-kaggle-two-phase-pair-v2" or
+        state.get("spec_identity") != spec.identity or state.get("status") != "failed" or
+        type(state.get("arms")) is not dict or set(state["arms"]) != ids):
+        raise ValueError("Expected the exact failed execution state for every arm")
+    declaration = spec.to_dict()
+    hardware = state.get("hardware")
+    count = declaration["platform"]["device_count"]
+    if (declaration["platform"]["name"] != "kaggle" or type(hardware) is not list or
+        len(hardware) != count or any(type(name) is not str or "T4" not in name for name in hardware)):
+        raise ValueError("Missing matching observed T4 allocation")
+    devices = [arm.get("device") for arm in state["arms"].values()]
+    if (any(type(device) is not int or not 0 <= device < count for device in devices) or
+        len(set(devices)) != len(devices)):
+        raise ValueError("Missing distinct observed arm device assignment")
+    observations = {}
+    for arm_id, arm in state["arms"].items():
+        if type(arm.get("training_started")) is not bool:
+            raise ValueError("Training-start state is unknown")
+        status = arm.get("terminal_status")
+        if status not in {"failed", "cancelled", "interrupted"}:
+            raise ValueError("Completed/unknown arms require their owning artifact inspection")
+        seconds = arm.get("worker_wall_seconds")
+        if type(seconds) not in (float, int) or not math.isfinite(seconds) or seconds < 0:
+            raise ValueError("Missing retained worker allocation window")
+        observations[arm_id] = {"status": status, "exit_reason": arm["exit_reason"],
+            "progress": {key: None if arm["training_started"] else 0 for key in ("epoch", "step", "samples")},
+            "costs": [{"metric": "wall_seconds", "unit": "seconds", "value": seconds,
+                       "status": "measured", "reason": None},
+                      {"metric": "device_seconds", "unit": "seconds", "value": seconds,
+                       "status": "measured", "reason": None}],
+            "missing_evidence": ["training_progress_not_retained"] if arm["training_started"] else ["formal_training_not_started"]}
+    return observations
