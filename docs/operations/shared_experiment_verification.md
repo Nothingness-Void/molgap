@@ -1,5 +1,9 @@
 # Shared experiment infrastructure: server integration review
 
+The additive 2026-10-02 registered family/Kaggle workflow review, repairs and
+verification are recorded in [Desktop infrastructure review](DESKTOP_INFRASTRUCTURE_REVIEW_20261002.md).
+Earlier dated verification stages below retain their original scope.
+
 This record contains two dated review stages. The
 [desktop completion](#desktop-completion-review) supersedes the initial
 missing-factory and unsupported-loader findings below; historical verification
