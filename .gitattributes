@@ -66,3 +66,6 @@ experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json 
 experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json -text whitespace=cr-at-eol
 experiments/pcqm_gptrans_input_ema_100k/** -text
 experiments/pcqm_gptrans_input_ema_100k/**/*.json whitespace=cr-at-eol
+# Prospective combination evidence binds retained bytes, not checkout EOLs.
+experiments/pcqm_gptrans_path_ema_combination_100k/** -text
+experiments/pcqm_gptrans_path_ema_combination_100k/**/*.json whitespace=cr-at-eol
