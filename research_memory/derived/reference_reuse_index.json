@@ -937,6 +937,69 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "PAIRED_ENDPOINT_single_seed",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
+      "role_use": {
+        "fixed50k_development": "selection_used",
+        "official_train_prefix_0_100000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_same_job_k1_ssma_accuracy_100k_saved_artifacts",
+      "source_envelope": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_v1/reference/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "retained_local_metadata_verified"
+      ],
+      "comparison_status": "no_formal_accuracy_comparison",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
+      "role_use": {
+        "fixed50k_development": "unknown",
+        "official_train_prefix_0_100000": "labels_read",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_same_job_runtime_qualification_no_formal_training",
+      "source_envelope": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/reference/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "retained_local_metadata_verified"
+      ],
+      "comparison_status": "not_run",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
+      "role_use": {
+        "development": "unknown",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "unknown"
+      },
+      "scientific_scope": "source_release_infrastructure_only",
+      "source_envelope": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/reference/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "committed_metadata_verified"
       ],
       "comparison_status": "exploratory_residual_attribution_complete",
@@ -1018,6 +1081,89 @@
       "source_envelope": "experiments/pcqm_k1_slot_width96/qualification/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "PAIRED_ENDPOINT_single_seed",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
+      "role_use": {
+        "fixed50k_development": "selection_used",
+        "official_train_prefix_0_100000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_same_job_k1_ssma_accuracy_100k_saved_artifacts",
+      "source_envelope": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_v1/ssma/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "retained_local_metadata_verified"
+      ],
+      "comparison_status": "no_formal_accuracy_comparison",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
+      "role_use": {
+        "fixed50k_development": "unknown",
+        "official_train_prefix_0_100000": "labels_read",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_same_job_runtime_qualification_no_formal_training",
+      "source_envelope": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "retained_local_metadata_verified"
+      ],
+      "comparison_status": "not_run",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-ssma-kaggle3-unsubmitted-source-v1",
+      "role_use": {
+        "development": "unknown",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "unknown"
+      },
+      "scientific_scope": "source_release_infrastructure_only",
+      "source_envelope": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/ssma/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "local_record_verified"
+      ],
+      "comparison_status": "strict_reference_accepted",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-v4-100k-reference-s42",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "historical_100k_immutable_reference",
+      "source_envelope": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json",
+      "track": "C",
+      "transfer_status": "reusable_same_contract_only",
       "used_by_trajectory_ids": []
     },
     {

@@ -66,14 +66,15 @@ Branch-local records absent here are linked through the
   terminal/acceptance/V5 inputs and raw test receipt are absent. Reconcile that
   limited engineering record separately; do not borrow another trajectory's
   training terminal or claim an active GPU job from this planning status.
-- **K1 V4 / SSMA:** the authenticated Kaggle3 recheck returned COMPLETE; original
-  pair acceptance/closure remains with the retained owner (`96e19ef1`), separately
-  from the new slot96 question. Reconcile the exact attempt from
-  [STATUS](D:/w/k1-local-aux/experiments/pcqm_k1_local_mixing_clean_aux/STATUS.md).
-  The new contract records overhead without the25% veto and retains all other
-  correctness gates. The previous cost-gated attempt remains accepted NO_TRAIN.
-  Runtime/scientific acceptance and per-arm replay qualification are pending;
-  no automatic monitoring, retry, successor or promotion is released.
+- **K1 V4 / SSMA:** exact Kaggle3 accuracy-pair acceptance and terminal RML
+  closure are complete. SSMA is NEGATIVE_UNDER_CONTRACT; original K1 remains
+  the accepted bounded control. Accepted canonical evidence is discoverable in
+  desktop RML, and complete owner history is retained in archive. Read the
+  [decision](experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/terminal_decision.md)
+  and its attribution before another module. The report_only overhead policy
+  applies only to this closed attempt. Strict replay/readiness admission remains
+  unevaluated; prior cost-gated NO_TRAIN decisions and their historical trace gap
+  retain their authority. No retry,successor,scale-up or adoption is released.
 - **Centered logits:** scientifically closed; historical reference binding
   excludes strict causal replay, not a training retry trigger. See
   [STATUS](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md).

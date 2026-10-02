@@ -341,6 +341,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-k1-v4-100k-reference-s42:A001",
+      "target": "experiments/pcqm_k1_variants_100k/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-k1-v4-100k-reference-s42:A001",
+      "target": "experiments/v5_legacy_evidence_migration/inventory_summary.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback:A001",
       "target": "experiments/pcqm_gptrans_conditional_flow_history/conditional_pair_readback/provenance.json",
       "type": "action_produced_evidence"
@@ -591,6 +601,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-k1-reference-kaggle3-100k-s42-v2",
+      "target": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-k1-residual-reconciliation",
       "target": "TB-pcqm-expert-oracle-feasibility-20260930",
       "type": "parent_trajectory"
@@ -603,6 +618,11 @@
     {
       "source": "TB-k1-slot96-cpu-qualification-20261002",
       "target": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-ssma-kaggle3-100k-s42-v2",
+      "target": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1",
       "type": "parent_trajectory"
     },
     {
@@ -1176,6 +1196,36 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-reference-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-reference-kaggle3-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-ssma-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-100k-reference-s42",
+      "target": "TB-k1-ssma-kaggle3-100k-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
       "target": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
@@ -1656,6 +1706,18 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-residual-reconciliation",
       "type": "evidence"
     },
@@ -1669,6 +1731,22 @@
     },
     {
       "id": "pcqm-k1-slot96-cpu-qualification-20261002",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-ssma-kaggle3-unsubmitted-source-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-v4-100k-reference-s42",
       "type": "evidence"
     },
     {
@@ -1896,6 +1974,18 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-reference-kaggle3-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-reference-kaggle3-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-k1-residual-reconciliation",
       "type": "trajectory"
     },
@@ -1909,6 +1999,18 @@
     },
     {
       "id": "TB-k1-slot96-cpu-qualification-20261002",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-ssma-kaggle3-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-ssma-kaggle3-100k-s42-v2",
       "type": "trajectory"
     },
     {
@@ -1965,6 +2067,10 @@
     },
     {
       "id": "TC-k1-pair-value-decoupled-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-k1-v4-100k-reference-s42",
       "type": "trajectory"
     },
     {

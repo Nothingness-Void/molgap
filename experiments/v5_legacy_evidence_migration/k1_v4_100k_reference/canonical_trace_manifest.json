@@ -1,0 +1,52 @@
+{
+  "backtest_eligibility": {
+    "eligible": true,
+    "exclusion_reasons": []
+  },
+  "comparability_identity": {
+    "architecture_identity": "neural_atom_k1_v4",
+    "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "lr_schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+    "matched_architecture_required": false,
+    "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+    "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+    "row_split_identity": "train-0-100000-development-100000-150000@e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+    "scientific_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs",
+    "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+    "terminal_endpoint_identity": "31240-optimizer-steps",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_k1_variants_100k/training_contract.json",
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "internal_development_direct_gap_mae_eV",
+  "model_identity": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d",
+  "presentation_semantics_ref": "experiments/pcqm_k1_variants_100k/training_contract.json",
+  "reference_id": "pcqm-k1-v4-100k-reference-s42",
+  "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+  "terminal_evidence_ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json",
+  "trace_artifact_ref": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace.json",
+  "trace_artifact_sha256": "9d183603f3685ed1f425ae3aaa439feadbacc5632668910498af92d10b4e19e6",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TC-k1-v4-100k-reference-s42",
+  "weight_semantics": "raw_model_no_ema",
+  "x_axis": "optimizer_steps"
+}

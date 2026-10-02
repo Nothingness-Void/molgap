@@ -1,0 +1,52 @@
+{
+  "artifacts": [
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/reference/decision.md",
+      "name": "decision.md",
+      "sha256": "23d81e9ffb9c1933c595897f47c28df2a02a38028a8d93970768c39d398050e1"
+    },
+    {
+      "availability": "retained_local_metadata_verified",
+      "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/reference/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "88d75f511f76f5d60a8b3650308ee98a763f2151e20c1b1cc7cdad26676a8ebc"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/reference/decision.md",
+      "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v1/reference/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-reference-kaggle3-unsubmitted-source-v1",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-k1-v4-100k-local-qualification-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-01T05:14:08.142276+00:00",
+    "scientific_reinterpretation": false,
+    "synthetic_model_checks_executed": false,
+    "training_executed": false,
+    "verification_scope": "Source packager failure before remote create/push; separate local qualification results remain in their report."
+  },
+  "outcome": {
+    "artifact_status": "release_failure_record_retained",
+    "budget_decision": "no_accelerator_release",
+    "comparison_status": "not_run",
+    "execution_status": "not_submitted",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "development": "unknown",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "unknown"
+  },
+  "scope": "source_release_infrastructure_only",
+  "track": "B"
+}

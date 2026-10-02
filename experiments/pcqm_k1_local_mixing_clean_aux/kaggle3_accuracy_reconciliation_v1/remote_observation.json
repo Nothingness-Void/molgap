@@ -1,0 +1,71 @@
+{
+  "kernel": "nvoid912/molgap-k1-v4-ssma-accuracy-100k-s42-v1",
+  "metadata": {
+    "author": "Nvoid912",
+    "categoryIds": [
+      "gpu"
+    ],
+    "currentVersionNumber": 1,
+    "datasetDataSources": [
+      "nvoid912/molgap-k1-ssma-accuracy-source-s42-v1",
+      "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "dockerImage": "gcr.io/kaggle-private-byod/python@sha256:37c64f7dd9c54116ecd1bcc88817c5469b88387388fade02bfa8bf3fc647d461",
+    "enableGpu": true,
+    "enableInternet": true,
+    "enableTpu": false,
+    "id": 136643751,
+    "isPrivate": true,
+    "kernelType": "script",
+    "language": "python",
+    "lastRunTime": "2026-09-29T05:59:10.122Z",
+    "machineShape": "NvidiaTeslaT4",
+    "ref": "nvoid912/molgap-k1-v4-ssma-accuracy-100k-s42-v1",
+    "slug": "molgap-k1-v4-ssma-accuracy-100k-s42-v1",
+    "title": "molgap-k1-v4-ssma-accuracy-100k-s42-v1"
+  },
+  "normalized_entry_match": true,
+  "observed_at_utc": "2026-10-02T05:59:09.475539+00:00",
+  "output_file_names": [
+    "k1_pair/pair_state.json",
+    "k1_pair/reference/allocation_cost.json",
+    "k1_pair/reference/architecture_preflight.json",
+    "k1_pair/reference/canonical_trace.json",
+    "k1_pair/reference/canonical_trace.json.context.json",
+    "k1_pair/reference/development_predictions.pt",
+    "k1_pair/reference/diagnostic_cost.json",
+    "k1_pair/reference/diagnostic_resume.pt",
+    "k1_pair/reference/diagnostic_selected.pt",
+    "k1_pair/reference/last_checkpoint.pt",
+    "k1_pair/reference/output_manifest.json",
+    "k1_pair/reference/preflight.log",
+    "k1_pair/reference/runtime_certificate.json",
+    "k1_pair/reference/runtime_manifest.json",
+    "k1_pair/reference/runtime_provenance.json",
+    "k1_pair/reference/selected_model.pt",
+    "k1_pair/reference/train.log",
+    "k1_pair/reference/training_contract.json",
+    "k1_pair/ssma/allocation_cost.json",
+    "k1_pair/ssma/architecture_preflight.json",
+    "k1_pair/ssma/canonical_trace.json",
+    "k1_pair/ssma/canonical_trace.json.context.json",
+    "k1_pair/ssma/development_predictions.pt",
+    "k1_pair/ssma/diagnostic_cost.json",
+    "k1_pair/ssma/diagnostic_resume.pt",
+    "k1_pair/ssma/diagnostic_selected.pt",
+    "k1_pair/ssma/last_checkpoint.pt",
+    "k1_pair/ssma/output_manifest.json",
+    "k1_pair/ssma/preflight.log",
+    "k1_pair/ssma/runtime_certificate.json",
+    "k1_pair/ssma/runtime_manifest.json",
+    "k1_pair/ssma/runtime_provenance.json",
+    "k1_pair/ssma/selected_model.pt",
+    "k1_pair/ssma/train.log",
+    "k1_pair/ssma/training_contract.json"
+  ],
+  "remote_entry_sha256": "df122cce86faa986e36ad7d3ecdcb0198b204f661a48843e360f302cca13e519",
+  "status": {
+    "status": "COMPLETE"
+  },
+  "submitted_entry_sha256": "df122cce86faa986e36ad7d3ecdcb0198b204f661a48843e360f302cca13e519"
+}

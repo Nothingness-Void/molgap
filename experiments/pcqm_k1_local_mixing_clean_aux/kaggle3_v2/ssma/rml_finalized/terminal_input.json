@@ -1,0 +1,199 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_local_mixing_clean_aux/attribution_kaggle3_v1.md": "f69aefdbb025314c16ad30eea2c5c9742d13433f63a9e84afa8fd66c08f1fd37",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/pair_state.json": "a8fd49225bbd2c07476f7f1957e58c50a126d49aa9ef15b1aaab8a158be08dd9",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/architecture_preflight.json": "0c31bc56e3f54d0e497218f06813dc88b2d6e1f4259c8128ad6be6fd08e4b3b7",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/diagnostic_cost.json": "fee5d2c3f014d4e339538451917975cebc8e7495fc90a4c600a14c4dd1bb58d2",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/runtime_manifest.json": "95d0929f43150ada28ace12e13c5489d4b832393e3f64c436586c9e46d8fb148",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/runtime_provenance.json": "a6972627b123333b3aaf72d7cb0a869c410e1e8d213bc2380665ddb93a0c30c5",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/remote-status-final.json": "043e158d40dc1d81e81040463c554a671abc15d89a40560f9967224f84249cde",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/submission-response.json": "63304ed18fd245759da9e5e088373ef526670c1699e56d35ae8ca78ac80aa326",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/acceptance.json": "6929ceb1ec54d48720af114eead01788e5b85f7153a7edbafdfbf2ef4dc23805",
+    "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/decision.md": "d5dcbc1bad3aabc755cacc07739109182a456f9bb86a71e1923d3d83f57c4b3e"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle3-pair-002",
+      "category": "preflight",
+      "cost_event_id": "cost-TB-k1-ssma-kaggle3-100k-s42-v2-measured-diagnostic-window",
+      "evidence_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/acceptance.json",
+      "hardware": "Tesla T4; exclusive assigned diagnostic window only",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.003327038385277774
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.003327038385277774
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "k1-v4-ssma-pair-100k-s42-v2:ssma:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v2"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "user_review_of_runtime_cost_result_and_a_new_prospective_decision"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/attribution_kaggle3_v1.md",
+        "name": "attribution_kaggle3_v1.md",
+        "sha256": "f69aefdbb025314c16ad30eea2c5c9742d13433f63a9e84afa8fd66c08f1fd37"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/pair_state.json",
+        "name": "pair_state.json",
+        "sha256": "a8fd49225bbd2c07476f7f1957e58c50a126d49aa9ef15b1aaab8a158be08dd9"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/architecture_preflight.json",
+        "name": "architecture_preflight.json",
+        "sha256": "0c31bc56e3f54d0e497218f06813dc88b2d6e1f4259c8128ad6be6fd08e4b3b7"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/diagnostic_cost.json",
+        "name": "diagnostic_cost.json",
+        "sha256": "fee5d2c3f014d4e339538451917975cebc8e7495fc90a4c600a14c4dd1bb58d2"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/runtime_manifest.json",
+        "name": "runtime_manifest.json",
+        "sha256": "95d0929f43150ada28ace12e13c5489d4b832393e3f64c436586c9e46d8fb148"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/runtime_provenance.json",
+        "name": "runtime_provenance.json",
+        "sha256": "a6972627b123333b3aaf72d7cb0a869c410e1e8d213bc2380665ddb93a0c30c5"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/remote-status-final.json",
+        "name": "remote-status-final.json",
+        "sha256": "043e158d40dc1d81e81040463c554a671abc15d89a40560f9967224f84249cde"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/submission-response.json",
+        "name": "submission-response.json",
+        "sha256": "63304ed18fd245759da9e5e088373ef526670c1699e56d35ae8ca78ac80aa326"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "6929ceb1ec54d48720af114eead01788e5b85f7153a7edbafdfbf2ef4dc23805"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/decision.md",
+        "name": "decision.md",
+        "sha256": "d5dcbc1bad3aabc755cacc07739109182a456f9bb86a71e1923d3d83f57c4b3e"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_local_mixing_clean_aux/attribution_kaggle3_v1.md",
+        "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/pair_state.json",
+        "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/architecture_preflight.json",
+        "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/diagnostic_cost.json",
+        "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/runtime_manifest.json",
+        "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/minimal_diagnostics/ssma/runtime_provenance.json",
+        "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/remote-status-final.json",
+        "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_submission_v1/submission-response.json",
+        "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/acceptance.json",
+        "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-k1-v4-100k-runtime-qualification-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-01T05:34:05.537036+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Terminal evidence translation executes no training/inference; accepted runtime calibration executions are explicitly recorded in acceptance and retained architecture artifacts."
+    },
+    "outcome": {
+      "artifact_status": "runtime_json_and_minimal_logs_retained",
+      "budget_decision": "formal_training_blocked_at_frozen_cost_gate",
+      "comparison_status": "no_formal_accuracy_comparison",
+      "execution_status": "runtime_qualification_finished_formal_training_not_started",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "fixed50k_development": "unknown",
+      "official_train_prefix_0_100000": "labels_read",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "desktop_same_job_runtime_qualification_no_formal_training",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-01T05:34:05.537036+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "fixed50k_development": "unknown",
+    "official_train_prefix_0_100000": "labels_read",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_v2/ssma/acceptance.json",
+      "role_event_id": "role-TB-k1-ssma-kaggle3-100k-s42-v2-calibration-train-labels",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "k1-v4-ssma-pair-100k-s42-v2:ssma:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v2"
+    }
+  ],
+  "run_id": "k1-v4-ssma-pair-100k-s42-v2:ssma:downstream",
+  "same_run_observation": {
+    "attempt_id": "kaggle3-pair-002",
+    "logical_run_id": "k1-v4-ssma-pair-100k-s42-v2",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-k1-v4-ssma-pair-100k-s42-v1",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "70e0b3af981df106de31eef5dcbdb3870eb74a7e",
+    "source_package_sha256": "60902e5299b2ef8d28f24233c5aea34bcc455361dd72cc42e4de74f49bdefa8d",
+    "spec_identity": "e1f454f5f443de8d103b2ad8ba294135d2d144806e307eecc26af693c7e0da0f"
+  },
+  "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v2"
+}

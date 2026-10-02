@@ -1,0 +1,17 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v1",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [],
+      "status": "failed"
+    }
+  ],
+  "status": "failed",
+  "pair_process_wall_seconds": 54.03020802000003,
+  "scope": "pair orchestration window; excludes kernel bootstrap and queue; per-arm assigned T4 allocation measured by trainer"
+}
