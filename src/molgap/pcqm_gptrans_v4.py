@@ -46,12 +46,12 @@ WEIGHT_DECAY = 0.05
 GRADIENT_CLIP = 1.0
 EMA_DECAY = 0.9999
 AUTHOR_MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
-                "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999")
-PATH_MODES = ("path_bond_mean", "degree_path_bond_mean")
+                "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999")
+PATH_MODES = ("path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_ema999")
 
 
 def _ema_decay(variant: str) -> float:
-    return 0.999 if variant in {"degree_scale_ema999", "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999"} else EMA_DECAY
+    return 0.999 if variant in {"degree_scale_ema999", "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999"} else EMA_DECAY
 LOADER_WORKERS = 4
 EXPECTED_PARAMETERS = 5_246_817
 EXPECTED_INITIAL_MODEL_SHA256 = (

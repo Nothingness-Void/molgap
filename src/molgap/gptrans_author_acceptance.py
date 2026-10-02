@@ -67,7 +67,12 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
     require(startup["spec_identity"] == spec.identity and startup["source_archive_sha256"] == source_sha,
             "Startup identity")
     selected = _selected_completed_arms(config["arms"], summary["outcomes"], selected_arms)
-    require(cost["allocated_gpu_count"] == cost["used_gpu_count"] == 2
+    from .gptrans_author_screen import validate_arm_allocation
+    modes = validate_arm_allocation(config)
+    require(startup["arms"] == list(modes), "Declared startup arms")
+    if len(modes) == 1:
+        require(startup.get("single_arm_reason") == config["single_arm_reason"], "Single-arm justification binding")
+    require(cost["allocated_gpu_count"] == 2 and cost["used_gpu_count"] == len(modes)
             and len(cost["allocated_gpu_inventory"]) == 2 and all("T4" in v for v in cost["allocated_gpu_inventory"]), "T4x2 cost")
     require(cost["source_archive_sha256"] == source_sha and math.isfinite(cost["wall_seconds"])
             and 0 < cost["wall_seconds"] <= config["maximum_wall_seconds"]
@@ -106,7 +111,7 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         require(preflight["accepted"] is True and preflight["parameters"] == EXPECTED_PARAMETERS, "Preflight")
         validate_runtime_certificate(preflight["runtime_certificate"], observed)
         require(observed["runtime_certificate_id"] == manifest["runtime_certificate_id"] == preflight["runtime_certificate_id"], "Runtime binding")
-        if mode in {"path_bond_mean", "degree_path_bond_mean"}:
+        if mode in {"path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_ema999"}:
             sidecar = manifest["path_sidecar_identity"]
             require(sidecar["valid"] is True and sidecar["content_hashes_checked"] is True
                 and sidecar["sidecar_manifest_sha256"] == config["path_manifest_sha256"]

@@ -29,7 +29,7 @@ def gptrans_screen_arguments(
     if declaration["schema_version"] != "molgap-experiment-spec-v2":
         raise ValueError("Training argument wiring requires per-arm Spec v2 plans")
     if metadata.variant not in {"degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
-                                "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999"}:
+                                "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999"}:
         raise ValueError("This variant has no qualified per-arm V5 trace wiring")
     arm = next(item for item in declaration["arms"] if item["arm_id"] == arm_id)
     if arm["training"]["overrides"]:
@@ -38,7 +38,7 @@ def gptrans_screen_arguments(
         raise ValueError("GPTrans screen requires a frozen initial state")
     if not platform_id or type(platform_id) is not str:
         raise ValueError("Explicit platform provenance is required")
-    if (metadata.variant in {"path_bond_mean", "degree_path_bond_mean"}) != (path_sidecar_root is not None):
+    if (metadata.variant in {"path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_ema999"}) != (path_sidecar_root is not None):
         raise ValueError("Only the path arm requires/consumes an accepted path sidecar")
     package = verify_experiment_source_package(package_dir)
     if package["spec_identity"] != spec.identity:

@@ -108,7 +108,7 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         cost = {"schema": "molgap-cost-event-v1", "cost_event_id": f"cost-{tid}-observed-v1",
             "trajectory_id": tid, "action_id": "A001", "run_id": run, "attempt_id": "v1", "category": "training",
             "platform": "kaggle3" if followup else "kaggle2", "hardware": "Tesla_T4", "evidence_ref": metadata_ref,
-            "measurement": {"device_hours": {"status": "measured", "value": native["allocated_device_hours"] / 2},
+            "measurement": {"device_hours": {"status": "measured", "value": native["allocated_device_hours"] / len(config["arms"])},
                 "wall_hours": {"status": "measured", "value": native["wall_seconds"] / 3600},
                 "cpu_hours": {"status": "measurement_missing", "value": None},
                 "queue_hours": {"status": "measurement_missing", "value": None}}}
@@ -141,7 +141,7 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         atomic_write(target / "decision.md", decision_text.encode())
         save(target / "observed_metadata.json", {"evidence_id": evidence_id, "trajectory_id": tid, "run_id": run,
             "outcome": outcome, "trajectory_decision": decision, "role_use": role_use, "roles": roles, "costs": [cost],
-            "native_cost_ref": rel(screen / "native_cost.json"), "cost_attribution": "one allocated T4 per arm; equal wall reservation, not utilization",
+            "native_cost_ref": rel(screen / "native_cost.json"), "cost_attribution": "full allocated T4 cost divided among declared arms; includes idle devices, not utilization",
             "observed_role_sources": [rel(training / "completion_manifest.json"), rel(training / "canonical_trace.json"), rel(acceptance)],
             "local_training_executed": False, "model_inference_executed": False})
         save(target / "role_history.json", {"roles": roles, "source_ref": metadata_ref,

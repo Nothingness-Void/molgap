@@ -19,7 +19,16 @@ from .gptrans_screen_adapter import gptrans_screen_arguments
 from .training_reproducibility import atomic_json, sha256_file
 
 MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
-         "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999")
+         "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999")
+
+
+def validate_arm_allocation(config):
+    modes = tuple(config["arms"])
+    if any(mode not in MODES for mode in modes) or len(modes) not in (1, 2):
+        raise ValueError("One or two supported independent arms are required")
+    if len(modes) == 1 and not config.get("single_arm_reason", "").strip():
+        raise ValueError("Single-arm allocation requires an explicit scientific reason")
+    return modes
 
 
 def mounted(input_root: Path, name: str, sha256: str) -> Path:
@@ -95,9 +104,7 @@ def run_author_screen(upload_root: Path, source_root: Path, output: Path, archiv
     package = restore_source_package(upload_root, package_dir, archive_sha256)
     config_path = source_root / config_ref
     config = json.loads(config_path.read_text())
-    modes = tuple(config["arms"])
-    if len(modes) != 2 or any(mode not in MODES for mode in modes):
-        raise ValueError("Exactly two supported independent arms are required")
+    modes = validate_arm_allocation(config)
     manifest = mounted(input_root, "manifest.json", config["dataset_manifest_sha256"])
     paths = mounted(input_root, "manifest.json", config["path_manifest_sha256"]) if config.get("path_manifest_sha256") else None
     transform = upload_root / "target_transform.json"
@@ -123,10 +130,11 @@ def run_author_screen(upload_root: Path, source_root: Path, output: Path, archiv
         "spec_identity": package["spec_identity"], "source_commit": package["source_commit"],
         "source_archive_sha256": archive_sha256, "allocated_gpu_inventory": allocation,
         "arms": list(modes), "maximum_wall_seconds": config["maximum_wall_seconds"],
+        "single_arm_reason": config.get("single_arm_reason"),
         "official_validation_role_read": False, "test_dev_role_read": False, "test_challenge_role_read": False})
     outcomes = []
     try:
-        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=len(modes)) as executor:
             futures = {executor.submit(scheduler.worker, arm, device, context,
                        started + config["maximum_wall_seconds"]): arm for device, arm in enumerate(modes)}
             for future in concurrent.futures.as_completed(futures):
@@ -138,7 +146,7 @@ def run_author_screen(upload_root: Path, source_root: Path, output: Path, archiv
         elapsed = time.monotonic() - started
         atomic_json(output / "job_summary.json", {"outcomes": outcomes, "elapsed_seconds": elapsed})
         atomic_json(output / "native_cost.json", {"allocated_gpu_inventory": allocation,
-            "allocated_gpu_count": 2, "used_gpu_count": 2, "wall_seconds": elapsed,
+            "allocated_gpu_count": 2, "used_gpu_count": len(modes), "wall_seconds": elapsed,
             "allocated_device_hours": elapsed * 2 / 3600, "source_archive_sha256": archive_sha256})
-    if len(outcomes) != 2 or not all(row["complete"] for row in outcomes):
+    if len(outcomes) != len(modes) or not all(row["complete"] for row in outcomes):
         raise RuntimeError("Retain independent arm outputs: " + str(outcomes))
