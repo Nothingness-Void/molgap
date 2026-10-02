@@ -170,3 +170,15 @@ evidence and is not extended.
 
 Experiment method and conclusions live in each experiment's own decision record;
 follow `experiments/README.md` rather than restating them here.
+
+
+## Registered family lifecycle extension
+
+The [registered family workflow](docs/operations/REGISTERED_EXPERIMENT_WORKFLOW.md)
+is additive to server preparation. `experiment_execution.py` owns static
+family/addon dispatch, `experiment_training_worker.py` the isolated worker,
+`k1_screen_training.py` and `gptrans_screen_workflow.py` the owning train/output
+adapters. `kaggle_workflow.py` owns local platform staging,
+`kaggle_pair_runtime.py` the assigned-device all-arm barrier, and
+`experiment_source_inventory.py` reviewed bootstrap dependencies. Existing
+server GPTrans, EdgeState and historical model sources retain their owners.

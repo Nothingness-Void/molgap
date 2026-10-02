@@ -231,3 +231,23 @@ $env:PYTHONPATH = (Resolve-Path src).Path
 These local tests do not confer formal training authorization.
 Server verification scope is retained in
 [shared_experiment_verification.md](shared_experiment_verification.md).
+
+
+## Registered family lifecycle
+
+See [registered family workflow](REGISTERED_EXPERIMENT_WORKFLOW.md) for the
+pinned Spec v2, preparation plan, static training registry and T4x2 barrier.
+`prepare-workflow --spec SPEC --repo-root ROOT --plan PLAN --output FRESH`
+stages and freezes the payload locally. `accept-workflow --spec SPEC --repo-root
+ROOT --package PACKAGE --expected-package-identity SHA --receipt RECEIPT
+--outputs OUTPUTS --locations LOCATIONS` inspects every arm; `--execute` delegates
+to existing terminal closure only after independent scientific inputs exist.
+`build-terminal --spec SPEC --repo-root ROOT --package PACKAGE --expected-package-identity SHA
+--receipt RECEIPT --observations OBSERVATIONS --locations LOCATIONS --output
+DESCRIPTOR` translates incomplete attempts. Use `--execution-state PAIR_STATE`
+instead of `--observations` only for a retained all-incomplete pair state.
+These commands do not submit, qualify causal comparisons or change the existing
+server `prepare-release`, `check-preparation` and replay-closure entries.
+New K1/GPTrans recipe builders freeze full `metric_semantics` independently;
+the inspector retains exact recipe-to-trace checks, including the declared
+development role. Missing live or EMA observations remain null.

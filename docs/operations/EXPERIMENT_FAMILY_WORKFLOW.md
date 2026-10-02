@@ -229,3 +229,17 @@ checks that missing scientific qualification stays replay-blocked.
 actual owning-runner call sites without executing models. Existing same-run
 replay tests own positive paired qualification. These are local synthetic tests,
 not proof of a real accelerator run or a five-minute submission benchmark.
+
+
+## Registered K1 screen output
+
+`k1-screen-v1` covers `neural_atom_k1/2` with model, optimizer, scheduler, RNG
+and acknowledged sampler cursor. It is separate from historical `k1-v1` and
+server `edge-state-v1`. The static [training registry](REGISTERED_EXPERIMENT_WORKFLOW.md)
+adds executable owning trainers for its explicitly listed modes, with observed
+runtime certificates and scoped invocation costs. The source recipe pins full
+metric semantics and exposure before output production. GPTrans's adapter
+retains and translates the owning runner's outputs without replacing that runner.
+Incomplete terminal translation uses retained scheduler/process facts; missing
+progress after a training-start marker remains unknown. This does not qualify
+an executable resume, real hardware, a causal comparison or replay eligibility.

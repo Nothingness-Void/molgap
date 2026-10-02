@@ -70,6 +70,9 @@ def _name(value) -> str:
         raise ValueError(f"Unsafe source path: {value}")
     lowered = [part.lower() for part in path.parts]
     tokens = {token for part in lowered for token in re.split(r"[._-]+", part)}
+    # This exact reviewed source owner is not a retained artifact directory.
+    if value == "src/molgap/experiment_family_artifacts.py":
+        tokens.discard("artifacts")
     if (set(lowered) & _BLOCKED_PARTS or tokens & _BLOCKED_PARTS
             or any(part == ".env" or part.startswith(".env.") for part in lowered)
             or path.suffix.lower() in _BLOCKED_SUFFIXES

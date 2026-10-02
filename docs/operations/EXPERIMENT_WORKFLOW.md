@@ -5,6 +5,17 @@ existing components; it does not introduce a trainer, submitter or evidence
 schema. A small scientific change should not require another packager, account
 wrapper, monitor or RML finalizer.
 
+## Registered family training workflow
+
+The additive [registered family workflow](REGISTERED_EXPERIMENT_WORKFLOW.md)
+provides `prepare-workflow`, `accept-workflow` and incomplete `build-terminal`
+translation for K1 family/version 2 and retained GPTrans modes on Kaggle T4x2.
+It reuses family trainers and all-arm preflight rather than changing the server
+`prepare-release`/`check-preparation` path below. Existing server author/input
+screens and EdgeState event hooks retain their owning adapters and contracts.
+Registration and local tests do not release a remote run or establish strict
+runtime/scientific qualification.
+
 ## What changes per experiment
 
 Keep the addon implementation, reviewed registry entry, executable scientific

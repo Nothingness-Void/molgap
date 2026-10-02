@@ -18,6 +18,8 @@ class ArtifactAdapter:
 
 
 ADAPTERS = MappingProxyType({
+    "k1-screen-v1": ArtifactAdapter("k1-screen-v1", ("neural_atom_k1", "2"),
+                                    ("model", "optimizer", "scheduler", "rng_state"), False),
     "edge-state-v1": ArtifactAdapter("edge-state-v1", ("edge_state_gps", "1"),
                                      ("model", "optimizer", "scheduler", "rng_state"), False),
     "k1-v1": ArtifactAdapter("k1-v1", ("neural_atom_k1", "1"),

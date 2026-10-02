@@ -1,5 +1,24 @@
 # Kaggle Adapter
 
+For registered multi-arm training, start with the
+[modular workflow](../../docs/operations/EXPERIMENT_WORKFLOW.md). Its local
+`prepare-workflow` command builds the source dataset, frozen launch metadata,
+kernel entrypoint and release report. `platforms/kaggle/run_experiment.py`
+verifies those bytes and calls the generic pair runtime; the runtime preflights
+every assigned arm before it starts training. Neither package code nor this
+bootstrap submits a kernel.
+
+Use the `kaggle-molgap-workloads` skill and existing Kaggle adapters to publish
+the prepared dataset/kernel, verify the active account, pass the release gate,
+submit, reconcile the same remote attempt and retrieve its manifest-bound
+outputs. For a modular workflow payload, pass its `release_report.json` with
+`--release-report`; the adapter rejects a missing or failed report and rechecks
+the bound package, launch config, mounts, metadata and entrypoint immediately
+before POST. Core preparation and bootstrap do not submit. A prepared directory,
+successful release check, local receipt or queue response is not training
+acceptance. Keep the platform skill as the owner of account credentials and
+authoritative remote state.
+
 For the new family output protocol, `retrieve_family_outputs.py` streams only
 the pinned manifest's required files through an authenticated owning account.
 Source/job/version reconciliation and obtaining the small manifest belong to
