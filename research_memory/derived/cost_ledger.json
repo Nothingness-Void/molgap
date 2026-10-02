@@ -1,11 +1,11 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 17,
-  "event_count": 98,
+  "estimated_event_count": 18,
+  "event_count": 99,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
   "measurement_missing_event_count": 82,
-  "not_applicable_event_count": 40,
+  "not_applicable_event_count": 41,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -593,8 +593,8 @@
     "preflight": {
       "CPU4threads; no accelerator:cpu_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.3333333333333333
+          "known_records": 2,
+          "known_total": 0.6666666666666666
         },
         "measured": {
           "known_records": 0,
@@ -612,7 +612,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 2,
+        "not_applicable_records": 3,
         "unknown_records": 0
       },
       "CPU4threads; no accelerator:queue_hours": {
@@ -624,13 +624,13 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 2,
+        "not_applicable_records": 3,
         "unknown_records": 0
       },
       "CPU4threads; no accelerator:wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.08333333333333333
+          "known_records": 2,
+          "known_total": 0.16666666666666666
         },
         "measured": {
           "known_records": 1,
@@ -1321,8 +1321,8 @@
     "CPU4threads; no accelerator": {
       "cpu_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.3333333333333333
+          "known_records": 2,
+          "known_total": 0.6666666666666666
         },
         "measured": {
           "known_records": 1,
@@ -1340,7 +1340,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 3,
+        "not_applicable_records": 4,
         "unknown_records": 0
       },
       "queue_hours": {
@@ -1352,13 +1352,13 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 3,
+        "not_applicable_records": 4,
         "unknown_records": 0
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.08333333333333333
+          "known_records": 2,
+          "known_total": 0.16666666666666666
         },
         "measured": {
           "known_records": 2,
@@ -5325,6 +5325,56 @@
         "measured": {
           "known_records": 1,
           "known_total": 2.7069101230302755
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-flag-cpu-qualification-20261002": {
+      "CPU4threads; no accelerator:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "CPU4threads; no accelerator:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU4threads; no accelerator:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU4threads; no accelerator:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.08333333333333333
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
