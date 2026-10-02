@@ -6,9 +6,10 @@
 ## Server active screen
 
 The authorized T4x2 [final atom/bond readout dual](experiments/pcqm_gptrans_readout_100k/gpu/submission_record.md)
-is API-observed RUNNING and reuses frozen G1+EMA without baseline retraining.
-Luna B monitors the exact job through [one binding](experiments/pcqm_gptrans_readout_100k/monitor_binding.json);
-no successor or scale run is released. Terminal evidence is pending.
+is closed: both arms are independently accepted, STRICT_CAUSAL, and admitted
+as complete Replay pairs, but neither supports promotion; preserve the
+[decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md).
+No server GPU job or successor is released; the existing Luna heartbeat is paused.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).

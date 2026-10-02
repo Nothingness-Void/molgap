@@ -1,0 +1,413 @@
+{
+  "format": "molgap-readout-terminal-analysis-v1",
+  "observed_at": "2026-10-03",
+  "physical_run_id": "nvoid912/molgap-gptrans-g1-readout-dual-s42:v1",
+  "source_commit": "983c10dfd1976620b4b5c8a7da08264f2d574b22",
+  "source_archive_sha256": "8466fabab0ca8632940d09d0f575c706851dbc3e529737a4f373f19cbb703246",
+  "acceptance_ref": "experiments/pcqm_gptrans_readout_100k/gpu/results/acceptance.json",
+  "reference_id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+  "reference_bundle_ref": "experiments/pcqm_gptrans_readout_100k/reference/reference_bundle.json",
+  "native_cost": {
+    "allocated_gpu_inventory": [
+      "GPU 0: Tesla T4 (UUID: GPU-17ae5fd1-007c-2939-fefe-ccb132e09956)",
+      "GPU 1: Tesla T4 (UUID: GPU-8d6a2216-e757-50ad-18de-26279aa04971)"
+    ],
+    "allocated_gpu_count": 2,
+    "used_gpu_count": 2,
+    "wall_seconds": 11510.057024254,
+    "allocated_device_hours": 6.394476124585555,
+    "source_archive_sha256": "8466fabab0ca8632940d09d0f575c706851dbc3e529737a4f373f19cbb703246"
+  },
+  "wall_hours": 3.1972380622927776,
+  "budget_cap_wall_hours": 5,
+  "budget_cap_allocated_device_hours": 10,
+  "model_inference_executed": false,
+  "local_training_executed": false,
+  "arms": {
+    "degree_node_mean_readout_ema999": {
+      "trajectory_id": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "parameters": 5246817,
+      "best_epoch_zero_based": 50,
+      "paired_analysis": {
+        "rows": 50000,
+        "reference_mae_eV": 0.14423262914597987,
+        "candidate_mae_eV": 0.1448040564674139,
+        "candidate_minus_reference_eV": 0.000571427321434021,
+        "paired_row_bootstrap": {
+          "delta": 0.000571427321434021,
+          "ci95": [
+            -0.0003376671155691147,
+            0.0014825153729915593
+          ],
+          "probability_better": 0.1124,
+          "n_bootstrap": 5000,
+          "seed": 20260912
+        },
+        "candidate_win_fraction": 0.49404,
+        "absolute_error_delta_quantiles_eV": [
+          -3.654050827026367,
+          -0.09803881645202635,
+          -0.042645931243896484,
+          0.0008566379547119141,
+          0.045174360275268555,
+          0.09973454475402832,
+          1.9812121391296387
+        ],
+        "posthoc_reference_error_quintiles": [
+          {
+            "reference_error_quintile": 1,
+            "rows": 10000,
+            "reference_mae_eV": 0.015788019275665283,
+            "candidate_mae_eV": 0.057227109098434446,
+            "candidate_minus_reference_eV": 0.041439089822769164
+          },
+          {
+            "reference_error_quintile": 2,
+            "rows": 10000,
+            "reference_mae_eV": 0.05045005625486374,
+            "candidate_mae_eV": 0.07033262211084366,
+            "candidate_minus_reference_eV": 0.01988256585597992
+          },
+          {
+            "reference_error_quintile": 3,
+            "rows": 10000,
+            "reference_mae_eV": 0.09522396845817566,
+            "candidate_mae_eV": 0.09828756148815156,
+            "candidate_minus_reference_eV": 0.003063593029975891
+          },
+          {
+            "reference_error_quintile": 4,
+            "rows": 10000,
+            "reference_mae_eV": 0.16574542496204375,
+            "candidate_mae_eV": 0.1503412568807602,
+            "candidate_minus_reference_eV": -0.01540416808128357
+          },
+          {
+            "reference_error_quintile": 5,
+            "rows": 10000,
+            "reference_mae_eV": 0.39395567677915094,
+            "candidate_mae_eV": 0.3478317327588797,
+            "candidate_minus_reference_eV": -0.0461239440202713
+          }
+        ],
+        "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+      },
+      "material_gate_eV": 0.003,
+      "material_gate_passed": false,
+      "epoch_mean_seconds": 189.79005870225004,
+      "final_ten_ema_change_eV": -3.0413269996643066e-05,
+      "sampled_trajectory": [
+        {
+          "epoch_zero_based": 9,
+          "optimizer_step": 7810,
+          "sample_presentations": 999680,
+          "candidate_train_eV": 0.19246268874409939,
+          "reference_train_eV": 0.19246669958856996,
+          "candidate_live_dev_eV": 0.20547287166118622,
+          "reference_live_dev_eV": 0.20631109178066254,
+          "candidate_ema_dev_eV": 0.18770137429237366,
+          "reference_ema_dev_eV": 0.18365578353405,
+          "ema_candidate_minus_reference_eV": 0.004045590758323669
+        },
+        {
+          "epoch_zero_based": 19,
+          "optimizer_step": 15620,
+          "sample_presentations": 1999360,
+          "candidate_train_eV": 0.1545787679948013,
+          "reference_train_eV": 0.15698440275443976,
+          "candidate_live_dev_eV": 0.1704350709915161,
+          "reference_live_dev_eV": 0.17384520173072815,
+          "candidate_ema_dev_eV": 0.16062034666538239,
+          "reference_ema_dev_eV": 0.159537672996521,
+          "ema_candidate_minus_reference_eV": 0.0010826736688613892
+        },
+        {
+          "epoch_zero_based": 29,
+          "optimizer_step": 23430,
+          "sample_presentations": 2999040,
+          "candidate_train_eV": 0.13317017563886027,
+          "reference_train_eV": 0.13543941677442148,
+          "candidate_live_dev_eV": 0.15807761251926422,
+          "reference_live_dev_eV": 0.15993085503578186,
+          "candidate_ema_dev_eV": 0.15122251212596893,
+          "reference_ema_dev_eV": 0.15065236389636993,
+          "ema_candidate_minus_reference_eV": 0.000570148229598999
+        },
+        {
+          "epoch_zero_based": 39,
+          "optimizer_step": 31240,
+          "sample_presentations": 3998720,
+          "candidate_train_eV": 0.11348761656952983,
+          "reference_train_eV": 0.11584333998198311,
+          "candidate_live_dev_eV": 0.15313665568828583,
+          "reference_live_dev_eV": 0.15399108827114105,
+          "candidate_ema_dev_eV": 0.1474224478006363,
+          "reference_ema_dev_eV": 0.1460917443037033,
+          "ema_candidate_minus_reference_eV": 0.0013307034969329834
+        },
+        {
+          "epoch_zero_based": 49,
+          "optimizer_step": 39050,
+          "sample_presentations": 4998400,
+          "candidate_train_eV": 0.09879910070375914,
+          "reference_train_eV": 0.10213132150035385,
+          "candidate_live_dev_eV": 0.145763099193573,
+          "reference_live_dev_eV": 0.1456393152475357,
+          "candidate_ema_dev_eV": 0.14493106305599213,
+          "reference_ema_dev_eV": 0.14480280876159668,
+          "ema_candidate_minus_reference_eV": 0.00012825429439544678
+        },
+        {
+          "epoch_zero_based": 59,
+          "optimizer_step": 46860,
+          "sample_presentations": 5998080,
+          "candidate_train_eV": 0.09360020548727019,
+          "reference_train_eV": 0.09714278386591209,
+          "candidate_live_dev_eV": 0.14495597779750824,
+          "reference_live_dev_eV": 0.14429225027561188,
+          "candidate_ema_dev_eV": 0.14490064978599548,
+          "reference_ema_dev_eV": 0.14424195885658264,
+          "ema_candidate_minus_reference_eV": 0.0006586909294128418
+        }
+      ],
+      "comparison_class": "STRICT_CAUSAL",
+      "actual_replay_pair_verified": true,
+      "pool_group_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"ema999-each-step-selection\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"gptrans-v5-observation-reference-fp32-bs128-60epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"46860-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-g1-degree-scale-ema999-100k-s42\"}",
+      "pool_group_members": [
+        {
+          "trajectory_id": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+          "comparison_role": "candidate",
+          "capability": "complete"
+        },
+        {
+          "trajectory_id": "TC-gptrans-g1-ema999-100k-s42",
+          "comparison_role": "reference",
+          "capability": "complete"
+        },
+        {
+          "trajectory_id": "TC-gptrans-g1-node-mean-readout-100k-s42",
+          "comparison_role": "candidate",
+          "capability": "complete"
+        },
+        {
+          "trajectory_id": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+          "comparison_role": "candidate",
+          "capability": "complete"
+        },
+        {
+          "trajectory_id": "TC-gptrans-g1-path-endpoints-100k-s42",
+          "comparison_role": "candidate",
+          "capability": "complete"
+        },
+        {
+          "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+          "comparison_role": "candidate",
+          "capability": "complete"
+        }
+      ],
+      "candidate_trace_sha256": "7a7333f95c3df95cfcf9584cfb779486689811ab3c16f07245d736b5d18c291b",
+      "reference_trace_sha256": "a2b76bf000d8541ca996b2aa40a614adcb8147d253573fcde6d63a25ea686552",
+      "reference_trajectory_id": "TC-gptrans-g1-ema999-100k-s42",
+      "terminal_closure_ref": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/results/closure.json"
+    },
+    "degree_bond_mean_readout_ema999": {
+      "trajectory_id": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "parameters": 5246817,
+      "best_epoch_zero_based": 59,
+      "paired_analysis": {
+        "rows": 50000,
+        "reference_mae_eV": 0.14423262914597987,
+        "candidate_mae_eV": 0.14697397049367428,
+        "candidate_minus_reference_eV": 0.002741341347694397,
+        "paired_row_bootstrap": {
+          "delta": 0.002741341347694397,
+          "ci95": [
+            0.0018064035482406617,
+            0.0036890556869506835
+          ],
+          "probability_better": 0.0,
+          "n_bootstrap": 5000,
+          "seed": 20260912
+        },
+        "candidate_win_fraction": 0.4845,
+        "absolute_error_delta_quantiles_eV": [
+          -3.329326629638672,
+          -0.10246624946594238,
+          -0.043627262115478516,
+          0.0024073123931884766,
+          0.04932224750518799,
+          0.10936565399169922,
+          2.062408447265625
+        ],
+        "posthoc_reference_error_quintiles": [
+          {
+            "reference_error_quintile": 1,
+            "rows": 10000,
+            "reference_mae_eV": 0.015788019275665283,
+            "candidate_mae_eV": 0.06103244650363922,
+            "candidate_minus_reference_eV": 0.045244427227973935
+          },
+          {
+            "reference_error_quintile": 2,
+            "rows": 10000,
+            "reference_mae_eV": 0.05045005625486374,
+            "candidate_mae_eV": 0.07507904771566391,
+            "candidate_minus_reference_eV": 0.02462899146080017
+          },
+          {
+            "reference_error_quintile": 3,
+            "rows": 10000,
+            "reference_mae_eV": 0.09522396845817566,
+            "candidate_mae_eV": 0.10191861758232117,
+            "candidate_minus_reference_eV": 0.006694649124145508
+          },
+          {
+            "reference_error_quintile": 4,
+            "rows": 10000,
+            "reference_mae_eV": 0.16574542496204375,
+            "candidate_mae_eV": 0.1499469945192337,
+            "candidate_minus_reference_eV": -0.015798430442810058
+          },
+          {
+            "reference_error_quintile": 5,
+            "rows": 10000,
+            "reference_mae_eV": 0.39395567677915094,
+            "candidate_mae_eV": 0.34689274614751336,
+            "candidate_minus_reference_eV": -0.04706293063163757
+          }
+        ],
+        "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+      },
+      "material_gate_eV": 0.003,
+      "material_gate_passed": false,
+      "epoch_mean_seconds": 189.3683301956834,
+      "final_ten_ema_change_eV": -0.0004424750804901123,
+      "sampled_trajectory": [
+        {
+          "epoch_zero_based": 9,
+          "optimizer_step": 7810,
+          "sample_presentations": 999680,
+          "candidate_train_eV": 0.19623404095804856,
+          "reference_train_eV": 0.19246669958856996,
+          "candidate_live_dev_eV": 0.20832179486751556,
+          "reference_live_dev_eV": 0.20631109178066254,
+          "candidate_ema_dev_eV": 0.19081339240074158,
+          "reference_ema_dev_eV": 0.18365578353405,
+          "ema_candidate_minus_reference_eV": 0.007157608866691589
+        },
+        {
+          "epoch_zero_based": 19,
+          "optimizer_step": 15620,
+          "sample_presentations": 1999360,
+          "candidate_train_eV": 0.1568783271286277,
+          "reference_train_eV": 0.15698440275443976,
+          "candidate_live_dev_eV": 0.1756865680217743,
+          "reference_live_dev_eV": 0.17384520173072815,
+          "candidate_ema_dev_eV": 0.16141165792942047,
+          "reference_ema_dev_eV": 0.159537672996521,
+          "ema_candidate_minus_reference_eV": 0.001873984932899475
+        },
+        {
+          "epoch_zero_based": 29,
+          "optimizer_step": 23430,
+          "sample_presentations": 2999040,
+          "candidate_train_eV": 0.13408326555785421,
+          "reference_train_eV": 0.13543941677442148,
+          "candidate_live_dev_eV": 0.16606281697750092,
+          "reference_live_dev_eV": 0.15993085503578186,
+          "candidate_ema_dev_eV": 0.1521214097738266,
+          "reference_ema_dev_eV": 0.15065236389636993,
+          "ema_candidate_minus_reference_eV": 0.001469045877456665
+        },
+        {
+          "epoch_zero_based": 39,
+          "optimizer_step": 31240,
+          "sample_presentations": 3998720,
+          "candidate_train_eV": 0.11263294547217265,
+          "reference_train_eV": 0.11584333998198311,
+          "candidate_live_dev_eV": 0.1545288860797882,
+          "reference_live_dev_eV": 0.15399108827114105,
+          "candidate_ema_dev_eV": 0.14912006258964539,
+          "reference_ema_dev_eV": 0.1460917443037033,
+          "ema_candidate_minus_reference_eV": 0.0030283182859420776
+        },
+        {
+          "epoch_zero_based": 49,
+          "optimizer_step": 39050,
+          "sample_presentations": 4998400,
+          "candidate_train_eV": 0.09745222300802527,
+          "reference_train_eV": 0.10213132150035385,
+          "candidate_live_dev_eV": 0.14879685640335083,
+          "reference_live_dev_eV": 0.1456393152475357,
+          "candidate_ema_dev_eV": 0.14741644263267517,
+          "reference_ema_dev_eV": 0.14480280876159668,
+          "ema_candidate_minus_reference_eV": 0.002613633871078491
+        },
+        {
+          "epoch_zero_based": 59,
+          "optimizer_step": 46860,
+          "sample_presentations": 5998080,
+          "candidate_train_eV": 0.09234525958537212,
+          "reference_train_eV": 0.09714278386591209,
+          "candidate_live_dev_eV": 0.14696082472801208,
+          "reference_live_dev_eV": 0.14429225027561188,
+          "candidate_ema_dev_eV": 0.14697396755218506,
+          "reference_ema_dev_eV": 0.14424195885658264,
+          "ema_candidate_minus_reference_eV": 0.002732008695602417
+        }
+      ],
+      "comparison_class": "STRICT_CAUSAL",
+      "actual_replay_pair_verified": true,
+      "pool_group_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"ema999-each-step-selection\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"gptrans-v5-observation-reference-fp32-bs128-60epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"46860-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-g1-degree-scale-ema999-100k-s42\"}",
+      "pool_group_members": [
+        {
+          "trajectory_id": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+          "comparison_role": "candidate",
+          "capability": "complete"
+        },
+        {
+          "trajectory_id": "TC-gptrans-g1-ema999-100k-s42",
+          "comparison_role": "reference",
+          "capability": "complete"
+        },
+        {
+          "trajectory_id": "TC-gptrans-g1-node-mean-readout-100k-s42",
+          "comparison_role": "candidate",
+          "capability": "complete"
+        },
+        {
+          "trajectory_id": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+          "comparison_role": "candidate",
+          "capability": "complete"
+        },
+        {
+          "trajectory_id": "TC-gptrans-g1-path-endpoints-100k-s42",
+          "comparison_role": "candidate",
+          "capability": "complete"
+        },
+        {
+          "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+          "comparison_role": "candidate",
+          "capability": "complete"
+        }
+      ],
+      "candidate_trace_sha256": "9421449d2d2589a215354145d6888a33990e13f294c0089be4dde028aa57a665",
+      "reference_trace_sha256": "a2b76bf000d8541ca996b2aa40a614adcb8147d253573fcde6d63a25ea686552",
+      "reference_trajectory_id": "TC-gptrans-g1-ema999-100k-s42",
+      "terminal_closure_ref": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/results/closure.json"
+    }
+  },
+  "pool_snapshot": {
+    "entries": 36,
+    "comparable_group_count": 6,
+    "sha256": "25a4cbe5fa50088d91362c2e76faf9435770a57aec8313eda90cf2834ac7eedc"
+  },
+  "successor_authorized": false,
+  "decision": "close_both_readout_replacements_without_promotion",
+  "interpretation_limits": [
+    "single paired seed, reused development role",
+    "row bootstrap does not measure training stochasticity",
+    "posthoc reference-error groups are target-derived, not deployable routing",
+    "no scale-transfer or optimal-readout claim"
+  ]
+}
