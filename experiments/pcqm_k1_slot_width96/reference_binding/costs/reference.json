@@ -1,0 +1,31 @@
+{
+  "action_id": "A001",
+  "attempt_id": "nvoid912/molgap-k1-v4-ssma-accuracy-100k-s42-v1:producer-version-unknown",
+  "category": "training",
+  "cost_event_id": "TB-k1-v4-192-kaggle3-reference-custody-20261002-cost",
+  "evidence_ref": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/output_manifest.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 1.5427258715394443
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 1.5427258715394443
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "molgap-k1-v4-ssma-accuracy-100k-s42-v1:reference",
+  "schema": "molgap-cost-event-v1",
+  "semantics": "Original arm producer process wall and allocated single T4 device time; excludes unobserved CPU, queue and prior attempts.",
+  "trajectory_id": "TB-k1-v4-192-kaggle3-reference-custody-20261002"
+}

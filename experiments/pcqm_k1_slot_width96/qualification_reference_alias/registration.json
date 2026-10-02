@@ -1,0 +1,9 @@
+{
+  "scope": "Metadata alias registration only; no model execution or change to frozen CPU inputs",
+  "reason": "CPU prospective planner used a dated custody alias rather than the existing s42-v1 bundle ID",
+  "original_reference_bundle_id": "k1-v4-192-kaggle3-reference-custody-s42-v1",
+  "registered_alias": "k1-v4-192-kaggle3-reference-custody-20261002",
+  "original_bundle_path": "experiments/pcqm_k1_slot_width96/reference_binding/reference_bundle.json",
+  "original_bundle_sha256": "42588175612815878af074ad53ddcd3334b4529ea2525d3377cd687fcb42131c",
+  "all_fields_except_bundle_id_preserved": true
+}

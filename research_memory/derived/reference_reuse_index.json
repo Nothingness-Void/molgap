@@ -980,6 +980,72 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "PAIRED_ENDPOINT_single_seed",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal",
+      "role_use": {
+        "fixed50k_development": "selection_used",
+        "official_train_prefix_0_100000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_k1_latent_slot96_100k_saved_prediction_comparison",
+      "source_envelope": "experiments/pcqm_k1_slot_width96/kaggle3_v1/slot96/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "consumed_role_frozen_final_slot_intervention",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-slot96-cpu-qualification-20261002",
+      "role_use": {
+        "internal_development": "selection_used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_prefix": "untouched"
+      },
+      "scientific_scope": "desktop_k1_slot96_cpu_qualification",
+      "source_envelope": "experiments/pcqm_k1_slot_width96/qualification/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "reference_only_strict_candidate_qualification_pending",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "role_use": {
+        "internal_development": "selection_used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_prefix": "consumed"
+      },
+      "scientific_scope": "retained_k1_width192_reference_only_custody",
+      "source_envelope": "experiments/pcqm_k1_slot_width96/reference_binding/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": [
+        "TB-k1-slot-width96-kaggle3-100k-s42-v1",
+        "TB-k1-slot96-cpu-qualification-20261002"
+      ]
+    },
+    {
+      "artifact_availability": [
         "committed_metadata_verified"
       ],
       "comparison_status": "paired_three_arm_comparison_complete",

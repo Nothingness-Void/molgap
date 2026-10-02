@@ -1,0 +1,119 @@
+{
+  "format": "molgap-k1-slot96-runtime-review-v1",
+  "candidate_qualified": true,
+  "certificate": {
+    "format": "molgap-runtime-certificate-v1",
+    "status": "accepted",
+    "platform_id": "kaggle-t4x2",
+    "accelerator": "Tesla T4",
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "deterministic_algorithms": true,
+    "physical_batch_per_device": 128,
+    "tail_batch_policy": "drop_last",
+    "runtime_fingerprint": "0e3e1a2a2fd838a60d6ba810ee696ea5da513183b1d2c8e593587a318404ed6b",
+    "software_fingerprint": "00dcfce5144bddf7ad1e8d3b07a655001ced66a9b6bd187e912ca9197e759071",
+    "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+    "calibration_fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+    "calibration_output_sha256": "35724f64cfa45dd89104b326648c7c8d9b209a459b5d7a21ccf48c0bdfa66a79",
+    "calibration_checks_passed": true,
+    "provenance_sha256": "77e4089ec996fc384bef84ae39568c29d34452a202d73a05da98edb95ae0e3ae",
+    "architecture_sha256": "abe53b1213fbc80d48871b65a979c6bf93d70eeff33b4ec9a621a56ef2fbbf08"
+  },
+  "architecture": {
+    "accepted": true,
+    "mode": "slot96",
+    "zero_initialization_delta": null,
+    "repeated_optimizer_steps": 2,
+    "repeatability": {
+      "accepted": true,
+      "losses": [
+        0.7801382541656494,
+        0.7801382541656494
+      ],
+      "loss_delta": 0.0,
+      "maximum_loss_delta": 1e-07,
+      "state_sha256": [
+        "35724f64cfa45dd89104b326648c7c8d9b209a459b5d7a21ccf48c0bdfa66a79",
+        "35724f64cfa45dd89104b326648c7c8d9b209a459b5d7a21ccf48c0bdfa66a79"
+      ],
+      "max_parameter_delta": 0.0,
+      "maximum_parameter_delta": 1e-07,
+      "max_parameter_name": ""
+    },
+    "resume_roundtrip": {
+      "accepted": true,
+      "losses": [
+        0.7801382541656494,
+        0.7801382541656494
+      ],
+      "loss_delta": 0.0,
+      "maximum_loss_delta": 1e-07,
+      "state_sha256": [
+        "ec6292f62fc00944d1b30793f83f679ddebd2875e4312e5aba6016d3a25cd57b",
+        "ec6292f62fc00944d1b30793f83f679ddebd2875e4312e5aba6016d3a25cd57b"
+      ],
+      "max_parameter_delta": 0.0,
+      "maximum_parameter_delta": 1e-07,
+      "max_parameter_name": ""
+    },
+    "timings": {
+      "reference": {
+        "median_step_seconds": 0.10448847100002467,
+        "samples_seconds": [
+          0.10622186500000907,
+          0.10466165700000829,
+          0.10448847100002467,
+          0.10411933799997541,
+          0.10217354899998554
+        ],
+        "peak_memory_bytes": 576284672
+      },
+      "slot96": {
+        "median_step_seconds": 0.10777098900001647,
+        "samples_seconds": [
+          0.10899305800001002,
+          0.10777098900001647,
+          0.10850244099998463,
+          0.10481896400000323,
+          0.10581766800004289
+        ],
+        "peak_memory_bytes": 605709312
+      }
+    },
+    "selected_state_roundtrip_delta": 0.0,
+    "synchronized_step_overhead_fraction": 0.03141512138684677,
+    "maximum_overhead_fraction": null,
+    "formal_sample_presentations": 0,
+    "fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+    "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption",
+    "initialization_equivalence": "not_applicable_width_change",
+    "overhead_policy": "report_only_width_change",
+    "parameter_count": 3853793,
+    "reference_parameter_count": 3658817,
+    "finite_nonzero_gradient_check": true,
+    "reference_profile_initialization": "seed42-random-latent64-execution-calibration-only"
+  },
+  "candidate_runtime_fingerprint": "0e3e1a2a2fd838a60d6ba810ee696ea5da513183b1d2c8e593587a318404ed6b",
+  "strict_reference_runtime_qualified": false,
+  "replay_eligible": false,
+  "exclusions": [
+    "full_software_equivalence_not_established",
+    "literal_development_role_identity_mismatch"
+  ],
+  "installed_distribution_differences": {
+    "reference_only": [
+      "numpy==2.0.2"
+    ],
+    "candidate_only": [
+      "littleutils==0.2.4",
+      "numpy==1.26.4",
+      "outdated==0.2.2"
+    ]
+  },
+  "development_role_labels_as_recorded": {
+    "reference": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "candidate": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000"
+  },
+  "interpretation": "Aligned finite rows allow descriptive pairing; frozen metadata unchanged"
+}

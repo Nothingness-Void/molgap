@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle3-slot96-001",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-slot-width96-kaggle3-100k-s42-v1-expected-training",
+  "evidence_ref": "experiments/pcqm_k1_slot_width96/protocol.md",
+  "hardware": "Tesla T4 x2 allocation; candidate assigned GPU0",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 8.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4.0
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "molgap-k1-slot96-100k-s42-v1:slot96:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-slot-width96-kaggle3-100k-s42-v1"
+}

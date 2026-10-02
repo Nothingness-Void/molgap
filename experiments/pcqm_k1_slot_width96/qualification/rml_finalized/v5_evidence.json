@@ -1,0 +1,84 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_width96/qualification_result.json",
+      "name": "qualification_result.json",
+      "sha256": "97f31ca1f9727bd514a0cf2071a3bc31d4f747dd2744a9a1bd087b0ef9ce2cd4"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_width96/ablation_result.json",
+      "name": "ablation_result.json",
+      "sha256": "f968b6e9cd14ea69e39e763ca59fb5ba5ca9f4428c011bf17c495563431d4c32"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_width96/ablation_rows.npz",
+      "name": "ablation_rows.npz",
+      "sha256": "b9187e7482b73024cff55861e8a8af6e39f917ddb43374b5c5db94de5391e6eb"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_width96/qualification_initial_state.pt",
+      "name": "qualification_initial_state.pt",
+      "sha256": "31f9984c6fcdb7a0e02e8b14ae30c4cbf5925123be4e040f18d536c6dd36d119"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_width96/cpu_acceptance.json",
+      "name": "cpu_acceptance.json",
+      "sha256": "f01729e5499fe9a6763fad7a33c50bc1ecb97ca223843b4bba0650c36e315018"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_slot_width96/cpu_decision.md",
+      "name": "cpu_decision.md",
+      "sha256": "28fa5b91061765275c01c72bf056299798cf03e0c6e6db70bb38584e264309e8"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_slot_width96/protocol.md",
+      "experiments/pcqm_k1_slot_width96/cpu_decision.md",
+      "experiments/pcqm_k1_slot_width96/cpu_attribution.md",
+      "experiments/pcqm_k1_slot_width96/cpu_acceptance.json",
+      "experiments/pcqm_k1_slot_width96/qualification_result.json",
+      "experiments/pcqm_k1_slot_width96/ablation_result.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-slot96-cpu-qualification-20261002",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "k1-slot96-cpu-qualification-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-02",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata publication of separately executed prospective CPU qualification; no model execution in finalizer."
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_k1_slot_width96/ablation_result.json",
+    "inference_executed": true,
+    "training_executed": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "cpu_closure_no_training_release",
+    "comparison_status": "consumed_role_frozen_final_slot_intervention",
+    "execution_status": "complete_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_prefix": "untouched"
+  },
+  "scope": "desktop_k1_slot96_cpu_qualification",
+  "track": "B"
+}

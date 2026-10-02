@@ -1,0 +1,148 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-slot-width96",
+    "question": "Does frozen final-slot utility justify testing isolated latent64-to96 capacity, and does candidate construction preserve family semantics?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-slot96-cpu-20261002",
+      "observed_deficiency": "Node widening regressed; observed final global return is substantial but causal utility and isolated slot96 capacity remain unresolved.",
+      "supporting_evidence_ids": [
+        "pcqm-k1-slot-readout-diagnostic-20261002",
+        "pcqm-k1-v4-192-kaggle3-reference-custody-20261002"
+      ],
+      "alternative_explanations": [
+        "Final slot can be harmful despite large norm.",
+        "Slot64 may already suffice; extra capacity can worsen generalization.",
+        "Single-seed optimization and runtime distributions may explain endpoint changes."
+      ],
+      "changed_mechanism": "Frozen selected192 last-mixer output is bypassed only for CPU causal utility measurement; new random slot96 state changes only latent dimension.",
+      "cheapest_falsifier": "2048 original/zero-final-slot paired forwards plus finite candidate CPU construction; stop if original prediction reconstruction or 300-second ceiling fails.",
+      "related_closed_family_ids": [
+        "k1-slot-readout-diagnostic",
+        "k1-node-width",
+        "k1-full-convergence"
+      ],
+      "expected_native_cost_ref": "cost-k1-slot96-cpu-expected",
+      "decision_changed_if_positive": "If zero-slot regression >=1meV, review single candidate slot96 100K training already authorized by user; no automatic scale-up.",
+      "decision_changed_if_negative": "No slot-capacity training if final-slot utility gate fails; retain diagnostic and unresolved information-quality attribution.",
+      "historical_unknowns": [
+        "Single-seed variance.",
+        "Large-molecule effect absent from retained prefix."
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "13e0812998c7c1b15b2aa11849251e4db92e206c",
+      "contract_refs": [
+        "experiments/pcqm_k1_slot_width96/protocol.md",
+        "experiments/pcqm_k1_slot_width96/evidence_review.md"
+      ],
+      "reference_ids": [
+        "pcqm-k1-v4-192-kaggle3-reference-custody-20261002"
+      ],
+      "parent_trajectory_ids": [
+        "TB-k1-slot-readout-diagnostic-20261002"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-k1-slot-readout-diagnostic-20261002",
+        "pcqm-k1-v4-192-kaggle3-reference-custody-20261002"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_slot_width96/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_slot_width96/protocol.md",
+      "source_config_identity": "K1 atom192 edge64 slot96 layers9; frozen model/worker hashes in cpu_frozen.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "cpu_frozen_ablation_and_initialization",
+        "source_commit": "13e0812998c7c1b15b2aa11849251e4db92e206c",
+        "run_ids": [
+          "local-k1-slot96-qualification-20261002"
+        ],
+        "attempt_ids": [
+          "cpu-001"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_k1_slot_width96/protocol.md"
+        ],
+        "cost_event_ids": [
+          "cost-k1-slot96-cpu-expected"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_slot_width96/protocol.md",
+      "next_allowed_actions": [
+        "A001"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_slot_width96/protocol.md",
+    "comparison_blockers": [
+      "Consumed development role and single seed; zero-slot interference does not prove capacity bottleneck."
+    ],
+    "reference_bundle_id": "k1-v4-192-kaggle3-reference-custody-20261002"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-slot96-cpu-expected",
+      "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-slot96-qualification-20261002",
+      "attempt_id": "cpu-001",
+      "platform": "local-windows",
+      "hardware": "CPU4threads; no accelerator",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_slot_width96/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.08333333333333333,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": 0.3333333333333333,
+          "status": "estimated"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "action_inputs_ref": "experiments/pcqm_k1_slot_width96/cpu_action_inputs.json",
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "QUALIFY_CPU",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "QUALIFY_CPU",
+    "policy_id": "k1-slot96-cpu-qualification",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_slot_width96/role_plan.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_slot_width96/protocol.md",
+    "state_timestamp": "2026-10-02",
+    "source_commit": "13e0812998c7c1b15b2aa11849251e4db92e206c"
+  }
+}

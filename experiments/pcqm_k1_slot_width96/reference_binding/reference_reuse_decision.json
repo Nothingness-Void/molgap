@@ -1,0 +1,36 @@
+{
+  "architecture_config_identity": "ab4a532c1bef2f22978bf3cc7699a78ca01ee6d1d643edb078db553c1810b3a5",
+  "architecture_config_ref": "experiments/pcqm_k1_slot_width96/reference_binding/architecture_config.json",
+  "meaning": "Reference-only custody migration for slot-width96 preparation; no original SSMA-pair science acceptance or closure.",
+  "mechanical_acceptance_ref": "experiments/pcqm_k1_slot_width96/reference_binding/mechanical_acceptance.json",
+  "missing_evidence": [
+    "future candidate software tuple and NumPy environment equivalence",
+    "cross-source candidate/reference qualification",
+    "original producer platform_version was null",
+    "single-seed training stochasticity unavailable"
+  ],
+  "native_cost_scope": "producer process wall and assigned T4 device seconds; CPU/queue unknown",
+  "reference_evidence_id": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+  "reference_source": {
+    "account": "nvoid912",
+    "arm_id": "reference",
+    "arm_identity": "e5c1409009af57879076f496c825bf6140faf24583a59dd7b52142875827ff2a",
+    "experiment_id": "pcqm-k1-ssma-accuracy-kaggle3-100k",
+    "family_name": "neural_atom_k1",
+    "family_version": "2",
+    "logical_run_id": "molgap-k1-v4-ssma-accuracy-100k-s42-v1",
+    "package_identity": "deae476a1e9122966bf45ff60151f0e734dcbcfec7433577d21b89e85b11569c",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "nvoid912/molgap-k1-v4-ssma-accuracy-100k-s42-v1",
+    "source_archive_sha256": "2073ea91ea96ef88859a0db6d7b68e0ffff4a12fd9e11e3dc5f3e689d1c22c11",
+    "source_commit": "f21920ba5d9f3fe148cfa18803d53c0a5ec8f670",
+    "spec_identity": "ac7f233504dedc9e37a57ec400df4a84415319caee62a9f85baa365cecb8b85b",
+    "training_recipe_sha256": "fcd6a444e7b865a0861b96436743a7c432d63972135026dd037e362d54d6af3d"
+  },
+  "runtime_report_hash_semantics": "Original runtime certificate architecture_sha256 binds architecture_preflight.json, not architecture configuration. Certificate bytes are preserved.",
+  "scope": "metadata-only historical reference import; no training or inference during staging",
+  "status": "RETAINED_REFERENCE_BOUND",
+  "strict_qualification": "PENDING_CANDIDATE_RUNTIME_AND_SOURCE_EQUIVALENCE",
+  "training_stochasticity": "unavailable-single-seed"
+}

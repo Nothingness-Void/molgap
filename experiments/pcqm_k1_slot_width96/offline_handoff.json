@@ -1,0 +1,38 @@
+{
+  "scope": "Submission reconciliation only; runtime and scientific acceptance pending",
+  "owner_branch": "codex/exp/k1-slot-width96",
+  "owner_checkout": "D:/w/k1-slot96",
+  "kernel": "nvoid912/molgap-k1-slot96-100k-s42-v1",
+  "kernel_id": 136686300,
+  "version_number": 1,
+  "script_version_id": null,
+  "last_observed_remote_state": {
+    "status": "RUNNING"
+  },
+  "observation_ref": "experiments/pcqm_k1_slot_width96/remote_observation_20261001T172518Z.json",
+  "source_commit": "13b8e23638461eff4d6313030f6af8f238cb9d2f",
+  "source_archive_sha256": "1844fa26aecb22cd63532f8b33fc83c0f588b74d6ded3f30d79c3de0e4d66eaf",
+  "spec_identity": "ea909f766f9c8b29e424da17b10d96bf7da980911d0d3af5f3bfddbff67450fb",
+  "package_identity": "567fe90b6d12ffe2a75e36feb8dd17f784029d427534381b4cb18d9b3ddc8840",
+  "initial_state_file_sha256": "31f9984c6fcdb7a0e02e8b14ae30c4cbf5925123be4e040f18d536c6dd36d119",
+  "source_dataset": "nvoid912/molgap-k1-slot96-source-s42-v1",
+  "source_dataset_version_number": null,
+  "source_version_reason": "Create response omitted version; all nine downloaded bytes verified",
+  "dataset": "nvoid912/pcqm4mv2-ogb-fixed-100k-v1",
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "receipt_ref": "experiments/pcqm_k1_slot_width96/submission_v1/receipts/954513d5df9cb36f7d5ebb3d568b9f64c0712bb09941a9ec4c3077972403cbf9.json",
+  "expected_outputs": "/kaggle/working/experiment",
+  "actual_startup_log_available": false,
+  "runtime_qualification": "pending; RUNNING is not proof that T4 barrier passed",
+  "next_allowed_action": "Reconcile this exact run/version, retrieve small state/manifest, then manifest-bound artifacts and acceptance",
+  "automatic_retry_or_successor": false,
+  "desktop_server_takeover": false,
+  "retained_records": {
+    "experiments/pcqm_k1_slot_width96/submission_response.json": "ea073278bbb7b16166403aede43a14c7df62d76848c8beb7ac4a44ea612464ce",
+    "experiments/pcqm_k1_slot_width96/source_verification.json": "ebe50c86d596616e9921cbf104bd7bbea1069bdbe0e36a6e36981e64ae5c17ba",
+    "experiments/pcqm_k1_slot_width96/remote_observation_20261001T172518Z.json": "4d568340452e0e02d73eaa9975c8631ec2da147ff850dcea45265968e14c357c",
+    "experiments/pcqm_k1_slot_width96/archive_release_qualification.json": "fc7fb8b6a948fdd909bc6ea9e2c4b530d78889d6797392c314569cae1f92cd9c",
+    "experiments/pcqm_k1_slot_width96/submission_v1/receipts/954513d5df9cb36f7d5ebb3d568b9f64c0712bb09941a9ec4c3077972403cbf9.json": "b2352e624395643bac20d20c16cd96300bfb8db2a5dfaffce267604adc5bda31"
+  },
+  "local_shutdown_authority": "User explicitly instructed shutdown after submission completed"
+}

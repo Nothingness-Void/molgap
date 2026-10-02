@@ -1,0 +1,44 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "ea909f766f9c8b29e424da17b10d96bf7da980911d0d3af5f3bfddbff67450fb",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "slot96",
+          "device": 0,
+          "returncode": 0
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "train",
+      "workers": [
+        {
+          "arm_id": "slot96",
+          "device": 0,
+          "returncode": 0
+        }
+      ],
+      "status": "complete"
+    }
+  ],
+  "status": "complete",
+  "arms": {
+    "slot96": {
+      "device": 0,
+      "training_started": true,
+      "terminal_status": "complete",
+      "worker_wall_seconds": 5176.705235861,
+      "exit_reason": "train_worker_exit_0"
+    }
+  },
+  "pair_process_wall_seconds": 5176.708115055,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost"
+}

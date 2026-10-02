@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 64,
-    "with_complete_native_measurement": 7,
-    "with_cost_event": 53,
-    "with_incomplete_native_measurement": 46,
+    "trajectories_total": 67,
+    "with_complete_native_measurement": 8,
+    "with_cost_event": 56,
+    "with_incomplete_native_measurement": 48,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 44,
+      "count": 47,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -48,6 +48,9 @@
         "TB-k1-gptrans-full-fusion-r3",
         "TB-k1-residual-reconciliation",
         "TB-k1-slot-readout-diagnostic-20261002",
+        "TB-k1-slot-width96-kaggle3-100k-s42-v1",
+        "TB-k1-slot96-cpu-qualification-20261002",
+        "TB-k1-v4-192-kaggle3-reference-custody-20261002",
         "TB-pcqm-expert-oracle-feasibility-20260930",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
@@ -66,7 +69,7 @@
     },
     {
       "code": "historical_partial_record",
-      "count": 18,
+      "count": 19,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -79,6 +82,7 @@
         "TB-k1-full-convergence-20260919",
         "TB-k1-gptrans-full-fusion-r3",
         "TB-k1-residual-reconciliation",
+        "TB-k1-v4-192-kaggle3-reference-custody-20261002",
         "TB-matched-500k-v4-three-arm",
         "TB-recurrent-graph-state-100k-seed42",
         "TB-route-b-four-encoder-specialist",
@@ -91,7 +95,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 46,
+      "count": 48,
       "items": [
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
@@ -131,6 +135,8 @@
         "TB-gptrans-reference-k1pair-100k-s42",
         "TB-k1-full-convergence-20260919",
         "TB-k1-residual-reconciliation",
+        "TB-k1-slot-width96-kaggle3-100k-s42-v1",
+        "TB-k1-v4-192-kaggle3-reference-custody-20261002",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
         "TB-pcqm-scale-fit-retained-20261001",

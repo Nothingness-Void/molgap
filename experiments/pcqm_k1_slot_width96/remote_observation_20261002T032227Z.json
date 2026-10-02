@@ -1,0 +1,57 @@
+{
+  "account": "nvoid912",
+  "kernel": "nvoid912/molgap-k1-slot96-100k-s42-v1",
+  "observed_at_utc": "2026-10-02T03:22:27.527268+00:00",
+  "status": {
+    "status": "COMPLETE"
+  },
+  "remote_entry_sha256": "86f637ba7a3cfc7739bf3685b8a708db8e5189ff4d0b46aac1c22d3389370f3e",
+  "submitted_entry_sha256": "86f637ba7a3cfc7739bf3685b8a708db8e5189ff4d0b46aac1c22d3389370f3e",
+  "remote_entry_normalized_match": true,
+  "remote_metadata": {
+    "id": 136686300,
+    "ref": "nvoid912/molgap-k1-slot96-100k-s42-v1",
+    "title": "molgap-k1-slot96-100k-s42-v1",
+    "author": "Nvoid912",
+    "slug": "molgap-k1-slot96-100k-s42-v1",
+    "lastRunTime": "2026-09-29T03:22:28.183Z",
+    "language": "python",
+    "kernelType": "script",
+    "isPrivate": true,
+    "enableGpu": true,
+    "enableInternet": true,
+    "categoryIds": [
+      "gpu"
+    ],
+    "datasetDataSources": [
+      "nvoid912/molgap-k1-slot96-source-s42-v1",
+      "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "enableTpu": false,
+    "currentVersionNumber": 1,
+    "dockerImage": "gcr.io/kaggle-private-byod/python@sha256:37c64f7dd9c54116ecd1bcc88817c5469b88387388fade02bfa8bf3fc647d461",
+    "machineShape": "NvidiaTeslaT4"
+  },
+  "output_file_names": [
+    "experiment/pair_state.json",
+    "experiment/slot96/allocation_cost.json",
+    "experiment/slot96/architecture_preflight.json",
+    "experiment/slot96/canonical_trace.json",
+    "experiment/slot96/canonical_trace.json.context.json",
+    "experiment/slot96/development_predictions.pt",
+    "experiment/slot96/diagnostic_cost.json",
+    "experiment/slot96/diagnostic_resume.pt",
+    "experiment/slot96/diagnostic_selected.pt",
+    "experiment/slot96/last_checkpoint.pt",
+    "experiment/slot96/output_manifest.json",
+    "experiment/slot96/preflight.log",
+    "experiment/slot96/runtime_certificate.json",
+    "experiment/slot96/runtime_manifest.json",
+    "experiment/slot96/runtime_provenance.json",
+    "experiment/slot96/selected_model.pt",
+    "experiment/slot96/train.log",
+    "experiment/slot96/training_contract.json"
+  ],
+  "log_available": true,
+  "log_error": null
+}

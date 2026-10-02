@@ -1,0 +1,82 @@
+{
+  "kernel": "nvoid912/molgap-k1-slot96-100k-s42-v1",
+  "receipt_version": "1",
+  "producer_version": null,
+  "files": [
+    {
+      "path": "training_contract.json",
+      "sha256": "168112ce60649b06318230cdeb7af30f048ca1c6a9f434d84382e55a055ba082",
+      "state": "RETAINED"
+    },
+    {
+      "path": "development_predictions.pt",
+      "sha256": "071dd0479d8c0d968e0200954eaa7595f28fe4e4595302be4ffa6a38c9d7c749",
+      "state": "RETAINED"
+    },
+    {
+      "path": "last_checkpoint.pt",
+      "sha256": "9210381078767342e7b0dba367aef821b1fee9a4e979db90a3bf6a78dd4eac5e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "selected_model.pt",
+      "sha256": "5c1e44ed33928d23ada7eddf410a43117cbb43edb83579f156c420007faf5d4d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "canonical_trace.json",
+      "sha256": "d4680149a03c794a1307f2189dd57bfa707582bd7c648b08b29e7d0752154d99",
+      "state": "RETAINED"
+    },
+    {
+      "path": "output_manifest.json",
+      "sha256": "c2141e43cba8628974d77ecb798e8e2257aa6e1ed5269b20b90829ccbdb14bca",
+      "state": "RETAINED"
+    }
+  ],
+  "manifest_sha256": "c2141e43cba8628974d77ecb798e8e2257aa6e1ed5269b20b90829ccbdb14bca",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": false,
+  "qualification_metadata": {
+    "pair_state.json": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/qualification/pair_state.json",
+      "sha256": "e6e8fa149e33ff8673cf0264075710145917a45351e165fdf85744fc61033beb"
+    },
+    "slot96/architecture_preflight.json": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/qualification/slot96/architecture_preflight.json",
+      "sha256": "35cd6c0ec47a0b6ac48ef9918aeedb8bfe1649182ea886b44ae2525394b4337e"
+    },
+    "slot96/runtime_certificate.json": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/qualification/slot96/runtime_certificate.json",
+      "sha256": "86f991377642c82d18b1af745888e3be7f4366566f084657b69f1bfbaf7a0ba7"
+    },
+    "slot96/runtime_manifest.json": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/qualification/slot96/runtime_manifest.json",
+      "sha256": "4bfc11b6a0f3af4108b43a3319c8a27dc73c98fade0111188e87ac00cead7e93"
+    },
+    "slot96/runtime_provenance.json": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/qualification/slot96/runtime_provenance.json",
+      "sha256": "9534e9a9062123a44f72eba301634b277bfdba52e9ce55e068ceeddf459aed15"
+    },
+    "slot96/allocation_cost.json": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/qualification/slot96/allocation_cost.json",
+      "sha256": "e1382fc5a675ebd164b3a6a790149148fb2854d2b3845b0388dd028fdc74a303"
+    },
+    "slot96/diagnostic_cost.json": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/qualification/slot96/diagnostic_cost.json",
+      "sha256": "037b29688e042dc7a76f0dbf9a8487c146a139862b974053111b7c247d700fde"
+    },
+    "slot96/preflight.log": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/qualification/slot96/preflight.log",
+      "sha256": "32f1ba3f820e86df328ba6516bdea6696bef881882ca709b8960189ecc5353dd"
+    },
+    "slot96/train.log": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/qualification/slot96/train.log",
+      "sha256": "0b273292a29229d0e0be5cc19057a27ae8982f99b78cc18572c9043d9df348bb"
+    },
+    "slot96/canonical_trace.json.context.json": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/qualification/slot96/canonical_trace.json.context.json",
+      "sha256": "6f7efcc7b4aa065613573fdbca9edb58193f5ee0e4e2654fc06253e604718dc9"
+    }
+  }
+}

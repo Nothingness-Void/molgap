@@ -13,6 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does K1 latent slot64->96 improve the fixed100K screen? | Accepted NEGATIVE_UNDER_CONTRACT; misses material gain gate; strict replay excluded; no scale-up | [Slot96 decision](pcqm_k1_slot_width96/terminal_decision.md) |
 | Does retained K1 global return become negligible after mean readout? | Accepted observational NO_TRAIN diagnostic; magnitude remains substantial; causal utility unresolved | [K1 slot/readout](pcqm_k1_slot_readout_diagnostic/README.md) |
 | Can prediction-only routing realize expert Oracle headroom? | Accepted saved-prediction diagnostic; NO_TRAIN for a new prediction-only router, no model promotion | `pcqm_expert_oracle_feasibility/` |
 | Does clean-input chemical auxiliary supervision improve GPTrans Gap? | Owner endpoint acceptance and terminal RML complete; strict qualification INCONCLUSIVE and replay excluded. Evidence integration / Git routing remain under review | [Retained chemical owner](../BRANCHES.md#retained-checkout-map) |

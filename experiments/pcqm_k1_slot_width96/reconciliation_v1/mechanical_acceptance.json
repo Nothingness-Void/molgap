@@ -1,0 +1,78 @@
+{
+  "status": "MECHANICALLY_VERIFIED",
+  "blockers": [],
+  "context": {
+    "experiment_id": "pcqm-k1-slot-width96-kaggle3-100k",
+    "logical_run_id": "molgap-k1-slot96-100k-s42-v1",
+    "arm_id": "slot96",
+    "arm_identity": "4187a74c2960f2e14f2cffdc7f640a583118c808f891f0dd76409d5d86721c75",
+    "spec_identity": "ea909f766f9c8b29e424da17b10d96bf7da980911d0d3af5f3bfddbff67450fb",
+    "family_name": "neural_atom_k1",
+    "family_version": "2",
+    "source_commit": "13b8e23638461eff4d6313030f6af8f238cb9d2f",
+    "source_archive_sha256": "1844fa26aecb22cd63532f8b33fc83c0f588b74d6ded3f30d79c3de0e4d66eaf",
+    "package_identity": "567fe90b6d12ffe2a75e36feb8dd17f784029d427534381b4cb18d9b3ddc8840",
+    "training_recipe_sha256": "168112ce60649b06318230cdeb7af30f048ca1c6a9f434d84382e55a055ba082",
+    "platform": "kaggle",
+    "account": "nvoid912",
+    "run_reference": "nvoid912/molgap-k1-slot96-100k-s42-v1",
+    "platform_version": "1"
+  },
+  "observed": {
+    "producer_platform_version": null,
+    "development_mae_eV": 0.1407475805991888,
+    "selected_epoch": 37,
+    "selected_optimizer_step": 28897,
+    "selected_weights": "live",
+    "progress": {
+      "epochs": 40,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "costs": [
+      {
+        "hardware": "Tesla T4",
+        "metric": "wall_seconds",
+        "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+        "semantics": "process_wall",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 5104.429500053
+      },
+      {
+        "hardware": "Tesla T4",
+        "metric": "device_seconds",
+        "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+        "semantics": "allocated_device",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 5104.429500053
+      }
+    ],
+    "artifacts": {
+      "contract": {
+        "path": "training_contract.json",
+        "sha256": "168112ce60649b06318230cdeb7af30f048ca1c6a9f434d84382e55a055ba082"
+      },
+      "predictions": {
+        "path": "development_predictions.pt",
+        "sha256": "071dd0479d8c0d968e0200954eaa7595f28fe4e4595302be4ffa6a38c9d7c749"
+      },
+      "resume": {
+        "path": "last_checkpoint.pt",
+        "sha256": "9210381078767342e7b0dba367aef821b1fee9a4e979db90a3bf6a78dd4eac5e"
+      },
+      "selected_model": {
+        "path": "selected_model.pt",
+        "sha256": "5c1e44ed33928d23ada7eddf410a43117cbb43edb83579f156c420007faf5d4d"
+      },
+      "trace": {
+        "path": "canonical_trace.json",
+        "sha256": "d4680149a03c794a1307f2189dd57bfa707582bd7c648b08b29e7d0752154d99"
+      }
+    }
+  },
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED",
+  "runtime_qualification": "NOT_EVALUATED"
+}

@@ -1,0 +1,81 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/training_contract.json",
+      "name": "training_contract.json",
+      "sha256": "fcd6a444e7b865a0861b96436743a7c432d63972135026dd037e362d54d6af3d"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/development_predictions.pt",
+      "name": "development_predictions.pt",
+      "sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/last_checkpoint.pt",
+      "name": "last_checkpoint.pt",
+      "sha256": "fa279b97533a3f274367a28e3f036e123b6512f43d2e992e6105733febe2d590"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/selected_model.pt",
+      "name": "selected_model.pt",
+      "sha256": "4a7dab43f50f5f3216b224374c213a01cc82cfb4160dcd6d54aab1ef614fce17"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/canonical_trace.json",
+      "name": "canonical_trace.json",
+      "sha256": "c18bd76b9f55114005020ab65bcb663636dfd496f971966d5f0007a44a79f149"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_slot_width96/reference_binding/reference_reuse_decision.json",
+      "experiments/pcqm_k1_slot_width96/reference_binding/mechanical_acceptance.json",
+      "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/output_manifest.json",
+      "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/training_contract.json",
+      "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/runtime_certificate.json",
+      "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/runtime_provenance.json",
+      "experiments/pcqm_k1_slot_width96/reference_binding/original_reference_arm.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "historical_unknowns": [
+    "original canonical reference evidence ID was not frozen; this EID identifies only custody migration",
+    "original hypothesis and budget unavailable for reference-only import",
+    "strict candidate runtime/software and source equivalence pending",
+    "original platform_version null",
+    "single-seed stochasticity unavailable"
+  ],
+  "legacy_contract": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-02",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Preserved prior mechanically verified reference; file hashes and original Spec/arm identities checked without model execution."
+  },
+  "outcome": {
+    "artifact_status": "locally_retained_hash_verified",
+    "budget_decision": "no_new_training_release",
+    "comparison_status": "reference_only_strict_candidate_qualification_pending",
+    "execution_status": "historical_reference_complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NOT_REINTERPRETED_REFERENCE_ONLY",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_prefix": "consumed"
+  },
+  "scope": "retained_k1_width192_reference_only_custody",
+  "track": "B"
+}
