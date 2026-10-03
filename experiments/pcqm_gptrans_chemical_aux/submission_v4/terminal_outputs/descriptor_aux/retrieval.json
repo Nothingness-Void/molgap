@@ -1,0 +1,40 @@
+{
+  "kernel": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+  "receipt_version": "3",
+  "producer_version": null,
+  "files": [
+    {
+      "path": "training_contract.json",
+      "sha256": "a1c4f5f9750dadafac87a4a05618dd0e6b20f028fa78189329c93d0ec23dba4d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "development_predictions.pt",
+      "sha256": "5843147b577c217a8c0829347ebc7ec616109b6fd12e2e0010cccf23925436ad",
+      "state": "RETAINED"
+    },
+    {
+      "path": "last_checkpoint.pt",
+      "sha256": "ff9ce68333957ebe92c42f926139862cb4e1367e436258c26674fc15da540c25",
+      "state": "RETAINED"
+    },
+    {
+      "path": "selected_model.pt",
+      "sha256": "ced94c8852bdad652030eb94b28524cd4e245a0e5e635f4cb09b182ce061b9b6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "canonical_trace.json",
+      "sha256": "11eccca4ae37bd473c536b738aa88b3eab8d16f406c0f4b8d108eaa64e282116",
+      "state": "RETAINED"
+    },
+    {
+      "path": "output_manifest.json",
+      "sha256": "aea7a546e52ee1f31ed0d2117d347558aafce5959e3b4a09bcac68a649c00f5b",
+      "state": "ALREADY_RETAINED"
+    }
+  ],
+  "manifest_sha256": "aea7a546e52ee1f31ed0d2117d347558aafce5959e3b4a09bcac68a649c00f5b",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": false
+}

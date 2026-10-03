@@ -1,0 +1,98 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle1-v1",
+  "cache_labels_sha256": "8a56d81fa9c5d7aaf74b6d76bc0bcb16c0ad3b10c79aadc64b5d1ec67eb4803b",
+  "cache_manifest_sha256": "824d41f6f541a7f06d51fc73ffb048fd8fb61ed3e01eca0a1571b4ccaf3cbb78",
+  "costs": [],
+  "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v2-no-train-import-failed",
+  "finalized_at": "2026-09-30T15:52:17.773337+00:00",
+  "local_loader_evidence_ref": "experiments/pcqm_gptrans_chemical_aux/submission_v2/loader_preflight.json",
+  "native_cost": {
+    "cpu_busy_time": null,
+    "device_time": null,
+    "note": "Two T4 devices were allocated; native device/wall/queue/CPU busy costs were not reported. The planned six hours is an estimate, not observed cost.",
+    "queue_time": null,
+    "status": "measurement_missing",
+    "wall_time": null
+  },
+  "outcome": {
+    "artifact_status": "retained_raw_error_log_and_source_receipt",
+    "budget_decision": "allocated_T4x2_native_cost_unmeasured",
+    "comparison_status": "not_applicable_no_model_execution",
+    "execution_status": "kernel_version1_error_before_runtime_preflight",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "package_release": {
+    "cause": "nested run_arm.py process did not inherit source PYTHONPATH; first molgap import failed",
+    "gpu_allocated": true,
+    "gpu_names": [
+      "Tesla T4",
+      "Tesla T4"
+    ],
+    "inference_executed": false,
+    "planned_run_id_is_platform_job_id": false,
+    "platform_job_id": "136542008",
+    "platform_version": 1,
+    "source_of_observation": "authenticated Kaggle scheduler plus raw terminal log",
+    "status": "remote_ERROR",
+    "training_executed": false
+  },
+  "role_access": {
+    "local_loader_preflight_read_train_and_internal_development": true,
+    "model_training_or_selection_executed": false,
+    "official_validation_consumed": false,
+    "test_challenge_consumed": false,
+    "test_dev_consumed": false
+  },
+  "role_use": {
+    "fixed50k_development": "labels_read",
+    "official_train_prefix_0_100000": "labels_read",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm-fixed100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v2/descriptor_aux/acceptance.json",
+      "role_event_id": "R-TB-gptrans-chemical-descriptor-aux-100k-s42-v2-local-loader-train",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "95d71c7700f92cd861b885c27092ff9caf2a05b320c36e8b58da8bf3b0703966",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v2"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm-fixed100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v2/descriptor_aux/acceptance.json",
+      "role_event_id": "R-TB-gptrans-chemical-descriptor-aux-100k-s42-v2-local-loader-development",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "0635ba2d1b9a7fca5167dd4cc9864f26768dbbac7cfec55c616e630ed39ff6a1",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v2"
+    }
+  ],
+  "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+  "source_commit": "24bc46fe3fe387f41d42149ec78341f16ba02c94",
+  "source_config_identity": "c8778d292e9e90590ff7cafa5d13bbc52154df5918f1c7b8de78726920b97d2e",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v2/descriptor_aux/decision_no_train.md",
+    "next_allowed_actions": [
+      "continue only under independently frozen v3 retry plan"
+    ],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "nested subprocess source path repaired and source/Spec/release identities refrozen"
+    ]
+  },
+  "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v2"
+}

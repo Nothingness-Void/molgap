@@ -1,0 +1,35 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-c63b31b285c3dac100e49be5120bd93618f0e7e7b29fd5c6225b301d28cd0a28",
+  "finalized_at": "2026-10-01T00:22:22+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/acceptance.json": "186091ec1d49d15ca04a4f66a9b514f3ca1ea75c92c0ed167929029583df8cf8",
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/fingerprints_retry2_manifest.json": "bf4599bf295c0e6dc348248d2de8c3d82fc1bde7efd7db95096e9a900d4053e5",
+    "experiments/pcqm_gptrans_chemical_aux/objective_fingerprint_aux.json": "6726f47e3d82d1f906facb010552d941e46b64fd3d15a4bf20b285106b375bf6",
+    "experiments/pcqm_gptrans_chemical_aux/training_contract_fingerprint_aux.json": "c66af03d28707ae24974efa4da56d4b7983daab43965197e3b9eee00275e62e0",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/fingerprint_aux/acceptance.json": "fd2bbec691b1057760cbef786d3e6b9cb893857e5258775a63fc23dc34e351ba",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/fingerprint_aux/costs/cost-TB-gptrans-chemical-fingerprint-aux-100k-s42-v1-expected-training.json": "c8760c19224bcc7aabf89572c294c1a95972829bc8e053b215d49dd85f58b793",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/fingerprint_aux/decision_no_train.md": "b4670c09d15194649ae8cce64671f0b7406c6fed07ffaef4e725f4ec44bb1dda",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/fingerprint_aux/decision_state.json": "dd06db17f0f535841424f5d007c3b93cb508bdab50120c6834bdd8bdbca7a8d4",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/fingerprint_aux/policy_snapshot.json": "9b2ed121994097a0f17637618d77290db2a4308c11aba5fdb311b8dd25a97221",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective/fingerprint_aux/trajectory.json": "4a23fee3c6c5a6b4cefdfd040b6c973fe8eeb9dcd5aef4bbcceaf92635cf3ca0",
+    "experiments/pcqm_gptrans_chemical_aux/training_protocol.md": "58c613e8cf9c151172f33a4b76058cca7def50a47cdab60293a3fa3b75d1c8ff"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/measurement_missing.json": "bf60dbc3cc170ca997286997d80d1a6c1783f8194bd1bc3e24b96dc21f0f8fbb",
+    "prospective_snapshot.json": "4a23fee3c6c5a6b4cefdfd040b6c973fe8eeb9dcd5aef4bbcceaf92635cf3ca0",
+    "terminal_input.json": "f7567c4897cf161629ccc65048535764f5cfe6f6daf47c893dfd4668e6556d33",
+    "trajectory.json": "2400ac6d5bc46deca4c869238295a067561834f7eb65a44bb01660f24913f13f",
+    "v5_evidence.json": "a0fff51a55aabf45db12b4db57e933c782c3627db4fcbd98cc0b98e53c1b28fd"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_chemical_aux/training_prospective/fingerprint_aux/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "c63b31b285c3dac100e49be5120bd93618f0e7e7b29fd5c6225b301d28cd0a28",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1"
+}

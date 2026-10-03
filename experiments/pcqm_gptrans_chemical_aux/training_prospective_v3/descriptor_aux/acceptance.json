@@ -1,0 +1,143 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle1-v1",
+  "cache_labels_sha256": "8a56d81fa9c5d7aaf74b6d76bc0bcb16c0ad3b10c79aadc64b5d1ec67eb4803b",
+  "cache_manifest_sha256": "824d41f6f541a7f06d51fc73ffb048fd8fb61ed3e01eca0a1571b4ccaf3cbb78",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-kernel-version2",
+      "category": "training",
+      "cost_event_id": "C-TB-gptrans-chemical-descriptor-aux-100k-s42-v3-first-epoch-wall",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/descriptor_aux/acceptance.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.052576089770277765
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
+    }
+  ],
+  "evidence_id": "pcqm-gptrans-chemical-descriptor-aux-100k-s42-v3-inconclusive-trace-failure",
+  "finalized_at": "2026-09-30T16:10:13.606715+00:00",
+  "local_loader_evidence_ref": "experiments/pcqm_gptrans_chemical_aux/submission_v3/loader_preflight.json",
+  "native_cost": {
+    "cpu_busy_time": null,
+    "device_time": null,
+    "epoch_wall_seconds": 189.27392317299996,
+    "note": "One epoch process wall includes development evaluation; it is not device busy time or total allocated T4 time.",
+    "queue_time": null,
+    "status": "partial_measured_epoch_wall"
+  },
+  "observed_training": {
+    "backtest_eligible": false,
+    "durable_resume_path": "D:\\\u6587\u6863\\molgap\\platforms\\_records\\kaggle\\training\\gptrans_chemical_aux_kernel_v2_partial\\descriptor_aux\\last_checkpoint.pt",
+    "elapsed_epoch_wall_seconds": 189.27392317299996,
+    "ema_development_mae_eV": 0.779376745223999,
+    "epochs": 1,
+    "finite_aligned_50000_predictions": true,
+    "legacy_resume_validated": true,
+    "live_train_mae_eV": 0.5526964108366045,
+    "objective_step_ratio": 1.024146094014848,
+    "optimizer_steps": 781,
+    "reason": "partial exposure and no V5 strict terminal comparison",
+    "sample_presentations": 99968
+  },
+  "outcome": {
+    "artifact_status": "partial_trace_predictions_and_legacy_resume_retained",
+    "budget_decision": "partial_epoch_wall_measured_device_cost_unknown",
+    "comparison_status": "not_qualified_partial_exposure",
+    "execution_status": "infrastructure_error_after_one_epoch",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated"
+  },
+  "package_release": {
+    "cause": "canonical trace treated checkpoint at completed epoch exposure as duplicate optimizer-step observation",
+    "gpu_allocated": true,
+    "gpu_names": [
+      "Tesla T4",
+      "Tesla T4"
+    ],
+    "inference_executed": true,
+    "planned_run_id_is_platform_job_id": false,
+    "platform_job_id": "136542008",
+    "platform_version": 2,
+    "source_of_observation": "authenticated Kaggle scheduler and retained raw terminal log",
+    "status": "remote_ERROR",
+    "training_executed": true
+  },
+  "role_access": {
+    "internal_development_selection_used": true,
+    "official_validation_consumed": false,
+    "test_challenge_consumed": false,
+    "test_dev_consumed": false,
+    "training_membership": true
+  },
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_train_prefix_0_100000": "training_membership",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm-fixed100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/descriptor_aux/acceptance.json",
+      "role_event_id": "R-TB-gptrans-chemical-descriptor-aux-100k-s42-v3-partial-train",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "95d71c7700f92cd861b885c27092ff9caf2a05b320c36e8b58da8bf3b0703966",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm-fixed100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/descriptor_aux/acceptance.json",
+      "role_event_id": "R-TB-gptrans-chemical-descriptor-aux-100k-s42-v3-partial-development",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "0635ba2d1b9a7fca5167dd4cc9864f26768dbbac7cfec55c616e630ed39ff6a1",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
+    }
+  ],
+  "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+  "source_commit": "3ddb45f59917fe208c512f3f20e274f60f2e06c8",
+  "source_config_identity": "c8778d292e9e90590ff7cafa5d13bbc52154df5918f1c7b8de78726920b97d2e",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/descriptor_aux/decision_inconclusive.md",
+    "next_allowed_actions": [
+      "continue under separately frozen v4 infrastructure repair retry"
+    ],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "canonical trace permits same-exposure checkpoint markers without permitting duplicate metric observations"
+    ]
+  },
+  "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
+}

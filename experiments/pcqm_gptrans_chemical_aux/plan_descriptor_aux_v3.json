@@ -1,0 +1,138 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-kernel-version2",
+      "category": "training",
+      "cost_event_id": "cost-TB-gptrans-chemical-descriptor-aux-100k-s42-v3-expected-training",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+      "hardware": "NvidiaTeslaT4_requested",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "estimated",
+          "value": 6.0
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 6.0
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
+    }
+  ],
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_100K",
+      "NO_TRAIN"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+    "chosen_action": "RUN_100K",
+    "known_evidence_ids": [],
+    "known_trajectory_ids": [],
+    "policy_id": "pcqm-gptrans-chemical-components-100k-launch",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_t_100k_v4/roles/train.json",
+      "experiments/pcqm_gptrans_t_100k_v4/roles/development.json",
+      "platforms/_records/kaggle/pcqm_fixed_datasets_v1/acceptance.json"
+    ],
+    "source_commit": "3ddb45f59917fe208c512f3f20e274f60f2e06c8",
+    "state_timestamp": "2026-09-30T15:33:17.264677+00:00"
+  },
+  "trajectory": {
+    "actions": [
+      {
+        "action_id": "A001",
+        "attempt_ids": [
+          "kaggle1-kernel-version2"
+        ],
+        "cost_event_ids": [
+          "cost-TB-gptrans-chemical-descriptor-aux-100k-s42-v3-expected-training"
+        ],
+        "evidence_refs": [],
+        "run_ids": [
+          "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1"
+        ],
+        "source_commit": "3ddb45f59917fe208c512f3f20e274f60f2e06c8",
+        "type": "remote_screen_training"
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+      "next_allowed_actions": [
+        "A001"
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": []
+    },
+    "family_id": "gptrans-clean-chemical-descriptor-aux",
+    "hypothesis": {
+      "alternative_explanations": [
+        "Auxiliary labels may be redundant or conflict with Gap gradients.",
+        "Early gains may erode at matched terminal exposure; development reuse and seed variation limit interpretation."
+      ],
+      "changed_mechanism": "descriptor_aux objective 1eb9e0e75c40d2b69eea82a2d4ddfadfde82ae463df395c11a978649860c722b; train-only accepted cache 824d41f6f541a7f06d51fc73ffb048fd8fb61ed3e01eca0a1571b4ccaf3cbb78",
+      "cheapest_falsifier": "Existing T4 runtime and <=5% optimizer-step overhead preflight block formal training on failure.",
+      "decision_changed_if_negative": "Close the exact mechanism after terminal attribution; no automatic retry or 500K.",
+      "decision_changed_if_positive": "Nominate only after the frozen 3 meV, paired-uncertainty, V5 comparison and cost gates; no automatic scale-up.",
+      "expected_native_cost_ref": "cost-TB-gptrans-chemical-descriptor-aux-100k-s42-v3-expected-training",
+      "hypothesis_id": "H-TB-gptrans-chemical-descriptor-aux-100k-s42-v3",
+      "observed_deficiency": "Accepted GPTrans-T 100K V4 development MAE is 0.15662720430791377 eV; a missing graph-level chemical representation is unproven.",
+      "related_closed_family_ids": [
+        "gptrans-t-input-embedding-initialization",
+        "pcqm-k1-joint-atom-reconstruction"
+      ],
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ]
+    },
+    "owner": "desktop",
+    "question": "Does descriptor_aux improve terminal clean-input Gap accuracy under the frozen V4 exposure and unchanged exported inference?",
+    "record_mode": "prospective",
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "schema": "molgap-trajectory-v1",
+    "state_at_start": {
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+        "experiments/pcqm_gptrans_chemical_aux/training_contract_descriptor_aux.json"
+      ],
+      "parent_trajectory_ids": [
+        "TB-gptrans-t-100k-v4-reference",
+        "TB-chemical-aux-component-cache-retry2-20260930",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v2"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ],
+      "prior_trajectory_ids": [],
+      "reference_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_t_100k_v4/roles/train.json",
+        "experiments/pcqm_gptrans_t_100k_v4/roles/development.json",
+        "platforms/_records/kaggle/pcqm_fixed_datasets_v1/acceptance.json"
+      ],
+      "source_commit": "3ddb45f59917fe208c512f3f20e274f60f2e06c8",
+      "source_config_identity": "c8778d292e9e90590ff7cafa5d13bbc52154df5918f1c7b8de78726920b97d2e"
+    },
+    "track": "B",
+    "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
+  }
+}

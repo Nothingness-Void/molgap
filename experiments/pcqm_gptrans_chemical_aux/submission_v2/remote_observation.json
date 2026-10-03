@@ -1,0 +1,72 @@
+{
+  "observed_at_utc": "2026-09-30T15:28:01.660568+00:00",
+  "kernel": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+  "kernel_id": 136542008,
+  "version_number": 1,
+  "scheduler_state": "RUNNING",
+  "status_source": "authenticated Kaggle CLI kernels status",
+  "pulled_code_sha256": "6996c695c6927ae25926b1ceaae26198f3eec711c7b97762df4aa58573af4b52",
+  "exact_submitted_code_match": true,
+  "source_commit": "24bc46fe3fe387f41d42149ec78341f16ba02c94",
+  "package_identity": "40940bdfa3023113a441dc6458bd7ea099e584ef113f382a83f0df76d4e378f2",
+  "spec_identity": "bcb500dea9f6d84f5a53bbfa00d43dacab7b7e8daad650183b15e4a315104d1f",
+  "identity_reconciliation": {
+    "raw_ref": "/code/nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+    "method": "returned URL plus authenticated pulled metadata id/id_no and exact code bytes",
+    "duplicate_submission": false
+  },
+  "input_dataset_state": "ready",
+  "input_dataset_reference": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-source-v1",
+  "input_files": {
+    "descriptor_aux_labels.npz": {
+      "bytes": 100800810,
+      "sha256": "8a56d81fa9c5d7aaf74b6d76bc0bcb16c0ad3b10c79aadc64b5d1ec67eb4803b"
+    },
+    "descriptor_aux_manifest.json": {
+      "bytes": 1320271,
+      "sha256": "824d41f6f541a7f06d51fc73ffb048fd8fb61ed3e01eca0a1571b4ccaf3cbb78"
+    },
+    "experiment_spec.json": {
+      "bytes": 5877,
+      "sha256": "bcb500dea9f6d84f5a53bbfa00d43dacab7b7e8daad650183b15e4a315104d1f"
+    },
+    "fingerprint_aux_labels.npz": {
+      "bytes": 52000538,
+      "sha256": "9eb7f434b534497404e8d4435c1d6dcdde1371c27948c7603da0469b131c46f7"
+    },
+    "fingerprint_aux_manifest.json": {
+      "bytes": 1290880,
+      "sha256": "bf4599bf295c0e6dc348248d2de8c3d82fc1bde7efd7db95096e9a900d4053e5"
+    },
+    "initial_state.pt": {
+      "bytes": 21081351,
+      "sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+    },
+    "package_manifest.json": {
+      "bytes": 7421,
+      "sha256": "23defd9b730fa598cd9b3ba89648a0eea04a5727dfda501fd5f664301a6ddaf3"
+    },
+    "SOURCE_ARCHIVE_SHA256.txt": {
+      "bytes": 65,
+      "sha256": "bc86c83a8483f780511c2a30f43b81d41a4e047403e76948be345d8333010bca"
+    },
+    "SOURCE_COMMIT.txt": {
+      "bytes": 41,
+      "sha256": "c11c10d0023909f859a99e81f21df5174c7f65850344ea2535a7c969862f549b"
+    },
+    "SOURCE_FILES.json": {
+      "bytes": 30734,
+      "sha256": "cf530cb97cf684533e42b47941681f60728998489fdfa329a07f577cc30d96ea"
+    },
+    "source_payload.bin": {
+      "bytes": 580310,
+      "sha256": "742e949506330302980a17b796e63547c9e11c0790d23c2c968d9af9635da827"
+    }
+  },
+  "receipt_path": "experiments/pcqm_gptrans_chemical_aux/submission_v2/receipt/2cb302448b436771879b3eb97d85280c4ca036d003b7cf80958e45094e1679b5.json",
+  "limitations": [
+    "RUNNING does not establish GPU preflight success or formal training progress.",
+    "No remote training output downloaded.",
+    "Scientific acceptance and per-arm RML replay readiness remain pending."
+  ]
+}

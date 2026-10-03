@@ -1,0 +1,30 @@
+{
+  "action_id": "A-chemical-aux-cpu-fixtures",
+  "attempt_id": "local-001",
+  "category": "preflight",
+  "cost_event_id": "C-chemical-aux-cpu-prospective",
+  "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/protocol.md",
+  "hardware": "CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "chemical-aux-fixtures",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+}

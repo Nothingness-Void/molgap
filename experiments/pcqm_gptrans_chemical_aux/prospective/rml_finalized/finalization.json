@@ -1,0 +1,30 @@
+{
+  "cost_status": "measurement_missing",
+  "finalization_id": "finalize-4b2ecf1983d78e9c450dd4c8cf0e2ed8c1a4fd842c88c5757cb67657cf4b0f5e",
+  "finalized_at": "2026-10-04T03:33:08+09:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_chemical_aux/feasibility.md": "c41bee67c1c4bccf588560cb0e1a8d0662924731a312c7c78d01bababb8f0240",
+    "experiments/pcqm_gptrans_chemical_aux/prospective/acceptance.json": "35fa50f07163cb2530d3654e4a0252b20601fe58bd5bf722cb8bbcd79fea0c7d",
+    "experiments/pcqm_gptrans_chemical_aux/prospective/costs/C-chemical-aux-cpu-prospective.json": "5a187ada60e110783df12a560c93afb59fb9c9451ca6ae844efb28cf448eb9f8",
+    "experiments/pcqm_gptrans_chemical_aux/prospective/decision.md": "cde34447e56e46b035258d0848412a8c0cea73ebdf87ce83a37e6fa0ee756fcc",
+    "experiments/pcqm_gptrans_chemical_aux/prospective/trajectory.json": "fbc6f3eb94530188e529c361f32ce140658f9aca676aad2be1c8e0cbf251cee5",
+    "experiments/pcqm_gptrans_chemical_aux/protocol.md": "dff37a8cc151fe7a58271117a8325195237a356d17f0156477f6f37feb0b634a"
+  },
+  "outcome": "INCONCLUSIVE",
+  "published_hashes": {
+    "costs/measurement_missing.json": "c85b1d862f014f969feac01fb72a06ef8929b5b7e7eabe7e1922dfd74bb3bd99",
+    "prospective_snapshot.json": "fbc6f3eb94530188e529c361f32ce140658f9aca676aad2be1c8e0cbf251cee5",
+    "terminal_input.json": "9c7fec8b95915b6f27f8d7f76da59d85af1b9489a407a77b9e698c13fd042002",
+    "trajectory.json": "a596af5446bbf8709adceb87009471b910ad32244aa589718bae130104276bca",
+    "v5_evidence.json": "c4cb80a318e11a660e873f39474761c1c21113d3a5816d5f543e3be9c47a4785"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_chemical_aux/prospective/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "4b2ecf1983d78e9c450dd4c8cf0e2ed8c1a4fd842c88c5757cb67657cf4b0f5e",
+  "trace_status": "unavailable",
+  "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+}

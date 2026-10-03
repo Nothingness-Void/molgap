@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_DIAGNOSTIC",
+    "field": "exact_fixture_check_unrun",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-chemical-aux-static-fixtures-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "dff37a8cc151fe7a58271117a8325195237a356d17f0156477f6f37feb0b634a",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-chemical-aux-feasibility",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "exact_fixture_check_unrun"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

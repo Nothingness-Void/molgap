@@ -59,7 +59,7 @@ remote Git snapshots. Inspect only the question required by the task.
 | Archived desktop K1 isolated slot96 screen: `codex/exp/k1-slot-width96` | `D:/w/k1-slot96` | [STATUS](D:/w/k1-slot96/experiments/pcqm_k1_slot_width96/STATUS.md); accepted NEGATIVE_UNDER_CONTRACT; complete history archived, canonical desktop discovery, no successor |
 | Archived desktop pretraining pair | `C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap` | [terminal decision](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/terminal_decision.md); [unreviewed fusion supplement](C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/fusion_comparison.md) |
 | Archived desktop geometry | `C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap` | [fixed-blend scale decision](C:/Users/17449/.codex/worktrees/geometry-v4-500k/molgap/experiments/pcqm_geometry_v4_500k_pair/fixed_blend_scale_decision.md) |
-| Desktop chemical auxiliary: `codex/exp/gptrans-chemical-aux` | `C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap` | [STATUS](C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap/experiments/pcqm_gptrans_chemical_aux/STATUS.md), its linked submission_v4 observation and frozen training protocol |
+| Archived desktop chemical auxiliary: `codex/exp/gptrans-chemical-aux` | `C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap` | [STATUS](C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap/experiments/pcqm_gptrans_chemical_aux/STATUS.md), terminal trained/summary-only CPU evidence; owner8f71783e preserved in archive71d2af06, canonical desktop discovery; no objective adoption |
 | Archived desktop K1 V4 / SSMA pair: `codex/exp/k1-local-mixing-clean-aux` | `D:/w/k1-local-aux` | [Accepted terminal decision](experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/terminal_decision.md); owner tip `d92f3615` preserved through archive custody merge `6b91b285`; canonical desktop discovery, no successor; prior NO_TRAIN custody and historical trace gap preserved |
 | Archived desktop precision | `D:/文档/molgap-exp/molgap-gptrans-fp16-precision-100k` | Retained acceptance / reference-binding records |
 | Archived server DSAR/DSMR draft | `D:/w/rml-500k-fix` | Old draft snapshot; job/attempt identity incomplete, not live scheduler evidence |
@@ -71,8 +71,8 @@ owns exact source/supplement tips and preserved qualification gaps. Four old
 temporary refs were retired locally/remotely after their archive push; detached
 worktrees and ignored artifacts remain. The pretraining supplement was saved
 as an unreviewed snapshot, not accepted Desktop evidence. Administrative archival
-does not finalize a scientific trajectory or qualify replay. Chemical auxiliary
-keeps its dedicated working ref through acceptance. DSAR/DSMR stays server-owned;
+does not finalize a scientific trajectory or qualify replay. Chemical auxiliary terminal histories are preserved in archive with exclusions;
+retained owner checkout keeps ignored artifacts. DSAR/DSMR stays server-owned;
 do not adopt jobs or infer scheduler state from the archived draft. Reopening
 archived qualification work requires explicit routing, not a successor by default.
 

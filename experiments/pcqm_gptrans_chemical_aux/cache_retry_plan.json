@@ -1,0 +1,116 @@
+{
+  "costs": [
+    {
+      "action_id": "A-chemical-aux-component-cache-retry2",
+      "attempt_id": "local-component-cache-002",
+      "category": "preflight",
+      "cost_event_id": "C-chemical-aux-component-cache-retry2-prospective",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/cache_retry_protocol.md",
+      "hardware": "CPU",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "chemical-aux-component-cache-retry2",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-chemical-aux-component-cache-retry2-20260930"
+    }
+  ],
+  "decision_state": {
+    "available_actions": [
+      "A-chemical-aux-component-cache-retry2"
+    ],
+    "chosen_action": "A-chemical-aux-component-cache-retry2",
+    "policy_id": "pcqm-chemical-aux-feasibility",
+    "policy_version": "1",
+    "state_timestamp": "2026-09-30T14:39:18.541735+00:00"
+  },
+  "trajectory": {
+    "actions": [
+      {
+        "action_id": "A-chemical-aux-component-cache-retry2",
+        "attempt_ids": [
+          "local-component-cache-002"
+        ],
+        "cost_event_ids": [
+          "C-chemical-aux-component-cache-retry2-prospective"
+        ],
+        "evidence_refs": [],
+        "run_ids": [
+          "chemical-aux-component-cache-retry2"
+        ],
+        "source_commit": "d9fe982088117bc51f226d920e29885c5509d265",
+        "type": "DIAGNOSTIC"
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/cache_retry_protocol.md",
+      "next_allowed_actions": [
+        "A-chemical-aux-component-cache-retry2"
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": []
+    },
+    "family_id": "gptrans-clean-chemical-aux-cache",
+    "hypothesis": {
+      "alternative_explanations": [
+        "Additional supervision may only improve early optimization; compressed head may remove the paper benefit; labels may be redundant."
+      ],
+      "changed_mechanism": "Existing PCQM topology parser; descriptor-only raw/CDF missingness mask; independent fingerprint-only cache.",
+      "cheapest_falsifier": "Priority exceptional-row or exact full-cache coverage failure blocks GPU launch.",
+      "decision_changed_if_negative": "Stop before GPU release and record exact failed rows or provenance blocker.",
+      "decision_changed_if_positive": "Freeze independent training-arm plans after full-cache acceptance.",
+      "expected_native_cost_ref": "C-chemical-aux-component-cache-retry2-prospective",
+      "hypothesis_id": "H-chemical-aux-component-cache-retry2-20260930",
+      "observed_deficiency": "Accepted small GPTrans reference leaves development error; earlier auxiliary-like gains eroded at 500K. A missing chemical representation is unproven.",
+      "related_closed_family_ids": [
+        "gptrans-t-input-embedding-initialization",
+        "pcqm-k1-joint-atom-reconstruction"
+      ],
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ]
+    },
+    "owner": "desktop",
+    "question": "Can the repaired explicit component policies retain all frozen V4 training rows in two independent accepted label caches?",
+    "state_at_start": {
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_chemical_aux/cache_retry_protocol.md",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_chemical_aux/cache_retry_protocol.md",
+        "experiments/pcqm_gptrans_chemical_aux/label_policy.md"
+      ],
+      "parent_trajectory_ids": [
+        "TB-chemical-aux-fixed-train-cache-20260930"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_t_100k_v4/roles/train.json",
+        "platforms/_records/kaggle/pcqm_fixed_datasets_v1/acceptance.json"
+      ],
+      "source_commit": "d9fe982088117bc51f226d920e29885c5509d265",
+      "source_config_identity": "3ba6a0cf4f1f5b68f12ebfa3ca6c48f16bdbb9b955871bc69a9391284689161e"
+    },
+    "track": "B",
+    "trajectory_id": "TB-chemical-aux-component-cache-retry2-20260930"
+  }
+}

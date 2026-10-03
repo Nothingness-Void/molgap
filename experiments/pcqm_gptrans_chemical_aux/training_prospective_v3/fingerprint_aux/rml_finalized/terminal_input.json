@@ -1,0 +1,380 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/acceptance.json": "186091ec1d49d15ca04a4f66a9b514f3ca1ea75c92c0ed167929029583df8cf8",
+    "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/fingerprints_retry2_manifest.json": "bf4599bf295c0e6dc348248d2de8c3d82fc1bde7efd7db95096e9a900d4053e5",
+    "experiments/pcqm_gptrans_chemical_aux/objective_fingerprint_aux.json": "6726f47e3d82d1f906facb010552d941e46b64fd3d15a4bf20b285106b375bf6",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/kernel_error.log": "6e43c800a6d26b11f8634805fb12464684cfa3591ec02adde6e7e08314b1d0a0",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/loader_preflight.json": "8cdc1a5f877350d07a257c4324a38ad391598dc3615dc938729db00e1650b815",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/package_manifest.json": "a3e5865892eb4988d41319037a5408c5e042bd7ef1ad3793eaa2630a77d8a97e",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/family_outputs/canonical_trace.json": "6d5fddbec5300bad2359c461d4e94c44e0d0e6e4e198554f23f4a70853f44dbc",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/family_outputs/canonical_trace.json.context.json": "def24f041e8682857af4980064b260ee7ecfd495f54c07f82e39b5385222b710",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/objective_profile.json": "e35ccc52465c6cdfb131f26b5bba68941c5b81465979f7dd36f095570aafbf31",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/preflight.json": "6d6390f9f0ab91ab6ffa9b4ba9c1c60af3de3d41aacebcb3f5384e22c1cc7c6a",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/runtime_certificate.json": "9f8f87566608fbe0dcf33432171dd25297e0c6d0058f3d027248505e3e2d5fb2",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/runtime_manifest.json": "95d0929f43150ada28ace12e13c5489d4b832393e3f64c436586c9e46d8fb148",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/trace.json": "a3df397fce73e45125f1e3d91c5ab201ecf8ef0c131031992eafdde9ffb8e0b0",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/family_outputs/canonical_trace.json": "8244b7d64c0a93d610bcb7fc52e0d731eb73c62f3914630388edf28c4a2b8ace",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/family_outputs/canonical_trace.json.context.json": "b5e73b77c7617f1002fead6be34dad37daba6ca6e91c2485e03914ed85391b4e",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/objective_profile.json": "fc9948bdce6ffd5516d15caf16042c4ebae9f129388e082e05b5b7ac6437f1ab",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/preflight.json": "76ce52a7c2d546631fea6e3819217d3a3d08d8d6086ce49796fea1d74d26c0c6",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/runtime_certificate.json": "1b2e522c35cb517c32fad51fe5cc726df42a49e7a8499e0e8c13f8b3cac3603f",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/runtime_manifest.json": "95d0929f43150ada28ace12e13c5489d4b832393e3f64c436586c9e46d8fb148",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/trace.json": "54fd9acf6f7426df90b4dd17dd205960ba5ebb7326e355a8b822e58aab3aa9c2",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/retrieval.json": "a8d8b18569ec5588a9551397dc856a1588c80f30eb876d9dc0d60785f996f1a2",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/pulled_kernel_metadata.json": "b5d8dd078112f9be486d5dee7505ec604246aa026dcc43fe9f59e9265854a8ac",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/remote_observation.json": "5941f02cf8f8011fe1fb5db39a9dcc67c3ec0bdcb0b85f0264fc506a9935cea1",
+    "experiments/pcqm_gptrans_chemical_aux/submission_v3/submit_response.json": "b3544723169886773f485d0fe1db5dd5e47ef1543993860efbf6a71521615d21",
+    "experiments/pcqm_gptrans_chemical_aux/training_contract_fingerprint_aux.json": "c66af03d28707ae24974efa4da56d4b7983daab43965197e3b9eee00275e62e0",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/acceptance.json": "77597ce5a016a3f7ead76deb1f86fbc76bca4e88484ad4a2b7e21e027c4a495f",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/costs/cost-TB-gptrans-chemical-fingerprint-aux-100k-s42-v3-expected-training.json": "225be63855703e681ae3c76a235cee3a16eb701615ca49c44ff7a635efec5620",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/decision_inconclusive.md": "9af3d2218bac0dcc1715f950e4fad8fb403a62466c7e4ed6047291d8747ad418",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/decision_state.json": "01e65b119fa5b623da88e71b08fbea0f7c37f2462fc10f1a5714ea45d347f568",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/policy_snapshot.json": "9b2ed121994097a0f17637618d77290db2a4308c11aba5fdb311b8dd25a97221",
+    "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/trajectory.json": "4f13c1d44ded5e255c8b529ebd39600c7fe5730548570630cbbed3c9b808e9d3",
+    "experiments/pcqm_gptrans_chemical_aux/training_protocol.md": "58c613e8cf9c151172f33a4b76058cca7def50a47cdab60293a3fa3b75d1c8ff"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-kernel-version2",
+      "category": "training",
+      "cost_event_id": "C-TB-gptrans-chemical-fingerprint-aux-100k-s42-v3-first-epoch-wall",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/acceptance.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.05222740990611112
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/decision_inconclusive.md",
+    "next_allowed_actions": [
+      "continue under separately frozen v4 infrastructure repair retry"
+    ],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "canonical trace permits same-exposure checkpoint markers without permitting duplicate metric observations"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "186091ec1d49d15ca04a4f66a9b514f3ca1ea75c92c0ed167929029583df8cf8"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/fingerprints_retry2_manifest.json",
+        "name": "fingerprints_retry2_manifest.json",
+        "sha256": "bf4599bf295c0e6dc348248d2de8c3d82fc1bde7efd7db95096e9a900d4053e5"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/objective_fingerprint_aux.json",
+        "name": "objective_fingerprint_aux.json",
+        "sha256": "6726f47e3d82d1f906facb010552d941e46b64fd3d15a4bf20b285106b375bf6"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/kernel_error.log",
+        "name": "kernel_error.log",
+        "sha256": "6e43c800a6d26b11f8634805fb12464684cfa3591ec02adde6e7e08314b1d0a0"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/loader_preflight.json",
+        "name": "loader_preflight.json",
+        "sha256": "8cdc1a5f877350d07a257c4324a38ad391598dc3615dc938729db00e1650b815"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/package_manifest.json",
+        "name": "package_manifest.json",
+        "sha256": "a3e5865892eb4988d41319037a5408c5e042bd7ef1ad3793eaa2630a77d8a97e"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/pulled_kernel_metadata.json",
+        "name": "pulled_kernel_metadata.json",
+        "sha256": "b5d8dd078112f9be486d5dee7505ec604246aa026dcc43fe9f59e9265854a8ac"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/remote_observation.json",
+        "name": "remote_observation.json",
+        "sha256": "5941f02cf8f8011fe1fb5db39a9dcc67c3ec0bdcb0b85f0264fc506a9935cea1"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/submit_response.json",
+        "name": "submit_response.json",
+        "sha256": "b3544723169886773f485d0fe1db5dd5e47ef1543993860efbf6a71521615d21"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/training_contract_fingerprint_aux.json",
+        "name": "training_contract_fingerprint_aux.json",
+        "sha256": "c66af03d28707ae24974efa4da56d4b7983daab43965197e3b9eee00275e62e0"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "77597ce5a016a3f7ead76deb1f86fbc76bca4e88484ad4a2b7e21e027c4a495f"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/costs/cost-TB-gptrans-chemical-fingerprint-aux-100k-s42-v3-expected-training.json",
+        "name": "cost-TB-gptrans-chemical-fingerprint-aux-100k-s42-v3-expected-training.json",
+        "sha256": "225be63855703e681ae3c76a235cee3a16eb701615ca49c44ff7a635efec5620"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/decision_state.json",
+        "name": "decision_state.json",
+        "sha256": "01e65b119fa5b623da88e71b08fbea0f7c37f2462fc10f1a5714ea45d347f568"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/policy_snapshot.json",
+        "name": "policy_snapshot.json",
+        "sha256": "9b2ed121994097a0f17637618d77290db2a4308c11aba5fdb311b8dd25a97221"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/trajectory.json",
+        "name": "trajectory.json",
+        "sha256": "4f13c1d44ded5e255c8b529ebd39600c7fe5730548570630cbbed3c9b808e9d3"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+        "name": "training_protocol.md",
+        "sha256": "58c613e8cf9c151172f33a4b76058cca7def50a47cdab60293a3fa3b75d1c8ff"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/decision_inconclusive.md",
+        "name": "decision_inconclusive.md",
+        "sha256": "9af3d2218bac0dcc1715f950e4fad8fb403a62466c7e4ed6047291d8747ad418"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/retrieval.json",
+        "name": "retrieval.json",
+        "sha256": "a8d8b18569ec5588a9551397dc856a1588c80f30eb876d9dc0d60785f996f1a2"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/objective_profile.json",
+        "name": "objective_profile.json",
+        "sha256": "e35ccc52465c6cdfb131f26b5bba68941c5b81465979f7dd36f095570aafbf31"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/preflight.json",
+        "name": "preflight.json",
+        "sha256": "6d6390f9f0ab91ab6ffa9b4ba9c1c60af3de3d41aacebcb3f5384e22c1cc7c6a"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/runtime_certificate.json",
+        "name": "runtime_certificate.json",
+        "sha256": "9f8f87566608fbe0dcf33432171dd25297e0c6d0058f3d027248505e3e2d5fb2"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/runtime_manifest.json",
+        "name": "runtime_manifest.json",
+        "sha256": "95d0929f43150ada28ace12e13c5489d4b832393e3f64c436586c9e46d8fb148"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/trace.json",
+        "name": "trace.json",
+        "sha256": "a3df397fce73e45125f1e3d91c5ab201ecf8ef0c131031992eafdde9ffb8e0b0"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/family_outputs/canonical_trace.json",
+        "name": "canonical_trace.json",
+        "sha256": "6d5fddbec5300bad2359c461d4e94c44e0d0e6e4e198554f23f4a70853f44dbc"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/family_outputs/canonical_trace.json.context.json",
+        "name": "canonical_trace.json.context.json",
+        "sha256": "def24f041e8682857af4980064b260ee7ecfd495f54c07f82e39b5385222b710"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/objective_profile.json",
+        "name": "objective_profile.json",
+        "sha256": "fc9948bdce6ffd5516d15caf16042c4ebae9f129388e082e05b5b7ac6437f1ab"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/preflight.json",
+        "name": "preflight.json",
+        "sha256": "76ce52a7c2d546631fea6e3819217d3a3d08d8d6086ce49796fea1d74d26c0c6"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/runtime_certificate.json",
+        "name": "runtime_certificate.json",
+        "sha256": "1b2e522c35cb517c32fad51fe5cc726df42a49e7a8499e0e8c13f8b3cac3603f"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/runtime_manifest.json",
+        "name": "runtime_manifest.json",
+        "sha256": "95d0929f43150ada28ace12e13c5489d4b832393e3f64c436586c9e46d8fb148"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/trace.json",
+        "name": "trace.json",
+        "sha256": "54fd9acf6f7426df90b4dd17dd205960ba5ebb7326e355a8b822e58aab3aa9c2"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/family_outputs/canonical_trace.json",
+        "name": "canonical_trace.json",
+        "sha256": "8244b7d64c0a93d610bcb7fc52e0d731eb73c62f3914630388edf28c4a2b8ace"
+      },
+      {
+        "availability": "retained_local_metadata_verified",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/family_outputs/canonical_trace.json.context.json",
+        "name": "canonical_trace.json.context.json",
+        "sha256": "b5e73b77c7617f1002fead6be34dad37daba6ca6e91c2485e03914ed85391b4e"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/acceptance.json",
+        "experiments/pcqm_gptrans_chemical_aux/cache_retry_observation/fingerprints_retry2_manifest.json",
+        "experiments/pcqm_gptrans_chemical_aux/objective_fingerprint_aux.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/kernel_error.log",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/loader_preflight.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/package_manifest.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/pulled_kernel_metadata.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/remote_observation.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/submit_response.json",
+        "experiments/pcqm_gptrans_chemical_aux/training_contract_fingerprint_aux.json",
+        "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/acceptance.json",
+        "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/costs/cost-TB-gptrans-chemical-fingerprint-aux-100k-s42-v3-expected-training.json",
+        "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/decision_state.json",
+        "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/policy_snapshot.json",
+        "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/trajectory.json",
+        "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+        "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/decision_inconclusive.md",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/retrieval.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/objective_profile.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/preflight.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/runtime_certificate.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/runtime_manifest.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/trace.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/family_outputs/canonical_trace.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/descriptor_aux/family_outputs/canonical_trace.json.context.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/objective_profile.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/preflight.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/runtime_certificate.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/runtime_manifest.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/trace.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/family_outputs/canonical_trace.json",
+        "experiments/pcqm_gptrans_chemical_aux/submission_v3/partial_outputs/fingerprint_aux/family_outputs/canonical_trace.json.context.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-chemical-fingerprint-aux-100k-s42-v3-inconclusive-trace-failure",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3-kernel-version2",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-30T16:10:13.606715+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Evidence indexing executes no training or inference. Underlying run: one epoch runtime/step gates, aligned finite development predictions, retained source-pinned legacy resume and partial trace; no terminal promotion comparison."
+    },
+    "outcome": {
+      "artifact_status": "partial_trace_predictions_and_legacy_resume_retained",
+      "budget_decision": "partial_epoch_wall_measured_device_cost_unknown",
+      "comparison_status": "not_qualified_partial_exposure",
+      "execution_status": "infrastructure_error_after_one_epoch",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "fixed50k_development": "selection_used",
+      "official_train_prefix_0_100000": "training_membership",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "desktop_fingerprint_aux_partial_100k_training",
+    "track": "B"
+  },
+  "finalized_at": "2026-09-30T16:10:13.606715+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_train_prefix_0_100000": "training_membership",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm-fixed100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/acceptance.json",
+      "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v3-partial-train",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "95d71c7700f92cd861b885c27092ff9caf2a05b320c36e8b58da8bf3b0703966",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm-fixed100k-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective_v3/fingerprint_aux/acceptance.json",
+      "role_event_id": "R-TB-gptrans-chemical-fingerprint-aux-100k-s42-v3-partial-development",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "0635ba2d1b9a7fca5167dd4cc9864f26768dbbac7cfec55c616e630ed39ff6a1",
+      "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3"
+    }
+  ],
+  "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+  "trajectory_id": "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3"
+}

@@ -1,0 +1,32 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-45e6c9452456e96d9ecc68186c27453f2f7dc063000011e29666be96aa77d644",
+  "finalized_at": "2026-09-30T13:28:39.045442+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_chemical_aux/cache_decision.md": "1e7076383597df5aa295a28ae476f817e83e72dad058d930268af74bb645d3fc",
+    "experiments/pcqm_gptrans_chemical_aux/cache_observation/acceptance.json": "2fbc8d8043d9c64166c41864829835581c6987166e16b480da01d1d9e13dc255",
+    "experiments/pcqm_gptrans_chemical_aux/cache_observation/confirmed_blocker.json": "5b55a45aa19a632167205cd149908b613ec876756ce4707050c9ae348cd94949",
+    "experiments/pcqm_gptrans_chemical_aux/cache_observation/export_receipt_attempt2.json": "aec67074419633bcc8bb6df11c4bc1425cd027e0ad579434fd4af07f2f2b093f",
+    "experiments/pcqm_gptrans_chemical_aux/cache_observation/process_before_cancel.json": "ab692a1b25ffee9ecae2652ad156fe05744f5b7975a141af600b0f19a3a6938e",
+    "experiments/pcqm_gptrans_chemical_aux/cache_observation/train_export_binding.json": "0c348d34306b82fa9bdb2c33919a01ac1b9807c899300a20d34a59fd62fdbf10",
+    "experiments/pcqm_gptrans_chemical_aux/cache_protocol.md": "3ba6a0cf4f1f5b68f12ebfa3ca6c48f16bdbb9b955871bc69a9391284689161e"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/C-chemical-aux-fixed-cache-observed-process-interval.json": "c0f00699bd8152f44d6bd34e056ac75ea0ac88b4d11f39fb1ee83545adf1ecd6",
+    "prospective_snapshot.json": "3cd0e54ff7bcfc5cc6d1954cc535bdc100119267d90c08f6bdb209577ef95a1e",
+    "roles/R-chemical-aux-fixed-cache-train-chemical-labels.json": "47ad12172267f4a5ed1a16d41c444242c9da053d02b858125faccb3c9038e7c9",
+    "terminal_input.json": "c9de0099f4bbbfed185efe913d139ca7a3d928c4e8bdfd363e5f82c2ee58b7e8",
+    "trajectory.json": "3495025fdbd5c2cca46ba84197357c87ef7ec21c484a8871866127a256f90c28",
+    "v5_evidence.json": "6e3dcab0677192a8c008708ca7aa336f9bec36e04b9f485bd93eb48ad3f7fdef"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_chemical_aux/cache_prospective/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "45e6c9452456e96d9ecc68186c27453f2f7dc063000011e29666be96aa77d644",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-chemical-aux-fixed-train-cache-20260930"
+}

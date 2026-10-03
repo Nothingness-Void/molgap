@@ -1,0 +1,30 @@
+{
+  "action_id": "A-chemical-aux-component-cache-retry2",
+  "attempt_id": "local-component-cache-002",
+  "category": "preflight",
+  "cost_event_id": "C-chemical-aux-component-cache-retry2-prospective",
+  "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/cache_retry_protocol.md",
+  "hardware": "CPU",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "chemical-aux-component-cache-retry2",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-chemical-aux-component-cache-retry2-20260930"
+}

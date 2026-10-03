@@ -1,0 +1,43 @@
+{
+  "device_time_semantics": null,
+  "metric_semantics": {
+    "ema_dev_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "internal_development_100000_150000",
+      "target": "Gap",
+      "unit": "eV",
+      "weights": "ema"
+    },
+    "live_dev_metric": null,
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "official_train_prefix_0_100000",
+      "target": "Gap",
+      "unit": "eV",
+      "weights": "live"
+    }
+  },
+  "observations": [
+    {
+      "checkpoint_identity": null,
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": 0.779376745223999,
+      "epoch_or_pass": 1,
+      "event": "observation",
+      "learning_rate": null,
+      "live_dev_metric": null,
+      "live_train_metric": 0.5526964108366045,
+      "optimizer_step": 781,
+      "sample_presentations": 99968,
+      "sequence": 0,
+      "wall_time_seconds": null
+    }
+  ],
+  "run_id": "gptrans-chemical-components-100k-s42-v3:descriptor_aux:downstream",
+  "schema": "molgap-trace-v1",
+  "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v3"
+}

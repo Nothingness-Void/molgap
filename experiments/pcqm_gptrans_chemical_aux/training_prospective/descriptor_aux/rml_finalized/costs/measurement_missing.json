@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "unknown",
+  "category": "other",
+  "cost_event_id": "cost-finalize-e0a88230278efd2319dea140",
+  "evidence_ref": "experiments/pcqm_gptrans_chemical_aux/training_prospective/descriptor_aux/rml_finalized/v5_evidence.json",
+  "hardware": "unknown",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "unknown",
+  "run_id": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-gptrans-chemical-descriptor-aux-100k-s42-v1"
+}

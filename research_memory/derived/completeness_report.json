@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 76,
-    "with_complete_native_measurement": 9,
-    "with_cost_event": 65,
-    "with_incomplete_native_measurement": 56,
+    "trajectories_total": 87,
+    "with_complete_native_measurement": 10,
+    "with_cost_event": 76,
+    "with_incomplete_native_measurement": 66,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,8 +15,11 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 55,
+      "count": 66,
       "items": [
+        "T-gptrans-chemical-aux-feasibility",
+        "TB-chemical-aux-component-cache-retry2-20260930",
+        "TB-chemical-aux-fixed-train-cache-20260930",
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
@@ -25,6 +28,14 @@
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-500k-frozen-readout-attribution",
         "TB-gptrans-centered-logits-100k-s42",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v2",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v3",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v4",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",
         "TB-gptrans-full-convergence-20260919",
         "TB-gptrans-geometry-distance-100k-s42",
@@ -104,8 +115,10 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 56,
+      "count": 66,
       "items": [
+        "T-gptrans-chemical-aux-feasibility",
+        "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-gptrans-100k-local-joint-control-20260925",
@@ -114,6 +127,14 @@
         "TB-gptrans-500k-frozen-readout-attribution",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-centered-logits-k1pair-100k-s42",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v2",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v3",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v4",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v2",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v3",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v4",
         "TB-gptrans-feature-denoise-full-atom-100k-s42",
         "TB-gptrans-feature-denoise-full-atom-bond-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",
@@ -185,13 +206,16 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 32,
+      "count": 35,
       "items": [
+        "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
+        "TB-gptrans-chemical-descriptor-aux-100k-s42-v1",
+        "TB-gptrans-chemical-fingerprint-aux-100k-s42-v1",
         "TB-gptrans-geometry-distance-100k-s42",
         "TB-gptrans-geometry-distance-angle-100k-s42",
         "TB-gptrans-input-init-100k-s42",

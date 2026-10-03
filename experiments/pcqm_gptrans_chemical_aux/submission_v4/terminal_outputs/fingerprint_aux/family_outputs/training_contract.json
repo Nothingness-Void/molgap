@@ -1,0 +1,83 @@
+{
+  "acceptance_requirements": {
+    "development_rows": 50000,
+    "epochs": 60,
+    "optimizer_steps": 46860,
+    "precision": "fp32",
+    "sample_presentations": 5998080,
+    "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+    "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e"
+  },
+  "architecture_sha256": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+  "arm_id": "fingerprint_aux",
+  "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+  "data_role_fingerprint": "e0d4412326e631fba2d0d3ee74d93c8ba7c4acc5ef76be43d69ab24581bd159d",
+  "deterministic_algorithms": true,
+  "development_role_identity": "internal_development_100000_150000",
+  "development_rows": 50000,
+  "device_count": 1,
+  "ema_decay": 0.9999,
+  "epochs": 60,
+  "feature_fingerprint": "8e2a76b9e8c53d1c91983c87ee6f7605ea9d48013ef70a8ad34191a6b6041979",
+  "finite_check_every_optimizer_steps": 50,
+  "format": "molgap-gptrans-chemical-component-100k-contract-v1",
+  "geometry_aggregate_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+  "gradient_accumulation_steps": 1,
+  "gradient_clip": 1.0,
+  "label_cache": {
+    "manifest_sha256": "bf4599bf295c0e6dc348248d2de8c3d82fc1bde7efd7db95096e9a900d4053e5",
+    "role_sha256": "626fb2ff7dc44e9e6a88dfd301b3b295d1414c89b1dbac708af8379c66d4932c",
+    "rows_sha256": "64c10233a76f1f36d9f0da3b3c26a83c4166a44bbf70c3e58fcc6d24cb78df46"
+  },
+  "label_policy": {
+    "components": [
+      "fingerprints"
+    ],
+    "descriptor_missing_policy": "reject",
+    "parse_policy": "pcqm_topology"
+  },
+  "loss_fingerprint": "normalized-gap-l1+chemical-aux:75f4503819d32407609e5ccc68f519907d01e0543bf6cfacf6ced67abebccc7c:label-policy:d42963fac873ee88ab7127dd19ccf1786b235e24943bb80186cedc3370ee1070",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "minimum_material_gain_eV": 0.003,
+  "model_id": "gptrans_t_core_12x256_pair32",
+  "objective": {
+    "auxiliary_hidden_dim": 32,
+    "auxiliary_seed": 42,
+    "descriptor_weight": 0.0,
+    "fingerprint_weight": 0.1,
+    "schema": "molgap-gptrans-objective-v1"
+  },
+  "optimizer": {
+    "foreach": false,
+    "fused": false,
+    "lr": 0.001,
+    "name": "AdamW",
+    "weight_decay": 0.05
+  },
+  "optimizer_fingerprint": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+  "optimizer_steps_per_epoch": 781,
+  "owner": "desktop",
+  "parameter_count": 5246817,
+  "physical_batch_per_device": 128,
+  "precision": "fp32",
+  "protocol_ref": "experiments/pcqm_gptrans_chemical_aux/training_protocol.md",
+  "role_access_fingerprint": "f44a677d54d7f99eacb610a481d2506f8d2bb1f66087cde8f88f7c90ff825d42",
+  "row_order_fingerprint": "71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+  "rows_dropped_per_epoch": 32,
+  "sample_exposure": 5998080,
+  "schedule": {
+    "minimum_lr": 1e-06,
+    "warmup_epochs": 4
+  },
+  "schedule_fingerprint": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+  "seed": 42,
+  "seed42_initial_model_sha256": "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6",
+  "seed42_initial_state_artifact_sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+  "selection_fingerprint": "best-development-ema9999-60epochs",
+  "stochasticity_floor_eV": 0.003,
+  "tail_batch_policy": "drop_last",
+  "target_fingerprint": "pcqm4mv2-gap-eV-direct",
+  "target_transform_fingerprint": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+  "tf32_enabled": false,
+  "train_rows": 100000
+}

@@ -1,15 +1,15 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 65
+- Validated V5 evidence: 76
 - Evidence without trajectory: 0
 
 ## Trajectories
 - CLOSED: 11
-- INCONCLUSIVE: 14
+- INCONCLUSIVE: 19
 - INFRASTRUCTURE_ONLY: 5
 - NEGATIVE_UNDER_CONTRACT: 17
-- NO_TRAIN: 21
+- NO_TRAIN: 27
 - POSITIVE_UNDER_CONTRACT: 8
 
 ## Transfer
@@ -18,15 +18,19 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 154
-- Coarse historical role records: 288
-- Repeatedly selected role identities: 11
+- Explicit role events: 168
+- Coarse historical role records: 341
+- Repeatedly selected role identities: 12
 
 ## Cost
 - A100 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - A100 device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - A100 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - A100 wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- CPU cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
+- CPU device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=2
+- CPU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=2
+- CPU wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - CPU4threads; no accelerator cpu_hours: measured=0.019379 (2 measured records), estimated=0.666667 (2 estimated records), measurement_missing=1, not_applicable=0
 - CPU4threads; no accelerator device_hours: not applicable (5 records); measurement_missing=0
 - CPU4threads; no accelerator queue_hours: not applicable (5 records); measurement_missing=0
@@ -35,6 +39,10 @@
 - CPU; inference4threads, structure1thread; no accelerator device_hours: not applicable (1 records); measurement_missing=0
 - CPU; inference4threads, structure1thread; no accelerator queue_hours: not applicable (1 records); measurement_missing=0
 - CPU; inference4threads, structure1thread; no accelerator wall_hours: measured=0.014255 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- CPU_MODEL_UNRECORDED cpu_hours: measured=0.330365 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- CPU_MODEL_UNRECORDED device_hours: not applicable (3 records); measurement_missing=0
+- CPU_MODEL_UNRECORDED queue_hours: not applicable (3 records); measurement_missing=0
+- CPU_MODEL_UNRECORDED wall_hours: measured=0.666858 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Hygon DCU cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - Hygon DCU device_hours: measured=30.974167 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Hygon DCU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
@@ -67,10 +75,10 @@
 - NvidiaTeslaP100_requested device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - NvidiaTeslaP100_requested queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - NvidiaTeslaP100_requested wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
-- NvidiaTeslaT4_requested cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=23, not_applicable=0
-- NvidiaTeslaT4_requested device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=23, not_applicable=0
-- NvidiaTeslaT4_requested queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=23, not_applicable=0
-- NvidiaTeslaT4_requested wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=23, not_applicable=0
+- NvidiaTeslaT4_requested cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=31, not_applicable=0
+- NvidiaTeslaT4_requested device_hours: measured=unknown (0 measured records), estimated=48.000000 (8 estimated records), measurement_missing=23, not_applicable=0
+- NvidiaTeslaT4_requested queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=31, not_applicable=0
+- NvidiaTeslaT4_requested wall_hours: measured=unknown (0 measured records), estimated=48.000000 (8 estimated records), measurement_missing=23, not_applicable=0
 - Tesla T4 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
 - Tesla T4 device_hours: measured=37.683279 (13 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
@@ -99,10 +107,10 @@
 - Tesla_P100_PCIE_16GB device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_P100_PCIE_16GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla_P100_PCIE_16GB wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Tesla_T4 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=11
-- Tesla_T4 device_hours: measured=32.286500 (5 measured records), estimated=32.000000 (6 estimated records), measurement_missing=1, not_applicable=0
-- Tesla_T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=9
-- Tesla_T4 wall_hours: measured=32.888200 (5 measured records), estimated=32.000000 (6 estimated records), measurement_missing=1, not_applicable=0
+- Tesla_T4 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=11
+- Tesla_T4 device_hours: measured=32.286500 (5 measured records), estimated=32.000000 (6 estimated records), measurement_missing=5, not_applicable=0
+- Tesla_T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=7, not_applicable=9
+- Tesla_T4 wall_hours: measured=38.764538 (9 measured records), estimated=32.000000 (6 estimated records), measurement_missing=1, not_applicable=0
 - Z100SM DCU cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Z100SM DCU device_hours: measured=0.073889 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Z100SM DCU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -119,16 +127,16 @@
 - not_applicable device_hours: not applicable (2 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (2 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (2 records); measurement_missing=0
-- unknown cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
-- unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
-- unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
-- unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
+- unknown cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
+- unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
+- unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
+- unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
 - unknown-before-authorized-device-query cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 100
-- Cost-event coverage: 65/76 trajectories; incomplete native measurement=56
+- Measurement-missing cost events: 122
+- Cost-event coverage: 76/87 trajectories; incomplete native measurement=66
 
 ## Screening Backtest
 - Status: available
@@ -136,9 +144,9 @@
 - Excluded traces: 11
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 55
+- [INFO] trace_unavailable_for_backtest: 66
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 56
+- [WARN] incomplete_native_cost_measurement: 66
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 32
+- [WARN] missing_explicit_role_identity: 35
 - [WARN] trajectory_without_v5_evidence: 11

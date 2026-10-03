@@ -1,0 +1,73 @@
+{
+  "adapter": "gptrans-v1",
+  "artifacts": {
+    "contract": {
+      "path": "training_contract.json",
+      "sha256": "c66af03d28707ae24974efa4da56d4b7983daab43965197e3b9eee00275e62e0"
+    },
+    "predictions": {
+      "path": "development_predictions.pt",
+      "sha256": "1dc26ca8129f7b491bd82c369625f0bbe41caaa9b8515f89165a5ac314f4c651"
+    },
+    "resume": {
+      "path": "last_checkpoint.pt",
+      "sha256": "28ad5af2e3275c05df42d02268506d3fcf90faf878ac7da1c328d8329f9ed8fb"
+    },
+    "selected_model": {
+      "path": "selected_model.pt",
+      "sha256": "022677fae26a5e30f195f3ec2986a815738879c1a2e07d1a2a6c43cbf2d61075"
+    },
+    "trace": {
+      "path": "canonical_trace.json",
+      "sha256": "1b08a62d6d126a9d8e4b1217bca9cad9b6e1b5d13e5205fdbea52f078e9739ff"
+    }
+  },
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "fingerprint_aux",
+    "arm_identity": "41a753151e391e080cdf711265547e310356f458eb671f1060fc9c4853f3ab08",
+    "experiment_id": "pcqm-gptrans-chemical-components-100k-v4",
+    "family_name": "gptrans_t",
+    "family_version": "1",
+    "logical_run_id": "gptrans-chemical-components-100k-s42-v4",
+    "package_identity": "2fa7cb09d255041f35b2f193e25c698f23b6eafeede16658c3e10bedd623a799",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "nothingnessvoid/molgap-gptrans-chemical-aux-100k-s42-v1",
+    "source_archive_sha256": "61f2f11958cc69ca74d7a4c65e1fbe45194961daea2e709447db00ac568ee9fa",
+    "source_commit": "3aabc3d05a3cc0644ff984426fe6c4d8fe109899",
+    "spec_identity": "84a944ccfbb13e81809cdd5fe7dc73c1564ece95e8bdec1fa0388280a27e5b63",
+    "training_recipe_sha256": "c66af03d28707ae24974efa4da56d4b7983daab43965197e3b9eee00275e62e0"
+  },
+  "costs": [
+    {
+      "hardware": "Tesla T4",
+      "metric": "wall_seconds",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 10388.010558056
+    },
+    {
+      "hardware": "Tesla T4",
+      "metric": "device_seconds",
+      "semantics": "allocated_device",
+      "status": "missing",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "format": "molgap-family-output-v1",
+  "progress": {
+    "epochs": 60,
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080
+  },
+  "runtime": {
+    "account": "nothingnessvoid",
+    "platform": "kaggle",
+    "precision": "fp32",
+    "source_archive_sha256": "61f2f11958cc69ca74d7a4c65e1fbe45194961daea2e709447db00ac568ee9fa",
+    "source_commit": "3aabc3d05a3cc0644ff984426fe6c4d8fe109899"
+  }
+}

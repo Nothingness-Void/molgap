@@ -55,14 +55,15 @@ Branch-local records absent here are linked through the
   or successor. Archive custody and accepted desktop evidence are linked in
   [STATUS](experiments/pcqm_k1_slot_width96/STATUS.md).
 
-- **Chemical auxiliary:** owner `17b1987a` has complete endpoint acceptance and
-  terminal RML; both arms remain INCONCLUSIVE for strict qualification and replay.
-  Desktop evidence integration and Git routing remain under review. Read the
-  [STATUS](C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap/experiments/pcqm_gptrans_chemical_aux/STATUS.md)
-  and decisions through [BRANCHES](BRANCHES.md#retained-checkout-map).
-  The separate early `T-gptrans-chemical-aux-feasibility` CPU record remains ACTIVE
-  without bound terminal/acceptance/V5 inputs or raw test receipt. Reconcile that
-  engineering gap separately; it is not an active GPU job or a training retry.
+- **Chemical auxiliary:** both trained arms and the summary-only CPU feasibility
+  record are terminal INCONCLUSIVE; no adoption. Full owner history8f71783e is
+  preserved in archive71d2af06; accepted canonical evidence is imported here.
+  Strict reference, native cost, producer/physical-run identity and original CPU
+  test-receipt gaps remain explicit. Read [STATUS](experiments/pcqm_gptrans_chemical_aux/STATUS.md)
+  and [custody decision](experiments/pcqm_gptrans_chemical_aux/terminal_custody_decision.md).
+  Authenticated 2026-10-04 scheduler recheck is COMPLETE. No active GPU or CPU
+  feasibility action remains, and no duplicate acceptance is needed.
+
 - **K1 V4 / SSMA:** exact Kaggle3 accuracy-pair acceptance and terminal RML
   closure are complete; SSMA is NEGATIVE_UNDER_CONTRACT, no successor or adoption.
   The [owning entry](experiments/pcqm_k1_local_mixing_clean_aux/README.md) links
