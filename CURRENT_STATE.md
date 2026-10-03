@@ -1,7 +1,8 @@
 # Current State
 
-> Live truth only. Historical methods, metrics, and failures live in experiment
-> decisions; task order lives in `ROADMAP.md`.
+> Live truth only. Historical methods, metrics, and failures live in the
+> [conditional history index](docs/operations/CURRENT_STATE_HISTORY_INDEX.md)
+> and the linked experiment decisions; task order lives in `ROADMAP.md`.
 
 ## Server active screen
 
@@ -13,555 +14,73 @@ No server GPU job or successor is released; the existing Luna heartbeat is pause
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).
-The prior pair-scale dual is closed with both actual Replay pairs and no promotion;
-preserve its [terminal decision](experiments/pcqm_gptrans_pair_scale_100k/gpu/results/decision.md).
+
+The failed CPU attempts and accepted CPU NO_TRAIN preparation are RML-closed.
+Seven stale ACTIVE plans were reconciled without changing prospective bytes,
+scientific results, live job bindings, or replay eligibility; see the dated
+local reconciliation routed by the tracked [`research_memory/README.md`](research_memory/README.md).
 
 ## Shared experiment infrastructure
 
-The shared local experiment CLI, packaging, planning and terminal/RML helpers
-are integrated. Platform submission and executable training recipes remain
-with their owning adapters. Desktop's K1 value-decoupled factory and selected
-topology-shard loader checks are integrated without replacing historical server
-models. Schema/loader success alone cannot release training.
-Capability routing: [addon guide](docs/operations/EXPERIMENT_ADDON_GUIDE.md).
-GPTrans/EdgeState variant preparation and per-arm wiring:
-[standard workflow](docs/operations/EXPERIMENT_WORKFLOW.md) (local only).
-K1/GPTrans new-protocol output hooks, inspection and terminal integration:
-[family workflow](docs/operations/EXPERIMENT_FAMILY_WORKFLOW.md).
-Supported server screens have opt-in owning-runner hooks; base EdgeState has an
-artifact profile, not a generic epoch trainer. Real remote qualification remains separate.
-Verification and remaining boundaries:
-[integration review](docs/operations/shared_experiment_verification.md).
+The shared local CLI, typed Spec/addon registry, source packaging, prospective
+planning, strict launch binding, family output inspection, portable recovery,
+allocation retention, and terminal/RML helpers are integrated. Family trainers
+own model/loader/optimizer/selection/resume behavior; platform adapters own
+submission, reconciliation, and retrieval. Real remote qualification remains
+separate from local schema or synthetic checks.
+
+Start with the [new-agent quickstart](docs/operations/EXPERIMENT_QUICKSTART.md),
+then use the [addon guide](docs/operations/EXPERIMENT_ADDON_GUIDE.md) and
+[registered workflow](docs/operations/REGISTERED_EXPERIMENT_WORKFLOW.md).
+The shared CLI is a local identity, packaging, diagnostic, receipt, preparation,
+inspection, and terminal entry point; it is never a platform submitter.
+Compatible new PCQM graph families reuse the [shared graph owner](docs/operations/GRAPH_SCREEN_EXTENSION.md).
+Local proof and repeatable checks live in the [bounded verification record](docs/operations/INFRASTRUCTURE_VERIFICATION.md).
 
 ## Production
 
 - Recommended Track A model: repaired-2M three-GPS dense pure 2D.
-- Registry: `repaired_2m_dense_2d`; lower-cost preset:
-  `repaired_2m_equal_2d`.
+- Registry: `repaired_2m_dense_2d`; lower-cost preset: `repaired_2m_equal_2d`.
 - Loader: `load_repaired_2m_2d` in `src/molgap/inference.py`.
 - Authority: `production/04_evaluate/project_freeze/track_a_final_decision.md`.
 - Track B experiments cannot change this registry.
 
-## Track B candidate
+## Track B ownership
 
-Neural-Atom K1 and the adapted GPTrans-T core are the two frozen architectures
-in the desktop-owned matched full-run comparison. K1 replaces dense per-layer global GPS attention with
-three exchanges through one 64-channel molecular slot while retaining local
-persistent real-bond EdgeState processing. Its PCQM-100K, once-read shadow, and
-fixed 500K bridge passed; evidence is in:
+Neural-Atom K1 and GPTrans-T remain the frozen desktop-owned comparison
+architectures. The desktop full chain and bounded continuations are terminal and
+accepted; EdgeState remains the official-validation reference. Desktop owns any
+new full-scale training, official evaluation, and final submission. Details and
+decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HISTORY_INDEX.md).
 
-- `experiments/pcqm_k1_shadow/decision.md`
-- `experiments/pcqm_k1_scale500k/decision.md`
+## Live boundaries and next actions
 
-K1 is frozen at 3,658,817 parameters and architecture commit
-`36215d9539acdd75542608637ec1e2db5341d3ff`. It is not a production promotion,
-an official leaderboard result, or evidence against the separately configured
-desktop 304-wide/pretrained model.
-
-GPTrans-T is frozen at 5,246,817 parameters. Its 100K reference was weak, but
-the same propagation core passed the accepted SCNet 500K gate and was
-numerically slightly better than K1's separate 500K run. Because their
-architecture-specific optimization contracts differ, the full matched study—not
-the cross-job 500K scalar difference—owns the final comparison. Authority:
-`experiments/pcqm_gptrans_t_500k/results/decision.md`.
-
-The audited full-role implementation is `experiments/pcqm_k1_full/`. The
-desktop-owned K1/GPTrans full chain and both bounded continuations are terminal
-and accepted. Neither K1 nor the original blend displaced the converged
-EdgeState official-validation reference; GPTrans improved during continuation
-but stopped at its budget without a plateau or promotion. The desktop's
-[full-chain acceptance](https://github.com/Nothingness-Void/molgap/blob/cb53e973/platforms/_records/ims/full_chain_reacceptance_20260926.md)
-and [scale-transfer postmortem](https://github.com/Nothingness-Void/molgap/blob/cb53e973/experiments/pcqm_scale_transfer_reassessment/decision.md)
-are the authorities. The latter finds substantial erosion of early 500K
-advantages within one matched training contract, not a proven architecture-only
-full-scale reversal. Official validation has been consumed for selection;
-test-dev/challenge remain sealed. Desktop alone owns any new full-scale work.
-
-The separate server-owned K1-v4 A100 FP32/TF32 execution diagnostic is closed.
-Both arms completed and passed no-inference acceptance; TF32 did not improve
-training throughput, so strict FP32 remains unchanged. Authority:
-`experiments/pcqm_k1_tf32_runtime_comparison_100k/decision.md`. This did not
-modify or take custody of the desktop full run.
-
-## Discovery state
-
-The authorized GPTrans G1/G2 input-attribution dual-arm screen is terminal.
-Both independent arms passed saved-output acceptance and RML finalization.
-An additive, verified same-reference qualification now admits both arms and
-their control to one Replay-Ready group with STRICT_CAUSAL reassessment.
-Original prospective snapshots and terminal receipts remain immutable. Authority:
-[qualification](experiments/pcqm_gptrans_author_alignment/gpu/results/qualification_decision.md).
-The G1 path/EMA follow-up is terminal, independently accepted and Replay-Ready
-per arm. EMA correction passed its material gate with identical live training
-observations; path additivity did not establish a gain. This is a 100K EMA
-finding, not a new architecture or proven scale benefit. That terminal decision
-released no successor, seed, scale bridge or full training; live ownership is above.
-Authority: [follow-up decision](experiments/pcqm_gptrans_input_ema_100k/gpu/results/decision.md).
-Authority: [terminal decision](experiments/pcqm_gptrans_author_alignment/gpu/results/decision.md).
-[Submission record](experiments/pcqm_gptrans_author_alignment/gpu/submission_record.md);
-[physical receipt](experiments/pcqm_gptrans_author_alignment/gpu/submission_v1.json).
-Authority: [dual-arm protocol](experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md).
-
-The authorized GPTrans-T V5 evidence-baseline rerun is accepted and RML-closed,
-with all live/EMA observations and a separate locally verified reference bundle.
-It repairs reference evidence, not architecture; that acceptance alone did not
-release a candidate, seed, scale-up or protected role. Findings and closure authority:
-[terminal decision](experiments/pcqm_gptrans_v5_audit_reference/results/terminal/decision.md).
-
-The server-owned frozen K1 representation diagnostic completed on Kunshan as
-job `123315282` and passed independent saved-JSON acceptance. The same-row
-100K/500K checkpoint contrast does not support a general node-representation
-collapse or a new repair mechanism. Scientific interpretation and monitoring
-are closed; receipt-bound NO_TRAIN RML publication is complete and preserves
-the original prospective bytes. It does not qualify a training replay pair. Authority:
-[decision](experiments/pcqm_k1_explainability_audit/representation/decision.md)
-and [status](experiments/pcqm_k1_explainability_audit/representation/STATUS.md).
-
-The server's pure-2D motif-hierarchy CPU sidecar passed its fixed-100K
-full-row and cost/coverage gates. The first two separately frozen K1 motif-graph
-GPU attempts stopped at runtime device gates before model work; neither has a
-scientific result. T4-only version 3 completed its matched seed-42 screen and
-passed saved-artifact, strict-comparison and replay-ready RML acceptance. The
-additive motif exchange was negative versus frozen K1-v4; no extra seed,
-500K audit, full run or protected-role action is released. Its monitor is
-paused and the exact run is closed. Authorities: [GPU decision](experiments/pcqm_motif_hierarchy_100k/attempt_v3/decision.md),
-[CPU decision](experiments/pcqm_motif_hierarchy_100k/decision.md) and
-[operational status](experiments/pcqm_motif_hierarchy_100k/STATUS.md).
-
-The server-owned MetaGIN2D fixed-100K seed-42 screen is complete and closed:
-the independent 2D backbone regressed versus frozen K1-v4 under the strict
-paired contract. No additional seed, scale-up, protected-role use, or automatic
-successor is released. Its terminal is strict and replay-ready. Authority:
-[MetaGIN2D decision](experiments/pcqm_metagin_2d_100k/attempt_v2/decision.md).
-The Kaggle2 K1 layer-6
-chemistry-separated local-bond comparison completed: both atom-pair and
-bond-type grouping regressed versus frozen K1. Both training trajectories are
-strict and replay-ready; the conditional 500K inference audit was not released.
-Authority: [decision](experiments/pcqm_k1_chem_local_100k/decision.md) and
-[status](experiments/pcqm_k1_chem_local_100k/STATUS.md). A distinct new
-mechanism would require its own evidence-backed prospective compute decision.
-
-The Kaggle2 joint-Gap/atom-reconstruction v3 study is complete and closed.
-Reconstruction improved both audited roles relative to identical corruption
-without reconstruction, but the complete recipe remained below the original
-material gate and did not retain superiority over clean K1 in frozen500K
-inference. Both training trajectories are strict/replay-ready; the audit has a
-separate NO_TRAIN terminal. No scientific successor or scale-up is released,
-and monitoring is paused. Authorities:
-[decision](experiments/pcqm_k1_joint_atom_reconstruction_100k/decision.md)
-and [status](experiments/pcqm_k1_joint_atom_reconstruction_100k/STATUS.md).
-
-The Kaggle2 frozen-checkpoint relation-intervention diagnostic is complete.
-Receiver, Triplet and RRWP computations helped within their co-adapted networks,
-but none established a new portable architecture winner. Attenuation and
-targeted knockouts did not repair the weak molecular groups. The separate
-NO_TRAIN terminal is closed; that diagnostic releases no automatic successor. Authority:
-[diagnostic decision](experiments/pcqm_k1_relation_resolution_100k/diagnostic/decision.md).
-
-The Kaggle2 overnight relation-resolution study and separate NO_TRAIN audit
-are complete. Receiver-pair, vector triplet aggregation and RRWP-pair were
-positive below the original-role material gate, but all three regressed on
-fixed500K internal-dev molecules with unchanged 100K checkpoints. The three
-training trajectories remain replay-ready; the audit has a distinct accepted
-NO_TRAIN terminal. All three exact interventions are closed without scale-up,
-extra seeds or successor training. Their former monitoring is closed.
-Authority: `experiments/pcqm_k1_relation_resolution_100k/STATUS.md`.
-
-The pure-2D Kaggle1 node-query linear-attention screen is closed. Its early
-advantage disappeared at the matched terminal exposure; frozen500K internal
-development inference also regressed. The training candidate has a complete
-strict RML replay entry. The failed original audit and successful NO_TRAIN
-recovery retain distinct physical run identities; recovery is retrospective
-diagnostic evidence, not a training replay claim. No successor or scale-up is released.
-Authority and retained evidence:
-`experiments/pcqm_k1_linear_attention_100k/STATUS.md`.
-
-The server-owned Kaggle1 K1 topology-portability dual-arm screen and its
-separate frozen 500K NO_TRAIN audit are complete. Both isolated 100K arms
-improved K1 below the material gate, then regressed against K1 on the fixed
-500K internal development role without retraining. Both exact interventions
-are closed without scale-up. Both training arms have complete RML replay
-entries; the audit is a separate `NO_TRAIN` terminal. Authority:
-`experiments/pcqm_k1_portability_dual_100k/STATUS.md`.
-
-The server-owned K1 conjugated-component hyperedge 100K dual-arm screen is
-closed. Both arms completed and passed no-inference acceptance and separate
-strict/replay-ready RML terminal closure. One-shot was negative; persistent
-was positive but below its prospective material gate. Neither received a
-500K, full-scale, multi-seed, or protected-role release. Authority:
-`experiments/pcqm_k1_conjugated_hyperedge_100k/STATUS.md`.
-
-The extra PairToken+MoSE31 seed-42 round is complete and closed. Saved-artifact
-analysis found an undeclared feature-identity change in its frozen prelaunch:
-the candidate consumes RWSE16+MoSE31, while the architecture-only strict plan
-copied K1's RWSE16 identity. Its aligned development endpoint is retained as
-`PAIRED_ENDPOINT`, not a strict causal comparison or replay-ready win; no seed,
-scale bridge, protected role, or successor follows. Authority:
-`experiments/pcqm_k1_pair_token_mose_100k/decision.md`.
-
-Round 1 of the newly authorized, at-most-three-round K1 sequence is closed.
-The pure-2D sparse-triplet candidate was exactly K1 at initialization and
-completed the fixed V5 screen, but reached `0.1424927413 eV`, worse than K1 by
-`0.0011191070 eV`; its paired interval was entirely unfavorable. It fit the
-training role more strongly and helped the hardest K1-error quintiles while
-damaging easier rows, so full-depth triplet state is an allocation/overfit
-failure rather than a missing-topology win. It is now a fourth complete
-candidate in the RML replay pool. Authority:
-`experiments/pcqm_k1_sparse_triplet_100k/decision.md`.
-
-Round 2, Graphormer-SPD conditioning of the accepted layer-6 PairToken, is
-closed. It reached `0.1397010982 eV`, a favorable but sub-threshold
-`0.0016725361 eV` gain over K1, while regressing `0.0013710489 eV` against the
-original PairToken with an entirely unfavorable paired interval. The learned
-distance biases were non-trivial, so the result closes globally shared
-shortest-path conditioning rather than an inactive implementation. It is the
-fifth complete candidate in the RML replay pool. Authority:
-`experiments/pcqm_k1_spd_pair_token_100k/decision.md`.
-
-The final authorized round is closed. A zero-initialized, non-persistent
-directed bond-to-bond triplet adapter at layer 6 beside original PairToken
-reached `0.1387662739 eV`, improving K1 by `0.0026073605 eV` with a favorable
-paired interval but missing the frozen `0.003 eV` gate. It was
-`0.0004362366 eV` worse than original PairToken and that parent interval
-crossed zero. The candidate again helped hard K1-error rows while damaging
-easy rows. It is replay-ready but not promoted; original PairToken remains the
-retained K1 relation mechanism. The three-round sparse-triplet/SPD/one-shot
-sequence is exhausted. Authority:
-`experiments/pcqm_k1_oneshot_triplet_pair_token_100k/decision.md`.
-
-The multiplicative PairValue screen completed under the fixed V5 PCQM-100K,
-FP32, BS128 contract and passed no-inference terminal acceptance. It reached
-`0.1424374580 eV`, which was `0.0010638237 eV` worse than K1-v4 and
-`0.0041074143 eV` worse than original PairToken; both paired intervals were
-unfavorable. PairToken selector/value micro-architecture enrichment is closed.
-Authority:
-`experiments/pcqm_k1_multiplicative_pair_value_100k/decision.md`.
-
-The chemistry-conditioned PairToken
-completed under the fixed V5 PCQM-100K/50K, FP32, BS128 contract and passed
-no-inference terminal acceptance. It reached `0.1385749578 eV`, improving K1 by
-`0.0027986765 eV` with a favorable paired interval, but missed the frozen
-`0.003 eV` gate. It was also `0.0002449146 eV` worse than original PairToken;
-that paired interval crossed zero. Chemistry-conditioned selection is closed,
-and original PairToken remains the strongest retained 100K relation-content
-mechanism. Authority:
-`experiments/pcqm_k1_chem_typed_pair_token_100k/decision.md`.
-
-The standalone functional-group token screen completed at `0.1398314089 eV`
-versus K1-v4 at `0.1413736343 eV`. Its favorable `0.0015422255 eV` gain missed
-the prospectively frozen `0.003 eV` gate, so the standalone route is closed.
-Its terminal evidence was ingested through the generic RML pipeline; replay
-excludes it only because the historical K1 reference trace is not yet locally
-canonicalized, not because candidate evidence is incomplete. Authority:
-`experiments/pcqm_k1_functional_group_token_100k/decision.md`.
-
-The node-adaptive PairToken-return screen
-completed with strict V5 evidence. It improved immutable K1-v4 by
-`0.0017446578 eV`, and its paired interval was entirely favorable, but it missed
-the prospectively frozen `0.003 eV` material gate. Return redistribution is
-therefore directionally useful but insufficient; extra seeds, scale-up and
-further return-only variants are closed. Authority:
-`experiments/pcqm_k1_pair_token_node_return_100k/decision.md`.
-
-The retained K1-v4 100K artifacts have a repository-bound V5 reference bundle
-and portable target-transform asset. Recovery verified the fixed cache,
-row/target identities, aligned 50K predictions, model/checkpoint hashes,
-runtime, roles, cost and trace without training or model inference. Training
-stochasticity remains unavailable. Authority:
-`experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_bundle.json`.
-
-The K1 molecule-context MoSE gate
-completed and passed mechanical acceptance, but reached `0.1419007480 eV`
-versus immutable K1-v4 at `0.1413736343 eV` and the positive selective-MoSE
-predecessor at `0.1393276304 eV`. Its paired interval crossed zero and its best
-checkpoint occurred at epoch 39 of 40. The mechanism is therefore
-`NEGATIVE_UNDER_CONTRACT`; contextual MoSE gate refinement is closed without a
-retry, extra seed, scale bridge or successor. Authority:
-`experiments/pcqm_k1_mose_context_gate_100k/decision.md`.
-
-The predecessor selective MoSE residual improved immutable K1-v4 by
-`0.0020460039 eV`, with an entirely favorable paired interval, but missed the
-experiment-local, prospectively frozen `0.003 eV` gate. That value is not a
-permanent V5 threshold. The candidate strongly improved K1-hard rows while
-damaging K1-easy rows, and its late trajectory was effectively saturated. It
-is retained as positive mechanism evidence but is not promoted under that
-experiment's contract. Authority:
-`experiments/pcqm_k1_mose_residual_gate_100k/decision.md`.
-
-The prior K1-MoSE hidden-normalization screen completed and regressed versus
-both K1-v4 and unnormalized MoSE. Its paired interval was entirely unfavorable,
-and subgroup analysis found regression in every MoSE-magnitude quintile. Hidden
-normalization and further normalization variants are closed. Authority:
-`experiments/pcqm_k1_mose_hidden_bn_100k/decision.md`.
-
-The V5 K1-MoSE information-source screen is complete. It replaced K1-v4's
-RWSE16 input with 31 rooted motif-homomorphism counts while preserving the
-EdgeState/K1 information flow and all non-intervention contract fields. The
-accepted seed-42 candidate reached `0.1402545124 eV` versus K1-v4 at
-`0.1413736343 eV`: a directional `0.0011191219 eV` gain with a favorable paired
-row-bootstrap interval. It nevertheless failed the prospectively frozen
-`0.003 eV` promotion gate, which accounts conservatively for training-level
-variation that row bootstrap cannot measure. The outcome is
-`NEGATIVE_UNDER_CONTRACT` / `DIRECTIONAL_SUBTHRESHOLD`; no extra seed, 500K
-bridge, protected role, full training, or desktop handoff is authorized.
-Authority: `experiments/pcqm_k1_mose_100k/decision.md`.
-
-The `0.003 eV` value is a policy gate, not a permanently fixed V5 constant.
-Any replacement must be calibrated from same-contract repeatability evidence
-and frozen before another candidate is observed. The prior nominally identical
-scratch-through-40 jobs differed by `0.0026921320 eV`, so the present MoSE
-result does not justify lowering the gate retroactively.
-
-The separately authorized three-round K1 architecture sequence is complete.
-Round 1 closed RepSet final readout and cross-layer selector sharing. Round 2
-found a directional but sub-threshold gain from removing length-one slot
-attention. Round 3 found a similarly directional but sub-threshold gain from
-uniform normalized return; inverse-score return regressed. No candidate cleared
-the frozen `0.003 eV` material/run-variation gate, so K1-v4 remains unchanged.
-Authority: `experiments/pcqm_k1_return_allocation_100k/decision.md`.
-
-The explicitly reopened interaction screen combining the two directionally
-positive K1 simplifications completed with a favorable but sub-threshold gain.
-It is closed and does not alter the frozen K1 handoff. Authority:
-`experiments/pcqm_k1_combined_simplification_100k/decision.md`.
-
-The separate Kaggle2 discovery loop remains bounded to at most three
-evidence-gated rounds. Round 1 completed a pure-2D GPTrans-T reference on the
-accepted 100K/50K data identity. It was mechanically accepted but substantially
-underperformed the contextual K1 reference. Reconciliation with the accepted
-500K run does not isolate a causal scale effect: exposure, EMA time scale and
-evaluation roles differ. The user explicitly reopened the two unused Kaggle2
-rounds. The first completed: Pair PreNorm passed the mechanism-shortlist gate;
-Centered Logits regressed and is closed. No K1/full promotion follows.
-Authority: `experiments/pcqm_gptrans_relation_flow/decision.md`.
-The last authorized round completed: both persistent-pair readback variants
-failed to improve the reference and are closed. That two-round authorization
-was exhausted without a full-scale promotion.
-Pair PreNorm is the only retained seed42 mechanism shortlist, not a full-scale
-or K1 promotion. Authority and consolidated evidence:
-`experiments/pcqm_gptrans_memory_readback/decision.md`.
-
-The earlier GPTrans author/local matrix established path-content distinctions
-and degree-input scale imbalance, not an MAE effect. Its historical V4 trace
-limitation remains unchanged; the separately accepted complete V5 reference
-above is the proposed G1/G2 comparator. Historical diagnostic authority:
-`experiments/pcqm_gptrans_author_alignment/decision.md`.
-
-The separate GPTrans reference rerun and its infrastructure-attempt history are
-closed. See the reference-evidence state above and
-`experiments/pcqm_gptrans_v5_audit_reference/STATUS.md`; no candidate successor
-is released by reference acceptance.
-
-The user reopened three additional evidence-gated Kaggle2 rounds. Round 1
-closed isolated K1 real-bond storage/read normalization: one arm regressed and
-the other was directionally favorable but below the material gate. Round 2
-tested that weak relation-recurrence signal with the two favorable global-slot
-simplifications. Neither pair passed the material gate or retained both parent
-effects, so triple stacking is closed. The final authorized round tested
-GPS++-style sender-only and separate receiver/sender local aggregation while
-preserving frozen K1 at initialization. Sender-only regressed; bidirectional
-fit training more strongly but was slightly worse than K1 on development.
-Neither passed the material gate, so all three rounds are exhausted with no
-K1 change. Authorities:
-`experiments/pcqm_k1_edge_memory_100k/decision.md` and
-`experiments/pcqm_k1_edge_slot_interaction_100k/decision.md` and
-`experiments/pcqm_k1_gpspp_local_100k/decision.md`.
-
-The bounded three-attempt K1 mechanism sequence is complete. Paper-style
-multi-slot grouping, channel-wise multi-head atom selection, and a
-molecule-conditioned single query all fit training more tightly and generalized
-worse under otherwise matched v4 contracts. Their decisions are
-`experiments/pcqm_k1_paper_allocation_100k/decision.md`,
-`experiments/pcqm_k1_multiview_pool_100k/decision.md`, and
-`experiments/pcqm_k1_dynamic_query_100k/decision.md`. No attempt qualifies for
-another seed, shadow access, scale-up, official evaluation, or submission.
-
-The bounded K1-v4 selective-global screen completed with no winner. K1-G was
-materially worse; K1-R was statistically indistinguishable and slightly worse.
-Both are closed without extra seeds or scale-up. The accepted K1-v4 reference
-remains reusable only for its exact benchmark contract. Authority:
-`experiments/pcqm_k1_variants_100k/decision.md`.
-
-GraphState and its derivatives failed full-scale transfer and are archive-only.
-The local-hierarchy allocation, GAPE, adaptive denoising, cardinality channel,
-multi-slot Neural-Atom, K1-G, K1-R, Fourier Edge, geometry, path, ring, PNA,
-directed-bond, fragment, dual-stream, and attention variants are closed by
-their own records.
-The consolidated attribution is
-`experiments/pcqm_gap_architecture/results/architecture_failure_attribution_2026-09-08/decision.md`;
-archive indexes are `experiments/_closed/pcqm_server_archive_index.md` and
-`experiments/_closed/qm9_top20_archive_index.md`.
-
-Desktop continues to own SCNet full training, official evaluation, and final
-submission. By explicit user authorization, server may use the new Kunshan
-account for V4 architecture screens. Its reusable Python 3.10/DTK 23.10/PyG
-runtime has passed the generic one-DCU FP32 BS128 determinism check; every
-candidate still requires its own source/cache/memory/throughput V4 preflight.
-Authority: `platforms/scnet/KUNSHAN_V4_RUNTIME.md`. This infrastructure result
-does not modify the frozen K1 full handoff.
-
-The coordinator explicitly reopened one fresh seed-42 K1 question: condition
-the three sparse slot selectors on the incident persistent real-bond state.
-The protocol is `experiments/pcqm_k1_edge_conditioned_slot_100k/protocol.md`.
-Its Kaggle2 v1 submission terminated before training because the metadata-only
-P100 request received a Tesla T4. The terminal diagnosis is
-`experiments/pcqm_k1_edge_conditioned_slot_100k/results/failure_diagnosis.md`.
-The user then authorized one infrastructure-only retry with an explicit CLI P100
-accelerator override and the unchanged scientific contract. Version 2 also
-received a Tesla T4 and terminated before candidate execution; its diagnosis is
-`experiments/pcqm_k1_edge_conditioned_slot_100k/results/failure_diagnosis_v2.md`.
-Version 3 completed with accelerator-flexible binding and passed saved-artifact
-acceptance without model inference. It reached `0.1410829425 eV` on the fixed
-development role, a `0.0002906919 eV` gain over K1-v4, while the paired
-bootstrap interval crossed zero and the `0.003 eV` material gate failed.
-`selected_candidate=null`; the mechanism is closed without shadow/official
-roles, another seed, scale-up, or successor. The decision and attribution are
-in `experiments/pcqm_k1_edge_conditioned_slot_100k/decision.md`.
-
-The post-hoc K1 explainability Stage 1 completed without training or model
-inference. Across 20 frozen same-contract payloads it found coherent K1
-deficits at small/sparse/weakly conjugated and highly cyclic/high-RWSE topology
-extremes. No old variant cleared the overall material-gain gate. A no-training
-frozen-checkpoint Stage 2 is now informative, but no successor architecture is
-released unless that intervention identifies a causal information-flow
-bottleneck. Authority:
-`experiments/pcqm_k1_explainability_audit/results/stage1_decision.md`.
-
-Its frozen-checkpoint causal Round 1 also completed and reproduced K1-v4.
-Deleting any global exchange was strongly harmful, but layer 6 showed the
-largest topology-dependent update-magnitude and node-dispersion inflation.
-The no-training Round-2 strength audit found coefficient `1.0` to be a sharp
-optimum: every attenuation or amplification worsened all audited strata. The
-scalar-strength hypothesis and its conditional Round 3 are closed; K1-v4 is
-unchanged. Authority:
-`experiments/pcqm_k1_explainability_audit/results/stage2_round2_decision.md`.
-
-K1 PairToken is the only new seed-42 mechanism winner. It preserves K1-v4 and
-adds one pre-normalized all-pair relation token at layer 6 without dense
-atom-to-atom attention. It reached `0.1383300573 eV`, improving K1-v4 by
-`0.0030435771 eV`, with a favorable paired interval and 22,848 added
-parameters. The margin is only `0.0000435771 eV` above the material gate.
-Frozen-checkpoint causal audit job
-`122305552` showed that learned pair selection, cross-node pairs, and per-pair
-normalization are all active; uniform averaging, diagonal-only pairs, or
-removing normalization regressed. Its matched-V4 500K bridge completed at
-`0.1043037325 eV`, only `0.0005561373 eV` better than the frozen K1 scalar and
-below the `0.003 eV` gate. V5 execution/artifact acceptance passed, strict
-paired comparison remained pending because the exact reference prediction
-bundle was unavailable, and the route was closed as
-`NEGATIVE_UNDER_CONTRACT`. Authority:
-`experiments/pcqm_k1_pair_token_100k/decision.md` and
-`experiments/pcqm_k1_pair_token_500k/results/decision_122312462.md`.
-
-A frozen PairToken assignment audit rejected hard dynamic top-pair sparsity:
-the largest 20% of ordered pairs carried only 42.9% median assignment mass,
-including on K1-hard molecules. This was `NO_TRAIN` evidence, not a new model
-candidate or replay-pool entry. No sparse successor was released. Authority:
-`experiments/pcqm_k1_pair_selection_diagnostic/decision.md`.
-
-The bounded PairToken scale-attribution Round 1 reference `122743291` is
-terminal-accepted. Round 2 aligned all 50,000 fixed 500K development rows:
-PairToken is `0.0006985342 eV` worse than the exact matched60-v4 K1 reference
-(paired 95% row-bootstrap candidate-minus-reference interval
-`[0.0001388103, 0.0012531244] eV`). The positive 100K gain did not retain.
-The bounded PairToken scale-attribution sequence is closed. The sole Round-3
-inference job `122843454` completed and passed independent acceptance: the
-trained PairToken network relies on its relation branch, but PairToken's exact
-matched 500K development MAE is `0.000699 eV` worse than K1, with a larger
-train–development gap. This does not reject K1's own 100K-to-500K scale gain.
-No PairToken successor, seed, full run, or protected-role access is released.
-Authority: `experiments/pcqm_k1_pair_token_scale_attribution/results/round3_decision.md`.
-
-A separate, bounded frozen-checkpoint cross-scale diagnostic is complete and
-independently accepted. Most of PairToken's selected 100K advantage disappears
-on the disjoint 500K development molecules before retraining; the matched
-500K training contract adds a smaller, further reversal on those same rows.
-The relative loss is not explained by simple atom-count or conjugation
-marginal shifts, and the existing late learning curve shows a growing
-train–development gap. This remains descriptive, not a unique causal
-mechanism; PairToken promotion stays closed. Authority:
-`experiments/pcqm_k1_cross_scale_frozen/decision.md`.
-
-A read-only structural residual follow-up on retained predictions found no
-stable, inference-visible subgroup that justifies another K1 relation or motif
-training screen. It released no new GPU work. Authority:
-`experiments/pcqm_k1_cross_scale_frozen/structural_residual_decision.md`.
-
-Server acceptance now follows the V5 seven-state outcome model without
-rewriting historical V4 decisions. A local audit found complete raw artifact
-sets for all 21 inventoried V4 100K arms, and the PairToken 100K result has a
-non-destructive V5 sidecar. The old K1 500K run remains paired-v3 evidence, not
-a strict V4 reference. The PairToken profiling sweep reproduced BS128
-throughput but was non-monotonic and only partially covered V5 timing stages;
-it did not change the BS128 contract. Authorities:
-`experiments/v5_legacy_evidence_migration/decision.md` and
-`experiments/pcqm_k1_pair_token_batch_profile/results/decision_122388380.md`.
-
-The server-owned V5 GPTrans-T/Pair-PreNorm 500K scale question is closed without
-another continuation. Initial preflights failed before training, repaired
-preflights passed, and training jobs `122432964`/`122432972` reached the
-16-hour wall with atomic checkpoints through reference epoch 36 and candidate
-epoch 38. A first continuation redundantly reran calibration; certified
-continuations `122520066`/`122520074` then passed identity checks but failed
-before adding an epoch because restored EMA tensors remained on CPU.
-
-The preserved curve was already unfavorable: Pair PreNorm was worse at every
-common epoch from 20 through 36 and would need a relative `0.0044580414 eV`
-reversal to clear the material gate. Finishing would cost about 18.2 additional
-DCU-hours, so the V5 outcome is `INCONCLUSIVE` science, `STOP_FOR_COST`, and no
-desktop handoff. The experiment did not access protected roles. Authority:
-`experiments/pcqm_gptrans_prenorm_500k_v5/decision.md`.
-
-The separate train-only GPTrans shortest-path profile completed. Exact cached
-distances accelerated the isolated path stage but improved representative
-end-to-end throughput by only `1.0238x`, regressed the graph-size tail, and
-missed the strict trajectory-equivalence tolerance. No implementation follow-up
-or scientific-contract change was released. Authority:
-`experiments/pcqm_gptrans_shortest_path_profile_v5/results/decision_122484011.md`.
-
-A broader train-only V5 GPTrans execution profile completed on Kunshan. Forward
-plus backward accounted for about 87% of synchronized step time; loader/H2D,
-finite checks, checkpointing, AdamW and EMA did not yield an isolated,
-strictly-equivalent material optimization. No active job or scientific
-contract was changed. Authority:
-`experiments/pcqm_gptrans_step_profile_v5/results/decision_122499114.md`.
-
-## Data and comparison contract
-
-- PCQM4Mv2 fixed 100K, 500K, 1M, and full identities are accepted under
-  `platforms/_records/ims/pcqm_fixed_datasets_v1/`; Kaggle mirrors are indexed
-  under `platforms/_records/kaggle/`.
-- New screens use one immutable baseline per scientific contract. A candidate
-  may compare directly across platforms without retraining that baseline when
-  data, row order, seed, FP32 mode, BS128, optimizer, schedule, loss, selection,
-  exposure, and role access match and each runtime has one reusable calibration
-  certificate. Authority: `experiments/SCREENING_POLICY.md`.
-- Historical paired-v3 results retain their original contracts. The K1 500K
-  result remains valid but its 32-row epoch tail prevents use as a new v4
-  reference.
-- A reused development score is selection evidence, not an unbiased final
-  estimate. Official validation and test-dev remain sealed.
-
-## Hard boundaries
-
-- Track B predicts Gap directly on official PCQM4Mv2; Track A remains on the
-  repaired-2M PubChemQC corpus. No silent dataset replacement or augmentation.
-- No teacher/distillation or privileged geometry on the OGB leaderboard line.
-- Any geometry used in training and inference must use the same ETKDG contract.
-- Molecular-research-server access is separately gated by
-  `platforms/REMOTE_HANDOFF.md` and limited to `/lustre/home/users/sm2/chou/`.
-- Remote jobs require immutable cache acceptance, atomic checkpoints,
-  retrievable outputs, and a dated decision. Scientific failures close a route;
-  only infrastructure failures may retry unchanged.
+- Keep the two active Kaggle jobs bound to their exact monitor and reconcile
+  actual platform evidence before terminal closure; do not create a successor
+  automatically.
+- Use one immutable baseline per matching scientific contract. Track B predicts
+  direct Gap on fixed PCQM4Mv2; Track A remains on repaired-2M PubChemQC.
+- ETKDG must match between training and inference. Official validation was
+  consumed for desktop selection; test-dev/challenge remain sealed, and any new
+  protected-role access requires the owning authority's one-time record.
+- GPU/DCU work follows immutable cache acceptance, atomic checkpoints,
+  independently retrievable outputs, and a dated decision. Scientific failures
+  close a route; unchanged-contract infrastructure failures may retry.
+- Molecular-research-server access is governed by
+  [`platforms/REMOTE_HANDOFF.md`](platforms/REMOTE_HANDOFF.md). The server does
+  not adopt, monitor, or resume desktop-owned jobs.
 
 ## Pointers
 
 | Question | Authority |
 |---|---|
+| What is active? | This file |
+| Historical state and authority map | `docs/operations/CURRENT_STATE_HISTORY_INDEX.md` |
 | What happens next? | `ROADMAP.md` |
+| How to add or run a family/addon | `docs/operations/EXPERIMENT_QUICKSTART.md` |
 | What ships? | `production/README.md` |
 | Track meanings | `TRACKS.md` |
-| Experiment index | `experiments/README.md` |
+| Experiment directory/evidence index | `experiments/README.md` and `experiments/EVIDENCE_INDEX.md` |
 | Remote operations | `platforms/README.md` and `platforms/REMOTE_HANDOFF.md` |
-| Code ownership | `ARCHITECTURE.md` |
+| Code ownership | `ARCHITECTURE.md` and `docs/operations/ARCHITECTURE_MODULE_INDEX.md` |
 | Artifact inventory | `models/README.md` |

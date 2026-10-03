@@ -4,6 +4,10 @@ Paths below are relative to the selected checkout. This is a routing index,
 not a second copy of contracts, dataset identities, thresholds or live jobs.
 Verify APIs against the checkout; missing capabilities remain unsupported.
 
+For a new family or addon, start with the [experiment quickstart](../../../../docs/operations/EXPERIMENT_QUICKSTART.md),
+then use this file to select the smallest existing callable. Read only the
+relevant detailed contract after the owner is selected.
+
 ## Common experiment plumbing
 
 Start with the [addon guide](../../../../docs/operations/EXPERIMENT_ADDON_GUIDE.md)

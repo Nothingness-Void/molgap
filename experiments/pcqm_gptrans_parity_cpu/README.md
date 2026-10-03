@@ -5,6 +5,10 @@ GPTrans-T implementation against the authors' pinned public source. It does
 not read any PCQM graph cache, label, checkpoint, development role, or official
 evaluation role. It cannot establish a validation-MAE contribution.
 
+Traceability role: `diagnostic`. The technical interpretation is recorded in
+[`decision.md`](decision.md); this directory has no scientific acceptance
+bundle.
+
 The Kaggle2 CPU script lives in `kaggle_cpu/run.py`. It fetches only immutable
 GitHub commit URLs, checks every source SHA-256 before executing extracted
 functions, and writes one atomic JSON per completed check plus `summary.json`.

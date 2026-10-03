@@ -145,8 +145,7 @@ delivery candidate may be promoted from the integration branches to `master`.
 - Docs in English (LLM efficiency). One file answers one question.
 - Minimize expected context cost (`read frequency * token count`): frequently
   read entry documents contain only routing, hard constraints, and live deltas;
-  move high-entropy methods, metrics, and logs into conditionally read experiment
-  records.
+  move high-entropy methods, metrics, and logs into conditionally read records.
 - Don't double-write a fact; if it must appear twice, the second is a link.
 - Decision records use dated historical language. Never write `current`,
   `default`, `running`, or `next` there; point to `CURRENT_STATE.md` or
@@ -168,5 +167,4 @@ delivery candidate may be promoted from the integration branches to `master`.
 | How do I run this remotely? | `platforms/README.md` |
 | Where to edit code? | `ARCHITECTURE.md` |
 | How should paths and artifacts be named? | `NAMING.md` |
-| How to install / basic inference? | `README.md` |
-| How to use the shared local experiment entry? | `docs/operations/EXPERIMENT_ADDON_GUIDE.md` and `docs/operations/EXPERIMENT_CLI.md` |
+| How to install / basic inference / use experiment infrastructure? | `README.md`; `docs/operations/EXPERIMENT_QUICKSTART.md`; `docs/operations/EXPERIMENT_ADDON_GUIDE.md`; `docs/operations/EXPERIMENT_CLI.md` |

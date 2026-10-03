@@ -2,4 +2,5 @@
 
 This paired server-owned bridge establishes one reusable strict V5 GPTrans 500K
 reference and tests the only retained 100K relation-flow mechanism. Read
-`protocol.md`, then `results/decision.md` after completion.
+`protocol.md`, then the dated stop decision in `decision.md` and its compact
+curve evidence in `results/trajectory_stop_summary.json`.

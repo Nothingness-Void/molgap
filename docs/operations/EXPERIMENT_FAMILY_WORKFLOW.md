@@ -19,9 +19,16 @@ producer-output and post-run half, not another submission implementation.
 | `build_verified_terminal_descriptor` | Deterministic translation into the existing descriptor |
 | `close_verified_outputs` | Inspect every arm before existing terminal/RML closure |
 | Kaggle `retrieve_family_outputs` | Stream only manifest-bound files through the owning account |
+| `graph-screen-v1` | Shared pure-2D Gap output profile; the [graph extension contract](GRAPH_SCREEN_EXTENSION.md) owns registration and the small model/addon interface. |
 
-Static profiles: `k1-v1` for `neural_atom_k1/1`, `gptrans-v1` for `gptrans_t/1`,
-and `edge-state-v1` for `edge_state_gps/1` (live weights and scheduler state).
+Static profiles: `graph-screen-v1` for a reviewed shared graph registration,
+`k1-v1` for `neural_atom_k1/1`, `gptrans-v1` for `gptrans_t/1`, and
+`edge-state-v1` for `edge_state_gps/1` (live weights and scheduler state).
+The graph profile requires the pure-2D normalized-Gap contract: feature schema
+`ogb-atom9-bond3-rwse16-v1`, roles `train` and `development`, recipe
+`graph_gap_screen_v1`, sampler `seed42-epoch-global-randperm-v1`, and transform
+`train-mean-unbiased-std`. The static registration and its focused tests are
+the capability gate; a declaration alone does not enable the route.
 K1 requires scheduler state; GPTrans requires EMA state. Both require model,
 optimizer, Python/NumPy/Torch/CUDA RNG and the acknowledged sampler cursor.
 These profiles cover the **new output protocol**. Existing historical runners

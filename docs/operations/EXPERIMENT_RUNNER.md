@@ -27,8 +27,13 @@ rejected. No user-supplied callback, module name or dynamic provider is accepted
 
 The fixed family/version registry maps `gptrans_t/1` to `gptrans_adapter`,
 legacy `neural_atom_k1/1` to `k1_adapter`, and prospective `edge_state_gps/1`
-to `edge_state_adapter`. See [EDGE_STATE_ADAPTER.md](EDGE_STATE_ADAPTER.md) for
-the model-only depth/K1 variants. The only workers are:
+to `edge_state_adapter`. A reviewed pure-2D graph family reaches the same
+diagnostic workers through the static `graph_training_adapter` registration;
+the runner then uses `shared_model_adapter.graph_metadata` and
+`shared_model_adapter.build_graph_model`. This route is available only when
+the family contract, model factory and artifact profile pass the shared
+registry checks. See [EDGE_STATE_ADAPTER.md](EDGE_STATE_ADAPTER.md) for the
+model-only depth/K1 variants. The only workers are:
 
 - `adapter_probe`: adapter metadata only; no NumPy, torch or model import is
   required by the worker, and no factory is called. Frozen-state declarations
@@ -104,9 +109,15 @@ are diagnostic observations, not expected training steps or scientific evidence.
 No positive replay, training-success, terminal or RML authority fields are emitted.
 `SUCCEEDED` means only that the selected diagnostic completed.
 
-Real trainer integration, data/source/state admission, runtime certification,
-platform submission and checkpoint/resume remain separate and unimplemented.
-The shared preflight and terminal/RML interfaces are separate gates; runner
+The runner intentionally stops at diagnostics. For a reviewed graph family,
+training and checkpoint production belong to `graph_screen_training.py` and its
+family contract; recovery uses the shared resume owner and the family-specific
+state checks. Platform staging, submission, retrieval and reconciliation remain
+with the owning platform adapter and workload skill. Start at the
+[experiment quickstart](EXPERIMENT_QUICKSTART.md), then follow the
+[family workflow](EXPERIMENT_FAMILY_WORKFLOW.md), [platform route](../../platforms/README.md),
+and [reuse skill entrypoints](../../.agents/skills/molgap-experiment-reuse/references/entrypoints.md).
+Shared preflight and terminal/RML interfaces remain separate gates; runner
 success does not satisfy them.
 
 The synthetic tests in `tests/test_experiment_runner.py` use temporary directories,

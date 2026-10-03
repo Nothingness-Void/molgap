@@ -10,3 +10,6 @@ operational identity and RML closure are in [STATUS](STATUS.md).
 The implementation is an MMGNN-inspired adaptation, not a reproduction of
 its atom-pair-subgraph architecture. Historical GPS++ local-adapter closure
 remains authoritative for that different full-depth mechanism.
+
+Terminal machine evidence: [atom-pair](arms/atom_pair_local/results/terminal_evidence.json)
+and [bond-type](arms/bond_type_local/results/terminal_evidence.json).

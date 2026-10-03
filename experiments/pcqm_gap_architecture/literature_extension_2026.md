@@ -1114,7 +1114,7 @@ theory/geometry contract is not closed to B3LYP/6-31G*/ETKDG, and no official
 code, checkpoint, or independently retrievable pretraining release was found.
 The computational and experimental rows must not enter Track A/B. **Grade:
 C for artifacts/direct use; B for a future objective reference.** See the
-[full organic-electronics deep-reading card](deep_reading_organic_electronics_2026-09-07.md#11-oscagent-graphsmiles-contrastive-pretraining-with-frontier-supervision).
+[full organic-electronics deep-reading card](deep_reading_organic_electronics_2026-09-07.md#11-oscagent-graph-smiles-contrastive-pretraining-with-frontier-supervision).
 
 ### E33. QuADMET-Former: public quantum-target bundle and E3FP control
 
@@ -1188,7 +1188,7 @@ repository/checkpoint surface was frozen in the full card. Its grouped QM9
 `HOMO/LUMO/GAP` column improves over random PaiNN, but remains behind Uni-Mol2
 and is not a PCQM4Mv2 Gap result. **Grade: A/B for objective, code, checkpoint
 provenance, and controlled QM9 evidence; C for current PCQM/ETKDG use.** See
-the [full geometry/higher-order deep-reading card](deep_reading_foundation_geometry_higher_order_2026-09-07.md#15-c-free-contrast-free-ego-net-prediction-with-23d-conformers).
+the [full geometry/higher-order deep-reading card](deep_reading_foundation_geometry_higher_order_2026-09-07.md#15-c-free-contrast-free-ego-net-prediction-with-2d3d-conformers).
 
 ### E36. OneQMC/Orbformer: public wavefunction and density-teacher assets
 

@@ -3,7 +3,8 @@
 This final round of the bounded K1 sequence asks whether the atoms that build
 the molecular slot should also determine which atoms receive its update. Read
 `evidence_selection.md` for the causal basis, `protocol.md` for the frozen
-contract, and `STATUS.md` for remote operations.
+contract, `STATUS.md` for remote operations, and [`decision.md`](decision.md)
+for the terminal result.
 
 The two parameter-free candidates retain learned K1 source pooling but replace
 its transposed return with either a uniform or complementary normalized return.

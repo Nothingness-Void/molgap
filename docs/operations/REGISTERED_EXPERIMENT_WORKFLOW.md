@@ -1,5 +1,10 @@
 # Modular Experiment Workflow
 
+Use the [infrastructure quickstart](EXPERIMENT_QUICKSTART.md) for the shortest
+new-agent route. This document owns the detailed registry, preparation,
+acceptance, recovery, and allocation-retention contract; it does not authorize
+remote submission.
+
 This is the entry point for the registered local-to-Kaggle training path. It
 owns preparation and acceptance orchestration. It does not own scientific
 authorization, a trainer loop, or platform submission.
@@ -43,15 +48,17 @@ are in `experiment_family_artifacts.py`. `experiment_source_inventory.py`
 owns reviewed common bootstrap files. Each family adapter declares its source
 and serialized-module dependencies; an addon declares only additional reviewed
 dependencies. Packaging selects the registered families/addons in the Spec.
-The family trainer owns its model,
-loader, optimizer, selection and resume behavior. A same-family variant adds a
-registered addon/mode once; each experiment then supplies only that addon,
-its frozen contract/recipe and config. It does not add an experiment-specific
-training loop or launcher. A new family registers its declarative family
-contract, model/trainer adapter, output profile and reviewed source inventory
-once. A new addon within an existing family adds its reviewed mode hook and
-source path only when it introduces a new dependency. Unsupported families,
-addon versions, modes and platform allocations stop before execution.
+The family trainer or shared graph owner supplies model/input semantics,
+optimizer, selection and resume behavior. A same-family variant supplies only
+its registered addon set, frozen contract/recipe and config; legacy adapters
+retain their declared single-addon limits, while the generic graph adapter may
+apply multiple approved hooks in registry order. It does not add an
+experiment-specific training loop or launcher. A new graph family registers its
+declarative family contract, `graph_training_adapter` model factory, output
+profile and reviewed source inventory once. A new addon adds its reviewed mode
+or `apply_addon` hook and source path only when it introduces a new dependency.
+Unsupported families, addon versions, modes and platform allocations stop before
+execution. Declaration support alone is not runtime qualification.
 
 ## Add an addon
 
@@ -60,10 +67,12 @@ addon versions, modes and platform allocations stop before execution.
    literals or bounded integers), applicable family versions, source module and
    zero-initialization contract. Configuration validation uses these fields;
    it does not require an addon-name branch in the Spec parser.
-2. Add one `TrainingAddon(name, version, mode, extra_source_files=...)` to the
-   owning `TrainingAdapter` in `experiment_execution.py`. Reuse the family's
-   recipe, preflight, training, output and resume hooks. A new dependency belongs
-   in that descriptor; do not copy the full source inventory into an experiment.
+2. Add the approved `TrainingAddon(name, version, mode, ...)` entries to the
+   owning `TrainingAdapter` in `experiment_execution.py`. Generic graph addons
+   bind `apply_hook="molgap.<module>:apply_addon"`; legacy adapters retain their
+   mode dispatch. Reuse the family's or shared graph owner's recipe, preflight,
+   training, output and resume hooks. A new dependency belongs in that
+   descriptor; do not copy the full source inventory into an experiment.
 3. Add focused checks for configuration, zero initialization, the owning mode
    and source dependency selection. No lifecycle, package, receipt, closure or
    platform launcher changes are needed for an existing-family addon.

@@ -3,8 +3,9 @@
 This is a zero-training audit of existing K1, GPTrans-T, EdgeState and
 PairToken evidence. It applies the additive V5 comparison classes without
 rewriting historical results. The machine-readable authority is
-`results/comparison_audit.json`; its additive metadata contract is
-`comparison_audit.schema.json`, and interpretation is in `decision.md`.
+[`results/comparison_audit.json`](results/comparison_audit.json); its additive
+metadata contract is [`comparison_audit.schema.json`](comparison_audit.schema.json),
+and interpretation is in [`decision.md`](decision.md).
 The audit payload is versioned as `molgap-v5-comparison-audit-v2`; this version
 adds metadata dimensions only and does not rewrite source experiment outcomes.
 

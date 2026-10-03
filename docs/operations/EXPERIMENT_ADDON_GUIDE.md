@@ -4,6 +4,10 @@ This is the short handoff for extending the shared experiment core. It defines
 ownership boundaries; the linked contracts remain authoritative for field-level
 schemas and safety checks.
 
+New agents should begin with the [infrastructure quickstart](EXPERIMENT_QUICKSTART.md),
+then return here for the addon ownership contract. The [registered workflow](REGISTERED_EXPERIMENT_WORKFLOW.md)
+contains the executable registry and recovery details.
+
 Before adding plumbing, use the repository's
 [experiment reuse skill](../../.agents/skills/molgap-experiment-reuse/SKILL.md).
 It routes to existing components and records only the missing behavior; the
@@ -75,11 +79,12 @@ terminal descriptor does not make either arm replay-ready.
 
 ## Addon Ownership
 
-The experiment-owned addon is responsible for its frozen scientific recipe,
-authenticated graph/data loader, sampler and exact row-order replay, training
-loop, selection, and any validation not supported by shared preflight. For an
-EdgeState arm, call the shared training core rather than copying its step,
-evaluation, or checkpoint code. Do not copy reusable model, RML,
+The addon owns only its model delta, typed configuration, and any contract
+specific validation or hook that the selected family owner does not provide.
+The family trainer or shared graph owner supplies its declared input loader,
+sampler, exact row-order replay, training loop, selection, and resume behavior.
+For an EdgeState arm, call the shared training core rather than copying its
+step, evaluation, or checkpoint code. Do not copy reusable model, RML,
 source-packaging or receipt logic into a second implementation. Platform
 submission, status reconciliation, and artifact retrieval belong to the
 applicable Kaggle/IMS/SCNet skill and its existing platform adapter, not to
@@ -105,9 +110,11 @@ packaging and evidence rules.
 For an addon within a registered training family, follow the
 [three-step registration contract](REGISTERED_EXPERIMENT_WORKFLOW.md#add-an-addon).
 Typed config fields and a small execution descriptor bind the model delta,
-mode and extra dependencies. The lifecycle, launch validation, recovery
-transport and acceptance orchestration stay reusable. Platform operations
-remain with the owning workload adapter.
+mode and extra dependencies. Generic graph addons additionally bind a reviewed
+`apply_addon` hook whose source is hash-pinned; legacy family addons retain
+their owning mode dispatch. The lifecycle, launch validation, recovery transport
+and acceptance orchestration stay reusable. Platform operations remain with the
+owning workload adapter.
 
 ## Desktop arm packing
 

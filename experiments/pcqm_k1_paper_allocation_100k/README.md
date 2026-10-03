@@ -3,5 +3,6 @@
 This experiment asks whether the missing atom-to-Neural-Atom grouping equation
 from Neural Atoms improves the frozen K1 skeleton. Read `protocol.md` for the
 frozen question and `STATUS.md` for remote state. `decision.md` is created only
-after terminal acceptance.
+after terminal acceptance. The compact terminal record is
+[attempt1_summary.json](results/attempt1_summary.json).
 

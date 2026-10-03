@@ -1,5 +1,7 @@
 # V5 Route Portfolio
 
+Traceability role: `portfolio`.
+
 This directory owns the evidence-driven selection of the next server-side
 PCQM-100K questions. It does not own a model result yet.
 

@@ -1,5 +1,10 @@
 # Unified Local Experiment CLI
 
+New agents: use the [infrastructure quickstart](EXPERIMENT_QUICKSTART.md) to
+choose the family/addon route. This page is the exact command and result
+reference; the CLI remains local preparation and evidence plumbing, never a
+platform submitter.
+
 Run from the selected checkout using its configured project environment:
 
 ```powershell
@@ -10,12 +15,12 @@ Run from the selected checkout using its configured project environment:
 .\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/edge_state_v1.json
 ```
 
-The module is a new unified local entry point, not a complete migration. Existing
-scripts remain available as family/platform-specific entry points and are not
-deleted or redirected. No package-level export or installation entry point is
-required for `python -m molgap.experiment_cli` in an installed checkout.
-For new family/platform work, start with the short [addon guide](EXPERIMENT_ADDON_GUIDE.md);
-this CLI remains a shared local core, not a trainer or submitter.
+The module is the unified local entry point for identity, planning, packaging,
+preflight, preparation, inspection, receipts, recovery, and terminal translation.
+Existing scripts remain available as family/platform-specific thin entry points.
+For new family/platform work, start with the [quickstart](EXPERIMENT_QUICKSTART.md)
+and [addon guide](EXPERIMENT_ADDON_GUIDE.md); this CLI remains shared local
+plumbing, not a trainer or submitter.
 For producer output inspection and guarded terminal closure, see the
 [family workflow](EXPERIMENT_FAMILY_WORKFLOW.md). Its additional local commands
 are `check-acceptance`, `inspect-output`, and `accept-terminal`, retaining the
@@ -151,11 +156,10 @@ The experiment paths in this subsection belong to `molgap-desktop`, not this
 server checkout. They are context, not server-local runnable examples.
 For a desktop-owned GPTrans two-arm screen, use the owning experiment's contract
 and the [addon handoff sequence](EXPERIMENT_ADDON_GUIDE.md). The submitted
-Kaggle1 paired example is under
-`experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/`: its `run_pair.py`
+Kaggle1 paired example belongs to the desktop checkout: its `run_pair.py`
 bootstraps the frozen source and delegates training to the existing
-`experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py` profile. The shared
-model implementation is `src/molgap/pcqm_gptrans_v4.py`. Actual Kaggle
+`run_candidates.py` profile. The shared model implementation is
+`src/molgap/pcqm_gptrans_v4.py` in that checkout. Actual Kaggle
 submission uses `platforms/kaggle/push_kernel_with_accelerator.py`, outside
 this CLI. `launch-receipt` records a local observation; it does not push a
 kernel. This section describes the desktop-owned route for context; it does not
