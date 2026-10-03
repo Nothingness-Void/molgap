@@ -1,0 +1,54 @@
+[{"stream_name":"stdout","time":4.542262807,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.1/63.1 kB 2.7 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":4.6610514290000005,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 34.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":4.688114538,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 3.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":11.367430553,"data":"GPU allocation: ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stderr","time":12.426002912,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":12.426055874,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_chemical_aux/run_arm.py\", line 6, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":12.426122898,"data":"    from molgap.chemical_aux_cache import ChemicalLabelCache\n"}
+,{"stream_name":"stderr","time":12.426269322,"data":"ModuleNotFoundError: No module named 'molgap'\n"}
+,{"stream_name":"stderr","time":12.439997997,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":12.440024636,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 174, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":12.44020635,"data":"    main()\n"}
+,{"stream_name":"stderr","time":12.44022684,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 155, in main\n"}
+,{"stream_name":"stderr","time":12.440369962,"data":"    worker(mode, root)\n"}
+,{"stream_name":"stderr","time":12.440391535,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 63, in worker\n"}
+,{"stream_name":"stderr","time":12.440513977,"data":"    chemical_worker(mode, root)\n"}
+,{"stream_name":"stderr","time":12.440536711,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 145, in chemical_worker\n"}
+,{"stream_name":"stderr","time":12.44075088,"data":"    subprocess.check_call(args)\n"}
+,{"stream_name":"stderr","time":12.440767856,"data":"  File \"/usr/lib/python3.12/subprocess.py\", line 413, in check_call\n"}
+,{"stream_name":"stderr","time":12.442061928,"data":"    raise CalledProcessError(retcode, cmd)\n"}
+,{"stream_name":"stderr","time":12.442079996,"data":"subprocess.CalledProcessError: Command '['/usr/bin/python3', '/kaggle/temp/molgap-source/experiments/pcqm_gptrans_chemical_aux/run_arm.py', '--phase', 'preflight', '--dataset-root', '/kaggle/input/datasets/nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1', '--manifest-path', '/kaggle/input/datasets/nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1/manifest.json', '--source-archive', '/kaggle/working/_release_bindings/fingerprint_aux/package/source.tar.gz', '--source-archive-sha256', '742e949506330302980a17b796e63547c9e11c0790d23c2c968d9af9635da827', '--source-commit', '24bc46fe3fe387f41d42149ec78341f16ba02c94', '--output', '/kaggle/working/fingerprint_aux', '--platform-id', 'kaggle1-t4x2', '--initial-state-path', '/kaggle/input/datasets/nothingnessvoid/molgap-gptrans-chemical-aux-100k-source-v1/initial_state.pt', '--objective-config', '/kaggle/temp/molgap-source/experiments/pcqm_gptrans_chemical_aux/objective_fingerprint_aux.json', '--cache-root', '/kaggle/working/_release_bindings/fingerprint_aux/cache', '--cache-manifest-sha256', 'bf4599bf295c0e6dc348248d2de8c3d82fc1bde7efd7db95096e9a900d4053e5', '--cache-role-sha256', '626fb2ff7dc44e9e6a88dfd301b3b295d1414c89b1dbac708af8379c66d4932c', '--spec', '/kaggle/working/_release_bindings/fingerprint_aux/package/experiment_spec.json', '--package', '/kaggle/working/_release_bindings/fingerprint_aux/package', '--contract', '/kaggle/temp/molgap-source/experiments/pcqm_gptrans_chemical_aux/training_contract_fingerprint_aux.json', '--expected-package-identity', '40940bdfa3023113a441dc6458bd7ea099e584ef113f382a83f0df76d4e378f2', '--arm-id', 'fingerprint_aux', '--trajectory-id', 'TB-gptrans-chemical-fingerprint-aux-100k-s42-v2']' returned non-zero exit status 1.\n"}
+,{"stream_name":"stderr","time":12.905923802,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":12.905953874,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_chemical_aux/run_arm.py\", line 6, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":12.905959383999999,"data":"    from molgap.chemical_aux_cache import ChemicalLabelCache\n"}
+,{"stream_name":"stderr","time":12.905963428,"data":"ModuleNotFoundError: No module named 'molgap'\n"}
+,{"stream_name":"stderr","time":12.9180427,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":12.918066877,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 174, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":12.918228021000001,"data":"    main()\n"}
+,{"stream_name":"stderr","time":12.91824455,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 155, in main\n"}
+,{"stream_name":"stderr","time":12.918375491,"data":"    worker(mode, root)\n"}
+,{"stream_name":"stderr","time":12.918385358,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 63, in worker\n"}
+,{"stream_name":"stderr","time":12.918545438,"data":"    chemical_worker(mode, root)\n"}
+,{"stream_name":"stderr","time":12.918556335,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 145, in chemical_worker\n"}
+,{"stream_name":"stderr","time":12.918668932,"data":"    subprocess.check_call(args)\n"}
+,{"stream_name":"stderr","time":12.91868424,"data":"  File \"/usr/lib/python3.12/subprocess.py\", line 413, in check_call\n"}
+,{"stream_name":"stderr","time":12.918950142,"data":"    raise CalledProcessError(retcode, cmd)\n"}
+,{"stream_name":"stderr","time":12.918994577,"data":"subprocess.CalledProcessError: Command '['/usr/bin/python3', '/kaggle/temp/molgap-source/experiments/pcqm_gptrans_chemical_aux/run_arm.py', '--phase', 'preflight', '--dataset-root', '/kaggle/input/datasets/nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1', '--manifest-path', '/kaggle/input/datasets/nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1/manifest.json', '--source-archive', '/kaggle/working/_release_bindings/descriptor_aux/package/source.tar.gz', '--source-archive-sha256', '742e949506330302980a17b796e63547c9e11c0790d23c2c968d9af9635da827', '--source-commit', '24bc46fe3fe387f41d42149ec78341f16ba02c94', '--output', '/kaggle/working/descriptor_aux', '--platform-id', 'kaggle1-t4x2', '--initial-state-path', '/kaggle/input/datasets/nothingnessvoid/molgap-gptrans-chemical-aux-100k-source-v1/initial_state.pt', '--objective-config', '/kaggle/temp/molgap-source/experiments/pcqm_gptrans_chemical_aux/objective_descriptor_aux.json', '--cache-root', '/kaggle/working/_release_bindings/descriptor_aux/cache', '--cache-manifest-sha256', '824d41f6f541a7f06d51fc73ffb048fd8fb61ed3e01eca0a1571b4ccaf3cbb78', '--cache-role-sha256', '626fb2ff7dc44e9e6a88dfd301b3b295d1414c89b1dbac708af8379c66d4932c', '--spec', '/kaggle/working/_release_bindings/descriptor_aux/package/experiment_spec.json', '--package', '/kaggle/working/_release_bindings/descriptor_aux/package', '--contract', '/kaggle/temp/molgap-source/experiments/pcqm_gptrans_chemical_aux/training_contract_descriptor_aux.json', '--expected-package-identity', '40940bdfa3023113a441dc6458bd7ea099e584ef113f382a83f0df76d4e378f2', '--arm-id', 'descriptor_aux', '--trajectory-id', 'TB-gptrans-chemical-descriptor-aux-100k-s42-v2']' returned non-zero exit status 1.\n"}
+,{"stream_name":"stderr","time":12.940969952,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":12.94099588,"data":"  File \"/kaggle/src/script.py\", line 48, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":12.941124231,"data":"    runpy.run_path(\n"}
+,{"stream_name":"stderr","time":12.94114053,"data":"  File \"\u003cfrozen runpy\u003e\", line 287, in run_path\n"}
+,{"stream_name":"stderr","time":12.941146433,"data":"  File \"\u003cfrozen runpy\u003e\", line 98, in _run_module_code\n"}
+,{"stream_name":"stderr","time":12.941150694,"data":"  File \"\u003cfrozen runpy\u003e\", line 88, in _run_code\n"}
+,{"stream_name":"stderr","time":12.941155492,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 174, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":12.941335288,"data":"    main()\n"}
+,{"stream_name":"stderr","time":12.941343897,"data":"  File \"/kaggle/temp/molgap-source/experiments/pcqm_gptrans_pair_norm_100k/run_candidates.py\", line 170, in main\n"}
+,{"stream_name":"stderr","time":12.941488671,"data":"    raise RuntimeError(f\"Pair {phase} workers failed: {codes}\")\n"}
+,{"stream_name":"stderr","time":12.941536873,"data":"RuntimeError: Pair preflight workers failed: [1, 1]\n"}
+,{"stream_name":"stderr","time":17.091373963,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":17.091418348,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":17.395490822,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":17.395520083,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":18.042722362,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":19.355395171,"data":"[NbConvertApp] Writing 282569 bytes to __results__.html\n"}
+]
