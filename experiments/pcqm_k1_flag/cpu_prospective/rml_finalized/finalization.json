@@ -1,0 +1,42 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-a2681eecb05952fdea9a5ca2f07207f9af3898c82bb60beb28492ef96f172e7f",
+  "finalized_at": "2026-10-02T06:27:14.414482+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_flag/cpu_acceptance.json": "ccf393098cb3ad62d642052ac6eda4206e96b192f20528be44cf5180d4e1f8eb",
+    "experiments/pcqm_k1_flag/cpu_attribution.md": "bc76e7a9f06b1503b8477256ac28afce82d0cf113838a3b2ee3dd79db5b41be0",
+    "experiments/pcqm_k1_flag/cpu_decision.md": "99c878dea27b2d8b7900c3e7113be91cda14d4cdb90787b061ee9b579c2ad107",
+    "experiments/pcqm_k1_flag/cpu_frozen.json": "692a11f030363db454209bad85e35fd41e1a98782f7ae86f935f8080cc0aba3c",
+    "experiments/pcqm_k1_flag/cpu_prospective/trajectory.json": "bd9f681a683be1efeaa2ae63dd3b970ef91d4dd4246131ce9de50e7038d4bbde",
+    "experiments/pcqm_k1_flag/evidence_review.md": "a924be38b739ca35eed858139f912c03d02fdeae3a562c3addbc4b51fc479e7c",
+    "experiments/pcqm_k1_flag/finalize_cpu.py": "beadffa4bd47af2846cddda225a9ea468a0130a3fae7947d61a12235939fef6c",
+    "experiments/pcqm_k1_flag/protocol.md": "8f80da58c5184ca1d49436957ee41116535f1edc5cb4534099d06573fc6dc60b",
+    "experiments/pcqm_k1_flag/qualification/cpu_resume.pt": "d0cb1ea9e3bb8df1e740018356b9a3266d9208b65968ccaeb9ebcd3f85053de9",
+    "experiments/pcqm_k1_flag/qualification/initial_state.pt": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+    "experiments/pcqm_k1_flag/qualification/qualification_result.json": "ac25119d74c0c9f0d0571c36281e5c74c547dc71cd55003deb7af5035b3b0eb6",
+    "experiments/pcqm_k1_flag/qualification/sensitivity.json": "3b55d30168add983809f30fa8bffb116654f666e5111452794f2ed0c579dbcc4",
+    "experiments/pcqm_k1_flag/rml_inventory.json": "780237c1d672b723db7883a6a4a61e8b5330dc1dbbe2b27dd4d01cf57271c99d",
+    "experiments/pcqm_k1_flag/rml_review.md": "d0ac864d23731bf3dd7c476c3dbba37e71ba1af39f4ae9d3d7b5d2b1b2865c11",
+    "experiments/pcqm_k1_flag/role_plan.json": "1b0aa3c60b011eb2112840caeec0571eedd89294211379fd2b1a3cdbb4c8f80a"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-k1-flag-cpu-observed-20261002.json": "e5da30b0a5c0769166a75331dd13bf124b2df6d5189067668d3cddcc828b1387",
+    "prospective_snapshot.json": "bd9f681a683be1efeaa2ae63dd3b970ef91d4dd4246131ce9de50e7038d4bbde",
+    "roles/role-k1-flag-cpu-labels_read-20261002.json": "95e9de0142ca25185b7d756e8c0b28708953f65edefa1aaf0d8560c8a173bab1",
+    "roles/role-k1-flag-cpu-metric_computed-20261002.json": "96addce3dba840dda07f03e5a9633a515cac47636e831e0a22ffd24ebcbdaf10",
+    "roles/role-k1-flag-cpu-prediction_input-20261002.json": "e3014fd506cb7b97584b52a49cbb6d7b2a39bd6a7d7080bb57781864dff9901f",
+    "terminal_input.json": "db97433e8c9ce95d8ed9a7c4e8f5f58ed1f5b96afdea81afe000a1ffda7efab6",
+    "trajectory.json": "4bc7ca0c5aa053e808dea5da6b7cc7814fe9db798a18e765a7d0f00386d1d1d6",
+    "v5_evidence.json": "3bd44c4597ff98a45cb76f130eee0da1f9df6f5960b7e430beb72cd4ccea8567"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_flag/cpu_prospective/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "a2681eecb05952fdea9a5ca2f07207f9af3898c82bb60beb28492ef96f172e7f",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-flag-cpu-qualification-20261002"
+}

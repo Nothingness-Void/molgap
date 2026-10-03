@@ -1,0 +1,30 @@
+{
+  "source_hashes": {
+    "experiments/pcqm_k1_flag/qualify.py": "e91affaac42f611f6626e88ad9e02997d7cd389d8cff3e3d0644ee3702815b02",
+    "experiments/pcqm_k1_flag/protocol.md": "65f66f86aefa741f52bb3907b51a7e7e66121cbb7ceef5fcfa240e3b54806c7a",
+    "experiments/pcqm_k1_flag/role_plan.json": "1b0aa3c60b011eb2112840caeec0571eedd89294211379fd2b1a3cdbb4c8f80a",
+    "experiments/pcqm_k1_flag/evidence_review.md": "0fea167cd77480fe31cbe8532cd72e92cbca8dcc7fbe3e30925c878a86ebf42c",
+    "src/molgap/k1_flag.py": "7fdb88fef23e3509bce4e992f17cc83b88c842b775f806c5ab597496995c6b49",
+    "src/molgap/k1_screen_training.py": "18060e3290353e4b099c1e51ae917b4a52460e5e4e8cde3bd7438fd52908b2e7",
+    "src/molgap/qm9_neural_atom.py": "39873ef5f171fdac660c4a06caf282ead778d908befd2bfbf4553e50558e8d49",
+    "src/molgap/training_reproducibility.py": "6608ee1a52e432c2f2a7f68e483f5cb5ec162f95d1d09d9d7b35d3ea7e3f48ba",
+    "src/molgap/v4_runtime.py": "3cd3206642133ff5ce60f8176f2ccd5b76456f99e94f674e81eb62b3b08b6d4c"
+  },
+  "prospective_path": "experiments/pcqm_k1_flag/cpu_prospective/trajectory.json",
+  "prospective_sha256": "bd9f681a683be1efeaa2ae63dd3b970ef91d4dd4246131ce9de50e7038d4bbde",
+  "graph_shard_path": "D:/\u6587\u6863/molgap/data/pcqm_fixed_100k_v1/train/train_shard_0000.pt",
+  "graph_shard_sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+  "selected_checkpoint_path": "D:\\w\\k1-flag\\platforms\\_records\\kaggle\\training\\pcqm_k1_width256_reference_kaggle3_v1\\k1_pair\\reference\\selected_model.pt",
+  "selected_checkpoint_sha256": "4a7dab43f50f5f3216b224374c213a01cc82cfb4160dcd6d54aab1ef614fce17",
+  "selected_state_sha256": "828fa756b0fb757d3ff1a125fc7ee5b6c2ddab6fd36c072f35b26b72b2f77822",
+  "initial_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "target_mean": 5.3383002281188965,
+  "target_std": 1.275090217590332,
+  "row_start": 0,
+  "row_stop": 256,
+  "cpu_threads": 4,
+  "max_seconds": 300,
+  "source_commit": "cefdc3e4a8a1099bd11205f35c3a56d28f5cf699",
+  "trajectory_id": "TB-k1-flag-cpu-qualification-20261002",
+  "run_id": "local-k1-flag-qualification-20261002"
+}

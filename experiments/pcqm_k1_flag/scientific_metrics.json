@@ -1,0 +1,69 @@
+{
+  "rows": 50000,
+  "reference_mae_eV": 0.1412944608205557,
+  "candidate_mae_eV": 0.14060661458909512,
+  "paired_gain_eV": 0.0006878462314605713,
+  "row_bootstrap_95pct_eV": [
+    -0.00018880222177505493,
+    0.0016369001244306563
+  ],
+  "candidate_better_row_fraction": 0.50734,
+  "material_3mev_point_gain": false,
+  "bootstrap_replicates": 1000,
+  "bootstrap_seed": 42,
+  "reference_prediction_sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82",
+  "candidate_prediction_sha256": "6d45f8343b44d7a8b2a88357994e16db8479ab0927e23d84fc1ff98401dffdc8",
+  "training_stochasticity": "unknown_single_seed",
+  "development_role": "selection_used",
+  "endpoint_gate": "gain>=0.003eV and positive lower95pct bound",
+  "scientific_outcome": "NEGATIVE_UNDER_CONTRACT",
+  "runtime_reference_comparison": {
+    "platform_id": {
+      "reference": "kaggle3-t4x2",
+      "candidate": "kaggle-t4x2",
+      "equal": false
+    },
+    "runtime_fingerprint": {
+      "reference": "c6653bd92ee5d532a18e609c6846d8ed54e6724323cdc78b0014d6986244f630",
+      "candidate": "0e3e1a2a2fd838a60d6ba810ee696ea5da513183b1d2c8e593587a318404ed6b",
+      "equal": false
+    },
+    "software_fingerprint": {
+      "reference": "01a422b3553be49b84623a1b965dcba1f5a269a081152e05f5fb0b8bc90c3b98",
+      "candidate": "00dcfce5144bddf7ad1e8d3b07a655001ced66a9b6bd187e912ca9197e759071",
+      "equal": false
+    },
+    "determinism_fingerprint": {
+      "reference": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+      "candidate": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+      "equal": true
+    },
+    "precision": {
+      "reference": "fp32",
+      "candidate": "fp32",
+      "equal": true
+    },
+    "tf32_enabled": {
+      "reference": false,
+      "candidate": false,
+      "equal": true
+    },
+    "physical_batch_per_device": {
+      "reference": 128,
+      "candidate": 128,
+      "equal": true
+    },
+    "tail_batch_policy": {
+      "reference": "drop_last",
+      "candidate": "drop_last",
+      "equal": true
+    },
+    "calibration_fixture_sha256": {
+      "reference": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+      "candidate": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+      "equal": true
+    }
+  },
+  "strict_causal_comparison": "not_qualified_runtime_and_software_fingerprints_differ",
+  "replay_readiness": "not_evaluated"
+}

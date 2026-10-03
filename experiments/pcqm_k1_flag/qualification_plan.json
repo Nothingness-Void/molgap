@@ -1,0 +1,148 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-flag-cpu-qualification-20261002",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-flag",
+    "question": "Does the frozen train-only FLAG algorithm qualify without changing clean K1 identity?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-flag-cpu-20261002",
+      "observed_deficiency": "Simple atom/slot widening misses material gains; useful preserved paths motivate an untested supervised embedding-robustness objective, not a diagnosed fitting failure.",
+      "supporting_evidence_ids": [
+        "pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal",
+        "pcqm-k1-slot-readout-diagnostic-20261002",
+        "pcqm-k1-v4-192-kaggle3-reference-custody-20261002"
+      ],
+      "alternative_explanations": [
+        "Perturbations may harm clean Gap regression.",
+        "Embedding sensitivity need not predict generalization.",
+        "Repeated evaluations and dropout can account for effects."
+      ],
+      "changed_mechanism": "Three gradient-directed embedding perturbations averaged before one optimizer step; clean K1 state and architecture unchanged.",
+      "cheapest_falsifier": "First256 training rows only: exact clean identity, finite gradients, independent gradient accumulation, resume, storage and descriptive frozen-model sensitivity; CPU300s maximum.",
+      "related_closed_family_ids": [
+        "k1-slot-width96",
+        "k1-node-width",
+        "k1-slot-readout-diagnostic",
+        "gptrans-noisy-nodes",
+        "k1-pretraining"
+      ],
+      "expected_native_cost_ref": "cost-k1-flag-cpu-expected",
+      "decision_changed_if_positive": "Review one authorized fixed100K candidate after accepted CPU checks and remote T4 qualification; no automatic scale-up.",
+      "decision_changed_if_negative": "NO_TRAIN on implementation/numeric/resource failure; preserve failure attribution.",
+      "historical_unknowns": [
+        "Clean Gap transfer benefit of FLAG.",
+        "Single-seed stochasticity."
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "cefdc3e4a8a1099bd11205f35c3a56d28f5cf699",
+      "source_config_identity": "K1 original192/64/64 + train-only FLAG M3 alpha0.001",
+      "contract_refs": [
+        "experiments/pcqm_k1_flag/protocol.md",
+        "experiments/pcqm_k1_flag/evidence_review.md",
+        "experiments/pcqm_k1_flag/rml_review.md",
+        "experiments/pcqm_k1_flag/rml_inventory.json"
+      ],
+      "reference_ids": [
+        "pcqm-k1-v4-192-kaggle3-reference-custody-20261002"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal",
+        "pcqm-k1-slot-readout-diagnostic-20261002",
+        "pcqm-k1-v4-192-kaggle3-reference-custody-20261002"
+      ],
+      "parent_trajectory_ids": [
+        "TB-k1-slot-width96-kaggle3-100k-s42-v1"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_flag/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_flag/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "cpu_train_only_algorithm_and_sensitivity_qualification",
+        "source_commit": "cefdc3e4a8a1099bd11205f35c3a56d28f5cf699",
+        "run_ids": [
+          "local-k1-flag-qualification-20261002"
+        ],
+        "attempt_ids": [
+          "cpu-001"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_k1_flag/protocol.md"
+        ],
+        "cost_event_ids": [
+          "cost-k1-flag-cpu-expected"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_flag/protocol.md",
+      "next_allowed_actions": [
+        "A001"
+      ],
+      "reopen_conditions": []
+    }
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-flag-cpu-expected",
+      "trajectory_id": "TB-k1-flag-cpu-qualification-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-flag-qualification-20261002",
+      "attempt_id": "cpu-001",
+      "platform": "local-windows",
+      "hardware": "CPU4threads; no accelerator",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_flag/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "status": "estimated",
+          "value": 0.08333333333333333
+        },
+        "cpu_hours": {
+          "status": "estimated",
+          "value": 0.3333333333333333
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        }
+      }
+    }
+  ],
+  "action_inputs_ref": "experiments/pcqm_k1_flag/cpu_action_inputs.json",
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "QUALIFY_CPU",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "QUALIFY_CPU",
+    "policy_id": "k1-flag-cpu-qualification",
+    "policy_version": "1",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_flag/role_plan.json"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_flag/protocol.md",
+    "state_timestamp": "2026-10-02",
+    "source_commit": "cefdc3e4a8a1099bd11205f35c3a56d28f5cf699"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "format": "molgap-rml-local-census-summary-v1",
+  "review_date": "2026-10-02",
+  "authority": "review-only; canonical trajectory and decision records retain authority",
+  "scope": {
+    "repository": "D:/文档/molgap",
+    "read_only": true,
+    "remote_calls": false,
+    "training_or_model_execution": false,
+    "protected_data_read": false,
+    "worktrees_total": 63,
+    "indexed_worktrees": 30,
+    "indexed_worktree_rows": 1078,
+    "indexed_worktree_unique_ids": 103,
+    "desktop_index": {
+      "path": "research_memory/derived/trajectory_index.json",
+      "head": "e23e1a41280a8441942ce16b6ed4e8d4b16e641f",
+      "entries": 67,
+      "source_digest": "4a796c19b6b7838839a2a0eb43b7c3326ddfa3f9043a95ee85434e37115495ce",
+      "sha256": "6e6dddfade92510da397fc0639f5b5bc8bb310280ad0b3e5237993673a719b7c"
+    },
+    "cached_server_index": {
+      "git_ref": "origin/molgap-server",
+      "commit": "cac66f69166260254ae5cb3f69433d181c06592c",
+      "entries": 64,
+      "source_digest": "5dc035bcea2b7e1edd74ec457cb9da6a88832d3f1444eefa1c1baef4a60f9d6c"
+    },
+    "older_local_server_index": {
+      "git_ref": "molgap-server",
+      "commit": "cb53b4895434a92d46467f82c668d22e41c6d16d",
+      "entries": 25,
+      "unique_ids_subset_of_cached_server": true
+    },
+    "indexed_union_unique_ids": 166,
+    "prior_review_navigation_only": {
+      "path": "research_memory/reviews/edgestate_single_model/evidence_inventory.json",
+      "review_date": "2026-09-30",
+      "rows": 240,
+      "unique_ids": 126,
+      "covered_by_union": 126
+    },
+    "archive_tip": {
+      "commit": "f16823acc012727c02671b64798147346ba70010",
+      "derived_index_present": false,
+      "trajectory_json_snapshots": 8,
+      "unique_ids": 4,
+      "all_ids_overlap_indexed_union": true,
+      "historical_scope": "tip and cited decisions reviewed; all unindexed ancestor blobs not exhaustively read"
+    }
+  },
+  "desktop_derived_ledgers": {
+    "native_cost": {
+      "complete_measurements": 8,
+      "incomplete": 48,
+      "no_cost_event": 11,
+      "events": 98,
+      "estimated_events": 17,
+      "measurement_missing": 82,
+      "not_applicable": 40,
+      "cross_hardware_total": null
+    },
+    "roles": {
+      "explicit_events": 126,
+      "ambiguous_historical_records": 244,
+      "full_training_membership_conflicts": 3
+    }
+  },
+  "method_search": {
+    "regex": "(?i)\\b(?:FLAG|SAM)\\b|gradient.{0,50}adversarial|adversarial|sharpness[- ]aware",
+    "result": "no executed FLAG/gradient-adversarial/SAM trajectory found in indexed canonical records, decisions, and attribution documents",
+    "boundary": "bounded local indexed snapshots; not unindexed files, every archive ancestor blob, or external literature"
+  },
+  "primary_index_locators": [
+    "D:/文档/molgap/research_memory/derived/trajectory_index.json",
+    "local Git ref origin/molgap-server:research_memory/derived/trajectory_index.json",
+    "local Git ref molgap-server:research_memory/derived/trajectory_index.json",
+    "D:/文档/molgap/research_memory/reviews/edgestate_single_model/evidence_inventory.json"
+  ],
+  "review_file": "experiments/pcqm_k1_flag/rml_review.md",
+  "limitation": "This compact inventory summarizes the audited snapshot census; it does not inline the 166 trajectory rows or claim every unindexed archive ancestor was read.",
+  "reconciliation_update": {
+    "desktop_commit": "dcdda03518a281c2b06a92e374991883f4f737d4",
+    "trajectories": 74,
+    "v5_evidence": 63,
+    "cost_events": 113,
+    "role_events": 145,
+    "traces": 21,
+    "ready": 0,
+    "validation": "PASS",
+    "frozen_check": "PASS",
+    "archive_custody": "6b91b2857e0eb014f8c3ab6376638280ceffa9fe",
+    "portable": "documented_missing_historical_reference_raw_trace",
+    "cost_completeness_summary_scope": "earlier67-trajectorysnapshot"
+  }
+}

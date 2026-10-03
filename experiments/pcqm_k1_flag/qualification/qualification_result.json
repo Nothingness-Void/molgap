@@ -1,0 +1,81 @@
+{
+  "accepted": true,
+  "scope": "CPU engineering qualification; not formal training or scientific nomination",
+  "freeze_sha256": "692a11f030363db454209bad85e35fd41e1a98782f7ae86f935f8080cc0aba3c",
+  "prospective_sha256": "bd9f681a683be1efeaa2ae63dd3b970ef91d4dd4246131ce9de50e7038d4bbde",
+  "source_idx_sha256": "bbd330b12e8159e117376ef24fa106413bc9fc18032a0d43e95c5dae5e47953f",
+  "target_sha256": "1dcdc875591f8c7540fc4bba164b210dd4a42cebe7bdd5758f21eb9ce54843b0",
+  "rows": 256,
+  "cpu_threads": 4,
+  "determinism": {
+    "seed": 42,
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "float32_matmul_precision": "highest"
+  },
+  "flag_config": {
+    "passes": 3,
+    "step_size": 0.001,
+    "initialization": "uniform-minus-alpha-plus-alpha",
+    "ascent": "unbounded-sign",
+    "location": "ogb-atom-embedding-before-rwse",
+    "loss": "normalized-gap-l1",
+    "gradient_reduction": "mean"
+  },
+  "parameters": 3658817,
+  "stored_tensor_elements": 3665747,
+  "state_keys_unchanged": true,
+  "initial_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "initial_state_file_sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+  "zero_perturbation_and_cleanup_exact": true,
+  "finite_nonzero_perturbation_gradients": [
+    1.389012098312378,
+    1.3830426931381226,
+    1.3831095695495605
+  ],
+  "finite_nonzero_model_gradients": true,
+  "maximum_clipped_gradient_delta": 0.0,
+  "explicit_accumulation": {
+    "accepted": true,
+    "losses": [
+      0.7591231465339661,
+      0.7591231465339661
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "05493c94c758d9446aef6c35a0a6a9d34286521e796e121ca559c021622ab568",
+      "05493c94c758d9446aef6c35a0a6a9d34286521e796e121ca559c021622ab568"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume": {
+    "accepted": true,
+    "losses": [
+      0.678296685218811,
+      0.678296685218811
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "eead5abab187072bd4bdbef35936be68d883fca2edb7d01b5750ffa1453dce6d",
+      "eead5abab187072bd4bdbef35936be68d883fca2edb7d01b5750ffa1453dce6d"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "hook_cleanup": true,
+  "sensitivity_sha256": "3b55d30168add983809f30fa8bffb116654f666e5111452794f2ed0c579dbcc4",
+  "formal_sample_presentations": 0,
+  "development_role_read": false,
+  "protected_roles_read": false,
+  "wall_seconds": 20.242408800000703,
+  "process_cpu_seconds": 45.140625
+}

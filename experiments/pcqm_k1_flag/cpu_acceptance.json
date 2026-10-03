@@ -1,0 +1,106 @@
+{
+  "format": "molgap-k1-flag-cpu-acceptance-v1",
+  "evidence_id": "pcqm-k1-flag-cpu-qualification-20261002",
+  "run_id": "local-k1-flag-qualification-20261002",
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "engineering_checks_only",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "cpu_closure_no_training_release",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_flag/cpu_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate authorized training prospective and actual T4 qualification."
+    ]
+  },
+  "role_use": {
+    "train_prefix_0_256": "read",
+    "internal_development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-flag-cpu-observed-20261002",
+      "trajectory_id": "TB-k1-flag-cpu-qualification-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-flag-qualification-20261002",
+      "attempt_id": "cpu-001",
+      "platform": "local-windows",
+      "hardware": "CPU4threads; no accelerator",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_flag/cpu_acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.005622891333333529
+        },
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.0125390625
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-flag-cpu-prediction_input-20261002",
+      "trajectory_id": "TB-k1-flag-cpu-qualification-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-flag-qualification-20261002",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "bbd330b12e8159e117376ef24fa106413bc9fc18032a0d43e95c5dae5e47953f",
+      "role_name": "train_prefix_0_256",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_flag/cpu_acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-flag-cpu-labels_read-20261002",
+      "trajectory_id": "TB-k1-flag-cpu-qualification-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-flag-qualification-20261002",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "bbd330b12e8159e117376ef24fa106413bc9fc18032a0d43e95c5dae5e47953f",
+      "role_name": "train_prefix_0_256",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_flag/cpu_acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-flag-cpu-metric_computed-20261002",
+      "trajectory_id": "TB-k1-flag-cpu-qualification-20261002",
+      "action_id": "A001",
+      "run_id": "local-k1-flag-qualification-20261002",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "bbd330b12e8159e117376ef24fa106413bc9fc18032a0d43e95c5dae5e47953f",
+      "role_name": "train_prefix_0_256",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_flag/cpu_acceptance.json"
+    }
+  ],
+  "qualification_result_ref": "experiments/pcqm_k1_flag/qualification/qualification_result.json",
+  "scientific_nomination": false,
+  "role_scope": "This CPU action only; retained reference role history remains consumed.",
+  "cost_scope": "Worker timer only; launcher/planning/publication overhead unmeasured."
+}

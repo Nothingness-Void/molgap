@@ -43,14 +43,13 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
 
-- **K1 FLAG objective:** user-authorized single100K candidate submitted to
-  Kaggle3 `nvoid912/molgap-k1-flag-100k-s42-v1`, actual ID136744623/version1.
-  Authenticated observation returned RUNNING and verified submitted entry bytes;
-  actual qualification/phase/accuracy/cost remain pending. Original K1 parameter
-  count and clean inference are preserved. Use the mapped experiment owner's
-  STATUS and frozen contract for exact-attempt reconciliation; no automatic
-  successor, scale-up or model promotion. The detailed local RML review covers
-  172 pre-existing IDs; see [review navigation](docs/research/EDGE_STATE_RML_REVIEW_20261002.md).
+- **K1 FLAG objective:** exact Kaggle3 ID136744623/version1 is COMPLETE;
+  accepted terminal NEGATIVE_UNDER_CONTRACT. No adoption or scale-up. Full history
+  is preserved in archive at custody merge `7c569e1a`; accepted canonical evidence
+  is now imported into desktop. Read [decision](experiments/pcqm_k1_flag/terminal_decision.md),
+  [attribution](experiments/pcqm_k1_flag/attribution.md), and
+  [STATUS](experiments/pcqm_k1_flag/STATUS.md). Runtime/reference and replay
+  qualification gaps remain exclusions, not an active GPU job.
 
 - **K1 isolated slot96:** accepted terminal NEGATIVE_UNDER_CONTRACT; no adoption
   or successor. Archive custody and accepted desktop evidence are linked in

@@ -873,6 +873,48 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "engineering_checks_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-flag-cpu-qualification-20261002",
+      "role_use": {
+        "internal_development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_prefix_0_256": "read"
+      },
+      "scientific_scope": "desktop_k1_flag_cpu_qualification",
+      "source_envelope": "experiments/pcqm_k1_flag/cpu_prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "PAIRED_ENDPOINT_single_seed_runtime_mismatch",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-flag-kaggle3-100k-s42-v1-terminal",
+      "role_use": {
+        "fixed50k_development": "selection_used",
+        "official_train_prefix_0_100000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_k1_flag_100k_saved_artifacts",
+      "source_envelope": "experiments/pcqm_k1_flag/kaggle3_v1/flag/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified",
         "durable_remote_and_local_verified"
       ],
@@ -1186,6 +1228,8 @@
       "track": "B",
       "transfer_status": "not_evaluated",
       "used_by_trajectory_ids": [
+        "TB-k1-flag-cpu-qualification-20261002",
+        "TB-k1-flag-kaggle3-100k-s42-v1",
         "TB-k1-slot-width96-kaggle3-100k-s42-v1",
         "TB-k1-slot96-cpu-qualification-20261002"
       ]
