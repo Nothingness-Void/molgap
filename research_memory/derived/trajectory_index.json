@@ -1,18 +1,20 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "c98cac17fe8cb88dbcef271b24104bde4c7a15ef0cbb1b645dcf6a30989b3ead",
+  "source_digest": "6e2f7aed01c30b688fcd7ce2d7f85d751f13665aeea503f024e2128d3e8c717e",
   "trajectories": [
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_chemical_aux/prospective/decision.md",
       "family_id": "gptrans-clean-chemical-aux",
-      "outcome": "ACTIVE",
+      "outcome": "INCONCLUSIVE",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_chemical_aux/prospective/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_chemical_aux/prospective/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930"
+      ],
       "track": "B",
       "trajectory_id": "T-gptrans-chemical-aux-feasibility"
     },

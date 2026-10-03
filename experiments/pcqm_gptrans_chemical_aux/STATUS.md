@@ -11,3 +11,7 @@ Each terminal decision is INCONCLUSIVE for strict qualification. The historical 
 The independent decisions, concise attribution, cost and role records, terminal packages and finalization receipts live under [descriptor](training_prospective_v4/descriptor_aux/decision.md) and [fingerprint](training_prospective_v4/fingerprint_aux/decision.md). Only process wall is measured; allocated device, CPU and queue time remain unknown. Official validation, test-dev and challenge remain untouched.
 
 Earlier cache and attempt dispositions remain at their original pointers: `cache_retry_observation/`, `training_prospective/`, `training_prospective_v2/`, and `training_prospective_v3/`. Their original records are unchanged. Training recipe and nominal gate remain owned by [training_protocol.md](training_protocol.md).
+
+## CPU feasibility closure and custody
+
+The CPU fixture trajectory now closes as summary-only `INCONCLUSIVE`; execution remains unverified because its original test receipt/logs are absent, and all native cost measurements remain missing. See [terminal decision](prospective/decision.md) and [custody decision](terminal_custody_decision.md). The trained arms remain inconclusive for strict qualification with no adoption.

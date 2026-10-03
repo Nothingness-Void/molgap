@@ -1,0 +1,77 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_chemical_aux/prospective/acceptance.json",
+  "action_id": "A-chemical-aux-cpu-fixtures",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_chemical_aux/feasibility.md": "c41bee67c1c4bccf588560cb0e1a8d0662924731a312c7c78d01bababb8f0240",
+    "experiments/pcqm_gptrans_chemical_aux/prospective/acceptance.json": "35fa50f07163cb2530d3654e4a0252b20601fe58bd5bf722cb8bbcd79fea0c7d",
+    "experiments/pcqm_gptrans_chemical_aux/prospective/costs/C-chemical-aux-cpu-prospective.json": "5a187ada60e110783df12a560c93afb59fb9c9451ca6ae844efb28cf448eb9f8",
+    "experiments/pcqm_gptrans_chemical_aux/prospective/decision.md": "cde34447e56e46b035258d0848412a8c0cea73ebdf87ce83a37e6fa0ee756fcc",
+    "experiments/pcqm_gptrans_chemical_aux/prospective/trajectory.json": "fbc6f3eb94530188e529c361f32ce140658f9aca676aad2be1c8e0cbf251cee5",
+    "experiments/pcqm_gptrans_chemical_aux/protocol.md": "dff37a8cc151fe7a58271117a8325195237a356d17f0156477f6f37feb0b634a"
+  },
+  "costs": [],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_chemical_aux/prospective/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "Recover the original local-001 test-runner receipt/logs from pre-existing artifacts; no rerun is authorized to manufacture a receipt."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "retained_local_summary_raw_receipt_missing",
+        "locator": "experiments/pcqm_gptrans_chemical_aux/feasibility.md",
+        "name": "feasibility_summary.md",
+        "sha256": "c41bee67c1c4bccf588560cb0e1a8d0662924731a312c7c78d01bababb8f0240"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_chemical_aux/protocol.md",
+        "experiments/pcqm_gptrans_chemical_aux/feasibility.md",
+        "experiments/pcqm_gptrans_chemical_aux/prospective/trajectory.json",
+        "experiments/pcqm_gptrans_chemical_aux/prospective/costs/C-chemical-aux-cpu-prospective.json",
+        "experiments/pcqm_gptrans_chemical_aux/prospective/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "experiments/pcqm_gptrans_chemical_aux/protocol.md; CPU/static feasibility contract dated 2026-09-30",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-04T03:33:08+09:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Retained feasibility summary only. Original raw test receipt/logs are absent; execution is unverified. No training, inference, PCQM row, or role access is claimed."
+    },
+    "outcome": {
+      "artifact_status": "summary_only_raw_receipt_missing",
+      "budget_decision": "native_cost_measurements_missing",
+      "comparison_status": "not_applicable_engineering_diagnostic",
+      "execution_status": "unknown_summary_only",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "desktop_cpu_chemical_aux_engineering_diagnostic",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-04T03:33:08+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [],
+  "run_id": "chemical-aux-fixtures",
+  "trajectory_id": "T-gptrans-chemical-aux-feasibility"
+}

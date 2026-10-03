@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 269,
+  "ambiguous_historical_role_record_count": 272,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
@@ -31,6 +31,27 @@
     },
     {
       "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "role_identity": null,
       "role_name": "test_dev",
       "semantics": "coarse_historical",
@@ -2741,6 +2762,7 @@
   "protected_roles_reported_untouched": {
     "test_challenge": [
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
+      "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-expert-oracle-feasibility-no-train-20260930",
@@ -2803,6 +2825,7 @@
     ],
     "test_dev": [
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
+      "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
       "pcqm-distance-angle-triangle-500k-20260911",
       "pcqm-expert-oracle-feasibility-no-train-20260930",

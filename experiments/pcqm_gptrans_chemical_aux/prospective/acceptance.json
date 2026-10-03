@@ -1,0 +1,27 @@
+{
+  "evidence_id": "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
+  "run_id": "chemical-aux-fixtures",
+  "outcome": {
+    "execution_status": "unknown_summary_only",
+    "artifact_status": "summary_only_raw_receipt_missing",
+    "comparison_status": "not_applicable_engineering_diagnostic",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "native_cost_measurements_missing",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_chemical_aux/prospective/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "Recover the original local-001 test-runner receipt/logs from pre-existing artifacts; no rerun is authorized to manufacture a receipt."
+    ]
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "basis": "Summary-only terminal disposition; execution remains unverified because the original raw test receipt/logs are absent."
+}

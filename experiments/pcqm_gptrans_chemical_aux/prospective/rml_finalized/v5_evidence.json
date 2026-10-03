@@ -1,0 +1,46 @@
+{
+  "artifacts": [
+    {
+      "availability": "retained_local_summary_raw_receipt_missing",
+      "locator": "experiments/pcqm_gptrans_chemical_aux/feasibility.md",
+      "name": "feasibility_summary.md",
+      "sha256": "c41bee67c1c4bccf588560cb0e1a8d0662924731a312c7c78d01bababb8f0240"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_chemical_aux/protocol.md",
+      "experiments/pcqm_gptrans_chemical_aux/feasibility.md",
+      "experiments/pcqm_gptrans_chemical_aux/prospective/trajectory.json",
+      "experiments/pcqm_gptrans_chemical_aux/prospective/costs/C-chemical-aux-cpu-prospective.json",
+      "experiments/pcqm_gptrans_chemical_aux/prospective/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "experiments/pcqm_gptrans_chemical_aux/protocol.md; CPU/static feasibility contract dated 2026-09-30",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-04T03:33:08+09:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Retained feasibility summary only. Original raw test receipt/logs are absent; execution is unverified. No training, inference, PCQM row, or role access is claimed."
+  },
+  "outcome": {
+    "artifact_status": "summary_only_raw_receipt_missing",
+    "budget_decision": "native_cost_measurements_missing",
+    "comparison_status": "not_applicable_engineering_diagnostic",
+    "execution_status": "unknown_summary_only",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "desktop_cpu_chemical_aux_engineering_diagnostic",
+  "track": "B"
+}

@@ -1,13 +1,12 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 61
+- Validated V5 evidence: 62
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 1
 - CLOSED: 9
-- INCONCLUSIVE: 18
+- INCONCLUSIVE: 19
 - INFRASTRUCTURE_ONLY: 4
 - NEGATIVE_UNDER_CONTRACT: 14
 - NO_TRAIN: 19
@@ -20,7 +19,7 @@
 
 ## Roles
 - Explicit role events: 113
-- Coarse historical role records: 269
+- Coarse historical role records: 272
 - Repeatedly selected role identities: 9
 
 ## Cost
@@ -84,11 +83,11 @@
 - not_applicable device_hours: not applicable (2 records); measurement_missing=0
 - not_applicable queue_hours: not applicable (2 records); measurement_missing=0
 - not_applicable wall_hours: not applicable (2 records); measurement_missing=0
-- unknown cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=12, not_applicable=0
-- unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=12, not_applicable=0
-- unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=12, not_applicable=0
-- unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=12, not_applicable=0
-- Measurement-missing cost events: 96
+- unknown cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
+- unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
+- unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
+- unknown wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=13, not_applicable=0
+- Measurement-missing cost events: 97
 - Cost-event coverage: 62/73 trajectories; incomplete native measurement=55
 
 ## Screening Backtest
@@ -102,4 +101,4 @@
 - [WARN] incomplete_native_cost_measurement: 55
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 33
-- [WARN] trajectory_without_v5_evidence: 12
+- [WARN] trajectory_without_v5_evidence: 11
