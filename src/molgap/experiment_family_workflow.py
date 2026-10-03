@@ -258,7 +258,8 @@ def write_selected_state(path: Path, context: RunContext, *, model_state: dict,
 def write_resume_state(path: Path, context: RunContext, *, adapter: str, model_state: dict,
                        optimizer_state: dict, rng_state: dict, cursor: dict,
                        optimizer_step: int, sample_presentations: int,
-                       scheduler_state: dict | None = None, ema_state: dict | None = None) -> Path:
+                       scheduler_state: dict | None = None, ema_state: dict | None = None,
+                       owner_state: dict | None = None) -> Path:
     """Atomic output translation; resume loading stays with the owning trainer."""
     from .training_reproducibility import atomic_torch_save, assert_finite_state_dict
     _safe_local(Path(path).absolute())
@@ -272,6 +273,10 @@ def write_resume_state(path: Path, context: RunContext, *, adapter: str, model_s
         state["scheduler"] = scheduler_state
     if ema_state is not None:
         state["ema"] = ema_state
+    if owner_state is not None:
+        if type(owner_state) is not dict or not owner_state:
+            raise ValueError("Owner resume state must be a nonempty mapping")
+        state["owner_state"] = owner_state
     if any(not isinstance(state.get(key), dict) or not state[key] for key in profile.resume_keys):
         raise ValueError("Incomplete checkpoint/resume state")
     assert_finite_state_dict(model_state, label="resume.model")
@@ -367,11 +372,12 @@ class FamilyOutputSession:
 
     def checkpoint(self, *, model_state: dict, optimizer_state: dict, cursor: dict,
                    optimizer_step: int, sample_presentations: int, rng_state: dict,
-                   scheduler_state: dict | None = None, ema_state: dict | None = None):
+                   scheduler_state: dict | None = None, ema_state: dict | None = None,
+                   owner_state: dict | None = None):
         write_resume_state(self.root / "last_checkpoint.pt", self.context, adapter=self.adapter,
             model_state=model_state, optimizer_state=optimizer_state, rng_state=rng_state,
             cursor=cursor, optimizer_step=optimizer_step, sample_presentations=sample_presentations,
-            scheduler_state=scheduler_state, ema_state=ema_state)
+            scheduler_state=scheduler_state, ema_state=ema_state, owner_state=owner_state)
 
     def complete(self, *, runtime: dict, hardware: str, observed_costs: list | None = None) -> dict:
         import time

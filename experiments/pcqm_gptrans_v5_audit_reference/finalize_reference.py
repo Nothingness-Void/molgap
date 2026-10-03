@@ -11,6 +11,7 @@ import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+from molgap.constants import REPO_ROOT
 
 from molgap.research_memory.terminal_wiring import close_terminal_arm
 from molgap.research_memory.trace import atomic_write, canonicalize_trace, file_digest, json_bytes
@@ -18,7 +19,7 @@ from molgap.comparison_readiness import validate_reference_bundle
 
 
 def main() -> None:
-    root = Path(__file__).resolve().parents[2]
+    root = REPO_ROOT
     directory = Path(__file__).resolve().parent
     results = directory / "results/terminal"
     relative = lambda p: p.relative_to(root).as_posix()

@@ -9,9 +9,10 @@ import subprocess
 import tarfile
 import tempfile
 from pathlib import Path
+from molgap.constants import REPO_ROOT
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = REPO_ROOT
 
 
 def sha256(path: Path) -> str:

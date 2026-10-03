@@ -1,5 +1,6 @@
 """Scientific declarations over the qualified prospective/release builder."""
 from pathlib import Path
+from molgap.constants import REPO_ROOT
 import json
 from molgap.gptrans_followup_release import freeze_followup
 
@@ -31,5 +32,5 @@ STUDY = {
 }
 
 if __name__ == "__main__":
-    print(json.dumps(freeze_followup(Path(__file__).resolve().parents[2], base=BASE,
+    print(json.dumps(freeze_followup(REPO_ROOT, base=BASE,
         modes=tuple(STUDY["arms"]), run="gptrans-g1-readout-dual-s42", terminal_reference=True, study=STUDY)))

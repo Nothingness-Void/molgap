@@ -515,13 +515,13 @@ def _write_strict_retained_reference_plan(repo: Path, spec: ExperimentSpec,
     assert prelaunch["prelaunch_ready"] is True
     _write_json(prelaunch_path, prelaunch)
 
-    adapters = {"neural_atom_k1": "k1-screen-v1", "gptrans_t": "gptrans-v1"}
+    from molgap.experiment_execution import training_adapter
     entries = []
     for arm in spec.to_dict()["arms"]:
         recipe_path = repo / recipes[arm["arm_id"]]
         entries.append({
             "arm_id": arm["arm_id"],
-            "adapter": adapters[arm["family"]["name"]],
+            "adapter": training_adapter(arm).artifact_adapter,
             "expected": expected,
             "contract": _pointer(repo, recipe_path),
             "comparison_prelaunch": _pointer(repo, prelaunch_path),

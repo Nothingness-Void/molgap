@@ -6,9 +6,10 @@ import hashlib
 import json
 import shutil
 from pathlib import Path
+from molgap.constants import REPO_ROOT
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = REPO_ROOT
 RECORDS = ROOT / "platforms/_records/kaggle/training"
 OUTPUT = ROOT / "platforms/_records/scnet/k1_explainability_payloads_v1"
 

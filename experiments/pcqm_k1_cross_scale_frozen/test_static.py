@@ -1,9 +1,10 @@
 """Contract checks that require neither torch nor a remote accelerator."""
 
 from pathlib import Path
+from molgap.constants import REPO_ROOT
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = REPO_ROOT
 MODULE = ROOT / "src/molgap/pcqm_k1_cross_scale_diagnostic.py"
 ACCEPTANCE = ROOT / "experiments/pcqm_k1_cross_scale_frozen/accept_and_analyze.py"
 

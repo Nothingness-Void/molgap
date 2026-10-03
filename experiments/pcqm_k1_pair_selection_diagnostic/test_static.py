@@ -3,13 +3,14 @@ from __future__ import annotations
 
 import ast
 from pathlib import Path
+from molgap.constants import REPO_ROOT
 
 import torch
 
 from molgap.pcqm_k1_pair_selection_diagnostic import attention_metrics
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = REPO_ROOT
 
 
 def test_attention_mass_partition_on_two_atom_bond():

@@ -8,6 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from importlib import import_module
 from pathlib import Path
+import re
 from types import MappingProxyType
 
 from .experiment_spec import ADDONS, FAMILIES, ExperimentSpec, SCHEMA_VERSION_V2, validate_addon_config
@@ -20,6 +21,7 @@ class TrainingAddon:
     version: str
     mode: str
     extra_source_files: tuple[str, ...] = ()
+    apply_hook: str | None = None
 
 
 @dataclass(frozen=True)
@@ -30,6 +32,7 @@ class TrainingAdapter:
     addons: tuple[TrainingAddon, ...]
     serialization_modules: tuple[str, ...] = ()
     source_files: tuple[str, ...] = ()
+    model_factory: str | None = None
 
     @property
     def addon_modes(self) -> tuple[tuple[str, str], ...]:
@@ -45,9 +48,30 @@ class TrainingAdapter:
         addons = arm["addons"]
         if not addons:
             return "reference"
+        if self.model_factory is not None:
+            modes = [self.addon(a["name"], a["version"]).mode for a in addons]
+            return modes[0] if len(modes) == 1 else "composed"
         if len(addons) != 1:
             raise ValueError("Execution requires one supported addon")
         return self.addon(addons[0]["name"], addons[0]["version"]).mode
+
+
+def _hook_source(hook: str) -> str:
+    if type(hook) is not str or re.fullmatch(r"molgap(?:\.[A-Za-z_][A-Za-z0-9_]*)+:[A-Za-z_][A-Za-z0-9_]*", hook) is None:
+        raise ValueError("Expected a reviewed molgap module:function hook")
+    return "src/" + hook.split(":", 1)[0].replace(".", "/") + ".py"
+
+
+def graph_training_adapter(family, *, model_factory, addons=(), source_files=(),
+                           serialization_modules=()) -> TrainingAdapter:
+    """Bind a small model to the shared pure-2D normalized-Gap training owner."""
+    sources = {"src/molgap/graph_screen_training.py", "src/molgap/pcqm_graph_inputs.py",
+               "src/molgap/shared_model_adapter.py", "src/molgap/pcqm_topology.py",
+               "src/molgap/ogb_features.py",
+               _hook_source(model_factory), *source_files}
+    return TrainingAdapter(tuple(family), "molgap.graph_screen_training", "graph-screen-v1",
+        tuple(addons), tuple(serialization_modules), tuple(sorted(sources)), model_factory)
+
 
 
 TRAINING_ADAPTERS = MappingProxyType({
@@ -76,6 +100,22 @@ def validate_training_registry() -> None:
         artifact_adapter(adapter.artifact_adapter, family)
         if "src/" + adapter.module.replace(".", "/") + ".py" not in adapter.source_files:
             raise ValueError("Training registration omits its owning source module")
+        if adapter.model_factory is not None:
+            if (adapter.module != "molgap.graph_screen_training" or adapter.artifact_adapter != "graph-screen-v1"
+                    or _hook_source(adapter.model_factory) not in adapter.source_files
+                    or not adapter.model_factory.endswith(":make_model")):
+                raise ValueError("Shared graph model registration differs from its reviewed owner/source")
+            contract = FAMILIES[family]
+            if _hook_source(adapter.model_factory) != "src/" + contract.source_module.replace(".", "/") + ".py":
+                raise ValueError("Shared graph factory differs from its declared model source")
+            if (contract.feature_schema != "ogb-atom9-bond3-rwse16-v1"
+                    or contract.roles != ("train", "development")
+                    or contract.recipe != "graph_gap_screen_v1"
+                    or contract.sampler != "seed42-epoch-global-randperm-v1"
+                    or contract.transform != "train-mean-unbiased-std"):
+                raise ValueError("Shared graph training requires its explicit feature/role/recipe contract")
+        elif adapter.module == "molgap.graph_screen_training":
+            raise ValueError("Shared graph training requires a reviewed model factory")
         if len({(a.name, a.version) for a in adapter.addons}) != len(adapter.addons):
             raise ValueError("Duplicate executable addon registration")
         for addon in adapter.addons:
@@ -86,6 +126,12 @@ def validate_training_registry() -> None:
                 raise ValueError("Executable addon differs from its declared family version")
             if type(addon.mode) is not str or not addon.mode:
                 raise ValueError("Executable addon requires an explicit owning mode")
+            if adapter.model_factory is not None:
+                if (addon.apply_hook is None or not addon.apply_hook.endswith(":apply_addon")
+                        or _hook_source(addon.apply_hook) != "src/" + contract.source_module.replace(".", "/") + ".py"):
+                    raise ValueError("Shared graph addon requires its reviewed model-delta hook")
+            elif addon.apply_hook is not None:
+                raise ValueError("Owning trainer addons must retain their own mode dispatch")
 
 
 def build_addon_declaration(family, addon, *, repo_root, config=None, version="1") -> dict:
@@ -117,6 +163,8 @@ def workflow_capabilities(spec: ExperimentSpec) -> dict:
             adapter = training_adapter(arm)
             supported[arm["arm_id"]] = {"mode": adapter.mode(arm), "trainer": adapter.module,
                                         "artifact_profile": adapter.artifact_adapter}
+            if adapter.model_factory is not None:
+                supported[arm["arm_id"]]["model_factory"] = adapter.model_factory
         except ValueError as exc:
             unsupported[arm["arm_id"]] = str(exc)
     registered = not unsupported and spec.to_dict()["platform"]["name"] == "kaggle"
@@ -137,14 +185,27 @@ def training_adapter(arm: dict) -> TrainingAdapter:
     return adapter
 
 
-def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
+def build_family_recipe(family: tuple[str, str], *, addon: str | tuple[str, ...] | None = None,
                         source_idx_sha256: str, target_sha256: str,
-                        addon_version: str = "1") -> dict:
+                        addon_version: str = "1", recipe_config: dict | None = None) -> dict:
     """Build owned constants before freezing the Spec; never read development rows."""
     adapter = TRAINING_ADAPTERS.get(family)
     if adapter is None:
         raise ValueError("No executable family recipe builder")
-    mode = "reference" if addon is None else adapter.addon(addon, addon_version).mode
+    if isinstance(addon, tuple):
+        if adapter.model_factory is None or len(addon) < 2 or len(set(addon)) != len(addon):
+            raise ValueError("Composed addons require distinct reviewed shared-model hooks")
+        for name in addon:
+            adapter.addon(name, addon_version)
+        mode = "composed"
+    else:
+        mode = "reference" if addon is None else adapter.addon(addon, addon_version).mode
+    if adapter.model_factory is not None:
+        return import_module(adapter.module).build_screen_recipe(mode, family=family,
+            source_idx_sha256=source_idx_sha256, target_sha256=target_sha256,
+            recipe_config=recipe_config)
+    if recipe_config is not None:
+        raise ValueError("Frozen family recipes do not accept generic configuration")
     return import_module(adapter.module).build_screen_recipe(mode,
         source_idx_sha256=source_idx_sha256, target_sha256=target_sha256)
 

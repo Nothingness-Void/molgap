@@ -1,7 +1,8 @@
 from pathlib import Path
+from molgap.constants import REPO_ROOT
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = REPO_ROOT
 MODULE = ROOT / "src/molgap/pcqm_k1_pair_token_batch_profile.py"
 SLURM = Path(__file__).with_name("run_kunshan.slurm")
 PROTOCOL = Path(__file__).with_name("protocol.md")

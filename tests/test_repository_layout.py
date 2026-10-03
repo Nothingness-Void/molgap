@@ -9,6 +9,7 @@ import pytest
 
 from conftest import CLI_MODULES
 from molgap.constants import REPO_ROOT
+from molgap.documentation_check import ENTRYPOINT_LINE_LIMITS
 
 ACTIVE_ROOTS = ("production", "experiments", "platforms")
 EXCLUDED_PARTS = {
@@ -40,6 +41,11 @@ ROOT_POINTER = re.compile(
 )
 LOCAL_ARTIFACT_POINTER = re.compile(r"`([^`\n]+\.(?:md|json))`")
 MARKDOWN_LINK = re.compile(r"(?<!!)\[[^\]]+\]\(([^)\n]+)\)")
+TRACEABILITY_ROLE = re.compile(
+    r"^\s*Traceability role:\s*`(evidence|context|diagnostic|pending|portfolio)`",
+    re.IGNORECASE | re.MULTILINE,
+)
+NON_EVIDENCE_ROLES = {"context", "diagnostic", "pending", "portfolio"}
 REPO_POINTER_ROOTS = {
     "data",
     "experiments",
@@ -77,11 +83,7 @@ LOCAL_LINK_SUFFIXES = (
     ".yaml",
     ".yml",
 )
-CONTROL_DOC_LIMITS = {
-    "AGENTS.md": 170,
-    "CURRENT_STATE.md": 120,
-    "ROADMAP.md": 120,
-}
+CONTROL_DOC_LIMITS = ENTRYPOINT_LINE_LIMITS
 TOP_LEVEL_POINTER_DOCS = (
     "AGENTS.md",
     "CURRENT_STATE.md",
@@ -93,7 +95,17 @@ TOP_LEVEL_POINTER_DOCS = (
     "experiments/README.md",
     "production/README.md",
     "platforms/README.md",
+    "experiments/DIRECTORY_INDEX.md",
+    "experiments/EVIDENCE_INDEX.md",
+    "docs/operations/EXPERIMENT_QUICKSTART.md",
+    "docs/operations/GRAPH_SCREEN_EXTENSION.md",
+    "docs/operations/ARCHITECTURE_MODULE_INDEX.md",
+    "docs/operations/CURRENT_STATE_HISTORY_INDEX.md",
+    "docs/operations/ROADMAP_HISTORY_INDEX.md",
 )
+EXPERIMENT_DIRECTORY_INDEX = REPO_ROOT / "experiments" / "DIRECTORY_INDEX.md"
+EXPERIMENT_EVIDENCE_INDEX = REPO_ROOT / "experiments" / "EVIDENCE_INDEX.md"
+INDEXED_EXPERIMENT = re.compile(r"`([a-z0-9][a-z0-9_\-]*)/`")
 
 
 def active_python_files() -> list[Path]:
@@ -154,52 +166,112 @@ def resolve_doc_pointer(document: Path, raw_pointer: str) -> Path | None:
     return document.parent / normalized
 
 
+def markdown_targets(document: Path) -> list[str]:
+    """Return local Markdown targets without treating prose code as links."""
+
+    targets: list[str] = []
+    text = document.read_text(encoding="utf-8", errors="ignore")
+    for raw_target in MARKDOWN_LINK.findall(text):
+        target = raw_target.strip()
+        if target.startswith("<") and ">" in target:
+            target = target[1 : target.index(">")]
+        else:
+            # Optional Markdown link titles are outside the path token.
+            target = target.split(None, maxsplit=1)[0]
+        if target.startswith(("#", "http://", "https://", "mailto:")):
+            continue
+        targets.append(target)
+    return targets
+
+
+def existing_local_pointers(document: Path) -> set[Path]:
+    """Resolve explicit links and only reliable, existing inline path pointers."""
+
+    pointers = markdown_targets(document)
+    text = document.read_text(encoding="utf-8", errors="ignore")
+    pointers.extend(LOCAL_ARTIFACT_POINTER.findall(text))
+    resolved: set[Path] = set()
+    for raw_pointer in pointers:
+        if raw_pointer.startswith(("#", "http://", "https://", "mailto:")):
+            continue
+        target = raw_pointer.strip().split(None, maxsplit=1)[0]
+        path = resolve_doc_pointer(document, target)
+        if path is not None and path.is_file():
+            resolved.add(path.resolve())
+    return resolved
+
+
+def traceability_role(readme: Path) -> str:
+    match = TRACEABILITY_ROLE.search(
+        readme.read_text(encoding="utf-8", errors="ignore")
+    )
+    return match.group(1).lower() if match else "evidence"
+
+
 def test_active_experiments_have_readme_entrypoints() -> None:
-    missing = [
-        path.name
-        for path in active_experiment_dirs()
-        if not (path / "README.md").is_file()
-    ]
-    assert not missing, "active experiments missing README.md:\n" + "\n".join(missing)
+    """The conditional directory index is the stable entrypoint for every question."""
+
+    directory_index = EXPERIMENT_DIRECTORY_INDEX.read_text(encoding="utf-8")
+    indexed = set(INDEXED_EXPERIMENT.findall(directory_index))
+    active_dirs = active_experiment_dirs()
+    active = {path.name for path in active_dirs}
+    missing_readmes = sorted(
+        path.name for path in active_dirs if not (path / "README.md").is_file()
+    )
+    assert not missing_readmes, (
+        "active experiments missing README.md entrypoints:\n"
+        + "\n".join(missing_readmes)
+    )
+    assert indexed == active, (
+        "experiments/DIRECTORY_INDEX.md must cover exactly active question directories:\n"
+        f"missing={sorted(active - indexed)}\nextra={sorted(indexed - active)}"
+    )
 
 
 def test_active_experiments_are_indexed_and_traceable() -> None:
-    index = (REPO_ROOT / "experiments" / "README.md").read_text(encoding="utf-8")
-    failures: list[str] = []
-    for experiment in active_experiment_dirs():
-        readme_path = experiment / "README.md"
-        if not readme_path.is_file():
-            continue
-        readme = readme_path.read_text(encoding="utf-8", errors="ignore")
-        decisions = sorted(experiment.rglob("*decision*.md"))
-        evidence = sorted(experiment.rglob("*.json"))
-        relative_decisions = [path.relative_to(experiment).as_posix() for path in decisions]
+    """Validate conditional indexes and retain the accepted-evidence gate."""
 
-        if f"`{experiment.name}/`" not in index:
-            failures.append(f"{experiment.name}: missing from experiments/README.md")
-        if not decisions:
-            failures.append(f"{experiment.name}: no *decision*.md")
-        elif not any(relative in readme for relative in relative_decisions):
-            failures.append(f"{experiment.name}: README does not point to a decision")
-        if not evidence:
-            failures.append(f"{experiment.name}: no JSON machine evidence")
-        else:
-            reachable_evidence = False
-            for decision in decisions:
-                decision_text = decision.read_text(encoding="utf-8", errors="ignore")
-                for raw_pointer in LOCAL_ARTIFACT_POINTER.findall(decision_text):
-                    if not raw_pointer.endswith(".json"):
-                        continue
-                    resolved = resolve_doc_pointer(decision, raw_pointer)
-                    if resolved is not None and resolved.is_file():
-                        reachable_evidence = True
-                        break
-                if reachable_evidence:
-                    break
-            if not reachable_evidence:
-                failures.append(
-                    f"{experiment.name}: no decision points to reachable JSON evidence"
-                )
+    directory_index = EXPERIMENT_DIRECTORY_INDEX.read_text(encoding="utf-8")
+    evidence_index = EXPERIMENT_EVIDENCE_INDEX.read_text(encoding="utf-8")
+    indexed_directories = set(INDEXED_EXPERIMENT.findall(directory_index))
+    indexed_evidence = set(INDEXED_EXPERIMENT.findall(evidence_index))
+    active_names = {path.name for path in active_experiment_dirs()}
+    failures: list[str] = []
+    for name in sorted(indexed_directories - active_names):
+        failures.append(f"{name}: DIRECTORY_INDEX.md points to missing directory")
+    for name in sorted(indexed_evidence - active_names):
+        failures.append(f"{name}: EVIDENCE_INDEX.md points to missing directory")
+
+    # An explicit role marker is used when an indexed question is a
+    # portfolio/context/diagnostic or pending record rather than a terminal
+    # evidence bundle. The default role is ``evidence`` so accepted rows keep
+    # the historical decision/evidence gate.
+    for name in sorted(indexed_evidence & active_names):
+        experiment = REPO_ROOT / "experiments" / name
+        readme = experiment / "README.md"
+        role = traceability_role(readme) if readme.is_file() else "evidence"
+        if role not in NON_EVIDENCE_ROLES:
+            decisions = sorted(experiment.rglob("*decision*.md"))
+            evidence = sorted(experiment.rglob("*.json"))
+            if not decisions:
+                failures.append(f"{name}: no *decision*.md")
+                continue
+            decision_paths = {path.resolve() for path in decisions}
+            if not (existing_local_pointers(readme) & decision_paths):
+                failures.append(f"{name}: README does not point to a decision")
+            if not evidence:
+                failures.append(f"{name}: no JSON machine evidence")
+            else:
+                evidence_documents = [readme, *decisions]
+                if not any(
+                    path.suffix.lower() == ".json"
+                    and path.resolve() in existing_local_pointers(document)
+                    for document in evidence_documents
+                    for path in evidence
+                ):
+                    failures.append(
+                        f"{name}: README or decision has no reachable JSON evidence"
+                    )
 
     assert not failures, "experiment traceability failures:\n" + "\n".join(failures)
 
@@ -236,8 +308,7 @@ def test_active_experiment_entrypoint_pointers_exist() -> None:
         if status.is_file():
             documents.append(status)
         for document in documents:
-            text = document.read_text(encoding="utf-8", errors="ignore")
-            for raw_pointer in LOCAL_ARTIFACT_POINTER.findall(text):
+            for raw_pointer in markdown_targets(document):
                 resolved = resolve_doc_pointer(document, raw_pointer)
                 if resolved is not None and not resolved.exists():
                     failures.append(

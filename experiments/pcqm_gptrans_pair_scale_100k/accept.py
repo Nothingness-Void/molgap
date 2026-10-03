@@ -1,5 +1,6 @@
 """Thin saved-output and RML closure entry; never executes a model."""
 from pathlib import Path
+from molgap.constants import REPO_ROOT
 import argparse
 from molgap.gptrans_author_acceptance import accept_training_outputs
 from molgap.gptrans_author_terminal import close_author_outputs
@@ -15,7 +16,7 @@ if __name__ == "__main__":
     parser.add_argument("--close-rml", action="store_true")
     parser.add_argument("--arm", action="append")
     args = parser.parse_args()
-    root = Path(__file__).resolve().parents[2]
+    root = REPO_ROOT
     result = accept_training_outputs(root, args.records, args.package,
         experiment_ref=BASE + "/gpu", selected_arms=args.arm)
     atomic_json(args.output, result)
