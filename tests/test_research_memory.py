@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import subprocess
 from pathlib import Path
@@ -24,6 +25,31 @@ from molgap.research_memory.validate import validate_repository_records
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_k1_reference_raw_source_is_losslessly_restored():
+    owner = REPO_ROOT / "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference"
+    binding = json.loads((owner / "trace_migration.json").read_text(encoding="utf-8"))
+    original = REPO_ROOT / binding["retained_source_ref"]
+    raw = original.read_bytes()
+    pin = "a86d940044f0e591f5c4ac2978b1b32194d35f1bac19592195cacead1d024923"
+    assert binding["source_trace_sha256"] == hashlib.sha256(raw).hexdigest() == pin
+    attributes = subprocess.run(
+        ["git", "check-attr", "text", "--", binding["retained_source_ref"]],
+        cwd=REPO_ROOT, capture_output=True, text=True, check=True,
+    )
+    assert attributes.stdout.rstrip().endswith(": text: unset")
+    canonical = json.loads((owner / "trace.json").read_text(encoding="utf-8"))
+    mapping = json.loads((owner / "trace_recovery_spec.json").read_text(encoding="utf-8"))["field_mapping"]
+    source = json.loads(raw)
+    assert set(source) == {"epochs"}
+    assert len(source["epochs"]) == len(canonical["observations"]) == 40
+    best = float("inf")
+    for row, observation in zip(source["epochs"], canonical["observations"]):
+        assert all(row[source_field] == observation[canonical_field]
+                   for canonical_field, source_field in mapping.items())
+        assert row["improved"] is (row["development_gap_mae_eV"] < best)
+        best = min(best, row["development_gap_mae_eV"])
 
 
 def _cost_event(

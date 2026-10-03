@@ -18,3 +18,12 @@ artifacts when publishing this branch; bulky perrow JSON is redundant with NPZ.
 
 Run records are terminal. Do not replay launch/prepare or reuse its consumed role
 as independent validation. No successor is authorized by the NO_TRAIN closure.
+
+## Frozen evidence navigation
+
+The [decision](terminal_decision.md) and [analysis](results/analysis.json) are
+receipt-bound historical bytes; this entry supplies their additive navigation.
+The copied [input decision](input_authority/terminal_decision.md) retains links
+relative to its original owner. Use the local [input metrics](input_authority/scientific_metrics.json)
+and [owner binding](inputs.json) for snapshot context; do not rewrite the snapshot.
+The [finalization](rml/rml_finalized/finalization.json) binds their exact hashes.

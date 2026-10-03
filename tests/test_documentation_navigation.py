@@ -13,6 +13,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 GUIDE = "docs/operations/EXPERIMENT_ADDON_GUIDE.md"
 CLI = "docs/operations/EXPERIMENT_CLI.md"
+WORKFLOW = "docs/operations/EXPERIMENT_WORKFLOW.md"
 BLOCK_READMES = tuple(
     f"production/{stage}/README.md" for stage in (
         "01_acquire", "02_graphs", "03_train", "04_evaluate",
@@ -21,7 +22,8 @@ BLOCK_READMES = tuple(
 ) + ("platforms/_records/README.md", "platforms/_staging/README.md")
 DOCUMENTS = (
     "README.md", "ARCHITECTURE.md", "AGENTS.md", "BRANCHES.md",
-    "CURRENT_STATE.md", "ROADMAP.md", CLI, GUIDE,
+    "CURRENT_STATE.md", "ROADMAP.md", CLI, GUIDE, WORKFLOW,
+    "docs/operations/INFRASTRUCTURE_REPAIR_20261003.md",
     "docs/operations/RESEARCH_PROTOCOL.md", "docs/operations/BRANCH_HISTORY.md",
     "docs/operations/LOCAL_AUDIT_20261001.md",
     "production/README.md", "platforms/README.md", "models/REFERENCE_INDEX.md",
@@ -66,6 +68,13 @@ def test_entrypoints_link_directly_to_operation_map(relative):
     assert expected in links
     if relative == "README.md":
         assert _read(relative).index(expected) < _read(relative).index("## Install")
+
+
+@pytest.mark.parametrize("relative", ("AGENTS.md", "README.md", "ARCHITECTURE.md",
+                                      "CURRENT_STATE.md", "ROADMAP.md", CLI))
+def test_entrypoints_link_to_registered_workflow(relative):
+    expected = "EXPERIMENT_WORKFLOW.md" if relative == CLI else WORKFLOW
+    assert expected in LINK.findall(_read(relative))
 
 
 @pytest.mark.parametrize("operation", (

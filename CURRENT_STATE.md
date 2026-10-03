@@ -2,14 +2,11 @@
 
 ## Reuse Navigation
 
-Start with the [operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
+Start with the [modular workflow](docs/operations/EXPERIMENT_WORKFLOW.md), then
+the [operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
 and [local CLI](docs/operations/EXPERIMENT_CLI.md), not a copied launcher.
 Remote operations belong to `kaggle-molgap-workloads`, `ims-molgap-workloads`
 and `scnet-bw-dcu-molgap`; reuse does not authorize execution.
-
-The accepted expert Oracle study closed NO_TRAIN; prediction-only routing did
-not clear nomination. See
-[decision](experiments/pcqm_expert_oracle_feasibility/decision.md).
 
 This file owns the live recommendation, blockers and branch routing.
 Dated decisions and canonical RML evidence own historical results.
@@ -56,34 +53,24 @@ Branch-local records absent here are linked through the
   172 pre-existing IDs; see [review navigation](docs/research/EDGE_STATE_RML_REVIEW_20261002.md).
 
 - **K1 isolated slot96:** accepted terminal NEGATIVE_UNDER_CONTRACT; no adoption
-  or successor. Complete experiment history is routed to archive; accepted canonical
-  evidence is discoverable in desktop RML. Read the
-  [decision](experiments/pcqm_k1_slot_width96/terminal_decision.md) and
-  [STATUS](experiments/pcqm_k1_slot_width96/STATUS.md) before selecting another module.
+  or successor. Archive custody and accepted desktop evidence are linked in
+  [STATUS](experiments/pcqm_k1_slot_width96/STATUS.md).
 
-- **Chemical auxiliary:** endpoint acceptance and independent terminal RML
-  closure are complete on the dedicated owner at `17b1987a`. The 2026-10-01
-  authenticated recheck returned COMPLETE; pulled entry bytes match the accepted
-  submission_v4 source. Both arms remain INCONCLUSIVE for strict qualification,
-  with nomination and replay exclusions preserved. Read the owning
+- **Chemical auxiliary:** owner `17b1987a` has complete endpoint acceptance and
+  terminal RML; both arms remain INCONCLUSIVE for strict qualification and replay.
+  Desktop evidence integration and Git routing remain under review. Read the
   [STATUS](C:/Users/17449/.codex/worktrees/gptrans-init-fidelity/molgap/experiments/pcqm_gptrans_chemical_aux/STATUS.md)
   and decisions through [BRANCHES](BRANCHES.md#retained-checkout-map).
-  Review evidence integration and terminal Git routing; do not repeat acceptance
-  or treat branch-local closure as evidence already imported into desktop RML.
-  The separate early `T-gptrans-chemical-aux-feasibility` CPU DIAGNOSTIC still
-  has ACTIVE status: its fixture summary exists, but independently bound
-  terminal/acceptance/V5 inputs and raw test receipt are absent. Reconcile that
-  limited engineering record separately; do not borrow another trajectory's
-  training terminal or claim an active GPU job from this planning status.
+  The separate early `T-gptrans-chemical-aux-feasibility` CPU record remains ACTIVE
+  without bound terminal/acceptance/V5 inputs or raw test receipt. Reconcile that
+  engineering gap separately; it is not an active GPU job or a training retry.
 - **K1 V4 / SSMA:** exact Kaggle3 accuracy-pair acceptance and terminal RML
-  closure are complete. SSMA is NEGATIVE_UNDER_CONTRACT; original K1 remains
-  the accepted bounded control. Accepted canonical evidence is discoverable in
-  desktop RML, and complete owner history is retained in archive. Read the
-  [decision](experiments/pcqm_k1_local_mixing_clean_aux/kaggle3_accuracy_reconciliation_v1/terminal_decision.md)
-  and its attribution before another module. The report_only overhead policy
-  applies only to this closed attempt. Strict replay/readiness admission remains
-  unevaluated; prior cost-gated NO_TRAIN decisions and their historical trace gap
-  retain their authority. No retry,successor,scale-up or adoption is released.
+  closure are complete; SSMA is NEGATIVE_UNDER_CONTRACT, no successor or adoption.
+  The [owning entry](experiments/pcqm_k1_local_mixing_clean_aux/README.md) links
+  accuracy evidence, earlier cost-gated attempts and unchanged qualification limits.
+- **Desktop RML custody:** the missing K1 raw trace was losslessly restored to its
+  exact pinned SHA; frozen check passed. Portable HEAD custody awaits a reviewed
+  commit; see the [recovery record](docs/operations/INFRASTRUCTURE_REPAIR_20261003.md).
 - **Centered logits:** scientifically closed; historical reference binding
   excludes strict causal replay, not a training retry trigger. See
   [STATUS](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md).
@@ -92,12 +79,9 @@ Branch-local records absent here are linked through the
 
 ## Archived Qualification Work
 
-The user paused/archived the old pretraining, geometry, precision and server
-DSAR/DSMR draft refs. Their original conclusions, unresolved acceptance gaps
-and replay exclusions remain unchanged; no scientific closure was manufactured.
-The [checkout/custody map](BRANCHES.md#retained-checkout-map) links exact archived
-source history and the unreviewed pretraining supplement. No automatic reopening,
-training retry or server job takeover is released. DSAR/DSMR remote state is UNKNOWN.
+Archived qualification gaps and replay exclusions remain unchanged; no reopening,
+retry or takeover is released. The [custody map](BRANCHES.md#retained-checkout-map)
+owns source history and the unreviewed supplement. DSAR/DSMR remote state is UNKNOWN.
 
 ## Closed evidence entrypoints
 
@@ -105,26 +89,10 @@ All accepted and historical module decisions are indexed in
 `experiments/README.md` and `research_memory/README.md`. Follow those pointers
 before selecting another module. No closed negative screen releases a successor.
 
-- Same-job input initialization: `experiments/pcqm_gptrans_input_init_100k/`.
-- Pair-memory, local-edge, centered-logit and geometry-channel attribution:
-  `research_memory/DESKTOP_ATTRIBUTION_AUDIT_20260928.md`.
-- 100K-to-500K transfer and raw/EMA probes:
-  `experiments/pcqm_gptrans_100k_transfer_control/decision.md` and
-  `experiments/pcqm_scale_transfer_reassessment/decision.md`.
-- Retrospectively recovered frozen-weight diagnostic:
-  `experiments/pcqm_gptrans_frozen_transfer_probe/reconciliation_decision.md`.
-- Retained same-cohort training/development fit diagnostic: accepted `NO_TRAIN`;
-  no model promotion or causal size-versus-exposure conclusion. Read
-  [terminal navigation](experiments/pcqm_scale_fit_retained/STATUS.md), not its
-  frozen preparation README.
-- Full K1/GPTrans fusion and convergence: see
-  `experiments/pcqm_k1_gptrans_full_fusion/README.md`,
-  `experiments/pcqm_k1_full_convergence/decision.md`, and
-  `experiments/pcqm_gptrans_full_convergence/decision.md`.
-- OGB submission/reproduction state:
-  `experiments/pcqm_edge_state_full/results/rich_full/submission_status.md`.
-- Geometry nomination and its comparability limits:
-  `experiments/pcqm_geometry_transfer_500k/decision.md`.
+Use the [experiment index](experiments/README.md) for closed transfer, fusion,
+geometry, initialization, Oracle and submission questions. Use the
+[attribution audit](research_memory/DESKTOP_ATTRIBUTION_AUDIT_20260928.md)
+before another same-family module; dated records do not release successors.
 
 ## Operating boundaries
 

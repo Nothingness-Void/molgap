@@ -3,8 +3,9 @@ from pathlib import Path
 import re
 import os
 from molgap.research_memory.validate import validate_repository_records
+from molgap.constants import REPO_ROOT
 
-ROOT=Path(__file__).resolve().parents[2]
+ROOT=REPO_ROOT
 ORIGINS=[Path('D:/文档/molgap'),Path('D:/w/k1-width256')]
 
 def main():

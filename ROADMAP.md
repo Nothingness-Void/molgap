@@ -6,7 +6,8 @@ track ownership is defined in `TRACKS.md`.
 
 ## Reuse Navigation
 
-First use the [operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
+First use the [modular workflow](docs/operations/EXPERIMENT_WORKFLOW.md), then
+the [operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
 and [local CLI](docs/operations/EXPERIMENT_CLI.md). Platform work stays in
 `kaggle-molgap-workloads`, `ims-molgap-workloads` and `scnet-bw-dcu-molgap`.
 Reuse existing family, analysis and acceptance owners; this is not execution authority.
@@ -20,8 +21,9 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 
 | Priority | Task | Exit condition / owner |
 |---|---|---|
+| P0 | Publish the repaired infrastructure evidence closure | Exact-hash K1 source restored; reviewed commit and portable HEAD check remain. See [repair record](docs/operations/INFRASTRUCTURE_REPAIR_20261003.md); no qualification upgrade |
 | P0 | Reconcile the user-authorized K1 FLAG100K objective experiment | Exact Kaggle3 attempt on `codex/exp/k1-flag`; retrieve actual qualification, complete exposure, aligned predictions and native cost, then acceptance and attribution. One original-width single model; no automatic successor or scale-up |
-| P0 | Review prior chemical auxiliary and cost-gated K1 terminal evidence integration / Git routing | Prior attempts' terminal closure is complete. Reconcile the separate early chemical CPU feasibility record's missing terminal evidence, preserve qualification exclusions and artifacts, then review desktop discovery and terminal custody; no duplicate training acceptance |
+| P0 | Review chemical auxiliary evidence integration / Git routing | Owner endpoint closure is complete; reconcile the separate early CPU feasibility gap, preserve exclusions, then review remaining desktop discovery/custody. K1 accuracy evidence is already imported; no duplicate training acceptance |
 | Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |
 
 Centered-logit replay exclusions are closed evidence, not an active training queue.

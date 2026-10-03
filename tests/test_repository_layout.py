@@ -98,13 +98,24 @@ TOP_LEVEL_POINTER_DOCS = (
 
 ORACLE_DIR = "experiments/pcqm_expert_oracle_feasibility"
 ORACLE_FINALIZATION = f"{ORACLE_DIR}/rml/rml_finalized/finalization.json"
+SLOT_DIR = "experiments/pcqm_k1_slot_readout_diagnostic"
+SLOT_FINALIZATION = f"{SLOT_DIR}/rml/rml_finalized/finalization.json"
 # Only these named historical artifacts can receive the two allowances below.
 FROZEN_ARTIFACT_DIGESTS = {
     f"{ORACLE_DIR}/analyze.py": "8b43cf0f050bbc3bd801a2befe2ed782d742d3a1871da4cc06da2e190c467a30",
     f"{ORACLE_DIR}/decision.md": "81dae767d7d1b7fabcc6f9d5c362bccac64feb007e84b83574e7e35432ca7ac1",
     f"{ORACLE_DIR}/analysis.json": "58bbd71c011ceb3bd57a696736198e18eea5a52dd6fff05c8de4f74a3428ab3d",
+    f"{SLOT_DIR}/prepare.py": "822053385b584ff424b358f55915fd92ccadce82bba35b570572f2df3f1863e6",
+    f"{SLOT_DIR}/finalize_analysis.py": "b600ae7e9cb99de9f09720fc4febab38e98d6eff948a085a3b4be4357c6f62bd",
+    f"{SLOT_DIR}/terminal_decision.md": "db39710b327f5b2ec0713e07e82b7790dd052cbc0e1e4f9c42e4396b2e463dd5",
+    f"{SLOT_DIR}/results/analysis.json": "d0c7544ec13a1316c31264175b0259e25818cbd41e504581e52e96b7118952e2",
+    f"{SLOT_DIR}/input_authority/terminal_decision.md": "7e040041be9d1f9fcd768ded2612f87330793ea243f8b55349a02c82a2199772",
+    f"{SLOT_DIR}/input_authority/scientific_metrics.json": "b6babc6b8eb954d69cea6aea1a14377f4a4d1ed8bbd5328d992f3ef7a3c7c4b9",
+    f"{SLOT_DIR}/inputs.json": "2aa4c07861260336205b139b7b988026ba95698644f3e8c9ab45c19e16b0183f",
 }
-FROZEN_ROOT_DEPTH_SCRIPTS = {f"{ORACLE_DIR}/analyze.py"}
+FROZEN_ROOT_DEPTH_SCRIPTS = {
+    f"{ORACLE_DIR}/analyze.py", f"{SLOT_DIR}/prepare.py", f"{SLOT_DIR}/finalize_analysis.py",
+}
 # This exact Windows checkout variant predates maintenance. Do not normalize
 # arbitrary sources: both its raw bytes and the receipt-bound LF bytes must match.
 FROZEN_CRLF_DIGESTS = {
@@ -112,7 +123,12 @@ FROZEN_CRLF_DIGESTS = {
 }
 IMMUTABLE_DECISION_NAVIGATION = {
     f"{ORACLE_DIR}/decision.md": f"{ORACLE_DIR}/analysis.json",
+    f"{SLOT_DIR}/terminal_decision.md": f"{SLOT_DIR}/results/analysis.json",
 }
+
+
+def frozen_receipt(relative: str) -> str:
+    return SLOT_FINALIZATION if relative.startswith(SLOT_DIR + "/") else ORACLE_FINALIZATION
 
 
 def verified_frozen_artifact(relative: str) -> bool:
@@ -120,7 +136,7 @@ def verified_frozen_artifact(relative: str) -> bool:
     if expected is None:
         return False
     try:
-        receipt = json.loads((REPO_ROOT / ORACLE_FINALIZATION).read_text(encoding="utf-8"))
+        receipt = json.loads((REPO_ROOT / frozen_receipt(relative)).read_text(encoding="utf-8"))
         if receipt.get("input_artifact_hashes", {}).get(relative) != expected:
             return False
         payload = (REPO_ROOT / relative).read_bytes()
@@ -148,6 +164,44 @@ def supplementary_machine_evidence(decision: Path, readme: Path) -> bool:
     pointers = MARKDOWN_LINK.findall(readme.read_text(encoding="utf-8"))
     resolved = {resolve_doc_pointer(readme, pointer) for pointer in pointers}
     return decision in resolved and REPO_ROOT / evidence in resolved
+
+
+def frozen_snapshot_navigation(document: Path) -> bool:
+    """Only the named receipt-bound copy may keep its owner's relative links."""
+    relative = document.relative_to(REPO_ROOT).as_posix()
+    snapshot = f"{SLOT_DIR}/input_authority/terminal_decision.md"
+    required = (snapshot, f"{SLOT_DIR}/input_authority/scientific_metrics.json", f"{SLOT_DIR}/inputs.json")
+    if relative != snapshot or not all(verified_frozen_artifact(item) for item in required):
+        return False
+    readme = REPO_ROOT / SLOT_DIR / "README.md"
+    resolved = {resolve_doc_pointer(readme, p) for p in MARKDOWN_LINK.findall(readme.read_text(encoding="utf-8"))}
+    return all(REPO_ROOT / item in resolved for item in required)
+
+
+def experiment_is_indexed(index: str, experiment: Path) -> bool:
+    if f"`{experiment.name}/`" in index:
+        return True
+    owner = REPO_ROOT / "experiments/README.md"
+    return any(
+        target is not None and target.resolve().is_relative_to(experiment.resolve())
+        for target in (resolve_doc_pointer(owner, p) for p in MARKDOWN_LINK.findall(index))
+    )
+
+
+def has_main_guard(source: str) -> bool:
+    for node in ast.parse(source).body:
+        if not isinstance(node, ast.If) or not isinstance(node.test, ast.Compare):
+            continue
+        test = node.test
+        if len(test.ops) != 1 or not isinstance(test.ops[0], ast.Eq):
+            continue
+        left, right = test.left, test.comparators[0]
+        if isinstance(right, ast.Name):
+            left, right = right, left
+        if (isinstance(left, ast.Name) and left.id == "__name__"
+                and isinstance(right, ast.Constant) and right.value == "__main__"):
+            return True
+    return False
 
 
 def active_python_files() -> list[Path]:
@@ -235,7 +289,7 @@ def test_active_experiments_are_indexed_and_traceable() -> None:
         evidence = sorted(experiment.rglob("*.json"))
         relative_decisions = [path.relative_to(experiment).as_posix() for path in decisions]
 
-        if f"`{experiment.name}/`" not in index:
+        if not experiment_is_indexed(index, experiment):
             failures.append(f"{experiment.name}: missing from experiments/README.md")
         if not decisions:
             failures.append(f"{experiment.name}: no *decision*.md")
@@ -315,6 +369,8 @@ def test_active_experiment_entrypoint_pointers_exist() -> None:
 def test_active_markdown_links_resolve() -> None:
     failures: list[str] = []
     for document in active_markdown_files():
+        if frozen_snapshot_navigation(document):
+            continue
         text = document.read_text(encoding="utf-8", errors="ignore")
         for raw_target in MARKDOWN_LINK.findall(text):
             target = raw_target.strip()
@@ -421,6 +477,10 @@ def test_named_frozen_layout_allowances_are_verified() -> None:
     assert frozen_root_depth_snapshot(REPO_ROOT / ORACLE_DIR / "analyze.py")
     assert not frozen_root_depth_snapshot(REPO_ROOT / ORACLE_DIR / "prepare.py")
     assert not frozen_root_depth_snapshot(REPO_ROOT / ORACLE_DIR / "finalize_diagnostic.py")
+    assert frozen_root_depth_snapshot(REPO_ROOT / SLOT_DIR / "prepare.py")
+    assert frozen_root_depth_snapshot(REPO_ROOT / SLOT_DIR / "finalize_analysis.py")
+    assert not frozen_root_depth_snapshot(REPO_ROOT / SLOT_DIR / "hydrate_existing_bindings.py")
+    assert frozen_snapshot_navigation(REPO_ROOT / SLOT_DIR / "input_authority/terminal_decision.md")
     assert supplementary_machine_evidence(
         REPO_ROOT / ORACLE_DIR / "decision.md", REPO_ROOT / ORACLE_DIR / "README.md"
     )
@@ -432,7 +492,8 @@ def test_changed_hash_invalidates_frozen_allowances(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, relative: str, mutation: str
 ) -> None:
     original_root = REPO_ROOT
-    for name in (*FROZEN_ARTIFACT_DIGESTS, ORACLE_FINALIZATION, f"{ORACLE_DIR}/README.md"):
+    for name in (*FROZEN_ARTIFACT_DIGESTS, ORACLE_FINALIZATION, SLOT_FINALIZATION,
+                 f"{ORACLE_DIR}/README.md", f"{SLOT_DIR}/README.md"):
         destination = tmp_path / name
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_bytes((original_root / name).read_bytes())
@@ -442,17 +503,20 @@ def test_changed_hash_invalidates_frozen_allowances(
         artifact = tmp_path / relative
         artifact.write_bytes(artifact.read_bytes() + b"\n# altered\n")
     else:
-        receipt_path = tmp_path / ORACLE_FINALIZATION
+        receipt_path = tmp_path / frozen_receipt(relative)
         receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
         receipt["input_artifact_hashes"][relative] = "0" * 64
         receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
     assert not verified_frozen_artifact(relative)
-    if relative.endswith("analyze.py"):
+    if relative in FROZEN_ROOT_DEPTH_SCRIPTS:
         assert not frozen_root_depth_snapshot(tmp_path / relative)
-    else:
+    if relative in IMMUTABLE_DECISION_NAVIGATION:
         assert not supplementary_machine_evidence(
-            tmp_path / ORACLE_DIR / "decision.md", tmp_path / ORACLE_DIR / "README.md"
+            tmp_path / relative, (tmp_path / relative).parent / "README.md"
         )
+    if relative in (f"{SLOT_DIR}/input_authority/terminal_decision.md",
+                    f"{SLOT_DIR}/input_authority/scientific_metrics.json", f"{SLOT_DIR}/inputs.json"):
+        assert not frozen_snapshot_navigation(tmp_path / SLOT_DIR / "input_authority/terminal_decision.md")
 
 
 def test_argparse_clis_have_a_guarded_entrypoint() -> None:
@@ -461,10 +525,27 @@ def test_argparse_clis_have_a_guarded_entrypoint() -> None:
     failures: list[str] = []
     for path in argparse_clis():
         source = path.read_text(encoding="utf-8", errors="ignore")
-        has_guard = '__name__ == "__main__"' in source or "__name__ == '__main__'" in source
-        if not has_guard:
+        if not has_main_guard(source):
             failures.append(str(path.relative_to(REPO_ROOT)))
     assert not failures, "argparse CLIs missing main guard:\n" + "\n".join(failures)
+
+
+@pytest.mark.parametrize("source, expected", (
+    ("if __name__=='__main__': main()", True),
+    ('if "__main__" == __name__: main()', True),
+    ('# if __name__ == "__main__": main()', False),
+    ('text = "__name__ == __main__"', False),
+    ('if __name__ != "__main__": main()', False),
+))
+def test_main_guard_check_is_syntax_aware(source, expected):
+    assert has_main_guard(source) is expected
+
+
+def test_experiment_index_accepts_markdown_links_without_prefix_collisions():
+    experiment = REPO_ROOT / SLOT_DIR
+    assert experiment_is_indexed("[entry](pcqm_k1_slot_readout_diagnostic/README.md)", experiment)
+    assert not experiment_is_indexed("[entry](pcqm_k1_slot_readout_diagnostic_other/README.md)", experiment)
+    assert not experiment_is_indexed("[entry](pcqm_k1_slot_readout_diagnostic/../other/README.md)", experiment)
 
 
 @pytest.mark.parametrize(

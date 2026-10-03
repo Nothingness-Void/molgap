@@ -14,10 +14,11 @@ Start with [AGENTS.md](AGENTS.md) for the reading protocol and constraints;
 in [TRACKS.md](TRACKS.md), not in historical results.
 
 Before writing experiment plumbing, use the
+[modular workflow](docs/operations/EXPERIMENT_WORKFLOW.md), then the
 [operation-oriented reuse map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
 for family trainers, checkpoint/inference owners, saved-prediction analysis,
 and acceptance/V5/RML. The [local experiment CLI](docs/operations/EXPERIMENT_CLI.md)
-handles identity and evidence flow, not training or platform submission.
+stages registered training and evidence flow; platform skills own submission.
 Query [RML](research_memory/README.md) before opening a new research question;
 follow its pointers to canonical evidence. Platform submission and retrieval
 remain in the applicable workload skills and existing adapters.
