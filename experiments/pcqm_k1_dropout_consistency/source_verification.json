@@ -1,0 +1,52 @@
+{
+  "dataset": "nvoid912/molgap-k1-dropout-consistency-source-s42-v1",
+  "account": "nvoid912",
+  "status": "HASH_AND_MOUNT_SHAPE_VERIFIED",
+  "observed_at_utc": "2026-10-03T18:52:01.370643+00:00",
+  "files": {
+    "experiment_launch.json": {
+      "sha256": "13c5142bb6884a8b0fa92c86d968dc3062d329f4d7ff73ca5dfa054fc26e92f5",
+      "bytes": 1264
+    },
+    "experiment_spec.json": {
+      "sha256": "8edc7cc11717eb00b6bb961e9164db0c081fb01b16e6ccd3862a4a5e0d0b8a02",
+      "bytes": 5847
+    },
+    "package_manifest.json": {
+      "sha256": "5c51297bbdf76ec793ed3655118a08cd8664d73394aaf507f9e625407abbf105",
+      "bytes": 3223
+    },
+    "SOURCE_ARCHIVE_SHA256.txt": {
+      "sha256": "8127a2528b0edc6d8e9ad2965a49ef3840d985d5ed6ca2a68ea564de4b936203",
+      "bytes": 65
+    },
+    "SOURCE_COMMIT.txt": {
+      "sha256": "d50ee4823f65949cc437f3c70823ecbccca6913dd19d3db90d74a058c5f8ed26",
+      "bytes": 41
+    },
+    "SOURCE_FILES.json": {
+      "sha256": "59c30d72e9c2dcf4ad4294b82c0e46416b4638ba5b0426a8baf33ccc5e48d259",
+      "bytes": 10502
+    },
+    "source_payload.bin": {
+      "sha256": "367794d18354408fa576c9908f5641b9634f6da56ca09c5bea4fe66aa03ce94d",
+      "bytes": 197703
+    },
+    "initial_states/dropout_consistency2.pt": {
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "bytes": 14779763
+    },
+    "initial_states/dropout_mean2.pt": {
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "bytes": 14779763
+    },
+    "prospective/dropout_consistency2/trajectory.json": {
+      "sha256": "a0220ef4ad238f855fd4d1c2f48c6a1177837fef495b39c5c9175ebdb1288a3f",
+      "bytes": 42055
+    },
+    "prospective/dropout_mean2/trajectory.json": {
+      "sha256": "257e7beaeb300ae3270f450ca464f44a751ed394013b3d0a66d8878cac87696a",
+      "bytes": 42006
+    }
+  }
+}
