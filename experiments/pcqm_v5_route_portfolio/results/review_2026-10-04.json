@@ -1,0 +1,112 @@
+{
+  "format": "molgap-server-planning-evidence-review-v1",
+  "review_date": "2026-10-04",
+  "scope": "registered server-owned control states and retained RML metadata; no desktop or remote job adoption",
+  "controls": [
+    {
+      "path": "platforms/_records/control/gptrans_g1_input_ema_v1.json",
+      "observed_status": "COMPLETE",
+      "events": [
+        {
+          "event_id": "evt-22a5c2e5260232b042c2512a",
+          "state": "CLOSED"
+        }
+      ]
+    },
+    {
+      "path": "platforms/_records/control/gptrans_g1_pair_scale_v1.json",
+      "observed_status": "COMPLETE",
+      "events": [
+        {
+          "event_id": "evt-bec51f3ce1688ee33afa0b5c",
+          "state": "CLOSED"
+        }
+      ]
+    },
+    {
+      "path": "platforms/_records/control/gptrans_g1_recipe_paths_v1.json",
+      "observed_status": "ERROR",
+      "events": [
+        {
+          "event_id": "evt-121fbeeec1298eb7088a4094",
+          "state": "PAUSED"
+        }
+      ]
+    },
+    {
+      "path": "platforms/_records/control/gptrans_path_ema_combination_v1.json",
+      "observed_status": "COMPLETE",
+      "events": [
+        {
+          "event_id": "evt-95a1e9f6425ae35097541ffe",
+          "state": "CLOSED"
+        }
+      ]
+    },
+    {
+      "path": "platforms/_records/control/gptrans_readout_dual_v1.json",
+      "observed_status": "COMPLETE",
+      "events": [
+        {
+          "event_id": "evt-fdd45e634c82044f7f785123",
+          "state": "CLOSED"
+        }
+      ]
+    }
+  ],
+  "rml_snapshot": {
+    "trajectories": 71,
+    "outcomes": {
+      "STOP_FOR_COST": 1,
+      "NEGATIVE_UNDER_CONTRACT": 14,
+      "POSITIVE_UNDER_CONTRACT": 4,
+      "INFRASTRUCTURE_ONLY": 19,
+      "NO_TRAIN": 9,
+      "INCONCLUSIVE": 7,
+      "CLOSED": 4,
+      "POSITIVE_BELOW_GATE": 13
+    },
+    "replay_entries": 36,
+    "replay_comparable_groups": 6,
+    "replay_capabilities": {
+      "complete": 35,
+      "historical_partial": 1
+    },
+    "validation": "passed",
+    "frozen_check": "passed",
+    "trajectory_index_sha256": "5f22a4c286b5f597b8644def0e669e411f28263c327c372e2b30dcfac27c3ecd",
+    "replay_pool_sha256": "25a4cbe5fa50088d91362c2e76faf9435770a57aec8313eda90cf2834ac7eedc"
+  },
+  "frozen_inputs": {
+    "g1_ema9999": {
+      "reference_bundle_ref": "experiments/pcqm_gptrans_input_ema_100k/reference/reference_bundle.json",
+      "reference_bundle_file_sha256": "2669804e16c59c18fbc5e00840efe268a2b09ea99647fc198d413108786367e2",
+      "checkpoint_locator": "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/degree_scale/training/best_model.pt",
+      "checkpoint_sha256": "5fceb2bc34d8d269dcc90cbe1b2697fe2ad3b6e5136e0262e59cf6165ea1152c",
+      "prediction_payload_locator": "platforms/_records/kaggle/training/gptrans_author_inputs_dual_s42_v1/gptrans_author_screen/degree_scale/training/development_predictions.pt",
+      "prediction_payload_sha256": "67518aa94b471acdfa8294681cef8f5b45e6d5db2a701eb022fd6f5b7f412c60",
+      "architecture_identity": "f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896",
+      "target_transform_ref": "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json",
+      "ema_decay": 0.9999,
+      "existing_files_verified": true
+    },
+    "g1_ema999": {
+      "reference_bundle_ref": "experiments/pcqm_gptrans_readout_100k/reference/reference_bundle.json",
+      "reference_bundle_file_sha256": "8297629f91ac311911bb484daae272491ca600271943392cb068791f68177ec3",
+      "checkpoint_locator": "platforms/_records/kaggle/training/gptrans_g1_input_ema_v1/gptrans_input_ema_screen/degree_scale_ema999/training/best_model.pt",
+      "checkpoint_sha256": "e8d0b955f39526e8b517d44767749366bc641851310c0d2df40e443d1003e07b",
+      "prediction_payload_locator": "platforms/_records/kaggle/training/gptrans_g1_input_ema_v1/gptrans_input_ema_screen/degree_scale_ema999/training/development_predictions.pt",
+      "prediction_payload_sha256": "39a094e2ce9cc1d5aa01e637c37f5b90a5af728dc2136e8751797ae30fc38108",
+      "architecture_identity": "f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896",
+      "target_transform_ref": "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json",
+      "ema_decay": 0.999,
+      "existing_files_verified": true
+    }
+  },
+  "selected_question": "Does the accepted EMA correction retain benefit on the existing fixed500K internal-development cohort without further optimization?",
+  "plan_ref": "experiments/pcqm_v5_route_portfolio/overnight_plan_2026-10-04.md",
+  "compute_released": false,
+  "source_or_future_run_identity_fabricated": false,
+  "local_model_training_executed": false,
+  "local_model_inference_executed": false
+}

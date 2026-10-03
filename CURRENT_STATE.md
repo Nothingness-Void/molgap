@@ -55,9 +55,9 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 
 ## Live boundaries and next actions
 
-- Keep the two active Kaggle jobs bound to their exact monitor and reconcile
-  actual platform evidence before terminal closure; do not create a successor
-  automatically.
+- No registered server GPU chain is active or awaiting terminal acceptance.
+  The [proposed G1 EMA portability audit](experiments/pcqm_v5_route_portfolio/overnight_plan_2026-10-04.md)
+  is planned only; compute is not released and Luna remains paused.
 - Use one immutable baseline per matching scientific contract. Track B predicts
   direct Gap on fixed PCQM4Mv2; Track A remains on repaired-2M PubChemQC.
 - ETKDG must match between training and inference. Official validation was
