@@ -69,8 +69,9 @@ Branch-local records absent here are linked through the
   The [owning entry](experiments/pcqm_k1_local_mixing_clean_aux/README.md) links
   accuracy evidence, earlier cost-gated attempts and unchanged qualification limits.
 - **Desktop RML custody:** the missing K1 raw trace was losslessly restored to its
-  exact pinned SHA; frozen check passed. Portable HEAD custody awaits a reviewed
-  commit; see the [recovery record](docs/operations/INFRASTRUCTURE_REPAIR_20261003.md).
+  exact pinned SHA. Frozen/portable checks passed on committed desktop repair;
+  the [recovery record](docs/operations/INFRASTRUCTURE_REPAIR_20261003.md) owns
+  verification and unchanged historical qualification limits.
 - **Centered logits:** scientifically closed; historical reference binding
   excludes strict causal replay, not a training retry trigger. See
   [STATUS](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md).
