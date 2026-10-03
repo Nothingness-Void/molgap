@@ -24,22 +24,18 @@ archive `89d0626619fc9efb0db557f15bf7558f1130188f0c1ff2af3cab02c29f973b9d`.
 Private source dataset `nvoid912/molgap-k1-flag-source-s42-v1` was independently
 downloaded: all9 file hashes and mounted shape match the prepared package.
 
-Actual submission: [kernel](https://www.kaggle.com/code/nvoid912/molgap-k1-flag-100k-s42-v1),
-ID136744623,version1,account nvoid912, machineShape NvidiaTeslaT4. Authenticated
-latest observation at2026-10-02T06:42:15.233397+00:00 returned RUNNING; actual entry
-bytes and dataset/version/owner identity match. This is a platform observation,
-not proof that GPU qualification or formal training started. No outputs/log
-were available then; runtime certificates, actual phase, native cost and score
-remain pending. Receipt is [launch_receipt.json](launch_receipt.json); raw
-submission/observation/source verification and release bindings are retained.
+Terminal reconciliation on 2026-10-04 confirmed exact kernel
+[nvoid912/molgap-k1-flag-100k-s42-v1](https://www.kaggle.com/code/nvoid912/molgap-k1-flag-100k-s42-v1),
+ID136744623/version1 COMPLETE. Pulled entry/source identity and selective,
+manifest-bound outputs pass mechanical inspection. All40epochs completed.
 
-Next action is exact-attempt reconciliation on user return. Retrieve family
-manifest, runtime/architecture qualification, predictions, selected/resume
-weights, complete trace and costs via existing Kaggle adapter; verify identities
-and separate infrastructure/qualification/science. Do not retry from stale state.
-Preserve the4x step veto and3meV/paired-positive-bound endpoint gate. Actual
-runtime/reference mismatches exclude strict claims; no automatic500K/full or
-official/test evaluation, model adoption, heartbeat or machine shutdown.
+Read [terminal decision](terminal_decision.md), [attribution](attribution.md),
+[acceptance](training_acceptance.json), and independent
+[terminal RML](kaggle3_v1/flag/rml_finalized/finalization.json).
+Outcome NEGATIVE_UNDER_CONTRACT; no model adoption. Runtime/software mismatch
+with retained reference excludes strict causal/replay claims; missing complete
+allocation costs stay unknown. Full history routes to archive, canonical
+accepted evidence to desktop. No retry or scale-up is released.
 
 Preparation: `platforms/_records/kaggle/staging/k1_flag_workflow_v1/` (ignored,
 small release/workflow records copied to `platform_preparation/`; source mounted
