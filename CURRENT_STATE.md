@@ -43,6 +43,17 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
 
+- **K1 dropout consistency:** new user-authorized paired100K40epoch question,
+  owning branch `codex/exp/k1-dropout-consistency`, tip0151bdc9. Exact Kaggle3
+  [kernel](https://www.kaggle.com/code/nvoid912/molgap-k1-dropout-consistency-100k-s42-v1)
+  ID136942701/version1 returned RUNNING; pulled entry and published source pins
+  match. Two NEW two-pass objectives isolate prediction consistency against
+  averaged stochastic supervision; original clean baseline is retained.
+  Read [owner STATUS](D:/w/k1-dropout-consistency/experiments/pcqm_k1_dropout_consistency/STATUS.md)
+  and frozen protocol. Independent prospective RML arms live on the owner;
+  runtime qualification, actual costs and scientific endpoints remain pending.
+  User requested desktop shutdown after verified submission; no automatic monitor.
+
 - **K1 FLAG objective:** exact Kaggle3 ID136744623/version1 is COMPLETE;
   accepted terminal NEGATIVE_UNDER_CONTRACT. No adoption or scale-up. Full history
   is preserved in archive at custody merge `7c569e1a`; accepted canonical evidence

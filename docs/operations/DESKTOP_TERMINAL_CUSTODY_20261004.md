@@ -17,3 +17,16 @@ source files do not upgrade historical runtime or replay qualification.
 Retained binary artifacts are locally staged from existing owners; they are not
 new remote downloads. Parent source branches remain until custody and discovery
 have been verified. Official/test roles have no new execution authorization.
+
+## Verification and completed routing
+
+Existing finalizers were verified without rewriting their inputs. Desktop RML
+rebuild and frozen/portable checks passed on committed closure. Cache-helper
+synthetic verification passed29 tests (five unrelated objective/topology cases
+excluded). No scientific inference or real-role test was run locally.
+
+After archive reachability and push verification, the FLAG and chemical local
+and remote temporary refs were deleted; their checkouts remain detached at
+1ddc1590 and8f71783e with ignored artifacts preserved. New question source and
+prospective/submission evidence stay on codex/exp/k1-dropout-consistency at
+0151bdc9; source84288398 is frozen independently of later receipt commits.

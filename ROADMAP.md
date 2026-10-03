@@ -21,7 +21,7 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 
 | Priority | Task | Exit condition / owner |
 |---|---|---|
-| P0 | Select a distinct evidence-grounded overnight question after terminal attribution | User authorized a new desktop experiment; FLAG is closed and does not release a nearby step/seed/schedule retry. Use the current desktop base and modular workflow |
+| P0 | Reconcile K1 two-pass dropout consistency on desktop return | Exact Kaggle3 ID136942701/version1; verify every arm preflight, source, complete exposure and aligned outputs; accept and attribute before any further experiment |
 | Closed | Chemical auxiliary custody and canonical discovery | Trained arms and summary-only CPU terminal dispositions retained; strict qualification gaps remain unknown, no new training |
 | Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |
 
