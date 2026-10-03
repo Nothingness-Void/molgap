@@ -188,7 +188,7 @@ def find_fixed_cache(input_root: Path) -> tuple[Path, dict]:
     return root, manifest
 
 
-def load_roles(root: Path, manifest: dict):
+def load_roles(root: Path, manifest: dict, *, training_only: bool = False):
     import torch
     from torch.utils.data import ConcatDataset
 
@@ -196,6 +196,9 @@ def load_roles(root: Path, manifest: dict):
     aggregate = hashlib.sha256()
     expected_start = {"train": 0, "development": TRAIN_ROWS}
     for item in manifest["geometry_shards"]:
+        aggregate.update(f"{item['role']}\tstore/geometry/{item['file']}\t{item['sha256']}\n".encode("ascii"))
+        if training_only and item["role"] != "train":
+            continue
         path = root / item["file"]
         if sha256_file(path) != item["sha256"]:
             raise RuntimeError(f"Fixed shard changed: {item['file']}")
@@ -210,13 +213,10 @@ def load_roles(root: Path, manifest: dict):
             raise RuntimeError(f"Source order changed: {item['file']}")
         expected_start[role] += len(payload)
         roles[role].append(payload)
-        aggregate.update(
-            f"{role}\tstore/geometry/{item['file']}\t{item['sha256']}\n".encode("ascii")
-        )
     if aggregate.hexdigest() != FIXED_GEOMETRY_SHA256:
         raise RuntimeError("Fixed aggregate recomputation changed")
-    combined = {name: ConcatDataset(parts) for name, parts in roles.items()}
-    if len(combined["train"]) != TRAIN_ROWS or len(combined["development"]) != DEVELOPMENT_ROWS:
+    combined = {name: ConcatDataset(parts) for name, parts in roles.items() if parts}
+    if len(combined["train"]) != TRAIN_ROWS or (not training_only and len(combined["development"]) != DEVELOPMENT_ROWS):
         raise RuntimeError("Fixed role counts changed")
     return combined
 
@@ -291,7 +291,8 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("reference", "ssma", "clean_fingerprint")
+TWO_PASS_MODES = ("dropout_mean2", "dropout_consistency2")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint", *TWO_PASS_MODES)
 
 
 def _state_digest(state: dict) -> str:
@@ -320,6 +321,12 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
         "scheduler_t_max": 40, "scheduler_eta_min": 1e-6,
         "ema": False, "selection": "best-development-live",
         "auxiliary_weight": 0.1 if mode == "clean_fingerprint" else 0.0}
+    if mode in TWO_PASS_MODES:
+        from .k1_dropout_consistency import configuration, objective_identity
+        if (recipe.get("dropout_objective") != configuration(mode) or
+            recipe.get("loss_identity") != objective_identity(mode) or
+            recipe.get("gradient_loss_row_evaluations") != 2 * SAMPLE_EXPOSURE):
+            raise ValueError("K1 two-pass objective/exposure changed")
     if recipe.get("training_recipe") != expected_training:
         raise ValueError("K1 executable training recipe changed")
 
@@ -329,9 +336,9 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
     from .experiment_spec import _digest
     for name, value in (("source_idx_sha256", source_idx_sha256), ("target_sha256", target_sha256)):
         _digest(value, name)
-    if mode not in {"reference", "ssma"}:
+    if mode not in {"reference", "ssma", *TWO_PASS_MODES}:
         raise ValueError("No executable screen recipe for this K1 addon")
-    return {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
+    recipe = {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
         "initialization_sha256": INITIAL_STATE_SHA256,
         "development_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
         "training_recipe": {"seed": SEED, "batch_size": BATCH_SIZE, "drop_last": True,
@@ -341,6 +348,13 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
         "acceptance_requirements": {"epochs": EPOCHS, "optimizer_steps": EPOCHS * STEPS_PER_EPOCH,
             "sample_presentations": SAMPLE_EXPOSURE, "development_rows": DEVELOPMENT_ROWS,
             "precision": "fp32", "source_idx_sha256": source_idx_sha256, "target_sha256": target_sha256}}
+    if mode in TWO_PASS_MODES:
+        from .k1_dropout_consistency import configuration, objective_identity
+        recipe.update(dropout_objective=configuration(mode), loss_identity=objective_identity(mode),
+                      gradient_loss_row_evaluations=2 * SAMPLE_EXPOSURE,
+                      runtime_platform_id="kaggle3-t4x2")
+        recipe["development_role_identity"] = "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000"
+    return recipe
 
 
 def _attach_fingerprint_head(model):
@@ -388,6 +402,9 @@ def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
     """Original V4 optimizer-inclusive step, with optional clean auxiliary loss."""
     import torch
     import torch.nn.functional as functional
+    if mode in TWO_PASS_MODES:
+        from .k1_dropout_consistency import optimizer_step
+        return optimizer_step(model, optimizer, batch, mean, std, mode=mode)
     optimizer.zero_grad(set_to_none=True)
     if mode == "clean_fingerprint":
         representation = model.encode(batch.x, batch.edge_index, batch.edge_attr,
@@ -435,6 +452,14 @@ def _validate_arm_binding(spec, context, mode):
         if addons != [expected]:
             raise ValueError("SSMA executable addon differs from Spec")
 
+    if mode in TWO_PASS_MODES:
+        from .k1_dropout_consistency import configuration, objective_identity
+        expected = {"name": "k1_" + mode, "version": "1",
+            "source_sha256": normalized_source_sha256(Path(__file__).with_name("k1_dropout_consistency.py")),
+            "config": configuration(mode)}
+        if addons != [expected] or declaration["training"]["objective"]["sha256"] != objective_identity(mode):
+            raise ValueError("K1 executable two-pass objective differs from Spec")
+
 
 def validate_screen_recipe(spec, arm_id, recipe):
     """Static family validation shared with preparation; no molecular roles."""
@@ -444,7 +469,8 @@ def validate_screen_recipe(spec, arm_id, recipe):
     mode = training_adapter(arm).mode(arm)
     validate_recipe(recipe, mode=mode)
     _validate_arm_binding(spec, SimpleNamespace(arm_id=arm_id), mode)
-    if recipe.get("development_role_identity") != "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000":
+    expected_role = "pcqm4mv2-ogb-fixed-100k-v1:" + ("internal-development-100000-150000" if mode in TWO_PASS_MODES else "development-100000-150000")
+    if recipe.get("development_role_identity") != expected_role:
         raise ValueError("K1 recipe lacks the fixed development role identity")
     from .experiment_family_workflow import EXPECTED
     if set(recipe["acceptance_requirements"]) != EXPECTED:
@@ -485,10 +511,15 @@ def validate_runtime_preflight(directory, provenance):
         architecture.get("repeatability", {}).get("accepted") is not True or
         architecture.get("resume_roundtrip", {}).get("accepted") is not True or
         architecture.get("zero_initialization_delta") != 0.0 or
-        not 0 <= architecture.get("maximum_overhead_fraction", -1) <= 0.25 or
+        not 0 <= architecture.get("maximum_overhead_fraction", -1) <= (2.0 if provenance.get("mode") in TWO_PASS_MODES else 0.25) or
         not math.isfinite(architecture.get("synchronized_step_overhead_fraction", math.inf)) or
         architecture["synchronized_step_overhead_fraction"] > architecture["maximum_overhead_fraction"]):
         raise ValueError("K1 runtime calibration evidence differs from the gate")
+    if provenance.get("mode") in TWO_PASS_MODES:
+        if (architecture.get("mode") != provenance["mode"] or
+            architecture.get("selected_state_roundtrip_delta") != 0.0 or
+            architecture.get("dropout_signal", {}).get("accepted") is not True):
+            raise ValueError("K1 two-pass preflight is incomplete")
     return certificate
 
 
@@ -500,8 +531,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     import torch
     from .experiment_family_workflow import RunContext
     from .training_reproducibility import capture_rng_state, restore_rng_state
-    if mode not in ("reference", "ssma") or label_cache is not None:
-        raise ValueError("This paired GPU qualification supports reference and SSMA only")
+    if mode not in ("reference", "ssma", *TWO_PASS_MODES) or label_cache is not None:
+        raise ValueError("Unsupported K1 paired GPU qualification mode or label cache")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
     context = RunContext.for_training(spec, package_dir,
@@ -530,7 +561,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     if compute_row_order_fingerprint() != ROW_ORDER_FINGERPRINT:
         raise RuntimeError("Frozen row-order implementation changed")
     root, manifest = find_fixed_cache(input_root)
-    roles = load_roles(root, manifest)
+    roles = load_roles(root, manifest, training_only=mode in TWO_PASS_MODES)
     mean_value, std_value = _target_stats(roles["train"])
     batch = next(iter(_train_loader(roles["train"], 0))).to("cuda")
     if int(batch.num_graphs) != BATCH_SIZE:
@@ -545,6 +576,12 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     if zero_delta != 0.0:
         raise RuntimeError("Zero-added initialization differs from frozen reference")
     del reference, candidate
+    dropout_signal = None
+    if mode in TWO_PASS_MODES:
+        from .k1_dropout_consistency import qualify_signal
+        probe = _make_screen_model(state, mode)
+        dropout_signal = qualify_signal(probe, batch, mode=mode)
+        del probe
     losses, states = [], []
     for _ in range(2):
         configure_fp32_determinism(SEED)
@@ -615,13 +652,16 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
             "samples_seconds": samples, "peak_memory_bytes": torch.cuda.max_memory_allocated()}
         del model, optimizer
     overhead = timings[mode]["median_step_seconds"] / timings["reference"]["median_step_seconds"] - 1
-    architecture = {"accepted": overhead <= 0.25, "mode": mode, "zero_initialization_delta": zero_delta,
+    maximum_overhead = 2.0 if mode in TWO_PASS_MODES else 0.25
+    architecture = {"accepted": overhead <= maximum_overhead, "mode": mode, "zero_initialization_delta": zero_delta,
         "repeated_optimizer_steps": 2,
         "repeatability": repeated, "resume_roundtrip": resume, "timings": timings,
         "selected_state_roundtrip_delta": selected_delta,
-        "synchronized_step_overhead_fraction": overhead, "maximum_overhead_fraction": 0.25,
+        "synchronized_step_overhead_fraction": overhead, "maximum_overhead_fraction": maximum_overhead,
         "formal_sample_presentations": 0, "fixture_sha256": _batch_sha256(batch),
         "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"}
+    if mode in TWO_PASS_MODES:
+        architecture["dropout_signal"] = dropout_signal
     atomic_json(output / "architecture_preflight.json", architecture)
     torch.cuda.synchronize()
     atomic_json(output / "diagnostic_cost.json", {"costs": _allocation_costs(
@@ -630,7 +670,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         "cpu_allocation_seconds": {"status": "missing", "value": None},
         "queue_seconds": {"status": "missing", "value": None}})
     if not architecture["accepted"]:
-        raise RuntimeError("SSMA exceeds synchronized optimizer-inclusive overhead gate")
+        raise RuntimeError("K1 mode exceeds frozen optimizer-inclusive overhead gate")
     certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
         "platform_id": recipe.get("runtime_platform_id", context.platform + "-t4x2"),
         "accelerator": hardware, "precision": "fp32", "tf32_enabled": False,
@@ -673,7 +713,7 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     if declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
                                         "state_sha256": INITIAL_STATE_SHA256}:
         raise ValueError("K1 Spec initialization differs from executable state")
-    if mode in ("reference", "ssma") and label_cache is not None:
+    if mode in ("reference", "ssma", *TWO_PASS_MODES) and label_cache is not None:
         raise ValueError("Reference/SSMA does not consume chemical auxiliary labels")
     if mode == "clean_fingerprint":
         if label_cache is None or label_cache.components != ("fingerprints",):
@@ -718,6 +758,8 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
                  "live_dev_metric": {"metric": "MAE", "unit": "eV", "target": "Gap",
                      "role_identity": recipe["development_role_identity"],
                      "weights": "live", "direction": "minimize"}}
+    if mode in TWO_PASS_MODES:
+        semantics["live_train_metric"]["timing"] = "online-pre-update mean MAE of two independent dropout passes; excludes consistency penalty"
     session = FamilyOutputSession(output, context, adapter="k1-screen-v1", contract=recipe_path,
                                  trajectory_id=trajectory_id, metric_semantics=semantics)
     atomic_json(session.root / "runtime_manifest.json", runtime)

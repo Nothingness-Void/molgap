@@ -74,6 +74,8 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    **{(name, "1"): AddonContract("neural_atom_k1", "k1-training-objective", "molgap.k1_dropout_consistency")
+       for name in ("k1_dropout_mean2", "k1_dropout_consistency2")},
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
     ),
@@ -228,6 +230,10 @@ def _arm(arm: dict) -> None:
                     f"[{EDGE_STATE_MIN_LAYERS}, {EDGE_STATE_MAX_LAYERS}] "
                     f"except {EDGE_STATE_BASE_LAYERS}"
                 )
+        elif addon["name"] in ("k1_dropout_mean2", "k1_dropout_consistency2"):
+            weight = 0.0 if addon["name"] == "k1_dropout_mean2" else 0.1
+            if family["version"] != "2" or len(arm["addons"]) != 1 or addon["config"] != {"passes": 2, "consistency_weight": weight, "space": "normalized-gap", "disagreement": "squared-output"}:
+                raise ValueError("K1 two-pass objective differs from frozen configuration")
         elif addon["name"] == "k1_joint_aggregation":
             if family["version"] != "2" or len(arm["addons"]) != 1:
                 raise ValueError("K1 screen extension requires family/version 2 and one extension")

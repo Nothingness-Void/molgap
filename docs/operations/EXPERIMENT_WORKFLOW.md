@@ -27,7 +27,7 @@ the static training registry, its mode, and its output profile.
 
 | Family/version | Reference mode | Registered addon mode(s) | Output profile |
 |---|---|---|---|
-| `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma` | `k1-screen-v1` |
+| `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma`; `k1_dropout_mean2/1`, `k1_dropout_consistency2/1` → matched two-pass objectives | `k1-screen-v1` |
 | `gptrans_t/1` | `reference` | `pair_prenorm/1`, `centered_logits/1`, `memory_value/1`, `memory_message/1` | `gptrans-v1` |
 
 The executable registry is in `experiment_execution.py`; the output profiles
