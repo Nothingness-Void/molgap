@@ -10,22 +10,16 @@ The authorized T4x2 [final atom/bond readout dual](experiments/pcqm_gptrans_read
 is closed: both arms are independently accepted, STRICT_CAUSAL, and admitted
 as complete Replay pairs, but neither supports promotion; preserve the
 [decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md).
-The server-owned [frozen G1 EMA portability audit](experiments/pcqm_gptrans_ema_portability/submission_record.md)
-failed before workers during installation and is RML-closed as infrastructure-only;
-see the [retained failure](experiments/pcqm_gptrans_ema_portability/results/failure_v1/decision.md).
-The [CPU-only interpreter qualification](experiments/pcqm_gptrans_ema_portability/results/environment_v1/decision.md)
-passed and is RML-closed as NO_TRAIN import proof, not GPU calibration.
-The frozen audit [GPU v2](experiments/pcqm_gptrans_ema_portability/results/failure_v2/decision.md)
-failed before worker entry on duplicate shard-name resolution; its retained
-failure is infrastructure-only, not a model result. Exact dataset-scoped path
-resolution passed a duplicate-mount regression. The unchanged-contract
-[v3 audit](experiments/pcqm_gptrans_ema_portability/results/failure_v3/decision.md)
-failed on mapping-only serialization of the first role-event list after model
-load but before graph-role read/inference. Its infrastructure-only RML is closed;
-list-capable shared atomic IO and observed-read ordering passed regression.
-The unchanged-contract [v4 audit](experiments/pcqm_gptrans_ema_portability/attempt_v4/submission_receipt.json)
-is RUNNING, bound to the existing silent30-minute Luna monitor. Training remains
-gated on accepted audit results and analysis.
+The server-owned frozen G1 EMA audit v4 is accepted and RML-finalized as
+NO_TRAIN / PAIRED_ENDPOINT: corrected EMA passed frozen-weight portability,
+not 500K optimization or full-scale qualification. Preserve its
+[decision](experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md).
+Earlier infrastructure failures and CPU qualification remain separately
+retained in the [audit index](experiments/pcqm_gptrans_ema_portability/README.md).
+The completed binding is closed and the existing Luna heartbeat is paused.
+The justified follow-up is matched 500K EMA attribution; release remains gated
+on an executable G1-scale adapter, exact comparison/reference semantics and
+optimizer-inclusive bounded runtime qualification, not an old 500K scalar.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).

@@ -13,7 +13,8 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-GPTRANS-EMA-PORTABILITY | Qualify the isolated interpreter on CPU, then recover the unchanged frozen audit and analyze portability before training. | [Runtime qualification](experiments/pcqm_gptrans_ema_portability/environment_protocol.md); CPU acceptance, original reproduction barrier, saved-payload/RML closure |
+| P1 | C-GPTRANS-EMA-SCALE | Qualify one matched fixed500K EMA attribution without adding architecture modules or mixing old reference contracts. | [Scale release review](experiments/pcqm_gptrans_ema_portability/scale_training_review.md); supported G1 trainer, prospective reference/trace/role/cost binding and bounded optimizer-inclusive feasibility |
+| — | C-GPTRANS-EMA-PORTABILITY | Accepted NO_TRAIN portability; no training Replay claim. | Preserve the [terminal audit](experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md) |
 | — | C-GPTRANS-FINAL-READOUT | Closed without promotion; both actual complete Replay pairs verified. | Preserve the [terminal decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md); no automatic successor |
 
 The path+EMA combination is terminal with no supported additivity; preserve its

@@ -28,3 +28,12 @@ The reused500K role is development, not a new sealed/generalization test.
 After acceptance the existing controller may implement one evidence-justified
 bounded training contrast under the user's authorization. Luna only hands off
 terminal/fault evidence; it never trains/retries/selects a successor.
+
+## Retained attempt decisions
+
+- [v1 installation failure](results/failure_v1/decision.md).
+- [CPU interpreter qualification](results/environment_v1/decision.md).
+- [v2 mount-resolution failure](results/failure_v2/decision.md).
+- [v3 role-event serialization failure](results/failure_v3/decision.md).
+- [v4 accepted frozen portability](attempt_v4/decision.md).
+- [500K training capability/release review](scale_training_review.md).
