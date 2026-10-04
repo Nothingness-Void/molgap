@@ -1,0 +1,28 @@
+{
+  "owner": "server",
+  "closed": false,
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "credential_owner": "nvoid912",
+  "credential_file": "C:\\Users\\Adminn\\Downloads\\Key\\kaggle-nv912.json",
+  "jobs": [
+    {
+      "slot": "g1-decay-clock",
+      "kernel": "nvoid912/molgap-gptrans-g1-decay-clock-s42",
+      "kernel_id": 137044379,
+      "version": 1,
+      "closed": false,
+      "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\control\\g1-decay-clock_v1.json",
+      "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\g1-decay-clock_v1"
+    }
+  ],
+  "retrieval": {
+    "method": "molgap.kaggle_output_retrieval.retrieve_exact_metadata",
+    "metadata_paths": [
+      "gptrans_decay_clock/job_summary.json"
+    ],
+    "bulk_output_download_allowed": false
+  },
+  "postrun_requires_actual_replay_pool_admission": true,
+  "successor_authorized": false
+}

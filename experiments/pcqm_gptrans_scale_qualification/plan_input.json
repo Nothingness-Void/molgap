@@ -1,0 +1,136 @@
+{
+  "trajectory": {
+    "trajectory_id": "TC-gptrans-g1-scale500k-qualification-s42",
+    "record_mode": "prospective",
+    "owner": "server",
+    "track": "C",
+    "family_id": "gptrans-g1-scale-qualification",
+    "question": "Can G1 and two EMA filters fit the equal-exposure500K runtime budget?",
+    "hypothesis": {
+      "hypothesis_id": "H-TC-gptrans-g1-scale500k-qualification-s42",
+      "observed_deficiency": "Scale trainer/runtime eligibility is unqualified.",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-g1-ema-portability-frozen-s42-v4"
+      ],
+      "alternative_explanations": [
+        "Loader and real validation overhead can invalidate an optimistic proxy"
+      ],
+      "changed_mechanism": "Execution-only disposable calibration, no trained candidate",
+      "cheapest_falsifier": "37train-role-only disposable optimizer updates",
+      "related_closed_family_ids": [
+        "gptrans-final-readout"
+      ],
+      "expected_native_cost_ref": "cost-TC-gptrans-g1-scale500k-qualification-s42",
+      "decision_changed_if_positive": "Plan scale adapter; no automatic long training release",
+      "decision_changed_if_negative": "Do not release500K training",
+      "historical_unknowns": [
+        "True dev distribution/runtime and checkpoint overhead remain unmeasured"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "7099334093703dbd4d6b5f72de8d0097f0e1a849",
+      "source_config_identity": "fa6ba6ee7b15887fcb5b915cf3adc8a5577a2ba96f7107da5911d07c74a667f9",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_scale_qualification/contract.json",
+        "experiments/pcqm_gptrans_scale_qualification/protocol.md"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema-portability-frozen-s42-v4"
+      ],
+      "prior_trajectory_ids": [
+        "TC-gptrans-g1-ema-portability-frozen-s42-v4"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-g1-ema-portability-frozen-s42-v4"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_scale_qualification/contract.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_scale_qualification/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "NO_TRAIN_profiling",
+        "source_commit": "7099334093703dbd4d6b5f72de8d0097f0e1a849",
+        "run_ids": [
+          "gptrans-g1-scale-qualification-s42"
+        ],
+        "attempt_ids": [
+          "v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_scale_qualification/contract.json"
+        ],
+        "cost_event_ids": [
+          "cost-TC-gptrans-g1-scale500k-qualification-s42"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_scale_qualification/protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "Bounded qualification then controller analysis"
+      ],
+      "reopen_conditions": [
+        "Completed output or actionable execution fault"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "PROFILE_G1_SCALE",
+      "DEFER"
+    ],
+    "chosen_action": "PROFILE_G1_SCALE",
+    "policy_id": "gptrans-g1-followup",
+    "policy_version": "v1",
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_scale_qualification/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_scale_qualification/contract.json"
+    ],
+    "state_timestamp": "2026-10-04T13:49:01.600192+00:00",
+    "source_commit": "7099334093703dbd4d6b5f72de8d0097f0e1a849"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-g1-scale500k-qualification-s42",
+      "trajectory_id": "TC-gptrans-g1-scale500k-qualification-s42",
+      "action_id": "A001",
+      "run_id": "gptrans-g1-scale-qualification-s42",
+      "attempt_id": "v1",
+      "category": "preflight",
+      "platform": "kaggle2",
+      "hardware": "T4-allocation-one-visible-worker",
+      "evidence_ref": "experiments/pcqm_gptrans_scale_qualification/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "status": "estimated",
+          "value": 0.75
+        },
+        "device_hours": {
+          "status": "estimated",
+          "value": 1.5
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}

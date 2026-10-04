@@ -16,10 +16,15 @@ not 500K optimization or full-scale qualification. Preserve its
 [decision](experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md).
 Earlier infrastructure failures and CPU qualification remain separately
 retained in the [audit index](experiments/pcqm_gptrans_ema_portability/README.md).
-The completed binding is closed and the existing Luna heartbeat is paused.
-The justified follow-up is matched 500K EMA attribution; release remains gated
-on an executable G1-scale adapter, exact comparison/reference semantics and
-optimizer-inclusive bounded runtime qualification, not an old 500K scalar.
+Two server follow-ups are submitted and bound to the existing Luna heartbeat:
+[fixed500K train-only execution qualification](experiments/pcqm_gptrans_scale_qualification/submission_record.md)
+and [isolated G1 decay-coefficient falsifier](experiments/pcqm_gptrans_decay_clock_100k/gpu/submission_record.md).
+The former is disposable profiling, not scientific training or a Replay pair.
+Matched 500K scientific EMA attribution remains gated on a qualified scale owner
+and explicit comparison/reference/trace semantics; no long successor is released.
+The latter reuses accepted G1 EMA999 without baseline retraining; actual terminal
+acceptance and Replay admission remain pending. The monitor observes only these
+two exact server-owned bindings and never adopts desktop jobs.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).

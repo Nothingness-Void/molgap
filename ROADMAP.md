@@ -13,7 +13,8 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-GPTRANS-EMA-SCALE | Qualify one matched fixed500K EMA attribution without adding architecture modules or mixing old reference contracts. | [Scale release review](experiments/pcqm_gptrans_ema_portability/scale_training_review.md); supported G1 trainer, prospective reference/trace/role/cost binding and bounded optimizer-inclusive feasibility |
+| P1 | C-GPTRANS-EMA-SCALE | Accept bounded fixed500K train-only execution qualification before planning matched scientific EMA attribution. | [Qualification protocol](experiments/pcqm_gptrans_scale_qualification/protocol.md); no automatic long training release |
+| P2 | C-GPTRANS-DECAY-CLOCK | Test one all-parameter coefficient intervention against accepted G1 EMA999. | [Isolated protocol](experiments/pcqm_gptrans_decay_clock_100k/protocol.md); full saved-output acceptance, causal binding and actual Replay admission; no automatic scale or grid |
 | — | C-GPTRANS-EMA-PORTABILITY | Accepted NO_TRAIN portability; no training Replay claim. | Preserve the [terminal audit](experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md) |
 | — | C-GPTRANS-FINAL-READOUT | Closed without promotion; both actual complete Replay pairs verified. | Preserve the [terminal decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md); no automatic successor |
 
