@@ -291,7 +291,8 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("reference", "ssma", "clean_fingerprint")
+COMBO_MODES = ("pretrained_consistency", "pretrained_consistency_teacher")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint", *COMBO_MODES)
 
 
 def _state_digest(state: dict) -> str:
@@ -312,7 +313,13 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
         raise ValueError("Recipe mode mismatch")
     if recipe.get("row_order_fingerprint") != ROW_ORDER_FINGERPRINT:
         raise ValueError("K1 historical Python sampler identity changed")
-    if recipe.get("initialization_sha256") != INITIAL_STATE_SHA256:
+    if mode in COMBO_MODES:
+        from .k1_pretrained_combo import validate_config
+        config = validate_config(recipe.get("combo"), mode)
+        expected_initial = config["initialization_sha256"]
+    else:
+        expected_initial = INITIAL_STATE_SHA256
+    if recipe.get("initialization_sha256") != expected_initial:
         raise ValueError("K1 initialization identity changed")
     expected_training = {"seed": 42, "batch_size": 128, "drop_last": True,
         "optimizer": "AdamW", "learning_rate": 4e-4, "weight_decay": 1e-5,
@@ -324,14 +331,14 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
         raise ValueError("K1 executable training recipe changed")
 
 
-def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str) -> dict:
+def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str, addon_config=None) -> dict:
     """Build fixed family constants; callers pin real retained development rows."""
     from .experiment_spec import _digest
     for name, value in (("source_idx_sha256", source_idx_sha256), ("target_sha256", target_sha256)):
         _digest(value, name)
-    if mode not in {"reference", "ssma"}:
+    if mode not in {"reference", "ssma", *COMBO_MODES}:
         raise ValueError("No executable screen recipe for this K1 addon")
-    return {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
+    recipe = {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
         "initialization_sha256": INITIAL_STATE_SHA256,
         "development_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
         "training_recipe": {"seed": SEED, "batch_size": BATCH_SIZE, "drop_last": True,
@@ -341,6 +348,15 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
         "acceptance_requirements": {"epochs": EPOCHS, "optimizer_steps": EPOCHS * STEPS_PER_EPOCH,
             "sample_presentations": SAMPLE_EXPOSURE, "development_rows": DEVELOPMENT_ROWS,
             "precision": "fp32", "source_idx_sha256": source_idx_sha256, "target_sha256": target_sha256}}
+    if mode in COMBO_MODES:
+        from .k1_pretrained_combo import validate_config, objective_identity
+        recipe["combo"] = validate_config(addon_config, mode)
+        recipe["initialization_sha256"] = recipe["combo"]["initialization_sha256"]
+        recipe["loss_identity"] = objective_identity(mode, recipe["combo"])
+        recipe["gradient_loss_row_evaluations"] = 2 * SAMPLE_EXPOSURE
+    elif addon_config is not None:
+        raise ValueError("Historical K1 cannot change initialization/configuration")
+    return recipe
 
 
 def _attach_fingerprint_head(model):
@@ -381,6 +397,8 @@ def _make_screen_model(state, mode):
         attach_k1_joint_aggregation(model, mode="ssma", layer=6, seed=SEED)
     elif mode == "clean_fingerprint":
         _attach_fingerprint_head(model)
+    if mode in COMBO_MODES and sum(p.numel() for p in model.parameters()) != 3658817:
+        raise ValueError("Pretrained K1 parameter count changed")
     return model.to("cuda")
 
 
@@ -388,6 +406,9 @@ def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
     """Original V4 optimizer-inclusive step, with optional clean auxiliary loss."""
     import torch
     import torch.nn.functional as functional
+    if mode in COMBO_MODES:
+        from .k1_pretrained_combo import optimizer_step
+        return optimizer_step(model, optimizer, batch, mean, std, mode=mode)
     optimizer.zero_grad(set_to_none=True)
     if mode == "clean_fingerprint":
         representation = model.encode(batch.x, batch.edge_index, batch.edge_attr,
@@ -412,7 +433,7 @@ def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
     return {"format": "molgap-k1-runtime-provenance-v1", "context": context.to_dict(),
         "mode": mode, "recipe_sha256": sha256_file(recipe_path),
         "initial_state_file_sha256": sha256_file(initial_state_path),
-        "initialization_sha256": INITIAL_STATE_SHA256,
+        "initialization_sha256": json.loads(Path(recipe_path).read_text(encoding="utf-8"))["initialization_sha256"],
         "runtime_fingerprint": runtime["runtime_fingerprint"],
         "row_order_fingerprint": ROW_ORDER_FINGERPRINT}
 
@@ -420,11 +441,20 @@ def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
 def _validate_arm_binding(spec, context, mode):
     declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == context.arm_id)
     if (declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
-                                          "state_sha256": INITIAL_STATE_SHA256} or
+                                          "state_sha256": (declaration["addons"][0]["config"]["initialization_sha256"] if mode in COMBO_MODES else INITIAL_STATE_SHA256)} or
         declaration["training"]["sampler"]["sha256"] != ROW_ORDER_FINGERPRINT or
         declaration["training"]["overrides"]):
         raise ValueError("K1 executable initialization/sampler/overrides differ from Spec")
     addons = declaration["addons"]
+    if mode in COMBO_MODES:
+        from .k1_pretrained_combo import ADDON_MODES, validate_config, objective_identity
+        if len(addons) != 1:
+            raise ValueError("Pretrained K1 requires exactly one objective addon")
+        config = validate_config(addons[0]["config"], mode)
+        expected = {"name": next(k for k, v in ADDON_MODES.items() if v == mode), "version": "1",
+                    "source_sha256": normalized_source_sha256(Path(__file__).with_name("k1_pretrained_combo.py")), "config": config}
+        if addons != [expected] or declaration["training"]["objective"]["sha256"] != objective_identity(mode, config):
+            raise ValueError("Pretrained K1 executable objective/config mismatch")
     if mode == "reference" and addons:
         raise ValueError("Reference must declare no addon")
     if mode == "ssma":
@@ -444,6 +474,10 @@ def validate_screen_recipe(spec, arm_id, recipe):
     mode = training_adapter(arm).mode(arm)
     validate_recipe(recipe, mode=mode)
     _validate_arm_binding(spec, SimpleNamespace(arm_id=arm_id), mode)
+    if mode in COMBO_MODES:
+        from .k1_pretrained_combo import objective_identity
+        if recipe.get("combo") != arm["addons"][0]["config"] or recipe.get("loss_identity") != objective_identity(mode, recipe["combo"]) or recipe.get("gradient_loss_row_evaluations") != 2 * SAMPLE_EXPOSURE:
+            raise ValueError("Pretrained K1 recipe differs from pinned objective")
     if recipe.get("development_role_identity") != "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000":
         raise ValueError("K1 recipe lacks the fixed development role identity")
     from .experiment_family_workflow import EXPECTED
@@ -485,10 +519,12 @@ def validate_runtime_preflight(directory, provenance):
         architecture.get("repeatability", {}).get("accepted") is not True or
         architecture.get("resume_roundtrip", {}).get("accepted") is not True or
         architecture.get("zero_initialization_delta") != 0.0 or
-        not 0 <= architecture.get("maximum_overhead_fraction", -1) <= 0.25 or
+        (architecture.get("maximum_overhead_fraction") != 2.0 if provenance.get("mode") in COMBO_MODES else not 0 <= architecture.get("maximum_overhead_fraction", -1) <= 0.25) or
         not math.isfinite(architecture.get("synchronized_step_overhead_fraction", math.inf)) or
         architecture["synchronized_step_overhead_fraction"] > architecture["maximum_overhead_fraction"]):
         raise ValueError("K1 runtime calibration evidence differs from the gate")
+    if provenance.get("mode") in COMBO_MODES and (architecture.get("dropout_signal", {}).get("accepted") is not True or architecture.get("selected_state_roundtrip_delta") != 0.0):
+        raise ValueError("Pretrained K1 signal/selected-state qualification missing")
     return certificate
 
 
@@ -500,10 +536,10 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     import torch
     from .experiment_family_workflow import RunContext
     from .training_reproducibility import capture_rng_state, restore_rng_state
-    if mode not in ("reference", "ssma") or label_cache is not None:
-        raise ValueError("This paired GPU qualification supports reference and SSMA only")
+    if mode not in ("reference", "ssma", *COMBO_MODES) or label_cache is not None:
+        raise ValueError("Unsupported K1 GPU qualification mode/label cache")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
-    validate_recipe(recipe, mode=mode)
+    validate_screen_recipe(spec, arm_id, recipe)
     context = RunContext.for_training(spec, package_dir,
         expected_package_identity=expected_package_identity, arm_id=arm_id,
         account=account, run_reference=run_reference)
@@ -512,7 +548,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
     if ((context.family_name, context.family_version) != ("neural_atom_k1", "2") or
         declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
-                                          "state_sha256": INITIAL_STATE_SHA256}):
+                                          "state_sha256": recipe["initialization_sha256"]}):
         raise ValueError("Preflight requires frozen K1 family/initialization")
     determinism = configure_fp32_determinism(SEED)
     runtime = build_runtime_manifest(determinism)
@@ -525,14 +561,21 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     atomic_json(output / "runtime_provenance.json", provenance)
     atomic_json(output / "runtime_manifest.json", runtime)
     state = torch.load(initial_state_path, map_location="cpu", weights_only=True)
-    if state_dict_sha256(state) != INITIAL_STATE_SHA256:
+    if mode in COMBO_MODES:
+        from .k1_pretrained_combo import validate_initial_state
+        validate_initial_state(state, recipe["combo"])
+    if state_dict_sha256(state) != recipe["initialization_sha256"]:
         raise ValueError("Pinned K1 initial tensor identity mismatch")
     if compute_row_order_fingerprint() != ROW_ORDER_FINGERPRINT:
         raise RuntimeError("Frozen row-order implementation changed")
     root, manifest = find_fixed_cache(input_root)
     roles = load_roles(root, manifest)
     mean_value, std_value = _target_stats(roles["train"])
-    batch = next(iter(_train_loader(roles["train"], 0))).to("cuda")
+    batch = next(iter(_train_loader(roles["train"], 0)))
+    if mode == COMBO_MODES[1]:
+        from .k1_teacher_cache import load_teacher_cache
+        load_teacher_cache(input_root, recipe["combo"]["teacher_cache"], mode="distill_strong").attach(batch)
+    batch = batch.to("cuda")
     if int(batch.num_graphs) != BATCH_SIZE:
         raise RuntimeError("Runtime calibration requires physical train batch128")
     mean, std = torch.tensor(mean_value, device="cuda"), torch.tensor(std_value, device="cuda")
@@ -545,6 +588,12 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     if zero_delta != 0.0:
         raise RuntimeError("Zero-added initialization differs from frozen reference")
     del reference, candidate
+    dropout_signal = None
+    if mode in COMBO_MODES:
+        from .k1_pretrained_combo import qualify_signal
+        model = _make_screen_model(state, mode).train()
+        dropout_signal = qualify_signal(model, batch)
+        del model
     losses, states = [], []
     for _ in range(2):
         configure_fp32_determinism(SEED)
@@ -615,11 +664,13 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
             "samples_seconds": samples, "peak_memory_bytes": torch.cuda.max_memory_allocated()}
         del model, optimizer
     overhead = timings[mode]["median_step_seconds"] / timings["reference"]["median_step_seconds"] - 1
-    architecture = {"accepted": overhead <= 0.25, "mode": mode, "zero_initialization_delta": zero_delta,
+    limit = 2.0 if mode in COMBO_MODES else 0.25
+    architecture = {"accepted": overhead <= limit, "mode": mode, "zero_initialization_delta": zero_delta,
         "repeated_optimizer_steps": 2,
         "repeatability": repeated, "resume_roundtrip": resume, "timings": timings,
         "selected_state_roundtrip_delta": selected_delta,
-        "synchronized_step_overhead_fraction": overhead, "maximum_overhead_fraction": 0.25,
+        "synchronized_step_overhead_fraction": overhead, "maximum_overhead_fraction": limit,
+        "dropout_signal": dropout_signal,
         "formal_sample_presentations": 0, "fixture_sha256": _batch_sha256(batch),
         "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"}
     atomic_json(output / "architecture_preflight.json", architecture)
@@ -630,7 +681,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         "cpu_allocation_seconds": {"status": "missing", "value": None},
         "queue_seconds": {"status": "missing", "value": None}})
     if not architecture["accepted"]:
-        raise RuntimeError("SSMA exceeds synchronized optimizer-inclusive overhead gate")
+        raise RuntimeError("K1 objective exceeds synchronized optimizer-inclusive overhead gate")
     certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
         "platform_id": recipe.get("runtime_platform_id", context.platform + "-t4x2"),
         "accelerator": hardware, "precision": "fp32", "tf32_enabled": False,
@@ -654,14 +705,15 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
 
     Resume is restricted to acknowledged complete epochs. Re-created epoch
     loaders retain the original Python row order and worker setup. No EMA,
-    corruption, pretraining, alternate geometry cache or protected role is used.
+    corruption, alternate geometry cache or protected role is used. Combo modes
+    load their separately pinned pretrained initialization without executing pretraining.
     """
     import torch
     from .experiment_family_workflow import FamilyOutputSession, RunContext
     from .training_reproducibility import capture_rng_state, restore_rng_state
 
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
-    validate_recipe(recipe, mode=mode)
+    validate_screen_recipe(spec, arm_id, recipe)
     context = RunContext.for_training(spec, package_dir,
         expected_package_identity=expected_package_identity, arm_id=arm_id,
         account=account, run_reference=run_reference)
@@ -671,7 +723,7 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         raise ValueError("Expected registered K1 family output adapter")
     declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
     if declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
-                                        "state_sha256": INITIAL_STATE_SHA256}:
+                                        "state_sha256": recipe["initialization_sha256"]}:
         raise ValueError("K1 Spec initialization differs from executable state")
     if mode in ("reference", "ssma") and label_cache is not None:
         raise ValueError("Reference/SSMA does not consume chemical auxiliary labels")
@@ -701,9 +753,16 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     mean_value, std_value = _target_stats(roles["train"])
     # Load the exact backbone before constructing any extra trainable mechanism.
     state = torch.load(initial_state_path, map_location="cpu", weights_only=True)
-    if _state_digest(state) != INITIAL_STATE_SHA256:
+    if mode in COMBO_MODES:
+        from .k1_pretrained_combo import validate_initial_state
+        validate_initial_state(state, recipe["combo"])
+    if _state_digest(state) != recipe["initialization_sha256"]:
         raise ValueError("Pinned K1 initial tensor identity mismatch")
     model = _make_screen_model(state, mode)
+    teacher_cache = None
+    if mode == COMBO_MODES[1]:
+        from .k1_teacher_cache import load_teacher_cache
+        teacher_cache = load_teacher_cache(input_root, recipe["combo"]["teacher_cache"], mode="distill_strong")
     optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE,
                                  weight_decay=WEIGHT_DECAY)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
@@ -722,6 +781,11 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
                                  trajectory_id=trajectory_id, metric_semantics=semantics)
     atomic_json(session.root / "runtime_manifest.json", runtime)
     atomic_json(session.root / "runtime_certificate.json", certificate)
+    objective_trace_path = session.root / "objective_trace.json"
+    objective_record = json.loads(objective_trace_path.read_text(encoding="utf-8")) if objective_trace_path.exists() else {"context": context.to_dict(), "epochs": []}
+    if objective_record["context"] != context.to_dict():
+        raise ValueError("Objective trace source/arm identity mismatch")
+    objective_rows = objective_record["epochs"]
     start_epoch, best = 0, math.inf
     checkpoint = session.root / "last_checkpoint.pt"
     if checkpoint.exists():
@@ -744,19 +808,33 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         scheduler.load_state_dict(saved["scheduler"])
         best = min(row["live_dev_metric"] for row in observations)
         restore_rng_state(saved["rng_state"])
+    if mode in COMBO_MODES and (
+        len(objective_rows) != start_epoch or
+        any(row.get("epoch") != index or row.get("optimizer_steps") != index * STEPS_PER_EPOCH or
+            row.get("sample_presentations") != index * ROWS_PER_EPOCH
+            for index, row in enumerate(objective_rows, 1))
+    ):
+        raise ValueError("Objective trace and durable checkpoint disagree; reconcile before resume")
     torch.cuda.synchronize()
     allocation_started = time.perf_counter()
     for epoch in range(start_epoch, EPOCHS):
         model.train()
         absolute, rows = 0.0, 0
+        component_totals = {key: 0.0 for key in ("supervised_l1", "disagreement", "combined_loss", "teacher_mse")}
         started = time.perf_counter()
         for batch in _train_loader(roles["train"], epoch):
             if label_cache is not None:
                 label_cache.attach(batch)
+            if teacher_cache is not None:
+                teacher_cache.attach(batch)
             batch = batch.to("cuda", non_blocking=True)
             _, batch_absolute, batch_rows = _optimizer_step(model, optimizer, batch, mean, std, mode)
             absolute += float(batch_absolute)
             rows += batch_rows
+            if mode in COMBO_MODES:
+                for key, value in model._combo_components.items():
+                    if value is not None:
+                        component_totals[key] += value * batch_rows
         if rows != ROWS_PER_EPOCH:
             raise RuntimeError("Frozen optimizer exposure changed")
         validation_mae, target_eV, prediction_eV, source_idx = _evaluate(
@@ -767,6 +845,12 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
             session.selected(model_state=_clean_gap_state(model), epoch=epoch + 1,
                 optimizer_step=step, weights="live", prediction_eV=prediction_eV,
                 target_eV=target_eV, source_idx=source_idx)
+        if mode in COMBO_MODES:
+            objective_rows.append({"epoch": epoch + 1, "optimizer_steps": step, "sample_presentations": presentations,
+                **{key: (None if key == "teacher_mse" and mode == COMBO_MODES[0] else float(value / rows)) for key, value in component_totals.items()},
+                "teacher_mse_status": "not_applicable" if mode == COMBO_MODES[0] else "measured",
+                "space": "normalized-gap", "timing": "online-pre-update-two-dropout-passes"})
+            atomic_json(objective_trace_path, {"context": context.to_dict(), "epochs": objective_rows})
         observed_lr = optimizer.param_groups[0]["lr"]
         scheduler.step()
         session.checkpoint(model_state=model.state_dict(), optimizer_state=optimizer.state_dict(),
@@ -794,6 +878,9 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         "queue_seconds": {"status": "missing", "value": None},
         "scope": "one exclusive assigned T4 training window including development/checkpoint; "
                  "lower bound excludes bootstrap/queue and earlier resume allocations"})
+    if mode in COMBO_MODES:
+        atomic_json(session.root / "objective_trace_receipt.json", {"path": "objective_trace.json",
+            "sha256": sha256_file(objective_trace_path), "epochs": len(objective_rows), "context": context.to_dict()})
     return session.complete(runtime={"platform": context.platform, "account": context.account,
         "precision": "fp32", "source_commit": context.source_commit,
         "source_archive_sha256": context.source_archive_sha256,

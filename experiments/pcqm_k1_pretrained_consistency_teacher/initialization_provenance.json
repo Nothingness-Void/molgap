@@ -1,0 +1,23 @@
+{
+  "prepared_state_path": "D:\\w\\k1-pretrained-combo\\platforms\\_records\\kaggle\\training\\k1_pretrained_combo_inputs\\pretrained_initial_state.pt",
+  "prepared_file_sha256": "9656064f7bb0256881da4bc063e90de135171abf517a486bf6202d774694fdba",
+  "initialization_sha256": "7458f5c4776208da1715d39cbce66537727ff8054b30da0ea07d82d0e94181f4",
+  "pretrained_source_sha256": "aa41015dfd277c12618e17e3d438e3e5ecdb0fe05961e66372eba9f0046d7de0",
+  "head_reset_sha256": "74109662490a37b16a10f81bd75dd47274465c530ecdb7992061520b65bb0e77",
+  "pretraining_source_commit": "e24318f78f9c900d1c7ff9bbec44e164f9d91e8c",
+  "pretraining_passes": 10,
+  "pretraining_stage_complete_sha256": "50949d0332bf6fd40814f5a261f2f044aac7055a5c60d155688995f634ae7191",
+  "pretraining_owner_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+  "original_initial_state_file_sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+  "original_initial_state_tensor_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "extraction": "checkpoint.model exact keys/shapes/dtypes; replace every head.* from original seed42 state; discard pretraining heads/optimizer/scheduler/RNG",
+  "teacher_cache_manifest_sha256": "cd19a9154444f52721f901c7940caf7b1fb83c45a4946fcf8da02e218cce7504",
+  "teacher_identity": "96dafbc00ee104856978472d3fb727491cf48913380970a895d97aa511dc89bc",
+  "teacher_dataset_directory": "D:\\w\\k1-pretrained-combo\\platforms\\_records\\kaggle\\training\\k1_pretrained_combo_inputs\\teacher_dataset",
+  "teacher_payload_sha256": "c27ee84756a69299b2773bf7cafc9e0573051be1b97d4d715247b5cc5f278200",
+  "historical_limits": [
+    "Pretraining improvement and strict comparator qualification remain inconclusive.",
+    "Historical pretraining device allocation is unknown; reused wall cost is not a new allocation.",
+    "No teacher regeneration or scientific model execution occurred here."
+  ]
+}

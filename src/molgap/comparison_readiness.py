@@ -152,6 +152,7 @@ CAUSAL_REQUIRED_TRACE_FIELDS = frozenset(
 )
 
 INTERVENTION_FIELDS_BY_PURPOSE = {
+    "training_objective_comparison": frozenset({"loss_identity"}),
     "architecture_comparison": frozenset({"architecture_config_identity"}),
     "mechanism_comparison": frozenset({"architecture_config_identity"}),
     "optimizer_comparison": frozenset(

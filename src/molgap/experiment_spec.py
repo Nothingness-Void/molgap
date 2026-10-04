@@ -74,6 +74,8 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    **{(name, "1"): AddonContract("neural_atom_k1", "k1-training-objective", "molgap.k1_pretrained_combo")
+       for name in ("k1_pretrained_consistency", "k1_pretrained_consistency_teacher")},
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
     ),
@@ -200,7 +202,14 @@ def _arm(arm: dict) -> None:
     _object(training["overrides"], "", "training.overrides")
     if init["seed"] != 42:
         raise ValueError("Frozen recipe initialization requires seed 42")
-    _reference(training["objective"], "training.objective", name="normalized-gap-l1")
+    _list(arm["addons"], "addons", nonempty=False)
+    combo = [a for a in arm["addons"] if type(a) is dict and a.get("name") in ("k1_pretrained_consistency", "k1_pretrained_consistency_teacher")]
+    if combo:
+        from .k1_pretrained_combo import ADDON_MODES, objective_name
+        expected_objective = objective_name(ADDON_MODES[combo[0]["name"]])
+    else:
+        expected_objective = "normalized-gap-l1"
+    _reference(training["objective"], "training.objective", name=expected_objective)
     _reference(training["sampler"], "training.sampler", name=contract.sampler)
     _reference(training["transform"], "training.transform", name=contract.transform)
 
@@ -228,6 +237,16 @@ def _arm(arm: dict) -> None:
                     f"[{EDGE_STATE_MIN_LAYERS}, {EDGE_STATE_MAX_LAYERS}] "
                     f"except {EDGE_STATE_BASE_LAYERS}"
                 )
+        elif addon["name"] in ("k1_pretrained_consistency", "k1_pretrained_consistency_teacher"):
+            from .k1_pretrained_combo import ADDON_MODES, validate_config, objective_identity
+            mode = ADDON_MODES[addon["name"]]
+            config = validate_config(addon["config"], mode)
+            if family["version"] != "2" or len(arm["addons"]) != 1:
+                raise ValueError("Pretrained K1 requires family 2 and exactly one objective")
+            if init != {"kind": "frozen_state", "seed": 42, "state_sha256": config["initialization_sha256"]}:
+                raise ValueError("Pretrained K1 initialization/config mismatch")
+            if training["objective"]["sha256"] != objective_identity(mode, config):
+                raise ValueError("Pretrained K1 loss identity mismatch")
         elif addon["name"] == "k1_joint_aggregation":
             if family["version"] != "2" or len(arm["addons"]) != 1:
                 raise ValueError("K1 screen extension requires family/version 2 and one extension")
