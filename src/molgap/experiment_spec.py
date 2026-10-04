@@ -94,6 +94,8 @@ ADDONS = MappingProxyType({
     ("k1_joint_aggregation", "1"): AddonContract(
         "neural_atom_k1", "k1-local-aggregation", "molgap.k1_joint_aggregation",
     ),
+    **{(name, "1"): AddonContract("neural_atom_k1", "k1-training-objective", "molgap.k1_teacher_cache")
+       for name in ("k1_fusion_distill_weak", "k1_fusion_distill_strong")},
 })
 
 
@@ -200,7 +202,10 @@ def _arm(arm: dict) -> None:
     _object(training["overrides"], "", "training.overrides")
     if init["seed"] != 42:
         raise ValueError("Frozen recipe initialization requires seed 42")
-    _reference(training["objective"], "training.objective", name="normalized-gap-l1")
+    distillation = any(a.get("name") in {"k1_fusion_distill_weak", "k1_fusion_distill_strong"}
+                       for a in arm.get("addons", []) if isinstance(a, dict))
+    _reference(training["objective"], "training.objective",
+               name="normalized-gap-l1-plus-frozen-teacher-mse" if distillation else "normalized-gap-l1")
     _reference(training["sampler"], "training.sampler", name=contract.sampler)
     _reference(training["transform"], "training.transform", name=contract.transform)
 
@@ -228,6 +233,15 @@ def _arm(arm: dict) -> None:
                     f"[{EDGE_STATE_MIN_LAYERS}, {EDGE_STATE_MAX_LAYERS}] "
                     f"except {EDGE_STATE_BASE_LAYERS}"
                 )
+        elif addon["name"] in {"k1_fusion_distill_weak", "k1_fusion_distill_strong"}:
+            if family["version"] != "2" or len(arm["addons"]) != 1:
+                raise ValueError("K1 distillation requires family/version2 and one addon")
+            config = _object(addon["config"], "weight teacher_identity cache_manifest_sha256", "addon.config")
+            weight = 0.1 if addon["name"] == "k1_fusion_distill_weak" else 1.0
+            if type(config["weight"]) not in (int, float) or config["weight"] != weight:
+                raise ValueError("K1 distillation weight differs from its frozen mode")
+            for key in ("teacher_identity", "cache_manifest_sha256"):
+                _digest(config[key], "addon.config." + key)
         elif addon["name"] == "k1_joint_aggregation":
             if family["version"] != "2" or len(arm["addons"]) != 1:
                 raise ValueError("K1 screen extension requires family/version 2 and one extension")

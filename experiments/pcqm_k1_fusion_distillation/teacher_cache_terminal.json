@@ -1,0 +1,270 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004",
+  "run_id": "local-k1-fusion-teacher-cache-20261004",
+  "action_id": "A001",
+  "finalized_at": "2026-10-04T11:27:42.221313+00:00",
+  "acceptance_ref": "experiments/pcqm_k1_fusion_distillation/teacher_cache_acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_fusion_distillation/cache_plan_input.json": "a4a8015fd4c3d82335c93fe6731b42bd0bce53a2d936a363ac85897bdb831a83",
+    "experiments/pcqm_k1_fusion_distillation/close_teacher.py": "00270730b47dafc4854868aaf4d9536cdfd1b1075469ac8835b3177d75b2b903",
+    "experiments/pcqm_k1_fusion_distillation/generate_teacher.py": "05e1299939481c622a10124e288825fd9d55633eafcd41481734f7b9d77de628",
+    "experiments/pcqm_k1_fusion_distillation/protocol.md": "89bb4f8a4ea79fb2b491b1771f6865e866ef43f73fd88b72edd03258f6f75f18",
+    "experiments/pcqm_k1_fusion_distillation/teacher_cache/manifest.json": "cd19a9154444f52721f901c7940caf7b1fb83c45a4946fcf8da02e218cce7504",
+    "experiments/pcqm_k1_fusion_distillation/teacher_cache/teacher_predictions.pt": "c27ee84756a69299b2773bf7cafc9e0573051be1b97d4d715247b5cc5f278200",
+    "experiments/pcqm_k1_fusion_distillation/teacher_cache_acceptance.json": "8ed63fdb7e62f5bd2277301129222ff5bc5e5ec432fc2d8caebe977f457524b4",
+    "experiments/pcqm_k1_fusion_distillation/teacher_cache_attribution.md": "5dcad43261ba8485bd766fd489ef14eaaab6f3ab650dd1c34dada581c1e1020f",
+    "experiments/pcqm_k1_fusion_distillation/teacher_cache_decision.md": "6aee676fa84b493dc3da956f831a3a7ff7f353ba7de8d0afa994e7399ef0a459",
+    "experiments/pcqm_k1_fusion_distillation/teacher_generation.json": "f07acf65f9db09fb969e2236ba2278d034f12df3f17251ae20a98f90bd43a2a1",
+    "experiments/pcqm_k1_fusion_distillation/teacher_input_verification.json": "d95b1c0925d984a53260cc4ee97dc1c1632079706c2e7c68c96b01f754dd00bb",
+    "experiments/pcqm_k1_fusion_distillation/teacher_inputs.json": "b41a849c60447304e2c8c8bb0c3ea78b59503b83a2c3cfab82e2edc1093ca8e8",
+    "src/molgap/gps.py": "f0dabfe575708117efbe365be36591e421f0e1324014ca093fd0692d8312782b",
+    "src/molgap/k1_frozen_inference.py": "70c76a629cee9c1108db7c9a65f34e977094a2072bf8b94656c0f02159a59895",
+    "src/molgap/k1_screen_training.py": "69f88de7cabbba5f51b888cc8e9b5ef0b53b3129c50916aee446af7b6160fad7",
+    "src/molgap/k1_teacher_cache.py": "7368df34882ef2d4202b7f1395e7dfc24f7933d5976d6b9ad56bd57ed7780fb3",
+    "src/molgap/pcqm_gap_architecture.py": "0ad2ffc7930907fdb64475926d91c06967793a47fab31d3fe035df4cd9a0e3b0",
+    "src/molgap/qm9_neural_atom.py": "13b09c53f39edd4bf637d5b42b0097d23dd46a236990f1af9f623db48154d0dd",
+    "src/molgap/training_reproducibility.py": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-fusion-distillation-teacher-cache-20261004",
+    "track": "B",
+    "scope": "desktop_train_role_frozen_teacher_cache_prerequisite",
+    "legacy_contract": "pcqm-k1-fusion-distillation-teacher-cache-v1",
+    "outcome": {
+      "execution_status": "complete_no_training",
+      "artifact_status": "train_only_finite_hash_verified_teacher_cache",
+      "comparison_status": "not_applicable_cache_prerequisite",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "teacher_cache_input_verified",
+      "budget_decision": "prerequisite_closed_no_training_updates",
+      "full_handoff_status": "not_applicable"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_fusion_distillation/teacher_cache_decision.md",
+        "experiments/pcqm_k1_fusion_distillation/teacher_cache_acceptance.json",
+        "experiments/pcqm_k1_fusion_distillation/protocol.md",
+        "experiments/pcqm_k1_fusion_distillation/teacher_generation.json"
+      ]
+    },
+    "artifacts": [
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/cache_plan_input.json",
+        "locator": "experiments/pcqm_k1_fusion_distillation/cache_plan_input.json",
+        "sha256": "a4a8015fd4c3d82335c93fe6731b42bd0bce53a2d936a363ac85897bdb831a83",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/close_teacher.py",
+        "locator": "experiments/pcqm_k1_fusion_distillation/close_teacher.py",
+        "sha256": "00270730b47dafc4854868aaf4d9536cdfd1b1075469ac8835b3177d75b2b903",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/generate_teacher.py",
+        "locator": "experiments/pcqm_k1_fusion_distillation/generate_teacher.py",
+        "sha256": "05e1299939481c622a10124e288825fd9d55633eafcd41481734f7b9d77de628",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+        "locator": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+        "sha256": "89bb4f8a4ea79fb2b491b1771f6865e866ef43f73fd88b72edd03258f6f75f18",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/teacher_cache/manifest.json",
+        "locator": "experiments/pcqm_k1_fusion_distillation/teacher_cache/manifest.json",
+        "sha256": "cd19a9154444f52721f901c7940caf7b1fb83c45a4946fcf8da02e218cce7504",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/teacher_cache/teacher_predictions.pt",
+        "locator": "experiments/pcqm_k1_fusion_distillation/teacher_cache/teacher_predictions.pt",
+        "sha256": "c27ee84756a69299b2773bf7cafc9e0573051be1b97d4d715247b5cc5f278200",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/teacher_cache_acceptance.json",
+        "locator": "experiments/pcqm_k1_fusion_distillation/teacher_cache_acceptance.json",
+        "sha256": "8ed63fdb7e62f5bd2277301129222ff5bc5e5ec432fc2d8caebe977f457524b4",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/teacher_cache_attribution.md",
+        "locator": "experiments/pcqm_k1_fusion_distillation/teacher_cache_attribution.md",
+        "sha256": "5dcad43261ba8485bd766fd489ef14eaaab6f3ab650dd1c34dada581c1e1020f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/teacher_cache_decision.md",
+        "locator": "experiments/pcqm_k1_fusion_distillation/teacher_cache_decision.md",
+        "sha256": "6aee676fa84b493dc3da956f831a3a7ff7f353ba7de8d0afa994e7399ef0a459",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/teacher_generation.json",
+        "locator": "experiments/pcqm_k1_fusion_distillation/teacher_generation.json",
+        "sha256": "f07acf65f9db09fb969e2236ba2278d034f12df3f17251ae20a98f90bd43a2a1",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/teacher_input_verification.json",
+        "locator": "experiments/pcqm_k1_fusion_distillation/teacher_input_verification.json",
+        "sha256": "d95b1c0925d984a53260cc4ee97dc1c1632079706c2e7c68c96b01f754dd00bb",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_fusion_distillation/teacher_inputs.json",
+        "locator": "experiments/pcqm_k1_fusion_distillation/teacher_inputs.json",
+        "sha256": "b41a849c60447304e2c8c8bb0c3ea78b59503b83a2c3cfab82e2edc1093ca8e8",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "src/molgap/gps.py",
+        "locator": "src/molgap/gps.py",
+        "sha256": "f0dabfe575708117efbe365be36591e421f0e1324014ca093fd0692d8312782b",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "src/molgap/k1_frozen_inference.py",
+        "locator": "src/molgap/k1_frozen_inference.py",
+        "sha256": "70c76a629cee9c1108db7c9a65f34e977094a2072bf8b94656c0f02159a59895",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "src/molgap/k1_screen_training.py",
+        "locator": "src/molgap/k1_screen_training.py",
+        "sha256": "69f88de7cabbba5f51b888cc8e9b5ef0b53b3129c50916aee446af7b6160fad7",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "src/molgap/k1_teacher_cache.py",
+        "locator": "src/molgap/k1_teacher_cache.py",
+        "sha256": "7368df34882ef2d4202b7f1395e7dfc24f7933d5976d6b9ad56bd57ed7780fb3",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "src/molgap/pcqm_gap_architecture.py",
+        "locator": "src/molgap/pcqm_gap_architecture.py",
+        "sha256": "0ad2ffc7930907fdb64475926d91c06967793a47fab31d3fe035df4cd9a0e3b0",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "src/molgap/qm9_neural_atom.py",
+        "locator": "src/molgap/qm9_neural_atom.py",
+        "sha256": "13b09c53f39edd4bf637d5b42b0097d23dd46a236990f1af9f623db48154d0dd",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "src/molgap/training_reproducibility.py",
+        "locator": "src/molgap/training_reproducibility.py",
+        "sha256": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa",
+        "availability": "locally_retained_hash_verified"
+      }
+    ],
+    "role_use": {
+      "official_train_prefix_0_100000": "used",
+      "internal_development": "untouched",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "migration": {
+      "migrated_at": "2026-10-04",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Metadata-only publication of separately completed prospective teacher inference; no model execution during closure."
+    },
+    "observed_execution": {
+      "training_executed": false,
+      "inference_executed": true,
+      "execution_ref": "experiments/pcqm_k1_fusion_distillation/teacher_generation.json"
+    }
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_fusion_distillation/teacher_cache_decision.md",
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Student training belongs to its separate authorized prospective two-strength contract; cache acceptance alone does not release training, scale-up or protected roles."
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-fusion-distillation-teacher-cache-20261004-measured-inference",
+      "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-fusion-teacher-cache-20261004",
+      "attempt_id": "local-cache-001",
+      "category": "inference",
+      "platform": "local-windows",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/teacher_cache_acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": 0.01849482930555193,
+          "status": "measured"
+        },
+        "wall_hours": {
+          "value": 0.018539092638889594,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.018741319444444446,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-fusion-distillation-teacher-cache-20261004-train-prediction_input",
+      "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-fusion-teacher-cache-20261004",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "official_train_prefix_0_100000",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/teacher_cache_acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-fusion-distillation-teacher-cache-20261004-train-labels_read",
+      "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-fusion-teacher-cache-20261004",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "official_train_prefix_0_100000",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/teacher_cache_acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-fusion-distillation-teacher-cache-20261004-train-metric_computed",
+      "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-fusion-teacher-cache-20261004",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "official_train_prefix_0_100000",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/teacher_cache_acceptance.json"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "local-cache-001",
+  "category": "inference",
+  "cost_event_id": "cost-TB-k1-fusion-distillation-teacher-cache-20261004-expected-inference",
+  "evidence_ref": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+  "hardware": "NVIDIA GeForce RTX5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0.16666666666666666
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.16666666666666666
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-fusion-teacher-cache-20261004",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004"
+}

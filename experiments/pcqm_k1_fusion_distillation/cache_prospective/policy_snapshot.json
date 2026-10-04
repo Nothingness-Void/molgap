@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_DIAGNOSTIC",
+    "field": "user_requested_frozen_inference_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-k1-fusion-teacher-cache-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "89bb4f8a4ea79fb2b491b1771f6865e866ef43f73fd88b72edd03258f6f75f18",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-k1-fusion-teacher-cache",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_requested_frozen_inference_scope_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

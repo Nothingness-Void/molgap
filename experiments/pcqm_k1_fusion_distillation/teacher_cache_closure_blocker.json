@@ -1,0 +1,13 @@
+{
+  "format": "molgap-teacher-cache-closure-blocker-v1",
+  "recorded_at": "2026-10-04T11:26:49.058286+00:00",
+  "status": "BLOCKED_REPOSITORY_ARTIFACT_HYDRATION",
+  "finalization_receipt_available": false,
+  "frozen_prospective_sha256": "cc1728687922cbd33a389fb0f20fb3a0b30d3c9e019ec54f4676a0de535ecfe2",
+  "frozen_prospective_unchanged": true,
+  "blocked_stage": "existing finalize -> _validate_staged -> validate_repository_records -> strict comparison artifact verification",
+  "missing_pointer": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/best_model.pt",
+  "error": "required repository pointer is missing",
+  "next_action": "Hydrate exact pre-existing repository artifacts under authoritative hash bindings; retry close_teacher.py. Preserve validators and frozen evidence.",
+  "closure_execution_scope": "Metadata export and file hashing only; no model/GPU/remote/derived rebuild/commit."
+}

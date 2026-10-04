@@ -36,7 +36,8 @@ class TrainingAdapter:
 TRAINING_ADAPTERS = MappingProxyType({
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
-        (("k1_joint_aggregation", "ssma"),), ("molgap.pcqm_wedge",)),
+        (("k1_joint_aggregation", "ssma"), ("k1_fusion_distill_weak", "distill_weak"),
+         ("k1_fusion_distill_strong", "distill_strong")), ("molgap.pcqm_wedge",)),
     ("gptrans_t", "1"): TrainingAdapter(
         ("gptrans_t", "1"), "molgap.gptrans_screen_workflow", "gptrans-v1",
         (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),
@@ -55,7 +56,8 @@ def training_adapter(arm: dict) -> TrainingAdapter:
 
 
 def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
-                        source_idx_sha256: str, target_sha256: str) -> dict:
+                        source_idx_sha256: str, target_sha256: str,
+                        addon_config: dict | None = None) -> dict:
     """Build owned constants before freezing the Spec; never read development rows."""
     adapter = TRAINING_ADAPTERS.get(family)
     if adapter is None:
@@ -63,8 +65,12 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
     mode = "reference" if addon is None else dict(adapter.addon_modes).get(addon)
     if mode is None:
         raise ValueError("No executable recipe for this addon")
-    return import_module(adapter.module).build_screen_recipe(mode,
-        source_idx_sha256=source_idx_sha256, target_sha256=target_sha256)
+    kwargs = {"source_idx_sha256": source_idx_sha256, "target_sha256": target_sha256}
+    if addon_config is not None:
+        if family != ("neural_atom_k1", "2") or mode not in {"distill_weak", "distill_strong"}:
+            raise ValueError("This family/addon does not accept recipe configuration")
+        kwargs["addon_config"] = addon_config
+    return import_module(adapter.module).build_screen_recipe(mode, **kwargs)
 
 
 def check_family_recipes(spec, repo_root, recipes):

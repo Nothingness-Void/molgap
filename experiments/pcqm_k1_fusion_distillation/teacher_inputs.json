@@ -1,0 +1,40 @@
+{
+  "files": {
+    "manifest": {
+      "path": "D:/\u6587\u6863/molgap/data/pcqm_fixed_100k_v1/manifest.json",
+      "sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
+    },
+    "shard0": {
+      "path": "D:/\u6587\u6863/molgap/data/pcqm_fixed_100k_v1/train/train_shard_0000.pt",
+      "sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e"
+    },
+    "shard1": {
+      "path": "D:/\u6587\u6863/molgap/data/pcqm_fixed_100k_v1/train/train_shard_0001.pt",
+      "sha256": "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd"
+    },
+    "mean2": {
+      "path": "D:/\u6587\u6863/molgap/experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/selected_model.pt",
+      "sha256": "b3a7643041cca68d69768024cccb33b89a5b3b4811554f0ac309f7a22d8b6f05"
+    },
+    "consistency2": {
+      "path": "D:/\u6587\u6863/molgap/experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/selected_model.pt",
+      "sha256": "465aaeb18995df5b1e7a1b6a30b3e911ebee0afacdea2ae6004e060f3f2a5a9a"
+    }
+  },
+  "teacher_identity": "96dafbc00ee104856978472d3fb727491cf48913380970a895d97aa511dc89bc",
+  "teacher_definition": {
+    "mean2": "b3a7643041cca68d69768024cccb33b89a5b3b4811554f0ac309f7a22d8b6f05",
+    "consistency2": "465aaeb18995df5b1e7a1b6a30b3e911ebee0afacdea2ae6004e060f3f2a5a9a",
+    "weights": [
+      0.5,
+      0.5
+    ],
+    "epoch": 37,
+    "mode": "clean-live",
+    "mean": 5.3383002281188965,
+    "std": 1.275090217590332
+  },
+  "mean": 5.3383002281188965,
+  "std": 1.275090217590332,
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
+}

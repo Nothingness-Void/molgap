@@ -19,6 +19,13 @@ successful release check, local receipt or queue response is not training
 acceptance. Keep the platform skill as the owner of account credentials and
 authoritative remote state.
 
+For SDK operations with an explicit key, use `credential_api.py`'s
+`api_for_credentials(path)`. The installed SDK can otherwise prefer a global
+OAuth session over the requested API key. Verify an authenticated own-kernel
+listing before publication; the accelerator push adapter already binds its
+explicit credential independently. Never print the key or alter global login
+files to switch an experiment's account.
+
 For the new family output protocol, `retrieve_family_outputs.py` streams only
 the pinned manifest's required files through an authenticated owning account.
 Source/job/version reconciliation and obtaining the small manifest belong to

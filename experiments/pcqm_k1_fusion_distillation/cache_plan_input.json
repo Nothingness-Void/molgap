@@ -1,0 +1,141 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-fusion-distillation",
+    "question": "Generate exact fixed-teacher predictions on original100K training membership for the authorized two-strength distillation question.",
+    "hypothesis": {
+      "hypothesis_id": "H-TB-k1-fusion-distillation-teacher-cache-20261004",
+      "observed_deficiency": "Accepted fixed fusion improves separate development Gap by2.812meV but needs two inference passes; no train-only teacher target cache exists.",
+      "supporting_evidence_ids": [
+        "pcqm-k1-consistency-fusion-transfer-20261004"
+      ],
+      "alternative_explanations": [
+        "Teacher training-set memorization may limit transferable student benefit.",
+        "Teacher bias may harm the supervised student."
+      ],
+      "changed_mechanism": "Fixed clean equal-average teacher predictions only on original100K training rows; no optimizer updates.",
+      "cheapest_falsifier": "Verify retained states,exact row order,finite outputs and complete train-only cache before student training.",
+      "related_closed_family_ids": [
+        "k1-dropout-consistency",
+        "pcqm-k1-consistency-fusion-transfer"
+      ],
+      "expected_native_cost_ref": "cost-TB-k1-fusion-distillation-teacher-cache-20261004-expected-inference",
+      "decision_changed_if_positive": "Release only hash-bound teacher cache as input to the already-authorized prospective100K distillation pair.",
+      "decision_changed_if_negative": "Stop before student training; do not invent cache or consume development as teacher labels."
+    },
+    "state_at_start": {
+      "source_commit": "342692b0ad848cd1f402fd7d2f1174690601a240",
+      "contract_refs": [
+        "experiments/pcqm_k1_fusion_distillation/protocol.md",
+        "experiments/pcqm_k1_fusion_distillation/generate_teacher.py",
+        "experiments/pcqm_k1_fusion_distillation/teacher_inputs.json",
+        "src/molgap/k1_frozen_inference.py",
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/k1_teacher_cache.py",
+        "src/molgap/qm9_neural_atom.py",
+        "src/molgap/gps.py",
+        "src/molgap/pcqm_gap_architecture.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      "reference_ids": [
+        "pcqm-k1-consistency-fusion-transfer-20261004"
+      ],
+      "parent_trajectory_ids": [
+        "TB-k1-consistency-fusion-transfer-20261004"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-k1-consistency-fusion-transfer-20261004"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_fusion_distillation/protocol.md"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+      "source_config_identity": "b41a849c60447304e2c8c8bb0c3ea78b59503b83a2c3cfab82e2edc1093ca8e8"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "authorized_train_role_frozen_teacher_inference",
+        "source_commit": "342692b0ad848cd1f402fd7d2f1174690601a240",
+        "run_ids": [
+          "local-k1-fusion-teacher-cache-20261004"
+        ],
+        "attempt_ids": [
+          "local-cache-001"
+        ],
+        "evidence_refs": [],
+        "cost_event_ids": [
+          "cost-TB-k1-fusion-distillation-teacher-cache-20261004-expected-inference"
+        ]
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "RUN_DIAGNOSTIC"
+      ],
+      "reopen_conditions": []
+    },
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [
+      "pcqm-k1-consistency-fusion-transfer-20261004"
+    ],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_fusion_distillation/protocol.md"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-fusion-teacher-cache",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+    "state_timestamp": "2026-10-04T11:16:18.778152+00:00",
+    "source_commit": "342692b0ad848cd1f402fd7d2f1174690601a240"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-fusion-distillation-teacher-cache-20261004-expected-inference",
+      "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-fusion-teacher-cache-20261004",
+      "attempt_id": "local-cache-001",
+      "category": "inference",
+      "platform": "local-windows",
+      "hardware": "NVIDIA GeForce RTX5060",
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+      "measurement": {
+        "device_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "wall_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ]
+}

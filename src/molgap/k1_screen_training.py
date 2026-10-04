@@ -281,7 +281,10 @@ def _state_sha256(model) -> str:
 
 def _batch_sha256(batch) -> str:
     digest = hashlib.sha256()
-    for name in ("x", "edge_index", "edge_attr", "batch", "random_walk_pe", "y", "source_idx"):
+    fields = ("x", "edge_index", "edge_attr", "batch", "random_walk_pe", "y", "source_idx")
+    if getattr(batch, "teacher_eV", None) is not None:
+        fields += ("teacher_eV",)
+    for name in fields:
         value = getattr(batch, name).detach().cpu().contiguous()
         digest.update(name.encode("ascii") + b"\0")
         digest.update(str(value.dtype).encode("ascii") + b"\0")
@@ -291,7 +294,8 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("reference", "ssma", "clean_fingerprint")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint", "distill_weak", "distill_strong")
+DISTILL_MODES = ("distill_weak", "distill_strong")
 
 
 def _state_digest(state: dict) -> str:
@@ -322,16 +326,27 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
         "auxiliary_weight": 0.1 if mode == "clean_fingerprint" else 0.0}
     if recipe.get("training_recipe") != expected_training:
         raise ValueError("K1 executable training recipe changed")
+    if mode in DISTILL_MODES:
+        from .k1_teacher_cache import validate_teacher_config
+        validate_teacher_config(recipe.get("teacher_cache"), mode)
+    elif "teacher_cache" in recipe:
+        raise ValueError("Historical K1 mode cannot declare teacher cache")
 
 
-def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str) -> dict:
+def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str,
+                        addon_config: dict | None = None) -> dict:
     """Build fixed family constants; callers pin real retained development rows."""
     from .experiment_spec import _digest
     for name, value in (("source_idx_sha256", source_idx_sha256), ("target_sha256", target_sha256)):
         _digest(value, name)
-    if mode not in {"reference", "ssma"}:
+    if mode not in {"reference", "ssma", *DISTILL_MODES}:
         raise ValueError("No executable screen recipe for this K1 addon")
-    return {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
+    if mode in DISTILL_MODES:
+        from .k1_teacher_cache import validate_teacher_config
+        config = validate_teacher_config(addon_config, mode)
+    elif addon_config is not None:
+        raise ValueError("Historical K1 recipe does not accept addon configuration")
+    recipe = {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
         "initialization_sha256": INITIAL_STATE_SHA256,
         "development_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
         "training_recipe": {"seed": SEED, "batch_size": BATCH_SIZE, "drop_last": True,
@@ -341,6 +356,9 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
         "acceptance_requirements": {"epochs": EPOCHS, "optimizer_steps": EPOCHS * STEPS_PER_EPOCH,
             "sample_presentations": SAMPLE_EXPOSURE, "development_rows": DEVELOPMENT_ROWS,
             "precision": "fp32", "source_idx_sha256": source_idx_sha256, "target_sha256": target_sha256}}
+    if mode in DISTILL_MODES:
+        recipe["teacher_cache"] = config
+    return recipe
 
 
 def _attach_fingerprint_head(model):
@@ -400,6 +418,10 @@ def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
     if mode == "clean_fingerprint":
         loss = loss + 0.1 * functional.binary_cross_entropy_with_logits(
             model.clean_fingerprint_head(representation), batch.chemical_fingerprint.float())
+    elif mode in DISTILL_MODES:
+        from .k1_teacher_cache import DISTILL_WEIGHTS
+        teacher = (batch.teacher_eV.view(-1).detach() - mean) / std
+        loss = loss + DISTILL_WEIGHTS[mode] * functional.mse_loss(prediction, teacher)
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
     optimizer.step()
@@ -409,12 +431,18 @@ def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
 def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode):
     if sha256_file(recipe_path) != context.training_recipe_sha256:
         raise ValueError("Runtime recipe bytes differ from Spec")
-    return {"format": "molgap-k1-runtime-provenance-v1", "context": context.to_dict(),
+    provenance = {"format": "molgap-k1-runtime-provenance-v1", "context": context.to_dict(),
         "mode": mode, "recipe_sha256": sha256_file(recipe_path),
         "initial_state_file_sha256": sha256_file(initial_state_path),
         "initialization_sha256": INITIAL_STATE_SHA256,
         "runtime_fingerprint": runtime["runtime_fingerprint"],
         "row_order_fingerprint": ROW_ORDER_FINGERPRINT}
+    if mode in DISTILL_MODES:
+        from .k1_teacher_cache import validate_teacher_config
+        config = validate_teacher_config(json.loads(Path(recipe_path).read_text(encoding="utf-8"))["teacher_cache"], mode)
+        provenance.update(cache_identity=config["cache_manifest_sha256"],
+                          teacher_identity=config["teacher_identity"])
+    return provenance
 
 
 def _validate_arm_binding(spec, context, mode):
@@ -434,6 +462,16 @@ def _validate_arm_binding(spec, context, mode):
                        "latent_channels": 64, "layer": 6, "seed": SEED}}
         if addons != [expected]:
             raise ValueError("SSMA executable addon differs from Spec")
+    if mode in DISTILL_MODES:
+        from .k1_teacher_cache import validate_teacher_config
+        if len(addons) != 1:
+            raise ValueError("Distillation requires exactly one addon")
+        config = validate_teacher_config(addons[0].get("config"), mode)
+        expected = {"name": "k1_fusion_" + mode, "version": "1",
+                    "source_sha256": normalized_source_sha256(Path(__file__).with_name("k1_teacher_cache.py")),
+                    "config": config}
+        if addons != [expected]:
+            raise ValueError("Distillation executable addon differs from Spec")
 
 
 def validate_screen_recipe(spec, arm_id, recipe):
@@ -444,6 +482,8 @@ def validate_screen_recipe(spec, arm_id, recipe):
     mode = training_adapter(arm).mode(arm)
     validate_recipe(recipe, mode=mode)
     _validate_arm_binding(spec, SimpleNamespace(arm_id=arm_id), mode)
+    if mode in DISTILL_MODES and recipe["teacher_cache"] != arm["addons"][0]["config"]:
+        raise ValueError("Teacher recipe differs from Spec addon configuration")
     if recipe.get("development_role_identity") != "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000":
         raise ValueError("K1 recipe lacks the fixed development role identity")
     from .experiment_family_workflow import EXPECTED
@@ -500,14 +540,20 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     import torch
     from .experiment_family_workflow import RunContext
     from .training_reproducibility import capture_rng_state, restore_rng_state
-    if mode not in ("reference", "ssma") or label_cache is not None:
-        raise ValueError("This paired GPU qualification supports reference and SSMA only")
+    if mode not in ("reference", "ssma", *DISTILL_MODES) or label_cache is not None:
+        raise ValueError("Paired GPU qualification requires a registered screen mode and recipe-owned cache")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
     context = RunContext.for_training(spec, package_dir,
         expected_package_identity=expected_package_identity, arm_id=arm_id,
         account=account, run_reference=run_reference)
     _validate_arm_binding(spec, context, mode)
+    if mode in DISTILL_MODES:
+        declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
+        if recipe["teacher_cache"] != declaration["addons"][0]["config"]:
+            raise ValueError("Teacher recipe differs from Spec addon configuration")
+        from .k1_teacher_cache import load_teacher_cache
+        label_cache = load_teacher_cache(input_root, recipe["teacher_cache"], mode=mode)
     _validate_prospective(spec, context, input_root, trajectory_id)
     declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
     if ((context.family_name, context.family_version) != ("neural_atom_k1", "2") or
@@ -532,7 +578,10 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     root, manifest = find_fixed_cache(input_root)
     roles = load_roles(root, manifest)
     mean_value, std_value = _target_stats(roles["train"])
-    batch = next(iter(_train_loader(roles["train"], 0))).to("cuda")
+    batch = next(iter(_train_loader(roles["train"], 0)))
+    if label_cache is not None:
+        label_cache.attach(batch)
+    batch = batch.to("cuda")
     if int(batch.num_graphs) != BATCH_SIZE:
         raise RuntimeError("Runtime calibration requires physical train batch128")
     mean, std = torch.tensor(mean_value, device="cuda"), torch.tensor(std_value, device="cuda")
@@ -673,6 +722,13 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     if declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
                                         "state_sha256": INITIAL_STATE_SHA256}:
         raise ValueError("K1 Spec initialization differs from executable state")
+    if mode in DISTILL_MODES:
+        if label_cache is not None:
+            raise ValueError("Distillation cache must be loaded from frozen recipe")
+        if recipe["teacher_cache"] != declaration["addons"][0]["config"]:
+            raise ValueError("Teacher recipe differs from Spec addon configuration")
+        from .k1_teacher_cache import load_teacher_cache
+        label_cache = load_teacher_cache(input_root, recipe["teacher_cache"], mode=mode)
     if mode in ("reference", "ssma") and label_cache is not None:
         raise ValueError("Reference/SSMA does not consume chemical auxiliary labels")
     if mode == "clean_fingerprint":
@@ -718,6 +774,8 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
                  "live_dev_metric": {"metric": "MAE", "unit": "eV", "target": "Gap",
                      "role_identity": recipe["development_role_identity"],
                      "weights": "live", "direction": "minimize"}}
+    if mode in DISTILL_MODES:
+        semantics["live_train_metric"]["timing"] = "online-pre-update; includes dropout; label L1 only; excludes teacher MSE"
     session = FamilyOutputSession(output, context, adapter="k1-screen-v1", contract=recipe_path,
                                  trajectory_id=trajectory_id, metric_semantics=semantics)
     atomic_json(session.root / "runtime_manifest.json", runtime)

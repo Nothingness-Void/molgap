@@ -1,0 +1,48 @@
+{
+  "status": "complete_no_training",
+  "rows": 100000,
+  "source_idx_range": [
+    0,
+    100000
+  ],
+  "inputs_sha256": "b41a849c60447304e2c8c8bb0c3ea78b59503b83a2c3cfab82e2edc1093ca8e8",
+  "prospective_sha256": "cc1728687922cbd33a389fb0f20fb3a0b30d3c9e019ec54f4676a0de535ecfe2",
+  "runtime": {
+    "seed": 42,
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "float32_matmul_precision": "highest"
+  },
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "timings": {
+    "mean2": {
+      "rows": 100000,
+      "wall_seconds": 37.544926000002306,
+      "process_cpu_seconds": 36.75,
+      "forward_seconds": 25.540760194778443,
+      "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+    },
+    "consistency2": {
+      "rows": 100000,
+      "wall_seconds": 27.63029149999784,
+      "process_cpu_seconds": 27.515625,
+      "forward_seconds": 23.983008630752565,
+      "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+    }
+  },
+  "allocation_seconds": 66.58138549998694,
+  "wall_seconds": 66.74073350000253,
+  "process_cpu_seconds": 67.46875,
+  "teacher_training_mae_eV": 0.06741786839842796,
+  "manifest_sha256": "cd19a9154444f52721f901c7940caf7b1fb83c45a4946fcf8da02e218cce7504",
+  "payload_sha256": "c27ee84756a69299b2773bf7cafc9e0573051be1b97d4d715247b5cc5f278200",
+  "source_idx_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+  "cost_scope": "assigned local RTX inference window includes both model loads and two train-cohort passes; excludes graph loading/startup/hash, cache export and metric validation",
+  "protected_roles_untouched": true,
+  "geometry_constructed": false,
+  "parameter_updates": false
+}

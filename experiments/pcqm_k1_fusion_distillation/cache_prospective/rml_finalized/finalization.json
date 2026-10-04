@@ -1,0 +1,46 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-7965fae6ead50c2a189b50019f883477ee04f0b3b79e4b22b35289ffc3806b36",
+  "finalized_at": "2026-10-04T11:27:42.221313+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_fusion_distillation/cache_plan_input.json": "a4a8015fd4c3d82335c93fe6731b42bd0bce53a2d936a363ac85897bdb831a83",
+    "experiments/pcqm_k1_fusion_distillation/close_teacher.py": "00270730b47dafc4854868aaf4d9536cdfd1b1075469ac8835b3177d75b2b903",
+    "experiments/pcqm_k1_fusion_distillation/generate_teacher.py": "05e1299939481c622a10124e288825fd9d55633eafcd41481734f7b9d77de628",
+    "experiments/pcqm_k1_fusion_distillation/protocol.md": "89bb4f8a4ea79fb2b491b1771f6865e866ef43f73fd88b72edd03258f6f75f18",
+    "experiments/pcqm_k1_fusion_distillation/teacher_cache/manifest.json": "cd19a9154444f52721f901c7940caf7b1fb83c45a4946fcf8da02e218cce7504",
+    "experiments/pcqm_k1_fusion_distillation/teacher_cache/teacher_predictions.pt": "c27ee84756a69299b2773bf7cafc9e0573051be1b97d4d715247b5cc5f278200",
+    "experiments/pcqm_k1_fusion_distillation/teacher_cache_acceptance.json": "8ed63fdb7e62f5bd2277301129222ff5bc5e5ec432fc2d8caebe977f457524b4",
+    "experiments/pcqm_k1_fusion_distillation/teacher_cache_attribution.md": "5dcad43261ba8485bd766fd489ef14eaaab6f3ab650dd1c34dada581c1e1020f",
+    "experiments/pcqm_k1_fusion_distillation/teacher_cache_decision.md": "6aee676fa84b493dc3da956f831a3a7ff7f353ba7de8d0afa994e7399ef0a459",
+    "experiments/pcqm_k1_fusion_distillation/teacher_generation.json": "f07acf65f9db09fb969e2236ba2278d034f12df3f17251ae20a98f90bd43a2a1",
+    "experiments/pcqm_k1_fusion_distillation/teacher_input_verification.json": "d95b1c0925d984a53260cc4ee97dc1c1632079706c2e7c68c96b01f754dd00bb",
+    "experiments/pcqm_k1_fusion_distillation/teacher_inputs.json": "b41a849c60447304e2c8c8bb0c3ea78b59503b83a2c3cfab82e2edc1093ca8e8",
+    "src/molgap/gps.py": "f0dabfe575708117efbe365be36591e421f0e1324014ca093fd0692d8312782b",
+    "src/molgap/k1_frozen_inference.py": "70c76a629cee9c1108db7c9a65f34e977094a2072bf8b94656c0f02159a59895",
+    "src/molgap/k1_screen_training.py": "69f88de7cabbba5f51b888cc8e9b5ef0b53b3129c50916aee446af7b6160fad7",
+    "src/molgap/k1_teacher_cache.py": "7368df34882ef2d4202b7f1395e7dfc24f7933d5976d6b9ad56bd57ed7780fb3",
+    "src/molgap/pcqm_gap_architecture.py": "0ad2ffc7930907fdb64475926d91c06967793a47fab31d3fe035df4cd9a0e3b0",
+    "src/molgap/qm9_neural_atom.py": "13b09c53f39edd4bf637d5b42b0097d23dd46a236990f1af9f623db48154d0dd",
+    "src/molgap/training_reproducibility.py": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TB-k1-fusion-distillation-teacher-cache-20261004-measured-inference.json": "02ac1912210963c423ad52046cb4fc6c2742a1dc4f5a25cb0f3682a8ead20abb",
+    "prospective_snapshot.json": "cc1728687922cbd33a389fb0f20fb3a0b30d3c9e019ec54f4676a0de535ecfe2",
+    "roles/role-TB-k1-fusion-distillation-teacher-cache-20261004-train-labels_read.json": "171066410931d4d251756cc5bd36b67a116b33a3c6eb32bfe2a1545d8a2ee563",
+    "roles/role-TB-k1-fusion-distillation-teacher-cache-20261004-train-metric_computed.json": "814f551fb72c8163dec86f6f3d9d9cef19d809a468f859d4642552ce1a591bbc",
+    "roles/role-TB-k1-fusion-distillation-teacher-cache-20261004-train-prediction_input.json": "fb8fc232fb8615c8c131f8517b7d6ea787c44eb2131fa5af40fcbb465e7ce420",
+    "terminal_input.json": "c63b2280db832b88f87688c9d5bdeeb3dfe7533a028e59c2951dc0c413f096f3",
+    "trajectory.json": "519eda826c4b9e89d3208117af067aeae8e9bcbb3a35cabf8756e2cf0459c5f8",
+    "v5_evidence.json": "5db95053e55911befd028dd8f610e5959290fab6f64643922835cc8f8465be9e"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_fusion_distillation/cache_prospective/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "7965fae6ead50c2a189b50019f883477ee04f0b3b79e4b22b35289ffc3806b36",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004"
+}

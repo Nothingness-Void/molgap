@@ -1,0 +1,42 @@
+{
+  "format": "molgap-retained-input-verification-v1",
+  "verified_at": "2026-10-04T11:27:42.207955+00:00",
+  "inputs": [
+    {
+      "name": "manifest",
+      "path": "D:/\u6587\u6863/molgap/data/pcqm_fixed_100k_v1/manifest.json",
+      "sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "observed_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "status": "exact_bytes_verified"
+    },
+    {
+      "name": "shard0",
+      "path": "D:/\u6587\u6863/molgap/data/pcqm_fixed_100k_v1/train/train_shard_0000.pt",
+      "sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+      "observed_sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+      "status": "exact_bytes_verified"
+    },
+    {
+      "name": "shard1",
+      "path": "D:/\u6587\u6863/molgap/data/pcqm_fixed_100k_v1/train/train_shard_0001.pt",
+      "sha256": "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd",
+      "observed_sha256": "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd",
+      "status": "exact_bytes_verified"
+    },
+    {
+      "name": "mean2",
+      "path": "D:/\u6587\u6863/molgap/experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/selected_model.pt",
+      "sha256": "b3a7643041cca68d69768024cccb33b89a5b3b4811554f0ac309f7a22d8b6f05",
+      "observed_sha256": "b3a7643041cca68d69768024cccb33b89a5b3b4811554f0ac309f7a22d8b6f05",
+      "status": "exact_bytes_verified"
+    },
+    {
+      "name": "consistency2",
+      "path": "D:/\u6587\u6863/molgap/experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/selected_model.pt",
+      "sha256": "465aaeb18995df5b1e7a1b6a30b3e911ebee0afacdea2ae6004e060f3f2a5a9a",
+      "observed_sha256": "465aaeb18995df5b1e7a1b6a30b3e911ebee0afacdea2ae6004e060f3f2a5a9a",
+      "status": "exact_bytes_verified"
+    }
+  ],
+  "scope": "Hash-only verification of retained external inputs; no model loading, inference or training during closure."
+}
