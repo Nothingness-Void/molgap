@@ -24,7 +24,11 @@ failed its promotion gate and the coefficient route is closed.
 The user authorized four physical Kaggle2 studies across two isolated T4x2
 notebooks. The [node capacity pair](experiments/pcqm_gptrans_capacity_nodes_100k/protocol.md)
 and [local-bond plus500K EMA study](experiments/pcqm_gptrans_capacity_relations_100k/protocol.md)
-are submitted as version1, physical IDs137072037 and137072203, respectively.
+were submitted as version1, physical IDs137072037 and137072203, respectively.
+The node capacity pair is independently accepted, STRICT_CAUSAL and admitted as
+two complete Replay pairs; neither passed promotion. Its exact configurations
+are closed; preserve the [interpretation](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/results/interpretation.md).
+The local-bond plus500K study remains under the existing monitor's custody.
 Exact receipts and the [shared monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
 own execution state; one existing Luna B heartbeat observes only these jobs.
 The three100K architecture comparisons reuse the accepted G1+EMA999 reference.
