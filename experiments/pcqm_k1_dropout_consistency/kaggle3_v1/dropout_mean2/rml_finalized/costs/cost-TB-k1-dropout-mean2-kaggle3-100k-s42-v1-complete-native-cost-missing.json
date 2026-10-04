@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "unknown",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-dropout-mean2-kaggle3-100k-s42-v1-complete-native-cost-missing",
+  "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+  "hardware": "Tesla T4; complete40epoch allocation unknown",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+}

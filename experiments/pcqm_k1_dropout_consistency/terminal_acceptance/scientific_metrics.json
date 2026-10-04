@@ -1,0 +1,36 @@
+{
+  "full_exposure_verified": true,
+  "historical_context": {
+    "candidate_better_row_fraction": 0.5133,
+    "candidate_mae_eV": 0.13872850305497647,
+    "material_3mev_point_gain": false,
+    "paired_gain_eV": 0.0025659577655792235,
+    "reference_mae_eV": 0.1412944608205557,
+    "row_bootstrap_95pct_eV": [
+      0.0016730003967285155,
+      0.0035193906322717665
+    ],
+    "rows": 50000
+  },
+  "mean2_historical_gain_eV": 0.001037175254821776,
+  "numerical_benefit": true,
+  "outcome": "NEGATIVE_UNDER_CONTRACT",
+  "primary": {
+    "candidate_better_row_fraction": 0.50648,
+    "candidate_mae_eV": 0.13872850305497647,
+    "material_3mev_point_gain": false,
+    "paired_gain_eV": 0.0015287825107574463,
+    "reference_mae_eV": 0.1402572855657339,
+    "row_bootstrap_95pct_eV": [
+      0.0006161361584663391,
+      0.002348937706589699
+    ],
+    "rows": 50000
+  },
+  "promotion_passed": false,
+  "seed_variability": "unknown_single_seed",
+  "source_ref": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/result_check.json",
+  "source_sha256": "85aa1d9e172bf8b67cc50852510d7f0e71ea3b3e75f4f0859ea48038bf2efcf3",
+  "status": "ACCEPTED_FROZEN_ENDPOINT_GATE",
+  "strict_v5_comparison": "not_qualified"
+}

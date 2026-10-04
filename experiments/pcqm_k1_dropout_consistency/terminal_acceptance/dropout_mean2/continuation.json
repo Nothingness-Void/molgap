@@ -1,0 +1,51 @@
+{
+  "format": "molgap-terminal-continuation-v1",
+  "origin": {
+    "schema": "molgap-same-run-observation-v1",
+    "spec_identity": "8edc7cc11717eb00b6bb961e9164db0c081fb01b16e6ccd3862a4a5e0d0b8a02",
+    "logical_run_id": "molgap-k1-dropout-consistency-100k-s42-v1",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-k1-dropout-consistency-100k-s42-v1@136942701:v1",
+    "attempt_id": "kaggle3-dropout-001",
+    "source_commit": "84288398cc45c54eee80493e74c669fdd9418a65",
+    "source_package_sha256": "367794d18354408fa576c9908f5641b9634f6da56ca09c5bea4fe66aa03ce94d"
+  },
+  "continued": {
+    "schema": "molgap-same-run-observation-v1",
+    "spec_identity": "8edc7cc11717eb00b6bb961e9164db0c081fb01b16e6ccd3862a4a5e0d0b8a02",
+    "logical_run_id": "molgap-k1-dropout-consistency-100k-s42-v1",
+    "platform_name": "kaggle",
+    "platform_run_reference": "nvoid912/molgap-k1-dropout-consistency-100k-s42-v1@136942701:v3",
+    "attempt_id": "unknown",
+    "source_commit": "84288398cc45c54eee80493e74c669fdd9418a65",
+    "source_package_sha256": "367794d18354408fa576c9908f5641b9634f6da56ca09c5bea4fe66aa03ce94d"
+  },
+  "source_trace": {
+    "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/canonical_trace.json",
+    "sha256": "9dfdcb4bd4a32f5e2ba653ca289bf2757dc2a6336cea220b4e360ecb3549cd94"
+  },
+  "continued_trace": {
+    "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/canonical_trace.json",
+    "sha256": "e3a71a0f50667965d83370b8d57aabd993c01cdd850e5d5d4079c01de1a71011"
+  },
+  "source_context": {
+    "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/canonical_trace.json.context.json",
+    "sha256": "198595b6939b184b84eba9211ea5dd736430d02b0985355fc983d0500eb6bef7"
+  },
+  "resume_binding": {
+    "path": "experiments/pcqm_k1_dropout_consistency/resume_binding_v2.json",
+    "sha256": "d905eb77a5d50236c4813645bc1ceda03afec7342f6d554f5ded7a31e5cb84ad"
+  },
+  "continued_manifest": {
+    "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/output_manifest.json",
+    "sha256": "98478ab1a52e7299662c50772710bc51fb37649e3de619d2d181299a28b0c604"
+  },
+  "checkpoint": {
+    "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/last_checkpoint.pt",
+    "sha256": "9261185fc4ca17d57f10823769d2a850d5d475c2be0c4251dfa8d3ca2fce4e5b"
+  },
+  "authority": {
+    "path": "experiments/pcqm_k1_dropout_consistency/recovery_authority.md",
+    "sha256": "d13ef5079f198ed99997640a543c795ce06a76fbf428f880fbac217d8331dddd"
+  }
+}

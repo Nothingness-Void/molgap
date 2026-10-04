@@ -1,6 +1,22 @@
 # K1 dropout consistency desktop handoff
 
-## Latest reconciliation
+## Accepted terminal result
+
+Both arms passed mechanical acceptance and independent terminal/RML publication
+on2026-10-04. Each finalization is VALID/COMPLETE with its full40epoch trace.
+Read [decision](terminal_acceptance/decision.md),
+[accepted metrics](terminal_acceptance/scientific_metrics.json) and
+[attribution](terminal_acceptance/attribution.md). Consistency retains a positive
+1.5287825meV matched gain, below the frozen3meV material gate;
+NEGATIVE_UNDER_CONTRACT records the gate outcome, not numerical module harm.
+The explicit pinned float32 compatibility hook resolved mechanical encoding
+acceptance without changing frozen source/recipes or prior failure records.
+Control native cumulative T4 cost remains missing; physical continuation and
+strict V5 readiness gaps exclude canonical prefix replay/READY. No dual
+replay-ready or promotion claim is made. Complete history routes to archive;
+accepted canonical evidence and reusable acceptance fixes route to desktop.
+
+## Prior result check
 
 Kaggle3 ID136942701/version3 is authenticated COMPLETE on2026-10-04.
 Both arms now meet40epochs/31240updates/3998720presentations. Control epoch40

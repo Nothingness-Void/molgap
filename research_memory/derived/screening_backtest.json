@@ -99,6 +99,26 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "control_cumulative_native_cost_missing",
+        "cross_attempt_control_continuation",
+        "strict_v5_comparison_readiness_not_established"
+      ],
+      "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_consistency2:downstream",
+      "trajectory_id": "TB-k1-dropout-consistency2-kaggle3-100k-s42-v1"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "control_cumulative_native_cost_missing",
+        "cross_attempt_control_continuation",
+        "strict_v5_comparison_readiness_not_established"
+      ],
+      "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+      "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+    },
+    {
+      "reasons": [
         "no_compatible_candidate_reference_trace_pair"
       ],
       "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
@@ -172,5 +192,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 21
+  "trace_count": 23
 }

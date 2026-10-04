@@ -1,0 +1,18 @@
+{
+  "actual_arm_inspections": "both MECHANICALLY_VERIFIED",
+  "combined_regression": {
+    "failed": 1,
+    "failure": "stale error-message expectation; implementation rejected the unqualified comparison as required",
+    "passed": 413,
+    "seconds": 164.97,
+    "skipped": 3
+  },
+  "core_commit": "cbbb15eec88e48e4643fc09cb04bc26a3604843d",
+  "frozen_source_and_recipe_bytes": "unchanged",
+  "model_execution_at_acceptance": false,
+  "new_encoding_and_continuation_tests": "passed",
+  "targeted_after_assertion_repair": {
+    "passed": 1,
+    "seconds": 2.24
+  }
+}
