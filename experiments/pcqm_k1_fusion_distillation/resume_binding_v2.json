@@ -1,0 +1,21 @@
+{
+  "spec_identity": "8cf5b23e01e7b452c31e8e73067e43fac901ba41eb4bac6d5627fb1a9798907c",
+  "package_identity": "d9f56b5c858adcfd7d878c772874bb8eacae8cef9ebb259af755caf09aa01b4c",
+  "original_run": "nvoid912/molgap-k1-fusion-distill-100k-s42-v1",
+  "original_version": 1,
+  "arm_id": "distill_strong",
+  "start_epoch": 39,
+  "end_epoch": 40,
+  "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+  "target_identity": {
+    "plan_path": "experiments/pcqm_k1_fusion_distillation/family_acceptance_plan.json",
+    "plan_sha256": "772062e3dba81232d46c506e45d7621545cf2515dbbce580c31207f1163f34ae"
+  },
+  "files": {
+    "last_checkpoint.pt": "1562819776939470d092159df76845b241148af7555fcd99a674270bbcd695e9",
+    "selected_model.pt": "d573e303b784c02d24070bb831f8f9ad71f47736be027ce74a2bb8b4e8e2b2fc",
+    "development_predictions.pt": "3556c414ad0f2618d678b236e7db598e8e50cacb93dd40851dfc9e9192cc825e",
+    "canonical_trace.json": "a2864423d8dac975dab822807094eeccbac4c0ec65c0b7cd225403345ceaa40c",
+    "canonical_trace.json.context.json": "9ba86b24b23040997d57dc2275d91d8c0f0e905c9d09d673bff2109bdc8cff17"
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "format": "molgap-kaggle-source-publication-inputs-v1",
+  "archive_sha256": "698ef20d46b2812d10b36ee05fc9abe25c66bc55d02a13c1aa28b5877f3a389c",
+  "bytes": 95309383,
+  "files": [
+    {
+      "path": "acceptance/experiments/pcqm_k1_dropout_consistency/historical_reference_bundle.json",
+      "bytes": 4151,
+      "sha256": "f3ff003dc0452cf567970ab32311b246348b365d35fbcfda37296deb40e2b5cc"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_fusion_distillation/comparison_prelaunch_distill_strong.json",
+      "bytes": 3442,
+      "sha256": "e9836d5152d14ce9275b84771c3bf18047fc665c5c0d5f3e25674487d80e9111"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_fusion_distillation/comparison_prelaunch_distill_weak.json",
+      "bytes": 3440,
+      "sha256": "cd8cf5232a58fa89aae91da1ca4a50cb3ad258d40d212b5837ef4c28d2ab44b9"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_fusion_distillation/family_acceptance_plan.json",
+      "bytes": 6467,
+      "sha256": "772062e3dba81232d46c506e45d7621545cf2515dbbce580c31207f1163f34ae"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_fusion_distillation/training_recipe_distill_strong.json",
+      "bytes": 1106,
+      "sha256": "60ffa80a571305324196e93997f4923119414d9d1c5eb2544173e6c314b2b6aa"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_fusion_distillation/training_recipe_distill_weak.json",
+      "bytes": 1104,
+      "sha256": "a81cec97e870f0561adc80d4495548497dd60e8671b6325b35af009084b484c8"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/cost_records.json",
+      "bytes": 587,
+      "sha256": "94c6e4055dc1f6001c14bff694330d0fb89eb4427e67a3aa6bb6fef8bbf29de6"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/mechanical_acceptance.json",
+      "bytes": 2129,
+      "sha256": "3ed8707397f0a43e0fbe85d901c1b3ea0479279ad672171d0ba8f6350aa31195"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/prediction_manifest.json",
+      "bytes": 517,
+      "sha256": "373937ba1d00a29a6b8b07217a51a95a261c6eb8de5f2f5ea37631a03018bfcf"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/reference_reuse_decision.json",
+      "bytes": 2314,
+      "sha256": "8917c5e77d54d0d8d30d398ed43bee8ac4694af9f628d4fc86a00bbe3fb42cb0"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/retained_trace_binding.json",
+      "bytes": 577,
+      "sha256": "8008b9c26825316ba4c6c3d818c4f6ea74e25e8891e8db9008d648282c3bd039"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/role_history.json",
+      "bytes": 1240,
+      "sha256": "58dae088d1aaaa05f4468dc479a14499118bff4a82369430ec3c17ae781af6a7"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/row_manifest.json",
+      "bytes": 389,
+      "sha256": "93055246a5d72067e063c7f366efa32b11909709a9363d87821c6c94af52920f"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "bytes": 408,
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_transform.json",
+      "bytes": 646,
+      "sha256": "7633713dd6128407cdd3035275ec56f44153ac316f42d7bca283ec25ef75de3d"
+    },
+    {
+      "path": "acceptance/platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/development_predictions.pt",
+      "bytes": 803349,
+      "sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82"
+    },
+    {
+      "path": "acceptance/platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/runtime_certificate.json",
+      "bytes": 994,
+      "sha256": "e3964b18181a191be0c3f96e46669dbe084db949e012124b7f3fc1901462171e"
+    },
+    {
+      "path": "acceptance/platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/selected_model.pt",
+      "bytes": 14786408,
+      "sha256": "4a7dab43f50f5f3216b224374c213a01cc82cfb4160dcd6d54aab1ef614fce17"
+    },
+    {
+      "path": "experiment_launch.json",
+      "bytes": 1651,
+      "sha256": "a17e49002a73c80acb6666f902925af2a8bc1d18820af56a681ba45de69e4120"
+    },
+    {
+      "path": "experiment_spec.json",
+      "bytes": 5970,
+      "sha256": "8cf5b23e01e7b452c31e8e73067e43fac901ba41eb4bac6d5627fb1a9798907c"
+    },
+    {
+      "path": "initial_states/distill_strong.pt",
+      "bytes": 14779763,
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242"
+    },
+    {
+      "path": "initial_states/distill_weak.pt",
+      "bytes": 14779763,
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242"
+    },
+    {
+      "path": "package_manifest.json",
+      "bytes": 3198,
+      "sha256": "cc4ff8ef7c9a05d6a1109a5891f38bf71bec8b6d923f683ee122454f5874f344"
+    },
+    {
+      "path": "prospective/distill_strong/trajectory.json",
+      "bytes": 43754,
+      "sha256": "80058026926f971ce7be8f45d0697e1e937e23692e27aaf7faed73225e15a2ee"
+    },
+    {
+      "path": "prospective/distill_weak/trajectory.json",
+      "bytes": 43742,
+      "sha256": "cae84685b9aa1c0219069ec852a59142d7910d887fc7cc1e3b7c78c4fba27d32"
+    },
+    {
+      "path": "recovery/canonical_trace.json",
+      "bytes": 24444,
+      "sha256": "a2864423d8dac975dab822807094eeccbac4c0ec65c0b7cd225403345ceaa40c"
+    },
+    {
+      "path": "recovery/canonical_trace.json.context.json",
+      "bytes": 955,
+      "sha256": "9ba86b24b23040997d57dc2275d91d8c0f0e905c9d09d673bff2109bdc8cff17"
+    },
+    {
+      "path": "recovery/development_predictions.pt",
+      "bytes": 803349,
+      "sha256": "3556c414ad0f2618d678b236e7db598e8e50cacb93dd40851dfc9e9192cc825e"
+    },
+    {
+      "path": "recovery/last_checkpoint.pt",
+      "bytes": 44360595,
+      "sha256": "1562819776939470d092159df76845b241148af7555fcd99a674270bbcd695e9"
+    },
+    {
+      "path": "recovery/resume_binding.json",
+      "bytes": 1169,
+      "sha256": "400cb250b5b74aed6b74723563ab01699f4dd9c9ad7dfb469617310300993a99"
+    },
+    {
+      "path": "recovery/selected_model.pt",
+      "bytes": 14786408,
+      "sha256": "d573e303b784c02d24070bb831f8f9ad71f47736be027ce74a2bb8b4e8e2b2fc"
+    },
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "bytes": 65,
+      "sha256": "c336e05d4e6c86020dcc001bea50b91f762cc0afd26bee9c4be1e5c29daf7786"
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "bytes": 41,
+      "sha256": "5d372ef9b3965a4e6331f509c74339d43b9184551c3131ebe2c14bf5a03c5054"
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "bytes": 10490,
+      "sha256": "1e19cf4cee73b7a3ac61024bb976fbe520d5165e9d6d2a57c09698e15f71a20f"
+    },
+    {
+      "path": "source_payload.bin",
+      "bytes": 200529,
+      "sha256": "0f56a8b8f56c0e591eb90b5c9674125765b68136d2ad2d4b02b716f978581d76"
+    }
+  ]
+}

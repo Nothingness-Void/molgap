@@ -1,0 +1,10 @@
+........................................................................ [ 35%]
+........................................................................ [ 70%]
+......................................ss....................             [100%]
+============================== warnings summary ===============================
+..\..\�ĵ�\molgap\.venv\lib\site-packages\torch_geometric\llm\utils\backend_utils.py:26
+  D:\�ĵ�\molgap\.venv\lib\site-packages\torch_geometric\llm\utils\backend_utils.py:26: DeprecationWarning: `torch_geometric.distributed` has been deprecated since 2.7.0 and will no longer be maintained. For distributed training, refer to our tutorials on distributed training at https://pytorch-geometric.readthedocs.io/en/latest/tutorial/distributed.html or cuGraph examples at https://github.com/rapidsai/cugraph-gnn/tree/main/python/cugraph-pyg/cugraph_pyg/examples
+    from torch_geometric.distributed import (
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+202 passed, 2 skipped, 1 warning in 223.39s (0:03:43)
