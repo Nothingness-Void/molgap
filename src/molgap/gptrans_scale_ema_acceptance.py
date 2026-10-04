@@ -18,6 +18,19 @@ BASE = "experiments/pcqm_gptrans_capacity_relations_100k"
 FILTERS = {"ema9999": .9999, "ema999": .999}
 
 
+def _transfer_terminal_decision(decision_ref):
+    # Comparison qualification and trajectory outcomes are separate vocabularies.
+    return {"final": True, "outcome": "INCONCLUSIVE", "decision_ref": decision_ref,
+        "next_allowed_actions": ["Controller interpretation of aligned EMA views only"],
+        "reopen_conditions": ["Separately authorized causal500K comparison"]}
+
+
+def _matches_schedule_learning_rate(observed, expected):
+    """Allow only final-bit libm variation between remote and accepting OS."""
+    return (math.isfinite(observed) and math.isfinite(expected)
+        and abs(observed - expected) <= 2 * math.ulp(expected))
+
+
 def _retained_artifacts(paths, primary_trace, relative):
     """Retain both EMA views but bind one canonical physical-run trace."""
     artifacts = []
@@ -91,7 +104,8 @@ def accept_outputs(root, records, package):
         _require(len(rows) == 60 and trace["trajectory_id"] == config["arms"]["scale_ema"]["trajectory_id"]
             and trace["run_id"] == config["scale_study"]["logical_run_id"], "Canonical physical trace")
         _require(all(r["optimizer_step"] == (i + 1) * 781 and r["sample_presentations"] == (i + 1) * 781 * 128
-            and r["learning_rate"] == FrozenEpochScheduler.learning_rate(i) for i, r in enumerate(rows)), "Trace exposure/LR")
+            and _matches_schedule_learning_rate(r["learning_rate"], FrozenEpochScheduler.learning_rate(i))
+            for i, r in enumerate(rows)), "Trace exposure/LR")
         best = min(range(60), key=lambda i: rows[i]["ema_dev_metric"])
         _require(best == result["best"][view]["rung"], "Frozen per-view selector")
         payload = torch.load(folder / view / "development_predictions.pt", map_location="cpu", weights_only=True)
@@ -157,8 +171,7 @@ def close_outputs(root, records, acceptance):
     outcome = {"execution_status": "complete", "artifact_status": "accepted", "comparison_status": "paired_endpoint",
         "scientific_status": "not_evaluated", "transfer_status": "partial_evidence", "budget_decision": "stop_under_contract",
         "full_handoff_status": "not_authorized"}
-    decision = {"final": True, "outcome": "CONTEXT_ONLY", "decision_ref": rel(decision_path),
-        "next_allowed_actions": ["Controller interpretation of aligned EMA views only"], "reopen_conditions": ["Separately authorized causal500K comparison"]}
+    decision = _transfer_terminal_decision(rel(decision_path))
     result.update(evidence_id="pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42", run_id=run,
         outcome=outcome, trajectory_decision=decision, role_use=role_use, roles=roles, costs=[cost])
     atomic_json(acceptance, result)
