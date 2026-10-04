@@ -14,7 +14,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
 | P1 | C-GPTRANS-EMA-SCALE | Design the scale/resume and same-live-trajectory EMA reference owner after accepted execution qualification. | [Qualified scope and remaining gates](experiments/pcqm_gptrans_scale_qualification/results/interpretation.md); no automatic long training release |
-| P2 | C-GPTRANS-DECAY-CLOCK | Test one all-parameter coefficient intervention against accepted G1 EMA999. | [Isolated protocol](experiments/pcqm_gptrans_decay_clock_100k/protocol.md); full saved-output acceptance, causal binding and actual Replay admission; no automatic scale or grid |
+| — | C-GPTRANS-DECAY-CLOCK | Closed without promotion; optimizer intervention accepted and complete Replay pair verified. | Preserve the [endpoint and trajectory interpretation](experiments/pcqm_gptrans_decay_clock_100k/gpu/results/interpretation.md); no coefficient grid or automatic scale |
 | — | C-GPTRANS-EMA-PORTABILITY | Accepted NO_TRAIN portability; no training Replay claim. | Preserve the [terminal audit](experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md) |
 | — | C-GPTRANS-FINAL-READOUT | Closed without promotion; both actual complete Replay pairs verified. | Preserve the [terminal decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md); no automatic successor |
 

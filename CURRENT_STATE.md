@@ -18,13 +18,13 @@ Earlier infrastructure failures and CPU qualification remain separately
 retained in the [audit index](experiments/pcqm_gptrans_ema_portability/README.md).
 The [fixed500K execution qualification](experiments/pcqm_gptrans_scale_qualification/results/interpretation.md)
 is accepted and RML-finalized as NO_TRAIN / CONTEXT_ONLY, not a training Replay pair.
-The [isolated G1 decay-coefficient falsifier](experiments/pcqm_gptrans_decay_clock_100k/gpu/submission_record.md)
-remains bound to the existing Luna heartbeat.
+The [isolated G1 decay-coefficient falsifier](experiments/pcqm_gptrans_decay_clock_100k/gpu/results/interpretation.md)
+is accepted and RML-finalized with a complete Replay pair; the intervention
+failed its promotion gate and the coefficient route is closed.
 Matched 500K scientific EMA attribution remains gated on a qualified scale owner
 and explicit comparison/reference/trace semantics; no long successor is released.
-The coefficient screen reuses accepted G1 EMA999 without baseline retraining; actual terminal
-acceptance and Replay admission remain pending. The monitor observes only the
-remaining exact server-owned binding and never adopts desktop jobs.
+The two bounded follow-up bindings are closed. No successor training is
+released; the monitor never adopts desktop jobs.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).

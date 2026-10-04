@@ -1,0 +1,140 @@
+{
+  "analysis_scope": "saved_trace_posthoc_diagnostic",
+  "local_training_executed": false,
+  "model_inference_executed": false,
+  "scientific_label_rewritten": false,
+  "inputs": [
+    {
+      "ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/results/acceptance.json",
+      "sha256": "9c73db862b93b35a38ba5e80b46b1d3f3a20c2a03787c4ec9a06bfb0e96199b0"
+    },
+    {
+      "ref": "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/trace.json",
+      "sha256": "571d0991e79491a8a4d7900c5873417243ca06c23c863bc106e8d060ce769a4b"
+    },
+    {
+      "ref": "platforms/_records/kaggle/training/gptrans_g1_input_ema_v1/gptrans_input_ema_screen/degree_scale_ema999/training/trace.json",
+      "sha256": "da81812f85b80e4f6540a826a6e7aedff83e8b3b8f4be63fdef0462685bd4121"
+    }
+  ],
+  "selected_observations": [
+    {
+      "epoch_zero_based": 0,
+      "candidate_train_mae_eV": 0.4345649339083091,
+      "reference_train_mae_eV": 0.42882957578784103,
+      "candidate_ema_dev_eV": 0.4492475390434265,
+      "reference_ema_dev_eV": 0.4422304630279541,
+      "candidate_live_dev_eV": 0.3348771035671234,
+      "reference_live_dev_eV": 0.3255096971988678,
+      "candidate_preclip_gradient_norm": 3.2889287071862996,
+      "candidate_clip_frequency": 0.9167733674775929,
+      "candidate_weight_norm": 152.80714416503906
+    },
+    {
+      "epoch_zero_based": 9,
+      "candidate_train_mae_eV": 0.19595719304126857,
+      "reference_train_mae_eV": 0.19246669958856996,
+      "candidate_ema_dev_eV": 0.1887747198343277,
+      "reference_ema_dev_eV": 0.18365578353405,
+      "candidate_live_dev_eV": 0.19817988574504852,
+      "reference_live_dev_eV": 0.20631109178066254,
+      "candidate_preclip_gradient_norm": 0.9958559395256482,
+      "candidate_clip_frequency": 0.4532650448143406,
+      "candidate_weight_norm": 168.6676025390625
+    },
+    {
+      "epoch_zero_based": 19,
+      "candidate_train_mae_eV": 0.15677597585839548,
+      "reference_train_mae_eV": 0.15698440275443976,
+      "candidate_ema_dev_eV": 0.1608147919178009,
+      "reference_ema_dev_eV": 0.159537672996521,
+      "candidate_live_dev_eV": 0.17218035459518433,
+      "reference_live_dev_eV": 0.17384520173072815,
+      "candidate_preclip_gradient_norm": 0.6586251350432138,
+      "candidate_clip_frequency": 0.1446862996158771,
+      "candidate_weight_norm": 200.27374267578125
+    },
+    {
+      "epoch_zero_based": 29,
+      "candidate_train_mae_eV": 0.13344222798072983,
+      "reference_train_mae_eV": 0.13543941677442148,
+      "candidate_ema_dev_eV": 0.15266463160514832,
+      "reference_ema_dev_eV": 0.15065236389636993,
+      "candidate_live_dev_eV": 0.1590200513601303,
+      "reference_live_dev_eV": 0.15993085503578186,
+      "candidate_preclip_gradient_norm": 0.5615165602992958,
+      "candidate_clip_frequency": 0.06017925736235595,
+      "candidate_weight_norm": 220.03646850585938
+    },
+    {
+      "epoch_zero_based": 39,
+      "candidate_train_mae_eV": 0.11462348274118327,
+      "reference_train_mae_eV": 0.11584333998198311,
+      "candidate_ema_dev_eV": 0.14890572428703308,
+      "reference_ema_dev_eV": 0.1460917443037033,
+      "candidate_live_dev_eV": 0.15438756346702576,
+      "reference_live_dev_eV": 0.15399108827114105,
+      "candidate_preclip_gradient_norm": 0.5345475395876681,
+      "candidate_clip_frequency": 0.04353393085787452,
+      "candidate_weight_norm": 226.3173370361328
+    },
+    {
+      "epoch_zero_based": 49,
+      "candidate_train_mae_eV": 0.10145262931815315,
+      "reference_train_mae_eV": 0.10213132150035385,
+      "candidate_ema_dev_eV": 0.14705795049667358,
+      "reference_ema_dev_eV": 0.14480280876159668,
+      "candidate_live_dev_eV": 0.1476997435092926,
+      "reference_live_dev_eV": 0.1456393152475357,
+      "candidate_preclip_gradient_norm": 0.4616148651943622,
+      "candidate_clip_frequency": 0.008962868117797696,
+      "candidate_weight_norm": 226.44503784179688
+    },
+    {
+      "epoch_zero_based": 50,
+      "candidate_train_mae_eV": 0.10049745667231492,
+      "reference_train_mae_eV": 0.10063565019398847,
+      "candidate_ema_dev_eV": 0.14702163636684418,
+      "reference_ema_dev_eV": 0.14470091462135315,
+      "candidate_live_dev_eV": 0.14782056212425232,
+      "reference_live_dev_eV": 0.14543679356575012,
+      "candidate_preclip_gradient_norm": 0.46314676165122837,
+      "candidate_clip_frequency": 0.0076824583866837385,
+      "candidate_weight_norm": 226.3999786376953
+    },
+    {
+      "epoch_zero_based": 58,
+      "candidate_train_mae_eV": 0.09719245232034204,
+      "reference_train_mae_eV": 0.09711701854980215,
+      "candidate_ema_dev_eV": 0.14703191816806793,
+      "reference_ema_dev_eV": 0.1442326307296753,
+      "candidate_live_dev_eV": 0.1470460593700409,
+      "reference_live_dev_eV": 0.14424392580986023,
+      "candidate_preclip_gradient_norm": 0.4229576511358635,
+      "candidate_clip_frequency": 0.002560819462227913,
+      "candidate_weight_norm": 226.2727813720703
+    },
+    {
+      "epoch_zero_based": 59,
+      "candidate_train_mae_eV": 0.09734594808559355,
+      "reference_train_mae_eV": 0.09714278386591209,
+      "candidate_ema_dev_eV": 0.1470421999692917,
+      "reference_ema_dev_eV": 0.14424195885658264,
+      "candidate_live_dev_eV": 0.14705370366573334,
+      "reference_live_dev_eV": 0.14429225027561188,
+      "candidate_preclip_gradient_norm": 0.4209866297840309,
+      "candidate_clip_frequency": 0.005121638924455826,
+      "candidate_weight_norm": 226.27377319335938
+    }
+  ],
+  "candidate_ema_worse_epoch_count": 59,
+  "aligned_epochs": 60,
+  "final_ema_minus_live_eV": -1.150369644165039e-05,
+  "final_ten_ema_change_eV": -1.5750527381896973e-05,
+  "reference_optimizer_diagnostics_available": false,
+  "candidate_terminal_decay_only_log_factor": -0.23842457869277664,
+  "candidate_terminal_decay_only_factor": 0.7878681080589828,
+  "candidate_terminal_cumulative_lr_sum": 23.842368000000004,
+  "max_original_sum_recompute_roundoff": 1.4210854715202004e-14,
+  "diagnostic_caveat": "Trace directions are observational; no 500K optimization, seed variability, weight-norm reference contrast or deployable target-based routing was measured."
+}

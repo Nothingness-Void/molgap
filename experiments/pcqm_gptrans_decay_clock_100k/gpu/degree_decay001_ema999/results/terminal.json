@@ -1,0 +1,401 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/observed_metadata.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/comparison_readiness_prelaunch.json": "5f9a7acff13b21f83bc227fa613d004431f730ab3397b2a1666f1d381ebc9fad",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/contract.json": "af5e3d2ca46e43f8d03c0c6f55c971e571ec94fc1d77d43cdca6f654a04c2269",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/candidate_trace_manifest.json": "25831a0457bf01efa5c51558647af5db328915931d6359926dd769ac2e98d1a7",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/comparison_readiness.json": "2f9ec5459f3e888016cd9033cc6fcd0f9495d5b527a62f2105d9a80757db05ef",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/cost_records.json": "0e31edd4d0f354efa21499d4ef894a2386b8be96593c44c50a194d421d1d5746",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/decision.md": "f7bd979cf8da08bcdeba8ece9dc0421247fef1d8006f673bb190542481c48437",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/observed_metadata.json": "57f96d5ce3f9140a4cf3b926164a2c69d10b72e16ea7df094640637d5a0c4d84",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/paired_analysis.json": "4cb9b741c8d3e87de6ca25fd6d02dc67e229723634e6a4399cb71fddd7db46a4",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/prediction_manifest.json": "cfcdf8016964bb3ec97eb30919b3ea3a3bfdfd8e267ede7bec475ab3113f974f",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/role_history.json": "a80f4d850ef2c0a58abe607f4b8e422a89f2ad886975dc7ff3fa85d42c7477cf",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/runtime_certificate.json": "568156ece9a0c2d145e345b431a6835f880f43c39f57d6ea9f1e15c1b4a00654",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/rml_plan/trajectory.json": "3669baf90a9d1471934091c496b7c80dce1f008b126737480e87fbf751f7394f",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/results/acceptance.json": "9c73db862b93b35a38ba5e80b46b1d3f3a20c2a03787c4ec9a06bfb0e96199b0",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/screen_config.json": "92ab7d32e7bc6cd47bc53a12d8a14b997379ee302ab52f0db8d25281a17a8708",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/submission_v1.json": "352fe079ee72e00e780581dd07a1e64cac96abc2b515b964b96345fcc7a77b1e",
+    "experiments/pcqm_gptrans_decay_clock_100k/protocol.md": "6a6c466c23f6e31279c508b905a48d0898bbb7032d629556b3129c734eb41cc2",
+    "experiments/pcqm_gptrans_input_ema_100k/gpu/screen_config.json": "704a135ed202d3b0fd2bf52add06a6401f749b39ab878c0b3bf4e4317cc18c9f",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948",
+    "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/best_model.pt": "5fa506289374bcc5a0d5f4653aa851e42f465977f0ead796320f403579dbb814",
+    "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/canonical_trace.json": "8c3b94d5a2191d9e1cecfd59ef87015d79bb44dcd49b42ea58bb735cc57fc5cd",
+    "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/completion_manifest.json": "ac288aa683508f4b831a75470f4afdfdee4ce4288fa1e55462e0f46f5280a8e5",
+    "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/development_predictions.pt": "bbf8b35782dc63c1f74b710ed567516ddf327571b34bbff14bd7b60898a49e3d",
+    "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/last_checkpoint.pt": "7843d526ac8bb4c8a360be719cb3ec5adaaa8191628165655642c465b76e2a68",
+    "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/native_cost.json": "a992dd98ae79b13ca80ccb8f1301a02549929384660bda3da2092d1417fd9aec"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-g1-decay-clock-wd001-100k-s42-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/observed_metadata.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 4.454097413423334
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.227048706711667
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "CLOSE"
+    ],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "explicit scale/combination compute authorization"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json",
+        "name": "target_transform.json",
+        "sha256": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/candidate_trace_manifest.json",
+        "name": "candidate_trace_manifest.json",
+        "sha256": "25831a0457bf01efa5c51558647af5db328915931d6359926dd769ac2e98d1a7"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/comparison_readiness.json",
+        "name": "comparison_readiness.json",
+        "sha256": "2f9ec5459f3e888016cd9033cc6fcd0f9495d5b527a62f2105d9a80757db05ef"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/cost_records.json",
+        "name": "cost_records.json",
+        "sha256": "0e31edd4d0f354efa21499d4ef894a2386b8be96593c44c50a194d421d1d5746"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/decision.md",
+        "name": "decision.md",
+        "sha256": "f7bd979cf8da08bcdeba8ece9dc0421247fef1d8006f673bb190542481c48437"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/observed_metadata.json",
+        "name": "observed_metadata.json",
+        "sha256": "57f96d5ce3f9140a4cf3b926164a2c69d10b72e16ea7df094640637d5a0c4d84"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/paired_analysis.json",
+        "name": "paired_analysis.json",
+        "sha256": "4cb9b741c8d3e87de6ca25fd6d02dc67e229723634e6a4399cb71fddd7db46a4"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/prediction_manifest.json",
+        "name": "prediction_manifest.json",
+        "sha256": "cfcdf8016964bb3ec97eb30919b3ea3a3bfdfd8e267ede7bec475ab3113f974f"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/role_history.json",
+        "name": "role_history.json",
+        "sha256": "a80f4d850ef2c0a58abe607f4b8e422a89f2ad886975dc7ff3fa85d42c7477cf"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/runtime_certificate.json",
+        "name": "runtime_certificate.json",
+        "sha256": "568156ece9a0c2d145e345b431a6835f880f43c39f57d6ea9f1e15c1b4a00654"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/screen_config.json",
+        "name": "screen_config.json",
+        "sha256": "92ab7d32e7bc6cd47bc53a12d8a14b997379ee302ab52f0db8d25281a17a8708"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json",
+        "name": "row_manifest.json",
+        "sha256": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json",
+        "name": "target_manifest.json",
+        "sha256": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/best_model.pt",
+        "name": "best_model.pt",
+        "sha256": "5fa506289374bcc5a0d5f4653aa851e42f465977f0ead796320f403579dbb814"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/canonical_trace.json",
+        "name": "canonical_trace.json",
+        "sha256": "8c3b94d5a2191d9e1cecfd59ef87015d79bb44dcd49b42ea58bb735cc57fc5cd"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "ac288aa683508f4b831a75470f4afdfdee4ce4288fa1e55462e0f46f5280a8e5"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/last_checkpoint.pt",
+        "name": "last_checkpoint.pt",
+        "sha256": "7843d526ac8bb4c8a360be719cb3ec5adaaa8191628165655642c465b76e2a68"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/native_cost.json",
+        "name": "native_cost.json",
+        "sha256": "a992dd98ae79b13ca80ccb8f1301a02549929384660bda3da2092d1417fd9aec"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/results/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "9c73db862b93b35a38ba5e80b46b1d3f3a20c2a03787c4ec9a06bfb0e96199b0"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/development_predictions.pt",
+        "name": "development_predictions.pt",
+        "sha256": "bbf8b35782dc63c1f74b710ed567516ddf327571b34bbff14bd7b60898a49e3d"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/contract.json",
+        "name": "contract.json",
+        "sha256": "af5e3d2ca46e43f8d03c0c6f55c971e571ec94fc1d77d43cdca6f654a04c2269"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_decay_clock_100k/protocol.md",
+        "experiments/pcqm_gptrans_input_ema_100k/gpu/screen_config.json",
+        "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/rml_plan/trajectory.json",
+        "experiments/pcqm_gptrans_decay_clock_100k/gpu/submission_v1.json",
+        "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/comparison_readiness_prelaunch.json",
+        "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-g1-degree-decay001-ema999-100k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-04T16:36:00.244571+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "verified native artifacts and saved prediction tensors"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "internal_development": "consumed",
+      "internal_train": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "single_mechanism_screen_100k",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-04T16:36:00.244571+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development": "consumed",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_train-training_membership",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_train-labels_read",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_train-metric_computed",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_development-prediction_input",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_development-labels_read",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_development-selection_used",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+    }
+  ],
+  "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "ema999-each-step-selection",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "90a8cfb2b22ac451f806be6eb653c71934707fb1a89337ba3c6fc98c54372444",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+      "scientific_contract": "gptrans-v5-observation-reference-fp32-bs128-60epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+      "terminal_endpoint_identity": "46860-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "internal_development_ema_gap_mae_eV",
+    "model_identity": "f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+    "reference_id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+    "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_ema_over_60_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/terminal_evidence.json",
+    "trace_artifact_ref": "platforms/_records/kaggle/training/g1-decay-clock_v1/gptrans_decay_clock/degree_decay001_ema999/training/canonical_trace.json",
+    "trace_artifact_sha256": "8c3b94d5a2191d9e1cecfd59ef87015d79bb44dcd49b42ea58bb735cc57fc5cd",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+    "weight_semantics": "ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+}
