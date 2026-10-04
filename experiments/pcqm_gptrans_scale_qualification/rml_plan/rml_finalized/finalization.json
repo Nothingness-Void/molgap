@@ -1,0 +1,39 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-9358707eb669ebaf6e1cb3b6bd711c72cefbe6a076ed39ea296463069af79f01",
+  "finalized_at": "2026-10-04T14:32:32.150497+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_scale_qualification/contract.json": "e358185f864259d99e12f097b22cb082dde72ded1e60a71fff9f4ce56a0c3ff1",
+    "experiments/pcqm_gptrans_scale_qualification/protocol.md": "3ad97c6b993cc4d503810b49d36eebba67896b2984385411e5e9932e816f314b",
+    "experiments/pcqm_gptrans_scale_qualification/release_binding.json": "2a966e5395d7ec5aa36fb16ece2d75a27c5283b90b179dae8c64214f14a78e11",
+    "experiments/pcqm_gptrans_scale_qualification/results/acceptance.json": "0bdd51c5b20f95edf41b62d2b9b48f175db64db0816206a4df1f3cc29d80f693",
+    "experiments/pcqm_gptrans_scale_qualification/results/decision.md": "fbc16c9645c3c6625a1cf18f14d7882c17bb411d41f87fc764716f4dbba24359",
+    "experiments/pcqm_gptrans_scale_qualification/rml_plan/trajectory.json": "453725d6c73358a07acb5229ed1b297f531b167e337305e1838c299f1758e480",
+    "experiments/pcqm_gptrans_scale_qualification/submission_v1.json": "32160cdc5c6a49989bf7aab625f05bca65864b5bfab14ec4065d0fb4a6f08ac6",
+    "platforms/_records/kaggle/training/g1-scale-profile_v1/gptrans_scale_qualification/cost.json": "5efff85a25573687656d1e1e62df4fe834d3447ef9dfb27fb8b19be9a76cff10",
+    "platforms/_records/kaggle/training/g1-scale-profile_v1/gptrans_scale_qualification/environment.json": "259562dc51d2858a7ac1f414c86fea1b4248fbf21e7c142b539bb7bb900f7ff0",
+    "platforms/_records/kaggle/training/g1-scale-profile_v1/gptrans_scale_qualification/output_manifest.json": "9e0fb18ba0a8eec8397e101b60627cf5fdb94098674a32b5a8e9b05099cf999d",
+    "platforms/_records/kaggle/training/g1-scale-profile_v1/gptrans_scale_qualification/qualification.json": "93b93dd41755d21641ec20b4b51a340a915cac71e1f3da94327a86edacf4d6d6",
+    "platforms/_records/kaggle/training/g1-scale-profile_v1/gptrans_scale_qualification/startup.json": "4a00473efd12b6006b1b8f8fb58d5e9890ec722bc201f1f059a2793234bd6f47"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TC-gptrans-g1-scale500k-qualification-s42-observed.json": "ca76f4b8d870991532d6d9ab7d54fdb842696272afadf0699280b4b6c6fbb971",
+    "prospective_snapshot.json": "453725d6c73358a07acb5229ed1b297f531b167e337305e1838c299f1758e480",
+    "roles/role-TC-gptrans-g1-scale500k-qualification-s42-labels_read.json": "b61616bc28961a3285e418694d8adfd658369998a0076c254f698d1223d9b611",
+    "roles/role-TC-gptrans-g1-scale500k-qualification-s42-metric_computed.json": "c53c0e493c1e4850504ea22a919b3d10c244af3b3e5e8ae3ceb65a1780331331",
+    "roles/role-TC-gptrans-g1-scale500k-qualification-s42-training_membership.json": "9e1593041fe5302d77260790da0ee17c391c489ee41f0c1fe7054e4a3cabd745",
+    "terminal_input.json": "c40496b61752997f6284142fe4a3fb230a3ce325c07585a9b124074e14576c7f",
+    "trajectory.json": "dc8b9f44a84bf853448985e0171594576d69b58afb6e2906b7d7569d6d68aedc",
+    "v5_evidence.json": "4a29ff88636412951fa1f4150b005bddaccdc6ab8b5532c76af983347717ca0d"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_gptrans_scale_qualification/rml_plan/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "9358707eb669ebaf6e1cb3b6bd711c72cefbe6a076ed39ea296463069af79f01",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-gptrans-g1-scale500k-qualification-s42"
+}
