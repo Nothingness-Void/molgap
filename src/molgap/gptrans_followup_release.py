@@ -79,6 +79,9 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         if terminal_reference:
             recipe.update(optimizer_parameter_groups="bias-and-1d-no-decay-v1" if "group_decay" in mode else "single-group",
                           endpoint_path_encoding="all-shortest-first-minus-last-half-v1" if "path_endpoints" in mode else "none")
+        if mode == "degree_decay001_ema999":
+            recipe["weight_decay"] = .01
+            recipe["optimizer"] = "AdamW-foreach-false-lr0.001-weight-decay0.01"
         if mode == "degree_pair_depth_scale_ema999":
             recipe["pair_residual_scale"] = 12 ** -0.5
         if mode in {"degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999"}:
@@ -93,9 +96,9 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         for role in arm["data"]["roles"]:
             role["usage_sha256"] = sha256_file(root / role_ref)
         candidate = dict(identity)
-        if terminal_reference and mode == "degree_group_decay_ema999":
+        if terminal_reference and mode in {"degree_group_decay_ema999", "degree_decay001_ema999"}:
             from .pcqm_gptrans_v4 import _scientific_fields
-            candidate.update(optimizer_identity=_scientific_fields(mode)["optimizer_fingerprint"], optimizer_mode="adamw-bias-and-1d-no-decay-v1")
+            candidate.update(optimizer_identity=_scientific_fields(mode)["optimizer_fingerprint"], optimizer_mode="adamw-bias-and-1d-no-decay-v1" if mode == "degree_group_decay_ema999" else "adamw-single-group-wd001-v1")
             purpose, fields = "optimizer_comparison", ["optimizer_identity", "optimizer_mode"]
         elif terminal_reference and mode != "degree_path_bond_mean_ema999":
             module_key, module = (("readout_module", "gptrans_readout.py") if "readout" in mode else

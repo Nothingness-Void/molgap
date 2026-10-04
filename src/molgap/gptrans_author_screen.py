@@ -20,7 +20,7 @@ from .training_reproducibility import atomic_json, sha256_file
 
 MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
          "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999",
-         "degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999")
+         "degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999", "degree_decay001_ema999")
 
 
 def validate_arm_allocation(config):

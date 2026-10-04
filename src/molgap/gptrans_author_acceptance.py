@@ -184,6 +184,13 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
             require(all(row["optimizer_diagnostics"]["parameter_groups_sha256"] == parameter_groups_fingerprint(preflight["optimizer_parameter_groups"])
                         and all(math.isfinite(v) for k in ("group_weight_norms", "group_adam_first_moment_norms") for v in row["optimizer_diagnostics"][k])
                         for row in rows), "Grouped optimizer identity and finite norms")
+        if mode == "degree_decay001_ema999":
+            from .pcqm_gptrans_v4 import FrozenEpochScheduler
+            require(all(row["optimizer_diagnostics"]["weight_decay"] == .01
+                and row["optimizer_diagnostics"]["cumulative_lr_sum"] == BATCHES_PER_EPOCH * sum(FrozenEpochScheduler.learning_rate(i) for i in range(row["epoch"] + 1))
+                and 0 <= row["optimizer_diagnostics"]["clip_frequency"] <= 1
+                and all(math.isfinite(v) for key in ("group_weight_norms", "group_adam_first_moment_norms") for v in row["optimizer_diagnostics"][key])
+                for row in rows), "Coefficient-only optimizer diagnostics")
         declared = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == mode)
         require(plan["state_at_start"]["source_config_identity"] == canonical_fingerprint(declared), "Frozen full-arm declaration")
         prelaunch = load(base / mode / "comparison_readiness_prelaunch.json")

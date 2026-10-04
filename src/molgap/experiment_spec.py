@@ -39,6 +39,12 @@ class FamilyContract:
 
 
 FAMILIES = MappingProxyType({
+    ("gptrans_scale_profile", "1"): FamilyContract(
+        "gptrans_scale_profile", "1", "molgap.gptrans_scale_profile",
+        "gptrans_scale_profile_v1", "ogb-atom9-bond3-shortest-path-cap20",
+        ("train",), "seed42-step-fixed500k-profiling-v1",
+        "fixed-train-100k-mean-sample-std",
+    ),
     ("edge_state_gps", "1"): FamilyContract(
         "edge_state_gps", "1", "molgap.edge_state_model_only_v1",
         "edge_state_model_only_v1", "ogb-atom9-bond3-rwse16-v1",
@@ -106,7 +112,7 @@ ADDONS = MappingProxyType({
     **{
         (name, "1"): AddonContract("gptrans_t", "input-intervention", "molgap.gptrans_author_variants")
         for name in ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
-                     "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999")
+                     "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999", "degree_decay001_ema999")
     },
     ("k1_pair_value", "1"): AddonContract(
         "neural_atom_k1", "pair-token-replacement", "molgap.k1_pair_token",
