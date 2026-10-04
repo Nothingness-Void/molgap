@@ -2,8 +2,32 @@
 
 Owner codex/exp/k1-dropout-consistency; verified desktop base a779e8cf.
 [Kernel](https://www.kaggle.com/code/nvoid912/molgap-k1-dropout-consistency-100k-s42-v1)
-actual ID136942701/version1 was authenticated RUNNING after submission;
-pulled entry bytes match. See remote_observation.json and launch_receipt.json.
+actual ID136942701/version1 is ERROR on the authenticated 2026-10-04 recheck.
+Submission identity remains in launch_receipt.json; retained failure evidence is
+in failure_reconciliation_v1/remote_observation.json and pair_state.json.
+
+Both preflights passed. consistency2 finished40epochs/31240updates;
+mean2 retained39epochs/30459updates before orchestration termination. The
+family inspector rejected the historical float32 target digest because it
+computes a float64 digest. Both retained ordered target tensors reproduce the
+original historical digest exactly. See target_encoding_reconciliation.json
+and dropout_consistency2/mechanical_inspection.json in failure_reconciliation_v1.
+This is an acceptance encoding defect, not an observed numerical/model crash.
+
+Retained prediction MAE: consistency2=0.13872850305497647eV;
+mean2=0.1402572855657339eV. Difference1.5287825meV is descriptive and below the
+3meV gate; the matched40epoch contract and mechanical acceptance are incomplete.
+The user authorized recovery of only mean2 epoch40; see recovery_authority.md
+and resume_binding_v2.json. No candidate retraining or scale-up is released.
+The frozen validator remains BLOCKED; no dual replay-ready claim is made.
+
+Kaggle3 ID136942701/version2 was authenticated RUNNING at04:54UTC on
+2026-10-04. Only mean2 resumes; consistency outputs are custody-only inputs.
+The new bootstrap entry is independently bound in recovery_submit_response_v2.json
+and recovery_remote_observation_v2.json. The original source archive is unchanged.
+Seventeen required published source/resume files were independently downloaded
+and hash-verified; four focused synthetic recovery cases passed. See
+recovery_source_verification_v2.json and recovery_verification_v2.json.
 
 Two NEW100K40epoch arms: dropout_mean2 (matched two-pass control) and
  dropout_consistency2 (same passes plus0.1 normalized output disagreement).
@@ -18,7 +42,10 @@ publication was independently downloaded and all11 required file hashes/mount
 paths verified. Synthetic focused verification:240 tests, then1 targeted
 train-only-loader test after that narrow change; no local molecular diagnostic.
 The existing runtime requires BOTH assigned T4 preflights to pass before training.
-Actual qualification/phase/MAE/native costs remain pending, not accepted results.
+Runtime qualification and retained phase/MAE evidence are now observed; scientific
+acceptance and replay readiness remain pending. Consistency's measured assigned
+T4 training window was9180.524511809seconds (2.5501457T4h), excluding bootstrap
+and queue; incomplete-control total costs remain unresolved.
 
 No heartbeat,server takeover,automatic retry,scale-up or protected evaluation.
 User requested shutdown after verified submission. When desktop returns, query

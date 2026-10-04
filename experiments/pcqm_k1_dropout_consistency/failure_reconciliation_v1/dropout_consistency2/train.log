@@ -1,0 +1,51 @@
+/usr/local/lib/python3.13/dist-packages/outdated/__init__.py:36: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import parse_version
+dropout_consistency2 epoch=1 train_normalized_mae=0.271449 dev=0.331651eV seconds=243.5
+dropout_consistency2 epoch=2 train_normalized_mae=0.217452 dev=0.275524eV seconds=228.9
+dropout_consistency2 epoch=3 train_normalized_mae=0.197296 dev=0.258488eV seconds=236.5
+dropout_consistency2 epoch=4 train_normalized_mae=0.183292 dev=0.229651eV seconds=231.2
+dropout_consistency2 epoch=5 train_normalized_mae=0.169657 dev=0.225358eV seconds=227.8
+dropout_consistency2 epoch=6 train_normalized_mae=0.161566 dev=0.200363eV seconds=229.0
+dropout_consistency2 epoch=7 train_normalized_mae=0.153676 dev=0.223828eV seconds=227.8
+dropout_consistency2 epoch=8 train_normalized_mae=0.144786 dev=0.198322eV seconds=226.9
+dropout_consistency2 epoch=9 train_normalized_mae=0.138626 dev=0.189576eV seconds=227.7
+dropout_consistency2 epoch=10 train_normalized_mae=0.133095 dev=0.183507eV seconds=228.7
+dropout_consistency2 epoch=11 train_normalized_mae=0.128098 dev=0.170927eV seconds=226.6
+dropout_consistency2 epoch=12 train_normalized_mae=0.122999 dev=0.167413eV seconds=227.4
+dropout_consistency2 epoch=13 train_normalized_mae=0.119537 dev=0.174321eV seconds=227.0
+dropout_consistency2 epoch=14 train_normalized_mae=0.116457 dev=0.161326eV seconds=227.4
+dropout_consistency2 epoch=15 train_normalized_mae=0.113222 dev=0.161563eV seconds=229.2
+dropout_consistency2 epoch=16 train_normalized_mae=0.109505 dev=0.163028eV seconds=234.4
+dropout_consistency2 epoch=17 train_normalized_mae=0.106663 dev=0.153837eV seconds=232.6
+dropout_consistency2 epoch=18 train_normalized_mae=0.103351 dev=0.152613eV seconds=231.1
+dropout_consistency2 epoch=19 train_normalized_mae=0.099928 dev=0.150467eV seconds=229.2
+dropout_consistency2 epoch=20 train_normalized_mae=0.097413 dev=0.150478eV seconds=229.2
+dropout_consistency2 epoch=21 train_normalized_mae=0.095191 dev=0.150042eV seconds=231.3
+dropout_consistency2 epoch=22 train_normalized_mae=0.092425 dev=0.149447eV seconds=233.1
+dropout_consistency2 epoch=23 train_normalized_mae=0.090483 dev=0.146960eV seconds=231.1
+dropout_consistency2 epoch=24 train_normalized_mae=0.087824 dev=0.143601eV seconds=233.6
+dropout_consistency2 epoch=25 train_normalized_mae=0.085205 dev=0.149563eV seconds=232.6
+dropout_consistency2 epoch=26 train_normalized_mae=0.083917 dev=0.144340eV seconds=231.1
+dropout_consistency2 epoch=27 train_normalized_mae=0.081090 dev=0.141849eV seconds=226.0
+dropout_consistency2 epoch=28 train_normalized_mae=0.079605 dev=0.142893eV seconds=227.9
+dropout_consistency2 epoch=29 train_normalized_mae=0.077925 dev=0.141301eV seconds=227.0
+dropout_consistency2 epoch=30 train_normalized_mae=0.076061 dev=0.139883eV seconds=226.8
+dropout_consistency2 epoch=31 train_normalized_mae=0.074572 dev=0.140922eV seconds=226.3
+dropout_consistency2 epoch=32 train_normalized_mae=0.073194 dev=0.141029eV seconds=226.9
+dropout_consistency2 epoch=33 train_normalized_mae=0.072100 dev=0.139572eV seconds=226.6
+dropout_consistency2 epoch=34 train_normalized_mae=0.071093 dev=0.139409eV seconds=226.8
+dropout_consistency2 epoch=35 train_normalized_mae=0.070087 dev=0.139278eV seconds=225.6
+dropout_consistency2 epoch=36 train_normalized_mae=0.069695 dev=0.139213eV seconds=228.1
+dropout_consistency2 epoch=37 train_normalized_mae=0.068880 dev=0.138728eV seconds=229.1
+dropout_consistency2 epoch=38 train_normalized_mae=0.068419 dev=0.139041eV seconds=230.7
+dropout_consistency2 epoch=39 train_normalized_mae=0.068199 dev=0.138919eV seconds=228.7
+dropout_consistency2 epoch=40 train_normalized_mae=0.067985 dev=0.138845eV seconds=228.9
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 35, in <module>
+    main()
+    ~~~~^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 31, in main
+    raise RuntimeError("Owning family phase did not pass")
+RuntimeError: Owning family phase did not pass

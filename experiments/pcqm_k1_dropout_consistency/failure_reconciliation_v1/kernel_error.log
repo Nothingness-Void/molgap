@@ -1,0 +1,49 @@
+[{"stream_name":"stdout","time":4.971332874,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.8/15.8 MB 77.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":203.555174895,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.1/63.1 kB 2.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":204.180507454,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 46.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":204.212325557,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 4.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stderr","time":210.985952293,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":210.985978219,"data":"bigframes 2.48.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":210.985983992,"data":"opencv-python-headless 4.14.0.94 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.985988699,"data":"kaggle-environments 1.27.3 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.985993297,"data":"mne 1.13.2 requires numpy\u003c3,\u003e=2.1, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.98599771599999,"data":"opencv-python 4.14.0.94 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986002667,"data":"bayesian-optimization 3.3.0 requires numpy\u003e=2.1.3; python_full_version \u003e= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986007431,"data":"cesium 0.12.4 requires numpy\u003c3.0,\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986011998,"data":"google-colab 1.0.0 requires jupyter-server==2.20.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986016821,"data":"google-colab 1.0.0 requires pandas==2.2.3, but you have pandas 2.3.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986021273,"data":"google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.98602597000001,"data":"dopamine-rl 4.1.2 requires gym\u003c=0.25.2, but you have gym 0.26.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986031012,"data":"cupy-cuda12x 14.0.1 requires numpy\u003c2.6,\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986035657,"data":"moviepy 1.0.3 requires decorator\u003c5.0,\u003e=4.0.2, but you have decorator 5.3.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986040257,"data":"ml-dtypes 0.6.0 requires numpy\u003e=2.0.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986044625,"data":"ml-dtypes 0.6.0 requires numpy\u003e=2.1.0; python_version \u003e= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986049365,"data":"tobler 0.14.0 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986053827,"data":"jax 0.11.1 requires numpy\u003e=2.1, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986081243,"data":"opencv-contrib-python 4.14.0.94 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986086155,"data":"dm-tree 0.1.10 requires numpy\u003e=2.1.0; python_version \u003e= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986089875,"data":"jaxlib 0.11.1 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986092933,"data":"xarray-einstats 0.11.0 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986117439,"data":"tifffile 2026.8.23 requires numpy\u003e=2.1, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986122921,"data":"pytensor 2.38.3 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986126903,"data":"shap 0.52.0 requires numpy\u003e=2, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":210.986131053,"data":"rasterio 1.5.1 requires numpy\u003e=2, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":9464.805161119,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":9464.806118287,"data":"  File \"/kaggle/src/script.py\", line 64, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":9464.806135511,"data":"    main()\n"}
+,{"stream_name":"stderr","time":9464.806141255,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":9464.806146093,"data":"  File \"/kaggle/src/script.py\", line 59, in main\n"}
+,{"stream_name":"stderr","time":9464.806151135,"data":"    run_two_phase_pair(source_root=source, package_dir=package, input_root=mounted,\n"}
+,{"stream_name":"stderr","time":9464.806155552,"data":"    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":9464.806160498,"data":"                       launch_path=launch, output=Path(\"/kaggle/working/experiment\"))\n"}
+,{"stream_name":"stderr","time":9464.806165611,"data":"                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":9464.806170243,"data":"  File \"/kaggle/temp/molgap-workflow/source/src/molgap/kaggle_pair_runtime.py\", line 69, in run_two_phase_pair\n"}
+,{"stream_name":"stderr","time":9464.806175666,"data":"    raise RuntimeError(f\"Arm failed during {phase}; retained logs identify the blocker\")\n"}
+,{"stream_name":"stderr","time":9464.806180109,"data":"RuntimeError: Arm failed during train; retained logs identify the blocker\n"}
+,{"stream_name":"stderr","time":9466.864351584,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":9466.864386959,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":9467.134722498,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":9467.134750898,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":9467.918478876,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":9468.972987265,"data":"[NbConvertApp] Writing 285489 bytes to __results__.html\n"}
+]
