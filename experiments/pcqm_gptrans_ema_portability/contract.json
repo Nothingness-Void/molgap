@@ -1,0 +1,17 @@
+{
+  "format": "molgap-gptrans-ema-portability-contract-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "experiment_purpose": "NO_TRAIN", "training_executed": false,
+  "physical_batch": 128, "include_partial_inference_batch": true,
+  "precision": "fp32", "tf32_enabled": false, "seed": 42,
+  "chunk_rows": 5000, "allocation_cap_seconds": 5400, "allocated_T4_hours_cap": 3,
+  "roles": {"original_100k": [100000, 150000], "unseen_500k": [500000, 550000]},
+  "role_release": "Both full original-role reproductions accepted before either new-role read",
+  "reproduction_max_abs_eV": 0.001, "reproduction_mae_difference_eV": 0.0001,
+  "original_gain_eV": 0.0066522625, "minimum_retained_fraction": 0.5,
+  "bootstrap_resamples": 5000, "bootstrap_seed": 20260912,
+  "nomination": "gain >= original_gain * 0.5 AND paired gain 95% CI lower > 0",
+  "comparison_class_maximum": "PAIRED_ENDPOINT",
+  "protected_roles": "forbidden", "training_shards": "forbidden",
+  "next_training_authorization": "Controller may release one justified bounded matched training after independent acceptance/analysis, not the monitor; no automatic full/extra-seed release"
+}

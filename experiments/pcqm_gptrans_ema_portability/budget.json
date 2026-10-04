@@ -1,0 +1,6 @@
+{
+  "format": "molgap-native-budget-v1", "platform": "kaggle2", "accelerator": "NvidiaTeslaT4",
+  "allocated_devices": 2, "wall_seconds_cap": 5400, "allocated_device_hours_cap": 3,
+  "estimated_wall_hours": 1, "estimated_device_hours": 2,
+  "measurement_caveat": "Estimate is not a measured runtime; first retained chunk must qualify remaining work. Record kernel startup/setup/idle separately from inference. Queue/teardown remain unknown if not observed."
+}
