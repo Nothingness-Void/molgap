@@ -13,14 +13,14 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-GPTRANS-EMA-SCALE | Design the scale/resume and same-live-trajectory EMA reference owner after accepted execution qualification. | [Qualified scope and remaining gates](experiments/pcqm_gptrans_scale_qualification/results/interpretation.md); no automatic long training release |
+| P1 | C-GPTRANS-CAPACITY | Release the two authorized Kaggle2 T4x2 notebooks: three100K architecture falsifiers and one equal-update500K shared-live EMA study. | [Capacity protocol](experiments/pcqm_gptrans_capacity_nodes_100k/protocol.md) and [local/scale scope](experiments/pcqm_gptrans_capacity_relations_100k/protocol.md); independent terminal qualification, no successor |
 | — | C-GPTRANS-DECAY-CLOCK | Closed without promotion; optimizer intervention accepted and complete Replay pair verified. | Preserve the [endpoint and trajectory interpretation](experiments/pcqm_gptrans_decay_clock_100k/gpu/results/interpretation.md); no coefficient grid or automatic scale |
 | — | C-GPTRANS-EMA-PORTABILITY | Accepted NO_TRAIN portability; no training Replay claim. | Preserve the [terminal audit](experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md) |
 | — | C-GPTRANS-FINAL-READOUT | Closed without promotion; both actual complete Replay pairs verified. | Preserve the [terminal decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md); no automatic successor |
 
 The path+EMA combination is terminal with no supported additivity; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).
-The readout dual is terminal; no further training is released. CPU prerequisite and failed-attempt bookkeeping remain in the
+The readout dual is terminal; the newly authorized four-study campaign is bounded by its own protocols. CPU prerequisite and failed-attempt bookkeeping remain in the
 dated reconciliation routed by the tracked [`research_memory/README.md`](research_memory/README.md).
 Closed queue records and route boundaries are in the [roadmap history index](docs/operations/ROADMAP_HISTORY_INDEX.md).
 

@@ -21,10 +21,14 @@ is accepted and RML-finalized as NO_TRAIN / CONTEXT_ONLY, not a training Replay 
 The [isolated G1 decay-coefficient falsifier](experiments/pcqm_gptrans_decay_clock_100k/gpu/results/interpretation.md)
 is accepted and RML-finalized with a complete Replay pair; the intervention
 failed its promotion gate and the coefficient route is closed.
-Matched 500K scientific EMA attribution remains gated on a qualified scale owner
-and explicit comparison/reference/trace semantics; no long successor is released.
-The two bounded follow-up bindings are closed. No successor training is
-released; the monitor never adopts desktop jobs.
+The user authorized four physical Kaggle2 studies across two isolated T4x2
+notebooks. The [node capacity pair](experiments/pcqm_gptrans_capacity_nodes_100k/protocol.md)
+and [local-bond plus500K EMA study](experiments/pcqm_gptrans_capacity_relations_100k/protocol.md)
+are in release preparation; no remote submission has yet been observed.
+The three100K architecture comparisons reuse the accepted G1+EMA999 reference.
+The500K same-live/two-filter study is noncausal at prelaunch, not a forged
+STRICT_CAUSAL or Replay-ready500K comparison. No automatic successor is authorized.
+The earlier monitor bindings are closed; the monitor never adopts desktop jobs.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).

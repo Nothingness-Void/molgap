@@ -176,14 +176,21 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             purpose, fields = "mechanism_comparison", ["architecture_config_identity"]
         prelaunch = assess_comparison_prelaunch(candidate_id=trajectory,
             candidate_plan={"comparison_identity": candidate, "source_config_status": "frozen", "source_commit_or_archive": commit},
-            reference_id=bundle["reference_id"], reference_bundle=bundle, experiment_purpose=purpose,
+            reference_id=None if scale else bundle["reference_id"], reference_bundle=None if scale else bundle, experiment_purpose=purpose,
             intervention_group_id="gptrans-g1-followup", mechanism_id=mode,
             declared_intervention_fields=fields, role_applicability_plan=roles,
             trace_plan={k: True for k in TRACE_FIELD_DECLARATIONS}, runtime_qualification_plan={"status": "declared",
                 "runtime_certificate_required": True, "qualification_scope": identity["runtime_certificate_scope"]})
-        write_server_comparison_prelaunch(root / folder / "comparison_readiness_prelaunch.json",
-            comparison_prelaunch=prelaunch, experiment_purpose=purpose, reference_bundle=bundle,
-            repo_root=root, reference_bundle_path=root / bundle_ref)
+        if scale:
+            from .comparison_readiness import validate_server_comparison_prelaunch
+            # A transfer study has no matched500K reference. Use the existing
+            # explicitly noncausal gate; do not relax the scientific helper.
+            validate_server_comparison_prelaunch(prelaunch, experiment_purpose=purpose, reference_bundle=None)
+            atomic_json(root / folder / "comparison_readiness_prelaunch.json", prelaunch)
+        else:
+            write_server_comparison_prelaunch(root / folder / "comparison_readiness_prelaunch.json",
+                comparison_prelaunch=prelaunch, experiment_purpose=purpose, reference_bundle=bundle,
+                repo_root=root, reference_bundle_path=root / bundle_ref)
         plan = deepcopy(source_plan)
         question = (study["arms"][mode]["question"] if study else {"degree_group_decay_ema999": "Does exempting bias and 1D tensors from AdamW decay improve G1 EMA999 without adding inference capacity?",
                      "degree_path_endpoints_ema999": "Does all-shortest-path endpoint bond contrast improve G1 EMA999 while avoiding atom-index tie choices?"}[mode]
