@@ -1,0 +1,36 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-g1-ffn2-100k-s42-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/results/observed_metadata.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.082912723900556
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.082912723900556
+        }
+      },
+      "platform": "kaggle2-t4-gptrans-g1-capacity",
+      "run_id": "gptrans-g1-node-capacity-s42:degree_ffn2_ema999",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-ffn2-100k-s42"
+    }
+  ],
+  "source_ref": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/results/observed_metadata.json",
+  "source_sha256": "9dd6752f51811f61169caa7c08308bd7dd5f3db1d049aeccdbfbb5bb51c240ec"
+}

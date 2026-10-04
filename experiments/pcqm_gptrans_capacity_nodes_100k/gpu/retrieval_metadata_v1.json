@@ -1,0 +1,57 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-g1-node-capacity-s42",
+  "version": 1,
+  "files": [
+    {
+      "path": "gptrans_node_capacity/degree_node352_ema999/arm_binding.json",
+      "sha256": "b7f323d73b3bcc7cbd883ebf8c295f596c8c253ea706c8f3071dd451196152ca"
+    },
+    {
+      "path": "gptrans_node_capacity/degree_node352_ema999/preflight/preflight.json",
+      "sha256": "284cc16a518cc9a9e96cecaa3611151e550f64c32e2be757b20103cee38be23a"
+    },
+    {
+      "path": "gptrans_node_capacity/degree_node352_ema999/training/completion_manifest.json",
+      "sha256": "c10ed0f18e477e16fd8094c9032c85dc67d071b8c2cea8f4c3fb4fdbe9a9db33"
+    },
+    {
+      "path": "gptrans_node_capacity/degree_node352_ema999/training/frozen_reference.json",
+      "sha256": "7206d2dccacf23cd6c7f4eea382d25d547af19fb76cea2fbc63c01ca2d3d21f2"
+    },
+    {
+      "path": "gptrans_node_capacity/degree_node352_ema999/training/canonical_trace.json",
+      "sha256": "e912b8024e487721b5c553fa80b535cd6d3c81c8fcfbd0625e794eeba576e8da"
+    },
+    {
+      "path": "gptrans_node_capacity/degree_node352_ema999/training/trace.json",
+      "sha256": "e1ddaeed515211dbae742efd97f6736566f8a8ba097e9a373371f96fe0c94b5d"
+    },
+    {
+      "path": "gptrans_node_capacity/degree_ffn2_ema999/arm_binding.json",
+      "sha256": "895e3dcdb495aa9e874ac407557bbbc903e41b8b7e789c61b045b342f6b48ef6"
+    },
+    {
+      "path": "gptrans_node_capacity/degree_ffn2_ema999/preflight/preflight.json",
+      "sha256": "c0ab66af0dca47f08ac705d3ff4e3fec1f5ff8b7d4e8498cc314f1553af5842b"
+    },
+    {
+      "path": "gptrans_node_capacity/degree_ffn2_ema999/training/completion_manifest.json",
+      "sha256": "9f8df5b0bd8afd50e766b9bfe116db7353c60d92599b0cb4c377eb93f499e239"
+    },
+    {
+      "path": "gptrans_node_capacity/degree_ffn2_ema999/training/frozen_reference.json",
+      "sha256": "4311510b75efeac560b8ffcfa01c3e39bb61519e3938513da7fbef4a7b7cd6ee"
+    },
+    {
+      "path": "gptrans_node_capacity/degree_ffn2_ema999/training/canonical_trace.json",
+      "sha256": "03d84d06620209816ee2302e8845e0d8d73ab0beb2aef52f149c4d71ab0b3258"
+    },
+    {
+      "path": "gptrans_node_capacity/degree_ffn2_ema999/training/trace.json",
+      "sha256": "402d63375cedc0a83b4490ad8e759097d2c081e1052135e004bfd1eee3a23c13"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}
