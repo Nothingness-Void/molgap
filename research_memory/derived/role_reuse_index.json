@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 359,
+  "ambiguous_historical_role_record_count": 364,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
@@ -1822,6 +1822,41 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-fusion-distillation-teacher-cache-20261004",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distillation-teacher-cache-20261004",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distillation-teacher-cache-20261004",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distillation-teacher-cache-20261004",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distillation-teacher-cache-20261004",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-gptrans-full-fusion-r3",
       "role_identity": null,
       "role_name": "official_train",
@@ -2515,7 +2550,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 192,
+  "explicit_role_event_count": 195,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "fixed50k_development",
@@ -3775,6 +3810,29 @@
         "trajectory_id": "TB-k1-slot-width96-kaggle3-100k-s42-v1"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:official_train_prefix_0_100000": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-fusion-distillation-teacher-cache-20261004-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-fusion-distillation-teacher-cache-20261004-train-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-fusion-distillation-teacher-cache-20261004-train-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distillation-teacher-cache-20261004"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:bbd330b12e8159e117376ef24fa106413bc9fc18032a0d43e95c5dae5e47953f:train_prefix_0_256": [
       {
         "access_kind": "labels_read",
@@ -4001,6 +4059,7 @@
       "pcqm-k1-flag-cpu-qualification-20261002",
       "pcqm-k1-flag-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-full-convergence-20260919",
+      "pcqm-k1-fusion-distillation-teacher-cache-20261004",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
@@ -4082,6 +4141,7 @@
       "pcqm-k1-flag-cpu-qualification-20261002",
       "pcqm-k1-flag-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-full-convergence-20260919",
+      "pcqm-k1-fusion-distillation-teacher-cache-20261004",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",

@@ -103,7 +103,7 @@ def main():
             contract_refs=[f'{REL}/protocol.md', recipe_path, f'{REL}/evidence_review.md',
                            f'{REL}/teacher_cache/manifest.json', f'{REL}/teacher_generation.json'],
             parent_trajectory_ids=['TB-k1-consistency-fusion-transfer-20261004'], prior_evidence_ids=[EVIDENCE],
-            reference_ids=[bundle['reference_id']], role_snapshot_refs=[f'{REL}/role_plan.json'],
+            reference_ids=['pcqm-k1-v4-192-kaggle3-reference-custody-20261002'], role_snapshot_refs=[f'{REL}/role_plan.json'],
             source_commit=commit, source_config_identity=canonical_fingerprint(arm))
         plan_path = f'{REL}/training_plan_{mode}.json'
         write(ROOT / plan_path, plan)

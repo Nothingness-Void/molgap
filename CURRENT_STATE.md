@@ -49,8 +49,10 @@ Branch-local records absent here are linked through the
   bounds, at approximately two single-model inference passes. Read the
   [decision](experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md)
   and [analysis](experiments/pcqm_k1_consistency_fusion_transfer/analysis_zh.md).
-  Single-model distillation is the evidence-backed next question, conditional on
-  its own prospective authority; no training, adoption or official-role release.
+  The separately authorized 100K two-strength student distillation question is
+  owned by `codex/exp/k1-fusion-distillation`; see its
+  [live execution state](experiments/pcqm_k1_fusion_distillation/STATUS.md).
+  No model adoption, scale-up or official-role release follows from submission.
 
 - **K1 dropout consistency:** paired100K40epoch question, owning branch
   `codex/exp/k1-dropout-consistency`. Exact Kaggle3

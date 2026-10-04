@@ -1,11 +1,11 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 37,
-  "event_count": 152,
+  "estimated_event_count": 40,
+  "event_count": 156,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 130,
-  "not_applicable_event_count": 53,
+  "measurement_missing_event_count": 133,
+  "not_applicable_event_count": 55,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -451,8 +451,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.0105078125
+          "known_records": 2,
+          "known_total": 0.029249131944444444
         },
         "not_applicable_records": 0,
         "unknown_records": 2
@@ -463,8 +463,8 @@
           "known_total": 0.16666666666666666
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.009792833833331922
+          "known_records": 2,
+          "known_total": 0.02828766313888385
         },
         "not_applicable_records": 0,
         "unknown_records": 1
@@ -478,7 +478,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 3,
+        "not_applicable_records": 4,
         "unknown_records": 0
       },
       "NVIDIA GeForce RTX 5060:wall_hours": {
@@ -487,8 +487,56 @@
           "known_total": 0.16666666666666666
         },
         "measured": {
-          "known_records": 2,
-          "known_total": 0.01639823805555352
+          "known_records": 3,
+          "known_total": 0.03493733069444312
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX5060:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA GeForce RTX5060:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX5060:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX5060:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -1603,6 +1651,54 @@
         "not_applicable_records": 0,
         "unknown_records": 0
       },
+      "Tesla T4; assigned GPU0 in 2T4 pair:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU0 in 2T4 pair:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4; assigned GPU0 in 2T4 pair:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU0 in 2T4 pair:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
       "Tesla T4; assigned GPU0 in2T4 pair:cpu_hours": {
         "estimated": {
           "known_records": 0,
@@ -1640,6 +1736,54 @@
         "unknown_records": 1
       },
       "Tesla T4; assigned GPU0 in2T4 pair:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4; assigned GPU1 in 2T4 pair:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU1 in 2T4 pair:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4; assigned GPU1 in 2T4 pair:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU1 in 2T4 pair:wall_hours": {
         "estimated": {
           "known_records": 1,
           "known_total": 4.0
@@ -2593,8 +2737,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.0105078125
+          "known_records": 2,
+          "known_total": 0.029249131944444444
         },
         "not_applicable_records": 0,
         "unknown_records": 2
@@ -2605,8 +2749,8 @@
           "known_total": 0.16666666666666666
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.009792833833331922
+          "known_records": 2,
+          "known_total": 0.02828766313888385
         },
         "not_applicable_records": 0,
         "unknown_records": 1
@@ -2620,7 +2764,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 3,
+        "not_applicable_records": 4,
         "unknown_records": 0
       },
       "wall_hours": {
@@ -2629,8 +2773,58 @@
           "known_total": 0.16666666666666666
         },
         "measured": {
-          "known_records": 2,
-          "known_total": 0.01639823805555352
+          "known_records": 3,
+          "known_total": 0.03493733069444312
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "NVIDIA GeForce RTX5060": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -2986,7 +3180,107 @@
         "unknown_records": 0
       }
     },
+    "Tesla T4; assigned GPU0 in 2T4 pair": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "Tesla T4; assigned GPU0 in2T4 pair": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "Tesla T4; assigned GPU1 in 2T4 pair": {
       "cpu_hours": {
         "estimated": {
           "known_records": 0,
@@ -8660,6 +8954,204 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      }
+    },
+    "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1": {
+      "Tesla T4; assigned GPU1 in 2T4 pair:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU1 in 2T4 pair:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4; assigned GPU1 in 2T4 pair:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU1 in 2T4 pair:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1": {
+      "Tesla T4; assigned GPU0 in 2T4 pair:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU0 in 2T4 pair:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4; assigned GPU0 in 2T4 pair:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU0 in 2T4 pair:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-fusion-distillation-teacher-cache-20261004": {
+      "NVIDIA GeForce RTX 5060:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.018741319444444446
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX 5060:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.01849482930555193
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX 5060:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX 5060:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.018539092638889594
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX5060:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA GeForce RTX5060:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX5060:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "NVIDIA GeForce RTX5060:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "TB-k1-reference-accuracy-kaggle3-100k-s42-v1": {

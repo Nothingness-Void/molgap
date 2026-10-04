@@ -1,0 +1,118 @@
+{
+  "datasets": [
+    {
+      "ref": "nvoid912/molgap-k1-fusion-teacher-train100k-v1",
+      "status": "ready",
+      "files": {
+        "datasetFiles": [
+          {
+            "name": "manifest.json",
+            "creationDate": "2026-10-04T11:32:32.088Z",
+            "totalBytes": 438
+          },
+          {
+            "name": "teacher_predictions.pt",
+            "creationDate": "2026-10-04T11:32:32.117Z",
+            "totalBytes": 1202085
+          }
+        ]
+      }
+    },
+    {
+      "ref": "nvoid912/molgap-k1-fusion-distill-source-s42-v1",
+      "status": "ready",
+      "files": {
+        "datasetFiles": [
+          {
+            "name": "SOURCE_ARCHIVE_SHA256.txt",
+            "creationDate": "2026-10-04T11:32:40.939Z",
+            "totalBytes": 65
+          },
+          {
+            "name": "SOURCE_COMMIT.txt",
+            "creationDate": "2026-10-04T11:32:40.936Z",
+            "totalBytes": 41
+          },
+          {
+            "name": "SOURCE_FILES.json",
+            "creationDate": "2026-10-04T11:32:40.944Z",
+            "totalBytes": 10490
+          },
+          {
+            "name": "experiment_launch.json",
+            "creationDate": "2026-10-04T11:32:40.455Z",
+            "totalBytes": 1282
+          },
+          {
+            "name": "experiment_spec.json",
+            "creationDate": "2026-10-04T11:32:40.448Z",
+            "totalBytes": 5970
+          },
+          {
+            "name": "initial_states/distill_strong.pt",
+            "creationDate": "2026-10-04T11:32:41.047Z",
+            "totalBytes": 14779763
+          },
+          {
+            "name": "initial_states/distill_weak.pt",
+            "creationDate": "2026-10-04T11:32:41.269Z",
+            "totalBytes": 14779763
+          },
+          {
+            "name": "package_manifest.json",
+            "creationDate": "2026-10-04T11:32:40.932Z",
+            "totalBytes": 3198
+          },
+          {
+            "name": "prospective/distill_strong/trajectory.json",
+            "creationDate": "2026-10-04T11:32:40.950Z",
+            "totalBytes": 43754
+          },
+          {
+            "name": "prospective/distill_weak/trajectory.json",
+            "creationDate": "2026-10-04T11:32:41.037Z",
+            "totalBytes": 43742
+          },
+          {
+            "name": "source_payload.bin",
+            "creationDate": "2026-10-04T11:32:40.955Z",
+            "totalBytes": 200529
+          }
+        ]
+      }
+    },
+    {
+      "ref": "nvoid912/pcqm4mv2-ogb-fixed-100k-v1",
+      "status": "ready",
+      "files": {
+        "datasetFiles": [
+          {
+            "name": "README.md",
+            "creationDate": "2026-09-17T18:13:34.086Z",
+            "totalBytes": 490
+          },
+          {
+            "name": "manifest.json",
+            "creationDate": "2026-09-17T18:13:33.903Z",
+            "totalBytes": 2401
+          },
+          {
+            "name": "train/train_shard_0000.pt",
+            "creationDate": "2026-09-17T18:13:41.943Z",
+            "totalBytes": 202363317
+          },
+          {
+            "name": "train/train_shard_0001.pt",
+            "creationDate": "2026-09-17T18:13:43.310Z",
+            "totalBytes": 202787061
+          },
+          {
+            "name": "train/train_shard_0002.pt",
+            "creationDate": "2026-09-17T18:13:44.549Z",
+            "totalBytes": 203498165
+          }
+        ]
+      }
+    }
+  ]
+}

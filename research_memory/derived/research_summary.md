@@ -1,15 +1,16 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 80
+- Validated V5 evidence: 81
 - Evidence without trajectory: 0
 
 ## Trajectories
+- ACTIVE: 2
 - CLOSED: 11
 - INCONCLUSIVE: 19
 - INFRASTRUCTURE_ONLY: 5
 - NEGATIVE_UNDER_CONTRACT: 19
-- NO_TRAIN: 29
+- NO_TRAIN: 30
 - POSITIVE_UNDER_CONTRACT: 8
 
 ## Transfer
@@ -18,8 +19,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 192
-- Coarse historical role records: 359
+- Explicit role events: 195
+- Coarse historical role records: 364
 - Repeatedly selected role identities: 14
 
 ## Cost
@@ -63,10 +64,14 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.008734 (4 measured records), estimated=0.250000 (1 estimated record), measurement_missing=1, not_applicable=0
-- NVIDIA GeForce RTX 5060 cpu_hours: measured=0.010508 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
-- NVIDIA GeForce RTX 5060 device_hours: measured=0.009793 (1 measured record), estimated=0.166667 (1 estimated record), measurement_missing=1, not_applicable=0
-- NVIDIA GeForce RTX 5060 queue_hours: not applicable (3 records); measurement_missing=0
-- NVIDIA GeForce RTX 5060 wall_hours: measured=0.016398 (2 measured records), estimated=0.166667 (1 estimated record), measurement_missing=0, not_applicable=0
+- NVIDIA GeForce RTX 5060 cpu_hours: measured=0.029249 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- NVIDIA GeForce RTX 5060 device_hours: measured=0.028288 (2 measured records), estimated=0.166667 (1 estimated record), measurement_missing=1, not_applicable=0
+- NVIDIA GeForce RTX 5060 queue_hours: not applicable (4 records); measurement_missing=0
+- NVIDIA GeForce RTX 5060 wall_hours: measured=0.034937 (3 measured records), estimated=0.166667 (1 estimated record), measurement_missing=0, not_applicable=0
+- NVIDIA GeForce RTX5060 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NVIDIA GeForce RTX5060 device_hours: measured=unknown (0 measured records), estimated=0.166667 (1 estimated record), measurement_missing=0, not_applicable=0
+- NVIDIA GeForce RTX5060 queue_hours: not applicable (1 records); measurement_missing=0
+- NVIDIA GeForce RTX5060 wall_hours: measured=unknown (0 measured records), estimated=0.166667 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA_GeForce_RTX_5060 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA_GeForce_RTX_5060 device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA_GeForce_RTX_5060 queue_hours: not applicable (1 records); measurement_missing=0
@@ -95,10 +100,18 @@
 - Tesla T4 x2 allocation; candidate assigned GPU0 device_hours: measured=unknown (0 measured records), estimated=8.000000 (1 estimated record), measurement_missing=1, not_applicable=0
 - Tesla T4 x2 allocation; candidate assigned GPU0 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - Tesla T4 x2 allocation; candidate assigned GPU0 wall_hours: measured=unknown (0 measured records), estimated=9.000000 (2 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4; assigned GPU0 in 2T4 pair cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- Tesla T4; assigned GPU0 in 2T4 pair device_hours: measured=unknown (0 measured records), estimated=4.000000 (1 estimated record), measurement_missing=0, not_applicable=0
+- Tesla T4; assigned GPU0 in 2T4 pair queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- Tesla T4; assigned GPU0 in 2T4 pair wall_hours: measured=unknown (0 measured records), estimated=4.000000 (1 estimated record), measurement_missing=0, not_applicable=0
 - Tesla T4; assigned GPU0 in2T4 pair cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla T4; assigned GPU0 in2T4 pair device_hours: measured=unknown (0 measured records), estimated=4.000000 (1 estimated record), measurement_missing=0, not_applicable=0
 - Tesla T4; assigned GPU0 in2T4 pair queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla T4; assigned GPU0 in2T4 pair wall_hours: measured=unknown (0 measured records), estimated=4.000000 (1 estimated record), measurement_missing=0, not_applicable=0
+- Tesla T4; assigned GPU1 in 2T4 pair cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- Tesla T4; assigned GPU1 in 2T4 pair device_hours: measured=unknown (0 measured records), estimated=4.000000 (1 estimated record), measurement_missing=0, not_applicable=0
+- Tesla T4; assigned GPU1 in 2T4 pair queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- Tesla T4; assigned GPU1 in 2T4 pair wall_hours: measured=unknown (0 measured records), estimated=4.000000 (1 estimated record), measurement_missing=0, not_applicable=0
 - Tesla T4; assigned GPU1 in2T4 pair cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Tesla T4; assigned GPU1 in2T4 pair device_hours: measured=unknown (0 measured records), estimated=4.000000 (1 estimated record), measurement_missing=0, not_applicable=0
 - Tesla T4; assigned GPU1 in2T4 pair queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -167,8 +180,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 130
-- Cost-event coverage: 80/91 trajectories; incomplete native measurement=68
+- Measurement-missing cost events: 133
+- Cost-event coverage: 83/94 trajectories; incomplete native measurement=70
 
 ## Screening Backtest
 - Status: available
@@ -176,9 +189,9 @@
 - Excluded traces: 13
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 68
+- [INFO] trace_unavailable_for_backtest: 71
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 68
+- [WARN] incomplete_native_cost_measurement: 70
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 35
-- [WARN] trajectory_without_v5_evidence: 11
+- [WARN] missing_explicit_role_identity: 37
+- [WARN] trajectory_without_v5_evidence: 13

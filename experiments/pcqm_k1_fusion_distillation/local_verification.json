@@ -1,0 +1,18 @@
+{
+  "batch": {
+    "tests": [
+      "tests/test_k1_teacher_cache.py",
+      "tests/test_k1_screen_training.py",
+      "tests/test_experiment_spec.py",
+      "tests/test_experiment_workflow.py"
+    ],
+    "passed": 167,
+    "seconds": 37.82
+  },
+  "additional_comparison_purpose_regression": {
+    "passed": 1
+  },
+  "real_teacher_cache_cpu_checks": "manifest/payload hashes,100K ascending training source indices,float32 finite,row digest",
+  "gpu_training_during_local_tests": false,
+  "remote_preflight": "pending_not_observed"
+}

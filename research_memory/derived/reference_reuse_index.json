@@ -1129,7 +1129,9 @@
       "source_envelope": "experiments/pcqm_k1_consistency_fusion_transfer/rml/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "internal_development_nomination",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-k1-fusion-distillation-teacher-cache-20261004"
+      ]
     },
     {
       "artifact_availability": [
@@ -1262,6 +1264,27 @@
       "source_envelope": "experiments/pcqm_k1_full_convergence/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "not_applicable_cache_prerequisite",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-fusion-distillation-teacher-cache-20261004",
+      "role_use": {
+        "internal_development": "untouched",
+        "official_train_prefix_0_100000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_train_role_frozen_teacher_cache_prerequisite",
+      "source_envelope": "experiments/pcqm_k1_fusion_distillation/cache_prospective/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "teacher_cache_input_verified",
       "used_by_trajectory_ids": []
     },
     {
@@ -1562,6 +1585,8 @@
         "TB-k1-dropout-mean2-kaggle3-100k-s42-v1",
         "TB-k1-flag-cpu-qualification-20261002",
         "TB-k1-flag-kaggle3-100k-s42-v1",
+        "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+        "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1",
         "TB-k1-slot-width96-kaggle3-100k-s42-v1",
         "TB-k1-slot96-cpu-qualification-20261002"
       ]
