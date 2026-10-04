@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 
 from .training_reproducibility import atomic_json, atomic_torch_save, sha256_file
+from .research_memory.trace import atomic_write, json_bytes
 
 FORMAT = "molgap-gptrans-ema-portability-v1"
 ARMS = {
@@ -31,6 +32,13 @@ PARAMETERS = 5_246_817
 BATCH = 128
 CHUNK_ROWS = 5000
 ORIGINAL_GAIN = 0.0066522625
+
+
+def save_role_events(path: Path, events: list[dict]):
+    """Preserve the list format expected by acceptance, using shared atomic IO."""
+    if not isinstance(events, list) or any(not isinstance(event, dict) for event in events):
+        raise ValueError("Role events must be a list of records")
+    atomic_write(path, json_bytes(events))
 
 
 def verify_file(path: Path, digest: str):
@@ -201,9 +209,10 @@ def worker(*, arm: str, inputs: Path, cache_100k: Path, cache_500k: Path,
 
     def graphs_for(role):
         _deadline(deadline)
+        graphs = _accepted_development(cache_100k if role == "original_100k" else cache_500k, role)
         role_events.append(dict(role=role, event="prediction_input_and_labels_read", timestamp=time.time()))
-        atomic_json(directory / "role_events.json", role_events)
-        return _accepted_development(cache_100k if role == "original_100k" else cache_500k, role)
+        save_role_events(directory / "role_events.json", role_events)
+        return graphs
 
     graphs = graphs_for("original_100k")
     chunk_identity = dict(identity, arm=arm, model_sha256=spec["model_sha256"],
@@ -221,7 +230,7 @@ def worker(*, arm: str, inputs: Path, cache_100k: Path, cache_500k: Path,
     saved = torch.load(payload_path, map_location="cpu", weights_only=False)
     reproduction = check_reproduction(joined(directory / "original_100k", chunks), saved)
     role_events.append(dict(role="original_100k", event="metric_computed", timestamp=time.time()))
-    atomic_json(directory / "role_events.json", role_events)
+    save_role_events(directory / "role_events.json", role_events)
     atomic_json(directory / "reproduction.json", dict(identity=barrier_identity, **reproduction))
     del graphs, saved
     while not check_barrier(output, barrier_identity):
@@ -236,7 +245,7 @@ def worker(*, arm: str, inputs: Path, cache_100k: Path, cache_500k: Path,
     check_rows(payload, 500000, 50000)
     mae = float((payload["prediction_eV"].double() - payload["target_eV"].double()).abs().mean())
     role_events.append(dict(role="unseen_500k", event="metric_computed", timestamp=time.time()))
-    atomic_json(directory / "role_events.json", role_events)
+    save_role_events(directory / "role_events.json", role_events)
     if state_dict_sha256(model.state_dict()) != frozen_state:
         raise ValueError("Inference mutated the frozen state")
     verify_file(model_path, spec["model_sha256"])

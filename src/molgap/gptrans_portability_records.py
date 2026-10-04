@@ -33,10 +33,19 @@ def close_preworker_failure(root: Path, output: Path, *, release_path: Path,
         qualification = json.loads((output/"environment_qualification.json").read_text())
         if any(qualification.get(k) is not False for k in ("model_constructed", "model_inference_executed", "training_executed", "graph_role_read")):
             raise ValueError("Mount failure qualification exceeded import-only scope")
+    elif failure_kind == "role_event_serialization":
+        expected |= {"environment_qualification.json", *(
+            f"{arm}/{name}" for arm in ("ema999", "ema9999")
+            for name in ("runtime.json", f"failure_{allocation['invocation_id']}.json"))}
+        for arm in ("ema999", "ema9999"):
+            error = json.loads((output/f"{arm}/failure_{allocation['invocation_id']}.json").read_text())["error"]
+            if ('atomic_json(directory / "role_events.json", role_events)' not in error
+                or 'ValueError: dictionary update sequence element #0 has length 3; 2 is required' not in error):
+                raise ValueError("Failure does not prove role event serialization before graph load")
     elif failure_kind != "setup":
         raise ValueError("Unsupported pre-entry failure qualification")
     if type(physical_version) is not int or physical_version < 1 or set(manifest["files"]) != expected:
-        raise ValueError("Only failures before any worker/role execution qualify")
+        raise ValueError("Only explicitly qualified failures before role execution qualify")
     actual = {p.relative_to(output).as_posix() for p in output.rglob("*") if p.is_file()}
     if actual != set(manifest["files"]) | {"output_manifest.json"}:
         raise ValueError("Unexpected execution artifacts")
@@ -58,7 +67,9 @@ def close_preworker_failure(root: Path, output: Path, *, release_path: Path,
         return p.relative_to(root).as_posix()
     decision = dict(final=True, outcome="INFRASTRUCTURE_ONLY", decision_ref=rel(result/"decision.md"),
         next_allowed_actions=[], reopen_conditions=["New prospective attempt after verified infrastructure correction"])
-    outcome = dict(execution_status="failed_before_worker_entry" if failure_kind == "mount_resolution" else "failed_before_workers", artifact_status="failure_metadata_verified",
+    execution = {"setup":"failed_before_workers", "mount_resolution":"failed_before_worker_entry",
+                 "role_event_serialization":"failed_before_inference_role_read"}[failure_kind]
+    outcome = dict(execution_status=execution, artifact_status="failure_metadata_verified",
         comparison_status="not_evaluated", scientific_status="not_evaluated", transfer_status="not_evaluated",
         budget_decision="native_allocation_cost_retained", full_handoff_status="not_authorized")
     role_use = {k:"untouched" for k in ("internal_development_100000_150000", "internal_development_500000_550000",
@@ -75,7 +86,7 @@ def close_preworker_failure(root: Path, output: Path, *, release_path: Path,
     atomic_json(acceptance, dict(evidence_id=eid, run_id=run,
         outcome=outcome, trajectory_decision=decision, role_use=role_use, costs=[cost], roles=[],
         remote_identity=dict(kernel="kaseichou/molgap-gptrans-ema-portability-audit", kernel_id=136990464, version=physical_version),
-        model_inference_executed=False, cost_scope=native["scope"]))
+        model_inference_executed=False, model_constructed=failure_kind == "role_event_serialization", cost_scope=native["scope"]))
     pointers = [plan, release_path, result/"decision.md", acceptance, output/"output_manifest.json",
                 *(output/name for name in manifest["files"])]
     hashes = {rel(p):sha256_file(p) for p in pointers}
@@ -85,7 +96,8 @@ def close_preworker_failure(root: Path, output: Path, *, release_path: Path,
         authority=dict(pointers=list(hashes)), artifacts=[dict(name=p.name, locator=rel(p), sha256=hashes[rel(p)],
             availability="retained_metadata") for p in pointers[4:]], migration=dict(migrated_at=finalized_at,
             training_executed=False, inference_executed=False, scientific_reinterpretation=False,
-            verification_scope="Hash-bound pre-worker failure only; no model deserialization, graph or role execution"))
+            verification_scope=("Hash-bound role-event writer failure after model load but before graph-role read or inference"
+                if failure_kind == "role_event_serialization" else "Hash-bound pre-worker failure only; no model deserialization, graph or role execution")))
     terminal = result/"terminal.json"
     atomic_json(terminal, dict(format="molgap-rml-terminal-package-v1", trajectory_id=tid, run_id=run,
         action_id="A001", finalized_at=finalized_at, acceptance_ref=rel(acceptance), artifact_hashes=hashes,

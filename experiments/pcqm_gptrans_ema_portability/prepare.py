@@ -26,7 +26,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--reuse-plan", action="store_true", help="Preserve already frozen prospective bytes during an infrastructure-only packaging correction")
-    parser.add_argument("--attempt", choices=("v1", "v2", "v3"), default="v1")
+    parser.add_argument("--attempt", choices=("v1", "v2", "v3", "v4"), default="v1")
     args = parser.parse_args()
     root = Path.cwd().resolve()
     destination = args.output.resolve()
@@ -43,7 +43,7 @@ def main():
         contract_refs=[(BASE/"contract.json").as_posix()],
         reference_ids=["pcqm-gptrans-author-degree-scale-100k-s42", "pcqm-gptrans-g1-degree-scale-ema999-100k-s42"],
         prior_evidence_ids=["pcqm-gptrans-author-degree-scale-100k-s42", "pcqm-gptrans-g1-degree-scale-ema999-100k-s42"],
-        prior_trajectory_ids=[], parent_trajectory_ids=(["TC-gptrans-g1-ema-portability-frozen-s42" + ("-v2" if args.attempt == "v3" else "")] if args.attempt != "v1" else []),
+        prior_trajectory_ids=[], parent_trajectory_ids=(["TC-gptrans-g1-ema-portability-frozen-s42" + (f"-v{int(args.attempt[1:])-1}" if args.attempt != "v2" else "")] if args.attempt != "v1" else []),
         role_snapshot_refs=[(BASE/"role_plan.json").as_posix()], budget_snapshot_ref=(BASE/"budget.json").as_posix())
     hypothesis = snapshot["trajectory"]["hypothesis"]
     hypothesis.update(hypothesis_id="H-"+trajectory_id,
