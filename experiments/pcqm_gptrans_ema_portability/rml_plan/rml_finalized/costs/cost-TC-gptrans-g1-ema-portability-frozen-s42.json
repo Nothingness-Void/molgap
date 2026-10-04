@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "infrastructure_failure",
+  "cost_event_id": "cost-TC-gptrans-g1-ema-portability-frozen-s42",
+  "evidence_ref": "experiments/pcqm_gptrans_ema_portability/results/failure_v1/acceptance.json",
+  "hardware": "Tesla_T4x2",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.11312799586190117
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.056563997930950585
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "gptrans-ema-portability-audit:v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42"
+}

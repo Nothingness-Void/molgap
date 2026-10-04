@@ -1,0 +1,70 @@
+{
+  "artifacts": [
+    {
+      "availability": "retained_metadata",
+      "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/output_manifest.json",
+      "name": "output_manifest.json",
+      "sha256": "6e6a640b56605403b06580ca769f89bb095d8619ba588e321b1135dbdf67d613"
+    },
+    {
+      "availability": "retained_metadata",
+      "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/allocation.json",
+      "name": "allocation.json",
+      "sha256": "d4b16402a80abf51df43e6c9b722349dcecd36563a661fae15925ee447284561"
+    },
+    {
+      "availability": "retained_metadata",
+      "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/failure.json",
+      "name": "failure.json",
+      "sha256": "69ad5d4f98ac11275a83162634f6a564f5724d1a714657d67f50e4b6d7f42356"
+    },
+    {
+      "availability": "retained_metadata",
+      "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/cost.json",
+      "name": "cost.json",
+      "sha256": "db878472c536cbd0c79c14b930ddb3b52938dc1ac2d22c6a5e085a3b71b025e7"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_ema_portability/rml_plan/trajectory.json",
+      "experiments/pcqm_gptrans_ema_portability/release_binding.json",
+      "experiments/pcqm_gptrans_ema_portability/results/failure_v1/decision.md",
+      "experiments/pcqm_gptrans_ema_portability/results/failure_v1/acceptance.json",
+      "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/output_manifest.json",
+      "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/allocation.json",
+      "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/failure.json",
+      "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/cost.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-ema-portability-infrastructure-v1",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-v5-prospective",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-04T06:28:52.435055+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Hash-bound pre-worker failure only; no model deserialization, graph or role execution"
+  },
+  "outcome": {
+    "artifact_status": "failure_metadata_verified",
+    "budget_decision": "native_allocation_cost_retained",
+    "comparison_status": "not_evaluated",
+    "execution_status": "failed_before_workers",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "untouched",
+    "internal_development_500000_550000": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "not_applicable"
+  },
+  "scope": "preworker_runtime_failure",
+  "track": "C"
+}

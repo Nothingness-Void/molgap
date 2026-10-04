@@ -11,8 +11,10 @@ is closed: both arms are independently accepted, STRICT_CAUSAL, and admitted
 as complete Replay pairs, but neither supports promotion; preserve the
 [decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md).
 The server-owned [frozen G1 EMA portability audit](experiments/pcqm_gptrans_ema_portability/submission_record.md)
-is released on Kaggle2. It performs NO_TRAIN inference only; the existing Luna B
-heartbeat monitors its exact version and hands terminal/fault evidence to A.
+failed before workers during installation and is RML-closed as infrastructure-only;
+see the [retained failure](experiments/pcqm_gptrans_ema_portability/results/failure_v1/decision.md).
+CPU-only interpreter qualification precedes a separately planned unchanged-contract
+retry. The existing Luna B monitors exact bound versions and hands terminal evidence to A.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).

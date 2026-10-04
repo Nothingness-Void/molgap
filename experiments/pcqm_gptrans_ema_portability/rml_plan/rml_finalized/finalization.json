@@ -1,0 +1,33 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-6561763983a7d6f614d5e329d0c1ce805e191c68ff4d5683ba31ff984215497d",
+  "finalized_at": "2026-10-04T06:28:52.435055+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_ema_portability/release_binding.json": "c14a4ea3812b11fd382e615207ee8f969c045cfdd44d451511e6caed0aacf23c",
+    "experiments/pcqm_gptrans_ema_portability/results/failure_v1/acceptance.json": "78e8f0457408744eef01826772066c9fbaee26b859d218d0b131f5d10d0bb7e1",
+    "experiments/pcqm_gptrans_ema_portability/results/failure_v1/decision.md": "c2c68aa1ddcdd7cac73782ec24c74436e61fc0918e6efc3ed8339b9534c586ef",
+    "experiments/pcqm_gptrans_ema_portability/rml_plan/trajectory.json": "40231c12a0982d9a834a0f86973b7ae6875623e05436705e5630e98a7311c8dc",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/allocation.json": "d4b16402a80abf51df43e6c9b722349dcecd36563a661fae15925ee447284561",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/cost.json": "db878472c536cbd0c79c14b930ddb3b52938dc1ac2d22c6a5e085a3b71b025e7",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/failure.json": "69ad5d4f98ac11275a83162634f6a564f5724d1a714657d67f50e4b6d7f42356",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability/output_manifest.json": "6e6a640b56605403b06580ca769f89bb095d8619ba588e321b1135dbdf67d613"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-gptrans-g1-ema-portability-frozen-s42.json": "39d735262e7aa44542571a402fd083a9e931e7db90040e70e94c70353cf0a234",
+    "prospective_snapshot.json": "40231c12a0982d9a834a0f86973b7ae6875623e05436705e5630e98a7311c8dc",
+    "terminal_input.json": "3f99c81a95185fd1a8c484ecd582ea4630e2fd6a2aab714080196aa88a7ec639",
+    "trajectory.json": "c767003f6abbf331325cfe742dc00539cbd1c4ad3a62fb6cbd9021bb4343660f",
+    "v5_evidence.json": "395404a67d3c8f5586cb42949266a6700384cf04e016573ddfba94d26680f177"
+  },
+  "replacements": {
+    "costs/cost-TC-gptrans-g1-ema-portability-frozen-s42.json": "experiments/pcqm_gptrans_ema_portability/rml_plan/costs/cost-TC-gptrans-g1-ema-portability-frozen-s42.json",
+    "trajectory.json": "experiments/pcqm_gptrans_ema_portability/rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "6561763983a7d6f614d5e329d0c1ce805e191c68ff4d5683ba31ff984215497d",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42"
+}
