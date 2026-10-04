@@ -48,6 +48,7 @@ def source(inputs, destination):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--arm", choices=("ema9999", "ema999"))
+    parser.add_argument("--environment-only", action="store_true")
     args = parser.parse_args()
     inputs = one("audit_release.json").parent
     output = Path("/kaggle/working/gptrans_ema_portability")
@@ -67,6 +68,25 @@ def main():
             raise
         return
     began = time.time()
+    if args.environment_only:
+        source(inputs, Path("/kaggle/working/audit_source"))
+        from molgap.kaggle_python_environment import prepare_python
+        from molgap.training_reproducibility import atomic_json
+        status = "ERROR"
+        try:
+            _, qualification = prepare_python(Path("/kaggle/working/audit_env"),
+                deadline=began+1800, source_root=Path("/kaggle/working/audit_source"))
+            qualification["source_identity"] = json.loads((inputs/"audit_release.json").read_text())["identity"]
+            atomic_json(output/"environment_qualification.json", qualification)
+            status = "COMPLETE"
+        except BaseException:
+            atomic_json(output/"failure.json", dict(error=traceback.format_exc(), timestamp=time.time()))
+            raise
+        finally:
+            atomic_json(output/"environment_cost.json", dict(status=status, wall_seconds=time.time()-began,
+                allocated_devices=0, device_hours=0, training_executed=False, model_inference_executed=False,
+                graph_role_read=False))
+        return
     # Allocation is captured without importing torch in the coordinator.
     devices = subprocess.check_output(["nvidia-smi", "--query-gpu=index,name,memory.total,uuid", "--format=csv,noheader"], text=True).strip().splitlines()
     release = source(inputs, Path("/kaggle/working/audit_source"))
@@ -81,15 +101,14 @@ def main():
         if len(devices) != 2 or any("T4" not in row for row in devices):
             raise RuntimeError("Frozen dual audit requires actual T4x2 allocation")
         # Setup and partial worker launch must be inside cost/fault retention.
-        subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "numpy==1.26.4",
-            "torch==2.4.1", "--extra-index-url", "https://download.pytorch.org/whl/cu121"],
-            check=True, timeout=max(1, deadline-time.time()))
-        subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "torch-geometric==2.6.1", "ogb==1.3.6", "rdkit==2025.9.5"],
-            check=True, timeout=max(1, deadline-time.time()))
+        from molgap.kaggle_python_environment import prepare_python
+        executable, qualification = prepare_python(Path("/kaggle/working/audit_env"),
+            deadline=deadline, source_root=Path("/kaggle/working/audit_source"))
+        atomic_json(output/"environment_qualification.json", qualification)
         for device, arm in enumerate(("ema9999", "ema999")):
-            environment = dict(os.environ, CUDA_VISIBLE_DEVICES=str(device), PYTHONHASHSEED="42",
+            environment = dict(os.environ, CUDA_VISIBLE_DEVICES=str(device), PYTHONPATH="", PYTHONHASHSEED="42",
                                CUBLAS_WORKSPACE_CONFIG=":4096:8", OMP_NUM_THREADS="2")
-            children.append(subprocess.Popen([sys.executable, __file__, "--arm", arm], env=environment))
+            children.append(subprocess.Popen([str(executable), __file__, "--arm", arm], env=environment))
         status = "RUNNING"
         while any(child.poll() is None for child in children):
             if time.time() >= deadline-25 or any(child.poll() not in (None, 0) for child in children):
