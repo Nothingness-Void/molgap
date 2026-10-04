@@ -1,0 +1,51 @@
+/usr/local/lib/python3.13/dist-packages/outdated/__init__.py:36: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import parse_version
+distill_weak epoch=1 train_normalized_mae=0.274118 dev=0.324037eV seconds=156.4
+distill_weak epoch=2 train_normalized_mae=0.220583 dev=0.276614eV seconds=146.5
+distill_weak epoch=3 train_normalized_mae=0.198695 dev=0.281838eV seconds=147.0
+distill_weak epoch=4 train_normalized_mae=0.184870 dev=0.240518eV seconds=146.1
+distill_weak epoch=5 train_normalized_mae=0.171761 dev=0.219524eV seconds=147.1
+distill_weak epoch=6 train_normalized_mae=0.163874 dev=0.214708eV seconds=146.9
+distill_weak epoch=7 train_normalized_mae=0.156320 dev=0.232067eV seconds=146.5
+distill_weak epoch=8 train_normalized_mae=0.148518 dev=0.195274eV seconds=146.9
+distill_weak epoch=9 train_normalized_mae=0.141974 dev=0.193279eV seconds=147.0
+distill_weak epoch=10 train_normalized_mae=0.138030 dev=0.185805eV seconds=146.7
+distill_weak epoch=11 train_normalized_mae=0.133820 dev=0.187718eV seconds=146.8
+distill_weak epoch=12 train_normalized_mae=0.128969 dev=0.176545eV seconds=147.8
+distill_weak epoch=13 train_normalized_mae=0.125152 dev=0.177216eV seconds=146.7
+distill_weak epoch=14 train_normalized_mae=0.122409 dev=0.171666eV seconds=147.3
+distill_weak epoch=15 train_normalized_mae=0.118581 dev=0.171496eV seconds=146.8
+distill_weak epoch=16 train_normalized_mae=0.115454 dev=0.175470eV seconds=146.6
+distill_weak epoch=17 train_normalized_mae=0.112836 dev=0.167194eV seconds=146.7
+distill_weak epoch=18 train_normalized_mae=0.109700 dev=0.160931eV seconds=147.0
+distill_weak epoch=19 train_normalized_mae=0.106915 dev=0.163801eV seconds=145.8
+distill_weak epoch=20 train_normalized_mae=0.104683 dev=0.162335eV seconds=146.7
+distill_weak epoch=21 train_normalized_mae=0.102128 dev=0.158237eV seconds=147.1
+distill_weak epoch=22 train_normalized_mae=0.099740 dev=0.155778eV seconds=146.3
+distill_weak epoch=23 train_normalized_mae=0.097390 dev=0.154050eV seconds=146.7
+distill_weak epoch=24 train_normalized_mae=0.094823 dev=0.153023eV seconds=147.4
+distill_weak epoch=25 train_normalized_mae=0.092699 dev=0.150374eV seconds=146.3
+distill_weak epoch=26 train_normalized_mae=0.090776 dev=0.148340eV seconds=146.9
+distill_weak epoch=27 train_normalized_mae=0.089190 dev=0.146709eV seconds=147.7
+distill_weak epoch=28 train_normalized_mae=0.086973 dev=0.146532eV seconds=146.7
+distill_weak epoch=29 train_normalized_mae=0.085496 dev=0.146028eV seconds=147.3
+distill_weak epoch=30 train_normalized_mae=0.083915 dev=0.144834eV seconds=146.4
+distill_weak epoch=31 train_normalized_mae=0.082279 dev=0.143504eV seconds=146.6
+distill_weak epoch=32 train_normalized_mae=0.081271 dev=0.143112eV seconds=147.2
+distill_weak epoch=33 train_normalized_mae=0.080013 dev=0.143360eV seconds=146.7
+distill_weak epoch=34 train_normalized_mae=0.078816 dev=0.143016eV seconds=145.7
+distill_weak epoch=35 train_normalized_mae=0.077929 dev=0.143039eV seconds=146.9
+distill_weak epoch=36 train_normalized_mae=0.077444 dev=0.141469eV seconds=146.3
+distill_weak epoch=37 train_normalized_mae=0.076613 dev=0.141446eV seconds=146.9
+distill_weak epoch=38 train_normalized_mae=0.076189 dev=0.141565eV seconds=146.9
+distill_weak epoch=39 train_normalized_mae=0.075800 dev=0.141514eV seconds=148.2
+distill_weak epoch=40 train_normalized_mae=0.075820 dev=0.141407eV seconds=147.0
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 35, in <module>
+    main()
+    ~~~~^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 31, in main
+    raise RuntimeError("Owning family phase did not pass")
+RuntimeError: Owning family phase did not pass

@@ -1,0 +1,68 @@
+{
+  "accepted": true,
+  "mode": "distill_strong",
+  "zero_initialization_delta": 0.0,
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      1.693603277206421,
+      1.693603277206421
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "a48a03a4f0f2c5b7f4a64edd80e606ba9597e31ccf7736874d49e787fb3de4c5",
+      "a48a03a4f0f2c5b7f4a64edd80e606ba9597e31ccf7736874d49e787fb3de4c5"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      1.693603277206421,
+      1.693603277206421
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "7c1a139690809552ee3f821de0215d0f538b8669e7b89d10fedfad690280b238",
+      "7c1a139690809552ee3f821de0215d0f538b8669e7b89d10fedfad690280b238"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.10036879699998735,
+      "samples_seconds": [
+        0.11110543600000256,
+        0.100677446000077,
+        0.10036879699998735,
+        0.09881993300007252,
+        0.10003367599995272
+      ],
+      "peak_memory_bytes": 572914176
+    },
+    "distill_strong": {
+      "median_step_seconds": 0.1012067259999867,
+      "samples_seconds": [
+        0.10442389000002095,
+        0.10259199699999044,
+        0.09861089100002118,
+        0.09964652799999385,
+        0.1012067259999867
+      ],
+      "peak_memory_bytes": 572914688
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": 0.008348500978839546,
+  "maximum_overhead_fraction": 0.25,
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "ab3ac705ff9c04a3b9e38221d890abf26dff1392ea458670515a8238283f7b00",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"
+}
