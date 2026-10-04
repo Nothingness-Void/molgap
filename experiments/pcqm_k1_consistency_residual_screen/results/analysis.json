@@ -1,0 +1,172 @@
+{
+  "status": "EXECUTED_SAVED_PREDICTION_DIAGNOSTIC",
+  "rows": 50000,
+  "inputs_sha256": "d97b501bf2a2fccd7b3e30eec7af4b6821019ed2b400a524832ca8aa0b432e5b",
+  "prospective_sha256": "ec2f29f9c8e1083aed7990b05543cf5d606953be9cf3f3d1eb3e94d5ecec8c6c",
+  "source_idx_sha256": "70b528a764a04dbf5a9cbe52afc51a454c97d8aaf6586acc37759e890dbcf96e",
+  "artifacts_sha256": {
+    "experiments/pcqm_k1_consistency_residual_screen/inputs/mean2.pt": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076",
+    "experiments/pcqm_k1_consistency_residual_screen/inputs/consistency2.pt": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a"
+  },
+  "accepted_primary": {
+    "rows": 50000,
+    "reference_mae_eV": 0.1402572855657339,
+    "candidate_mae_eV": 0.13872850305497647,
+    "paired_gain_eV": 0.0015287825107574463,
+    "row_bootstrap_95pct_eV": [
+      0.0006161361584663391,
+      0.002348937706589699
+    ],
+    "candidate_better_row_fraction": 0.50648,
+    "material_3mev_point_gain": false
+  },
+  "residuals": {
+    "targets": {
+      "gap": {
+        "baseline_mae_eV": 0.1402572855657339,
+        "candidate_mae_eV": 0.13872850305497647,
+        "delta_mae_eV": -0.0015287825107574463,
+        "candidate_win_rate": 0.50648,
+        "baseline_signed_bias_eV": 0.00126258142888546,
+        "candidate_signed_bias_eV": 0.008733523792624473,
+        "absolute_residual_correlation": 0.8312062820640513,
+        "signed_residual_correlation": 0.8698866857735743,
+        "disagreement_delta_correlation": 0.15266060483558092,
+        "oracle_mae_eV": 0.11014472361981868
+      }
+    },
+    "average": {
+      "baseline_mae_eV": 0.1402572855657339,
+      "candidate_mae_eV": 0.13872850305497647,
+      "delta_mae_eV": -0.0015287825107574463,
+      "candidate_win_rate": 0.50648,
+      "absolute_residual_correlation": 0.8312062820640513,
+      "disagreement_delta_correlation": 0.15266060483558092,
+      "oracle_mae_eV": 0.11014472361981868,
+      "top_disagreement_quartile_delta_mae_eV": -0.004936106014251709
+    }
+  },
+  "distribution": {
+    "improved_rows": 25324,
+    "harmed_rows": 24675,
+    "improvement_contribution_meV": 30.11256194591522,
+    "harm_contribution_meV": 28.583779435157773,
+    "control_top1pct": {
+      "rows": 500,
+      "gain_meV": 118.86648321151733,
+      "fraction_of_net_gain": 0.7775238294204718
+    }
+  },
+  "descriptive_strata": [
+    {
+      "true_gap_bin": "[0,2)",
+      "rows": 25,
+      "gain_meV": -73.31973075866699,
+      "mean2_mae_eV": 0.6381641948223113,
+      "consistency2_mae_eV": 0.7114839255809784
+    },
+    {
+      "true_gap_bin": "[2,4)",
+      "rows": 3700,
+      "gain_meV": -3.6374479371148185,
+      "mean2_mae_eV": 0.1954804468799282,
+      "consistency2_mae_eV": 0.199117894817043
+    },
+    {
+      "true_gap_bin": "[4,6)",
+      "rows": 34837,
+      "gain_meV": 1.8581050228716007,
+      "mean2_mae_eV": 0.1261193533286191,
+      "consistency2_mae_eV": 0.12426124830574749
+    },
+    {
+      "true_gap_bin": "[6,8)",
+      "rows": 10451,
+      "gain_meV": 2.7968549988461664,
+      "mean2_mae_eV": 0.15732800494015087,
+      "consistency2_mae_eV": 0.15453114994130468
+    },
+    {
+      "true_gap_bin": "[8,inf)",
+      "rows": 987,
+      "gain_meV": -2.2594327259933333,
+      "mean2_mae_eV": 0.23888310883666003,
+      "consistency2_mae_eV": 0.24114254156265336
+    }
+  ],
+  "split": {
+    "fit_rows": 10000,
+    "holdout_rows": 40000,
+    "rule": "source_idx modulo5 ==0 fits"
+  },
+  "offsets_eV": {
+    "mean2": 0.004591226577758789,
+    "consistency2": -0.002650737762451172
+  },
+  "fitted_mean2_weight": 0.418,
+  "fitted_mae_eV": 0.13456587905426023,
+  "heldout_against_consistency2": {
+    "consistency_bias_corrected": {
+      "reference_mae_eV": 0.13897839647457003,
+      "candidate_mae_eV": 0.1389425931327045,
+      "gain_meV": 0.035803341865539545,
+      "row_bootstrap_95pct_meV": [
+        0.010495916306972506,
+        0.0625205436348915
+      ],
+      "candidate_better_fraction": 0.5064,
+      "nomination_passed": false
+    },
+    "mean2_bias_corrected": {
+      "reference_mae_eV": 0.13897839647457003,
+      "candidate_mae_eV": 0.1401070765607059,
+      "gain_meV": -1.1286800861358643,
+      "row_bootstrap_95pct_meV": [
+        -2.069034204632044,
+        -0.17040109574794784
+      ],
+      "candidate_better_fraction": 0.4955,
+      "nomination_passed": false
+    },
+    "fixed_equal_blend": {
+      "reference_mae_eV": 0.13897839647457003,
+      "candidate_mae_eV": 0.1346632610194385,
+      "gain_meV": 4.315135455131531,
+      "row_bootstrap_95pct_meV": [
+        3.7873748324811456,
+        4.837740669324994
+      ],
+      "candidate_better_fraction": 0.541425,
+      "nomination_passed": true
+    },
+    "fitted_convex_blend": {
+      "reference_mae_eV": 0.13897839647457003,
+      "candidate_mae_eV": 0.13471593701323867,
+      "gain_meV": 4.262459461331367,
+      "row_bootstrap_95pct_meV": [
+        3.822881479855777,
+        4.700795969854593
+      ],
+      "candidate_better_fraction": 0.5481,
+      "nomination_passed": true
+    }
+  },
+  "checks": {
+    "aligned_rows": true,
+    "finite_predictions": true,
+    "exact_targets": true,
+    "reconstructed_accepted_endpoints": true,
+    "no_model_execution": true,
+    "protected_roles_untouched": true
+  },
+  "limitations": [
+    "Post-hoc model-selected development role; modulo holdout is not independent qualification.",
+    "One seed; row bootstrap is not training variance.",
+    "No saved dropout pass disagreement or clean training-cohort predictions.",
+    "Descriptive target/tail strata and Oracle are label-informed, not routing policies.",
+    "Original cross-attempt control/native-cost and strict V5 gaps unchanged."
+  ],
+  "hardware": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+  "wall_seconds": 0.9054373999970267,
+  "cpu_seconds": 3.34375
+}

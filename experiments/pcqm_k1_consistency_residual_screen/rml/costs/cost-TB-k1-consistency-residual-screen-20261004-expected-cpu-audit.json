@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "local-attempt-001",
+  "category": "audit",
+  "cost_event_id": "cost-TB-k1-consistency-residual-screen-20261004-expected-cpu-audit",
+  "evidence_ref": "experiments/pcqm_k1_consistency_residual_screen/protocol.md",
+  "hardware": "CPU; saved-prediction analysis only; accelerator not applicable",
+  "measurement": {
+    "cpu_hours": {
+      "status": "estimated",
+      "value": 0.05
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.05
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-consistency-residual-screen-20261004",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-consistency-residual-screen-20261004"
+}

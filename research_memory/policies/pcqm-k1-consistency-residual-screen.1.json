@@ -1,0 +1,33 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-k1-consistency-residual-screen",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-k1-consistency-residual-screen-v1"
+  },
+  "required_observable_fields": [
+    "user_requested_saved_prediction_scope_reviewed"
+  ],
+  "action_rule": {
+    "field": "user_requested_saved_prediction_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1,
+    "action": "READ_SAVED_PREDICTIONS"
+  },
+  "borderline_action": "NO_TRAIN",
+  "observation_point": null,
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": []
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  },
+  "created_from_source_digest": "4041d8aeaaa69a6eb7378af0edf756f4295bd51238ab3f00013fa0cd66bc1535"
+}

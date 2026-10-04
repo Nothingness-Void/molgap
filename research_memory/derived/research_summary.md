@@ -1,7 +1,7 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 78
+- Validated V5 evidence: 79
 - Evidence without trajectory: 0
 
 ## Trajectories
@@ -9,7 +9,7 @@
 - INCONCLUSIVE: 19
 - INFRASTRUCTURE_ONLY: 5
 - NEGATIVE_UNDER_CONTRACT: 19
-- NO_TRAIN: 27
+- NO_TRAIN: 28
 - POSITIVE_UNDER_CONTRACT: 8
 
 ## Transfer
@@ -18,8 +18,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 180
-- Coarse historical role records: 351
+- Explicit role events: 184
+- Coarse historical role records: 355
 - Repeatedly selected role identities: 12
 
 ## Cost
@@ -27,6 +27,10 @@
 - A100 device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - A100 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - A100 wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD cpu_hours: measured=0.000929 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD device_hours: not applicable (1 records); measurement_missing=0
+- AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD queue_hours: not applicable (1 records); measurement_missing=0
+- AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD wall_hours: measured=0.000252 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - CPU cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
 - CPU device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=2
 - CPU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=2
@@ -39,6 +43,10 @@
 - CPU; inference4threads, structure1thread; no accelerator device_hours: not applicable (1 records); measurement_missing=0
 - CPU; inference4threads, structure1thread; no accelerator queue_hours: not applicable (1 records); measurement_missing=0
 - CPU; inference4threads, structure1thread; no accelerator wall_hours: measured=0.014255 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- CPU; saved-prediction analysis only; accelerator not applicable cpu_hours: measured=unknown (0 measured records), estimated=0.050000 (1 estimated record), measurement_missing=0, not_applicable=0
+- CPU; saved-prediction analysis only; accelerator not applicable device_hours: not applicable (1 records); measurement_missing=0
+- CPU; saved-prediction analysis only; accelerator not applicable queue_hours: not applicable (1 records); measurement_missing=0
+- CPU; saved-prediction analysis only; accelerator not applicable wall_hours: measured=unknown (0 measured records), estimated=0.050000 (1 estimated record), measurement_missing=0, not_applicable=0
 - CPU_MODEL_UNRECORDED cpu_hours: measured=0.330365 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - CPU_MODEL_UNRECORDED device_hours: not applicable (3 records); measurement_missing=0
 - CPU_MODEL_UNRECORDED queue_hours: not applicable (3 records); measurement_missing=0
@@ -160,7 +168,7 @@
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Measurement-missing cost events: 129
-- Cost-event coverage: 78/89 trajectories; incomplete native measurement=68
+- Cost-event coverage: 79/90 trajectories; incomplete native measurement=68
 
 ## Screening Backtest
 - Status: available
@@ -168,7 +176,7 @@
 - Excluded traces: 13
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 66
+- [INFO] trace_unavailable_for_backtest: 67
 - [WARN] historical_partial_record: 20
 - [WARN] incomplete_native_cost_measurement: 68
 - [WARN] missing_cost_event: 11

@@ -6,9 +6,9 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 89,
-      "with_complete_native_measurement": 10,
-      "with_cost_event": 78,
+      "trajectories_total": 90,
+      "with_complete_native_measurement": 11,
+      "with_cost_event": 79,
       "with_incomplete_native_measurement": 68,
       "without_cost_event": 11
     },
@@ -61,6 +61,56 @@
           },
           "not_applicable_records": 0,
           "unknown_records": 2
+        }
+      },
+      "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 1,
+            "known_total": 0.0009288194444444445
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 1,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 1,
+          "unknown_records": 0
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 1,
+            "known_total": 0.00025151038888806296
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
         }
       },
       "CPU": {
@@ -208,6 +258,56 @@
           "measured": {
             "known_records": 1,
             "known_total": 0.014254614638889001
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
+      "CPU; saved-prediction analysis only; accelerator not applicable": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 0.05
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 1,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 1,
+          "unknown_records": 0
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 0.05
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -1717,14 +1817,14 @@
     "unknown_events": 129
   },
   "evidence": {
-    "validated": 78,
+    "validated": 79,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 66,
+      "count": 67,
       "severity": "INFO"
     },
     {
@@ -1754,19 +1854,19 @@
     }
   ],
   "roles": {
-    "coarse_historical": 351,
-    "explicit_events": 180,
+    "coarse_historical": 355,
+    "explicit_events": 184,
     "repeatedly_selected": 12
   },
-  "source_digest": "3499dc49f62aa3bbf79b4f11e57e43155539144851eb04826a79bc346fed396e",
+  "source_digest": "af664e0f8a1fcb6b21a9d815b73a1929d81a4a18ca066fa6d5e4aba7b2a74e11",
   "trajectories": {
-    "count": 89,
+    "count": 90,
     "outcomes": {
       "CLOSED": 11,
       "INCONCLUSIVE": 19,
       "INFRASTRUCTURE_ONLY": 5,
       "NEGATIVE_UNDER_CONTRACT": 19,
-      "NO_TRAIN": 27,
+      "NO_TRAIN": 28,
       "POSITIVE_UNDER_CONTRACT": 8
     }
   },

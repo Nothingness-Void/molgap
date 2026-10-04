@@ -1,0 +1,97 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_consistency_residual_screen/results/analysis.json",
+      "name": "results/analysis.json",
+      "sha256": "b2b8beb84ae669028b953c13285240073a46842aecbac864528ad777ef670911"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "f4d18c228577bbe306f724dd3cea86874411c9e26c66a52696f58eaabeb31c5f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_consistency_residual_screen/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "6aab08d9c1f0f6d221cf540592dd68c8a81a502b404b562454fcc5becabee05e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_consistency_residual_screen/protocol.md",
+      "name": "protocol.md",
+      "sha256": "4041d8aeaaa69a6eb7378af0edf756f4295bd51238ab3f00013fa0cd66bc1535"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_consistency_residual_screen/inputs.json",
+      "name": "inputs.json",
+      "sha256": "d97b501bf2a2fccd7b3e30eec7af4b6821019ed2b400a524832ca8aa0b432e5b"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_consistency_residual_screen/run_analysis.py",
+      "name": "run_analysis.py",
+      "sha256": "f9f81739b142196b6462e403124fb2bfc9d7df209533914acc5e5d90b8c93d9b"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_consistency_residual_screen/inputs/mean2.pt",
+      "name": "inputs/mean2.pt",
+      "sha256": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_consistency_residual_screen/inputs/consistency2.pt",
+      "name": "inputs/consistency2.pt",
+      "sha256": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_consistency_residual_screen/verification.json",
+      "name": "verification.json",
+      "sha256": "51a81f97929b242176177a970b4f8368f1c7425dfb9c88ffa8fe5571d08b1bc8"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_consistency_residual_screen/protocol.md",
+      "experiments/pcqm_k1_consistency_residual_screen/terminal_decision.md",
+      "experiments/pcqm_k1_consistency_residual_screen/acceptance.json",
+      "experiments/pcqm_k1_consistency_residual_screen/results/analysis.json",
+      "experiments/pcqm_k1_consistency_residual_screen/inputs.json",
+      "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+      "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_consistency2/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-consistency-residual-screen-20261004",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-k1-consistency-residual-screen-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-04",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Prospective local CPU analysis of hash-bound accepted saved predictions; no checkpoint inference, training, or V5 promotion."
+  },
+  "outcome": {
+    "artifact_status": "hash_verified_saved_predictions",
+    "budget_decision": "no_training_release",
+    "comparison_status": "posthoc_internal_development_modulo_holdout",
+    "execution_status": "complete_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_v5_qualified"
+  },
+  "role_use": {
+    "internal_development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "desktop_k1_consistency_saved_prediction_residual_and_fixed_blend_screen",
+  "track": "B"
+}

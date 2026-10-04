@@ -1,14 +1,110 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 35,
-  "event_count": 148,
+  "estimated_event_count": 36,
+  "event_count": 150,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
   "measurement_missing_event_count": 129,
-  "not_applicable_event_count": 49,
+  "not_applicable_event_count": 51,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
+      "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0009288194444444445
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.00025151038888806296
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "CPU; saved-prediction analysis only; accelerator not applicable:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.05
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "CPU; saved-prediction analysis only; accelerator not applicable:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU; saved-prediction analysis only; accelerator not applicable:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU; saved-prediction analysis only; accelerator not applicable:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.05
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
       "LOCAL_CPU_UNSPECIFIED:cpu_hours": {
         "estimated": {
           "known_records": 0,
@@ -2040,6 +2136,56 @@
         "unknown_records": 2
       }
     },
+    "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0009288194444444445
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.00025151038888806296
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "CPU": {
       "cpu_hours": {
         "estimated": {
@@ -2185,6 +2331,56 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.014254614638889001
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "CPU; saved-prediction analysis only; accelerator not applicable": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.05
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.05
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -7775,6 +7971,104 @@
         "measured": {
           "known_records": 1,
           "known_total": 2.7069101230302755
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-consistency-residual-screen-20261004": {
+      "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0009288194444444445
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.00025151038888806296
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "CPU; saved-prediction analysis only; accelerator not applicable:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.05
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "CPU; saved-prediction analysis only; accelerator not applicable:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU; saved-prediction analysis only; accelerator not applicable:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU; saved-prediction analysis only; accelerator not applicable:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.05
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0

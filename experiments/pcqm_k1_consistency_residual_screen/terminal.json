@@ -1,0 +1,221 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-k1-consistency-residual-screen-20261004",
+  "run_id": "local-k1-consistency-residual-screen-20261004",
+  "action_id": "A001",
+  "finalized_at": "2026-10-04T09:27:09.721230+00:00",
+  "acceptance_ref": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_100k_transfer_control/analyze_pair.py": "cc24d6825741a5ec36095372688254d42056d333c79501cca9a435e4d36b44d0",
+    "experiments/pcqm_k1_consistency_residual_screen/acceptance.json": "f4d18c228577bbe306f724dd3cea86874411c9e26c66a52696f58eaabeb31c5f",
+    "experiments/pcqm_k1_consistency_residual_screen/finalize_rml.py": "26ce29c7ef58524efbbbb2cf47820792be6035dc7900595ad9c3bb3ca8673790",
+    "experiments/pcqm_k1_consistency_residual_screen/inputs.json": "d97b501bf2a2fccd7b3e30eec7af4b6821019ed2b400a524832ca8aa0b432e5b",
+    "experiments/pcqm_k1_consistency_residual_screen/inputs/consistency2.pt": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a",
+    "experiments/pcqm_k1_consistency_residual_screen/inputs/mean2.pt": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076",
+    "experiments/pcqm_k1_consistency_residual_screen/prepare_rml.py": "bc9a6591fbb64ef4d7aacc453fcb133ad0168135151225907ebf293388dfe23d",
+    "experiments/pcqm_k1_consistency_residual_screen/protocol.md": "4041d8aeaaa69a6eb7378af0edf756f4295bd51238ab3f00013fa0cd66bc1535",
+    "experiments/pcqm_k1_consistency_residual_screen/results/analysis.json": "b2b8beb84ae669028b953c13285240073a46842aecbac864528ad777ef670911",
+    "experiments/pcqm_k1_consistency_residual_screen/run_analysis.py": "f9f81739b142196b6462e403124fb2bfc9d7df209533914acc5e5d90b8c93d9b",
+    "experiments/pcqm_k1_consistency_residual_screen/terminal_decision.md": "6aab08d9c1f0f6d221cf540592dd68c8a81a502b404b562454fcc5becabee05e",
+    "experiments/pcqm_k1_consistency_residual_screen/verification.json": "51a81f97929b242176177a970b4f8368f1c7425dfb9c88ffa8fe5571d08b1bc8",
+    "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_consistency2/acceptance.json": "2d34d288be6681eb210561e438688a224e8120c23926ed6f7da86f5526df55c6",
+    "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json": "26db22017e180489b02394df10920f439a74d215d3f9076a7adc8342a060a5d2",
+    "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/scientific_metrics.json": "9ee0224bc09938b5cf1d0a092e460b310342984701453167c69218939c4c29eb",
+    "src/molgap/pcqm_k1_gptrans_fusion.py": "fc66ec7232e00a18126bc65c5935fe1fd6fe8b92130dd3246e58b3f493836b9b",
+    "src/molgap/residual_attribution.py": "6cd6248b5ec0fcb90323f0100d9640dbf4fee5832a4f72be970be7ae3b1af884",
+    "src/molgap/router.py": "aec3c6242594c8f064cfa1124950bf509e555ff3c547b2d64d653ef7f974dd7e",
+    "src/molgap/training_reproducibility.py": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa",
+    "src/molgap/v4_runtime.py": "34bb7430c6c48add83f4fe49fe1070f1175fce5c421464f121a196c4b3b57a1f"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "evidence_id": "pcqm-k1-consistency-residual-screen-20261004",
+    "track": "B",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "legacy_contract": "pcqm-k1-consistency-residual-screen-v1",
+    "scope": "desktop_k1_consistency_saved_prediction_residual_and_fixed_blend_screen",
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_consistency_residual_screen/protocol.md",
+        "experiments/pcqm_k1_consistency_residual_screen/terminal_decision.md",
+        "experiments/pcqm_k1_consistency_residual_screen/acceptance.json",
+        "experiments/pcqm_k1_consistency_residual_screen/results/analysis.json",
+        "experiments/pcqm_k1_consistency_residual_screen/inputs.json",
+        "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+        "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_consistency2/acceptance.json"
+      ]
+    },
+    "artifacts": [
+      {
+        "name": "results/analysis.json",
+        "locator": "experiments/pcqm_k1_consistency_residual_screen/results/analysis.json",
+        "sha256": "b2b8beb84ae669028b953c13285240073a46842aecbac864528ad777ef670911",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "acceptance.json",
+        "locator": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json",
+        "sha256": "f4d18c228577bbe306f724dd3cea86874411c9e26c66a52696f58eaabeb31c5f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "terminal_decision.md",
+        "locator": "experiments/pcqm_k1_consistency_residual_screen/terminal_decision.md",
+        "sha256": "6aab08d9c1f0f6d221cf540592dd68c8a81a502b404b562454fcc5becabee05e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "protocol.md",
+        "locator": "experiments/pcqm_k1_consistency_residual_screen/protocol.md",
+        "sha256": "4041d8aeaaa69a6eb7378af0edf756f4295bd51238ab3f00013fa0cd66bc1535",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "inputs.json",
+        "locator": "experiments/pcqm_k1_consistency_residual_screen/inputs.json",
+        "sha256": "d97b501bf2a2fccd7b3e30eec7af4b6821019ed2b400a524832ca8aa0b432e5b",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "run_analysis.py",
+        "locator": "experiments/pcqm_k1_consistency_residual_screen/run_analysis.py",
+        "sha256": "f9f81739b142196b6462e403124fb2bfc9d7df209533914acc5e5d90b8c93d9b",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "inputs/mean2.pt",
+        "locator": "experiments/pcqm_k1_consistency_residual_screen/inputs/mean2.pt",
+        "sha256": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "inputs/consistency2.pt",
+        "locator": "experiments/pcqm_k1_consistency_residual_screen/inputs/consistency2.pt",
+        "sha256": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "verification.json",
+        "locator": "experiments/pcqm_k1_consistency_residual_screen/verification.json",
+        "sha256": "51a81f97929b242176177a970b4f8368f1c7425dfb9c88ffa8fe5571d08b1bc8",
+        "availability": "locally_retained_hash_verified"
+      }
+    ],
+    "outcome": {
+      "execution_status": "complete_no_training",
+      "artifact_status": "hash_verified_saved_predictions",
+      "comparison_status": "posthoc_internal_development_modulo_holdout",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_v5_qualified",
+      "budget_decision": "no_training_release",
+      "full_handoff_status": "not_applicable"
+    },
+    "role_use": {
+      "internal_development": "selection_used",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "migration": {
+      "migrated_at": "2026-10-04",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Prospective local CPU analysis of hash-bound accepted saved predictions; no checkpoint inference, training, or V5 promotion."
+    }
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_consistency_residual_screen/terminal_decision.md",
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Any further analysis or training requires its own prospective authority and role review."
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-consistency-residual-screen-20261004-measured-audit",
+      "trajectory_id": "TB-k1-consistency-residual-screen-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-residual-screen-20261004",
+      "attempt_id": "local-attempt-001",
+      "category": "audit",
+      "platform": "local-windows",
+      "hardware": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+      "evidence_ref": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "cpu_hours": {
+          "value": 0.0009288194444444445,
+          "status": "measured"
+        },
+        "wall_hours": {
+          "value": 0.00025151038888806296,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-residual-screen-20261004-prediction_input",
+      "trajectory_id": "TB-k1-consistency-residual-screen-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-residual-screen-20261004",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-residual-screen-20261004-labels_read",
+      "trajectory_id": "TB-k1-consistency-residual-screen-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-residual-screen-20261004",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-residual-screen-20261004-metric_computed",
+      "trajectory_id": "TB-k1-consistency-residual-screen-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-residual-screen-20261004",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-residual-screen-20261004-selection_used",
+      "trajectory_id": "TB-k1-consistency-residual-screen-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-residual-screen-20261004",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json"
+    }
+  ]
+}

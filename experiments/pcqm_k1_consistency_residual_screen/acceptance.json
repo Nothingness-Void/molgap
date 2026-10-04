@@ -1,0 +1,203 @@
+{
+  "format": "molgap-k1-consistency-residual-screen-acceptance-v1",
+  "evidence_id": "pcqm-k1-consistency-residual-screen-20261004",
+  "run_id": "local-k1-consistency-residual-screen-20261004",
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "hash_verified_saved_predictions",
+    "comparison_status": "posthoc_internal_development_modulo_holdout",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_v5_qualified",
+    "budget_decision": "no_training_release",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_consistency_residual_screen/terminal_decision.md",
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Any further analysis or training requires its own prospective authority and role review."
+    ]
+  },
+  "role_use": {
+    "internal_development": "selection_used",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "checks": {
+    "inputs_manifest_hash_verified": true,
+    "source_code_hashes_verified": true,
+    "planned_source_hashes_verified": true,
+    "raw_prediction_hashes_verified": true,
+    "accepted_pair_endpoints_reproduced": true,
+    "source_rows_100000_150000_aligned": true,
+    "fixed_blend_nomination_rule_passed": true,
+    "no_checkpoint_or_model_execution": true,
+    "no_training_or_accelerator_use": true,
+    "protected_roles_untouched": true
+  },
+  "observed_execution": {
+    "analysis_ref": "experiments/pcqm_k1_consistency_residual_screen/results/analysis.json",
+    "inputs_sha256": "d97b501bf2a2fccd7b3e30eec7af4b6821019ed2b400a524832ca8aa0b432e5b",
+    "prospective_sha256": "ec2f29f9c8e1083aed7990b05543cf5d606953be9cf3f3d1eb3e94d5ecec8c6c",
+    "source_idx_sha256": "70b528a764a04dbf5a9cbe52afc51a454c97d8aaf6586acc37759e890dbcf96e",
+    "source_idx_state_dict_sha256": "70b528a764a04dbf5a9cbe52afc51a454c97d8aaf6586acc37759e890dbcf96e",
+    "accepted_cohort_binding": {
+      "role_name": "internal_development",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "source_acceptances": [
+        "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+        "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_consistency2/acceptance.json"
+      ],
+      "selection_used": true
+    },
+    "fixed_equal_blend_gain_meV": 4.315135455131531,
+    "fixed_equal_blend_row_bootstrap_95pct_meV": [
+      3.7873748324811456,
+      4.837740669324994
+    ],
+    "other_postprocessor_results": {
+      "consistency_bias_corrected": {
+        "reference_mae_eV": 0.13897839647457003,
+        "candidate_mae_eV": 0.1389425931327045,
+        "gain_meV": 0.035803341865539545,
+        "row_bootstrap_95pct_meV": [
+          0.010495916306972506,
+          0.0625205436348915
+        ],
+        "candidate_better_fraction": 0.5064,
+        "nomination_passed": false
+      },
+      "mean2_bias_corrected": {
+        "reference_mae_eV": 0.13897839647457003,
+        "candidate_mae_eV": 0.1401070765607059,
+        "gain_meV": -1.1286800861358643,
+        "row_bootstrap_95pct_meV": [
+          -2.069034204632044,
+          -0.17040109574794784
+        ],
+        "candidate_better_fraction": 0.4955,
+        "nomination_passed": false
+      },
+      "fixed_equal_blend": {
+        "reference_mae_eV": 0.13897839647457003,
+        "candidate_mae_eV": 0.1346632610194385,
+        "gain_meV": 4.315135455131531,
+        "row_bootstrap_95pct_meV": [
+          3.7873748324811456,
+          4.837740669324994
+        ],
+        "candidate_better_fraction": 0.541425,
+        "nomination_passed": true
+      },
+      "fitted_convex_blend": {
+        "reference_mae_eV": 0.13897839647457003,
+        "candidate_mae_eV": 0.13471593701323867,
+        "gain_meV": 4.262459461331367,
+        "row_bootstrap_95pct_meV": [
+          3.822881479855777,
+          4.700795969854593
+        ],
+        "candidate_better_fraction": 0.5481,
+        "nomination_passed": true
+      }
+    },
+    "analysis_timer_scope": "analysis_body_excludes_interpreter_import_startup",
+    "cost_scope": "Process CPU and wall timers begin in main after imports; interpreter/import startup, planning, summary, and Git overhead are outside these measurements."
+  },
+  "limitations": [
+    "Post-hoc model-selected development role; modulo holdout is not independent qualification.",
+    "One seed; row bootstrap is not training variance.",
+    "No saved dropout pass disagreement or clean training-cohort predictions.",
+    "Descriptive target/tail strata and Oracle are label-informed, not routing policies.",
+    "Original cross-attempt control/native-cost and strict V5 gaps unchanged."
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-consistency-residual-screen-20261004-measured-audit",
+      "trajectory_id": "TB-k1-consistency-residual-screen-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-residual-screen-20261004",
+      "attempt_id": "local-attempt-001",
+      "category": "audit",
+      "platform": "local-windows",
+      "hardware": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+      "evidence_ref": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "cpu_hours": {
+          "value": 0.0009288194444444445,
+          "status": "measured"
+        },
+        "wall_hours": {
+          "value": 0.00025151038888806296,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-residual-screen-20261004-prediction_input",
+      "trajectory_id": "TB-k1-consistency-residual-screen-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-residual-screen-20261004",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-residual-screen-20261004-labels_read",
+      "trajectory_id": "TB-k1-consistency-residual-screen-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-residual-screen-20261004",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-residual-screen-20261004-metric_computed",
+      "trajectory_id": "TB-k1-consistency-residual-screen-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-residual-screen-20261004",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-residual-screen-20261004-selection_used",
+      "trajectory_id": "TB-k1-consistency-residual-screen-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-residual-screen-20261004",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_residual_screen/acceptance.json"
+    }
+  ]
+}

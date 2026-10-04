@@ -1,0 +1,29 @@
+{
+  "arms": {
+    "mean2": {
+      "path": "experiments/pcqm_k1_consistency_residual_screen/inputs/mean2.pt",
+      "sha256": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076"
+    },
+    "consistency2": {
+      "path": "experiments/pcqm_k1_consistency_residual_screen/inputs/consistency2.pt",
+      "sha256": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a"
+    }
+  },
+  "source_hashes": {
+    "experiments/pcqm_k1_consistency_residual_screen/run_analysis.py": "f9f81739b142196b6462e403124fb2bfc9d7df209533914acc5e5d90b8c93d9b",
+    "experiments/pcqm_k1_consistency_residual_screen/protocol.md": "4041d8aeaaa69a6eb7378af0edf756f4295bd51238ab3f00013fa0cd66bc1535",
+    "experiments/pcqm_gptrans_100k_transfer_control/analyze_pair.py": "cc24d6825741a5ec36095372688254d42056d333c79501cca9a435e4d36b44d0",
+    "src/molgap/residual_attribution.py": "6cd6248b5ec0fcb90323f0100d9640dbf4fee5832a4f72be970be7ae3b1af884",
+    "src/molgap/router.py": "aec3c6242594c8f064cfa1124950bf509e555ff3c547b2d64d653ef7f974dd7e",
+    "src/molgap/pcqm_k1_gptrans_fusion.py": "fc66ec7232e00a18126bc65c5935fe1fd6fe8b92130dd3246e58b3f493836b9b",
+    "src/molgap/v4_runtime.py": "34bb7430c6c48add83f4fe49fe1070f1175fce5c421464f121a196c4b3b57a1f",
+    "src/molgap/training_reproducibility.py": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa"
+  },
+  "role": "internal_development",
+  "source_idx_range": [
+    100000,
+    150000
+  ],
+  "selection_used": true,
+  "accepted_authority": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/scientific_metrics.json"
+}

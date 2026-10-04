@@ -1,0 +1,66 @@
+{
+  "format": "molgap-k1-consistency-residual-screen-verification-v1",
+  "scope": "Focused verification of existing outputs and runner source; run_analysis.py was not executed.",
+  "worktree": {
+    "path": "D:/w/k1-consistency-screen",
+    "branch": "codex/exp/k1-consistency-residual-screen"
+  },
+  "tests": {
+    "command": "D:/文档/molgap/.venv/Scripts/python.exe -m pytest tests/test_gptrans_local_pair_analysis.py tests/test_pcqm_k1_gptrans_fusion.py tests/test_residual_attribution.py",
+    "working_directory": "D:/w/k1-consistency-screen",
+    "environment": {
+      "PYTHONPATH": "D:/w/k1-consistency-screen/src",
+      "python": "3.10.6",
+      "pytest": "9.1.1"
+    },
+    "exit_code": 0,
+    "collected": 8,
+    "passed": 8,
+    "failed": 0,
+    "duration_seconds": 0.37,
+    "warning": "One PyTorch Geometric deprecation warning for torch_geometric.distributed; tests passed."
+  },
+  "runner_static_review": {
+    "path": "experiments/pcqm_k1_consistency_residual_screen/run_analysis.py",
+    "ast_parse": "pass",
+    "executed": false,
+    "model_construction_forward_inference_or_training_calls_found": [],
+    "saved_prediction_loading": "torch_load_compat with map_location=cpu and weights_only=True",
+    "fit_rows": 10000,
+    "fit_predicate": "source_idx % 5 == 0",
+    "fit_operations": [
+      "per-arm median residual offsets",
+      "one convex blend weight"
+    ],
+    "score_rows": 40000,
+    "score_predicate": "source_idx % 5 != 0",
+    "scoring": "paired_gain on held rows; paired_bootstrap_mean uses 1000 draws and seed 42",
+    "full_cohort_operations": "accepted endpoint reconstruction and descriptive residual summaries only"
+  },
+  "artifact_reconciliation": {
+    "status": "pass",
+    "files_reviewed": [
+      "experiments/pcqm_k1_consistency_residual_screen/results/analysis.json",
+      "experiments/pcqm_k1_consistency_residual_screen/analysis_zh.md",
+      "experiments/pcqm_k1_consistency_residual_screen/terminal_decision.md"
+    ],
+    "arithmetic_and_scope_mismatch_found": false,
+    "matched_values": {
+      "fixed_equal_blend_gain_meV": 4.315135455131531,
+      "fixed_equal_blend_row_bootstrap_95pct_meV": [
+        3.7873748324811456,
+        4.837740669324994
+      ],
+      "fitted_convex_blend_mean2_weight": 0.418,
+      "fitted_convex_blend_heldout_gain_meV": 4.262459461331367,
+      "fitted_convex_blend_row_bootstrap_95pct_meV": [
+        3.822881479855777,
+        4.700795969854593
+      ],
+      "median_bias_correction_gain_meV": 0.035803341865539545,
+      "control_top_1pct_fraction_of_net_gain": 0.7775238294204718
+    },
+    "scope_note": "analysis.json fitted_mae_eV is the in-sample 10,000-row fit metric; the decision and Chinese summary report the 40,000-row heldout score from heldout_against_consistency2.fitted_convex_blend. These are distinct scopes, not a discrepancy.",
+    "qualification_note": "The modulo holdout is part of previously checkpoint-selection-used development data and is not independent qualification; original cross-attempt control/native-cost and strict V5 gaps remain."
+  }
+}

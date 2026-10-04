@@ -1115,6 +1115,26 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "posthoc_internal_development_modulo_holdout",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-consistency-residual-screen-20261004",
+      "role_use": {
+        "internal_development": "selection_used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_k1_consistency_saved_prediction_residual_and_fixed_blend_screen",
+      "source_envelope": "experiments/pcqm_k1_consistency_residual_screen/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_v5_qualified",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "PAIRED_ENDPOINT_single_seed_recovered_control_strict_readiness_not_established",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
@@ -1130,7 +1150,9 @@
       "source_envelope": "experiments/pcqm_k1_dropout_consistency/kaggle3_v1/dropout_consistency2/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_evaluated",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-k1-consistency-residual-screen-20261004"
+      ]
     },
     {
       "artifact_availability": [
@@ -1151,7 +1173,9 @@
       "source_envelope": "experiments/pcqm_k1_dropout_consistency/kaggle3_v1/dropout_mean2/rml_finalized/v5_evidence.json",
       "track": "B",
       "transfer_status": "not_evaluated",
-      "used_by_trajectory_ids": []
+      "used_by_trajectory_ids": [
+        "TB-k1-consistency-residual-screen-20261004"
+      ]
     },
     {
       "artifact_availability": [
