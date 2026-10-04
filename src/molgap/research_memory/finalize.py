@@ -20,7 +20,8 @@ from typing import Any
 from molgap.evidence_pointers import load_json_object
 from .paths import repo_local_path, resolve_repo_pointer, verify_bound_artifact
 from .paired import (accepted_reference_evidence, pair_binding, reference_trajectory,
-                     terminal_reference_evidence, validate_pair_observation)
+                     terminal_reference_evidence, validate_pair_observation,
+                     validate_ineligible_continuation)
 from .roles import validate_observed_role_truth
 from molgap.v5_common import validate_v5_evidence_envelope
 from .schemas import validate_cost_event, validate_role_event, validate_trace_manifest, validate_trajectory
@@ -304,6 +305,10 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         eligible = manifest["backtest_eligibility"]["eligible"]
         if paired is not None:
             observation = validate_pair_observation(package.get("same_run_observation"))
+            if package.get("continuation_ref") is not None:
+                if eligible:
+                    raise ValueError("continued physical jobs remain excluded from same-run replay")
+                validate_ineligible_continuation(root, package)
             if (observation["spec_identity"], observation["logical_run_id"], observation["source_commit"]) != (
                 paired["spec_identity"], paired["logical_run_id"], frozen["state_at_start"]["source_commit"]
             ):
@@ -328,7 +333,8 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
                 assert reference_path is not None
                 reference_terminal = load_json_object(reference_path.parent / "rml_finalized/terminal_input.json")
                 if validate_pair_observation(reference_terminal.get("same_run_observation")) != observation:
-                    raise ValueError("same-run candidate and control have different observed platform jobs")
+                    if eligible or validate_ineligible_continuation(root, reference_terminal) != observation:
+                        raise ValueError("same-run candidate and control have different observed platform jobs")
         elif eligible and (comparison is None or not comparison["strict_ready"]):
             raise ValueError("new eligible trace requires existing strict V5 comparison acceptance")
         if (manifest["trajectory_id"], manifest["run_id"]) != (frozen["trajectory_id"], run_id):

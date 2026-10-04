@@ -121,6 +121,16 @@ hardware; absent counterfactual costs remain unknown.
 
 ## Replay definitions
 
+A control resumed in a later physical job can close with its full retained trace
+through an explicit hash-bound `continuation_ref`, using
+`paired.validate_ineligible_continuation`. The record binds original/continued
+observations, the exact preserved trace prefix, source context, frozen resume
+binding and source checkpoint, continued output manifest and user authority.
+The candidate must still bind the original paired job and frozen source identity.
+Such traces remain replay-ineligible with explicit reasons; eligible same-run
+traces retain the original physical-job equality gate. Recovery provenance never
+substitutes for missing cumulative native costs.
+
 The pool admits canonical candidate/reference pairs only after the existing
 strict grouping gate and local artifact/hash validation. Removing an unavailable
 reference removes that replay world. Partial traces remain labeled partial;

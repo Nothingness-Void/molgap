@@ -672,7 +672,10 @@ def test_accept_workflow_blocks_all_arm_closure_when_one_output_is_missing(
     monkeypatch.setattr(workflow, "prepare_terminal_outputs",
         lambda *_args, **_kwargs: supplied_outputs)
 
-    def inspect(output_dir, **_kwargs):
+    observed_bindings = {}
+
+    def inspect(output_dir, **kwargs):
+        observed_bindings[Path(output_dir)] = kwargs.get("target_identity")
         return {"status": "MECHANICALLY_VERIFIED" if Path(output_dir).is_dir() else "BLOCKED",
                 "blockers": [] if Path(output_dir).is_dir() else ["output missing"]}
 
@@ -682,16 +685,20 @@ def test_accept_workflow_blocks_all_arm_closure_when_one_output_is_missing(
     monkeypatch.setattr(workflow, "build_verified_terminal_descriptor", descriptor)
     monkeypatch.setattr(workflow, "close_verified_outputs", close)
 
+    target_identity = object()
     result = workflow.accept_workflow(
         spec, tmp_path, {}, receipt_path=tmp_path / "receipt.json",
         package_dir=tmp_path / "package", expected_package_identity=HEX_A,
         locations={arm_id: {} for arm_id in arm_ids}, execute=True,
+        target_identities={arm_ids[0]: target_identity},
     )
 
     assert result["status"] == "BLOCKED"
     assert result["executed"] is False
     assert result["arms"][arm_ids[0]]["status"] == "MECHANICALLY_VERIFIED"
     assert result["arms"][arm_ids[1]]["status"] == "BLOCKED"
+    assert observed_bindings[existing] is target_identity
+    assert observed_bindings[missing] is None
     descriptor.assert_not_called()
     close.assert_not_called()
 

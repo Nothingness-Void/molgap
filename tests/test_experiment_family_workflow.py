@@ -22,9 +22,11 @@ from molgap.experiment_family_workflow import (
     FamilyOutputSession,
     RunContext,
     StageRecorder,
+    TargetIdentityBinding,
     build_verified_terminal_descriptor,
     check_acceptance_plan,
     close_verified_outputs,
+    inspect_terminal_output,
     inspect_output,
     tensor_digest,
     write_resume_state,
@@ -43,6 +45,7 @@ from molgap.research_memory.finalize import verified_receipt
 from molgap.research_memory.trace import (
     canonicalize_trace, file_digest, json_bytes, load_canonical_trace,
 )
+from molgap.screen_policy import canonical_fingerprint
 from test_comparison_readiness import _prelaunch, _reference_bundle
 from test_terminal_trace_closure import create_candidate_arm, setup_mock_repo
 from test_experiment_package import repo  # Synthetic local Git/package fixture.
@@ -100,15 +103,143 @@ def _expected_requirements():
     }
 
 
-def _recipe(family_name, *, development_role_identity="dev"):
+def _recipe(family_name, *, development_role_identity="dev", expected=None):
     recipe = {
         "format": "synthetic-family-recipe-v1",
         "family": {"name": family_name, "version": "1"},
-        "acceptance_requirements": _expected_requirements(),
+        "acceptance_requirements": copy.deepcopy(expected or _expected_requirements()),
     }
     if development_role_identity is not None:
         recipe["development_role_identity"] = development_role_identity
     return recipe
+
+
+def _target_identity_plan(repo, spec, expected, recipes, *, encoding):
+    bundle = copy.deepcopy(_reference_bundle())
+    prediction_bytes = json_bytes({
+        "synthetic": True,
+        "source_idx_sha256": expected["source_idx_sha256"],
+        "target_sha256": expected["target_sha256"],
+        "rows": expected["development_rows"],
+    })
+    bundle["prediction_manifest"].update({
+        "prediction_sha256": hashlib.sha256(prediction_bytes).hexdigest(),
+        "source_idx_sha256": expected["source_idx_sha256"],
+        "target_sha256": expected["target_sha256"],
+        "row_count": expected["development_rows"],
+        "unique_source_idx": expected["development_rows"],
+    })
+
+    owner_fields = {
+        "runtime_certificate": "runtime_certificate_ref",
+        "row_manifest": "row_manifest_ref",
+        "target_manifest": "target_manifest_ref",
+        "trace_manifest": "trace_manifest_ref",
+        "role_history": "role_history_ref",
+        "target_transform_asset": "target_transform_asset_ref",
+        "cost_records": "cost_records_ref",
+        "acceptance": "acceptance_ref",
+        "decision": "decision_ref",
+    }
+    artifacts = {}
+    for name, field in owner_fields.items():
+        path = repo / bundle[field]
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if name == "target_manifest":
+            content = json_bytes({
+                "development_target_sha256": expected["target_sha256"],
+                "target_encoding": encoding,
+            })
+        elif name == "decision":
+            content = b"# Synthetic retained reference decision\n"
+        else:
+            content = json_bytes({"synthetic": True, "artifact": name})
+        path.write_bytes(content)
+        artifacts[name] = {"path": path.relative_to(repo).as_posix(),
+                           "sha256": hashlib.sha256(content).hexdigest()}
+
+    for name, content in {
+        "checkpoint": b"synthetic checkpoint artifact\n",
+        "prediction_manifest": json_bytes(bundle["prediction_manifest"]),
+        "predictions": prediction_bytes,
+    }.items():
+        path = repo / f"experiments/reference/{name}.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(content)
+        artifacts[name] = {"path": path.relative_to(repo).as_posix(),
+                           "sha256": hashlib.sha256(content).hexdigest()}
+
+    plan_root = repo / "family-target-identity-plan"
+    plan_root.mkdir(exist_ok=True)
+    bundle_path = plan_root / "reference_bundle.json"
+    bundle_path.write_bytes(json_bytes(bundle))
+    prelaunch_path = plan_root / "comparison_prelaunch.json"
+    prelaunch = _prelaunch(bundle)
+    assert prelaunch["prelaunch_ready"] is True
+    prelaunch_path.write_bytes(json_bytes(prelaunch))
+
+    pointer = lambda path: {
+        "path": path.relative_to(repo).as_posix(),
+        "sha256": file_digest(path),
+    }
+    adapters = {"gptrans_t": "gptrans-v1", "neural_atom_k1": "k1-v1"}
+    entries = []
+    for arm in spec.to_dict()["arms"]:
+        recipe_path = repo / recipes[arm["arm_id"]]
+        entries.append({
+            "arm_id": arm["arm_id"],
+            "adapter": adapters[arm["arm_id"]],
+            "expected": copy.deepcopy(expected),
+            "contract": pointer(recipe_path),
+            "comparison_prelaunch": pointer(prelaunch_path),
+            "reference_bundle": pointer(bundle_path),
+            "reference_artifacts": copy.deepcopy(artifacts),
+        })
+    plan_path = plan_root / "acceptance_plan.json"
+    plan_path.write_bytes(json_bytes({
+        "format": "molgap-family-acceptance-plan-v1",
+        "spec_identity": spec.identity,
+        "arms": entries,
+    }))
+    return plan_path
+
+
+def _target_identity_case(repo, launch_contexts, target, *, encoding):
+    old_spec, _, _, _, old_contexts = launch_contexts
+    target_bytes = target.detach().cpu().contiguous().numpy().astype("<f4", copy=False).tobytes()
+    expected = _expected_requirements()
+    expected["target_sha256"] = hashlib.sha256(target_bytes).hexdigest()
+
+    declaration = old_spec.to_dict()
+    recipes = {}
+    recipe_hashes = {}
+    for arm in declaration["arms"]:
+        family_name = arm["family"]["name"]
+        recipe = _recipe(family_name, expected=expected)
+        recipe_path = repo / "recipes" / f"{family_name}-target-identity.json"
+        recipe_path.parent.mkdir(parents=True, exist_ok=True)
+        recipe_bytes = json_bytes(recipe)
+        recipe_path.write_bytes(recipe_bytes)
+        recipe_hash = hashlib.sha256(recipe_bytes).hexdigest()
+        arm["training"]["recipe"]["sha256"] = recipe_hash
+        recipes[arm["arm_id"]] = recipe_path.relative_to(repo).as_posix()
+        recipe_hashes[arm["arm_id"]] = recipe_hash
+    spec = ExperimentSpec(declaration)
+    contexts = {}
+    for arm in spec.to_dict()["arms"]:
+        old_context = old_contexts[arm["arm_id"]]
+        contexts[arm["arm_id"]] = replace(
+            old_context,
+            arm_identity=canonical_fingerprint(arm),
+            spec_identity=spec.identity,
+            training_recipe_sha256=recipe_hashes[arm["arm_id"]],
+        )
+    plan_path = _target_identity_plan(repo, spec, expected, recipes, encoding=encoding)
+    binding = TargetIdentityBinding.from_acceptance_plan(
+        spec, repo, plan_path.relative_to(repo).as_posix(),
+        plan_sha256=file_digest(plan_path),
+    )
+    return spec, expected, contexts, plan_path, binding
 
 
 def _context_for_recipe(context, *, development_role_identity):
@@ -281,13 +412,16 @@ def _write_output(
     publish=True,
     development_role_identity="dev",
     metric_semantics=None,
+    target_tensor=None,
+    expected_override=None,
 ):
     root = tmp_path / f"output-{context.arm_id}"
     root.mkdir()
 
     source_idx = torch.tensor([101, 103, 108], dtype=torch.int64)
-    target = torch.tensor([0.0, 0.0, 0.0], dtype=torch.float64)
-    prediction = torch.tensor([1.0, 1.0, 1.0], dtype=torch.float64)
+    target = (torch.tensor([0.0, 0.0, 0.0], dtype=torch.float64)
+              if target_tensor is None else target_tensor.clone())
+    prediction = target.double() + 1.0
     protected = {}
     if variant == "wrong_rows":
         source_idx = source_idx + 1
@@ -312,8 +446,11 @@ def _write_output(
         "prediction_eV": prediction,
         **protected,
     }, prediction_path)
+    expected = copy.deepcopy(expected_override or _expected_requirements())
     (root / "contract.json").write_bytes(json_bytes(_recipe(
-        context.family_name, development_role_identity=development_role_identity
+        context.family_name,
+        development_role_identity=development_role_identity,
+        expected=expected,
     )))
 
     selected_weights = "ema" if adapter == "gptrans-v1" else "live"
@@ -406,15 +543,6 @@ def _write_output(
     }
     if progress_overrides:
         progress.update(progress_overrides)
-    expected = {
-        "epochs": 2,
-        "optimizer_steps": 4,
-        "sample_presentations": 8,
-        "development_rows": 3,
-        "source_idx_sha256": tensor_digest(SOURCE_IDX, role="source_idx"),
-        "target_sha256": tensor_digest(TARGET, role="target"),
-        "precision": "fp32",
-    }
     if publish:
         write_output_manifest(
             root,
@@ -442,11 +570,242 @@ def test_verified_output_is_bound_to_launch_arm_and_source(
     assert result["context"] == context.to_dict()
     assert result["scientific_acceptance"] == "NOT_EVALUATED"
     assert result["replay_readiness"] == "NOT_EVALUATED"
+    assert "target_identity" not in result["observed"]
     assert result["observed"]["progress"] == {
         "epochs": 2,
         "optimizer_steps": 4,
         "sample_presentations": 8,
     }
+
+
+def test_prelaunch_pinned_float32_target_accepts_its_original_dtype(
+    tmp_path, repo, launch_contexts
+):
+    target = torch.tensor([0.1, 0.2, 0.3], dtype=torch.float32)
+    spec, expected, contexts, plan_path, binding = _target_identity_case(
+        repo, launch_contexts, target,
+        encoding="little-endian-float32-contiguous-raw-bytes",
+    )
+    context = contexts["gptrans_t"]
+    root, _, _, _ = _write_output(
+        tmp_path, context, "gptrans-v1", target_tensor=target,
+        expected_override=expected,
+    )
+
+    result = inspect_output(root, context=context, expected=expected,
+                            target_identity=binding)
+
+    assert binding.plan_sha256 == file_digest(plan_path)
+    assert context.spec_identity == spec.identity
+    assert result["status"] == "MECHANICALLY_VERIFIED", result
+    gptrans_plan_arm = next(
+        row for row in json.loads(plan_path.read_bytes())["arms"]
+        if row["arm_id"] == "gptrans_t"
+    )
+    assert result["observed"]["target_identity"] == {
+        "encoding": "little-endian-float32-contiguous-raw-bytes",
+        "manifest": gptrans_plan_arm["reference_artifacts"]["target_manifest"],
+        "acceptance_plan_sha256": file_digest(plan_path),
+    }
+
+
+def test_float32_target_identity_is_not_inferred_without_explicit_binding(
+    tmp_path, repo, launch_contexts
+):
+    target = torch.tensor([0.1, 0.2, 0.3], dtype=torch.float32)
+    _, expected, contexts, _, _ = _target_identity_case(
+        repo, launch_contexts, target,
+        encoding="little-endian-float32-contiguous-raw-bytes",
+    )
+    root, _, _, _ = _write_output(
+        tmp_path, contexts["gptrans_t"], "gptrans-v1", target_tensor=target,
+        expected_override=expected,
+    )
+
+    result = inspect_output(root, context=contexts["gptrans_t"], expected=expected)
+
+    assert result["status"] == "BLOCKED"
+    assert any("Development target identity mismatch" in blocker
+               for blocker in result["blockers"])
+
+
+def test_pinned_float32_identity_rejects_a_lossy_float64_output(
+    tmp_path, repo, launch_contexts
+):
+    target = torch.tensor([0.1, 0.2, 0.3], dtype=torch.float32)
+    _, expected, contexts, _, binding = _target_identity_case(
+        repo, launch_contexts, target,
+        encoding="little-endian-float32-contiguous-raw-bytes",
+    )
+    root, _, _, _ = _write_output(
+        tmp_path, contexts["gptrans_t"], "gptrans-v1", target_tensor=target.double(),
+        expected_override=expected,
+    )
+
+    result = inspect_output(root, context=contexts["gptrans_t"], expected=expected,
+                            target_identity=binding)
+
+    assert result["status"] == "BLOCKED"
+    assert any("original float32 tensors" in blocker for blocker in result["blockers"])
+
+
+def test_target_identity_rejects_a_changed_pinned_manifest(
+    tmp_path, repo, launch_contexts
+):
+    target = torch.tensor([0.1, 0.2, 0.3], dtype=torch.float32)
+    _, expected, contexts, plan_path, binding = _target_identity_case(
+        repo, launch_contexts, target,
+        encoding="little-endian-float32-contiguous-raw-bytes",
+    )
+    plan = json.loads(plan_path.read_bytes())
+    gptrans_plan_arm = next(row for row in plan["arms"] if row["arm_id"] == "gptrans_t")
+    pointer = gptrans_plan_arm["reference_artifacts"]["target_manifest"]
+    (repo / pointer["path"]).write_bytes(json_bytes({
+        "development_target_sha256": expected["target_sha256"],
+        "target_encoding": "little-endian-float32-contiguous-raw-bytes",
+        "changed": True,
+    }))
+    root, _, _, _ = _write_output(
+        tmp_path, contexts["gptrans_t"], "gptrans-v1", target_tensor=target,
+        expected_override=expected,
+    )
+
+    result = inspect_output(root, context=contexts["gptrans_t"], expected=expected,
+                            target_identity=binding)
+
+    assert result["status"] == "BLOCKED"
+    assert any("Target identity manifest hash mismatch" in blocker
+               for blocker in result["blockers"])
+
+
+def test_target_identity_rejects_an_unrecognized_pinned_encoding(
+    tmp_path, repo, launch_contexts
+):
+    target = torch.tensor([0.1, 0.2, 0.3], dtype=torch.float32)
+    _, expected, contexts, _, binding = _target_identity_case(
+        repo, launch_contexts, target, encoding="float16-packed",
+    )
+    root, _, _, _ = _write_output(
+        tmp_path, contexts["gptrans_t"], "gptrans-v1", target_tensor=target,
+        expected_override=expected,
+    )
+
+    result = inspect_output(root, context=contexts["gptrans_t"], expected=expected,
+                            target_identity=binding)
+
+    assert result["status"] == "BLOCKED"
+    assert any("Unsupported pinned target encoding" in blocker
+               for blocker in result["blockers"])
+
+
+def test_target_identity_rejects_plan_expectations_changed_after_prelaunch(
+    tmp_path, repo, launch_contexts
+):
+    target = torch.tensor([0.1, 0.2, 0.3], dtype=torch.float32)
+    _, expected, contexts, plan_path, _ = _target_identity_case(
+        repo, launch_contexts, target,
+        encoding="little-endian-float32-contiguous-raw-bytes",
+    )
+    plan = json.loads(plan_path.read_bytes())
+    entry = next(row for row in plan["arms"] if row["arm_id"] == "gptrans_t")
+    entry["expected"]["target_sha256"] = "f" * 64
+    plan_path.write_bytes(json_bytes(plan))
+    binding = TargetIdentityBinding(
+        repo, plan_path.relative_to(repo).as_posix(), file_digest(plan_path),
+    )
+    root, _, _, _ = _write_output(
+        tmp_path, contexts["gptrans_t"], "gptrans-v1", target_tensor=target,
+        expected_override=expected,
+    )
+
+    result = inspect_output(root, context=contexts["gptrans_t"], expected=expected,
+                            target_identity=binding)
+
+    assert result["status"] == "BLOCKED"
+    assert any("Target identity plan/frozen expectations mismatch" in blocker
+               for blocker in result["blockers"])
+
+
+def test_float32_binding_does_not_skip_later_checkpoint_acceptance_checks(
+    tmp_path, repo, launch_contexts
+):
+    target = torch.tensor([0.1, 0.2, 0.3], dtype=torch.float32)
+    _, expected, contexts, _, binding = _target_identity_case(
+        repo, launch_contexts, target,
+        encoding="little-endian-float32-contiguous-raw-bytes",
+    )
+    root, _, _, _ = _write_output(
+        tmp_path, contexts["gptrans_t"], "gptrans-v1", target_tensor=target,
+        expected_override=expected, resume_missing=["ema"],
+    )
+
+    result = inspect_output(root, context=contexts["gptrans_t"], expected=expected,
+                            target_identity=binding)
+
+    assert result["status"] == "BLOCKED"
+    assert result["observed"]["target_identity"]["encoding"] == (
+        "little-endian-float32-contiguous-raw-bytes"
+    )
+    assert any("Incomplete checkpoint/resume state" in blocker
+               for blocker in result["blockers"])
+
+
+def test_target_binding_is_preserved_by_descriptor_build_and_close_reinspection(
+    tmp_path, repo, launch_contexts, monkeypatch,
+):
+    target = torch.tensor([0.1, 0.2, 0.3], dtype=torch.float32)
+    spec, expected, contexts, _, binding = _target_identity_case(
+        repo, launch_contexts, target,
+        encoding="little-endian-float32-contiguous-raw-bytes",
+    )
+    outputs = {
+        arm_id: {
+            "context": context,
+            "expected": expected,
+            "output_dir": tmp_path / ("output-" + arm_id),
+            "target_identity": binding,
+        }
+        for arm_id, context in contexts.items()
+    }
+    locations = {
+        arm_id: {
+            "trajectory_id": "trajectory-" + arm_id,
+            "run_id": "run-" + arm_id,
+            "trajectory": f"experiments/{arm_id}/trajectory.json",
+            "terminal": f"experiments/{arm_id}/terminal.json",
+            "trace": f"experiments/{arm_id}/trace.json",
+        }
+        for arm_id in outputs
+    }
+    calls = []
+
+    def blocked_inspection(output_dir, **kwargs):
+        calls.append((output_dir, kwargs))
+        return {"status": "BLOCKED", "blockers": ["sentinel"]}
+
+    monkeypatch.setattr(
+        "molgap.experiment_family_workflow.inspect_output", blocked_inspection
+    )
+    item = outputs["gptrans_t"]
+    inspect_terminal_output(item)
+    assert calls[-1][1]["target_identity"] is binding
+
+    with pytest.raises(ValueError, match="Output inspection blocked: sentinel"):
+        build_verified_terminal_descriptor(repo, spec, outputs=outputs,
+                                           locations=locations)
+    assert calls[-1][1]["target_identity"] is binding
+
+    import molgap.experiment_terminal as terminal
+    monkeypatch.setattr(terminal, "translate_terminal_descriptor", lambda *_args: None)
+
+    class Descriptor:
+        def to_dict(self):
+            return {"arms": [{"arm_id": "gptrans_t"}]}
+
+    result = close_verified_outputs(repo, spec, Descriptor(), outputs=outputs)
+
+    assert result["status"] == "BLOCKED"
+    assert calls[-1][1]["target_identity"] is binding
 
 
 @pytest.mark.parametrize(

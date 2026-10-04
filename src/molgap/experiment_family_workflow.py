@@ -445,7 +445,78 @@ def _costs(costs):
                 _text(cost["reason"], "cost.reason")
 
 
-def inspect_output(output_dir: Path, *, context: RunContext, expected: dict) -> dict:
+@dataclass(frozen=True)
+class TargetIdentityBinding:
+    """An explicit prelaunch encoding binding; never infer it from outputs."""
+
+    repo_root: Path
+    plan_path: str
+    plan_sha256: str
+
+    @classmethod
+    def from_acceptance_plan(cls, spec: ExperimentSpec, repo_root: Path,
+                             plan_path: str, *, plan_sha256: str):
+        root = Path(repo_root).absolute()
+        path = _artifact_path(root, plan_path)
+        _digest(plan_sha256, "acceptance plan digest")
+        if file_digest(path) != plan_sha256:
+            raise ValueError("Target identity acceptance plan hash mismatch")
+        report = check_acceptance_plan(spec, root, _json(path))
+        if report["status"] != "ACCEPTANCE_INPUTS_AVAILABLE":
+            raise ValueError("Target identity acceptance plan is blocked")
+        return cls(root, plan_path, plan_sha256)
+
+    def digest(self, target, *, context: RunContext, expected: dict) -> tuple[str, dict]:
+        import torch
+
+        _digest(self.plan_sha256, "acceptance plan digest")
+        path = _artifact_path(self.repo_root, self.plan_path)
+        if file_digest(path) != self.plan_sha256:
+            raise ValueError("Target identity acceptance plan hash mismatch")
+        plan = _json(path)
+        if plan.get("format") != "molgap-family-acceptance-plan-v1" or plan.get("spec_identity") != context.spec_identity:
+            raise ValueError("Target identity plan/Spec mismatch")
+        entries = [entry for entry in plan["arms"] if entry["arm_id"] == context.arm_id]
+        if len(entries) != 1:
+            raise ValueError("Target identity plan requires one matching arm")
+        entry = entries[0]
+        if entry["expected"] != expected or entry["contract"]["sha256"] != context.training_recipe_sha256:
+            raise ValueError("Target identity plan/frozen expectations mismatch")
+        pointer = entry["reference_artifacts"]["target_manifest"]
+        if set(pointer) != {"path", "sha256"}:
+            raise ValueError("Target identity requires a pinned manifest")
+        _digest(pointer["sha256"], "target manifest digest")
+        manifest_path = _artifact_path(self.repo_root, pointer["path"])
+        if file_digest(manifest_path) != pointer["sha256"]:
+            raise ValueError("Target identity manifest hash mismatch")
+        manifest = _json(manifest_path)
+        if manifest.get("development_target_sha256") != expected["target_sha256"]:
+            raise ValueError("Target identity manifest/frozen target mismatch")
+        encoding = manifest.get("target_encoding")
+        if encoding == "little-endian-float32-contiguous-raw-bytes":
+            # Requiring the original dtype prevents a lossy cast hiding changes.
+            if target.dtype != torch.float32 or not torch.isfinite(target).all():
+                raise ValueError("Pinned float32 targets require finite original float32 tensors")
+            data = target.detach().cpu().contiguous().numpy().astype("<f4", copy=False).tobytes()
+            digest = hashlib.sha256(data).hexdigest()
+        elif encoding == "little-endian-float64-contiguous-raw-bytes":
+            digest = tensor_digest(target, role="target")
+        else:
+            raise ValueError("Unsupported pinned target encoding")
+        return digest, {"encoding": encoding, "manifest": pointer,
+                        "acceptance_plan_sha256": self.plan_sha256}
+
+
+def inspect_terminal_output(item: dict) -> dict:
+    """Carry an explicit encoding binding through every closure reinspection."""
+    kwargs = {"context": item["context"], "expected": item["expected"]}
+    if item.get("target_identity") is not None:
+        kwargs["target_identity"] = item["target_identity"]
+    return inspect_output(item["output_dir"], **kwargs)
+
+
+def inspect_output(output_dir: Path, *, context: RunContext, expected: dict,
+                   target_identity: TargetIdentityBinding | None = None) -> dict:
     """Inspect pinned retained files on CPU, using safe tensor-only loading.
 
     Expected row/target hashes and exposure must come from the frozen contract,
@@ -515,7 +586,14 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict) -> 
             raise ValueError("Nonfinite or nonfloating predictions")
         if tensor_digest(idx, role="source_idx") != expected["source_idx_sha256"]:
             raise ValueError("Development row identity mismatch")
-        if tensor_digest(target, role="target") != expected["target_sha256"]:
+        if target_identity is None:
+            target_sha256 = tensor_digest(target, role="target")
+        else:
+            if not isinstance(target_identity, TargetIdentityBinding):
+                raise ValueError("Expected explicit pinned target identity binding")
+            target_sha256, observed["target_identity"] = target_identity.digest(
+                target, context=context, expected=expected)
+        if target_sha256 != expected["target_sha256"]:
             raise ValueError("Development target identity mismatch")
         observed["development_mae_eV"] = (prediction.double() - target.double()).abs().mean().item()
         trace = validate_canonical_trace(_json(paths["trace"]))
@@ -679,7 +757,7 @@ def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *,
     reports = {}
     for arm in descriptor.to_dict()["arms"]:
         item = outputs[arm["arm_id"]]
-        report = inspect_output(item["output_dir"], context=item["context"], expected=item["expected"])
+        report = inspect_terminal_output(item)
         reports[arm["arm_id"]] = report
         if report["status"] == "BLOCKED":
             continue
@@ -755,7 +833,7 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
         ctx = item["context"]
         if ctx.spec_identity != spec.identity or ctx.arm_identity != canonical_fingerprint(arm):
             raise ValueError("Output/Spec arm binding mismatch")
-        report = inspect_output(item["output_dir"], context=ctx, expected=item["expected"])
+        report = inspect_terminal_output(item)
         if report["status"] != "MECHANICALLY_VERIFIED":
             raise ValueError("Output inspection blocked: " + "; ".join(report["blockers"]))
         where = locations[arm_id]
