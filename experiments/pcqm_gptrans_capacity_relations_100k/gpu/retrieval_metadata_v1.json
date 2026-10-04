@@ -1,0 +1,61 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-g1-local-scale-s42",
+  "version": 1,
+  "files": [
+    {
+      "path": "gptrans_local_scale/degree_bond_local_ema999/arm_binding.json",
+      "sha256": "3cb7c17206ecdd64953f8dfd29cfe840a56cadcfc212b821a374cda872034955"
+    },
+    {
+      "path": "gptrans_local_scale/degree_bond_local_ema999/preflight/preflight.json",
+      "sha256": "e858be3b40937b81fcd5c212cb65b37f4cd738c3415047e1830d591b8d1622f2"
+    },
+    {
+      "path": "gptrans_local_scale/degree_bond_local_ema999/training/completion_manifest.json",
+      "sha256": "24b78ed87c23b62df31464fb2b5bb6ec3acb1b4c59537cdfad30647c934f737f"
+    },
+    {
+      "path": "gptrans_local_scale/degree_bond_local_ema999/training/frozen_reference.json",
+      "sha256": "b9632ba9a3b3d4822162f12bdc889ba6367f9bdee9809ce8080483fe2057eb69"
+    },
+    {
+      "path": "gptrans_local_scale/degree_bond_local_ema999/training/canonical_trace.json",
+      "sha256": "ccb150226f5159f6806954e6366112cc2129767002b0ac80660788a57ce4a646"
+    },
+    {
+      "path": "gptrans_local_scale/degree_bond_local_ema999/training/trace.json",
+      "sha256": "89dd5102b93943eb413ef8c3ff78dac4e9ef27848aa270a0e189997c611130bc"
+    },
+    {
+      "path": "gptrans_local_scale/scale_ema/arm_binding.json",
+      "sha256": "185e09828e34306fef2bbda307e8e0d25730e79cd02341e960276e96311f49ec"
+    },
+    {
+      "path": "gptrans_local_scale/scale_ema/training/completion_manifest.json",
+      "sha256": "c481b562c63e47bc4904a1a529e6db2c2afa7865649246626bc169c6f6c661ee"
+    },
+    {
+      "path": "gptrans_local_scale/scale_ema/training/qualification.json",
+      "sha256": "83b9a7bcffa05d6afcd124975a6c436d49cb26c7cb777275c0886790f731f05e"
+    },
+    {
+      "path": "gptrans_local_scale/scale_ema/training/ema9999/canonical_trace.json",
+      "sha256": "33e12a12dc76d954b265e4670d9520a7c95512187c4984c0e6fdb2b2aceccd19"
+    },
+    {
+      "path": "gptrans_local_scale/scale_ema/training/ema9999/trace.json",
+      "sha256": "bbf3e84c3b8219bc8a35d38271b43bf09a2dd5625879dedbc83cbfc228241f1a"
+    },
+    {
+      "path": "gptrans_local_scale/scale_ema/training/ema999/canonical_trace.json",
+      "sha256": "c800359fd76b6c7bdecd79ef1c18c2474e329a5c1cec32a79ead6b39e6041381"
+    },
+    {
+      "path": "gptrans_local_scale/scale_ema/training/ema999/trace.json",
+      "sha256": "4e5324e162f170625b949723a334c4ec4ea535317a36c95550554b83d75f1e79"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}
