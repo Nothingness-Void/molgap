@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "unknown",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-dropout-mean2-kaggle3-100k-s42-v1-recovery-v3-invocation",
+  "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+  "hardware": "Tesla T4; recovery invocation only, loading included in device time; prior segments excluded",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.056603259626111097
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.05217152821972222
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+}

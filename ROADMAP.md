@@ -21,7 +21,7 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 
 | Priority | Task | Exit condition / owner |
 |---|---|---|
-| P0 | Close K1 dropout acceptance gaps | Kaggle3 ID136942701/version3 completed control epoch40; retained paired gain1.5288meV is below3meV. Resolve pinned target encoding and missing cumulative control native cost without changing frozen evidence; then finalize acceptance/RML and routing. Attribution is retained on owner; no scale-up |
+| Closed | K1 dropout pair acceptance and attribution | Both40epoch arms finalized VALID/COMPLETE; canonical desktop RML retains the1.5288meV positive numerical benefit below3meV. Missing control native cost and resumed provenance remain explicit strict replay exclusions; no successor or scale-up |
 | Closed | Chemical auxiliary custody and canonical discovery | Trained arms and summary-only CPU terminal dispositions retained; strict qualification gaps remain unknown, no new training |
 | Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |
 

@@ -1,0 +1,81 @@
+{
+  "accepted": true,
+  "mode": "dropout_mean2",
+  "zero_initialization_delta": 0.0,
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      0.7798992395401001,
+      0.7798992395401001
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "0fa9006e0f9bd4ae7b1267495a63293900f6fc1396a1bfed6faaa94a8dfcfc6f",
+      "0fa9006e0f9bd4ae7b1267495a63293900f6fc1396a1bfed6faaa94a8dfcfc6f"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      0.7798992395401001,
+      0.7798992395401001
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "434a0309517ca17e1a0d1b66ca3d6da63c71fc9394d55a181bd2a9616185bee8",
+      "434a0309517ca17e1a0d1b66ca3d6da63c71fc9394d55a181bd2a9616185bee8"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.10800960200003829,
+      "samples_seconds": [
+        0.10725104600010127,
+        0.10782754800004568,
+        0.10906410100005814,
+        0.11245417099996757,
+        0.10800960200003829
+      ],
+      "peak_memory_bytes": 560826880
+    },
+    "dropout_mean2": {
+      "median_step_seconds": 0.2089625099999921,
+      "samples_seconds": [
+        0.20410849100005635,
+        0.2196173979999685,
+        0.2588164510000297,
+        0.20239343399998688,
+        0.2089625099999921
+      ],
+      "peak_memory_bytes": 975263744
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": 0.9346660494121444,
+  "maximum_overhead_fraction": 2.0,
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption",
+  "dropout_signal": {
+    "accepted": true,
+    "normalized_disagreement": 0.00025919912150129676,
+    "disagreement_gradient_squared_norm": 3.7860151380875954e-05,
+    "fixture_role": "training-only",
+    "formal_sample_presentations": 0,
+    "config": {
+      "passes": 2,
+      "consistency_weight": 0.0,
+      "space": "normalized-gap",
+      "disagreement": "squared-output"
+    }
+  }
+}

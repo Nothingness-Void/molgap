@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle3-dropout-001",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-dropout-consistency2-kaggle3-100k-s42-v1-observed-training",
+  "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_consistency2/acceptance.json",
+  "hardware": "Tesla T4; exclusive assigned training window lower bound, bootstrap and queue excluded",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 2.5501456977247225
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 2.5501456977247225
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_consistency2:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-dropout-consistency2-kaggle3-100k-s42-v1"
+}

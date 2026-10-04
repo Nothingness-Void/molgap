@@ -1,0 +1,81 @@
+{
+  "accepted": true,
+  "mode": "dropout_consistency2",
+  "zero_initialization_delta": 0.0,
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      0.7799811959266663,
+      0.7799811959266663
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "b40cdd4b04b6a015d9144d8e03b1e0e6be7d997506b0f335037172d0fd19ca13",
+      "b40cdd4b04b6a015d9144d8e03b1e0e6be7d997506b0f335037172d0fd19ca13"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      0.7799811959266663,
+      0.7799811959266663
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "5a6c4795e7ae5423d8f3a12bb5b8badee8b223a6970b063421e27df38f1728e9",
+      "5a6c4795e7ae5423d8f3a12bb5b8badee8b223a6970b063421e27df38f1728e9"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.10980276699990554,
+      "samples_seconds": [
+        0.10854971700007354,
+        0.10980276699990554,
+        0.11577968300002794,
+        0.11121141899991471,
+        0.10959379499990973
+      ],
+      "peak_memory_bytes": 560826880
+    },
+    "dropout_consistency2": {
+      "median_step_seconds": 0.2080492970000023,
+      "samples_seconds": [
+        0.2080492970000023,
+        0.22176880200004234,
+        0.25512294300006033,
+        0.20237832600003003,
+        0.20547174600005746
+      ],
+      "peak_memory_bytes": 975263744
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": 0.8947545921149809,
+  "maximum_overhead_fraction": 2.0,
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption",
+  "dropout_signal": {
+    "accepted": true,
+    "normalized_disagreement": 0.00025919912150129676,
+    "disagreement_gradient_squared_norm": 3.7860151380875954e-05,
+    "fixture_role": "training-only",
+    "formal_sample_presentations": 0,
+    "config": {
+      "passes": 2,
+      "consistency_weight": 0.1,
+      "space": "normalized-gap",
+      "disagreement": "squared-output"
+    }
+  }
+}

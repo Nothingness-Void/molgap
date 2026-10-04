@@ -1,0 +1,31 @@
+{
+  "costs": [
+    {
+      "metric": "wall_seconds",
+      "unit": "seconds",
+      "value": 11.484470041000009,
+      "status": "measured",
+      "semantics": "process_wall",
+      "hardware": "Tesla T4",
+      "scope": "diagnostic_window_excludes_bootstrap_queue"
+    },
+    {
+      "metric": "device_seconds",
+      "unit": "seconds",
+      "value": 11.484470041000009,
+      "status": "measured",
+      "semantics": "allocated_device",
+      "hardware": "Tesla T4",
+      "scope": "diagnostic_window_excludes_bootstrap_queue"
+    }
+  ],
+  "scope": "one exclusive assigned T4 diagnostic window; bootstrap and queue excluded",
+  "cpu_allocation_seconds": {
+    "status": "missing",
+    "value": null
+  },
+  "queue_seconds": {
+    "status": "missing",
+    "value": null
+  }
+}

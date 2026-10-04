@@ -46,16 +46,16 @@ Branch-local records absent here are linked through the
 - **K1 dropout consistency:** paired100K40epoch question, owning branch
   `codex/exp/k1-dropout-consistency`. Exact Kaggle3
   [kernel](https://www.kaggle.com/code/nvoid912/molgap-k1-dropout-consistency-100k-s42-v1)
-  ID136942701/version3 is COMPLETE: the authorized control-only recovery finished
-  epoch40. Both arms now have40epochs/31240updates/3998720presentations.
-  Consistency MAE0.1387285031 versus matched control0.1402572856eV gives1.5288meV
-  improvement, below the frozen3meV gate; recovery did not refresh the best model.
-  Target-hash byte encoding still blocks mechanical acceptance, and cumulative
-  control native T4 cost is missing. Preserve versions1/2 and frozen source.
-  Read [owner STATUS](D:/w/k1-dropout-consistency/experiments/pcqm_k1_dropout_consistency/STATUS.md)
-  and frozen protocol. Independent prospective RML arms live on the owner;
-  Scientific acceptance and dual replay readiness remain pending; no adoption or
-  scale-up. There is no automatic monitor or server takeover.
+  ID136942701/version3 is COMPLETE. Both40epoch arms passed mechanical acceptance
+  and independent terminal/RML publication. The1.5288meV numerical consistency
+  gain is retained; NEGATIVE_UNDER_CONTRACT records the missed3meV gate.
+  Read [accepted decision](experiments/pcqm_k1_dropout_consistency/terminal_acceptance/decision.md)
+  and [attribution](experiments/pcqm_k1_dropout_consistency/terminal_acceptance/attribution.md).
+  Desktop canonical discovery includes both results and full traces; reusable
+  encoding/continuation acceptance fixes are integrated. Complete history routes
+  to archive; no model adoption or scale-up. Strict replay/READY stays excluded
+  for resumed-control provenance, missing cumulative control native cost and
+  absent strict V5 readiness. There is no automatic monitor or server takeover.
 
 - **K1 FLAG objective:** exact Kaggle3 ID136744623/version1 is COMPLETE;
   accepted terminal NEGATIVE_UNDER_CONTRACT. No adoption or scale-up. Full history

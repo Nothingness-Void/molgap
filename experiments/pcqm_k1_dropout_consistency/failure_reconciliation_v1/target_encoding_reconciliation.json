@@ -1,0 +1,21 @@
+{
+  "original_expected_encoding": "little-endian-float32-contiguous-raw-bytes",
+  "inspector_encoding": "little-endian-float64-converted-from-retained-target-values",
+  "arms": {
+    "dropout_mean2": {
+      "mae_eV": 0.1402572855657339,
+      "legacy_target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137",
+      "canonical_target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e",
+      "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+    },
+    "dropout_consistency2": {
+      "mae_eV": 0.13872850305497647,
+      "legacy_target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137",
+      "canonical_target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e",
+      "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+    }
+  },
+  "frozen_records_modified": false,
+  "mechanical_status": "BLOCKED",
+  "scientific_status": "NOT_ACCEPTED"
+}

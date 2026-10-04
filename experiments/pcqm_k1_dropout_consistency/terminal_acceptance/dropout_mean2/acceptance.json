@@ -1,0 +1,213 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "unknown",
+      "category": "training",
+      "cost_event_id": "cost-TB-k1-dropout-mean2-kaggle3-100k-s42-v1-complete-native-cost-missing",
+      "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+      "hardware": "Tesla T4; complete40epoch allocation unknown",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "unknown",
+      "category": "training",
+      "cost_event_id": "cost-TB-k1-dropout-mean2-kaggle3-100k-s42-v1-recovery-v3-invocation",
+      "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+      "hardware": "Tesla T4; recovery invocation only, loading included in device time; prior segments excluded",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.056603259626111097
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.05217152821972222
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle3-dropout-001",
+      "category": "preflight",
+      "cost_event_id": "cost-TB-k1-dropout-mean2-kaggle3-100k-s42-v1-original-qualification",
+      "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+      "hardware": "Tesla T4; original assigned qualification window, bootstrap and queue excluded",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.003188109586666662
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.003188109586666662
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+    }
+  ],
+  "evidence_id": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+  "format": "molgap-k1-dropout-training-terminal-acceptance-v1",
+  "mechanical_acceptance_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/mechanical.json",
+  "outcome": {
+    "artifact_status": "hash_verified_retained",
+    "budget_decision": "no_successor_or_scale_up",
+    "comparison_status": "PAIRED_ENDPOINT_single_seed_recovered_control_strict_readiness_not_established",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_evaluated"
+  },
+  "preparation_status": "ACCEPTED_TERMINAL_METADATA",
+  "replay_eligible": false,
+  "replay_exclusions": [
+    "cross_attempt_control_continuation",
+    "control_cumulative_native_cost_missing",
+    "strict_v5_comparison_readiness_not_established"
+  ],
+  "role_observation_basis": "Retained frozen contract,complete40epoch trace,selected/resume states,aligned predictions and runtime provenance; exported historical trainer role observations, no new protected access.",
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+      "role_event_id": "role-TB-k1-dropout-mean2-kaggle3-100k-s42-v1-official_train_prefix_0_100000-training_membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+      "role_event_id": "role-TB-k1-dropout-mean2-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+      "role_event_id": "role-TB-k1-dropout-mean2-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+      "role_event_id": "role-TB-k1-dropout-mean2-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+      "role_event_id": "role-TB-k1-dropout-mean2-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+      "role_event_id": "role-TB-k1-dropout-mean2-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+    }
+  ],
+  "run_id": "molgap-k1-dropout-consistency-100k-s42-v1:dropout_mean2:downstream",
+  "runtime_qualification": "retained_certificates_and_architecture_preflights_accepted; strict_v5_readiness_not_established",
+  "scientific_metrics_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/scientific_metrics.json",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "Distinct explicitly authorized decision-relevant prospective question; no seed/schedule retry."
+    ]
+  },
+  "trajectory_id": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1"
+}

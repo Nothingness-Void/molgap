@@ -1,0 +1,73 @@
+{
+  "kernel": "nvoid912/molgap-k1-dropout-consistency-100k-s42-v1",
+  "version": 1,
+  "files": [
+    {
+      "remote_path": "experiment/dropout_consistency2/canonical_trace.json.context.json",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/canonical_trace.json.context.json",
+      "sha256": "25808df7f8f37dfcbe0c56742ac5c44e66a749eae1de287b93731503968c57d2",
+      "bytes": 971
+    },
+    {
+      "remote_path": "experiment/dropout_consistency2/runtime_manifest.json",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/runtime_manifest.json",
+      "sha256": "6adc19959c5aa18983aac0182ee34a88a4d5ecd91676f1142e232f570d428aaa",
+      "bytes": 25209
+    },
+    {
+      "remote_path": "experiment/dropout_consistency2/runtime_provenance.json",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/runtime_provenance.json",
+      "sha256": "52b06a80c93221929c74c9d95fae4f528466f3fcf0163d86e76aeaa2a0995740",
+      "bytes": 1493
+    },
+    {
+      "remote_path": "experiment/dropout_consistency2/training_contract.json",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/training_contract.json",
+      "sha256": "b1659dc7b0ad36e7382fc3ab0c32358264da09cef324277c57c995c415c38ba4",
+      "bytes": 1188
+    },
+    {
+      "remote_path": "experiment/dropout_mean2/canonical_trace.json.context.json",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/canonical_trace.json.context.json",
+      "sha256": "198595b6939b184b84eba9211ea5dd736430d02b0985355fc983d0500eb6bef7",
+      "bytes": 964
+    },
+    {
+      "remote_path": "experiment/dropout_mean2/development_predictions.pt",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/development_predictions.pt",
+      "sha256": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076",
+      "bytes": 803349
+    },
+    {
+      "remote_path": "experiment/dropout_mean2/last_checkpoint.pt",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/last_checkpoint.pt",
+      "sha256": "9261185fc4ca17d57f10823769d2a850d5d475c2be0c4251dfa8d3ca2fce4e5b",
+      "bytes": 44360595
+    },
+    {
+      "remote_path": "experiment/dropout_mean2/runtime_manifest.json",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/runtime_manifest.json",
+      "sha256": "6adc19959c5aa18983aac0182ee34a88a4d5ecd91676f1142e232f570d428aaa",
+      "bytes": 25209
+    },
+    {
+      "remote_path": "experiment/dropout_mean2/runtime_provenance.json",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/runtime_provenance.json",
+      "sha256": "68f86faab8b62fd782fc83f1e4a6b6cdd72f8e351367a557f6efaa44dba9cd16",
+      "bytes": 1479
+    },
+    {
+      "remote_path": "experiment/dropout_mean2/selected_model.pt",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/selected_model.pt",
+      "sha256": "b3a7643041cca68d69768024cccb33b89a5b3b4811554f0ac309f7a22d8b6f05",
+      "bytes": 14786408
+    },
+    {
+      "remote_path": "experiment/dropout_mean2/training_contract.json",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/training_contract.json",
+      "sha256": "856446cec2cea5d3557524e1cd124e179fc7221b721514753b8523448d511a2f",
+      "bytes": 1181
+    }
+  ],
+  "unselected_outputs_downloaded": false
+}

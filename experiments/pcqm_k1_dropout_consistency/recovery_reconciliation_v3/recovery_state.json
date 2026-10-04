@@ -1,0 +1,20 @@
+{
+  "status": "TRAINING_COMPLETE",
+  "acceptance_status": "BLOCKED",
+  "acceptance_blockers": [
+    "Development target identity mismatch"
+  ],
+  "arm_id": "dropout_mean2",
+  "original_run": "nvoid912/molgap-k1-dropout-consistency-100k-s42-v1",
+  "original_version": 1,
+  "progress": {
+    "epochs": 40,
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "additional_epochs": 1,
+  "assigned_device_seconds": 203.77173465399994,
+  "device_cost_scope": "one assigned T4 recovery invocation including model/data loading; prior segment excluded",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED"
+}

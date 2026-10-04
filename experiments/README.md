@@ -14,6 +14,7 @@ Track C.
 | Question | Verdict | Directory |
 |---|---|---|
 | Does three-pass FLAG robustness improve original K1 at fixed100K? | Accepted NEGATIVE_UNDER_CONTRACT; full history archived, strict replay excluded | [FLAG decision](pcqm_k1_flag/terminal_decision.md) |
+| Does output consistency improve beyond matched two-pass dropout supervision? | Both40epoch arms accepted;1.529meV numerical gain below3meV; canonical RML and attribution retained, strict replay excluded | [Dropout pair decision](pcqm_k1_dropout_consistency/terminal_acceptance/decision.md) |
 | Does K1 latent slot64->96 improve the fixed100K screen? | Accepted NEGATIVE_UNDER_CONTRACT; misses material gain gate; strict replay excluded; no scale-up | [Slot96 decision](pcqm_k1_slot_width96/terminal_decision.md) |
 | Does retained K1 global return become negligible after mean readout? | Accepted observational NO_TRAIN diagnostic; magnitude remains substantial; causal utility unresolved | [K1 slot/readout](pcqm_k1_slot_readout_diagnostic/README.md) |
 | Can prediction-only routing realize expert Oracle headroom? | Accepted saved-prediction diagnostic; NO_TRAIN for a new prediction-only router, no model promotion | `pcqm_expert_oracle_feasibility/` |
