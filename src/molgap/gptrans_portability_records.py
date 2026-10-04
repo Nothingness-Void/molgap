@@ -76,3 +76,33 @@ def close_preworker_failure(root: Path, output: Path, *, release_path: Path,
         action_id="A001", finalized_at=finalized_at, acceptance_ref=rel(acceptance), artifact_hashes=hashes,
         evidence=evidence, decision=decision, costs=[cost], roles=[], role_use=role_use))
     return finalize(root, plan, terminal)
+
+
+def accept_environment(output: Path, binding: dict) -> dict:
+    """CPU qualification is import proof only, never model/data acceptance."""
+    from .kaggle_python_environment import REQUIREMENTS, UV_VERSION, PYTHON_VERSION
+    qualification = json.loads((output/"environment_qualification.json").read_text())
+    native = json.loads((output/"environment_cost.json").read_text())
+    if qualification.get("source_identity") != binding["source_release"]["identity"]:
+        raise ValueError("CPU result is not the intended audit source")
+    if (qualification.get("status") != "IMPORTS_QUALIFIED_NOT_GPU_CALIBRATED"
+        or qualification.get("requirements") != list(REQUIREMENTS)
+        or qualification.get("bootstrap_uv") != UV_VERSION
+        or qualification.get("requested_python") != PYTHON_VERSION
+        or qualification.get("cuda_build") != "12.1"
+        or not qualification.get("python", "").startswith("3.12.")):
+        raise ValueError("Pinned environment qualification differs")
+    expected = {r.split("==")[0]:r.split("==")[1] for r in REQUIREMENTS}
+    if qualification.get("packages") != expected:
+        raise ValueError("Imported workload packages differ")
+    for record in (qualification, native):
+        if any(record.get(k) is not False for k in (
+            "training_executed", "model_inference_executed", "graph_role_read")):
+            raise ValueError("Qualification exceeded import-only scope")
+    if (qualification.get("model_constructed") is not False or native.get("status") != "COMPLETE"
+        or native.get("allocated_devices") != 0 or native.get("device_hours") != 0
+        or not 0 < native.get("wall_seconds", 0) <= 1850):
+        raise ValueError("CPU qualification execution/cost differs")
+    return dict(accepted=True, qualification=qualification, cost=native,
+        model_inference_executed=False, gpu_calibrated=False,
+        scientific_comparison_status="NOT_EVALUATED", next_decision="SOL_REQUIRED")

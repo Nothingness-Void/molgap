@@ -47,8 +47,9 @@ def source(inputs, destination):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--arm", choices=("ema9999", "ema999"))
-    parser.add_argument("--environment-only", action="store_true")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--arm", choices=("ema9999", "ema999"))
+    mode.add_argument("--environment-only", action="store_true")
     args = parser.parse_args()
     inputs = one("audit_release.json").parent
     output = Path("/kaggle/working/gptrans_ema_portability")
