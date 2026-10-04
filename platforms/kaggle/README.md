@@ -21,6 +21,11 @@ authoritative remote state.
 
 ## Frozen K1 continuation
 
+For SDK operations with an explicit key, use `credential_api.py`'s
+`api_for_credentials(path)`. It binds the requested account even when the SDK
+finds a different global OAuth session. Keep credentials outside the repository;
+verify the owner before publication and leave global login files intact.
+
 `resume_frozen_k1_arm.py` restores one incomplete arm through the existing
 isolated qualification/training workers. Keep the exact original source package,
 Spec, recipe, prospective records and producer context. A separate reviewed
