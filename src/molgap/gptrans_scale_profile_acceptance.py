@@ -21,7 +21,7 @@ def accept_and_close(root: Path, records: Path, package: Path):
     local = read(package / "staging.json")["package"]
     receipt = read(root / BASE / "submission_v1.json")
     contract = read(root / BASE / "contract.json")
-    if receipt.get("kernel") != "kaseichou/molgap-gptrans-g1-scale-qualification" or receipt.get("version_number") != 1 or receipt.get("status") != "SUBMITTED":
+    if receipt.get("kernel") != "kaseichou/molgap-gptrans-g1-scale-qualification" or receipt.get("version_number") != 1 or receipt.get("status") != "submitted" or receipt.get("reconciliation_required") is not False:
         raise ValueError("Exact returned Kaggle identity required")
     for key in ("package_identity", "spec_identity", "source_commit"):
         if receipt["release_binding"][key] != local[key]:

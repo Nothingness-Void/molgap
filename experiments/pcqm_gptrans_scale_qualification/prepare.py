@@ -17,7 +17,7 @@ from molgap.pcqm_k1_scale import FIXED_500K_MANIFEST_SHA256
 BASE = "experiments/pcqm_gptrans_scale_qualification"
 
 
-def prepare(output: Path):
+def freeze_profile():
     root = REPO_ROOT
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     contract = json.loads((root / BASE / "contract.json").read_text())
@@ -62,6 +62,17 @@ def prepare(output: Path):
     spec = ExperimentSpec(declaration)
     spec.write(root/BASE/"spec.json")
     result = plan(root, snapshot, BASE+"/rml_plan")
+    return spec, result
+
+
+def prepare(output: Path):
+    root = REPO_ROOT
+    if (root / BASE / "rml_plan/trajectory.json").is_file():
+        spec = ExperimentSpec.from_json((root / BASE / "spec.json").read_text())
+        result = {"status": "FROZEN_PLAN_REUSED", "path": BASE + "/rml_plan", "compute_released": False}
+    else:
+        spec, result = freeze_profile()
+    initial = root / "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/degree_initial_state.pt"
     sources = subprocess.check_output(["git","ls-files","src/molgap"],text=True).splitlines()
     allowed = []
     for p in sources:
@@ -79,7 +90,10 @@ def prepare(output: Path):
         required_modules=["molgap.gptrans_scale_profile","molgap.kaggle_python_environment"],
         entry_template=root/"platforms/kaggle/bootstrap_gptrans_profile.py",kernel_metadata=root/BASE/"kernel-metadata.json",
         dataset_metadata={"title":"MolGap GPTrans G1 Scale Profile Source","id":"kaseichou/molgap-gptrans-g1-scale-profile-source","licenses":[{"name":"other"}],"isPrivate":True})
-    atomic_json(root/BASE/"release_binding.json", {"prospective":result,"staging":staged,"release_root":str(output)})
+    binding = root / BASE / "release_binding.json"
+    if binding.exists():
+        atomic_json(root / BASE / "preparation_failed_binding_v1.json", json.loads(binding.read_text()))
+    atomic_json(binding, {"prospective":result,"staging":staged,"release_root":str(output)})
     return staged
 
 

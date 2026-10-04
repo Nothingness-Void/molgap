@@ -9,7 +9,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .pcqm_gap_data import sha256_file
+from .training_reproducibility import sha256_file
 from .pcqm_k1_scale import (
     FIXED_500K_DATASET,
     FIXED_500K_GEOMETRY_SHA256,
