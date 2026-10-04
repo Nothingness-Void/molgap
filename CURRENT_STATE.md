@@ -46,11 +46,12 @@ Branch-local records absent here are linked through the
 - **K1 dropout consistency:** paired100K40epoch question, owning branch
   `codex/exp/k1-dropout-consistency`. Exact Kaggle3
   [kernel](https://www.kaggle.com/code/nvoid912/molgap-k1-dropout-consistency-100k-s42-v1)
-  ID136942701/version1 ended ERROR after the candidate completed40epochs and
-  the matched control completed39. Frozen target-hash encoding blocks mechanical
-  acceptance. User-authorized version3 now resumes only the missing control epoch
-  with the original source and checkpoint; version2 failed before formal training.
-  The published recovery files and pulled entry have been verified.
+  ID136942701/version3 is COMPLETE: the authorized control-only recovery finished
+  epoch40. Both arms now have40epochs/31240updates/3998720presentations.
+  Consistency MAE0.1387285031 versus matched control0.1402572856eV gives1.5288meV
+  improvement, below the frozen3meV gate; recovery did not refresh the best model.
+  Target-hash byte encoding still blocks mechanical acceptance, and cumulative
+  control native T4 cost is missing. Preserve versions1/2 and frozen source.
   Read [owner STATUS](D:/w/k1-dropout-consistency/experiments/pcqm_k1_dropout_consistency/STATUS.md)
   and frozen protocol. Independent prospective RML arms live on the owner;
   Scientific acceptance and dual replay readiness remain pending; no adoption or

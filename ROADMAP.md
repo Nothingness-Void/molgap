@@ -21,7 +21,7 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 
 | Priority | Task | Exit condition / owner |
 |---|---|---|
-| P0 | Reconcile K1 dropout missing-epoch recovery | Exact Kaggle3 ID136942701/version3 resumes only control epoch40; preserve versions1/2, reconcile target encoding without changing frozen evidence, then accept/attribute before another experiment |
+| P0 | Close K1 dropout acceptance gaps | Kaggle3 ID136942701/version3 completed control epoch40; retained paired gain1.5288meV is below3meV. Resolve pinned target encoding and missing cumulative control native cost without changing frozen evidence; then finalize acceptance/RML and routing. Attribution is retained on owner; no scale-up |
 | Closed | Chemical auxiliary custody and canonical discovery | Trained arms and summary-only CPU terminal dispositions retained; strict qualification gaps remain unknown, no new training |
 | Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |
 
