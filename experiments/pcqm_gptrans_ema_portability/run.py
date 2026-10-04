@@ -13,8 +13,10 @@ import time
 import traceback
 
 
-def one(name):
-    matches = list(Path("/kaggle/input").rglob(name))
+def one(name, dataset=None, *, input_root=Path("/kaggle/input")):
+    # Fixed mirrors deliberately reuse shard names; select the owning mount.
+    matches = (list(input_root.glob(f"**/{dataset}/train/{name}")) if dataset
+               else list(input_root.rglob(name)))
     if len(matches) != 1:
         raise ValueError(f"Expected one mounted {name}: {matches}")
     return matches[0]
@@ -61,8 +63,8 @@ def main():
         allocation = json.loads((output / "allocation.json").read_text())
         try:
             worker(arm=args.arm, inputs=inputs,
-                cache_100k=one("train_shard_0002.pt").parent.parent,
-                cache_500k=one("train_shard_0010.pt").parent.parent,
+                cache_100k=one("train_shard_0002.pt", "pcqm4mv2-ogb-fixed-100k-v1").parent.parent,
+                cache_500k=one("train_shard_0010.pt", "pcqm4mv2-ogb-fixed-500k-scnet-v1").parent.parent,
                 output=output, release=release, deadline=allocation["deadline_unix"], invocation_id=allocation["invocation_id"])
         except BaseException:
             atomic_json(output / args.arm / f"failure_{allocation['invocation_id']}.json", dict(error=traceback.format_exc(), timestamp=time.time()))

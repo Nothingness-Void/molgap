@@ -10,7 +10,8 @@ from .research_memory.finalize import finalize
 
 
 def close_preworker_failure(root: Path, output: Path, *, release_path: Path,
-                           plan: Path, result: Path, finalized_at: str):
+                           plan: Path, result: Path, finalized_at: str,
+                           failure_kind: str = "setup", physical_version: int = 1):
     root = root.resolve()
     for path in (output, release_path, plan, result):
         path.resolve().relative_to(root)
@@ -20,7 +21,21 @@ def close_preworker_failure(root: Path, output: Path, *, release_path: Path,
     release = json.loads(release_path.read_text())["release"]
     if manifest["status"] != "ERROR" or manifest["identity"] != release:
         raise ValueError("Failure is not the frozen release")
-    if set(manifest["files"]) != {"allocation.json", "cost.json", "failure.json"}:
+    allocation = json.loads((output/"allocation.json").read_text())
+    expected = {"allocation.json", "cost.json", "failure.json"}
+    if failure_kind == "mount_resolution":
+        expected |= {"environment_qualification.json", *(
+            f"{arm}/failure_{allocation['invocation_id']}.json" for arm in ("ema999", "ema9999"))}
+        for arm in ("ema999", "ema9999"):
+            error = json.loads((output/f"{arm}/failure_{allocation['invocation_id']}.json").read_text())["error"]
+            if 'cache_100k=one("train_shard_0002.pt")' not in error or "ValueError: Expected one mounted train_shard_0002.pt:" not in error:
+                raise ValueError("Failure does not prove pre-entry mount ambiguity")
+        qualification = json.loads((output/"environment_qualification.json").read_text())
+        if any(qualification.get(k) is not False for k in ("model_constructed", "model_inference_executed", "training_executed", "graph_role_read")):
+            raise ValueError("Mount failure qualification exceeded import-only scope")
+    elif failure_kind != "setup":
+        raise ValueError("Unsupported pre-entry failure qualification")
+    if type(physical_version) is not int or physical_version < 1 or set(manifest["files"]) != expected:
         raise ValueError("Only failures before any worker/role execution qualify")
     actual = {p.relative_to(output).as_posix() for p in output.rglob("*") if p.is_file()}
     if actual != set(manifest["files"]) | {"output_manifest.json"}:
@@ -31,7 +46,6 @@ def close_preworker_failure(root: Path, output: Path, *, release_path: Path,
         "training_executed", "official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")):
         raise ValueError("Failure role/execution attestations differ")
     native = json.loads((output/"cost.json").read_text())
-    allocation = json.loads((output/"allocation.json").read_text())
     if native["allocated_devices"] != 2 or allocation["allocated_devices"] != 2:
         raise ValueError("Unexpected allocation")
     wall = native["allocation_wall_seconds"]
@@ -43,8 +57,8 @@ def close_preworker_failure(root: Path, output: Path, *, release_path: Path,
     def rel(p):
         return p.relative_to(root).as_posix()
     decision = dict(final=True, outcome="INFRASTRUCTURE_ONLY", decision_ref=rel(result/"decision.md"),
-        next_allowed_actions=[], reopen_conditions=["New prospective attempt after CPU-only environment qualification"])
-    outcome = dict(execution_status="failed_before_workers", artifact_status="failure_metadata_verified",
+        next_allowed_actions=[], reopen_conditions=["New prospective attempt after verified infrastructure correction"])
+    outcome = dict(execution_status="failed_before_worker_entry" if failure_kind == "mount_resolution" else "failed_before_workers", artifact_status="failure_metadata_verified",
         comparison_status="not_evaluated", scientific_status="not_evaluated", transfer_status="not_evaluated",
         budget_decision="native_allocation_cost_retained", full_handoff_status="not_authorized")
     role_use = {k:"untouched" for k in ("internal_development_100000_150000", "internal_development_500000_550000",
@@ -53,19 +67,20 @@ def close_preworker_failure(root: Path, output: Path, *, release_path: Path,
     acceptance = result/"acceptance.json"
     missing = dict(status="measurement_missing", value=None)
     cost = dict(schema="molgap-cost-event-v1", cost_event_id=frozen["actions"][0]["cost_event_ids"][0],
-        trajectory_id=tid, action_id="A001", run_id=run, attempt_id="v1", category="infrastructure_failure",
+        trajectory_id=tid, action_id="A001", run_id=run, attempt_id=frozen["actions"][0]["attempt_ids"][0], category="infrastructure_failure",
         platform="kaggle2", hardware="Tesla_T4x2", evidence_ref=rel(acceptance), measurement=dict(
             device_hours=dict(status="measured", value=native["allocated_device_hours"]),
             wall_hours=dict(status="measured", value=wall/3600), cpu_hours=missing, queue_hours=missing))
-    atomic_json(acceptance, dict(evidence_id="pcqm-gptrans-ema-portability-infrastructure-v1", run_id=run,
+    eid = f"pcqm-gptrans-ema-portability-infrastructure-v{physical_version}"
+    atomic_json(acceptance, dict(evidence_id=eid, run_id=run,
         outcome=outcome, trajectory_decision=decision, role_use=role_use, costs=[cost], roles=[],
-        remote_identity=dict(kernel="kaseichou/molgap-gptrans-ema-portability-audit", kernel_id=136990464, version=1),
+        remote_identity=dict(kernel="kaseichou/molgap-gptrans-ema-portability-audit", kernel_id=136990464, version=physical_version),
         model_inference_executed=False, cost_scope=native["scope"]))
     pointers = [plan, release_path, result/"decision.md", acceptance, output/"output_manifest.json",
                 *(output/name for name in manifest["files"])]
     hashes = {rel(p):sha256_file(p) for p in pointers}
     evidence = dict(format="molgap-v5-evidence-envelope-v1", contract="MOLGAP-COMMON-V5-FINAL",
-        evidence_id="pcqm-gptrans-ema-portability-infrastructure-v1", track="C", scope="preworker_runtime_failure",
+        evidence_id=eid, track="C", scope="preworker_runtime_failure",
         legacy_contract="none-v5-prospective", outcome=outcome, role_use=role_use,
         authority=dict(pointers=list(hashes)), artifacts=[dict(name=p.name, locator=rel(p), sha256=hashes[rel(p)],
             availability="retained_metadata") for p in pointers[4:]], migration=dict(migrated_at=finalized_at,

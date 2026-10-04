@@ -26,7 +26,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--reuse-plan", action="store_true", help="Preserve already frozen prospective bytes during an infrastructure-only packaging correction")
-    parser.add_argument("--attempt", choices=("v1", "v2"), default="v1")
+    parser.add_argument("--attempt", choices=("v1", "v2", "v3"), default="v1")
     args = parser.parse_args()
     root = Path.cwd().resolve()
     destination = args.output.resolve()
@@ -34,8 +34,8 @@ def main():
         raise ValueError("Never overwrite a staged release")
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     snapshot = copy.deepcopy(json.loads((root / "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/plan_input.json").read_text()))
-    attempt_base = BASE if args.attempt == "v1" else BASE/"attempt_v2"
-    trajectory_id = "TC-gptrans-g1-ema-portability-frozen-s42" + ("-v2" if args.attempt == "v2" else "")
+    attempt_base = BASE if args.attempt == "v1" else BASE/f"attempt_{args.attempt}"
+    trajectory_id = "TC-gptrans-g1-ema-portability-frozen-s42" + (f"-{args.attempt}" if args.attempt != "v1" else "")
     run_id = "gptrans-ema-portability-audit:" + args.attempt
     cost_id = "cost-" + trajectory_id
     state = snapshot["trajectory"]["state_at_start"]
@@ -43,7 +43,7 @@ def main():
         contract_refs=[(BASE/"contract.json").as_posix()],
         reference_ids=["pcqm-gptrans-author-degree-scale-100k-s42", "pcqm-gptrans-g1-degree-scale-ema999-100k-s42"],
         prior_evidence_ids=["pcqm-gptrans-author-degree-scale-100k-s42", "pcqm-gptrans-g1-degree-scale-ema999-100k-s42"],
-        prior_trajectory_ids=[], parent_trajectory_ids=(["TC-gptrans-g1-ema-portability-frozen-s42"] if args.attempt == "v2" else []),
+        prior_trajectory_ids=[], parent_trajectory_ids=(["TC-gptrans-g1-ema-portability-frozen-s42" + ("-v2" if args.attempt == "v3" else "")] if args.attempt != "v1" else []),
         role_snapshot_refs=[(BASE/"role_plan.json").as_posix()], budget_snapshot_ref=(BASE/"budget.json").as_posix())
     hypothesis = snapshot["trajectory"]["hypothesis"]
     hypothesis.update(hypothesis_id="H-"+trajectory_id,
