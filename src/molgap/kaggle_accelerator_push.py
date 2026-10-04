@@ -54,6 +54,14 @@ def _verify_release_report(path: Path, code_path: Path) -> dict:
     from .training_reproducibility import sha256_file
 
     report = json.loads(path.read_text(encoding="utf-8"))
+    if report.get("format") == "molgap-frozen-inference-release-v1":
+        from .frozen_inference_release import check_frozen_inference_release
+        inputs = report["inputs"]
+        observed = check_frozen_inference_release(Path(inputs["input_root"]),
+            Path(inputs["entry_script"]), Path(inputs["metadata"]))
+        if observed != report or Path(inputs["entry_script"]).resolve() != code_path.resolve():
+            raise ValueError("Frozen inference release inputs changed")
+        return {key: report["release"][key] for key in ("source_commit", "archive_sha256", "contract_sha256")}
     if report["status"] != "LOCAL_RELEASE_INPUTS_VERIFIED":
         raise ValueError("Release input checks did not pass")
     inputs = report["inputs"]
@@ -101,6 +109,8 @@ def push_kernel_with_accelerator(
     release_binding = _verify_release_report(release_report_path, code_path) if release_report_path else None
     if release_report_path:
         report_inputs = json.loads(release_report_path.read_text(encoding="utf-8"))["inputs"]
+        if report_inputs.get("metadata") and Path(report_inputs["metadata"]).resolve() != (package / "kernel-metadata.json").resolve():
+            raise ValueError("Frozen inference submission metadata differs")
         if report_inputs.get("kernel_metadata") and Path(report_inputs["kernel_metadata"]).resolve() != (package / "kernel-metadata.json").resolve():
             raise ValueError("Submission metadata differs from the prepared workflow metadata")
         if report_inputs.get("launch_config"):
