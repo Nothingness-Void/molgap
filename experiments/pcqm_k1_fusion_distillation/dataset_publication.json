@@ -1,0 +1,41 @@
+{
+  "format": "molgap-kaggle-dataset-publication-observation-v1",
+  "account": "nvoid912",
+  "datasets": [
+    {
+      "requested_ref": "nvoid912/molgap-k1-fusion-teacher-train100k-v1",
+      "response": {
+        "ref": "/datasets/nvoid912/molgap-k1-fusion-teacher-train100k-v1",
+        "url": "https://www.kaggle.com/datasets/nvoid912/molgap-k1-fusion-teacher-train100k-v1",
+        "status": "Ok"
+      },
+      "uploaded_files": [
+        {
+          "path": "manifest.json",
+          "sha256": "cd19a9154444f52721f901c7940caf7b1fb83c45a4946fcf8da02e218cce7504",
+          "bytes": 438
+        },
+        {
+          "path": "teacher_predictions.pt",
+          "sha256": "c27ee84756a69299b2773bf7cafc9e0573051be1b97d4d715247b5cc5f278200",
+          "bytes": 1202085
+        }
+      ]
+    },
+    {
+      "requested_ref": "nvoid912/molgap-k1-fusion-distill-source-s42-v1",
+      "response": {
+        "ref": "/datasets/nvoid912/molgap-k1-fusion-distill-source-s42-v1",
+        "url": "https://www.kaggle.com/datasets/nvoid912/molgap-k1-fusion-distill-source-s42-v1",
+        "status": "Ok"
+      },
+      "uploaded_files": [
+        {
+          "path": "workflow_inputs.zip",
+          "sha256": "55309cfed8707979b49317d600b7bee5d68a73a79a920bd9afe5fe3448c61472",
+          "bytes": 26672868
+        }
+      ]
+    }
+  ]
+}

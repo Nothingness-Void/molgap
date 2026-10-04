@@ -1,0 +1,22 @@
+{
+  "status": "verified_partial_checkpoint_not_complete_acceptance",
+  "completed_epochs": 39,
+  "optimizer_steps": 30459,
+  "acknowledged_presentations": 3898752,
+  "selected_epoch": 37,
+  "selected_mae_eV": 0.13845699764192104,
+  "last_checkpoint_sha256": "1562819776939470d092159df76845b241148af7555fcd99a674270bbcd695e9",
+  "cursor": {
+    "epoch": 39,
+    "next_batch": 0,
+    "sampler_order_sha256": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34"
+  },
+  "finite_model_optimizer_scheduler_rng_checks": true,
+  "aligned_finite_50000_predictions": true,
+  "remaining_acknowledged_contract_epochs": 1,
+  "limitations": [
+    "Potential work after the acknowledged epoch39 checkpoint is not retained and cannot be counted or declared absent.",
+    "No completed output manifest or full per-arm training allocation ledger.",
+    "Recovery compatibility with any changed-source successor requires explicit reviewed binding; this inspection does not authorize resume."
+  ]
+}

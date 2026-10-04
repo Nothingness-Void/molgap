@@ -1,0 +1,35 @@
+{
+  "format": "molgap-kaggle-remote-observation-v1",
+  "observed_at": "2026-10-04T11:35:14.312131+00:00",
+  "kernel": "nvoid912/molgap-k1-fusion-distill-100k-s42-v1",
+  "kernel_id": 137029945,
+  "version_number": 1,
+  "status": {
+    "status": "RUNNING"
+  },
+  "remote_entry_sha256": "fa47cd4e4f5819d7b31ac09e631bf58c07d27be38d6e178bd4f5638930b6e76e",
+  "prepared_entry_sha256": "d1963bb43e570f4ed0339164869f1b00d945ac7af1718a7ea0f100e75af73d78",
+  "executable_source_match": "exact after transport CRLF normalization",
+  "remote_metadata": {
+    "id": "nvoid912/molgap-k1-fusion-distill-100k-s42-v1",
+    "id_no": 137029945,
+    "title": "MolGap K1 Fusion Distill 100K S42 V1",
+    "code_file": "molgap-k1-fusion-distill-100k-s42-v1.py",
+    "language": "python",
+    "kernel_type": "script",
+    "is_private": true,
+    "enable_gpu": true,
+    "enable_tpu": false,
+    "enable_internet": true,
+    "keywords": [],
+    "dataset_sources": [
+      "nvoid912/molgap-k1-fusion-teacher-train100k-v1",
+      "nvoid912/molgap-k1-fusion-distill-source-s42-v1",
+      "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "kernel_sources": [],
+    "competition_sources": [],
+    "model_sources": []
+  },
+  "source_pull_path": "platforms/_records/kaggle/source_packages/k1_fusion_distill_v1_remote"
+}

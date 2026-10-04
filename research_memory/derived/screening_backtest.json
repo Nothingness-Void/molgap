@@ -119,6 +119,27 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "cross_attempt_continuation",
+        "cumulative_native_cost_missing",
+        "historical_reference_runtime_equivalence_not_established",
+        "strict_v5_comparison_readiness_not_established"
+      ],
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "historical_reference_runtime_equivalence_not_established",
+        "original_runtime_manifest_not_retained",
+        "strict_v5_comparison_readiness_not_established"
+      ],
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_weak:downstream",
+      "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+    },
+    {
+      "reasons": [
         "no_compatible_candidate_reference_trace_pair"
       ],
       "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
@@ -192,5 +213,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 23
+  "trace_count": 25
 }

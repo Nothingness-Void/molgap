@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "unknown",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-observed-recovery-v2",
+  "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json",
+  "hardware": "Tesla T4; one assigned T4 recovery invocation including model/data loading and post-training CPU inspection; prior segment excluded; allocation time, not device busy time",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.03828413990833332
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.03828413990833332
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+}

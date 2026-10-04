@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 91,
+    "trajectories_total": 93,
     "with_complete_native_measurement": 12,
-    "with_cost_event": 80,
-    "with_incomplete_native_measurement": 68,
+    "with_cost_event": 82,
+    "with_incomplete_native_measurement": 70,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -117,7 +117,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 68,
+      "count": 70,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -169,6 +169,8 @@
         "TB-k1-dropout-mean2-kaggle3-100k-s42-v1",
         "TB-k1-flag-kaggle3-100k-s42-v1",
         "TB-k1-full-convergence-20260919",
+        "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+        "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1",
         "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
         "TB-k1-reference-kaggle3-100k-s42-v1",
         "TB-k1-reference-kaggle3-100k-s42-v2",

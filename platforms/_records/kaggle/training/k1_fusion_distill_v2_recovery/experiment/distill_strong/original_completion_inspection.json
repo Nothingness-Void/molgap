@@ -1,0 +1,29 @@
+{
+  "status": "BLOCKED",
+  "blockers": [
+    "Development target identity mismatch"
+  ],
+  "context": {
+    "experiment_id": "pcqm-k1-fusion-distillation-kaggle3-100k",
+    "logical_run_id": "molgap-k1-fusion-distill-100k-s42-v1",
+    "arm_id": "distill_strong",
+    "arm_identity": "54c4266e5452c22fc13b2aa305609312e2d472c16e1dd094279debcf39882f60",
+    "spec_identity": "8cf5b23e01e7b452c31e8e73067e43fac901ba41eb4bac6d5627fb1a9798907c",
+    "family_name": "neural_atom_k1",
+    "family_version": "2",
+    "source_commit": "932d107831f22617181a0139b597252512f4ff75",
+    "source_archive_sha256": "0f56a8b8f56c0e591eb90b5c9674125765b68136d2ad2d4b02b716f978581d76",
+    "package_identity": "d9f56b5c858adcfd7d878c772874bb8eacae8cef9ebb259af755caf09aa01b4c",
+    "training_recipe_sha256": "60ffa80a571305324196e93997f4923119414d9d1c5eb2544173e6c314b2b6aa",
+    "platform": "kaggle",
+    "account": "nvoid912",
+    "run_reference": "nvoid912/molgap-k1-fusion-distill-100k-s42-v1",
+    "platform_version": null
+  },
+  "observed": {
+    "producer_platform_version": null
+  },
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED",
+  "runtime_qualification": "NOT_EVALUATED"
+}

@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 359,
+  "ambiguous_historical_role_record_count": 369,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
@@ -1822,6 +1822,76 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-gptrans-full-fusion-r3",
       "role_identity": null,
       "role_name": "official_train",
@@ -2515,7 +2585,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 192,
+  "explicit_role_event_count": 206,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "fixed50k_development",
@@ -3432,6 +3502,48 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-official_train_prefix_0_100000-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-official_train_prefix_0_100000-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
         "selection_used": false,
         "semantics": "explicit",
@@ -3580,6 +3692,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-flag-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
       },
       {
         "access_kind": "labels_read",
@@ -4001,6 +4169,8 @@
       "pcqm-k1-flag-cpu-qualification-20261002",
       "pcqm-k1-flag-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-full-convergence-20260919",
+      "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
+      "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
@@ -4082,6 +4252,8 @@
       "pcqm-k1-flag-cpu-qualification-20261002",
       "pcqm-k1-flag-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-full-convergence-20260919",
+      "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
+      "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
@@ -4729,6 +4901,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-flag-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
       },
       {
         "access_kind": "labels_read",
@@ -5669,6 +5897,48 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-official_train_prefix_0_100000-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-official_train_prefix_0_100000-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TB-k1-reference-accuracy-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
         "selection_used": false,
         "semantics": "explicit",
@@ -5817,6 +6087,62 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-flag-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
       },
       {
         "access_kind": "labels_read",

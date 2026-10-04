@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle3-distill-001",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1-observed-training-v1",
+  "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_weak/acceptance.json",
+  "hardware": "Tesla T4; one exclusive assigned T4 training window including development/checkpoint; lower bound excludes bootstrap/queue and earlier resume allocations",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 1.6340408603605556
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 1.6340408603605556
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_weak:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
+}

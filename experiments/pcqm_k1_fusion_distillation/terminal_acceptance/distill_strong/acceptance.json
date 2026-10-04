@@ -1,0 +1,303 @@
+{
+  "format": "molgap-retained-terminal-acceptance-v1",
+  "preparation_status": "RECORDED_FROM_RETAINED_ARTIFACTS",
+  "evidence_id": "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
+  "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+  "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+  "mechanical_acceptance_ref": "experiments/pcqm_k1_fusion_distillation/terminal_mechanical_distill_strong.json",
+  "scientific_metrics_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/scientific_metrics.json",
+  "runtime_qualification": {
+    "certificate_validation": {
+      "certificate_id": "feae32c67f4625bbede7e9021e957b257b2e623fb2a2c472b7d274907de13a2e",
+      "platform_id": "kaggle-t4x2"
+    },
+    "provenance_and_architecture_hashes_verified": true,
+    "retained_runtime_preflight_validation": "PASSED",
+    "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+    "architecture_preflight": {
+      "accepted": true,
+      "repeatability": true,
+      "resume_roundtrip": true,
+      "selected_state_roundtrip_delta": 0.0,
+      "formal_sample_presentations": 0
+    },
+    "scope": "retained metadata only; no model execution"
+  },
+  "role_use": {
+    "official_train_prefix_0_100000": "used",
+    "fixed50k_development": "selection_used",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-official_train_prefix_0_100000-training_membership",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+      "action_id": "A001",
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "official_train_prefix_0_100000",
+      "access_kind": "training_membership",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-official_train_prefix_0_100000-labels_read",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+      "action_id": "A001",
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "official_train_prefix_0_100000",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-official_train_prefix_0_100000-prediction_input",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+      "action_id": "A001",
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "official_train_prefix_0_100000",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-prediction_input",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+      "action_id": "A001",
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "fixed50k_development",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-labels_read",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+      "action_id": "A001",
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "fixed50k_development",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-metric_computed",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+      "action_id": "A001",
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "fixed50k_development",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-fixed50k_development-selection_used",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+      "action_id": "A001",
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "fixed50k_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json"
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-observed-preflight-v1",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+      "action_id": "A001",
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "attempt_id": "kaggle3-distill-001",
+      "platform": "kaggle3",
+      "hardware": "Tesla T4; one exclusive assigned T4 diagnostic window; bootstrap and queue excluded",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measured",
+          "value": 0.0024232579824999966
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.0024232579824999966
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-original-training-v1-measurement-missing",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+      "action_id": "A001",
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "attempt_id": "kaggle3-distill-001",
+      "platform": "kaggle3",
+      "hardware": "Tesla T4; original epochs1-39 allocation/wall ledger not retained; unknown is not zero",
+      "category": "training",
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-observed-preflight-v2",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+      "action_id": "A001",
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "attempt_id": "unknown",
+      "platform": "kaggle3",
+      "hardware": "Tesla T4; version2 separate diagnostic window, excludes recovery training invocation",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measured",
+          "value": 0.0033231060480555167
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.0033231060480555167
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-observed-recovery-v2",
+      "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
+      "action_id": "A001",
+      "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+      "attempt_id": "unknown",
+      "platform": "kaggle3",
+      "hardware": "Tesla T4; one assigned T4 recovery invocation including model/data loading and post-training CPU inspection; prior segment excluded; allocation time, not device busy time",
+      "category": "training",
+      "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measured",
+          "value": 0.03828413990833332
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.03828413990833332
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "cost_observation_basis": [
+    {
+      "event_id": "cost-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-observed-preflight-v1",
+      "artifact": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_strong/diagnostic_cost.json",
+      "metric_basis": "raw diagnostic_cost.costs, seconds /3600; CPU and queue missing"
+    },
+    {
+      "event_id": "cost-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-original-training-v1-measurement-missing",
+      "artifact": "experiments/pcqm_k1_fusion_distillation/failure_retained_inventory_v1.json",
+      "metric_basis": "No complete allocation_cost retained from original failed worker; original segment totals unknown"
+    },
+    {
+      "event_id": "cost-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-observed-preflight-v2",
+      "artifact": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/diagnostic_cost.json",
+      "metric_basis": "raw diagnostic_cost.costs, seconds /3600; exact physical version2 receipt bound"
+    },
+    {
+      "event_id": "cost-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-observed-recovery-v2",
+      "artifact": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/recovery_state.json",
+      "metric_basis": "assigned_device_seconds /3600; process elapsed in one exclusive assigned device window; not GPU busy time; separate preflight excluded; do not add nested121.556s training wall"
+    }
+  ],
+  "role_observation_basis": {
+    "contract": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+    "role_plan": "experiments/pcqm_k1_fusion_distillation/role_plan.json",
+    "manifest": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/output_manifest.json",
+    "trace": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/canonical_trace.json",
+    "predictions": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/development_predictions.pt",
+    "teacher_cache_manifest": "experiments/pcqm_k1_fusion_distillation/teacher_cache/manifest.json",
+    "interpretation": "Training membership labels and cached teacher predictions; clean development predictions/labels/metrics used for live checkpoint selection. No teacher cache development rows. Original train membership qualification does not add formal exposure."
+  },
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "hash_verified_retained",
+    "comparison_status": "aligned_saved_predictions_single_seed_historical_reference_strict_readiness_not_established",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "no_successor_or_scale_up",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "Distinct explicitly authorized decision-relevant prospective question; no blind seed/schedule retry."
+    ]
+  },
+  "replay_eligible": false,
+  "replay_exclusions": [
+    "strict_v5_comparison_readiness_not_established",
+    "historical_reference_runtime_equivalence_not_established",
+    "cross_attempt_continuation",
+    "cumulative_native_cost_missing"
+  ]
+}

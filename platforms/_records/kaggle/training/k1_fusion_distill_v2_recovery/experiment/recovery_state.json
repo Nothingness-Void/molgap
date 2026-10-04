@@ -1,0 +1,18 @@
+{
+  "status": "TRAINING_COMPLETE",
+  "acceptance_status": "MECHANICALLY_VERIFIED",
+  "acceptance_blockers": [],
+  "arm_id": "distill_strong",
+  "original_run": "nvoid912/molgap-k1-fusion-distill-100k-s42-v1",
+  "original_version": 1,
+  "progress": {
+    "epochs": 40,
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "additional_epochs": 1,
+  "assigned_device_seconds": 137.82290366999996,
+  "device_cost_scope": "one assigned T4 recovery invocation including model/data loading and post-training CPU inspection; prior segment excluded; allocation time, not device busy time",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED"
+}

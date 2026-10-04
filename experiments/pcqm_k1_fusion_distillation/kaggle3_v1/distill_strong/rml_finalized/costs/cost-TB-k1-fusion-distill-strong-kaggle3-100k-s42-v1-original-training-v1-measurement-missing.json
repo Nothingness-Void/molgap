@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle3-distill-001",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1-original-training-v1-measurement-missing",
+  "evidence_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/distill_strong/acceptance.json",
+  "hardware": "Tesla T4; original epochs1-39 allocation/wall ledger not retained; unknown is not zero",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_strong:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
+}

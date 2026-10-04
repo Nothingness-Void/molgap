@@ -1,0 +1,56 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "strict_v5_comparison_readiness_not_established",
+      "historical_reference_runtime_equivalence_not_established",
+      "original_runtime_manifest_not_retained"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+    "lr_schedule_identity": "5149f49173d461a2ee525033e99117151ef8a6e819e82414ea07366bd9144717",
+    "matched_architecture_required": true,
+    "optimizer_identity": "807c8c09fcd1bdff36f33026816c5c9a44c5b0deb6fd91207d5d40b734520922",
+    "precision_identity": "fp32",
+    "row_split_identity": "55c16e35f7ac7600b4dafef2c59c615a1ff42f7a022c0d9a54f1890ab3c4c604",
+    "scientific_contract": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+    "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+    "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+    "terminal_endpoint_identity": "endpoint_31240",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d",
+  "presentation_semantics_ref": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+  "reference_id": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+  "run_id": "molgap-k1-fusion-distill-100k-s42-v1:distill_weak:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+  "terminal_evidence_ref": "experiments/pcqm_k1_fusion_distillation/kaggle3_v1/distill_weak/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_k1_fusion_distillation/kaggle3_v1/distill_weak/rml_finalized/trace.json",
+  "trace_artifact_sha256": "e762410b7066207a8381f0d40fdc684c5eedc000115ae09e3c5138a99e7bf2b4",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

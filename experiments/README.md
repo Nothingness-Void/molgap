@@ -13,6 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Can fixed-fusion output distillation retain ensemble benefit in one K1? | Both40epoch students accepted NEGATIVE_UNDER_CONTRACT;0.433meV strong gain is below gate with bounds crossing zero; full traces/RML retained, strict replay excluded | [Distillation decision](pcqm_k1_fusion_distillation/terminal_acceptance/decision.md) |
 | K1 fixed equal-blend transfer | NO_TRAIN accepted inference; 50K common-cohort fusion nomination and measured native cost; no adoption | [decision](pcqm_k1_consistency_fusion_transfer/terminal_decision.md) |
 | Does three-pass FLAG robustness improve original K1 at fixed100K? | Accepted NEGATIVE_UNDER_CONTRACT; full history archived, strict replay excluded | [FLAG decision](pcqm_k1_flag/terminal_decision.md) |
 | Does output consistency improve beyond matched two-pass dropout supervision? | Both40epoch arms accepted;1.529meV numerical gain below3meV; canonical RML and attribution retained, strict replay excluded | [Dropout pair decision](pcqm_k1_dropout_consistency/terminal_acceptance/decision.md) |

@@ -49,8 +49,14 @@ Branch-local records absent here are linked through the
   bounds, at approximately two single-model inference passes. Read the
   [decision](experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md)
   and [analysis](experiments/pcqm_k1_consistency_fusion_transfer/analysis_zh.md).
-  Single-model distillation is the evidence-backed next question, conditional on
-  its own prospective authority; no training, adoption or official-role release.
+  The authorized two-strength100K student question is now terminal: both40epoch
+  arms are NEGATIVE_UNDER_CONTRACT. Strong gains0.433meV over the best constituent
+  with paired-row bounds crossing zero and loses3.630meV to the teacher.
+  Read the [distillation decision](experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md)
+  and [attribution](experiments/pcqm_k1_fusion_distillation/terminal_acceptance/attribution.md).
+  Both independent RML records and full traces are imported here; complete history
+  is archived. Strict reference/runtime and cumulative strong-cost gaps remain
+  replay/READY exclusions. No distillation retry, adoption or scale-up is released.
 
 - **K1 dropout consistency:** paired100K40epoch question, owning branch
   `codex/exp/k1-dropout-consistency`. Exact Kaggle3

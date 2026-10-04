@@ -1,0 +1,20 @@
+{
+  "status": "STAGED_FOR_RELEASE_CHECK",
+  "source_package": "platforms\\_records\\kaggle\\source_packages\\k1_fusion_distill_v1\\package",
+  "prepared_directory": "platforms\\_records\\kaggle\\source_packages\\k1_fusion_distill_resume_v2_release",
+  "spec_identity": "8cf5b23e01e7b452c31e8e73067e43fac901ba41eb4bac6d5627fb1a9798907c",
+  "package_identity": "d9f56b5c858adcfd7d878c772874bb8eacae8cef9ebb259af755caf09aa01b4c",
+  "source_commit": "932d107831f22617181a0139b597252512f4ff75",
+  "entry_sha256": "4399e4f242ddb179d228338dc6da1e81b6c7f5092b16325dfa32427337495229",
+  "adapter_sha256": "c7ff739da66e90dbe8dc5ff823800263dcde295b80227d3d1bf91743f4da95a4",
+  "binding_sha256": "400cb250b5b74aed6b74723563ab01699f4dd9c9ad7dfb469617310300993a99",
+  "source_dataset": "nvoid912/molgap-k1-fusion-distill-resume-s42-v2",
+  "datasets": [
+    "nvoid912/molgap-k1-fusion-distill-resume-s42-v2",
+    "nvoid912/pcqm4mv2-ogb-fixed-100k-v1",
+    "nvoid912/molgap-k1-fusion-teacher-train100k-v1"
+  ],
+  "arm_id": "distill_strong",
+  "additional_epochs": 1,
+  "weak_reused_from_version": 1
+}

@@ -1,0 +1,14 @@
+{
+  "role": "already-consumed internal development source_idx [100000,150000)",
+  "paired_rows": 50000,
+  "historical_mean2_mae_eV": 0.1402572855657339,
+  "historical_consistency2_mae_eV": 0.13872850305497647,
+  "fixed_fusion_teacher_mae_eV": 0.1346659925311804,
+  "distill_weak_mae_eV": 0.14140677722871303,
+  "distill_strong_retained_partial_mae_eV": 0.13845699764192104,
+  "limitations": [
+    "Strong arm incomplete: selected partial endpoint is not 40-epoch acceptance.",
+    "No new bootstrap or training-variance claim; endpoint-only descriptive comparison.",
+    "This cohort is different from the separate fusion-transfer cohort."
+  ]
+}
