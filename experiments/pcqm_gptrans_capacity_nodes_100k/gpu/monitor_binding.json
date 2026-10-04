@@ -1,0 +1,39 @@
+{
+  "owner": "server",
+  "closed": false,
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "credential_owner": "kaseichou",
+  "credential_file": "C:/Users/Adminn/Downloads/key/kaggle_2.json",
+  "jobs": [
+    {
+      "slot": "g1-node-capacity",
+      "kernel": "kaseichou/molgap-gptrans-g1-node-capacity-s42",
+      "kernel_id": 137072037,
+      "version": 1,
+      "closed": false,
+      "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/control/gptrans_capacity_nodes_v1.json",
+      "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/gptrans_capacity_nodes_v1",
+      "metadata_paths": ["gptrans_node_capacity/startup.json", "gptrans_node_capacity/job_summary.json", "gptrans_node_capacity/native_cost.json"]
+    },
+    {
+      "slot": "g1-local-scale",
+      "kernel": "kaseichou/molgap-gptrans-g1-local-scale-s42",
+      "kernel_id": 137072203,
+      "version": 1,
+      "closed": false,
+      "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/control/gptrans_capacity_relations_v1.json",
+      "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/gptrans_capacity_relations_v1",
+      "metadata_paths": ["gptrans_local_scale/startup.json", "gptrans_local_scale/job_summary.json", "gptrans_local_scale/native_cost.json"]
+    }
+  ],
+  "retrieval": {
+    "method": "molgap.kaggle_output_retrieval.retrieve_exact_metadata",
+    "metadata_paths": [],
+    "use_exact_job_metadata_paths": true,
+    "bulk_output_download_allowed": false
+  },
+  "postrun_requires_actual_replay_pool_admission": true,
+  "replay_scope": "three100K architecture arms only;500K transfer study is noncausal PAIRED_ENDPOINT",
+  "successor_authorized": false
+}

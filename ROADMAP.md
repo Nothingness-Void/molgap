@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| P1 | C-GPTRANS-CAPACITY | Release the two authorized Kaggle2 T4x2 notebooks: three100K architecture falsifiers and one equal-update500K shared-live EMA study. | [Capacity protocol](experiments/pcqm_gptrans_capacity_nodes_100k/protocol.md) and [local/scale scope](experiments/pcqm_gptrans_capacity_relations_100k/protocol.md); independent terminal qualification, no successor |
+| P1 | C-GPTRANS-CAPACITY | Independently accept the four authorized Kaggle2 arms and interpret capacity versus equal-update500K EMA evidence. | [Capacity protocol](experiments/pcqm_gptrans_capacity_nodes_100k/protocol.md) and [local/scale scope](experiments/pcqm_gptrans_capacity_relations_100k/protocol.md); independent terminal qualification, no successor |
 | — | C-GPTRANS-DECAY-CLOCK | Closed without promotion; optimizer intervention accepted and complete Replay pair verified. | Preserve the [endpoint and trajectory interpretation](experiments/pcqm_gptrans_decay_clock_100k/gpu/results/interpretation.md); no coefficient grid or automatic scale |
 | — | C-GPTRANS-EMA-PORTABILITY | Accepted NO_TRAIN portability; no training Replay claim. | Preserve the [terminal audit](experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md) |
 | — | C-GPTRANS-FINAL-READOUT | Closed without promotion; both actual complete Replay pairs verified. | Preserve the [terminal decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md); no automatic successor |

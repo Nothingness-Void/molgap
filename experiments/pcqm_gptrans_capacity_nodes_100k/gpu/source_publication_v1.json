@@ -1,0 +1,30 @@
+{
+  "owner": "kaseichou",
+  "dataset": "kaseichou/molgap-gptrans-g1-node-capacity-source",
+  "status": "ready",
+  "mount_files": {
+    "SOURCE_ARCHIVE_SHA256.txt": 65,
+    "SOURCE_COMMIT.txt": 41,
+    "SOURCE_FILES.json": 48510,
+    "degree_ffn2_ema999_initial.pt": 27389958,
+    "degree_node352_ema999_initial.pt": 38812851,
+    "experiment_spec.json": 5576,
+    "package_manifest.json": 11400,
+    "source_payload.bin": 916586,
+    "target_transform.json": 695
+  },
+  "upload_sha256": {
+    "dataset-metadata.json": "4897008ab39ddccaa3948cd1c6cc99095ae314b9329cabebfee4602e24431378",
+    "degree_ffn2_ema999_initial.pt": "0c13361141e3c6f7de13107b755251fee6a3e57b341429ed06eb563829b5debf",
+    "degree_node352_ema999_initial.pt": "588f37217b537be36542faf0f0cd81ebfc4c3ddab1bfa3520938b6cfb24d3943",
+    "experiment_spec.json": "4051aa2cd6e53044c78d8a653e56c7a21518e7c6eef232db842259002e8c0023",
+    "package_manifest.json": "e24e5aca0d34939f54051999521cef9a39d8748bc166a6e594e1e06ec10b2609",
+    "SOURCE_ARCHIVE_SHA256.txt": "056b7fffa2996c7b80aa858fa557407ab980b42774fc0299984e46215cd8d592",
+    "SOURCE_COMMIT.txt": "861e3eda98f5394d8fe8cf92a44d31ae4b1191f0ac9a1e075d92a2b6e05a9c37",
+    "SOURCE_FILES.json": "f0f3338533482f3fad98c4a897469e50af5bcc16a605d0efea516524afba5079",
+    "source_payload.bin": "9cd1491e82414128ee6d59f94dc125695e5eafff97217c312a38fc65a8dc5cdf",
+    "target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026"
+  },
+  "layout_verified": true,
+  "gpu_submitted": false
+}
