@@ -21,7 +21,7 @@ def check_frozen_inference_release(input_root: Path, entry: Path, metadata: Path
         raise ValueError("Release identity changed")
     if release["format"] != FORMAT or release["experiment_purpose"] != "NO_TRAIN":
         raise ValueError("Unsupported release contract")
-    required = {"source.tar.gz", "SOURCE_FILES.json", "contract.json", "target_transform.json",
+    required = {"source_payload.bin", "SOURCE_FILES.json", "contract.json", "target_transform.json",
                 "ema999_model.pt", "ema999_predictions.pt", "ema9999_model.pt", "ema9999_predictions.pt"}
     if set(release["files"]) != required:
         raise ValueError("Frozen inference input allowlist changed")
@@ -29,7 +29,7 @@ def check_frozen_inference_release(input_root: Path, entry: Path, metadata: Path
         path = root / name
         if path.is_symlink() or not path.is_file() or sha256_file(path) != digest:
             raise ValueError(f"Frozen inference input changed: {name}")
-    if release["archive_sha256"] != release["files"]["source.tar.gz"] or release["contract_sha256"] != release["files"]["contract.json"]:
+    if release["archive_sha256"] != release["files"]["source_payload.bin"] or release["contract_sha256"] != release["files"]["contract.json"]:
         raise ValueError("Source/contract release binding differs")
     if sha256_file(entry) != release["entry_sha256"] or sha256_file(metadata) != release["metadata_sha256"]:
         raise ValueError("Entrypoint/platform metadata changed")
@@ -49,7 +49,7 @@ def check_frozen_inference_release(input_root: Path, entry: Path, metadata: Path
     if inventory["source_commit"] != release["source_commit"]:
         raise ValueError("Source commit identity changed")
     files = {row["path"]: row for row in inventory["files"]}
-    with tarfile.open(root / "source.tar.gz", "r:gz") as archive:
+    with tarfile.open(root / "source_payload.bin", "r:gz") as archive:
         members = archive.getmembers()
         if len(members) != len(files) or {m.name for m in members} != set(files):
             raise ValueError("Source inventory mismatch")

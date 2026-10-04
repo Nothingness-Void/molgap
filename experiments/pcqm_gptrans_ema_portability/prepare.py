@@ -25,6 +25,7 @@ LOCATORS = {
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--reuse-plan", action="store_true", help="Preserve already frozen prospective bytes during an infrastructure-only packaging correction")
     args = parser.parse_args()
     root = Path.cwd().resolve()
     destination = args.output.resolve()
@@ -65,13 +66,19 @@ def main():
         evidence_ref=(BASE/"budget.json").as_posix(), measurement={
             "device_hours": dict(status="estimated", value=2), "wall_hours": dict(status="estimated", value=1),
             "queue_hours": dict(status="measurement_missing", value=None), "cpu_hours": dict(status="measurement_missing", value=None)})]
-    prospective = plan(root, snapshot, BASE/"rml_plan")
+    if args.reuse_plan:
+        prior = json.loads((root/BASE/"rml_plan/trajectory.json").read_text())
+        if prior["trajectory_id"] != trajectory_id or prior["state_at_start"]["source_config_identity"] != sha256_file(root/BASE/"contract.json"):
+            raise ValueError("Repackaging may not change the frozen scientific contract")
+        prospective = dict(status="EXISTING_FROZEN_PLAN", trajectory_id=trajectory_id, path=(BASE/"rml_plan").as_posix())
+    else:
+        prospective = plan(root, snapshot, BASE/"rml_plan")
     destination.mkdir(parents=True)
     package = destination/"inputs"
     names = subprocess.check_output(["git", "ls-files", "src/molgap"], text=True).splitlines()
     names = [name for name in names if name.endswith(".py")]
     names += [(BASE/name).as_posix() for name in ("run.py", "contract.json", "role_plan.json", "budget.json")]
-    bundle = build_v4_source_bundle(repo_root=root, relative_paths=names, output_dir=package, source_commit=commit)
+    bundle = build_v4_source_bundle(repo_root=root, relative_paths=names, output_dir=package, source_commit=commit, archive_name="source_payload.bin")
     for arm, location in LOCATORS.items():
         for kind, original in (("model", "best_model.pt"), ("predictions", "development_predictions.pt")):
             source = root/location/original
@@ -87,7 +94,7 @@ def main():
         kernel=meta["id"], dataset_sources=meta["dataset_sources"],
         prospective_trajectory_id=trajectory_id, prospective_sha256=sha256_file(root/BASE/"rml_plan/trajectory.json"),
         files={name: sha256_file(package/name) for name in (
-            "source.tar.gz", "SOURCE_FILES.json", "contract.json", "target_transform.json",
+            "source_payload.bin", "SOURCE_FILES.json", "contract.json", "target_transform.json",
             "ema9999_model.pt", "ema9999_predictions.pt", "ema999_model.pt", "ema999_predictions.pt")})
     release["identity"] = canonical_fingerprint(release)
     atomic_json(package/"audit_release.json", release)

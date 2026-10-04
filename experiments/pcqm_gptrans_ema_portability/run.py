@@ -28,7 +28,7 @@ def source(inputs, destination):
     destination.mkdir(parents=True, exist_ok=True)
     inventory = json.loads((inputs / "SOURCE_FILES.json").read_text())
     entries = {row["path"]: row for row in inventory["files"]}
-    with tarfile.open(inputs / "source.tar.gz") as archive:
+    with tarfile.open(inputs / "source_payload.bin") as archive:
         members = archive.getmembers()
         if len(members) != len(entries) or {m.name for m in members} != set(entries):
             raise ValueError("Mounted source inventory mismatch")
