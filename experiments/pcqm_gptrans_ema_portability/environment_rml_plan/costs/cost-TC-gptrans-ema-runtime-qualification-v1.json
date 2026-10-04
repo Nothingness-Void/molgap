@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "preflight",
+  "cost_event_id": "cost-TC-gptrans-ema-runtime-qualification-v1",
+  "evidence_ref": "experiments/pcqm_gptrans_ema_portability/environment_protocol.md",
+  "hardware": "CPU-only",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.5
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-gptrans-runtime-qualification:v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-gptrans-ema-runtime-qualification-v1"
+}

@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "RUN_FROZEN_EMA_AUDIT",
+    "field": "accepted_frozen_models_and_roles",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "user-authorized-audit-then-controller-analysis",
+    "authority_ref": "experiments/pcqm_gptrans_ema_portability/contract.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "frozen-gptrans-g1-ema-portability-NO_TRAIN"
+  },
+  "cost_model": {
+    "assumptions": [
+      "All allocated T4s including idle",
+      "No cross-hardware conversion"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "gptrans-ema-portability-audit",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "accepted_frozen_models_and_roles"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

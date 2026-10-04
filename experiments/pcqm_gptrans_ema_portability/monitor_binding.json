@@ -7,17 +7,18 @@
   "credential_file": "C:/Users/Adminn/Downloads/key/kaggle_2.json",
   "jobs": [
     {
-      "slot": "gpu-frozen-audit",
-      "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
-      "kernel_id": 136990464,
+      "slot": "cpu-runtime-qualification",
+      "kernel": "kaseichou/molgap-gptrans-runtime-qualification",
+      "kernel_id": 136999674,
       "version": 1,
       "closed": false,
-      "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\control\\gptrans_ema_portability_v1.json",
-      "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\gptrans_ema_portability_v1"
+      "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\control\\gptrans_runtime_qualification_v1.json",
+      "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\gptrans_runtime_qualification_v1"
     }
   ],
-  "acceptance_command": ".venv/Scripts/python.exe experiments/pcqm_gptrans_ema_portability/accept.py platforms/_records/kaggle/training/gptrans_ema_portability_v1/gptrans_ema_portability --inputs platforms/_records/kaggle/packages/gptrans_ema_portability_v3/inputs",
   "postrun_requires_actual_replay_pool_admission": false,
-  "experiment_purpose": "NO_TRAIN",
-  "successor_authorized": "A-only; bounded justified training after independently accepted audit analysis; no full/extra seed/protected roles"
+  "experiment_purpose": "NO_TRAIN_CPU_ENVIRONMENT_QUALIFICATION",
+  "successor_authorized": "A-only: qualify source-bound CPU output and close infrastructure RML, then release pending unchanged frozen GPU audit v2; no training before audit analysis",
+  "acceptance_callable": "molgap.gptrans_portability_records.accept_environment",
+  "source_binding": "experiments/pcqm_gptrans_ema_portability/environment_release_corrected.json"
 }

@@ -13,8 +13,9 @@ as complete Replay pairs, but neither supports promotion; preserve the
 The server-owned [frozen G1 EMA portability audit](experiments/pcqm_gptrans_ema_portability/submission_record.md)
 failed before workers during installation and is RML-closed as infrastructure-only;
 see the [retained failure](experiments/pcqm_gptrans_ema_portability/results/failure_v1/decision.md).
-CPU-only interpreter qualification precedes a separately planned unchanged-contract
-retry. The existing Luna B monitors exact bound versions and hands terminal evidence to A.
+The [CPU-only interpreter qualification](experiments/pcqm_gptrans_ema_portability/environment_submission.json)
+is RUNNING; a separately planned unchanged-contract GPU retry is not submitted.
+The existing Luna B monitors the exact CPU version and hands terminal evidence to A.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).
@@ -59,7 +60,8 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 
 ## Live boundaries and next actions
 
-- Independently accept the frozen EMA audit, close its noncausal RML evidence,
+- Independently accept CPU runtime qualification before retrying the frozen EMA
+  audit; close each noncausal RML attempt separately,
   then choose zero or one justified bounded training action under the user's
   audit-first authorization. No successor training is released before analysis;
   no full training, extra seed or protected-role access is authorized.

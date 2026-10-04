@@ -1,0 +1,43 @@
+{
+  "prospective": {
+    "trajectory_id": "TC-gptrans-ema-runtime-qualification-v1",
+    "status": "PLANNED",
+    "path": "experiments/pcqm_gptrans_ema_portability/environment_rml_plan"
+  },
+  "source_release": {
+    "format": "molgap-frozen-inference-release-v1",
+    "experiment_purpose": "NO_TRAIN",
+    "source_commit": "19262789dd712bad3be2d748cb1c8aa467666a47",
+    "archive_sha256": "19b1708ec044d4869be5b540d8321950fbbb16881964f4dc01598b05327520a2",
+    "contract_sha256": "0c67468dc5eee871fbcbfa90ff4a852fc78e384c379b5060dd8009271b424e39",
+    "entry_sha256": "d7af8bb044cd2a0d3d89026416a1cc1a6fc09bc577197d090e70353ae3a07bc3",
+    "metadata_sha256": "6be8c5bcb1dac4ae46ab931c51466d8f69a111617b6bbc0924edfc61cd5536ab",
+    "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+    "dataset_sources": [
+      "kaseichou/molgap-gptrans-ema-portability-inputs",
+      "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+      "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+    ],
+    "prospective_trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+    "prospective_sha256": "9e562616a94967e6c0d4a39538b66e6c4fffc6da9dc9e33b6e65d73fe53ecac6",
+    "files": {
+      "source_payload.bin": "19b1708ec044d4869be5b540d8321950fbbb16881964f4dc01598b05327520a2",
+      "SOURCE_FILES.json": "8e281be46ad68f0b02a7d41eb14b559d49522a2a18068111c366d665ac2eb61e",
+      "contract.json": "0c67468dc5eee871fbcbfa90ff4a852fc78e384c379b5060dd8009271b424e39",
+      "target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+      "ema9999_model.pt": "5fceb2bc34d8d269dcc90cbe1b2697fe2ad3b6e5136e0262e59cf6165ea1152c",
+      "ema9999_predictions.pt": "67518aa94b471acdfa8294681cef8f5b45e6d5db2a701eb022fd6f5b7f412c60",
+      "ema999_model.pt": "e8d0b955f39526e8b517d44767749366bc641851310c0d2df40e443d1003e07b",
+      "ema999_predictions.pt": "39a094e2ce9cc1d5aa01e637c37f5b90a5af728dc2136e8751797ae30fc38108"
+    },
+    "identity": "6f92912971ecd20c8e02dc9a20e734512e852bbd5afcf106108d9072a8348025"
+  },
+  "entry_sha256": "1a9216aa4f5cd18c0d1e690857929e3f78cb47548ae690d02497d12c894783bd",
+  "metadata_sha256": "b5f670d6ee71d5a4391dc74646385ca2c7f07464add56c96698873df18ef0c95",
+  "prospective_sha256": "74290bae54009546d09cc54ee9aac0734a39a0a4b0ab7b0e1c3cfa99f1caffd6",
+  "training_executed": false,
+  "model_inference_executed": false,
+  "graph_datasets_mounted": false,
+  "gpu_enabled": false,
+  "gpu_successor_released": false
+}
