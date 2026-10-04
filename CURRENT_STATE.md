@@ -28,12 +28,14 @@ were submitted as version1, physical IDs137072037 and137072203, respectively.
 The node capacity pair is independently accepted, STRICT_CAUSAL and admitted as
 two complete Replay pairs; neither passed promotion. Its exact configurations
 are closed; preserve the [interpretation](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/results/interpretation.md).
-The local-bond plus500K study remains under the existing monitor's custody.
-Exact receipts and the [shared monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
-own execution state; one existing Luna B heartbeat observes only these jobs.
-The three100K architecture comparisons reuse the accepted G1+EMA999 reference.
-The500K same-live/two-filter study is noncausal at prelaunch, not a forged
-STRICT_CAUSAL or Replay-ready500K comparison. No automatic successor is authorized.
+The [local-bond plus500K study](experiments/pcqm_gptrans_capacity_relations_100k/gpu/results/interpretation.md)
+is independently accepted and RML-finalized. The local addon has a complete
+STRICT_CAUSAL Replay pair but remains below its frozen promotion gate. The500K
+shared-live EMA study supports the correction direction, remains noncausal
+PAIRED_ENDPOINT and is not a causal Replay pair or full-scale qualification.
+All four authorized studies are closed; the existing Luna heartbeat is paused.
+Exact receipts and the [closed shared monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
+retain custody history. No automatic successor is authorized.
 The earlier monitor bindings are closed; the monitor never adopts desktop jobs.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
@@ -79,10 +81,10 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 
 ## Live boundaries and next actions
 
-- Independently accept the four bounded capacity/EMA arms after terminal evidence,
-  with per-arm role/cost/trace qualification. The three100K comparisons require
-  actual Replay admission; the500K transfer study remains noncausal. No successor,
-  full training, extra seed or protected-role access is authorized.
+- Preserve the four-study terminal interpretation and independent qualifications.
+  Reopening any local-addon transfer or new architecture requires a separate
+  covered compute decision. No successor, full training, extra seed or
+  protected-role access is authorized by this closed campaign.
 - Use one immutable baseline per matching scientific contract. Track B predicts
   direct Gap on fixed PCQM4Mv2; Track A remains on repaired-2M PubChemQC.
 - ETKDG must match between training and inference. Official validation was
