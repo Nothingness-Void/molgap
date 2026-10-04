@@ -1,0 +1,295 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+  "version": 4,
+  "files": [
+    {
+      "path": "allocation.json",
+      "sha256": "f2b06f8506e92b3a02f62c2a5730173929b3eded51bffa50cdcec0110b749878",
+      "state": "RETAINED"
+    },
+    {
+      "path": "cost.json",
+      "sha256": "d36650d53e27c23579d09a2000c2efbd12aa9d9b3d8eb9e7b62b564bd4620dd1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "environment_qualification.json",
+      "sha256": "372c9420af52116c9a48a23217133eb874f20af05026dbd9ac85abff1e1cc5d3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/terminal.json",
+      "sha256": "8f1928616540526e7fd6e2b15b5779fe4ee399f88221b16e7603aaf581854750",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/feasibility.json",
+      "sha256": "e1a8f30e2c45fcbbaf20ecbb451d7e79ff59a9ee86ec05631c6f8921072f3918",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/runtime.json",
+      "sha256": "930b66ece80ef279841e8dcda843fea08886132d5431f40ef242fe4b0be5d5e6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/role_events.json",
+      "sha256": "c2bcb27f73ef8b85b233e2fdfea3cfe6215581ed8789bda9024ca5f40c44c334",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/reproduction.json",
+      "sha256": "243574c9cd15c6d842c11fd58c0d9913a19f2d3b8f0be26a82c225baf1e79fbb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/terminal.json",
+      "sha256": "bb5eae956f0606c11d9ee314636b2640c2383e42556d7c85e5e291a001130d09",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/feasibility.json",
+      "sha256": "a28e115d0570c1191d03ebc2872a6a537e66268cfb9094ddfd3432e47aa21478",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/runtime.json",
+      "sha256": "930b66ece80ef279841e8dcda843fea08886132d5431f40ef242fe4b0be5d5e6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/role_events.json",
+      "sha256": "63382b35bc5011a72764110366b9a9ec35070fe3e4a5c53adbdbcc6293ce4395",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/reproduction.json",
+      "sha256": "bd9abb96b40c179eef5b92b5a5d1f1c266f5b2693e052a4b9f2d19d71953745c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/unseen_500k/chunk_04.pt",
+      "sha256": "979d8709bf1b8458c0dc91802a881e38a7b3959eea9cf8b655d1dd93a982e889",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/unseen_500k/chunk_09.pt",
+      "sha256": "de8871c155420c8e16c614709d83d5cdfd9b4208f9eb9bef7259eb09a556bb15",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/unseen_500k/chunk_06.pt",
+      "sha256": "f89d24b18dfee3a07357f4853b5797528557f71b99c6843b8a5b33210dfe99b6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/unseen_500k/chunk_05.pt",
+      "sha256": "9de5d1f8c98e1310376a72cd1c960d33d04e6066aee7a80811c2047df91505ec",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/unseen_500k/chunk_08.pt",
+      "sha256": "480301394124df201f0e6ead04b7ae336530c54fd65431108f3e2559b7fa5b42",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/unseen_500k/chunk_03.pt",
+      "sha256": "b7910bec4a26c99aec29299d64820f1dae49d19f2a22424e69bc6ab7c468d714",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/unseen_500k/progress.json",
+      "sha256": "31742cb084fc0f97ecd4c1e091f24d9ce80df7515105dfa5dbcf2673d84d96a3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/unseen_500k/chunk_07.pt",
+      "sha256": "9830a64ca3860a1ff1babbb9c17317d8504fb525899b781b86761dd7247d551d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/unseen_500k/chunk_02.pt",
+      "sha256": "101302f48320092a1f3e3db4f3638c148b37360b65bc21273955e2c4759cbc60",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/unseen_500k/chunk_00.pt",
+      "sha256": "ecdf264361b1738ca0ada62fd26390b00659722deefb726c68c16bece2b93eef",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/unseen_500k/chunk_01.pt",
+      "sha256": "6273b5206d992085545964cab1c6105e96b628a958fb98474cd8f8c40f29913d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/original_100k/chunk_04.pt",
+      "sha256": "7a2bd0137f0d6a952bab2efa4f611e56c02e0f934ce2b07787fbe1f659fb8e9b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/original_100k/chunk_09.pt",
+      "sha256": "44052f1a673edf30683a9943615dda2c4c6af8896a5b7b62dbc0c1b0d92cb0d3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/original_100k/chunk_06.pt",
+      "sha256": "8238a3e8dbe459d2ad93ff6274ae4a4a8f8297398ccdfa51fc1b88f260d454ef",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/original_100k/chunk_05.pt",
+      "sha256": "c9810c30278a80bbd2aa097e4272e36e1bad093942d7ad697de296a84d6ad0d3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/original_100k/chunk_08.pt",
+      "sha256": "9c16bca5852f838a3fc58acac958955c1df43e85fc40ec015afda019e1ee02fc",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/original_100k/chunk_03.pt",
+      "sha256": "f48e6dca32889196f27d10af71f93e992ceb0cfa550b16fc62d163104eae37f6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/original_100k/progress.json",
+      "sha256": "5ce9d36692ad5304bfa034fe228fe19e8a8b88ba7a164dfa2004a707aa78102c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/original_100k/chunk_07.pt",
+      "sha256": "4310243fa292c0b338e7967c1ceabff2d943aa2050363f05922a9df58e8bd66a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/original_100k/chunk_02.pt",
+      "sha256": "ef87977b4ec70326fc88c95578bdc3a1b4962bd84d0a9c4f15ef6220f466ef0f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/original_100k/chunk_00.pt",
+      "sha256": "5b5a07508597526eb83582926d5bb5b6483839902579ddfe6e870d025774e826",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema9999/original_100k/chunk_01.pt",
+      "sha256": "03ef6ef95fd07e2073fa9310d6c4c0a5a58f79b907df84ef1f2aadf4748a2f80",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/unseen_500k/chunk_04.pt",
+      "sha256": "f19c125f589bff194851f02d1a1742f1527ef02b7ddbe2a5fdeefad8b745ac6f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/unseen_500k/chunk_09.pt",
+      "sha256": "3980dc1b5f8acd1764fc60c0f6dac3441d82b291e37096346638633eabb2e222",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/unseen_500k/chunk_06.pt",
+      "sha256": "1bd011c06abb4ab6765f79087865346d3e461dd3c1c73ade6784741973457649",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/unseen_500k/chunk_05.pt",
+      "sha256": "58bc53f8c739bc6501513cf8bd5b7c7ea7161a5d9f51e093560e7e79c516b69f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/unseen_500k/chunk_08.pt",
+      "sha256": "80608488d7e5c0253b5d60c5147921db17935f4b45cb58ba3c3eff6e3e994cb6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/unseen_500k/chunk_03.pt",
+      "sha256": "afb1ce86fd30ebc34848d459ebf4df218ffdc33c656d7aaa8c78302cb11e1ff7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/unseen_500k/progress.json",
+      "sha256": "de5fe5a99008f6d3e200b1aa1420513d7784571d7bb51b58948cd3a63c6d1433",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/unseen_500k/chunk_07.pt",
+      "sha256": "8364dcaaedcb575e0f426e9616d8230474c1d8f8ca143014845832489378eae1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/unseen_500k/chunk_02.pt",
+      "sha256": "b97cb035274f236d37051b5b30f1a777581f22feb86dcb515bdcf8df79aadc02",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/unseen_500k/chunk_00.pt",
+      "sha256": "d5e9453a5b2211314ff72ac888c56af1b59233492b8f175190da144720ec2cd4",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/unseen_500k/chunk_01.pt",
+      "sha256": "ab00c1be52e2a76d64b96e74d034486f389d52a204d13a7c9f7ff2329cc4f62a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/original_100k/chunk_04.pt",
+      "sha256": "562b0c4982e6f22184fa13e19973660629de1c20bb6ffafd45a13412865e8ea6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/original_100k/chunk_09.pt",
+      "sha256": "1f45819934fadb94134ae0fb26533309d6ee4d533fc4b09a430b9c7cc5eb11c2",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/original_100k/chunk_06.pt",
+      "sha256": "6420ebc7e501e0bab1809e02a16e45649059fc85d2b4bcb557d14f6403fe0b7e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/original_100k/chunk_05.pt",
+      "sha256": "ccea009eb08dd150e0e95c24170a3ea39103df36149f0f904ffe8f5f0a51fe85",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/original_100k/chunk_08.pt",
+      "sha256": "6dd93e8cf78f71248afe76c6eb8ed182feb6a61315124c08941f16a2b4b422e8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/original_100k/chunk_03.pt",
+      "sha256": "edcd9aa2e4752caa47292eeab01f4c5f3d7a73950938e0a1db0957c94e4d0e19",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/original_100k/progress.json",
+      "sha256": "8e6451e15bd681a138c8f558a7a158bdf57708b45ba7c1d9600c0e49954c683b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/original_100k/chunk_07.pt",
+      "sha256": "8bbb4eededde6f7c7b7653108ec6476f5734e72cf8c54122ea42e7375f654e2e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/original_100k/chunk_02.pt",
+      "sha256": "6a6f87cc856ad0aab56248df2394ee57c613b27aad9da54fe673ec4e2b1e3100",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/original_100k/chunk_00.pt",
+      "sha256": "fc119f5162bb7790d2b9936546ab13cd4b95274f52e242b5fdb39a12cc4bffb7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "ema999/original_100k/chunk_01.pt",
+      "sha256": "d1bf965c1ef9d99d1521666fc66bd8a175911fa61a4e821a81eeecb8be747039",
+      "state": "RETAINED"
+    }
+  ],
+  "manifest_source_binding_verified": true,
+  "version_specific_exact_file": true,
+  "unselected_outputs_downloaded": false,
+  "scientific_acceptance": false
+}

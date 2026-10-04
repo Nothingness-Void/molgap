@@ -71,3 +71,7 @@ experiments/pcqm_gptrans_path_ema_combination_100k/** -text
 experiments/pcqm_gptrans_path_ema_combination_100k/**/*.json whitespace=cr-at-eol
 experiments/pcqm_gptrans_readout_100k/** -text
 experiments/pcqm_gptrans_readout_100k/**/*.json whitespace=cr-at-eol
+
+# Preserve this audit's exact manifest-bound terminal and retrieved metadata.
+experiments/pcqm_gptrans_ema_portability/attempt_v4/** -text whitespace=cr-at-eol
+platforms/_records/kaggle/training/gptrans_ema_portability_v4/** -text whitespace=cr-at-eol

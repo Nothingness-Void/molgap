@@ -1,0 +1,35 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v4",
+      "category": "audit",
+      "cost_event_id": "cost-TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "evidence_ref": "experiments/pcqm_gptrans_ema_portability/attempt_v4/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.07065690822071499
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.035328454110357496
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "gptrans-ema-portability-audit:v4",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v4"
+    }
+  ],
+  "semantics": "kernel-entry-through-workers; teardown/queue unavailable; measured allocation includes both T4 devices; not a billing claim"
+}

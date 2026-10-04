@@ -1,0 +1,201 @@
+{
+  "format": "molgap-gptrans-ema-portability-v1",
+  "accepted": true,
+  "experiment_purpose": "NO_TRAIN",
+  "comparison_class": "PAIRED_ENDPOINT",
+  "strict_ready": false,
+  "model_inference_executed_in_acceptance": false,
+  "comparisons": {
+    "original_100k": {
+      "rows": 50000,
+      "reference_mae_eV": 0.15088489144265652,
+      "candidate_mae_eV": 0.1442326293605566,
+      "candidate_minus_reference_eV": -0.0066522620820999145,
+      "paired_row_bootstrap": {
+        "delta": -0.0066522620820999145,
+        "ci95": [
+          -0.007045725022554398,
+          -0.006262434197664262
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 5000,
+        "seed": 20260912
+      },
+      "candidate_win_fraction": 0.56146,
+      "absolute_error_delta_quantiles_eV": [
+        -0.5453252792358398,
+        -0.060047674179077144,
+        -0.030840396881103516,
+        -0.005194425582885742,
+        0.018256783485412598,
+        0.04404125213623047,
+        1.1365547180175781
+      ],
+      "posthoc_reference_error_quintiles": [
+        {
+          "reference_error_quintile": 1,
+          "rows": 10000,
+          "reference_mae_eV": 0.0175945086479187,
+          "candidate_mae_eV": 0.03149943552017212,
+          "candidate_minus_reference_eV": 0.013904926872253419
+        },
+        {
+          "reference_error_quintile": 2,
+          "rows": 10000,
+          "reference_mae_eV": 0.05553122630119324,
+          "candidate_mae_eV": 0.053321932339668275,
+          "candidate_minus_reference_eV": -0.0022092939615249636
+        },
+        {
+          "reference_error_quintile": 3,
+          "rows": 10000,
+          "reference_mae_eV": 0.10252693972587586,
+          "candidate_mae_eV": 0.09153563678264617,
+          "candidate_minus_reference_eV": -0.010991302943229675
+        },
+        {
+          "reference_error_quintile": 4,
+          "rows": 10000,
+          "reference_mae_eV": 0.1749449701666832,
+          "candidate_mae_eV": 0.1597145727753639,
+          "candidate_minus_reference_eV": -0.015230397391319275
+        },
+        {
+          "reference_error_quintile": 5,
+          "rows": 10000,
+          "reference_mae_eV": 0.4038268123716116,
+          "candidate_mae_eV": 0.3850915693849325,
+          "candidate_minus_reference_eV": -0.018735242986679078
+        }
+      ],
+      "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+    },
+    "unseen_500k": {
+      "rows": 50000,
+      "reference_mae_eV": 0.155522904214859,
+      "candidate_mae_eV": 0.1495983907175064,
+      "candidate_minus_reference_eV": -0.0059245134973526,
+      "paired_row_bootstrap": {
+        "delta": -0.0059245134973526,
+        "ci95": [
+          -0.006283154957652092,
+          -0.0055650907909870154
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 5000,
+        "seed": 20260912
+      },
+      "candidate_win_fraction": 0.56224,
+      "absolute_error_delta_quantiles_eV": [
+        -0.660252571105957,
+        -0.05522670745849609,
+        -0.02828085422515869,
+        -0.004300355911254883,
+        0.01586627960205078,
+        0.040886878967285156,
+        0.5022561550140381
+      ],
+      "posthoc_reference_error_quintiles": [
+        {
+          "reference_error_quintile": 1,
+          "rows": 10000,
+          "reference_mae_eV": 0.01862411434650421,
+          "candidate_mae_eV": 0.029567561292648314,
+          "candidate_minus_reference_eV": 0.010943446946144105
+        },
+        {
+          "reference_error_quintile": 2,
+          "rows": 10000,
+          "reference_mae_eV": 0.059671492910385135,
+          "candidate_mae_eV": 0.05668404679298401,
+          "candidate_minus_reference_eV": -0.002987446117401123
+        },
+        {
+          "reference_error_quintile": 3,
+          "rows": 10000,
+          "reference_mae_eV": 0.11144682886600495,
+          "candidate_mae_eV": 0.10200270311832428,
+          "candidate_minus_reference_eV": -0.009444125747680663
+        },
+        {
+          "reference_error_quintile": 4,
+          "rows": 10000,
+          "reference_mae_eV": 0.18658352627754213,
+          "candidate_mae_eV": 0.17361528046131133,
+          "candidate_minus_reference_eV": -0.012968245816230774
+        },
+        {
+          "reference_error_quintile": 5,
+          "rows": 10000,
+          "reference_mae_eV": 0.40128855867385865,
+          "candidate_mae_eV": 0.3861223619222641,
+          "candidate_minus_reference_eV": -0.015166196751594543
+        }
+      ],
+      "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+    }
+  },
+  "native_cost": {
+    "status": "COMPLETE",
+    "allocated_devices": 2,
+    "allocation_wall_seconds": 127.18243479728699,
+    "allocated_device_hours": 0.07065690822071499,
+    "scope": "kernel-entry-through-workers; teardown/queue unavailable",
+    "queue_hours": null
+  },
+  "gain_retained_fraction": 0.8906012799934759,
+  "nomination_passed": true,
+  "threshold_eV": 0.00332613125,
+  "decision": "SOL_REQUIRED",
+  "identity": {
+    "source_commit": "bfa2fadfa4c8f60d3d6779dc6268075ace1ffee3",
+    "archive_sha256": "cbd154a1bc1820f8b997f8c6539bb502115583c5cb6fa321877ff1102ff61835",
+    "contract_sha256": "0c67468dc5eee871fbcbfa90ff4a852fc78e384c379b5060dd8009271b424e39"
+  },
+  "logical_run_id": "gptrans-ema-portability-audit:v4",
+  "remote_submission": {
+    "status": "submitted",
+    "requested_kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+    "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+    "url": "https://www.kaggle.com/code/kaseichou/molgap-gptrans-ema-portability-audit",
+    "version_number": 4,
+    "script_version_id": null,
+    "kernel_id": 136990464,
+    "identity_conflicts": [],
+    "accelerator": "NvidiaTeslaT4",
+    "invalid_dataset_sources": [],
+    "invalid_kernel_sources": [],
+    "invalid_model_sources": [],
+    "invalid_competition_sources": [],
+    "reconciliation_required": false,
+    "release_binding": {
+      "source_commit": "bfa2fadfa4c8f60d3d6779dc6268075ace1ffee3",
+      "archive_sha256": "cbd154a1bc1820f8b997f8c6539bb502115583c5cb6fa321877ff1102ff61835",
+      "contract_sha256": "0c67468dc5eee871fbcbfa90ff4a852fc78e384c379b5060dd8009271b424e39"
+    },
+    "platform_response": {
+      "ref": "/code/kaseichou/molgap-gptrans-ema-portability-audit",
+      "url": "https://www.kaggle.com/code/kaseichou/molgap-gptrans-ema-portability-audit",
+      "versionNumber": 4,
+      "kernelId": 136990464,
+      "invalidDatasetSources": [],
+      "invalidKernelSources": [],
+      "invalidModelSources": [],
+      "invalidCompetitionSources": []
+    }
+  },
+  "remote_verification": {
+    "identity": {
+      "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+      "kernel_id": 136990464,
+      "version": 4
+    },
+    "status": "RUNNING",
+    "source_matches_after_newline_normalization": true,
+    "pulled_sha256": "b1c93d34929f685a4e3bedf48e1e04004178db100013a3af663de8eaf32a717e",
+    "local_entry_sha256": "301845146f1a9d45ceb39553a61964ce6ddd1e5da8f46f4d8c9dc31d1a67b1e6"
+  },
+  "remote_inference_executed": true,
+  "training_executed": false,
+  "local_model_inference_executed": false
+}

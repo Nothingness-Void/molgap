@@ -1,6 +1,6 @@
 {
   "owner": "server",
-  "closed": false,
+  "closed": true,
   "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
   "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
   "credential_owner": "kaseichou",
@@ -11,7 +11,7 @@
       "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
       "kernel_id": 136990464,
       "version": 4,
-      "closed": false,
+      "closed": true,
       "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\control\\gptrans_ema_portability_v4.json",
       "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\gptrans_ema_portability_v4"
     }
@@ -23,7 +23,9 @@
   "source_binding": "experiments/pcqm_gptrans_ema_portability/attempt_v4/release_binding.json",
   "retrieval": {
     "method": "molgap.kaggle_output_retrieval.retrieve_exact_metadata",
-    "metadata_paths": ["gptrans_ema_portability/output_manifest.json"],
+    "metadata_paths": [
+      "gptrans_ema_portability/output_manifest.json"
+    ],
     "bulk_output_download_allowed": false,
     "environment_output_download_allowed": false,
     "full_payload_retrieval_owner": "controller A"

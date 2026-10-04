@@ -1,0 +1,32 @@
+{
+  "verified_at": "2026-10-04T12:35:24.221365+00:00",
+  "verifier": "existing Luna Max bounded offline verification",
+  "tests": {
+    "passed": 20,
+    "failed": 0,
+    "scope": "GPTrans portability, role events, completed-record boundaries"
+  },
+  "manifest_files_verified": 57,
+  "prediction_chunks_loaded": 40,
+  "saved_prediction_payloads_loaded": 2,
+  "model_checkpoints_loaded": 0,
+  "local_training_executed": false,
+  "local_model_inference_executed": false,
+  "protected_roles_read": false,
+  "rml_validate": "PASS",
+  "rml_counts": {
+    "evidence": 77,
+    "trajectories": 76
+  },
+  "in_memory_derived_compile": {
+    "passed": true,
+    "replay_entries": 36,
+    "comparable_group_count": 6,
+    "audit_in_training_replay": false,
+    "derived_writes": false
+  },
+  "checkout_frozen_check": "stale derived indexes; unrelated user edits preserved",
+  "unseen_gain_eV": 0.0059245134973526,
+  "gain_retained_fraction": 0.8906012799934759,
+  "allocated_T4_hours_measured": 0.07065690822071499
+}

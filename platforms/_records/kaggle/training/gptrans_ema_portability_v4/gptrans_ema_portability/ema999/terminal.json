@@ -1,0 +1,29 @@
+{
+  "format": "molgap-gptrans-ema-portability-v1",
+  "complete": true,
+  "arm": "ema999",
+  "identity": {
+    "source_commit": "bfa2fadfa4c8f60d3d6779dc6268075ace1ffee3",
+    "archive_sha256": "cbd154a1bc1820f8b997f8c6539bb502115583c5cb6fa321877ff1102ff61835",
+    "contract_sha256": "0c67468dc5eee871fbcbfa90ff4a852fc78e384c379b5060dd8009271b424e39"
+  },
+  "model_sha256": "e8d0b955f39526e8b517d44767749366bc641851310c0d2df40e443d1003e07b",
+  "state_sha256": "a099c3fb3332bce6915718d230afd22d5d366b98f3262f9d6761431f7f8d1931",
+  "parameter_count": 5246817,
+  "model_inference_executed": true,
+  "training_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "original": {
+    "accepted": true,
+    "max_abs_eV": 1.9073486328125e-06,
+    "mae_eV": 0.1442326293605566,
+    "saved_mae_eV": 0.14423262914597987,
+    "mae_difference_eV": 2.1457674526104142e-10
+  },
+  "unseen_mae_eV": 0.1495983907175064,
+  "elapsed_seconds": 73.499847708,
+  "peak_memory_bytes": 102025216,
+  "runtime_sha256": "930b66ece80ef279841e8dcda843fea08886132d5431f40ef242fe4b0be5d5e6"
+}
