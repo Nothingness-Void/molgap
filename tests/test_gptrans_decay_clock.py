@@ -1,13 +1,27 @@
 """Metadata/synthetic clock checks; no real model or dataset execution."""
 import ast
 import json
+import math
 from pathlib import Path
 
 from molgap.pcqm_gptrans_v4 import _ema_decay, _scientific_fields, _weight_decay
 from molgap.gptrans_author_screen import validate_arm_allocation
 from molgap.gptrans_scale_profile import clock_projection
+from molgap.gptrans_author_acceptance import _matches_recomputed_lr_sum
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_derived_lr_sum_accepts_only_roundoff_not_schedule_drift():
+    expected = 23.842368
+    observed = expected
+    for _ in range(4):
+        observed = math.nextafter(observed, math.inf)
+    assert _matches_recomputed_lr_sum(observed, expected)
+    assert _matches_recomputed_lr_sum(expected, expected)
+    for bad in (expected + 1e-10, expected - 1e-10, expected * 5,
+                float("nan"), float("inf"), True, "23.842368"):
+        assert not _matches_recomputed_lr_sum(bad, expected)
 
 
 def test_only_optimizer_fingerprint_changes():

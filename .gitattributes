@@ -75,3 +75,6 @@ experiments/pcqm_gptrans_readout_100k/**/*.json whitespace=cr-at-eol
 # Preserve this audit's exact manifest-bound terminal and retrieved metadata.
 experiments/pcqm_gptrans_ema_portability/attempt_v4/** -text whitespace=cr-at-eol
 platforms/_records/kaggle/training/gptrans_ema_portability_v4/** -text whitespace=cr-at-eol
+
+# Coefficient-study terminal records bind exact prospective and observed bytes.
+experiments/pcqm_gptrans_decay_clock_100k/** -text whitespace=cr-at-eol

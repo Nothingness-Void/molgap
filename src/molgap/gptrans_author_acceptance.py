@@ -187,7 +187,8 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         if mode == "degree_decay001_ema999":
             from .pcqm_gptrans_v4 import FrozenEpochScheduler
             require(all(row["optimizer_diagnostics"]["weight_decay"] == .01
-                and row["optimizer_diagnostics"]["cumulative_lr_sum"] == BATCHES_PER_EPOCH * sum(FrozenEpochScheduler.learning_rate(i) for i in range(row["epoch"] + 1))
+                and _matches_recomputed_lr_sum(row["optimizer_diagnostics"]["cumulative_lr_sum"],
+                    BATCHES_PER_EPOCH * math.fsum(FrozenEpochScheduler.learning_rate(i) for i in range(row["epoch"] + 1)))
                 and 0 <= row["optimizer_diagnostics"]["clip_frequency"] <= 1
                 and all(math.isfinite(v) for key in ("group_weight_norms", "group_adam_first_moment_norms") for v in row["optimizer_diagnostics"][key])
                 for row in rows), "Coefficient-only optimizer diagnostics")
@@ -228,6 +229,15 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
 def _require(condition, message):
     if not condition:
         raise ValueError(message)
+
+
+def _matches_recomputed_lr_sum(observed: float, expected: float) -> bool:
+    # Recomputed float sums can differ across Python runtimes. This derived
+    # diagnostic gets an eight-ULP bound; recorded schedule/trace identity,
+    # counters and the actual weight-decay coefficient remain exact checks.
+    return (type(observed) in (int, float) and math.isfinite(observed)
+        and math.isfinite(expected) and expected > 0
+        and abs(observed - expected) <= 8 * math.ulp(expected))
 
 
 def _selected_completed_arms(declared, outcomes, selected=None):
