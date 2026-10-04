@@ -1,4 +1,4 @@
-"""Translate retained pre-worker audit failure into the existing RML finalizer."""
+"""Translate retained frozen-audit evidence into the existing RML finalizer."""
 from __future__ import annotations
 
 import json
@@ -7,6 +7,84 @@ from pathlib import Path
 from .gptrans_portability import verify_file
 from .training_reproducibility import atomic_json, sha256_file
 from .research_memory.finalize import finalize
+
+
+def close_completed_audit(root: Path, output: Path, inputs: Path, *, finalized_at: str):
+    """Accept saved tensors and reuse the two-role NO_TRAIN terminal adapter."""
+    import hashlib
+    from .gptrans_portability import analyze, joined, load_progress
+    from .k1_relation_audit_records import prepare_no_train_terminal
+
+    root = root.resolve()
+    output, inputs = output.resolve(), inputs.resolve()
+    for path in (output, inputs):
+        path.relative_to(root)
+    prefix = "experiments/pcqm_gptrans_ema_portability/attempt_v4"
+    base, results = root / prefix, root / prefix / "results"
+    plan = base / "rml_plan/trajectory.json"
+    if (plan.parent / "rml_finalized").exists():
+        return finalize(root, plan, results / "terminal.json")
+    # Never translate an unverified COMPLETE status into scientific evidence.
+    accepted = analyze(output, inputs)
+    frozen = json.loads(plan.read_text())
+    receipt = json.loads((base / "submission_receipt.json").read_text())
+    verification = json.loads((base / "remote_kernel_verification.json").read_text())
+    if receipt["version_number"] != 4 or receipt["kernel"] != "kaseichou/molgap-gptrans-ema-portability-audit":
+        raise ValueError("Physical receipt differs from the accepted v4 attempt")
+    if (receipt.get("status") != "submitted" or receipt.get("reconciliation_required") is not False
+            or receipt.get("identity_conflicts") != []
+            or verification.get("identity") != dict(kernel=receipt["kernel"],
+                kernel_id=receipt["kernel_id"], version=4)
+            or verification.get("source_matches_after_newline_normalization") is not True):
+        raise ValueError("Actual version/source binding is not qualified")
+    run = frozen["actions"][0]["run_ids"][0]
+    acceptance = dict(accepted, logical_run_id=run, remote_submission=receipt,
+        remote_verification=verification, remote_inference_executed=True,
+        training_executed=False, local_model_inference_executed=False)
+    atomic_json(results / "acceptance_summary.json", acceptance)
+    manifests = {}
+    for role, start, manifest in (
+            ("original_100k", 100000, "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"),
+            ("unseen_500k", 500000, "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751")):
+        directory = output / "ema999" / role
+        progress = json.loads((directory / "progress.json").read_text())
+        payload = joined(directory, load_progress(directory, progress["identity"]))
+        manifests[role] = dict(cache_manifest_sha256=manifest, rows=50000,
+            start_inclusive=start, end_exclusive=start + 50000,
+            row_ids_sha256_le_i64=hashlib.sha256(payload["source_idx"].numpy().astype("<i8").tobytes()).hexdigest(),
+            targets_sha256_le_f32=hashlib.sha256(payload["target_eV"].numpy().astype("<f4").tobytes()).hexdigest())
+    atomic_json(results / "role_row_manifests.json", manifests)
+    atomic_json(results / "execution.json", dict(native_cost=accepted["native_cost"],
+        allocation=json.loads((output / "allocation.json").read_text()),
+        logical_run_id=run, physical_submission_ref=f"{prefix}/submission_receipt.json"))
+    native = accepted["native_cost"]
+    missing = dict(status="measurement_missing", value=None)
+    measurements = dict(device_hours=dict(status="measured", value=native["allocated_device_hours"]),
+        wall_hours=dict(status="measured", value=native["allocation_wall_seconds"] / 3600),
+        cpu_hours=missing, queue_hours=missing)
+    passed = accepted["nomination_passed"]
+    outcome = dict(execution_status="complete", artifact_status="accepted",
+        comparison_status="paired_endpoint_diagnostic",
+        scientific_status="no_train_positive_transfer" if passed else "no_train_below_nomination",
+        transfer_status="frozen_portability_passed" if passed else "frozen_portability_below_gate",
+        budget_decision="within_frozen_audit_cap", full_handoff_status="not_authorized")
+    metadata = json.loads((output / "output_manifest.json").read_text())["files"]
+    refs = [f"{prefix}/results/{name}.json" for name in (
+        "acceptance_summary", "execution", "role_row_manifests", "role_history", "cost_records")]
+    refs += [(output / name).relative_to(root).as_posix()
+             for name in ("output_manifest.json", *metadata) if name.endswith(".json")]
+    authority = ["experiments/pcqm_gptrans_ema_portability/" + name for name in (
+        "contract.json", "role_plan.json", "budget.json")]
+    authority += [f"{prefix}/{name}" for name in (
+        "rml_plan/trajectory.json", "decision.md", "release_binding.json",
+        "submission_receipt.json", "remote_kernel_verification.json", "retrieval_receipt.json")]
+    paths = prepare_no_train_terminal(prefix=prefix, frozen=frozen, run_id=run,
+        evidence_id="pcqm-gptrans-g1-ema-portability-frozen-s42-v4", outcome=outcome,
+        scope="frozen_checkpoint_NO_TRAIN_portability_not_scale_training", finalized_at=finalized_at,
+        artifact_refs=refs, authority=authority, acceptance_name="acceptance_summary",
+        repo_root=root, cost_measurement=measurements, attempt_id="v4",
+        cost_semantics=native["scope"] + "; measured allocation includes both T4 devices; not a billing claim")
+    return finalize(root, root / paths["trajectory"], root / paths["terminal"])
 
 
 def close_preworker_failure(root: Path, output: Path, *, release_path: Path,
