@@ -1,0 +1,12 @@
+/usr/local/lib/python3.13/dist-packages/outdated/__init__.py:36: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import parse_version
+dropout_mean2 epoch=40 train_normalized_mae=0.070171 dev=0.140280eV seconds=187.8
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 35, in <module>
+    main()
+    ~~~~^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 31, in main
+    raise RuntimeError("Owning family phase did not pass")
+RuntimeError: Owning family phase did not pass

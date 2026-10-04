@@ -1,0 +1,59 @@
+{
+  "format": "molgap-retained-prediction-result-check-v1",
+  "status": "DIAGNOSTIC_ONLY_NOT_ACCEPTED",
+  "primary": {
+    "rows": 50000,
+    "reference_mae_eV": 0.1402572855657339,
+    "candidate_mae_eV": 0.13872850305497647,
+    "paired_gain_eV": 0.0015287825107574463,
+    "row_bootstrap_95pct_eV": [
+      0.0006161361584663391,
+      0.002348937706589699
+    ],
+    "candidate_better_row_fraction": 0.50648,
+    "material_3mev_point_gain": false
+  },
+  "historical_context": {
+    "rows": 50000,
+    "reference_mae_eV": 0.1412944608205557,
+    "candidate_mae_eV": 0.13872850305497647,
+    "paired_gain_eV": 0.0025659577655792235,
+    "row_bootstrap_95pct_eV": [
+      0.0016730003967285155,
+      0.0035193906322717665
+    ],
+    "candidate_better_row_fraction": 0.5133,
+    "material_3mev_point_gain": false
+  },
+  "inputs": {
+    "mean2": {
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/development_predictions.pt",
+      "sha256": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076"
+    },
+    "consistency2": {
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/development_predictions.pt",
+      "sha256": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a"
+    },
+    "historical_clean_k1": {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/development_predictions.pt",
+      "sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82"
+    }
+  },
+  "gate": {
+    "material_gain_eV": 0.003,
+    "mechanical_acceptance": "BLOCKED",
+    "scientific_acceptance": "NOT_FINALIZED",
+    "dual_replay_ready": false
+  },
+  "limitations": [
+    "Historical clean K1 is contextual, not the matched causal control.",
+    "One training seed; row bootstrap is not training stochasticity.",
+    "Target digest byte encoding blocks the frozen generic inspector.",
+    "Cumulative native cost for resumed mean2 is missing.",
+    "No checkpoint inference or new protected role consumption."
+  ],
+  "recovery_preserved_best_artifacts": {
+    "selected_model.pt": true,
+    "development_predictions.pt": true
+  }
+}

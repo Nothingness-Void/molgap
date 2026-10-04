@@ -1,5 +1,21 @@
 # K1 dropout consistency desktop handoff
 
+## Latest reconciliation
+
+Kaggle3 ID136942701/version3 is authenticated COMPLETE on2026-10-04.
+Both arms now meet40epochs/31240updates/3998720presentations. Control epoch40
+did not refresh its best epoch37 checkpoint. Exact retained-prediction MAE:
+mean2=0.1402572855657339eV; consistency2=0.13872850305497647eV.
+Primary gain1.5287825meV, paired-row95%interval[0.6161362,2.3489377]meV,
+falls below the frozen3meV material gate. Historical clean-K1 gain is2.5659578meV.
+Read [result check and attribution](recovery_reconciliation_v3/analysis.md).
+The target digest encoding mismatch still blocks mechanical acceptance; resumed
+control total native T4 cost is missing. Scientific acceptance is not finalized;
+dual replay readiness remains unqualified. No scale-up or successor was submitted.
+The original records below retain the dated sequence, not current queue state.
+
+## Previous attempts and frozen submission
+
 Owner codex/exp/k1-dropout-consistency; verified desktop base a779e8cf.
 [Kernel](https://www.kaggle.com/code/nvoid912/molgap-k1-dropout-consistency-100k-s42-v1)
 actual ID136942701/version1 is ERROR on the authenticated 2026-10-04 recheck.
