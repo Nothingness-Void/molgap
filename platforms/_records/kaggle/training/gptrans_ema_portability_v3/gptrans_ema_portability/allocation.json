@@ -1,0 +1,42 @@
+{
+  "started_unix": 1791101146.9876716,
+  "deadline_unix": 1791106546.9876716,
+  "invocation_id": "1791101148458066607",
+  "devices": [
+    "0, Tesla T4, 15360 MiB, GPU-8243e435-edf6-e95c-8234-a5d6576aa7ac",
+    "1, Tesla T4, 15360 MiB, GPU-54f5f4b6-6f46-3c68-3ac6-401ccba403ff"
+  ],
+  "allocated_devices": 2,
+  "idle_devices": 0,
+  "precision": "fp32",
+  "physical_batch": 128,
+  "training_executed": false,
+  "release": {
+    "format": "molgap-frozen-inference-release-v1",
+    "experiment_purpose": "NO_TRAIN",
+    "source_commit": "1d78e653abf2657bc2536fe2ff5e46ccd3436073",
+    "archive_sha256": "097c5296b7d2a43f90af3ff8d25766782921a87a948b297752c324849231b5a9",
+    "contract_sha256": "0c67468dc5eee871fbcbfa90ff4a852fc78e384c379b5060dd8009271b424e39",
+    "entry_sha256": "301845146f1a9d45ceb39553a61964ce6ddd1e5da8f46f4d8c9dc31d1a67b1e6",
+    "metadata_sha256": "6be8c5bcb1dac4ae46ab931c51466d8f69a111617b6bbc0924edfc61cd5536ab",
+    "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+    "dataset_sources": [
+      "kaseichou/molgap-gptrans-ema-portability-inputs",
+      "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+      "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+    ],
+    "prospective_trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+    "prospective_sha256": "c3a88ea08735495ad015127718fb5cc973787a7d3fd140df652b257947870683",
+    "files": {
+      "source_payload.bin": "097c5296b7d2a43f90af3ff8d25766782921a87a948b297752c324849231b5a9",
+      "SOURCE_FILES.json": "3fc20fd52ba35f51eb2894d8949a3ac99992e6c4b47869af1a6fb57cccc35ca6",
+      "contract.json": "0c67468dc5eee871fbcbfa90ff4a852fc78e384c379b5060dd8009271b424e39",
+      "target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+      "ema9999_model.pt": "5fceb2bc34d8d269dcc90cbe1b2697fe2ad3b6e5136e0262e59cf6165ea1152c",
+      "ema9999_predictions.pt": "67518aa94b471acdfa8294681cef8f5b45e6d5db2a701eb022fd6f5b7f412c60",
+      "ema999_model.pt": "e8d0b955f39526e8b517d44767749366bc641851310c0d2df40e443d1003e07b",
+      "ema999_predictions.pt": "39a094e2ce9cc1d5aa01e637c37f5b90a5af728dc2136e8751797ae30fc38108"
+    },
+    "identity": "e4cbe31be99484dccdd193c163d55400068f04a74702f4206efd12a5edb5d7b7"
+  }
+}

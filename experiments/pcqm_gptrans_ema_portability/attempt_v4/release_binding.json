@@ -1,0 +1,37 @@
+{
+  "release": {
+    "format": "molgap-frozen-inference-release-v1",
+    "experiment_purpose": "NO_TRAIN",
+    "source_commit": "bfa2fadfa4c8f60d3d6779dc6268075ace1ffee3",
+    "archive_sha256": "cbd154a1bc1820f8b997f8c6539bb502115583c5cb6fa321877ff1102ff61835",
+    "contract_sha256": "0c67468dc5eee871fbcbfa90ff4a852fc78e384c379b5060dd8009271b424e39",
+    "entry_sha256": "301845146f1a9d45ceb39553a61964ce6ddd1e5da8f46f4d8c9dc31d1a67b1e6",
+    "metadata_sha256": "6be8c5bcb1dac4ae46ab931c51466d8f69a111617b6bbc0924edfc61cd5536ab",
+    "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+    "dataset_sources": [
+      "kaseichou/molgap-gptrans-ema-portability-inputs",
+      "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+      "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+    ],
+    "prospective_trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+    "prospective_sha256": "cf69bfd37f5238e37ef653ca0df6b06b4493e03f3bd2551b5a9b67b50fc9cbf0",
+    "files": {
+      "source_payload.bin": "cbd154a1bc1820f8b997f8c6539bb502115583c5cb6fa321877ff1102ff61835",
+      "SOURCE_FILES.json": "d3c89ec34c53a94928ccf20dcb1bc5437d0e70bd490d33773e25a6d3be3a3e9f",
+      "contract.json": "0c67468dc5eee871fbcbfa90ff4a852fc78e384c379b5060dd8009271b424e39",
+      "target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+      "ema9999_model.pt": "5fceb2bc34d8d269dcc90cbe1b2697fe2ad3b6e5136e0262e59cf6165ea1152c",
+      "ema9999_predictions.pt": "67518aa94b471acdfa8294681cef8f5b45e6d5db2a701eb022fd6f5b7f412c60",
+      "ema999_model.pt": "e8d0b955f39526e8b517d44767749366bc641851310c0d2df40e443d1003e07b",
+      "ema999_predictions.pt": "39a094e2ce9cc1d5aa01e637c37f5b90a5af728dc2136e8751797ae30fc38108"
+    },
+    "identity": "a506efdff5673ba03636587c4ab487abff282d4e8d5806ede8f6b548b15a1e5d"
+  },
+  "prospective": {
+    "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+    "status": "PLANNED",
+    "path": "experiments/pcqm_gptrans_ema_portability/attempt_v4/rml_plan"
+  },
+  "staged_input_root": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\packages\\gptrans_ema_portability_v7\\inputs",
+  "release_report": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\packages\\gptrans_ema_portability_v7\\release_report.json"
+}

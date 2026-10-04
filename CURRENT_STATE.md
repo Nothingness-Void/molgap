@@ -19,7 +19,11 @@ The frozen audit [GPU v2](experiments/pcqm_gptrans_ema_portability/results/failu
 failed before worker entry on duplicate shard-name resolution; its retained
 failure is infrastructure-only, not a model result. Exact dataset-scoped path
 resolution passed a duplicate-mount regression. The unchanged-contract
-[v3 audit](experiments/pcqm_gptrans_ema_portability/attempt_v3/submission_receipt.json)
+[v3 audit](experiments/pcqm_gptrans_ema_portability/results/failure_v3/decision.md)
+failed on mapping-only serialization of the first role-event list after model
+load but before graph-role read/inference. Its infrastructure-only RML is closed;
+list-capable shared atomic IO and observed-read ordering passed regression.
+The unchanged-contract [v4 audit](experiments/pcqm_gptrans_ema_portability/attempt_v4/submission_receipt.json)
 is RUNNING, bound to the existing silent30-minute Luna monitor. Training remains
 gated on accepted audit results and analysis.
 The path + corrected-EMA combination is closed with a strict/complete Replay

@@ -1,0 +1,4 @@
+{
+  "error": "Traceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 65, in main\n    worker(arm=args.arm, inputs=inputs,\n  File \"/kaggle/working/audit_source_ema9999/src/molgap/gptrans_portability.py\", line 208, in worker\n    graphs = graphs_for(\"original_100k\")\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/working/audit_source_ema9999/src/molgap/gptrans_portability.py\", line 205, in graphs_for\n    atomic_json(directory / \"role_events.json\", role_events)\n  File \"/kaggle/working/audit_source_ema9999/src/molgap/training_reproducibility.py\", line 195, in atomic_json\n    temporary.write_text(json.dumps(dict(value), indent=2) + \"\\n\", encoding=\"utf-8\")\n                                    ^^^^^^^^^^^\nValueError: dictionary update sequence element #0 has length 3; 2 is required\n",
+  "timestamp": 1791101203.1905663
+}

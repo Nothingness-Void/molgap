@@ -95,3 +95,29 @@ the unchanged scientific contract and frozen model/payload hashes. Independent
 physical version3, entry equality and RUNNING status. The existing B and
 heartbeat were rebound to v3; the v2 event was finalized NEXT_RUN_BOUND.
 No new training successor or scientific promotion was inferred from this release.
+
+## List-capable event recording recovery v4 — 2026-10-04
+
+The [v3 terminal decision](results/failure_v3/decision.md) retained the mapping-only
+role-event serialization failure after frozen model loading and before graph
+loading/inference. Its INFRASTRUCTURE_ONLY RML closure did not alter prospective
+bytes, infer predictions, or manufacture training Replay eligibility.
+
+The repair reused `research_memory.trace.atomic_write/json_bytes` for event lists
+and placed observed-read events after successful accepted graph loading. The
+independent Luna verification passed23 bounded offline tests, including atomic
+event-list roundtrip, nonfinite rejection, every worker event callsite, exact
+mount resolution, pinned environment, and version-specific retrieval.
+
+Kernel136990464/version4 was released only after exact v3 ERROR reconciliation
+and a new source/prospective binding. The
+[input verification](attempt_v4/remote_input_verification.json) checked source
+dataset version7, inventory sizes and downloaded source bytes; older versions
+were retained. The [release](attempt_v4/release_binding.json) bound commit
+`bfa2fadfa4c8f60d3d6779dc6268075ace1ffee3`, unchanged scientific contract and
+the original model/payload hashes. The [receipt](attempt_v4/submission_receipt.json)
+had no mount or identity conflicts. Independent
+[verification](attempt_v4/remote_kernel_verification.json) matched physical
+version4 and the entry script with RUNNING status. Existing B/heartbeat were
+rebound; the v3 event was finalized NEXT_RUN_BOUND. Setup/runtime success remained
+distinct from successful numerical reproduction or a nomination decision.

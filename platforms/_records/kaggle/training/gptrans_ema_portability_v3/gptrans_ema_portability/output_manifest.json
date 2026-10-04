@@ -1,0 +1,45 @@
+{
+  "status": "ERROR",
+  "files": {
+    "cost.json": "ec749cd090c472e609c21044d5c585e104a014b2a8351df3ea2c2e5b43f03ce4",
+    "failure.json": "9dcaa11920fd543551d31a055a2d1bbc12d9fdb9ebf7126bfb7a3b6f0490d2aa",
+    "environment_qualification.json": "372c9420af52116c9a48a23217133eb874f20af05026dbd9ac85abff1e1cc5d3",
+    "allocation.json": "1d7d9f66d4df8243ed16be86cb2e0ef9a9cf1fe07e00da1561ec9540d9e249ef",
+    "ema999/failure_1791101148458066607.json": "57e3b05ca06eafe0264d524e469f634d81a48d712171c17488a5a3dcb753c33d",
+    "ema999/runtime.json": "930b66ece80ef279841e8dcda843fea08886132d5431f40ef242fe4b0be5d5e6",
+    "ema9999/failure_1791101148458066607.json": "326f936113e3e65aae0ff24e4c8cd7f0b87b23957e197bd886edced0aa004e01",
+    "ema9999/runtime.json": "930b66ece80ef279841e8dcda843fea08886132d5431f40ef242fe4b0be5d5e6"
+  },
+  "identity": {
+    "format": "molgap-frozen-inference-release-v1",
+    "experiment_purpose": "NO_TRAIN",
+    "source_commit": "1d78e653abf2657bc2536fe2ff5e46ccd3436073",
+    "archive_sha256": "097c5296b7d2a43f90af3ff8d25766782921a87a948b297752c324849231b5a9",
+    "contract_sha256": "0c67468dc5eee871fbcbfa90ff4a852fc78e384c379b5060dd8009271b424e39",
+    "entry_sha256": "301845146f1a9d45ceb39553a61964ce6ddd1e5da8f46f4d8c9dc31d1a67b1e6",
+    "metadata_sha256": "6be8c5bcb1dac4ae46ab931c51466d8f69a111617b6bbc0924edfc61cd5536ab",
+    "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+    "dataset_sources": [
+      "kaseichou/molgap-gptrans-ema-portability-inputs",
+      "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+      "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+    ],
+    "prospective_trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+    "prospective_sha256": "c3a88ea08735495ad015127718fb5cc973787a7d3fd140df652b257947870683",
+    "files": {
+      "source_payload.bin": "097c5296b7d2a43f90af3ff8d25766782921a87a948b297752c324849231b5a9",
+      "SOURCE_FILES.json": "3fc20fd52ba35f51eb2894d8949a3ac99992e6c4b47869af1a6fb57cccc35ca6",
+      "contract.json": "0c67468dc5eee871fbcbfa90ff4a852fc78e384c379b5060dd8009271b424e39",
+      "target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+      "ema9999_model.pt": "5fceb2bc34d8d269dcc90cbe1b2697fe2ad3b6e5136e0262e59cf6165ea1152c",
+      "ema9999_predictions.pt": "67518aa94b471acdfa8294681cef8f5b45e6d5db2a701eb022fd6f5b7f412c60",
+      "ema999_model.pt": "e8d0b955f39526e8b517d44767749366bc641851310c0d2df40e443d1003e07b",
+      "ema999_predictions.pt": "39a094e2ce9cc1d5aa01e637c37f5b90a5af728dc2136e8751797ae30fc38108"
+    },
+    "identity": "e4cbe31be99484dccdd193c163d55400068f04a74702f4206efd12a5edb5d7b7"
+  },
+  "training_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

@@ -1,0 +1,178 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+  "run_id": "gptrans-ema-portability-audit:v3",
+  "action_id": "A001",
+  "finalized_at": "2026-10-04T08:41:30.186565+00:00",
+  "acceptance_ref": "experiments/pcqm_gptrans_ema_portability/results/failure_v3/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_ema_portability/attempt_v3/rml_plan/trajectory.json": "c3a88ea08735495ad015127718fb5cc973787a7d3fd140df652b257947870683",
+    "experiments/pcqm_gptrans_ema_portability/attempt_v3/release_binding.json": "9310a6233197ffbc4206398d0fb4318eca2b96b9614433877b50edfd6f6976c2",
+    "experiments/pcqm_gptrans_ema_portability/results/failure_v3/decision.md": "d5f3f81a1894742a4c9cfa383a738c243eaee06950b719fbf559af0577bd4ab2",
+    "experiments/pcqm_gptrans_ema_portability/results/failure_v3/acceptance.json": "11bbd4eefb67e034edd0ad8fb96bf9010787ae0336493f217c6900f2479cad70",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/output_manifest.json": "c602cc81e3fd094e243c29201fd88c82548ea235df82d02d459d295ee00dc307",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/cost.json": "ec749cd090c472e609c21044d5c585e104a014b2a8351df3ea2c2e5b43f03ce4",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/failure.json": "9dcaa11920fd543551d31a055a2d1bbc12d9fdb9ebf7126bfb7a3b6f0490d2aa",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/environment_qualification.json": "372c9420af52116c9a48a23217133eb874f20af05026dbd9ac85abff1e1cc5d3",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/allocation.json": "1d7d9f66d4df8243ed16be86cb2e0ef9a9cf1fe07e00da1561ec9540d9e249ef",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema999/failure_1791101148458066607.json": "57e3b05ca06eafe0264d524e469f634d81a48d712171c17488a5a3dcb753c33d",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema999/runtime.json": "930b66ece80ef279841e8dcda843fea08886132d5431f40ef242fe4b0be5d5e6",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema9999/failure_1791101148458066607.json": "326f936113e3e65aae0ff24e4c8cd7f0b87b23957e197bd886edced0aa004e01",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema9999/runtime.json": "930b66ece80ef279841e8dcda843fea08886132d5431f40ef242fe4b0be5d5e6"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-ema-portability-infrastructure-v3",
+    "track": "C",
+    "scope": "preworker_runtime_failure",
+    "legacy_contract": "none-v5-prospective",
+    "outcome": {
+      "execution_status": "failed_before_inference_role_read",
+      "artifact_status": "failure_metadata_verified",
+      "comparison_status": "not_evaluated",
+      "scientific_status": "not_evaluated",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "native_allocation_cost_retained",
+      "full_handoff_status": "not_authorized"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "untouched",
+      "internal_development_500000_550000": "untouched",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched",
+      "train": "not_applicable"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_ema_portability/attempt_v3/rml_plan/trajectory.json",
+        "experiments/pcqm_gptrans_ema_portability/attempt_v3/release_binding.json",
+        "experiments/pcqm_gptrans_ema_portability/results/failure_v3/decision.md",
+        "experiments/pcqm_gptrans_ema_portability/results/failure_v3/acceptance.json",
+        "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/output_manifest.json",
+        "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/cost.json",
+        "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/failure.json",
+        "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/environment_qualification.json",
+        "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/allocation.json",
+        "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema999/failure_1791101148458066607.json",
+        "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema999/runtime.json",
+        "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema9999/failure_1791101148458066607.json",
+        "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema9999/runtime.json"
+      ]
+    },
+    "artifacts": [
+      {
+        "name": "output_manifest.json",
+        "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/output_manifest.json",
+        "sha256": "c602cc81e3fd094e243c29201fd88c82548ea235df82d02d459d295ee00dc307",
+        "availability": "retained_metadata"
+      },
+      {
+        "name": "cost.json",
+        "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/cost.json",
+        "sha256": "ec749cd090c472e609c21044d5c585e104a014b2a8351df3ea2c2e5b43f03ce4",
+        "availability": "retained_metadata"
+      },
+      {
+        "name": "failure.json",
+        "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/failure.json",
+        "sha256": "9dcaa11920fd543551d31a055a2d1bbc12d9fdb9ebf7126bfb7a3b6f0490d2aa",
+        "availability": "retained_metadata"
+      },
+      {
+        "name": "environment_qualification.json",
+        "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/environment_qualification.json",
+        "sha256": "372c9420af52116c9a48a23217133eb874f20af05026dbd9ac85abff1e1cc5d3",
+        "availability": "retained_metadata"
+      },
+      {
+        "name": "allocation.json",
+        "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/allocation.json",
+        "sha256": "1d7d9f66d4df8243ed16be86cb2e0ef9a9cf1fe07e00da1561ec9540d9e249ef",
+        "availability": "retained_metadata"
+      },
+      {
+        "name": "failure_1791101148458066607.json",
+        "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema999/failure_1791101148458066607.json",
+        "sha256": "57e3b05ca06eafe0264d524e469f634d81a48d712171c17488a5a3dcb753c33d",
+        "availability": "retained_metadata"
+      },
+      {
+        "name": "runtime.json",
+        "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema999/runtime.json",
+        "sha256": "930b66ece80ef279841e8dcda843fea08886132d5431f40ef242fe4b0be5d5e6",
+        "availability": "retained_metadata"
+      },
+      {
+        "name": "failure_1791101148458066607.json",
+        "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema9999/failure_1791101148458066607.json",
+        "sha256": "326f936113e3e65aae0ff24e4c8cd7f0b87b23957e197bd886edced0aa004e01",
+        "availability": "retained_metadata"
+      },
+      {
+        "name": "runtime.json",
+        "locator": "platforms/_records/kaggle/training/gptrans_ema_portability_v3/gptrans_ema_portability/ema9999/runtime.json",
+        "sha256": "930b66ece80ef279841e8dcda843fea08886132d5431f40ef242fe4b0be5d5e6",
+        "availability": "retained_metadata"
+      }
+    ],
+    "migration": {
+      "migrated_at": "2026-10-04T08:41:30.186565+00:00",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Hash-bound role-event writer failure after model load but before graph-role read or inference"
+    }
+  },
+  "decision": {
+    "final": true,
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "decision_ref": "experiments/pcqm_gptrans_ema_portability/results/failure_v3/decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "New prospective attempt after verified infrastructure correction"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "action_id": "A001",
+      "run_id": "gptrans-ema-portability-audit:v3",
+      "attempt_id": "v3",
+      "category": "infrastructure_failure",
+      "platform": "kaggle2",
+      "hardware": "Tesla_T4x2",
+      "evidence_ref": "experiments/pcqm_gptrans_ema_portability/results/failure_v3/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measured",
+          "value": 0.03185634003745185
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.015928170018725925
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "internal_development_100000_150000": "untouched",
+    "internal_development_500000_550000": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "train": "not_applicable"
+  }
+}
