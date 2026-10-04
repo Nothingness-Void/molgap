@@ -1,0 +1,11 @@
+{
+  "estimated_wall_hours": 3.5,
+  "estimated_allocated_t4_hours": 7.0,
+  "maximum_wall_hours": 5,
+  "maximum_allocated_t4_hours": 10,
+  "allocated_devices": 2,
+  "baseline_retraining": false,
+  "automatic_successor_authorized": false,
+  "single_arm_reason": "Only wd0.01 is justified; reuse the accepted wd0.05 G1 EMA999 reference, not a duplicate baseline or extra coefficient grid. Accounted allocation is two T4s.",
+  "authority_ref": "experiments/pcqm_gptrans_decay_clock_100k/protocol.md"
+}

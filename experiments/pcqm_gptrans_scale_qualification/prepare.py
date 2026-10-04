@@ -28,7 +28,7 @@ def prepare(output: Path):
     arm = deepcopy(prior["arms"][0])
     arm.update(arm_id="scale_profile", scientific_role="ablation", family={"name": "gptrans_scale_profile", "version": "1"}, addons=[], addon_semantics="baseline")
     arm["data"]["dataset"]["sha256"] = FIXED_500K_MANIFEST_SHA256
-    arm["data"]["dataset"]["name"] = "pcqm4mv2-ogb-fixed-500k-scnet-v1"
+    arm["data"]["dataset"]["name"] = "pcqm4mv2"
     arm["data"]["split"] = {"name": "fixed500k-train-only-profile", "version": "1", "sha256": FIXED_500K_MANIFEST_SHA256}
     arm["data"]["roles"] = [{"role": "train", "membership_sha256": canonical_fingerprint({"start": 0, "stop": 500000}),
         "row_order_sha256": canonical_fingerprint({"source_order": [0,500000]}), "usage_sha256": sha256_file(root / BASE / "contract.json")}]
@@ -43,7 +43,7 @@ def prepare(output: Path):
         changed_mechanism="Execution-only disposable calibration, no trained candidate",
         cheapest_falsifier="37train-role-only disposable optimizer updates", expected_native_cost_ref="cost-"+tid,
         supporting_evidence_ids=source["result"]["evidence_ids"], alternative_explanations=["Loader and real validation overhead can invalidate an optimistic proxy"],
-        decision_changed_if_positive="Plan scale adapter; no automatic long training release", decision_changed_if_negative="Do not release500K training", related_closed_family_ids=[], historical_unknowns=["True dev distribution/runtime and checkpoint overhead remain unmeasured"])
+        decision_changed_if_positive="Plan scale adapter; no automatic long training release", decision_changed_if_negative="Do not release500K training", related_closed_family_ids=["gptrans-final-readout"], historical_unknowns=["True dev distribution/runtime and checkpoint overhead remain unmeasured"])
     trajectory["state_at_start"].update(source_commit=commit, source_config_identity=canonical_fingerprint(arm),
         contract_refs=[BASE+"/contract.json",BASE+"/protocol.md"], reference_ids=[], parent_trajectory_ids=[source["trajectory_id"]],
         prior_trajectory_ids=[source["trajectory_id"]], prior_evidence_ids=source["result"]["evidence_ids"],
