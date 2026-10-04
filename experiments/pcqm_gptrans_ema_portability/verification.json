@@ -1,0 +1,17 @@
+{
+  "scope": "Local synthetic/static and metadata release checks only",
+  "focused_tests": {
+    "command": ".venv/Scripts/python.exe -m pytest --noconftest -q tests/test_gptrans_portability.py tests/test_kaggle_accelerator_push.py",
+    "executor": "Luna subagent",
+    "passed": 23, "failed": 0, "duration_seconds": 2.31
+  },
+  "repository_rml_validate": "PASS; 72 trajectories, 72 evidence, 103 costs at prospective publication",
+  "packaged_import_probe": "PASS; isolated CPU process, 9 packaged molgap modules, no model construction",
+  "models_loaded_locally": false,
+  "training_executed_locally": false,
+  "inference_executed_locally": false,
+  "protected_roles_accessed": false,
+  "runtime_qualification": "Remote full original-role reproduction remains required",
+  "source_publication_corrections": "v1 auto-expanded tar.gz caught before GPU provisioning; v2 opaque archive; v3 invocation-specific barrier/setup-cost fix; only one GPU POST",
+  "historical_evidence_or_user_changes_modified": false
+}

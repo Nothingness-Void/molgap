@@ -1,0 +1,33 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+  "version": 1,
+  "remote_entry_sha256": "65c205404b28ae8753a26d844cf93b0781bc1ec55c1866e2693df82b2f7aa7de",
+  "entry_text_matches": true,
+  "metadata": {
+    "id": "kaseichou/molgap-gptrans-ema-portability-audit",
+    "id_no": 136990464,
+    "title": "MolGap GPTrans EMA Portability Audit",
+    "code_file": "molgap-gptrans-ema-portability-audit.py",
+    "language": "python",
+    "kernel_type": "script",
+    "is_private": true,
+    "enable_gpu": true,
+    "enable_tpu": false,
+    "enable_internet": true,
+    "keywords": [],
+    "dataset_sources": [
+      "kaseichou/molgap-gptrans-ema-portability-inputs",
+      "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+      "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+    ],
+    "kernel_sources": [],
+    "competition_sources": [],
+    "model_sources": [],
+    "docker_image": "gcr.io/kaggle-private-byod/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+    "machine_shape": "NvidiaTeslaT4"
+  },
+  "normalized_entry_sha256": "a2b425e32895648965d36ec78d35700742f7be5a261cec439089ccb8612069f1",
+  "normalized_source_inventory_entry_matches": true,
+  "source_commit": "92a4b0ca7e0ee9f925c52a116e800af2e86f9cee",
+  "retrieval_byte_caveat": "SDK-saved newline bytes differ; normalized returned executable exactly matches source inventory"
+}

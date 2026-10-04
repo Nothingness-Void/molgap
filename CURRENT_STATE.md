@@ -10,7 +10,9 @@ The authorized T4x2 [final atom/bond readout dual](experiments/pcqm_gptrans_read
 is closed: both arms are independently accepted, STRICT_CAUSAL, and admitted
 as complete Replay pairs, but neither supports promotion; preserve the
 [decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md).
-No server GPU job or successor is released; the existing Luna heartbeat is paused.
+The server-owned [frozen G1 EMA portability audit](experiments/pcqm_gptrans_ema_portability/submission_record.md)
+is released on Kaggle2. It performs NO_TRAIN inference only; the existing Luna B
+heartbeat monitors its exact version and hands terminal/fault evidence to A.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).
@@ -55,9 +57,10 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 
 ## Live boundaries and next actions
 
-- No registered server GPU chain is active or awaiting terminal acceptance.
-  The [proposed G1 EMA portability audit](experiments/pcqm_v5_route_portfolio/overnight_plan_2026-10-04.md)
-  is planned only; compute is not released and Luna remains paused.
+- Independently accept the frozen EMA audit, close its noncausal RML evidence,
+  then choose zero or one justified bounded training action under the user's
+  audit-first authorization. No successor training is released before analysis;
+  no full training, extra seed or protected-role access is authorized.
 - Use one immutable baseline per matching scientific contract. Track B predicts
   direct Gap on fixed PCQM4Mv2; Track A remains on repaired-2M PubChemQC.
 - ETKDG must match between training and inference. Official validation was
