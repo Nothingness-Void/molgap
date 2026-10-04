@@ -64,4 +64,3 @@ disprove a decay/exposure interaction at larger scale, but it rejects the
 simple remedy tested here. The separate scale execution profile only measured
 feasibility; qualified scale/resume and same-live-trajectory reference ownership
 remain prerequisites to any separately authorized 500K scientific job.
-
