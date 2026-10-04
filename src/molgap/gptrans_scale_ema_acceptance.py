@@ -18,6 +18,23 @@ BASE = "experiments/pcqm_gptrans_capacity_relations_100k"
 FILTERS = {"ema9999": .9999, "ema999": .999}
 
 
+def _retained_artifacts(paths, primary_trace, relative):
+    """Retain both EMA views but bind one canonical physical-run trace."""
+    artifacts = []
+    for path in paths:
+        kind = "supporting_evidence"
+        if path.resolve() == primary_trace.resolve():
+            kind = "training_trace"
+        elif "trace" in path.name:
+            # The auxiliary view and raw history are retained, not a second
+            # canonical trace for the same one-optimizer RML transaction.
+            kind = "analysis"
+        artifacts.append({"name": path.name, "locator": relative(path),
+            "sha256": sha256_file(path), "availability": "local_verified",
+            "artifact_type": kind})
+    return artifacts
+
+
 def accept_outputs(root, records, package):
     import tarfile
     import torch
@@ -161,7 +178,7 @@ def close_outputs(root, records, acceptance):
         "evidence_id": result["evidence_id"], "track": "C", "scope": "equal-update500K shared-live EMA transfer study",
         "legacy_contract": "none-prospective-v5", "outcome": outcome, "role_use": role_use,
         "authority": {"pointers": [rel(plan), rel(root / BASE / "protocol.md"), rel(base / "scale_ema/contract.json"), rel(decision_path)]},
-        "artifacts": [{"name": p.name, "locator": rel(p), "sha256": sha256_file(p), "availability": "local_verified"} for p in paths],
+        "artifacts": _retained_artifacts(paths, folder / "ema999/canonical_trace.json", rel),
         "migration": {"migrated_at": timestamp, "training_executed": False, "inference_executed": False,
             "scientific_reinterpretation": False, "verification_scope": "Saved tensors and canonical traces; no local model execution"}}
     atomic_json(terminal, {"format": "molgap-rml-terminal-package-v1", "trajectory_id": tid, "run_id": run,
