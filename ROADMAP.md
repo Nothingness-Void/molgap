@@ -21,7 +21,7 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 
 | Priority | Task | Exit condition / owner |
 |---|---|---|
-| P0 | Reconcile K1 two-pass dropout consistency on desktop return | Exact Kaggle3 ID136942701/version1; verify every arm preflight, source, complete exposure and aligned outputs; accept and attribute before any further experiment |
+| P0 | Reconcile K1 dropout missing-epoch recovery | Exact Kaggle3 ID136942701/version3 resumes only control epoch40; preserve versions1/2, reconcile target encoding without changing frozen evidence, then accept/attribute before another experiment |
 | Closed | Chemical auxiliary custody and canonical discovery | Trained arms and summary-only CPU terminal dispositions retained; strict qualification gaps remain unknown, no new training |
 | Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |
 

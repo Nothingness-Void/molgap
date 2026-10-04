@@ -43,16 +43,18 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
 
-- **K1 dropout consistency:** new user-authorized paired100K40epoch question,
-  owning branch `codex/exp/k1-dropout-consistency`, tip0151bdc9. Exact Kaggle3
+- **K1 dropout consistency:** paired100K40epoch question, owning branch
+  `codex/exp/k1-dropout-consistency`. Exact Kaggle3
   [kernel](https://www.kaggle.com/code/nvoid912/molgap-k1-dropout-consistency-100k-s42-v1)
-  ID136942701/version1 returned RUNNING; pulled entry and published source pins
-  match. Two NEW two-pass objectives isolate prediction consistency against
-  averaged stochastic supervision; original clean baseline is retained.
+  ID136942701/version1 ended ERROR after the candidate completed40epochs and
+  the matched control completed39. Frozen target-hash encoding blocks mechanical
+  acceptance. User-authorized version3 now resumes only the missing control epoch
+  with the original source and checkpoint; version2 failed before formal training.
+  The published recovery files and pulled entry have been verified.
   Read [owner STATUS](D:/w/k1-dropout-consistency/experiments/pcqm_k1_dropout_consistency/STATUS.md)
   and frozen protocol. Independent prospective RML arms live on the owner;
-  runtime qualification, actual costs and scientific endpoints remain pending.
-  User requested desktop shutdown after verified submission; no automatic monitor.
+  Scientific acceptance and dual replay readiness remain pending; no adoption or
+  scale-up. There is no automatic monitor or server takeover.
 
 - **K1 FLAG objective:** exact Kaggle3 ID136744623/version1 is COMPLETE;
   accepted terminal NEGATIVE_UNDER_CONTRACT. No adoption or scale-up. Full history
