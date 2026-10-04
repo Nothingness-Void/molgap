@@ -26,6 +26,19 @@ listing before publication; the accelerator push adapter already binds its
 explicit credential independently. Never print the key or alter global login
 files to switch an experiment's account.
 
+## Frozen K1 continuation
+
+`resume_frozen_k1_arm.py` restores one incomplete arm through the existing
+isolated qualification/training workers. Keep the exact original source package,
+Spec, recipe, prospective records and producer context. A separate reviewed
+platform entry binds the physical continuation, five retained output hashes,
+complete-epoch cursor, runtime fingerprint and frozen target-identity plan.
+The adapter retains the old completion inspection and separately applies the
+explicit encoding binding; it never suppresses another inspection blocker.
+Completed peer arms are reused. Incremental recovery allocation is a separate
+cost observation; an absent prior ledger stays missing. The owning question
+supplies its authorized continuation declaration and source-dataset preparation.
+
 For the new family output protocol, `retrieve_family_outputs.py` streams only
 the pinned manifest's required files through an authenticated owning account.
 Source/job/version reconciliation and obtaining the small manifest belong to

@@ -89,7 +89,7 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         record("family_recipes", check_family_recipes(spec, repo_root, recipes))
         stage = backend.stage_inputs(repo_root=repo_root, output=output, package=package,
             manifest=manifest, spec=spec, platform_plan=plan[platform_name], metadata=metadata,
-            initial_states=initial_states, jobs=jobs)
+            initial_states=initial_states, jobs=jobs, acceptance_plan_path=plan["acceptance_plan"])
         staged, kernel = stage["input_root"], stage["kernel_dir"]
         release = check_release_inputs(spec, package,
             expected_package_identity=manifest["package_identity"], recipe_files=recipes,
