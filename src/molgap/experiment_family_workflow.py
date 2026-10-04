@@ -358,7 +358,14 @@ class FamilyOutputSession:
             cursor=cursor, optimizer_step=optimizer_step, sample_presentations=sample_presentations,
             scheduler_state=scheduler_state, ema_state=ema_state)
 
-    def complete(self, *, runtime: dict, hardware: str, observed_costs: list | None = None) -> dict:
+    def complete(self, *, runtime: dict, hardware: str, observed_costs: list | None = None,
+                 target_identity: TargetIdentityBinding | None = None) -> dict:
+        """Inspect retained outputs with the owning prelaunch target binding.
+
+        An omitted binding retains canonical float64 identity. Historical target
+        encodings require an explicit pinned binding and the same strict checks
+        used during terminal closure.
+        """
         import time
         rows = [row for row in self.stage.recorder.record["observations"]
                 if row["event"] == "observation"]
@@ -377,7 +384,8 @@ class FamilyOutputSession:
             artifacts={"predictions": "development_predictions.pt", "selected_model": "selected_model.pt",
                        "resume": "last_checkpoint.pt", "trace": "canonical_trace.json", "contract": "training_contract.json"},
             progress=progress, runtime=runtime, costs=costs)
-        return inspect_output(self.root, context=self.context, expected=self.expected)
+        return inspect_output(self.root, context=self.context, expected=self.expected,
+                              target_identity=target_identity)
 
 
 def tensor_digest(tensor, *, role: str) -> str:

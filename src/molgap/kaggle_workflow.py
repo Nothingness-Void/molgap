@@ -43,7 +43,7 @@ def validate_plan(spec, plan):
 
 
 def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
-                 metadata, initial_states, jobs):
+                 metadata, initial_states, jobs, acceptance_plan_path=None):
     staged = output / "source_dataset"
     staged.mkdir()
     for path in package.iterdir():
@@ -51,6 +51,9 @@ def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
     (staged / "initial_states").mkdir()
     for arm_id, initial in initial_states.items():
         shutil.copyfile(initial, staged / "initial_states" / (arm_id + ".pt"))
+    acceptance_binding = None
+    if acceptance_plan_path is not None:
+        acceptance_binding = stage_acceptance_inputs(spec, repo_root, acceptance_plan_path, staged / "acceptance")
     publish_immutable_bytes(staged / "dataset-metadata.json", canonical_json({
         "id": platform_plan["source_dataset"], "title": platform_plan["source_dataset"].split("/")[1],
         "licenses": [{"name": "CC0-1.0"}]}).encode())
@@ -62,15 +65,44 @@ def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
     if entry_text.count(marker) != 1:
         raise ValueError("Expected one reviewed launch digest marker in the platform entry")
     publish_immutable_bytes(kernel / "kernel-metadata.json", canonical_json(metadata).encode())
+    launch = {"format": "molgap-execution-launch-v1", "spec_identity": spec.identity,
+        "expected_package_identity": manifest["package_identity"],
+        "expected_source_archive_sha256": manifest["archive_sha256"],
+        "account": platform_plan["account"], "run_reference": platform_plan["kernel"],
+        "dataset_sources": metadata["dataset_sources"], "accelerator": platform_plan["accelerator"],
+        "device_count": spec.to_dict()["platform"]["device_count"], "jobs": jobs}
+    if acceptance_binding is not None:
+        launch["target_identity"] = acceptance_binding
     return {"input_root": staged, "kernel_dir": kernel, "entry_path": kernel / "run.py",
         "metadata_path": kernel / "kernel-metadata.json", "launch_path": staged / "experiment_launch.json",
         "entry_text": entry_text, "accelerator": platform_plan["accelerator"],
-        "launch": {"format": "molgap-execution-launch-v1", "spec_identity": spec.identity,
-            "expected_package_identity": manifest["package_identity"],
-            "expected_source_archive_sha256": manifest["archive_sha256"],
-            "account": platform_plan["account"], "run_reference": platform_plan["kernel"],
-            "dataset_sources": metadata["dataset_sources"], "accelerator": platform_plan["accelerator"],
-            "device_count": spec.to_dict()["platform"]["device_count"], "jobs": jobs}}
+        "launch": launch}
+
+
+def stage_acceptance_inputs(spec, repo_root, plan_path, destination):
+    """Retain the exact checked plan and its explicit pins for producer closure."""
+    from .experiment_family_workflow import _json, check_acceptance_plan
+    from .research_memory.trace import file_digest
+    root, destination = Path(repo_root).absolute(), Path(destination)
+    path = _artifact_path(root, plan_path)
+    plan = _json(path)
+    report = check_acceptance_plan(spec, root, plan)
+    if report["status"] != "ACCEPTANCE_INPUTS_AVAILABLE":
+        raise ValueError("Producer acceptance inputs are blocked")
+    pointers = {plan_path: file_digest(path)}
+    for arm in plan["arms"]:
+        for pointer in [arm["contract"], arm["comparison_prelaunch"], arm["reference_bundle"], *arm["reference_artifacts"].values()]:
+            prior = pointers.setdefault(pointer["path"], pointer["sha256"])
+            if prior != pointer["sha256"]:
+                raise ValueError("Conflicting acceptance artifact pins")
+    for relative, digest in pointers.items():
+        source = _artifact_path(root, relative)
+        if file_digest(source) != digest:
+            raise ValueError("Acceptance inputs changed during staging")
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
+    return {"plan_path": plan_path, "plan_sha256": pointers[plan_path]}
 
 
 def freeze_inputs(stage, trajectories):

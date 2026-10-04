@@ -530,6 +530,80 @@ def _write_strict_retained_reference_plan(repo: Path, spec: ExperimentSpec,
     return path.relative_to(repo).as_posix()
 
 
+def test_stage_acceptance_inputs_preserves_plan_and_all_pinned_bytes(workflow_case, tmp_path):
+    from molgap.experiment_family_workflow import TargetIdentityBinding
+
+    repo, spec = workflow_case["repo"], workflow_case["spec"]
+    plan_path = workflow_case["plan"]["acceptance_plan"]
+    destination = tmp_path / "staged-acceptance"
+    binding = kaggle_backend.stage_acceptance_inputs(spec, repo, plan_path, destination)
+    plan = json.loads((repo / plan_path).read_bytes())
+    pointers = {plan_path: _sha((repo / plan_path).read_bytes())}
+    for arm in plan["arms"]:
+        for pointer in [arm["contract"], arm["comparison_prelaunch"], arm["reference_bundle"],
+                        *arm["reference_artifacts"].values()]:
+            pointers[pointer["path"]] = pointer["sha256"]
+    assert binding == {"plan_path": plan_path, "plan_sha256": pointers[plan_path]}
+    assert {path.relative_to(destination).as_posix() for path in destination.rglob("*") if path.is_file()} == set(pointers)
+    for relative, digest in pointers.items():
+        assert (destination / relative).read_bytes() == (repo / relative).read_bytes()
+        assert _sha((destination / relative).read_bytes()) == digest
+    assert TargetIdentityBinding.from_acceptance_plan(
+        spec, destination, plan_path, plan_sha256=binding["plan_sha256"]
+    ).repo_root == destination.absolute()
+
+
+@pytest.mark.parametrize("phase", ["preflight", "train"])
+@pytest.mark.parametrize("binding_mode", ["pinned", "omitted", "malformed", "changed_plan"])
+def test_worker_validates_staged_binding_before_dispatch(
+    workflow_case, tmp_path, monkeypatch, phase, binding_mode
+):
+    import molgap.experiment_execution as execution
+    from molgap.experiment_family_workflow import TargetIdentityBinding
+    from molgap.experiment_training_worker import main
+
+    repo, spec = workflow_case["repo"], workflow_case["spec"]
+    staged = tmp_path / "worker-stage"
+    staged.mkdir()
+    (staged / "experiment_spec.json").write_text(spec.to_json(), encoding="utf-8")
+    binding = kaggle_backend.stage_acceptance_inputs(
+        spec, repo, workflow_case["plan"]["acceptance_plan"], staged / "acceptance"
+    )
+    arm_id = spec.to_dict()["arms"][0]["arm_id"]
+    config = {"jobs": [{"arm_id": arm_id}], "expected_package_identity": HEX_A,
+              "account": "synthetic-account", "run_reference": "synthetic-account/workload-1",
+              "prospective_sha256": {arm_id: HEX_B}}
+    if binding_mode != "omitted":
+        config["target_identity"] = dict(binding)
+    if binding_mode == "malformed":
+        config["target_identity"]["inferred_encoding"] = "float32"
+    elif binding_mode == "changed_plan":
+        path = staged / "acceptance" / binding["plan_path"]
+        path.write_bytes(path.read_bytes() + b"\n")
+    launch_path = staged / "experiment_launch.json"
+    _write_json(launch_path, config)
+    monkeypatch.setattr(execution, "validate_execution_plan", lambda _spec, jobs: jobs)
+    dispatch = Mock(return_value={"status": "MECHANICALLY_VERIFIED" if phase == "train" else "accepted"})
+    monkeypatch.setattr(execution, "execute_training_phase", dispatch)
+    argv = ["--source-root", str(repo), "--package-dir", str(staged), "--input-root", str(staged),
+            "--output", str(tmp_path / "output"), "--launch", str(launch_path),
+            "--arm", arm_id, "--phase", phase]
+    if binding_mode in {"malformed", "changed_plan"}:
+        with pytest.raises(ValueError, match="binding|hash mismatch"):
+            main(argv)
+        dispatch.assert_not_called()
+    else:
+        main(argv)
+        forwarded = dispatch.call_args.kwargs["target_identity"]
+        if binding_mode == "omitted":
+            assert forwarded is None
+        else:
+            assert isinstance(forwarded, TargetIdentityBinding)
+            assert forwarded.repo_root == (staged / "acceptance").absolute()
+            assert forwarded.plan_path == binding["plan_path"]
+            assert forwarded.plan_sha256 == binding["plan_sha256"]
+
+
 def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates(
     workflow_case, tmp_path, monkeypatch,
 ):
@@ -902,6 +976,112 @@ def test_pair_runtime_preflight_failure_terminates_peer_and_never_starts_trainin
     unknown = incomplete_observations_from_execution(spec, uncertain)[first_arm]
     assert unknown["progress"] == {key: None for key in ("epoch", "step", "samples")}
     assert "training_progress_not_retained" in unknown["missing_evidence"]
+
+
+def test_pair_runtime_train_failure_drains_peer_and_freezes_per_worker_wall(
+    tmp_path, monkeypatch,
+):
+    from molgap import kaggle_pair_runtime as pair_runtime
+
+    spec = _candidate_pair_spec()
+    source_root = tmp_path / "source"
+    package_dir = tmp_path / "package"
+    input_root = tmp_path / "input"
+    output = tmp_path / "output"
+    for path in (source_root, package_dir, input_root):
+        path.mkdir()
+    (package_dir / "experiment_spec.json").write_bytes(spec.to_json().encode())
+    jobs = _jobs(spec)
+    launch_path = input_root / "experiment_launch.json"
+    _write_json(launch_path, {
+        "format": "molgap-execution-launch-v1",
+        "spec_identity": spec.identity,
+        "expected_package_identity": HEX_A,
+        "expected_source_archive_sha256": HEX_B,
+        "account": "synthetic-account",
+        "run_reference": "synthetic-account/synthetic-pair-run",
+        "jobs": jobs,
+    })
+    monkeypatch.setattr(pair_runtime.subprocess, "check_output",
+        lambda *_args, **_kwargs: "NVIDIA Tesla T4\nNVIDIA Tesla T4\n")
+
+    clock = [0.0]
+    monkeypatch.setattr(pair_runtime.time, "perf_counter", lambda: clock[0])
+    monkeypatch.setattr(pair_runtime.time, "sleep",
+        lambda seconds: clock.__setitem__(0, clock[0] + seconds))
+    processes = {}
+    commands = []
+
+    class FakeProcess:
+        def __init__(self, command):
+            self.command = command
+            self.arm_id = command[command.index("--arm") + 1]
+            self.phase = command[command.index("--phase") + 1]
+            self.returncode = None
+            self.terminated = False
+            self.poll_count = 0
+
+        def poll(self):
+            if self.returncode is not None:
+                return self.returncode
+            if self.phase == "preflight":
+                self.returncode = 0
+            else:
+                self.poll_count += 1
+                if self.arm_id == jobs[0]["arm_id"]:
+                    self.returncode = 23
+                elif self.poll_count >= 4:
+                    self.returncode = 0
+            return self.returncode
+
+        def terminate(self):
+            self.terminated = True
+            self.returncode = -15
+
+        def wait(self, timeout=None):
+            if self.returncode is None:
+                self.returncode = 0
+            return self.returncode
+
+        def kill(self):
+            self.returncode = -9
+
+    def fake_popen(command, **_kwargs):
+        commands.append(command)
+        process = FakeProcess(command)
+        processes[process.arm_id, process.phase] = process
+        return process
+
+    monkeypatch.setattr(pair_runtime.subprocess, "Popen", fake_popen)
+
+    with pytest.raises(RuntimeError, match="Arm failed during train"):
+        pair_runtime.run_two_phase_pair(
+            source_root=source_root, package_dir=package_dir, input_root=input_root,
+            launch_path=launch_path, output=output,
+        )
+
+    assert {command[command.index("--phase") + 1] for command in commands} == {
+        "preflight", "train",
+    }
+    failed = processes[jobs[0]["arm_id"], "train"]
+    peer = processes[jobs[1]["arm_id"], "train"]
+    assert failed.returncode == 23
+    assert peer.returncode == 0
+    assert peer.terminated is False
+
+    state = json.loads((output / "pair_state.json").read_bytes())
+    assert state["status"] == "failed"
+    assert all(arm["started"] and arm["training_started"] for arm in state["arms"].values())
+    assert state["arms"][jobs[0]["arm_id"]]["terminal_status"] == "failed"
+    assert state["arms"][jobs[1]["arm_id"]]["terminal_status"] == "complete"
+    assert state["arms"][jobs[0]["arm_id"]]["exit_reason"] == "train_worker_exit_23"
+    assert state["arms"][jobs[1]["arm_id"]]["exit_reason"] == "train_worker_exit_0"
+    assert state["arms"][jobs[0]["arm_id"]]["worker_wall_seconds"] == 0.0
+    assert state["arms"][jobs[1]["arm_id"]]["worker_wall_seconds"] == 1.5
+    train_phase = next(phase for phase in state["phases"] if phase["phase"] == "train")
+    assert train_phase["status"] == "failed"
+    assert {row["terminal_status"] for row in train_phase["workers"]} == {"failed", "complete"}
+    assert {row["started"] for row in train_phase["workers"]} == {True}
 
 
 def test_check_workflow_binding_rejects_tampered_final_prospective_identity(tmp_path):

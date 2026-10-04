@@ -1672,6 +1672,7 @@ def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
 
     assert result["status"] == "MECHANICALLY_VERIFIED", result
     trace = load_canonical_trace(root / "canonical_trace.json")
+    assert "target_identity" not in result["observed"]
     assert [row["event"] for row in trace["observations"]] == [
         "observation", "observation", "checkpoint", "resume", "checkpoint", "terminal"
     ]
@@ -1691,6 +1692,108 @@ def test_output_session_round_trips_tensor_events_and_native_unknown_cost(
     assert (device["metric"], device["status"], device["value"]) == (
         "device_seconds", "missing", None
     )
+
+
+@pytest.mark.parametrize("binding_mode", ["pinned", "omitted", "changed_plan", "lossy_output", "invalid_binding"])
+def test_k1_session_completion_uses_frozen_float32_target_binding(
+    tmp_path, repo, launch_contexts, binding_mode
+):
+    # The retained K1 contract hashes original f32 bytes, not f64 conversions.
+    target = torch.tensor([0.1, 0.2, 0.3], dtype=torch.float32)
+    _, expected, contexts, plan_path, binding = _target_identity_case(
+        repo, launch_contexts, target,
+        encoding="little-endian-float32-contiguous-raw-bytes",
+    )
+    context = contexts["neural_atom_k1"]
+    root = tmp_path / "k1-f32-session"
+    contract = repo / "recipes/neural_atom_k1-target-identity.json"
+    frozen_contract_bytes = contract.read_bytes()
+    session = FamilyOutputSession(
+        root, context, adapter="k1-v1", contract=contract,
+        trajectory_id=f"{context.experiment_id}-{context.arm_id}",
+        metric_semantics=METRIC_SEMANTICS,
+    )
+    output_target = target.double() if binding_mode == "lossy_output" else target
+    prediction = output_target.double() + 1.0
+    mae = (prediction - output_target.double()).abs().mean().item()
+    for epoch in (1, 2):
+        session.epoch_finished(
+            epoch=epoch, optimizer_step=epoch * 2,
+            sample_presentations=epoch * 4,
+            live_train_metric=mae, live_dev_metric=mae,
+        )
+    session.selected(
+        model_state={"weight": torch.tensor([0.5])}, epoch=2,
+        optimizer_step=4, weights="live", prediction_eV=prediction,
+        target_eV=output_target, source_idx=SOURCE_IDX,
+    )
+    session.checkpoint(
+        model_state={"weight": torch.tensor([0.5])},
+        optimizer_state={"state": {}, "param_groups": [{"params": [0], "lr": 0.001}]},
+        cursor={"epoch": 2, "next_batch": 0, "sampler_order_sha256": "a" * 64},
+        optimizer_step=4, sample_presentations=8,
+        rng_state={"python": random.getstate(), "numpy": np.random.get_state(),
+                   "torch": torch.get_rng_state(), "cuda": []},
+        scheduler_state={"last_epoch": 2},
+    )
+    if binding_mode == "changed_plan":
+        plan_path.write_bytes(plan_path.read_bytes() + b"\n")
+    kwargs = {} if binding_mode == "omitted" else {"target_identity": binding}
+    if binding_mode == "invalid_binding":
+        kwargs["target_identity"] = {"encoding": "little-endian-float32-contiguous-raw-bytes"}
+
+    result = session.complete(runtime=_runtime(context), hardware="synthetic-cpu", **kwargs)
+
+    assert contract.read_bytes() == frozen_contract_bytes
+    assert (root / "training_contract.json").read_bytes() == frozen_contract_bytes
+    assert file_digest(contract) == context.training_recipe_sha256
+    assert session.expected == expected
+    if binding_mode == "pinned":
+        assert result["status"] == "MECHANICALLY_VERIFIED", result
+        assert result["blockers"] == []
+        assert result["observed"]["target_identity"]["encoding"] == (
+            "little-endian-float32-contiguous-raw-bytes"
+        )
+        assert result["observed"]["target_identity"]["acceptance_plan_sha256"] == binding.plan_sha256
+    else:
+        assert result["status"] == "BLOCKED", result
+        reason = {
+            "omitted": "Development target identity mismatch",
+            "changed_plan": "Target identity acceptance plan hash mismatch",
+            "lossy_output": "original float32 tensors",
+            "invalid_binding": "explicit pinned target identity binding",
+        }[binding_mode]
+        assert any(reason in blocker for blocker in result["blockers"])
+
+
+def test_training_worker_retains_completion_blockers(tmp_path, launch_contexts, monkeypatch):
+    import molgap.experiment_execution as execution
+    from molgap.experiment_training_worker import main
+
+    spec = launch_contexts[0]
+    package = tmp_path / "worker-package"
+    package.mkdir()
+    (package / "experiment_spec.json").write_text(spec.to_json(), encoding="utf-8")
+    launch_path = tmp_path / "worker-launch.json"
+    launch_path.write_bytes(json_bytes({
+        "jobs": [{"arm_id": "neural_atom_k1"}],
+        "expected_package_identity": "a" * 64,
+        "account": "synthetic-account", "run_reference": "synthetic-account/workload-1",
+        "prospective_sha256": {"neural_atom_k1": "b" * 64},
+    }))
+    monkeypatch.setattr(execution, "validate_execution_plan", lambda _spec, jobs: jobs)
+    monkeypatch.setattr(execution, "execute_training_phase", lambda **kwargs: {
+        "status": "BLOCKED", "blockers": ["Development target identity mismatch", "second blocker"],
+    })
+
+    with pytest.raises(RuntimeError) as error:
+        main(["--source-root", str(tmp_path), "--package-dir", str(package),
+              "--input-root", str(tmp_path), "--output", str(tmp_path / "worker-output"),
+              "--launch", str(launch_path), "--arm", "neural_atom_k1", "--phase", "train"])
+
+    message = str(error.value)
+    assert "arm=neural_atom_k1, phase=train, status=BLOCKED" in message
+    assert "Development target identity mismatch; second blocker" in message
 
 
 def test_checkpoint_without_completed_observation_cannot_complete(tmp_path, launch_contexts):

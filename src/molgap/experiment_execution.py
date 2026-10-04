@@ -149,7 +149,8 @@ def validate_staged_trajectory(spec, arm_id, input_root: Path, *, expected_sha25
 
 def execute_training_phase(*, spec, job, phase, source_root, package_dir,
                            expected_package_identity, input_root, output,
-                           account, run_reference, staged_root=None, prospective_sha256=None):
+                           account, run_reference, staged_root=None, prospective_sha256=None,
+                           target_identity=None):
     """Static dispatch; each owning trainer retains its recipe/runtime gates."""
     from .experiment_family_workflow import RunContext, _artifact_path
     from .research_memory.trace import file_digest
@@ -179,8 +180,17 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     owner = import_module(adapter.module)
     runner = owner.run_screen_preflight if phase == "preflight" else owner.run_screen_arm
     options = {} if phase == "preflight" else {"preflight_dir": output}
-    return runner(spec=spec, package_dir=package_dir,
+    result = runner(spec=spec, package_dir=package_dir,
         expected_package_identity=expected_package_identity, arm_id=job["arm_id"],
         mode=adapter.mode(arm), recipe_path=recipe, initial_state_path=initial,
         input_root=input_root, output=output, account=account,
         run_reference=run_reference, trajectory_id=job["trajectory_id"], **options)
+    if phase == "train" and target_identity is not None:
+        # Retained family trainers keep their frozen completion call. The owning
+        # inspection applies the explicit contract encoding at dispatch closure.
+        from .experiment_family_workflow import inspect_output
+        normalized = Path(output) / "normalized" if adapter.artifact_adapter == "gptrans-v1" else Path(output)
+        import json
+        expected = json.loads(recipe.read_text(encoding="utf-8"))["acceptance_requirements"]
+        return inspect_output(normalized, context=context, expected=expected, target_identity=target_identity)
+    return result

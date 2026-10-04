@@ -891,6 +891,13 @@ def check_workflow_binding(spec, *, launch_config, kernel_metadata, entry_script
         path = _regular(launch_path.parent / "prospective" / arm_id / "trajectory.json")
         if _file_sha(path) != digest:
             raise ValueError("Published prospective record changed after preparation")
+    if "target_identity" in launch:
+        from .experiment_family_workflow import TargetIdentityBinding
+        binding = launch["target_identity"]
+        if type(binding) is not dict or set(binding) != {"plan_path", "plan_sha256"}:
+            raise ValueError("Expected explicit producer target identity binding")
+        TargetIdentityBinding.from_acceptance_plan(spec, launch_path.parent / "acceptance",
+            binding["plan_path"], plan_sha256=binding["plan_sha256"])
     tree = ast.parse(entry_path.read_bytes())
     pins_in_entry = [node.value.value for node in tree.body if isinstance(node, ast.Assign)
         and any(isinstance(target, ast.Name) and target.id == "EXPECTED_LAUNCH_SHA256" for target in node.targets)

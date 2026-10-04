@@ -134,6 +134,16 @@ exact serialized bytes.
 
 ## CLI and RML bridge
 
+Registered preparation retains the checked acceptance plan and all explicit
+artifact pins under the source mount's `acceptance/`. Its launch configuration
+binds `target_identity.plan_path` and `plan_sha256`; release and worker startup
+validate those files before execution. The dispatcher supplies that explicit
+binding to the existing output inspector, including retained trainers whose
+completion call predates this field. `FamilyOutputSession.complete()` also
+accepts `target_identity` directly. Frozen float32 target manifests require
+original finite float32 tensors; no encoding is inferred from output or cast
+to make an expectation pass. Missing bindings retain the float64 default.
+
 The [local CLI](EXPERIMENT_CLI.md) adds:
 
 ```text
