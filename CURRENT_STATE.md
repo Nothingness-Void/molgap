@@ -43,11 +43,14 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
 
-- **K1 consistency residual screen:** accepted saved-prediction diagnostic;
-  fixed equal blending is the next research nomination for separately frozen
-  common-cohort qualification. Read [decision](experiments/pcqm_k1_consistency_residual_screen/terminal_decision.md)
-  and [analysis](experiments/pcqm_k1_consistency_residual_screen/analysis_zh.md).
-  No new training, model adoption, official-role access or scale-up is released.
+- **K1 fixed equal fusion:** common-cohort frozen inference completed on 50K
+  internal-development rows outside both arms' training and checkpoint selection.
+  The fixed blend improves over consistency by2.812meV with positive paired-row
+  bounds, at approximately two single-model inference passes. Read the
+  [decision](experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md)
+  and [analysis](experiments/pcqm_k1_consistency_fusion_transfer/analysis_zh.md).
+  Single-model distillation is the evidence-backed next question, conditional on
+  its own prospective authority; no training, adoption or official-role release.
 
 - **K1 dropout consistency:** paired100K40epoch question, owning branch
   `codex/exp/k1-dropout-consistency`. Exact Kaggle3

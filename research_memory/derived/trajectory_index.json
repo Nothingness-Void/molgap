@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "af664e0f8a1fcb6b21a9d815b73a1929d81a4a18ca066fa6d5e4aba7b2a74e11",
+  "source_digest": "dfbbb2745189bafd8826dcc5ea99d21df838d03105c9d0049769801ae3ab9fbd",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -997,6 +997,24 @@
       ],
       "track": "B",
       "trajectory_id": "TB-gptrans-t-500k-bridge"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md",
+      "family_id": "pcqm-k1-consistency-fusion-transfer",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-k1-consistency-residual-screen-20261004"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_consistency_fusion_transfer/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-consistency-fusion-transfer-20261004"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004"
     },
     {
       "completeness_status": "complete",

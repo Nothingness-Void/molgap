@@ -22,7 +22,7 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 | Priority | Task | Exit condition / owner |
 |---|---|---|
 | Closed | K1 dropout pair acceptance and attribution | Both40epoch arms finalized VALID/COMPLETE; canonical desktop RML retains the1.5288meV positive numerical benefit below3meV. Missing control native cost and resumed provenance remain explicit strict replay exclusions; no successor or scale-up |
-| Closed diagnostic | K1 consistency residual screen | Fixed equal blend nominated for separately frozen common-cohort inference qualification; no new training or model promotion. See `experiments/pcqm_k1_consistency_residual_screen/terminal_decision.md` |
+| Closed diagnostic | K1 fixed equal-blend transfer | Common-cohort frozen inference supports fusion nomination with measured two-pass cost; separate single-model distillation is conditional, no training or model promotion. See `experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md` |
 | Closed | Chemical auxiliary custody and canonical discovery | Trained arms and summary-only CPU terminal dispositions retained; strict qualification gaps remain unknown, no new training |
 | Conditional | Final official test-dev submission | Explicit user authority after full-run and official-validation acceptance under the owning frozen submission contract |
 

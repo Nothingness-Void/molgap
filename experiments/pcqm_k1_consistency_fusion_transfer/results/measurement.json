@@ -1,0 +1,114 @@
+{
+  "status": "complete_no_training",
+  "rows": 50000,
+  "source_idx_range": [
+    500000,
+    550000
+  ],
+  "inputs_sha256": "7430e19c8c9090f45f44ad13c32e78c594ee393fd449300f1d5bc07bfcae8a93",
+  "prospective_sha256": "e7b9feb0c70f52b48c1695df25f867fe66903f2218f5a1cbcc516814794e88c3",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "runtime": {
+    "seed": 42,
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "float32_matmul_precision": "highest",
+    "torch": "2.7.1+cu128",
+    "cuda": "12.8"
+  },
+  "equivalence": {
+    "mean2": {
+      "rows": 2048,
+      "max_abs_delta_eV": 1.9073486328125e-06,
+      "mean_abs_delta_eV": 1.0035000741481781e-07,
+      "tolerance_eV": 0.0001
+    },
+    "consistency2": {
+      "rows": 2048,
+      "max_abs_delta_eV": 2.384185791015625e-06,
+      "mean_abs_delta_eV": 9.452924132347107e-08,
+      "tolerance_eV": 0.0001
+    }
+  },
+  "timings": {
+    "mean2": {
+      "qualification": {
+        "rows": 2048,
+        "wall_seconds": 4.34545339999022,
+        "process_cpu_seconds": 4.0,
+        "forward_seconds": 4.05761017036438,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "rows": 50000,
+        "wall_seconds": 16.108787599994685,
+        "process_cpu_seconds": 15.625,
+        "forward_seconds": 10.792298410415649,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "consistency2": {
+      "qualification": {
+        "rows": 2048,
+        "wall_seconds": 0.49804069999663625,
+        "process_cpu_seconds": 1.015625,
+        "forward_seconds": 0.4290032024383545,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "rows": 50000,
+        "wall_seconds": 13.535476099990774,
+        "process_cpu_seconds": 13.359375,
+        "forward_seconds": 11.487980810165405,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    }
+  },
+  "mae_eV": {
+    "mean2": 0.14400446114063262,
+    "consistency2": 0.14070332780838013,
+    "fixed_equal_blend": 0.13789134101867676
+  },
+  "comparisons": {
+    "mean2": {
+      "gain_meV": 6.1131201219558715,
+      "ci95_meV": [
+        5.728896095395088,
+        6.508566447794437
+      ]
+    },
+    "consistency2": {
+      "gain_meV": 2.811986789703369,
+      "ci95_meV": [
+        2.4006143468022345,
+        3.2208507683873178
+      ]
+    }
+  },
+  "cohort_source_idx_sha256": {
+    "calibration": "eb500009154d3b1e61d01bec79e8d0a36345bbd847442ae472b9a0525a55f157",
+    "development": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2"
+  },
+  "row_manifest_encoding": "ascending source_idx signed int64 little-endian raw bytes",
+  "nomination_passed": true,
+  "artifact_hashes": {
+    "experiments/pcqm_k1_consistency_fusion_transfer/results/mean2.pt": "af28bd1da7aeb233fa084cc1e75433155d2fc74dafd4a2aa96a49fc0727260d4",
+    "experiments/pcqm_k1_consistency_fusion_transfer/results/consistency2.pt": "662720c5d9004f7c1bdc58055f6f2d35066332c55dc86f8028fc03bb07c398b6",
+    "experiments/pcqm_k1_consistency_fusion_transfer/results/fixed_equal_blend.pt": "7ba2728bcdbef8830117a844d8ae7a8a5765819d10ae6c98e97ea3b222df1ff8"
+  },
+  "allocation_seconds": 35.25420179999492,
+  "wall_seconds": 36.062536799989175,
+  "process_cpu_seconds": 37.828125,
+  "peak_cuda_allocated_bytes": 143996416,
+  "cost_scope": "one assigned RTX 5060; two reconstruction probes and two common-cohort passes; loader/transfer waits included; hashing/startup and report/bootstrap excluded from allocation",
+  "limitations": [
+    "One training seed; row bootstrap does not measure training stochasticity.",
+    "Internal-development rows previously used for other experiments; not a sealed test.",
+    "RTX inference reconstruction is tolerance-qualified, not a native T4 training comparison.",
+    "Historical training costs and replay exclusions remain unchanged."
+  ]
+}

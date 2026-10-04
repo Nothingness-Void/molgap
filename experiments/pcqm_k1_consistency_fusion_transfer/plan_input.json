@@ -1,0 +1,152 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "pcqm-k1-consistency-fusion-transfer",
+    "question": "Does unfitted equal blending of the accepted K1 dropout arms retain at least 1 meV gain on a separate common cohort, and what is its inference cost?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-consistency-fusion-transfer-20261004",
+      "observed_deficiency": "Equal blending gained 4.315135 meV on the prior posthoc development holdout, but separate-cohort prediction and native inference costs were missing.",
+      "supporting_evidence_ids": [
+        "pcqm-k1-consistency-residual-screen-20261004"
+      ],
+      "alternative_explanations": [
+        "Complementarity transfers to other internal-development rows.",
+        "Prior gain is specific to the checkpoint-selection cohort.",
+        "The gain transfers but doubles inference cost."
+      ],
+      "changed_mechanism": "No model change: clean retained checkpoint inference with a frozen 50:50 average.",
+      "cheapest_falsifier": "Reconstruct 2048 accepted predictions per model, then compare both retained models and their equal blend on 50K common development rows.",
+      "related_closed_family_ids": [
+        "k1-dropout-consistency",
+        "k1-consistency-residual-screen"
+      ],
+      "expected_native_cost_ref": "cost-TB-k1-consistency-fusion-transfer-20261004-expected-inference",
+      "decision_changed_if_positive": "Retain a common-cohort fusion nomination with measured inference cost; separate distillation or scale decisions remain unreleased.",
+      "decision_changed_if_negative": "Close the transfer claim without retraining, adjusting weights, or consuming official roles."
+    },
+    "state_at_start": {
+      "source_commit": "d49bad192ba115f77bb2439d5e015b62aeba7f45",
+      "contract_refs": [
+        "experiments/pcqm_k1_consistency_fusion_transfer/protocol.md",
+        "experiments/pcqm_k1_consistency_fusion_transfer/inputs.json",
+        "experiments/pcqm_k1_consistency_fusion_transfer/plan_input.json",
+        "experiments/pcqm_k1_consistency_fusion_transfer/run.py",
+        "experiments/pcqm_k1_consistency_fusion_transfer/protocol.md",
+        "experiments/pcqm_k1_consistency_fusion_transfer/prepare.py",
+        "experiments/pcqm_k1_consistency_fusion_transfer/close.py",
+        "src/molgap/k1_frozen_inference.py",
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/router.py",
+        "src/molgap/training_reproducibility.py",
+        "src/molgap/qm9_neural_atom.py",
+        "src/molgap/pcqm_gap_architecture.py",
+        "src/molgap/gps.py"
+      ],
+      "reference_ids": [
+        "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+        "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
+        "pcqm-k1-consistency-residual-screen-20261004"
+      ],
+      "parent_trajectory_ids": [
+        "TB-k1-consistency-residual-screen-20261004"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+        "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
+        "pcqm-k1-consistency-residual-screen-20261004"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_consistency_fusion_transfer/protocol.md"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_consistency_fusion_transfer/protocol.md",
+      "source_config_identity": "7430e19c8c9090f45f44ad13c32e78c594ee393fd449300f1d5bc07bfcae8a93"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "frozen_checkpoint_inference",
+        "source_commit": "d49bad192ba115f77bb2439d5e015b62aeba7f45",
+        "run_ids": [
+          "local-k1-consistency-fusion-transfer-20261004"
+        ],
+        "attempt_ids": [
+          "local-attempt-001"
+        ],
+        "evidence_refs": [],
+        "cost_event_ids": [
+          "cost-TB-k1-consistency-fusion-transfer-20261004-expected-inference"
+        ]
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/pcqm_k1_consistency_fusion_transfer/protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "RUN_DIAGNOSTIC"
+      ],
+      "reopen_conditions": []
+    },
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [
+      "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
+      "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
+      "pcqm-k1-consistency-residual-screen-20261004"
+    ],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_consistency_fusion_transfer/protocol.md"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-consistency-fusion-transfer",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_consistency_fusion_transfer/protocol.md",
+    "state_timestamp": "2026-10-04T10:48:16.064411+00:00",
+    "source_commit": "d49bad192ba115f77bb2439d5e015b62aeba7f45"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-consistency-fusion-transfer-20261004-expected-inference",
+      "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-fusion-transfer-20261004",
+      "attempt_id": "local-attempt-001",
+      "category": "inference",
+      "platform": "local-windows",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "evidence_ref": "experiments/pcqm_k1_consistency_fusion_transfer/protocol.md",
+      "measurement": {
+        "device_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "wall_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ]
+}

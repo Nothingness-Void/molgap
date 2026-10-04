@@ -1,0 +1,53 @@
+{
+  "bindings": {
+    "mean2_model": {
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/selected_model.pt",
+      "sha256": "b3a7643041cca68d69768024cccb33b89a5b3b4811554f0ac309f7a22d8b6f05"
+    },
+    "mean2_predictions": {
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/development_predictions.pt",
+      "sha256": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076"
+    },
+    "consistency2_model": {
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/selected_model.pt",
+      "sha256": "465aaeb18995df5b1e7a1b6a30b3e911ebee0afacdea2ae6004e060f3f2a5a9a"
+    },
+    "consistency2_predictions": {
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/development_predictions.pt",
+      "sha256": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a"
+    },
+    "manifest": {
+      "path": "experiments/pcqm_k1_consistency_fusion_transfer/inputs/manifest.json",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+    },
+    "calibration_shard": {
+      "path": "experiments/pcqm_k1_consistency_fusion_transfer/inputs/train_shard_0002.pt",
+      "sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a"
+    },
+    "development_shard": {
+      "path": "experiments/pcqm_k1_consistency_fusion_transfer/inputs/train_shard_0010.pt",
+      "sha256": "1a37dc5d458396b590044d978526822e6d1cb35df223de913a837dc7277d64c1"
+    }
+  },
+  "mean": 5.3383002281188965,
+  "std": 1.275090217590332,
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "source_equivalence": {
+    "src/molgap/qm9_neural_atom.py": "exact LF-normalized bytes equal original source commit 84288398",
+    "src/molgap/pcqm_gap_architecture.py": "exact LF-normalized bytes equal original source commit 84288398",
+    "src/molgap/gps.py": "exact LF-normalized bytes equal original source commit 84288398"
+  },
+  "source_hashes": {
+    "experiments/pcqm_k1_consistency_fusion_transfer/run.py": "a42dbec145516de8e106dbc5bb1e22fa3daa8b4375e9f59179f908fe0f0e1b7e",
+    "experiments/pcqm_k1_consistency_fusion_transfer/protocol.md": "7c05568cf2304e4efcbb93aeeac0edcf6926e66745250861a49307bab77b653e",
+    "experiments/pcqm_k1_consistency_fusion_transfer/prepare.py": "7b83fe44a417d5616410bb915aedaa289c24c3249514ad2f6edd64342c870356",
+    "experiments/pcqm_k1_consistency_fusion_transfer/close.py": "390bfa8a31bd6a30458759f5baaa1f1d61ae34a7daf8b395aa1cbc2ef78d8ece",
+    "src/molgap/k1_frozen_inference.py": "70c76a629cee9c1108db7c9a65f34e977094a2072bf8b94656c0f02159a59895",
+    "src/molgap/k1_screen_training.py": "641acabd1e37148a99da01f13607b6691a735b7dd8c45c83dd9bf2fde76b3a55",
+    "src/molgap/router.py": "aec3c6242594c8f064cfa1124950bf509e555ff3c547b2d64d653ef7f974dd7e",
+    "src/molgap/training_reproducibility.py": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa",
+    "src/molgap/qm9_neural_atom.py": "13b09c53f39edd4bf637d5b42b0097d23dd46a236990f1af9f623db48154d0dd",
+    "src/molgap/pcqm_gap_architecture.py": "0ad2ffc7930907fdb64475926d91c06967793a47fab31d3fe035df4cd9a0e3b0",
+    "src/molgap/gps.py": "f0dabfe575708117efbe365be36591e421f0e1324014ca093fd0692d8312782b"
+  }
+}

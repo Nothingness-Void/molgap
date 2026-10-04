@@ -1,0 +1,181 @@
+{
+  "format": "molgap-k1-fusion-transfer-acceptance-v1",
+  "evidence_id": "pcqm-k1-consistency-fusion-transfer-20261004",
+  "run_id": "local-k1-consistency-fusion-transfer-20261004",
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "aligned_finite_hash_verified_predictions",
+    "comparison_status": "same_cohort_retained_checkpoint_equal_blend",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "internal_development_nomination",
+    "budget_decision": "no_training_release",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md",
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "New training, distillation, scale-up or official-role use needs separate authority and a prospective contract."
+    ]
+  },
+  "role_use": {
+    "internal_development": "selection_used",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "checks": {
+    "strict_state_load": true,
+    "finite_aligned_50k_outputs": true,
+    "accepted_prediction_reconstruction_passed": true,
+    "no_training": true,
+    "protected_roles_untouched": true
+  },
+  "measurement_ref": "experiments/pcqm_k1_consistency_fusion_transfer/results/measurement.json",
+  "cost_scope": "one assigned RTX 5060; two reconstruction probes and two common-cohort passes; loader/transfer waits included; hashing/startup and report/bootstrap excluded from allocation",
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-fusion-transfer-20261004-calibration-prediction_input",
+      "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-fusion-transfer-20261004",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "eb500009154d3b1e61d01bec79e8d0a36345bbd847442ae472b9a0525a55f157",
+      "role_name": "internal_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_fusion_transfer/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-fusion-transfer-20261004-calibration-labels_read",
+      "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-fusion-transfer-20261004",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "eb500009154d3b1e61d01bec79e8d0a36345bbd847442ae472b9a0525a55f157",
+      "role_name": "internal_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_fusion_transfer/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-fusion-transfer-20261004-calibration-metric_computed",
+      "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-fusion-transfer-20261004",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "eb500009154d3b1e61d01bec79e8d0a36345bbd847442ae472b9a0525a55f157",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_fusion_transfer/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-fusion-transfer-20261004-calibration-selection_used",
+      "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-fusion-transfer-20261004",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "eb500009154d3b1e61d01bec79e8d0a36345bbd847442ae472b9a0525a55f157",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_fusion_transfer/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-fusion-transfer-20261004-development-prediction_input",
+      "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-fusion-transfer-20261004",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_fusion_transfer/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-fusion-transfer-20261004-development-labels_read",
+      "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-fusion-transfer-20261004",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_fusion_transfer/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-fusion-transfer-20261004-development-metric_computed",
+      "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-fusion-transfer-20261004",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_fusion_transfer/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-k1-consistency-fusion-transfer-20261004-development-selection_used",
+      "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-fusion-transfer-20261004",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_consistency_fusion_transfer/acceptance.json"
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-consistency-fusion-transfer-20261004-measured-inference",
+      "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004",
+      "action_id": "A001",
+      "run_id": "local-k1-consistency-fusion-transfer-20261004",
+      "attempt_id": "local-attempt-001",
+      "category": "inference",
+      "platform": "local-windows",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "evidence_ref": "experiments/pcqm_k1_consistency_fusion_transfer/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": 0.009792833833331922,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.0105078125,
+          "status": "measured"
+        },
+        "wall_hours": {
+          "value": 0.010017371333330326,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "One training seed; row bootstrap does not measure training stochasticity.",
+    "Internal-development rows previously used for other experiments; not a sealed test.",
+    "RTX inference reconstruction is tolerance-qualified, not a native T4 training comparison.",
+    "Historical training costs and replay exclusions remain unchanged."
+  ]
+}

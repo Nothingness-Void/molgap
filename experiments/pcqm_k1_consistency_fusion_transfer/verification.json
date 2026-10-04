@@ -1,0 +1,33 @@
+{
+  "verified_at": "2026-10-04T10:56:15.498584+00:00",
+  "reviewer": "gpt-6-luna max subagent fusion_verification; parent integrated",
+  "tests": {
+    "command": "D:/\u6587\u6863/molgap/.venv/Scripts/python.exe -m pytest tests/test_gptrans_local_pair_analysis.py tests/test_pcqm_k1_gptrans_fusion.py",
+    "runs": 1,
+    "passed": 7,
+    "failed": 0
+  },
+  "saved_artifact_cpu_verification": {
+    "cuda_visible_devices": "-1",
+    "no_model_loaded": true,
+    "exact_50000_source_idx_500000_550000": true,
+    "same_targets": true,
+    "finite_predictions_and_targets": true,
+    "all_output_sha256_verified": true,
+    "exact_fixed_equal_blend_tensor": true,
+    "mae_recomputed": true,
+    "paired_bootstrap_1000_seed42_recomputed": true,
+    "cohort_hashes_verified": true
+  },
+  "runtime_review": {
+    "no_training": true,
+    "checkpoint_strict_load_and_reconstruction": true,
+    "protected_roles_untouched": true,
+    "timing_boundaries_consistent": true
+  },
+  "limitations": [
+    "run.py relies on the same deterministic DataLoader for arm source alignment; independent saved tensor verification explicitly confirmed the two source tensors equal.",
+    "RML mapping consumes hash-verified measurement plus this independent verification; it does not execute inference again.",
+    "Allocation is an assigned local GPU window including waits, not kernel busy time."
+  ]
+}

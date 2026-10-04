@@ -1,0 +1,7 @@
+{
+  "scope": "terminal-export metadata correction only; no source, input, inference or scientific result changes",
+  "before_sha256": "931cf60680baa2aee969c3e1e9b7e53a8680c8cc78af395a3aa8341ffd9a57b9",
+  "reason": "Frozen close.py mapped observed execution into the migration exporter field; V5 rejects inference during migration.",
+  "owning_validator": "src/molgap/v5_common.py:validate_v5_evidence_envelope",
+  "accepted_mapping_example": "experiments/pcqm_k1_slot_readout_diagnostic/rml/rml_finalized/v5_evidence.json"
+}

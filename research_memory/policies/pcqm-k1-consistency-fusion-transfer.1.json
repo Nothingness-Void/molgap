@@ -1,0 +1,33 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-k1-consistency-fusion-transfer",
+  "version": "1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-k1-consistency-fusion-transfer-v1"
+  },
+  "required_observable_fields": [
+    "user_requested_frozen_inference_scope_reviewed"
+  ],
+  "action_rule": {
+    "field": "user_requested_frozen_inference_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1,
+    "action": "RUN_DIAGNOSTIC"
+  },
+  "borderline_action": "NO_TRAIN",
+  "observation_point": null,
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": []
+  },
+  "approval": {
+    "approved_by": null,
+    "approved_at": null,
+    "authority_ref": null
+  },
+  "created_from_source_digest": "7c05568cf2304e4efcbb93aeeac0edcf6926e66745250861a49307bab77b653e"
+}
