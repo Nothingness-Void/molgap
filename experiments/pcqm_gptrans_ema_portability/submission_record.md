@@ -46,3 +46,52 @@ role order, chunk/source hashes, runtime isolation and budget before nomination.
 NO_TRAIN evidence could be PAIRED_ENDPOINT, never STRICT_CAUSAL or a new training
 Replay pair. A separately analyzed and released training contrast would require
 its own prospective plan, comparison gate and actual Replay-ready closure.
+
+## Interpreter recovery and audit v2 — 2026-10-04
+
+The first GPU attempt stopped before workers because Kaggle Python3.13 could
+not install the pinned torch2.4.1 wheel. Its evidence was closed separately as
+[infrastructure-only](results/failure_v1/decision.md), without changing the
+scientific contract. The [CPU qualification](results/environment_v1/decision.md)
+accepted an isolated Python3.12.14 and the pinned imports; its NO_TRAIN RML
+closure did not claim GPU numerical calibration or training Replay eligibility.
+
+After reconciling the exact prior physical attempt, the owning adapter released
+version2 of kernel136990464 on T4. The
+[actual receipt](attempt_v2/submission_receipt.json) and
+[remote verification](attempt_v2/remote_kernel_verification.json) identified
+`kaseichou/molgap-gptrans-ema-portability-audit:v2`, initially RUNNING, and
+verified the remote entry against the staged source. Frozen source, input,
+contract and prospective identity remained in
+[the v2 binding](attempt_v2/release_binding.json).
+
+The existing B heartbeat was rebound, not duplicated. It was instructed to
+retrieve version-pinned small metadata only, never recursively download the
+isolated worker environment. A retained ownership of hash-bound tensor retrieval,
+original-role reproduction, 500K-role acceptance and any subsequent training
+decision. The original90-minute/3 allocated-T4-hour audit ceiling remained fixed.
+
+The v2 terminal event subsequently reported ERROR. Both subprocesses stopped
+at ambiguous cache-argument resolution before worker entry; the environment
+qualified successfully. The [v2 failure decision](results/failure_v2/decision.md)
+retained all six manifest-bound JSON files and measured allocation cost. Its
+RML closure was INFRASTRUCTURE_ONLY, not a scientific negative. Two local
+duplicate-mount regression cases passed before staging a new v3 source and
+prospective binding; no frozen weight or scientific contract was modified.
+
+## Dataset-scoped recovery v3 — 2026-10-04
+
+The adapter released kernel136990464/version3 only after reconciliation of v2
+ERROR, its infrastructure-only RML closure and local mount regression. The
+[receipt](attempt_v3/submission_receipt.json) returned no mount/identity conflicts.
+The [input verification](attempt_v3/remote_input_verification.json) accepted
+private source dataset version6, exact inventory sizes and downloaded source
+archive/manifest bytes. All older dataset versions were preserved.
+
+The [new release](attempt_v3/release_binding.json) froze source commit
+`1d78e653abf2657bc2536fe2ff5e46ccd3436073`, a new prospective attempt, and
+the unchanged scientific contract and frozen model/payload hashes. Independent
+[remote verification](attempt_v3/remote_kernel_verification.json) checked exact
+physical version3, entry equality and RUNNING status. The existing B and
+heartbeat were rebound to v3; the v2 event was finalized NEXT_RUN_BOUND.
+No new training successor or scientific promotion was inferred from this release.

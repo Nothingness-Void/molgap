@@ -1,0 +1,132 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TC-gptrans-ema-runtime-qualification-v1",
+  "run_id": "kaseichou/molgap-gptrans-runtime-qualification:v1",
+  "action_id": "A001",
+  "finalized_at": "2026-10-04T07:47:44.654759+00:00",
+  "acceptance_ref": "experiments/pcqm_gptrans_ema_portability/results/environment_v1/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_ema_portability/environment_rml_plan/trajectory.json": "74290bae54009546d09cc54ee9aac0734a39a0a4b0ab7b0e1c3cfa99f1caffd6",
+    "experiments/pcqm_gptrans_ema_portability/environment_protocol.md": "134781a048da311baa8a6f6f4d076cb7a153e956e3cde44a305be5a43d8b0288",
+    "experiments/pcqm_gptrans_ema_portability/environment_release.json": "5e2ed01ca705bcdae31a15fbb3a5dfcc97d6c05990d060aec24735556524139f",
+    "experiments/pcqm_gptrans_ema_portability/environment_release_corrected.json": "d08a18216ff21faaad4c36121458f9822e0be4d3b90fb957e2dbaf0641c61947",
+    "experiments/pcqm_gptrans_ema_portability/environment_submission.json": "f810f1e818784418c03e90b8d6f4318f870388e86eea79593c2168d3bcf9c030",
+    "experiments/pcqm_gptrans_ema_portability/environment_remote_verification.json": "3956220491c7e24be0dd25e3bcfe52dba7fb0f6fe35d77845ec0d22a1ddb5b76",
+    "experiments/pcqm_gptrans_ema_portability/results/environment_v1/decision.md": "0371da72620a422a322b9e1a167ab9a4780c4e88d252e4f1123076c20bc0eaa2",
+    "experiments/pcqm_gptrans_ema_portability/results/environment_v1/acceptance.json": "e237bca4bffd13b010bc2c76942e5b3ba3985cf342ec079545434f7f28b55a90",
+    "platforms/_records/kaggle/training/gptrans_runtime_qualification_v1/gptrans_ema_portability/environment_qualification.json": "9f7e48ca7cf0f19fc3c2c540b1515bc939cc61b1c493b93e5e48fc5168b7fd80",
+    "platforms/_records/kaggle/training/gptrans_runtime_qualification_v1/gptrans_ema_portability/environment_cost.json": "895d81f6d3dfd3fd69a2129f6c0d28c47714c0b0c4464be397d8a482050b3778"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-ema-runtime-qualification-v1",
+    "track": "C",
+    "scope": "CPU_import_only_runtime_qualification",
+    "legacy_contract": "none-v5-prospective",
+    "outcome": {
+      "execution_status": "complete",
+      "artifact_status": "accepted_import_qualification",
+      "comparison_status": "context_only",
+      "scientific_status": "not_evaluated",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "within_CPU_wall_cap",
+      "full_handoff_status": "not_authorized"
+    },
+    "role_use": {
+      "train": "not_applicable",
+      "internal_development_100000_150000": "not_applicable",
+      "internal_development_500000_550000": "not_applicable",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_ema_portability/environment_rml_plan/trajectory.json",
+        "experiments/pcqm_gptrans_ema_portability/environment_protocol.md",
+        "experiments/pcqm_gptrans_ema_portability/environment_release.json",
+        "experiments/pcqm_gptrans_ema_portability/environment_release_corrected.json",
+        "experiments/pcqm_gptrans_ema_portability/environment_submission.json",
+        "experiments/pcqm_gptrans_ema_portability/environment_remote_verification.json",
+        "experiments/pcqm_gptrans_ema_portability/results/environment_v1/decision.md",
+        "experiments/pcqm_gptrans_ema_portability/results/environment_v1/acceptance.json",
+        "platforms/_records/kaggle/training/gptrans_runtime_qualification_v1/gptrans_ema_portability/environment_qualification.json",
+        "platforms/_records/kaggle/training/gptrans_runtime_qualification_v1/gptrans_ema_portability/environment_cost.json"
+      ]
+    },
+    "artifacts": [
+      {
+        "name": "environment_qualification.json",
+        "locator": "platforms/_records/kaggle/training/gptrans_runtime_qualification_v1/gptrans_ema_portability/environment_qualification.json",
+        "sha256": "9f7e48ca7cf0f19fc3c2c540b1515bc939cc61b1c493b93e5e48fc5168b7fd80",
+        "availability": "retained_metadata"
+      },
+      {
+        "name": "environment_cost.json",
+        "locator": "platforms/_records/kaggle/training/gptrans_runtime_qualification_v1/gptrans_ema_portability/environment_cost.json",
+        "sha256": "895d81f6d3dfd3fd69a2129f6c0d28c47714c0b0c4464be397d8a482050b3778",
+        "availability": "retained_metadata"
+      }
+    ],
+    "migration": {
+      "migrated_at": "2026-10-04T07:47:44.654759+00:00",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Pinned package imports and cost only; not GPU calibration or training Replay qualification"
+    }
+  },
+  "decision": {
+    "final": true,
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_gptrans_ema_portability/results/environment_v1/decision.md",
+    "next_allowed_actions": [
+      "Controller may release the separately planned unchanged frozen GPU audit v2"
+    ],
+    "reopen_conditions": [
+      "GPU reproduction failure or actionable infrastructure event"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-ema-runtime-qualification-v1",
+      "trajectory_id": "TC-gptrans-ema-runtime-qualification-v1",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-gptrans-runtime-qualification:v1",
+      "attempt_id": "v1",
+      "category": "preflight",
+      "platform": "kaggle2",
+      "hardware": "CPU-only",
+      "evidence_ref": "experiments/pcqm_gptrans_ema_portability/results/environment_v1/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.017358905805481804
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "train": "not_applicable",
+    "internal_development_100000_150000": "not_applicable",
+    "internal_development_500000_550000": "not_applicable",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  }
+}

@@ -13,9 +13,15 @@ as complete Replay pairs, but neither supports promotion; preserve the
 The server-owned [frozen G1 EMA portability audit](experiments/pcqm_gptrans_ema_portability/submission_record.md)
 failed before workers during installation and is RML-closed as infrastructure-only;
 see the [retained failure](experiments/pcqm_gptrans_ema_portability/results/failure_v1/decision.md).
-The [CPU-only interpreter qualification](experiments/pcqm_gptrans_ema_portability/environment_submission.json)
-is RUNNING; a separately planned unchanged-contract GPU retry is not submitted.
-The existing Luna B monitors the exact CPU version and hands terminal evidence to A.
+The [CPU-only interpreter qualification](experiments/pcqm_gptrans_ema_portability/results/environment_v1/decision.md)
+passed and is RML-closed as NO_TRAIN import proof, not GPU calibration.
+The frozen audit [GPU v2](experiments/pcqm_gptrans_ema_portability/results/failure_v2/decision.md)
+failed before worker entry on duplicate shard-name resolution; its retained
+failure is infrastructure-only, not a model result. Exact dataset-scoped path
+resolution passed a duplicate-mount regression. The unchanged-contract
+[v3 audit](experiments/pcqm_gptrans_ema_portability/attempt_v3/submission_receipt.json)
+is RUNNING, bound to the existing silent30-minute Luna monitor. Training remains
+gated on accepted audit results and analysis.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).

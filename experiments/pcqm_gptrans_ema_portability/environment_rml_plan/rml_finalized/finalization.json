@@ -1,0 +1,35 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-c053618a0763e69fb8a1661644f92d9c4abeb59760f190bea16853e04f277a7d",
+  "finalized_at": "2026-10-04T07:47:44.654759+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_ema_portability/environment_protocol.md": "134781a048da311baa8a6f6f4d076cb7a153e956e3cde44a305be5a43d8b0288",
+    "experiments/pcqm_gptrans_ema_portability/environment_release.json": "5e2ed01ca705bcdae31a15fbb3a5dfcc97d6c05990d060aec24735556524139f",
+    "experiments/pcqm_gptrans_ema_portability/environment_release_corrected.json": "d08a18216ff21faaad4c36121458f9822e0be4d3b90fb957e2dbaf0641c61947",
+    "experiments/pcqm_gptrans_ema_portability/environment_remote_verification.json": "3956220491c7e24be0dd25e3bcfe52dba7fb0f6fe35d77845ec0d22a1ddb5b76",
+    "experiments/pcqm_gptrans_ema_portability/environment_rml_plan/trajectory.json": "74290bae54009546d09cc54ee9aac0734a39a0a4b0ab7b0e1c3cfa99f1caffd6",
+    "experiments/pcqm_gptrans_ema_portability/environment_submission.json": "f810f1e818784418c03e90b8d6f4318f870388e86eea79593c2168d3bcf9c030",
+    "experiments/pcqm_gptrans_ema_portability/results/environment_v1/acceptance.json": "e237bca4bffd13b010bc2c76942e5b3ba3985cf342ec079545434f7f28b55a90",
+    "experiments/pcqm_gptrans_ema_portability/results/environment_v1/decision.md": "0371da72620a422a322b9e1a167ab9a4780c4e88d252e4f1123076c20bc0eaa2",
+    "platforms/_records/kaggle/training/gptrans_runtime_qualification_v1/gptrans_ema_portability/environment_cost.json": "895d81f6d3dfd3fd69a2129f6c0d28c47714c0b0c4464be397d8a482050b3778",
+    "platforms/_records/kaggle/training/gptrans_runtime_qualification_v1/gptrans_ema_portability/environment_qualification.json": "9f7e48ca7cf0f19fc3c2c540b1515bc939cc61b1c493b93e5e48fc5168b7fd80"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TC-gptrans-ema-runtime-qualification-v1.json": "f7397a7d71881a72981080f63927dc40c2066c98d99e8264cfb7babd1fbd0fad",
+    "prospective_snapshot.json": "74290bae54009546d09cc54ee9aac0734a39a0a4b0ab7b0e1c3cfa99f1caffd6",
+    "terminal_input.json": "66344d2a99b7c1daeb1ab0494745f0834ac123317b85d86955c740c9e809aa4c",
+    "trajectory.json": "adeaa975e3624244535f677563bb980435f8bb34b92a54bf9c8d27ccaf0da6e8",
+    "v5_evidence.json": "faeb13b4fa0cbe82f8341ffb7d1e455908445bdc472089a0f575f8f40b9c71a4"
+  },
+  "replacements": {
+    "costs/cost-TC-gptrans-ema-runtime-qualification-v1.json": "experiments/pcqm_gptrans_ema_portability/environment_rml_plan/costs/cost-TC-gptrans-ema-runtime-qualification-v1.json",
+    "trajectory.json": "experiments/pcqm_gptrans_ema_portability/environment_rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "c053618a0763e69fb8a1661644f92d9c4abeb59760f190bea16853e04f277a7d",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-gptrans-ema-runtime-qualification-v1"
+}

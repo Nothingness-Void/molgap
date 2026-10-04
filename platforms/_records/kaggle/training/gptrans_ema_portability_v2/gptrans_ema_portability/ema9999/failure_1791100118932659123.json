@@ -1,0 +1,4 @@
+{
+  "error": "Traceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 64, in main\n    cache_100k=one(\"train_shard_0002.pt\").parent.parent,\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/src/script.py\", line 19, in one\n    raise ValueError(f\"Expected one mounted {name}: {matches}\")\nValueError: Expected one mounted train_shard_0002.pt: [PosixPath('/kaggle/input/datasets/kaseichou/pcqm4mv2-ogb-fixed-100k-v1/train/train_shard_0002.pt'), PosixPath('/kaggle/input/datasets/kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1/train/train_shard_0002.pt')]\n",
+  "timestamp": 1791100167.5048363
+}

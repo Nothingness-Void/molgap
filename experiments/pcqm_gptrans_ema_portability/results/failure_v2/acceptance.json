@@ -1,0 +1,70 @@
+{
+  "evidence_id": "pcqm-gptrans-ema-portability-infrastructure-v2",
+  "run_id": "gptrans-ema-portability-audit:v2",
+  "outcome": {
+    "execution_status": "failed_before_worker_entry",
+    "artifact_status": "failure_metadata_verified",
+    "comparison_status": "not_evaluated",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "native_allocation_cost_retained",
+    "full_handoff_status": "not_authorized"
+  },
+  "trajectory_decision": {
+    "final": true,
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "decision_ref": "experiments/pcqm_gptrans_ema_portability/results/failure_v2/decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "New prospective attempt after verified infrastructure correction"
+    ]
+  },
+  "role_use": {
+    "internal_development_100000_150000": "untouched",
+    "internal_development_500000_550000": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "train": "not_applicable"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "action_id": "A001",
+      "run_id": "gptrans-ema-portability-audit:v2",
+      "attempt_id": "v2",
+      "category": "infrastructure_failure",
+      "platform": "kaggle2",
+      "hardware": "Tesla_T4x2",
+      "evidence_ref": "experiments/pcqm_gptrans_ema_portability/results/failure_v2/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measured",
+          "value": 0.028378172980414496
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.014189086490207248
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "remote_identity": {
+    "kernel": "kaseichou/molgap-gptrans-ema-portability-audit",
+    "kernel_id": 136990464,
+    "version": 2
+  },
+  "model_inference_executed": false,
+  "cost_scope": "kernel-entry-through-workers; teardown/queue unavailable"
+}

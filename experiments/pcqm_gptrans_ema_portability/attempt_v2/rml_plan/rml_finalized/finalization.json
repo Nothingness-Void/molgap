@@ -1,0 +1,36 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-c37a5d45db803ed49a10025cb3ef33979355cdf71d0d692e15dcee9f13d86c9d",
+  "finalized_at": "2026-10-04T08:01:14.953353+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_ema_portability/attempt_v2/release_binding.json": "07ade4dfaa3a4ff6dec8ce95e219b43cfda1182421efbb852e5940f1e320564e",
+    "experiments/pcqm_gptrans_ema_portability/attempt_v2/rml_plan/trajectory.json": "9e562616a94967e6c0d4a39538b66e6c4fffc6da9dc9e33b6e65d73fe53ecac6",
+    "experiments/pcqm_gptrans_ema_portability/results/failure_v2/acceptance.json": "6538c2a9b113d2fba5ace12632cbbdd091ece702b04f763b3f948f4957d8a6b3",
+    "experiments/pcqm_gptrans_ema_portability/results/failure_v2/decision.md": "10241999ac791c12f10fd6aa7c3387db821ac3aa6c8e7b4451fe972454f2f56a",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v2/gptrans_ema_portability/allocation.json": "880d0aedb708cc282c13bbc60aabdfa27c030f86303279c21325e1588fe8f9f0",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v2/gptrans_ema_portability/cost.json": "be4b39cd151ea1480a46539dda0caab419f8538a68d826c95de8df7c28f2845e",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v2/gptrans_ema_portability/ema999/failure_1791100118932659123.json": "800199d2d5e2a113b8897ea38b0a3210426736d6da0856906c47840132d2c419",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v2/gptrans_ema_portability/ema9999/failure_1791100118932659123.json": "b8990af2d2d9604ce180af1bf50a10780a91d36e54f6413161bad63fa37469b1",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v2/gptrans_ema_portability/environment_qualification.json": "372c9420af52116c9a48a23217133eb874f20af05026dbd9ac85abff1e1cc5d3",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v2/gptrans_ema_portability/failure.json": "fd054e33b04e8935c4c8e94ddb128e00b3a32de1c91e9b6e905d09649d50d7dc",
+    "platforms/_records/kaggle/training/gptrans_ema_portability_v2/gptrans_ema_portability/output_manifest.json": "ca03ef30aa22eaba63a3fd26e691542b4b9517a7a8507dd29c09065cf62436f8"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-gptrans-g1-ema-portability-frozen-s42-v2.json": "107a62b5487fa1056fd91d6612dd60f2eb47fd8fb85b4701888659c13cca20ce",
+    "prospective_snapshot.json": "9e562616a94967e6c0d4a39538b66e6c4fffc6da9dc9e33b6e65d73fe53ecac6",
+    "terminal_input.json": "426eb13be2a3726718eb32869c6bac305ed79af8908709b2cac774e78b551918",
+    "trajectory.json": "b3f3c2c13b515a3a13ab375a5d0cdf08631d2ac5def8c84497598edea66bde3f",
+    "v5_evidence.json": "e8ecdd848cd60f15057962321b17e9d46c349cbedf43e6bc0a375f8e5edfe229"
+  },
+  "replacements": {
+    "costs/cost-TC-gptrans-g1-ema-portability-frozen-s42-v2.json": "experiments/pcqm_gptrans_ema_portability/attempt_v2/rml_plan/costs/cost-TC-gptrans-g1-ema-portability-frozen-s42-v2.json",
+    "trajectory.json": "experiments/pcqm_gptrans_ema_portability/attempt_v2/rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "c37a5d45db803ed49a10025cb3ef33979355cdf71d0d692e15dcee9f13d86c9d",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v2"
+}
