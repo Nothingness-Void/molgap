@@ -39,6 +39,10 @@ class FamilyContract:
 
 
 FAMILIES = MappingProxyType({
+    ("gptrans_scale_ema", "1"): FamilyContract(
+        "gptrans_scale_ema", "1", "molgap.gptrans_scale_ema", "gptrans_scale_ema_v1",
+        "ogb-atom9-bond3-shortest-path-cap20", ("train", "development"),
+        "seed42-continuous-fixed500k-step-v1", "fixed-train-100k-mean-sample-std"),
     ("gptrans_scale_profile", "1"): FamilyContract(
         "gptrans_scale_profile", "1", "molgap.gptrans_scale_profile",
         "gptrans_scale_profile_v1", "ogb-atom9-bond3-shortest-path-cap20",
@@ -93,6 +97,8 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    **{(name, "1"): AddonContract("gptrans_t", "capacity-intervention", "molgap.gptrans_capacity")
+       for name in ("degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999")},
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
         (AddonConfigField("num_layers", "integer", minimum=EDGE_STATE_MIN_LAYERS,

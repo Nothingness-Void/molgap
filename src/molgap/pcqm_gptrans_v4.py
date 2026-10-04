@@ -48,10 +48,14 @@ EMA_DECAY = 0.9999
 AUTHOR_MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
                 "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999",
                 "degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999", "degree_decay001_ema999")
+CAPACITY_MODES = ("degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999")
+AUTHOR_MODES += CAPACITY_MODES
 PATH_MODES = ("path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_ema999")
 
 
 def _ema_decay(variant: str) -> float:
+    if variant in CAPACITY_MODES:
+        return .999
     return 0.999 if variant in {"degree_scale_ema999", "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999", "degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999", "degree_decay001_ema999"} else EMA_DECAY
 
 
@@ -269,6 +273,12 @@ def _run_target_stats(shards, variant: str, target_transform_path: Path | None):
 def _make_model(initial_state_path: Path | None = None, variant: str = "reference"):
     import torch
 
+    if variant in CAPACITY_MODES:
+        from .gptrans_capacity import load_initial
+        if initial_state_path is None:
+            raise ValueError("Capacity arm requires its frozen full initialization")
+        return load_initial(variant, initial_state_path)
+
     from .gptrans import OGBGPTransTiny
     if variant in ("memory_value", "memory_message"):
         from .gptrans_memory import apply_memory_variant as apply_variant
@@ -355,6 +365,12 @@ def _verify_model_identity(model) -> tuple[int, str]:
     if architecture_sha256 != EXPECTED_ARCHITECTURE_SHA256:
         raise RuntimeError("Frozen GPTrans-T source changed")
     parameters = sum(parameter.numel() for parameter in model.parameters())
+    if getattr(model, "_molgap_author_variant", None) in CAPACITY_MODES:
+        from .gptrans_capacity import PARAMETER_CAP, architecture_identity
+        if (parameters != model._capacity_parameters or parameters > PARAMETER_CAP
+                or _state_sha256(model) != model._capacity_initial_sha256):
+            raise RuntimeError("Frozen capacity initialization/parameter allowance changed")
+        return parameters, architecture_identity(model._molgap_author_variant)
     if parameters != EXPECTED_PARAMETERS:
         raise RuntimeError(f"Frozen GPTrans-T parameter count changed: {parameters}")
     initial_sha256 = _state_sha256(model)
@@ -475,7 +491,7 @@ def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bo
     return loss.detach()
 
 
-def _evaluate(model, ema, graphs, mean, std, *, weights: str = "ema", device: str = "cuda") -> dict:
+def _evaluate(model, ema, graphs, mean, std, *, weights: str = "ema", device: str = "cuda", source_idx_start: int = 100000) -> dict:
     import torch
 
     if weights not in {"ema", "live"}:
@@ -506,7 +522,7 @@ def _evaluate(model, ema, graphs, mean, std, *, weights: str = "ema", device: st
     source_idx = torch.cat(source_indices)
     if prediction.numel() != DEVELOPMENT_ROWS:
         raise RuntimeError("Development prediction count changed")
-    expected = torch.arange(100_000, 100_000 + DEVELOPMENT_ROWS, dtype=torch.long)
+    expected = torch.arange(source_idx_start, source_idx_start + DEVELOPMENT_ROWS, dtype=torch.long)
     if not torch.equal(source_idx, expected):
         raise RuntimeError("Development source order changed")
     return {
@@ -752,9 +768,12 @@ def run_preflight(
     result = {
         "format": "molgap-pcqm-gptrans-t-100k-preflight-v4",
         "variant": variant,
-        "parameters": EXPECTED_PARAMETERS,
+        "parameters": sum(p.numel() for p in model.parameters()),
         "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_author_variants.py" if variant in AUTHOR_MODES else "gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
         "ema_decay": _ema_decay(variant),
+        **({"capacity_architecture_identity": __import__("molgap.gptrans_capacity", fromlist=["architecture_identity"]).architecture_identity(variant),
+             "capacity_implementation_sha256": _source_sha256(Path(__file__).with_name("gptrans_capacity.py"))}
+           if variant in CAPACITY_MODES else {}),
         **({"pair_scale_implementation_sha256": _source_sha256(Path(__file__).with_name("gptrans_pair_scale.py"))}
            if variant == "degree_pair_depth_scale_ema999" else {}),
         **({"readout_implementation_sha256": _source_sha256(Path(__file__).with_name("gptrans_readout.py"))}
@@ -1053,8 +1072,8 @@ def run_training(
                 "format": RUN_FORMAT,
                 "model_config": {
                     "variant": variant,
-                    "node_channels": 256,
-                    "pair_channels": 32,
+                    "node_channels": model.node_channels,
+                    "pair_channels": model.pair_channels,
                     "num_layers": 12,
                     "num_heads": 8,
                     "shortest_path_cap": 20,
@@ -1062,12 +1081,14 @@ def run_training(
                     "drop_path": 0.1,
                     "layer_scale": 1.0,
                     "n_targets": 1,
+                    **({"capacity_configuration": __import__("molgap.gptrans_capacity", fromlist=["configuration"]).configuration(variant)}
+                       if variant in CAPACITY_MODES else {}),
                 },
                 "model": {name: value.detach().cpu() for name, value in ema.state_dict().items()},
                 "target_stats": target_stats,
                 "epoch": epoch,
                 "development_mae_eV": best,
-                "architecture_sha256": EXPECTED_ARCHITECTURE_SHA256,
+                "architecture_sha256": preflight.get("capacity_architecture_identity", EXPECTED_ARCHITECTURE_SHA256),
                 "runtime_certificate_id": certificate_id,
                 "manifest_sha256": MANIFEST_SHA256,
                 "source_archive_sha256": source_archive_sha256,
@@ -1218,6 +1239,11 @@ def run_training(
         "best_development_mae_eV": best,
         "best_epoch": best_epoch,
     }
+    if variant in CAPACITY_MODES:
+        reference["architecture_fingerprint"] = preflight["capacity_architecture_identity"]
+        reference["model_id"] = f"gptrans_g1_12x{model.node_channels}_pair{model.pair_channels}/{variant}"
+        reference["capacity_configuration"] = __import__("molgap.gptrans_capacity", fromlist=["configuration"]).configuration(variant)
+        reference["model_parameters"] = sum(p.numel() for p in model.parameters())
     missing = [field for field in (*REFERENCE_MATCH_FIELDS, *REFERENCE_PROVENANCE_FIELDS) if field not in reference]
     if missing:
         raise RuntimeError(f"Reference record is incomplete: {missing}")
@@ -1226,7 +1252,7 @@ def run_training(
     completion = {
         "format": RUN_FORMAT,
         "variant": variant,
-        "parameters": EXPECTED_PARAMETERS,
+        "parameters": preflight["parameters"],
         "variant_source_sha256": preflight.get("variant_source_sha256"),
         "ema_decay": _ema_decay(variant),
         "checkpoint_sha256": sha256_file(checkpoint_path),

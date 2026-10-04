@@ -12,6 +12,7 @@ from .gptrans import OGBGPTransTiny
 MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
          "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999",
          "degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999", "degree_decay001_ema999")
+MODES += ("degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999")
 PATH_MODES = frozenset({"path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_ema999"})
 SCALED_MODES = frozenset(set(MODES) - {"path_bond_mean"})
 G1_ARCHITECTURE_ID = "f156359acf2bcd121c04234c22195a12d4e605c17b1129c91c8a17a91c555896"
@@ -74,6 +75,8 @@ class PathInputGPTrans(OGBGPTransTiny):
 def apply_author_variant(model, variant):
     if variant not in MODES:
         raise ValueError(variant)
+    if variant in {"degree_node352_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999", "degree_pair64_ema999"}:
+        raise ValueError("Capacity arms require their complete frozen initialization factory")
     before = set(model.state_dict())
     if variant in SCALED_MODES:
         with torch.no_grad():

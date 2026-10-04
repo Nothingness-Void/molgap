@@ -63,6 +63,7 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
     source_arm = next(a for a in old_spec["arms"] if a["arm_id"] == "degree_scale")
     source_plan = read(OLD + "/gpu/degree_scale/plan_input.json")
     arms_config, recipes = {}, {}
+    capacity_inputs = {}
     for mode in MODES:
         folder = BASE + "/gpu/" + mode
         if (root / folder / "rml_plan").exists():
@@ -71,11 +72,33 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         suffix = {"degree_group_decay_ema999": "group-decay", "degree_path_endpoints_ema999": "path-endpoints"}.get(mode, "ema999" if ema else "path-mean")
         if study:
             suffix = study["arms"][mode]["suffix"]
-        trajectory = "TC-gptrans-g1-" + suffix + "-100k-s42"
+        trajectory = "TC-gptrans-g1-" + suffix + ("-500k-s42" if mode == "scale_ema" else "-100k-s42")
         recipe_ref = folder + "/contract.json"
         recipe = read("experiments/pcqm_gptrans_v5_audit_reference/contract.json")
         recipe.update(initial_state_sha256=accepted["degree_initial_file_sha256"], ema_decay=.999 if ema or terminal_reference else .9999,
-            platform="kaggle3", independent_models=1, variant=mode, reference_id=bundle["reference_id"])
+            platform=(study or {}).get("platform_id", "kaggle3"), independent_models=1, variant=mode, reference_id=bundle["reference_id"])
+        from .gptrans_capacity import MODES as capacity_modes
+        capacity = mode in capacity_modes
+        scale = mode == "scale_ema"
+        prepared_initial, prepared_file = initial, "degree_initial_state.pt"
+        prepared_tensor_sha = source_arm["initialization"]["state_sha256"]
+        expected_parameters = recipe["model_parameters"]
+        if capacity:
+            from .gptrans_capacity import freeze_initial, configuration
+            prepared_file = mode + "_initial.pt"
+            prepared_initial = root / "platforms/_records/kaggle/initializations" / prepared_file
+            if prepared_initial.exists():
+                from .gptrans_capacity import load_initial, architecture_identity
+                from .pcqm_gptrans_v4 import _state_sha256
+                model = load_initial(mode, prepared_initial)
+                facts = {"parameters": sum(p.numel() for p in model.parameters()),
+                    "state_sha256": _state_sha256(model), "architecture_identity": architecture_identity(mode)}
+            else:
+                facts = freeze_initial(mode, initial, prepared_initial)
+            prepared_tensor_sha, expected_parameters = facts["state_sha256"], facts["parameters"]
+            recipe.update(initial_state_sha256=sha256_file(prepared_initial), model_parameters=expected_parameters,
+                          capacity_configuration=configuration(mode), architecture_sha256=facts["architecture_identity"])
+            capacity_inputs[prepared_file] = UploadArtifact.from_file(prepared_initial).to_workflow()
         if terminal_reference:
             recipe.update(optimizer_parameter_groups="bias-and-1d-no-decay-v1" if "group_decay" in mode else "single-group",
                           endpoint_path_encoding="all-shortest-first-minus-last-half-v1" if "path_endpoints" in mode else "none")
@@ -86,17 +109,55 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             recipe["pair_residual_scale"] = 12 ** -0.5
         if mode in {"degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999"}:
             recipe["readout_intervention"] = mode
+        if scale:
+            from .pcqm_k1_scale import FIXED_500K_MANIFEST_SHA256
+            recipe.update(format="molgap-gptrans-scale-ema-contract-v1", benchmark_id="pcqm4mv2-fixed500k-ema-equal-update-v1",
+                manifest_sha256=FIXED_500K_MANIFEST_SHA256, fixed_train_rows=[0,500000], fixed_development_rows=[500000,550000],
+                optimizer_steps=46860, sample_presentations=5998080, observation_rungs=60, optimizer_steps_per_rung=781,
+                sampler="seed42-continuous-fixed500k-step-v1", ema_decays=[.9999,.999],
+                experiment_purpose="transfer_study", comparison_class="PAIRED_ENDPOINT",
+                selection="each EMA view independently selects its minimum internal50k MAE over the same60 rungs",
+                reference_scope="100K context only; no accepted500K same-contract comparator")
+            recipe.update(dataset_identity="pcqm4mv2-ogb-fixed-500k-scnet-v1@" + FIXED_500K_MANIFEST_SHA256,
+                model_id="gptrans-g1-core12x256-pair32", data_role_fingerprint=canonical_fingerprint({"train":[0,500000],"development":[500000,550000]}),
+                row_order_fingerprint=canonical_fingerprint({"sampler":"seed42-continuous-fixed500k-step-v1","steps":46860,"batch":128}))
         atomic_json(root / recipe_ref, recipe)
         recipes[mode] = recipe_ref
         arm = deepcopy(source_arm)
         arm.update(arm_id=mode, addons=[{"name": mode, "version": "1", "config": {}, "source_sha256": implementation}])
+        if capacity:
+            arm["initialization"]["state_sha256"] = prepared_tensor_sha
+            arm["addons"][0]["source_sha256"] = normalized_source_sha256(root / "src/molgap/gptrans_capacity.py")
+        if scale:
+            arm.update(family={"name":"gptrans_scale_ema","version":"1"}, addons=[], addon_semantics="baseline",
+                scientific_role="ablation")
+            arm["data"]["dataset"]["sha256"] = FIXED_500K_MANIFEST_SHA256
+            arm["data"]["split"] = {"name":"fixed500k-internal50k","version":"1","sha256":FIXED_500K_MANIFEST_SHA256}
+            arm["data"]["roles"] = [{"role":role, "membership_sha256":canonical_fingerprint({"rows":bounds}),
+                "row_order_sha256":canonical_fingerprint({"source_order":bounds}), "usage_sha256":sha256_file(root / recipe_ref)}
+                for role,bounds in (("train",[0,500000]),("development",[500000,550000]))]
+            arm["training"]["recipe"]["name"] = "gptrans_scale_ema_v1"
+            arm["training"]["sampler"] = {"name":"seed42-continuous-fixed500k-step-v1","version":"1",
+                "sha256":canonical_fingerprint({"seed":42,"train_rows":500000,"steps":46860,"batch":128,"tail":"drop32-per-cycle"})}
         if "readout" in mode:
             arm["addons"][0]["source_sha256"] = normalized_source_sha256(root / "src/molgap/gptrans_readout.py")
         arm["training"]["recipe"]["sha256"] = normalized_source_sha256(root / recipe_ref)
+        arm_role_ref = recipe_ref if scale else role_ref
         for role in arm["data"]["roles"]:
-            role["usage_sha256"] = sha256_file(root / role_ref)
+            role["usage_sha256"] = sha256_file(root / arm_role_ref)
         candidate = dict(identity)
-        if terminal_reference and mode in {"degree_group_decay_ema999", "degree_decay001_ema999"}:
+        if scale:
+            candidate.update(benchmark_identity="pcqm4mv2-fixed500k-ema-equal-update-v1",
+                dataset_identity="pcqm4mv2-ogb-fixed500k-v1@"+FIXED_500K_MANIFEST_SHA256,
+                data_role_identity=canonical_fingerprint({"train":[0,500000],"development":[500000,550000]}),
+                row_membership_identity=FIXED_500K_MANIFEST_SHA256,
+                row_order_identity=arm["training"]["sampler"]["sha256"],
+                evaluation_role_identity="fixed500k:development-500000-550000", selection_role_identity="fixed500k:development-500000-550000")
+            purpose, fields = "transfer_study", []
+        elif capacity:
+            candidate["architecture_config_identity"] = facts["architecture_identity"]
+            purpose, fields = "architecture_comparison", ["architecture_config_identity"]
+        elif terminal_reference and mode in {"degree_group_decay_ema999", "degree_decay001_ema999"}:
             from .pcqm_gptrans_v4 import _scientific_fields
             candidate.update(optimizer_identity=_scientific_fields(mode)["optimizer_fingerprint"], optimizer_mode="adamw-bias-and-1d-no-decay-v1" if mode == "degree_group_decay_ema999" else "adamw-single-group-wd001-v1")
             purpose, fields = "optimizer_comparison", ["optimizer_identity", "optimizer_mode"]
@@ -151,14 +212,17 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
                 alternative_explanations=facts["alternative_explanations"])
             t["state_at_start"].update(prior_trajectory_ids=study["prior_trajectory_ids"],
                 prior_evidence_ids=study["supporting_evidence_ids"])
+        if scale:
+            t["state_at_start"]["role_snapshot_refs"] = [recipe_ref]
+            t["hypothesis"]["cheapest_falsifier"] = "one live500K trajectory with two retained EMA views at equal updates;100K reference is context only"
         t["actions"] = [{"action_id": "A001", "type": "single_mechanism_screen", "source_commit": commit,
             "run_ids": [RUN + ":" + mode], "attempt_ids": ["v1"], "evidence_refs": [recipe_ref], "cost_event_ids": [cost]}]
         t["decision"].update(decision_ref=BASE + "/protocol.md", next_allowed_actions=["one isolated T4 arm then full saved-artifact acceptance"])
         plan["decision_state"].update(active_reference_ids=[bundle["reference_id"]], available_actions=["RUN_G1_FOLLOWUP", "DEFER"],
             chosen_action="RUN_G1_FOLLOWUP", policy_id="gptrans-g1-followup", budget_snapshot_ref=budget_ref,
-            role_snapshot_refs=[role_ref], state_timestamp=datetime.now(timezone.utc).isoformat(), source_commit=commit)
+            role_snapshot_refs=[arm_role_ref], state_timestamp=datetime.now(timezone.utc).isoformat(), source_commit=commit)
         plan["costs"][0].update(cost_event_id=cost, trajectory_id=trajectory, run_id=RUN + ":" + mode,
-            platform="kaggle3", evidence_ref=budget_ref)
+            platform=(study or {}).get("platform_id", "kaggle3"), evidence_ref=budget_ref)
         for unit in ("device_hours", "wall_hours"):
             plan["costs"][0]["measurement"][unit] = {"status": "estimated", "value": estimate}
         plan_ref = folder + "/plan_input.json"
@@ -166,9 +230,11 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         declaration["arms"].append(arm)
         declaration["prospective"]["arms"].append({"arm_id": mode, "trajectory_id": trajectory,
             "plan_spec_ref": plan_ref, "plan_spec_sha256": sha256_file(root / plan_ref), "output": folder + "/rml_plan"})
-        arms_config[mode] = {"trajectory_id": trajectory, "initial_file": "degree_initial_state.pt",
-            "initial_file_sha256": accepted["degree_initial_file_sha256"], "comparison_identity": candidate,
+        arms_config[mode] = {"trajectory_id": trajectory, "initial_file": prepared_file,
+            "initial_file_sha256": sha256_file(prepared_initial), "comparison_identity": candidate,
             "experiment_purpose": purpose, "declared_intervention_fields": fields}
+        if capacity:
+            arms_config[mode].update(expected_parameters=expected_parameters, initial_tensor_sha256=prepared_tensor_sha)
     spec = ExperimentSpec(declaration)
     spec.write(root / BASE / "gpu/spec.json")
     config = read(OLD + "/gpu/screen_config.json")
@@ -179,6 +245,15 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             output_subdirectory="gptrans_recipe_path_screen")
     if study:
         config.update(requested_kernel=study["kernel"], output_subdirectory=study["output_subdirectory"])
+        config["platform_id"] = study.get("platform_id", config["platform_id"])
+        if "scale_ema" in MODES:
+            scale_tid = arms_config["scale_ema"]["trajectory_id"]
+            config["scale_study"] = {"logical_run_id":RUN+":scale_ema", "physical_arm_trajectory_id":scale_tid,
+                "initial_file_sha256":accepted["degree_initial_file_sha256"],
+                "training_estimate_cap_hours":study["training_estimate_cap_hours"],
+                "view_trajectories":{view:scale_tid for view in ("ema9999","ema999")},
+                "role_plan":BASE+"/gpu/scale_ema/contract.json", "profiling_only":False,
+                "expected_optimizer_steps":46860, "expected_sample_presentations":5998080}
         config.update(maximum_wall_seconds=int(wall_cap * 3600),
                       training_estimate_cap_hours=study.get("training_estimate_cap_hours", 4.5))
     if single_reason:
@@ -195,6 +270,14 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
     if study:
         workflow["dataset_metadata"].update(title=study["dataset_title"], id=study["dataset"])
         workflow["entry_template"] = study.get("entry_template", workflow["entry_template"])
+    if capacity_inputs:
+        workflow["artifacts"] = {**capacity_inputs, "target_transform.json": workflow["artifacts"]["target_transform.json"]}
+        workflow["initial_states"] = {mode: arms_config[mode]["initial_file"] for mode in MODES}
+        workflow["required_modules"].append("molgap.gptrans_capacity")
+        if "scale_ema" in MODES:
+            workflow["artifacts"]["degree_initial_state.pt"] = UploadArtifact.from_file(initial).to_workflow()
+    if "scale_ema" in MODES:
+        workflow["required_modules"].extend(["molgap.gptrans_scale_profile", "molgap.gptrans_scale_ema"])
     tracked = subprocess.check_output(["git", "ls-files", "-z", "--", "src/molgap"], cwd=root).decode().split("\0")
     sources = []
     for p in tracked:

@@ -48,7 +48,7 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         require((receipt["kernel_id"], receipt["version_number"]) == (136543794, 1), "Physical run identity")
     else:
         from .kaggle_accelerator_push import _observed_identity
-        actual = _observed_identity(receipt["platform_response"], "nvoid912")
+        actual = _observed_identity(receipt["platform_response"], config["requested_kernel"].split("/")[0])
         require(receipt["requested_kernel"] == config.get("requested_kernel", "nvoid912/molgap-gptrans-g1-path-ema-dual-s42")
             and receipt["kernel_id"] > 0 and receipt["version_number"] == 1
             and not actual["identity_conflicts"]
@@ -92,6 +92,10 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         if mode not in selected:
             continue
         folder = screen / mode
+        expected_parameters = arm.get("expected_parameters", EXPECTED_PARAMETERS)
+        if "expected_parameters" in arm:
+            from .gptrans_capacity import PARAMETER_CAP, architecture_identity
+            require(0 < expected_parameters <= PARAMETER_CAP and architecture_identity(mode) == arm["comparison_identity"]["architecture_config_identity"], "Capacity allowance/implementation")
         training = folder / "training"
         manifest, observed, preflight = (load(training / "completion_manifest.json"),
             load(training / "frozen_reference.json"), load(folder / "preflight/preflight.json"))
@@ -101,14 +105,19 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
             "trajectory_id": arm["trajectory_id"], "source_archive_sha256": source_sha}, "Worker arm binding")
         require(manifest["format"] == RUN_FORMAT and manifest["complete"] is True
             and manifest["v5_audit"] is True and manifest["epochs"] == EPOCHS
-            and manifest["parameters"] == EXPECTED_PARAMETERS and manifest["variant"] == mode, "Completion/architecture")
+            and manifest["parameters"] == expected_parameters and manifest["variant"] == mode, "Completion/architecture")
         require(manifest["optimizer_steps"] == BATCHES_PER_EPOCH * EPOCHS
             and manifest["sample_presentations"] == BATCHES_PER_EPOCH * EPOCHS * PHYSICAL_BATCH, "Terminal exposure")
         for record in (manifest, preflight):
             require(record["source_archive_sha256"] == source_sha and record["source_commit"] == frozen["source_commit"], "Arm source")
             require(record["variant_source_sha256"] == variant_sha and record["manifest_sha256"] == config["dataset_manifest_sha256"], "Variant/data identity")
             require(record["initial_state_artifact_sha256"] == arm["initial_file_sha256"], "Initial file binding")
-        require(preflight["accepted"] is True and preflight["parameters"] == EXPECTED_PARAMETERS, "Preflight")
+        require(preflight["accepted"] is True and preflight["parameters"] == expected_parameters, "Preflight")
+        if "expected_parameters" in arm:
+            with tarfile.open(package / "source.tar.gz", "r:gz") as archive:
+                capacity_sha = hashlib.sha256(archive.extractfile("src/molgap/gptrans_capacity.py").read()).hexdigest()
+            require(preflight["capacity_implementation_sha256"] == capacity_sha and
+                preflight["capacity_architecture_identity"] == arm["comparison_identity"]["architecture_config_identity"], "Capacity source binding")
         validate_runtime_certificate(preflight["runtime_certificate"], observed)
         require(observed["runtime_certificate_id"] == manifest["runtime_certificate_id"] == preflight["runtime_certificate_id"], "Runtime binding")
         if mode in {"path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_ema999"}:

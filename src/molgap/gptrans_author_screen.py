@@ -21,6 +21,8 @@ from .training_reproducibility import atomic_json, sha256_file
 MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
          "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999",
          "degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999", "degree_decay001_ema999")
+MODES += ("degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999")
+MODES += ("scale_ema",)
 
 
 def validate_arm_allocation(config):
@@ -55,6 +57,38 @@ def author_child(stage: str, variant: str, context: dict, root: Path):
     """Bind calls, and prevent an unrelated retained prefix from being resumed."""
     from .pcqm_gptrans_v4 import run_preflight, run_training
     import torch
+    if variant == "scale_ema":
+        if torch.cuda.device_count() != 1 or "T4" not in torch.cuda.get_device_name(0):
+            raise ValueError("Scale arm requires one isolated T4")
+        config = json.loads(Path(context["screen_config"]).read_bytes())
+        package = verify_experiment_source_package(Path(context["package_dir"]))
+        if package["spec_identity"] != config["spec_identity"]:
+            raise ValueError("Scale source/Spec binding changed")
+        study = config["scale_study"]
+        root.mkdir(parents=True, exist_ok=True)
+        binding = {"spec_identity": config["spec_identity"], "arm_id": variant,
+            "trajectory_id": config["arms"][variant]["trajectory_id"],
+            "source_archive_sha256": context["archive_sha256"], "configuration": study}
+        retained = root / "arm_binding.json"
+        if retained.exists() and json.loads(retained.read_bytes()) != binding:
+            raise ValueError("Scale resume arm/Spec/source binding changed")
+        if not retained.exists():
+            if any(root.glob("training/*.pt")):
+                raise ValueError("Unbound scale checkpoint cannot be adopted")
+            atomic_json(retained, binding)
+        from .gptrans_scale_profile import profile
+        if stage == "preflight":
+            result = profile(Path(context["upload_root"]), root / "training", {
+                "initial_file_sha256": study["initial_file_sha256"],
+                "training_estimate_cap_hours": study["training_estimate_cap_hours"]}, source_identity=package)
+            if not result["qualification_passed"]:
+                raise ValueError("Scale execution/calibration budget failed")
+        elif stage == "training":
+            from .gptrans_scale_ema import train
+            train(Path(context["upload_root"]), root / "training", config=study, source_identity=package)
+        else:
+            raise ValueError(stage)
+        return
     from .gptrans_author_variants import MODES as supported_modes, PATH_MODES
     if variant not in supported_modes or torch.cuda.device_count() != 1 or "T4" not in torch.cuda.get_device_name(0):
         raise RuntimeError("Each released author arm requires exactly one visible T4")

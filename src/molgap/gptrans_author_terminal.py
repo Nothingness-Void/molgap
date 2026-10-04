@@ -19,8 +19,9 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         *, experiment_ref: str = "experiments/pcqm_gptrans_author_alignment") -> list[dict]:
     root = Path(repo_root).resolve()
     base = root / experiment_ref
-    followup = experiment_ref in {"experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k", "experiments/pcqm_gptrans_path_ema_combination_100k", "experiments/pcqm_gptrans_readout_100k", "experiments/pcqm_gptrans_decay_clock_100k"}
-    if experiment_ref not in {"experiments/pcqm_gptrans_author_alignment", "experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k", "experiments/pcqm_gptrans_path_ema_combination_100k", "experiments/pcqm_gptrans_readout_100k", "experiments/pcqm_gptrans_decay_clock_100k"}:
+    capacity_studies = {"experiments/pcqm_gptrans_capacity_nodes_100k", "experiments/pcqm_gptrans_capacity_relations_100k"}
+    followup = experiment_ref in capacity_studies or experiment_ref in {"experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k", "experiments/pcqm_gptrans_path_ema_combination_100k", "experiments/pcqm_gptrans_readout_100k", "experiments/pcqm_gptrans_decay_clock_100k"}
+    if experiment_ref not in capacity_studies and experiment_ref not in {"experiments/pcqm_gptrans_author_alignment", "experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k", "experiments/pcqm_gptrans_path_ema_combination_100k", "experiments/pcqm_gptrans_readout_100k", "experiments/pcqm_gptrans_decay_clock_100k"}:
         raise ValueError("Unsupported terminal experiment adapter")
     gpu = base / "gpu"
     load = lambda p: json.loads(p.read_bytes())
@@ -107,7 +108,7 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         native = result["native_cost"]
         cost = {"schema": "molgap-cost-event-v1", "cost_event_id": f"cost-{tid}-observed-v1",
             "trajectory_id": tid, "action_id": "A001", "run_id": run, "attempt_id": "v1", "category": "training",
-            "platform": "kaggle3" if followup else "kaggle2", "hardware": "Tesla_T4", "evidence_ref": metadata_ref,
+            "platform": config.get("platform_id", "kaggle3" if followup else "kaggle2"), "hardware": "Tesla_T4", "evidence_ref": metadata_ref,
             "measurement": {"device_hours": {"status": "measured", "value": native["allocated_device_hours"] / len(config["arms"])},
                 "wall_hours": {"status": "measured", "value": native["wall_seconds"] / 3600},
                 "cpu_hours": {"status": "measurement_missing", "value": None},
