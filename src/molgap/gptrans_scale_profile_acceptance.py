@@ -57,6 +57,8 @@ def accept_and_close(root: Path, records: Path, package: Path):
         raise ValueError("Qualification exceeded wall cap")
     if abs(cost["allocated_device_hours"] - cost["allocated_devices"] * cost["allocation_wall_seconds"] / 3600) > 1e-6:
         raise ValueError("Full allocated cost is inconsistent")
+    if (root / BASE / "rml_plan/rml_finalized/finalization.json").is_file():
+        return close_terminal_arm(root, root / BASE / "rml_plan/trajectory.json", target / "terminal.json")
     target.mkdir(parents=True, exist_ok=True)
     acceptance = target / "acceptance.json"
     atomic_json(acceptance, {"accepted": True, "qualification_passed": expected, "model_inference_executed_locally": False,
@@ -72,7 +74,7 @@ def accept_and_close(root: Path, records: Path, package: Path):
         root / BASE / "release_binding.json", root / BASE / "submission_v1.json", acceptance, decision,
         *[folder / n for n in manifest["files"]], folder / "output_manifest.json"]
     timestamp = datetime.now(timezone.utc).isoformat()
-    role_use = {"train": "profiling_only", "internal_development": "untouched", "official_validation": "untouched", "test_dev": "untouched", "test_challenge": "untouched"}
+    role_use = {"train": "consumed", "internal_development": "untouched", "official_validation": "untouched", "test_dev": "untouched", "test_challenge": "untouched"}
     evidence = {"format": "molgap-v5-evidence-envelope-v1", "contract": "MOLGAP-COMMON-V5-FINAL",
         "evidence_id": "pcqm-gptrans-g1-scale500k-qualification-s42", "track": "C", "scope": "train_only_disposable_GPU_profile",
         "legacy_contract": "none-v5-prospective", "outcome": {"execution_status": "complete", "artifact_status": "accepted",
@@ -91,10 +93,18 @@ def accept_and_close(root: Path, records: Path, package: Path):
         "wall_hours": {"status": "measured", "value": cost["allocation_wall_seconds"] / 3600},
         "device_hours": {"status": "measured", "value": cost["allocated_device_hours"]},
         "queue_hours": {"status": "measurement_missing", "value": None}, "cpu_hours": {"status": "measurement_missing", "value": None}}}
+    trajectory_decision = {"final": True, "outcome": "NO_TRAIN", "decision_ref": rel(decision),
+        "next_allowed_actions": ["Controller analysis; no automatic long training"], "reopen_conditions": ["Explicit separate scale release"]}
+    accepted = read(acceptance)
+    accepted.update(evidence_id=evidence["evidence_id"], run_id="gptrans-g1-scale-qualification-s42",
+        outcome=evidence["outcome"], trajectory_decision=trajectory_decision,
+        roles=roles, costs=[observed_cost], role_use=role_use)
+    atomic_json(acceptance, accepted)
+    evidence["artifacts"] = [{"name": p.name, "locator": rel(p), "sha256": sha256_file(p), "availability": "retained_metadata"} for p in paths]
     terminal = target / "terminal.json"
     atomic_json(terminal, {"format": "molgap-rml-terminal-package-v1", "trajectory_id": tid,
         "run_id": "gptrans-g1-scale-qualification-s42", "action_id": "A001", "finalized_at": timestamp,
         "acceptance_ref": rel(acceptance), "artifact_hashes": {rel(p): sha256_file(p) for p in paths}, "evidence": evidence,
-        "decision": {"final": True, "outcome": "NO_TRAIN", "decision_ref": rel(decision), "next_allowed_actions": ["Controller analysis; no automatic long training"], "reopen_conditions": ["Explicit separate scale release"]},
+        "decision": trajectory_decision,
         "costs": [observed_cost], "roles": roles, "role_use": role_use})
     return close_terminal_arm(root, trajectory_path, terminal)
