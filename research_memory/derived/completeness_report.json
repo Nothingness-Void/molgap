@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 71,
+      "count": 69,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -60,8 +60,6 @@
         "TB-k1-flag-cpu-qualification-20261002",
         "TB-k1-flag-kaggle3-100k-s42-v1",
         "TB-k1-full-convergence-20260919",
-        "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
-        "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1",
         "TB-k1-fusion-distillation-teacher-cache-20261004",
         "TB-k1-gptrans-full-fusion-r3",
         "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
@@ -215,7 +213,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 37,
+      "count": 35,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
@@ -240,8 +238,6 @@
         "TB-gptrans-pair-memory-memory-message-100k-s42",
         "TB-gptrans-pair-memory-memory-value-100k-s42",
         "TB-gptrans-t-500k-bridge",
-        "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
-        "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1",
         "TB-k1-gptrans-full-fusion-r3",
         "TB-k1-reference-kaggle3-100k-s42-v1",
         "TB-k1-ssma-kaggle3-100k-s42-v1",
@@ -259,7 +255,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 13,
+      "count": 11,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -270,8 +266,6 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
-        "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
-        "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],

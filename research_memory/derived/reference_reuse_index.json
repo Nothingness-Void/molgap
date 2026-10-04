@@ -1270,6 +1270,48 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "aligned_saved_predictions_single_seed_historical_reference_strict_readiness_not_established",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
+      "role_use": {
+        "fixed50k_development": "selection_used",
+        "official_train_prefix_0_100000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_k1_fixed_fusion_output_distillation_100k_distill_strong",
+      "source_envelope": "experiments/pcqm_k1_fusion_distillation/kaggle3_v1/distill_strong/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "aligned_saved_predictions_single_seed_historical_reference_strict_readiness_not_established",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
+      "role_use": {
+        "fixed50k_development": "selection_used",
+        "official_train_prefix_0_100000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_k1_fixed_fusion_output_distillation_100k_distill_weak",
+      "source_envelope": "experiments/pcqm_k1_fusion_distillation/kaggle3_v1/distill_weak/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "not_applicable_cache_prerequisite",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,

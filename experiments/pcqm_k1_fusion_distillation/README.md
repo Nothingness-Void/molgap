@@ -8,3 +8,5 @@ Desktop-owned 100K two-arm question: compress the accepted fixed 50:50 teacher i
 - Execution state: [STATUS](STATUS.md).
 
 The shared K1 family trainer, source packaging, Kaggle pair runtime, per-arm output acceptance and research-memory APIs own the workflow. This directory contains scientific declarations and thin wrappers.
+
+Accepted two-arm terminal NEGATIVE_UNDER_CONTRACT: [decision](terminal_acceptance/decision.md), [attribution](terminal_acceptance/attribution.md), and [RML closure](terminal_acceptance/closure_receipt.json). Full40-epoch artifacts retained; strict replay/READY exclusions remain.

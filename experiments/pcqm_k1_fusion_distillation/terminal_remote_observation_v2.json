@@ -1,0 +1,32 @@
+{
+  "observed_at": "2026-10-04T16:27:44.781299+00:00",
+  "kernel": "nvoid912/molgap-k1-fusion-distill-100k-s42-v1",
+  "kernel_id": 137029945,
+  "version_number": 2,
+  "status": {
+    "status": "COMPLETE",
+    "failureMessage": null
+  },
+  "output_files": [
+    "experiment/distill_strong/allocation_cost.json",
+    "experiment/distill_strong/architecture_preflight.json",
+    "experiment/distill_strong/canonical_trace.json",
+    "experiment/distill_strong/canonical_trace.json.context.json",
+    "experiment/distill_strong/development_predictions.pt",
+    "experiment/distill_strong/diagnostic_cost.json",
+    "experiment/distill_strong/diagnostic_resume.pt",
+    "experiment/distill_strong/diagnostic_selected.pt",
+    "experiment/distill_strong/last_checkpoint.pt",
+    "experiment/distill_strong/mechanical_inspection.json",
+    "experiment/distill_strong/original_completion_inspection.json",
+    "experiment/distill_strong/output_manifest.json",
+    "experiment/distill_strong/preflight.log",
+    "experiment/distill_strong/runtime_certificate.json",
+    "experiment/distill_strong/runtime_manifest.json",
+    "experiment/distill_strong/runtime_provenance.json",
+    "experiment/distill_strong/selected_model.pt",
+    "experiment/distill_strong/train.log",
+    "experiment/distill_strong/training_contract.json",
+    "experiment/recovery_state.json"
+  ]
+}

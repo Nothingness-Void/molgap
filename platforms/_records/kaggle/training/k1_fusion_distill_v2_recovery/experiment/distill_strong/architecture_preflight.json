@@ -1,0 +1,68 @@
+{
+  "accepted": true,
+  "mode": "distill_strong",
+  "zero_initialization_delta": 0.0,
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      1.693603277206421,
+      1.693603277206421
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "a48a03a4f0f2c5b7f4a64edd80e606ba9597e31ccf7736874d49e787fb3de4c5",
+      "a48a03a4f0f2c5b7f4a64edd80e606ba9597e31ccf7736874d49e787fb3de4c5"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      1.693603277206421,
+      1.693603277206421
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "7c1a139690809552ee3f821de0215d0f538b8669e7b89d10fedfad690280b238",
+      "7c1a139690809552ee3f821de0215d0f538b8669e7b89d10fedfad690280b238"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.11523276399998394,
+      "samples_seconds": [
+        0.11094581599991216,
+        0.110819384000024,
+        0.11523276399998394,
+        0.1162716859998909,
+        0.11723492399983115
+      ],
+      "peak_memory_bytes": 572914176
+    },
+    "distill_strong": {
+      "median_step_seconds": 0.10600905900014368,
+      "samples_seconds": [
+        0.10462160299994139,
+        0.10597804999997607,
+        0.10600905900014368,
+        0.10672332200010715,
+        0.10865454400004637
+      ],
+      "peak_memory_bytes": 560827904
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": -0.08004411835371361,
+  "maximum_overhead_fraction": 0.25,
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "ab3ac705ff9c04a3b9e38221d890abf26dff1392ea458670515a8238283f7b00",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"
+}

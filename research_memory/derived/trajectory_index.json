@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "52dec373e8487c53fbd496672d7bc27b039cd5003bdda74136c9d9d584474194",
+  "source_digest": "f4d9387263945b1bbc108315b21bd171f663a5f62950b92c6facf1854c8393c0",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1127,33 +1127,37 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md",
       "family_id": "k1-fusion-distillation",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-k1-consistency-fusion-transfer-20261004"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_fusion_distillation/kaggle3_v1/distill_strong/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_fusion_distillation/kaggle3_v1/distill_strong/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal"
+      ],
       "track": "B",
       "trajectory_id": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md",
       "family_id": "k1-fusion-distillation",
-      "outcome": "ACTIVE",
+      "outcome": "NEGATIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-k1-consistency-fusion-transfer-20261004"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_fusion_distillation/kaggle3_v1/distill_weak/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_fusion_distillation/kaggle3_v1/distill_weak/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal"
+      ],
       "track": "B",
       "trajectory_id": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1"
     },

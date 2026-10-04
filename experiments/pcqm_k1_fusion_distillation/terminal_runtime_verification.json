@@ -1,0 +1,36 @@
+{
+  "distill_weak": {
+    "certificate_validation": {
+      "certificate_id": "f9fafd3ccf2521bbe6db1ce8bfd7dc7ab0ba04bfa9e3650c5020ca08be97ab37",
+      "platform_id": "kaggle-t4x2"
+    },
+    "provenance_and_architecture_hashes_verified": true,
+    "retained_runtime_preflight_validation": "runtime_manifest_not_retained",
+    "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+    "architecture_preflight": {
+      "accepted": true,
+      "repeatability": true,
+      "resume_roundtrip": true,
+      "selected_state_roundtrip_delta": 0.0,
+      "formal_sample_presentations": 0
+    },
+    "scope": "retained metadata only; no model execution"
+  },
+  "distill_strong": {
+    "certificate_validation": {
+      "certificate_id": "feae32c67f4625bbede7e9021e957b257b2e623fb2a2c472b7d274907de13a2e",
+      "platform_id": "kaggle-t4x2"
+    },
+    "provenance_and_architecture_hashes_verified": true,
+    "retained_runtime_preflight_validation": "PASSED",
+    "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+    "architecture_preflight": {
+      "accepted": true,
+      "repeatability": true,
+      "resume_roundtrip": true,
+      "selected_state_roundtrip_delta": 0.0,
+      "formal_sample_presentations": 0
+    },
+    "scope": "retained metadata only; no model execution"
+  }
+}

@@ -1,0 +1,345 @@
+{
+  "format": "molgap-k1-fusion-distillation-scientific-metrics-v1",
+  "scope": "Saved predictions and retained traces only; no inference, training, or new role access.",
+  "endpoint_role": {
+    "dataset": "pcqm4mv2-ogb-fixed-100k-v1",
+    "role": "internal development source_idx [100000,150000)",
+    "rows": 50000,
+    "already_consumed_and_selection_used": true,
+    "alignment": {
+      "ordered_source_idx_exact": true,
+      "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "targets_equal_across_all_four_retained_predictions": true,
+      "target_sha256_from_frozen_contract": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137",
+      "predictions_and_targets_finite": true
+    }
+  },
+  "mechanical_acceptance": {
+    "distill_weak": {
+      "status": "MECHANICALLY_VERIFIED",
+      "selected_epoch": 40,
+      "development_mae_eV": 0.14140677722871303
+    },
+    "distill_strong": {
+      "status": "MECHANICALLY_VERIFIED",
+      "selected_epoch": 40,
+      "development_mae_eV": 0.13829570941865443
+    }
+  },
+  "analysis_method": {
+    "python": "D:/\u6587\u6863/molgap/.venv/Scripts/python.exe",
+    "helper": {
+      "path": "experiments/pcqm_gptrans_100k_transfer_control/analyze_pair.py",
+      "callable": "paired_metrics",
+      "sha256": "cc24d6825741a5ec36095372688254d42056d333c79501cca9a435e4d36b44d0",
+      "checks": "Exact frozen source_idx order, finite predictions/targets, and exact paired target equality."
+    },
+    "bootstrap": {
+      "replicates": 1000,
+      "seed": 42,
+      "rng": "numpy.random.default_rng",
+      "sampling": "50,000 paired rows with replacement per draw",
+      "interval": "Empirical 2.5th and 97.5th percentiles",
+      "intervals_unadjusted": true,
+      "training_stochasticity_estimated": false
+    },
+    "gain_sign": "Reference MAE minus candidate MAE; positive means the candidate has lower MAE."
+  },
+  "references": {
+    "accepted_constituents": {
+      "dropout_mean2_mae_eV": 0.1402572855657339,
+      "dropout_consistency2_mae_eV": 0.13872850305497647,
+      "stronger_retained_constituent": "dropout_consistency2"
+    },
+    "fixed_50_50_teacher": {
+      "definition": "Float32 arithmetic mean of the accepted mean2 and consistency2 saved prediction_eV vectors, row-aligned on the same 50K cohort.",
+      "mae_eV": 0.13466599278628827,
+      "historical_failure_retained_comparison_mae_eV": 0.1346659925311804,
+      "absolute_difference_from_historical_eV": 2.5510787e-10
+    }
+  },
+  "paired_comparisons": [
+    {
+      "comparison": "distill_weak vs accepted dropout_consistency2",
+      "reference_mae_eV": 0.13872850305497647,
+      "candidate_mae_eV": 0.14140677722871303,
+      "candidate_gain_meV_reference_minus_candidate": -2.6782741737365723,
+      "candidate_mae_loss_meV": 2.6782741737365723,
+      "bootstrap_95pct_candidate_gain_meV": [
+        -3.61661752808094,
+        -1.7313099800348282
+      ],
+      "fraction_rows_candidate_better": 0.48838
+    },
+    {
+      "comparison": "distill_strong vs accepted dropout_consistency2",
+      "reference_mae_eV": 0.13872850305497647,
+      "candidate_mae_eV": 0.13829570941865443,
+      "candidate_gain_meV_reference_minus_candidate": 0.4327936363220215,
+      "candidate_mae_loss_meV": -0.4327936363220215,
+      "bootstrap_95pct_candidate_gain_meV": [
+        -0.4536679067611694,
+        1.390280661344528
+      ],
+      "fraction_rows_candidate_better": 0.50186
+    },
+    {
+      "comparison": "distill_weak vs fixed 50:50 teacher",
+      "reference_mae_eV": 0.13466599278628827,
+      "candidate_mae_eV": 0.14140677722871303,
+      "candidate_gain_meV_reference_minus_candidate": -6.740784442424775,
+      "candidate_mae_loss_meV": 6.740784442424775,
+      "bootstrap_95pct_candidate_gain_meV": [
+        -7.5349468457102775,
+        -5.892366298496723
+      ],
+      "fraction_rows_candidate_better": 0.47142
+    },
+    {
+      "comparison": "distill_strong vs fixed 50:50 teacher",
+      "reference_mae_eV": 0.13466599278628827,
+      "candidate_mae_eV": 0.13829570941865443,
+      "candidate_gain_meV_reference_minus_candidate": -3.6297166323661805,
+      "candidate_mae_loss_meV": 3.6297166323661805,
+      "bootstrap_95pct_candidate_gain_meV": [
+        -4.408562714993954,
+        -2.859676744222641
+      ],
+      "fraction_rows_candidate_better": 0.48104
+    },
+    {
+      "comparison": "distill_strong vs distill_weak",
+      "reference_mae_eV": 0.14140677722871303,
+      "candidate_mae_eV": 0.13829570941865443,
+      "candidate_gain_meV_reference_minus_candidate": 3.111067810058594,
+      "candidate_mae_loss_meV": -3.111067810058594,
+      "bootstrap_95pct_candidate_gain_meV": [
+        2.259078237295151,
+        3.9815457463264465
+      ],
+      "fraction_rows_candidate_better": 0.50958
+    }
+  ],
+  "frozen_compression_nomination_gate": {
+    "criterion": "At least 1 meV lower MAE than the stronger retained constituent, positive paired-row 95% lower bound, and at most 1 meV MAE loss versus the fixed 50:50 teacher.",
+    "distill_weak": {
+      "gain_vs_consistency2_at_least_1meV": false,
+      "gain_ci_lower_bound_positive": false,
+      "teacher_blend_loss_at_most_1meV": false,
+      "teacher_blend_loss_meV": 6.740784442424775,
+      "nomination_passed": false
+    },
+    "distill_strong": {
+      "gain_vs_consistency2_at_least_1meV": false,
+      "gain_ci_lower_bound_positive": false,
+      "teacher_blend_loss_at_most_1meV": false,
+      "teacher_blend_loss_meV": 3.6297166323661805,
+      "nomination_passed": false
+    },
+    "computed_disposition": "NEGATIVE_UNDER_CONTRACT"
+  },
+  "full40_trace_summary": {
+    "definition": "Last-10 development gain is epoch 31 MAE minus epoch 40 MAE; positive means improvement.",
+    "distill_weak": {
+      "epochs": 40,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720,
+      "best_development_epoch": 40,
+      "best_development_mae_eV_trace": 0.14140677452087402,
+      "epoch31_development_mae_eV": 0.14350417256355286,
+      "epoch40_development_mae_eV": 0.14140677452087402,
+      "last10_development_gain_meV_epoch31_to40": 2.097398042678833,
+      "last5_development_mae_eV": [
+        0.14146938920021057,
+        0.14144621789455414,
+        0.14156486093997955,
+        0.14151360094547272,
+        0.14140677452087402
+      ],
+      "epoch39_to40_development_change_meV": -0.10682642459869385,
+      "online_train_label_mae_eV_epoch31": 0.10491309453620828,
+      "online_train_label_mae_eV_epoch40": 0.09667784040077639,
+      "online_train_label_mae_drop_last10_meV": 8.2352541354319,
+      "online_train_metric_semantics": "Online pre-update MAE with dropout; label L1 only; excludes teacher MSE."
+    },
+    "distill_strong": {
+      "epochs": 40,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720,
+      "best_development_epoch": 40,
+      "best_development_mae_eV_trace": 0.1382957100868225,
+      "epoch31_development_mae_eV": 0.14050652086734772,
+      "epoch40_development_mae_eV": 0.1382957100868225,
+      "last10_development_gain_meV_epoch31_to40": 2.2108107805252075,
+      "last5_development_mae_eV": [
+        0.1390346735715866,
+        0.13845698535442352,
+        0.13859498500823975,
+        0.13853749632835388,
+        0.1382957100868225
+      ],
+      "epoch39_to40_development_change_meV": -0.24178624153137207,
+      "online_train_label_mae_eV_epoch31": 0.09995065669894904,
+      "online_train_label_mae_eV_epoch40": 0.0921171191459265,
+      "online_train_label_mae_drop_last10_meV": 7.833537553022532,
+      "online_train_metric_semantics": "Online pre-update MAE with dropout; label L1 only; excludes teacher MSE."
+    },
+    "imitation_or_total_objective_curve_retained": false
+  },
+  "attribution_limits": [
+    "The development cohort was already consumed and selection-used; paired row intervals describe this fixed cohort and do not establish generalization to a new cohort.",
+    "One seed per strength; paired-row bootstrap is not training stochasticity.",
+    "Online train MAE is label-only and includes dropout; it is not the total distillation objective and is not directly comparable with clean development MAE.",
+    "No per-epoch teacher-imitation or combined-objective curve is retained, so teacher fit, teacher-error transfer, or optimization saturation cannot be attributed from these endpoints.",
+    "The old failure_retained_endpoint_comparison.json records strong's partial endpoint; the full40 result above supersedes that partial endpoint for this comparison.",
+    "Weak measured 5,882.547 T4 allocated device seconds; strong cumulative allocated T4 cost remains missing because its completion crossed attempts, so relative cost efficiency is unresolved.",
+    "This analysis does not establish strict V5 reference/runtime/cost qualification or a READY/promotion claim."
+  ],
+  "input_artifacts": [
+    {
+      "role": "frozen_fusion_protocol",
+      "path": "experiments/pcqm_k1_fusion_distillation/protocol.md",
+      "sha256": "89bb4f8a4ea79fb2b491b1771f6865e866ef43f73fd88b72edd03258f6f75f18"
+    },
+    {
+      "role": "historical_partial_endpoint_comparison",
+      "path": "experiments/pcqm_k1_fusion_distillation/failure_retained_endpoint_comparison.json",
+      "sha256": "4de11d5cddb62e85ccb86497609cedfa8a5e38c7bf4d9a8dcc453f93b50b09f2"
+    },
+    {
+      "role": "research_protocol",
+      "path": "docs/operations/RESEARCH_PROTOCOL.md",
+      "sha256": "dd5a25a842c5225efa83f1aa230253726d7d58020584992c05415c8ce1f59c10"
+    },
+    {
+      "role": "distill_weak_predictions",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_weak/development_predictions.pt",
+      "sha256": "cd5a0d5735b3bbaefbeb319260c2bf0939d852cb91eda157ef77966879effa3c"
+    },
+    {
+      "role": "distill_weak_trace",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_weak/canonical_trace.json",
+      "sha256": "e762410b7066207a8381f0d40fdc684c5eedc000115ae09e3c5138a99e7bf2b4"
+    },
+    {
+      "role": "distill_weak_output_manifest",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_weak/output_manifest.json",
+      "sha256": "898d4b643125281557a6d8d8fe7cf36714261f0afb9f2cc6a1704c27c12524df"
+    },
+    {
+      "role": "distill_weak_training_contract",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_weak/training_contract.json",
+      "sha256": "a81cec97e870f0561adc80d4495548497dd60e8671b6325b35af009084b484c8"
+    },
+    {
+      "role": "distill_weak_mechanical_acceptance",
+      "path": "experiments/pcqm_k1_fusion_distillation/terminal_mechanical_distill_weak.json",
+      "sha256": "afebc93d36b09fd2e0ae4ce800b1e814deb5fb7dccff689a4bd9216fb7b480c1"
+    },
+    {
+      "role": "distill_strong_predictions",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/development_predictions.pt",
+      "sha256": "6814f97d1c5f2fa9caf5ca2b04167d6c68c8e07face08390ef8a672720fe16f8"
+    },
+    {
+      "role": "distill_strong_trace",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/canonical_trace.json",
+      "sha256": "5f4e4dfaa1f5e93ff442fabdcd496c6d1a296f61dc66ad9b2a38ce88d74b2895"
+    },
+    {
+      "role": "distill_strong_output_manifest",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/output_manifest.json",
+      "sha256": "93a3acf8c62b0645d33eac1dcd193baa2084d90061f4f4622ac8c5b8e54ada41"
+    },
+    {
+      "role": "distill_strong_training_contract",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/training_contract.json",
+      "sha256": "60ffa80a571305324196e93997f4923119414d9d1c5eb2544173e6c314b2b6aa"
+    },
+    {
+      "role": "distill_strong_mechanical_acceptance",
+      "path": "experiments/pcqm_k1_fusion_distillation/terminal_mechanical_distill_strong.json",
+      "sha256": "e2258be9efd6ca6fe42e1883b3c5b07d76f0b4f05b36741157d34897bd69056f"
+    },
+    {
+      "role": "accepted_dropout_mean2_predictions",
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/development_predictions.pt",
+      "sha256": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076"
+    },
+    {
+      "role": "accepted_dropout_mean2_trace",
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/canonical_trace.json",
+      "sha256": "e3a71a0f50667965d83370b8d57aabd993c01cdd850e5d5d4079c01de1a71011"
+    },
+    {
+      "role": "accepted_dropout_mean2_output_manifest",
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/output_manifest.json",
+      "sha256": "98478ab1a52e7299662c50772710bc51fb37649e3de619d2d181299a28b0c604"
+    },
+    {
+      "role": "accepted_dropout_mean2_training_contract",
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/training_contract.json",
+      "sha256": "856446cec2cea5d3557524e1cd124e179fc7221b721514753b8523448d511a2f"
+    },
+    {
+      "role": "accepted_dropout_consistency2_predictions",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/development_predictions.pt",
+      "sha256": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a"
+    },
+    {
+      "role": "accepted_dropout_consistency2_trace",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/canonical_trace.json",
+      "sha256": "7e2f63d4354bdad6e17ae995e3847b09797d09a10a1cd1b7eb0364832aae8740"
+    },
+    {
+      "role": "accepted_dropout_consistency2_output_manifest",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/output_manifest.json",
+      "sha256": "44d2ae17e2fa87a437670c78e8b4c9ec32e967d38621c053cca850801ed2c532"
+    },
+    {
+      "role": "accepted_dropout_consistency2_training_contract",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/training_contract.json",
+      "sha256": "b1659dc7b0ad36e7382fc3ab0c32358264da09cef324277c57c995c415c38ba4"
+    },
+    {
+      "role": "dropout_mean2_acceptance",
+      "path": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/acceptance.json",
+      "sha256": "26db22017e180489b02394df10920f439a74d215d3f9076a7adc8342a060a5d2"
+    },
+    {
+      "role": "dropout_mean2_terminal",
+      "path": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_mean2/terminal.json",
+      "sha256": "3326792a824baf57a8506ad336a35d83126300fa84a54f0ce97519a469031016"
+    },
+    {
+      "role": "dropout_consistency2_acceptance",
+      "path": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_consistency2/acceptance.json",
+      "sha256": "2d34d288be6681eb210561e438688a224e8120c23926ed6f7da86f5526df55c6"
+    },
+    {
+      "role": "dropout_consistency2_terminal",
+      "path": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/dropout_consistency2/terminal.json",
+      "sha256": "40485c6a661ba6a97b58a556357064b416c8ceef2205af96c361af032542b8f6"
+    },
+    {
+      "role": "dropout_pair_decision",
+      "path": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/decision.md",
+      "sha256": "801278262a3b1424160ff4f7aaf45797351635e256621dc013260270382e6a76"
+    },
+    {
+      "role": "dropout_pair_scientific_metrics",
+      "path": "experiments/pcqm_k1_dropout_consistency/terminal_acceptance/scientific_metrics.json",
+      "sha256": "9ee0224bc09938b5cf1d0a092e460b310342984701453167c69218939c4c29eb"
+    },
+    {
+      "role": "dropout_pair_result_check",
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/result_check.json",
+      "sha256": "85aa1d9e172bf8b67cc50852510d7f0e71ea3b3e75f4f0859ea48038bf2efcf3"
+    },
+    {
+      "role": "paired_metrics_helper",
+      "path": "experiments/pcqm_gptrans_100k_transfer_control/analyze_pair.py",
+      "sha256": "cc24d6825741a5ec36095372688254d42056d333c79501cca9a435e4d36b44d0"
+    }
+  ]
+}

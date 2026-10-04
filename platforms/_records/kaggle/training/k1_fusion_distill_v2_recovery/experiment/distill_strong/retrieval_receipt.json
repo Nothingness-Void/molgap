@@ -1,0 +1,40 @@
+{
+  "kernel": "nvoid912/molgap-k1-fusion-distill-100k-s42-v1",
+  "receipt_version": "2",
+  "producer_version": null,
+  "files": [
+    {
+      "path": "training_contract.json",
+      "sha256": "60ffa80a571305324196e93997f4923119414d9d1c5eb2544173e6c314b2b6aa",
+      "state": "RETAINED"
+    },
+    {
+      "path": "development_predictions.pt",
+      "sha256": "6814f97d1c5f2fa9caf5ca2b04167d6c68c8e07face08390ef8a672720fe16f8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "last_checkpoint.pt",
+      "sha256": "cc15c7b514019d693e8df5ecbb4682284a8f9785417292d3fe285c1face67900",
+      "state": "RETAINED"
+    },
+    {
+      "path": "selected_model.pt",
+      "sha256": "0aa4e602bef140bb4eeebdce822e42e4e5250a398d6a77e04609eea64653bf61",
+      "state": "RETAINED"
+    },
+    {
+      "path": "canonical_trace.json",
+      "sha256": "5f4e4dfaa1f5e93ff442fabdcd496c6d1a296f61dc66ad9b2a38ce88d74b2895",
+      "state": "RETAINED"
+    },
+    {
+      "path": "output_manifest.json",
+      "sha256": "93a3acf8c62b0645d33eac1dcd193baa2084d90061f4f4622ac8c5b8e54ada41",
+      "state": "ALREADY_RETAINED"
+    }
+  ],
+  "manifest_sha256": "93a3acf8c62b0645d33eac1dcd193baa2084d90061f4f4622ac8c5b8e54ada41",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": false
+}
