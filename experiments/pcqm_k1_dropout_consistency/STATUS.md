@@ -21,13 +21,18 @@ The user authorized recovery of only mean2 epoch40; see recovery_authority.md
 and resume_binding_v2.json. No candidate retraining or scale-up is released.
 The frozen validator remains BLOCKED; no dual replay-ready claim is made.
 
-Kaggle3 ID136942701/version2 was authenticated RUNNING at04:54UTC on
-2026-10-04. Only mean2 resumes; consistency outputs are custody-only inputs.
-The new bootstrap entry is independently bound in recovery_submit_response_v2.json
-and recovery_remote_observation_v2.json. The original source archive is unchanged.
+Kaggle3 ID136942701/version2 failed before formal training at the runtime identity
+gate. The recovery adapter incorrectly ran qualification and training in one
+process; it now reuses separate standard workers for both phases. Preserve the
+failed attempt in recovery_reconciliation_v2; no added epoch was acknowledged.
+ID136942701/version3 is authenticated RUNNING; only mean2 resumes and consistency
+outputs are custody-only inputs. Read recovery_submit_response_v3.json and
+recovery_remote_observation_v3.json for actual returned identity and pulled entry.
+The original source archive is unchanged.
 Seventeen required published source/resume files were independently downloaded
 and hash-verified; four focused synthetic recovery cases passed. See
-recovery_source_verification_v2.json and recovery_verification_v2.json.
+recovery_source_verification_v2.json, recovery_verification_v2.json and the
+focused isolation-repair checks in recovery_verification_v3.json.
 
 Two NEW100K40epoch arms: dropout_mean2 (matched two-pass control) and
  dropout_consistency2 (same passes plus0.1 normalized output disagreement).
