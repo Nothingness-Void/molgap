@@ -60,6 +60,14 @@ def test_both_reproductions_required(tmp_path):
         check_barrier(tmp_path, {"source_commit": "different"})
 
 
+def test_stale_reproduction_never_releases_new_invocation(tmp_path):
+    for arm in ("ema999", "ema9999"):
+        directory = tmp_path / arm
+        directory.mkdir()
+        (directory / "reproduction.json").write_text(json.dumps(dict(identity={"invocation_id": "old"}, accepted=True)))
+    assert not check_barrier(tmp_path, {"invocation_id": "new"})
+
+
 def test_unrecorded_chunks_fail_closed(tmp_path):
     (tmp_path / "chunk_00.pt").write_bytes(b"not accepted")
     with pytest.raises(ValueError):

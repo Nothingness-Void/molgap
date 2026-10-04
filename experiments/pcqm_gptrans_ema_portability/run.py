@@ -61,9 +61,9 @@ def main():
             worker(arm=args.arm, inputs=inputs,
                 cache_100k=one("train_shard_0002.pt").parent.parent,
                 cache_500k=one("train_shard_0010.pt").parent.parent,
-                output=output, release=release, deadline=allocation["deadline_unix"])
+                output=output, release=release, deadline=allocation["deadline_unix"], invocation_id=allocation["invocation_id"])
         except BaseException:
-            atomic_json(output / args.arm / "failure.json", dict(error=traceback.format_exc(), timestamp=time.time()))
+            atomic_json(output / args.arm / f"failure_{allocation['invocation_id']}.json", dict(error=traceback.format_exc(), timestamp=time.time()))
             raise
         return
     began = time.time()
@@ -72,25 +72,27 @@ def main():
     release = source(inputs, Path("/kaggle/working/audit_source"))
     from molgap.training_reproducibility import atomic_json
     deadline = began + 5400
-    atomic_json(output / "allocation.json", dict(started_unix=began, deadline_unix=deadline,
+    atomic_json(output / "allocation.json", dict(started_unix=began, deadline_unix=deadline, invocation_id=str(time.time_ns()),
         devices=devices, allocated_devices=len(devices), idle_devices=max(len(devices)-2, 0),
         precision="fp32", physical_batch=128, training_executed=False, release=release))
-    if len(devices) != 2 or any("T4" not in row for row in devices):
-        raise RuntimeError("Frozen dual audit requires actual T4x2 allocation")
-    # Retain the tested training runtime. These warnings about unrelated image
-    # packages do not change the scientific environment used by the encoder.
-    subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "numpy==1.26.4",
-        "torch==2.4.1", "--extra-index-url", "https://download.pytorch.org/whl/cu121"], check=True)
-    subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "torch-geometric==2.6.1", "ogb==1.3.6", "rdkit==2025.9.5"], check=True)
     children = []
-    for device, arm in enumerate(("ema9999", "ema999")):
-        environment = dict(os.environ, CUDA_VISIBLE_DEVICES=str(device), PYTHONHASHSEED="42",
-                           CUBLAS_WORKSPACE_CONFIG=":4096:8", OMP_NUM_THREADS="2")
-        children.append(subprocess.Popen([sys.executable, __file__, "--arm", arm], env=environment))
-    status = "RUNNING"
+    status = "ERROR"
     try:
+        if len(devices) != 2 or any("T4" not in row for row in devices):
+            raise RuntimeError("Frozen dual audit requires actual T4x2 allocation")
+        # Setup and partial worker launch must be inside cost/fault retention.
+        subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "numpy==1.26.4",
+            "torch==2.4.1", "--extra-index-url", "https://download.pytorch.org/whl/cu121"],
+            check=True, timeout=max(1, deadline-time.time()))
+        subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "torch-geometric==2.6.1", "ogb==1.3.6", "rdkit==2025.9.5"],
+            check=True, timeout=max(1, deadline-time.time()))
+        for device, arm in enumerate(("ema9999", "ema999")):
+            environment = dict(os.environ, CUDA_VISIBLE_DEVICES=str(device), PYTHONHASHSEED="42",
+                               CUBLAS_WORKSPACE_CONFIG=":4096:8", OMP_NUM_THREADS="2")
+            children.append(subprocess.Popen([sys.executable, __file__, "--arm", arm], env=environment))
+        status = "RUNNING"
         while any(child.poll() is None for child in children):
-            if time.time() >= deadline or any(child.poll() not in (None, 0) for child in children):
+            if time.time() >= deadline-25 or any(child.poll() not in (None, 0) for child in children):
                 raise RuntimeError("Audit deadline or isolated worker failure; stopping the peer")
             time.sleep(1)
         if any(child.returncode != 0 for child in children):

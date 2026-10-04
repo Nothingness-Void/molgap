@@ -76,6 +76,11 @@ def check_barrier(output: Path, identity: dict):
         if not path.is_file():
             return False
         row = json.loads(path.read_text())
+        if (row.get("identity") != identity and isinstance(row.get("identity"), dict)
+                and {k: v for k, v in row["identity"].items() if k != "invocation_id"}
+                    == {k: v for k, v in identity.items() if k != "invocation_id"}
+                and row["identity"].get("invocation_id") != identity.get("invocation_id")):
+            return False
         if row.get("identity") != identity or row.get("accepted") is not True:
             raise ValueError("Invalid shared reproduction gate")
     return True
@@ -155,7 +160,7 @@ def _infer(graphs, model, directory: Path, *, role: str, identity: dict,
 
 
 def worker(*, arm: str, inputs: Path, cache_100k: Path, cache_500k: Path,
-           output: Path, release: dict, deadline: float):
+           output: Path, release: dict, deadline: float, invocation_id: str):
     import torch
     from .gptrans import OGBGPTransTiny
     from .pcqm_k1_cross_scale_diagnostic import _accepted_development
@@ -164,6 +169,7 @@ def worker(*, arm: str, inputs: Path, cache_100k: Path, cache_500k: Path,
 
     began = time.monotonic()
     identity = {key: release[key] for key in ("source_commit", "archive_sha256", "contract_sha256")}
+    barrier_identity = dict(identity, invocation_id=invocation_id)
     directory = output / arm
     directory.mkdir(parents=True, exist_ok=True)
     determinism = configure_fp32_determinism(42)
@@ -216,11 +222,11 @@ def worker(*, arm: str, inputs: Path, cache_100k: Path, cache_500k: Path,
     reproduction = check_reproduction(joined(directory / "original_100k", chunks), saved)
     role_events.append(dict(role="original_100k", event="metric_computed", timestamp=time.time()))
     atomic_json(directory / "role_events.json", role_events)
-    atomic_json(directory / "reproduction.json", dict(identity=identity, **reproduction))
+    atomic_json(directory / "reproduction.json", dict(identity=barrier_identity, **reproduction))
     del graphs, saved
-    while not check_barrier(output, identity):
+    while not check_barrier(output, barrier_identity):
         _deadline(deadline)
-        if list(output.glob("*/failure.json")):
+        if list(output.glob(f"*/failure_{invocation_id}.json")):
             raise RuntimeError("Peer inference worker failed before role release")
         time.sleep(1)
     graphs = graphs_for("unseen_500k")
@@ -301,7 +307,8 @@ def analyze(output: Path, inputs: Path):
                 raise ValueError("Incomplete/changed role chunks")
             roles[arm][role] = joined(directory, chunks)
             check_rows(roles[arm][role], start, 50000)
-    if identities[0] != identities[1] or not check_barrier(output, identities[0]):
+    allocation = json.loads((output / "allocation.json").read_text())
+    if identities[0] != identities[1] or not check_barrier(output, dict(identities[0], invocation_id=allocation["invocation_id"])):
         raise ValueError("Cross-worker release identity/reproduction mismatch")
     expected_identity = {key: release[key] for key in ("source_commit", "archive_sha256", "contract_sha256")}
     if identities[0] != expected_identity:
