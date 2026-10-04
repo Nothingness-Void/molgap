@@ -131,12 +131,18 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
 
 
 def accept_workflow(spec, repo_root, supplied, *, receipt_path, package_dir,
-                    expected_package_identity, locations, execute=False):
+                    expected_package_identity, locations, execute=False,
+                    target_identities=None):
     """Inspect every arm, build the existing descriptor, then delegate closure."""
-    from .experiment_family_workflow import inspect_output
+    from .experiment_family_workflow import inspect_terminal_output
     outputs = prepare_terminal_outputs(spec, repo_root, supplied, receipt_path=receipt_path,
         package_dir=package_dir, expected_package_identity=expected_package_identity)
-    reports = {arm_id: inspect_output(item["output_dir"], context=item["context"], expected=item["expected"])
+    if target_identities is not None:
+        if type(target_identities) is not dict or set(target_identities) - set(outputs):
+            raise ValueError("Target identity bindings name unknown workflow arms")
+        for arm_id, binding in target_identities.items():
+            outputs[arm_id]["target_identity"] = binding
+    reports = {arm_id: inspect_terminal_output(item)
                for arm_id, item in outputs.items()}
     if any(r["status"] == "BLOCKED" for r in reports.values()):
         return {"status": "BLOCKED", "arms": reports, "executed": False}

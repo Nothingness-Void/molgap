@@ -135,7 +135,7 @@ def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path):
     with pytest.raises(ValueError, match="not yet terminally accepted"):
         accepted_reference_evidence(tmp_path, json.loads(candidate["traj_path"].read_text()))
     assert close_terminal_arm(tmp_path, reference["traj_path"], reference["terminal_path"], trace=ref_trace)["pipeline_status"] == "COMPLETE"
-    with pytest.raises(ValueError, match="requires accepted control and strict V5 comparison"):
+    with pytest.raises(ValueError, match="requires strict V5 comparison"):
         close_terminal_arm(tmp_path, candidate["traj_path"], candidate["terminal_path"], trace=candidate_trace)
     assert not (candidate["exp_dir"] / "rml_finalized").exists()
     comparison_ref, digest = _strict_comparison(tmp_path, reference, candidate)
@@ -154,3 +154,26 @@ def test_same_run_pair_reaches_replay_only_after_reference_acceptance(tmp_path):
     entries = [entry for entry in replay["entries"] if entry["trajectory_id"] in {reference["traj_id"], candidate["traj_id"]}]
     assert {entry["comparison_role"] for entry in entries} == {"reference", "candidate"}
     assert {entry["reference_id"] for entry in entries} == {reference["ev_id"]}
+
+
+def test_replay_eligible_same_run_reference_rejects_a_cross_job_continuation(tmp_path):
+    setup_mock_repo(tmp_path)
+    reference = create_candidate_arm(
+        tmp_path, "continued_ref", "T-continued-ref", "run-continued-ref", "ev-continued-ref"
+    )
+    trace_path = _prepare_arm(tmp_path, reference, reference, "reference")
+    terminal = json.loads(reference["terminal_path"].read_bytes())
+    terminal["trace_manifest"]["backtest_eligibility"] = {
+        "eligible": True,
+        "exclusion_reasons": [],
+    }
+    continuation_pointer = "experiments/continued_ref/continuation.json"
+    continuation_path = tmp_path / continuation_pointer
+    _put(continuation_path, {"synthetic": "must not authorize replay"})
+    terminal["continuation_ref"] = continuation_pointer
+    terminal["artifact_hashes"][continuation_pointer] = file_digest(continuation_path)
+    _put(reference["terminal_path"], terminal)
+
+    with pytest.raises(ValueError, match="continued physical jobs remain excluded"):
+        close_terminal_arm(tmp_path, reference["traj_path"], reference["terminal_path"],
+                           trace=trace_path)

@@ -26,6 +26,7 @@ import pytest
 from molgap.constants import REPO_ROOT
 from molgap.evidence_pointers import load_json_object
 from molgap.research_memory.finalize import verified_receipt
+from molgap.research_memory.paired import validate_ineligible_continuation
 from molgap.research_memory.terminal_wiring import (
     build_default_trace_manifest,
     close_terminal_arm,
@@ -47,6 +48,154 @@ REPO_ROOT_PATH = Path(REPO_ROOT).resolve()
 
 def sha256_bytes(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
+
+
+def _continuation_case(root: Path, *, mutation: str | None = None):
+    base_context = {
+        "spec_identity": "a" * 64,
+        "logical_run_id": "paired-logical-run",
+        "arm_id": "reference-arm",
+        "source_commit": "1" * 40,
+        "source_archive_sha256": "2" * 64,
+        "package_identity": "3" * 64,
+        "platform": "kaggle",
+        "account": "synthetic-account",
+        "run_reference": "synthetic-account/kernel",
+    }
+    origin = {
+        "schema": "molgap-same-run-observation-v1",
+        "spec_identity": base_context["spec_identity"],
+        "logical_run_id": base_context["logical_run_id"],
+        "platform_name": base_context["platform"],
+        "platform_run_reference": "synthetic-account/kernel@origin:1",
+        "attempt_id": "origin-attempt",
+        "source_commit": base_context["source_commit"],
+        "source_package_sha256": base_context["source_archive_sha256"],
+    }
+    continued = {**origin,
+        "platform_run_reference": "synthetic-account/kernel@continued:2",
+        "attempt_id": "continued-attempt",
+    }
+    trajectory_id, run_id = "T-continuation", "run-continuation"
+    semantics = {
+        "live_train_metric": None,
+        "live_dev_metric": None,
+        "ema_dev_metric": None,
+    }
+
+    def row(epoch):
+        return {"epoch_or_pass": epoch, "optimizer_step": epoch,
+                "sample_presentations": epoch, "learning_rate": 0.01}
+
+    source = canonicalize_trace({
+        "trajectory_id": trajectory_id, "run_id": run_id,
+        "metric_semantics": semantics, "observations": [row(1)],
+    })
+    continued_rows = [row(1), row(2)]
+    if mutation == "corrupted_prefix":
+        continued_rows[0]["learning_rate"] = 0.02
+    final = canonicalize_trace({
+        "trajectory_id": trajectory_id, "run_id": run_id,
+        "metric_semantics": semantics, "observations": continued_rows,
+    })
+
+    folder = root / "experiments" / "continuation"
+    folder.mkdir(parents=True)
+
+    def put(name: str, content: bytes) -> tuple[str, str]:
+        path = folder / name
+        path.write_bytes(content)
+        return path.relative_to(root).as_posix(), sha256_bytes(content)
+
+    source_trace = put("source_trace.json", json_bytes(source))
+    final_trace = put("continued_trace.json", json_bytes(final))
+    checkpoint = put("source_checkpoint.pt", b"retained source checkpoint\n")
+    source_context = dict(base_context)
+    if mutation == "changed_source_context":
+        source_context["source_commit"] = "f" * 40
+    source_context_ref = put("source_context.json", json_bytes({"context": source_context}))
+    resume_files = {
+        Path(checkpoint[0]).name: checkpoint[1],
+        Path(source_trace[0]).name: source_trace[1],
+    }
+    if mutation == "changed_checkpoint":
+        resume_files[Path(checkpoint[0]).name] = "f" * 64
+    resume_binding = {
+        "spec_identity": base_context["spec_identity"],
+        "package_identity": base_context["package_identity"],
+        "arm_id": base_context["arm_id"],
+        "start_epoch": 1,
+        "end_epoch": 2,
+        "files": resume_files,
+    }
+    resume_ref = put("resume_binding.json", json_bytes(resume_binding))
+    manifest = {
+        "format": "molgap-family-output-v1",
+        "context": base_context,
+        "artifacts": {"trace": {"sha256": final_trace[1]}},
+    }
+    manifest_ref = put("continued_manifest.json", json_bytes(manifest))
+    authority = put("authority.json", json_bytes({"user_authorized": True}))
+
+    record = {
+        "format": "molgap-terminal-continuation-v1",
+        "origin": origin,
+        "continued": continued,
+        "source_trace": {"path": source_trace[0], "sha256": source_trace[1]},
+        "continued_trace": {"path": final_trace[0], "sha256": final_trace[1]},
+        "source_context": {"path": source_context_ref[0], "sha256": source_context_ref[1]},
+        "resume_binding": {"path": resume_ref[0], "sha256": resume_ref[1]},
+        "continued_manifest": {"path": manifest_ref[0], "sha256": manifest_ref[1]},
+        "checkpoint": {"path": checkpoint[0], "sha256": checkpoint[1]},
+        "authority": {"path": authority[0], "sha256": authority[1]},
+    }
+    continuation_path = folder / "continuation.json"
+    continuation_path.write_bytes(json_bytes(record))
+    artifact_hashes = {
+        item[0]: item[1]
+        for item in (source_trace, final_trace, source_context_ref, resume_ref,
+                     manifest_ref, checkpoint, authority)
+    }
+    continuation_pointer = continuation_path.relative_to(root).as_posix()
+    artifact_hashes[continuation_pointer] = file_digest(continuation_path)
+    if mutation == "missing_authority_hash":
+        artifact_hashes.pop(authority[0])
+
+    terminal = {
+        "continuation_ref": continuation_pointer,
+        "artifact_hashes": artifact_hashes,
+        "same_run_observation": continued,
+        "run_id": run_id,
+        "trajectory_id": trajectory_id,
+        "evidence": {"artifacts": [{"locator": final_trace[0], "sha256": final_trace[1]}]},
+        "trace_manifest": {"trace_artifact_ref": final_trace[0]},
+    }
+    return terminal, origin
+
+
+def test_ineligible_cross_job_continuation_requires_prefix_context_and_checkpoint_authority(tmp_path):
+    terminal, origin = _continuation_case(tmp_path)
+
+    assert validate_ineligible_continuation(tmp_path, terminal) == origin
+    assert origin["platform_run_reference"] != terminal["same_run_observation"]["platform_run_reference"]
+
+
+@pytest.mark.parametrize(
+    "mutation,match",
+    [
+        ("corrupted_prefix", "exact retained trace prefix"),
+        ("changed_source_context", "output context changed"),
+        ("changed_checkpoint", "source endpoint"),
+        ("missing_authority_hash", "continuation artifact is not bound"),
+    ],
+)
+def test_ineligible_cross_job_continuation_rejects_unbound_or_changed_state(
+    tmp_path, mutation, match,
+):
+    terminal, _ = _continuation_case(tmp_path, mutation=mutation)
+
+    with pytest.raises(ValueError, match=match):
+        validate_ineligible_continuation(tmp_path, terminal)
 
 
 def setup_mock_repo(temp_dir: Path) -> dict[str, Path]:

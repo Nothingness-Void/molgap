@@ -70,6 +70,79 @@ def validate_pair_observation(value: Any) -> dict[str, str]:
     return observation
 
 
+def validate_ineligible_continuation(root: Path, terminal: Mapping[str, Any]) -> dict[str, str]:
+    """Verify a retained control continuation without granting replay eligibility."""
+    from .paths import verify_bound_artifact
+    from .trace import load_canonical_trace
+
+    pointer = terminal.get("continuation_ref")
+    bindings = terminal.get("artifact_hashes", {})
+    if not isinstance(pointer, str) or pointer not in bindings:
+        raise ValueError("different platform jobs require a bound continuation record")
+    verify_bound_artifact(root, pointer, bindings[pointer])
+    path = resolve_repo_pointer(root, pointer)
+    record = load_json_object(path)
+    if set(record) != {"format", "origin", "continued", "source_trace", "continued_trace",
+                       "source_context", "resume_binding", "continued_manifest", "checkpoint", "authority"} or record["format"] != "molgap-terminal-continuation-v1":
+        raise ValueError("invalid terminal continuation record")
+    origin = validate_pair_observation(record["origin"])
+    continued = validate_pair_observation(record["continued"])
+    if continued != validate_pair_observation(terminal.get("same_run_observation")):
+        raise ValueError("continuation terminal job mismatch")
+    for key in ("spec_identity", "logical_run_id", "source_commit", "source_package_sha256", "platform_name"):
+        if origin[key] != continued[key]:
+            raise ValueError("continuation changed frozen training identity")
+    retained = {}
+    for key in ("source_trace", "continued_trace", "source_context", "resume_binding", "continued_manifest", "checkpoint", "authority"):
+        item = record[key]
+        if not isinstance(item, Mapping) or set(item) != {"path", "sha256"} or bindings.get(item["path"]) != item["sha256"]:
+            raise ValueError("continuation artifact is not bound")
+        verify_bound_artifact(root, item["path"], item["sha256"])
+        retained[key] = resolve_repo_pointer(root, item["path"])
+    source = load_canonical_trace(retained["source_trace"])
+    final = load_canonical_trace(retained["continued_trace"])
+    for key in ("trajectory_id", "run_id", "metric_semantics"):
+        if source[key] != final[key]:
+            raise ValueError("continuation trace identity changed")
+    before, after = source["observations"], final["observations"]
+    if not before or len(after) <= len(before) or after[:len(before)] != before:
+        raise ValueError("continuation must preserve an exact retained trace prefix")
+    if final["run_id"] != terminal["run_id"] or final["trajectory_id"] != terminal["trajectory_id"]:
+        raise ValueError("continuation trace is not the terminal run")
+    manifest = load_json_object(retained["continued_manifest"])
+    if manifest.get("format") != "molgap-family-output-v1" or manifest["artifacts"]["trace"]["sha256"] != record["continued_trace"]["sha256"]:
+        raise ValueError("continuation output/trace binding mismatch")
+    context = load_json_object(retained["source_context"])["context"]
+    if context != manifest["context"]:
+        raise ValueError("continuation output context changed")
+    for field, observed_field in (("spec_identity", "spec_identity"),
+                                  ("logical_run_id", "logical_run_id"),
+                                  ("source_commit", "source_commit"),
+                                  ("source_archive_sha256", "source_package_sha256"),
+                                  ("platform", "platform_name")):
+        if context[field] != origin[observed_field]:
+            raise ValueError("continuation observation/output identity mismatch")
+    for observation in (origin, continued):
+        if observation["platform_run_reference"].partition("@")[0] != context["run_reference"]:
+            raise ValueError("continuation observation/output run mismatch")
+    resume = load_json_object(retained["resume_binding"])
+    if (resume["spec_identity"], resume["package_identity"], resume["arm_id"],
+            resume["start_epoch"], resume["end_epoch"]) != (
+            context["spec_identity"], context["package_identity"], context["arm_id"],
+            before[-1]["epoch_or_pass"], after[-1]["epoch_or_pass"]):
+        raise ValueError("continuation resume identity/progress mismatch")
+    if (resume["files"].get(retained["checkpoint"].name) != record["checkpoint"]["sha256"]
+            or resume["files"].get(retained["source_trace"].name) != record["source_trace"]["sha256"]):
+        raise ValueError("continuation checkpoint is not the retained source endpoint")
+    if not any(a.get("locator") == record["continued_trace"]["path"]
+               and a.get("sha256") == record["continued_trace"]["sha256"]
+               for a in terminal["evidence"]["artifacts"]):
+        raise ValueError("continuation trace is absent from accepted evidence")
+    if terminal["trace_manifest"]["trace_artifact_ref"] != record["continued_trace"]["path"]:
+        raise ValueError("continuation manifest selects a different trace")
+    return origin
+
+
 def reference_trajectory(root: Path, trajectory: Mapping[str, Any]) -> dict[str, Any]:
     """Resolve the frozen peer without using a later, unbound reference name."""
     binding = pair_binding(trajectory)

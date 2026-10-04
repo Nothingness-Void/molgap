@@ -6,6 +6,17 @@ and scientific decisions remain with their existing owners.
 
 ## Capability matrix
 
+For a retained historical target encoding, use the explicit library binding
+`TargetIdentityBinding.from_acceptance_plan(spec, repo_root, plan_path,
+plan_sha256=...)` and pass it as `target_identity` to `inspect_output`, or in
+each direct closure output item. `accept_workflow` accepts an optional
+`target_identities` mapping for library callers. The pinned prelaunch plan must
+pass existing reference checks; its target manifest declares exactly one byte
+encoding and matches the frozen recipe hash. Default float64 hashing is unchanged.
+Float32 raw-byte identity requires original finite float32 tensors, with no
+fallback or lossy conversion. Descriptor construction and closure reinspection
+retain the same binding. This does not alter a frozen recipe or scientific gate.
+
 | Component | Responsibility |
 |---|---|
 | `RunContext` | Spec/arm/source/package/recipe identity and observed launch binding |
