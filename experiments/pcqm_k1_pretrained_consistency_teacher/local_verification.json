@@ -1,0 +1,24 @@
+{
+  "batch": {
+    "tests": [
+      "tests/test_k1_pretrained_combo.py",
+      "tests/test_k1_screen_training.py",
+      "tests/test_experiment_workflow.py",
+      "tests/test_experiment_spec.py",
+      "tests/test_experiment_family_workflow.py",
+      "tests/test_experiment_preflight.py",
+      "tests/test_experiment_package.py",
+      "tests/test_release_inputs.py",
+      "tests/test_comparison_readiness.py"
+    ],
+    "passed": 414,
+    "skipped": 3,
+    "failed": 0,
+    "seconds": 295.51,
+    "warnings": [
+      "torch_geometric.distributed deprecation warning"
+    ]
+  },
+  "scope": "synthetic regressions only; no real-shard access, pretrained checkpoint, teacher generation, scientific inference, or remote submission",
+  "real_loader_preflight": "pending_not_run"
+}

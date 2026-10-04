@@ -1,0 +1,152 @@
+{
+  "dataset": "nothingnessvoid/molgap-k1-pretrain-consistency-source-s42-v1",
+  "public": false,
+  "timestamp": "2026-10-04T18:08:35.837262+00:00",
+  "files": [
+    {
+      "path": "acceptance/experiments/pcqm_k1_dropout_consistency/historical_reference_bundle.json",
+      "bytes": 4151,
+      "sha256": "f3ff003dc0452cf567970ab32311b246348b365d35fbcfda37296deb40e2b5cc"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_pretrained_consistency_teacher/comparison_prelaunch_pretrained_consistency.json",
+      "bytes": 3769,
+      "sha256": "688f2ecbe22f00ab957902e9aec789f4856ccdc5298884f22f096d8b760f7af8"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_pretrained_consistency_teacher/comparison_prelaunch_pretrained_consistency_teacher.json",
+      "bytes": 3777,
+      "sha256": "9a09fcc02b31965ee2e03246efb9d0d3349dccd7fbcc32c1a1a890e9f19caeaf"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_pretrained_consistency_teacher/family_acceptance_plan.json",
+      "bytes": 6589,
+      "sha256": "a2f8c301b7215538256b85521d5b5c94fb7a7541f019cf5621ff9f6ed4ced260"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_pretrained_consistency_teacher/training_recipe_pretrained_consistency.json",
+      "bytes": 1394,
+      "sha256": "032de977fa47c4f69d6555d93dd9d7abd53894bc5ceb2e4b4585df120631b30d"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_pretrained_consistency_teacher/training_recipe_pretrained_consistency_teacher.json",
+      "bytes": 1589,
+      "sha256": "3deba1935237136b67cf6295068d61f726c6706dfad272261d04dafc180621cb"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/cost_records.json",
+      "bytes": 587,
+      "sha256": "94c6e4055dc1f6001c14bff694330d0fb89eb4427e67a3aa6bb6fef8bbf29de6"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/mechanical_acceptance.json",
+      "bytes": 2129,
+      "sha256": "3ed8707397f0a43e0fbe85d901c1b3ea0479279ad672171d0ba8f6350aa31195"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/prediction_manifest.json",
+      "bytes": 517,
+      "sha256": "373937ba1d00a29a6b8b07217a51a95a261c6eb8de5f2f5ea37631a03018bfcf"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/reference_reuse_decision.json",
+      "bytes": 2314,
+      "sha256": "8917c5e77d54d0d8d30d398ed43bee8ac4694af9f628d4fc86a00bbe3fb42cb0"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/retained_trace_binding.json",
+      "bytes": 577,
+      "sha256": "8008b9c26825316ba4c6c3d818c4f6ea74e25e8891e8db9008d648282c3bd039"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/role_history.json",
+      "bytes": 1240,
+      "sha256": "58dae088d1aaaa05f4468dc479a14499118bff4a82369430ec3c17ae781af6a7"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/row_manifest.json",
+      "bytes": 389,
+      "sha256": "93055246a5d72067e063c7f366efa32b11909709a9363d87821c6c94af52920f"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "bytes": 408,
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_transform.json",
+      "bytes": 646,
+      "sha256": "7633713dd6128407cdd3035275ec56f44153ac316f42d7bca283ec25ef75de3d"
+    },
+    {
+      "path": "acceptance/platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/development_predictions.pt",
+      "bytes": 803349,
+      "sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82"
+    },
+    {
+      "path": "acceptance/platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/runtime_certificate.json",
+      "bytes": 994,
+      "sha256": "e3964b18181a191be0c3f96e46669dbe084db949e012124b7f3fc1901462171e"
+    },
+    {
+      "path": "acceptance/platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/selected_model.pt",
+      "bytes": 14786408,
+      "sha256": "4a7dab43f50f5f3216b224374c213a01cc82cfb4160dcd6d54aab1ef614fce17"
+    },
+    {
+      "path": "experiment_launch.json",
+      "bytes": 1666,
+      "sha256": "53090c048b676932dd6c31ae0dd888f1197afdf9396ef4b9f4cf87e952c1ef99"
+    },
+    {
+      "path": "experiment_spec.json",
+      "bytes": 6731,
+      "sha256": "d12e37bc641415f5a0fc1d57f0bb114a404d720411b795b1dc28682949be3cb6"
+    },
+    {
+      "path": "initial_states/pretrained_consistency.pt",
+      "bytes": 14783930,
+      "sha256": "9656064f7bb0256881da4bc063e90de135171abf517a486bf6202d774694fdba"
+    },
+    {
+      "path": "initial_states/pretrained_consistency_teacher.pt",
+      "bytes": 14783930,
+      "sha256": "9656064f7bb0256881da4bc063e90de135171abf517a486bf6202d774694fdba"
+    },
+    {
+      "path": "package_manifest.json",
+      "bytes": 3330,
+      "sha256": "024791243dd860893b9cd8566b367c1a996c0c65107f9ca672bbb39071b8eb8f"
+    },
+    {
+      "path": "prospective/pretrained_consistency/trajectory.json",
+      "bytes": 45169,
+      "sha256": "a20c7096dacc7b39992a41724b39cb271a2bb95588f284ec0a850d63b899e47a"
+    },
+    {
+      "path": "prospective/pretrained_consistency_teacher/trajectory.json",
+      "bytes": 45259,
+      "sha256": "2e39e84b0d1caa9f70a12595d17d20eeea5dd86a3c216dc413e37cb2d701485c"
+    },
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "bytes": 65,
+      "sha256": "92554cbd0be5e512d21666ebc7a767e4bb355cc497081e58049e042326e9a482"
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "bytes": 41,
+      "sha256": "5231a30c1eb48bfdc717e39e968f0717b3aceb0379d36966b4164ef419b8ef80"
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "bytes": 10707,
+      "sha256": "ee044f6cb9065440757795bda669169eda7f2669d41e0ed91238038c8d465fe3"
+    },
+    {
+      "path": "source_payload.bin",
+      "bytes": 204580,
+      "sha256": "3ac9de2d50eab7498cb49917d791cc9f1adebfa243f84060abe8f440537a2cee"
+    }
+  ]
+}

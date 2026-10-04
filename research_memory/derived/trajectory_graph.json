@@ -256,6 +256,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_pretrained_consistency_teacher/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-pretrained-consistency-teacher-kaggle1-100k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_pretrained_consistency_teacher/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-residual-reconciliation:A001",
       "target": "experiments/pcqm_k1_residual_reconciliation/analysis.json",
       "type": "action_produced_evidence"
@@ -733,6 +743,16 @@
     {
       "source": "TB-k1-consistency-fusion-transfer-20261004",
       "target": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-consistency-fusion-transfer-20261004",
+      "target": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-consistency-fusion-transfer-20261004",
+      "target": "TB-k1-pretrained-consistency-teacher-kaggle1-100k-s42-v1",
       "type": "parent_trajectory"
     },
     {
@@ -1401,6 +1421,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-consistency-fusion-transfer-20261004",
+      "target": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-consistency-fusion-transfer-20261004",
+      "target": "TB-k1-pretrained-consistency-teacher-kaggle1-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-consistency-residual-screen-20261004",
       "target": "TB-k1-consistency-fusion-transfer-20261004",
       "type": "prior_evidence"
@@ -1933,6 +1963,16 @@
     {
       "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
       "target": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-pretrained-consistency-teacher-kaggle1-100k-s42-v1",
       "type": "reference_used"
     },
     {
@@ -2568,6 +2608,14 @@
     },
     {
       "id": "TB-k1-gptrans-full-fusion-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-pretrained-consistency-teacher-kaggle1-100k-s42-v1",
       "type": "trajectory"
     },
     {

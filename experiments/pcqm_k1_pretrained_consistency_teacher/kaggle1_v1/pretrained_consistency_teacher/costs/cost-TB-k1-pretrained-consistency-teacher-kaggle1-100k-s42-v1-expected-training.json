@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle1-pretrained-combo-001",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-pretrained-consistency-teacher-kaggle1-100k-s42-v1-expected-training",
+  "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/protocol.md",
+  "hardware": "Tesla T4; assigned GPU1 in2T4 pair",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 4.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4.0
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency_teacher:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-pretrained-consistency-teacher-kaggle1-100k-s42-v1"
+}
