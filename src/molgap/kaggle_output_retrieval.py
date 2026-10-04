@@ -28,6 +28,63 @@ def _digest(value: Any, label: str) -> str:
     return value
 
 
+def retrieve_exact_metadata(api, *, account: str, kernel: str, version: int,
+                            paths: list[str], destination: Path, http_session=None) -> dict:
+    """Pin small version-specific outputs without listing worker environments.
+
+    Hashes here describe retrieved bytes, not scientific acceptance. The caller
+    reconciles the actual attempt and then validates the owning source/manifest.
+    """
+    from kagglesdk.kernels.types.kernels_api_service import ApiDownloadKernelOutputRequest
+    from .research_memory.trace import atomic_write
+    if (api.get_config_value(api.CONFIG_NAME_USER) != account
+        or kernel.count("/") != 1 or kernel.split("/")[0] != account
+        or type(version) is not int or version < 1
+        or not paths or len(paths) != len(set(paths)) or len(paths) > 32):
+        raise ValueError("Exact output account/version/allowlist differs")
+    for path in paths:
+        _path(path)
+        if PurePosixPath(path).suffix != ".json":
+            raise ValueError("Exact metadata retrieval permits JSON only")
+    if http_session is None:
+        import requests
+        http_session = requests.Session()
+    root = Path(destination).absolute()
+    _safe_local(root)
+    root.mkdir(parents=True, exist_ok=True)
+    retained = []
+    with api.build_kaggle_client() as client:
+        for path in paths:
+            target = repo_local_path(root, path)
+            request = ApiDownloadKernelOutputRequest()
+            request.owner_slug, request.kernel_slug = account, kernel.split("/")[1]
+            request.version_number, request.file_path = version, path
+            try:
+                redirect = client.kernels.kernels_api_client.download_kernel_output(request)
+                with http_session.get(redirect.url, stream=True, timeout=(30, 60)) as response:
+                    if response.status_code != 200:
+                        raise RuntimeError("Exact metadata response was not successful")
+                    data = bytearray()
+                    for chunk in response.iter_content(65536):
+                        data.extend(chunk)
+                        if len(data) > 1024 * 1024:
+                            raise ValueError("Exact metadata exceeds 1 MiB")
+            except Exception:
+                raise RuntimeError("Exact metadata retrieval failed; no bulk fallback") from None
+            import json
+            json.loads(data)
+            pin = hashlib.sha256(data).hexdigest()
+            if target.exists() and file_digest(target) != pin:
+                raise ValueError("Retained exact metadata differs")
+            if not target.exists():
+                target.parent.mkdir(parents=True, exist_ok=True)
+                atomic_write(target, bytes(data))
+            retained.append(dict(path=path, sha256=pin))
+    return dict(kernel=kernel, version=version, files=retained,
+        transport="version_specific_exact_file", scientific_acceptance=False,
+        unselected_outputs_downloaded=False)
+
+
 def _selected_files(files: Mapping[str, Any]) -> dict[str, tuple[str, str]]:
     if not isinstance(files, Mapping) or not files:
         raise ValueError("Selected output files must be a non-empty mapping")

@@ -106,3 +106,59 @@ def accept_environment(output: Path, binding: dict) -> dict:
     return dict(accepted=True, qualification=qualification, cost=native,
         model_inference_executed=False, gpu_calibrated=False,
         scientific_comparison_status="NOT_EVALUATED", next_decision="SOL_REQUIRED")
+
+
+def close_environment(root: Path, output: Path, *, finalized_at: str):
+    """Close the accepted import-only attempt, preserving its frozen prospective."""
+    root = root.resolve()
+    output = output.resolve()
+    output.relative_to(root)
+    base = root/"experiments/pcqm_gptrans_ema_portability"
+    plan = base/"environment_rml_plan/trajectory.json"
+    result = base/"results/environment_v1"
+    if (plan.parent/"rml_finalized").exists():
+        return finalize(root, plan, result/"terminal.json")
+    binding = json.loads((base/"environment_release_corrected.json").read_text())
+    observed = accept_environment(output, binding)
+    frozen = json.loads(plan.read_text())
+    run = frozen["actions"][0]["run_ids"][0]
+    submission = json.loads((base/"environment_submission.json").read_text())
+    if (submission["kernel"]+":v"+str(submission["version_number"]) != run
+        or submission.get("accelerator") != "CPU-only" or submission.get("reconciliation_required") is not False):
+        raise ValueError("Qualification does not bind the actual CPU-only run")
+    def rel(path):
+        return path.relative_to(root).as_posix()
+    decision = dict(final=True, outcome="NO_TRAIN", decision_ref=rel(result/"decision.md"),
+        next_allowed_actions=["Controller may release the separately planned unchanged frozen GPU audit v2"],
+        reopen_conditions=["GPU reproduction failure or actionable infrastructure event"])
+    outcome = dict(execution_status="complete", artifact_status="accepted_import_qualification",
+        comparison_status="context_only", scientific_status="not_evaluated", transfer_status="not_evaluated",
+        budget_decision="within_CPU_wall_cap", full_handoff_status="not_authorized")
+    roles = {r:"not_applicable" for r in ("train", "internal_development_100000_150000", "internal_development_500000_550000")}
+    roles.update({r:"untouched" for r in ("official_validation", "test_dev", "test_challenge")})
+    acceptance = result/"acceptance.json"
+    missing = dict(status="measurement_missing", value=None)
+    cost = dict(schema="molgap-cost-event-v1", cost_event_id=frozen["actions"][0]["cost_event_ids"][0],
+        trajectory_id=frozen["trajectory_id"], action_id="A001", run_id=run, attempt_id="v1",
+        category="preflight", platform="kaggle2", hardware="CPU-only", evidence_ref=rel(acceptance),
+        measurement=dict(device_hours=dict(status="not_applicable", value=None), cpu_hours=missing, queue_hours=missing,
+            wall_hours=dict(status="measured", value=observed["cost"]["wall_seconds"]/3600)))
+    eid = "pcqm-gptrans-ema-runtime-qualification-v1"
+    atomic_json(acceptance, dict(observed, evidence_id=eid, run_id=run, outcome=outcome,
+        trajectory_decision=decision, role_use=roles, costs=[cost], roles=[]))
+    pointers = [plan, base/"environment_protocol.md", base/"environment_release.json",
+        base/"environment_release_corrected.json", base/"environment_submission.json",
+        base/"environment_remote_verification.json", result/"decision.md", acceptance,
+        output/"environment_qualification.json", output/"environment_cost.json"]
+    hashes = {rel(p):sha256_file(p) for p in pointers}
+    evidence = dict(format="molgap-v5-evidence-envelope-v1", contract="MOLGAP-COMMON-V5-FINAL",
+        evidence_id=eid, track="C", scope="CPU_import_only_runtime_qualification", legacy_contract="none-v5-prospective",
+        outcome=outcome, role_use=roles, authority=dict(pointers=list(hashes)),
+        artifacts=[dict(name=p.name, locator=rel(p), sha256=hashes[rel(p)], availability="retained_metadata") for p in pointers[-2:]],
+        migration=dict(migrated_at=finalized_at, training_executed=False, inference_executed=False,
+            scientific_reinterpretation=False, verification_scope="Pinned package imports and cost only; not GPU calibration or training Replay qualification"))
+    terminal = result/"terminal.json"
+    atomic_json(terminal, dict(format="molgap-rml-terminal-package-v1", trajectory_id=frozen["trajectory_id"],
+        run_id=run, action_id="A001", finalized_at=finalized_at, acceptance_ref=rel(acceptance),
+        artifact_hashes=hashes, evidence=evidence, decision=decision, costs=[cost], roles=[], role_use=roles))
+    return finalize(root, plan, terminal)
