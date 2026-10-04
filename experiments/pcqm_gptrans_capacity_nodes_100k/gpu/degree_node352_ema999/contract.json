@@ -1,0 +1,51 @@
+{
+  "format": "molgap-gptrans-v5-audit-reference-contract-v1",
+  "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "fixed_train_rows": [
+    0,
+    100000
+  ],
+  "fixed_development_rows": [
+    100000,
+    150000
+  ],
+  "initial_state_sha256": "588f37217b537be36542faf0f0cd81ebfc4c3ddab1bfa3520938b6cfb24d3943",
+  "architecture_sha256": "d52b717be3b2a81786fa390554ddf768c2ead8053efda9e03e406d90468e01db",
+  "model_parameters": 9678273,
+  "seed": 42,
+  "epochs": 60,
+  "physical_batch_per_device": 128,
+  "drop_last": true,
+  "optimizer_steps": 46860,
+  "sample_presentations": 5998080,
+  "precision": "fp32-no-tf32",
+  "optimizer": "AdamW-foreach-false-lr0.001-weight-decay0.05",
+  "schedule": "warmup4-cosine60-min-lr1e-6",
+  "loss": "train-normalized-gap-L1",
+  "ema_decay": 0.999,
+  "selection": "minimum-internal-development-EMA-MAE",
+  "observation_addition": "separate-live-model-development-MAE-each-epoch",
+  "geometry_used": false,
+  "protected_roles": "forbidden",
+  "platform": "kaggle2-t4-gptrans-g1-capacity",
+  "accelerator_request": "NvidiaTeslaT4",
+  "independent_models": 1,
+  "segment_epochs": 10,
+  "variant": "degree_node352_ema999",
+  "reference_id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+  "capacity_configuration": {
+    "node_channels": 352,
+    "pair_channels": 32,
+    "layers": 12,
+    "heads": 8,
+    "ffn_ratio": 1,
+    "local_bond_channels": 0,
+    "degree_scale": 0.0897,
+    "dropout": 0.1,
+    "drop_path": 0.1,
+    "initialization": "seed42-constructor;shared-shape-core-preserved-v1"
+  },
+  "optimizer_parameter_groups": "single-group",
+  "endpoint_path_encoding": "none"
+}

@@ -1,0 +1,53 @@
+{
+  "format": "molgap-gptrans-scale-ema-contract-v1",
+  "benchmark_id": "pcqm4mv2-fixed500k-ema-equal-update-v1",
+  "manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "fixed_train_rows": [
+    0,
+    500000
+  ],
+  "fixed_development_rows": [
+    500000,
+    550000
+  ],
+  "initial_state_sha256": "fce207ab71ec5f8e239f69fa86c0a5db53f80544f9cc84ed80e3d2868595e31b",
+  "architecture_sha256": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+  "model_parameters": 5246817,
+  "seed": 42,
+  "epochs": 60,
+  "physical_batch_per_device": 128,
+  "drop_last": true,
+  "optimizer_steps": 46860,
+  "sample_presentations": 5998080,
+  "precision": "fp32-no-tf32",
+  "optimizer": "AdamW-foreach-false-lr0.001-weight-decay0.05",
+  "schedule": "warmup4-cosine60-min-lr1e-6",
+  "loss": "train-normalized-gap-L1",
+  "ema_decay": 0.999,
+  "selection": "each EMA view independently selects its minimum internal50k MAE over the same60 rungs",
+  "observation_addition": "separate-live-model-development-MAE-each-epoch",
+  "geometry_used": false,
+  "protected_roles": "forbidden",
+  "platform": "kaggle2-t4-gptrans-g1-capacity",
+  "accelerator_request": "NvidiaTeslaT4",
+  "independent_models": 1,
+  "segment_epochs": 10,
+  "variant": "scale_ema",
+  "reference_id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+  "optimizer_parameter_groups": "single-group",
+  "endpoint_path_encoding": "none",
+  "observation_rungs": 60,
+  "optimizer_steps_per_rung": 781,
+  "sampler": "seed42-continuous-fixed500k-step-v1",
+  "ema_decays": [
+    0.9999,
+    0.999
+  ],
+  "experiment_purpose": "transfer_study",
+  "comparison_class": "PAIRED_ENDPOINT",
+  "reference_scope": "100K context only; no accepted500K same-contract comparator",
+  "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "model_id": "gptrans-g1-core12x256-pair32",
+  "data_role_fingerprint": "ae8fcc3afdb48297016236834ba76b24bb11399b7a16987b5ea1d4698c80c6e5",
+  "row_order_fingerprint": "87c1f83b5caf329d15b0eb688bcb89132d5fa4eb15cb667e0c6eebc1f19652f6"
+}

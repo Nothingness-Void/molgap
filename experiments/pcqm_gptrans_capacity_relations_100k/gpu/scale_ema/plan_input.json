@@ -1,0 +1,145 @@
+{
+  "trajectory": {
+    "trajectory_id": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+    "record_mode": "prospective",
+    "owner": "server",
+    "track": "C",
+    "family_id": "gptrans-g1-scale_ema",
+    "question": "Does the EMA999 selected-prediction benefit persist during real500K training on one shared live trajectory?",
+    "hypothesis": {
+      "hypothesis_id": "H-TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "observed_deficiency": "Does the EMA999 selected-prediction benefit persist during real500K training on one shared live trajectory?",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+        "pcqm-gptrans-g1-scale500k-qualification-s42"
+      ],
+      "alternative_explanations": [
+        "More molecule diversity or later convergence can erase the filter advantage; equal steps are not60full passes."
+      ],
+      "changed_mechanism": "scale_ema",
+      "cheapest_falsifier": "one live500K trajectory with two retained EMA views at equal updates;100K reference is context only",
+      "related_closed_family_ids": [
+        "gptrans-pair-prenorm",
+        "gptrans-runtime-profiling"
+      ],
+      "expected_native_cost_ref": "cost-TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "decision_changed_if_positive": "controller interpretation only; no automatic scale or seed release",
+      "decision_changed_if_negative": "close this exact follow-up hypothesis",
+      "historical_unknowns": [
+        "training stochasticity unmeasured; material gate is a policy choice"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "02355c5802e62fbc8abc28b1704d0e74339e74d4",
+      "source_config_identity": "c3cb4d12a212b928bd2a35ab67a1ba492a8c56080c5c3397b367dc9ff9e29975",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/contract.json",
+        "experiments/pcqm_gptrans_capacity_relations_100k/protocol.md",
+        "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/comparison_readiness_prelaunch.json"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-g1-degree-scale-ema999-100k-s42"
+      ],
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "prior_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42",
+        "TC-gptrans-g1-scale500k-qualification-s42"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+        "pcqm-gptrans-g1-scale500k-qualification-s42"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/contract.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/budget.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "single_mechanism_screen",
+        "source_commit": "02355c5802e62fbc8abc28b1704d0e74339e74d4",
+        "run_ids": [
+          "gptrans-g1-local-scale-s42:scale_ema"
+        ],
+        "attempt_ids": [
+          "v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/contract.json"
+        ],
+        "cost_event_ids": [
+          "cost-TC-gptrans-g1-scale-ema-equal-updates-500k-s42"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_capacity_relations_100k/protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one isolated T4 arm then full saved-artifact acceptance"
+      ],
+      "reopen_conditions": [
+        "terminal evidence or an infrastructure fault requiring controller diagnosis"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [
+      "pcqm-gptrans-g1-degree-scale-ema999-100k-s42"
+    ],
+    "available_actions": [
+      "RUN_G1_FOLLOWUP",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_G1_FOLLOWUP",
+    "policy_id": "gptrans-g1-followup",
+    "policy_version": "v1",
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/budget.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/contract.json"
+    ],
+    "state_timestamp": "2026-10-04T18:12:39.670521+00:00",
+    "source_commit": "02355c5802e62fbc8abc28b1704d0e74339e74d4"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "trajectory_id": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "action_id": "A001",
+      "run_id": "gptrans-g1-local-scale-s42:scale_ema",
+      "attempt_id": "v1",
+      "category": "training",
+      "platform": "kaggle2-t4-gptrans-g1-capacity",
+      "hardware": "one-of-two-independent-T4",
+      "evidence_ref": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/budget.json",
+      "measurement": {
+        "device_hours": {
+          "status": "estimated",
+          "value": 4
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 4
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}

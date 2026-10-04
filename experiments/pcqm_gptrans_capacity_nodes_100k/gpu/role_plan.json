@@ -1,0 +1,21 @@
+{
+  "role_applicability": {
+    "prediction_input": "applicable",
+    "training_membership": "applicable",
+    "metric_computed": "applicable",
+    "external_submission": "not_applicable",
+    "selection_used": "applicable",
+    "labels_read": "applicable"
+  },
+  "train_rows": [
+    0,
+    100000
+  ],
+  "development_rows": [
+    100000,
+    150000
+  ],
+  "official_validation": "forbidden",
+  "test_dev": "forbidden",
+  "test_challenge": "forbidden"
+}

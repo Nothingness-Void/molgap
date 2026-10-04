@@ -1,0 +1,43 @@
+{
+  "format": "molgap-comparison-prelaunch-v1",
+  "candidate_id": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+  "reference_id": null,
+  "reference_bundle_id": null,
+  "reference_bundle_sha256": null,
+  "experiment_purpose": "transfer_study",
+  "intervention_group_id": "gptrans-g1-followup",
+  "mechanism_id": "scale_ema",
+  "planned_status": "PRELAUNCH_NONCAUSAL_PLANNED",
+  "prelaunch_ready": true,
+  "declared_intervention_fields": [],
+  "matched_fields": {},
+  "mismatched_fields": {},
+  "missing_fields": [],
+  "blocker_codes": [],
+  "candidate_source_config_status": "frozen",
+  "candidate_source_commit_or_archive": "02355c5802e62fbc8abc28b1704d0e74339e74d4",
+  "role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "trace_plan": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "runtime_qualification_plan": {
+    "status": "declared",
+    "runtime_certificate_required": true,
+    "qualification_scope": "single-device-fp32-no-tf32-bs128-optimizer-inclusive"
+  },
+  "terminal_candidate_artifacts_required": false
+}
