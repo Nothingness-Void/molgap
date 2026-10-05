@@ -43,6 +43,17 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
 
+- **K1 overnight 100K pairs:** two user-authorized two-arm screens are submitted
+  to Kaggle3; implementation and acceptance remain on their separate owners.
+  Standalone parameter EMA is blocked by a terminal startup ERROR with empty
+  logs after one unchanged-package retry. The Gaussian spectral pair reports
+  RUNNING; remote qualification and terminal acceptance remain pending.
+  Exact submission identities, scheduler snapshots and return procedures are in
+  the [EMA owner handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md)
+  and [spectral owner handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md).
+  On desktop return, reconcile exact runs and durable artifacts before any
+  successor. No model adoption, scale-up, heartbeat or server takeover.
+
 - **K1 fixed equal fusion:** common-cohort frozen inference completed on 50K
   internal-development rows outside both arms' training and checkpoint selection.
   The fixed blend improves over consistency by2.812meV with positive paired-row
