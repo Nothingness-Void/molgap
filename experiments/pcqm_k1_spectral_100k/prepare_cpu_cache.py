@@ -11,7 +11,7 @@ def write(path,value):
 def main():
     commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     tid='TB-k1-spectral-cpu-cache-100k-20261006'; cid='cost-'+tid+'-expected-cpu'
-    refs=['pcqm-k1-slot-readout-diagnostic-terminal','pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal']
+    refs=['pcqm-k1-slot-readout-diagnostic-20261002','pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal']
     protocol=REL+'/protocol.md'; policy_id='pcqm-k1-spectral-cpu-cache-20261006'
     policy={'schema':'molgap-policy-v1','policy_id':policy_id,'version':'1','policy_type':'research_action','status':'candidate','comparability_selector':{'scientific_contract':'k1-spectral-cpu-cache-100k-v1'},'required_observable_fields':['evidence_review_complete'],'action_rule':{'field':'evidence_review_complete','operator':'eq','threshold':1,'action':'PREPARE_CPU_CACHE'},'borderline_action':'NO_TRAIN','observation_point':None,'promotion_rule':None,'early_stop_rule':None,'cost_model':{'kind':'measured_only','assumptions':[]},'approval':{'approved_by':None,'approved_at':None,'authority_ref':None},'created_from_source_digest':sha256_file(HERE/'protocol.md')}
     write(ROOT/f'research_memory/policies/{policy_id}.1.json',policy)
@@ -24,3 +24,4 @@ def main():
     result=plan(ROOT,spec,REL+'/cpu_preparation')
     print(json.dumps(result,default=str))
 if __name__=='__main__':main()
+
