@@ -683,7 +683,10 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
             "samples_seconds": samples, "peak_memory_bytes": torch.cuda.max_memory_allocated()}
         del model, optimizer
     overhead = timings[mode]["median_step_seconds"] / timings["reference"]["median_step_seconds"] - 1
-    architecture = {"accepted": overhead <= 0.25, "mode": mode, "zero_initialization_delta": zero_delta,
+    memory_qualified = mode != "spectral" or timings[mode]["peak_memory_bytes"] <= 12 * 1024 ** 3
+    architecture = {"accepted": overhead <= 0.25 and memory_qualified,
+        "maximum_peak_memory_bytes": 12 * 1024 ** 3 if mode == "spectral" else None,
+        "peak_memory_qualified": memory_qualified, "mode": mode, "zero_initialization_delta": zero_delta,
         "spectral_qualification": spectral_qualification,
         "repeated_optimizer_steps": 2,
         "repeatability": repeated, "resume_roundtrip": resume, "timings": timings,
