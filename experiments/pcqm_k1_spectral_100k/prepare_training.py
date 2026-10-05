@@ -70,7 +70,7 @@ def main():
         recipe=build_family_recipe(('neural_atom_k1','2'),addon=addon,source_idx_sha256=expected['source_idx_sha256'],target_sha256=expected['target_sha256'])
         if recipe['acceptance_requirements']!=expected: raise ValueError('Frozen exposure/roles differ')
         arm=copy.deepcopy(read(REFERENCE/'original_reference_arm.json'))
-        arm.update(arm_id=mode,scientific_role='reference' if device==0 else 'candidate',addon_semantics='ordered')
+        arm.update(arm_id=mode,scientific_role='reference' if device==0 else 'candidate',addon_semantics='baseline' if mode=='reference' else 'ordered')
         arm['initialization']={'kind':'frozen_state','seed':42,'state_sha256':initial_hash}
         arm['addons']=[] if mode=='reference' else [{'name':addon,'version':'1','config':configuration(mode),'source_sha256':normalized_source_sha256(ROOT/'src/molgap/k1_spectral.py')}]
         arm['training']['recipe']['sha256']=hashlib.sha256(canonical(recipe)).hexdigest()
@@ -103,5 +103,6 @@ def main():
     write(HERE/'workflow_plan_kaggle3_v1.json',{'format':'molgap-experiment-workflow-v1','spec_identity':spec.identity,'source_files':[],'arms':workflow_arms,'acceptance_plan':f'{REL}/family_acceptance_plan.json','kaggle':{'account':'nvoid912','kernel':'nvoid912/'+RUN,'title':TITLE,'datasets':[source,'nvoid912/pcqm4mv2-ogb-fixed-100k-v1'],'source_dataset':source,'accelerator':'NvidiaTeslaT4'}})
     print(json.dumps({'status':'CONFIGS_PREPARED_UNPUBLISHED','spec_identity':spec.identity,'source_commit':commit,'kernel':'nvoid912/'+RUN,'initial_file_sha256':sha256_file(initial),'models_executed':False,'submitted':False}))
 if __name__=='__main__': main()
+
 
 
