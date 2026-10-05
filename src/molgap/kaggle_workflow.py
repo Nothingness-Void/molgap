@@ -51,6 +51,13 @@ def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
     (staged / "initial_states").mkdir()
     for arm_id, initial in initial_states.items():
         shutil.copyfile(initial, staged / "initial_states" / (arm_id + ".pt"))
+    from importlib import import_module
+    from .experiment_execution import training_adapter
+    for family in {tuple(arm["family"][key] for key in ("name", "version")) for arm in spec.to_dict()["arms"]}:
+        arm = next(a for a in spec.to_dict()["arms"] if tuple(a["family"][key] for key in ("name", "version")) == family)
+        owner = import_module(training_adapter(arm).module)
+        if hasattr(owner, "stage_input_artifacts"):
+            owner.stage_input_artifacts(spec, repo_root, staged)
     acceptance_binding = None
     if acceptance_plan_path is not None:
         acceptance_binding = stage_acceptance_inputs(spec, repo_root, acceptance_plan_path, staged / "acceptance")

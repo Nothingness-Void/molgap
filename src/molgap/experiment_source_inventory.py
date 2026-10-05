@@ -28,6 +28,7 @@ SHARED_SOURCE_FILES = (
     'src/molgap/gptrans_screen_workflow.py',
     'src/molgap/gptrans_variants.py',
     'src/molgap/k1_joint_aggregation.py',
+    'src/molgap/k1_spectral.py',
     'src/molgap/k1_screen_training.py',
     'src/molgap/kaggle_pair_runtime.py',
     'src/molgap/kaggle_workflow.py',

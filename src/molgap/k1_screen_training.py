@@ -266,6 +266,8 @@ def _development_loader(graphs):
 
 
 def _forward(model, batch):
+    if hasattr(model, "k1_spectral"):
+        model.k1_spectral.current_batch = batch
     return model(
         batch.x,
         batch.edge_index,
@@ -291,11 +293,43 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("reference", "ssma", "clean_fingerprint")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint", "spectral")
 
 
 def _state_digest(state: dict) -> str:
     return state_dict_sha256(state)
+
+
+def stage_input_artifacts(spec, repo_root, destination):
+    """Stage only statically registered K1 spectral input pins."""
+    import shutil
+    from .experiment_family_workflow import _artifact_path
+    for arm in spec.to_dict()["arms"]:
+        if not arm["addons"] or arm["addons"][0]["name"] != "k1_spectral":
+            continue
+        _validate_arm_binding(spec, type("Context", (), {"arm_id": arm["arm_id"]})(), "spectral")
+        target = Path(destination) / "spectral_cache"
+        target.mkdir(exist_ok=True)
+        names = {"cache": "spectral_cache.pt", "manifest": "spectral_cache_manifest.json"}
+        for key, pin in arm["addons"][0]["config"]["input_artifacts"].items():
+            source = _artifact_path(repo_root, pin["path"])
+            if sha256_file(source) != pin["sha256"]:
+                raise ValueError("Pinned CPU spectral input bytes changed")
+            shutil.copyfile(source, target / names[key])
+
+
+def _load_spectral_roles(spec, arm_id, roles, input_root):
+    from .k1_spectral import spectral_roles
+    arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == arm_id)
+    pins = arm["addons"][0]["config"]["input_artifacts"]
+    candidates = list(Path(input_root).rglob("spectral_cache_manifest.json"))
+    candidates = [p for p in candidates if sha256_file(p) == pins["manifest"]["sha256"]]
+    if len(candidates) != 1:
+        raise ValueError("Expected exactly one pinned CPU spectral cache manifest")
+    directory = candidates[0].parent
+    if sha256_file(directory / "spectral_cache.pt") != pins["cache"]["sha256"]:
+        raise ValueError("Pinned spectral tensor cache changed")
+    return spectral_roles(roles, directory, fixed_manifest_sha256=FIXED_MANIFEST_SHA256)
 
 
 def validate_recipe(recipe: dict, *, mode: str) -> None:
@@ -329,7 +363,7 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
     from .experiment_spec import _digest
     for name, value in (("source_idx_sha256", source_idx_sha256), ("target_sha256", target_sha256)):
         _digest(value, name)
-    if mode not in {"reference", "ssma"}:
+    if mode not in {"reference", "ssma", "spectral"}:
         raise ValueError("No executable screen recipe for this K1 addon")
     return {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
         "initialization_sha256": INITIAL_STATE_SHA256,
@@ -381,6 +415,9 @@ def _make_screen_model(state, mode):
         attach_k1_joint_aggregation(model, mode="ssma", layer=6, seed=SEED)
     elif mode == "clean_fingerprint":
         _attach_fingerprint_head(model)
+    elif mode == "spectral":
+        from .k1_spectral import attach_spectral
+        attach_spectral(model)
     return model.to("cuda")
 
 
@@ -434,6 +471,22 @@ def _validate_arm_binding(spec, context, mode):
                        "latent_channels": 64, "layer": 6, "seed": SEED}}
         if addons != [expected]:
             raise ValueError("SSMA executable addon differs from Spec")
+    if mode == "spectral":
+        from .k1_spectral import configuration
+        from .experiment_spec import _digest, _repo_path
+        if len(addons) != 1 or addons[0]["name"] != "k1_spectral" or addons[0]["version"] != "1":
+            raise ValueError("Spectral addon declaration differs")
+        config = dict(addons[0]["config"])
+        artifacts = config.pop("input_artifacts", None)
+        if config != configuration() or addons[0]["source_sha256"] != normalized_source_sha256(Path(__file__).with_name("k1_spectral.py")):
+            raise ValueError("Spectral mechanism differs from frozen configuration")
+        if type(artifacts) is not dict or set(artifacts) != {"cache", "manifest"}:
+            raise ValueError("Spectral cache requires two immutable artifact pins")
+        for pointer in artifacts.values():
+            if set(pointer) != {"path", "sha256"}:
+                raise ValueError("Malformed spectral input artifact")
+            _repo_path(pointer["path"], "spectral cache path")
+            _digest(pointer["sha256"], "spectral cache digest")
 
 
 def validate_screen_recipe(spec, arm_id, recipe):
@@ -500,7 +553,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     import torch
     from .experiment_family_workflow import RunContext
     from .training_reproducibility import capture_rng_state, restore_rng_state
-    if mode not in ("reference", "ssma") or label_cache is not None:
+    if mode not in ("reference", "ssma", "spectral") or label_cache is not None:
         raise ValueError("This paired GPU qualification supports reference and SSMA only")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
@@ -532,6 +585,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     root, manifest = find_fixed_cache(input_root)
     roles = load_roles(root, manifest)
     mean_value, std_value = _target_stats(roles["train"])
+    if mode == "spectral":
+        roles = _load_spectral_roles(spec, arm_id, roles, input_root)
     batch = next(iter(_train_loader(roles["train"], 0))).to("cuda")
     if int(batch.num_graphs) != BATCH_SIZE:
         raise RuntimeError("Runtime calibration requires physical train batch128")
@@ -557,6 +612,11 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
             and float(parameter.grad.abs().sum()) > 0
             for parameter in model.k1_joint_aggregation.parameters()):
             raise RuntimeError("SSMA mechanism has no finite nonzero training gradient")
+        if mode == "spectral" and not all(
+            parameter.grad is not None and bool(torch.isfinite(parameter.grad).all())
+            and float(parameter.grad.abs().sum()) > 0
+            for parameter in model.k1_spectral.parameters()):
+            raise RuntimeError("Spectral mechanism lacks finite nonzero two-step gradients")
         losses.append(float(loss.cpu()))
         states.append({key: value.detach().cpu().clone() for key, value in model.state_dict().items()})
         del model, optimizer
@@ -673,7 +733,7 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     if declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
                                         "state_sha256": INITIAL_STATE_SHA256}:
         raise ValueError("K1 Spec initialization differs from executable state")
-    if mode in ("reference", "ssma") and label_cache is not None:
+    if mode in ("reference", "ssma", "spectral") and label_cache is not None:
         raise ValueError("Reference/SSMA does not consume chemical auxiliary labels")
     if mode == "clean_fingerprint":
         if label_cache is None or label_cache.components != ("fingerprints",):
@@ -699,6 +759,8 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     root, manifest = find_fixed_cache(input_root)
     roles = load_roles(root, manifest)
     mean_value, std_value = _target_stats(roles["train"])
+    if mode == "spectral":
+        roles = _load_spectral_roles(spec, arm_id, roles, input_root)
     # Load the exact backbone before constructing any extra trainable mechanism.
     state = torch.load(initial_state_path, map_location="cpu", weights_only=True)
     if _state_digest(state) != INITIAL_STATE_SHA256:

@@ -74,6 +74,9 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    ("k1_spectral", "1"): AddonContract(
+        "neural_atom_k1", "k1-spectral-residual", "molgap.k1_spectral",
+    ),
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
     ),
