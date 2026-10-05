@@ -159,6 +159,7 @@ INTERVENTION_FIELDS_BY_PURPOSE = {
     ),
     "ema_comparison": frozenset(
         {
+            "checkpoint_selection_identity",
             "ema_enabled",
             "ema_decay",
             "ema_update_frequency",

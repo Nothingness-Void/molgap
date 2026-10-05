@@ -291,7 +291,7 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("reference", "ssma", "clean_fingerprint")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint", "ema999")
 
 
 def _state_digest(state: dict) -> str:
@@ -318,8 +318,11 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
         "optimizer": "AdamW", "learning_rate": 4e-4, "weight_decay": 1e-5,
         "clip_grad_norm": 1.0, "scheduler": "CosineAnnealingLR",
         "scheduler_t_max": 40, "scheduler_eta_min": 1e-6,
-        "ema": False, "selection": "best-development-live",
+        "ema": mode == "ema999", "selection": "best-development-ema" if mode == "ema999" else "best-development-live",
         "auxiliary_weight": 0.1 if mode == "clean_fingerprint" else 0.0}
+    if mode == "ema999":
+        from .k1_weight_ema import configuration
+        expected_training["ema_configuration"] = configuration()
     if recipe.get("training_recipe") != expected_training:
         raise ValueError("K1 executable training recipe changed")
 
@@ -329,6 +332,12 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
     from .experiment_spec import _digest
     for name, value in (("source_idx_sha256", source_idx_sha256), ("target_sha256", target_sha256)):
         _digest(value, name)
+    if mode == "ema999":
+        from .k1_weight_ema import configuration
+        recipe = build_screen_recipe("reference", source_idx_sha256=source_idx_sha256, target_sha256=target_sha256)
+        recipe["mode"] = mode
+        recipe["training_recipe"].update(ema=True, selection="best-development-ema", ema_configuration=configuration())
+        return recipe
     if mode not in {"reference", "ssma"}:
         raise ValueError("No executable screen recipe for this K1 addon")
     return {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
@@ -427,6 +436,12 @@ def _validate_arm_binding(spec, context, mode):
     addons = declaration["addons"]
     if mode == "reference" and addons:
         raise ValueError("Reference must declare no addon")
+    if mode == "ema999":
+        from .k1_weight_ema import configuration
+        expected = {"name": "k1_weight_ema", "version": "1", "config": configuration(),
+                    "source_sha256": normalized_source_sha256(Path(__file__).with_name("k1_weight_ema.py"))}
+        if addons != [expected]:
+            raise ValueError("EMA executable addon differs from Spec")
     if mode == "ssma":
         expected = {"name": "k1_joint_aggregation", "version": "1",
             "source_sha256": normalized_source_sha256(Path(__file__).with_name("k1_joint_aggregation.py")),
@@ -500,7 +515,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     import torch
     from .experiment_family_workflow import RunContext
     from .training_reproducibility import capture_rng_state, restore_rng_state
-    if mode not in ("reference", "ssma") or label_cache is not None:
+    if mode not in ("reference", "ssma", "ema999") or label_cache is not None:
         raise ValueError("This paired GPU qualification supports reference and SSMA only")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
@@ -545,6 +560,13 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     if zero_delta != 0.0:
         raise RuntimeError("Zero-added initialization differs from frozen reference")
     del reference, candidate
+    ema_checks = None
+    if mode == "ema999":
+        from .k1_weight_ema import qualification
+        configure_fp32_determinism(SEED)
+        probe_model = _make_screen_model(state, mode).train()
+        ema_checks = qualification(probe_model, batch, mean, std, output)
+        del probe_model
     losses, states = [], []
     for _ in range(2):
         configure_fp32_determinism(SEED)
@@ -599,9 +621,15 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     for profile_mode in ("reference", mode):
         configure_fp32_determinism(SEED)
         model = _make_screen_model(state, profile_mode).train()
+        profile_ema = None
+        if profile_mode == "ema999":
+            from .k1_weight_ema import make_ema, update_ema
+            profile_ema = make_ema(model)
         optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
         for _ in range(2):
             _optimizer_step(model, optimizer, batch, mean, std, profile_mode)
+            if profile_ema is not None:
+                update_ema(profile_ema, model)
         torch.cuda.synchronize()
         torch.cuda.reset_peak_memory_stats()
         samples = []
@@ -609,13 +637,17 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
             torch.cuda.synchronize()
             tick = time.perf_counter()
             _optimizer_step(model, optimizer, batch, mean, std, profile_mode)
+            if profile_ema is not None:
+                update_ema(profile_ema, model)
             torch.cuda.synchronize()
             samples.append(time.perf_counter() - tick)
         timings[profile_mode] = {"median_step_seconds": float(np.median(samples)),
             "samples_seconds": samples, "peak_memory_bytes": torch.cuda.max_memory_allocated()}
         del model, optimizer
+        del profile_ema
     overhead = timings[mode]["median_step_seconds"] / timings["reference"]["median_step_seconds"] - 1
     architecture = {"accepted": overhead <= 0.25, "mode": mode, "zero_initialization_delta": zero_delta,
+        "ema_checks": ema_checks,
         "repeated_optimizer_steps": 2,
         "repeatability": repeated, "resume_roundtrip": resume, "timings": timings,
         "selected_state_roundtrip_delta": selected_delta,
@@ -704,6 +736,10 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     if _state_digest(state) != INITIAL_STATE_SHA256:
         raise ValueError("Pinned K1 initial tensor identity mismatch")
     model = _make_screen_model(state, mode)
+    ema_model = None
+    if mode == "ema999":
+        from .k1_weight_ema import make_ema, update_ema
+        ema_model = make_ema(model)
     optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE,
                                  weight_decay=WEIGHT_DECAY)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
@@ -714,7 +750,9 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
                      "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:training-0-100000",
                      "weights": "live", "direction": "minimize",
                      "timing": "online-pre-update; includes dropout; no auxiliary BCE"},
-                 "ema_dev_metric": None,
+                 "ema_dev_metric": ({"metric": "MAE", "unit": "eV", "target": "Gap",
+                     "role_identity": recipe["development_role_identity"],
+                     "weights": "ema", "direction": "minimize"} if ema_model is not None else None),
                  "live_dev_metric": {"metric": "MAE", "unit": "eV", "target": "Gap",
                      "role_identity": recipe["development_role_identity"],
                      "weights": "live", "direction": "minimize"}}
@@ -740,9 +778,11 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         if len(observations) != start_epoch:
             raise ValueError("Trace and durable checkpoint disagree; reconcile before resume")
         model.load_state_dict(saved["model"], strict=True)
+        if ema_model is not None:
+            ema_model.load_state_dict(saved["ema"], strict=True)
         optimizer.load_state_dict(saved["optimizer"])
         scheduler.load_state_dict(saved["scheduler"])
-        best = min(row["live_dev_metric"] for row in observations)
+        best = min(row["ema_dev_metric" if ema_model is not None else "live_dev_metric"] for row in observations)
         restore_rng_state(saved["rng_state"])
     torch.cuda.synchronize()
     allocation_started = time.perf_counter()
@@ -755,28 +795,40 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
                 label_cache.attach(batch)
             batch = batch.to("cuda", non_blocking=True)
             _, batch_absolute, batch_rows = _optimizer_step(model, optimizer, batch, mean, std, mode)
+            if ema_model is not None:
+                update_ema(ema_model, model)
             absolute += float(batch_absolute)
             rows += batch_rows
         if rows != ROWS_PER_EPOCH:
             raise RuntimeError("Frozen optimizer exposure changed")
         validation_mae, target_eV, prediction_eV, source_idx = _evaluate(
             model, development_loader, mean, std)
+        ema_mae = None
+        selected_model, selected_mae = model, validation_mae
+        if ema_model is not None:
+            # Extra loader base-seed draws must not alter next epoch's live trajectory.
+            evaluation_rng = capture_rng_state()
+            ema_mae, target_eV, prediction_eV, source_idx = _evaluate(ema_model, development_loader, mean, std)
+            restore_rng_state(evaluation_rng)
+            selected_model, selected_mae = ema_model, ema_mae
         step, presentations = (epoch + 1) * STEPS_PER_EPOCH, (epoch + 1) * ROWS_PER_EPOCH
-        if validation_mae < best:
-            best = validation_mae
-            session.selected(model_state=_clean_gap_state(model), epoch=epoch + 1,
-                optimizer_step=step, weights="live", prediction_eV=prediction_eV,
+        if selected_mae < best:
+            best = selected_mae
+            session.selected(model_state=_clean_gap_state(selected_model), epoch=epoch + 1,
+                optimizer_step=step, weights="ema" if ema_model is not None else "live", prediction_eV=prediction_eV,
                 target_eV=target_eV, source_idx=source_idx)
         observed_lr = optimizer.param_groups[0]["lr"]
         scheduler.step()
         session.checkpoint(model_state=model.state_dict(), optimizer_state=optimizer.state_dict(),
             scheduler_state=scheduler.state_dict(), rng_state=capture_rng_state(),
+            ema_state=ema_model.state_dict() if ema_model is not None else None,
             cursor={"epoch": epoch + 1, "next_batch": 0,
                     "sampler_order_sha256": ROW_ORDER_FINGERPRINT},
             optimizer_step=step, sample_presentations=presentations)
         torch.cuda.synchronize()
         session.epoch_finished(epoch=epoch + 1, optimizer_step=step,
             sample_presentations=presentations, live_dev_metric=validation_mae,
+            ema_dev_metric=ema_mae,
             live_train_metric=absolute / rows * std_value, learning_rate=observed_lr,
             checkpoint_identity="sha256:" + sha256_file(checkpoint),
             wall_time_seconds=time.perf_counter() - started)

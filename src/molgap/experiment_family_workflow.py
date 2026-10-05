@@ -631,8 +631,11 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict,
                 step, epoch = state.get("optimizer_step"), state.get("epoch")
                 if type(epoch) is not int or not 1 <= epoch <= progress["epochs"] or type(step) is not int or step not in {r["optimizer_step"] for r in rows}:
                     raise ValueError("Selected endpoint is outside the retained trace")
-                if state.get("weights") not in {"live", "ema"} or (state["weights"] == "ema" and not profile.ema_required):
+                k1_ema = profile.name == "k1-screen-v1" and contract.get("mode") == "ema999"
+                if state.get("weights") not in {"live", "ema"} or (state["weights"] == "ema" and not (profile.ema_required or k1_ema)):
                     raise ValueError("Unsupported selected weight semantics")
+                if k1_ema and state["weights"] != "ema":
+                    raise ValueError("K1 EMA recipe must select EMA only")
                 selected = rows[epoch - 1]
                 if selected["optimizer_step"] != step:
                     raise ValueError("Selected epoch/step disagree")
@@ -647,7 +650,14 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict,
             else:
                 if any(not isinstance(state.get(key), dict) or not state[key] for key in profile.resume_keys):
                     raise ValueError("Incomplete checkpoint/resume state")
-                if profile.ema_required:
+                if profile.ema_required or (profile.name == "k1-screen-v1" and contract.get("mode") == "ema999"):
+                    if not isinstance(state.get("ema"), dict) or not state["ema"]:
+                        raise ValueError("Missing EMA resume state")
+                    if profile.name == "k1-screen-v1":
+                        if (state["ema"].keys() != state["model"].keys() or any(
+                            not isinstance(value, torch.Tensor) or value.shape != state["model"][key].shape
+                            for key, value in state["ema"].items())):
+                            raise ValueError("K1 EMA resume topology differs from live model")
                     assert_finite_state_dict(state["ema"], label="resume.ema")
                 optimizer = state["optimizer"]
                 if not isinstance(optimizer.get("state"), dict) or not isinstance(optimizer.get("param_groups"), list) or not optimizer["param_groups"]:

@@ -94,6 +94,9 @@ ADDONS = MappingProxyType({
     ("k1_joint_aggregation", "1"): AddonContract(
         "neural_atom_k1", "k1-local-aggregation", "molgap.k1_joint_aggregation",
     ),
+    ("k1_weight_ema", "1"): AddonContract(
+        "neural_atom_k1", "k1-weight-selection", "molgap.k1_weight_ema",
+    ),
 })
 
 
@@ -234,6 +237,12 @@ def _arm(arm: dict) -> None:
             if addon["config"] != {"layer": 6, "latent_channels": 64, "kappa": 4,
                                     "seed": 42, "degree_policy": "original-sum-above-four"}:
                 raise ValueError("K1 extension differs from the bounded frozen configuration")
+        elif addon["name"] == "k1_weight_ema":
+            if family["version"] != "2" or len(arm["addons"]) != 1:
+                raise ValueError("K1 EMA requires screen family and one addon")
+            from .k1_weight_ema import configuration
+            if addon["config"] != configuration():
+                raise ValueError("K1 EMA configuration changed")
         else:
             _object(addon["config"], "", "addon.config")
         _digest(addon["source_sha256"], "addon.source_sha256")
