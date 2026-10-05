@@ -425,7 +425,10 @@ class ExponentialMovingAverage:
     def load_state_dict(self, state) -> None:
         if state.keys() != self.state.keys():
             raise RuntimeError("EMA state identity changed")
-        self.state = {name: value.clone() for name, value in state.items()}
+        if any(value.shape != self.state[name].shape or value.dtype != self.state[name].dtype
+               for name, value in state.items()):
+            raise RuntimeError("EMA state tensor identity changed")
+        self.state = {name: value.to(self.state[name].device).clone() for name, value in state.items()}
 
 
 class FrozenEpochScheduler:

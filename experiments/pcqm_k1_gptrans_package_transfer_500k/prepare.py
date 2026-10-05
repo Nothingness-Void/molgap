@@ -8,7 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 
-from molgap.experiment_package import build_experiment_source_package
+from molgap.experiment_package import build_experiment_source_package, verify_experiment_source_package
 from molgap.experiment_preflight import check_release_inputs
 from molgap.experiment_prospective import plan_prospective
 from molgap.experiment_source_inventory import SHARED_SOURCE_FILES
@@ -162,6 +162,8 @@ def main():
     parser.add_argument("--inputs", type=Path, default=STAGING / "inputs")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--declare-only", action="store_true")
+    parser.add_argument("--resume-prepared", action="store_true",
+                        help="Verify an existing frozen package and published records after RML rebuild recovery")
     parser.add_argument("--pickle-input", type=Path, default=TRUSTED_PICKLE)
     args = parser.parse_args()
     actual = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
@@ -171,16 +173,30 @@ def main():
     if args.declare_only:
         print(json.dumps({"status": "DECLARATIONS_PREPARED", "spec_identity": spec.identity}))
         return
-    if args.output is None or args.output.exists():
+    if args.output is None or (args.output.exists() and not args.resume_prepared):
         raise ValueError("Provide a fresh --output directory")
     output = args.output
-    output.mkdir(parents=True)
+    output.mkdir(parents=True, exist_ok=args.resume_prepared)
     recipes = {aid: f"{REL}/training_recipe_{aid}.json" for aid in ARMS}
     names = sorted(set(SHARED_SOURCE_FILES) | set(EXTRA_SOURCE) | set(recipes.values()) | {f"{REL}/protocol.md", f"{REL}/plan.md", f"{REL}/role_plan.json", f"{REL}/budget.json"})
-    manifest = build_experiment_source_package(spec, ROOT, names, output / "package")
+    manifest = (verify_experiment_source_package(output / "package", repo_root=ROOT)
+                if args.resume_prepared else build_experiment_source_package(spec, ROOT, names, output / "package"))
     if manifest["source_commit"] != actual:
         raise ValueError("Package source commit changed")
-    report, code = plan_prospective(spec, ROOT)
+    if args.resume_prepared:
+        if manifest["spec_identity"] != spec.identity:
+            raise ValueError("Recovered package Spec changed")
+        for arm, binding in zip(spec.to_dict()["arms"], spec.to_dict()["prospective"]["arms"]):
+            trajectory = read(ROOT / binding["output"] / "trajectory.json")
+            if (trajectory["record_mode"] != "prospective" or trajectory["trajectory_id"] != binding["trajectory_id"]
+                    or trajectory["state_at_start"]["source_config_identity"] != canonical_fingerprint(arm)
+                    or trajectory["state_at_start"]["source_commit"] != actual):
+                raise ValueError("Published prospective identity changed")
+        from molgap.research_memory.compiler import rebuild_research_memory
+        rebuild_research_memory(ROOT)
+        report, code = {"status": "EXISTING_PROSPECTIVE_VERIFIED_RML_REBUILT", "spec_identity": spec.identity}, 0
+    else:
+        report, code = plan_prospective(spec, ROOT)
     write(output / "prospective_report.json", report)
     if code:
         raise RuntimeError("Prospective publication requires reconciliation: " + report["status"])
