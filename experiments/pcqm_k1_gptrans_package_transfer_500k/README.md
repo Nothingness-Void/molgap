@@ -4,6 +4,7 @@ Desktop-owned experiment on `codex/exp/k1-gptrans-500k-package`,
 branched from verified desktop tip `3f194a932fe2da3d8ac14ecedffac709d90c3de7`.
 Read [the frozen contract](protocol.md) for execution and acceptance,
 and [the evidence review](plan.md) for selection rationale and limitations.
+Physical execution and continuation are in [STATUS](STATUS.md).
 
 Preparation: [prepare.py](prepare.py) freezes the Spec, two native recipes,
 role/budget declarations and per-arm prospective planner inputs. It uses the

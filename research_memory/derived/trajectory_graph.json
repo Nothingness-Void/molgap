@@ -151,6 +151,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_gptrans_package_transfer_500k/plan.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_gptrans_package_transfer_500k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-gptrans-input-init-k1pair-candidate-100k-s42-r3:A001",
       "target": "experiments/pcqm_gptrans_input_init_100k/prospective_kaggle1_pair_retry3/candidate/observed_metadata.json",
       "type": "action_produced_evidence"
@@ -253,6 +263,16 @@
     {
       "source": "TB-k1-gptrans-full-fusion-r3:A001",
       "target": "experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-pretrained-consistency-kaggle1-500k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_gptrans_package_transfer_500k/plan.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-pretrained-consistency-kaggle1-500k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_gptrans_package_transfer_500k/protocol.md",
       "type": "action_produced_evidence"
     },
     {
@@ -812,12 +832,22 @@
     },
     {
       "source": "TB-matched-500k-v4-three-arm",
+      "target": "TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-matched-500k-v4-three-arm",
       "target": "TB-gptrans-noisy-nodes-500k-s42",
       "type": "parent_trajectory"
     },
     {
       "source": "TB-matched-500k-v4-three-arm",
       "target": "TB-k1-gptrans-full-fusion-r3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-matched-500k-v4-three-arm",
+      "target": "TB-k1-pretrained-consistency-kaggle1-500k-s42-v1",
       "type": "parent_trajectory"
     },
     {
@@ -1577,7 +1607,17 @@
     },
     {
       "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-gptrans-noisy-nodes-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-k1-pretrained-consistency-kaggle1-500k-s42-v1",
       "type": "prior_evidence"
     },
     {
@@ -2407,6 +2447,10 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-gptrans-geometry-distance-100k-s42",
       "type": "trajectory"
     },
@@ -2568,6 +2612,10 @@
     },
     {
       "id": "TB-k1-gptrans-full-fusion-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-pretrained-consistency-kaggle1-500k-s42-v1",
       "type": "trajectory"
     },
     {

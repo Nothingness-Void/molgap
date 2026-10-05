@@ -40,6 +40,12 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 
 ## Active Work and Unresolved Acceptance
 
+- **Teacher-free K1/G1 package transfer500K:** desktop-owned isolated branch
+  `codex/exp/k1-gptrans-500k-package`; authorized two-arm60-pass question.
+  [Owning status](experiments/pcqm_k1_gptrans_package_transfer_500k/STATUS.md)
+  records physical execution, infrastructure attempts and continuation limits.
+  No adoption, official evaluation or automatic monitor is released.
+
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
 
