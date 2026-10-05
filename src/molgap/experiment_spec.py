@@ -237,6 +237,21 @@ def _arm(arm: dict) -> None:
             if addon["config"] != {"layer": 6, "latent_channels": 64, "kappa": 4,
                                     "seed": 42, "degree_policy": "original-sum-above-four"}:
                 raise ValueError("K1 extension differs from the bounded frozen configuration")
+        elif addon["name"] == "k1_spectral":
+            if family["version"] != "2" or len(arm["addons"]) != 1:
+                raise ValueError("K1 spectral requires family/version2 and one extension")
+            config = _object(addon["config"], "layer latent_channels frequency_basis laplacian eigensystem filter gaussian_width return_initialization seed input_artifacts", "addon.config")
+            for key, value in {"layer": 6, "latent_channels": 64, "frequency_basis": 8,
+                    "laplacian": "undirected-unweighted-symmetric-normalized",
+                    "eigensystem": "full-float64-cpu-to-float32", "filter": "per-channel-gaussian-eigenvalue",
+                    "gaussian_width": 0.25, "return_initialization": "zero", "seed": 42}.items():
+                if config[key] != value:
+                    raise ValueError("K1 spectral configuration differs from bounded contract")
+            artifacts = _object(config["input_artifacts"], "cache manifest", "spectral input artifacts")
+            for pointer in artifacts.values():
+                _object(pointer, "path sha256", "spectral artifact pin")
+                _repo_path(pointer["path"], "spectral input path")
+                _digest(pointer["sha256"], "spectral input digest")
         else:
             _object(addon["config"], "", "addon.config")
         _digest(addon["source_sha256"], "addon.source_sha256")
