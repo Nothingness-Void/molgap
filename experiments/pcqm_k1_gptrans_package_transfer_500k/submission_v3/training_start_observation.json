@@ -1,0 +1,43 @@
+{
+  "observed_at": "2026-10-05T10:39:01.901871+00:00",
+  "source": "authenticated Kaggle Logs UI",
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1",
+  "version": 3,
+  "script_version_id": 355422526,
+  "scheduler": "RUNNING",
+  "accelerator": "GPU T4 x2",
+  "cpu_preflight_complete": true,
+  "both_independent_resume_preflights_passed": true,
+  "training_resume_verified": true,
+  "arms": {
+    "k1_pretrained_consistency": {
+      "preserved_completed_epochs": 6,
+      "observed_epoch_one_based": 7,
+      "observed_batch": 1,
+      "observed_global_step": 23437,
+      "lr": 0.00038990482,
+      "preflight_parameters": 3658817,
+      "preflight_peak_bytes": 1029701632
+    },
+    "gptrans_g1_bond_local_ema999": {
+      "preserved_completed_epochs": 9,
+      "observed_epoch_one_based": 10,
+      "observed_batch": 100,
+      "observed_global_step": 35254,
+      "lr": 0.00097976674,
+      "preflight_parameters": 5871201,
+      "preflight_peak_bytes": 1107296256
+    }
+  },
+  "visible_messages": [
+    "167.8s [cpu] ALL_ARM_CPU_MODEL_CACHE_RECIPE_PASS",
+    "187.8s [preflight/k1_pretrained_consistency] PREFLIGHT ONLY PASS",
+    "188.4s [preflight/gptrans_g1_bond_local_ema999] PREFLIGHT ONLY PASS",
+    "208.7s [training/k1_pretrained_consistency] PREFLIGHT PASS resume_epoch=6",
+    "209.4s k1_pretrained_consistency epoch=7/60 batch=1/3906 global_step=23437",
+    "210.1s [training/gptrans_g1_bond_local_ema999] PREFLIGHT PASS resume_epoch=9",
+    "231.4s gptrans_g1_bond_local_ema999 epoch=10/60 batch=100/3906 global_step=35254",
+    "219.7s PHASE training elapsed=30s worker_codes both None"
+  ],
+  "scientific_terminal_acceptance": false
+}

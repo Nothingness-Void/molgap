@@ -1,12 +1,13 @@
 # Execution status
 
-Last authoritative observation: [v3 scheduler](submission_v3/scheduler_snapshot.json).
+Last authoritative observation: [v3 resumed training](submission_v3/training_start_observation.json).
 Kaggle1 kernel `nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1`,
 ID137144136/version3 is RUNNING. Its [actual receipt](submission_v3/platform_response.json)
 and [pulled identity](submission_v3/remote_identity_verified.json) bind the frozen
-Spec, source and private continuation inputs. Installation output is visible
-in the authenticated main log. Resumed qualification/training progress remains
-pending verification; RUNNING is not training acceptance.
+Spec, source and private continuation inputs. CPU validation and both independent resumed T4 preflights passed.
+The authenticated main log confirms actual epoch7 K1/epoch10 GPTrans training
+from preserved steps23,436/35,154. Batch/step/lr progress is forwarded live;
+this startup verification is not terminal scientific acceptance.
 [Interrupted v2 decision](submission_v2/stop_reconciliation/decision.md) retains
 K1 six complete epochs (23,436steps), GPTrans nine (35,154steps) and the prior
 measured4.941222allocated native T4hours. Version3 resumes those exact states.
