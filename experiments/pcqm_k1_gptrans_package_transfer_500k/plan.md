@@ -2,26 +2,29 @@
 
 ## Question and selection
 
-Does each family's strongest numerically observed recent pure-2D composition
-retain its benefit with 500K unique training molecules and a full 60-pass
-budget, and do their prediction errors support fixed equal fusion?
+Do the selected teacher-free K1 composition and recent GPTrans composition
+transfer to 500K unique training molecules with a full 60-pass budget, and
+do their prediction errors support fixed equal fusion?
 This tests complete recipes and transfer, not isolated module causality.
 It does not establish these packages as globally best or production-adopted.
 
 | Arm | Composition | Preserved scientific mechanism |
 |---|---|---|
-| `k1_pretrained_consistency_teacher` | K1-v4, atom192/edge64/slot64/9 layers, 3,658,817 inference parameters | Exact retained 10-pass backbone; original seed42 Gap head restored; two independent dropout forwards; averaged label L1 + 0.1 disagreement MSE + 1.0 frozen-teacher MSE on the mean prediction |
+| `k1_pretrained_consistency` | K1-v4, atom192/edge64/slot64/9 layers, 3,658,817 inference parameters | Exact retained 100K-stage 10-pass backbone; original seed42 Gap head restored; two independent dropout forwards; averaged label L1 + 0.1 disagreement MSE; no teacher |
 | `gptrans_g1_bond_local_ema999` | G1 GPTrans, node256/pair32/12 layers/8 heads/FFN ratio1; degree scale0.0897; real-bond local64; 5,871,201 parameters | Accepted G1 input/init behavior, interior real-directed-bond local stream with zero-output initialization, EMA0.999 updated once per optimizer step |
 
-The teacher is the fixed equal blend of retained K1 mean2 and consistency2.
-Do not train a new teacher or use downstream-selected student Gap weights as
-initialization. G1 uses its owning random initialization, not K1 pretraining.
+There is no accepted500K-trained fusion teacher. Evaluating100K-trained teachers
+on500K rows would generate new predictions, not establish a500K-trained teacher
+or its quality. Following the user's correction, this pair has no distillation
+loss, teacher-cache preparation or teacher inference. Do not use downstream-
+selected student Gap weights as initialization. G1 uses its owning random
+initialization, not K1 pretraining.
 No new module, geometry, width expansion, path encoding, precision change or
 new fusion-weight search is part of this question.
 
 ## Evidence and limitations
 
-- Desktop K1 owner commit [51bc61fc](https://github.com/Nothingness-Void/molgap/blob/51bc61fc/experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/decision.md): the teacher package scores0.136781212eV versus matched no-teacher0.138265848eV. Gain1.484636meV, paired-row95% bounds[0.759455,2.196867]meV. The narrow teacher gate passes; compression fails against fixed teacher0.134665993eV. Pretraining itself and its interaction are not isolated. Both training arms are independently replay-ready under their own contract.
+- Desktop K1 owner commit [51bc61fc](https://github.com/Nothingness-Void/molgap/blob/51bc61fc/experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/decision.md): the selected teacher-free arm completed40epochs and scores0.138265848eV, with independent complete Replay acceptance. Its teacher sibling scores0.136781212eV, but that sibling is not the proposed arm. The narrow100K teacher gate passes while compression fails; it does not qualify an absent500K teacher. Pretraining itself and its interaction are not isolated, so teacher-free transfer is a new scale question rather than a proven gain claim.
 - Server authority [f426350a](https://github.com/Nothingness-Void/molgap/blob/f426350a/experiments/pcqm_gptrans_capacity_relations_100k/gpu/results/interpretation.md): local-bond G1+EMA999 scores0.1423582275eV versus G1+EMA9990.1442326291eV. Gain1.8744017meV with favorable paired-row bounds, below the frozen3meV gate. Preserve its INCONCLUSIVE/no-promotion outcome. The exact local comparison is strict and complete Replay, not a 500K architecture qualification.
 - The server's genuine500K study uses one unchanged G1 live model with two EMA filters. Fast EMA0.1152574413eV versus slow0.1247831724eV supports the correction direction, but only46,860 updates/5,998,080 presentations (~12passes). It is PAIRED_ENDPOINT, not causal Replay or60passes. It contains no local-bond addon.
 - [Matched500K V4](../pcqm_500k_v4_evidence/final_decision.md): K1 reference0.104860eV, GPTrans reference0.106868eV,60passes. Reuse artifacts; no bookkeeping baseline retraining. Their optimizer/initialization/selection/runtime differences from these compositions must remain explicit.
@@ -53,13 +56,11 @@ the new500K training cohort; B the pinned100K training-subset transform used
 by G1. Bind actual assets and digests before release. These recipe differences
 prevent an architecture-only causal comparison between A and B.
 
-A requires a NEW hash-bound500K training teacher cache. Its current100K cache
-cannot be relabeled or repeated. Use existing frozen K1 loaders/inference and
-teacher-cache admission, preserving constituent SHA256, exact row joins and
-finite predictions. Publish prospective authority before teacher inference;
-CPU performs cache validation/joining. No development teacher cache is needed
-to supervise this job. Reused historical pretraining/teacher costs remain
-separate and may have qualification gaps; unknown is not zero.
+A reads actual500K training labels only. No teacher cache or new inference is
+required. The retained pretraining backbone remains a100K-stage artifact, not
+new500K pretraining. Its historical costs and qualification gaps stay separate;
+unknown is not zero. Both new500K outputs can subsequently be evaluated as a
+fusion candidate, not predeclared as an accepted teacher for another student.
 
 ## Endpoints and proposed decision gates
 
@@ -96,13 +97,13 @@ account, quota and allowed session duration must be reconciled before release.
 No default monitor or server job takeover. Server code/evidence is reviewed
 input to desktop custody, not a wholesale branch merge.
 
-A's measured100K40epoch training window is8,942.644allocated T4seconds;
-linear presentation scaling to this endpoint is ~18.64T4hours. This is a rough
+A's measured100K40epoch training window is8,966.101allocated T4seconds;
+linear presentation scaling to this endpoint is ~18.69T4hours. This is a rough
 estimate: development/checkpoint time does not scale identically. B's notebook
 half-allocation (~3.7585T4hours at5,998,080presentations) gives ~18.80T4hours
 under the same rough5x assumption. These are not measured500K60pass costs or
 wall-time guarantees. Reserve a proposed48allocated T4hour training ceiling
-including paired idle capacity; measure teacher/qualification costs separately.
+including paired idle capacity; measure qualification costs separately.
 Do not claim the complete trial fits one overnight session.
 
 Reuse bounded resumable invocation semantics: each invocation attempts all
@@ -114,7 +115,7 @@ Do not pre-split into tiny arbitrary stages or rely on transient worker files.
 
 Reusable owners: `pcqm_500k_v4_evidence.run` and scale cache/loader for60pass
 sampling, deterministic recovery and bounded continuation; family model/loss/
-EMA owners; `k1_frozen_inference` and `k1_teacher_cache`; existing workflow,
+EMA owners and the accepted K1 pretrained-initialization mapping; existing workflow,
 source/release/receipt, Kaggle paired runtime/adapter, family acceptance,
 `comparison_readiness` and RML terminal closure. The legacy500K loop does not
 already implement these two compositions; current K1 screen constants and
@@ -123,7 +124,7 @@ adapter for explicit scale configuration, not an experiment-local copied loop.
 
 Before any new execution: publish two prospective trajectories; review/import
 only the required server and K1 reusable changes with provenance; bind actual
-500Kteacher/cache/init/transform assets; register compatible scale execution and
+500K graph/cache/init/transform assets; register compatible scale execution and
 acceptance; run one focused final regression batch and release validation.
 Then actual training-only T4 fixtures qualify both arms behind the all-arm
 barrier. A failed release/qualification stops and retains truthful evidence.
