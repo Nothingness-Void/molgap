@@ -34,3 +34,8 @@ The same existing source/package/prospects were finalized using shared freeze_in
 bind_release,validate_staged_trajectory and build_launch_receipt; no replan.
 RMLrebuild/check--frozen passed. Remote state is UNKNOWN until root reconciles
 returned exact kernel/version and startup qualification. No promotion/scale-up.
+
+Post-commit portable qualification passed unchanged validators after109 exact-byte
+existing ignored artifacts (2,987,094,810bytes) copied from already qualified
+EMA custody/main. See portable_custody_repair.json. No historical records changed.
+

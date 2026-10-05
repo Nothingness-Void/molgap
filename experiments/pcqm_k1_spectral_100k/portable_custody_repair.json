@@ -1,0 +1,659 @@
+{
+  "files": [
+    {
+      "bytes": 19810391,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\scnet\\pcqm_distance_angle_500k_20260923\\remote\\output\\ogb_distance_angle_triangle_edge_state_gps9",
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_distance_angle_triangle_edge_state_gps9/direct_gap_best.pt",
+      "sha256": "f2e3150deec0093b10b8bf1f8374752de72775dca91156024af9ab7b7b27ae39"
+    },
+    {
+      "bytes": 801538,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\scnet\\pcqm_distance_angle_500k_20260923\\remote\\output\\ogb_distance_angle_triangle_edge_state_gps9",
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_distance_angle_triangle_edge_state_gps9/direct_gap_development.pt",
+      "sha256": "8dd42e95819448b7544d502addd3ac7162ddfa62942a77205ffee0cb3428f2c1"
+    },
+    {
+      "bytes": 59379928,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\scnet\\pcqm_distance_angle_500k_20260923\\remote\\output\\ogb_distance_angle_triangle_edge_state_gps9",
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_distance_angle_triangle_edge_state_gps9/direct_gap_last.pt",
+      "sha256": "b577921e8479825d65ab690ae7b60547c62c6dc9fb022bed705918dcd3e64607"
+    },
+    {
+      "bytes": 19267551,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\scnet\\pcqm_distance_angle_500k_20260923\\remote\\output\\ogb_edge_state_structural_gps9",
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_edge_state_structural_gps9/direct_gap_best.pt",
+      "sha256": "0b80c295933429ab77b62752879751a89a78988f8e00d9944bdd02188e22250a"
+    },
+    {
+      "bytes": 801538,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\scnet\\pcqm_distance_angle_500k_20260923\\remote\\output\\ogb_edge_state_structural_gps9",
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_edge_state_structural_gps9/direct_gap_development.pt",
+      "sha256": "9822150944b49b8329c0edecc2b7253412fa93c27cef5f69dfa0feda0ffeff0f"
+    },
+    {
+      "bytes": 57727498,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\scnet\\pcqm_distance_angle_500k_20260923\\remote\\output\\ogb_edge_state_structural_gps9",
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_edge_state_structural_gps9/direct_gap_last.pt",
+      "sha256": "13cee1ee3c73b6543c13725fa1ae503d5af9fbb570323f873bdc4b4497e4e5a3"
+    },
+    {
+      "bytes": 10116905,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_gine_expert\\results\\local_scaleup_1m_v7_frozen_bn",
+      "path": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_gine_best.pt",
+      "sha256": "9b971c1c9f770b80966af38107b30da21143c75b5567879a941173afb2d5955e"
+    },
+    {
+      "bytes": 30240739,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_gine_expert\\results\\local_scaleup_1m_v7_frozen_bn",
+      "path": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_gine_last.pt",
+      "sha256": "6cc657143bb7a2396df781934ffe021c3ee9cd6b0fafa4b09af0df711431cc44"
+    },
+    {
+      "bytes": 225060,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_gine_expert\\results\\local_scaleup_1m_v7_frozen_bn",
+      "path": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_official_valid_5k_predictions.csv",
+      "sha256": "a16abc67eb01c2b787303e5aa5d628ba0ad03f01c9c847fef17d522371357f88"
+    },
+    {
+      "bytes": 21071318,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1\\raw\\centered_logits",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/best_model.pt",
+      "sha256": "189221e2b0d4c5a4db075452fb6ef4c3eed68f41ab1153b06da9c8453d0eed9b"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1\\raw\\centered_logits",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/development_predictions.pt",
+      "sha256": "de1ab0c56181e157184222d676441541bc6dda1f01262a319537d9e38a299f71"
+    },
+    {
+      "bytes": 84390244,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1\\raw\\centered_logits",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/last_checkpoint.pt",
+      "sha256": "effcddcc25b25f667c42a617007f38d35d2e9f31b96205ce8485b787397eb8f9"
+    },
+    {
+      "bytes": 21071318,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1\\raw\\reference",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/best_model.pt",
+      "sha256": "a06f1f163dc6fd7ebae45eec6bfcff75cf05da4ae077344a93926b7d498d0565"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1\\raw\\reference",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/development_predictions.pt",
+      "sha256": "37b57447af7be634dc9c4482a1be569670f23f4247e3066acbe0efe8d7bddcff"
+    },
+    {
+      "bytes": 84390244,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1\\raw\\reference",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/last_checkpoint.pt",
+      "sha256": "27b61495030b4e35dcbb28b44489892d85fff52768b81514ed51f7b7356bfee4"
+    },
+    {
+      "bytes": 803349,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_gptrans_chemical_aux\\submission_v4\\terminal_outputs\\descriptor_aux\\family_outputs",
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/descriptor_aux/family_outputs/development_predictions.pt",
+      "sha256": "5843147b577c217a8c0829347ebc7ec616109b6fd12e2e0010cccf23925436ad"
+    },
+    {
+      "bytes": 84913152,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_gptrans_chemical_aux\\submission_v4\\terminal_outputs\\descriptor_aux\\family_outputs",
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/descriptor_aux/family_outputs/last_checkpoint.pt",
+      "sha256": "ff9ce68333957ebe92c42f926139862cb4e1367e436258c26674fc15da540c25"
+    },
+    {
+      "bytes": 21072594,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_gptrans_chemical_aux\\submission_v4\\terminal_outputs\\descriptor_aux\\family_outputs",
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/descriptor_aux/family_outputs/selected_model.pt",
+      "sha256": "ced94c8852bdad652030eb94b28524cd4e245a0e5e635f4cb09b182ce061b9b6"
+    },
+    {
+      "bytes": 802080,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_gptrans_chemical_aux\\submission_v4\\terminal_outputs\\reference",
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/reference/development_predictions.pt",
+      "sha256": "4fa3d32f83b183503bfafeee33b7b44dc7ee5f396bef5b1b546c956669ce6d29"
+    },
+    {
+      "bytes": 803349,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_gptrans_chemical_aux\\submission_v4\\terminal_outputs\\fingerprint_aux\\family_outputs",
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/fingerprint_aux/family_outputs/development_predictions.pt",
+      "sha256": "1dc26ca8129f7b491bd82c369625f0bbe41caaa9b8515f89165a5ac314f4c651"
+    },
+    {
+      "bytes": 84913152,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_gptrans_chemical_aux\\submission_v4\\terminal_outputs\\fingerprint_aux\\family_outputs",
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/fingerprint_aux/family_outputs/last_checkpoint.pt",
+      "sha256": "28ad5af2e3275c05df42d02268506d3fcf90faf878ac7da1c328d8329f9ed8fb"
+    },
+    {
+      "bytes": 21072594,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_gptrans_chemical_aux\\submission_v4\\terminal_outputs\\fingerprint_aux\\family_outputs",
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/fingerprint_aux/family_outputs/selected_model.pt",
+      "sha256": "022677fae26a5e30f195f3ec2986a815738879c1a2e07d1a2a6c43cbf2d61075"
+    },
+    {
+      "bytes": 21255024,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\raw\\gptrans_feature_denoising_100k\\full_atom",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom/best_model.pt",
+      "sha256": "74cfd98ec6954c7cbb0f4bcdc9b0db7b79696859ea4adbb994a06c282ae1d8bd"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\raw\\gptrans_feature_denoising_100k\\full_atom",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom/development_predictions.pt",
+      "sha256": "60e2e57fd31a01478dc9e30574b45f91c5f73d6e547433121a216bb2e003b4c6"
+    },
+    {
+      "bytes": 505788,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\raw\\runtime",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/runtime/source.tar.gz",
+      "sha256": "8e79c0a9c3214fa7252bb835551d59a83c59fac41f62d811a5ca97ce280950a8"
+    },
+    {
+      "bytes": 21258446,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\raw\\gptrans_feature_denoising_100k\\full_atom_bond",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom_bond/best_model.pt",
+      "sha256": "879cb0b0b8d867e152610c1bfb0cc1fca7870f03194c9590ad9a55311e6e6d69"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_feature_denoising_s42_v2\\raw\\gptrans_feature_denoising_100k\\full_atom_bond",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom_bond/development_predictions.pt",
+      "sha256": "428c175df61484ea01ef9dd70e48cd5bc8bb84b111b0f7721ce791b958bc69da"
+    },
+    {
+      "bytes": 21077951,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\gptrans",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/best_model_bundle.pt",
+      "sha256": "82d3231f00b55d8650cbaf36b188c7e1bc0ff149ca6d912961e50d306d93b447"
+    },
+    {
+      "bytes": 84384740,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\gptrans",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/last_checkpoint.pt",
+      "sha256": "690480f3af150b42b773924d7439a244e3e8fcbdff14ae18d2b1e272ff20fb88"
+    },
+    {
+      "bytes": 84383268,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\gptrans",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/resume_source_20260919.pt",
+      "sha256": "a686c6e1d12666a4dca6dac1b0472175863228a0fb0ae7b663bb465fbd90abb6"
+    },
+    {
+      "bytes": 1179111,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\gptrans",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_01.pt",
+      "sha256": "76e0f7fc20eba2304ac4ccd302ac00589e55e3c659a96d3eabb25f5fe116958a"
+    },
+    {
+      "bytes": 1179111,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\gptrans",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_02.pt",
+      "sha256": "676ccf54e38a665384fed29a46e1f0ee3484872470d94bdec73a425c7f87f818"
+    },
+    {
+      "bytes": 1179111,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\gptrans",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_03.pt",
+      "sha256": "92a61210118a8a60df3dcfd79129e1e8a8b2b406e50c5a81e6fef78dee699fd2"
+    },
+    {
+      "bytes": 1179111,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\gptrans",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_04.pt",
+      "sha256": "7459864229765244b50c27f992ffdd225b89f046c918ada60f1f121087c2a428"
+    },
+    {
+      "bytes": 1179111,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\gptrans",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_05.pt",
+      "sha256": "4bfbfd388cf187c26b4199e5372f4d20fdea074c5880331919821275ff0f32f7"
+    },
+    {
+      "bytes": 1179111,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\gptrans",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_06.pt",
+      "sha256": "c3ebfd3489608183799aa9dbd8d77c2864fc89901bc76aecd38e42e8ab98c1b5"
+    },
+    {
+      "bytes": 21091114,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_geometry_channels_100k_s42_v2\\attempt_002\\arms\\distance_angle\\output",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/best_model.pt",
+      "sha256": "f0597e32fc2e536bb3f6203cd5576193dbc9f9910070fb16fcda4656376f371b"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_geometry_channels_100k_s42_v2\\attempt_002\\arms\\distance_angle\\output",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/development_predictions.pt",
+      "sha256": "80de33b3cddb5a753ae90eb9e3d705a17d73f9afdc209af39167d4b97539fa1a"
+    },
+    {
+      "bytes": 84468734,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_geometry_channels_100k_s42_v2\\attempt_002\\arms\\distance_angle\\output",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/last_checkpoint.pt",
+      "sha256": "41ad1e08ab6159f4db5cb72362547d7878a43d9fb651bc0608365fbea172523d"
+    },
+    {
+      "bytes": 21091114,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_geometry_channels_100k_s42_v2\\attempt_002\\arms\\distance_only\\output",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/best_model.pt",
+      "sha256": "4feb7b3fbc50e1aa5ca8afcacd62bc3c20ba41e50f59fb9fb7bc91cd859b9106"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_geometry_channels_100k_s42_v2\\attempt_002\\arms\\distance_only\\output",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/development_predictions.pt",
+      "sha256": "aea1e3d65043ad57838a3b6f46ae97cd6355be38c93e7bd05ab0100867eb860d"
+    },
+    {
+      "bytes": 84435037,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_geometry_channels_100k_s42_v2\\attempt_002\\arms\\distance_only\\output",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/last_checkpoint.pt",
+      "sha256": "dc9f57f41ba0dd0103ee502bd4149b278f10bbce5d1d88c6c9682b0708922999"
+    },
+    {
+      "bytes": 21071318,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_input_init_pair_retry3_v1\\raw\\input_embedding_normal002",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/input_embedding_normal002/best_model.pt",
+      "sha256": "549fd02e6fa7257ab22918638c84472025a8bc3838ec3672f563183ada9e72f8"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_input_init_pair_retry3_v1\\raw\\input_embedding_normal002",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/input_embedding_normal002/development_predictions.pt",
+      "sha256": "96d2b09411118fbc91f8e008d8b088bf2558bc80ca3c40a1c99b8b8b818f65ae"
+    },
+    {
+      "bytes": 84390244,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_input_init_pair_retry3_v1\\raw\\input_embedding_normal002",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/input_embedding_normal002/last_checkpoint.pt",
+      "sha256": "0802e784424572834f4c0c9f513bc153e77d1d5add3e20273fbe23d97d8c4f6a"
+    },
+    {
+      "bytes": 21071318,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_input_init_pair_retry3_v1\\raw\\reference",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/reference/best_model.pt",
+      "sha256": "25a68792809a844986f97e8ae7a5c893c74dae59b17157a884b94e517cab44a7"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_input_init_pair_retry3_v1\\raw\\reference",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/reference/development_predictions.pt",
+      "sha256": "37b57447af7be634dc9c4482a1be569670f23f4247e3066acbe0efe8d7bddcff"
+    },
+    {
+      "bytes": 84390244,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_input_init_pair_retry3_v1\\raw\\reference",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/reference/last_checkpoint.pt",
+      "sha256": "d0fa35f13ed5d41961fc4cb4c8be5cf300f55fa0c08e69f43c9749804165f9f3"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_local_inductive_bias_100k_s42_v2\\attempt_002\\arms\\rwse16\\output",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/development_predictions.pt",
+      "sha256": "3cb9ff55ed21a9df562d01d1e5aa7330754080009a91504f113d4005ddceca80"
+    },
+    {
+      "bytes": 84463259,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_local_inductive_bias_100k_s42_v2\\attempt_002\\arms\\rwse16\\output",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/last_checkpoint.pt",
+      "sha256": "9c24fe1604c6946a1ba94231ae08e109665eb4c0a59630ef3c6a49146efc6946"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_local_inductive_bias_100k_s42_v2\\attempt_002\\arms\\rwse16_local_edge\\output",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/development_predictions.pt",
+      "sha256": "b306a04e1e485fbd6ea5a532cbc6859a1a1d185c095334bdbcc0e8fd269a18c4"
+    },
+    {
+      "bytes": 95793573,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_local_inductive_bias_100k_s42_v2\\attempt_002\\arms\\rwse16_local_edge\\output",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/last_checkpoint.pt",
+      "sha256": "dda32ec8d0e174a3da292e1834253b4604ab6d507f5285082f0a1e493473a0dd"
+    },
+    {
+      "bytes": 21209504,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_noisy_nodes_500k_s42_v1\\pcqm_gptrans_noisy_nodes_500k",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_nodes_500k_s42_v1/pcqm_gptrans_noisy_nodes_500k/best_model.pt",
+      "sha256": "022f883e1f3e2e2dd5f2fb52ed4e8120f276f6bf3d45135087cee05089f8084f"
+    },
+    {
+      "bytes": 802262,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_noisy_nodes_500k_s42_v1\\pcqm_gptrans_noisy_nodes_500k",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_nodes_500k_s42_v1/pcqm_gptrans_noisy_nodes_500k/best_predictions.pt",
+      "sha256": "931af40416a9c2f86df4dd8c36f5726f2e9af357ec60ffe9b4a4ea13c22ec0e6"
+    },
+    {
+      "bytes": 21209568,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_noisy_pair_norm_500k_s42_v1\\pcqm_gptrans_noisy_pair_norm_500k",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_pair_norm_500k_s42_v1/pcqm_gptrans_noisy_pair_norm_500k/best_model.pt",
+      "sha256": "112153e648928b10784d34b2f01d3f4de097ef51a35e3a9a536ef46bb08c2c72"
+    },
+    {
+      "bytes": 802262,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_noisy_pair_norm_500k_s42_v1\\pcqm_gptrans_noisy_pair_norm_500k",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_pair_norm_500k_s42_v1/pcqm_gptrans_noisy_pair_norm_500k/best_predictions.pt",
+      "sha256": "e699964532abf4edfe461c7247943649fc9159e9b91afcb870c54e264b67768e"
+    },
+    {
+      "bytes": 21071318,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1\\raw\\memory_message",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/best_model.pt",
+      "sha256": "de4e9a21a7b96cf47190a355244fca70bec826f4fc04a698df51e64f287a2a30"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1\\raw\\memory_message",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/development_predictions.pt",
+      "sha256": "22f3d9581f99af44e879e9eed59cf31303c6fc266cb8eac896cb86d49fae4292"
+    },
+    {
+      "bytes": 84390244,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1\\raw\\memory_message",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/last_checkpoint.pt",
+      "sha256": "d1587c599298933d23d1e493ec2c32b20eae434ea2940227ca81680baba8df16"
+    },
+    {
+      "bytes": 21071318,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1\\raw\\memory_value",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/best_model.pt",
+      "sha256": "0ea53502feab4285d6ebcd31bf08752587b9a31c9f2a806af24ae079dfc3e0a2"
+    },
+    {
+      "bytes": 802517,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1\\raw\\memory_value",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/development_predictions.pt",
+      "sha256": "6077ffa6608b4f36d2752565852f4072ec84e28566b5d2a2fc47647e5a600cff"
+    },
+    {
+      "bytes": 84390244,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1\\raw\\memory_value",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/last_checkpoint.pt",
+      "sha256": "29eeeb6cd2dc5fe79ce0ec08e5a70fe9aa8dc4064ef330433d5d53a6b365c784"
+    },
+    {
+      "bytes": 21086870,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_pair_norm_500k_s42_v1\\gptrans_pair_update_norm",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_norm_500k_s42_v1/gptrans_pair_update_norm/best_model.pt",
+      "sha256": "d46b0bbb9709a5933396a262a1e42323fc45b23e92c7121ffb66468f099529a5"
+    },
+    {
+      "bytes": 802262,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_gptrans_pair_norm_500k_s42_v1\\gptrans_pair_update_norm",
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_norm_500k_s42_v1/gptrans_pair_update_norm/best_predictions.pt",
+      "sha256": "731d67452b31bed74909023031eb9bbc122e8b0e022ff6e2c35bd3599d7113f4"
+    },
+    {
+      "bytes": 203498165,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_consistency_fusion_transfer\\inputs",
+      "path": "experiments/pcqm_k1_consistency_fusion_transfer/inputs/train_shard_0002.pt",
+      "sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a"
+    },
+    {
+      "bytes": 213447349,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_consistency_fusion_transfer\\inputs",
+      "path": "experiments/pcqm_k1_consistency_fusion_transfer/inputs/train_shard_0010.pt",
+      "sha256": "1a37dc5d458396b590044d978526822e6d1cb35df223de913a837dc7277d64c1"
+    },
+    {
+      "bytes": 803349,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_dropout_consistency\\failure_reconciliation_v1\\dropout_consistency2",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/development_predictions.pt",
+      "sha256": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a"
+    },
+    {
+      "bytes": 14786472,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_dropout_consistency\\failure_reconciliation_v1\\dropout_consistency2",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/selected_model.pt",
+      "sha256": "465aaeb18995df5b1e7a1b6a30b3e911ebee0afacdea2ae6004e060f3f2a5a9a"
+    },
+    {
+      "bytes": 803349,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_dropout_consistency\\recovery_reconciliation_v3\\dropout_mean2",
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/development_predictions.pt",
+      "sha256": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076"
+    },
+    {
+      "bytes": 14786408,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_dropout_consistency\\recovery_reconciliation_v3\\dropout_mean2",
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/selected_model.pt",
+      "sha256": "b3a7643041cca68d69768024cccb33b89a5b3b4811554f0ac309f7a22d8b6f05"
+    },
+    {
+      "bytes": 803349,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_consistency_residual_screen\\inputs",
+      "path": "experiments/pcqm_k1_consistency_residual_screen/inputs/consistency2.pt",
+      "sha256": "be88294358a33592064ddfb6ad2b3d77c95350351bb92adb6559bf77de409e8a"
+    },
+    {
+      "bytes": 803349,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_consistency_residual_screen\\inputs",
+      "path": "experiments/pcqm_k1_consistency_residual_screen/inputs/mean2.pt",
+      "sha256": "603fc5eba19e676ff3b5bcbb96b27d26221194bd641eb2bbce554bafa5458076"
+    },
+    {
+      "bytes": 44360595,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_dropout_consistency\\failure_reconciliation_v1\\dropout_consistency2",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/last_checkpoint.pt",
+      "sha256": "14781489d03c6c28f68d9bf73dd0849f2d236cc524b24590c142ad7b33ffcee0"
+    },
+    {
+      "bytes": 44360595,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_dropout_consistency\\failure_reconciliation_v1\\dropout_mean2",
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/last_checkpoint.pt",
+      "sha256": "9261185fc4ca17d57f10823769d2a850d5d475c2be0c4251dfa8d3ca2fce4e5b"
+    },
+    {
+      "bytes": 44360595,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_dropout_consistency\\recovery_reconciliation_v3\\dropout_mean2",
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/last_checkpoint.pt",
+      "sha256": "2409106e21988cf8809305fa7f391fc379b79095816bc0089990a0ff943b2fc6"
+    },
+    {
+      "bytes": 14779763,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_flag\\qualification",
+      "path": "experiments/pcqm_k1_flag/qualification/initial_state.pt",
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242"
+    },
+    {
+      "bytes": 803285,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_flag_kaggle3_v1",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_flag_kaggle3_v1/development_predictions.pt",
+      "sha256": "6d45f8343b44d7a8b2a88357994e16db8479ab0927e23d84fc1ff98401dffdc8"
+    },
+    {
+      "bytes": 44360531,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_flag_kaggle3_v1",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_flag_kaggle3_v1/last_checkpoint.pt",
+      "sha256": "5a530e38bda4ebb7ea3171a2e9d8d89d570ab2fc8f0667f0704dd570bcd7c950"
+    },
+    {
+      "bytes": 14786408,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_flag_kaggle3_v1",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_flag_kaggle3_v1/selected_model.pt",
+      "sha256": "8c0a3634e8a31b813db862a42878f90bbda02c8f839a06a512f987a6fe9d46bf"
+    },
+    {
+      "bytes": 44364883,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\k1",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/last_checkpoint.pt",
+      "sha256": "daf2a5ed7ae0d0c1c8ec9c5a7f670bd27396144487ea5f6991b47e388ad2ff1c"
+    },
+    {
+      "bytes": 44363987,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\k1",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/resume_source_20260919.pt",
+      "sha256": "a8a4c02868d419b21e0ae9a5d280c303c8fb5a60829c30249d976b63db1900db"
+    },
+    {
+      "bytes": 1179111,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\k1",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/valid_predictions_pass_01.pt",
+      "sha256": "11379da70550397275d95070200d8ed85ceb28729d06874d609158bed2ad1bf4"
+    },
+    {
+      "bytes": 1179111,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\k1",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/valid_predictions_pass_02.pt",
+      "sha256": "2bf39b9ed607243a386017d9a33c1973af5dcdb691a3bd645e3d295742b3b6dd"
+    },
+    {
+      "bytes": 1179111,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\ims\\convergence_resume_20260919\\remote_outputs\\k1",
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/valid_predictions_pass_03.pt",
+      "sha256": "aa9c09d461d788e094382fd2f30d2b86f16b0de0e0befdd31c699cbee1779cff"
+    },
+    {
+      "bytes": 44360595,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\k1_fusion_distill_v1_failure\\experiment\\distill_strong",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_strong/last_checkpoint.pt",
+      "sha256": "1562819776939470d092159df76845b241148af7555fcd99a674270bbcd695e9"
+    },
+    {
+      "bytes": 803349,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\k1_fusion_distill_v2_recovery\\experiment\\distill_strong",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/development_predictions.pt",
+      "sha256": "6814f97d1c5f2fa9caf5ca2b04167d6c68c8e07face08390ef8a672720fe16f8"
+    },
+    {
+      "bytes": 44360595,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\k1_fusion_distill_v2_recovery\\experiment\\distill_strong",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/last_checkpoint.pt",
+      "sha256": "cc15c7b514019d693e8df5ecbb4682284a8f9785417292d3fe285c1face67900"
+    },
+    {
+      "bytes": 14786408,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\k1_fusion_distill_v2_recovery\\experiment\\distill_strong",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/selected_model.pt",
+      "sha256": "0aa4e602bef140bb4eeebdce822e42e4e5250a398d6a77e04609eea64653bf61"
+    },
+    {
+      "bytes": 803349,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\k1_fusion_distill_v1_failure\\experiment\\distill_weak",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_weak/development_predictions.pt",
+      "sha256": "cd5a0d5735b3bbaefbeb319260c2bf0939d852cb91eda157ef77966879effa3c"
+    },
+    {
+      "bytes": 44360595,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\k1_fusion_distill_v1_failure\\experiment\\distill_weak",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_weak/last_checkpoint.pt",
+      "sha256": "ec213c3562eb3fcbd63984052705bee1299876fe605e91226b13f64919facd5a"
+    },
+    {
+      "bytes": 14786408,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\k1_fusion_distill_v1_failure\\experiment\\distill_weak",
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_weak/selected_model.pt",
+      "sha256": "d0592d12b73ac6f0aa57f9a084c88480eca21047f3179e9c80e88f7a29f06ddc"
+    },
+    {
+      "bytes": 803349,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_ssma_accuracy_kaggle3_v1\\reference\\family_outputs",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/reference/family_outputs/development_predictions.pt",
+      "sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82"
+    },
+    {
+      "bytes": 44360595,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_ssma_accuracy_kaggle3_v1\\reference\\family_outputs",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/reference/family_outputs/last_checkpoint.pt",
+      "sha256": "fa279b97533a3f274367a28e3f036e123b6512f43d2e992e6105733febe2d590"
+    },
+    {
+      "bytes": 14786408,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_ssma_accuracy_kaggle3_v1\\reference\\family_outputs",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/reference/family_outputs/selected_model.pt",
+      "sha256": "4a7dab43f50f5f3216b224374c213a01cc82cfb4160dcd6d54aab1ef614fce17"
+    },
+    {
+      "bytes": 803349,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_ssma_accuracy_kaggle3_v1\\ssma\\family_outputs",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/development_predictions.pt",
+      "sha256": "34c8f67326cc5ff797ca1e405c9338b7e2dec4383f1b709e8977e6bced1201a6"
+    },
+    {
+      "bytes": 45134029,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_ssma_accuracy_kaggle3_v1\\ssma\\family_outputs",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/last_checkpoint.pt",
+      "sha256": "ede3a6dc3424877c1d1a2d61abeef57517a9bcc095ab615e4fb6a98942c7f594"
+    },
+    {
+      "bytes": 15263069,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_ssma_accuracy_kaggle3_v1\\ssma\\family_outputs",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/selected_model.pt",
+      "sha256": "e8245422a788057da89521a27c7a452bd89f0ea9124d1f83e56473e1497afeb0"
+    },
+    {
+      "bytes": 518095,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\staging\\pair_value_source_50a6db5_v2",
+      "path": "platforms/_records/kaggle/staging/pair_value_source_50a6db5_v2/source.tar.gz",
+      "sha256": "9389a37bdaf11b1e81da1ea30578b28a7f908fbda66daf469234dacbfcd81353"
+    },
+    {
+      "bytes": 802398,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\k1_pair_value_s42_v2\\pcqm_k1_pair_value_100k\\neural_atom_k1_pair_token_value_decoupled",
+      "path": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/best_development_payload.pt",
+      "sha256": "043f7ccc510fba608c3650a57468a952072c874ca97ac40187060ea5537e3634"
+    },
+    {
+      "bytes": 14903903,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\k1_pair_value_s42_v2\\pcqm_k1_pair_value_100k\\neural_atom_k1_pair_token_value_decoupled",
+      "path": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/best_model.pt",
+      "sha256": "0ee39941962e140b8bb86377eccdae636763362e6629c7f6665d8488b35b3152"
+    },
+    {
+      "bytes": 44673063,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\k1_pair_value_s42_v2\\pcqm_k1_pair_value_100k\\neural_atom_k1_pair_token_value_decoupled",
+      "path": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/last_checkpoint.pt",
+      "sha256": "54ca81b6f855a5bd816819f1349ae11db0510833ac596ef672eec3d9d55462ba"
+    },
+    {
+      "bytes": 803285,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_slot_width96_kaggle3_v1\\reconciliation_v1\\family_outputs\\slot96",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/family_outputs/slot96/development_predictions.pt",
+      "sha256": "071dd0479d8c0d968e0200954eaa7595f28fe4e4595302be4ffa6a38c9d7c749"
+    },
+    {
+      "bytes": 46700307,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_slot_width96_kaggle3_v1\\reconciliation_v1\\family_outputs\\slot96",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/family_outputs/slot96/last_checkpoint.pt",
+      "sha256": "9210381078767342e7b0dba367aef821b1fee9a4e979db90a3bf6a78dd4eac5e"
+    },
+    {
+      "bytes": 15566312,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_slot_width96_kaggle3_v1\\reconciliation_v1\\family_outputs\\slot96",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/family_outputs/slot96/selected_model.pt",
+      "sha256": "5c1e44ed33928d23ada7eddf410a43117cbb43edb83579f156c420007faf5d4d"
+    },
+    {
+      "bytes": 43843,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_slot_width96",
+      "path": "experiments/pcqm_k1_slot_width96/ablation_rows.npz",
+      "sha256": "b9187e7482b73024cff55861e8a8af6e39f917ddb43374b5c5db94de5391e6eb"
+    },
+    {
+      "bytes": 15564953,
+      "custody": "D:\\w\\k1-ema-night\\experiments\\pcqm_k1_slot_width96",
+      "path": "experiments/pcqm_k1_slot_width96/qualification_initial_state.pt",
+      "sha256": "31f9984c6fcdb7a0e02e8b14ae30c4cbf5925123be4e040f18d536c6dd36d119"
+    },
+    {
+      "bytes": 803349,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_width256_reference_kaggle3_v1\\k1_pair\\reference",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/development_predictions.pt",
+      "sha256": "857fe31475d6728c3c9b0612571a0397a67db93815714c20ac107e06e44d4e82"
+    },
+    {
+      "bytes": 44360595,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_width256_reference_kaggle3_v1\\k1_pair\\reference",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/last_checkpoint.pt",
+      "sha256": "fa279b97533a3f274367a28e3f036e123b6512f43d2e992e6105733febe2d590"
+    },
+    {
+      "bytes": 14786408,
+      "custody": "D:\\w\\k1-ema-night\\platforms\\_records\\kaggle\\training\\pcqm_k1_width256_reference_kaggle3_v1\\k1_pair\\reference",
+      "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/selected_model.pt",
+      "sha256": "4a7dab43f50f5f3216b224374c213a01cc82cfb4160dcd6d54aab1ef614fce17"
+    }
+  ],
+  "scope": "ignored existing exact-byte copies; unchanged portable validators"
+}
