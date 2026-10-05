@@ -6,6 +6,12 @@
 
 ## Server active screen
 
+The user separately authorized one Kaggle2 [independent pair-transition100K
+screen](experiments/pcqm_gptrans_pair_transition_100k/protocol.md), against the
+accepted correctedG1+EMA999 reference. Local preparation is in progress;
+remote execution is not yet asserted. No GRIT, extra seed or500K training is
+released. The user-reported Kaggle1 dual500K remains outside server custody.
+
 The authorized T4x2 [final atom/bond readout dual](experiments/pcqm_gptrans_readout_100k/gpu/submission_record.md)
 is closed: both arms are independently accepted, STRICT_CAUSAL, and admitted
 as complete Replay pairs, but neither supports promotion; preserve the

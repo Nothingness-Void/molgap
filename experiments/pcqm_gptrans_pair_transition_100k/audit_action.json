@@ -1,0 +1,15 @@
+{
+  "action": "separate-post100k-frozen-weight-portability",
+  "purpose": "NO_TRAIN",
+  "release_state": "BLOCKED_UNTIL_ACCEPTED_100K_TERMINAL",
+  "candidate_model_hash": null,
+  "reference_authority": "experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md",
+  "fixed500k_internal_development_rows": [500000, 550000],
+  "inference_batch": 128,
+  "precision": "FP32",
+  "tf32": false,
+  "reproduction_tolerances_eV": {"maximum_absolute_prediction_difference": 0.001, "mae_difference": 0.0001},
+  "preconditions": ["accepted100K terminal", "frozen candidate checkpoint/source/transform hashes", "separate prospective NO_TRAIN plan", "accepted fixed500K immutable role/shard identity", "hash-bound reference500K saved predictions", "candidate100K prediction reproduction", "qualified candidate inference loader", "idempotent controller release"],
+  "artifacts": ["atomic5000-row prediction chunks", "source_idx and targets", "applicable role events", "observed native cost", "hash/source/runtime/checkpoint manifest", "paired molecule analysis", "independently accepted terminal RML"],
+  "forbidden": ["optimization", "transform refit", "500K training prefix", "official validation", "test-dev", "test-challenge", "automatic500K training"]
+}

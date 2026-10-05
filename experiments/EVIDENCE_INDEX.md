@@ -64,3 +64,6 @@ those claims distinct.
 
 Read the linked decision before using a verdict. Live jobs and release order are
 owned by [`CURRENT_STATE.md`](../CURRENT_STATE.md) and [`ROADMAP.md`](../ROADMAP.md).
+
+The 2026-10-05 [independent pair-transition screen](pcqm_gptrans_pair_transition_100k/decision.md)
+was prospectively authorized on Kaggle2; no scientific result was inferred.
