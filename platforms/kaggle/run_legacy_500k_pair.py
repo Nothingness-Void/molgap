@@ -26,7 +26,7 @@ from molgap.pcqm_composed_500k import make_model, scientific_contract, target_st
 launch = Path(sys.argv[1])
 config = json.loads(launch.read_text())
 root, manifest = find_cache(FIXED_500K_MANIFEST_SHA256)
-if not root.resolve().is_relative_to((Path('/kaggle/input') / config['graph_mount']).resolve()):
+if config['graph_mount'] not in root.relative_to(Path('/kaggle/input')).parts:
     raise RuntimeError('Accepted graph identity mounted under unexpected dataset')
 roles = load_roles(root, manifest)
 for arm in config['arms']:
@@ -62,7 +62,8 @@ def _main():
         raise RuntimeError("Expected one independently pinned legacy500K launch")
     launch = launches[0]
     config = json.loads(launch.read_text(encoding="utf-8"))
-    if launch.parent != mounted / config["source_mount"] or not (mounted / config["graph_mount"]).is_dir():
+    graph_mounts = [p for p in mounted.rglob(config["graph_mount"]) if p.is_dir()]
+    if launch.parent.name != config["source_mount"] or len(graph_mounts) != 1:
         raise RuntimeError("Frozen source/graph dataset mounts changed")
     if config["format"] != "molgap-legacy-500k-pair-v1":
         raise RuntimeError("Unsupported legacy500K launch")
@@ -188,10 +189,19 @@ def _main():
 
 def main():
     global STARTED
-    STARTED = time.monotonic()
-    started_utc = datetime.now(timezone.utc).isoformat()
+    STARTED = float(os.environ.get("MOLGAP_BOOTSTRAP_STARTED", time.monotonic()))
+    started_utc = os.environ.get("MOLGAP_BOOTSTRAP_UTC", datetime.now(timezone.utc).isoformat())
     succeeded = False
     try:
+        if sys.version_info[:2] != (3, 11):
+            # The owning Torch2.4.1 recipe has no Python3.13 wheel. Reuse uv's
+            # interpreter/venv management; preserve the full bootstrap cost clock.
+            subprocess.run([sys.executable, "-m", "pip", "install", "-q", "uv"], check=True)
+            environment = Path("/kaggle/temp/molgap-legacy500k-python311")
+            subprocess.run([sys.executable, "-m", "uv", "venv", "--python", "3.11", "--seed", str(environment)], check=True)
+            os.environ.update(MOLGAP_BOOTSTRAP_STARTED=str(STARTED), MOLGAP_BOOTSTRAP_UTC=started_utc)
+            python = str(environment / "bin/python")
+            os.execv(python, [python, "-u", str(Path(__file__).resolve())])
         _main()
         succeeded = True
     finally:
