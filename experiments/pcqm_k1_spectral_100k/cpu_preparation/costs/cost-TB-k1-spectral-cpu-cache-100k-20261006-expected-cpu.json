@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "cpu-cache-001",
+  "category": "cache_build",
+  "cost_event_id": "cost-TB-k1-spectral-cpu-cache-100k-20261006-expected-cpu",
+  "evidence_ref": "experiments/pcqm_k1_spectral_100k/protocol.md",
+  "hardware": "desktop CPU; one BLAS thread; no accelerator work",
+  "measurement": {
+    "cpu_hours": {
+      "status": "estimated",
+      "value": 0.25
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.25
+    }
+  },
+  "platform": "local",
+  "run_id": "TB-k1-spectral-cpu-cache-100k-20261006:cpu",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-spectral-cpu-cache-100k-20261006"
+}

@@ -1,0 +1,36 @@
+{
+  "format": "molgap-k1-spectral-cache-v1",
+  "identity": {
+    "configuration": {
+      "layer": 6,
+      "latent_channels": 64,
+      "frequency_basis": 8,
+      "laplacian": "undirected-unweighted-symmetric-normalized",
+      "eigensystem": "full-float64-cpu-to-float32",
+      "filter": "per-channel-gaussian-eigenvalue",
+      "gaussian_width": 0.25,
+      "return_initialization": "zero",
+      "seed": 42
+    },
+    "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "algorithm_source_sha256": "a9c8a5d825109cc4b267fceb8cf6e56fa460aae392d56e5719ddded43d2a2eb1",
+    "role_rows": {
+      "train": 100000,
+      "development": 50000
+    }
+  },
+  "cache_sha256": "016c1fecad6461a7be3a66a12c9d33d11cd5049bfe0e487707c19ead302fe1a7",
+  "maximum_nodes": 18,
+  "tensor_bytes": 158898900,
+  "ordered_topology_sha256": {
+    "train": "18a4b63e8dff1ef7e4afa08b20b609b9b62e0b8ac1433e4949017f300c3603aa",
+    "development": "7d06df070d6810ae08c05c7c15540c2da9671b20cc53a0afd001faa396cab958"
+  },
+  "ordered_source_idx_sha256": {
+    "train": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+    "development": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4"
+  },
+  "cpu_process_seconds": 23.390625,
+  "wall_seconds": 24.059616400001687,
+  "geometry_model_input": false
+}
