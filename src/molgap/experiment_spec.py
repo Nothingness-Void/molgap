@@ -250,7 +250,7 @@ def _arm(arm: dict) -> None:
             artifacts = _object(config["input_artifacts"], "cache manifest", "spectral input artifacts")
             for pointer in artifacts.values():
                 _object(pointer, "path sha256", "spectral artifact pin")
-                _repo_path(pointer["path"], "spectral input path")
+                _repo_path(pointer["path"], "spectral input path", output=True)
                 _digest(pointer["sha256"], "spectral input digest")
         else:
             _object(addon["config"], "", "addon.config")
@@ -378,3 +378,4 @@ class ExperimentSpec:
                 family = arm["family"]
                 return FAMILIES[(family["name"], family["version"])]
         raise ValueError(f"Unknown arm: {arm_id}")
+

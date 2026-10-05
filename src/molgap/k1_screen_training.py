@@ -485,7 +485,7 @@ def _validate_arm_binding(spec, context, mode):
         for pointer in artifacts.values():
             if set(pointer) != {"path", "sha256"}:
                 raise ValueError("Malformed spectral input artifact")
-            _repo_path(pointer["path"], "spectral cache path")
+            _repo_path(pointer["path"], "spectral cache path", output=True)
             _digest(pointer["sha256"], "spectral cache digest")
 
 
@@ -870,3 +870,4 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         "source_archive_sha256": context.source_archive_sha256,
         "runtime_certificate_id": canonical_fingerprint(certificate)}, hardware=hardware,
         observed_costs=costs)
+
