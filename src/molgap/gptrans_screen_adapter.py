@@ -31,7 +31,7 @@ def gptrans_screen_arguments(
     if metadata.variant not in {"degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scale_ema999",
                                 "degree_group_decay_ema999", "degree_path_endpoints_ema999", "degree_pair_depth_scale_ema999", "degree_path_bond_mean_ema999",
                                 "degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999", "degree_decay001_ema999",
-                                "degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999"}:
+                                "degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999", "degree_pair_transition_ema999"}:
         raise ValueError("This variant has no qualified per-arm V5 trace wiring")
     arm = next(item for item in declaration["arms"] if item["arm_id"] == arm_id)
     if arm["training"]["overrides"]:

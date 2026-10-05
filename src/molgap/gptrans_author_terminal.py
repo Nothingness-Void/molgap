@@ -19,7 +19,7 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         *, experiment_ref: str = "experiments/pcqm_gptrans_author_alignment") -> list[dict]:
     root = Path(repo_root).resolve()
     base = root / experiment_ref
-    capacity_studies = {"experiments/pcqm_gptrans_capacity_nodes_100k", "experiments/pcqm_gptrans_capacity_relations_100k"}
+    capacity_studies = {"experiments/pcqm_gptrans_capacity_nodes_100k", "experiments/pcqm_gptrans_capacity_relations_100k", "experiments/pcqm_gptrans_pair_transition_100k"}
     followup = experiment_ref in capacity_studies or experiment_ref in {"experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k", "experiments/pcqm_gptrans_path_ema_combination_100k", "experiments/pcqm_gptrans_readout_100k", "experiments/pcqm_gptrans_decay_clock_100k"}
     if experiment_ref not in capacity_studies and experiment_ref not in {"experiments/pcqm_gptrans_author_alignment", "experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k", "experiments/pcqm_gptrans_path_ema_combination_100k", "experiments/pcqm_gptrans_readout_100k", "experiments/pcqm_gptrans_decay_clock_100k"}:
         raise ValueError("Unsupported terminal experiment adapter")

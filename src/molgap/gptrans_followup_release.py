@@ -78,17 +78,20 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         recipe.update(initial_state_sha256=accepted["degree_initial_file_sha256"], ema_decay=.999 if ema or terminal_reference else .9999,
             platform=(study or {}).get("platform_id", "kaggle3"), independent_models=1, variant=mode, reference_id=bundle["reference_id"])
         from .gptrans_capacity import MODES as capacity_modes
-        capacity = mode in capacity_modes
+        transition = mode == "degree_pair_transition_ema999"
+        capacity = mode in capacity_modes or transition
         scale = mode == "scale_ema"
         prepared_initial, prepared_file = initial, "degree_initial_state.pt"
         prepared_tensor_sha = source_arm["initialization"]["state_sha256"]
         expected_parameters = recipe["model_parameters"]
         if capacity:
-            from .gptrans_capacity import freeze_initial, configuration
+            if transition:
+                from .gptrans_pair_transition import freeze_initial, configuration, load_initial, architecture_identity
+            else:
+                from .gptrans_capacity import freeze_initial, configuration, load_initial, architecture_identity
             prepared_file = mode + "_initial.pt"
             prepared_initial = root / "platforms/_records/kaggle/initializations" / prepared_file
             if prepared_initial.exists():
-                from .gptrans_capacity import load_initial, architecture_identity
                 from .pcqm_gptrans_v4 import _state_sha256
                 model = load_initial(mode, prepared_initial)
                 facts = {"parameters": sum(p.numel() for p in model.parameters()),
@@ -127,7 +130,7 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         arm.update(arm_id=mode, addons=[{"name": mode, "version": "1", "config": {}, "source_sha256": implementation}])
         if capacity:
             arm["initialization"]["state_sha256"] = prepared_tensor_sha
-            arm["addons"][0]["source_sha256"] = normalized_source_sha256(root / "src/molgap/gptrans_capacity.py")
+            arm["addons"][0]["source_sha256"] = normalized_source_sha256(root / "src/molgap" / ("gptrans_pair_transition.py" if transition else "gptrans_capacity.py"))
         if scale:
             arm.update(family={"name":"gptrans_scale_ema","version":"1"}, addons=[], addon_semantics="baseline",
                 scientific_role="ablation")
@@ -281,6 +284,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         workflow["artifacts"] = {**capacity_inputs, "target_transform.json": workflow["artifacts"]["target_transform.json"]}
         workflow["initial_states"] = {mode: arms_config[mode]["initial_file"] for mode in MODES}
         workflow["required_modules"].append("molgap.gptrans_capacity")
+        if "degree_pair_transition_ema999" in MODES:
+            workflow["required_modules"].append("molgap.gptrans_pair_transition")
         if "scale_ema" in MODES:
             workflow["artifacts"]["degree_initial_state.pt"] = UploadArtifact.from_file(initial).to_workflow()
     if "scale_ema" in MODES:

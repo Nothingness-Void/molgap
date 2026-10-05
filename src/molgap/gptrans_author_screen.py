@@ -23,6 +23,7 @@ MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degree_scal
          "degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999", "degree_decay001_ema999")
 MODES += ("degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999")
 MODES += ("scale_ema",)
+MODES += ("degree_pair_transition_ema999",)
 
 
 def validate_arm_allocation(config):

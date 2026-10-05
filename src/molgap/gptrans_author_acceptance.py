@@ -94,7 +94,10 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         folder = screen / mode
         expected_parameters = arm.get("expected_parameters", EXPECTED_PARAMETERS)
         if "expected_parameters" in arm:
-            from .gptrans_capacity import PARAMETER_CAP, architecture_identity
+            if mode == "degree_pair_transition_ema999":
+                from .gptrans_pair_transition import PARAMETER_CAP, architecture_identity
+            else:
+                from .gptrans_capacity import PARAMETER_CAP, architecture_identity
             require(0 < expected_parameters <= PARAMETER_CAP and architecture_identity(mode) == arm["comparison_identity"]["architecture_config_identity"], "Capacity allowance/implementation")
         training = folder / "training"
         manifest, observed, preflight = (load(training / "completion_manifest.json"),
@@ -115,9 +118,13 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         require(preflight["accepted"] is True and preflight["parameters"] == expected_parameters, "Preflight")
         if "expected_parameters" in arm:
             with tarfile.open(package / "source.tar.gz", "r:gz") as archive:
-                capacity_sha = hashlib.sha256(archive.extractfile("src/molgap/gptrans_capacity.py").read()).hexdigest()
+                module = "gptrans_pair_transition.py" if mode == "degree_pair_transition_ema999" else "gptrans_capacity.py"
+                capacity_sha = hashlib.sha256(archive.extractfile("src/molgap/" + module).read()).hexdigest()
             require(preflight["capacity_implementation_sha256"] == capacity_sha and
                 preflight["capacity_architecture_identity"] == arm["comparison_identity"]["architecture_config_identity"], "Capacity source binding")
+        if mode == "degree_pair_transition_ema999":
+            expected_config = __import__("molgap.gptrans_pair_transition", fromlist=["configuration"]).configuration(mode)
+            require(observed.get("capacity_configuration") == expected_config, "Pair-transition configuration")
         validate_runtime_certificate(preflight["runtime_certificate"], observed)
         require(observed["runtime_certificate_id"] == manifest["runtime_certificate_id"] == preflight["runtime_certificate_id"], "Runtime binding")
         if mode in {"path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_ema999"}:
@@ -138,6 +145,12 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         rows = load(training / "trace.json")["rows"]
         require((trace["trajectory_id"], trace["run_id"]) == (arm["trajectory_id"], observed["run_id"]), "Trace identity")
         require(len(trace["observations"]) == len(rows) == EPOCHS, "Trace coverage")
+        if mode == "degree_pair_transition_ema999":
+            for row in rows:
+                diagnostic = row.get("pair_transition_diagnostics", {})
+                require(diagnostic.get("before_blocks") == [3, 6, 9, 12], "Transition diagnostic insertion identity")
+                values = diagnostic.get("input_return_output_rms", [])
+                require(len(values) == 4 and all(len(v) == 3 and all(math.isfinite(x) for x in v) for v in values), "Finite transition diagnostics")
         require(trace["metric_semantics"] == ref_trace["metric_semantics"], "Trace metric semantics")
         for i, (row, native, ref_row) in enumerate(zip(rows, trace["observations"], ref_trace["observations"])):
             require(row["epoch"] == i and native["epoch_or_pass"] == i + 1, "Epoch order")

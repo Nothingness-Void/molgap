@@ -60,7 +60,8 @@ def _resolve(spec: ExperimentSpec, arm_id: str):
                              ("degree_group_decay_ema999", "1"), ("degree_path_endpoints_ema999", "1"),
                              ("degree_pair_depth_scale_ema999", "1"), ("degree_path_bond_mean_ema999", "1"),
                              ("degree_node_mean_readout_ema999", "1"), ("degree_bond_mean_readout_ema999", "1"), ("degree_decay001_ema999", "1"),
-                             ("degree_node352_ema999", "1"), ("degree_pair64_ema999", "1"), ("degree_ffn2_ema999", "1"), ("degree_bond_local_ema999", "1")):
+                             ("degree_node352_ema999", "1"), ("degree_pair64_ema999", "1"), ("degree_ffn2_ema999", "1"), ("degree_bond_local_ema999", "1"),
+                             ("degree_pair_transition_ema999", "1")):
             raise ValueError("Unsupported GPTrans addon/version")
         if ADDONS[addon_key].family != key[0]:
             raise ValueError("Incompatible GPTrans addon family")
