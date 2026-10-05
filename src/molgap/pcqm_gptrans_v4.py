@@ -405,14 +405,17 @@ def _forward(model, batch):
 
 
 class ExponentialMovingAverage:
-    def __init__(self, model) -> None:
+    def __init__(self, model, decay=EMA_DECAY) -> None:
+        if not 0.0 < decay < 1.0:
+            raise ValueError("EMA decay must lie strictly between zero and one")
+        self.decay = float(decay)
         self.state = {name: value.detach().clone() for name, value in model.state_dict().items()}
 
     def update(self, model) -> None:
         for name, value in model.state_dict().items():
             target = self.state[name]
             if value.is_floating_point():
-                target.mul_(EMA_DECAY).add_(value.detach(), alpha=1.0 - EMA_DECAY)
+                target.mul_(self.decay).add_(value.detach(), alpha=1.0 - self.decay)
             else:
                 target.copy_(value)
 

@@ -39,6 +39,18 @@ class FamilyContract:
 
 
 FAMILIES = MappingProxyType({
+    ("neural_atom_k1", "3"): FamilyContract(
+        "neural_atom_k1", "3", "molgap.pcqm_composed_500k",
+        "pcqm_k1_pretrained_consistency_500k", "ogb-atom9-bond3-rwse16-v1",
+        ("train", "development"), "seed42-epoch-global-randperm-v1",
+        "train-500k-mean-unbiased-std",
+    ),
+    ("gptrans_t", "2"): FamilyContract(
+        "gptrans_t", "2", "molgap.pcqm_composed_500k",
+        "pcqm_gptrans_g1_bond_local_ema999_500k", "ogb-atom9-bond3-shortest-path-cap20",
+        ("train", "development"), "seed42-epoch-global-randperm-v1",
+        "fixed-train-100k-mean-sample-std",
+    ),
     ("edge_state_gps", "1"): FamilyContract(
         "edge_state_gps", "1", "molgap.edge_state_model_only_v1",
         "edge_state_model_only_v1", "ogb-atom9-bond3-rwse16-v1",
@@ -200,7 +212,10 @@ def _arm(arm: dict) -> None:
     _object(training["overrides"], "", "training.overrides")
     if init["seed"] != 42:
         raise ValueError("Frozen recipe initialization requires seed 42")
-    _reference(training["objective"], "training.objective", name="normalized-gap-l1")
+    objective = ("normalized-gap-l1-dropout-consistency" if
+                 (family["name"], family["version"]) == ("neural_atom_k1", "3")
+                 else "normalized-gap-l1")
+    _reference(training["objective"], "training.objective", name=objective)
     _reference(training["sampler"], "training.sampler", name=contract.sampler)
     _reference(training["transform"], "training.transform", name=contract.transform)
 
