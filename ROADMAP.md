@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| 1 | C-GPTRANS-PAIR-TRANSITION | Release one separately authorized Kaggle2 independent pair-state transition screen, without reference retraining. | [Frozen protocol](experiments/pcqm_gptrans_pair_transition_100k/protocol.md); strict terminal evidence and actual Replay-pair admission before interpretation |
+| — | C-GPTRANS-PAIR-TRANSITION | Closed without promotion; exact intervention accepted as a complete Replay pair, with the disconnected final-branch limitation retained. | Preserve the [terminal interpretation](experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md); any corrected mechanism or new family needs separate release authority |
 | — | C-GPTRANS-CAPACITY | Closed four-study campaign; no architecture promotion. Preserve the500K EMA correction observation without a causal Replay/full-scale claim. | [Capacity falsifier](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/results/interpretation.md) and [accepted local/scale synthesis](experiments/pcqm_gptrans_capacity_relations_100k/gpu/results/interpretation.md); separate authority before reopening |
 | — | C-GPTRANS-DECAY-CLOCK | Closed without promotion; optimizer intervention accepted and complete Replay pair verified. | Preserve the [endpoint and trajectory interpretation](experiments/pcqm_gptrans_decay_clock_100k/gpu/results/interpretation.md); no coefficient grid or automatic scale |
 | — | C-GPTRANS-EMA-PORTABILITY | Accepted NO_TRAIN portability; no training Replay claim. | Preserve the [terminal audit](experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md) |
