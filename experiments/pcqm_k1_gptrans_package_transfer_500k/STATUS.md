@@ -1,6 +1,6 @@
 # Execution status
 
-Last authoritative observation: 2026-10-05T07:34 UTC. Kaggle1 kernel
+Last authoritative observation: [startup snapshot](submission_v2/startup_observation.json). Kaggle1 kernel
 `nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1`, ID137144136,
 version2 is RUNNING. [Response](submission_v2/platform_response.json),
 [scheduler snapshot](submission_v2/scheduler_snapshot.json), and
