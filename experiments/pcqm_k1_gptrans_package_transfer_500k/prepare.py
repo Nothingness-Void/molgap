@@ -33,7 +33,7 @@ REQUIRED_MODULES = ["molgap.pcqm_500k_v4_evidence", "molgap.pcqm_composed_500k",
 EXTRA_SOURCE = (
     "platforms/kaggle/run_legacy_500k_pair.py", "src/molgap/pcqm_500k_v4_evidence.py",
     "src/molgap/pcqm_composed_500k.py", "src/molgap/pcqm_k1_scale_runner.py",
-    "src/molgap/pcqm_k1_scale.py", "src/molgap/pcqm_gap_data.py",
+    "src/molgap/pcqm_k1_scale.py",
     "src/molgap/futility_gate.py", "src/molgap/k1_pretrained_combo.py",
     "src/molgap/gptrans_capacity.py",
 )
