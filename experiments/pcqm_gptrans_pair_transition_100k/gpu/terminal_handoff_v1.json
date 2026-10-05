@@ -1,0 +1,42 @@
+{
+  "format": "molgap-server-terminal-handoff-v1",
+  "event": {
+    "attempt_id": "v1",
+    "claimed_at": "2026-10-05T17:55:44Z",
+    "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "created_at": "2026-10-05T17:50:26Z",
+    "decision_ref": "experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md",
+    "delivered_at": "2026-10-05T17:51:19Z",
+    "delivery_attempts": 1,
+    "event_id": "evt-06ab397380101b855076bb84",
+    "event_status": "CLOSED",
+    "event_type": "COMPLETE",
+    "monitor_generation": 1,
+    "outcome": {
+      "actual_complete_replay_pair": true,
+      "artifact_status": "accepted",
+      "comparison_class": "STRICT_CAUSAL",
+      "disconnected_final_branch": true,
+      "execution_status": "COMPLETE",
+      "material_gate_passed": false,
+      "scientific_status": "INCONCLUSIVE",
+      "successor_submitted": false
+    },
+    "payload": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-pair-transition-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-pair-transition-s42",
+        "kernel_id": 137191673,
+        "version": 1
+      },
+      "version": 1
+    },
+    "run_id": "kaseichou/molgap-gptrans-pair-transition-s42:v1",
+    "finalized_at": "2026-10-05T18:04:05Z"
+  },
+  "controller_decision_ref": "experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md",
+  "monitor_binding_closed": true,
+  "existing_heartbeat_status": "PAUSED",
+  "new_training_submitted": false
+}

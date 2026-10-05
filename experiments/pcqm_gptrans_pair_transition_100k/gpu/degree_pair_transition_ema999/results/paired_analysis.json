@@ -1,0 +1,64 @@
+{
+  "absolute_error_delta_quantiles_eV": [
+    -2.862265110015869,
+    -0.09436664581298829,
+    -0.0424494743347168,
+    -1.049041748046875e-05,
+    0.04163038730621338,
+    0.09466996192932127,
+    1.4467854499816895
+  ],
+  "candidate_mae_eV": 0.14400946018636226,
+  "candidate_minus_reference_eV": -0.00022316895961761474,
+  "candidate_win_fraction": 0.5001,
+  "paired_row_bootstrap": {
+    "ci95": [
+      -0.0010585799963474276,
+      0.0006106318333148953
+    ],
+    "delta": -0.00022316895961761474,
+    "n_bootstrap": 5000,
+    "probability_better": 0.6978,
+    "seed": 20260912
+  },
+  "posthoc_reference_error_quintiles": [
+    {
+      "candidate_mae_eV": 0.05430492258071899,
+      "candidate_minus_reference_eV": 0.03851690330505371,
+      "reference_error_quintile": 1,
+      "reference_mae_eV": 0.015788019275665283,
+      "rows": 10000
+    },
+    {
+      "candidate_mae_eV": 0.06812566202878952,
+      "candidate_minus_reference_eV": 0.01767560577392578,
+      "reference_error_quintile": 2,
+      "reference_mae_eV": 0.05045005625486374,
+      "rows": 10000
+    },
+    {
+      "candidate_mae_eV": 0.09578806674480438,
+      "candidate_minus_reference_eV": 0.0005640982866287231,
+      "reference_error_quintile": 3,
+      "reference_mae_eV": 0.09522396845817566,
+      "rows": 10000
+    },
+    {
+      "candidate_mae_eV": 0.1481679811000824,
+      "candidate_minus_reference_eV": -0.017577443861961365,
+      "reference_error_quintile": 4,
+      "reference_mae_eV": 0.16574542496204375,
+      "rows": 10000
+    },
+    {
+      "candidate_mae_eV": 0.35366066847741606,
+      "candidate_minus_reference_eV": -0.04029500830173492,
+      "reference_error_quintile": 5,
+      "reference_mae_eV": 0.39395567677915094,
+      "rows": 10000
+    }
+  ],
+  "reference_mae_eV": 0.14423262914597987,
+  "rows": 50000,
+  "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+}

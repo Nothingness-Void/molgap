@@ -1,0 +1,38 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-pair-transition-s42",
+  "version": 1,
+  "files": [
+    {
+      "path": "gptrans_pair_transition/degree_pair_transition_ema999/arm_binding.json",
+      "sha256": "28132b666044320b07da8c8911bfb9713b1bfcd9118476b266555e2e3f58eab9"
+    },
+    {
+      "path": "gptrans_pair_transition/degree_pair_transition_ema999/preflight/preflight.json",
+      "sha256": "1ab1403a9930e8c0bfb2f1ae996f5aa476f02bc299ca5c32a9ce8bce36036a59"
+    },
+    {
+      "path": "gptrans_pair_transition/degree_pair_transition_ema999/training/completion_manifest.json",
+      "sha256": "14eb394d224ee2ff535db6f32b808d6d60be66632416ab570a653da249af68d2"
+    },
+    {
+      "path": "gptrans_pair_transition/degree_pair_transition_ema999/training/frozen_reference.json",
+      "sha256": "fa68363cabdf09570024cceafaebadf8ca63c7ebc803531d950d14dacf511549"
+    },
+    {
+      "path": "gptrans_pair_transition/degree_pair_transition_ema999/training/canonical_trace.json",
+      "sha256": "b9780aee6b793fe4557cc82fefbf5d1fa6a5d9c4e98b8f3d0c4a2965688b3735"
+    },
+    {
+      "path": "gptrans_pair_transition/degree_pair_transition_ema999/training/trace.json",
+      "sha256": "baa756395c4e149a2f5c2036cf9370e169279983e775cbb6219503512e0e5264"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false,
+  "observed_identity": {
+    "kernel": "kaseichou/molgap-gptrans-pair-transition-s42",
+    "kernel_id": 137191673,
+    "version": 1
+  }
+}
