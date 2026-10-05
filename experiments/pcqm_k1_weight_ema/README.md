@@ -5,6 +5,8 @@ recipe and decision gates; [evidence review](evidence_review.md) owns prior-work
 selection. Preparation uses `prepare_training.py`, then the registered
 `prepare-workflow` CLI. Kaggle publication and submission remain platform-owned.
 
+[Remote handoff](REMOTE_HANDOFF.md) owns submitted run identity and return procedure.
+
 No teacher, ensemble, 3D, alternate labels or protected evaluation is used.
 
 After completion reconcile the exact kernel/version, retrieve both manifests,

@@ -1,0 +1,20 @@
+{
+  "observed_at_utc": "2026-10-05T17:42:13.286688+00:00",
+  "quota": {
+    "quotaRefreshTime": "2026-10-10T00:00:00Z",
+    "gpuQuota": {
+      "timeUsed": "24886.570796200s",
+      "timeReserved": "0s",
+      "totalTimeAllowed": "108000s",
+      "minimumTimeAllowed": "108000s",
+      "hasEverRun": true
+    },
+    "tpuQuota": {
+      "timeUsed": "0s",
+      "timeReserved": "0s",
+      "totalTimeAllowed": "72000s",
+      "minimumTimeAllowed": "72000s"
+    }
+  },
+  "sdk_parser_workaround": "read-only raw JSON; duration integer serializer failed"
+}
