@@ -291,6 +291,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-weight-ema-ema999-kaggle3-100k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_weight_ema/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-weight-ema-reference-kaggle3-100k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_weight_ema/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-matched-500k-v4-three-arm:A001",
       "target": "experiments/pcqm_500k_v4_evidence/final_comparison.json",
       "type": "action_produced_evidence"
@@ -1416,6 +1426,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-weight-ema-ema999-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-weight-ema-reference-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
       "target": "TB-k1-consistency-fusion-transfer-20261004",
       "type": "prior_evidence"
@@ -1438,6 +1458,26 @@
     {
       "source": "pcqm-k1-flag-kaggle3-100k-s42-v1-terminal",
       "target": "TB-k1-dropout-mean2-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-flag-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-weight-ema-ema999-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-flag-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-weight-ema-reference-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-weight-ema-ema999-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-weight-ema-reference-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
     },
     {
@@ -1506,6 +1546,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-weight-ema-ema999-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-slot-width96-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-weight-ema-reference-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-slot96-cpu-qualification-20261002",
       "target": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
@@ -1568,6 +1618,16 @@
     {
       "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
       "target": "TB-k1-slot96-cpu-qualification-20261002",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-weight-ema-ema999-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-weight-ema-reference-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
     },
     {
@@ -1943,6 +2003,16 @@
     {
       "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
       "target": "TB-k1-slot96-cpu-qualification-20261002",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-weight-ema-ema999-kaggle3-100k-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
+      "target": "TB-k1-weight-ema-reference-kaggle3-100k-s42-v1",
       "type": "reference_used"
     },
     {
@@ -2612,6 +2682,14 @@
     },
     {
       "id": "TB-k1-v4-192-kaggle3-reference-custody-20261002",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-weight-ema-ema999-kaggle3-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-weight-ema-reference-kaggle3-100k-s42-v1",
       "type": "trajectory"
     },
     {

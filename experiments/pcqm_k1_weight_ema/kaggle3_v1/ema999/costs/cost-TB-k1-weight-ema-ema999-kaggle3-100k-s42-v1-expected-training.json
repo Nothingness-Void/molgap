@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle3-weight-ema-001",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-weight-ema-ema999-kaggle3-100k-s42-v1-expected-training",
+  "evidence_ref": "experiments/pcqm_k1_weight_ema/protocol.md",
+  "hardware": "Tesla T4; assigned GPU1 in2T4 pair",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 4.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4.0
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "molgap-k1-weight-ema-100k-s42-v1:ema999:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-weight-ema-ema999-kaggle3-100k-s42-v1"
+}
