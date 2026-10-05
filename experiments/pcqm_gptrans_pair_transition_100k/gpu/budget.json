@@ -1,0 +1,11 @@
+{
+  "estimated_wall_hours": 4,
+  "estimated_allocated_t4_hours": 8,
+  "maximum_wall_hours": 7,
+  "maximum_allocated_t4_hours": 14,
+  "allocated_devices": 2,
+  "baseline_retraining": false,
+  "automatic_successor_authorized": false,
+  "single_arm_reason": "One authorized relation-transition hypothesis; accepted G1 EMA999 reference is reused, not retrained to fill the second allocated T4.",
+  "authority_ref": "experiments/pcqm_gptrans_pair_transition_100k/protocol.md"
+}
