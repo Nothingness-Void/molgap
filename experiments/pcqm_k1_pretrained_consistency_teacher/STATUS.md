@@ -1,35 +1,33 @@
 # Attempt status
 
-Observed 2026-10-05 JST: Kaggle1 submission is RUNNING, kernel ID137071131,
-version1. Scheduler truth and UTC observation are retained in
-[scheduler observation](scheduler_observation_v1.json); this is execution
-status, not runtime qualification or scientific acceptance.
+Kaggle1 kernel137071131/version1 is COMPLETE, observed2026-10-05T05:52:30Z.
+Both arms completed40epochs,31240updates and3998720sample presentations.
+Existing mechanical inspection, runtime qualification, hash/row/target binding,
+checkpoint/resume and V5 strict same-job comparison checks passed.
 
+- [Exact terminal remote observation](terminal_remote_observation_v1.json)
 - [Actual kernel](https://www.kaggle.com/code/nothingnessvoid/molgap-k1-pretrain-consistency-pair-100k-s42-v1)
-- [Raw submission response](submission_response_v1.json)
-- [Bound launch receipt](launch_receipt_v1.json)
-- [Source and package identities](preparation_reconciliation.json)
-- [Local verification](local_verification.json):414 passed,3 skipped,0 failed.
-- Prospective RML:[A](kaggle1_v1/pretrained_consistency/trajectory.json),
-  [B](kaggle1_v1/pretrained_consistency_teacher/trajectory.json).
+- [Launch receipt](launch_receipt_v1.json) and [frozen source identities](preparation_reconciliation.json)
+- [Terminal decision](terminal_acceptance/decision.md), [attribution](terminal_acceptance/attribution.md), [metrics](terminal_acceptance/scientific_metrics.json)
+- [Independent closure receipts](terminal_acceptance/closure_receipt.json)
+- Finalized RML: [A](kaggle1_v1/pretrained_consistency/rml_finalized/trajectory.json), [B](kaggle1_v1/pretrained_consistency_teacher/rml_finalized/trajectory.json)
 
-Frozen executable source is8cb9fceca245963d1e00cfeade935689341b8c4d.
-Source and teacher datasets are private, ready, and have exact remote path/size
-inventories matching29source files and2teacher files. Pulled kernel source
-matches the prepared entry; dataset ordering returned by Kaggle is canonicalized
-as a set for observation. Source/recipe/init byte checks remain strict.
+A MAE0.138265848eV; B MAE0.136781212eV. The teacher increment gains1.484636meV;
+paired-row95% interval[0.759455,2.196867]meV. A closes as completed control;
+B is POSITIVE_UNDER_CONTRACT for the narrow increment question. The separate
+compression gate fails: B is2.115219meV worse than the fixed retained teacher.
+This single-seed contrast does not establish a pretraining gain or its interaction.
 
-Preparation stopped after both prospective records were published because two
-inherited ignored strict-comparison models were absent in this fresh worktree.
-Exact retained SHA-bound copies restored the local dependency. RML rebuild and
-check --frozen passed. Existing stage/freeze/release/receipt APIs reconciled the
-same package and plans; no duplicate trajectory or remote attempt was created.
+Both trajectories independently appear in replay_pool with capability complete
+and exclusion_reasons[]. The pair is replay-ready. Selected models, aligned50K
+predictions, resume states and required metadata were retrieved selectively;
+outputs remain independently retrievable from the exact remote version.
 
-Both arms use100K training,50K internal development,40epochs,FP32,T4x2.
-The shared remote barrier must qualify both arms before formal training.
-Retain separate runtime,trace/exposure,selected model,prediction,resume,role,cost
-and terminal RML evidence for each arm. Also retrieve objective_trace.json and
-its hash receipt for attribution. Replay readiness remains pending.
+Allocated training T4 windows total4.974651hours; diagnostic windows are separate.
+Queue, CPU and reused historical lineage costs are not measured by this job.
+No new training/inference was executed during acceptance; official validation
+and external test roles remained untouched.
 
-No default desktop monitor, server handoff, successor or scale-up is released.
-Keep submission, reconciliation and acceptance on the owning experiment branch.
+Frozen executable source remains8cb9fceca245963d1e00cfeade935689341b8c4d.
+Keep accepted evidence on the owning branch pending a reviewed adoption/Git
+route. No adoption, successor, scale-up or default monitor is released.

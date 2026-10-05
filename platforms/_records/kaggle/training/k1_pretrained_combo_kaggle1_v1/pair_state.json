@@ -1,0 +1,79 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "d12e37bc641415f5a0fc1d57f0bb114a404d720411b795b1dc28682949be3cb6",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "pretrained_consistency",
+          "device": 0,
+          "started": true,
+          "terminal_status": "preflight_complete",
+          "exit_reason": "preflight_worker_exit_0",
+          "returncode": 0,
+          "worker_wall_seconds": 54.01675301500006
+        },
+        {
+          "arm_id": "pretrained_consistency_teacher",
+          "device": 1,
+          "started": true,
+          "terminal_status": "preflight_complete",
+          "exit_reason": "preflight_worker_exit_0",
+          "returncode": 0,
+          "worker_wall_seconds": 54.516491651000024
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "train",
+      "workers": [
+        {
+          "arm_id": "pretrained_consistency",
+          "device": 0,
+          "started": true,
+          "terminal_status": "complete",
+          "exit_reason": "train_worker_exit_0",
+          "returncode": 0,
+          "worker_wall_seconds": 8982.11141505
+        },
+        {
+          "arm_id": "pretrained_consistency_teacher",
+          "device": 1,
+          "started": true,
+          "terminal_status": "complete",
+          "exit_reason": "train_worker_exit_0",
+          "returncode": 0,
+          "worker_wall_seconds": 8959.103023057
+        }
+      ],
+      "status": "complete"
+    }
+  ],
+  "status": "complete",
+  "arms": {
+    "pretrained_consistency": {
+      "device": 0,
+      "training_started": true,
+      "started": true,
+      "terminal_status": "complete",
+      "exit_reason": "train_worker_exit_0",
+      "worker_wall_seconds": 9036.128168064999
+    },
+    "pretrained_consistency_teacher": {
+      "device": 1,
+      "training_started": true,
+      "started": true,
+      "terminal_status": "complete",
+      "exit_reason": "train_worker_exit_0",
+      "worker_wall_seconds": 9013.619514708
+    }
+  },
+  "pair_process_wall_seconds": 9036.631551503,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost"
+}

@@ -1,0 +1,86 @@
+{
+  "status": "MECHANICALLY_VERIFIED",
+  "blockers": [],
+  "context": {
+    "experiment_id": "pcqm-k1-pretrained-consistency-teacher-kaggle1-100k",
+    "logical_run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1",
+    "arm_id": "pretrained_consistency",
+    "arm_identity": "760b6b7392d87a6500adea609836677cc2c07e1d76c49c5097548e19d2e0e9ae",
+    "spec_identity": "d12e37bc641415f5a0fc1d57f0bb114a404d720411b795b1dc28682949be3cb6",
+    "family_name": "neural_atom_k1",
+    "family_version": "2",
+    "source_commit": "8cb9fceca245963d1e00cfeade935689341b8c4d",
+    "source_archive_sha256": "3ac9de2d50eab7498cb49917d791cc9f1adebfa243f84060abe8f440537a2cee",
+    "package_identity": "d0c8a00f816c728d2a4a607ffd3efba1aa66f33222ddde81ef446c8f401093d8",
+    "training_recipe_sha256": "032de977fa47c4f69d6555d93dd9d7abd53894bc5ceb2e4b4585df120631b30d",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-k1-pretrain-consistency-pair-100k-s42-v1",
+    "platform_version": "1"
+  },
+  "observed": {
+    "producer_platform_version": null,
+    "target_identity": {
+      "encoding": "little-endian-float32-contiguous-raw-bytes",
+      "manifest": {
+        "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+        "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+      },
+      "acceptance_plan_sha256": "a2f8c301b7215538256b85521d5b5c94fb7a7541f019cf5621ff9f6ed4ced260"
+    },
+    "development_mae_eV": 0.13826584799706937,
+    "selected_epoch": 40,
+    "selected_optimizer_step": 31240,
+    "selected_weights": "live",
+    "progress": {
+      "epochs": 40,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "costs": [
+      {
+        "hardware": "Tesla T4",
+        "metric": "wall_seconds",
+        "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+        "semantics": "process_wall",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 8966.100944643
+      },
+      {
+        "hardware": "Tesla T4",
+        "metric": "device_seconds",
+        "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+        "semantics": "allocated_device",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 8966.100944643
+      }
+    ],
+    "artifacts": {
+      "contract": {
+        "path": "training_contract.json",
+        "sha256": "032de977fa47c4f69d6555d93dd9d7abd53894bc5ceb2e4b4585df120631b30d"
+      },
+      "predictions": {
+        "path": "development_predictions.pt",
+        "sha256": "5e39c48b78cd0f31fe1686d2d65413b9c272ce1e22285c6a48a8ad42b85ac757"
+      },
+      "resume": {
+        "path": "last_checkpoint.pt",
+        "sha256": "5613280c4c92c37003c77894877a62f9e6730d090857c8dc783cabe5fea23db0"
+      },
+      "selected_model": {
+        "path": "selected_model.pt",
+        "sha256": "0099312504be3aba0faf640eac524e4f6fd75b1ecfd93e3077868338878bd53f"
+      },
+      "trace": {
+        "path": "canonical_trace.json",
+        "sha256": "ad232b9e936bdd488b164625a7c682c07c343cfb821f139b0175a08429ca18fc"
+      }
+    }
+  },
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED",
+  "runtime_qualification": "NOT_EVALUATED"
+}

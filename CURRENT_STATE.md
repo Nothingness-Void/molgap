@@ -42,11 +42,15 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 
 - **K1 pretrained consistency / mean-teacher pair:** desktop-owned question on
   `codex/exp/k1-pretrained-consistency-teacher`; Kaggle1 kernel ID137071131/v1
-  is RUNNING. Both new arms use the same stage-10 backbone and reset Gap head;
-  B adds mean-output teacher MSE. Each has an independent prospective RML record.
+  is COMPLETE. Both arms completed40epochs and independently finalized RML;
+  replay_pool capability is complete with no exclusions for each arm.
+  B improves1.485meV over matched A; teacher-increment gate passes, while
+  compression fails (B remains2.115meV behind the fixed teacher).
   Read [owning status](experiments/pcqm_k1_pretrained_consistency_teacher/STATUS.md)
   and [protocol](experiments/pcqm_k1_pretrained_consistency_teacher/protocol.md).
-  No terminal acceptance, replay readiness, adoption or scale-up is claimed.
+  Read [terminal decision](experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/decision.md)
+  and attribution there. No model adoption or scale-up; retain the owning branch
+  pending a reviewed adoption/Git-routing decision.
 
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.

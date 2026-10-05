@@ -1,0 +1,52 @@
+{
+  "backtest_eligibility": {
+    "eligible": true,
+    "exclusion_reasons": []
+  },
+  "comparability_identity": {
+    "architecture_identity": "ab4a532c1bef2f22978bf3cc7699a78ca01ee6d1d643edb078db553c1810b3a5",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+    "lr_schedule_identity": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+    "matched_architecture_required": true,
+    "optimizer_identity": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+    "precision_identity": "fp32",
+    "row_split_identity": "55c16e35f7ac7600b4dafef2c59c615a1ff42f7a022c0d9a54f1890ab3c4c604",
+    "scientific_contract": "experiments/pcqm_k1_pretrained_consistency_teacher/protocol.md",
+    "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+    "target_transform_identity": "k1-v4-fixed-train-100k-fp32-gap-transform",
+    "terminal_endpoint_identity": "endpoint_31240",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/protocol.md",
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "ab4a532c1bef2f22978bf3cc7699a78ca01ee6d1d643edb078db553c1810b3a5",
+  "presentation_semantics_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/protocol.md",
+  "reference_id": "pcqm-k1-pretrained-combo-pretrained_consistency-kaggle1-s42-v1-terminal",
+  "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_internal_development_raw_model_over_40_epochs",
+  "terminal_evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/kaggle1_v1/pretrained_consistency/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/kaggle1_v1/pretrained_consistency/rml_finalized/trace.json",
+  "trace_artifact_sha256": "ad232b9e936bdd488b164625a7c682c07c343cfb821f139b0175a08429ca18fc",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

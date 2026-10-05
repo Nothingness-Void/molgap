@@ -1353,6 +1353,48 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "same_job_teacher_increment_strict_single_seed",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-pretrained-combo-pretrained_consistency-kaggle1-s42-v1-terminal",
+      "role_use": {
+        "fixed50k_development": "selection_used",
+        "official_train_prefix_0_100000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_k1_pretrained_consistency_teacher_100k_pretrained_consistency",
+      "source_envelope": "experiments/pcqm_k1_pretrained_consistency_teacher/kaggle1_v1/pretrained_consistency/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "compression_gate_failed_500k_not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "same_job_teacher_increment_strict_single_seed",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-pretrained-combo-pretrained_consistency_teacher-kaggle1-s42-v1-terminal",
+      "role_use": {
+        "fixed50k_development": "selection_used",
+        "official_train_prefix_0_100000": "used",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "desktop_k1_pretrained_consistency_teacher_100k_pretrained_consistency_teacher",
+      "source_envelope": "experiments/pcqm_k1_pretrained_consistency_teacher/kaggle1_v1/pretrained_consistency_teacher/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "compression_gate_failed_500k_not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "PAIRED_ENDPOINT_single_seed",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,

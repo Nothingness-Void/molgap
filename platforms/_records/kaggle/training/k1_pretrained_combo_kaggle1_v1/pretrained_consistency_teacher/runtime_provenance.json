@@ -1,0 +1,26 @@
+{
+  "format": "molgap-k1-runtime-provenance-v1",
+  "context": {
+    "experiment_id": "pcqm-k1-pretrained-consistency-teacher-kaggle1-100k",
+    "logical_run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1",
+    "arm_id": "pretrained_consistency_teacher",
+    "arm_identity": "358488073643a65f7ee18bdd869d0ada2dd6e6a29c484401c17b119c71249d4c",
+    "spec_identity": "d12e37bc641415f5a0fc1d57f0bb114a404d720411b795b1dc28682949be3cb6",
+    "family_name": "neural_atom_k1",
+    "family_version": "2",
+    "source_commit": "8cb9fceca245963d1e00cfeade935689341b8c4d",
+    "source_archive_sha256": "3ac9de2d50eab7498cb49917d791cc9f1adebfa243f84060abe8f440537a2cee",
+    "package_identity": "d0c8a00f816c728d2a4a607ffd3efba1aa66f33222ddde81ef446c8f401093d8",
+    "training_recipe_sha256": "3deba1935237136b67cf6295068d61f726c6706dfad272261d04dafc180621cb",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-k1-pretrain-consistency-pair-100k-s42-v1",
+    "platform_version": null
+  },
+  "mode": "pretrained_consistency_teacher",
+  "recipe_sha256": "3deba1935237136b67cf6295068d61f726c6706dfad272261d04dafc180621cb",
+  "initial_state_file_sha256": "9656064f7bb0256881da4bc063e90de135171abf517a486bf6202d774694fdba",
+  "initialization_sha256": "7458f5c4776208da1715d39cbce66537727ff8054b30da0ea07d82d0e94181f4",
+  "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+  "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34"
+}

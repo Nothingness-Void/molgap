@@ -154,6 +154,17 @@
   "format": "molgap-rml-screening-backtest-v1",
   "included_comparable_groups": [
     {
+      "comparability_key": "{\"identity\":{\"architecture_identity\":\"ab4a532c1bef2f22978bf3cc7699a78ca01ee6d1d643edb078db553c1810b3a5\",\"dataset_identity\":\"1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"none\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000\",\"lr_schedule_identity\":\"97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f\",\"optimizer_identity\":\"1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152\",\"precision_identity\":\"fp32\",\"row_split_identity\":\"55c16e35f7ac7600b4dafef2c59c615a1ff42f7a022c0d9a54f1890ab3c4c604\",\"scientific_contract\":\"experiments/pcqm_k1_pretrained_consistency_teacher/protocol.md\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000\",\"target_transform_identity\":\"k1-v4-fixed-train-100k-fp32-gap-transform\",\"terminal_endpoint_identity\":\"endpoint_31240\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-k1-pretrained-combo-pretrained_consistency-kaggle1-s42-v1-terminal\"}",
+      "run_ids": [
+        "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+        "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency_teacher:downstream"
+      ],
+      "trajectory_ids": [
+        "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1",
+        "TB-k1-pretrained-consistency-teacher-kaggle1-100k-s42-v1"
+      ]
+    },
+    {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751\",\"ema_semantics\":\"none\",\"evaluation_role_identity\":\"internal_development_500000_549999\",\"lr_schedule_identity\":\"cosine60-epoch0-4e-4-epoch59-1e-6\",\"optimizer_identity\":\"adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1\",\"precision_identity\":\"fp32:tf32-disabled:deterministic-algorithms:seed42\",\"row_split_identity\":\"train[0:500000]-development[500000:550000]\",\"scientific_contract\":\"pcqm-fixed500k-dev50k-matched60-v4\",\"selection_role_identity\":\"best-development-raw-model-60epochs\",\"target_transform_identity\":\"45c1de3bec7070e1b53bb4d45950897b84b2e7f23a7f019f85b04e10c2256834\",\"terminal_endpoint_identity\":\"optimizer_steps234360:sample_presentations29998080\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-matched-500k-v4-three-arm\"}",
       "run_ids": [
         "kaseichou/molgap-pcqm-gptrans-noisy-nodes-500k-s42",
@@ -204,6 +215,8 @@
     "TB-gptrans-noisy-pair-norm-500k-s42",
     "TB-gptrans-pair-norm-500k-s42",
     "TB-gptrans-t-100k-v4-reference",
+    "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1",
+    "TB-k1-pretrained-consistency-teacher-kaggle1-100k-s42-v1",
     "TB-matched-500k-v4-three-arm",
     "TC-gptrans-flow-ablation-100k-s42"
   ],
@@ -213,5 +226,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 25
+  "trace_count": 27
 }

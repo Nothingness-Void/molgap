@@ -1,0 +1,66 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-pretrained-combo-001",
+      "category": "training",
+      "cost_event_id": "cost-TB-k1-pretrained-consistency-kaggle1-100k-s42-v1-expected-training",
+      "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.4905835957341664
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.4905835957341664
+        }
+      },
+      "platform": "kaggle1",
+      "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-pretrained-combo-001",
+      "category": "preflight",
+      "cost_event_id": "cost-TB-k1-pretrained-consistency-kaggle1-100k-s42-v1-observed-preflight",
+      "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.002994725262222207
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.002994725262222207
+        }
+      },
+      "platform": "kaggle1",
+      "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1"
+    }
+  ],
+  "scope": "one exclusive assigned T4 training window including development/checkpoint; lower bound excludes bootstrap/queue and earlier resume allocations",
+  "source_acceptance_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json"
+}

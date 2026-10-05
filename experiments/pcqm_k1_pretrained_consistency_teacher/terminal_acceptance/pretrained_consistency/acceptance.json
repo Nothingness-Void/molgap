@@ -1,0 +1,278 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-pretrained-combo-001",
+      "category": "training",
+      "cost_event_id": "cost-TB-k1-pretrained-consistency-kaggle1-100k-s42-v1-expected-training",
+      "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.4905835957341664
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.4905835957341664
+        }
+      },
+      "platform": "kaggle1",
+      "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-pretrained-combo-001",
+      "category": "preflight",
+      "cost_event_id": "cost-TB-k1-pretrained-consistency-kaggle1-100k-s42-v1-observed-preflight",
+      "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.002994725262222207
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.002994725262222207
+        }
+      },
+      "platform": "kaggle1",
+      "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1"
+    }
+  ],
+  "evidence_id": "pcqm-k1-pretrained-combo-pretrained_consistency-kaggle1-s42-v1-terminal",
+  "mechanical": {
+    "blockers": [],
+    "context": {
+      "account": "nothingnessvoid",
+      "arm_id": "pretrained_consistency",
+      "arm_identity": "760b6b7392d87a6500adea609836677cc2c07e1d76c49c5097548e19d2e0e9ae",
+      "experiment_id": "pcqm-k1-pretrained-consistency-teacher-kaggle1-100k",
+      "family_name": "neural_atom_k1",
+      "family_version": "2",
+      "logical_run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1",
+      "package_identity": "d0c8a00f816c728d2a4a607ffd3efba1aa66f33222ddde81ef446c8f401093d8",
+      "platform": "kaggle",
+      "platform_version": "1",
+      "run_reference": "nothingnessvoid/molgap-k1-pretrain-consistency-pair-100k-s42-v1",
+      "source_archive_sha256": "3ac9de2d50eab7498cb49917d791cc9f1adebfa243f84060abe8f440537a2cee",
+      "source_commit": "8cb9fceca245963d1e00cfeade935689341b8c4d",
+      "spec_identity": "d12e37bc641415f5a0fc1d57f0bb114a404d720411b795b1dc28682949be3cb6",
+      "training_recipe_sha256": "032de977fa47c4f69d6555d93dd9d7abd53894bc5ceb2e4b4585df120631b30d"
+    },
+    "observed": {
+      "artifacts": {
+        "contract": {
+          "path": "training_contract.json",
+          "sha256": "032de977fa47c4f69d6555d93dd9d7abd53894bc5ceb2e4b4585df120631b30d"
+        },
+        "predictions": {
+          "path": "development_predictions.pt",
+          "sha256": "5e39c48b78cd0f31fe1686d2d65413b9c272ce1e22285c6a48a8ad42b85ac757"
+        },
+        "resume": {
+          "path": "last_checkpoint.pt",
+          "sha256": "5613280c4c92c37003c77894877a62f9e6730d090857c8dc783cabe5fea23db0"
+        },
+        "selected_model": {
+          "path": "selected_model.pt",
+          "sha256": "0099312504be3aba0faf640eac524e4f6fd75b1ecfd93e3077868338878bd53f"
+        },
+        "trace": {
+          "path": "canonical_trace.json",
+          "sha256": "ad232b9e936bdd488b164625a7c682c07c343cfb821f139b0175a08429ca18fc"
+        }
+      },
+      "costs": [
+        {
+          "hardware": "Tesla T4",
+          "metric": "wall_seconds",
+          "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+          "semantics": "process_wall",
+          "status": "measured",
+          "unit": "seconds",
+          "value": 8966.100944643
+        },
+        {
+          "hardware": "Tesla T4",
+          "metric": "device_seconds",
+          "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+          "semantics": "allocated_device",
+          "status": "measured",
+          "unit": "seconds",
+          "value": 8966.100944643
+        }
+      ],
+      "development_mae_eV": 0.13826584799706937,
+      "producer_platform_version": null,
+      "progress": {
+        "epochs": 40,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720
+      },
+      "selected_epoch": 40,
+      "selected_optimizer_step": 31240,
+      "selected_weights": "live",
+      "target_identity": {
+        "acceptance_plan_sha256": "a2f8c301b7215538256b85521d5b5c94fb7a7541f019cf5621ff9f6ed4ced260",
+        "encoding": "little-endian-float32-contiguous-raw-bytes",
+        "manifest": {
+          "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+          "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+        }
+      }
+    },
+    "replay_readiness": "NOT_EVALUATED",
+    "runtime_qualification": "NOT_EVALUATED",
+    "scientific_acceptance": "NOT_EVALUATED",
+    "status": "MECHANICALLY_VERIFIED"
+  },
+  "metrics_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/scientific_metrics.json",
+  "native_cost_scope": "one exclusive assigned T4 training window including development/checkpoint; lower bound excludes bootstrap/queue and earlier resume allocations",
+  "outcome": {
+    "artifact_status": "hash_verified_retained",
+    "budget_decision": "no_automatic_successor_or_scale_up",
+    "comparison_status": "same_job_teacher_increment_strict_single_seed",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "CLOSED",
+    "transfer_status": "compression_gate_failed_500k_not_evaluated"
+  },
+  "physical_attempt_mapping": {
+    "kernel_id": 137071131,
+    "logical_attempt_id": "kaggle1-pretrained-combo-001",
+    "receipt_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/launch_receipt_v1.json",
+    "version_number": 1
+  },
+  "role_use": {
+    "fixed50k_development": "selection_used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json",
+      "role_event_id": "role-TB-k1-pretrained-consistency-kaggle1-100k-s42-v1-official_train_prefix_0_100000-training_membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json",
+      "role_event_id": "role-TB-k1-pretrained-consistency-kaggle1-100k-s42-v1-official_train_prefix_0_100000-labels_read",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json",
+      "role_event_id": "role-TB-k1-pretrained-consistency-kaggle1-100k-s42-v1-official_train_prefix_0_100000-prediction_input",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json",
+      "role_event_id": "role-TB-k1-pretrained-consistency-kaggle1-100k-s42-v1-fixed50k_development-labels_read",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json",
+      "role_event_id": "role-TB-k1-pretrained-consistency-kaggle1-100k-s42-v1-fixed50k_development-prediction_input",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json",
+      "role_event_id": "role-TB-k1-pretrained-consistency-kaggle1-100k-s42-v1-fixed50k_development-metric_computed",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/pretrained_consistency/acceptance.json",
+      "role_event_id": "role-TB-k1-pretrained-consistency-kaggle1-100k-s42-v1-fixed50k_development-selection_used",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-100k-s42-v1"
+    }
+  ],
+  "run_id": "molgap-k1-pretrain-consistency-pair-100k-s42-v1:pretrained_consistency:downstream",
+  "runtime_certificate_id": "b71c6a4b4a512e8e19e7ae9bf867a45688f6a19b85cb50b75c9c9037686b58fc",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_pretrained_consistency_teacher/terminal_acceptance/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "CLOSED",
+    "reopen_conditions": [
+      "Separate explicit adoption or justified prospective scale contract; compression gate has not passed."
+    ]
+  }
+}

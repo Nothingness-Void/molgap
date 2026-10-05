@@ -1,0 +1,73 @@
+{
+  "accepted": true,
+  "mode": "pretrained_consistency",
+  "zero_initialization_delta": 0.0,
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      0.7836648225784302,
+      0.7836648225784302
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "20e3922a54b18e3ed1ee565f4aa0fbad51811dca04ba71f4c6d5e63936835784",
+      "20e3922a54b18e3ed1ee565f4aa0fbad51811dca04ba71f4c6d5e63936835784"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      0.7836648225784302,
+      0.7836648225784302
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "a96ddce7ebb10ea1970c5db3291a8b964c59761044f950189380911237a8de82",
+      "a96ddce7ebb10ea1970c5db3291a8b964c59761044f950189380911237a8de82"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.10049540700003945,
+      "samples_seconds": [
+        0.11381468199999745,
+        0.11123931099996298,
+        0.0996378879999611,
+        0.10049540700003945,
+        0.10029693299998144
+      ],
+      "peak_memory_bytes": 560826880
+    },
+    "pretrained_consistency": {
+      "median_step_seconds": 0.19672687399997812,
+      "samples_seconds": [
+        0.19672687399997812,
+        0.20672433499998988,
+        0.20079781799995544,
+        0.19645722200004911,
+        0.1945645199999717
+      ],
+      "peak_memory_bytes": 975265792
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": 0.9575707972395286,
+  "maximum_overhead_fraction": 2.0,
+  "dropout_signal": {
+    "accepted": true,
+    "disagreement": 0.00013067148393020034,
+    "gradient_squared_norm": 4.71745046346062e-06
+  },
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"
+}

@@ -1,0 +1,173 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-pretrain-consistency-pair-100k-s42-v1",
+  "kernel_id": 137071131,
+  "version_number": 1,
+  "timestamp": "2026-10-05T05:52:30.995101+00:00",
+  "scheduler": {
+    "status": "COMPLETE"
+  },
+  "entry_source_verified": true,
+  "dataset_sources": [
+    "nothingnessvoid/molgap-k1-fusion-teacher-train100k-v1",
+    "nothingnessvoid/molgap-k1-pretrain-consistency-source-s42-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "files": [
+    {
+      "path": "experiment/pair_state.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/allocation_cost.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/architecture_preflight.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/canonical_trace.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/canonical_trace.json.context.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/development_predictions.pt",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/diagnostic_cost.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/diagnostic_resume.pt",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/diagnostic_selected.pt",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/last_checkpoint.pt",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/objective_trace.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/objective_trace_receipt.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/output_manifest.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/preflight.log",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/runtime_certificate.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/runtime_manifest.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/runtime_provenance.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/selected_model.pt",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/train.log",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency/training_contract.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/allocation_cost.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/architecture_preflight.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/canonical_trace.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/canonical_trace.json.context.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/development_predictions.pt",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/diagnostic_cost.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/diagnostic_resume.pt",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/diagnostic_selected.pt",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/last_checkpoint.pt",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/objective_trace.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/objective_trace_receipt.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/output_manifest.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/preflight.log",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/runtime_certificate.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/runtime_manifest.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/runtime_provenance.json",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/selected_model.pt",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/train.log",
+      "bytes": null
+    },
+    {
+      "path": "experiment/pretrained_consistency_teacher/training_contract.json",
+      "bytes": null
+    }
+  ]
+}
