@@ -6,7 +6,8 @@
         "cpu-cache-001"
       ],
       "cost_event_ids": [
-        "cost-TB-k1-spectral-cpu-cache-100k-20261006-expected-cpu"
+        "cost-TB-k1-spectral-cpu-cache-100k-20261006-expected-cpu",
+        "cost-TB-k1-spectral-cpu-cache-100k-20261006-observed-cpu"
       ],
       "evidence_refs": [
         "experiments/pcqm_k1_spectral_100k/protocol.md"
@@ -435,7 +436,10 @@
   "record_mode": "prospective",
   "result": {
     "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_refs": [
+      "experiments/pcqm_k1_spectral_100k/cpu_cache_acceptance.json",
+      "experiments/pcqm_k1_spectral_100k/spectral_cache/spectral_cache_manifest.json"
+    ]
   },
   "schema": "molgap-trajectory-v1",
   "state_at_start": {

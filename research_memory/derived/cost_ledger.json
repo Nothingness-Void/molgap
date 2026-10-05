@@ -1,11 +1,11 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 39,
-  "event_count": 160,
+  "estimated_event_count": 42,
+  "event_count": 164,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 138,
-  "not_applicable_event_count": 53,
+  "measurement_missing_event_count": 140,
+  "not_applicable_event_count": 55,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -343,6 +343,54 @@
         "measured": {
           "known_records": 2,
           "known_total": 0.32504546766666764
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "desktop CPU; one BLAS thread; no accelerator work:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.006497395833333333
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "desktop CPU; one BLAS thread; no accelerator work:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "desktop CPU; one BLAS thread; no accelerator work:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "desktop CPU; one BLAS thread; no accelerator work:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.006683226777778247
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -1757,12 +1805,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "Tesla T4; assigned GPU0 in2T4 pair:device_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 4.0
+          "known_records": 2,
+          "known_total": 8.0
         },
         "measured": {
           "known_records": 0,
@@ -1781,12 +1829,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "Tesla T4; assigned GPU0 in2T4 pair:wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 4.0
+          "known_records": 2,
+          "known_total": 8.0
         },
         "measured": {
           "known_records": 0,
@@ -1853,12 +1901,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "Tesla T4; assigned GPU1 in2T4 pair:device_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 4.0
+          "known_records": 2,
+          "known_total": 8.0
         },
         "measured": {
           "known_records": 0,
@@ -1877,12 +1925,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "Tesla T4; assigned GPU1 in2T4 pair:wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 4.0
+          "known_records": 2,
+          "known_total": 8.0
         },
         "measured": {
           "known_records": 0,
@@ -3383,12 +3431,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "device_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 4.0
+          "known_records": 2,
+          "known_total": 8.0
         },
         "measured": {
           "known_records": 0,
@@ -3407,12 +3455,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 4.0
+          "known_records": 2,
+          "known_total": 8.0
         },
         "measured": {
           "known_records": 0,
@@ -3483,12 +3531,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "device_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 4.0
+          "known_records": 2,
+          "known_total": 8.0
         },
         "measured": {
           "known_records": 0,
@@ -3507,12 +3555,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 4.0
+          "known_records": 2,
+          "known_total": 8.0
         },
         "measured": {
           "known_records": 0,
@@ -4317,6 +4365,56 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.07388888888888889
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "desktop CPU; one BLAS thread; no accelerator work": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.006497395833333333
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.006683226777778247
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -10369,6 +10467,156 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.003573472166665144
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-spectral-cpu-cache-100k-20261006": {
+      "desktop CPU; one BLAS thread; no accelerator work:cpu_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.006497395833333333
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "desktop CPU; one BLAS thread; no accelerator work:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "desktop CPU; one BLAS thread; no accelerator work:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "desktop CPU; one BLAS thread; no accelerator work:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.25
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.006683226777778247
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-spectral-night-reference-kaggle3-100k-s42-v1": {
+      "Tesla T4; assigned GPU0 in2T4 pair:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU0 in2T4 pair:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4; assigned GPU0 in2T4 pair:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU0 in2T4 pair:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-spectral-night-spectral-kaggle3-100k-s42-v1": {
+      "Tesla T4; assigned GPU1 in2T4 pair:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU1 in2T4 pair:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4; assigned GPU1 in2T4 pair:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; assigned GPU1 in2T4 pair:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
