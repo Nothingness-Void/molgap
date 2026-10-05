@@ -1,6 +1,6 @@
 # Prepared overnight handoff - 2026-10-06
 
-PREPARED_FOR_PLATFORM; remote submission remains root/platform owner.
+Preparation-stage snapshot; subsequent submission is in [remote handoff](REMOTE_HANDOFF.md).
 Kernel nvoid912/molgap-k1-spectral-gaussian-100k-s42-v1.
 Private source nvoid912/molgap-k1-spectral-source-s42-v1.
 Fixed input nvoid912/pcqm4mv2-ogb-fixed-100k-v1.

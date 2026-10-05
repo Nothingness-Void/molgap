@@ -5,4 +5,5 @@ See protocol.md for frozen scientific/role/resource authority, evidence_review.m
 for novelty and alternatives. prepare_training.py reuses registered workflow;
 shared k1_spectral.py owns only mechanism and CPUcache, k1_screen_training.py
 owns original loader/trainer/resume/artifacts. Source privatepublication and
-submission stay with Kaggle skill. Remote state is pending, not submitted.
+submission stay with Kaggle skill. [Remote handoff](REMOTE_HANDOFF.md) links
+submitted identity, scheduler observations and the return procedure.
