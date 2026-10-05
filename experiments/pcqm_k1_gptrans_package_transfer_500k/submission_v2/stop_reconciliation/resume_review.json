@@ -1,0 +1,27 @@
+{
+  "scheduler": "CANCEL_ACKNOWLEDGED",
+  "training_complete": false,
+  "source_archive_sha256": "28ab9bc185246e70d047376ad2600aa30c18084e9d3f865c6ca101e5c3a4c271",
+  "spec_identity": "334b15ba0a0ec8c1fddd2097ef8e4be998a1a1c914850c1ab3beb9ff8c14838b",
+  "runtime_distributions_sha256": "e278bdae38c8277d8223b7205e9f6a9926d40eaa116e7a7bb28e5c93cf3403f3",
+  "resume_artifact_hashes_verified": true,
+  "arms": {
+    "k1_pretrained_consistency": {
+      "completed_epochs": 6,
+      "global_step": 23436,
+      "sample_presentations": 2999808,
+      "retained_epoch_training_evaluation_seconds": 8122.3296835870005,
+      "selected_development_mae_eV": 0.1266225427389145
+    },
+    "gptrans_g1_bond_local_ema999": {
+      "completed_epochs": 9,
+      "global_step": 35154,
+      "sample_presentations": 4499712,
+      "retained_epoch_training_evaluation_seconds": 7880.333500157999,
+      "selected_development_mae_eV": 0.11608478426933289
+    }
+  },
+  "prior_full_invocation_cost": "Recovered from authoritative Kaggle Logs UI: 8894.2 execution seconds on T4x2 = 17788.4 allocated native T4 seconds; phase/queue details remain unknown",
+  "budget_review": "Observed prior allocation 4.941222 T4h plus at most 18 T4h for this additional <=9h T4x2 stage remains below48 T4h. Reconcile costs again before any further continuation.",
+  "next_action": "user-authorized same-question continuation; no schedule reset or completed-epoch retraining"
+}

@@ -156,6 +156,86 @@ def declare(source_commit, inputs):
     return spec, pins, initial, transform
 
 
+def prepare_continuation(previous, resume_root, output, pickle_input):
+    """Keep prospective/scientific inputs frozen while rebinding executable source."""
+    import torch
+    previous, resume_root, output = map(Path, (previous, resume_root, output))
+    old = verify_experiment_source_package(previous / "package")
+    spec = ExperimentSpec.from_json((previous / "package/experiment_spec.json").read_text())
+    if spec.identity != ExperimentSpec.from_json((EXP / "experiment_spec.json").read_text()).identity:
+        raise ValueError("Continuation cannot change the owning frozen Spec")
+    output.mkdir(parents=True, exist_ok=False)
+    manifest = build_experiment_source_package(spec, ROOT, old["relative_allowlist"], output / "package")
+    source, kernel, checkpoints = output / "source_dataset", output / "kernel", output / "checkpoint_dataset"
+    shutil.copytree(previous / "source_dataset", source)
+    shutil.copytree(previous / "kernel", kernel)
+    checkpoints.mkdir()
+    checkpoint_slug = "molgap-k1-gptrans-500k-resume-v2-s42"
+    checkpoint_id = "nothingnessvoid/" + checkpoint_slug
+    launch = read(source / "legacy_500k_launch.json")
+    launch.update(source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"],
+                  package_identity=manifest["package_identity"])
+    launch["dataset_sources"] = list(launch["dataset_sources"]) + [checkpoint_id]
+    distributions = None
+    resume_summary = {}
+    for arm in launch["arms"]:
+        aid = arm["arm_id"]
+        prior = resume_root / aid
+        stage = read(prior / "stage_manifest.json")
+        if stage["arm"] != aid or stage["source_sha256"] != old["archive_sha256"]:
+            raise ValueError("Continuation must use this exact previous source/arm")
+        destination = checkpoints / aid
+        destination.mkdir()
+        for name, checksum in stage["artifacts"].items():
+            path = prior / name
+            if not path.resolve().is_relative_to(prior.resolve()) or sha256_file(path) != checksum:
+                raise ValueError("Retained resume artifact changed: " + name)
+            shutil.copyfile(path, destination / name)
+        shutil.copyfile(prior / "stage_manifest.json", destination / "stage_manifest.json")
+        state = torch.load(prior / "last_checkpoint.pt", map_location="cpu", weights_only=False)
+        runtime = read(prior / "runtime.json")
+        if (state["arm"] != aid or state["source_sha256"] != old["archive_sha256"]
+                or state["next_epoch"] != stage["next_epoch"] or len(state["trace"]) != state["next_epoch"]
+                or state["next_batch_index"] != 0 or state["global_step"] != 3906 * state["next_epoch"]
+                or state["next_schedule_epoch"] != state["next_epoch"]
+                or state["runtime_software"] != runtime["installed_distributions_sha256"]
+                or state["contract"] != stage["contract"]):
+            raise ValueError("Retained checkpoint cursor/scientific/runtime mismatch")
+        if distributions is not None and distributions != runtime["installed_distributions"]:
+            raise ValueError("Paired continuation runtimes differ")
+        distributions = runtime["installed_distributions"]
+        arm["resume"] = {"mount": checkpoint_slug, "manifest_sha256": sha256_file(prior / "stage_manifest.json"),
+                         "source_sha256": old["archive_sha256"], "next_epoch": state["next_epoch"]}
+        resume_summary[aid] = dict(arm["resume"], checkpoint_sha256=sha256_file(prior / "last_checkpoint.pt"),
+                                  global_step=state["global_step"], runtime_software=state["runtime_software"])
+    launch["runtime_distributions"] = distributions
+    for path in (output / "package").iterdir():
+        shutil.copyfile(path, source / ("source_payload.bin" if path.name == "source.tar.gz" else path.name))
+    write(source / "legacy_500k_launch.json", launch)
+    entry = (ROOT / "platforms/kaggle/run_legacy_500k_pair.py").read_text(encoding="utf-8").replace(
+        "EXPECTED_LAUNCH_SHA256 = None", "EXPECTED_LAUNCH_SHA256 = " + repr(sha256_file(source / "legacy_500k_launch.json")))
+    (kernel / "run.py").write_text(entry, encoding="utf-8", newline="\n")
+    metadata = read(kernel / "kernel-metadata.json")
+    metadata["dataset_sources"] = launch["dataset_sources"]
+    write(kernel / "kernel-metadata.json", metadata)
+    write(checkpoints / "dataset-metadata.json", {"id": checkpoint_id, "title": "MolGap K1 GPTrans 500K Resume V2 S42",
+                                                "licenses": [{"name": "other"}], "isPrivate": True})
+    write(output / "continuation_binding.json", {"prior_package_identity": old["package_identity"],
+        "prior_source_sha256": old["archive_sha256"], "spec_identity": spec.identity,
+        "resume_dataset": checkpoint_id, "arms": resume_summary,
+        "prospective_preserved": launch["prospective_sha256"]})
+    report = check_release_inputs(spec, output / "package", expected_package_identity=manifest["package_identity"],
+        recipe_files={a["arm_id"]: a["recipe"] for a in launch["arms"]},
+        initial_states={a["arm_id"]: source / a["initial_state"] for a in launch["arms"]},
+        required_modules=launch["required_modules"], pickle_inputs=[pickle_input],
+        entry_script=kernel / "run.py", input_root=source, launch_config=source / "legacy_500k_launch.json",
+        kernel_metadata=kernel / "kernel-metadata.json")
+    write(output / "release_report.json", report)
+    if report["errors"]:
+        raise RuntimeError("Continuation local release failed")
+    print(json.dumps({"status": report["status"], "package_identity": manifest["package_identity"], "resume": resume_summary}))
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--source-commit", required=True)
@@ -165,10 +245,17 @@ def main():
     parser.add_argument("--resume-prepared", action="store_true",
                         help="Verify an existing frozen package and published records after RML rebuild recovery")
     parser.add_argument("--pickle-input", type=Path, default=TRUSTED_PICKLE)
+    parser.add_argument("--continuation-from", type=Path)
+    parser.add_argument("--resume-root", type=Path)
     args = parser.parse_args()
     actual = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     if args.source_commit != actual:
         raise ValueError("Source commit must equal this checkout's frozen HEAD")
+    if args.continuation_from is not None:
+        if args.resume_root is None or args.output is None:
+            raise ValueError("Continuation requires --resume-root and a fresh --output")
+        prepare_continuation(args.continuation_from, args.resume_root, args.output, args.pickle_input)
+        return
     spec, pins, initial, transform = declare(actual, args.inputs)
     if args.declare_only:
         print(json.dumps({"status": "DECLARATIONS_PREPARED", "spec_identity": spec.identity}))

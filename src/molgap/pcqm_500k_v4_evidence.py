@@ -177,11 +177,13 @@ def evaluate(model, graphs, mean, std):
     model.eval()
     rows = {"prediction": [], "target": [], "source_idx": []}
     with torch.no_grad():
-        for batch in loader(graphs):
+        for batch_index, batch in enumerate(loader(graphs)):
             batch = batch.to("cuda", non_blocking=True)
             rows["prediction"].append((_forward(model, batch) * std + mean).cpu())
             rows["target"].append(batch.y.view(-1).cpu())
             rows["source_idx"].append(batch.source_idx.view(-1).cpu().long())
+            if batch_index == 0 or (batch_index + 1) % 100 == 0:
+                print(f"DEVELOPMENT batch={batch_index + 1} rows={sum(len(v) for v in rows['target'])}/{len(graphs)}", flush=True)
     result = {key: torch.cat(values) for key, values in rows.items()}
     if not torch.equal(result["source_idx"], torch.arange(500000, 550000)):
         raise RuntimeError("Development row order changed")
@@ -223,8 +225,10 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         raise RuntimeError("One visible accelerator per worker required")
     settings = configure_fp32_determinism(42)
     runtime = build_runtime_manifest(settings)
+    print(f"WORKER {arm} phase=load_cache preflight_only={preflight_only}", flush=True)
     root, manifest = find_cache(FIXED_500K_MANIFEST_SHA256)
     roles = load_roles(root, manifest)
+    print(f"WORKER {arm} phase=qualification train_rows={len(roles['train'])} development_rows={len(roles['validation'])}", flush=True)
     if composed is not None:
         composed.strip_geometry(roles)
         mean, std = composed.target_statistics(arm, roles["train"], target_transform)
@@ -433,6 +437,7 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         loss_sum = torch.zeros((), device="cuda")
         count = 0
         component_sums = {}
+        last_progress = started
         for batch_index, batch in enumerate(loader(roles["train"], epoch)):
             loss_sum += train_step(model, optimizer, batch.to("cuda", non_blocking=True))
             if composed is not None:
@@ -442,8 +447,12 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
             if ema is not None:
                 ema.update(model)
             count += BS
-            if (batch_index + 1) % 500 == 0:
-                print(f"{arm} ep={epoch} batch={batch_index+1}/{STEPS}", flush=True)
+            now = time.monotonic()
+            if batch_index == 0 or (batch_index + 1) % 100 == 0 or now - last_progress >= 30:
+                print(f"{arm} epoch={epoch + 1}/{EPOCHS} batch={batch_index+1}/{STEPS} "
+                      f"global_step={epoch * STEPS + batch_index + 1} lr={learning_rate(epoch):.8g} "
+                      f"elapsed={now-started:.1f}s", flush=True)
+                last_progress = now
         if count != STEPS * BS:
             raise RuntimeError("Sample exposure mismatch")
         live_evaluation = evaluate(model, roles["validation"], mean, std)

@@ -11,6 +11,7 @@ import sys
 import tarfile
 import types
 import time
+import threading
 from datetime import datetime, timezone
 
 EXPECTED_LAUNCH_SHA256 = None
@@ -54,6 +55,50 @@ def atomic(path, value):
     os.replace(temporary, path)
 
 
+def start_logged(command, path, *, label, env=None):
+    """Retain worker output and forward each flushed line to the platform log."""
+    log = Path(path).open("w", encoding="utf-8", buffering=1)
+    try:
+        worker = subprocess.Popen(command, env=env, stdout=subprocess.PIPE,
+                                  stderr=subprocess.STDOUT, text=True, bufsize=1)
+    except BaseException:
+        log.close()
+        raise
+    def forward():
+        try:
+            for line in worker.stdout:
+                log.write(line)
+                print(f"[{label}] {line.rstrip()}", flush=True)
+        finally:
+            worker.stdout.close()
+            log.close()
+    thread = threading.Thread(target=forward, name=label, daemon=True)
+    thread.start()
+    return worker, thread
+
+
+def resolve_resume(mounted, arm):
+    if "resume" not in arm:
+        return None
+    resume = arm["resume"]
+    manifests = [p for p in Path(mounted).rglob("stage_manifest.json")
+                 if resume["mount"] in p.relative_to(mounted).parts
+                 and p.parent.name == arm["arm_id"]]
+    if len(manifests) != 1 or digest(manifests[0]) != resume["manifest_sha256"]:
+        raise RuntimeError(f"Pinned resume manifest changed: {arm['arm_id']}")
+    manifest = json.loads(manifests[0].read_text())
+    if (manifest["arm"] != arm["arm_id"] or manifest["source_sha256"] != resume["source_sha256"]
+            or manifest["next_epoch"] != resume["next_epoch"]):
+        raise RuntimeError(f"Resume cursor/source changed: {arm['arm_id']}")
+    root = manifests[0].parent
+    for name, checksum in manifest["artifacts"].items():
+        path = root / name
+        if not path.resolve().is_relative_to(root.resolve()) or digest(path) != checksum:
+            raise RuntimeError(f"Resume artifact changed: {arm['arm_id']}/{name}")
+    print(f"RESUME VERIFIED {arm['arm_id']} completed_epochs={resume['next_epoch']}", flush=True)
+    return root
+
+
 def _main():
     global ALLOCATION_VERIFIED
     mounted = Path("/kaggle/input")
@@ -79,9 +124,20 @@ def _main():
     if len(names) != 2 or any("T4" not in name for name in names):
         raise RuntimeError(f"Expected T4x2 allocation: {names}")
     ALLOCATION_VERIFIED = True
+    print(f"ALLOCATION VERIFIED {names}; installing frozen runtime", flush=True)
+    constraints = []
+    runtime_requirements = config.get("runtime_distributions")
+    if any("resume" in arm for arm in config["arms"]) and not runtime_requirements:
+        raise RuntimeError("Continuation requires the retained runtime distribution pins")
+    if runtime_requirements:
+        requirements = Path("/kaggle/temp/molgap-legacy500k-constraints.txt")
+        requirements.write_text("\n".join(runtime_requirements) + "\n", encoding="utf-8")
+        constraints = ["-c", str(requirements)]
     # Torch imports happen only after installing the same frozen legacy runtime.
-    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "torch==2.4.1", "--index-url", "https://download.pytorch.org/whl/cu121"], check=True)
-    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "numpy<2", "torch-geometric==2.6.1", "ogb==1.3.6"], check=True)
+    subprocess.run([sys.executable, "-m", "pip", "install", "torch==2.4.1", "--index-url", "https://download.pytorch.org/whl/cu121"] + constraints, check=True, timeout=1200)
+    dependencies = ([value for value in runtime_requirements if not value.startswith(("torch==", "nvidia-", "triton=="))]
+                    if runtime_requirements else ["numpy<2", "torch-geometric==2.6.1", "ogb==1.3.6"])
+    subprocess.run([sys.executable, "-m", "pip", "install"] + dependencies + constraints, check=True, timeout=1200)
     root = Path("/kaggle/temp/molgap-legacy500k")
     root.mkdir(parents=True, exist_ok=False)
     package, source = root / "package", root / "source"
@@ -110,7 +166,7 @@ def _main():
             or manifest["source_commit"] != config["source_commit"]):
         raise RuntimeError("Launch/source/Spec binding changed")
     declared = {a["arm_id"]: a for a in spec.to_dict()["arms"]}
-    inputs, recipes = {}, {}
+    inputs, recipes, resumes = {}, {}, {}
     for arm in config["arms"]:
         aid = arm["arm_id"]
         if aid not in declared or canonical_fingerprint(declared[aid]) != arm["source_config_identity"]:
@@ -127,6 +183,7 @@ def _main():
             raise RuntimeError("Prospective identity mismatch")
         inputs[aid] = launch.parent / arm["initial_state"]
         recipes[aid] = arm["recipe"]
+        resumes[aid] = resolve_resume(mounted, arm)
     transform = launch.parent / config["target_transform"]
     if not transform.resolve().is_relative_to(launch.parent.resolve()) or digest(transform) != config["target_transform_sha256"]:
         raise RuntimeError("Pinned target transform changed")
@@ -142,16 +199,26 @@ def _main():
         raise RuntimeError("All-arm CPU release validation failed")
     cpu_env = os.environ.copy()
     cpu_env.update(CUDA_VISIBLE_DEVICES="", PYTHONPATH=str(source / "src"), OMP_NUM_THREADS="2", MKL_NUM_THREADS="2")
-    with (output / "cpu_model_cache_recipe.log").open("wb") as log:
-        subprocess.run([sys.executable, "-u", "-c", CPU_CHECK, str(launch), str(source)], env=cpu_env,
-                       stdout=log, stderr=subprocess.STDOUT, check=True)
+    print("PHASE cpu_model_cache_recipe: loading accepted training/development cache", flush=True)
+    cpu_worker, cpu_thread = start_logged([sys.executable, "-u", "-c", CPU_CHECK, str(launch), str(source)],
+        output / "cpu_model_cache_recipe.log", label="cpu", env=cpu_env)
+    try:
+        cpu_code = cpu_worker.wait(timeout=1200)
+    finally:
+        if cpu_worker.poll() is None:
+            cpu_worker.terminate()
+            cpu_worker.wait()
+        cpu_thread.join()
+    if cpu_code:
+        raise RuntimeError(f"CPU model/cache/recipe check failed: {cpu_code}")
     for phase in ("preflight", "training"):
         WINDOWS[phase] = {"start_monotonic": time.monotonic(), "stop_monotonic": None}
         state["phase"] = phase
         state["training_started"] = phase == "training"
         atomic(output / "pair_state.json", state)
         workers = []
-        logs = []
+        threads = []
+        print(f"PHASE {phase}: both isolated arms", flush=True)
         try:
             for arm in config["arms"]:
                 aid = arm["arm_id"]
@@ -165,19 +232,30 @@ def _main():
                     "--binding-identity", str(launch.parent / arm["binding"])]
                 if aid == "gptrans_g1_bond_local_ema999":
                     command += ["--target-transform", str(transform)]
+                if resumes[aid] is not None:
+                    command += ["--resume", str(resumes[aid]), "--resume-source-sha", arm["resume"]["source_sha256"]]
                 if phase == "preflight":
                     command += ["--preflight-only"]
-                log = (output / f"{phase}_{aid}.log").open("wb")
-                logs.append(log)
-                workers.append((aid, subprocess.Popen(command, env=env, stdout=log, stderr=subprocess.STDOUT)))
-            codes = {aid: worker.wait() for aid, worker in workers}
+                worker, thread = start_logged(command, output / f"{phase}_{aid}.log", label=f"{phase}/{aid}", env=env)
+                threads.append(thread)
+                workers.append((aid, worker))
+            last_report = time.monotonic()
+            while any(worker.poll() is None for _, worker in workers):
+                if time.monotonic() - last_report >= 30:
+                    elapsed = int(time.monotonic() - WINDOWS[phase]["start_monotonic"])
+                    print(f"PHASE {phase} elapsed={elapsed}s worker_codes={[(aid, w.poll()) for aid, w in workers]}", flush=True)
+                    last_report = time.monotonic()
+                if phase == "preflight" and time.monotonic() - WINDOWS[phase]["start_monotonic"] > 1200:
+                    raise TimeoutError("All-arm GPU preflight exceeded 1200s")
+                time.sleep(1)
+            codes = {aid: worker.returncode for aid, worker in workers}
         finally:
             for _, worker in workers:
                 if worker.poll() is None:
                     worker.terminate()
                     worker.wait()
-            for log in logs:
-                log.close()
+            for thread in threads:
+                thread.join()
             WINDOWS[phase]["stop_monotonic"] = time.monotonic()
         state["arms"] = codes
         atomic(output / "pair_state.json", state)
@@ -193,12 +271,13 @@ def main():
     started_utc = os.environ.get("MOLGAP_BOOTSTRAP_UTC", datetime.now(timezone.utc).isoformat())
     succeeded = False
     try:
+        print(f"BOOTSTRAP START python={sys.version.split()[0]}", flush=True)
         if sys.version_info[:2] != (3, 11):
             # The owning Torch2.4.1 recipe has no Python3.13 wheel. Reuse uv's
             # interpreter/venv management; preserve the full bootstrap cost clock.
             subprocess.run([sys.executable, "-m", "pip", "install", "-q", "uv"], check=True)
             environment = Path("/kaggle/temp/molgap-legacy500k-python311")
-            subprocess.run([sys.executable, "-m", "uv", "--native-tls", "venv", "--python", "3.11", "--seed", str(environment)], check=True)
+            subprocess.run([sys.executable, "-m", "uv", "--system-certs", "venv", "--python", "3.11.17", "--seed", str(environment)], check=True, timeout=600)
             os.environ.update(MOLGAP_BOOTSTRAP_STARTED=str(STARTED), MOLGAP_BOOTSTRAP_UTC=started_utc)
             python = str(environment / "bin/python")
             os.execv(python, [python, "-u", str(Path(__file__).resolve())])

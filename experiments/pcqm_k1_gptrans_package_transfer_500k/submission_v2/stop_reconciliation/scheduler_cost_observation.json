@@ -1,0 +1,17 @@
+{
+  "observed_at": "2026-10-05T10:18:35.746289+00:00",
+  "source": "Kaggle authenticated Logs UI",
+  "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1/log",
+  "version": 2,
+  "visible_status_text": "Version 2 was canceled after 8894.2s",
+  "visible_accelerator": "GPU T4 x2",
+  "container_image": "gcr.io/kaggle-gpu-images/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+  "elapsed_wall_seconds": 8894.2,
+  "elapsed_report_resolution_seconds": 0.1,
+  "allocated_T4_seconds": 17788.4,
+  "scope": "scheduler-reported execution duration on the verified T4x2 allocation; includes install/qualification/training/peer idle; not optimizer-active-only cost",
+  "method": "observed scheduler duration multiplied by two allocated native T4 devices",
+  "scheduler_queue_seconds": null,
+  "internal_phase_windows": null,
+  "process_final_ledger": "missing because user cancellation bypassed finally"
+}

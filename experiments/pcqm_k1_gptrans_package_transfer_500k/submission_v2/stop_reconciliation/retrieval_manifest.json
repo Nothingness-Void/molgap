@@ -1,0 +1,228 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1",
+  "version": 2,
+  "scheduler": "CANCEL_ACKNOWLEDGED",
+  "selection": "exact stage_manifest artifact sets required by owning resume preflight plus two worker logs",
+  "files": [
+    {
+      "file": "k1_pretrained_consistency\\predictions_epoch_01.pt",
+      "sha256": "8d6be200ab3d0e8037570270f2b9591842769f5da25da26bc96997a33c5ae937",
+      "bytes": 801931
+    },
+    {
+      "file": "k1_pretrained_consistency\\best_model.pt",
+      "sha256": "1e542886f6ec2a057ee5ffa60487743763f93208f002800b16df78709b23b5e0",
+      "bytes": 14801401
+    },
+    {
+      "file": "k1_pretrained_consistency\\calibration.json",
+      "sha256": "36aa3762521886107b9c4019df2e29d95e0c3aa5f40715fe37141e77915843b9",
+      "bytes": 755
+    },
+    {
+      "file": "k1_pretrained_consistency\\predictions_epoch_00.pt",
+      "sha256": "8bfdb0f4a19c5c2215fb5c6da63cf5de572336ae693335f0156c6160e285f4cc",
+      "bytes": 801931
+    },
+    {
+      "file": "k1_pretrained_consistency\\progress.json",
+      "sha256": "4791047443f00038eb0c987383e1f228ce3ff65d1330fcf07d56ce98d8a65e91",
+      "bytes": 75
+    },
+    {
+      "file": "k1_pretrained_consistency\\objective_components.json",
+      "sha256": "59f2640774355b1e65c72ece2957aab4fedc0e7338e1c65e5c3c131d32aa083a",
+      "bytes": 1209
+    },
+    {
+      "file": "k1_pretrained_consistency\\predictions_epoch_02.pt",
+      "sha256": "bd22adb58d3bdc2b305b99fc93b3d2fb4a55b4d4d1e3e048b425ef2a64e458b4",
+      "bytes": 801931
+    },
+    {
+      "file": "k1_pretrained_consistency\\predictions_epoch_03.pt",
+      "sha256": "2214ecf9f5b934510b6b5bda53eff0567db8b679a87e48ee55a5657d87008bb5",
+      "bytes": 801931
+    },
+    {
+      "file": "k1_pretrained_consistency\\scientific_contract.json",
+      "sha256": "fc60e39219edfab8e0cd5bf556ea4d7ca9d58007ace7898191c358d4eab1ea78",
+      "bytes": 1910
+    },
+    {
+      "file": "k1_pretrained_consistency\\trace.json",
+      "sha256": "54efe8aff6014fac023464394651e6fb1f465ab81f40c3698430d34c576a8cab",
+      "bytes": 3672
+    },
+    {
+      "file": "k1_pretrained_consistency\\objective_qualification.json",
+      "sha256": "ad4f82e2758cb32318be2fb0526e6ce1cc62cf766e1174abe4a96ddbda597c6d",
+      "bytes": 140
+    },
+    {
+      "file": "k1_pretrained_consistency\\predictions_epoch_04.pt",
+      "sha256": "9dcac1561198566fd59bf8419935d7ea58a0a52e66b3f07a5b301245a8497284",
+      "bytes": 801931
+    },
+    {
+      "file": "k1_pretrained_consistency\\runtime.json",
+      "sha256": "31d6d56dd793355e7075d4332fdbd449ab7f14efbaf1018a97a5752326f2834d",
+      "bytes": 2625
+    },
+    {
+      "file": "k1_pretrained_consistency\\initial_state.pt",
+      "sha256": "a1c54c2cfa6cb9c74fbeac1eef193321f8800e0da5fdca3483935b3005a7767e",
+      "bytes": 14800338
+    },
+    {
+      "file": "k1_pretrained_consistency\\last_checkpoint.pt",
+      "sha256": "72140971e30540563912e1b6282cc6a84df161e0e7dbd520ac507e8aa4d0d0ea",
+      "bytes": 44362798
+    },
+    {
+      "file": "k1_pretrained_consistency\\best_predictions.pt",
+      "sha256": "e5c85e409a55262608dca1de1b3dd9c3d8db6c2d930d7922ac1df185922e91b9",
+      "bytes": 801839
+    },
+    {
+      "file": "k1_pretrained_consistency\\data_manifest.json",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "bytes": 4790
+    },
+    {
+      "file": "k1_pretrained_consistency\\predictions_epoch_05.pt",
+      "sha256": "b9b5cfd90bf0352565a7f0a26e3fc2e38e32aec92c29454c94a42f9dc39791e8",
+      "bytes": 801931
+    },
+    {
+      "file": "k1_pretrained_consistency\\runtime_certificate.json",
+      "sha256": "88daf244f869c35de8ee70b0d51f3ba41b85927e3283edc4c3446a32ad557f92",
+      "bytes": 833
+    },
+    {
+      "file": "training_k1_pretrained_consistency.log",
+      "sha256": "e61ea7e98bf509672f348469bef0df9e52c819c23672d1b23a8868a188a3d280",
+      "bytes": 2631
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\predictions_epoch_07.pt",
+      "sha256": "f40b6a95ac4dc2ed4acc5dc9eeec68dce8c68fe9a4452ce28964d0caffec7cdd",
+      "bytes": 801931
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\predictions_epoch_01.pt",
+      "sha256": "6d0e14d97421b772eb3447c92b4aa446cccc6e700d53e333330ea9024c6d6c0d",
+      "bytes": 801931
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\best_model.pt",
+      "sha256": "a65f8db4d698b2718bd53cb386f373c83e5925aa81f5b27a199b784985899601",
+      "bytes": 23597539
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\calibration.json",
+      "sha256": "39de4dd1f01b2e01b63a4ff6180d26a48ed34de9ba0b58ae566746c28903572f",
+      "bytes": 929
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\predictions_epoch_00.pt",
+      "sha256": "7b9909c896aae5743d5752fb97aa82c027feff8ed65a94c01abbc0df6c8c356c",
+      "bytes": 801931
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\progress.json",
+      "sha256": "419e60aabba09b5a2449c859328633ea1f1bf5cd6762151a79034fa6e6b8f1e4",
+      "bytes": 76
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\objective_components.json",
+      "sha256": "d25aa76c6697da0254c92420c21907af17111fc3a366cdcb9cf197d185e6610c",
+      "bytes": 1385
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\predictions_epoch_02.pt",
+      "sha256": "896f5e619315b995c75d90e5c25d13f9a6e7217089a57e15cc280669e43ab8c5",
+      "bytes": 801931
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\predictions_epoch_03.pt",
+      "sha256": "7ef066f0221d0b265249c981b974a8ae47e8274499c486c53de3cafa71e1f62f",
+      "bytes": 801931
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\scientific_contract.json",
+      "sha256": "5b706baf42af67fe1b9042a725b9f95b5cd24f026576cfd39a296a4b426d48fe",
+      "bytes": 1898
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\best_live_predictions.pt",
+      "sha256": "0a813be00e70cbaaf18ac95193c2593d5c4b6b1f3c60dd9959976e9242c0bba5",
+      "bytes": 801938
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\trace.json",
+      "sha256": "bdd6a5d6f5214d991f15bbfdaf8d9c3c74e9e9d77876a716599f8911f95fdcdf",
+      "bytes": 5158
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\objective_qualification.json",
+      "sha256": "afa36abef3937b3fd064082d17c03e4e1cdf673171dd07387af16a6c5c40fa72",
+      "bytes": 111
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\predictions_epoch_04.pt",
+      "sha256": "dca8e3454efabe3938dde9788d2018776beabc6ec5a03f606f5931f126ed7e85",
+      "bytes": 801931
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\runtime.json",
+      "sha256": "31d6d56dd793355e7075d4332fdbd449ab7f14efbaf1018a97a5752326f2834d",
+      "bytes": 2625
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\initial_state.pt",
+      "sha256": "df6b5244c0939479974293fee8f4d85d3253c6b200e8a4618294211d2427c566",
+      "bytes": 23611362
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\predictions_epoch_08.pt",
+      "sha256": "a10d3955db7308f33039c74b7983ce54de229ce60e27d897ffa080a5e6486738",
+      "bytes": 801931
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\last_checkpoint.pt",
+      "sha256": "882bbad7b3c0fc2bf005d726c08eb78058af0add7a593f59946a424cbd30ebad",
+      "bytes": 94492535
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\predictions_epoch_06.pt",
+      "sha256": "fe0195fcac380e70ebf8cf85b062ab963bc8d22d3820a33cf777f3a81702846d",
+      "bytes": 801931
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\best_predictions.pt",
+      "sha256": "04f68243f15879eef4061945350fd561bc7bfd2d2fc28508b52afd28f6704248",
+      "bytes": 801839
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\data_manifest.json",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "bytes": 4790
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\predictions_epoch_05.pt",
+      "sha256": "d81cc845f736d1a4fc55370c4f3a3cb5ae3fd1dbee7782b4478bfd2e0828f209",
+      "bytes": 801931
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999\\runtime_certificate.json",
+      "sha256": "d0ce439b3a7acba06bf85969819503f77d84643e929fca9939d0a8d0f2382ac0",
+      "bytes": 833
+    },
+    {
+      "file": "training_gptrans_g1_bond_local_ema999.log",
+      "sha256": "6e847a3f6b4de32bedc2f26beec04e97fd27897ec59b35d41a78363db8ba68eb",
+      "bytes": 4250
+    }
+  ]
+}

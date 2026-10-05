@@ -21,6 +21,16 @@ authoritative remote state.
 
 ## Frozen K1 continuation
 
+The legacy500K pair bootstrap `run_legacy_500k_pair.py` forwards tagged worker
+output while retaining each original log. The owning trainer emits batch/step
+progress at least every100 batches or30 seconds at a batch boundary. Its
+continuation launch binds each private checkpoint mount, stage manifest hash,
+source archive and complete-epoch cursor; the owning trainer validates every
+resume artifact, optimizer/RNG/sampler/EMA state and exact runtime identity.
+The owning question's `prepare.py --continuation-from ... --resume-root ...`
+reuses shared source packaging/release checks and preserves its frozen Spec,
+initialization, recipes and prospective records. It does not publish or submit.
+
 For SDK operations with an explicit key, use `credential_api.py`'s
 `api_for_credentials(path)`. It binds the requested account even when the SDK
 finds a different global OAuth session. Keep credentials outside the repository;
