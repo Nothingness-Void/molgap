@@ -1,0 +1,23 @@
+{
+  "observed_at": "2026-10-05T10:26:29.919970+00:00",
+  "checks": [
+    {
+      "dataset": "nothingnessvoid/molgap-k1-gptrans-500k-source-s42-v1",
+      "file": "legacy_500k_launch.json",
+      "sha256": "4c862228eaed364645bab19e5241b372d80f51bf63d00755414fa1675680aace",
+      "status": "ready"
+    },
+    {
+      "dataset": "nothingnessvoid/molgap-k1-gptrans-500k-resume-v2-s42",
+      "file": "k1_pretrained_consistency/stage_manifest.json",
+      "sha256": "440f9391fba8ff9317aebe830c5a691c9e17dd9ff9bbf24d8e264e8186888a39",
+      "status": "ready"
+    },
+    {
+      "dataset": "nothingnessvoid/molgap-k1-gptrans-500k-resume-v2-s42",
+      "file": "gptrans_g1_bond_local_ema999/stage_manifest.json",
+      "sha256": "50df501def9063aa1aac26d3c495002c8efaa1bbfb0aa004d4fe2cdcc672b812",
+      "status": "ready"
+    }
+  ]
+}

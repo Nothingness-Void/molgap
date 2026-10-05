@@ -1,0 +1,17 @@
+{
+  "observed_at": "2026-10-05T10:35:00+00:00",
+  "source": "authenticated Kaggle Logs UI",
+  "version": 3,
+  "script_version_id": 355422526,
+  "script_version_url": "https://www.kaggle.com/code/nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1/edit/run/355422526",
+  "scheduler": "RUNNING",
+  "accelerator": "GPU T4 x2",
+  "observed_messages": [
+    "BOOTSTRAP START python=3.13.15",
+    "BOOTSTRAP START python=3.11.17",
+    "ALLOCATION VERIFIED ['Tesla T4', 'Tesla T4']; installing frozen runtime",
+    "Torch2.4.1 cu121 download/install output forwarded"
+  ],
+  "training_resume_verified": false,
+  "limitations": "Dependency installation visible; per-arm resume optimizer qualification and batch progress not yet observed"
+}

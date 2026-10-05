@@ -1,0 +1,10 @@
+{
+  "observed_at": "2026-10-05T10:25:19.113827+00:00",
+  "command": ".venv/Scripts/python.exe -m pytest tests/test_pcqm_k1_gptrans_bootstrap_continuation.py tests/test_pcqm_composed_500k.py -q",
+  "result": "13 passed",
+  "elapsed_seconds": 15.79,
+  "executor": "gpt-6-luna max subagent",
+  "scope": "synthetic immediate log forwarding/retention and nonzero exit; manifest/source/cursor/artifact rejection; both-arm resume CLI; composed family hooks",
+  "release_status": "LOCAL_RELEASE_INPUTS_VERIFIED",
+  "release_check_count": 82
+}

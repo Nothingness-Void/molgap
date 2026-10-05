@@ -1,12 +1,15 @@
 # Execution status
 
-Last authoritative observation: [stop snapshot](submission_v2/stop_reconciliation/snapshot.json).
+Last authoritative observation: [v3 scheduler](submission_v3/scheduler_snapshot.json).
 Kaggle1 kernel `nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1`,
-ID137144136/version2 is CANCEL_ACKNOWLEDGED after the user stopped it.
-[Interrupted-attempt decision](submission_v2/stop_reconciliation/decision.md)
-records successful training and the log-forwarding defect. K1 retains six
-complete epochs; GPTrans nine. The user authorized same-question continuation
-with batch progress. Continuation preparation/submission is pending.
+ID137144136/version3 is RUNNING. Its [actual receipt](submission_v3/platform_response.json)
+and [pulled identity](submission_v3/remote_identity_verified.json) bind the frozen
+Spec, source and private continuation inputs. Installation output is visible
+in the authenticated main log. Resumed qualification/training progress remains
+pending verification; RUNNING is not training acceptance.
+[Interrupted v2 decision](submission_v2/stop_reconciliation/decision.md) retains
+K1 six complete epochs (23,436steps), GPTrans nine (35,154steps) and the prior
+measured4.941222allocated native T4hours. Version3 resumes those exact states.
 
 Both teacher-free candidate arms target500K/60complete epochs. This invocation
 is bounded to9hours and may only publish a resumable intermediate stage.
