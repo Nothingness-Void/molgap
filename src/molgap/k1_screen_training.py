@@ -601,6 +601,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         raise RuntimeError("Zero-added initialization differs from frozen reference")
     del reference, candidate
     losses, states = [], []
+    spectral_qualification = None
     for _ in range(2):
         configure_fp32_determinism(SEED)
         model = _make_screen_model(state, mode).train()
@@ -617,6 +618,13 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
             and float(parameter.grad.abs().sum()) > 0
             for parameter in model.k1_spectral.parameters()):
             raise RuntimeError("Spectral mechanism lacks finite nonzero two-step gradients")
+        if mode == "spectral":
+            from .k1_spectral import qualify_invariance
+            parameter_count = sum(parameter.numel() for parameter in model.parameters())
+            if parameter_count > 2 * 3_658_817:
+                raise RuntimeError("Spectral parameter budget exceeded")
+            spectral_qualification = {"parameters": parameter_count,
+                                      **qualify_invariance(model, batch, _forward)}
         losses.append(float(loss.cpu()))
         states.append({key: value.detach().cpu().clone() for key, value in model.state_dict().items()})
         del model, optimizer
@@ -676,6 +684,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         del model, optimizer
     overhead = timings[mode]["median_step_seconds"] / timings["reference"]["median_step_seconds"] - 1
     architecture = {"accepted": overhead <= 0.25, "mode": mode, "zero_initialization_delta": zero_delta,
+        "spectral_qualification": spectral_qualification,
         "repeated_optimizer_steps": 2,
         "repeatability": repeated, "resume_roundtrip": resume, "timings": timings,
         "selected_state_roundtrip_delta": selected_delta,

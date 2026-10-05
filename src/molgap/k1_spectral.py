@@ -7,9 +7,11 @@ accelerator qualification; no molecular geometry is read or constructed.
 from pathlib import Path
 import json
 import time
+import hashlib
 import numpy as np
 from .screen_policy import canonical_fingerprint
 from .training_reproducibility import atomic_json, atomic_torch_save, sha256_file
+from .v4_runtime import normalized_source_sha256
 
 
 CONFIG = {"layer": 6, "latent_channels": 64, "frequency_basis": 8,
@@ -60,6 +62,7 @@ def spectral_roles(roles, directory, *, fixed_manifest_sha256, create=False):
     cache = directory / "spectral_cache.pt"
     metadata = directory / "spectral_cache_manifest.json"
     identity = {"configuration": configuration(), "fixed_manifest_sha256": fixed_manifest_sha256,
+                "algorithm_source_sha256": normalized_source_sha256(Path(__file__)),
                 "role_rows": {name: len(dataset) for name, dataset in roles.items()}}
     if not cache.exists():
         if not create:
@@ -73,21 +76,34 @@ def spectral_roles(roles, directory, *, fixed_manifest_sha256, create=False):
         if maximum > 128 or expected_bytes > 768 * 1024 ** 2:
             raise RuntimeError("Full spectral cache exceeds declared CPU memory budget")
         payload = {}
+        topology_hashes, source_row_hashes = {}, {}
         for name, dataset in roles.items():
             offsets = np.concatenate(([0], np.cumsum(sizes[name]))).astype(np.int64)
             vectors = np.zeros((int(offsets[-1]), maximum), dtype=np.float32)
             values = np.zeros(int(offsets[-1]), dtype=np.float32)
+            topology_digest, row_digest = hashlib.sha256(), hashlib.sha256()
+            source_rows = []
             for i in range(len(dataset)):
-                val, vec = eigensystem(dataset[i])
+                graph = dataset[i]
+                source_index = int(graph.source_idx.view(-1)[0])
+                source_rows.append(source_index)
+                row_digest.update(np.asarray([source_index], dtype="<i8").tobytes())
+                topology_digest.update(np.asarray([source_index, int(graph.num_nodes)], dtype="<i8").tobytes())
+                topology_digest.update(graph.edge_index.detach().cpu().contiguous().numpy().astype("<i8").tobytes())
+                val, vec = eigensystem(graph)
                 begin, end = offsets[i:i + 2]
                 vectors[begin:end, :len(val)] = vec
                 values[begin:end] = val
             payload[name] = {"vectors": torch.from_numpy(vectors), "values": torch.from_numpy(values),
-                             "slices": torch.from_numpy(offsets)}
+                             "slices": torch.from_numpy(offsets), "source_rows": torch.tensor(source_rows)}
+            topology_hashes[name] = topology_digest.hexdigest()
+            source_row_hashes[name] = row_digest.hexdigest()
         atomic_torch_save(cache, payload)
         atomic_json(metadata, {"format": "molgap-k1-spectral-cache-v1", "identity": identity,
                               "cache_sha256": sha256_file(cache), "maximum_nodes": maximum,
                               "tensor_bytes": expected_bytes,
+                              "ordered_topology_sha256": topology_hashes,
+                              "ordered_source_idx_sha256": source_row_hashes,
                               "cpu_process_seconds": time.process_time() - process_started,
                               "wall_seconds": time.perf_counter() - started,
                               "geometry_model_input": False})
@@ -95,7 +111,15 @@ def spectral_roles(roles, directory, *, fixed_manifest_sha256, create=False):
     if manifest["identity"] != identity or sha256_file(cache) != manifest["cache_sha256"]:
         raise ValueError("Spectral cache identity or byte hash changed")
     payload = torch.load(cache, map_location="cpu", weights_only=True)
-    return {name: SpectralDataset(dataset, **payload[name]) for name, dataset in roles.items()}
+    result = {}
+    for name, dataset in roles.items():
+        item = payload[name]
+        source_rows = item.pop("source_rows")
+        expected_start = 0 if name == "train" else 100_000
+        if not torch.equal(source_rows, torch.arange(expected_start, expected_start + len(dataset))):
+            raise ValueError("Spectral cache source row order changed")
+        result[name] = SpectralDataset(dataset, **item)
+    return result
 
 
 def attach_spectral(model):
@@ -138,3 +162,46 @@ def attach_spectral(model):
 
     model.local_blocks[CONFIG["layer"] - 1].register_forward_hook(residual_hook)
     return model
+
+
+def qualify_invariance(model, graph_batch, forward):
+    """Assigned-device release qualification on a training-only batch."""
+    import torch
+    model.eval()
+    with torch.no_grad():
+        original = forward(model, graph_batch)
+        sign_batch = graph_batch.clone()
+        signs = torch.ones(sign_batch.spectral_vectors.shape[1], device=original.device)
+        signs[::2] = -1
+        sign_batch.spectral_vectors = sign_batch.spectral_vectors * signs
+        sign_delta = float((forward(model, sign_batch) - original).abs().max())
+        rotated = graph_batch.clone()
+        rotations = 0
+        for begin, end in zip(graph_batch.ptr[:-1].tolist(), graph_batch.ptr[1:].tolist()):
+            values = graph_batch.spectral_values[begin:end, 0]
+            for index in range(len(values) - 1):
+                if abs(float(values[index + 1] - values[index])) <= 1e-6:
+                    columns = rotated.spectral_vectors[begin:end, index:index + 2].clone()
+                    rotation = columns.new_tensor([[0.6, -0.8], [0.8, 0.6]])
+                    rotated.spectral_vectors[begin:end, index:index + 2] = columns @ rotation
+                    rotations += 1
+                    break
+        rotation_delta = float((forward(model, rotated) - original).abs().max())
+        permutation = torch.cat([torch.arange(end - 1, begin - 1, -1, device=original.device)
+                                 for begin, end in zip(graph_batch.ptr[:-1].tolist(), graph_batch.ptr[1:].tolist())])
+        inverse = torch.empty_like(permutation)
+        inverse[permutation] = torch.arange(len(permutation), device=original.device)
+        permuted = graph_batch.clone()
+        for name in ("x", "random_walk_pe", "spectral_vectors"):
+            setattr(permuted, name, getattr(permuted, name)[permutation])
+        permuted.edge_index = inverse[permuted.edge_index]
+        permutation_delta = float((forward(model, permuted) - original).abs().max())
+    model.train()
+    del model.k1_spectral.current_batch
+    model.k1_spectral.current_batch = None
+    report = {"sign_delta": sign_delta, "repeated_space_rotation_delta": rotation_delta,
+              "repeated_space_rotations": rotations, "node_permutation_delta": permutation_delta,
+              "maximum_absolute_delta": 1e-5}
+    if max(sign_delta, rotation_delta, permutation_delta) > 1e-5 or rotations == 0:
+        raise RuntimeError("Spectral basis/permutation qualification failed or no repeated-space fixture")
+    return report
