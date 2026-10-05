@@ -63,7 +63,7 @@ def _main():
     launch = launches[0]
     config = json.loads(launch.read_text(encoding="utf-8"))
     graph_mounts = [p for p in mounted.rglob(config["graph_mount"]) if p.is_dir()]
-    if launch.parent.name != config["source_mount"] or len(graph_mounts) != 1:
+    if config["source_mount"] not in launch.relative_to(mounted).parts or len(graph_mounts) != 1:
         raise RuntimeError("Frozen source/graph dataset mounts changed")
     if config["format"] != "molgap-legacy-500k-pair-v1":
         raise RuntimeError("Unsupported legacy500K launch")
@@ -81,7 +81,7 @@ def _main():
     ALLOCATION_VERIFIED = True
     # Torch imports happen only after installing the same frozen legacy runtime.
     subprocess.run([sys.executable, "-m", "pip", "install", "-q", "torch==2.4.1", "--index-url", "https://download.pytorch.org/whl/cu121"], check=True)
-    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "numpy<2", "--no-deps", "torch-geometric==2.6.1", "ogb==1.3.6"], check=True)
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "numpy<2", "torch-geometric==2.6.1", "ogb==1.3.6"], check=True)
     root = Path("/kaggle/temp/molgap-legacy500k")
     root.mkdir(parents=True, exist_ok=False)
     package, source = root / "package", root / "source"
@@ -198,7 +198,7 @@ def main():
             # interpreter/venv management; preserve the full bootstrap cost clock.
             subprocess.run([sys.executable, "-m", "pip", "install", "-q", "uv"], check=True)
             environment = Path("/kaggle/temp/molgap-legacy500k-python311")
-            subprocess.run([sys.executable, "-m", "uv", "venv", "--python", "3.11", "--seed", str(environment)], check=True)
+            subprocess.run([sys.executable, "-m", "uv", "--native-tls", "venv", "--python", "3.11", "--seed", str(environment)], check=True)
             os.environ.update(MOLGAP_BOOTSTRAP_STARTED=str(STARTED), MOLGAP_BOOTSTRAP_UTC=started_utc)
             python = str(environment / "bin/python")
             os.execv(python, [python, "-u", str(Path(__file__).resolve())])
