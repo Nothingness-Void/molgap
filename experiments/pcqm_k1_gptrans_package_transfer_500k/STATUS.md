@@ -6,6 +6,8 @@ version2 is RUNNING. [Response](submission_v2/platform_response.json),
 [scheduler snapshot](submission_v2/scheduler_snapshot.json), and
 [source verification](submission_v2/remote_identity_verified.json) own the
 exact identities. RUNNING does not certify training or acceptance.
+The later [log-visibility inspection](submission_v2/log_visibility_analysis.md)
+confirmed hidden worker output; current training progress remains unverified.
 
 Both teacher-free candidate arms target500K/60complete epochs. This invocation
 is bounded to9hours and may only publish a resumable intermediate stage.
