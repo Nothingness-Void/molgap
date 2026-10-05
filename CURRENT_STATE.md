@@ -8,8 +8,10 @@
 
 The user separately authorized one Kaggle2 [independent pair-transition100K
 screen](experiments/pcqm_gptrans_pair_transition_100k/protocol.md), against the
-accepted correctedG1+EMA999 reference. Local preparation is in progress;
-remote execution is not yet asserted. No GRIT, extra seed or500K training is
+accepted correctedG1+EMA999 reference. Version1 physicalID137191673 is
+RUNNING; the [actual receipt](experiments/pcqm_gptrans_pair_transition_100k/gpu/submission_v1.json)
+and [existing Luna binding](experiments/pcqm_gptrans_pair_transition_100k/gpu/monitor_binding.json)
+identify its exact custody. No GRIT, extra seed or500K training is
 released. The user-reported Kaggle1 dual500K remains outside server custody.
 
 The authorized T4x2 [final atom/bond readout dual](experiments/pcqm_gptrans_readout_100k/gpu/submission_record.md)
@@ -39,7 +41,8 @@ is independently accepted and RML-finalized. The local addon has a complete
 STRICT_CAUSAL Replay pair but remains below its frozen promotion gate. The500K
 shared-live EMA study supports the correction direction, remains noncausal
 PAIRED_ENDPOINT and is not a causal Replay pair or full-scale qualification.
-All four authorized studies are closed; the existing Luna heartbeat is paused.
+All four earlier authorized studies are closed; Luna observes only the separately
+authorized pair-transition job above.
 Exact receipts and the [closed shared monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
 retain custody history. No automatic successor is authorized.
 The earlier monitor bindings are closed; the monitor never adopts desktop jobs.
