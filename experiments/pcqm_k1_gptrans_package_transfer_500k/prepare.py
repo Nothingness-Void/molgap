@@ -157,11 +157,14 @@ def declare(source_commit, inputs):
 
 
 def prepare_continuation(previous, resume_root, output, pickle_input,
-                         checkpoint_dataset="nothingnessvoid/molgap-k1-gptrans-500k-resume-v2-s42"):
+                         checkpoint_dataset="nothingnessvoid/molgap-k1-gptrans-500k-resume-v2-s42",
+                         max_stage_seconds=None):
     """Keep prospective/scientific inputs frozen while rebinding executable source."""
     import torch
     previous, resume_root, output = map(Path, (previous, resume_root, output))
     old = verify_experiment_source_package(previous / "package")
+    if max_stage_seconds is not None and (type(max_stage_seconds) is not int or not 0 < max_stage_seconds <= 32400):
+        raise ValueError("Continuation stage bound must be within the approved 9 hours")
     spec = ExperimentSpec.from_json((previous / "package/experiment_spec.json").read_text())
     if spec.identity != ExperimentSpec.from_json((EXP / "experiment_spec.json").read_text()).identity:
         raise ValueError("Continuation cannot change the owning frozen Spec")
@@ -178,6 +181,8 @@ def prepare_continuation(previous, resume_root, output, pickle_input,
     if not checkpoint_slug or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in checkpoint_slug):
         raise ValueError("Invalid checkpoint dataset slug")
     launch = read(source / "legacy_500k_launch.json")
+    if max_stage_seconds is not None:
+        launch["max_stage_seconds"] = max_stage_seconds
     launch.update(source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"],
                   package_identity=manifest["package_identity"])
     prior_resume_mounts = {a["resume"]["mount"] for a in launch["arms"] if "resume" in a}
@@ -257,6 +262,8 @@ def main():
     parser.add_argument("--resume-root", type=Path)
     parser.add_argument("--checkpoint-dataset", default="nothingnessvoid/molgap-k1-gptrans-500k-resume-v2-s42",
                         help="Account-owned immutable checkpoint dataset for this continuation")
+    parser.add_argument("--max-stage-seconds", type=int,
+                        help="Shorter continuation allocation window within the frozen 9-hour ceiling")
     args = parser.parse_args()
     actual = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     if args.source_commit != actual:
@@ -265,7 +272,7 @@ def main():
         if args.resume_root is None or args.output is None:
             raise ValueError("Continuation requires --resume-root and a fresh --output")
         prepare_continuation(args.continuation_from, args.resume_root, args.output, args.pickle_input,
-                             args.checkpoint_dataset)
+                             args.checkpoint_dataset, args.max_stage_seconds)
         return
     spec, pins, initial, transform = declare(actual, args.inputs)
     if args.declare_only:

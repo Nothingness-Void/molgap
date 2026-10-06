@@ -99,6 +99,36 @@ def resolve_resume(mounted, arm):
     return root
 
 
+def retain_completed_arm(resume_root, destination, arm, stage_epochs=60):
+    """Keep a finished peer's original evidence without another GPU worker."""
+    resume = arm.get("resume", {})
+    if resume.get("next_epoch") != stage_epochs:
+        return False
+    if resume_root is None:
+        raise RuntimeError("Completed arm requires verified retained output")
+    root = Path(resume_root)
+    if digest(root / "stage_manifest.json") != resume["manifest_sha256"]:
+        raise RuntimeError("Completed arm manifest changed after resume validation")
+    manifest = json.loads((root / "stage_manifest.json").read_text())
+    if (manifest["status"] != "COMPLETE" or manifest["next_epoch"] != stage_epochs
+            or manifest["arm"] != arm["arm_id"] or manifest["source_sha256"] != resume["source_sha256"]):
+        raise RuntimeError("Completed arm evidence disagrees with the pinned resume")
+    destination = Path(destination)
+    destination.mkdir(parents=True, exist_ok=False)
+    for name, checksum in manifest["artifacts"].items():
+        source = root / name
+        target = destination / name
+        if not source.resolve().is_relative_to(root.resolve()) or not target.resolve().is_relative_to(destination.resolve()):
+            raise RuntimeError("Completed artifact escapes its retained directory")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
+        if digest(target) != checksum:
+            raise RuntimeError("Completed artifact changed during retention: " + name)
+    shutil.copyfile(root / "stage_manifest.json", destination / "stage_manifest.json")
+    print(f"RETAIN COMPLETE {arm['arm_id']} epochs={stage_epochs}; no GPU worker", flush=True)
+    return True
+
+
 def _main():
     global ALLOCATION_VERIFIED
     mounted = Path("/kaggle/input")
@@ -191,6 +221,14 @@ def _main():
     output.mkdir(parents=True, exist_ok=False)
     state = {"format": config["format"], "spec_identity": spec.identity, "package_identity": manifest["package_identity"],
              "source_sha256": config["source_archive_sha256"], "training_started": False, "phase": "cpu_release", "arms": {}}
+    active_arms = []
+    state["reused_arms"] = {}
+    for arm in config["arms"]:
+        aid = arm["arm_id"]
+        if retain_completed_arm(resumes[aid], output / "stages" / aid, arm, config["stage_epochs"]):
+            state["reused_arms"][aid] = dict(arm["resume"], disposition="RETAINED_COMPLETE_NO_EXECUTION")
+        else:
+            active_arms.append(arm)
     atomic(output / "pair_state.json", state)
     report = check_release_inputs(spec, package, expected_package_identity=manifest["package_identity"],
         recipe_files=recipes, initial_states=inputs, required_modules=config["required_modules"], input_root=launch.parent)
@@ -214,13 +252,13 @@ def _main():
     for phase in ("preflight", "training"):
         WINDOWS[phase] = {"start_monotonic": time.monotonic(), "stop_monotonic": None}
         state["phase"] = phase
-        state["training_started"] = phase == "training"
+        state["training_started"] = phase == "training" and bool(active_arms)
         atomic(output / "pair_state.json", state)
         workers = []
         threads = []
-        print(f"PHASE {phase}: both isolated arms", flush=True)
+        print(f"PHASE {phase}: active arms={[a['arm_id'] for a in active_arms]}", flush=True)
         try:
-            for arm in config["arms"]:
+            for arm in active_arms:
                 aid = arm["arm_id"]
                 env = os.environ.copy()
                 env.update(CUDA_VISIBLE_DEVICES=str(arm["device"]), PYTHONPATH=str(source / "src"), PYTHONHASHSEED="42", CUBLAS_WORKSPACE_CONFIG=":4096:8", OMP_NUM_THREADS="2", MKL_NUM_THREADS="2", MOLGAP_V4_LOADER_WORKERS="2")
