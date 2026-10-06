@@ -1,13 +1,14 @@
 # Execution status
 
 Latest authoritative observation: [v4 submission identity](submission_v4/remote_identity_verified.json)
-and [authenticated startup log observation](submission_v4/startup_observation.json).
+and [actual training start](submission_v4/training_start_observation.json).
 Kaggle1 accepted kernel137144136/version4 (UI script355652612); scheduler RUNNING.
 The exact pulled entrypoint and three private/frozen input mounts match release.
-Python3.11.17 and Tesla T4x2 allocation are observed; the frozen runtime is
-installed and both epoch30/45 resume manifests passed. CPU checks are starting.
-All-arm runtime qualification and resumed training are not yet
-claimed. [Receipt and continuation summary](submission_v4/continuation_summary.md).
+Python3.11.17 and Tesla T4x2 allocation are observed; the frozen runtime and
+both epoch30/45 resume manifests passed. CPU checks and both isolated T4
+preflights passed. Actual K1 epoch31/step117181 and GPTrans epoch46/step175771
+training is observed with preserved learning rates and batch progress.
+[Receipt and continuation summary](submission_v4/continuation_summary.md).
 
 V4 resumes the same question from K1 epoch30/step117180 and GPTrans
 epoch45/step175770, preserving both schedules and recipes. It targets the

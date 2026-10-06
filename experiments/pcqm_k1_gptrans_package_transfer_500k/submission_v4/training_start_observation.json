@@ -1,0 +1,30 @@
+{
+  "observed_date": "2026-10-06",
+  "source": "authenticated Kaggle Logs UI",
+  "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1?scriptVersionId=355652612",
+  "kernel_id": 137144136,
+  "version": 4,
+  "script_version_id": 355652612,
+  "all_arm_cpu_model_cache_recipe_pass": true,
+  "both_isolated_t4_preflights_pass": true,
+  "actual_resumed_training_observed": true,
+  "arms": {
+    "k1_pretrained_consistency": {
+      "resume_epoch_zero_based": 30,
+      "epoch_one_based": 31,
+      "batch": 1,
+      "global_step": 117181,
+      "learning_rate_reported": 0.00019518921,
+      "log_elapsed_seconds": 237.8
+    },
+    "gptrans_g1_bond_local_ema999": {
+      "resume_epoch_zero_based": 45,
+      "epoch_one_based": 46,
+      "batch": 1,
+      "global_step": 175771,
+      "learning_rate_reported": 0.00015237968,
+      "log_elapsed_seconds": 238.6
+    }
+  },
+  "scientific_terminal_acceptance": false
+}
