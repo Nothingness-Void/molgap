@@ -1,0 +1,80 @@
+{
+  "format": "molgap-intermediate-stage-inspection-v1",
+  "observed_at": "2026-10-06T16:23:23.243210+00:00",
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1",
+  "version": 4,
+  "scheduler_status": "COMPLETE",
+  "disposition": "GPTRANS_60_EPOCH_COMPLETE_K1_RESUMABLE_INTERMEDIATE_STAGE",
+  "scientific_question_closed": false,
+  "dual_replay_ready": false,
+  "arms": {
+    "k1_pretrained_consistency": {
+      "stage_status": "STAGE_COMPLETE",
+      "training_contract_complete": false,
+      "completed_epochs": 53,
+      "required_epochs": 60,
+      "remaining_epochs": 7,
+      "optimizer_steps": 207018,
+      "sample_presentations": 26498304,
+      "best_development_mae_eV": 0.10490408539772034,
+      "best_epoch_one_based": 49,
+      "last_development_mae_eV": 0.10678550601005554,
+      "runtime_certificate_id": "6d54e8b1ddd932eadfee86d1045fa377720c43d75525e313233a002a800e29b7",
+      "recent_three_mean_epoch_seconds": 1213.6666709806668,
+      "estimated_remaining_single_device_hours": 2.359907415795741,
+      "checkpoint_model_optimizer_ema_finite": true,
+      "rng_and_optimizer_state_present": true,
+      "next_batch_index": 0,
+      "protected_roles_read": false
+    },
+    "gptrans_g1_bond_local_ema999": {
+      "stage_status": "COMPLETE",
+      "training_contract_complete": true,
+      "completed_epochs": 60,
+      "required_epochs": 60,
+      "remaining_epochs": 0,
+      "optimizer_steps": 234360,
+      "sample_presentations": 29998080,
+      "best_development_mae_eV": 0.10188769549131393,
+      "best_epoch_one_based": 50,
+      "last_development_mae_eV": 0.1022721454501152,
+      "runtime_certificate_id": "494f72295a2d763ab32227e605d4b1f0e666f32a3bd573d9bc1e928478c5fb4d",
+      "recent_three_mean_epoch_seconds": 975.6002422643329,
+      "estimated_remaining_single_device_hours": 0.0,
+      "checkpoint_model_optimizer_ema_finite": true,
+      "rng_and_optimizer_state_present": true,
+      "next_batch_index": 0,
+      "protected_roles_read": false
+    }
+  },
+  "verified_checks": [
+    "pulled executable and three input mounts match v4 submission",
+    "source/package/spec match retained v4 binding",
+    "27 selected files match stage SHA256 manifests; hash-identical cached files reused",
+    "each runtime certificate passes existing owner validator",
+    "v3 trace prefixes retained exactly; complete-epoch counters and exposures agree",
+    "selected model/last checkpoint/trace/contract/runtime match",
+    "model optimizer EMA tensors finite; optimizer RNG and schedule state retained",
+    "both development vectors are aligned finite 50000 rows with identical targets; recomputed MAE matches",
+    "GPTrans selected live vector and final EMA retained",
+    "official validation and test roles reported sealed"
+  ],
+  "retrieved_artifact_count": 27,
+  "downloaded_files": 13,
+  "v4_observed_allocated_T4_hours": 17.00834962792111,
+  "v2_plus_v3_plus_v4_measured_allocated_T4_hours": 39.476931706445555,
+  "cost_limit_allocated_T4_hours": 48,
+  "remaining_against_measured_allocated_T4_hours": 8.523068293554445,
+  "cost_missing": [
+    "v1 allocation",
+    "scheduler startup outside measured bootstrap windows",
+    "queue and CPU core time"
+  ],
+  "limits": [
+    "intermediate check; no terminal scientific comparison or dual replay claim",
+    "no local model execution or GPU resume",
+    "per-epoch prediction sweep not retrieved",
+    "raw progress is last epoch observation, not live scheduler truth"
+  ],
+  "next_action": "K1 needs seven remaining epochs from exact v4 state; retain completed GPTrans without retraining; review native cumulative allocation before any authorized continuation. Final fixed50:50 fusion and per-arm terminal RML remain pending."
+}

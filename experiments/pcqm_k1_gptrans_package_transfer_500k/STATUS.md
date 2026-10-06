@@ -1,19 +1,38 @@
 # Execution status
 
-Latest authoritative observation: [v4 submission identity](submission_v4/remote_identity_verified.json)
-and [actual training start](submission_v4/training_start_observation.json).
-Kaggle1 accepted kernel137144136/version4 (UI script355652612); scheduler RUNNING.
-The exact pulled entrypoint and three private/frozen input mounts match release.
-Python3.11.17 and Tesla T4x2 allocation are observed; the frozen runtime and
-both epoch30/45 resume manifests passed. CPU checks and both isolated T4
-preflights passed. Actual K1 epoch31/step117181 and GPTrans epoch46/step175771
-training is observed with preserved learning rates and batch progress.
-[Receipt and continuation summary](submission_v4/continuation_summary.md).
+Latest authoritative observation: [v4 stage inspection](submission_v4/terminal_inspection/inspection_report.json), 2026-10-07.
+Kaggle1 kernel137144136/version4 (UI script355652612) is COMPLETE, with both
+process exit codes0. It stopped at2026-10-06 23:29:06 JST under the bounded
+stage policy. GPTrans completed its60-epoch training contract; K1 published a
+resumable STAGE_COMPLETE at53epochs. The scientific question remains open.
 
-V4 resumes the same question from K1 epoch30/step117180 and GPTrans
-epoch45/step175770, preserving both schedules and recipes. It targets the
-remaining60-epoch contract under the reviewed9-hour stage and cumulative budget.
-No automatic monitor or server handoff is configured.
+| Arm | Complete epochs | Optimizer steps | Best development MAE (eV) | Selected epoch |
+|---|---:|---:|---:|---:|
+| K1 pretrained consistency | 53/60 | 207,018 | 0.1049040854 | 49 |
+| GPTrans G1 bond-local EMA .999 | 60/60 | 234,360 | 0.1018876955 | 50 |
+
+The exact pulled entrypoint, source/package/Spec and three input mounts match
+v4 release. All27 selected files match stage hashes;14 hash-identical retained
+v3 files were reused, and13 changed files retrieved. Each arm has50K finite
+aligned development predictions, verified runtime certificates, trace/exposure,
+finite selected/last model and optimizer state, RNG and unchanged schedule.
+GPTrans has its final EMA and selected live diagnostic predictions. Protected
+roles are reported sealed. V3 complete-epoch trace prefixes are unchanged.
+
+V4 observed allocation is17.008350 native T4hours; measured v2+v3+v4 total is
+39.476932 against the48-hour ceiling, leaving8.523068 before any continuation.
+Version1 allocation and external scheduler startup remain unknown. K1 needs
+seven epochs, estimated2.36single-device hours from its latest three epochs;
+an allocation budget must also include bootstrap and idle peer capacity.
+
+Retain the completed GPTrans output without retraining. Continue K1 only from
+the verified v4 state after applicable authorization and budget review. No new
+remote submission occurred during this check. Final fixed50:50 fusion,
+per-arm terminal scientific/RML closure and dual replay qualification remain
+pending. Both canonical prospective entries remain ACTIVE for this open
+question. No automatic monitor or server handoff is configured.
+
+[V4 receipt and startup provenance](submission_v4/continuation_summary.md).
 
 ## Last completed stage: v3
 
