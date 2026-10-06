@@ -156,7 +156,8 @@ def declare(source_commit, inputs):
     return spec, pins, initial, transform
 
 
-def prepare_continuation(previous, resume_root, output, pickle_input):
+def prepare_continuation(previous, resume_root, output, pickle_input,
+                         checkpoint_dataset="nothingnessvoid/molgap-k1-gptrans-500k-resume-v2-s42"):
     """Keep prospective/scientific inputs frozen while rebinding executable source."""
     import torch
     previous, resume_root, output = map(Path, (previous, resume_root, output))
@@ -170,12 +171,19 @@ def prepare_continuation(previous, resume_root, output, pickle_input):
     shutil.copytree(previous / "source_dataset", source)
     shutil.copytree(previous / "kernel", kernel)
     checkpoints.mkdir()
-    checkpoint_slug = "molgap-k1-gptrans-500k-resume-v2-s42"
-    checkpoint_id = "nothingnessvoid/" + checkpoint_slug
+    checkpoint_id = checkpoint_dataset
+    if not checkpoint_id.startswith("nothingnessvoid/") or checkpoint_id.count("/") != 1:
+        raise ValueError("Continuation checkpoint dataset must belong to Kaggle1")
+    checkpoint_slug = checkpoint_id.split("/")[1]
+    if not checkpoint_slug or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in checkpoint_slug):
+        raise ValueError("Invalid checkpoint dataset slug")
     launch = read(source / "legacy_500k_launch.json")
     launch.update(source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"],
                   package_identity=manifest["package_identity"])
-    launch["dataset_sources"] = list(launch["dataset_sources"]) + [checkpoint_id]
+    prior_resume_mounts = {a["resume"]["mount"] for a in launch["arms"] if "resume" in a}
+    launch["dataset_sources"] = [d for d in launch["dataset_sources"]
+                                 if d.split("/")[-1] not in prior_resume_mounts]
+    launch["dataset_sources"] += [checkpoint_id]
     distributions = None
     resume_summary = {}
     for arm in launch["arms"]:
@@ -218,7 +226,7 @@ def prepare_continuation(previous, resume_root, output, pickle_input):
     metadata = read(kernel / "kernel-metadata.json")
     metadata["dataset_sources"] = launch["dataset_sources"]
     write(kernel / "kernel-metadata.json", metadata)
-    write(checkpoints / "dataset-metadata.json", {"id": checkpoint_id, "title": "MolGap K1 GPTrans 500K Resume V2 S42",
+    write(checkpoints / "dataset-metadata.json", {"id": checkpoint_id, "title": "MolGap K1 GPTrans 500K Resume S42",
                                                 "licenses": [{"name": "other"}], "isPrivate": True})
     write(output / "continuation_binding.json", {"prior_package_identity": old["package_identity"],
         "prior_source_sha256": old["archive_sha256"], "spec_identity": spec.identity,
@@ -247,6 +255,8 @@ def main():
     parser.add_argument("--pickle-input", type=Path, default=TRUSTED_PICKLE)
     parser.add_argument("--continuation-from", type=Path)
     parser.add_argument("--resume-root", type=Path)
+    parser.add_argument("--checkpoint-dataset", default="nothingnessvoid/molgap-k1-gptrans-500k-resume-v2-s42",
+                        help="Account-owned immutable checkpoint dataset for this continuation")
     args = parser.parse_args()
     actual = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     if args.source_commit != actual:
@@ -254,7 +264,8 @@ def main():
     if args.continuation_from is not None:
         if args.resume_root is None or args.output is None:
             raise ValueError("Continuation requires --resume-root and a fresh --output")
-        prepare_continuation(args.continuation_from, args.resume_root, args.output, args.pickle_input)
+        prepare_continuation(args.continuation_from, args.resume_root, args.output, args.pickle_input,
+                             args.checkpoint_dataset)
         return
     spec, pins, initial, transform = declare(actual, args.inputs)
     if args.declare_only:
