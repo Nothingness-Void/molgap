@@ -21,8 +21,13 @@ def check_frozen_inference_release(input_root: Path, entry: Path, metadata: Path
         raise ValueError("Release identity changed")
     if release["format"] != FORMAT or release["experiment_purpose"] != "NO_TRAIN":
         raise ValueError("Unsupported release contract")
-    required = {"source_payload.bin", "SOURCE_FILES.json", "contract.json", "target_transform.json",
-                "ema999_model.pt", "ema999_predictions.pt", "ema9999_model.pt", "ema9999_predictions.pt"}
+    contract = json.loads((root / "contract.json").read_text())
+    bottleneck = contract.get("release_profile") == "gptrans-bottleneck-v1"
+    required = ({"source_payload.bin", "SOURCE_FILES.json", "contract.json", "target_transform.json",
+                 *contract.get("model_assets", {}), *contract.get("reference_payloads", {})}
+                if bottleneck else
+                {"source_payload.bin", "SOURCE_FILES.json", "contract.json", "target_transform.json",
+                 "ema999_model.pt", "ema999_predictions.pt", "ema9999_model.pt", "ema9999_predictions.pt"})
     if set(release["files"]) != required:
         raise ValueError("Frozen inference input allowlist changed")
     for name, digest in release["files"].items():
@@ -34,10 +39,9 @@ def check_frozen_inference_release(input_root: Path, entry: Path, metadata: Path
     if sha256_file(entry) != release["entry_sha256"] or sha256_file(metadata) != release["metadata_sha256"]:
         raise ValueError("Entrypoint/platform metadata changed")
     ast.parse(entry.read_text(encoding="utf-8"))
-    contract = json.loads((root / "contract.json").read_text())
     if (contract["training_executed"] is not False or contract["physical_batch"] != 128
             or contract["precision"] != "fp32" or contract["tf32_enabled"] is not False
-            or contract["allocation_cap_seconds"] != 5400
+            or contract["allocation_cap_seconds"] != (1800 if bottleneck else 5400)
             or contract["roles"] != {"original_100k": [100000, 150000], "unseen_500k": [500000, 550000]}):
         raise ValueError("Audit execution scope changed")
     meta = json.loads(metadata.read_text())
@@ -63,9 +67,13 @@ def check_frozen_inference_release(input_root: Path, entry: Path, metadata: Path
             if member.name.endswith(".py"):
                 ast.parse(payload)
     from .gptrans_portability import ARMS, MODEL_SOURCE, TRANSFORM_ASSET
-    for arm, spec in ARMS.items():
-        if release["files"][f"{arm}_model.pt"] != spec["model_sha256"] or release["files"][f"{arm}_predictions.pt"] != spec["payload_sha256"]:
-            raise ValueError("Model/prediction identity differs from frozen adapter")
+    if bottleneck:
+        from .gptrans_bottleneck import validate_release_contract
+        validate_release_contract(contract, release, files, meta)
+    else:
+        for arm, spec in ARMS.items():
+            if release["files"][f"{arm}_model.pt"] != spec["model_sha256"] or release["files"][f"{arm}_predictions.pt"] != spec["payload_sha256"]:
+                raise ValueError("Model/prediction identity differs from frozen adapter")
     if files["src/molgap/gptrans.py"]["sha256"] != MODEL_SOURCE:
         raise ValueError("Frozen architecture implementation changed")
     transform = json.loads((root / "target_transform.json").read_text())
