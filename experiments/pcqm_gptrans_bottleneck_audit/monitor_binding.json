@@ -1,0 +1,25 @@
+{
+  "owner": "server",
+  "closed": false,
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "credential_owner": "kaseichou",
+  "credential_file": "C:/Users/Adminn/Downloads/key/kaggle_2.json",
+  "jobs": [{
+    "slot": "bottleneck-frozen-v1",
+    "kernel": "kaseichou/molgap-gptrans-bottleneck-audit",
+    "kernel_id": 137289711,
+    "version": 1,
+    "closed": false,
+    "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/control/gptrans_bottleneck_v1.json",
+    "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/gptrans_bottleneck_v1",
+    "metadata_paths": ["gptrans_bottleneck/allocation.json", "gptrans_bottleneck/allocation_ledger.json", "gptrans_bottleneck/environment.json", "gptrans_bottleneck/mechanism/terminal.json", "gptrans_bottleneck/portability/terminal.json", "gptrans_bottleneck/output_manifest.json"]
+  }],
+  "retrieval": {"method": "molgap.kaggle_output_retrieval.retrieve_exact_metadata", "use_exact_job_metadata_paths": true, "bulk_output_download_allowed": false},
+  "postrun_requires_actual_replay_pool_admission": false,
+  "training_replay_ready": false,
+  "experiment_purpose": "NO_TRAIN",
+  "successor_authorized": false,
+  "prepared_package": "C:/Users/Adminn/Documents/molgap/experiments/pcqm_gptrans_bottleneck_audit",
+  "acceptance_entry": "experiments/pcqm_gptrans_bottleneck_audit/accept.py"
+}

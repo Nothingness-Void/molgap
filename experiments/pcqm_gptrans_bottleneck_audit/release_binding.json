@@ -1,0 +1,42 @@
+{
+  "release": {
+    "format": "molgap-frozen-inference-release-v1",
+    "experiment_purpose": "NO_TRAIN",
+    "source_commit": "13b21ee4b954c9de4a3bbafe9aad3aa07e750f0c",
+    "archive_sha256": "030d5688be7b79a01010ed3526b0aa4d8a5441a383c96d71ef3a9c9afe815d85",
+    "contract_sha256": "9fc689a69a49ea21ae559bf56a4fc772ba67175952a9e28205b7169c58e791a0",
+    "entry_sha256": "8b46e78a2d3d1e253afbdfae6a439c3058f4541e57d0151585053306bba91bac",
+    "metadata_sha256": "ec53372fceb497fdbaef0e565d5a631006bc86ff9ef10bb659854cbffa86c8c8",
+    "kernel": "kaseichou/molgap-gptrans-bottleneck-audit",
+    "dataset_sources": [
+      "kaseichou/molgap-gptrans-bottleneck-inputs",
+      "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+      "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+    ],
+    "prospective_trajectory_id": "TC-gptrans-bottleneck-frozen-v1",
+    "prospective_sha256": "0981d3d470b8875ce757a3525c38e1d7025856116016777d2e1c0a4af5e6cbe0",
+    "files": {
+      "source_payload.bin": "030d5688be7b79a01010ed3526b0aa4d8a5441a383c96d71ef3a9c9afe815d85",
+      "SOURCE_FILES.json": "131821ffe3a9d66102112a2242a806d520a72a4183477e1a297df9dc4948959f",
+      "contract.json": "9fc689a69a49ea21ae559bf56a4fc772ba67175952a9e28205b7169c58e791a0",
+      "target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+      "reference_19.pt": "c00022eaa5224b6c8b57c489c0111b9b102d384ca18fe5cc59360bfdac7a4270",
+      "reference_59.pt": "9174aaa244ba18be06a7df84be3187351e3d95254f3947dfdbd1d812dc104755",
+      "local_19.pt": "4c69b10bf1f398eaf8cdadb759a549216b3667f619f5d14879e5a2f3453ae419",
+      "local_59.pt": "d0973864d2e6deb696d3d1b9577aff45a52a580e725eb6eb7e1976fcdd30e819",
+      "local_best.pt": "2bb415bc2bf3b3fc66c293619d633c5f5f0b40d60c6e30d76f6b7d03ba1b246a",
+      "transition_best.pt": "6550cd064c419a9bc594e975045053caff0b33695dcff7cb499430ac96a7c01a",
+      "reference_predictions.pt": "39a094e2ce9cc1d5aa01e637c37f5b90a5af728dc2136e8751797ae30fc38108",
+      "local_predictions.pt": "330e7e5407bad13a849559a47dba75717d63d5d62a8ec6a1e168c4a3377bd7e0",
+      "reference_later.pt": "2d63f8772ce9482118f84388b11af39bb3aadb8986b734280a360152eefa7ad9"
+    },
+    "identity": "f97693d70c3254b5b419aabb398ea411c7953a223bdde86018e3b5c19916862e"
+  },
+  "prospective": {
+    "trajectory_id": "TC-gptrans-bottleneck-frozen-v1",
+    "status": "PLANNED",
+    "path": "experiments/pcqm_gptrans_bottleneck_audit/rml_plan"
+  },
+  "inputs": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\prepared\\gptrans_bottleneck_v1\\inputs",
+  "release_report": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\prepared\\gptrans_bottleneck_v1\\release_report.json"
+}
