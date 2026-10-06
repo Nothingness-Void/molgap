@@ -136,6 +136,9 @@ def close_audit(root, output, inputs):
     atomic_json(results/"role_row_manifests.json",role_manifests)
     refs = [str((output/name).relative_to(root)).replace("\\","/") for name in ("output_manifest.json",*manifest["files"]) if name.endswith(".json")]
     refs += [BASE+"/results/"+name+".json" for name in ("acceptance_summary","execution","role_row_manifests","role_history","cost_records")]
+    interpretation = root/BASE/"results/mechanism_interpretation.json"
+    if interpretation.is_file():
+        refs.append(BASE+"/results/mechanism_interpretation.json")
     missing = dict(status="measurement_missing",value=None)
     scope = dict(execution_status="complete",artifact_status="accepted",comparison_status="paired_endpoint_diagnostic",
         scientific_status="no_train_bottleneck_observations",transfer_status="frozen_cohort_diagnostic_only",

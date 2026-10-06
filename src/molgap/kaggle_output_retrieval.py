@@ -224,6 +224,48 @@ def retrieve_selected_kaggle_files(api, *, context, remote_manifest_path: str,
             "platform_version_verified_by_output_api": False}
 
 
+def retrieve_pinned_exact_files(api, *, context, remote_manifest_path: str,
+                               files: Mapping[str, Any], destination: Path,
+                               http_session=None) -> dict:
+    """Stream manifest-bound files at one physical version, without directory scans.
+
+    A retained environment can contain thousands of unrelated files; enumerating
+    it wastes requests and can exhaust the listing endpoint's rate limit.
+    The caller still owns manifest and actual run-identity qualification.
+    """
+    from kagglesdk.kernels.types.kernels_api_service import ApiDownloadKernelOutputRequest
+    _path(remote_manifest_path)
+    owner, slug, _ = _kernel_reference(api, context)
+    version = context.platform_version
+    if type(version) is not int or version < 1:
+        raise ValueError("Exact artifact retrieval requires a physical version number")
+    required = _selected_files(files)
+    if len(required) > 4096:
+        raise ValueError("Exact artifact allowlist exceeds the bounded request budget")
+    retained = []
+    with api.build_kaggle_client() as client:
+        for remote, (local, pin) in required.items():
+            target = repo_local_path(Path(destination).absolute(), local)
+            _safe_local(target)
+            if target.exists():
+                if not target.is_file() or file_digest(target) != pin:
+                    raise ValueError("Retained exact output conflicts with pinned artifact")
+                retained.append(dict(path=local, sha256=pin, state="ALREADY_RETAINED"))
+                continue
+            request = ApiDownloadKernelOutputRequest()
+            request.owner_slug, request.kernel_slug = owner, slug
+            request.version_number, request.file_path = version, remote
+            try:
+                redirect = client.kernels.kernels_api_client.download_kernel_output(request)
+            except Exception:
+                raise RuntimeError("Exact artifact redirect failed; no list/bulk fallback") from None
+            retained.extend(_download_selected(urls={remote: redirect.url},
+                required={remote: (local, pin)}, destination=destination, http_session=http_session))
+    return dict(kernel=context.run_reference, receipt_version=version, files=retained,
+        transport="version_specific_manifest_pinned_files", unselected_outputs_downloaded=False,
+        platform_version_verified_by_output_api=True)
+
+
 def retrieve_execution_retention(
     api,
     *,
