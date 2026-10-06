@@ -1,5 +1,21 @@
 # Execution status
 
+Latest authoritative observation: [v4 submission identity](submission_v4/remote_identity_verified.json)
+and [authenticated startup log observation](submission_v4/startup_observation.json).
+Kaggle1 accepted kernel137144136/version4 (UI script355652612); scheduler RUNNING.
+The exact pulled entrypoint and three private/frozen input mounts match release.
+Python3.11.17 and Tesla T4x2 allocation are observed; the frozen runtime is
+installed and both epoch30/45 resume manifests passed. CPU checks are starting.
+All-arm runtime qualification and resumed training are not yet
+claimed. [Receipt and continuation summary](submission_v4/continuation_summary.md).
+
+V4 resumes the same question from K1 epoch30/step117180 and GPTrans
+epoch45/step175770, preserving both schedules and recipes. It targets the
+remaining60-epoch contract under the reviewed9-hour stage and cumulative budget.
+No automatic monitor or server handoff is configured.
+
+## Last completed stage: v3
+
 Last authoritative observation: [v3 stage inspection](submission_v3/terminal_inspection/inspection_report.json), 2026-10-06.
 Kaggle1 kernel `nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1`,
 ID137144136/version3 is COMPLETE. Both arm processes exited successfully and
@@ -25,7 +41,7 @@ and scheduler startup outside measured windows remain unknown.
 
 K1 still needs 30 epochs and GPTrans 15. Continue only this frozen question from
 verified v3 states under continuation release and cumulative budget review.
-No successor was submitted during this check. Recent three-epoch durations
+Version4 subsequently resumes these states under explicit user authorization. Recent three-epoch durations
 suggest about 10.7 K1 device hours and 3.6 GPTrans device hours remain; these
 are execution estimates, not measured future costs or guaranteed wall time.
 

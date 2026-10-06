@@ -1,0 +1,22 @@
+{
+  "observed_date": "2026-10-06",
+  "source": "authenticated Kaggle Logs UI",
+  "url": "https://www.kaggle.com/code/nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1?scriptVersionId=355652612",
+  "kernel_id": 137144136,
+  "version": 4,
+  "script_version_id": 355652612,
+  "scheduler_status": "RUNNING",
+  "accelerator": "GPU T4 x2",
+  "observed_messages": [
+    "BOOTSTRAP START python=3.11.17",
+    "ALLOCATION VERIFIED ['Tesla T4', 'Tesla T4']; installing frozen runtime",
+    "RESUME VERIFIED k1_pretrained_consistency completed_epochs=30",
+    "RESUME VERIFIED gptrans_g1_bond_local_ema999 completed_epochs=45",
+    "PHASE cpu_model_cache_recipe: loading accepted training/development cache"
+  ],
+  "runtime_installation_observed": true,
+  "runtime_installation_complete_observed": true,
+  "resume_manifests_verified_observed": true,
+  "training_start_observed": false,
+  "runtime_qualification_observed": false
+}

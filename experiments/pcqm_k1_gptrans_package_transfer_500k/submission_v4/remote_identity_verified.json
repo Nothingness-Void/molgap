@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-10-06T05:59:24.491507+00:00",
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1",
+  "version": 4,
+  "kernel_id": 137144136,
+  "source_normalized_sha256": "4e22b4f8dfa52dbe082df445d95edcb1892d67e04e3a1189deb08aee61f33a5a",
+  "spec_identity": "334b15ba0a0ec8c1fddd2097ef8e4be998a1a1c914850c1ab3beb9ff8c14838b",
+  "package_identity": "f22aafe682b0e888184f5b584276deef45f37515e0e9cce1361ff15cebe04b88",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-k1-gptrans-500k-resume-v3-s42",
+    "nothingnessvoid/molgap-k1-gptrans-500k-source-s42-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ],
+  "resume": {
+    "k1_pretrained_consistency": {
+      "manifest_sha256": "f2050c36fab6404fd30732f212ce5e8acfd520030ef7ecf9c860b4e76f1fc059",
+      "mount": "molgap-k1-gptrans-500k-resume-v3-s42",
+      "next_epoch": 30,
+      "source_sha256": "0d53f2ae5a46d51cff9730e00767fa16b80ffb27002fa50b52a67c12ac8ab65a"
+    },
+    "gptrans_g1_bond_local_ema999": {
+      "manifest_sha256": "a3e155576284aaf384cbec245167dd15f92ba89a2b91f6c17d08ed017ccd9270",
+      "mount": "molgap-k1-gptrans-500k-resume-v3-s42",
+      "next_epoch": 45,
+      "source_sha256": "0d53f2ae5a46d51cff9730e00767fa16b80ffb27002fa50b52a67c12ac8ab65a"
+    }
+  },
+  "scheduler": {
+    "status": "RUNNING"
+  }
+}
