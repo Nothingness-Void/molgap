@@ -1,23 +1,44 @@
 # Execution status
 
-Last authoritative observation: [v3 resumed training](submission_v3/training_start_observation.json).
+Last authoritative observation: [v3 stage inspection](submission_v3/terminal_inspection/inspection_report.json), 2026-10-06.
 Kaggle1 kernel `nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1`,
-ID137144136/version3 is RUNNING. Its [actual receipt](submission_v3/platform_response.json)
-and [pulled identity](submission_v3/remote_identity_verified.json) bind the frozen
-Spec, source and private continuation inputs. CPU validation and both independent resumed T4 preflights passed.
-The authenticated main log confirms actual epoch7 K1/epoch10 GPTrans training
-from preserved steps23,436/35,154. Batch/step/lr progress is forwarded live;
-this startup verification is not terminal scientific acceptance.
-[Interrupted v2 decision](submission_v2/stop_reconciliation/decision.md) retains
-K1 six complete epochs (23,436steps), GPTrans nine (35,154steps) and the prior
-measured4.941222allocated native T4hours. Version3 resumes those exact states.
+ID137144136/version3 is COMPLETE. Both arm processes exited successfully and
+published STAGE_COMPLETE manifests at the bounded invocation limit.
+This is an intermediate stage, not completion of the frozen 60-epoch question.
 
-Both teacher-free candidate arms target500K/60complete epochs. This invocation
-is bounded to9hours and may only publish a resumable intermediate stage.
-The canonical prospective records are separate:
+| Arm | Complete epochs | Optimizer steps | Best development MAE (eV) | Selected epoch |
+|---|---:|---:|---:|---:|
+| K1 pretrained consistency | 30/60 | 117,180 | 0.1080075204 | 28 |
+| GPTrans G1 bond-local EMA .999 | 45/60 | 175,770 | 0.1020418257 | 43 |
+
+The [inspection report](submission_v3/terminal_inspection/inspection_report.json)
+binds scheduler truth, exact v3 source/package/Spec identity, retained runtime
+certificates, 27 selected artifact hashes, trace/exposure, selected predictions
+and saved optimizer/RNG/EMA state. Each arm has aligned finite 50K development
+predictions. Completed v2 trace prefixes are unchanged. No protected-role read
+is reported. Raw progress.json RUNNING is the last epoch observation; final
+stage manifests and the scheduler own the stopped state.
+
+Observed v3 allocation is 17.527360 native T4 hours; v2 plus v3 measured
+allocation is 22.468582 T4 hours against the 48-hour ceiling. Version1 allocation
+and scheduler startup outside measured windows remain unknown.
+
+K1 still needs 30 epochs and GPTrans 15. Continue only this frozen question from
+verified v3 states under continuation release and cumulative budget review.
+No successor was submitted during this check. Recent three-epoch durations
+suggest about 10.7 K1 device hours and 3.6 GPTrans device hours remain; these
+are execution estimates, not measured future costs or guaranteed wall time.
+
+The two canonical prospective records remain ACTIVE until terminal acceptance:
 
 - [K1](kaggle1_v1/k1_pretrained_consistency/trajectory.json).
 - [GPTrans](kaggle1_v1/gptrans_g1_bond_local_ema999/trajectory.json).
+
+There is no final fixed50:50 fusion verdict, adoption or dual replay-ready claim.
+The [v3 receipt](submission_v3/platform_response.json),
+[pulled identity](submission_v3/remote_identity_verified.json) and
+[interrupted v2 decision](submission_v2/stop_reconciliation/decision.md)
+retain source and continuation provenance.
 
 ## Infrastructure attempt history
 

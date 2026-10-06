@@ -1,0 +1,76 @@
+{
+  "format": "molgap-intermediate-stage-inspection-v1",
+  "observed_at": "2026-10-06T03:02:18.102918+00:00",
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1",
+  "version": 3,
+  "scheduler_status": "COMPLETE",
+  "disposition": "RESUMABLE_INTERMEDIATE_STAGE",
+  "scientific_question_closed": false,
+  "dual_replay_ready": false,
+  "arms": {
+    "k1_pretrained_consistency": {
+      "stage_status": "STAGE_COMPLETE",
+      "completed_epochs": 30,
+      "required_epochs": 60,
+      "remaining_epochs": 30,
+      "optimizer_steps": 117180,
+      "sample_presentations": 14999040,
+      "best_development_mae_eV": 0.1080075204372406,
+      "best_epoch_one_based": 28,
+      "last_development_mae_eV": 0.11165744811296463,
+      "runtime_certificate_id": "6d54e8b1ddd932eadfee86d1045fa377720c43d75525e313233a002a800e29b7",
+      "recent_three_mean_epoch_seconds": 1287.6248284043322,
+      "checkpoint_model_optimizer_ema_finite": true,
+      "rng_and_optimizer_state_present": true,
+      "next_batch_index": 0,
+      "protected_roles_read": false
+    },
+    "gptrans_g1_bond_local_ema999": {
+      "stage_status": "STAGE_COMPLETE",
+      "completed_epochs": 45,
+      "required_epochs": 60,
+      "remaining_epochs": 15,
+      "optimizer_steps": 175770,
+      "sample_presentations": 22498560,
+      "best_development_mae_eV": 0.1020418256521225,
+      "best_epoch_one_based": 43,
+      "last_development_mae_eV": 0.10225605219602585,
+      "runtime_certificate_id": "494f72295a2d763ab32227e605d4b1f0e666f32a3bd573d9bc1e928478c5fb4d",
+      "recent_three_mean_epoch_seconds": 859.7701937780002,
+      "checkpoint_model_optimizer_ema_finite": true,
+      "rng_and_optimizer_state_present": true,
+      "next_batch_index": 0,
+      "protected_roles_read": false
+    }
+  },
+  "verified_checks": [
+    "pulled executable normalized bytes equal submitted v3 bootstrap",
+    "source/package/spec/input bindings match submitted identities",
+    "27 retrieved artifact SHA256 values match owning stage manifests",
+    "both runtime certificates pass existing screen_policy validator",
+    "contiguous completed-epoch trace, exposure and optimizer steps",
+    "v2 complete-epoch trace prefixes preserved exactly",
+    "checkpoint trace, resume epoch, schedule epoch and cursor agree",
+    "best checkpoint selected epoch matches manifest",
+    "each arm has 50000 aligned finite development predictions; recomputed MAE matches",
+    "GPTrans EMA retained; model/optimizer/EMA finite; RNG retained",
+    "protected roles reported sealed"
+  ],
+  "retrieved_artifact_count": 27,
+  "retrieved_artifact_bytes": 218162936,
+  "v3_observed_allocated_T4_hours": 17.527359856302223,
+  "v2_plus_v3_measured_allocated_T4_hours": 22.468582078524445,
+  "cost_limit_allocated_T4_hours": 48,
+  "cost_missing": [
+    "v1 allocation",
+    "scheduler startup outside observed bootstrap",
+    "queue and CPU core time"
+  ],
+  "limits": [
+    "intermediate check only; no terminal scientific acceptance",
+    "no local model execution or GPU resume performed",
+    "per-epoch prediction sweep not retrieved",
+    "progress.json is last epoch observation; final manifest and scheduler own completion"
+  ],
+  "next_action": "Continue the same frozen question from v3 checkpoints after applicable continuation release review; finish both 60-epoch contracts before per-arm terminal RML and fixed 50:50 fusion gate."
+}
