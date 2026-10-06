@@ -31,6 +31,14 @@ The owning question's `prepare.py --continuation-from ... --resume-root ...`
 reuses shared source packaging/release checks and preserves its frozen Spec,
 initialization, recipes and prospective records. It does not publish or submit.
 
+For a partial continuation, a verified COMPLETE peer is retained with its
+original stage/source manifest and recorded in `pair_state.reused_arms`; only
+unfinished arms launch GPU qualification/training workers. CPU release and
+input checks still cover both frozen arms. This does not reattribute the
+finished peer to the continuation job. Pass an explicit checkpoint dataset
+and `--max-stage-seconds` to the owning preparer when the remaining allocation
+budget requires a shorter stage; include idle peer capacity in T4 cost.
+
 For SDK operations with an explicit key, use `credential_api.py`'s
 `api_for_credentials(path)`. It binds the requested account even when the SDK
 finds a different global OAuth session. Keep credentials outside the repository;

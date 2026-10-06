@@ -1,5 +1,30 @@
 # Execution status
 
+Latest authoritative observation: [v5 submission](submission_v5/platform_response.json),
+2026-10-07. Kaggle1 accepted kernel137144136/version5; authenticated UI binds
+script355820538 and T4x2 RUNNING. [Pulled source and three exact mounts](submission_v5/remote_identity_verified.json)
+match the release package. [Actual startup](submission_v5/training_start_observation.json)
+passed CPU and K1 T4 qualification; K1 restored epoch53 and entered epoch54/60,
+batch1/3906 at global_step207019 with carried learning_rate1.1095177e-05.
+The GPTrans COMPLETE retention/no-GPU-worker log is observed.
+
+This invocation resumes only K1 from53 complete epochs/207018 steps to the
+frozen60-epoch endpoint. The complete GPTrans outputs remain attributed to
+v4; no GPTrans GPU qualification/training worker is dispatched. The launch
+receipt maps K1 to v5 and the retained GPTrans arm to its v4 physical run.
+No model, objective, recipe, schedule, initial tensor, role or prospective
+record changes. Read [continuation plan](submission_v5/continuation_plan.md).
+
+The invocation has a14400second wall bound and at most8 additional allocated
+T4hours including idle peer capacity. Through v4 measured allocation is
+39.476932 T4hours; version1 allocation and external scheduler startup remain
+unknown. Estimated seven K1 epochs require2.36single-device hours plus startup.
+The final paired fusion/terminal science and per-arm replay qualification
+remain pending. Both canonical prospective records remain ACTIVE; no automatic
+monitor or server handoff is configured.
+
+## Last completed stage: v4
+
 Latest authoritative observation: [v4 stage inspection](submission_v4/terminal_inspection/inspection_report.json), 2026-10-07.
 Kaggle1 kernel137144136/version4 (UI script355652612) is COMPLETE, with both
 process exit codes0. It stopped at2026-10-06 23:29:06 JST under the bounded

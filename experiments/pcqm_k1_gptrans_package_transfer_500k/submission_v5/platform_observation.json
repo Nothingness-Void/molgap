@@ -1,0 +1,70 @@
+{
+  "format": "molgap-platform-response",
+  "version": 1,
+  "mode": "observed",
+  "outcome": "accepted",
+  "conflict_kind": null,
+  "binding": {
+    "arms": [
+      {
+        "arm_id": "k1_pretrained_consistency",
+        "arm_identity": "127efad39a634e2d05ebe0b90b5777227dc1790958db7bd1b3d7848d37a5041e"
+      },
+      {
+        "arm_id": "gptrans_g1_bond_local_ema999",
+        "arm_identity": "39c393964b98ba01958948d4989849eb52776e3e08d1f38f2d5fab46fded729f"
+      }
+    ],
+    "experiment_id": "pcqm-k1-gptrans-package-transfer-500k",
+    "logical_run_id": "molgap-k1-gptrans-500k-pair-s42-v1",
+    "package_identity": "5d5c70b732d44433733ecb26c9d10ee9266354b8928b6ccd659fe95c876858de",
+    "requested_logical_platform": "kaggle",
+    "source_archive_sha256": "c294a785f9d0b702f63152e4448511875f7124a830f1ad088c9acdd64203814a",
+    "source_commit": "01c561e967cb9cca4113a154eb6064cd915a716e",
+    "spec_identity": "334b15ba0a0ec8c1fddd2097ef8e4be998a1a1c914850c1ab3beb9ff8c14838b",
+    "spec_sha256": "334b15ba0a0ec8c1fddd2097ef8e4be998a1a1c914850c1ab3beb9ff8c14838b"
+  },
+  "canonical_platform_reference": {
+    "value": "nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1",
+    "missing_reason": null
+  },
+  "platform_version": {
+    "value": "5",
+    "missing_reason": null
+  },
+  "physical_runs": {
+    "value": [
+      {
+        "run_identity": "kaggle:137144136:v5",
+        "canonical_reference": "nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1",
+        "platform_version": {
+          "value": "5",
+          "missing_reason": null
+        },
+        "arm_ids": [
+          "k1_pretrained_consistency"
+        ]
+      },
+      {
+        "run_identity": "kaggle:137144136:v4",
+        "canonical_reference": "nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1",
+        "platform_version": {
+          "value": "4",
+          "missing_reason": null
+        },
+        "arm_ids": [
+          "gptrans_g1_bond_local_ema999"
+        ]
+      }
+    ],
+    "missing_reason": null
+  },
+  "timestamp": {
+    "value": "2026-10-06T16:43:45.206721+00:00",
+    "missing_reason": null
+  },
+  "monitor_paths": {
+    "value": null,
+    "missing_reason": "not_observed"
+  }
+}

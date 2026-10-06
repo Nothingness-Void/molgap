@@ -1,0 +1,37 @@
+{
+  "observed_at": "2026-10-06T16:43:45.172665+00:00",
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1",
+  "kernel_id": 137144136,
+  "version_number": 5,
+  "scheduler_status": {
+    "status": "RUNNING"
+  },
+  "pulled_entrypoint_normalized_sha256": "4fe188c5da3aeefc720a557919efd2995cd7a146d0bfd6cccc56a8302c3cde6d",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-k1-gptrans-500k-resume-v4-s42",
+    "nothingnessvoid/molgap-k1-gptrans-500k-source-s42-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ],
+  "source_commit": "01c561e967cb9cca4113a154eb6064cd915a716e",
+  "source_archive_sha256": "c294a785f9d0b702f63152e4448511875f7124a830f1ad088c9acdd64203814a",
+  "package_identity": "5d5c70b732d44433733ecb26c9d10ee9266354b8928b6ccd659fe95c876858de",
+  "spec_identity": "334b15ba0a0ec8c1fddd2097ef8e4be998a1a1c914850c1ab3beb9ff8c14838b",
+  "executing_arms": [
+    "k1_pretrained_consistency"
+  ],
+  "retained_arms": {
+    "gptrans_g1_bond_local_ema999": {
+      "kernel_id": 137144136,
+      "version_number": 4,
+      "script_version_id": 355652612,
+      "source_archive_sha256": "0d53f2ae5a46d51cff9730e00767fa16b80ffb27002fa50b52a67c12ac8ab65a",
+      "disposition": "RETAINED_COMPLETE_NO_EXECUTION"
+    }
+  },
+  "script_version_id": 355820538,
+  "runtime_resume_verification": {
+    "k1_completed_epochs": 53,
+    "gptrans_completed_epochs": 60,
+    "gptrans_retention_log": "146.6s RETAIN COMPLETE gptrans_g1_bond_local_ema999 epochs=60; no GPU worker"
+  }
+}

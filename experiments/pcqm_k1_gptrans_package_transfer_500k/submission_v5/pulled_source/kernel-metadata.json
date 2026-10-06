@@ -1,0 +1,23 @@
+{
+  "id": "nothingnessvoid/molgap-k1-gptrans-500k-pair-s42-v1",
+  "id_no": 137144136,
+  "title": "MolGap K1 GPTrans 500K Pair S42 V1",
+  "code_file": "molgap-k1-gptrans-500k-pair-s42-v1.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "nothingnessvoid/molgap-k1-gptrans-500k-resume-v4-s42",
+    "nothingnessvoid/molgap-k1-gptrans-500k-source-s42-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [],
+  "model_sources": []
+}

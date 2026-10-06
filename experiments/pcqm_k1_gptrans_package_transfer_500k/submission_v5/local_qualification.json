@@ -1,0 +1,31 @@
+{
+  "release_checks": {
+    "passed": 82,
+    "status": "LOCAL_RELEASE_INPUTS_VERIFIED"
+  },
+  "syntax_compilation": {
+    "modules": [
+      "platforms/kaggle/run_legacy_500k_pair.py",
+      "experiments/pcqm_k1_gptrans_package_transfer_500k/prepare.py"
+    ],
+    "result": "passed",
+    "executor": "luna test agent"
+  },
+  "focused_hook_tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_legacy_500k_completed_reuse.py -q",
+    "passed": 7,
+    "failed": 0,
+    "executor": "parent after test agent interruption",
+    "local_python_compatibility": "Tests provide hashlib.file_digest compatibility under Python3.10; published runtime remains Python3.11"
+  },
+  "initial_batch": {
+    "passed": 1,
+    "failed": 9,
+    "executor": "luna test agent",
+    "failures": [
+      "New hook fixtures initially lacked local Python3.10 file_digest compatibility; corrected in tests only",
+      "Three existing composed evidence tests reference absent COMPOSED_ARMS/_evaluate_ema APIs and remain stale; no trainer changes made"
+    ]
+  },
+  "scope": "Completed-peer retention and pinned manifest rejection only; no model inference, training or role access locally"
+}
