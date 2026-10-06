@@ -1,0 +1,14 @@
+{
+  "id": "kaseichou/molgap-gptrans-bottleneck-audit",
+  "title": "MolGap GPTrans Bottleneck Audit",
+  "code_file": "run.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": ["kaseichou/molgap-gptrans-bottleneck-inputs", "kaseichou/pcqm4mv2-ogb-fixed-100k-v1", "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"],
+  "kernel_sources": [],
+  "competition_sources": [],
+  "model_sources": []
+}

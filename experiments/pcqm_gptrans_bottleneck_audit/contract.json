@@ -1,0 +1,106 @@
+{
+  "format": "molgap-gptrans-bottleneck-contract-v1",
+  "release_profile": "gptrans-bottleneck-v1",
+  "experiment_purpose": "NO_TRAIN",
+  "training_executed": false,
+  "optimizer_steps": 0,
+  "physical_batch": 128,
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "allocation_cap_seconds": 1800,
+  "roles": {
+    "original_100k": [
+      100000,
+      150000
+    ],
+    "unseen_500k": [
+      500000,
+      550000
+    ]
+  },
+  "diagnostic_rows": 512,
+  "portability_rows": 10000,
+  "portability_sampler": "numpy-RandomState42-choice50000-without-replacement-sorted",
+  "checkpoint_epochs": [
+    19,
+    59
+  ],
+  "workers": [
+    "mechanism",
+    "portability"
+  ],
+  "weight_mode": "eval-EMA-frozen-no-update",
+  "protected_roles_read": false,
+  "target_transform_asset": "9462cf73ea022b030675a7f18f2e7682eda6f90b7a42b47affc2f0f4071353be",
+  "cohort_is_reused_development": true,
+  "model_assets": {
+    "reference_19.pt": {
+      "kind": "reference",
+      "epoch": 19,
+      "sha256": "c00022eaa5224b6c8b57c489c0111b9b102d384ca18fe5cc59360bfdac7a4270",
+      "state_sha256": "9b5f43263c433d30c1f63555f5139dfdcf7e1d6b22a1702b4e87917729c73009",
+      "source_checkpoint_sha256": "85ede560e6f05183f18f7d861063f7e341808c33f8cf5f5f910c81885097e16a",
+      "source_checkpoint": "platforms/_records/kaggle/training/gptrans_g1_input_ema_v1/gptrans_input_ema_screen/degree_scale_ema999/training/checkpoint_epoch_19.pt"
+    },
+    "reference_59.pt": {
+      "kind": "reference",
+      "epoch": 59,
+      "sha256": "9174aaa244ba18be06a7df84be3187351e3d95254f3947dfdbd1d812dc104755",
+      "state_sha256": "92b7c993238e3164d87e75acf1b79efc4068c19b09e945b5492d9c9c823af7c2",
+      "source_checkpoint_sha256": "54e18ec94ff228c0d7136fcb7692095eb4ca9ea42a6fcad8262b655435ea2e84",
+      "source_checkpoint": "platforms/_records/kaggle/training/gptrans_g1_input_ema_v1/gptrans_input_ema_screen/degree_scale_ema999/training/checkpoint_epoch_59.pt"
+    },
+    "local_19.pt": {
+      "kind": "local",
+      "epoch": 19,
+      "sha256": "4c69b10bf1f398eaf8cdadb759a549216b3667f619f5d14879e5a2f3453ae419",
+      "state_sha256": "3231b6ba9346a0f5cdd80e9ee2d0d73c6aa1c72740af0eac38a76aa78fd23ed8",
+      "source_checkpoint_sha256": "7ba4dec7b584371c7c53782c2d0139462f31db3bccea0fe1abd3a6dd79522b1a",
+      "source_checkpoint": "platforms/_records/kaggle/training/gptrans_capacity_relations_v1/gptrans_local_scale/degree_bond_local_ema999/training/checkpoint_epoch_19.pt"
+    },
+    "local_59.pt": {
+      "kind": "local",
+      "epoch": 59,
+      "sha256": "d0973864d2e6deb696d3d1b9577aff45a52a580e725eb6eb7e1976fcdd30e819",
+      "state_sha256": "5fb7128841842ce24ca86ff5a1eb9e2c81e16c3f3da5a5976f62289ce700fc2d",
+      "source_checkpoint_sha256": "fc9e188397a143921d765cb2c1842dcb2c49547b0033e8b22113990d44546974",
+      "source_checkpoint": "platforms/_records/kaggle/training/gptrans_capacity_relations_v1/gptrans_local_scale/degree_bond_local_ema999/training/checkpoint_epoch_59.pt"
+    },
+    "local_best.pt": {
+      "kind": "local",
+      "epoch": 41,
+      "sha256": "2bb415bc2bf3b3fc66c293619d633c5f5f0b40d60c6e30d76f6b7d03ba1b246a",
+      "state_sha256": "7d52875b2db8e36287e665884223c811aa81c91c285e3c34c8bf2cb39c93fd89",
+      "source_checkpoint_sha256": "9b82e927f917f2513069f573e5c5bbd821ac59dcb1a714658e910b831e221e38",
+      "source_checkpoint": "platforms/_records/kaggle/training/gptrans_capacity_relations_v1/gptrans_local_scale/degree_bond_local_ema999/training/best_model.pt"
+    },
+    "transition_best.pt": {
+      "kind": "transition",
+      "epoch": 56,
+      "sha256": "6550cd064c419a9bc594e975045053caff0b33695dcff7cb499430ac96a7c01a",
+      "state_sha256": "d299edfc969fb9ecc06a6d082c11b4f3e1a63bdd92490d35ff4ebb5c5f10f381",
+      "source_checkpoint_sha256": "1bbaad76d34c0cdf5ff96f81e420422a984e8effdba99de991b5a75c4d1f2214",
+      "source_checkpoint": "platforms/_records/kaggle/training/gptrans_pair_transition_v1/gptrans_pair_transition/degree_pair_transition_ema999/training/best_model.pt"
+    }
+  },
+  "reference_payloads": {
+    "reference_predictions.pt": {
+      "sha256": "39a094e2ce9cc1d5aa01e637c37f5b90a5af728dc2136e8751797ae30fc38108",
+      "original": "platforms/_records/kaggle/training/gptrans_g1_input_ema_v1/gptrans_input_ema_screen/degree_scale_ema999/training/development_predictions.pt"
+    },
+    "local_predictions.pt": {
+      "sha256": "330e7e5407bad13a849559a47dba75717d63d5d62a8ec6a1e168c4a3377bd7e0",
+      "original": "platforms/_records/kaggle/training/gptrans_capacity_relations_v1/gptrans_local_scale/degree_bond_local_ema999/training/development_predictions.pt"
+    },
+    "reference_later.pt": {
+      "sha256": "2d63f8772ce9482118f84388b11af39bb3aadb8986b734280a360152eefa7ad9",
+      "original_progress": "platforms/_records/kaggle/training/gptrans_ema_portability_v4/gptrans_ema_portability/ema999/unseen_500k/progress.json",
+      "original_progress_sha256": "de5fe5a99008f6d3e200b1aa1420513d7784571d7bb51b58948cd3a63c6d1433"
+    }
+  },
+  "source_identities": {
+    "src/molgap/gptrans.py": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+    "src/molgap/gptrans_capacity.py": "716f1bdaf25eaa17d8ec8f7aecc6adffc06f04b9a3c1195b7b5d8adee0489aca",
+    "src/molgap/gptrans_pair_transition.py": "4b362ed7fe783cb2748a4a7d82ca8dc8767574742ca951a25fbfab03976c49a8"
+  }
+}

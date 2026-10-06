@@ -1,0 +1,10 @@
+{
+  "maximum_wall_seconds": 1800,
+  "maximum_allocated_t4_hours": 1,
+  "estimated_wall_minutes": [10,20],
+  "allocated_devices": 2,
+  "training_executed": false,
+  "automatic_successor_authorized": false,
+  "authority_ref": "experiments/pcqm_gptrans_bottleneck_audit/protocol.md",
+  "scope": "setup, isolated derivative/inference workers, idle allocation and failure cost; queue/teardown unmeasured"
+}

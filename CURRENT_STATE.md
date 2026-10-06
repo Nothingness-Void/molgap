@@ -6,6 +6,11 @@
 
 ## Server active screen
 
+The user authorized a bounded [frozen GPTrans bottleneck diagnostic](experiments/pcqm_gptrans_bottleneck_audit/protocol.md):
+eval-only branch reachability/strength and later-cohort inference, not training.
+Release and actual remote identity are recorded beside that protocol. No new
+architecture, weight update, protected role or automatic successor is covered.
+
 The Kaggle2 [independent pair-transition100K screen](experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md)
 is independently accepted, STRICT_CAUSAL and admitted as a complete Replay
 pair, but did not support promotion. Its final real-pair branch was disconnected

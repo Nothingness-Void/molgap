@@ -1,0 +1,12 @@
+{
+  "schema": "molgap-policy-v1", "policy_id": "gptrans-bottleneck-audit", "version": "v1",
+  "policy_type": "research_action", "status": "candidate",
+  "comparability_selector": {"scientific_contract": "frozen-gptrans-bottleneck-NO_TRAIN-v1"},
+  "required_observable_fields": ["accepted_frozen_models_and_roles"],
+  "created_from_source_digest": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "approval": {"activation": "user-authorized-bottleneck-diagnostic", "authority_ref": "experiments/pcqm_gptrans_bottleneck_audit/protocol.md"},
+  "cost_model": {"kind": "measured_only", "assumptions": ["all allocated T4 time", "no hardware conversion"]},
+  "observation_point": null, "early_stop_rule": null, "promotion_rule": null,
+  "action_rule": {"field": "accepted_frozen_models_and_roles", "operator": "eq", "threshold": true, "action": "RUN_BOTTLENECK_AUDIT"},
+  "borderline_action": "DEFER"
+}
