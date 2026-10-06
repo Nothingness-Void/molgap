@@ -1,0 +1,141 @@
+{
+  "complete": true,
+  "comparisons": {
+    "original_100k": {
+      "rows": 50000,
+      "reference_mae_eV": 0.14423262914597987,
+      "candidate_mae_eV": 0.14235822796285152,
+      "candidate_minus_reference_eV": -0.001874401183128357,
+      "paired_row_bootstrap": {
+        "delta": -0.001874401183128357,
+        "ci95": [
+          -0.0028262438236474987,
+          -0.0009326873747110367
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 5000,
+        "seed": 20260912
+      },
+      "candidate_win_fraction": 0.50532,
+      "absolute_error_delta_quantiles_eV": [
+        -3.6369094848632812,
+        -0.10723974704742431,
+        -0.047395944595336914,
+        -0.0007927417755126953,
+        0.04438495635986328,
+        0.10241661071777342,
+        2.4176688194274902
+      ],
+      "posthoc_reference_error_quintiles": [
+        {
+          "reference_error_quintile": 1,
+          "rows": 10000,
+          "reference_mae_eV": 0.015788019275665283,
+          "candidate_mae_eV": 0.05848426692485809,
+          "candidate_minus_reference_eV": 0.04269624764919281
+        },
+        {
+          "reference_error_quintile": 2,
+          "rows": 10000,
+          "reference_mae_eV": 0.05045005625486374,
+          "candidate_mae_eV": 0.07135832613706589,
+          "candidate_minus_reference_eV": 0.02090826988220215
+        },
+        {
+          "reference_error_quintile": 3,
+          "rows": 10000,
+          "reference_mae_eV": 0.09522396845817566,
+          "candidate_mae_eV": 0.09695168278217316,
+          "candidate_minus_reference_eV": 0.0017277143239974977
+        },
+        {
+          "reference_error_quintile": 4,
+          "rows": 10000,
+          "reference_mae_eV": 0.16574542496204375,
+          "candidate_mae_eV": 0.14578771078586578,
+          "candidate_minus_reference_eV": -0.01995771417617798
+        },
+        {
+          "reference_error_quintile": 5,
+          "rows": 10000,
+          "reference_mae_eV": 0.39395567677915094,
+          "candidate_mae_eV": 0.3392091531842947,
+          "candidate_minus_reference_eV": -0.05474652359485626
+        }
+      ],
+      "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+    },
+    "unseen_500k": {
+      "rows": 10000,
+      "reference_mae_eV": 0.14972221785783768,
+      "candidate_mae_eV": 0.14705761052370073,
+      "candidate_minus_reference_eV": -0.0026646073341369627,
+      "paired_row_bootstrap": {
+        "delta": -0.0026646073341369627,
+        "ci95": [
+          -0.004739502211809158,
+          -0.0006282117909193047
+        ],
+        "probability_better": 0.9944,
+        "n_bootstrap": 5000,
+        "seed": 20260912
+      },
+      "candidate_win_fraction": 0.5131,
+      "absolute_error_delta_quantiles_eV": [
+        -1.8762354850769043,
+        -0.11120719909667968,
+        -0.04886806011199951,
+        -0.0018696784973144531,
+        0.04250514507293701,
+        0.10579366683959962,
+        1.8902463912963867
+      ],
+      "posthoc_reference_error_quintiles": [
+        {
+          "reference_error_quintile": 1,
+          "rows": 2000,
+          "reference_mae_eV": 0.017370921015739442,
+          "candidate_mae_eV": 0.05878118121623993,
+          "candidate_minus_reference_eV": 0.04141026020050049
+        },
+        {
+          "reference_error_quintile": 2,
+          "rows": 2000,
+          "reference_mae_eV": 0.05498428452014923,
+          "candidate_mae_eV": 0.07554735672473907,
+          "candidate_minus_reference_eV": 0.020563072204589843
+        },
+        {
+          "reference_error_quintile": 3,
+          "rows": 2000,
+          "reference_mae_eV": 0.10485813522338867,
+          "candidate_mae_eV": 0.1056784155368805,
+          "candidate_minus_reference_eV": 0.0008202803134918213
+        },
+        {
+          "reference_error_quintile": 4,
+          "rows": 2000,
+          "reference_mae_eV": 0.1802454606294632,
+          "candidate_mae_eV": 0.16219747304916382,
+          "candidate_minus_reference_eV": -0.018047987580299376
+        },
+        {
+          "reference_error_quintile": 5,
+          "rows": 2000,
+          "reference_mae_eV": 0.39115228790044787,
+          "candidate_mae_eV": 0.33308362609148023,
+          "candidate_minus_reference_eV": -0.05806866180896759
+        }
+      ],
+      "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+    }
+  },
+  "training_executed": false,
+  "optimizer_steps": 0,
+  "unchanged_state": true,
+  "comparison_class": "PAIRED_ENDPOINT",
+  "strict_ready": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

@@ -1,0 +1,14 @@
+{
+  "original_100k": {
+    "rows": 50000,
+    "source_idx_start": 100000,
+    "source_idx_stop": 150000
+  },
+  "unseen_500k": {
+    "rows": 10000,
+    "source_idx_start": 500000,
+    "source_idx_stop": 550000,
+    "row_selection": "frozen-RandomState42-without-replacement-sorted",
+    "reference_payload_sha256": "2d63f8772ce9482118f84388b11af39bb3aadb8986b734280a360152eefa7ad9"
+  }
+}

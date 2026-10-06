@@ -6,10 +6,12 @@
 
 ## Server active screen
 
-The user authorized a bounded [frozen GPTrans bottleneck diagnostic](experiments/pcqm_gptrans_bottleneck_audit/protocol.md):
-eval-only branch reachability/strength and later-cohort inference, not training.
-Release and actual remote identity are recorded beside that protocol. No new
-architecture, weight update, protected role or automatic successor is covered.
+The [frozen GPTrans bottleneck diagnostic](experiments/pcqm_gptrans_bottleneck_audit/decision_terminal.md)
+is accepted and closed as NO_TRAIN / PAIRED_ENDPOINT, not a training Replay
+pair. The local-bond advantage survived its frozen later cohort; all local
+branches were connected, while the final Pair Transition branch was not.
+Local-update control remains a hypothesis needing separate authority, not a
+validated improvement. No server successor or new GPU training is released.
 
 The Kaggle2 [independent pair-transition100K screen](experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md)
 is independently accepted, STRICT_CAUSAL and admitted as a complete Replay
