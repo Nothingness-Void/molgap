@@ -126,6 +126,11 @@ owns source history and the unreviewed supplement. DSAR/DSMR remote state is UNK
 
 ## Closed evidence entrypoints
 
+The accepted [K1 500K BN calibration diagnostic](experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md)
+improves the retained epoch49 predictor by1.245meV on the consumed full50K
+development cohort with frozen learned parameters. It nominates BN-state
+management for separate qualification; no model adoption or training release.
+
 The accepted [K1 500K frozen bottleneck diagnostic](experiments/pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md)
 retains measured slot dependency and heterogeneous clean tail-fit changes.
 Its NO_TRAIN closure changes no model recommendation and releases no training;

@@ -13,6 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does training-member BN recalibration improve the retained K1 500K predictor? | Accepted NO_TRAIN diagnostic:1.245meV full50K development gain with frozen learned parameters; nomination for separate qualification, no model adoption | [pcqm_k1_500k_bn_calibration](pcqm_k1_500k_bn_calibration/terminal_decision.md) |
 | Is the composed500K K1 slot inactive or its training tail uniformly beneficial? | NO_TRAIN frozen diagnostic: slot deletion strongly worsens retained predictions; clean tail changes are heterogeneous; capacity/pretraining-scale causality unresolved | [decision](pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md) |
 | Can fixed-fusion output distillation retain ensemble benefit in one K1? | Both40epoch students accepted NEGATIVE_UNDER_CONTRACT;0.433meV strong gain is below gate with bounds crossing zero; full traces/RML retained, strict replay excluded | [Distillation decision](pcqm_k1_fusion_distillation/terminal_acceptance/decision.md) |
 | K1 fixed equal-blend transfer | NO_TRAIN accepted inference; 50K common-cohort fusion nomination and measured native cost; no adoption | [decision](pcqm_k1_consistency_fusion_transfer/terminal_decision.md) |

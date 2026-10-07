@@ -75,6 +75,7 @@ def main():
         "costs": [cost], "roles": roles, "checks": result["checks"],
         "max_prediction_reconstruction_eV": result["max_selected_prediction_reconstruction_eV"],
         "metrics": result["metrics"],
+        "bootstrap_probability_semantics": "gain_eV uses original_error-calibrated_error. Existing helper probability_better is P(input_delta<0), hence here P(calibration_worse), not P(calibration_improves). The gate uses delta and ci95 only.",
         "comparison_class": "CONTEXT_ONLY", "analysis_ref": f"{REL}/results/analysis.json",
         "role_scope": "Loader decoded all500K training and50K development backing label tensors. Calibration uses only16384 sampled training-member features; no label objective or gradients. Full consumed development metrics inform diagnostic interpretation. No protected role.",
         "decoded_role_manifest_hashes": decoded,

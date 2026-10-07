@@ -1,0 +1,52 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-7c5db7f4349436ac61d868d2b69c73e0905b378c53de3066349c6abe7d05bbce",
+  "finalized_at": "2026-10-07T11:24:02.450461+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_500k_bn_calibration/README.md": "63e623a13cea1376c85e8ba655962c5d245d22573908c93411dd017f333b5eef",
+    "experiments/pcqm_k1_500k_bn_calibration/acceptance.json": "f084d11ccbe1ff570ffd26f44a33401dea66c27abea3cdf0f66f10bcd96e4afd",
+    "experiments/pcqm_k1_500k_bn_calibration/attribution.md": "1450a8a869d4c821c43ea87b25de730ed30d143f8a17fe677b780bb50a7be997",
+    "experiments/pcqm_k1_500k_bn_calibration/close.py": "b2747b0eb80c739af6615eaf17757c7b0e08d4b77ff57bb7588485bc138df8ef",
+    "experiments/pcqm_k1_500k_bn_calibration/decision.md": "038793d44142ead150cad9cc1e7593878c3647a880313260bb33afbf2d9372b8",
+    "experiments/pcqm_k1_500k_bn_calibration/input_authority/acceptance.snapshot.json": "bae8b98c48c0b2fb3bf6fed68fb27972bcd452ad78875d02eb28b682f014adda",
+    "experiments/pcqm_k1_500k_bn_calibration/input_authority/cost_accuracy_attribution.md": "d0fb715070f15fcfc2aed7877ae119b778d63bb432c8ef1f63cf3d7129fb92f4",
+    "experiments/pcqm_k1_500k_bn_calibration/inputs.json": "a151a1718acf2dbd743e58ea64387ed497398f0308eafacbffe9ea94be5ed550",
+    "experiments/pcqm_k1_500k_bn_calibration/plan_input.json": "19afe700f2b7019ff4a055e6421f5a25a172a0b8c02d1947de7afc5b6408cf22",
+    "experiments/pcqm_k1_500k_bn_calibration/plan_receipt.json": "8c076cb2f323394c2f1b19fbde238438cb1ec2a45bbaa0b0b2911263780605a7",
+    "experiments/pcqm_k1_500k_bn_calibration/prepare.py": "04b2d519c2cbb62d5c5246aa5474002b195152f3a189dad195bd12af64abdb86",
+    "experiments/pcqm_k1_500k_bn_calibration/protocol.md": "5917ac24dab529d2b1326e9a5738a7318286f3f3a8b9b00764dadeb210ca5bda",
+    "experiments/pcqm_k1_500k_bn_calibration/results/analysis.json": "e8589291e34cc62f55b7240f1211647ae74f74397da069f7b3c34c660f3125ca",
+    "experiments/pcqm_k1_500k_bn_calibration/results/calibrated.pt": "3d2a1074bc7627f611a5704558ab0a0767921f11242c6d22d7bf1ebcde40943a",
+    "experiments/pcqm_k1_500k_bn_calibration/results/calibrated_buffers.pt": "45e3f73af67ef79c9f9685de43462b03812f6a0bbe8ec385bfdc8a148c3c8f0f",
+    "experiments/pcqm_k1_500k_bn_calibration/results/original.pt": "e81c48f8f7008ad0a2c6d40e5e482e633fa56b786e5f995260244f2bb0c95518",
+    "experiments/pcqm_k1_500k_bn_calibration/roles.json": "217977b2435cf25880c036d5ad20c62a579f565ec19ea85e3209211b5d0e9add",
+    "experiments/pcqm_k1_500k_bn_calibration/run.py": "0b13ce40777eb9c060d4786d273cb8bacdff167bd2345ddedaef72996959a581",
+    "experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md": "675bf8c4f6352a24c23615a1ba75cab10f9c839a248c461b08795741727e955d",
+    "research_memory/policies/pcqm-k1-500k-bn-calibration.1.json": "030cef352d772e458c05d23cc45bb4a572398cdb3311542fa89038a7cfe483b2",
+    "src/molgap/k1_bn_calibration.py": "4eafbc4259cfe507f51913d18ef301e2f4c3542363379cea054b6f6ee3cb1e31",
+    "src/molgap/k1_frozen_inference.py": "dd88f9e3bbbb5aac8f6c55c6482e3db9b969725bf1a1db1e6e7d26ed5223217e"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-k1-500k-bn-calibration-observed.json": "0396f98c2c8b00bb031c899757116babdeb9b15f0d91957bae61b96718f9a462",
+    "prospective_snapshot.json": "17e512f04e745f38a57b643ecc78cd7682d37db6c154056b14db5ada3f359268",
+    "roles/role-k1-500k-bn-calibration-internal_development-labels_read.json": "da690d579ab65b4430f6ea07853f43ceacc46ed12b26861331f299e0fcd6b4bd",
+    "roles/role-k1-500k-bn-calibration-internal_development-metric_computed.json": "9eac529d64c8b143b79400628b628d797d15511e0f5d6d9e8a7cf7d30b9e2139",
+    "roles/role-k1-500k-bn-calibration-internal_development-prediction_input.json": "633c1955f00a6eb4de3aec4c2e0215e1a3f30709c0d202cc45988071f8205f4a",
+    "roles/role-k1-500k-bn-calibration-internal_development-selection_used.json": "64e45ca995ab33a1d9c682da284eb784f9045358349e4ac24bfcc126fb3925fe",
+    "roles/role-k1-500k-bn-calibration-train_prefix-labels_read.json": "d8468b865236b691bd6e08a3bdeb357cfaccf64f9f70ab20411c89ef0eba9d61",
+    "roles/role-k1-500k-bn-calibration-train_prefix-prediction_input.json": "62dd48b32e9b08ce31cee471391d59a1315c79254b4e576a9d84081f76ebbe25",
+    "terminal_input.json": "4382c62aca85beb6767d2edc3dc662ae573a6f86b814cac98878c3be4fee82da",
+    "trajectory.json": "3d8077c3514522abd6eb969eb8dc26db7981fd60fbab0f8812b979f959f4d298",
+    "v5_evidence.json": "b8a711540bca255e73491dc55b3908f250e5239277fbe49eea193dc779d8c11b"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_500k_bn_calibration/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "7c5db7f4349436ac61d868d2b69c73e0905b378c53de3066349c6abe7d05bbce",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-500k-bn-calibration-20261007"
+}

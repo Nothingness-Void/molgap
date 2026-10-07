@@ -1,0 +1,203 @@
+{
+  "format": "molgap-k1-bn-calibration-acceptance-v1",
+  "evidence_id": "pcqm-k1-500k-bn-calibration-20261007",
+  "run_id": "local-k1-500k-bn-calibration-20261007",
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "consumed_role_paired_bn_state_diagnostic",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "bounded_local_diagnostic_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately frozen and authorized independent-role validation or training-time BN intervention"
+    ]
+  },
+  "role_use": {
+    "train_prefix": "prediction_input",
+    "internal_development": "selection_used",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-500k-bn-calibration-observed",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU; four intra-op threads; no accelerator",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.03229849505555547,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.11939236111111111,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-train_prefix-labels_read",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "role_name": "train_prefix",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-train_prefix-prediction_input",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4",
+      "role_name": "train_prefix",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-internal_development-labels_read",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-internal_development-prediction_input",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-internal_development-metric_computed",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-internal_development-selection_used",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    }
+  ],
+  "checks": {
+    "strict_state_loading": true,
+    "source_and_cache_hashes": true,
+    "selected_prediction_reconstruction": true,
+    "exact_rows_targets": true,
+    "finite_predictions": true,
+    "training_only_calibration": true,
+    "parameters_unchanged": true,
+    "non_bn_buffers_unchanged": true,
+    "buffers_restored": true,
+    "restored_inference_exact": true,
+    "no_optimization": true,
+    "protected_roles_untouched": true
+  },
+  "max_prediction_reconstruction_eV": 2.384185791015625e-06,
+  "metrics": {
+    "original_mae_eV": 0.10490407538890839,
+    "calibrated_mae_eV": 0.10365894827842713,
+    "gain_eV": {
+      "delta": 0.0012451271104812621,
+      "ci95": [
+        0.0011077997597455978,
+        0.0013790973789691925
+      ],
+      "probability_better": 0.0,
+      "n_bootstrap": 1000,
+      "seed": 20261008
+    },
+    "nomination_passed": true,
+    "mean_abs_prediction_shift_eV": 0.012670561056137085,
+    "mean_signed_error_before_eV": 0.003966547002792358,
+    "mean_signed_error_after_eV": 0.001740047254562378,
+    "error_quantiles": {
+      "original": {
+        "0.5": 0.06484103202819824,
+        "0.9": 0.24762654304504392,
+        "0.95": 0.3391929626464841,
+        "0.99": 0.6018867635726951
+      },
+      "calibrated": {
+        "0.5": 0.0632925033569336,
+        "0.9": 0.24578452110290527,
+        "0.95": 0.3389233350753783,
+        "0.99": 0.6085639286041263
+      }
+    }
+  },
+  "bootstrap_probability_semantics": "gain_eV uses original_error-calibrated_error. Existing helper probability_better is P(input_delta<0), hence here P(calibration_worse), not P(calibration_improves). The gate uses delta and ci95 only.",
+  "comparison_class": "CONTEXT_ONLY",
+  "analysis_ref": "experiments/pcqm_k1_500k_bn_calibration/results/analysis.json",
+  "role_scope": "Loader decoded all500K training and50K development backing label tensors. Calibration uses only16384 sampled training-member features; no label objective or gradients. Full consumed development metrics inform diagnostic interpretation. No protected role.",
+  "decoded_role_manifest_hashes": {
+    "train_prefix": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+    "internal_development": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2"
+  },
+  "calibration_scope": "Parameter-free BN running-state adaptation; learned parameters fixed, dropout disabled, cumulative updates. This is not supervised training or training replay readiness.",
+  "cost_scope": "Worker startup/bootstrap, worker hashing, loading, BN calibration and inference included; preparation hashing, tests, metadata publication and Git overhead excluded.",
+  "limitations": [
+    "Consumed development used for prior checkpoint selection; row CI is not seed variance or independent generalization",
+    "One fixed clean-feature calibration sample/mode; not a causal test of double-forward BN update harm",
+    "NO_TRAIN is parameter-free BN state adaptation, not training replay readiness or model adoption"
+  ]
+}

@@ -216,6 +216,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-500k-bn-calibration-20261007:A001",
+      "target": "experiments/pcqm_k1_500k_bn_calibration/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-500k-bottleneck-diagnostic-20261007:A001",
       "target": "experiments/pcqm_k1_500k_bottleneck_diagnostic/inputs.json",
       "type": "action_produced_evidence"
@@ -1396,6 +1401,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+      "target": "TB-k1-500k-bn-calibration-20261007",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-consistency-fusion-transfer-20261004",
       "target": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
@@ -1588,6 +1598,11 @@
     {
       "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-gptrans-noisy-nodes-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-k1-500k-bn-calibration-20261007",
       "type": "prior_evidence"
     },
     {
@@ -2198,6 +2213,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-500k-bn-calibration-20261007",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "type": "evidence"
     },
@@ -2547,6 +2566,10 @@
     },
     {
       "id": "TB-gptrans-t-500k-bridge",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-500k-bn-calibration-20261007",
       "type": "trajectory"
     },
     {

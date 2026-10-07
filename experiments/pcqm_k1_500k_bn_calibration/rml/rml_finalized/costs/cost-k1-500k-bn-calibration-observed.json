@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "inference",
+  "cost_event_id": "cost-k1-500k-bn-calibration-observed",
+  "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json",
+  "hardware": "CPU; four intra-op threads; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.11939236111111111
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.03229849505555547
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-500k-bn-calibration-20261007",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-500k-bn-calibration-20261007"
+}

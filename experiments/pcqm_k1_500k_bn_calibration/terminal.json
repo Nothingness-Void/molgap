@@ -1,0 +1,241 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+  "run_id": "local-k1-500k-bn-calibration-20261007",
+  "action_id": "A001",
+  "finalized_at": "2026-10-07T11:24:02.450461+00:00",
+  "acceptance_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_500k_bn_calibration/acceptance.json": "f084d11ccbe1ff570ffd26f44a33401dea66c27abea3cdf0f66f10bcd96e4afd",
+    "experiments/pcqm_k1_500k_bn_calibration/attribution.md": "1450a8a869d4c821c43ea87b25de730ed30d143f8a17fe677b780bb50a7be997",
+    "experiments/pcqm_k1_500k_bn_calibration/close.py": "b2747b0eb80c739af6615eaf17757c7b0e08d4b77ff57bb7588485bc138df8ef",
+    "experiments/pcqm_k1_500k_bn_calibration/decision.md": "038793d44142ead150cad9cc1e7593878c3647a880313260bb33afbf2d9372b8",
+    "experiments/pcqm_k1_500k_bn_calibration/inputs.json": "a151a1718acf2dbd743e58ea64387ed497398f0308eafacbffe9ea94be5ed550",
+    "experiments/pcqm_k1_500k_bn_calibration/plan_input.json": "19afe700f2b7019ff4a055e6421f5a25a172a0b8c02d1947de7afc5b6408cf22",
+    "experiments/pcqm_k1_500k_bn_calibration/plan_receipt.json": "8c076cb2f323394c2f1b19fbde238438cb1ec2a45bbaa0b0b2911263780605a7",
+    "experiments/pcqm_k1_500k_bn_calibration/prepare.py": "04b2d519c2cbb62d5c5246aa5474002b195152f3a189dad195bd12af64abdb86",
+    "experiments/pcqm_k1_500k_bn_calibration/protocol.md": "5917ac24dab529d2b1326e9a5738a7318286f3f3a8b9b00764dadeb210ca5bda",
+    "experiments/pcqm_k1_500k_bn_calibration/README.md": "63e623a13cea1376c85e8ba655962c5d245d22573908c93411dd017f333b5eef",
+    "experiments/pcqm_k1_500k_bn_calibration/roles.json": "217977b2435cf25880c036d5ad20c62a579f565ec19ea85e3209211b5d0e9add",
+    "experiments/pcqm_k1_500k_bn_calibration/run.py": "0b13ce40777eb9c060d4786d273cb8bacdff167bd2345ddedaef72996959a581",
+    "experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md": "675bf8c4f6352a24c23615a1ba75cab10f9c839a248c461b08795741727e955d",
+    "experiments/pcqm_k1_500k_bn_calibration/input_authority/acceptance.snapshot.json": "bae8b98c48c0b2fb3bf6fed68fb27972bcd452ad78875d02eb28b682f014adda",
+    "experiments/pcqm_k1_500k_bn_calibration/input_authority/cost_accuracy_attribution.md": "d0fb715070f15fcfc2aed7877ae119b778d63bb432c8ef1f63cf3d7129fb92f4",
+    "experiments/pcqm_k1_500k_bn_calibration/results/analysis.json": "e8589291e34cc62f55b7240f1211647ae74f74397da069f7b3c34c660f3125ca",
+    "experiments/pcqm_k1_500k_bn_calibration/results/calibrated.pt": "3d2a1074bc7627f611a5704558ab0a0767921f11242c6d22d7bf1ebcde40943a",
+    "experiments/pcqm_k1_500k_bn_calibration/results/calibrated_buffers.pt": "45e3f73af67ef79c9f9685de43462b03812f6a0bbe8ec385bfdc8a148c3c8f0f",
+    "experiments/pcqm_k1_500k_bn_calibration/results/original.pt": "e81c48f8f7008ad0a2c6d40e5e482e633fa56b786e5f995260244f2bb0c95518",
+    "src/molgap/k1_frozen_inference.py": "dd88f9e3bbbb5aac8f6c55c6482e3db9b969725bf1a1db1e6e7d26ed5223217e",
+    "src/molgap/k1_bn_calibration.py": "4eafbc4259cfe507f51913d18ef301e2f4c3542363379cea054b6f6ee3cb1e31",
+    "research_memory/policies/pcqm-k1-500k-bn-calibration.1.json": "030cef352d772e458c05d23cc45bb4a572398cdb3311542fa89038a7cfe483b2"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-500k-bn-calibration-20261007",
+    "track": "B",
+    "scope": "desktop_k1_500k_bn_calibration_diagnostic",
+    "legacy_contract": "pcqm-k1-500k-bn-calibration-v1",
+    "outcome": {
+      "execution_status": "complete_no_training",
+      "artifact_status": "local_hash_verified",
+      "comparison_status": "consumed_role_paired_bn_state_diagnostic",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "bounded_local_diagnostic_complete",
+      "full_handoff_status": "not_applicable"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_500k_bn_calibration/protocol.md",
+        "experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md",
+        "experiments/pcqm_k1_500k_bn_calibration/attribution.md",
+        "experiments/pcqm_k1_500k_bn_calibration/acceptance.json",
+        "experiments/pcqm_k1_500k_bn_calibration/results/analysis.json"
+      ]
+    },
+    "role_use": {
+      "train_prefix": "prediction_input",
+      "internal_development": "selection_used",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "migration": {
+      "migrated_at": "2026-10-07",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Metadata publication of separately executed prospective BN calibration/inference; no model execution by finalizer"
+    },
+    "observed_execution": {
+      "training_executed": false,
+      "inference_executed": true,
+      "execution_ref": "experiments/pcqm_k1_500k_bn_calibration/results/analysis.json"
+    },
+    "artifacts": [
+      {
+        "name": "results/analysis.json",
+        "locator": "experiments/pcqm_k1_500k_bn_calibration/results/analysis.json",
+        "sha256": "e8589291e34cc62f55b7240f1211647ae74f74397da069f7b3c34c660f3125ca",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/original.pt",
+        "locator": "experiments/pcqm_k1_500k_bn_calibration/results/original.pt",
+        "sha256": "e81c48f8f7008ad0a2c6d40e5e482e633fa56b786e5f995260244f2bb0c95518",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/calibrated.pt",
+        "locator": "experiments/pcqm_k1_500k_bn_calibration/results/calibrated.pt",
+        "sha256": "3d2a1074bc7627f611a5704558ab0a0767921f11242c6d22d7bf1ebcde40943a",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/calibrated_buffers.pt",
+        "locator": "experiments/pcqm_k1_500k_bn_calibration/results/calibrated_buffers.pt",
+        "sha256": "45e3f73af67ef79c9f9685de43462b03812f6a0bbe8ec385bfdc8a148c3c8f0f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "acceptance.json",
+        "locator": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json",
+        "sha256": "f084d11ccbe1ff570ffd26f44a33401dea66c27abea3cdf0f66f10bcd96e4afd",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "terminal_decision.md",
+        "locator": "experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md",
+        "sha256": "675bf8c4f6352a24c23615a1ba75cab10f9c839a248c461b08795741727e955d",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "attribution.md",
+        "locator": "experiments/pcqm_k1_500k_bn_calibration/attribution.md",
+        "sha256": "1450a8a869d4c821c43ea87b25de730ed30d143f8a17fe677b780bb50a7be997",
+        "availability": "locally_retained_hash_verified"
+      }
+    ]
+  },
+  "decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately frozen and authorized independent-role validation or training-time BN intervention"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-500k-bn-calibration-observed",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU; four intra-op threads; no accelerator",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.03229849505555547,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.11939236111111111,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-train_prefix-labels_read",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "role_name": "train_prefix",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-train_prefix-prediction_input",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4",
+      "role_name": "train_prefix",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-internal_development-labels_read",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-internal_development-prediction_input",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-internal_development-metric_computed",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bn-calibration-internal_development-selection_used",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json"
+    }
+  ]
+}

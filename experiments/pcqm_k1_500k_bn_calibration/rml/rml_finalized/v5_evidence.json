@@ -1,0 +1,89 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bn_calibration/results/analysis.json",
+      "name": "results/analysis.json",
+      "sha256": "e8589291e34cc62f55b7240f1211647ae74f74397da069f7b3c34c660f3125ca"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bn_calibration/results/original.pt",
+      "name": "results/original.pt",
+      "sha256": "e81c48f8f7008ad0a2c6d40e5e482e633fa56b786e5f995260244f2bb0c95518"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bn_calibration/results/calibrated.pt",
+      "name": "results/calibrated.pt",
+      "sha256": "3d2a1074bc7627f611a5704558ab0a0767921f11242c6d22d7bf1ebcde40943a"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bn_calibration/results/calibrated_buffers.pt",
+      "name": "results/calibrated_buffers.pt",
+      "sha256": "45e3f73af67ef79c9f9685de43462b03812f6a0bbe8ec385bfdc8a148c3c8f0f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bn_calibration/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "f084d11ccbe1ff570ffd26f44a33401dea66c27abea3cdf0f66f10bcd96e4afd"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "675bf8c4f6352a24c23615a1ba75cab10f9c839a248c461b08795741727e955d"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bn_calibration/attribution.md",
+      "name": "attribution.md",
+      "sha256": "1450a8a869d4c821c43ea87b25de730ed30d143f8a17fe677b780bb50a7be997"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_500k_bn_calibration/protocol.md",
+      "experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md",
+      "experiments/pcqm_k1_500k_bn_calibration/attribution.md",
+      "experiments/pcqm_k1_500k_bn_calibration/acceptance.json",
+      "experiments/pcqm_k1_500k_bn_calibration/results/analysis.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-500k-bn-calibration-20261007",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-k1-500k-bn-calibration-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-07",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata publication of separately executed prospective BN calibration/inference; no model execution by finalizer"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_k1_500k_bn_calibration/results/analysis.json",
+    "inference_executed": true,
+    "training_executed": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "bounded_local_diagnostic_complete",
+    "comparison_status": "consumed_role_paired_bn_state_diagnostic",
+    "execution_status": "complete_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_prefix": "prediction_input"
+  },
+  "scope": "desktop_k1_500k_bn_calibration_diagnostic",
+  "track": "B"
+}

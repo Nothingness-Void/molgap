@@ -1,0 +1,264 @@
+{
+  "status": "complete",
+  "started_at": "2026-10-07T11:20:19.835291+00:00",
+  "completed_at": "2026-10-07T11:22:16.105754+00:00",
+  "inputs_sha256": "a151a1718acf2dbd743e58ea64387ed497398f0308eafacbffe9ea94be5ed550",
+  "prospective_sha256": "17e512f04e745f38a57b643ecc78cd7682d37db6c154056b14db5ada3f359268",
+  "sample_source_idx_sha256": {
+    "calibration": "8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4",
+    "development": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2"
+  },
+  "decoded_role_manifest_hashes": {
+    "train_prefix": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+    "internal_development": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2"
+  },
+  "max_selected_prediction_reconstruction_eV": 2.384185791015625e-06,
+  "metrics": {
+    "original_mae_eV": 0.10490407538890839,
+    "calibrated_mae_eV": 0.10365894827842713,
+    "gain_eV": {
+      "delta": 0.0012451271104812621,
+      "ci95": [
+        0.0011077997597455978,
+        0.0013790973789691925
+      ],
+      "probability_better": 0.0,
+      "n_bootstrap": 1000,
+      "seed": 20261008
+    },
+    "nomination_passed": true,
+    "mean_abs_prediction_shift_eV": 0.012670561056137085,
+    "mean_signed_error_before_eV": 0.003966547002792358,
+    "mean_signed_error_after_eV": 0.001740047254562378,
+    "error_quantiles": {
+      "original": {
+        "0.5": 0.06484103202819824,
+        "0.9": 0.24762654304504392,
+        "0.95": 0.3391929626464841,
+        "0.99": 0.6018867635726951
+      },
+      "calibrated": {
+        "0.5": 0.0632925033569336,
+        "0.9": 0.24578452110290527,
+        "0.95": 0.3389233350753783,
+        "0.99": 0.6085639286041263
+      }
+    }
+  },
+  "calibration": {
+    "rows": 16384,
+    "batches": 128,
+    "bn_modules": 18,
+    "wall_seconds": 13.559074700002384,
+    "process_cpu_seconds": 53.6875,
+    "parameters_unchanged": true,
+    "non_bn_buffers_unchanged": true,
+    "dropout_disabled": true,
+    "labels_used_for_calibration": false,
+    "buffer_sha256_before": "e9da5974668b4199576ccb6ca5ffa6b40ff31755330292a5e8c2859e03c87970",
+    "buffer_sha256_calibrated": "80956b54f6c3620f8f56c93b9b7b31a80111c91b22b594a04ea4cc8a45b6f043",
+    "bn_changes": {
+      "local_blocks.0.norm1.module": {
+        "running_mean_rms_change": 0.016352688893675804,
+        "running_var_mean_before": 2.767319679260254,
+        "running_var_mean_after": 2.6895439624786377
+      },
+      "local_blocks.0.norm3.module": {
+        "running_mean_rms_change": 0.004893428646028042,
+        "running_var_mean_before": 1.08395254611969,
+        "running_var_mean_after": 1.0839858055114746
+      },
+      "local_blocks.1.norm1.module": {
+        "running_mean_rms_change": 0.04952959343791008,
+        "running_var_mean_before": 29.04168701171875,
+        "running_var_mean_after": 28.79435920715332
+      },
+      "local_blocks.1.norm3.module": {
+        "running_mean_rms_change": 0.005223442334681749,
+        "running_var_mean_before": 1.2516371011734009,
+        "running_var_mean_after": 1.2442606687545776
+      },
+      "local_blocks.2.norm1.module": {
+        "running_mean_rms_change": 0.03529942408204079,
+        "running_var_mean_before": 19.193296432495117,
+        "running_var_mean_after": 19.11110496520996
+      },
+      "local_blocks.2.norm3.module": {
+        "running_mean_rms_change": 0.006552425213158131,
+        "running_var_mean_before": 1.3137348890304565,
+        "running_var_mean_after": 1.312727451324463
+      },
+      "local_blocks.3.norm1.module": {
+        "running_mean_rms_change": 0.04630524665117264,
+        "running_var_mean_before": 14.95792007446289,
+        "running_var_mean_after": 14.918766975402832
+      },
+      "local_blocks.3.norm3.module": {
+        "running_mean_rms_change": 0.005334708373993635,
+        "running_var_mean_before": 1.1741207838058472,
+        "running_var_mean_after": 1.1787402629852295
+      },
+      "local_blocks.4.norm1.module": {
+        "running_mean_rms_change": 0.038343898952007294,
+        "running_var_mean_before": 16.26824188232422,
+        "running_var_mean_after": 16.290193557739258
+      },
+      "local_blocks.4.norm3.module": {
+        "running_mean_rms_change": 0.004764297045767307,
+        "running_var_mean_before": 1.1905728578567505,
+        "running_var_mean_after": 1.1869498491287231
+      },
+      "local_blocks.5.norm1.module": {
+        "running_mean_rms_change": 0.0536138117313385,
+        "running_var_mean_before": 20.63525390625,
+        "running_var_mean_after": 20.866918563842773
+      },
+      "local_blocks.5.norm3.module": {
+        "running_mean_rms_change": 0.006536301225423813,
+        "running_var_mean_before": 1.2656927108764648,
+        "running_var_mean_after": 1.2664180994033813
+      },
+      "local_blocks.6.norm1.module": {
+        "running_mean_rms_change": 0.06747673451900482,
+        "running_var_mean_before": 22.522981643676758,
+        "running_var_mean_after": 22.82318878173828
+      },
+      "local_blocks.6.norm3.module": {
+        "running_mean_rms_change": 0.005542187951505184,
+        "running_var_mean_before": 1.237866759300232,
+        "running_var_mean_after": 1.2347127199172974
+      },
+      "local_blocks.7.norm1.module": {
+        "running_mean_rms_change": 0.08293267339468002,
+        "running_var_mean_before": 38.618099212646484,
+        "running_var_mean_after": 39.33671188354492
+      },
+      "local_blocks.7.norm3.module": {
+        "running_mean_rms_change": 0.004852671176195145,
+        "running_var_mean_before": 1.2494648694992065,
+        "running_var_mean_after": 1.2464760541915894
+      },
+      "local_blocks.8.norm1.module": {
+        "running_mean_rms_change": 0.10062140971422195,
+        "running_var_mean_before": 69.10934448242188,
+        "running_var_mean_after": 69.31661987304688
+      },
+      "local_blocks.8.norm3.module": {
+        "running_mean_rms_change": 0.018138756975531578,
+        "running_var_mean_before": 2.349539041519165,
+        "running_var_mean_after": 2.2325546741485596
+      }
+    },
+    "buffers_restored": true
+  },
+  "metadata": {
+    "mean": 5.413434769952119,
+    "std": 1.176728647311213,
+    "epoch_zero_based": 48,
+    "checkpoint_kind": "selected",
+    "contract": {
+      "benchmark_id": "pcqm-composed500k-dev50k-60pass-v1",
+      "data_role_fingerprint": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_order_fingerprint": "global-randperm-seed42-plus-epoch-drop-last32",
+      "feature_fingerprint": "ogb-node9-edge3-rwse16-pure2d",
+      "target_fingerprint": "pcqm4mv2-gap-eV",
+      "seed": 42,
+      "precision": "fp32",
+      "physical_batch_per_device": 128,
+      "device_count": 1,
+      "gradient_accumulation_steps": 1,
+      "epochs": 60,
+      "steps_per_epoch": 3906,
+      "sample_exposure": 29998080,
+      "optimizer_steps": 234360,
+      "tail_batch_policy": "drop_last",
+      "parameters": 3658817,
+      "arm": "k1_pretrained_consistency",
+      "initial_state_file_sha256": "9656064f7bb0256881da4bc063e90de135171abf517a486bf6202d774694fdba",
+      "initial_tensor_sha256": "7458f5c4776208da1715d39cbce66537727ff8054b30da0ea07d82d0e94181f4",
+      "optimizer_fingerprint": "adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1",
+      "schedule_fingerprint": "cosine60-epoch0-4e-4-epoch59-1e-6",
+      "loss_fingerprint": "normalized-gap-two-pass-label-L1-plus0.1-disagreement-MSE",
+      "target_transform_fingerprint": "45c1de3bec7070e1b53bb4d45950897b84b2e7f23a7f019f85b04e10c2256834",
+      "selection_fingerprint": "best-development-live-60epochs",
+      "ema_decay": null,
+      "role_access_fingerprint": "official-train-derived-train-and-internal-development-only",
+      "geometry_used": false,
+      "teacher_used": false,
+      "pretrained_lineage": "retained-100k-stage10-backbone-original-head-reset",
+      "initial_state_sha256": "9656064f7bb0256881da4bc063e90de135171abf517a486bf6202d774694fdba",
+      "binding_identity": {
+        "source_config_identity": "127efad39a634e2d05ebe0b90b5777227dc1790958db7bd1b3d7848d37a5041e",
+        "spec_identity": "334b15ba0a0ec8c1fddd2097ef8e4be998a1a1c914850c1ab3beb9ff8c14838b",
+        "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-500k-s42-v1"
+      },
+      "target_transform_artifact_sha256": null
+    }
+  },
+  "state_sha256": {
+    "original": "dfe681a620ffd248b584fec44ccc29fdad38654407a44753b7830d4f33ef2e20",
+    "calibrated": "e08f0ea556b6f519def86801da598716f547645148969d6e1cfccdb4c433cff7",
+    "parameters": "f3dbf9ddb092b3bec64fb1eaaf82ea715c53b3597395ecbd55cf21bba639d676"
+  },
+  "runtime": {
+    "torch": "2.7.1+cu128",
+    "settings": {
+      "seed": 20261008,
+      "precision": "fp32",
+      "tf32_enabled": false,
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "deterministic_algorithms": true,
+      "cublas_workspace_config": ":4096:8",
+      "float32_matmul_precision": "highest"
+    },
+    "cpu_threads": 4
+  },
+  "cost": {
+    "worker_wall_seconds": 116.27458219999971,
+    "worker_process_cpu_seconds": 429.8125,
+    "inference_timings": {
+      "original": {
+        "rows": 50000,
+        "wall_seconds": 47.34136390000276,
+        "process_cpu_seconds": 187.09375,
+        "forward_seconds": 40.79637410001669,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "calibrated": {
+        "rows": 50000,
+        "wall_seconds": 42.41641190000155,
+        "process_cpu_seconds": 168.21875,
+        "forward_seconds": 40.61611629997424,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "restored_control": {
+        "rows": 128,
+        "wall_seconds": 0.10820679999960703,
+        "process_cpu_seconds": 0.4375,
+        "forward_seconds": 0.10453300000153831,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "accelerator": "not_applicable"
+  },
+  "checks": {
+    "strict_state_loading": true,
+    "source_and_cache_hashes": true,
+    "selected_prediction_reconstruction": true,
+    "exact_rows_targets": true,
+    "finite_predictions": true,
+    "training_only_calibration": true,
+    "parameters_unchanged": true,
+    "non_bn_buffers_unchanged": true,
+    "buffers_restored": true,
+    "restored_inference_exact": true,
+    "no_optimization": true,
+    "protected_roles_untouched": true
+  },
+  "limits": [
+    "Consumed development used for prior checkpoint selection; row CI is not seed variance or independent generalization",
+    "One fixed clean-feature calibration sample/mode; not a causal test of double-forward BN update harm",
+    "NO_TRAIN is parameter-free BN state adaptation, not training replay readiness or model adoption"
+  ]
+}
