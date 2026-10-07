@@ -50,8 +50,17 @@ AUTHOR_MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degr
                 "degree_node_mean_readout_ema999", "degree_bond_mean_readout_ema999", "degree_decay001_ema999")
 CAPACITY_MODES = ("degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999")
 CAPACITY_MODES += ("degree_pair_transition_ema999",)
+CAPACITY_MODES += ("degree_bond_local_cap_ema999",)
 AUTHOR_MODES += CAPACITY_MODES
 PATH_MODES = ("path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_ema999")
+
+
+def capacity_module(variant):
+    """Keep old addon source identities while extending native trainer dispatch."""
+    from importlib import import_module
+    module = ("gptrans_local_control" if variant == "degree_bond_local_cap_ema999" else
+              "gptrans_pair_transition" if variant == "degree_pair_transition_ema999" else "gptrans_capacity")
+    return import_module("molgap." + module)
 
 
 def _ema_decay(variant: str) -> float:
@@ -275,10 +284,7 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
     import torch
 
     if variant in CAPACITY_MODES:
-        if variant == "degree_pair_transition_ema999":
-            from .gptrans_pair_transition import load_initial
-        else:
-            from .gptrans_capacity import load_initial
+        load_initial = capacity_module(variant).load_initial
         if initial_state_path is None:
             raise ValueError("Capacity arm requires its frozen full initialization")
         return load_initial(variant, initial_state_path)
@@ -370,10 +376,8 @@ def _verify_model_identity(model) -> tuple[int, str]:
         raise RuntimeError("Frozen GPTrans-T source changed")
     parameters = sum(parameter.numel() for parameter in model.parameters())
     if getattr(model, "_molgap_author_variant", None) in CAPACITY_MODES:
-        if model._molgap_author_variant == "degree_pair_transition_ema999":
-            from .gptrans_pair_transition import PARAMETER_CAP, architecture_identity
-        else:
-            from .gptrans_capacity import PARAMETER_CAP, architecture_identity
+        module = capacity_module(model._molgap_author_variant)
+        PARAMETER_CAP, architecture_identity = module.PARAMETER_CAP, module.architecture_identity
         if (parameters != model._capacity_parameters or parameters > PARAMETER_CAP
                 or _state_sha256(model) != model._capacity_initial_sha256):
             raise RuntimeError("Frozen capacity initialization/parameter allowance changed")
@@ -778,8 +782,8 @@ def run_preflight(
         "parameters": sum(p.numel() for p in model.parameters()),
         "variant_source_sha256": _source_sha256(Path(__file__).with_name("gptrans_author_variants.py" if variant in AUTHOR_MODES else "gptrans_memory.py" if variant in ("memory_value", "memory_message") else "gptrans_variants.py")),
         "ema_decay": _ema_decay(variant),
-        **({"capacity_architecture_identity": __import__("molgap.gptrans_pair_transition" if variant == "degree_pair_transition_ema999" else "molgap.gptrans_capacity", fromlist=["architecture_identity"]).architecture_identity(variant),
-             "capacity_implementation_sha256": _source_sha256(Path(__file__).with_name("gptrans_pair_transition.py" if variant == "degree_pair_transition_ema999" else "gptrans_capacity.py"))}
+        **({"capacity_architecture_identity": capacity_module(variant).architecture_identity(variant),
+             "capacity_implementation_sha256": _source_sha256(Path(capacity_module(variant).__file__))}
            if variant in CAPACITY_MODES else {}),
         **({"pair_scale_implementation_sha256": _source_sha256(Path(__file__).with_name("gptrans_pair_scale.py"))}
            if variant == "degree_pair_depth_scale_ema999" else {}),
@@ -1049,6 +1053,10 @@ def run_training(
         train_count = 0
         epoch_started = time.perf_counter()
         for batch_index, batch in enumerate(_training_loader(train_graphs, epoch)):
+            if variant == "degree_bond_local_cap_ema999" and batch_index == 0:
+                from .gptrans_local_control import INSERTIONS
+                for depth in INSERTIONS:
+                    model.blocks[depth - 1]._capture_control_diagnostics = True
             if variant == "degree_pair_transition_ema999" and batch_index == 0:
                 for block in model.blocks:
                     if hasattr(block, "transition"):
@@ -1092,7 +1100,7 @@ def run_training(
                     "drop_path": 0.1,
                     "layer_scale": 1.0,
                     "n_targets": 1,
-                    **({"capacity_configuration": __import__("molgap.gptrans_pair_transition" if variant == "degree_pair_transition_ema999" else "molgap.gptrans_capacity", fromlist=["configuration"]).configuration(variant)}
+                    **({"capacity_configuration": capacity_module(variant).configuration(variant)}
                        if variant in CAPACITY_MODES else {}),
                 },
                 "model": {name: value.detach().cpu() for name, value in ema.state_dict().items()},
@@ -1166,6 +1174,15 @@ def run_training(
                 "input_return_output_rms": torch.stack([b._transition_diagnostics for b in blocks]).cpu().tolist(),
                 "output_weight_norm_epoch_end": [float(b.output.weight.detach().norm().cpu()) for b in blocks],
                 "output_gradient_norm_last_batch": [float(b.output.weight.grad.detach().norm().cpu()) for b in blocks],
+            }
+        if variant == "degree_bond_local_cap_ema999":
+            from .gptrans_local_control import CAP, INSERTIONS
+            row["local_control_diagnostics"] = {
+                "source": "first_scheduled_training_batch_before_update",
+                "controlled_layers": list(INSERTIONS), "cap": CAP,
+                "fields": ["raw_update_input_ratio", "bounded_update_input_ratio", "scale"],
+                "per_layer_per_molecule": torch.stack([model.blocks[i-1]._control_diagnostics for i in INSERTIONS]).cpu().tolist(),
+                "output_gradient_norm_last_batch": [float(model.blocks[i-1].output.weight.grad.detach().norm().cpu()) for i in INSERTIONS],
             }
         trace.append(row)
         atomic_json(output / "trace.json", {"format": RUN_FORMAT, "rows": trace})
@@ -1262,7 +1279,7 @@ def run_training(
     if variant in CAPACITY_MODES:
         reference["architecture_fingerprint"] = preflight["capacity_architecture_identity"]
         reference["model_id"] = f"gptrans_g1_12x{model.node_channels}_pair{model.pair_channels}/{variant}"
-        reference["capacity_configuration"] = __import__("molgap.gptrans_pair_transition" if variant == "degree_pair_transition_ema999" else "molgap.gptrans_capacity", fromlist=["configuration"]).configuration(variant)
+        reference["capacity_configuration"] = capacity_module(variant).configuration(variant)
         reference["model_parameters"] = sum(p.numel() for p in model.parameters())
     missing = [field for field in (*REFERENCE_MATCH_FIELDS, *REFERENCE_PROVENANCE_FIELDS) if field not in reference]
     if missing:

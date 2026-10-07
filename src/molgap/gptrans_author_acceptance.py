@@ -94,10 +94,9 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         folder = screen / mode
         expected_parameters = arm.get("expected_parameters", EXPECTED_PARAMETERS)
         if "expected_parameters" in arm:
-            if mode == "degree_pair_transition_ema999":
-                from .gptrans_pair_transition import PARAMETER_CAP, architecture_identity
-            else:
-                from .gptrans_capacity import PARAMETER_CAP, architecture_identity
+            from .pcqm_gptrans_v4 import capacity_module
+            module = capacity_module(mode)
+            PARAMETER_CAP, architecture_identity = module.PARAMETER_CAP, module.architecture_identity
             require(0 < expected_parameters <= PARAMETER_CAP and architecture_identity(mode) == arm["comparison_identity"]["architecture_config_identity"], "Capacity allowance/implementation")
         training = folder / "training"
         manifest, observed, preflight = (load(training / "completion_manifest.json"),
@@ -118,13 +117,16 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         require(preflight["accepted"] is True and preflight["parameters"] == expected_parameters, "Preflight")
         if "expected_parameters" in arm:
             with tarfile.open(package / "source.tar.gz", "r:gz") as archive:
-                module = "gptrans_pair_transition.py" if mode == "degree_pair_transition_ema999" else "gptrans_capacity.py"
-                capacity_sha = hashlib.sha256(archive.extractfile("src/molgap/" + module).read()).hexdigest()
+                module_file = Path(capacity_module(mode).__file__).name
+                capacity_sha = hashlib.sha256(archive.extractfile("src/molgap/" + module_file).read()).hexdigest()
             require(preflight["capacity_implementation_sha256"] == capacity_sha and
                 preflight["capacity_architecture_identity"] == arm["comparison_identity"]["architecture_config_identity"], "Capacity source binding")
         if mode == "degree_pair_transition_ema999":
             expected_config = __import__("molgap.gptrans_pair_transition", fromlist=["configuration"]).configuration(mode)
             require(observed.get("capacity_configuration") == expected_config, "Pair-transition configuration")
+        if mode == "degree_bond_local_cap_ema999":
+            from .gptrans_local_control import CAP, INSERTIONS, configuration
+            require(observed.get("capacity_configuration") == configuration(mode), "Local-control configuration")
         validate_runtime_certificate(preflight["runtime_certificate"], observed)
         require(observed["runtime_certificate_id"] == manifest["runtime_certificate_id"] == preflight["runtime_certificate_id"], "Runtime binding")
         if mode in {"path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_ema999"}:
@@ -143,6 +145,22 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
             require(sha256_file(training / name) == digest, "Checkpoint chunk: " + name)
         trace = load_canonical_trace(training / "canonical_trace.json")
         rows = load(training / "trace.json")["rows"]
+        if mode == "degree_bond_local_cap_ema999":
+            for row in rows:
+                diagnostic = row.get("local_control_diagnostics", {})
+                require(diagnostic.get("controlled_layers") == list(INSERTIONS) and diagnostic.get("cap") == CAP,
+                        "Local-control insertion/cap identity")
+                values = torch.tensor(diagnostic.get("per_layer_per_molecule", []), dtype=torch.float64)
+                require(values.shape == (9, 3, PHYSICAL_BATCH) and bool(torch.isfinite(values).all()),
+                        "Local-control finite scheduled-batch telemetry")
+                require(bool((values[:, 0] >= 0).all()) and bool((values[:, 1] >= 0).all())
+                        and bool((values[:, 1] <= CAP + 1e-6).all())
+                        and bool((values[:, 2] >= 0).all()) and bool((values[:, 2] <= 1).all())
+                        and torch.allclose(values[:, 1], values[:, 0] * values[:, 2], atol=1e-6, rtol=1e-6),
+                        "Local-control bound/scale semantics")
+                gradients = diagnostic.get("output_gradient_norm_last_batch", [])
+                require(len(gradients) == 9 and all(math.isfinite(x) and x >= 0 for x in gradients),
+                        "Local-control final-loss gradient telemetry")
         require((trace["trajectory_id"], trace["run_id"]) == (arm["trajectory_id"], observed["run_id"]), "Trace identity")
         require(len(trace["observations"]) == len(rows) == EPOCHS, "Trace coverage")
         if mode == "degree_pair_transition_ema999":

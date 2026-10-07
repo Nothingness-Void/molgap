@@ -97,6 +97,8 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    ("degree_bond_local_cap_ema999", "1"): AddonContract(
+        "gptrans_t", "local-update-control", "molgap.gptrans_local_control", single_addon=True),
     ("degree_pair_transition_ema999", "1"): AddonContract(
         "gptrans_t", "relation-transition", "molgap.gptrans_pair_transition", single_addon=True),
     **{(name, "1"): AddonContract("gptrans_t", "capacity-intervention", "molgap.gptrans_capacity")

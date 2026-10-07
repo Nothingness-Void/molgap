@@ -19,7 +19,7 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         *, experiment_ref: str = "experiments/pcqm_gptrans_author_alignment") -> list[dict]:
     root = Path(repo_root).resolve()
     base = root / experiment_ref
-    capacity_studies = {"experiments/pcqm_gptrans_capacity_nodes_100k", "experiments/pcqm_gptrans_capacity_relations_100k", "experiments/pcqm_gptrans_pair_transition_100k"}
+    capacity_studies = {"experiments/pcqm_gptrans_capacity_nodes_100k", "experiments/pcqm_gptrans_capacity_relations_100k", "experiments/pcqm_gptrans_pair_transition_100k", "experiments/pcqm_gptrans_local_control_100k"}
     followup = experiment_ref in capacity_studies or experiment_ref in {"experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k", "experiments/pcqm_gptrans_path_ema_combination_100k", "experiments/pcqm_gptrans_readout_100k", "experiments/pcqm_gptrans_decay_clock_100k"}
     if experiment_ref not in capacity_studies and experiment_ref not in {"experiments/pcqm_gptrans_author_alignment", "experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k", "experiments/pcqm_gptrans_path_ema_combination_100k", "experiments/pcqm_gptrans_readout_100k", "experiments/pcqm_gptrans_decay_clock_100k"}:
         raise ValueError("Unsupported terminal experiment adapter")
@@ -133,11 +133,11 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         )
         if followup:
             decision_text = (f"# {mode}: bounded terminal decision\n\nOn {timestamp[:10]}, independently accepted saved outputs "
-                f"gave EMA MAE {arm['paired_analysis']['candidate_mae_eV']:.10f} eV and G1-reference gain "
+                f"gave EMA MAE {arm['paired_analysis']['candidate_mae_eV']:.10f} eV and frozen-reference gain "
                 f"{arm['material_gain_eV']:.10f} eV. The prospectively selected material gate was "
                 f"{config['material_gate_eV']} eV; passed={arm['material_gate_passed']}.\n\n"
                 "This is a single-seed causal comparison of the declared intervention, not seed stability or scale superiority. "
-                "Immutable G1 endpoint and canonical reference observations were reused without retraining. "
+                f"Immutable reference {bundle['reference_id']} endpoint and canonical observations were reused without retraining. "
                 "No protected evaluation role was accessed. No successor was authorized by this terminal result.\n")
         atomic_write(target / "decision.md", decision_text.encode())
         save(target / "observed_metadata.json", {"evidence_id": evidence_id, "trajectory_id": tid, "run_id": run,

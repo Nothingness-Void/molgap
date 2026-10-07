@@ -27,11 +27,13 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
     read = lambda ref: load_json_object(root / ref)
     if terminal_reference:
         from .research_memory.candidate_reference import enroll_terminal_candidate_reference
-        prior = "experiments/pcqm_gptrans_input_ema_100k"
+        reference = (study or {}).get("terminal_reference", {})
+        prior = reference.get("experiment_ref", "experiments/pcqm_gptrans_input_ema_100k")
+        reference_arm = reference.get("arm", "degree_scale_ema999")
         bundle = enroll_terminal_candidate_reference(root,
-            finalized_ref=prior + "/gpu/degree_scale_ema999/rml_plan/rml_finalized",
-            readiness_ref=prior + "/gpu/degree_scale_ema999/results/comparison_readiness.json",
-            acceptance_ref=prior + "/gpu/results/acceptance.json", acceptance_arm="degree_scale_ema999",
+            finalized_ref=prior + "/gpu/" + reference_arm + "/rml_plan/rml_finalized",
+            readiness_ref=prior + "/gpu/" + reference_arm + "/results/comparison_readiness.json",
+            acceptance_ref=prior + reference.get("acceptance_suffix", "/gpu/results/acceptance.json"), acceptance_arm=reference_arm,
             destination=BASE + "/reference", bundle_id=("reference-" + study["experiment_id"] + "-100k-s42-v1") if study else "reference-gptrans-g1-ema999-100k-s42-v1")
     else:
         bundle = enroll_candidate_reference(root, OLD + "/gpu/degree_scale/rml_plan/candidate_qualification.json",
@@ -79,16 +81,17 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             platform=(study or {}).get("platform_id", "kaggle3"), independent_models=1, variant=mode, reference_id=bundle["reference_id"])
         from .gptrans_capacity import MODES as capacity_modes
         transition = mode == "degree_pair_transition_ema999"
-        capacity = mode in capacity_modes or transition
+        local_control = mode == "degree_bond_local_cap_ema999"
+        capacity = mode in capacity_modes or transition or local_control
         scale = mode == "scale_ema"
         prepared_initial, prepared_file = initial, "degree_initial_state.pt"
         prepared_tensor_sha = source_arm["initialization"]["state_sha256"]
         expected_parameters = recipe["model_parameters"]
         if capacity:
-            if transition:
-                from .gptrans_pair_transition import freeze_initial, configuration, load_initial, architecture_identity
-            else:
-                from .gptrans_capacity import freeze_initial, configuration, load_initial, architecture_identity
+            from .pcqm_gptrans_v4 import capacity_module
+            module = capacity_module(mode)
+            freeze_initial, configuration = module.freeze_initial, module.configuration
+            load_initial, architecture_identity = module.load_initial, module.architecture_identity
             prepared_file = mode + "_initial.pt"
             prepared_initial = root / "platforms/_records/kaggle/initializations" / prepared_file
             if prepared_initial.exists():
@@ -130,7 +133,7 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         arm.update(arm_id=mode, addons=[{"name": mode, "version": "1", "config": {}, "source_sha256": implementation}])
         if capacity:
             arm["initialization"]["state_sha256"] = prepared_tensor_sha
-            arm["addons"][0]["source_sha256"] = normalized_source_sha256(root / "src/molgap" / ("gptrans_pair_transition.py" if transition else "gptrans_capacity.py"))
+            arm["addons"][0]["source_sha256"] = normalized_source_sha256(Path(module.__file__))
         if scale:
             arm.update(family={"name":"gptrans_scale_ema","version":"1"}, addons=[], addon_semantics="baseline",
                 scientific_role="ablation")
@@ -222,6 +225,9 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
                 alternative_explanations=facts["alternative_explanations"])
             t["state_at_start"].update(prior_trajectory_ids=study["prior_trajectory_ids"],
                 prior_evidence_ids=study["supporting_evidence_ids"])
+            if study.get("reference_parent_trajectory_id"):
+                t["state_at_start"]["parent_trajectory_ids"] = [study["reference_parent_trajectory_id"]]
+                t["hypothesis"]["cheapest_falsifier"] = "one matched seed42 screen against the accepted frozen local-bond model; no baseline retraining"
         if scale:
             t["state_at_start"]["role_snapshot_refs"] = [recipe_ref]
             t["hypothesis"]["cheapest_falsifier"] = "one live500K trajectory with two retained EMA views at equal updates;100K reference is context only"
@@ -286,6 +292,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         workflow["required_modules"].append("molgap.gptrans_capacity")
         if "degree_pair_transition_ema999" in MODES:
             workflow["required_modules"].append("molgap.gptrans_pair_transition")
+        if "degree_bond_local_cap_ema999" in MODES:
+            workflow["required_modules"].append("molgap.gptrans_local_control")
         if "scale_ema" in MODES:
             workflow["artifacts"]["degree_initial_state.pt"] = UploadArtifact.from_file(initial).to_workflow()
     if "scale_ema" in MODES:
