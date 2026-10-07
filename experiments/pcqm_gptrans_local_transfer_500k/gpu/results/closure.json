@@ -1,0 +1,11 @@
+{
+  "actual_complete_replay_pair": true,
+  "candidate_trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+  "reference_trajectory_id": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+  "comparability_key": "{\"identity\":{\"dataset_identity\":\"ae8fcc3afdb48297016236834ba76b24bb11399b7a16987b5ea1d4698c80c6e5\",\"ema_semantics\":\"ema\",\"evaluation_role_identity\":\"internal_development\",\"lr_schedule_identity\":\"unspecified_in_contract\",\"optimizer_identity\":\"AdamW-foreach-false-lr0.001-weight-decay0.05\",\"precision_identity\":\"fp32-no-tf32\",\"row_split_identity\":\"87c1f83b5caf329d15b0eb688bcb89132d5fa4eb15cb667e0c6eebc1f19652f6\",\"scientific_contract\":\"pcqm4mv2-fixed500k-ema-equal-update-v1\",\"selection_role_identity\":\"best_development_metric\",\"target_transform_identity\":\"unspecified_in_contract\",\"terminal_endpoint_identity\":\"endpoint_46860\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42\"}",
+  "finalization_status": "ALREADY_FINALIZED",
+  "validation_status": "VALID",
+  "pipeline_status": "COMPLETE",
+  "finalization_id": "finalize-87a329dd6fdc303542d4b132bf3dc779566bfecae69e78ec151fa7562e822ab6",
+  "outcome": "POSITIVE_UNDER_CONTRACT"
+}

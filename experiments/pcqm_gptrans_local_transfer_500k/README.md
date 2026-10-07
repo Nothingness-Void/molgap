@@ -11,6 +11,8 @@ after fixed500K optimization at the same update budget as its100K discovery?
   additive terminal-control enrollment; historical candidate claims are preserved.
 - [Submission record](gpu/submission_record.md): exact physical job and source binding.
 - [Acceptance entry](accept.py): shared saved-output acceptance and actual Replay admission.
+- [Terminal interpretation](gpu/results/interpretation.md): matched500K result,
+  limitations, allocation cost and actual Replay proof.
 
 Live operation belongs to `CURRENT_STATE.md`. The thin freeze and acceptance
 entries reuse shared source, native500K training, release, terminal and RML owners.

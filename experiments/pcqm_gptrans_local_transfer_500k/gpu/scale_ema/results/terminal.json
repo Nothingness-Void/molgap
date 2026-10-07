@@ -1,0 +1,1024 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/results/acceptance.json": "161ba8167659e857c7c83f67ae6ba69d3cdbd731344e10bceea8e8b4a8cc365e",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/contract.json": "9132aa75603978ff07fc90c4c1e7c1879fc1774cfb3a69a4e8033d02ce182133",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/candidate_trace_manifest.json": "1f688731bf94a93f3c7d68ae6dfcc0cf903bfea2eb926495a2beaa35b8fefc06",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/comparison_readiness.json": "502529a0c29f35e2bf92f0df80cad154bad69a4cebca37d8b57abb3be88bf508",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/cost_records.json": "c189c96bf229b1dcb72b34815571f63fca77e2adc98ad6b14cdd34a677615679",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/decision.md": "222774cd1ff2d87b3a70d5d962be6d51d89adadeb7a7afa03c9c137efed0fe40",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/paired_analysis.json": "a38152a2613f773c23328ee432dc8e29e07f7700ae572aab382015896196570e",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/prediction_manifest.json": "9d3bf2a1c4a6dc7cc12d4e1977985f908d79042b141900de95221e529c18dfd0",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json": "bf607b20cb8e5206b10dd3d51985430d2074db7c9ee019d4a945e8ffe1bae3ba",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/row_manifest.json": "b0d1524523b1f15fcd149b99459a851348284c7a5f2c19b8cede7e177748f6c6",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/runtime_certificate.json": "8fd401d653fec863a97e2eda2fb283242a92aad4ea1049e2ed9e2405cf875f44",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/target_manifest.json": "b583d35883fcc2d9a6c16c2e59b6b141587997f166350fafcb06815f9ff2c0f7",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/terminal_acceptance.json": "35859d752f9cb1e532a323221f7f20db95e75e870f6a080f02f47124329b53f8",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/trajectory.json": "abd6cff7cf3fad871ed263ff7d1cd1c57552f0fe516ce341736d20acf9361e03",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/screen_config.json": "f56164d4170bd957bfe1f528b466bef2a5fa06522690f60c2d571c1d911fe223",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/submission_v1.json": "9d563b1f43460541442b62daa1d1375e6e4aecdc14bd0c408e8ac20e4175279d",
+    "experiments/pcqm_gptrans_local_transfer_500k/protocol.md": "6a4515627efd915282149c42cc4fffe4a0e6f644169527ad9cd9a5d3c5ecc13d",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/native_cost.json": "b38841abdc7378ee816330d6d19b6977cf78cfa470ba1b733d22a61f22f49161",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_09.pt": "379feb10dd94a00b3551485bab88282f6d8ddcd5495927a753e59ecac6ae49df",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_19.pt": "f567f0775ac1db633ac3994570483af60bffd8af4998a3eb617d435c887541d1",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_29.pt": "a77f44b8d782ae61fb73216006b9db71ce1cdef267cfa8d0139de9055d084158",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_39.pt": "bc77204c50ebc8dbf098fa2d42283939c0f43111abaa4f4b5bf21bf47ec6fa88",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_49.pt": "17aa3a53430f20b51b24830b47f84a4f74fc6fe32200df7f207b3311159eb329",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_59.pt": "f7e3f0ba34ba3f7b20dbcd2834ffa61152054df8a22e0ce26b2962d532662f08",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/completion_manifest.json": "23600bbbf607302684aee3fcea125f128aeeb6a8cbe063e5c4ecec436106e209",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema999/best_model.pt": "3444456d37da022067aa67240a9d50f002ee7efff9bb6f21adfc151509cfe48e",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema999/canonical_trace.json": "3123c71834a77fc5b1266e32cb29310e0f3f713ded94e10508917c922400548e",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema999/development_predictions.pt": "274b16a853f2ab07464b8c506fd3f371a51b55f615e745f5daa0f37023bfa950",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema999/trace.json": "991042c61953888a8c19f09d16df6b90e6a70498fc43866c00460348fcf4a5f6",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema9999/best_model.pt": "5971507f6bb779409fbd91e481959410552df887e3ee2e5276a7ab4c967b7edc",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema9999/canonical_trace.json": "e581234cb6f670e1a019cd6feece2df04571c824429a7f6777d3d9bee4887f6e",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema9999/development_predictions.pt": "84130b60fc4715ab470fbf6bab17d9eca4d162f7e3e4a2493a2fd9c66a3060f5",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema9999/trace.json": "26d43bb2f5e855e7e54cc67d08bd0b23088a2232c43e46f9a753195e4d40eb0c",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/last_checkpoint.pt": "f7e3f0ba34ba3f7b20dbcd2834ffa61152054df8a22e0ce26b2962d532662f08",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/optimizer_phase_profile.json": "65915deb063d07d734b5ed93de1f06d55f6afd5e0b606e02165af12924524862",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/qualification.json": "34921cc5d8c7e9364d2bb83b5919b2c7125244103b243edd4e54d8ba746e2b3b",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_00.json": "d4125c21011f7e5569ecf5d01ac70b5d9a2d72448ccc76ab015c5e7eeafb67a8",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_01.json": "b70ec05aca3a554da604672eb26f535af276cd5ab8ef84f72748c93b2677cc2e",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_02.json": "9dad2c818ebfedcdb33e17a85ef973979a279720f4333fde102b9e654627cab3",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_03.json": "58d571086e427a2e81266cbfef9c9a416a459bb89a4bb3bfff8a461ab0c85803",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_04.json": "389ad2aa9e163cabb9dd2eeef98eaf96afb9092d12bb546ca7dcf0c9d3379603",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_05.json": "bd2e3ec2876f3081c8d900f097ab457047e66112052f6a1295eb843b762cd44e",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_06.json": "0f1661cb8d6bd5dfbc2c7d48a4c11f69093f7639c8f21b963ab7fdd02ba8b2cd",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_07.json": "1a52558441d779bc64d64a83452ba98b572a51ce1c5b24079d2fbc9a6d04e81a",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_08.json": "39cac753823c5975a2d078250acfe1b88d7576ab39e7f8c46ec4e5e182206dcd",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_09.json": "a6321bd5a76e351fdeb759890c9ac63d88776bc96f6fcd78b69f5319b1d3ad81",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_10.json": "dac5cc2740599bef229b83010bb464cf37a1aeddae828f30536646c259444ac1",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_11.json": "7a886de61120946ffef3c76fd96d136452d4d9ed464155f6de70d6753e4198ac",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_12.json": "07a726299213c39828732f76804c0eb616dfc3aa1b804aad938141dfa1268c23",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_13.json": "3d74a76dff210fc32e98457a285a1f31c4878352f1d2e74347f145e133bbdcc2",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_14.json": "0cfd9a6c2b7301e043ecbf1ce1c243d11123a182d40576ebc242c16e45242623",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_15.json": "f881b95e5825d53013e6f5f59d579204dd2f2bbd88fb593ae06e4f0e826c2e47",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_16.json": "341d315165c92820698a2a31e98c58e136833f7a0582e2028f11ef4f992f32a8",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_17.json": "dec1ccccb7640bcc251917515c2996dc3f5e198382d9b116b0a63e8c9b9fc2e9",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_18.json": "40f2a3814d84ceb5321d8551ed2cff66086fc1cdf3791b05205d3198718bb77e",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_19.json": "fdca60a51860e43834119751c166a06869e83a461623055d6221e5818e0fc012",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_20.json": "a0173bc993995fb9bbf7cce7421541bff24e415044cedf8f9f9920800dfc0dda",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_21.json": "990611f5f89f1be141eb245993c3a8ef512cd3f22ed75a19de582f1a692e18e5",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_22.json": "c9b131836bfe32af29854f2c6e18482499aae4c1449b9c01dc22fc6e25968172",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_23.json": "6aee907b13bd3d1a7fb7f2d581081dedfe45cbdba7fa14734b601990f680f70c",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_24.json": "aab665fd2e453dd174e714045e4dde0be1069ac786620eaf73d89130356e7652",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_25.json": "61cfc4d4db40234a9cef0ec3b9b73acb06d5a852283801c427a9f05f9452fba0",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_26.json": "eb13bd1d9a7c3f7f6b1e2ffd56666ed3d9a755dbd551c2a455969264de398553",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_27.json": "89efdf6d44413da11bdd1134a459c9eccf107038f46ec3eed4ef95f5133cdd28",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_28.json": "5810794e9cf7c94449a4940fbc1a494af35f3e7bd323f9838709390f0a9824d3",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_29.json": "74e27ea773904d69e6f5e50e3b42965fa1bca88f5f9e615cccf5d38f9e0c0dd1",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_30.json": "af9124da74ccb87901a2c223636dd84b5f02ea71f1d8e529b77acdd097b04b5a",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_31.json": "6302894652cb1dca6245fb6a160a639608f8eba3ff8506793817203636d6776f",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_32.json": "2e20781e7a6926c36ce94a9e3df84afa58cec19eec81d132e1115687be6e528a",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_33.json": "c763c0f8d276c1d7d79bf84e49895b66d7ad6873c5d188a1e96b8ab89611ebe9",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_34.json": "f0d5df5b13acca2096d236c0df3b07d3bc1ff919794fe4cde08f64f6d2293cab",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_35.json": "bd9b788906ad15a72bcd4c712bba8b9af33c7771214d578a5de682ddae8628b2",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_36.json": "ee3b64babb80e2c740623fb82f5d74056d24b5282ee995c2cbc11dd865af88d4",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_37.json": "a8d2730f7c8fd0a03534cfefc17e90b527ea01fa0a7656a72a5eaa60b1f9bcfd",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_38.json": "a77f4b5ff2a265216d782b7d94f7ae0d6bcb42e876d333031f5fda74b6745c9f",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_39.json": "6a02249a394b7341fc8397831356ac946e8b7ada9f6cd8dfefb5fdd7368a95f9",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_40.json": "0efa020c8405e54353388f193b985137cdbedf8812b314bf56030b98344019c0",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_41.json": "3c893a2705dd29b9ab671a94f038f14f8fb0991b3bb2ffff8d67431f7b84f6cf",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_42.json": "17d7750ec8a1511227bc2c9a650e60c4a93f27e628191a67253abc25e5591660",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_43.json": "c90b395f2db84b02582ddf50bc1e7bf5b053dff7052e6d8f2c9c8d68f85e75b1",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_44.json": "612c11c850783ac48fa9c77637c95c01112c27ae378466da33034347f1c7cc32",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_45.json": "ab51d68e38a7a809084defc90c9e8d1748a85703c3417771fe14ddb8891224a0",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_46.json": "a8ce0f36b85125d8f9af5c39c6d2b2de408b2f65595e71eeaeff443533b55d89",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_47.json": "d97f4ceca1ace7518dd4e14ff9fdd4ba65c50aa38fca61c31e39ca44b50c3ed1",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_48.json": "5e08f9c349ae3b706c45d7b82aa28e28295534b7f7b66d4ee19082028736823b",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_49.json": "7aaff556f62fab7c97bdab0c6b819c3bff4b16bd67d0f46cc73b046cfa9a860d",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_50.json": "fbd1db76e212d6179f2a6afd5b5299093a0e3fc37a3d8664b80889e122e3de14",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_51.json": "34989841c34be85aefe48d06cac135a485aa23e208aa8a7eaaf072226897def9",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_52.json": "223e7900545a1b93c823337b395802e8bdbb3a5ee32d3f3ac56457c8b0c52ffb",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_53.json": "9bb00bc6b51575a8296b4f86bcf6e467aaa8bae43bc722e41b1cdd4a9a324eaa",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_54.json": "3ae277e326a098b557897ab75cb293ad70ab59ddf404d79e4aa9f9ccdb914a8d",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_55.json": "a6819bff59afc7813fcadf0cc424928e183142cf69a5096f063b5b7e13cf2813",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_56.json": "bf739f5126d19fe7637ceaefda1ee1f8baf281bf4d51c458d67c6f2ab15b27a4",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_57.json": "c8846b60f1a4d18405cc11ad8b9202d770ac3274ed50346334b975db38123eb2",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_58.json": "a2112c0f4d43aa95e825330a8fda3469c38dc92613a6aa79eb4d777147c7752a",
+    "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_59.json": "b45d0f5bee3d819d645f03f2e48ebc9a6045da91a0d9f104fdd2aa10dcd0527c"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/cost_records.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 8.026411590381667
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 4.013205795190833
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "Controller interpretation and the separately planned bounded NO_TRAIN probes only"
+    ],
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "explicit new compute decision"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json",
+        "name": "target_transform.json",
+        "sha256": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/results/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "161ba8167659e857c7c83f67ae6ba69d3cdbd731344e10bceea8e8b4a8cc365e"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/contract.json",
+        "name": "contract.json",
+        "sha256": "9132aa75603978ff07fc90c4c1e7c1879fc1774cfb3a69a4e8033d02ce182133"
+      },
+      {
+        "artifact_type": "analysis",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/candidate_trace_manifest.json",
+        "name": "candidate_trace_manifest.json",
+        "sha256": "1f688731bf94a93f3c7d68ae6dfcc0cf903bfea2eb926495a2beaa35b8fefc06"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/comparison_readiness.json",
+        "name": "comparison_readiness.json",
+        "sha256": "502529a0c29f35e2bf92f0df80cad154bad69a4cebca37d8b57abb3be88bf508"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/cost_records.json",
+        "name": "cost_records.json",
+        "sha256": "c189c96bf229b1dcb72b34815571f63fca77e2adc98ad6b14cdd34a677615679"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/decision.md",
+        "name": "decision.md",
+        "sha256": "222774cd1ff2d87b3a70d5d962be6d51d89adadeb7a7afa03c9c137efed0fe40"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/paired_analysis.json",
+        "name": "paired_analysis.json",
+        "sha256": "a38152a2613f773c23328ee432dc8e29e07f7700ae572aab382015896196570e"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/prediction_manifest.json",
+        "name": "prediction_manifest.json",
+        "sha256": "9d3bf2a1c4a6dc7cc12d4e1977985f908d79042b141900de95221e529c18dfd0"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+        "name": "role_history.json",
+        "sha256": "bf607b20cb8e5206b10dd3d51985430d2074db7c9ee019d4a945e8ffe1bae3ba"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/row_manifest.json",
+        "name": "row_manifest.json",
+        "sha256": "b0d1524523b1f15fcd149b99459a851348284c7a5f2c19b8cede7e177748f6c6"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/runtime_certificate.json",
+        "name": "runtime_certificate.json",
+        "sha256": "8fd401d653fec863a97e2eda2fb283242a92aad4ea1049e2ed9e2405cf875f44"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/target_manifest.json",
+        "name": "target_manifest.json",
+        "sha256": "b583d35883fcc2d9a6c16c2e59b6b141587997f166350fafcb06815f9ff2c0f7"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/terminal_acceptance.json",
+        "name": "terminal_acceptance.json",
+        "sha256": "35859d752f9cb1e532a323221f7f20db95e75e870f6a080f02f47124329b53f8"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/trajectory.json",
+        "name": "trajectory.json",
+        "sha256": "abd6cff7cf3fad871ed263ff7d1cd1c57552f0fe516ce341736d20acf9361e03"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/screen_config.json",
+        "name": "screen_config.json",
+        "sha256": "f56164d4170bd957bfe1f528b466bef2a5fa06522690f60c2d571c1d911fe223"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/gpu/submission_v1.json",
+        "name": "submission_v1.json",
+        "sha256": "9d563b1f43460541442b62daa1d1375e6e4aecdc14bd0c408e8ac20e4175279d"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_transfer_500k/protocol.md",
+        "name": "protocol.md",
+        "sha256": "6a4515627efd915282149c42cc4fffe4a0e6f644169527ad9cd9a5d3c5ecc13d"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/native_cost.json",
+        "name": "native_cost.json",
+        "sha256": "b38841abdc7378ee816330d6d19b6977cf78cfa470ba1b733d22a61f22f49161"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_09.pt",
+        "name": "checkpoint_rung_09.pt",
+        "sha256": "379feb10dd94a00b3551485bab88282f6d8ddcd5495927a753e59ecac6ae49df"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_19.pt",
+        "name": "checkpoint_rung_19.pt",
+        "sha256": "f567f0775ac1db633ac3994570483af60bffd8af4998a3eb617d435c887541d1"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_29.pt",
+        "name": "checkpoint_rung_29.pt",
+        "sha256": "a77f44b8d782ae61fb73216006b9db71ce1cdef267cfa8d0139de9055d084158"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_39.pt",
+        "name": "checkpoint_rung_39.pt",
+        "sha256": "bc77204c50ebc8dbf098fa2d42283939c0f43111abaa4f4b5bf21bf47ec6fa88"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_49.pt",
+        "name": "checkpoint_rung_49.pt",
+        "sha256": "17aa3a53430f20b51b24830b47f84a4f74fc6fe32200df7f207b3311159eb329"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/checkpoint_rung_59.pt",
+        "name": "checkpoint_rung_59.pt",
+        "sha256": "f7e3f0ba34ba3f7b20dbcd2834ffa61152054df8a22e0ce26b2962d532662f08"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "23600bbbf607302684aee3fcea125f128aeeb6a8cbe063e5c4ecec436106e209"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema999/best_model.pt",
+        "name": "best_model.pt",
+        "sha256": "3444456d37da022067aa67240a9d50f002ee7efff9bb6f21adfc151509cfe48e"
+      },
+      {
+        "artifact_type": "training_trace",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema999/canonical_trace.json",
+        "name": "canonical_trace.json",
+        "sha256": "3123c71834a77fc5b1266e32cb29310e0f3f713ded94e10508917c922400548e"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema999/development_predictions.pt",
+        "name": "development_predictions.pt",
+        "sha256": "274b16a853f2ab07464b8c506fd3f371a51b55f615e745f5daa0f37023bfa950"
+      },
+      {
+        "artifact_type": "analysis",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema999/trace.json",
+        "name": "trace.json",
+        "sha256": "991042c61953888a8c19f09d16df6b90e6a70498fc43866c00460348fcf4a5f6"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema9999/best_model.pt",
+        "name": "best_model.pt",
+        "sha256": "5971507f6bb779409fbd91e481959410552df887e3ee2e5276a7ab4c967b7edc"
+      },
+      {
+        "artifact_type": "analysis",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema9999/canonical_trace.json",
+        "name": "canonical_trace.json",
+        "sha256": "e581234cb6f670e1a019cd6feece2df04571c824429a7f6777d3d9bee4887f6e"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema9999/development_predictions.pt",
+        "name": "development_predictions.pt",
+        "sha256": "84130b60fc4715ab470fbf6bab17d9eca4d162f7e3e4a2493a2fd9c66a3060f5"
+      },
+      {
+        "artifact_type": "analysis",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema9999/trace.json",
+        "name": "trace.json",
+        "sha256": "26d43bb2f5e855e7e54cc67d08bd0b23088a2232c43e46f9a753195e4d40eb0c"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/last_checkpoint.pt",
+        "name": "last_checkpoint.pt",
+        "sha256": "f7e3f0ba34ba3f7b20dbcd2834ffa61152054df8a22e0ce26b2962d532662f08"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/optimizer_phase_profile.json",
+        "name": "optimizer_phase_profile.json",
+        "sha256": "65915deb063d07d734b5ed93de1f06d55f6afd5e0b606e02165af12924524862"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/qualification.json",
+        "name": "qualification.json",
+        "sha256": "34921cc5d8c7e9364d2bb83b5919b2c7125244103b243edd4e54d8ba746e2b3b"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_00.json",
+        "name": "rung_00.json",
+        "sha256": "d4125c21011f7e5569ecf5d01ac70b5d9a2d72448ccc76ab015c5e7eeafb67a8"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_01.json",
+        "name": "rung_01.json",
+        "sha256": "b70ec05aca3a554da604672eb26f535af276cd5ab8ef84f72748c93b2677cc2e"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_02.json",
+        "name": "rung_02.json",
+        "sha256": "9dad2c818ebfedcdb33e17a85ef973979a279720f4333fde102b9e654627cab3"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_03.json",
+        "name": "rung_03.json",
+        "sha256": "58d571086e427a2e81266cbfef9c9a416a459bb89a4bb3bfff8a461ab0c85803"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_04.json",
+        "name": "rung_04.json",
+        "sha256": "389ad2aa9e163cabb9dd2eeef98eaf96afb9092d12bb546ca7dcf0c9d3379603"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_05.json",
+        "name": "rung_05.json",
+        "sha256": "bd2e3ec2876f3081c8d900f097ab457047e66112052f6a1295eb843b762cd44e"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_06.json",
+        "name": "rung_06.json",
+        "sha256": "0f1661cb8d6bd5dfbc2c7d48a4c11f69093f7639c8f21b963ab7fdd02ba8b2cd"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_07.json",
+        "name": "rung_07.json",
+        "sha256": "1a52558441d779bc64d64a83452ba98b572a51ce1c5b24079d2fbc9a6d04e81a"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_08.json",
+        "name": "rung_08.json",
+        "sha256": "39cac753823c5975a2d078250acfe1b88d7576ab39e7f8c46ec4e5e182206dcd"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_09.json",
+        "name": "rung_09.json",
+        "sha256": "a6321bd5a76e351fdeb759890c9ac63d88776bc96f6fcd78b69f5319b1d3ad81"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_10.json",
+        "name": "rung_10.json",
+        "sha256": "dac5cc2740599bef229b83010bb464cf37a1aeddae828f30536646c259444ac1"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_11.json",
+        "name": "rung_11.json",
+        "sha256": "7a886de61120946ffef3c76fd96d136452d4d9ed464155f6de70d6753e4198ac"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_12.json",
+        "name": "rung_12.json",
+        "sha256": "07a726299213c39828732f76804c0eb616dfc3aa1b804aad938141dfa1268c23"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_13.json",
+        "name": "rung_13.json",
+        "sha256": "3d74a76dff210fc32e98457a285a1f31c4878352f1d2e74347f145e133bbdcc2"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_14.json",
+        "name": "rung_14.json",
+        "sha256": "0cfd9a6c2b7301e043ecbf1ce1c243d11123a182d40576ebc242c16e45242623"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_15.json",
+        "name": "rung_15.json",
+        "sha256": "f881b95e5825d53013e6f5f59d579204dd2f2bbd88fb593ae06e4f0e826c2e47"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_16.json",
+        "name": "rung_16.json",
+        "sha256": "341d315165c92820698a2a31e98c58e136833f7a0582e2028f11ef4f992f32a8"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_17.json",
+        "name": "rung_17.json",
+        "sha256": "dec1ccccb7640bcc251917515c2996dc3f5e198382d9b116b0a63e8c9b9fc2e9"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_18.json",
+        "name": "rung_18.json",
+        "sha256": "40f2a3814d84ceb5321d8551ed2cff66086fc1cdf3791b05205d3198718bb77e"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_19.json",
+        "name": "rung_19.json",
+        "sha256": "fdca60a51860e43834119751c166a06869e83a461623055d6221e5818e0fc012"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_20.json",
+        "name": "rung_20.json",
+        "sha256": "a0173bc993995fb9bbf7cce7421541bff24e415044cedf8f9f9920800dfc0dda"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_21.json",
+        "name": "rung_21.json",
+        "sha256": "990611f5f89f1be141eb245993c3a8ef512cd3f22ed75a19de582f1a692e18e5"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_22.json",
+        "name": "rung_22.json",
+        "sha256": "c9b131836bfe32af29854f2c6e18482499aae4c1449b9c01dc22fc6e25968172"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_23.json",
+        "name": "rung_23.json",
+        "sha256": "6aee907b13bd3d1a7fb7f2d581081dedfe45cbdba7fa14734b601990f680f70c"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_24.json",
+        "name": "rung_24.json",
+        "sha256": "aab665fd2e453dd174e714045e4dde0be1069ac786620eaf73d89130356e7652"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_25.json",
+        "name": "rung_25.json",
+        "sha256": "61cfc4d4db40234a9cef0ec3b9b73acb06d5a852283801c427a9f05f9452fba0"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_26.json",
+        "name": "rung_26.json",
+        "sha256": "eb13bd1d9a7c3f7f6b1e2ffd56666ed3d9a755dbd551c2a455969264de398553"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_27.json",
+        "name": "rung_27.json",
+        "sha256": "89efdf6d44413da11bdd1134a459c9eccf107038f46ec3eed4ef95f5133cdd28"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_28.json",
+        "name": "rung_28.json",
+        "sha256": "5810794e9cf7c94449a4940fbc1a494af35f3e7bd323f9838709390f0a9824d3"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_29.json",
+        "name": "rung_29.json",
+        "sha256": "74e27ea773904d69e6f5e50e3b42965fa1bca88f5f9e615cccf5d38f9e0c0dd1"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_30.json",
+        "name": "rung_30.json",
+        "sha256": "af9124da74ccb87901a2c223636dd84b5f02ea71f1d8e529b77acdd097b04b5a"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_31.json",
+        "name": "rung_31.json",
+        "sha256": "6302894652cb1dca6245fb6a160a639608f8eba3ff8506793817203636d6776f"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_32.json",
+        "name": "rung_32.json",
+        "sha256": "2e20781e7a6926c36ce94a9e3df84afa58cec19eec81d132e1115687be6e528a"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_33.json",
+        "name": "rung_33.json",
+        "sha256": "c763c0f8d276c1d7d79bf84e49895b66d7ad6873c5d188a1e96b8ab89611ebe9"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_34.json",
+        "name": "rung_34.json",
+        "sha256": "f0d5df5b13acca2096d236c0df3b07d3bc1ff919794fe4cde08f64f6d2293cab"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_35.json",
+        "name": "rung_35.json",
+        "sha256": "bd9b788906ad15a72bcd4c712bba8b9af33c7771214d578a5de682ddae8628b2"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_36.json",
+        "name": "rung_36.json",
+        "sha256": "ee3b64babb80e2c740623fb82f5d74056d24b5282ee995c2cbc11dd865af88d4"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_37.json",
+        "name": "rung_37.json",
+        "sha256": "a8d2730f7c8fd0a03534cfefc17e90b527ea01fa0a7656a72a5eaa60b1f9bcfd"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_38.json",
+        "name": "rung_38.json",
+        "sha256": "a77f4b5ff2a265216d782b7d94f7ae0d6bcb42e876d333031f5fda74b6745c9f"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_39.json",
+        "name": "rung_39.json",
+        "sha256": "6a02249a394b7341fc8397831356ac946e8b7ada9f6cd8dfefb5fdd7368a95f9"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_40.json",
+        "name": "rung_40.json",
+        "sha256": "0efa020c8405e54353388f193b985137cdbedf8812b314bf56030b98344019c0"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_41.json",
+        "name": "rung_41.json",
+        "sha256": "3c893a2705dd29b9ab671a94f038f14f8fb0991b3bb2ffff8d67431f7b84f6cf"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_42.json",
+        "name": "rung_42.json",
+        "sha256": "17d7750ec8a1511227bc2c9a650e60c4a93f27e628191a67253abc25e5591660"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_43.json",
+        "name": "rung_43.json",
+        "sha256": "c90b395f2db84b02582ddf50bc1e7bf5b053dff7052e6d8f2c9c8d68f85e75b1"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_44.json",
+        "name": "rung_44.json",
+        "sha256": "612c11c850783ac48fa9c77637c95c01112c27ae378466da33034347f1c7cc32"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_45.json",
+        "name": "rung_45.json",
+        "sha256": "ab51d68e38a7a809084defc90c9e8d1748a85703c3417771fe14ddb8891224a0"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_46.json",
+        "name": "rung_46.json",
+        "sha256": "a8ce0f36b85125d8f9af5c39c6d2b2de408b2f65595e71eeaeff443533b55d89"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_47.json",
+        "name": "rung_47.json",
+        "sha256": "d97f4ceca1ace7518dd4e14ff9fdd4ba65c50aa38fca61c31e39ca44b50c3ed1"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_48.json",
+        "name": "rung_48.json",
+        "sha256": "5e08f9c349ae3b706c45d7b82aa28e28295534b7f7b66d4ee19082028736823b"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_49.json",
+        "name": "rung_49.json",
+        "sha256": "7aaff556f62fab7c97bdab0c6b819c3bff4b16bd67d0f46cc73b046cfa9a860d"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_50.json",
+        "name": "rung_50.json",
+        "sha256": "fbd1db76e212d6179f2a6afd5b5299093a0e3fc37a3d8664b80889e122e3de14"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_51.json",
+        "name": "rung_51.json",
+        "sha256": "34989841c34be85aefe48d06cac135a485aa23e208aa8a7eaaf072226897def9"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_52.json",
+        "name": "rung_52.json",
+        "sha256": "223e7900545a1b93c823337b395802e8bdbb3a5ee32d3f3ac56457c8b0c52ffb"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_53.json",
+        "name": "rung_53.json",
+        "sha256": "9bb00bc6b51575a8296b4f86bcf6e467aaa8bae43bc722e41b1cdd4a9a324eaa"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_54.json",
+        "name": "rung_54.json",
+        "sha256": "3ae277e326a098b557897ab75cb293ad70ab59ddf404d79e4aa9f9ccdb914a8d"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_55.json",
+        "name": "rung_55.json",
+        "sha256": "a6819bff59afc7813fcadf0cc424928e183142cf69a5096f063b5b7e13cf2813"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_56.json",
+        "name": "rung_56.json",
+        "sha256": "bf739f5126d19fe7637ceaefda1ee1f8baf281bf4d51c458d67c6f2ab15b27a4"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_57.json",
+        "name": "rung_57.json",
+        "sha256": "c8846b60f1a4d18405cc11ad8b9202d770ac3274ed50346334b975db38123eb2"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_58.json",
+        "name": "rung_58.json",
+        "sha256": "a2112c0f4d43aa95e825330a8fda3469c38dc92613a6aa79eb4d777147c7752a"
+      },
+      {
+        "artifact_type": "supporting_evidence",
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/timing/rung_59.json",
+        "name": "rung_59.json",
+        "sha256": "b45d0f5bee3d819d645f03f2e48ebc9a6045da91a0d9f104fdd2aa10dcd0527c"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_local_transfer_500k/protocol.md",
+        "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/trajectory.json",
+        "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/contract.json",
+        "experiments/pcqm_gptrans_local_transfer_500k/gpu/submission_v1.json",
+        "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-g1-local-transfer-equal-updates-500k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-07T13:42:33.528198+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "saved predictions, native trace, source/config, runtime, roles and complete allocation"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "POSITIVE_UNDER_CONTRACT",
+      "transfer_status": "partial_evidence"
+    },
+    "role_use": {
+      "internal_development": "consumed",
+      "internal_train": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "same-update500K local architecture comparison",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-07T13:42:33.528198+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development": "consumed",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_train-training_membership",
+      "role_name": "internal_train",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_train-labels_read",
+      "role_name": "internal_train",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_train-metric_computed",
+      "role_name": "internal_train",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-prediction_input",
+      "role_name": "internal_development",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-labels_read",
+      "role_name": "internal_development",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-selection_used",
+      "role_name": "internal_development",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    }
+  ],
+  "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "a79ec716d8ce41d744d9ea05d2f160d54ffac1acc24c3ba1ac276afe800897b3",
+      "dataset_identity": "ae8fcc3afdb48297016236834ba76b24bb11399b7a16987b5ea1d4698c80c6e5",
+      "ema_semantics": "ema",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "AdamW-foreach-false-lr0.001-weight-decay0.05",
+      "precision_identity": "fp32-no-tf32",
+      "row_split_identity": "87c1f83b5caf329d15b0eb688bcb89132d5fa4eb15cb667e0c6eebc1f19652f6",
+      "scientific_contract": "pcqm4mv2-fixed500k-ema-equal-update-v1",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/contract.json",
+    "evaluation_role_identity": "fixed500k:development-500000-550000",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "a79ec716d8ce41d744d9ea05d2f160d54ffac1acc24c3ba1ac276afe800897b3",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/contract.json",
+    "reference_id": "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
+    "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "minimum EMA999 internal50K MAE over60equal-update rungs",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/terminal_evidence.json",
+    "trace_artifact_ref": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/scale_ema/training/ema999/canonical_trace.json",
+    "trace_artifact_sha256": "3123c71834a77fc5b1266e32cb29310e0f3f713ded94e10508917c922400548e",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+}

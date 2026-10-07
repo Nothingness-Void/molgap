@@ -6,13 +6,14 @@
 
 ## Server active screen
 
-The authorized [two-arm500K local-stream bridge](experiments/pcqm_gptrans_local_transfer_500k/protocol.md)
-is submitted on Kaggle2; exact returned identity and first RUNNING observation
-are in the [submission record](experiments/pcqm_gptrans_local_transfer_500k/gpu/submission_record.md).
-Only the uncapped local candidate trains; the qualified retained G1 control is
-reused without baseline retraining. Existing Luna B and its30-minute heartbeat
-are bound to this job only. Completion requires actual candidate/reference
-Replay admission; no automatic successor, full training or extra seed is released.
+The [two-arm500K local-stream bridge](experiments/pcqm_gptrans_local_transfer_500k/gpu/results/interpretation.md)
+is accepted with a positive equal-update architecture result and an actual
+complete STRICT_CAUSAL Replay pair. Its benefit survived the500K endpoint;
+complete convergence and full-scale ranking remain unresolved. The retained
+control was reused without baseline retraining. Luna's heartbeat is paused and
+the event/binding closed; no training remains bound. No automatic successor,
+full training or extra seed is released. Protocol-bound NO_TRAIN probes need
+their own accepted-parent hashes and prospective records before execution.
 
 The [local-update control screen](experiments/pcqm_gptrans_local_control_100k/gpu/results/interpretation.md)
 is closed with a complete STRICT_CAUSAL Replay pair and a worse selected endpoint.
@@ -48,8 +49,8 @@ The accepted [local/500K synthesis](experiments/pcqm_gptrans_capacity_relations_
 retains a below-gate complete local Replay pair and a noncausal500K EMA
 PAIRED_ENDPOINT, not full-scale qualification. All earlier studies are closed;
 the [closed monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
-retains custody history. The active training binding is the500K bridge above;
-the closed campaigns release no automatic successor.
+retains custody history. All server training bindings are closed; the closed
+campaigns release no automatic successor.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).
@@ -93,8 +94,9 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 ## Live boundaries and next actions
 
 - Preserve the four-study terminal interpretation and independent qualifications.
-  The separately authorized500K bridge has one bound candidate. Any successor,
-  full training, extra seed or protected-role access needs separate authority.
+  Retain the positive500K bridge without inferring full-scale qualification.
+  Any successor training, full run, extra seed or protected-role access needs
+  separate authority.
 - Use one immutable baseline per matching scientific contract. Track B predicts
   direct Gap on fixed PCQM4Mv2; Track A remains on repaired-2M PubChemQC.
 - ETKDG must match between training and inference. Official validation was

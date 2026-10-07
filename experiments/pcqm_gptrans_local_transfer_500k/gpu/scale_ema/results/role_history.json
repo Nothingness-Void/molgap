@@ -1,0 +1,97 @@
+{
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_train-training_membership",
+      "role_name": "internal_train",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_train-labels_read",
+      "role_name": "internal_train",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_train-metric_computed",
+      "role_name": "internal_train",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-prediction_input",
+      "role_name": "internal_development",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-labels_read",
+      "role_name": "internal_development",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed500k-v1@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/role_history.json",
+      "role_event_id": "role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-selection_used",
+      "role_name": "internal_development",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    }
+  ],
+  "source_acceptance_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/results/acceptance.json",
+  "source_acceptance_sha256": "161ba8167659e857c7c83f67ae6ba69d3cdbd731344e10bceea8e8b4a8cc365e"
+}

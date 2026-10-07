@@ -1,0 +1,37 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/cost_records.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 8.026411590381667
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 4.013205795190833
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    }
+  ],
+  "idle_allocation_counted": true,
+  "native_cost_ref": "platforms/_records/kaggle/training/gptrans_local_transfer500k_v1/gptrans_local_transfer500k/native_cost.json",
+  "native_cost_sha256": "b38841abdc7378ee816330d6d19b6977cf78cfa470ba1b733d22a61f22f49161"
+}
