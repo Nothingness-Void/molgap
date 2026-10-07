@@ -63,6 +63,11 @@ Seven stale ACTIVE plans were reconciled without changing prospective bytes,
 scientific results, live job bindings, or replay eligibility; see the dated
 local reconciliation routed by the tracked [`research_memory/README.md`](research_memory/README.md).
 
+The user separately authorized the [local-update control screen](experiments/pcqm_gptrans_local_control_100k/protocol.md).
+It is in local preparation, not submitted or runtime-qualified. Its comparator
+is the accepted uncapped local-bond model, not a newly trained baseline. No
+500K/full/extra-seed or automatic successor is released by this new protocol.
+
 ## Shared experiment infrastructure
 
 The shared local CLI, typed Spec/addon registry, source packaging, prospective

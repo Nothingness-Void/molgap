@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| P0 | C-GPTRANS-LOCAL-CONTROL | One newly authorized local residual-amplitude falsifier; retain the accepted uncapped local-bond reference without retraining. | [Protocol](experiments/pcqm_gptrans_local_control_100k/protocol.md); one seed42 fixed100K, strict native acceptance and actual Replay-pair closure, no automatic scale |
 | — | C-GPTRANS-BOTTLENECK | Accepted and closed NO_TRAIN diagnostic; retain local-update control as an unproven research lead, no automatic successor. | [Terminal interpretation](experiments/pcqm_gptrans_bottleneck_audit/decision_terminal.md); separate single-mechanism protocol and compute authority before training |
 | — | C-GPTRANS-PAIR-TRANSITION | Closed without promotion; exact intervention accepted as a complete Replay pair, with the disconnected final-branch limitation retained. | Preserve the [terminal interpretation](experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md); any corrected mechanism or new family needs separate release authority |
 | — | C-GPTRANS-CAPACITY | Closed four-study campaign; no architecture promotion. Preserve the500K EMA correction observation without a causal Replay/full-scale claim. | [Capacity falsifier](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/results/interpretation.md) and [accepted local/scale synthesis](experiments/pcqm_gptrans_capacity_relations_100k/gpu/results/interpretation.md); separate authority before reopening |
