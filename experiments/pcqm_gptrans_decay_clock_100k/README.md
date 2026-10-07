@@ -5,3 +5,5 @@ The v1 saved-output [terminal decision](gpu/degree_decay001_ema999/results/decis
 and [interpretation](gpu/results/interpretation.md) preserve the endpoint,
 trajectory, acceptance and actual Replay qualification. The owning acceptance
 CLI reuses GPTrans artifact verification and shared per-arm RML closure.
+
+Compact machine evidence: [acceptance](gpu/results/acceptance.json).

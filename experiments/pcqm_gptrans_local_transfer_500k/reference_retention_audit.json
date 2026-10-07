@@ -1,0 +1,40 @@
+{
+  "format": "molgap-reference-retention-planning-audit-v1",
+  "audited_on": "2026-10-07",
+  "owner": "server",
+  "audit_source_head": "c673a8b4352535fb9ab0dd5e35b97c870d58a807",
+  "method": "Resolve every historical terminal artifact_hashes locator and compare its actual SHA256; inspect retained acceptance and canonical trace metadata only",
+  "terminal_ref": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/results/terminal.json",
+  "terminal_sha256": "74b85bb9cde7cf413a75e4c3676ce32a7e2da339444942c2f22b6582beef6760",
+  "evidence_ref": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/rml_finalized/v5_evidence.json",
+  "evidence_sha256": "18b242a581cfde3fba2a0013f3864d57cbe21b8cd71a0e65feccca2d1ffe2fb6",
+  "acceptance_ref": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/results/scale_acceptance.json",
+  "historical_qualification": {
+    "accepted": true,
+    "experiment_purpose": "transfer_study",
+    "comparison_class": "PAIRED_ENDPOINT",
+    "strict_ready": false,
+    "replay_ready": false
+  },
+  "retention": {
+    "bound_artifacts": 25,
+    "existing_artifacts": 25,
+    "sha256_verified_artifacts": 25,
+    "failures": []
+  },
+  "primary_trace": {
+    "ref": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/rml_finalized/trace.json",
+    "sha256": "c800359fd76b6c7bdecd79ef1c18c2474e329a5c1cec32a79ead6b39e6041381",
+    "observations": 60,
+    "final_optimizer_step": 46860,
+    "final_sample_presentations": 5998080
+  },
+  "prospective_reuse_status": "INCOMPLETE_RECOVERABLE",
+  "qualification_scope": "Retention and native trace metadata only; prospective reference bundle, self-reference trajectory binding, exact comparison identity and release gate not yet verified",
+  "baseline_retraining_authorized": false,
+  "release_authorized": false,
+  "training_executed": false,
+  "model_inference_executed": false,
+  "protected_role_read": false,
+  "remote_access_executed": false
+}

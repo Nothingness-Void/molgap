@@ -6,70 +6,52 @@
 
 ## Server active screen
 
+The user authorized a [two-arm500K local-stream bridge plan](experiments/pcqm_gptrans_local_transfer_500k/decision.md).
+Planning is recorded; compute is not released. Qualify the retained500K G1
+reference before any baseline retraining, freeze the candidate/release and
+diagnostic budget, then seek the covered execution decision. No job was submitted.
+
 The [local-update control screen](experiments/pcqm_gptrans_local_control_100k/gpu/results/interpretation.md)
-is independently accepted, STRICT_CAUSAL and admitted as a complete Replay
-pair against its frozen uncapped local-bond reference. The amplitude-control
-intervention worsened the selected endpoint and the exact route is closed.
-Its controller event and Luna binding are closed; the existing heartbeat is
-paused. No server training, extra seed,500K/full or successor is authorized.
+is closed with a complete STRICT_CAUSAL Replay pair and a worse selected endpoint.
+Its event and binding are closed and heartbeat paused; this result releases
+no cap grid, extra seed,500K/full or successor.
 
 The [frozen GPTrans bottleneck diagnostic](experiments/pcqm_gptrans_bottleneck_audit/decision_terminal.md)
-is accepted and closed as NO_TRAIN / PAIRED_ENDPOINT, not a training Replay
-pair. The local-bond advantage survived its frozen later cohort; all local
-branches were connected, while the final Pair Transition branch was not.
-The separately authorized control screen above did not support the proposed
-amplitude-suppression fix; preserve its declared scope rather than reopening a
-cap grid or treating the old diagnostic correlation as an established cause.
+is closed NO_TRAIN / PAIRED_ENDPOINT, not a training Replay pair. Local-bond
+benefit survived the later cohort; local branches were connected and the final
+Pair Transition branch was not. The control screen did not establish amplitude
+suppression as a fix; retain the diagnostic's causal limits.
 
 The Kaggle2 [independent pair-transition100K screen](experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md)
-is independently accepted, STRICT_CAUSAL and admitted as a complete Replay
-pair, but did not support promotion. Its final real-pair branch was disconnected
-from the virtual-node readout; this limits mechanism-level interpretation and
-is retained explicitly, not repaired retroactively. The exact route and Luna
-binding are closed; no server training or automatic successor is released.
-No GRIT, extra seed,500K training or portability inference is authorized by
-this terminal result. User-reported Kaggle1 dual500K remains outside server custody.
+is closed with a complete STRICT_CAUSAL Replay pair, without promotion. Its
+disconnected final real-pair branch limits interpretation; no corrected run or
+successor is released. User-reported Kaggle1 dual500K remains outside server custody.
 
 The authorized T4x2 [final atom/bond readout dual](experiments/pcqm_gptrans_readout_100k/gpu/submission_record.md)
-is closed: both arms are independently accepted, STRICT_CAUSAL, and admitted
-as complete Replay pairs, but neither supports promotion; preserve the
-[decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md).
+is closed with two complete STRICT_CAUSAL Replay pairs and no promotion;
+preserve its [decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md).
 The server-owned frozen G1 EMA audit v4 is accepted and RML-finalized as
 NO_TRAIN / PAIRED_ENDPOINT: corrected EMA passed frozen-weight portability,
 not 500K optimization or full-scale qualification. Preserve its
 [decision](experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md).
-Earlier infrastructure failures and CPU qualification remain separately
-retained in the [audit index](experiments/pcqm_gptrans_ema_portability/README.md).
 The [fixed500K execution qualification](experiments/pcqm_gptrans_scale_qualification/results/interpretation.md)
 is accepted and RML-finalized as NO_TRAIN / CONTEXT_ONLY, not a training Replay pair.
 The [isolated G1 decay-coefficient falsifier](experiments/pcqm_gptrans_decay_clock_100k/gpu/results/interpretation.md)
 is accepted and RML-finalized with a complete Replay pair; the intervention
 failed its promotion gate and the coefficient route is closed.
-The user authorized four physical Kaggle2 studies across two isolated T4x2
-notebooks. The [node capacity pair](experiments/pcqm_gptrans_capacity_nodes_100k/protocol.md)
-and [local-bond plus500K EMA study](experiments/pcqm_gptrans_capacity_relations_100k/protocol.md)
-were submitted as version1, physical IDs137072037 and137072203, respectively.
-The node capacity pair is independently accepted, STRICT_CAUSAL and admitted as
-two complete Replay pairs; neither passed promotion. Its exact configurations
-are closed; preserve the [interpretation](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/results/interpretation.md).
-The [local-bond plus500K study](experiments/pcqm_gptrans_capacity_relations_100k/gpu/results/interpretation.md)
-is independently accepted and RML-finalized. The local addon has a complete
-STRICT_CAUSAL Replay pair but remains below its frozen promotion gate. The500K
-shared-live EMA study supports the correction direction, remains noncausal
-PAIRED_ENDPOINT and is not a causal Replay pair or full-scale qualification.
-All four earlier authorized studies, pair-transition and local-control jobs
-are closed; Luna has no active server training binding.
-Exact receipts and the [closed shared monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
-retain custody history. No automatic successor is authorized.
-The earlier monitor bindings are closed; the monitor never adopts desktop jobs.
+The [node capacity pair](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/results/interpretation.md)
+is closed with two complete STRICT_CAUSAL Replay pairs and no promotion.
+The accepted [local/500K synthesis](experiments/pcqm_gptrans_capacity_relations_100k/gpu/results/interpretation.md)
+retains a below-gate complete local Replay pair and a noncausal500K EMA
+PAIRED_ENDPOINT, not full-scale qualification. All earlier studies are closed;
+the [closed monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
+retains custody history. Luna has no active training binding or automatic successor.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).
 
-The failed CPU attempts and accepted CPU NO_TRAIN preparation are RML-closed.
-Seven stale ACTIVE plans were reconciled without changing prospective bytes,
-scientific results, live job bindings, or replay eligibility; see the dated
-local reconciliation routed by the tracked [`research_memory/README.md`](research_memory/README.md).
+CPU attempts/preparation are RML-closed; stale-plan reconciliation preserved
+history and eligibility. See [`research_memory/README.md`](research_memory/README.md).
 
 ## Shared experiment infrastructure
 

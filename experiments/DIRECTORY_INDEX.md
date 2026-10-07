@@ -51,6 +51,10 @@ and its decision remains the authority. Grouping is by routing domain only.
 
 ## GPTrans family
 
+`pcqm_gptrans_capacity_nodes_100k/` · `pcqm_gptrans_capacity_relations_100k/` ·
+`pcqm_gptrans_ema_portability/` · `pcqm_gptrans_local_control_100k/` ·
+`pcqm_gptrans_local_transfer_500k/` ·
+
 `pcqm_gptrans_pair_transition_100k/` ·
 
 `pcqm_gptrans_author_alignment/` · `pcqm_gptrans_decay_clock_100k/` ·
