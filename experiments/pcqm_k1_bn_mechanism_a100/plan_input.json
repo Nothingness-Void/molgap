@@ -1,0 +1,138 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-bn-mechanism-a100",
+    "question": "Does dropout or duplicate BN calibration explain frozen K1 normalization error?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-bn-mechanism-20261008",
+      "supporting_evidence_ids": [
+        "pcqm-k1-500k-bn-calibration-20261007",
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "observed_deficiency": "BN calibration recovered1.245meV; source of normalization mismatch unresolved.",
+      "alternative_explanations": [
+        "dropout activation mismatch",
+        "duplicate BN updates",
+        "historical EMA or trajectory effects"
+      ],
+      "changed_mechanism": "Frozen BN statistics, dropout off/on x one/two repeated forwards",
+      "cheapest_falsifier": "Four bounded buffer-only interventions on fixed training members and consumed development",
+      "decision_changed_if_positive": "Nominate causal buffer-estimator effect for separate training qualification",
+      "decision_changed_if_negative": "Deprioritize tested calibration mechanisms; preserve historical EMA uncertainty",
+      "expected_native_cost_ref": "cost-k1-bn-mechanism-estimate",
+      "related_closed_family_ids": [
+        "k1-500k-bn-calibration"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "5dde43e48b7650501f9743654ffea3d4d796b573",
+      "source_config_identity": "a8c397756f8c063a661459d97b77d97a5b477e4ab1f1128d57a28086365a025f",
+      "contract_refs": [
+        "experiments/pcqm_k1_bn_mechanism_a100/protocol.md",
+        "experiments/pcqm_k1_bn_mechanism_a100/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-500k-bn-calibration-20261007",
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_bn_mechanism_a100/roles.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_bn_mechanism_a100/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "frozen_bn_mechanism_diagnostic",
+        "run_ids": [
+          "k1-bn-mechanism-a100-20261008"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "5dde43e48b7650501f9743654ffea3d4d796b573",
+        "evidence_refs": [
+          "experiments/pcqm_k1_bn_mechanism_a100/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-bn-mechanism-estimate"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_bn_mechanism_a100/decision.md",
+      "next_allowed_actions": [
+        "Frozen A100 BN mechanism diagnostic"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_bn_mechanism_a100/protocol.md",
+    "comparison_blockers": [
+      "Consumed selected-development cohort",
+      "No training-time causality or promotion"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-bn-mechanism-estimate",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "colab",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/protocol.md",
+      "measurement": {
+        "device_hours": {
+          "value": 0.3333333333333333,
+          "status": "estimated"
+        },
+        "wall_hours": {
+          "value": 0.3333333333333333,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-bn-mechanism-a100",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_bn_mechanism_a100/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_bn_mechanism_a100/roles.json"
+    ],
+    "source_commit": "5dde43e48b7650501f9743654ffea3d4d796b573",
+    "state_timestamp": "2026-10-07T16:53:04.497620+00:00"
+  }
+}

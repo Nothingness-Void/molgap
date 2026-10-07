@@ -1,0 +1,22 @@
+{
+  "train": {
+    "bounds": [
+      0,
+      500000
+    ],
+    "decoded_labels_read": 500000,
+    "prediction_input_rows": 16384,
+    "labels_used_for_calibration": false
+  },
+  "internal_development": {
+    "bounds": [
+      500000,
+      550000
+    ],
+    "labels_read": 50000,
+    "metric_computed": true,
+    "previously_selection_used": true
+  },
+  "official_validation": "untouched",
+  "tests": "untouched"
+}

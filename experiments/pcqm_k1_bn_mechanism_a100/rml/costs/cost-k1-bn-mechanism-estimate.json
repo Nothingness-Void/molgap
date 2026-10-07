@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "preflight",
+  "cost_event_id": "cost-k1-bn-mechanism-estimate",
+  "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/protocol.md",
+  "hardware": "NVIDIA A100-SXM4-40GB",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0.3333333333333333
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.3333333333333333
+    }
+  },
+  "platform": "colab",
+  "run_id": "k1-bn-mechanism-a100-20261008",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-bn-mechanism-a100-20261008"
+}

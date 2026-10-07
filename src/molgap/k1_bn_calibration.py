@@ -77,13 +77,15 @@ def recalibrated_batch_norm(model, loader, *, source_idx, source_bounds,
             raise ValueError("Incomplete calibration membership")
         model.eval()
         current = dict(model.named_buffers())
-        if parameters != state_dict_sha256(dict(model.named_parameters())) or any(
+        if any(parameter.requires_grad or parameter.grad is not None for parameter in model.parameters()) or \
+                parameters != state_dict_sha256(dict(model.named_parameters())) or any(
                 not torch.equal(current[key], value) for key, value in original.items() if key not in bn_keys):
             raise ValueError("Calibration changed parameters or non-BN buffers")
         if any(not torch.isfinite(current[key]).all() for key in bn_keys) or any(
                 int(module.num_batches_tracked) != batches for module in bn.values()):
             raise ValueError("Invalid calibrated BatchNorm state")
         report.update({"rows": cursor, "batches": batches, "bn_modules": len(bn),
+            "num_batches_tracked": {name: int(module.num_batches_tracked) for name, module in bn.items()},
             "wall_seconds": time.perf_counter() - tick,
             "process_cpu_seconds": time.process_time() - cpu_tick,
             "parameters_unchanged": True, "non_bn_buffers_unchanged": True,
