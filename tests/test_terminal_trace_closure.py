@@ -25,7 +25,7 @@ import pytest
 
 from molgap.constants import REPO_ROOT
 from molgap.evidence_pointers import load_json_object
-from molgap.research_memory.finalize import verified_receipt
+from molgap.research_memory.finalize import finalize, verified_receipt
 from molgap.research_memory.paired import validate_ineligible_continuation
 from molgap.research_memory.terminal_wiring import (
     build_default_trace_manifest,
@@ -631,6 +631,60 @@ def create_candidate_arm(
 # =========================================================================
 # Test A: Retained raw trace auto-resolves and finalizes available
 # =========================================================================
+@pytest.mark.parametrize("mutation", [None, "eligible", "candidate", "foreign_reference", "missing_reason", "frozen_reference"])
+def test_unpaired_missing_reference_trace_closure_stays_ineligible(tmp_path, mutation):
+    setup_mock_repo(tmp_path)
+    arm = create_candidate_arm(tmp_path, "unpaired", "TB-unpaired", "run-unpaired", "ev-unpaired")
+    trajectory = load_json_object(arm["traj_path"])
+    trajectory["state_at_start"]["reference_ids"] = []
+    if mutation == "frozen_reference":
+        trajectory["state_at_start"]["reference_ids"] = ["ev-ref-1"]
+    arm["traj_path"].write_bytes(json_bytes(trajectory))
+    prospective_bytes = arm["traj_path"].read_bytes()
+
+    terminal = load_json_object(arm["terminal_path"])
+    terminal["decision"]["outcome"] = "INCONCLUSIVE"
+    terminal["evidence"]["outcome"]["scientific_status"] = "INCONCLUSIVE"
+    acceptance_path = arm["exp_dir"] / "acceptance.json"
+    acceptance = load_json_object(acceptance_path)
+    acceptance["trajectory_decision"] = terminal["decision"]
+    acceptance["outcome"] = terminal["evidence"]["outcome"]
+    acceptance_path.write_bytes(json_bytes(acceptance))
+    acceptance_ref = terminal["acceptance_ref"]
+    terminal["artifact_hashes"][acceptance_ref] = file_digest(acceptance_path)
+    for artifact in terminal["evidence"]["artifacts"]:
+        if artifact["locator"] == acceptance_ref:
+            artifact["sha256"] = file_digest(acceptance_path)
+    arm["terminal_path"].write_bytes(json_bytes(terminal))
+    _, trace_path = resolve_trace_for_terminal_arm(tmp_path, arm["traj_path"], arm["terminal_path"])
+    manifest = build_default_trace_manifest(tmp_path, trajectory, terminal, load_canonical_trace(trace_path))
+    manifest.update(comparison_role="reference", reference_id=arm["ev_id"])
+    manifest["backtest_eligibility"]["exclusion_reasons"] = ["missing_frozen_reference"]
+    if mutation == "eligible":
+        manifest["backtest_eligibility"] = {"eligible": True, "exclusion_reasons": []}
+    elif mutation == "candidate":
+        manifest["comparison_role"] = "candidate"
+    elif mutation == "foreign_reference":
+        manifest["reference_id"] = "ev-ref-1"
+    elif mutation == "missing_reason":
+        manifest["backtest_eligibility"]["exclusion_reasons"] = ["other_gap"]
+    terminal["trace_manifest"] = manifest
+    arm["terminal_path"].write_bytes(json_bytes(terminal))
+    if mutation is not None:
+        message = "strict V5 comparison" if mutation == "eligible" else "manifest reference not frozen"
+        with pytest.raises(ValueError, match=message):
+            finalize(tmp_path, arm["traj_path"], arm["terminal_path"], trace_path)
+        assert not (arm["exp_dir"] / "rml_finalized").exists()
+    else:
+        assert finalize(tmp_path, arm["traj_path"], arm["terminal_path"], trace_path)["status"] == "FINALIZED"
+        published = load_json_object(arm["exp_dir"] / "rml_finalized/trace_manifest.json")
+        assert published["reference_id"] == arm["ev_id"]
+        assert published["backtest_eligibility"] == {"eligible": False, "exclusion_reasons": ["missing_frozen_reference"]}
+        assert load_json_object(arm["exp_dir"] / "rml_finalized/trajectory.json")["state_at_start"]["reference_ids"] == []
+        validate_repository_records(tmp_path)
+    assert arm["traj_path"].read_bytes() == prospective_bytes
+
+
 def test_declared_trace_auto_resolves_and_finalizes_available(tmp_path):
     setup_mock_repo(tmp_path)
     arm = create_candidate_arm(

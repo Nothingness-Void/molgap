@@ -343,7 +343,16 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
             raise ValueError("manifest contract not frozen")
         if (paired is None
                 and manifest["reference_id"] not in frozen["state_at_start"]["reference_ids"]):
-            raise ValueError("manifest reference not frozen")
+            # Preserve a terminal unpaired trace without inventing a comparator.
+            missing_reference_trace = (
+                eligible is False
+                and not frozen["state_at_start"]["reference_ids"]
+                and manifest["comparison_role"] == "reference"
+                and manifest["reference_id"] == evidence["evidence_id"]
+                and "missing_frozen_reference" in manifest["backtest_eligibility"]["exclusion_reasons"]
+            )
+            if not missing_reference_trace:
+                raise ValueError("manifest reference not frozen")
         manifest.update(trace_artifact_ref=prefix + "/trace.json",
                         trace_artifact_sha256=hashlib.sha256(trace_bytes).hexdigest(),
                         terminal_evidence_ref=prefix + "/v5_evidence.json")
