@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/content/k1-profile-a100-20261007/src/molgap/k1_execution_profile.py", line 221, in <module>
+    main()
+  File "/content/k1-profile-a100-20261007/src/molgap/k1_execution_profile.py", line 212, in main
+    run(args.root, args.output)
+  File "/content/k1-profile-a100-20261007/src/molgap/k1_execution_profile.py", line 58, in run
+    graphs = torch.load(root / "train_probe.pt", map_location="cpu", weights_only=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/k1-profile-python311/lib/python3.11/site-packages/torch/serialization.py", line 1097, in load
+    return _load(
+           ^^^^^^
+  File "/content/k1-profile-python311/lib/python3.11/site-packages/torch/serialization.py", line 1525, in _load
+    result = unpickler.load()
+             ^^^^^^^^^^^^^^^^
+  File "/content/k1-profile-python311/lib/python3.11/site-packages/torch/serialization.py", line 1515, in find_class
+    return super().find_class(mod_name, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'molgap.pcqm_wedge'

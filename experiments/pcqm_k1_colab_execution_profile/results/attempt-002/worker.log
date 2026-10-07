@@ -1,0 +1,17 @@
+single_w2: 8/29
+single_w2: 16/29
+single_w2: 24/29
+{"case": "single_w2", "passes": 1, "workers": 2, "median_step_s": 0.15675197200005186, "peak_allocated_bytes": 560573440}
+double_w0: 8/29
+double_w0: 16/29
+double_w0: 24/29
+{"case": "double_w0", "passes": 2, "workers": 0, "median_step_s": 0.27474626750006337, "peak_allocated_bytes": 960462848}
+double_w2: 8/29
+double_w2: 16/29
+double_w2: 24/29
+{"case": "double_w2", "passes": 2, "workers": 2, "median_step_s": 0.267762265999977, "peak_allocated_bytes": 960462848}
+double_w4: 8/29
+double_w4: 16/29
+double_w4: 24/29
+{"case": "double_w4", "passes": 2, "workers": 4, "median_step_s": 0.2688962340000671, "peak_allocated_bytes": 960462848}
+K1_PROFILE_COMPLETE
