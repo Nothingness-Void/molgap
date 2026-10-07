@@ -1,0 +1,23 @@
+{
+  "owner": "server",
+  "closed": false,
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "credential_owner": "kaseichou",
+  "credential_file": "C:/Users/Adminn/Downloads/key/kaggle_2.json",
+  "jobs": [{
+    "slot": "local-transfer500k-v1",
+    "kernel": "kaseichou/molgap-gptrans-local-transfer500k-s42",
+    "kernel_id": 137461712,
+    "version": 1,
+    "closed": false,
+    "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/control/gptrans_local_transfer500k_v1.json",
+    "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/gptrans_local_transfer500k_v1",
+    "metadata_paths": ["gptrans_local_transfer500k/startup.json", "gptrans_local_transfer500k/job_summary.json", "gptrans_local_transfer500k/native_cost.json"]
+  }],
+  "retrieval": {"method": "molgap.kaggle_output_retrieval.retrieve_exact_metadata", "use_exact_job_metadata_paths": true, "bulk_output_download_allowed": false},
+  "postrun_requires_actual_replay_pool_admission": true,
+  "successor_authorized": false,
+  "prepared_package": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/prepared/gptrans_local_transfer500k_v1/release/source",
+  "acceptance_entry": "experiments/pcqm_gptrans_local_transfer_500k/accept.py"
+}

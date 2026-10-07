@@ -6,10 +6,13 @@
 
 ## Server active screen
 
-The user authorized a [two-arm500K local-stream bridge plan](experiments/pcqm_gptrans_local_transfer_500k/decision.md).
-Planning is recorded; compute is not released. Qualify the retained500K G1
-reference before any baseline retraining, freeze the candidate/release and
-diagnostic budget, then seek the covered execution decision. No job was submitted.
+The authorized [two-arm500K local-stream bridge](experiments/pcqm_gptrans_local_transfer_500k/protocol.md)
+is submitted on Kaggle2; exact returned identity and first RUNNING observation
+are in the [submission record](experiments/pcqm_gptrans_local_transfer_500k/gpu/submission_record.md).
+Only the uncapped local candidate trains; the qualified retained G1 control is
+reused without baseline retraining. Existing Luna B and its30-minute heartbeat
+are bound to this job only. Completion requires actual candidate/reference
+Replay admission; no automatic successor, full training or extra seed is released.
 
 The [local-update control screen](experiments/pcqm_gptrans_local_control_100k/gpu/results/interpretation.md)
 is closed with a complete STRICT_CAUSAL Replay pair and a worse selected endpoint.
@@ -45,7 +48,8 @@ The accepted [local/500K synthesis](experiments/pcqm_gptrans_capacity_relations_
 retains a below-gate complete local Replay pair and a noncausal500K EMA
 PAIRED_ENDPOINT, not full-scale qualification. All earlier studies are closed;
 the [closed monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
-retains custody history. Luna has no active training binding or automatic successor.
+retains custody history. The active training binding is the500K bridge above;
+the closed campaigns release no automatic successor.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
 [decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).
@@ -89,9 +93,8 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 ## Live boundaries and next actions
 
 - Preserve the four-study terminal interpretation and independent qualifications.
-  Reopening any local-addon transfer or new architecture requires a separate
-  covered compute decision. No successor, full training, extra seed or
-  protected-role access is authorized by this closed campaign.
+  The separately authorized500K bridge has one bound candidate. Any successor,
+  full training, extra seed or protected-role access needs separate authority.
 - Use one immutable baseline per matching scientific contract. Track B predicts
   direct Gap on fixed PCQM4Mv2; Track A remains on repaired-2M PubChemQC.
 - ETKDG must match between training and inference. Official validation was
