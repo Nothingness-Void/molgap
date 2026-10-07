@@ -1,0 +1,20 @@
+{
+  "train_prefix": {
+    "range": [
+      0,
+      500000
+    ],
+    "sample_rows": 2048
+  },
+  "internal_development": {
+    "range": [
+      500000,
+      550000
+    ],
+    "sample_rows": 2048,
+    "previously_selection_used": true
+  },
+  "official_validation": "untouched",
+  "test_dev": "untouched",
+  "test_challenge": "untouched"
+}

@@ -1,0 +1,193 @@
+{
+  "format": "molgap-k1-frozen-bottleneck-acceptance-v1",
+  "evidence_id": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+  "run_id": "local-k1-500k-bottleneck-20261007",
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "consumed_role_frozen_intervention_and_clean_state_comparison",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "bounded_local_diagnostic_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately frozen and authorized training intervention to identify independent-slot capacity or pretraining-scale efficacy"
+    ]
+  },
+  "role_use": {
+    "train_prefix": "selection_used",
+    "internal_development": "selection_used",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-500k-bottleneck-observed",
+      "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bottleneck-20261007",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU; four intra-op threads; no accelerator",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.006241413833333556,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.017391493055555554,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bottleneck-train_prefix-prediction_input",
+      "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bottleneck-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8fcfbc8dfe4d500fdce7e678082f12867ef0fac610fb0f3e7e4bd9b4790c37c2",
+      "role_name": "train_prefix",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bottleneck-train_prefix-labels_read",
+      "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bottleneck-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "role_name": "train_prefix",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bottleneck-train_prefix-metric_computed",
+      "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bottleneck-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8fcfbc8dfe4d500fdce7e678082f12867ef0fac610fb0f3e7e4bd9b4790c37c2",
+      "role_name": "train_prefix",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bottleneck-train_prefix-selection_used",
+      "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bottleneck-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8fcfbc8dfe4d500fdce7e678082f12867ef0fac610fb0f3e7e4bd9b4790c37c2",
+      "role_name": "train_prefix",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bottleneck-internal_development-prediction_input",
+      "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bottleneck-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "09b4827137bb640bbb974a00f84d1a234531395b39c276f294dc8aca321210c5",
+      "role_name": "internal_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bottleneck-internal_development-labels_read",
+      "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bottleneck-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bottleneck-internal_development-metric_computed",
+      "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bottleneck-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "09b4827137bb640bbb974a00f84d1a234531395b39c276f294dc8aca321210c5",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-500k-bottleneck-internal_development-selection_used",
+      "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bottleneck-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "09b4827137bb640bbb974a00f84d1a234531395b39c276f294dc8aca321210c5",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json"
+    }
+  ],
+  "checks": {
+    "strict_state_loading": true,
+    "source_and_cache_hashes": true,
+    "selected_prediction_reconstruction": true,
+    "exact_rows_targets": true,
+    "frozen_parameters_buffers_unchanged": true,
+    "identity_control": true,
+    "no_training": true,
+    "protected_roles_untouched": true
+  },
+  "max_prediction_reconstruction_eV": 1.9073486328125e-06,
+  "comparison_class": "CONTEXT_ONLY",
+  "analysis_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/results/analysis.json",
+  "role_scope": "Whole accepted train/development shards were decoded, including backing label tensors; only the fixed4096 sample rows were evaluated. No protected role.",
+  "decoded_role_manifest_hashes": {
+    "train_prefix": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+    "internal_development": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2"
+  },
+  "sample_scope": "The2048 train diagnostic is stratified1024/1024, not population-proportional. Report both strata or use20/80 weights for a population point estimate.",
+  "cost_scope": "Worker startup, loading and inference only. Preparation/hashing, tests, metadata publication and Git overhead excluded.",
+  "timestamp_note": "analysis.started_at was captured at report publication; it is not the worker start timestamp. Elapsed cost comes from monotonic timers.",
+  "limitations": [
+    "Posthoc selected development; row intervals do not estimate seed variance",
+    "Deletion tests this frozen predictor, not retraining capacity or expanded-pretraining benefit",
+    "Positional train cohort differences are confounded and cannot attribute pretraining efficacy"
+  ]
+}

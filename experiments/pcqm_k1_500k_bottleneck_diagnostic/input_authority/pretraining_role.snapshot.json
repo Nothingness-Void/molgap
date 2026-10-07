@@ -1,0 +1,19 @@
+{
+  "format": "molgap-pretraining-role-snapshot-v1",
+  "train": {
+    "source_idx_start": 0,
+    "source_idx_stop": 100000
+  },
+  "development": {
+    "source_idx_start": 100000,
+    "source_idx_stop": 150000
+  },
+  "development_fresh": false,
+  "references": [
+    "pcqm-k1-v4-100k-reference-s42",
+    "pcqm-gptrans-noisy-pair-norm-100k-s42"
+  ],
+  "official_validation": false,
+  "test_dev": false,
+  "test_challenge": false
+}

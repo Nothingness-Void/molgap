@@ -126,6 +126,11 @@ owns source history and the unreviewed supplement. DSAR/DSMR remote state is UNK
 
 ## Closed evidence entrypoints
 
+The accepted [K1 500K frozen bottleneck diagnostic](experiments/pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md)
+retains measured slot dependency and heterogeneous clean tail-fit changes.
+Its NO_TRAIN closure changes no model recommendation and releases no training;
+capacity saturation and expanded-pretraining benefit remain untested.
+
 All accepted and historical module decisions are indexed in
 `experiments/README.md` and `research_memory/README.md`. Follow those pointers
 before selecting another module. No closed negative screen releases a successor.

@@ -1,0 +1,71 @@
+{
+  "format": "molgap-retained-pretraining-lineage-analysis-v1",
+  "source_files": {
+    "initialization_provenance.snapshot.json": {
+      "original_path": "D:/w/k1-pretrained-combo/experiments/pcqm_k1_pretrained_consistency_teacher/initialization_provenance.json",
+      "sha256": "d1a9fe41478c762a1b85db744aa6f5ae637d0f0ae009552bef86713b00781353"
+    },
+    "pretraining_stage_complete.snapshot.json": {
+      "original_path": "D:/w/k1-pretrained-combo/experiments/pcqm_k1_pretrained_consistency_teacher/initialization_inputs/pretraining_stage_complete.json",
+      "sha256": "50949d0332bf6fd40814f5a261f2f044aac7055a5c60d155688995f634ae7191"
+    },
+    "pretraining_role.snapshot.json": {
+      "original_path": "C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/role_snapshot.json",
+      "sha256": "b46b090108edbf2615391d37878177239355d5dd9daff8016a9984c549b1afdf"
+    },
+    "pretraining_acceptance.snapshot.json": {
+      "original_path": "C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/acceptance/k1/acceptance.json",
+      "sha256": "eb0a0c460439ade4ac11552285fe3fd9a96e9e3cb51e1c3edc5a37889815f63d"
+    },
+    "pretraining_contract.snapshot.json": {
+      "original_path": "C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/training_contract.json",
+      "sha256": "f24475202e5b5da349870ea9d0650420c92cbe2d976505de17e8d2ef596d0dc7"
+    },
+    "pretraining_protocol.md": {
+      "original_path": "C:/Users/17449/.codex/worktrees/hierarchy-exposure/molgap/experiments/pcqm_pretraining_family_pair/protocol.md",
+      "sha256": "bf6288e37fdb40cc007cb63b7331100b5fdb1ab0a901358508a2eb878775a169"
+    },
+    "downstream_data_manifest.snapshot.json": {
+      "original_path": "D:/w/k1-gptrans-500k-package/platforms/_records/kaggle/staging/pcqm_k1_gptrans_package_transfer_500k/v5-checked-artifacts/k1_pretrained_consistency/data_manifest.json",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+    }
+  },
+  "pretraining_member_range": [
+    0,
+    100000
+  ],
+  "downstream_member_range": [
+    0,
+    500000
+  ],
+  "pretraining_member_fraction": 0.2,
+  "pretraining_passes": 10,
+  "observed_pretraining_optimizer_steps": 7810,
+  "pretraining_sample_presentations": 999680,
+  "downstream_sample_presentations": 29998080,
+  "pretraining_to_downstream_presentation_ratio": 0.03332479945383171,
+  "initialization_provenance": {
+    "prepared_state_path": "D:\\w\\k1-pretrained-combo\\platforms\\_records\\kaggle\\training\\k1_pretrained_combo_inputs\\pretrained_initial_state.pt",
+    "prepared_file_sha256": "9656064f7bb0256881da4bc063e90de135171abf517a486bf6202d774694fdba",
+    "initialization_sha256": "7458f5c4776208da1715d39cbce66537727ff8054b30da0ea07d82d0e94181f4",
+    "pretrained_source_sha256": "aa41015dfd277c12618e17e3d438e3e5ecdb0fe05961e66372eba9f0046d7de0",
+    "head_reset_sha256": "74109662490a37b16a10f81bd75dd47274465c530ecdb7992061520b65bb0e77",
+    "pretraining_source_commit": "e24318f78f9c900d1c7ff9bbec44e164f9d91e8c",
+    "pretraining_passes": 10,
+    "pretraining_stage_complete_sha256": "50949d0332bf6fd40814f5a261f2f044aac7055a5c60d155688995f634ae7191",
+    "pretraining_owner_commit": "8821b5ce893680121260627436dc11a8f7fd8403",
+    "original_initial_state_file_sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+    "original_initial_state_tensor_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+    "extraction": "checkpoint.model exact keys/shapes/dtypes; replace every head.* from original seed42 state; discard pretraining heads/optimizer/scheduler/RNG",
+    "teacher_cache_manifest_sha256": "cd19a9154444f52721f901c7940caf7b1fb83c45a4946fcf8da02e218cce7504",
+    "teacher_identity": "96dafbc00ee104856978472d3fb727491cf48913380970a895d97aa511dc89bc",
+    "teacher_dataset_directory": "D:\\w\\k1-pretrained-combo\\platforms\\_records\\kaggle\\training\\k1_pretrained_combo_inputs\\teacher_dataset",
+    "teacher_payload_sha256": "c27ee84756a69299b2773bf7cafc9e0573051be1b97d4d715247b5cc5f278200",
+    "historical_limits": [
+      "Pretraining improvement and strict comparator qualification remain inconclusive.",
+      "Historical pretraining device allocation is unknown; reused wall cost is not a new allocation.",
+      "No teacher regeneration or scientific model execution occurred here."
+    ]
+  },
+  "interpretation": "Identity and membership linkage confirmed; this does not qualify a pretraining benefit or establish coverage as a causal bottleneck."
+}

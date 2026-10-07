@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "cd6036741c38713b8d58b4dca28b2adadafd001d8eccaea1267579850f7f46f2",
+  "source_digest": "c217a723f8a2ca45858467afa56c9782202c5c495840ca1e2ae8d55194515a5f",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -997,6 +997,22 @@
       ],
       "track": "B",
       "trajectory_id": "TB-gptrans-t-500k-bridge"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md",
+      "family_id": "k1-500k-frozen-bottleneck-diagnostic",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_500k_bottleneck_diagnostic/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-500k-bottleneck-diagnostic-20261007"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007"
     },
     {
       "completeness_status": "complete",

@@ -1,0 +1,144 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "k1-500k-frozen-bottleneck-diagnostic",
+    "question": "Does the accepted 500K K1 tail improve clean training fit, and does its selected predictor depend on global slot returns?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-500k-bottleneck-20261007",
+      "observed_deficiency": "The composed 500K K1 endpoint is close to older plain K1 while mandatory double passes increase cost.",
+      "supporting_evidence_ids": [
+        "pcqm-k1-slot-readout-diagnostic-20261002",
+        "pcqm-matched-500k-v4-three-arm"
+      ],
+      "alternative_explanations": [
+        "Useful global signal with adequate capacity",
+        "Finite-budget or learning-rate effects",
+        "Regularization or optimization advantage attenuates at scale"
+      ],
+      "changed_mechanism": "Frozen inference only: zero layer9 or layers3/6/9 mixer returns; compare retained best/final states in identical eval mode.",
+      "cheapest_falsifier": "4096 fixed clean rows per retained state plus two2048-row selected-development slot interventions; fail on reconstruction or600s ceiling.",
+      "decision_changed_if_positive": "Identify frozen slot utility or a late fit/generalization tradeoff as a bounded observation; separately design any training discriminator.",
+      "decision_changed_if_negative": "Do not prioritize an inactive-slot explanation or extending the current tail without further evidence.",
+      "expected_native_cost_ref": "cost-k1-500k-bottleneck-expected",
+      "related_closed_family_ids": [
+        "k1-slot-readout-diagnostic",
+        "k1-slot-width96"
+      ],
+      "historical_unknowns": [
+        "Training seed variance",
+        "Capacity saturation",
+        "Effect of expanded pretraining budget"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "db664dc9ef4c9c5bf4184356d37041bedb01cc6f",
+      "source_config_identity": "e4d5520f711f4e589c600eea0757372e3a7e9b3aeb580dce66be2031e3812ada",
+      "contract_refs": [
+        "experiments/pcqm_k1_500k_bottleneck_diagnostic/protocol.md",
+        "experiments/pcqm_k1_500k_bottleneck_diagnostic/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-slot-readout-diagnostic-20261002",
+        "pcqm-matched-500k-v4-three-arm"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_500k_bottleneck_diagnostic/roles.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_frozen_checkpoint_intervention",
+        "run_ids": [
+          "local-k1-500k-bottleneck-20261007"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "db664dc9ef4c9c5bf4184356d37041bedb01cc6f",
+        "evidence_refs": [
+          "experiments/pcqm_k1_500k_bottleneck_diagnostic/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-500k-bottleneck-expected"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/decision.md",
+      "next_allowed_actions": [
+        "Bounded local diagnostic only"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/protocol.md",
+    "comparison_blockers": [
+      "Selected, previously consumed internal development; single trained seed",
+      "Inference deletion does not test added training capacity"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-500k-bottleneck-expected",
+      "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bottleneck-20261007",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU; four intra-op threads",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-500k-bottleneck-diagnostic",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_500k_bottleneck_diagnostic/roles.json"
+    ],
+    "source_commit": "db664dc9ef4c9c5bf4184356d37041bedb01cc6f",
+    "state_timestamp": "2026-10-07T08:34:34.132694+00:00"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "inference",
+  "cost_event_id": "cost-k1-500k-bottleneck-observed",
+  "evidence_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json",
+  "hardware": "CPU; four intra-op threads; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.017391493055555554
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.006241413833333556
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-500k-bottleneck-20261007",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007"
+}

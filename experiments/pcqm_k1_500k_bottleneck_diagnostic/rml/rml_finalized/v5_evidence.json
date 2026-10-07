@@ -1,0 +1,101 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bottleneck_diagnostic/results/analysis.json",
+      "name": "results/analysis.json",
+      "sha256": "8ea8e48b4acffd0519224b67f9843eae71952ec7d934c977ff29b980f0403d67"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bottleneck_diagnostic/results/selected.pt",
+      "name": "results/selected.pt",
+      "sha256": "268f635ab7d791d2ca25ef6ca28cc9254b69165da4d2b51131c2b7acae69635f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bottleneck_diagnostic/results/final.pt",
+      "name": "results/final.pt",
+      "sha256": "ec9cd92b43ed426f1074945ac22c290555d6597989d32a954bb4011785be407f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bottleneck_diagnostic/results/last_slot_off.pt",
+      "name": "results/last_slot_off.pt",
+      "sha256": "1c9045405351af1b94e43b4caa4f7a60cb78e72c8fd4961a24224f0554fb4705"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bottleneck_diagnostic/results/all_slots_off.pt",
+      "name": "results/all_slots_off.pt",
+      "sha256": "debb88645b7357bb79dcfb3cf0bddce3e65980cd8f9204ba63c57645b135df88"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "16e220629045cdc7a3c2e27cc3c7abc06a3abf9558d0248cadb4c343f5b0ba38"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "4a763b492fc96b6714bb618fb25743f97b4b69dfdd4b3ae1b1d311630ab687a9"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bottleneck_diagnostic/attribution.md",
+      "name": "attribution.md",
+      "sha256": "e855212e2e0abf1c8603f7fb6e850e8d480d5431f2853652b7ff5ba6aa5985ba"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_500k_bottleneck_diagnostic/pretraining_lineage.json",
+      "name": "pretraining_lineage.json",
+      "sha256": "72de2f844236320a7edaff4028e881b2c74c02645931483e6b8226eef600dcb8"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_500k_bottleneck_diagnostic/protocol.md",
+      "experiments/pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md",
+      "experiments/pcqm_k1_500k_bottleneck_diagnostic/attribution.md",
+      "experiments/pcqm_k1_500k_bottleneck_diagnostic/acceptance.json",
+      "experiments/pcqm_k1_500k_bottleneck_diagnostic/results/analysis.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-k1-500k-bottleneck-diagnostic-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-07",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata publication of separately executed prospective local inference; no execution by finalizer"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_k1_500k_bottleneck_diagnostic/results/analysis.json",
+    "inference_executed": true,
+    "training_executed": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "bounded_local_diagnostic_complete",
+    "comparison_status": "consumed_role_frozen_intervention_and_clean_state_comparison",
+    "execution_status": "complete_no_training",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "selection_used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_prefix": "selection_used"
+  },
+  "scope": "desktop_k1_500k_frozen_bottleneck_diagnostic",
+  "track": "B"
+}
