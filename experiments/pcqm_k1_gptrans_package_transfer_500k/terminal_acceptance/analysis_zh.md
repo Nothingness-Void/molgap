@@ -3,6 +3,8 @@
 数值与复算入口：[analysis.json](analysis.json)、[analyze_terminal.py](../analyze_terminal.py)。
 训练与产物检查：[inspection_report.json](../submission_v5/terminal_inspection/inspection_report.json)。
 正式裁决：[decision.md](decision.md)。本次只读已保留预测，没有加载模型做推理。
+补充归因：[K1计算成本与精度](cost_accuracy_attribution.md)，核对双前向、损失分量、
+历史同开发集端点与EMA输出差异；不改变验收裁决。
 
 ## 结论
 

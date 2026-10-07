@@ -10,6 +10,8 @@ Terminal acceptance: [decision](terminal_acceptance/decision.md),
 [attribution and next-step conclusion](terminal_acceptance/analysis_zh.md),
 [fixed-prediction metrics](terminal_acceptance/analysis.json), and
 [per-arm finalization receipts](terminal_acceptance/finalization_summary.json).
+The [K1 cost/accuracy attribution](terminal_acceptance/cost_accuracy_attribution.md)
+records the two-pass compute cost, objective contributions and causal limits.
 The frozen equal blend passes its complementarity gate; component causality and
 strict replay qualification remain excluded. No full execution or adoption follows.
 
