@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "QUALIFY_THEN_TRAIN_PAIR_500K",
+    "field": "evidence_review_complete",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "pcqm-k1-consistency-ablation-500k-v1"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "d166e4bba69e8bbaee1a18df64deea8cc1a85cbbe5f524469078c7ecc493d2db",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-k1-consistency-ablation-500k-launch",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "evidence_review_complete"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

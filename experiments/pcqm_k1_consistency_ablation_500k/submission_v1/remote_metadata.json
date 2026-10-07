@@ -1,0 +1,12 @@
+{
+  "id": 137483676,
+  "ref": "nothingnessvoid/molgap-k1-consistency-500k-pair-s42-v1",
+  "title": "MolGap K1 Consistency 500K Pair S42 V1",
+  "currentVersionNumber": 1,
+  "machineShape": "NvidiaTeslaT4",
+  "enableGpu": true,
+  "datasetDataSources": [
+    "nothingnessvoid/molgap-k1-consistency-500k-source-s42-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "actual_kernel": "nothingnessvoid/molgap-k1-consistency-500k-pair-s42-v1",
+  "kernel_id": 137483676,
+  "version_number": 1,
+  "script_version_id": null,
+  "entry_sha256": "f253b6b147623aa38555b59878e28a456113c4c9f2876869b29562f632f4cc3c",
+  "local_entry_sha256": "a98206c749d67f3878f1659e6fcb8698e26ceb9fda22b1065db73f3615b3fa95",
+  "entry_matches": true,
+  "dataset_sources": [
+    "nothingnessvoid/molgap-k1-consistency-500k-source-s42-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ],
+  "datasets_match": true,
+  "sdk_file_bytes_match": false,
+  "sdk_line_endings": "Windows kernels_pull writes LF source as CRLF; original SDK file retained",
+  "api_source_sha256": "a98206c749d67f3878f1659e6fcb8698e26ceb9fda22b1065db73f3615b3fa95"
+}

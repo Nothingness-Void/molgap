@@ -1,0 +1,45 @@
+# Desktop return procedure
+
+Owner checkout: `D:/w/k1-consistency-500k`, branch
+`codex/exp/k1-consistency-ablation-500k`; source, Spec and package identities
+are in [STATUS](STATUS.md). Do not route to server or create a default monitor.
+Use desktop project Python with `PYTHONPATH=D:/w/k1-consistency-500k/src` and
+the Kaggle workload skill. Explicit credential file:
+`D:/下载/Key/.kaggle1_default/kaggle.json`, owner `nothingnessvoid`; never print it.
+
+1. Query the exact kernel/version from [submission response](submission_v1/platform_response.json).
+   Healthy RUNNING/QUEUED does not justify downloading training files or retrying.
+2. At terminal state verify returned source/version, frozen source dataset and
+   Spec. Retrieve only pair-state/invocation-cost and per-arm qualification,
+   runtime/data/contract/trace/objective/progress/stage manifests, selected model,
+   selected aligned predictions and last checkpoint required by acceptance or
+   continuation. Do not retrieve all per-epoch predictions or all outputs.
+3. Verify every required retained artifact against the owning stage manifest.
+   Preserve actual runtime and cumulative costs from every invocation, including
+   partial stages and paired idle capacity. Do not infer unknown queue/billing
+   from observed native windows. A bounded incomplete stage is a continuation,
+   not a scientific negative.
+4. If continuation is required and still within the52T4-hour training ceiling,
+   use `prepare.py --continuation-from <previous-prepared-dir> --resume-root
+   <verified-stages> --checkpoint-dataset nothingnessvoid/<fresh-resume-slug>
+   --output <fresh-dir>`. This reuses the lifted retained continuation owner.
+   Keep scientific Spec, initialization, recipes and prospective identity;
+   review any executable source change. Private checkpoint publication and
+   actual submission stay with the skill. Reconcile unknown submit outcomes.
+   Already completed peer arms are reused byte-for-byte without another worker.
+5. At two complete60-epoch endpoints, reuse accepted native500K artifact/trace
+   checks, paired prediction/bootstrap helpers and RML terminal/finalize owners.
+   Explicitly compare weight0/0.1 with the primary gate in protocol. Perform the
+   same predeclared BN-buffer calibration on both selected states using
+   `k1_bn_calibration.recalibrated_batch_norm`; retain original states, separate
+   calibrated predictions/buffers, roles, restoration and actual analysis cost.
+6. Publish independent per-arm V5/trace/role/cost records, attribution and
+   terminal decision. Rebuild/check RML and inspect both replay_pool entries;
+   missing qualification or inherited historical cost stays an exclusion.
+   Apply the BRANCHES adoption/archive route only after terminal disposition.
+
+Current preparation lives at
+`platforms/_records/kaggle/staging/pcqm_k1_consistency_ablation_500k/v1/`.
+Its release, prospective and legacy launch bindings are preserved copies in
+`submission_v1/`. Initialization files are retained in its `inputs/` and the
+private source dataset. No official/common/OOD/test roles or full-data execution.
