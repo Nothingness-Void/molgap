@@ -1,0 +1,90 @@
+{
+  "artifacts": [
+    {
+      "artifact_type": "training_trace",
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/k1_pretrained_consistency/trace.json",
+      "name": "accepted_training_trace",
+      "sha256": "98d30b61e2539ed3b5bfc199848741eb13e820d0fcc33ca2a4ac60758d8db5a5"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/k1_pretrained_consistency/stage_manifest.json",
+      "name": "stage_manifest",
+      "sha256": "40142dd8abe00e1ca581ce94b661dc03574ec529643ff4e8cf5a7e751395c783"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/k1_pretrained_consistency/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "sha256": "88daf244f869c35de8ee70b0d51f3ba41b85927e3283edc4c3446a32ad557f92"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/k1_pretrained_consistency/scientific_contract.json",
+      "name": "scientific_contract",
+      "sha256": "fc60e39219edfab8e0cd5bf556ea4d7ca9d58007ace7898191c358d4eab1ea78"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/k1_pretrained_consistency/data_manifest.json",
+      "name": "data_manifest",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/k1_pretrained_consistency/artifact_inventory.json",
+      "name": "final_selected_artifact_inventory",
+      "sha256": "5e2bfbe4ae37b6925533353d94d28f49337ae9024b57e3b87b90c00639211386"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/analysis.json",
+      "name": "fixed50_prediction_analysis",
+      "sha256": "0e90a20f3599ec3e74ee2984f841e0148823a9eb29e0f235de64136bc4469c47"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_gptrans_package_transfer_500k/protocol.md",
+      "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/decision.md",
+      "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/analysis_zh.md",
+      "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/k1_pretrained_consistency/acceptance.json",
+      "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/inspection_report.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-pretrained-consistency-kaggle1-500k-s42-terminal",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-composed500k-dev50k-60pass-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-07T03:52:58.887506+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "new terminal metadata wrapping retained remote execution and fixed-prediction acceptance"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/inspection_report.json",
+    "inference_executed": false,
+    "training_executed": true
+  },
+  "outcome": {
+    "artifact_status": "complete_selected_and_resume_artifacts_hash_verified",
+    "budget_decision": "observed_subtotal_below_ceiling_historical_total_unknown",
+    "comparison_status": "fixed50_paired_endpoint_complete_component_strict_reference_missing",
+    "execution_status": "complete",
+    "full_handoff_status": "not_released",
+    "scientific_status": "POSITIVE_UNDER_CONTRACT",
+    "transfer_status": "positive_complementarity_nomination_component_attribution_inconclusive"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "teacher_free_composed500k_fixed50_complementarity_nomination:k1_pretrained_consistency",
+  "track": "B"
+}

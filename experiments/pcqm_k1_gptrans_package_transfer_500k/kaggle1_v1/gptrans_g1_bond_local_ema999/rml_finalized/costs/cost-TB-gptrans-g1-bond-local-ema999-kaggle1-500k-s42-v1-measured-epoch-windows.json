@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle1-package-transfer-001:retained-epoch-windows",
+  "category": "training",
+  "cost_event_id": "cost-TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1-measured-epoch-windows",
+  "evidence_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/gptrans_g1_bond_local_ema999/acceptance.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 15.020668626826943
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 15.020668626826943
+    }
+  },
+  "platform": "Kaggle1",
+  "run_id": "molgap-k1-gptrans-500k-pair-s42-v1:gptrans_g1_bond_local_ema999",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1"
+}

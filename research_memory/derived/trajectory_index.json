@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "ae101f1957814e531291f14bac4e1b7d961c145bb028409955950ff8b1bfd9f2",
+  "source_digest": "4a61794ee839707cbed01d15506f63f51af05aec22d1269ed9e81eb2ae850c08",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -452,17 +452,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/decision.md",
       "family_id": "k1-gptrans-package-transfer-500k",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-matched-500k-v4-three-arm"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_gptrans_package_transfer_500k/kaggle1_v1/gptrans_g1_bond_local_ema999/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_gptrans_package_transfer_500k/kaggle1_v1/gptrans_g1_bond_local_ema999/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-terminal"
+      ],
       "track": "B",
       "trajectory_id": "TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1"
     },
@@ -1197,17 +1199,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/decision.md",
       "family_id": "k1-gptrans-package-transfer-500k",
-      "outcome": "ACTIVE",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
       "owner": "desktop",
       "parent_trajectory_ids": [
         "TB-matched-500k-v4-three-arm"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_gptrans_package_transfer_500k/kaggle1_v1/k1_pretrained_consistency/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_gptrans_package_transfer_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-pretrained-consistency-kaggle1-500k-s42-terminal"
+      ],
       "track": "B",
       "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-500k-s42-v1"
     },

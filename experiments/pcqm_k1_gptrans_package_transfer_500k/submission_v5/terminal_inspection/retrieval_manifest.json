@@ -1,0 +1,167 @@
+{
+  "selection": "best/last/init, contract, runtime, trace, objective; no epoch sweep",
+  "files": [
+    {
+      "file": "k1_pretrained_consistency/calibration.json",
+      "sha256": "36aa3762521886107b9c4019df2e29d95e0c3aa5f40715fe37141e77915843b9",
+      "retention": "hash-identical v4 retained",
+      "bytes": 755
+    },
+    {
+      "file": "k1_pretrained_consistency/trace.json",
+      "sha256": "98d30b61e2539ed3b5bfc199848741eb13e820d0fcc33ca2a4ac60758d8db5a5",
+      "retention": "downloaded exact v5 output",
+      "bytes": 36909
+    },
+    {
+      "file": "k1_pretrained_consistency/initial_state.pt",
+      "sha256": "a1c54c2cfa6cb9c74fbeac1eef193321f8800e0da5fdca3483935b3005a7767e",
+      "retention": "hash-identical v4 retained",
+      "bytes": 14800338
+    },
+    {
+      "file": "k1_pretrained_consistency/best_model.pt",
+      "sha256": "2e9cee13ebbf67031470e89acaf46d551238f937255fed601eb0922b93fdad92",
+      "retention": "hash-identical v4 retained",
+      "bytes": 14801401
+    },
+    {
+      "file": "k1_pretrained_consistency/objective_qualification.json",
+      "sha256": "ad4f82e2758cb32318be2fb0526e6ce1cc62cf766e1174abe4a96ddbda597c6d",
+      "retention": "hash-identical v4 retained",
+      "bytes": 140
+    },
+    {
+      "file": "k1_pretrained_consistency/runtime_certificate.json",
+      "sha256": "88daf244f869c35de8ee70b0d51f3ba41b85927e3283edc4c3446a32ad557f92",
+      "retention": "hash-identical v4 retained",
+      "bytes": 833
+    },
+    {
+      "file": "k1_pretrained_consistency/runtime.json",
+      "sha256": "31d6d56dd793355e7075d4332fdbd449ab7f14efbaf1018a97a5752326f2834d",
+      "retention": "hash-identical v4 retained",
+      "bytes": 2625
+    },
+    {
+      "file": "k1_pretrained_consistency/scientific_contract.json",
+      "sha256": "fc60e39219edfab8e0cd5bf556ea4d7ca9d58007ace7898191c358d4eab1ea78",
+      "retention": "hash-identical v4 retained",
+      "bytes": 1910
+    },
+    {
+      "file": "k1_pretrained_consistency/best_predictions.pt",
+      "sha256": "57463e4e578db6310eadfd2b46d9c57f50d0ef7e2aa12c3f883ace72e7265f55",
+      "retention": "hash-identical v4 retained",
+      "bytes": 801839
+    },
+    {
+      "file": "k1_pretrained_consistency/data_manifest.json",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "retention": "hash-identical v4 retained",
+      "bytes": 4790
+    },
+    {
+      "file": "k1_pretrained_consistency/objective_components.json",
+      "sha256": "a8c7ee7b524ec9240ed5e74bd07186fca152691193c2cb499df1614911ebad64",
+      "retention": "downloaded exact v5 output",
+      "bytes": 11977
+    },
+    {
+      "file": "k1_pretrained_consistency/progress.json",
+      "sha256": "7b0adb8d90cfa2c993d395e53668262e988a6e278c2dc2d3fac412ea89e5bd8a",
+      "retention": "downloaded exact v5 output",
+      "bytes": 77
+    },
+    {
+      "file": "k1_pretrained_consistency/last_checkpoint.pt",
+      "sha256": "29afd0d3fadc77b939bda61f60c21512eebef9606893b5c6c92b0dea982f15c2",
+      "retention": "downloaded exact v5 output",
+      "bytes": 44373742
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/runtime_certificate.json",
+      "sha256": "d0ce439b3a7acba06bf85969819503f77d84643e929fca9939d0a8d0f2382ac0",
+      "retention": "hash-identical v4 retained",
+      "bytes": 833
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/trace.json",
+      "sha256": "fcb97f6fa126703b5c1fc2993c5261e698a10beece5337d0c6e454ac4edd4950",
+      "retention": "hash-identical v4 retained",
+      "bytes": 34912
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/progress.json",
+      "sha256": "696c27df7fc692e444e71afc3bb1990122203920cabec34a7c9cf7b9d6f3f744",
+      "retention": "hash-identical v4 retained",
+      "bytes": 77
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/runtime.json",
+      "sha256": "31d6d56dd793355e7075d4332fdbd449ab7f14efbaf1018a97a5752326f2834d",
+      "retention": "hash-identical v4 retained",
+      "bytes": 2625
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/best_model.pt",
+      "sha256": "77e9ec2a46c815b17ba94b65583b6c59df3453d78334c8425674f936ec18f2ae",
+      "retention": "hash-identical v4 retained",
+      "bytes": 23597539
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/scientific_contract.json",
+      "sha256": "5b706baf42af67fe1b9042a725b9f95b5cd24f026576cfd39a296a4b426d48fe",
+      "retention": "hash-identical v4 retained",
+      "bytes": 1898
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/objective_qualification.json",
+      "sha256": "afa36abef3937b3fd064082d17c03e4e1cdf673171dd07387af16a6c5c40fa72",
+      "retention": "hash-identical v4 retained",
+      "bytes": 111
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/best_live_predictions.pt",
+      "sha256": "3bc85f8bea21dc8d52626ea54b70993ca637f419d03486800ada20961ee1d3ae",
+      "retention": "hash-identical v4 retained",
+      "bytes": 801938
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/calibration.json",
+      "sha256": "39de4dd1f01b2e01b63a4ff6180d26a48ed34de9ba0b58ae566746c28903572f",
+      "retention": "hash-identical v4 retained",
+      "bytes": 929
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/best_predictions.pt",
+      "sha256": "5b6c8ff81ae017289211d8896e52238825e420a7b32ffd4ac035cf15b0a4789c",
+      "retention": "hash-identical v4 retained",
+      "bytes": 801839
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/last_checkpoint.pt",
+      "sha256": "79d3e39bb03254dbc64ab755b2b37b858fb82f0bf98f09c485bede4bca0e1539",
+      "retention": "hash-identical v4 retained",
+      "bytes": 94502263
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/data_manifest.json",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "retention": "hash-identical v4 retained",
+      "bytes": 4790
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/objective_components.json",
+      "sha256": "4265e04016ae941314a02d43fc03d2dfb0da1de45cf1cbe98a046eafdab1541b",
+      "retention": "hash-identical v4 retained",
+      "bytes": 9181
+    },
+    {
+      "file": "gptrans_g1_bond_local_ema999/initial_state.pt",
+      "sha256": "df6b5244c0939479974293fee8f4d85d3253c6b200e8a4618294211d2427c566",
+      "retention": "hash-identical v4 retained",
+      "bytes": 23611362
+    }
+  ]
+}

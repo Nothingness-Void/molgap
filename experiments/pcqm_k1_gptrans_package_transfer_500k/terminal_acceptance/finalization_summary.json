@@ -1,0 +1,112 @@
+{
+  "dual_replay_ready": false,
+  "finalized_at": "2026-10-07T03:52:58.887506+00:00",
+  "receipts": [
+    {
+      "cost_status": "observed_records",
+      "finalization_id": "finalize-2ab67279532d94d3d542047ffaf2c08c6cbe09ac65e72c9c8ed767589a582f6b",
+      "finalized_at": "2026-10-07T03:52:58.887506+00:00",
+      "finalizer_version": "1",
+      "format": "molgap-rml-finalization-v1",
+      "input_artifact_hashes": {
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/protocol.md": "49839bd2b2ccd728696c68db496cc3e9b910c7e24aaf8c2731ec76b48ca5828e",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/cpu_release_report.json": "6b846487c760b5c46f645b289b16fbe2372e2ebc5f29a6c4412afa44ad8c4a67",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/invocation_cost.json": "a5274b86db79ae2b9986c72079d459767b8efe849f1cb8e6f23404d659f65415",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/pair_state.json": "a50590147ecd1986bc23ef26dc4a2ba32fa7610ffceb68971eddc40062cad615",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/k1_pretrained_consistency/data_manifest.json": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/k1_pretrained_consistency/runtime_certificate.json": "88daf244f869c35de8ee70b0d51f3ba41b85927e3283edc4c3446a32ad557f92",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/k1_pretrained_consistency/scientific_contract.json": "fc60e39219edfab8e0cd5bf556ea4d7ca9d58007ace7898191c358d4eab1ea78",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/k1_pretrained_consistency/stage_manifest.json": "40142dd8abe00e1ca581ce94b661dc03574ec529643ff4e8cf5a7e751395c783",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/k1_pretrained_consistency/trace.json": "98d30b61e2539ed3b5bfc199848741eb13e820d0fcc33ca2a4ac60758d8db5a5",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/inspection_report.json": "477c036f6fd308401920eddb727061dfcad8d61d8a0a66608676e55ee1e69b3d",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/remote_identity_verified.json": "9dfd1cbc2f8717b8631d71e71aad5f5a9344cbe61283b835631a0108d9afd039",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/retrieval_manifest.json": "0b66961913ad136a7d7bc3a0973f6ec08e94c2a8eefb932bd7bd974a6cf1cde7",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/analysis.json": "0e90a20f3599ec3e74ee2984f841e0148823a9eb29e0f235de64136bc4469c47",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/analysis_zh.md": "d6b9ee4ece41d06a9d6235869648fa75824e41496dc3adf73bd894a4b85f2345",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/decision.md": "c155e5521a7445265347c65bd084fcc63f556e2f0eaf8321757cfaee779bc2fe",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/k1_pretrained_consistency/acceptance.json": "bae8b98c48c0b2fb3bf6fed68fb27972bcd452ad78875d02eb28b682f014adda",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/k1_pretrained_consistency/artifact_inventory.json": "5e2bfbe4ae37b6925533353d94d28f49337ae9024b57e3b87b90c00639211386",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/k1_pretrained_consistency/canonical_trace.json": "f222d3a9da545d1e4aeef30d8b2154f4454d6012acd59633a0bb6021400bea80"
+      },
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "published_hashes": {
+        "costs/cost-TB-k1-pretrained-consistency-kaggle1-500k-s42-v1-measured-epoch-windows.json": "213ba2a1474dd0c7f938c7d51edf25bfab849e9c3e90e91f87df038f770de3d4",
+        "prospective_snapshot.json": "64e0ee5d180c8ef43e94e80e947be051b63b417d8cd2595e3a85254a0f6ace0d",
+        "roles/role-TB-k1-pretrained-consistency-kaggle1-500k-s42-v1-internal_development-labels_read.json": "f8f20edcc085fb3c0bbb3e2cc1bf4249c145b7339364ebb539baa5ce5bd98e40",
+        "roles/role-TB-k1-pretrained-consistency-kaggle1-500k-s42-v1-internal_development-metric_computed.json": "c5ac60471ecda18318a0e75d1bebbce4b18b975c85ef04ece403cd60f8ddf718",
+        "roles/role-TB-k1-pretrained-consistency-kaggle1-500k-s42-v1-internal_development-prediction_input.json": "4cfe3055f5c665e731508cb5736933a27d74a62d6d1c4283e0421873f79c6a51",
+        "roles/role-TB-k1-pretrained-consistency-kaggle1-500k-s42-v1-internal_development-selection_used.json": "61ddba1d2e1b72f6debc715e4b2f3cfaf6051981d329c39359816f2d010d0979",
+        "roles/role-TB-k1-pretrained-consistency-kaggle1-500k-s42-v1-train-labels_read.json": "cbe48ae53931a377a00109db2b8a0d5db8c35e7e8c5cea425f68e7d0a5ec3db2",
+        "roles/role-TB-k1-pretrained-consistency-kaggle1-500k-s42-v1-train-training_membership.json": "8b6c7f90569dc82e0d9062beb03bb86415a8f534866c3ca0ec311632adb2d815",
+        "terminal_input.json": "64d00c968d3e1e86817b6416e8e6e79d8a06ba89f8af42860b1061a0e8a2be11",
+        "trace.json": "f222d3a9da545d1e4aeef30d8b2154f4454d6012acd59633a0bb6021400bea80",
+        "trace_manifest.json": "cd54d424ae2363320d766f39ed654d5ff7ee676504b3ba1a7cb3db63f08eba6f",
+        "trajectory.json": "7a48b85f32920b017b90fd327ab892892637bd07aeea7c1b80df08f44eb144dd",
+        "v5_evidence.json": "c57218569ccef6ec5a71fafc6773fdf7f4328aa09e6abf018409e8223e5401f0"
+      },
+      "replacements": {
+        "trajectory.json": "experiments/pcqm_k1_gptrans_package_transfer_500k/kaggle1_v1/k1_pretrained_consistency/trajectory.json"
+      },
+      "role_status": "observed_records",
+      "source_artifact_digest": "2ab67279532d94d3d542047ffaf2c08c6cbe09ac65e72c9c8ed767589a582f6b",
+      "status": "FINALIZED",
+      "trace_status": "available",
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-500k-s42-v1"
+    },
+    {
+      "cost_status": "observed_records",
+      "finalization_id": "finalize-24592fce7c635f574f4f94cb743ccceea67a6f62380bac16b8bc98d3d05af6b0",
+      "finalized_at": "2026-10-07T03:52:58.887506+00:00",
+      "finalizer_version": "1",
+      "format": "molgap-rml-finalization-v1",
+      "input_artifact_hashes": {
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/protocol.md": "49839bd2b2ccd728696c68db496cc3e9b910c7e24aaf8c2731ec76b48ca5828e",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/cpu_release_report.json": "6b846487c760b5c46f645b289b16fbe2372e2ebc5f29a6c4412afa44ad8c4a67",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/invocation_cost.json": "a5274b86db79ae2b9986c72079d459767b8efe849f1cb8e6f23404d659f65415",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/pair_state.json": "a50590147ecd1986bc23ef26dc4a2ba32fa7610ffceb68971eddc40062cad615",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/gptrans_g1_bond_local_ema999/data_manifest.json": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/gptrans_g1_bond_local_ema999/runtime_certificate.json": "d0ce439b3a7acba06bf85969819503f77d84643e929fca9939d0a8d0f2382ac0",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/gptrans_g1_bond_local_ema999/scientific_contract.json": "5b706baf42af67fe1b9042a725b9f95b5cd24f026576cfd39a296a4b426d48fe",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/gptrans_g1_bond_local_ema999/stage_manifest.json": "98c62ebcd4b8428310dfd100863cbb519eae1baa975abe4fc70eac5b32932b6a",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/gptrans_g1_bond_local_ema999/trace.json": "fcb97f6fa126703b5c1fc2993c5261e698a10beece5337d0c6e454ac4edd4950",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/inspection_report.json": "477c036f6fd308401920eddb727061dfcad8d61d8a0a66608676e55ee1e69b3d",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/remote_identity_verified.json": "9dfd1cbc2f8717b8631d71e71aad5f5a9344cbe61283b835631a0108d9afd039",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/retrieval_manifest.json": "0b66961913ad136a7d7bc3a0973f6ec08e94c2a8eefb932bd7bd974a6cf1cde7",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/analysis.json": "0e90a20f3599ec3e74ee2984f841e0148823a9eb29e0f235de64136bc4469c47",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/analysis_zh.md": "d6b9ee4ece41d06a9d6235869648fa75824e41496dc3adf73bd894a4b85f2345",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/decision.md": "c155e5521a7445265347c65bd084fcc63f556e2f0eaf8321757cfaee779bc2fe",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/gptrans_g1_bond_local_ema999/acceptance.json": "e95ce47531049f9d7f2411f7c48686fcdb3c3f103935fc13853e146c6ab5bccf",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/gptrans_g1_bond_local_ema999/artifact_inventory.json": "3792287a991e309457c968240285992bf891d251dd37b8bc6c35bd6e32e6dc0e",
+        "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/gptrans_g1_bond_local_ema999/canonical_trace.json": "b42f52a368151135053220a6250b1f85f6f374b6575c8374c0c5ceb2a216c02e"
+      },
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "published_hashes": {
+        "costs/cost-TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1-measured-epoch-windows.json": "84657ac0c87818e3f2b947094437971dea130a94206f674e51b002bd3af62b96",
+        "prospective_snapshot.json": "f506e449805b6e19ccaf805136c055cfba505d33d7ecf6c9bcf5791eec712964",
+        "roles/role-TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1-internal_development-labels_read.json": "34b4b5192a671871e30af195448fe91e12ff25b1579d83c74a7a66eeb9d72a33",
+        "roles/role-TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1-internal_development-metric_computed.json": "3cae374e619542556b823707df6f2075634c7933738a58d569b332f4e8622f59",
+        "roles/role-TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1-internal_development-prediction_input.json": "a6de2b2edc7ecac55450ed4c743b0fb7aeac19da6ffd37778915ba1ba2830d21",
+        "roles/role-TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1-internal_development-selection_used.json": "5b631911498c4bb69e2ab74d0fb63a04adc33723537f965f8a7e9e8b58d70df4",
+        "roles/role-TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1-train-labels_read.json": "6da0dad7dcf764ec59b961d1476b43918e77b989add111adc38fb694258b9c6f",
+        "roles/role-TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1-train-training_membership.json": "8233acb182049d29cc979061c02cb0d6d9886550427f1b3e88c60a6d2b318d35",
+        "terminal_input.json": "35d298571983e63b7c3966f741f71f2e454dfa6785c78a697e0b7b811dc9bd5b",
+        "trace.json": "b42f52a368151135053220a6250b1f85f6f374b6575c8374c0c5ceb2a216c02e",
+        "trace_manifest.json": "188e1169cdc5ff65f7940fbf661682a9015e335c82805cbcd0b33f7dfd754cba",
+        "trajectory.json": "088309086990576f0485905bfa8e31d4cbc739180e193e5651db45a5de17471c",
+        "v5_evidence.json": "e6b817c160018f4de648ef3331c8439d418e2d91571fc73bcca6bd22808e289a"
+      },
+      "replacements": {
+        "trajectory.json": "experiments/pcqm_k1_gptrans_package_transfer_500k/kaggle1_v1/gptrans_g1_bond_local_ema999/trajectory.json"
+      },
+      "role_status": "observed_records",
+      "source_artifact_digest": "24592fce7c635f574f4f94cb743ccceea67a6f62380bac16b8bc98d3d05af6b0",
+      "status": "FINALIZED",
+      "trace_status": "available",
+      "trajectory_id": "TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1"
+    }
+  ],
+  "strict_replay_exclusions": [
+    "missing_frozen_reference",
+    "strict_component_comparison_unqualified"
+  ]
+}

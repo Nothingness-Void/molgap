@@ -1,0 +1,90 @@
+{
+  "artifacts": [
+    {
+      "artifact_type": "training_trace",
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/gptrans_g1_bond_local_ema999/trace.json",
+      "name": "accepted_training_trace",
+      "sha256": "fcb97f6fa126703b5c1fc2993c5261e698a10beece5337d0c6e454ac4edd4950"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/gptrans_g1_bond_local_ema999/stage_manifest.json",
+      "name": "stage_manifest",
+      "sha256": "98c62ebcd4b8428310dfd100863cbb519eae1baa975abe4fc70eac5b32932b6a"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/gptrans_g1_bond_local_ema999/runtime_certificate.json",
+      "name": "runtime_certificate",
+      "sha256": "d0ce439b3a7acba06bf85969819503f77d84643e929fca9939d0a8d0f2382ac0"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/gptrans_g1_bond_local_ema999/scientific_contract.json",
+      "name": "scientific_contract",
+      "sha256": "5b706baf42af67fe1b9042a725b9f95b5cd24f026576cfd39a296a4b426d48fe"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/gptrans_g1_bond_local_ema999/data_manifest.json",
+      "name": "data_manifest",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/gptrans_g1_bond_local_ema999/artifact_inventory.json",
+      "name": "final_selected_artifact_inventory",
+      "sha256": "3792287a991e309457c968240285992bf891d251dd37b8bc6c35bd6e32e6dc0e"
+    },
+    {
+      "availability": "committed_metadata_verified",
+      "locator": "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/analysis.json",
+      "name": "fixed50_prediction_analysis",
+      "sha256": "0e90a20f3599ec3e74ee2984f841e0148823a9eb29e0f235de64136bc4469c47"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_gptrans_package_transfer_500k/protocol.md",
+      "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/decision.md",
+      "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/analysis_zh.md",
+      "experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/gptrans_g1_bond_local_ema999/acceptance.json",
+      "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/inspection_report.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-terminal",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-composed500k-dev50k-60pass-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-07T03:52:58.887506+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "new terminal metadata wrapping retained remote execution and fixed-prediction acceptance"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/inspection_report.json",
+    "inference_executed": false,
+    "training_executed": true
+  },
+  "outcome": {
+    "artifact_status": "complete_selected_and_resume_artifacts_hash_verified",
+    "budget_decision": "observed_subtotal_below_ceiling_historical_total_unknown",
+    "comparison_status": "fixed50_paired_endpoint_complete_component_strict_reference_missing",
+    "execution_status": "complete",
+    "full_handoff_status": "not_released",
+    "scientific_status": "POSITIVE_UNDER_CONTRACT",
+    "transfer_status": "positive_complementarity_nomination_component_attribution_inconclusive"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "scope": "teacher_free_composed500k_fixed50_complementarity_nomination:gptrans_g1_bond_local_ema999",
+  "track": "B"
+}

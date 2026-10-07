@@ -40,11 +40,16 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 
 ## Active Work and Unresolved Acceptance
 
-- **Teacher-free K1/G1 package transfer500K:** desktop-owned isolated branch
-  `codex/exp/k1-gptrans-500k-package`; authorized two-arm60-pass question.
-  [Owning status](experiments/pcqm_k1_gptrans_package_transfer_500k/STATUS.md)
-  records physical execution, infrastructure attempts and continuation limits.
-  No adoption, official evaluation or automatic monitor is released.
+- **Teacher-free K1/G1 package transfer500K:** terminal on desktop-owned isolated
+  `codex/exp/k1-gptrans-500k-package`. Both60-pass arms passed mechanical acceptance
+  and independent RML closure. The frozen50:50 complementarity gate passed;
+  [decision](experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/decision.md)
+  and [attribution/next-step analysis](experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/analysis_zh.md)
+  own the results. Recommend review of a full-data transfer contract, without
+  extending this question. Strict reference/replay and total historical budget
+  qualification gaps remain explicit. No active kernel, adoption, official
+  evaluation, new training or automatic monitor is released. Retain the owner
+  branch pending adoption/integration; no desktop model promotion.
 
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.

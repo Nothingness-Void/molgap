@@ -6,6 +6,13 @@ Read [the frozen contract](protocol.md) for execution and acceptance,
 and [the evidence review](plan.md) for selection rationale and limitations.
 Physical execution and continuation are in [STATUS](STATUS.md).
 
+Terminal acceptance: [decision](terminal_acceptance/decision.md),
+[attribution and next-step conclusion](terminal_acceptance/analysis_zh.md),
+[fixed-prediction metrics](terminal_acceptance/analysis.json), and
+[per-arm finalization receipts](terminal_acceptance/finalization_summary.json).
+The frozen equal blend passes its complementarity gate; component causality and
+strict replay qualification remain excluded. No full execution or adoption follows.
+
 Preparation: [prepare.py](prepare.py) freezes the Spec, two native recipes,
 role/budget declarations and per-arm prospective planner inputs. It uses the
 shared source package, prospective planner and release checker. Declare first

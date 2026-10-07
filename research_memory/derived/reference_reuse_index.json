@@ -554,6 +554,27 @@
     },
     {
       "artifact_availability": [
+        "committed_metadata_verified"
+      ],
+      "comparison_status": "fixed50_paired_endpoint_complete_component_strict_reference_missing",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-terminal",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "teacher_free_composed500k_fixed50_complementarity_nomination:gptrans_g1_bond_local_ema999",
+      "source_envelope": "experiments/pcqm_k1_gptrans_package_transfer_500k/kaggle1_v1/gptrans_g1_bond_local_ema999/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "positive_complementarity_nomination_component_attribution_inconclusive",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified"
       ],
       "comparison_status": "same_job_reference_endpoint_not_strict",
@@ -1347,6 +1368,27 @@
       "source_envelope": "experiments/pcqm_k1_pair_value_100k/v5_evidence.json",
       "track": "C",
       "transfer_status": "not_qualified",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "committed_metadata_verified"
+      ],
+      "comparison_status": "fixed50_paired_endpoint_complete_component_strict_reference_missing",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-pretrained-consistency-kaggle1-500k-s42-terminal",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "teacher_free_composed500k_fixed50_complementarity_nomination:k1_pretrained_consistency",
+      "source_envelope": "experiments/pcqm_k1_gptrans_package_transfer_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "positive_complementarity_nomination_component_attribution_inconclusive",
       "used_by_trajectory_ids": []
     },
     {

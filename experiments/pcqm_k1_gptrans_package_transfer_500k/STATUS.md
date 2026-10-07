@@ -1,6 +1,33 @@
 # Execution status
 
-Latest authoritative observation: [v5 submission](submission_v5/platform_response.json),
+Latest authoritative observation: [v5 terminal inspection](submission_v5/terminal_inspection/inspection_report.json),
+2026-10-07. Exact Kaggle1 kernel137144136/version5/script355820538 is COMPLETE.
+Both arms completed the frozen60epochs,234360updates and29998080presentations.
+Source/package/Spec/mounts, runtime certificates, aligned finite50K predictions,
+selected/last states, optimizer/RNG/schedule continuity and hashes passed.
+Version5 trained only the lastseven K1epochs; the completed GPTrans and selected
+K1 best output preserve their original version4 provenance.
+
+[The frozen fixed50:50 endpoint](terminal_acceptance/analysis.json) is0.0988591544eV,
+improving3.0285357meV over the stronger GPTrans component with paired-row95%
+bounds[2.6935120,3.3619664]meV. Read [terminal decision](terminal_acceptance/decision.md)
+and [attribution/next-step analysis](terminal_acceptance/analysis_zh.md).
+Both independent RML overlays close POSITIVE_UNDER_CONTRACT for this complementarity
+nomination. The original prospective files remain immutable snapshots; they no
+longer imply active execution. Full canonical traces, roles and measured per-arm
+epoch-window costs are retained.
+
+Strict dual replay-ready remains excluded: the prospective reference lists were
+empty and component strict comparison is unqualified. No reference is fabricated.
+Measured v2throughv5 pair allocation44.025818846T4hours excludes the explicitly
+unknown v1/external startup costs; it is a measured subtotal, not a complete budget
+certificate. No active GPU job, new training, official role access, automatic
+monitor or server handoff remains. Recommend full-data transfer contract review;
+keep this owner branch pending adoption/integration. No model promotion occurred.
+
+## Version5 launch history
+
+Launch-time authoritative observation: [v5 submission](submission_v5/platform_response.json),
 2026-10-07. Kaggle1 accepted kernel137144136/version5; authenticated UI binds
 script355820538 and T4x2 RUNNING. [Pulled source and three exact mounts](submission_v5/remote_identity_verified.json)
 match the release package. [Actual startup](submission_v5/training_start_observation.json)
@@ -19,9 +46,8 @@ The invocation has a14400second wall bound and at most8 additional allocated
 T4hours including idle peer capacity. Through v4 measured allocation is
 39.476932 T4hours; version1 allocation and external scheduler startup remain
 unknown. Estimated seven K1 epochs require2.36single-device hours plus startup.
-The final paired fusion/terminal science and per-arm replay qualification
-remain pending. Both canonical prospective records remain ACTIVE; no automatic
-monitor or server handoff is configured.
+At launch, final paired fusion/terminal science and per-arm replay qualification
+were pending. The terminal section above supersedes that launch-time observation.
 
 ## Last completed stage: v4
 

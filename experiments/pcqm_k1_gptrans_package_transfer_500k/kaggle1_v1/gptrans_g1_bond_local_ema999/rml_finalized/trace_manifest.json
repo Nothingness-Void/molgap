@@ -1,0 +1,57 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "missing_frozen_reference",
+      "strict_component_comparison_unqualified",
+      "development_used_for_checkpoint_selection",
+      "historical_total_allocation_incomplete"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "gptrans_g1_bond_local_ema999:5871201",
+    "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "ema_semantics": "EMA0.999_each_optimizer_step",
+    "evaluation_role_identity": "internal_development_500000_550000",
+    "lr_schedule_identity": "warmup4-cosine60-min1e-6",
+    "matched_architecture_required": false,
+    "optimizer_identity": "adamw-unfused-foreachFalse-lr1e-3-wd0.05-clip1",
+    "precision_identity": "fp32_noTF32",
+    "row_split_identity": "train0:500000-internaldevelopment500000:550000",
+    "scientific_contract": "pcqm-composed500k-dev50k-60pass-v1",
+    "selection_role_identity": "best-development-EMA0.999-60epochs",
+    "target_transform_identity": "6a1b908a39e3c5e4f4b053474b9d1b799277cb4d30ce6cc789488f91024eee99",
+    "terminal_endpoint_identity": "complete60epochs_234360steps_29998080presentations",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/protocol.md",
+  "evaluation_role_identity": "internal_development_500000_550000",
+  "exposure": {
+    "optimizer_steps": 234360,
+    "sample_presentations": 29998080
+  },
+  "metric_semantics": "Gap MAE in eV; training dropout L1 differs from clean development mode",
+  "model_identity": "gptrans_g1_bond_local_ema999:5871201",
+  "presentation_semantics_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/protocol.md",
+  "reference_id": "pcqm-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-terminal",
+  "run_id": "molgap-k1-gptrans-500k-pair-s42-v1:gptrans_g1_bond_local_ema999",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best-development-EMA0.999-60epochs",
+  "terminal_evidence_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/kaggle1_v1/gptrans_g1_bond_local_ema999/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/kaggle1_v1/gptrans_g1_bond_local_ema999/rml_finalized/trace.json",
+  "trace_artifact_sha256": "b42f52a368151135053220a6250b1f85f6f374b6575c8374c0c5ceb2a216c02e",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1",
+  "weight_semantics": "ema_and_live",
+  "x_axis": "optimizer_steps"
+}

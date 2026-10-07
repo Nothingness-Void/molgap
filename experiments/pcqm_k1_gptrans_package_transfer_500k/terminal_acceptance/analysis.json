@@ -1,0 +1,178 @@
+{
+  "ema_diagnostic_limit": "Within-selected-checkpoint observation, not a randomized EMA intervention or independent checkpoint-selection comparison.",
+  "fixed50_vs_stronger_component": {
+    "candidate_better_row_fraction": 0.5306,
+    "candidate_mae_eV": 0.09885915442943573,
+    "material_3mev_point_gain": true,
+    "paired_gain_eV": 0.003028535718917847,
+    "reference_mae_eV": 0.10188769014835358,
+    "row_bootstrap_95pct_eV": [
+      0.002693512037098408,
+      0.0033619663813710212
+    ],
+    "rows": 50000
+  },
+  "format": "molgap-retained-500k-package-terminal-analysis-v1",
+  "frozen_complementarity_gate": {
+    "minimum_gain_eV": 0.001,
+    "passed": true,
+    "positive_row_95pct_lower_bound": true
+  },
+  "k1_vs_gptrans": {
+    "candidate_better_row_fraction": 0.52386,
+    "candidate_mae_eV": 0.10188769014835358,
+    "material_3mev_point_gain": true,
+    "paired_gain_eV": 0.0030163871479034422,
+    "reference_mae_eV": 0.10490407729625702,
+    "row_bootstrap_95pct_eV": [
+      0.0023811495904922484,
+      0.003625433243155479
+    ],
+    "rows": 50000
+  },
+  "limits": [
+    "Development selected checkpoints; row bootstrap does not measure seed variance or independent evaluation.",
+    "No qualified prelaunch component reference; whole-package contextual gains do not identify module causality.",
+    "No model execution, protected-role access, fusion weight fitting or remote training in this analysis."
+  ],
+  "prediction_bindings": {
+    "gptrans_g1_bond_local_ema999": {
+      "selected_predictions_sha256": "5b6c8ff81ae017289211d8896e52238825e420a7b32ffd4ac035cf15b0a4789c",
+      "stage_manifest_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/gptrans_g1_bond_local_ema999/stage_manifest.json",
+      "stage_manifest_sha256": "98c62ebcd4b8428310dfd100863cbb519eae1baa975abe4fc70eac5b32932b6a"
+    },
+    "k1_pretrained_consistency": {
+      "selected_predictions_sha256": "57463e4e578db6310eadfd2b46d9c57f50d0ef7e2aa12c3f883ace72e7265f55",
+      "stage_manifest_ref": "experiments/pcqm_k1_gptrans_package_transfer_500k/submission_v5/terminal_inspection/evidence/stages/k1_pretrained_consistency/stage_manifest.json",
+      "stage_manifest_sha256": "40142dd8abe00e1ca581ce94b661dc03574ec529643ff4e8cf5a7e751395c783"
+    }
+  },
+  "residual_diagnostics": {
+    "absolute_error_pearson": 0.8203524074512061,
+    "absolute_error_quantiles_eV": {
+      "fixed50": {
+        "median": 0.06000781059265137,
+        "p90": 0.23414971828460676,
+        "p95": 0.32335147857666,
+        "p99": 0.5907015419006351
+      },
+      "gptrans": {
+        "median": 0.061589956283569336,
+        "p90": 0.23893191814422604,
+        "p95": 0.33339223861694334,
+        "p99": 0.6061025047302249
+      },
+      "k1": {
+        "median": 0.06484127044677734,
+        "p90": 0.24762654304504392,
+        "p95": 0.3391929626464841,
+        "p99": 0.6018872356414817
+      }
+    },
+    "fixed50_gain_on_opposite_sign_rows_eV": 0.021105107322086147,
+    "fixed50_gain_on_same_sign_rows_eV": -0.0016894900438923911,
+    "k1_better_row_fraction": 0.47614,
+    "label_informed_best_of_two_mae_eV": 0.07886363030910493,
+    "opposite_error_sign_fraction": 0.20698,
+    "oracle_limit": "Label-informed upper bound only, not a learnable routing result or promotion evidence.",
+    "signed_error_mean_eV": {
+      "fixed50": 0.004241227498054504,
+      "gptrans": 0.004515907888412476,
+      "k1": 0.003966547107696533
+    },
+    "signed_error_pearson": 0.8567483197128044
+  },
+  "role": "selection_used_internal_development_500000_550000",
+  "selected_gptrans_ema_vs_same_checkpoint_live": {
+    "candidate_better_row_fraction": 0.5412,
+    "candidate_mae_eV": 0.10188769014835358,
+    "material_3mev_point_gain": false,
+    "paired_gain_eV": 0.0019390663290023804,
+    "reference_mae_eV": 0.10382675647735595,
+    "row_bootstrap_95pct_eV": [
+      0.0017318039269447326,
+      0.002157081852555275
+    ],
+    "rows": 50000
+  },
+  "trace_diagnostics": {
+    "gptrans_g1_bond_local_ema999": {
+      "best_dev_mae_eV": 0.10188769549131393,
+      "best_epoch_one_based": 50,
+      "epoch_windows": [
+        {
+          "first_epoch": 1,
+          "last_epoch": 10,
+          "mean_dev_mae_eV": 0.13345651626586913,
+          "mean_recorded_train_mae_eV": 0.17751117947284653,
+          "minimum_dev_mae_eV": 0.11416377872228622
+        },
+        {
+          "first_epoch": 21,
+          "last_epoch": 30,
+          "mean_dev_mae_eV": 0.10680078715085983,
+          "mean_recorded_train_mae_eV": 0.11936576145216848,
+          "minimum_dev_mae_eV": 0.10552287846803665
+        },
+        {
+          "first_epoch": 41,
+          "last_epoch": 50,
+          "mean_dev_mae_eV": 0.10230237394571304,
+          "mean_recorded_train_mae_eV": 0.08918405493875245,
+          "minimum_dev_mae_eV": 0.10188769549131393
+        },
+        {
+          "first_epoch": 51,
+          "last_epoch": 60,
+          "mean_dev_mae_eV": 0.1022781863808632,
+          "mean_recorded_train_mae_eV": 0.07607140286946448,
+          "minimum_dev_mae_eV": 0.10207199305295944
+        }
+      ],
+      "epochs_since_best": 10,
+      "final_dev_mae_eV": 0.1022721454501152,
+      "final_minus_best_meV": 0.38444995880126953,
+      "measured_one_worker_epoch_seconds": 54074.407056576994,
+      "train_metric_limit": "Training dropout supervised L1, different prediction mode from clean development; no fit diagnosis from their gap alone."
+    },
+    "k1_pretrained_consistency": {
+      "best_dev_mae_eV": 0.10490408539772034,
+      "best_epoch_one_based": 49,
+      "epoch_windows": [
+        {
+          "first_epoch": 1,
+          "last_epoch": 10,
+          "mean_dev_mae_eV": 0.13868160769343377,
+          "mean_recorded_train_mae_eV": 0.15626218817040055,
+          "minimum_dev_mae_eV": 0.1192638948559761
+        },
+        {
+          "first_epoch": 21,
+          "last_epoch": 30,
+          "mean_dev_mae_eV": 0.11018509045243263,
+          "mean_recorded_train_mae_eV": 0.09437312080915933,
+          "minimum_dev_mae_eV": 0.1080075204372406
+        },
+        {
+          "first_epoch": 41,
+          "last_epoch": 50,
+          "mean_dev_mae_eV": 0.10629630163311958,
+          "mean_recorded_train_mae_eV": 0.07341888509170207,
+          "minimum_dev_mae_eV": 0.10490408539772034
+        },
+        {
+          "first_epoch": 51,
+          "last_epoch": 60,
+          "mean_dev_mae_eV": 0.10587637722492219,
+          "mean_recorded_train_mae_eV": 0.06924087890207618,
+          "minimum_dev_mae_eV": 0.10499197244644165
+        }
+      ],
+      "epochs_since_best": 11,
+      "final_dev_mae_eV": 0.10572461038827896,
+      "final_minus_best_meV": 0.8205249905586243,
+      "measured_one_worker_epoch_seconds": 77782.63873880601,
+      "train_metric_limit": "Training dropout supervised L1, different prediction mode from clean development; no fit diagnosis from their gap alone."
+    }
+  }
+}

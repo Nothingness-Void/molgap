@@ -41,6 +41,17 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "development_used_for_checkpoint_selection",
+        "historical_total_allocation_incomplete",
+        "missing_frozen_reference",
+        "strict_component_comparison_unqualified"
+      ],
+      "run_id": "molgap-k1-gptrans-500k-pair-s42-v1:gptrans_g1_bond_local_ema999",
+      "trajectory_id": "TB-gptrans-g1-bond-local-ema999-kaggle1-500k-s42-v1"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "missing_remote_live_development_metric_per_epoch"
       ],
       "run_id": "kaggle1-gptrans-geometry-distance-100k-s42-v2",
@@ -140,6 +151,17 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "development_used_for_checkpoint_selection",
+        "historical_total_allocation_incomplete",
+        "missing_frozen_reference",
+        "strict_component_comparison_unqualified"
+      ],
+      "run_id": "molgap-k1-gptrans-500k-pair-s42-v1:k1_pretrained_consistency",
+      "trajectory_id": "TB-k1-pretrained-consistency-kaggle1-500k-s42-v1"
+    },
+    {
+      "reasons": [
         "no_compatible_candidate_reference_trace_pair"
       ],
       "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
@@ -213,5 +235,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 25
+  "trace_count": 27
 }
