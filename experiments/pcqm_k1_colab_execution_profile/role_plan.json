@@ -1,0 +1,15 @@
+{
+  "train": {
+    "range": [
+      0,
+      500000
+    ],
+    "sample_rows": 4096,
+    "local_decoded_rows": 500000,
+    "selection_used": false
+  },
+  "development": "untouched",
+  "official_validation": "untouched",
+  "test_dev": "untouched",
+  "test_challenge": "untouched"
+}

@@ -226,6 +226,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-colab-execution-profile-20261007:A001",
+      "target": "experiments/pcqm_k1_colab_execution_profile/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-dropout-consistency2-kaggle3-100k-s42-v1:A001",
       "target": "experiments/pcqm_k1_dropout_consistency/protocol.md",
       "type": "action_produced_evidence"
@@ -1401,8 +1406,18 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-500k-bn-calibration-20261007",
+      "target": "TB-k1-colab-execution-profile-20261007",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "target": "TB-k1-500k-bn-calibration-20261007",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+      "target": "TB-k1-colab-execution-profile-20261007",
       "type": "prior_evidence"
     },
     {
@@ -2574,6 +2589,10 @@
     },
     {
       "id": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-colab-execution-profile-20261007",
       "type": "trajectory"
     },
     {

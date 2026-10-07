@@ -1,10 +1,10 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 41,
-  "event_count": 164,
+  "estimated_event_count": 42,
+  "event_count": 165,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [],
-  "measurement_missing_event_count": 140,
+  "measurement_missing_event_count": 141,
   "not_applicable_event_count": 57,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -1021,6 +1021,54 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.06277777777777778
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100-SXM4-40GB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA A100-SXM4-40GB:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100-SXM4-40GB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA A100-SXM4-40GB:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -3116,6 +3164,56 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      }
+    },
+    "NVIDIA A100-SXM4-40GB": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "NVIDIA GeForce RTX 5060": {
@@ -9049,6 +9147,56 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.006241413833333556
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-colab-execution-profile-20261007": {
+      "NVIDIA A100-SXM4-40GB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA A100-SXM4-40GB:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100-SXM4-40GB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA A100-SXM4-40GB:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0

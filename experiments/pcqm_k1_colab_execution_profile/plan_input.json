@@ -1,0 +1,139 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-colab-execution-profile-20261007",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-execution-profile-a100",
+    "question": "Which K1 two-forward execution costs dominate and are selected-state consistency gradients aligned?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-colab-profile-20261007",
+      "supporting_evidence_ids": [
+        "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+        "pcqm-k1-500k-bn-calibration-20261007"
+      ],
+      "observed_deficiency": "Historical K1 epoch windows are43.8% slower than GPTrans; package accuracy flat.",
+      "alternative_explanations": [
+        "CPU loader contention",
+        "local edge operators dominate",
+        "consistency gradients interfere",
+        "A100 behavior differs from T4"
+      ],
+      "changed_mechanism": "Execution-only scratch forward/loader variants and selected-state gradient probe",
+      "cheapest_falsifier": "4096 train members, four bounded cases and four gradient batches under1200s",
+      "decision_changed_if_positive": "Nominate one measured bottleneck for separate runtime/MAE qualification",
+      "decision_changed_if_negative": "Do not optimize an unmeasured assumed bottleneck",
+      "expected_native_cost_ref": "cost-k1-colab-profile-estimate",
+      "related_closed_family_ids": [
+        "k1-500k-bn-calibration"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "42ddad2dbe345f2197245c77f87cbef5cd97cc77",
+      "source_config_identity": "4cc906e75d0bca150716428a160ccad84b62e0433c613a765a68062720bde576",
+      "contract_refs": [
+        "experiments/pcqm_k1_colab_execution_profile/protocol.md",
+        "experiments/pcqm_k1_colab_execution_profile/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+        "pcqm-k1-500k-bn-calibration-20261007"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_colab_execution_profile/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_colab_execution_profile/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "execution_profile",
+        "run_ids": [
+          "k1-profile-a100-20261007"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "42ddad2dbe345f2197245c77f87cbef5cd97cc77",
+        "evidence_refs": [
+          "experiments/pcqm_k1_colab_execution_profile/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-colab-profile-estimate"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_colab_execution_profile/decision.md",
+      "next_allowed_actions": [
+        "Bounded A100 execution-only analysis"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_colab_execution_profile/protocol.md",
+    "comparison_blockers": [
+      "A100 not native historical T4",
+      "execution profile not accuracy comparison"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-colab-profile-estimate",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007",
+      "action_id": "A001",
+      "run_id": "k1-profile-a100-20261007",
+      "attempt_id": "attempt-001",
+      "platform": "colab",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/protocol.md",
+      "measurement": {
+        "device_hours": {
+          "value": 0.3333333333333333,
+          "status": "estimated"
+        },
+        "wall_hours": {
+          "value": 0.3333333333333333,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-colab-execution-profile",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_colab_execution_profile/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_colab_execution_profile/role_plan.json"
+    ],
+    "source_commit": "42ddad2dbe345f2197245c77f87cbef5cd97cc77",
+    "state_timestamp": "2026-10-07T13:26:41.416672+00:00"
+  }
+}

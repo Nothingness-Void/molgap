@@ -117,6 +117,8 @@ experiments/**/*.joblib
 platforms/**/*.joblib
 production/**/*.ipynb
 experiments/**/*.ipynb
+!experiments/pcqm_k1_colab_execution_profile/MolGap_K1_A100_Profile.ipynb
+platforms/_records/colab/staging/k1-profile-a100-20261007/
 
 # Row-level selection payloads: regenerable; the decision beside them is tracked.
 experiments/**/selection.json

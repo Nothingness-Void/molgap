@@ -63,12 +63,22 @@ env['PYTHONPATH']=str(PAYLOAD/'src')
 env['CUBLAS_WORKSPACE_CONFIG']=':4096:8'
 env['PYTHONHASHSEED']='42'
 log=RUN_ROOT/'worker.log'
+from threading import Timer
 command=[PYTHON,'-u','-m','molgap.k1_execution_profile','--root',str(PAYLOAD),'--output',str(RUN_ROOT)]
 with log.open('w') as handle:
     process=subprocess.Popen(command,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
-    for line in process.stdout:
-        handle.write(line); handle.flush(); print(line,end='',flush=True)
-    returncode=process.wait()
+    watchdog=Timer(1200,process.kill)
+    watchdog.start()
+    worker_started=time.time()
+    try:
+        for line in process.stdout:
+            handle.write(line); handle.flush(); print(line,end='',flush=True)
+        returncode=process.wait()
+    finally:
+        watchdog.cancel()
+        (RUN_ROOT/'worker_process_observation.json').write_text(json.dumps({
+            'worker_wall_seconds_including_imports':time.time()-worker_started,
+            'returncode':process.returncode,'wall_ceiling_seconds':1200},sort_keys=True))
 assert returncode==0, f'Worker failed({returncode}); durable evidence: {RUN_ROOT}'
 print('DURABLE_K1_PROFILE_COMPLETE',flush=True)
 '''),code('''# Verify all bounded results before interpreting them.
