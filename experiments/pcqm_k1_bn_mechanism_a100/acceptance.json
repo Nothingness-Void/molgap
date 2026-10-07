@@ -1,0 +1,359 @@
+{
+  "format": "molgap-k1-bn-mechanism-a100-acceptance-v1",
+  "evidence_id": "pcqm-k1-bn-mechanism-a100-20261008",
+  "run_id": "k1-bn-mechanism-a100-20261008",
+  "outcome": {
+    "execution_status": "complete_frozen_bn_mechanism_diagnostic",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "paired_consumed_internal_development_diagnostic",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "bounded_a100_diagnostic_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_bn_mechanism_a100/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "A separate prospective qualification is independently authorized"
+    ]
+  },
+  "role_use": {
+    "train_decoded": "consumed",
+    "train_features": "consumed",
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "common": "untouched",
+    "ood": "untouched"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-bn-mechanism-train_decoded-labels_read",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "role_name": "train_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-bn-mechanism-train_features-prediction_input",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4",
+      "role_name": "train_features",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-bn-mechanism-train_features-labels_read",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4",
+      "role_name": "train_features",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-bn-mechanism-internal_development-labels_read",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-bn-mechanism-internal_development-prediction_input",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-bn-mechanism-internal_development-metric_computed",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-bn-mechanism-internal_development-selection_used",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/acceptance.json"
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-bn-mechanism-worker-attempt001",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "colab",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.048204733000861276,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": 0.048204733000861276,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.046921198813888884,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-bn-mechanism-setup-attempt001",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "colab",
+      "hardware": "Colab A100 allocation unmeasured (NVIDIA A100-SXM4-40GB)",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.01087427039941152,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-bn-mechanism-idle-attempt001",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "colab",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-bn-mechanism-local-staging",
+      "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+      "action_id": "A001",
+      "run_id": "k1-bn-mechanism-a100-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU; no accelerator",
+      "category": "cache_build",
+      "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "checks": {
+    "payload_manifest_exact_bytes": true,
+    "payload_runtime_sha256": true,
+    "source_prospective_binding": true,
+    "checkpoint_sha256": true,
+    "completion_artifact_hashes": true,
+    "worker_process_returncode_and_wall": true,
+    "native_a100_torch241_fp32_no_tf32": true,
+    "all_four_cases_and_update_counts": true,
+    "frozen_parameters_and_non_bn_buffers": true,
+    "original_buffers_restored_and_first128_exact": true,
+    "aligned_finite_50k_predictions_and_targets": true,
+    "protected_roles_untouched": true
+  },
+  "analysis_ref": "experiments/pcqm_k1_bn_mechanism_a100/analysis.json",
+  "runtime_release": {
+    "status": "user_confirmed_disconnected_and_deleted",
+    "evidence_ref": "experiments/pcqm_k1_bn_mechanism_a100/download_receipt.json",
+    "independent_browser_verification": false
+  },
+  "comparison_class": "CONTEXT_ONLY",
+  "metrics": {
+    "original": {
+      "mae_eV": 0.10490407830715179,
+      "rows": 50000
+    },
+    "dropout_off_pass1": {
+      "mae_eV": 0.1036589436006546,
+      "original_gain_eV": 0.0012451347064971923,
+      "rows": 50000,
+      "dropout_enabled": false,
+      "passes_per_batch": 1,
+      "bn_updates_per_module": 128,
+      "original_gain_paired_bootstrap": {
+        "delta": 0.0012451347064971923,
+        "ci95": [
+          0.001107807590007782,
+          0.001379104960680008
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "original_gain_probability_semantics": "P(mean original error minus case error < 0); smaller means stronger gain evidence"
+    },
+    "dropout_off_pass2": {
+      "mae_eV": 0.10365894460201264,
+      "original_gain_eV": 0.0012451337051391602,
+      "rows": 50000,
+      "dropout_enabled": false,
+      "passes_per_batch": 2,
+      "bn_updates_per_module": 256,
+      "original_gain_paired_bootstrap": {
+        "delta": 0.0012451337051391602,
+        "ci95": [
+          0.001107807914853096,
+          0.0013791050647497176
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "original_gain_probability_semantics": "P(mean original error minus case error < 0); smaller means stronger gain evidence"
+    },
+    "dropout_on_pass1": {
+      "mae_eV": 0.10450677397727966,
+      "original_gain_eV": 0.00039730432987213136,
+      "rows": 50000,
+      "dropout_enabled": true,
+      "passes_per_batch": 1,
+      "bn_updates_per_module": 128,
+      "original_gain_paired_bootstrap": {
+        "delta": 0.00039730432987213136,
+        "ci95": [
+          0.0003468485126495361,
+          0.00045083513677120213
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "original_gain_probability_semantics": "P(mean original error minus case error < 0); smaller means stronger gain evidence"
+    },
+    "dropout_on_pass2": {
+      "mae_eV": 0.10456831151008605,
+      "original_gain_eV": 0.00033576679706573485,
+      "rows": 50000,
+      "dropout_enabled": true,
+      "passes_per_batch": 2,
+      "bn_updates_per_module": 256,
+      "original_gain_paired_bootstrap": {
+        "delta": 0.00033576679706573485,
+        "ci95": [
+          0.00028517818915843964,
+          0.0003886129983663559
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "original_gain_probability_semantics": "P(mean original error minus case error < 0); smaller means stronger gain evidence"
+    }
+  },
+  "predeclared_contrasts_ref": "experiments/pcqm_k1_bn_mechanism_a100/analysis.json#predeclared_contrasts",
+  "role_scope": "Staging decoded backing labels for all500K training and50K development rows. The diagnostic read 16,384 fixed training graphs as feature input; training labels were not an objective. It computed metrics on the historically selection-used 50K development cohort. Official validation, test, common and OOD roles were untouched.",
+  "cost_scope": "Measured worker process wall is treated as allocated A100 wall time, not GPU busy time. The process CPU value is the worker's own process time; child CPU is unknown. Setup wall is measured separately while setup allocation is unknown. Idle allocation and local staging time are unknown.",
+  "execution_scope": "Four frozen BN-buffer interventions and aligned 50K inference only; no optimizer, gradients, training objective, training trace, replay-readiness claim, model promotion or full handoff.",
+  "limitations": [
+    "Development rows were historically selection-used.",
+    "Paired row bootstrap does not estimate training-seed variance.",
+    "This diagnostic does not establish training-time causality or transfer."
+  ]
+}

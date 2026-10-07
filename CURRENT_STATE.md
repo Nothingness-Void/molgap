@@ -29,8 +29,9 @@ User-directed focus(2026-10-07): solve two K1 questions at500K:
 1. Why its observed epoch elapsed time is much greater than GPTrans-T's:
    separate loader wait, forward/backward, optimizer, development evaluation
    and checkpoint/publication costs under the owning frozen native runtime.
-   Two full stochastic forwards are verified work; their timing contribution
-   and paired CPU/loader contention have not been measured independently.
+   Two full stochastic forwards are verified work. The accepted bounded A100
+   profile measures their contribution; native T4 epoch phases and paired
+   CPU/loader contention remain unresolved.
 2. Why the enhanced K1 package shows no improvement over its contextual older
    500K endpoint: isolate the consistency contribution, BN-state sensitivity
    and retained-pretraining coverage before proposing capacity/exposure changes.
@@ -57,6 +58,16 @@ tuning has little benefit there. Its selected-state gradient probe does not
 establish a causal accuracy loss. Read the [attribution](experiments/pcqm_k1_colab_execution_profile/attribution.md)
 before another K1 action. Native T4 epoch phases and single-pass MAE equivalence
 remain unresolved; no model recommendation or training release changes.
+
+The [accepted A100 BN mechanism diagnostic](experiments/pcqm_k1_bn_mechanism_a100/terminal_decision.md)
+confirms a frozen buffer-state effect: dropout during BN estimation worsens
+clean inference, while duplicate clean cumulative passes are near-null.
+No predeclared new mechanism contrast clears its material nomination gate.
+It does not establish training-time dropout or double-forward harm. Use the
+already authorized consistency500K question's original and fixed clean-BN
+outputs to distinguish learned-weight benefit from output-state effects.
+The diagnostic is terminal NO_TRAIN; reusable controls and evidence are
+integrated without model adoption. Runtime release is user-confirmed.
 
 Track B predicts PCQM4Mv2 Gap only and is separate from Track A. The accepted
 full EdgeState checkpoint remains the operational full-scale reference.

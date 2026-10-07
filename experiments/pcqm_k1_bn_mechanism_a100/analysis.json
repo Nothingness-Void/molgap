@@ -1,0 +1,172 @@
+{
+  "format": "molgap-k1-bn-mechanism-analysis-v1",
+  "trajectory_id": "TB-k1-bn-mechanism-a100-20261008",
+  "run_id": "k1-bn-mechanism-a100-20261008",
+  "attempt_id": "attempt-001",
+  "payload_manifest_sha256": "81dd396d01cac7b36b4762a14f73efc096f8702af097c46ba8f6b88928077509",
+  "source_commit": "5dde43e48b7650501f9743654ffea3d4d796b573",
+  "cohort": {
+    "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+    "development_rows": 50000,
+    "source_idx_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+    "target_sha256_float64_le": "f441f76f4f438bb04d33014259061e98b8b4d8974f46959f247119415f6c5afc"
+  },
+  "metric_precision": "float64 absolute errors and means",
+  "cases": {
+    "original": {
+      "mae_eV": 0.10490407830715179,
+      "rows": 50000
+    },
+    "dropout_off_pass1": {
+      "mae_eV": 0.1036589436006546,
+      "original_gain_eV": 0.0012451347064971923,
+      "rows": 50000,
+      "dropout_enabled": false,
+      "passes_per_batch": 1,
+      "bn_updates_per_module": 128,
+      "original_gain_paired_bootstrap": {
+        "delta": 0.0012451347064971923,
+        "ci95": [
+          0.001107807590007782,
+          0.001379104960680008
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "original_gain_probability_semantics": "P(mean original error minus case error < 0); smaller means stronger gain evidence"
+    },
+    "dropout_off_pass2": {
+      "mae_eV": 0.10365894460201264,
+      "original_gain_eV": 0.0012451337051391602,
+      "rows": 50000,
+      "dropout_enabled": false,
+      "passes_per_batch": 2,
+      "bn_updates_per_module": 256,
+      "original_gain_paired_bootstrap": {
+        "delta": 0.0012451337051391602,
+        "ci95": [
+          0.001107807914853096,
+          0.0013791050647497176
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "original_gain_probability_semantics": "P(mean original error minus case error < 0); smaller means stronger gain evidence"
+    },
+    "dropout_on_pass1": {
+      "mae_eV": 0.10450677397727966,
+      "original_gain_eV": 0.00039730432987213136,
+      "rows": 50000,
+      "dropout_enabled": true,
+      "passes_per_batch": 1,
+      "bn_updates_per_module": 128,
+      "original_gain_paired_bootstrap": {
+        "delta": 0.00039730432987213136,
+        "ci95": [
+          0.0003468485126495361,
+          0.00045083513677120213
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "original_gain_probability_semantics": "P(mean original error minus case error < 0); smaller means stronger gain evidence"
+    },
+    "dropout_on_pass2": {
+      "mae_eV": 0.10456831151008605,
+      "original_gain_eV": 0.00033576679706573485,
+      "rows": 50000,
+      "dropout_enabled": true,
+      "passes_per_batch": 2,
+      "bn_updates_per_module": 256,
+      "original_gain_paired_bootstrap": {
+        "delta": 0.00033576679706573485,
+        "ci95": [
+          0.00028517818915843964,
+          0.0003886129983663559
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "original_gain_probability_semantics": "P(mean original error minus case error < 0); smaller means stronger gain evidence"
+    }
+  },
+  "predeclared_contrasts": {
+    "dropout_pass1_on_error_minus_off": {
+      "delta_definition": "dropout_on_pass1 absolute error minus dropout_off_pass1 absolute error, eV",
+      "mean_error_difference_eV": 0.000847830376625061,
+      "paired_bootstrap": {
+        "delta": 0.000847830376625061,
+        "ci95": [
+          0.000727311718583107,
+          0.0009696845149993897
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "probability_better_semantics": "P(mean error difference < 0) under paired row bootstrap",
+      "multiplicity_correction": "none; four predeclared exploratory contrasts"
+    },
+    "dropout_pass2_on_error_minus_off": {
+      "delta_definition": "dropout_on_pass2 absolute error minus dropout_off_pass2 absolute error, eV",
+      "mean_error_difference_eV": 0.0009093669080734253,
+      "paired_bootstrap": {
+        "delta": 0.0009093669080734253,
+        "ci95": [
+          0.0007871902410984039,
+          0.0010320875591039657
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "probability_better_semantics": "P(mean error difference < 0) under paired row bootstrap",
+      "multiplicity_correction": "none; four predeclared exploratory contrasts"
+    },
+    "pass_count_off_pass2_error_minus_pass1": {
+      "delta_definition": "dropout_off_pass2 absolute error minus dropout_off_pass1 absolute error, eV",
+      "mean_error_difference_eV": 1.0013580322265624e-09,
+      "paired_bootstrap": {
+        "delta": 1.0013580322265624e-09,
+        "ci95": [
+          -1.8080472946166992e-09,
+          3.9721727371215824e-09
+        ],
+        "probability_better": 0.231,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "probability_better_semantics": "P(mean error difference < 0) under paired row bootstrap",
+      "multiplicity_correction": "none; four predeclared exploratory contrasts"
+    },
+    "pass_count_on_pass2_error_minus_pass1": {
+      "delta_definition": "dropout_on_pass2 absolute error minus dropout_on_pass1 absolute error, eV",
+      "mean_error_difference_eV": 6.153753280639649e-05,
+      "paired_bootstrap": {
+        "delta": 6.153753280639649e-05,
+        "ci95": [
+          5.6631996870040895e-05,
+          6.651201581954957e-05
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 20261008
+      },
+      "probability_better_semantics": "P(mean error difference < 0) under paired row bootstrap",
+      "multiplicity_correction": "none; four predeclared exploratory contrasts"
+    }
+  },
+  "diagnostic_scope": "Frozen-parameter BN buffer interventions; no optimizer, gradients, training objective, selection, promotion or replay claim.",
+  "reconstruction_max_abs_eV": 1.9073486328125e-06,
+  "bootstrap": {
+    "helper": "molgap.router.paired_bootstrap_mean",
+    "draws": 1000,
+    "seed": 20261008,
+    "interval": "95% row-bootstrap CI",
+    "interpretation_limit": "Paired row uncertainty is not training-seed variance."
+  }
+}

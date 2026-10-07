@@ -6,9 +6,9 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 96,
-      "with_complete_native_measurement": 15,
-      "with_cost_event": 85,
+      "trajectories_total": 97,
+      "with_complete_native_measurement": 16,
+      "with_cost_event": 86,
       "with_incomplete_native_measurement": 70,
       "without_cost_event": 11
     },
@@ -374,7 +374,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 2
         },
         "device_hours": {
           "estimated": {
@@ -385,7 +385,7 @@
             "known_records": 0,
             "known_total": null
           },
-          "not_applicable_records": 0,
+          "not_applicable_records": 1,
           "unknown_records": 1
         },
         "queue_hours": {
@@ -398,7 +398,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 2
         },
         "wall_hours": {
           "estimated": {
@@ -410,7 +410,7 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 2
         }
       },
       "CPU; saved-prediction analysis only; accelerator not applicable": {
@@ -508,6 +508,56 @@
           "measured": {
             "known_records": 3,
             "known_total": 0.6668580039444454
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
+      "Colab A100 allocation unmeasured (NVIDIA A100-SXM4-40GB)": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 1,
+            "known_total": 0.01087427039941152
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -670,23 +720,23 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 1,
-            "known_total": 0.017646426963611114
+            "known_records": 2,
+            "known_total": 0.0645676257775
           },
           "not_applicable_records": 0,
-          "unknown_records": 5
+          "unknown_records": 7
         },
         "device_hours": {
           "estimated": {
-            "known_records": 1,
-            "known_total": 0.3333333333333333
+            "known_records": 2,
+            "known_total": 0.6666666666666666
           },
           "measured": {
-            "known_records": 2,
-            "known_total": 0.020116896563106113
+            "known_records": 3,
+            "known_total": 0.0683216295639674
           },
           "not_applicable_records": 0,
-          "unknown_records": 3
+          "unknown_records": 4
         },
         "queue_hours": {
           "estimated": {
@@ -698,19 +748,19 @@
             "known_total": null
           },
           "not_applicable_records": 0,
-          "unknown_records": 6
+          "unknown_records": 9
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 1,
-            "known_total": 0.3333333333333333
+            "known_records": 2,
+            "known_total": 0.6666666666666666
           },
           "measured": {
-            "known_records": 4,
-            "known_total": 0.03099171625243293
+            "known_records": 5,
+            "known_total": 0.07919644925329421
           },
           "not_applicable_records": 0,
-          "unknown_records": 1
+          "unknown_records": 2
         }
       },
       "NVIDIA GeForce RTX 5060": {
@@ -2364,17 +2414,17 @@
         }
       }
     },
-    "unknown_events": 147
+    "unknown_events": 152
   },
   "evidence": {
-    "validated": 85,
+    "validated": 86,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 71,
+      "count": 72,
       "severity": "INFO"
     },
     {
@@ -2404,19 +2454,19 @@
     }
   ],
   "roles": {
-    "coarse_historical": 385,
-    "explicit_events": 223,
+    "coarse_historical": 393,
+    "explicit_events": 230,
     "repeatedly_selected": 17
   },
-  "source_digest": "1fcbb3712f4d21999f72de66267cf88c4f86c3ade47ca4b36a7cd9504f673515",
+  "source_digest": "68e3d368c4e6f43198ddd19c845a1b8bb40ce382eecd2c443a288d6b022c9fac",
   "trajectories": {
-    "count": 96,
+    "count": 97,
     "outcomes": {
       "CLOSED": 11,
       "INCONCLUSIVE": 19,
       "INFRASTRUCTURE_ONLY": 5,
       "NEGATIVE_UNDER_CONTRACT": 21,
-      "NO_TRAIN": 32,
+      "NO_TRAIN": 33,
       "POSITIVE_UNDER_CONTRACT": 8
     }
   },

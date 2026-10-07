@@ -1,9 +1,9 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 96,
-    "with_complete_native_measurement": 15,
-    "with_cost_event": 85,
+    "trajectories_total": 97,
+    "with_complete_native_measurement": 16,
+    "with_cost_event": 86,
     "with_incomplete_native_measurement": 70,
     "without_cost_event": 11
   },
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 71,
+      "count": 72,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -57,6 +57,7 @@
         "TB-gptrans-pair-memory-memory-value-100k-s42",
         "TB-k1-500k-bn-calibration-20261007",
         "TB-k1-500k-bottleneck-diagnostic-20261007",
+        "TB-k1-bn-mechanism-a100-20261008",
         "TB-k1-colab-execution-profile-20261007",
         "TB-k1-consistency-fusion-transfer-20261004",
         "TB-k1-consistency-residual-screen-20261004",

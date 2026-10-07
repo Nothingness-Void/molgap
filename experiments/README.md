@@ -13,6 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does dropout or repeated calibration explain frozen K1 BN error? | Accepted NO_TRAIN A100 diagnostic: dropout-enabled buffer estimation degrades clean inference; clean repeated passes are near-null; no new material mechanism nomination or model adoption | [BN mechanism decision](pcqm_k1_bn_mechanism_a100/terminal_decision.md) |
 | What dominates retained K1 two-forward execution on A100? | Accepted NO_TRAIN execution diagnostic; two-forward overhead dominates loader differences in the bounded sample, native T4 and single-pass MAE remain unqualified | [A100 profile decision](pcqm_k1_colab_execution_profile/terminal_decision.md) |
 | Does training-member BN recalibration improve the retained K1 500K predictor? | Accepted NO_TRAIN diagnostic:1.245meV full50K development gain with frozen learned parameters; nomination for separate qualification, no model adoption | [pcqm_k1_500k_bn_calibration](pcqm_k1_500k_bn_calibration/terminal_decision.md) |
 | Is the composed500K K1 slot inactive or its training tail uniformly beneficial? | NO_TRAIN frozen diagnostic: slot deletion strongly worsens retained predictions; clean tail changes are heterogeneous; capacity/pretraining-scale causality unresolved | [decision](pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md) |

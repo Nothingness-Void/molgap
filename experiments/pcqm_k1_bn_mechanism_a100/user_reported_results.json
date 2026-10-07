@@ -1,0 +1,15 @@
+{
+  "authority": "user_pasted_colab_console_only",
+  "artifact_verification": "pending_retrieval",
+  "rml_terminal_acceptance": "pending",
+  "original_mae_eV": 0.10490407049655914,
+  "cases": [
+    {"case": "dropout_off_pass1", "mae_eV": 0.10365894436836243, "case_wall_seconds": 24.33866194999996},
+    {"case": "dropout_off_pass2", "mae_eV": 0.10365894436836243, "case_wall_seconds": 29.602867129999936},
+    {"case": "dropout_on_pass1", "mae_eV": 0.10450677573680878, "case_wall_seconds": 24.444856827999956},
+    {"case": "dropout_on_pass2", "mae_eV": 0.10456831008195877, "case_wall_seconds": 30.09057177200009}
+  ],
+  "reported_completion": "DURABLE_BN_MECHANISM_RESULTS_COMPLETE",
+  "durable_path": "/content/drive/MyDrive/MolGap/V5/runs/k1-bn-mechanism-a100-20261008/attempt-001",
+  "limitations": ["No paired row uncertainty until prediction artifacts retrieved", "Case elapsed includes calibration and development inference, not training epoch timing", "Runtime release unverified"]
+}

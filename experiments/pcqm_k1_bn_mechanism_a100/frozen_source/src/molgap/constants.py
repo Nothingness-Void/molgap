@@ -1,0 +1,316 @@
+"""Centralized path constants and model configurations."""
+from __future__ import annotations
+
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+DATA_DIR = REPO_ROOT / "data"
+RAW_DIR = DATA_DIR / "raw"
+PROCESSED_DIR = DATA_DIR / "processed"
+COMMERCIAL_DIR = DATA_DIR / "commercial"
+CACHE_DIR = DATA_DIR / "cache"
+MODELS_DIR = REPO_ROOT / "models"
+
+# The tree is organized by role, not by calendar phase: `production/` is the
+# delivery line in data-flow order, `experiments/` answers one question per
+# directory, `platforms/` adapts a run to a compute environment.
+PRODUCTION_DIR = REPO_ROOT / "production"
+EXPERIMENTS_DIR = REPO_ROOT / "experiments"
+PLATFORMS_DIR = REPO_ROOT / "platforms"
+
+# Historical runtime assets stay outside the delivery line. Large ignored
+# files use these local archive paths; their reproducibility records live on
+# the repository's `archive` branch.
+LEGACY_RAW_DIR = RAW_DIR / "archive" / "legacy"
+LEGACY_CACHE_DIR = CACHE_DIR / "archive" / "legacy"
+LEGACY_MODEL_DIR = MODELS_DIR / "archive" / "legacy_checkpoints"
+LEGACY_METRICS_DIR = MODELS_DIR / "archive" / "legacy_metrics"
+ROUTED_V4_COMPAT_DIR = MODELS_DIR / "compatibility" / "routed_v4"
+
+# Stage output roots. Thin CLIs write here instead of composing paths from a
+# calendar phase number, so a stage can be renamed in one place.
+ACQUIRE_DIR = PRODUCTION_DIR / "01_acquire"
+GRAPHS_DIR = PRODUCTION_DIR / "02_graphs"
+TRAIN_DIR = PRODUCTION_DIR / "03_train"
+EVALUATE_DIR = PRODUCTION_DIR / "04_evaluate"
+DELTA_GW_DIR = PRODUCTION_DIR / "05_delta_gw"
+UQ_DIR = PRODUCTION_DIR / "06_uq"
+DATABASE_DIR = PRODUCTION_DIR / "07_database"
+
+TARGET_COLS = ["homo", "lumo", "gap"]
+METADATA_COLS = ["cid", "mw", "formula", "smiles", "canonical_smiles"]
+
+# ── Data files ──
+
+DATA_PHASE3 = LEGACY_RAW_DIR / "phase3_chonsfcl_mw200_500_30k.csv"
+DATA_PHASE6_LARGE = LEGACY_RAW_DIR / "phase6_chonsfcl_mw500_1000_15k.csv"
+
+# ── Graph caches ──
+
+GRAPHS_PHASE4 = LEGACY_CACHE_DIR / "pyg_3d_graphs_etkdg.pt"
+GRAPHS_PHASE6 = LEGACY_CACHE_DIR / "pyg_3d_graphs_etkdg_expanded.pt"
+
+# ── Model checkpoints ──
+
+MODEL_PHASE4 = LEGACY_MODEL_DIR / "gnn_schnet_3d_tuned.pt"
+MODEL_PHASE6 = LEGACY_MODEL_DIR / "gnn_schnet_3d_optuna_expanded.pt"
+
+# Phase 7 (300k, raw eV — no normalization)
+MODEL_SCHNET_300K = LEGACY_MODEL_DIR / "gnn_schnet_3d_300k.pt"
+MODEL_GPS_2D = LEGACY_MODEL_DIR / "gps_2d_300k.pt"
+MODEL_HYBRID = LEGACY_MODEL_DIR / "hybrid_fusion_optuna.pt"
+FUSION_METRICS = LEGACY_METRICS_DIR / "phase7_fusion_optuna_metrics.json"
+
+# Phase 8 replacement300k v2 candidate (raw eV — no normalization)
+MODEL_PHASE8_REPLACEMENT_GPS = LEGACY_MODEL_DIR / "phase8_gps_replacement_300k.pt"
+MODEL_PHASE8_REPLACEMENT_SCHNET = LEGACY_MODEL_DIR / "phase8_schnet_replacement_300k.pt"
+MODEL_PHASE8_REPLACEMENT_HYBRID = LEGACY_MODEL_DIR / "phase8_hybrid_fusion_replacement_300k.pt"
+FUSION_PHASE8_REPLACEMENT_METRICS = (
+    LEGACY_METRICS_DIR / "phase8_replacement_300k_fusion_metrics.json"
+)
+
+# The routed-v4 loader retains the old v3 component as an explicit
+# compatibility bundle; it is not the recommended predictor.
+MODEL_PHASE8_EXPANSION_GPS = ROUTED_V4_COMPAT_DIR / "gps7_500k_v3_compat.pt"
+MODEL_PHASE8_EXPANSION_SCHNET = ROUTED_V4_COMPAT_DIR / "schnet_500k_v3_compat.pt"
+MODEL_PHASE8_EXPANSION_HYBRID = ROUTED_V4_COMPAT_DIR / "gps7_schnet_500k_v3_compat.pt"
+FUSION_PHASE8_EXPANSION_METRICS = (
+    TRAIN_DIR / "routed_gps7_gps9_schnet_500k_v4"
+    / "gps7_schnet_500k_v3_compat_metrics.json"
+)
+
+# Phase 8 fixed-data architecture candidate: the v3 GPS plus a 9-layer GPS and
+# a dual-GPS fusion head. Inference routes only base-predicted Gap < 4 eV rows.
+MODEL_PHASE8_EXPANSION_GPS_DEPTH9 = ROUTED_V4_COMPAT_DIR / "gps9_500k_v4_expert.pt"
+MODEL_PHASE8_EXPANSION_DUALGPS_HYBRID = (
+    ROUTED_V4_COMPAT_DIR / "gps7_gps9_schnet_500k_v4.pt"
+)
+
+# Repaired-2M pure-2D Track A models. The three GPS encoders are direct
+# three-target predictors (no SchNet branch, no fusion head): the dense gate
+# blends their predictions per target, and the equal preset averages GPS7/GPS9
+# only. The rejected dual-SchNet residual is deliberately absent — see
+# `production/04_evaluate/project_freeze/track_a_final_decision.md`.
+MODEL_REPAIRED_2M_GPS7 = MODELS_DIR / "phase8" / "phase8_repaired_2m_d_gps7_seed42.pt"
+MODEL_REPAIRED_2M_GPS9 = MODELS_DIR / "phase8" / "phase8_repaired_2m_d_gps9_seed42.pt"
+MODEL_REPAIRED_2M_GPS11_160 = (
+    MODELS_DIR / "phase8" / "phase8_repaired_2m_d_gps11_160_seed42.pt"
+)
+# Three dense-gate seeds are averaged; this is the accepted gate ensemble, not a
+# seed-selection choice.
+MODELS_REPAIRED_2M_DENSE_GATES = tuple(
+    MODELS_DIR / "phase8" / f"phase8_repaired_2m_dense_gate_seed{seed}.pt"
+    for seed in (42, 43, 44)
+)
+
+# Phase 8 tail-pool fusion probe: v3 encoders frozen, fusion head retrained after
+# appending the residual-tail probe pool. Experimental only; not a default.
+MODEL_PHASE8_TAIL_PROBE_HYBRID = (
+    LEGACY_MODEL_DIR / "phase8_hybrid_fusion_tail_probe_30k.pt"
+)
+FUSION_PHASE8_TAIL_PROBE_METRICS = (
+    EXPERIMENTS_DIR / "_closed" / "legacy" / "pilots_30k" / "fusion_tail_probe_30k_metrics.json"
+)
+
+# TensorNet — ab3d experimental 3D encoder (NOT production). Solo TensorNet beats
+# SchNet, but at fusion level the gap collapses to <0.2% R² while costing ~3.7x
+# training time at 1M scale, so production stays on SchNet. See CURRENT_STATE.md
+# and experiments/_closed/ab3d/comparison.md. These artifacts are kept for the A/B record.
+MODEL_TENSORNET_300K = LEGACY_MODEL_DIR / "tensornet_3d_300k.pt"
+MODEL_HYBRID_TENSORNET = LEGACY_MODEL_DIR / "hybrid_fusion_tensornet.pt"
+FUSION_TENSORNET_METRICS = LEGACY_METRICS_DIR / "phase7_fusion_tensornet_metrics.json"
+
+# ── Model hyperparameters ──
+
+PARAMS_PHASE4 = {
+    "hidden_channels": 192,
+    "num_filters": 256,
+    "num_interactions": 6,
+    "num_gaussians": 100,
+    "cutoff": 6.0,
+    "dropout": 0.2,
+}
+
+PARAMS_PHASE6 = {
+    "hidden_channels": 192,
+    "num_filters": 256,
+    "num_interactions": 6,
+    "num_gaussians": 100,
+    "cutoff": 8.0,
+    "dropout": 0.1,
+}
+
+PARAMS_SCHNET_300K = {
+    "hidden_channels": 192,
+    "num_filters": 192,
+    "num_interactions": 6,
+    "num_gaussians": 50,
+    "cutoff": 6.0,
+    "dropout": 0.0,
+}
+
+PARAMS_GPS_2D = {
+    "hidden_channels": 192,
+    "num_layers": 7,
+    "num_heads": 4,
+    "dropout": 0.05,
+}
+
+# ── A/B 3D-encoder comparison (experiments/_closed/ab3d_scripts) ──
+# Same hidden=192 across encoders for capacity parity; layer counts follow each
+# architecture's convention. Param counts are reported by train_encoder.py.
+PARAMS_AB_SCHNET = dict(PARAMS_SCHNET_300K)  # invariant baseline, deployed form
+
+# Feasibility-tuned for the RTX 5060 (8 GB, 30 SM): the equivariant/tensor nets
+# are 40-130x heavier per batch than SchNet at hidden=192, so they run at
+# hidden=128 with fewer layers + cutoff 5.0 (fewer edges). Capacity therefore
+# differs from SchNet (h192) — param counts are reported and the gap is noted in
+# the comparison; the speed gap is itself a decision-relevant deliverable.
+PARAMS_VISNET = {
+    "hidden_channels": 128,
+    "num_layers": 4,
+    "num_heads": 8,      # 128 % 8 == 0
+    "num_rbf": 32,
+    "cutoff": 5.0,
+    "dropout": 0.0,
+}
+
+PARAMS_TENSORNET = {
+    "hidden_channels": 128,
+    "num_layers": 2,
+    "num_rbf": 32,
+    "cutoff": 5.0,
+    "dropout": 0.0,
+}
+
+# Experimental TensorNet for 300k training (same arch as ab3d winner; not production)
+PARAMS_TENSORNET_300K = {
+    "hidden_channels": 128,
+    "num_layers": 2,
+    "num_rbf": 32,
+    "cutoff": 5.0,
+    "dropout": 0.0,
+}
+
+# Single source of truth for the A/B arms. `kind` selects the wrapper class in
+# experiments/_closed/ab3d_scripts/train_encoder.py; `use_charges` is each
+# encoder's native form
+# (SchNet uses Gasteiger charges = deployed form; equivariant nets use Z+geometry).
+AB_ENCODERS = {
+    "schnet":    {"kind": "schnet",    "params": PARAMS_AB_SCHNET,  "use_charges": True},
+    "visnet":    {"kind": "visnet",    "params": PARAMS_VISNET,     "use_charges": False},
+    "tensornet": {"kind": "tensornet", "params": PARAMS_TENSORNET,  "use_charges": False},
+}
+
+# ── Model registry ──
+# Single source of truth for "which checkpoint + which hyperparams + is it
+# normalized". Consumed by inference.load_model(key=...) and inference.load_hybrid().
+# kind: "schnet" → SchNetWrapper, "gps" → GPSWrapper, "hybrid" → FusionHead trio.
+# normalized: True → predictions are (raw * y_std + y_mean); False → raw eV.
+MODEL_REGISTRY = {
+    "phase6_schnet": {
+        "kind": "schnet", "checkpoint": MODEL_PHASE6, "params": PARAMS_PHASE6,
+        "normalized": True, "graphs": GRAPHS_PHASE6, "use_charges": True,
+    },
+    "phase7_schnet_300k": {
+        "kind": "schnet", "checkpoint": MODEL_SCHNET_300K, "params": PARAMS_SCHNET_300K,
+        "normalized": False, "use_charges": True,
+    },
+    "phase7_gps_2d": {
+        "kind": "gps", "checkpoint": MODEL_GPS_2D, "params": PARAMS_GPS_2D,
+        "normalized": False,
+    },
+    "phase7_hybrid": {
+        "kind": "hybrid", "checkpoint": MODEL_HYBRID, "metrics": FUSION_METRICS,
+        "normalized": False, "components": ["phase7_gps_2d", "phase7_schnet_300k"],
+    },
+    "phase8_replacement_gps_2d": {
+        "kind": "gps", "checkpoint": MODEL_PHASE8_REPLACEMENT_GPS, "params": PARAMS_GPS_2D,
+        "normalized": False,
+    },
+    "phase8_replacement_schnet_300k": {
+        "kind": "schnet", "checkpoint": MODEL_PHASE8_REPLACEMENT_SCHNET,
+        "params": PARAMS_SCHNET_300K, "normalized": False, "use_charges": True,
+    },
+    "phase8_replacement_hybrid": {
+        "kind": "hybrid", "checkpoint": MODEL_PHASE8_REPLACEMENT_HYBRID,
+        "metrics": FUSION_PHASE8_REPLACEMENT_METRICS, "normalized": False,
+        "components": ["phase8_replacement_gps_2d", "phase8_replacement_schnet_300k"],
+        "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
+    },
+    "phase8_expansion_gps_2d": {
+        "kind": "gps", "checkpoint": MODEL_PHASE8_EXPANSION_GPS, "params": PARAMS_GPS_2D,
+        "normalized": False,
+    },
+    "phase8_expansion_schnet_500k": {
+        "kind": "schnet", "checkpoint": MODEL_PHASE8_EXPANSION_SCHNET,
+        "params": PARAMS_SCHNET_300K, "normalized": False, "use_charges": True,
+    },
+    "phase8_expansion_hybrid": {
+        "kind": "hybrid", "checkpoint": MODEL_PHASE8_EXPANSION_HYBRID,
+        "metrics": FUSION_PHASE8_EXPANSION_METRICS, "normalized": False,
+        "components": ["phase8_expansion_gps_2d", "phase8_expansion_schnet_500k"],
+        "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
+    },
+    "phase8_expansion_gps_depth9": {
+        "kind": "gps", "checkpoint": MODEL_PHASE8_EXPANSION_GPS_DEPTH9,
+        "params": {**PARAMS_GPS_2D, "num_layers": 9}, "normalized": False,
+    },
+    "phase8_routed_dualgps_hybrid": {
+        "kind": "routed_hybrid", "checkpoint": MODEL_PHASE8_EXPANSION_DUALGPS_HYBRID,
+        "normalized": False, "base_hybrid": "phase8_expansion_hybrid",
+        "extra_gps": "phase8_expansion_gps_depth9", "threshold_eV": 4.0,
+        "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
+    },
+    # Repaired-2M pure-2D experts. Each is a direct three-target GPS predictor,
+    # so `kind` is "gps" and no 3D or fusion component exists.
+    "repaired_2m_gps7": {
+        "kind": "gps", "checkpoint": MODEL_REPAIRED_2M_GPS7,
+        "params": PARAMS_GPS_2D, "normalized": False,
+    },
+    "repaired_2m_gps9": {
+        "kind": "gps", "checkpoint": MODEL_REPAIRED_2M_GPS9,
+        "params": {**PARAMS_GPS_2D, "num_layers": 9}, "normalized": False,
+    },
+    "repaired_2m_gps11_160": {
+        "kind": "gps", "checkpoint": MODEL_REPAIRED_2M_GPS11_160,
+        "params": {**PARAMS_GPS_2D, "hidden_channels": 160, "num_layers": 11},
+        "normalized": False,
+    },
+    # Accuracy preset: all three experts run, then a three-seed dense soft gate
+    # blends their predictions per target.
+    "repaired_2m_dense_2d": {
+        "kind": "multi2d_dense", "normalized": False,
+        "experts": ["repaired_2m_gps7", "repaired_2m_gps9", "repaired_2m_gps11_160"],
+        "gates": list(MODELS_REPAIRED_2M_DENSE_GATES),
+        "encoder_passes": 3,
+    },
+    # Lower-cost preset: two experts, fixed equal average, no gate checkpoint.
+    "repaired_2m_equal_2d": {
+        "kind": "multi2d_equal", "normalized": False,
+        "experts": ["repaired_2m_gps7", "repaired_2m_gps9"],
+        "encoder_passes": 2,
+    },
+    "phase8_tail_probe_hybrid": {
+        "kind": "hybrid", "checkpoint": MODEL_PHASE8_TAIL_PROBE_HYBRID,
+        "metrics": FUSION_PHASE8_TAIL_PROBE_METRICS, "normalized": False,
+        "components": ["phase8_expansion_gps_2d", "phase8_expansion_schnet_500k"],
+        "fusion_type": "gate", "hidden": 192, "dropout": 0.0,
+    },
+    # Closed ab3d branch: the checkpoints are no longer retained locally, so
+    # these entries resolve to absent files. Kept as provenance for
+    # `experiments/_closed/ab3d/comparison.md`; loading them raises FileNotFoundError.
+    "tensornet_300k": {
+        "kind": "tensornet", "checkpoint": MODEL_TENSORNET_300K,
+        "params": PARAMS_TENSORNET_300K, "normalized": False, "use_charges": False,
+        "artifact_retained": False,
+    },
+    "hybrid_tensornet": {
+        "kind": "hybrid", "checkpoint": MODEL_HYBRID_TENSORNET,
+        "metrics": FUSION_TENSORNET_METRICS,
+        "normalized": False, "components": ["phase7_gps_2d", "tensornet_300k"],
+        "artifact_retained": False,
+    },
+}
+
+SEED = 42

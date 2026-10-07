@@ -1,0 +1,22 @@
+{
+  "torch": "2.4.1+cu121",
+  "cuda": "12.1",
+  "python": "3.11.15",
+  "torch_geometric": "2.6.1",
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "determinism": {
+    "seed": 42,
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "float32_matmul_precision": "highest"
+  },
+  "payload_sha256": "81dd396d01cac7b36b4762a14f73efc096f8702af097c46ba8f6b88928077509",
+  "started_at_unix": 1791392362.9995067,
+  "scientific_training": false,
+  "optimizer_created": false,
+  "wall_ceiling_seconds": 1200
+}

@@ -1,13 +1,13 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 42,
-  "event_count": 171,
+  "estimated_event_count": 43,
+  "event_count": 176,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-k1-a100-profile-failed-worker"
   ],
-  "measurement_missing_event_count": 147,
-  "not_applicable_event_count": 57,
+  "measurement_missing_event_count": 152,
+  "not_applicable_event_count": 58,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -311,7 +311,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "CPU; no accelerator:device_hours": {
         "estimated": {
@@ -322,7 +322,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 0,
+        "not_applicable_records": 1,
         "unknown_records": 1
       },
       "CPU; no accelerator:queue_hours": {
@@ -335,7 +335,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "CPU; no accelerator:wall_hours": {
         "estimated": {
@@ -347,7 +347,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "CPU_MODEL_UNRECORDED:cpu_hours": {
         "estimated": {
@@ -587,6 +587,54 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.014254614638889001
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100-SXM4-40GB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.046921198813888884
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100-SXM4-40GB:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.048204733000861276
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100-SXM4-40GB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA A100-SXM4-40GB:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.048204733000861276
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -893,7 +941,7 @@
           "known_total": 0.017646426963611114
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "NVIDIA A100-SXM4-40GB:device_hours": {
         "estimated": {
@@ -905,7 +953,7 @@
           "known_total": 0.01769505308734046
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "NVIDIA A100-SXM4-40GB:queue_hours": {
         "estimated": {
@@ -917,7 +965,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 3
       },
       "NVIDIA A100-SXM4-40GB:wall_hours": {
         "estimated": {
@@ -929,7 +977,7 @@
           "known_total": 0.01769505308734046
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "unknown:cpu_hours": {
         "estimated": {
@@ -1125,6 +1173,54 @@
         "not_applicable_records": 0,
         "unknown_records": 0
       },
+      "Colab A100 allocation unmeasured (NVIDIA A100-SXM4-40GB):cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Colab A100 allocation unmeasured (NVIDIA A100-SXM4-40GB):device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Colab A100 allocation unmeasured (NVIDIA A100-SXM4-40GB):queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Colab A100 allocation unmeasured (NVIDIA A100-SXM4-40GB):wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.01087427039941152
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
       "Hygon DCU:cpu_hours": {
         "estimated": {
           "known_records": 0,
@@ -1183,12 +1279,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 4
       },
       "NVIDIA A100-SXM4-40GB:device_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.3333333333333333
+          "known_records": 2,
+          "known_total": 0.6666666666666666
         },
         "measured": {
           "known_records": 0,
@@ -1207,12 +1303,12 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 4
       },
       "NVIDIA A100-SXM4-40GB:wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.3333333333333333
+          "known_records": 2,
+          "known_total": 0.6666666666666666
         },
         "measured": {
           "known_records": 2,
@@ -3075,7 +3171,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "device_hours": {
         "estimated": {
@@ -3086,7 +3182,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 0,
+        "not_applicable_records": 1,
         "unknown_records": 1
       },
       "queue_hours": {
@@ -3099,7 +3195,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "wall_hours": {
         "estimated": {
@@ -3111,7 +3207,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       }
     },
     "CPU; saved-prediction analysis only; accelerator not applicable": {
@@ -3209,6 +3305,56 @@
         "measured": {
           "known_records": 3,
           "known_total": 0.6668580039444454
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "Colab A100 allocation unmeasured (NVIDIA A100-SXM4-40GB)": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.01087427039941152
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -3371,23 +3517,23 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.017646426963611114
+          "known_records": 2,
+          "known_total": 0.0645676257775
         },
         "not_applicable_records": 0,
-        "unknown_records": 5
+        "unknown_records": 7
       },
       "device_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.3333333333333333
+          "known_records": 2,
+          "known_total": 0.6666666666666666
         },
         "measured": {
-          "known_records": 2,
-          "known_total": 0.020116896563106113
+          "known_records": 3,
+          "known_total": 0.0683216295639674
         },
         "not_applicable_records": 0,
-        "unknown_records": 3
+        "unknown_records": 4
       },
       "queue_hours": {
         "estimated": {
@@ -3399,19 +3545,19 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 6
+        "unknown_records": 9
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.3333333333333333
+          "known_records": 2,
+          "known_total": 0.6666666666666666
         },
         "measured": {
-          "known_records": 4,
-          "known_total": 0.03099171625243293
+          "known_records": 5,
+          "known_total": 0.07919644925329421
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       }
     },
     "NVIDIA GeForce RTX 5060": {
@@ -9348,6 +9494,152 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 0
+      }
+    },
+    "TB-k1-bn-mechanism-a100-20261008": {
+      "CPU; no accelerator:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "CPU; no accelerator:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU; no accelerator:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "CPU; no accelerator:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Colab A100 allocation unmeasured (NVIDIA A100-SXM4-40GB):cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Colab A100 allocation unmeasured (NVIDIA A100-SXM4-40GB):device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Colab A100 allocation unmeasured (NVIDIA A100-SXM4-40GB):queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Colab A100 allocation unmeasured (NVIDIA A100-SXM4-40GB):wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.01087427039941152
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA A100-SXM4-40GB:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.046921198813888884
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 2
+      },
+      "NVIDIA A100-SXM4-40GB:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.048204733000861276
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA A100-SXM4-40GB:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 3
+      },
+      "NVIDIA A100-SXM4-40GB:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.048204733000861276
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
       }
     },
     "TB-k1-colab-execution-profile-20261007": {
