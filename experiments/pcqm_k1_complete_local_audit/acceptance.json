@@ -1,0 +1,229 @@
+{
+  "format": "molgap-local-frozen-diagnostic-acceptance-v1",
+  "evidence_id": "pcqm-k1-complete-module-audit-20261008",
+  "run_id": "local-k1-complete-module-audit-20261008",
+  "outcome": {
+    "execution_status": "complete_no_training",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "consumed_role_frozen_diagnostic",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "bounded_local_diagnostic_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_complete_local_audit/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately prospective and authorized training or independent-role validation"
+    ]
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "common": "untouched",
+    "ood": "untouched",
+    "train_decoded": "consumed",
+    "train_descriptive": "consumed",
+    "internal_development_decoded": "consumed",
+    "internal_development_retained_predictions": "consumed",
+    "internal_development": "consumed"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-complete-module-audit-20261008-observed",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU four intra-op threads; no accelerator",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.017992154583334922,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.052643229166666666,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-complete-module-audit-20261008-saved-analysis",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU four intra-op threads; no accelerator",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 6.973908333343894e-05,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.00046440972222222223,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-complete-module-audit-20261008-train_decoded-labels_read",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4",
+      "role_name": "train_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-complete-module-audit-20261008-train_descriptive-prediction_input",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "ae62197a9e6c7e5c74d4b762c8827542f086652a85975d785426adc48206671f",
+      "role_name": "train_descriptive",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-complete-module-audit-20261008-train_descriptive-metric_computed",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "ae62197a9e6c7e5c74d4b762c8827542f086652a85975d785426adc48206671f",
+      "role_name": "train_descriptive",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-complete-module-audit-20261008-internal_development_decoded-labels_read",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development_decoded",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-complete-module-audit-20261008-internal_development_retained_predictions-labels_read",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development_retained_predictions",
+      "access_kind": "labels_read",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-complete-module-audit-20261008-internal_development_retained_predictions-metric_computed",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "internal_development_retained_predictions",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-complete-module-audit-20261008-internal_development-prediction_input",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "3ede8a342d5ca0205cb3d1220b1a3f4e62c91e3ec0026e1c4594c69203703e11",
+      "role_name": "internal_development",
+      "access_kind": "prediction_input",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-complete-module-audit-20261008-internal_development-metric_computed",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "3ede8a342d5ca0205cb3d1220b1a3f4e62c91e3ec0026e1c4594c69203703e11",
+      "role_name": "internal_development",
+      "access_kind": "metric_computed",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-complete-module-audit-20261008-internal_development-selection_used",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "3ede8a342d5ca0205cb3d1220b1a3f4e62c91e3ec0026e1c4594c69203703e11",
+      "role_name": "internal_development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json"
+    }
+  ],
+  "checks": {
+    "strict_state_loading": true,
+    "source_and_artifact_hashes": true,
+    "selected_clean_reconstruction": true,
+    "exact_rows_targets": true,
+    "finite_predictions": true,
+    "state_and_hooks_restored": true,
+    "no_training_or_gradients": true,
+    "protected_roles_untouched": true
+  },
+  "comparison_class": "CONTEXT_ONLY",
+  "analysis_ref": "experiments/pcqm_k1_complete_local_audit/results/result.json",
+  "cost_scope": "Worker hashing/loading/calibration/inference/analysis; excludes preparation/tests/Git and historical comparator execution",
+  "execution_scope": "Frozen CPU inference, no optimizer, training trace or training replay-ready claim"
+}

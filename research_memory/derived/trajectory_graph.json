@@ -236,6 +236,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-complete-module-audit-20261008:A001",
+      "target": "experiments/pcqm_k1_complete_local_audit/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-dropout-consistency2-kaggle3-100k-s42-v1:A001",
       "target": "experiments/pcqm_k1_dropout_consistency/protocol.md",
       "type": "action_produced_evidence"
@@ -273,6 +278,11 @@
     {
       "source": "TB-k1-gptrans-full-fusion-r3:A001",
       "target": "experiments/pcqm_k1_gptrans_full_fusion/results/accepted_k1_gptrans_fusion_r3/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-late-weight-average-20261008:A001",
+      "target": "experiments/pcqm_k1_late_weight_average/inputs.json",
       "type": "action_produced_evidence"
     },
     {
@@ -1421,6 +1431,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-500k-bn-calibration-20261007",
+      "target": "TB-k1-complete-module-audit-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-500k-bn-calibration-20261007",
+      "target": "TB-k1-late-weight-average-20261008",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "target": "TB-k1-500k-bn-calibration-20261007",
       "type": "prior_evidence"
@@ -1431,8 +1451,33 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+      "target": "TB-k1-complete-module-audit-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+      "target": "TB-k1-late-weight-average-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "TB-k1-complete-module-audit-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "TB-k1-late-weight-average-20261008",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-colab-execution-profile-20261007",
       "target": "TB-k1-bn-mechanism-a100-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-colab-execution-profile-20261007",
+      "target": "TB-k1-complete-module-audit-20261008",
       "type": "prior_evidence"
     },
     {
@@ -2259,6 +2304,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-complete-module-audit-20261008",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-consistency-fusion-transfer-20261004",
       "type": "evidence"
     },
@@ -2296,6 +2345,10 @@
     },
     {
       "id": "pcqm-k1-gptrans-full-fusion-r3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-late-weight-average-20261008",
       "type": "evidence"
     },
     {
@@ -2623,6 +2676,10 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-k1-complete-module-audit-20261008",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-k1-consistency-fusion-transfer-20261004",
       "type": "trajectory"
     },
@@ -2660,6 +2717,10 @@
     },
     {
       "id": "TB-k1-gptrans-full-fusion-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-late-weight-average-20261008",
       "type": "trajectory"
     },
     {

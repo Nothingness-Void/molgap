@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "other",
+  "cost_event_id": "cost-k1-complete-module-audit-20261008-saved-analysis",
+  "evidence_ref": "experiments/pcqm_k1_complete_local_audit/acceptance.json",
+  "hardware": "CPU four intra-op threads; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.00046440972222222223
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 6.973908333343894e-05
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-complete-module-audit-20261008",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-complete-module-audit-20261008"
+}

@@ -1,0 +1,11 @@
+{
+  "train_graph_labels": "16384 decoded retained members; no loss",
+  "train_features": "1024 prefix and1024 extension descriptive input",
+  "internal_development_decoded": "50000 retained labels and baseline predictions decoded",
+  "internal_development": "4096 stratified diagnostic input/metrics; historically selection-used",
+  "official_validation": "untouched",
+  "test_dev": "untouched",
+  "test_challenge": "untouched",
+  "common": "untouched",
+  "ood": "untouched"
+}

@@ -1,0 +1,13 @@
+{
+  "case": "final_original",
+  "mae_eV": 0.1057246065235138,
+  "inference": {
+    "rows": 50000,
+    "wall_seconds": 31.052748000001884,
+    "process_cpu_seconds": 123.390625,
+    "forward_seconds": 29.95051410006272,
+    "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+  },
+  "calibration": null,
+  "state_restored": true
+}

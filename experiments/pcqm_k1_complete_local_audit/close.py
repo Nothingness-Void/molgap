@@ -15,4 +15,5 @@ if __name__ == "__main__":
         role_rows={"train_decoded": {"labels_read": inputs["train_source_idx"]},
                    "train_descriptive": {"prediction_input": train, "metric_computed": train},
                    "internal_development_decoded": {"labels_read": inputs["development_source_idx"]},
+                   "internal_development_retained_predictions": {a:inputs["development_source_idx"] for a in ("labels_read", "metric_computed")},
                    "internal_development": {a:dev for a in ("prediction_input", "metric_computed", "selection_used")}}))

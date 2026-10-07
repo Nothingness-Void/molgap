@@ -1,0 +1,34 @@
+{
+  "case": "edge_memory_reset",
+  "kind": "edge_memory",
+  "layers": [],
+  "mae_eV": 0.624356709246058,
+  "paired_gain": {
+    "delta": -0.5219502816325985,
+    "ci95": [
+      -0.5377451514053974,
+      -0.5064034587179777
+    ],
+    "n_bootstrap": 1000,
+    "seed": 20261009,
+    "delta_sign": "baseline absolute error minus case absolute error; positive improves",
+    "probability_nonnegative_gain": 0.0
+  },
+  "prediction_rms_shift_eV": 0.7816606163978577,
+  "inference": {
+    "rows": 4096,
+    "wall_seconds": 2.5542009999990114,
+    "process_cpu_seconds": 9.96875,
+    "forward_seconds": 2.459147400018992,
+    "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+  },
+  "restoration_inference": {
+    "rows": 128,
+    "wall_seconds": 0.07495769999513868,
+    "process_cpu_seconds": 0.3125,
+    "forward_seconds": 0.07208770000579534,
+    "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+  },
+  "state_and_hooks_restored": true,
+  "interpretation": "posthoc coadapted frozen sensitivity; not a training benefit"
+}

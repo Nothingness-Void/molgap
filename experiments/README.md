@@ -13,6 +13,8 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| What do all retained K1 modules, states and costs support as the next route? | Accepted NO_TRAIN complete local audit; fourteen frozen controls worsen, state/cost simplification prioritized conditionally, no adoption | [Complete audit](pcqm_k1_complete_local_audit/analysis_zh.md) |
+| Does fixed epoch49/60 parameter averaging rescue clean K1? | Accepted NO_TRAIN; equal endpoint average worsens selected-clean, true stepwise EMA unresolved | [Average decision](pcqm_k1_late_weight_average/terminal_decision.md) |
 | Does dropout or repeated calibration explain frozen K1 BN error? | Accepted NO_TRAIN A100 diagnostic: dropout-enabled buffer estimation degrades clean inference; clean repeated passes are near-null; no new material mechanism nomination or model adoption | [BN mechanism decision](pcqm_k1_bn_mechanism_a100/terminal_decision.md) |
 | What dominates retained K1 two-forward execution on A100? | Accepted NO_TRAIN execution diagnostic; two-forward overhead dominates loader differences in the bounded sample, native T4 and single-pass MAE remain unqualified | [A100 profile decision](pcqm_k1_colab_execution_profile/terminal_decision.md) |
 | Does training-member BN recalibration improve the retained K1 500K predictor? | Accepted NO_TRAIN diagnostic:1.245meV full50K development gain with frozen learned parameters; nomination for separate qualification, no model adoption | [pcqm_k1_500k_bn_calibration](pcqm_k1_500k_bn_calibration/terminal_decision.md) |

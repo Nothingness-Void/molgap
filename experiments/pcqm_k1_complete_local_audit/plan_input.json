@@ -1,0 +1,141 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-complete-module-audit-20261008",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "k1-complete-module-audit",
+    "question": "Which frozen K1 paths remain useful after clean BN, and which retained mechanisms justify a next route?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-complete-module-audit-20261008",
+      "observed_deficiency": "K1 remains slower and above contextual GPTrans EMA after BN repair; isolated histories do not form a complete causal explanation.",
+      "supporting_evidence_ids": [
+        "pcqm-k1-500k-bn-calibration-20261007",
+        "pcqm-k1-bn-mechanism-a100-20261008",
+        "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "alternative_explanations": [
+        "Every path remains coadapted and useful",
+        "State/selection effects dominate",
+        "Single-slot dilution is structural but not empirically limiting"
+      ],
+      "changed_mechanism": "Fixed half-scale component sensitivities and edge-memory reset, passive complete-module observations; no weights learned",
+      "cheapest_falsifier": "One stratified6K baseline and14development4K controls with retained historical evidence",
+      "decision_changed_if_positive": "Rank a precise training discriminator from supported dependency/state evidence; NO_TRAIN",
+      "decision_changed_if_negative": "Reject unsupported module narratives and list unresolved causal controls; NO_TRAIN",
+      "expected_native_cost_ref": "cost-k1-complete-module-audit-expected",
+      "related_closed_family_ids": [
+        "k1-500k-bn-calibration",
+        "k1-bn-mechanism-a100",
+        "k1-500k-frozen-bottleneck-diagnostic"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "8955c057be14dc45fb2740ef4c48de1111d93e43",
+      "source_config_identity": "cb85ac93889b8a9a37cffec04f17e6f02d725e92c182e214aeb55066414029ac",
+      "contract_refs": [
+        "experiments/pcqm_k1_complete_local_audit/protocol.md",
+        "experiments/pcqm_k1_complete_local_audit/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-500k-bn-calibration-20261007",
+        "pcqm-k1-bn-mechanism-a100-20261008",
+        "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_complete_local_audit/roles.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_complete_local_audit/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_frozen_module_audit",
+        "run_ids": [
+          "local-k1-complete-module-audit-20261008"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "8955c057be14dc45fb2740ef4c48de1111d93e43",
+        "evidence_refs": [
+          "experiments/pcqm_k1_complete_local_audit/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-complete-module-audit-expected"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_complete_local_audit/decision.md",
+      "next_allowed_actions": [
+        "One bounded CPU module audit"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_complete_local_audit/protocol.md",
+    "comparison_blockers": [
+      "Coadapted frozen perturbations do not estimate retraining benefit",
+      "Consumed selection cohort and exploratory controls"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-complete-module-audit-expected",
+      "trajectory_id": "TB-k1-complete-module-audit-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-complete-module-audit-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU four threads; no accelerator",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_complete_local_audit/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-complete-module-audit",
+    "policy_version": "1",
+    "state_timestamp": "2026-10-07T17:59:41.854243+00:00",
+    "source_commit": "8955c057be14dc45fb2740ef4c48de1111d93e43",
+    "budget_snapshot_ref": "experiments/pcqm_k1_complete_local_audit/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_complete_local_audit/roles.json"
+    ]
+  }
+}

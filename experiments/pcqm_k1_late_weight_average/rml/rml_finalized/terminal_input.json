@@ -1,0 +1,374 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_late_weight_average/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_late_weight_average/README.md": "4a651b71a1d5b257e5de640d649430ad933d5ddeafc75670a0a337177722a197",
+    "experiments/pcqm_k1_late_weight_average/acceptance.json": "d2cd81191823aa5b20045c8af24907aba1cfc2584458bdf380f2f6a6f0f9a4fc",
+    "experiments/pcqm_k1_late_weight_average/attribution.md": "ef28f8b3dbb1b4b3d055af142c8ba1b22bb580d9b55f201d4281f2fbd68ad587",
+    "experiments/pcqm_k1_late_weight_average/close.py": "c6a8a7d4e786175fee223b828a3cb521b083ba0f0c7528f5ccb7ca8cd6b75551",
+    "experiments/pcqm_k1_late_weight_average/decision.md": "b3a6e0e55749ebdc3b0465cb75d6a86343e3c7d8581553bf01282783834b8c38",
+    "experiments/pcqm_k1_late_weight_average/inputs.json": "f1d3bf302a2020f1be20f8f8a7fb6f7f937d9e10ff5282b2dd6048202f41af35",
+    "experiments/pcqm_k1_late_weight_average/plan_input.json": "96bf5a4f586f3b25a1c3e9b8c09097c15c6466183ea1d1cb242b3f54179b5533",
+    "experiments/pcqm_k1_late_weight_average/plan_receipt.json": "39e148addbe8ae06f1beb3a81626ddbcfa3618cf0ea5fc4bdcf9a157fbb757ec",
+    "experiments/pcqm_k1_late_weight_average/prepare.py": "8cd7d74aac1b20cb2e84e7d4484c9f0acd3b5a9221df1dabe1f267bfca919f16",
+    "experiments/pcqm_k1_late_weight_average/protocol.md": "164d4c506d566986a9cb67d052369dae092219b5427f807b0db15b42d92e9235",
+    "experiments/pcqm_k1_late_weight_average/results/average_clean_bn.json": "285da70ba9773e8fef33d3118cffb971893378112d891ffb37ed945d46685a25",
+    "experiments/pcqm_k1_late_weight_average/results/average_clean_bn.pt": "bf38097b70fbc472f40c68c9b4d4e9109ec3c6caa487d5263ea76d3df5b19376",
+    "experiments/pcqm_k1_late_weight_average/results/average_clean_bn_buffers.pt": "bc4c92dbbec9fa5511d9cba795725670b49b5cfc4ee0722f493bae74156a08ee",
+    "experiments/pcqm_k1_late_weight_average/results/average_selected_bn.json": "8f80c6dbba278d6e8c3c04dd36a300be27773a4676c91fa7ea6e09072c3a15bf",
+    "experiments/pcqm_k1_late_weight_average/results/average_selected_bn.pt": "ce89056a80d5f0d4c8df654293914a4b1dd83f8ed745f3eec5c3239f5411d928",
+    "experiments/pcqm_k1_late_weight_average/results/average_state.pt": "c28947ad9e6e4ebeed4fb659483c187d79bf7eeaab4df24d2943a0186474a921",
+    "experiments/pcqm_k1_late_weight_average/results/completion.json": "59622f3a19285bb0f92f5742b708393c6070609a82bcae5c4992d4a654850663",
+    "experiments/pcqm_k1_late_weight_average/results/final_clean_bn.json": "4ee9f93ada2a4d005f246fe7201dc2ab89dc81eed9d7bdfceed34378b419e335",
+    "experiments/pcqm_k1_late_weight_average/results/final_clean_bn.pt": "175280e599f31a5a0a27bf22fde0cdb7e55d8ee052027eec658ba537dc2252ad",
+    "experiments/pcqm_k1_late_weight_average/results/final_clean_bn_buffers.pt": "4cca34425b87a4914504522743eaa323652edb98c6522ac6243829ce57587315",
+    "experiments/pcqm_k1_late_weight_average/results/final_original.json": "2394f10ea9f57d7a1128195cd9e8d16bc16dcb71904cf5cb14169ed6357e5fd6",
+    "experiments/pcqm_k1_late_weight_average/results/final_original.pt": "66340b8d354ddd951b65abda324bd5a23cbd3ca6a4900501d74139d5e1e0886b",
+    "experiments/pcqm_k1_late_weight_average/results/fixed_clean_prediction_blend.pt": "4fafda1c7b14a2cb3e896cd03ef3c0b671ae7e84d852c310cce96c6ca9c575f7",
+    "experiments/pcqm_k1_late_weight_average/results/result.json": "e6a3b262d1bb2c546e39899f6549af507acb41abe94a1bc6f9695972dcd290e3",
+    "experiments/pcqm_k1_late_weight_average/roles.json": "33f456858b160312ae2b5a02ff95a2c694b2354fe39d2cdfb809fc56f7d27609",
+    "experiments/pcqm_k1_late_weight_average/run.py": "8f839f2a12509101b0c24731389ca5811a005aa60c3e212d168d864b3b055bc9",
+    "experiments/pcqm_k1_late_weight_average/terminal_decision.md": "02d4ba2ca10558907c1c4ead0e61900c61ae4bc216a2ceb7b0795a0bd44797e9",
+    "research_memory/policies/pcqm-k1-late-weight-average.1.json": "d8e2aec076723b4c5999308f11b3740f1752aaa5ef639d52a7676dfaf6d73f60",
+    "src/molgap/frozen_diagnostic_closure.py": "e9f2831c2f1803369e43a82250eb8e2a028f1c3426675844f19f43f76e2b0405",
+    "src/molgap/k1_bn_calibration.py": "4e32954540591ed0d7033caaa81908f652ed2f467c78a284c02b0b126132fe57",
+    "src/molgap/k1_frozen_inference.py": "dd88f9e3bbbb5aac8f6c55c6482e3db9b969725bf1a1db1e6e7d26ed5223217e",
+    "src/molgap/k1_weight_average_diagnostic.py": "fd8975c9f515abb8131b1f8bfe40e0dbbaceb0395e8887231f9d86eacdd4c71a"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "inference",
+      "cost_event_id": "cost-k1-late-weight-average-20261008-observed",
+      "evidence_ref": "experiments/pcqm_k1_late_weight_average/acceptance.json",
+      "hardware": "CPU four intra-op threads; no accelerator",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.16620659722222222
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.046875731027778075
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "local-k1-late-weight-average-20261008",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-late-weight-average-20261008"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_late_weight_average/terminal_decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Separately prospective and authorized training or independent-role validation"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "d2cd81191823aa5b20045c8af24907aba1cfc2584458bdf380f2f6a6f0f9a4fc"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/attribution.md",
+        "name": "attribution.md",
+        "sha256": "ef28f8b3dbb1b4b3d055af142c8ba1b22bb580d9b55f201d4281f2fbd68ad587"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/close.py",
+        "name": "close.py",
+        "sha256": "c6a8a7d4e786175fee223b828a3cb521b083ba0f0c7528f5ccb7ca8cd6b75551"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/decision.md",
+        "name": "decision.md",
+        "sha256": "b3a6e0e55749ebdc3b0465cb75d6a86343e3c7d8581553bf01282783834b8c38"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/inputs.json",
+        "name": "inputs.json",
+        "sha256": "f1d3bf302a2020f1be20f8f8a7fb6f7f937d9e10ff5282b2dd6048202f41af35"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/plan_input.json",
+        "name": "plan_input.json",
+        "sha256": "96bf5a4f586f3b25a1c3e9b8c09097c15c6466183ea1d1cb242b3f54179b5533"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/plan_receipt.json",
+        "name": "plan_receipt.json",
+        "sha256": "39e148addbe8ae06f1beb3a81626ddbcfa3618cf0ea5fc4bdcf9a157fbb757ec"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/prepare.py",
+        "name": "prepare.py",
+        "sha256": "8cd7d74aac1b20cb2e84e7d4484c9f0acd3b5a9221df1dabe1f267bfca919f16"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/protocol.md",
+        "name": "protocol.md",
+        "sha256": "164d4c506d566986a9cb67d052369dae092219b5427f807b0db15b42d92e9235"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/README.md",
+        "name": "README.md",
+        "sha256": "4a651b71a1d5b257e5de640d649430ad933d5ddeafc75670a0a337177722a197"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/roles.json",
+        "name": "roles.json",
+        "sha256": "33f456858b160312ae2b5a02ff95a2c694b2354fe39d2cdfb809fc56f7d27609"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/run.py",
+        "name": "run.py",
+        "sha256": "8f839f2a12509101b0c24731389ca5811a005aa60c3e212d168d864b3b055bc9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/terminal_decision.md",
+        "name": "terminal_decision.md",
+        "sha256": "02d4ba2ca10558907c1c4ead0e61900c61ae4bc216a2ceb7b0795a0bd44797e9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/average_clean_bn.json",
+        "name": "results/average_clean_bn.json",
+        "sha256": "285da70ba9773e8fef33d3118cffb971893378112d891ffb37ed945d46685a25"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/average_clean_bn.pt",
+        "name": "results/average_clean_bn.pt",
+        "sha256": "bf38097b70fbc472f40c68c9b4d4e9109ec3c6caa487d5263ea76d3df5b19376"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/average_clean_bn_buffers.pt",
+        "name": "results/average_clean_bn_buffers.pt",
+        "sha256": "bc4c92dbbec9fa5511d9cba795725670b49b5cfc4ee0722f493bae74156a08ee"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/average_selected_bn.json",
+        "name": "results/average_selected_bn.json",
+        "sha256": "8f80c6dbba278d6e8c3c04dd36a300be27773a4676c91fa7ea6e09072c3a15bf"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/average_selected_bn.pt",
+        "name": "results/average_selected_bn.pt",
+        "sha256": "ce89056a80d5f0d4c8df654293914a4b1dd83f8ed745f3eec5c3239f5411d928"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/average_state.pt",
+        "name": "results/average_state.pt",
+        "sha256": "c28947ad9e6e4ebeed4fb659483c187d79bf7eeaab4df24d2943a0186474a921"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/completion.json",
+        "name": "results/completion.json",
+        "sha256": "59622f3a19285bb0f92f5742b708393c6070609a82bcae5c4992d4a654850663"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/final_clean_bn.json",
+        "name": "results/final_clean_bn.json",
+        "sha256": "4ee9f93ada2a4d005f246fe7201dc2ab89dc81eed9d7bdfceed34378b419e335"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/final_clean_bn.pt",
+        "name": "results/final_clean_bn.pt",
+        "sha256": "175280e599f31a5a0a27bf22fde0cdb7e55d8ee052027eec658ba537dc2252ad"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/final_clean_bn_buffers.pt",
+        "name": "results/final_clean_bn_buffers.pt",
+        "sha256": "4cca34425b87a4914504522743eaa323652edb98c6522ac6243829ce57587315"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/final_original.json",
+        "name": "results/final_original.json",
+        "sha256": "2394f10ea9f57d7a1128195cd9e8d16bc16dcb71904cf5cb14169ed6357e5fd6"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/final_original.pt",
+        "name": "results/final_original.pt",
+        "sha256": "66340b8d354ddd951b65abda324bd5a23cbd3ca6a4900501d74139d5e1e0886b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/fixed_clean_prediction_blend.pt",
+        "name": "results/fixed_clean_prediction_blend.pt",
+        "sha256": "4fafda1c7b14a2cb3e896cd03ef3c0b671ae7e84d852c310cce96c6ca9c575f7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_late_weight_average/results/result.json",
+        "name": "results/result.json",
+        "sha256": "e6a3b262d1bb2c546e39899f6549af507acb41abe94a1bc6f9695972dcd290e3"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_late_weight_average/protocol.md",
+        "experiments/pcqm_k1_late_weight_average/terminal_decision.md",
+        "experiments/pcqm_k1_late_weight_average/attribution.md",
+        "experiments/pcqm_k1_late_weight_average/acceptance.json",
+        "experiments/pcqm_k1_late_weight_average/results/result.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-late-weight-average-20261008",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-k1-late-weight-average-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-07",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Metadata finalization of separately executed local diagnostic; no model execution in closure"
+    },
+    "observed_execution": {
+      "execution_ref": "experiments/pcqm_k1_late_weight_average/results/result.json",
+      "inference_executed": true,
+      "training_executed": false,
+      "training_replay_ready": false
+    },
+    "outcome": {
+      "artifact_status": "local_hash_verified",
+      "budget_decision": "bounded_local_diagnostic_complete",
+      "comparison_status": "consumed_role_frozen_diagnostic",
+      "execution_status": "complete_no_training",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "common": "untouched",
+      "internal_development": "consumed",
+      "official_validation": "untouched",
+      "ood": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train_features": "consumed"
+    },
+    "scope": "pcqm-k1-late-weight-average",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-07T18:19:51.234180+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_late_weight_average/acceptance.json",
+      "role_event_id": "role-k1-late-weight-average-20261008-train_features-labels_read",
+      "role_name": "train_features",
+      "row_manifest_hash": "8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4",
+      "run_id": "local-k1-late-weight-average-20261008",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-late-weight-average-20261008"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_late_weight_average/acceptance.json",
+      "role_event_id": "role-k1-late-weight-average-20261008-train_features-prediction_input",
+      "role_name": "train_features",
+      "row_manifest_hash": "8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4",
+      "run_id": "local-k1-late-weight-average-20261008",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-late-weight-average-20261008"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_late_weight_average/acceptance.json",
+      "role_event_id": "role-k1-late-weight-average-20261008-internal_development-labels_read",
+      "role_name": "internal_development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "local-k1-late-weight-average-20261008",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-k1-late-weight-average-20261008"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_late_weight_average/acceptance.json",
+      "role_event_id": "role-k1-late-weight-average-20261008-internal_development-prediction_input",
+      "role_name": "internal_development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "local-k1-late-weight-average-20261008",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-k1-late-weight-average-20261008"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_late_weight_average/acceptance.json",
+      "role_event_id": "role-k1-late-weight-average-20261008-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "local-k1-late-weight-average-20261008",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-k1-late-weight-average-20261008"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_late_weight_average/acceptance.json",
+      "role_event_id": "role-k1-late-weight-average-20261008-internal_development-selection_used",
+      "role_name": "internal_development",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "run_id": "local-k1-late-weight-average-20261008",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-k1-late-weight-average-20261008"
+    }
+  ],
+  "run_id": "local-k1-late-weight-average-20261008",
+  "trajectory_id": "TB-k1-late-weight-average-20261008"
+}

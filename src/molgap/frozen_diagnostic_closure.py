@@ -27,7 +27,8 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
         raise ValueError("Diagnostic is incomplete")
     if not result.get("checks") or not all(v is True for v in result["checks"].values()):
         raise ValueError("Diagnostic checks failed")
-    if result.get("runtime", {}).get("device") != "cpu":
+    runtime = result.get("runtime", {})
+    if runtime.get("device") != "cpu" or runtime.get("cpu_threads") != inputs.get("cpu_threads") or runtime.get("cpu_threads") != 4:
         raise ValueError("This adapter owns local CPU diagnostics only")
     if result.get("optimizer_created") is not False or result.get("gradients_computed") is not False or result.get("training_executed") is not False:
         raise ValueError("Unexpected training or gradients")
@@ -37,6 +38,24 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
             raise ValueError(f"Result identity differs: {key}")
     if completion.get("inputs_sha256") != result["inputs_sha256"]:
         raise ValueError("Completion input identity differs")
+    train, dev = inputs["train_source_idx"], inputs["development_source_idx"]
+    if result["format"] == "molgap-k1-endpoint-average-diagnostic-v1":
+        expected_roles = {"train_features": {"labels_read": train, "prediction_input": train},
+                          "internal_development": {a:dev for a in ("labels_read", "prediction_input", "metric_computed", "selection_used")}}
+    elif result["format"] == "molgap-k1-component-diagnostic-v1":
+        sample = result["sample_source_idx"]
+        sample_dev, sample_train = [i for i in sample if i >= 500000], [i for i in sample if i < 500000]
+        if not set(sample_dev) <= set(dev) or not set(sample_train) <= set(train):
+            raise ValueError("Observed sample escaped its declared roles")
+        expected_roles = {"train_decoded": {"labels_read": train},
+                          "train_descriptive": {"prediction_input": sample_train, "metric_computed": sample_train},
+                          "internal_development_decoded": {"labels_read": dev},
+                          "internal_development_retained_predictions": {a:dev for a in ("labels_read", "metric_computed")},
+                          "internal_development": {a:sample_dev for a in ("prediction_input", "metric_computed", "selection_used")}}
+    else:
+        raise ValueError("Unsupported diagnostic result format")
+    if role_rows != expected_roles:
+        raise ValueError("Caller role events differ from observed diagnostic membership")
     actual = {p.name for p in (experiment / "results").iterdir() if p.is_file() and p.name != "completion.json" and p.suffix in {".json", ".pt"}}
     if actual != set(completion["files"]):
         raise ValueError("Completion inventory differs")
@@ -71,6 +90,19 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
                              "device_hours": {"value": None, "status": "not_applicable"},
                              "queue_hours": {"value": None, "status": "not_applicable"}})
     roles = []
+    costs = [cost]
+    if result["format"] == "molgap-k1-component-diagnostic-v1":
+        summary = read(experiment / "retained_prediction_summary.json")
+        if summary.get("inference_executed") is not False or summary.get("training_executed") is not False or summary.get("rows") != len(dev):
+            raise ValueError("Retained-prediction analysis scope differs")
+        for name, digest in summary["source_hashes"].items():
+            if digest != inputs["artifacts"][name]["sha256"]:
+                raise ValueError("Retained-prediction analysis input differs")
+        summary_cost = dict(cost, cost_event_id=f"cost-{short}-saved-analysis", category="other")
+        summary_cost["measurement"] = dict(cost["measurement"],
+            wall_hours={"value":summary["wall_seconds"]/3600,"status":"measured"},
+            cpu_hours={"value":summary["process_cpu_seconds"]/3600,"status":"measured"})
+        costs.append(summary_cost)
     role_use = dict.fromkeys(("official_validation", "test_dev", "test_challenge", "common", "ood"), "untouched")
     for role, observations in role_rows.items():
         role_use[role] = "consumed"
@@ -86,7 +118,7 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
                               evidence_ref=f"{rel}/acceptance.json"))
     acceptance = dict(format="molgap-local-frozen-diagnostic-acceptance-v1", evidence_id=evidence_id,
                       run_id=run, outcome=outcome, trajectory_decision=decision, role_use=role_use,
-                      costs=[cost], roles=roles, checks=result["checks"], comparison_class="CONTEXT_ONLY",
+                      costs=costs, roles=roles, checks=result["checks"], comparison_class="CONTEXT_ONLY",
                       analysis_ref=f"{rel}/results/result.json", cost_scope="Worker hashing/loading/calibration/inference/analysis; excludes preparation/tests/Git and historical comparator execution",
                       execution_scope="Frozen CPU inference, no optimizer, training trace or training replay-ready claim")
     atomic_json(experiment / "acceptance.json", acceptance)
@@ -107,6 +139,6 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
                                for n, h in hashes.items() if n.startswith(rel + "/")])
     terminal = dict(format="molgap-rml-terminal-package-v1", trajectory_id=tid, run_id=run, action_id=action["action_id"],
                     finalized_at=datetime.now(timezone.utc).isoformat(), acceptance_ref=f"{rel}/acceptance.json",
-                    artifact_hashes=hashes, evidence=evidence, decision=decision, costs=[cost], roles=roles)
+                    artifact_hashes=hashes, evidence=evidence, decision=decision, costs=costs, roles=roles)
     atomic_json(experiment / "terminal.json", terminal)
     return finalize(repo, f"{rel}/rml", f"{rel}/terminal.json")

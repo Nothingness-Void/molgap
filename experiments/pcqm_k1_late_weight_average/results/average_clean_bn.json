@@ -1,0 +1,139 @@
+{
+  "case": "average_clean_bn",
+  "mae_eV": 0.1038496684217453,
+  "inference": {
+    "rows": 50000,
+    "wall_seconds": 31.10847130000184,
+    "process_cpu_seconds": 123.34375,
+    "forward_seconds": 30.005346300065867,
+    "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+  },
+  "calibration": {
+    "rows": 16384,
+    "batches": 128,
+    "bn_modules": 18,
+    "num_batches_tracked": {
+      "local_blocks.0.norm1.module": 128,
+      "local_blocks.0.norm3.module": 128,
+      "local_blocks.1.norm1.module": 128,
+      "local_blocks.1.norm3.module": 128,
+      "local_blocks.2.norm1.module": 128,
+      "local_blocks.2.norm3.module": 128,
+      "local_blocks.3.norm1.module": 128,
+      "local_blocks.3.norm3.module": 128,
+      "local_blocks.4.norm1.module": 128,
+      "local_blocks.4.norm3.module": 128,
+      "local_blocks.5.norm1.module": 128,
+      "local_blocks.5.norm3.module": 128,
+      "local_blocks.6.norm1.module": 128,
+      "local_blocks.6.norm3.module": 128,
+      "local_blocks.7.norm1.module": 128,
+      "local_blocks.7.norm3.module": 128,
+      "local_blocks.8.norm1.module": 128,
+      "local_blocks.8.norm3.module": 128
+    },
+    "wall_seconds": 9.859032699998352,
+    "process_cpu_seconds": 39.140625,
+    "parameters_unchanged": true,
+    "non_bn_buffers_unchanged": true,
+    "dropout_disabled": true,
+    "passes_per_batch": 1,
+    "labels_used_for_calibration": false,
+    "buffer_sha256_before": "e9da5974668b4199576ccb6ca5ffa6b40ff31755330292a5e8c2859e03c87970",
+    "buffer_sha256_calibrated": "38b6388ec8227c43b0ba34ab9aeadc8b48457a563b4746ace42a8d1fc878892f",
+    "bn_changes": {
+      "local_blocks.0.norm1.module": {
+        "running_mean_rms_change": 0.025801032781600952,
+        "running_var_mean_before": 2.767319679260254,
+        "running_var_mean_after": 2.6782305240631104
+      },
+      "local_blocks.0.norm3.module": {
+        "running_mean_rms_change": 0.008057995699346066,
+        "running_var_mean_before": 1.08395254611969,
+        "running_var_mean_after": 1.083659291267395
+      },
+      "local_blocks.1.norm1.module": {
+        "running_mean_rms_change": 0.05379467457532883,
+        "running_var_mean_before": 29.04168701171875,
+        "running_var_mean_after": 28.6522159576416
+      },
+      "local_blocks.1.norm3.module": {
+        "running_mean_rms_change": 0.008738582953810692,
+        "running_var_mean_before": 1.2516371011734009,
+        "running_var_mean_after": 1.2460561990737915
+      },
+      "local_blocks.2.norm1.module": {
+        "running_mean_rms_change": 0.03672453761100769,
+        "running_var_mean_before": 19.193296432495117,
+        "running_var_mean_after": 19.02204132080078
+      },
+      "local_blocks.2.norm3.module": {
+        "running_mean_rms_change": 0.009212578646838665,
+        "running_var_mean_before": 1.3137348890304565,
+        "running_var_mean_after": 1.3134528398513794
+      },
+      "local_blocks.3.norm1.module": {
+        "running_mean_rms_change": 0.0511661097407341,
+        "running_var_mean_before": 14.95792007446289,
+        "running_var_mean_after": 14.828661918640137
+      },
+      "local_blocks.3.norm3.module": {
+        "running_mean_rms_change": 0.010789724066853523,
+        "running_var_mean_before": 1.1741207838058472,
+        "running_var_mean_after": 1.1792935132980347
+      },
+      "local_blocks.4.norm1.module": {
+        "running_mean_rms_change": 0.037747472524642944,
+        "running_var_mean_before": 16.26824188232422,
+        "running_var_mean_after": 16.201677322387695
+      },
+      "local_blocks.4.norm3.module": {
+        "running_mean_rms_change": 0.010946478694677353,
+        "running_var_mean_before": 1.1905728578567505,
+        "running_var_mean_after": 1.186779499053955
+      },
+      "local_blocks.5.norm1.module": {
+        "running_mean_rms_change": 0.05302360653877258,
+        "running_var_mean_before": 20.63525390625,
+        "running_var_mean_after": 20.71883773803711
+      },
+      "local_blocks.5.norm3.module": {
+        "running_mean_rms_change": 0.012844023294746876,
+        "running_var_mean_before": 1.2656927108764648,
+        "running_var_mean_after": 1.2657960653305054
+      },
+      "local_blocks.6.norm1.module": {
+        "running_mean_rms_change": 0.07265765964984894,
+        "running_var_mean_before": 22.522981643676758,
+        "running_var_mean_after": 22.60306739807129
+      },
+      "local_blocks.6.norm3.module": {
+        "running_mean_rms_change": 0.021395426243543625,
+        "running_var_mean_before": 1.237866759300232,
+        "running_var_mean_after": 1.2370465993881226
+      },
+      "local_blocks.7.norm1.module": {
+        "running_mean_rms_change": 0.07814779132604599,
+        "running_var_mean_before": 38.618099212646484,
+        "running_var_mean_after": 38.74226760864258
+      },
+      "local_blocks.7.norm3.module": {
+        "running_mean_rms_change": 0.03338224068284035,
+        "running_var_mean_before": 1.2494648694992065,
+        "running_var_mean_after": 1.2459864616394043
+      },
+      "local_blocks.8.norm1.module": {
+        "running_mean_rms_change": 0.09075470268726349,
+        "running_var_mean_before": 69.10934448242188,
+        "running_var_mean_after": 68.4377212524414
+      },
+      "local_blocks.8.norm3.module": {
+        "running_mean_rms_change": 0.042942341417074203,
+        "running_var_mean_before": 2.349539041519165,
+        "running_var_mean_after": 2.240525484085083
+      }
+    },
+    "buffers_restored": true
+  },
+  "state_restored": true
+}

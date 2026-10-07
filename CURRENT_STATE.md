@@ -24,6 +24,18 @@ maintenance verification and its scientific limits, not live queue authority.
 
 ## Track B recommendation and constraints
 
+Use the [complete local K1 audit](experiments/pcqm_k1_complete_local_audit/analysis_zh.md)
+and its [canonical historical matrix](experiments/pcqm_k1_complete_local_audit/historical_evidence.md)
+before another K1 question. The accepted diagnostic does not change the model
+recommendation or release full training. Finish the owning consistency500K
+raw/clean-BN discriminator first; training-state and native-cost simplification
+is conditional on its result. Blind width/slot/module expansion, more tail
+epochs and this fixed endpoint average are not next actions. True EMA remains
+unqualified. The audit performed local CPU work only; existing remote jobs
+were neither queried nor advanced, so their authoritative state still requires
+reconciliation by their owners. Fixed retained-prediction blending is posthoc
+consumed-role evidence, not independent qualification or adoption.
+
 User-directed focus(2026-10-07): solve two K1 questions at500K:
 
 1. Why its observed epoch elapsed time is much greater than GPTrans-T's:

@@ -1,0 +1,57 @@
+{
+  "format": "molgap-k1-retained-prediction-description-v1",
+  "rows": 50000,
+  "interpretation": "Posthoc fixed50:50 blend on historically selection-used rows; no weight fit, new training or independent qualification",
+  "source_hashes": {
+    "selected_clean_predictions": "3d2a1074bc7627f611a5704558ab0a0767921f11242c6d22d7bf1ebcde40943a",
+    "gptrans_predictions": "5b6c8ff81ae017289211d8896e52238825e420a7b32ffd4ac035cf15b0a4789c"
+  },
+  "k1_clean_mae_eV": 0.10365894827842713,
+  "gptrans_ema_mae_eV": 0.10188769014835358,
+  "fixed_equal_blend_mae_eV": 0.09847724610328674,
+  "paired_blend_gain_over_gptrans": {
+    "delta": 0.0034104440450668334,
+    "ci95": [
+      0.0030799188782572747,
+      0.00374104017072916
+    ],
+    "n_bootstrap": 1000,
+    "seed": 20261008,
+    "probability_nonnegative_gain": 1.0
+  },
+  "residual_pearson": 0.8600985604251118,
+  "k1_row_win_fraction": 0.4894,
+  "opposite_residual_sign_fraction": 0.19912,
+  "absolute_error_quantiles": {
+    "k1": [
+      0.0632925033569336,
+      0.24578452110290527,
+      0.3389233350753783,
+      0.6085639286041263
+    ],
+    "gptrans": [
+      0.061589956283569336,
+      0.23893191814422604,
+      0.33339223861694334,
+      0.6061025047302249
+    ],
+    "equal_blend": [
+      0.05931365489959717,
+      0.23369245529174804,
+      0.32435723543167094,
+      0.5938522934913638
+    ]
+  },
+  "quantile_probabilities": [
+    0.5,
+    0.9,
+    0.95,
+    0.99
+  ],
+  "training_executed": false,
+  "inference_executed": false,
+  "optimizer_created": false,
+  "gradients_computed": false,
+  "wall_seconds": 0.25106070000038017,
+  "process_cpu_seconds": 1.671875
+}

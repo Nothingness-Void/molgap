@@ -1203,6 +1203,32 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "consumed_role_frozen_diagnostic",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-complete-module-audit-20261008",
+      "role_use": {
+        "common": "untouched",
+        "internal_development": "consumed",
+        "internal_development_decoded": "consumed",
+        "internal_development_retained_predictions": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_decoded": "consumed",
+        "train_descriptive": "consumed"
+      },
+      "scientific_scope": "pcqm-k1-complete-module-audit",
+      "source_envelope": "experiments/pcqm_k1_complete_local_audit/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "same_cohort_retained_checkpoint_equal_blend",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
@@ -1416,6 +1442,29 @@
         "TB-gptrans-full-convergence-20260919",
         "TB-k1-full-convergence-20260919"
       ]
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "consumed_role_frozen_diagnostic",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-late-weight-average-20261008",
+      "role_use": {
+        "common": "untouched",
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_features": "consumed"
+      },
+      "scientific_scope": "pcqm-k1-late-weight-average",
+      "source_envelope": "experiments/pcqm_k1_late_weight_average/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
     },
     {
       "artifact_availability": [

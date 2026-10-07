@@ -1,0 +1,36 @@
+{
+  "case": "slot3_half",
+  "kind": "slot",
+  "layers": [
+    3
+  ],
+  "mae_eV": 0.12032581173116341,
+  "paired_gain": {
+    "delta": -0.017919384117703885,
+    "ci95": [
+      -0.020181962223432492,
+      -0.01572841446031816
+    ],
+    "n_bootstrap": 1000,
+    "seed": 20261009,
+    "delta_sign": "baseline absolute error minus case absolute error; positive improves",
+    "probability_nonnegative_gain": 0.0
+  },
+  "prediction_rms_shift_eV": 0.08693037182092667,
+  "inference": {
+    "rows": 4096,
+    "wall_seconds": 2.5383841000002576,
+    "process_cpu_seconds": 10.15625,
+    "forward_seconds": 2.4450832000002265,
+    "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+  },
+  "restoration_inference": {
+    "rows": 128,
+    "wall_seconds": 0.07593939999787835,
+    "process_cpu_seconds": 0.3125,
+    "forward_seconds": 0.07300430000032065,
+    "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+  },
+  "state_and_hooks_restored": true,
+  "interpretation": "posthoc coadapted frozen sensitivity; not a training benefit"
+}

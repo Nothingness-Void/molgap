@@ -1,0 +1,138 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-late-weight-average-20261008",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "k1-late-weight-average",
+    "question": "Does fixed epoch49/60 parameter averaging improve K1 after identical clean BN calibration?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-late-weight-average-20261008",
+      "observed_deficiency": "Clean BN K1 remains1.771meV above contextual GPTrans EMA; no stepwise K1 EMA retained.",
+      "supporting_evidence_ids": [
+        "pcqm-k1-500k-bn-calibration-20261007",
+        "pcqm-k1-bn-mechanism-a100-20261008",
+        "pcqm-k1-500k-bottleneck-diagnostic-20261007"
+      ],
+      "alternative_explanations": [
+        "Late weights have no useful averaging gain",
+        "BN drift explains late raw deterioration",
+        "Stepwise EMA differs from sparse endpoint averaging"
+      ],
+      "changed_mechanism": "Equal learned-parameter mean of two retained endpoints, controlled with identical clean BN",
+      "cheapest_falsifier": "Four local CPU frozen-state inferences plus reused accepted selected comparators, no training",
+      "decision_changed_if_positive": "Nominate this exact late averaging test if >=1meV positive95% row lower; close NO_TRAIN",
+      "decision_changed_if_negative": "Deprioritize this exact sparse average; true EMA remains unresolved; close NO_TRAIN",
+      "expected_native_cost_ref": "cost-k1-late-weight-average-expected",
+      "related_closed_family_ids": [
+        "k1-500k-bn-calibration",
+        "k1-bn-mechanism-a100"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "8955c057be14dc45fb2740ef4c48de1111d93e43",
+      "source_config_identity": "f1d3bf302a2020f1be20f8f8a7fb6f7f937d9e10ff5282b2dd6048202f41af35",
+      "contract_refs": [
+        "experiments/pcqm_k1_late_weight_average/protocol.md",
+        "experiments/pcqm_k1_late_weight_average/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-500k-bn-calibration-20261007",
+        "pcqm-k1-bn-mechanism-a100-20261008",
+        "pcqm-k1-500k-bottleneck-diagnostic-20261007"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_late_weight_average/roles.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_late_weight_average/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_frozen_parameter_averaging",
+        "run_ids": [
+          "local-k1-late-weight-average-20261008"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "8955c057be14dc45fb2740ef4c48de1111d93e43",
+        "evidence_refs": [
+          "experiments/pcqm_k1_late_weight_average/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-late-weight-average-expected"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_late_weight_average/decision.md",
+      "next_allowed_actions": [
+        "One bounded local CPU averaging diagnostic"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_late_weight_average/protocol.md",
+    "comparison_blockers": [
+      "Consumed checkpoint-selection cohort",
+      "Sparse endpoint mean is not stepwise EMA"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-late-weight-average-expected",
+      "trajectory_id": "TB-k1-late-weight-average-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-late-weight-average-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU four intra-op threads; no accelerator",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_late_weight_average/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-late-weight-average",
+    "policy_version": "1",
+    "state_timestamp": "2026-10-07T17:59:27.412202+00:00",
+    "budget_snapshot_ref": "experiments/pcqm_k1_late_weight_average/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_late_weight_average/roles.json"
+    ],
+    "source_commit": "8955c057be14dc45fb2740ef4c48de1111d93e43"
+  }
+}
