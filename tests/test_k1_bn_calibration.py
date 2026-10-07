@@ -231,3 +231,81 @@ def test_incomplete_membership_raises_and_restores_buffers(monkeypatch):
     _assert_tensor_mapping_equal(dict(model.named_buffers()), original_buffers)
     assert all(not module.training for module in model.modules())
     assert model.bn.momentum == pytest.approx(0.37)
+
+
+@pytest.mark.parametrize("passes", [1, 2])
+def test_enabled_dropout_and_repeated_forwards_restore_exact_state(monkeypatch, passes):
+    model = _frozen_model()
+    original = _snapshot(model.state_dict())
+    monkeypatch.setattr(inference, "_forward", lambda model, batch: model(batch))
+    with inference.recalibrated_batch_norm(model, _calibration_batches(),
+            source_idx=[0, 1, 2, 3], source_bounds=(0, 4), device="cpu",
+            deadline=float("inf"), dropout_enabled=True, passes_per_batch=passes) as report:
+        assert model.forward_modes == [(True, True)] * (2 * passes)
+        assert int(model.bn.num_batches_tracked) == 2 * passes
+        assert model.training is False
+        assert all(not module.training for module in model.modules())
+        assert report["dropout_disabled"] is False
+    _assert_tensor_mapping_equal(model.state_dict(), original)
+    assert model.bn.momentum == pytest.approx(0.37)
+
+
+def test_functional_k1_and_attention_dropout_flags_are_scoped_and_restored(monkeypatch):
+    class LocalGPSBlock(torch.nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.dropout = 0.5
+            self.linear = torch.nn.Linear(2, 2)
+
+        def forward(self, value):
+            assert self.training
+            assert not self.linear.training
+            return torch.nn.functional.dropout(self.linear(value), p=self.dropout, training=self.training)
+
+    model = _frozen_model()
+    model.local = LocalGPSBlock()
+    model.attention = torch.nn.MultiheadAttention(2, 1, dropout=0.5, batch_first=True)
+    model.eval().requires_grad_(False)
+    original = _snapshot(model.state_dict())
+
+    def forward(model, batch):
+        assert not model.training
+        assert model.attention.training
+        assert not model.attention.out_proj.training
+        value = model.local(batch["x"])
+        value, _ = model.attention(value.unsqueeze(0), value.unsqueeze(0), value.unsqueeze(0))
+        return model.head(model.bn(value.squeeze(0))).view(-1)
+
+    monkeypatch.setattr(inference, "_forward", forward)
+    with inference.recalibrated_batch_norm(model, _calibration_batches(),
+            source_idx=[0, 1, 2, 3], source_bounds=(0, 4), device="cpu",
+            deadline=float("inf"), dropout_enabled=True):
+        assert all(not module.training for module in model.modules())
+    _assert_tensor_mapping_equal(model.state_dict(), original)
+
+
+def test_exception_with_dropout_and_double_pass_restores_all_flags(monkeypatch):
+    model = _frozen_model()
+    original = _snapshot(model.state_dict())
+    def forward(model, batch):
+        model(batch)
+        raise RuntimeError("interrupt with dropout")
+    monkeypatch.setattr(inference, "_forward", forward)
+    with pytest.raises(RuntimeError, match="interrupt with dropout"):
+        with inference.recalibrated_batch_norm(model, _calibration_batches(),
+                source_idx=[0, 1, 2, 3], source_bounds=(0, 4), device="cpu",
+                deadline=float("inf"), dropout_enabled=True, passes_per_batch=2):
+            pytest.fail("must not yield")
+    _assert_tensor_mapping_equal(model.state_dict(), original)
+    assert all(not module.training for module in model.modules())
+    assert model.bn.momentum == pytest.approx(0.37)
+
+
+@pytest.mark.parametrize("passes", [0, -1, True, 1.5])
+def test_invalid_pass_counts_rejected(monkeypatch, passes):
+    model = _frozen_model()
+    with pytest.raises(ValueError, match="positive integer"):
+        with inference.recalibrated_batch_norm(model, _calibration_batches(),
+                source_idx=[0, 1, 2, 3], source_bounds=(0, 4), device="cpu",
+                deadline=float("inf"), passes_per_batch=passes):
+            pytest.fail("must not yield")

@@ -6,16 +6,20 @@ from .k1_screen_training import FORBIDDEN_MODEL_FIELDS, _forward
 
 @contextmanager
 def recalibrated_batch_norm(model, loader, *, source_idx, source_bounds,
-                            device: str, deadline: float):
+                            device: str, deadline: float,
+                            dropout_enabled: bool = False, passes_per_batch: int = 1):
     """Temporarily fit only BN buffers on explicitly bound training members.
 
-    Dropout and every non-BN module remain in eval mode. Cumulative minibatch
+    Optional K1 dropout includes LocalGPSBlock functional dropout and attention
+    dropout, as well as Dropout children. Cumulative minibatch
     estimates follow PyTorch's update_bn convention; they are not exact
     node-weighted population moments. Restore original buffers even on failure.
     """
     import torch
     from .v4_runtime import state_dict_sha256
 
+    if type(dropout_enabled) is not bool or type(passes_per_batch) is not int or passes_per_batch < 1:
+        raise ValueError("Expected boolean dropout and positive integer passes_per_batch")
     if model.training or any(module.training for module in model.modules()):
         raise ValueError("BN recalibration requires clean eval mode")
     if any(parameter.requires_grad or parameter.grad is not None for parameter in model.parameters()):
@@ -34,15 +38,23 @@ def recalibrated_batch_norm(model, loader, *, source_idx, source_bounds,
     bn_keys = {f"{name}.{key}" if name else key for name, module in bn.items()
                for key, _ in module.named_buffers(recurse=False)}
     momentum = {name: module.momentum for name, module in bn.items()}
+    modes = {module: module.training for module in model.modules()}
     parameters = state_dict_sha256(dict(model.named_parameters()))
     tick, cpu_tick = time.perf_counter(), time.process_time()
     cursor, batches = 0, 0
     report = {}
     try:
+        model.eval()
         for module in bn.values():
             module.reset_running_stats()
             module.momentum = None
             module.train()
+        if dropout_enabled:
+            for module in model.modules():
+                if isinstance(module, (torch.nn.modules.dropout._DropoutNd, torch.nn.MultiheadAttention)) or \
+                        (module.__class__.__name__ == "LocalGPSBlock" and isinstance(getattr(module, "dropout", None), float)):
+                    # Assign directly: train() recursively enables unrelated children.
+                    module.training = True
         with torch.no_grad():
             for batch in loader:
                 if time.perf_counter() >= deadline:
@@ -52,15 +64,18 @@ def recalibrated_batch_norm(model, loader, *, source_idx, source_bounds,
                     raise ValueError("Calibration row order or membership differs")
                 if any(field in batch for field in FORBIDDEN_MODEL_FIELDS):
                     raise ValueError("Geometry reached pure-2D BN recalibration")
-                prediction = _forward(model, batch.to(device))
-                if not torch.isfinite(prediction).all():
-                    raise ValueError("Nonfinite calibration output")
+                batch = batch.to(device)
+                for _ in range(passes_per_batch):
+                    if time.perf_counter() >= deadline:
+                        raise TimeoutError("BN recalibration wall budget exhausted")
+                    prediction = _forward(model, batch)
+                    if not torch.isfinite(prediction).all():
+                        raise ValueError("Nonfinite calibration output")
                 cursor += len(observed)
-                batches += 1
+                batches += passes_per_batch
         if cursor != len(expected):
             raise ValueError("Incomplete calibration membership")
-        for module in bn.values():
-            module.eval()
+        model.eval()
         current = dict(model.named_buffers())
         if parameters != state_dict_sha256(dict(model.named_parameters())) or any(
                 not torch.equal(current[key], value) for key, value in original.items() if key not in bn_keys):
@@ -72,7 +87,8 @@ def recalibrated_batch_norm(model, loader, *, source_idx, source_bounds,
             "wall_seconds": time.perf_counter() - tick,
             "process_cpu_seconds": time.process_time() - cpu_tick,
             "parameters_unchanged": True, "non_bn_buffers_unchanged": True,
-            "dropout_disabled": True, "labels_used_for_calibration": False,
+            "dropout_disabled": not dropout_enabled, "passes_per_batch": passes_per_batch,
+            "labels_used_for_calibration": False,
             "buffer_sha256_before": state_dict_sha256(original),
             "buffer_sha256_calibrated": state_dict_sha256(current),
             "bn_changes": {name: {
@@ -86,5 +102,6 @@ def recalibrated_batch_norm(model, loader, *, source_idx, source_bounds,
                 value.copy_(original[name])
         for name, module in bn.items():
             module.momentum = momentum[name]
-            module.eval()
+        for module, training in modes.items():
+            module.training = training
         report["buffers_restored"] = state_dict_sha256(dict(model.named_buffers())) == state_dict_sha256(original)
