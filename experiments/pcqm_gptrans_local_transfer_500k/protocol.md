@@ -2,8 +2,9 @@
 
 Planning scope recorded on 2026-10-07. Status and release authority belong to
 `CURRENT_STATE.md`; this protocol is not a submission receipt or a validated
-prelaunch. Planning is authorized; remote training and diagnostics are not yet
-released.
+prelaunch. The user's subsequent Kaggle2 submission request on 2026-10-07
+authorized execution of this bounded plan subject to the real release gates.
+The release/response records, not this prose, establish any actual submission.
 
 ## One question and one intervention
 

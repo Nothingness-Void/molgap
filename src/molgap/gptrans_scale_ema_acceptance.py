@@ -48,7 +48,7 @@ def _retained_artifacts(paths, primary_trace, relative):
     return artifacts
 
 
-def accept_outputs(root, records, package):
+def accept_outputs(root, records, package, *, experiment_ref=BASE):
     import tarfile
     import torch
     from .k1_terminal_analysis import paired_saved_errors
@@ -56,7 +56,7 @@ def accept_outputs(root, records, package):
     from .pcqm_k1_scale import FIXED_500K_MANIFEST_SHA256
     root, records = Path(root).resolve(), Path(records).resolve()
     read = lambda path: json.loads(path.read_bytes())
-    base = root / BASE / "gpu"
+    base = root / experiment_ref / "gpu"
     config, receipt = read(base / "screen_config.json"), read(base / "submission_v1.json")
     frozen = verify_experiment_source_package(package)
     _require(receipt["status"] == "submitted" and not receipt["reconciliation_required"], "Physical submission unresolved")
@@ -65,7 +65,7 @@ def accept_outputs(root, records, package):
         _require(frozen[key] == receipt["release_binding"][key], "Source receipt: " + key)
     _require(frozen["archive_sha256"] == receipt["release_binding"]["source_archive_sha256"], "Source archive")
     with tarfile.open(Path(package) / "source.tar.gz", "r:gz") as archive:
-        _require(json.loads(archive.extractfile(BASE + "/gpu/screen_config.json").read()) == config, "Frozen config changed")
+        _require(json.loads(archive.extractfile(experiment_ref + "/gpu/screen_config.json").read()) == config, "Frozen config changed")
     screen = records / config["output_subdirectory"]
     folder = screen / "scale_ema/training"
     startup, cost, summary = (read(screen / name) for name in ("startup.json", "native_cost.json", "job_summary.json"))
@@ -75,7 +75,8 @@ def accept_outputs(root, records, package):
     outcomes = [r for r in summary["outcomes"] if r["variant"] == "scale_ema"]
     _require(len(outcomes) == 1 and outcomes[0]["complete"] is True, "Scale arm not complete")
     _require(result["source_identity"] == frozen and result["configuration"] == config["scale_study"], "Scale source/config")
-    _require(result["complete"] is True and result["live_optimizer_streams"] == 1 and result["parameters"] == 5246817,
+    expected_parameters = config["scale_study"].get("expected_parameters", 5246817)
+    _require(result["complete"] is True and result["live_optimizer_streams"] == 1 and result["parameters"] == expected_parameters,
         "Single unchanged live model")
     _require(result["manifest_sha256"] == FIXED_500K_MANIFEST_SHA256 and result["optimizer_steps"] == 46860
         and result["sample_presentations"] == 5998080, "Fixed data/exposure")
@@ -92,7 +93,7 @@ def accept_outputs(root, records, package):
         and qualification["precision"] == "fp32" and qualification["tf32_enabled"] is False
         and qualification["physical_batch"] == 128 and qualification["memory_reserve_fraction"] >= .15,
         "Runtime qualification")
-    _require(cost["allocated_gpu_count"] == 2 and cost["used_gpu_count"] == 2
+    _require(cost["allocated_gpu_count"] == 2 and cost["used_gpu_count"] == len(config["arms"])
         and len(cost["allocated_gpu_inventory"]) == 2 and all("T4" in n for n in cost["allocated_gpu_inventory"]), "T4x2 allocation")
     _require(math.isfinite(cost["wall_seconds"]) and 0 < cost["wall_seconds"] <= config["maximum_wall_seconds"]
         and cost["wall_seconds"] == summary["elapsed_seconds"]
