@@ -6,12 +6,21 @@
 
 ## Server active screen
 
+The newly authorized [local-update control screen](experiments/pcqm_gptrans_local_control_100k/protocol.md)
+was submitted to Kaggle2, version1, and reconciled as RUNNING. Exact receipt,
+qualification limits and Luna B custody are in its
+[submission record](experiments/pcqm_gptrans_local_control_100k/gpu/submission_record.md).
+Startup outputs are not yet retrievable; runtime qualification is pending.
+It reuses the accepted uncapped local-bond comparator without baseline retraining.
+No extra seed,500K/full or automatic successor is authorized.
+
 The [frozen GPTrans bottleneck diagnostic](experiments/pcqm_gptrans_bottleneck_audit/decision_terminal.md)
 is accepted and closed as NO_TRAIN / PAIRED_ENDPOINT, not a training Replay
 pair. The local-bond advantage survived its frozen later cohort; all local
 branches were connected, while the final Pair Transition branch was not.
 Local-update control remains a hypothesis needing separate authority, not a
-validated improvement. No server successor or new GPU training is released.
+validated improvement. That closed diagnostic did not authorize a successor;
+the separate new screen above has its own user-approved protocol.
 
 The Kaggle2 [independent pair-transition100K screen](experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md)
 is independently accepted, STRICT_CAUSAL and admitted as a complete Replay
@@ -50,7 +59,7 @@ STRICT_CAUSAL Replay pair but remains below its frozen promotion gate. The500K
 shared-live EMA study supports the correction direction, remains noncausal
 PAIRED_ENDPOINT and is not a causal Replay pair or full-scale qualification.
 All four earlier authorized studies and the separately authorized pair-transition
-job are closed; Luna has no active bound training job.
+job are closed; the distinct new screen above is Luna's only active binding.
 Exact receipts and the [closed shared monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
 retain custody history. No automatic successor is authorized.
 The earlier monitor bindings are closed; the monitor never adopts desktop jobs.
@@ -62,11 +71,6 @@ The failed CPU attempts and accepted CPU NO_TRAIN preparation are RML-closed.
 Seven stale ACTIVE plans were reconciled without changing prospective bytes,
 scientific results, live job bindings, or replay eligibility; see the dated
 local reconciliation routed by the tracked [`research_memory/README.md`](research_memory/README.md).
-
-The user separately authorized the [local-update control screen](experiments/pcqm_gptrans_local_control_100k/protocol.md).
-It is in local preparation, not submitted or runtime-qualified. Its comparator
-is the accepted uncapped local-bond model, not a newly trained baseline. No
-500K/full/extra-seed or automatic successor is released by this new protocol.
 
 ## Shared experiment infrastructure
 
