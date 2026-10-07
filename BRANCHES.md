@@ -47,6 +47,11 @@ work entry point. Promotion from `molgap-desktop` to `master` is separate.
 
 ## Retained Checkout Map
 
+Desktop K1 consistency ablation at500K: `codex/exp/k1-consistency-ablation-500k`
+in `D:/w/k1-consistency-500k`; [owning protocol](experiments/pcqm_k1_consistency_ablation_500k/protocol.md)
+and [execution status](experiments/pcqm_k1_consistency_ablation_500k/STATUS.md).
+This is an unresolved new question, not model adoption or full-scale release.
+
 These retained records are not present in the integration checkout.
 Use the mapped owner or archived source; do not create substitute directories.
 Paths are local checkout locators, not portable artifact provenance.
