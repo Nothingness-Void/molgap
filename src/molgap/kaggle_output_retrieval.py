@@ -29,14 +29,19 @@ def _digest(value: Any, label: str) -> str:
 
 
 def retrieve_exact_metadata(api, *, account: str, kernel: str, version: int,
-                            paths: list[str], destination: Path, http_session=None) -> dict:
+                            paths: list[str], destination: Path, http_session=None,
+                            max_bytes: int = 1024 * 1024) -> dict:
     """Pin small version-specific outputs without listing worker environments.
 
     Hashes here describe retrieved bytes, not scientific acceptance. The caller
     reconciles the actual attempt and then validates the owning source/manifest.
+    Larger scheduled diagnostic JSON may explicitly raise the per-file bound;
+    the default remains 1 MiB and no caller can exceed 16 MiB.
     """
     from kagglesdk.kernels.types.kernels_api_service import ApiDownloadKernelOutputRequest
     from .research_memory.trace import atomic_write
+    if type(max_bytes) is not int or not 0 < max_bytes <= 16 * 1024 * 1024:
+        raise ValueError("Exact metadata byte limit must be within 1..16 MiB")
     if (api.get_config_value(api.CONFIG_NAME_USER) != account
         or kernel.count("/") != 1 or kernel.split("/")[0] != account
         or type(version) is not int or version < 1
@@ -67,8 +72,8 @@ def retrieve_exact_metadata(api, *, account: str, kernel: str, version: int,
                     data = bytearray()
                     for chunk in response.iter_content(65536):
                         data.extend(chunk)
-                        if len(data) > 1024 * 1024:
-                            raise ValueError("Exact metadata exceeds 1 MiB")
+                        if len(data) > max_bytes:
+                            raise ValueError("Exact metadata exceeds its explicit byte limit")
             except Exception:
                 raise RuntimeError("Exact metadata retrieval failed; no bulk fallback") from None
             import json

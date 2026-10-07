@@ -176,6 +176,10 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
             target / "observed_metadata.json", training / "canonical_trace.json", training / "completion_manifest.json", training / "last_checkpoint.pt"})
         if followup:
             artifacts += [root / arm["prediction_manifest"]["artifact_locator"], gpu / mode / "contract.json"]
+        if mode == "degree_bond_local_cap_ema999":
+            diagnostic = arm["diagnostic_trace"]
+            verify_bound_artifact(root, diagnostic["ref"], diagnostic["sha256"])
+            artifacts.append(root / diagnostic["ref"])
         hashes = {rel(p): file_digest(p) for p in artifacts + authorities}
         evidence = {"format": "molgap-v5-evidence-envelope-v1", "contract": "MOLGAP-COMMON-V5-FINAL",
             "evidence_id": evidence_id, "track": "C", "scope": "single_mechanism_screen_100k", "legacy_contract": "none-prospective-v5",
@@ -183,6 +187,12 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
             "artifacts": [{"name": p.name, "locator": rel(p), "sha256": hashes[rel(p)], "availability": "local_verified"} for p in artifacts],
             "migration": {"migrated_at": timestamp, "verification_scope": "verified native artifacts and saved prediction tensors",
                 "training_executed": False, "inference_executed": False, "scientific_reinterpretation": False}}
+        if mode == "degree_bond_local_cap_ema999":
+            # The canonical trace owns replay axes; the redundant native log
+            # supplies amplitude telemetry and must not become a second trace.
+            for artifact in evidence["artifacts"]:
+                if artifact["locator"] == arm["diagnostic_trace"]["ref"]:
+                    artifact["purpose"] = "analysis_diagnostics"
         terminal = {"format": "molgap-rml-terminal-package-v1", "trajectory_id": tid, "run_id": run,
             "action_id": "A001", "finalized_at": timestamp, "acceptance_ref": metadata_ref, "artifact_hashes": hashes,
             "evidence": evidence, "decision": decision, "roles": roles, "costs": [cost], "role_use": role_use,

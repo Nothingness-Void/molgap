@@ -6,6 +6,8 @@ import json
 import sys
 from types import ModuleType, SimpleNamespace
 
+import pytest
+
 from molgap.kaggle_output_retrieval import retrieve_exact_metadata
 
 
@@ -135,3 +137,31 @@ def test_downloads_exact_version_owner_and_path_without_listing(tmp_path, monkey
         "unselected_outputs_downloaded": False,
     }
     assert (tmp_path / "retained" / path).read_bytes() == payload
+
+
+@pytest.mark.parametrize("limit", [0, -1, True, 1.5, 16 * 1024 * 1024 + 1])
+def test_invalid_metadata_limit_rejected_before_network(tmp_path, limit):
+    api = _Api(_Client(_KernelApi("unused")))
+    with pytest.raises(ValueError, match="byte limit"):
+        retrieve_exact_metadata(api, account="owning-account",
+            kernel="owning-account/job", version=1, paths=["trace.json"],
+            destination=tmp_path, max_bytes=limit)
+    assert api.client_builds == 0
+
+
+def test_larger_diagnostic_requires_explicit_bound(tmp_path):
+    # The real SDK request type is metadata-only; HTTP and API remain synthetic.
+    url = "https://signed.example/private/trace?token=secret"
+    payload = json.dumps({"diagnostic": "x" * (1024 * 1024)}).encode()
+    api = _Api(_Client(_KernelApi(url)))
+    http = _Http({url: payload})
+    kwargs = dict(account="owning-account", kernel="owning-account/job",
+        version=1, paths=["trace.json"], destination=tmp_path, http_session=http)
+    with pytest.raises(RuntimeError, match="no bulk fallback"):
+        retrieve_exact_metadata(api, **kwargs)
+    assert not (tmp_path / "trace.json").exists()
+    result = retrieve_exact_metadata(api, **kwargs, max_bytes=2 * 1024 * 1024)
+    assert (tmp_path / "trace.json").read_bytes() == payload
+    assert result["scientific_acceptance"] is False
+    assert result["files"][0]["sha256"] == hashlib.sha256(payload).hexdigest()
+    assert api.client.kernels.kernels_api_client.list_calls == 0

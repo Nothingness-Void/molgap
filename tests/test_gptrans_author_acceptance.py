@@ -80,3 +80,17 @@ def test_terminal_adapter_rejects_unaccepted_outputs_before_closure(tmp_path, mo
         lambda *a, **k: pytest.fail("Unaccepted outputs cannot finalize"))
     with pytest.raises(ValueError, match="Independent saved-output"):
         close_author_outputs(tmp_path, tmp_path / "records", acceptance)
+
+
+def test_native_control_diagnostics_do_not_compete_with_canonical_replay_trace():
+    from molgap.research_memory.terminal_wiring import inspect_trace_retention_evidence
+    prefix = "screen/degree_bond_local_cap_ema999/training/"
+    canonical = {"name": "canonical_trace.json", "locator": prefix + "canonical_trace.json"}
+    diagnostic = {"name": "trace.json", "locator": prefix + "trace.json",
+                  "purpose": "analysis_diagnostics"}
+    assert inspect_trace_retention_evidence({"artifacts": [canonical, diagnostic]},
+        "degree_bond_local_cap_ema999") == (True, canonical)
+    del diagnostic["purpose"]
+    with pytest.raises(ValueError, match="ambiguous trace retention"):
+        inspect_trace_retention_evidence({"artifacts": [canonical, diagnostic]},
+            "degree_bond_local_cap_ema999")

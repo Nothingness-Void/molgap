@@ -256,6 +256,11 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
             "matched_trajectory": [{"epoch": i, "candidate_ema_dev_eV": r["ema_dev_metric"], "reference_ema_dev_eV": b["ema_dev_metric"],
                 "gain_eV": b["ema_dev_metric"]-r["ema_dev_metric"], "candidate_live_dev_eV": r["live_dev_metric"], "reference_live_dev_eV": b["live_dev_metric"]}
                 for i,(r,b) in enumerate(zip(trace["observations"], ref_trace["observations"]))]}
+        if mode == "degree_bond_local_cap_ema999":
+            arms[mode]["diagnostic_trace"] = {
+                "ref": (training / "trace.json").relative_to(root).as_posix(),
+                "sha256": sha256_file(training / "trace.json"),
+            }
     return {"format": "molgap-gptrans-author-dual-acceptance-v1", "accepted": True, "arms": arms,
         "acceptance_scope": "selected_completed_arms" if selected_arms is not None else "all_arms",
         "all_arms_complete": all(r["complete"] is True for r in summary["outcomes"]),
