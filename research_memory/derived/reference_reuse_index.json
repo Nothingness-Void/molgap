@@ -1157,6 +1157,28 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "matched_scratch_execution_counterfactual",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-colab-execution-profile-20261007",
+      "role_use": {
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_decoded": "labels_read",
+        "train_probe": "prediction_input"
+      },
+      "scientific_scope": "desktop_k1_a100_execution_diagnostic",
+      "source_envelope": "experiments/pcqm_k1_colab_execution_profile/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "same_cohort_retained_checkpoint_equal_blend",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,

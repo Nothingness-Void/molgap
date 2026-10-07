@@ -1,0 +1,373 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_colab_execution_profile/MolGap_K1_A100_Profile.ipynb": "4ed0b9ccb0b615387a2b82630074daedbb923415255f3f888166aa6c7090f088",
+    "experiments/pcqm_k1_colab_execution_profile/README.md": "fbf9e1d1be1ba4bdd35287dfd7f746bde2c10b54353d4bcef2fa59587bea2fe1",
+    "experiments/pcqm_k1_colab_execution_profile/STATUS.md": "85013ceee6f98d84dee8810a15787779a99235a168087efa76f5f55fc422252b",
+    "experiments/pcqm_k1_colab_execution_profile/acceptance.json": "e62cf5221125c71e550d6b3ec3c64822b292ad3d97b419f65d57765af6be249a",
+    "experiments/pcqm_k1_colab_execution_profile/analysis.json": "43f2f63839838d4c1eb8bde1226aacc1a7c21b23ff136470a425a247172b3fce",
+    "experiments/pcqm_k1_colab_execution_profile/attribution.md": "49945054f0073b5548939e5044ccb235605be0e4fe6f5f922019529605f2339e",
+    "experiments/pcqm_k1_colab_execution_profile/browser_reconciliation.json": "65fce9ddf58db89829dbfbc6235755f755277f664e71d2dff057a00ceeecf369",
+    "experiments/pcqm_k1_colab_execution_profile/browser_reconciliation_complete.json": "357f1c4fe3aadbd2b695dcf6e940b3845ce342e8848344b698f8ee7e1f928b60",
+    "experiments/pcqm_k1_colab_execution_profile/build_notebook.py": "b558b354729ac1436116fb258baea3a5db2aff450c397120be0fa80e27864965",
+    "experiments/pcqm_k1_colab_execution_profile/close.py": "7cb5f97f31a0a381e71745b4b52147b90a2dafdb31764e6a9a6e3af8a98477b1",
+    "experiments/pcqm_k1_colab_execution_profile/decision.md": "55297e93fd54b1c7f64477c0a0455993bd6b8e9ca7c2f81922149fc68e3eddb3",
+    "experiments/pcqm_k1_colab_execution_profile/inputs.json": "4cc906e75d0bca150716428a160ccad84b62e0433c613a765a68062720bde576",
+    "experiments/pcqm_k1_colab_execution_profile/payload_import_check_attempt002.json": "bbef53e71ac588e373b9dce3b9df8503522fc7e091025b0fae66183e0ebb17b9",
+    "experiments/pcqm_k1_colab_execution_profile/payload_manifest.json": "5a916269b4501ed1b1baa67461f39f60f71f1ca8fa360387bcca0596ed8fa9db",
+    "experiments/pcqm_k1_colab_execution_profile/payload_manifest_attempt002.json": "0d60f0fc509d730650792a9ef838b53bcfb066e3c705765ae9f00a6b44bacf26",
+    "experiments/pcqm_k1_colab_execution_profile/plan_input.json": "07cb55b46d4af517a16c0a0ae524551b5cdb107477de3ebd6d738f63b3d81070",
+    "experiments/pcqm_k1_colab_execution_profile/plan_receipt.json": "67c8f0ddced67d49a21fa7bc0d3c15f6612651e6321fa8a71648eabba4f2cf98",
+    "experiments/pcqm_k1_colab_execution_profile/prepare.py": "96c4e0e1a304c0f60d90325de3ac861748e2df174801b431a673c071c19bb61b",
+    "experiments/pcqm_k1_colab_execution_profile/protocol.md": "3d0ef831b33a94cacf448828e5feff236e17cc415e3797b458e92f06fed2e664",
+    "experiments/pcqm_k1_colab_execution_profile/recovery_attempt002.py": "716217bbf97d613089d7c14e7418ce070675c99d83327808eb3e978af78ec946",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-001/failure.json": "a05aadeb8d8ad7cd6b337ce76dab3f16712475e55c3babb8ffbc53ed0415ced4",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-001/payload_manifest.json": "5a916269b4501ed1b1baa67461f39f60f71f1ca8fa360387bcca0596ed8fa9db",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-001/protocol.md": "3d0ef831b33a94cacf448828e5feff236e17cc415e3797b458e92f06fed2e664",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-001/runtime.json": "6bc65cf83afe6686bcdb804dd48ec12dd79f08752ca23f4e3c8efc6dd5afc37a",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-001/setup_observation.json": "7d55e5e8717d046bc5949ccc4a84fab88b160b7847417f2279b0a67ca5e057e7",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-001/worker.log": "90d40abb8bd1c1cc3e7074674bde915093f886b48188b723b4c0e646f91536ff",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-001/worker_process_observation.json": "d1d46ff88fefd1de25d77d4913964b7678afc4cc3106059517158533b987f7d8",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/completion.json": "c64f3cfb40bdb3011f6f03ade126607eaeba5b48e3d03624e1686be2baadc576",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/double_w0.json": "1e92300f0fb4c79087f98d9949520fec9664eb330a789ddafaea14e82277bf22",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/double_w2.json": "34e5ae61aaaa7d3014456511d89e4a188262c2f5dc1ebcfa1348e89c43a1bffc",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/double_w4.json": "a78902474b939143b334e493718595118494a2ca61bb6249e88a26a913befbe5",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/gradient_relation.json": "ea0a7afa2bf7203d770a3d117aab9b3e16a43373a5b0a1931c5335ec76d32a9d",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/operator_table.txt": "e02d5c50a9e2765f2fbe174083809c07f49c797c0812c6f779f0895d974e3499",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/payload_manifest.json": "0d60f0fc509d730650792a9ef838b53bcfb066e3c705765ae9f00a6b44bacf26",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/phase_timings.json": "3e68bd6f15a7f15d63edfac56a5cc0e2043dc852bdce601879476f3827c56bda",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/protocol.md": "3d0ef831b33a94cacf448828e5feff236e17cc415e3797b458e92f06fed2e664",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/result.json": "aa94b15e1f73026e5107005ff82885b5c7b2b08956ee2b67e2d9f69b9db58006",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/runtime.json": "e5fab5b83093bd5afde02450bf5629220fcdd59d2111065314c69551a8e27c21",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/setup_observation.json": "d86e7b5960245856512babb82bd82fb464ca598869206ab09ce71a0ded2f8495",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/single_w2.json": "bb78629dbcb3852ef51a7930915295f9425cb7cf5754d2eeb38e896881edc3d6",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/worker.log": "c4833f7159c3c83d4e1862e547ef45ce5adae76c7b1eb5de086f057af7cbd3c4",
+    "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/worker_process_observation.json": "5f32645b9bb61173d321a37b2ad70305480ce06507dfa0c2f76d9ac2f01fe93f",
+    "experiments/pcqm_k1_colab_execution_profile/results/k1-profile-a100-results-attempt002.zip": "7ebb21d766633e975670240f8da44d3aede7c306dd137883d3ea57ccfb321dcf",
+    "experiments/pcqm_k1_colab_execution_profile/role_plan.json": "b6221b731d2bba87baa2a48d07f029703ea4d0e9ea8c5f78eca2898c33e997f3",
+    "experiments/pcqm_k1_colab_execution_profile/source_patch.json": "58a29b6409b4550290cbb05759c9157ff0139b94e1dd64800261bf1f9b1a79fa",
+    "experiments/pcqm_k1_colab_execution_profile/source_patch_attempt002.json": "3f1142327f74853eb0d42e7d9907e604852c4d77f1f09c7a57cf49bd7754b2dc",
+    "experiments/pcqm_k1_colab_execution_profile/terminal_decision.md": "bba1413c1c74973693ec959e7f530255998fbb23a81eaa0d3fba41e5803e79d4",
+    "experiments/pcqm_k1_colab_execution_profile/upload_binding.json": "641fdafd7181646e88a8f1540924bc1871ce971f25469bbe84998fd03d7065ab",
+    "experiments/pcqm_k1_colab_execution_profile/upload_binding_attempt002.json": "641fdafd7181646e88a8f1540924bc1871ce971f25469bbe84998fd03d7065ab"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "infrastructure_failure",
+      "cost_event_id": "cost-k1-a100-profile-failed-worker",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.002421843475765652
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.002421843475765652
+        }
+      },
+      "platform": "colab",
+      "run_id": "k1-profile-a100-20261007",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-002",
+      "category": "other",
+      "cost_event_id": "cost-k1-a100-profile-worker",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.017646426963611114
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.01769505308734046
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.01769505308734046
+        }
+      },
+      "platform": "colab",
+      "run_id": "k1-profile-a100-20261007",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "preflight",
+      "cost_event_id": "cost-k1-a100-profile-attempt-001-setup",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.010179901719093323
+        }
+      },
+      "platform": "colab",
+      "run_id": "k1-profile-a100-20261007",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-002",
+      "category": "preflight",
+      "cost_event_id": "cost-k1-a100-profile-attempt-002-setup",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.0006949179702334933
+        }
+      },
+      "platform": "colab",
+      "run_id": "k1-profile-a100-20261007",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "shared-session",
+      "category": "other",
+      "cost_event_id": "cost-k1-a100-profile-idle-allocation",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "colab",
+      "run_id": "k1-profile-a100-20261007",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "local-staging",
+      "category": "cache_build",
+      "cost_event_id": "cost-k1-a100-profile-local-staging",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "hardware": "CPU; no accelerator",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "k1-profile-a100-20261007",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_colab_execution_profile/terminal_decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Separately frozen native T4 execution or single-pass quality qualification"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "e62cf5221125c71e550d6b3ec3c64822b292ad3d97b419f65d57765af6be249a"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_colab_execution_profile/analysis.json",
+        "name": "analysis.json",
+        "sha256": "43f2f63839838d4c1eb8bde1226aacc1a7c21b23ff136470a425a247172b3fce"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_colab_execution_profile/terminal_decision.md",
+        "name": "terminal_decision.md",
+        "sha256": "bba1413c1c74973693ec959e7f530255998fbb23a81eaa0d3fba41e5803e79d4"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_colab_execution_profile/attribution.md",
+        "name": "attribution.md",
+        "sha256": "49945054f0073b5548939e5044ccb235605be0e4fe6f5f922019529605f2339e"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/result.json",
+        "name": "results/attempt-002/result.json",
+        "sha256": "aa94b15e1f73026e5107005ff82885b5c7b2b08956ee2b67e2d9f69b9db58006"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/completion.json",
+        "name": "results/attempt-002/completion.json",
+        "sha256": "c64f3cfb40bdb3011f6f03ade126607eaeba5b48e3d03624e1686be2baadc576"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_colab_execution_profile/protocol.md",
+        "experiments/pcqm_k1_colab_execution_profile/terminal_decision.md",
+        "experiments/pcqm_k1_colab_execution_profile/attribution.md",
+        "experiments/pcqm_k1_colab_execution_profile/acceptance.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-colab-execution-profile-20261007",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-k1-colab-execution-profile-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-08",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Metadata acceptance of separately executed prospective scratch profiling; finalizer executes no model"
+    },
+    "observed_execution": {
+      "execution_ref": "experiments/pcqm_k1_colab_execution_profile/results/attempt-002/result.json",
+      "inference_executed": true,
+      "training_executed": false
+    },
+    "outcome": {
+      "artifact_status": "local_hash_verified",
+      "budget_decision": "bounded_a100_diagnostic_complete",
+      "comparison_status": "matched_scratch_execution_counterfactual",
+      "execution_status": "complete_execution_diagnostic",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "development": "untouched",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train_decoded": "labels_read",
+      "train_probe": "prediction_input"
+    },
+    "scope": "desktop_k1_a100_execution_diagnostic",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-07T16:04:09.137870+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "role_event_id": "role-k1-a100-profile-train_decoded-labels_read",
+      "role_name": "train_decoded",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "run_id": "k1-profile-a100-20261007",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "role_event_id": "role-k1-a100-profile-train_probe-labels_read",
+      "role_name": "train_probe",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "run_id": "k1-profile-a100-20261007",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "role_event_id": "role-k1-a100-profile-train_probe-prediction_input",
+      "role_name": "train_probe",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "run_id": "k1-profile-a100-20261007",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+    }
+  ],
+  "run_id": "k1-profile-a100-20261007",
+  "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+}

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "local-staging",
+  "category": "cache_build",
+  "cost_event_id": "cost-k1-a100-profile-local-staging",
+  "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+  "hardware": "CPU; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "k1-profile-a100-20261007",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+}

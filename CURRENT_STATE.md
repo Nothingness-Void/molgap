@@ -51,6 +51,13 @@ isolates single-pass overhead nor establishes a performance improvement.
 The missing native phase/operator profile is the first question's discriminator;
 freeze its prospective execution-only contract before any new profiling.
 
+The [accepted A100 execution diagnostic](experiments/pcqm_k1_colab_execution_profile/terminal_decision.md)
+isolates two-forward overhead on the retained training subset; loader-worker
+tuning has little benefit there. Its selected-state gradient probe does not
+establish a causal accuracy loss. Read the [attribution](experiments/pcqm_k1_colab_execution_profile/attribution.md)
+before another K1 action. Native T4 epoch phases and single-pass MAE equivalence
+remain unresolved; no model recommendation or training release changes.
+
 Track B predicts PCQM4Mv2 Gap only and is separate from Track A. The accepted
 full EdgeState checkpoint remains the operational full-scale reference.
 The matched 500K architecture ordering and the full-data ordering have different

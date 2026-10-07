@@ -1,0 +1,36 @@
+{
+  "selected_checkpoint_posthoc": true,
+  "optimizer_updates": 0,
+  "bn_buffers_updated_by_train_forward": true,
+  "batches": [
+    {
+      "batch": 0,
+      "supervised_norm": 1.3930325508117676,
+      "weighted_consistency_norm": 0.005099132657051086,
+      "norm_ratio": 0.00366045477837517,
+      "cosine": 0.05479159206151962
+    },
+    {
+      "batch": 1,
+      "supervised_norm": 0.8969781994819641,
+      "weighted_consistency_norm": 0.006265033967792988,
+      "norm_ratio": 0.006984600039790556,
+      "cosine": 0.8294234871864319
+    },
+    {
+      "batch": 2,
+      "supervised_norm": 0.4800052046775818,
+      "weighted_consistency_norm": 0.006604666821658611,
+      "norm_ratio": 0.013759573348990972,
+      "cosine": -0.0991508886218071
+    },
+    {
+      "batch": 3,
+      "supervised_norm": 0.6112488508224487,
+      "weighted_consistency_norm": 0.006791365798562765,
+      "norm_ratio": 0.011110639781857804,
+      "cosine": 0.11309982091188431
+    }
+  ],
+  "causal_accuracy_claim": false
+}

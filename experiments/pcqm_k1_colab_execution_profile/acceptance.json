@@ -1,0 +1,275 @@
+{
+  "evidence_id": "pcqm-k1-colab-execution-profile-20261007",
+  "run_id": "k1-profile-a100-20261007",
+  "outcome": {
+    "execution_status": "complete_execution_diagnostic",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "matched_scratch_execution_counterfactual",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "bounded_a100_diagnostic_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_colab_execution_profile/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately frozen native T4 execution or single-pass quality qualification"
+    ]
+  },
+  "role_use": {
+    "train_decoded": "labels_read",
+    "train_probe": "prediction_input",
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-a100-profile-train_decoded-labels_read",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007",
+      "action_id": "A001",
+      "run_id": "k1-profile-a100-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "role_name": "train_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-a100-profile-train_probe-labels_read",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007",
+      "action_id": "A001",
+      "run_id": "k1-profile-a100-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_probe",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-a100-profile-train_probe-prediction_input",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007",
+      "action_id": "A001",
+      "run_id": "k1-profile-a100-20261007",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_probe",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json"
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-a100-profile-failed-worker",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007",
+      "action_id": "A001",
+      "run_id": "k1-profile-a100-20261007",
+      "attempt_id": "attempt-001",
+      "platform": "colab",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "category": "infrastructure_failure",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.002421843475765652,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": 0.002421843475765652,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-a100-profile-worker",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007",
+      "action_id": "A001",
+      "run_id": "k1-profile-a100-20261007",
+      "attempt_id": "attempt-002",
+      "platform": "colab",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.01769505308734046,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": 0.01769505308734046,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.017646426963611114,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-a100-profile-attempt-001-setup",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007",
+      "action_id": "A001",
+      "run_id": "k1-profile-a100-20261007",
+      "attempt_id": "attempt-001",
+      "platform": "colab",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.010179901719093323,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-a100-profile-attempt-002-setup",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007",
+      "action_id": "A001",
+      "run_id": "k1-profile-a100-20261007",
+      "attempt_id": "attempt-002",
+      "platform": "colab",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.0006949179702334933,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-a100-profile-idle-allocation",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007",
+      "action_id": "A001",
+      "run_id": "k1-profile-a100-20261007",
+      "attempt_id": "shared-session",
+      "platform": "colab",
+      "hardware": "NVIDIA A100-SXM4-40GB",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    },
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-a100-profile-local-staging",
+      "trajectory_id": "TB-k1-colab-execution-profile-20261007",
+      "action_id": "A001",
+      "run_id": "k1-profile-a100-20261007",
+      "attempt_id": "local-staging",
+      "platform": "local-windows",
+      "hardware": "CPU; no accelerator",
+      "category": "cache_build",
+      "evidence_ref": "experiments/pcqm_k1_colab_execution_profile/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "analysis_ref": "experiments/pcqm_k1_colab_execution_profile/analysis.json",
+  "checks": {
+    "frozen_payload": true,
+    "prospective": true,
+    "selected_checkpoint": true,
+    "train_membership": true,
+    "native_fp32_a100": true,
+    "all_cases": true,
+    "finite_diagnostics": true,
+    "artifact_hashes": true,
+    "runtime_released": true
+  },
+  "execution_scope": "127 discarded scratch optimizer steps; four selected-state gradient batches; no scientific training/selection",
+  "cost_scope": "Worker device hours are allocated A100 wall time, not GPU busy or full session billing. Setup allocation, idle interval and staging costs unknown. Parent CPU excludes children.",
+  "role_scope": "Local staging decoded ten train shards/500K backing labels; worker loaded4096 training members only. No development/protected role.",
+  "limitations": [
+    "A100 != historical T4 runtime",
+    "bounded train subset",
+    "single-pass changes objective and BN updates",
+    "selected epoch49 posthoc gradients",
+    "no validation or checkpoint-publication timing",
+    "no full epoch cost extrapolation"
+  ]
+}

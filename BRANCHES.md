@@ -55,6 +55,7 @@ remote Git snapshots. Inspect only the question required by the task.
 
 | Question / owner | Retained checkout | Branch-local entry |
 |---|---|---|
+| Desktop accepted K1 A100 execution diagnostic | `D:/w/k1-colab-profile` | [NO_TRAIN decision](experiments/pcqm_k1_colab_execution_profile/terminal_decision.md); reviewed evidence/reusable profiler use the non-promotion desktop route; frozen source/sample payload retained in ignored staging and private Drive, no model adoption |
 | Desktop K1 consistency ablation500K: `codex/exp/k1-consistency-ablation-500k` | `D:/w/k1-consistency-500k` | [Protocol](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/protocol.md), [status](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/STATUS.md); independent per-arm prospective records and submission/continuation/acceptance stay on owner; no adoption |
 | Desktop K1/GPTrans composed500K transfer: `codex/exp/k1-gptrans-500k-package` | `D:/w/k1-gptrans-500k-package` | [Accepted cost/accuracy attribution](D:/w/k1-gptrans-500k-package/experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/cost_accuracy_attribution.md); retained terminal comparison and complementarity question, no standalone adoption/full release |
 | Desktop K1 parameter EMA: `codex/exp/k1-ema-100k-night-20261006` | `D:/w/k1-ema-night` | [Remote handoff](D:/w/k1-ema-night/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md); prospective paired100K question, implementation/submission/reconciliation/acceptance stay on owner |
