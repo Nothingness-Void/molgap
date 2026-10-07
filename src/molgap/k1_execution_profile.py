@@ -197,7 +197,9 @@ def run(root: Path, output: Path):
                    "no validation or checkpoint-publication timing", "no full epoch cost extrapolation"]}
     atomic_json(output / "result.json", result)
     atomic_json(output / "completion.json", {"status": "complete",
-        "artifacts": {p.name: sha256_file(p) for p in output.iterdir() if p.is_file() and p.name != "completion.json"}})
+        # The notebook owns the live log and process receipt; they finish after this worker exits.
+        "artifacts": {p.name: sha256_file(p) for p in output.iterdir() if p.is_file()
+                      and p.name not in {"completion.json", "worker.log", "worker_process_observation.json"}}})
     print("K1_PROFILE_COMPLETE", flush=True)
 
 
