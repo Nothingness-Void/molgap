@@ -28,6 +28,8 @@ def main():
     files = {f"src/molgap/{name}.py": prior["frozen_source_files"][f"src/molgap/{name}.py"] for name in names if name != "__init__"}
     frozen = Path(prior["frozen_source_root"]).parent
     files["src/molgap/__init__.py"] = sha256_file(frozen / "src/molgap/__init__.py")
+    # Sampled PyG objects retain their serialized graph subclass after geometry stripping.
+    files["src/molgap/pcqm_wedge.py"] = sha256_file(frozen / "src/molgap/pcqm_wedge.py")
     for name,digest in files.items():
         if sha256_file(frozen / name) != digest:
             raise ValueError(f"Frozen source differs: {name}")

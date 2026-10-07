@@ -7,6 +7,9 @@ HERE=Path(__file__).resolve().parent
 
 def main():
     binding=json.loads((HERE/"upload_binding.json").read_text())
+    archive_name=Path(binding['file']).name
+    attempt=binding.get('attempt_id')
+    run_path='V5/runs/k1-profile-a100-20261007'+('/'+attempt if attempt else '')
     def code(text):
         return {"cell_type":"code","execution_count":None,"metadata":{},"outputs":[],"source":text.splitlines(True)}
     cells=[{"cell_type":"markdown","metadata":{},"source":[
@@ -19,11 +22,11 @@ drive.mount('/content/drive')
 from pathlib import Path
 import hashlib, json, os, subprocess, sys, time, zipfile
 DRIVE_ROOT=Path('/content/drive/MyDrive/MolGap')
-RUN_ROOT=DRIVE_ROOT/'V5/runs/k1-profile-a100-20261007'
+RUN_ROOT=DRIVE_ROOT/'RUN_PATH_PLACEHOLDER'
 RUN_ROOT.mkdir(parents=True,exist_ok=True)
 print('Durable output:',RUN_ROOT,flush=True)
-'''),code(f'''# Immutable source/input transfer: no credentials or dataset download.
-ARCHIVE=DRIVE_ROOT/'k1-profile-a100-20261007.zip'
+'''.replace('RUN_PATH_PLACEHOLDER',run_path)),code(f'''# Immutable source/input transfer: no credentials or dataset download.
+ARCHIVE=DRIVE_ROOT/'{archive_name}'
 EXPECTED_SHA256='{binding['sha256']}'
 assert ARCHIVE.is_file(), 'Upload the prepared ZIP to MyDrive/MolGap first.'
 assert hashlib.sha256(ARCHIVE.read_bytes()).hexdigest()==EXPECTED_SHA256
