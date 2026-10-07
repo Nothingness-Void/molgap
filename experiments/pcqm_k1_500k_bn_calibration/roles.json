@@ -1,0 +1,23 @@
+{
+  "train_prefix": {
+    "range": [
+      0,
+      500000
+    ],
+    "decoded_labels_read": 500000,
+    "prediction_input_rows": 16384,
+    "labels_used_for_calibration": false
+  },
+  "internal_development": {
+    "range": [
+      500000,
+      550000
+    ],
+    "decoded_labels_read": 50000,
+    "prediction_input_rows": 50000,
+    "previously_selection_used": true
+  },
+  "official_validation": "untouched",
+  "test_dev": "untouched",
+  "test_challenge": "untouched"
+}

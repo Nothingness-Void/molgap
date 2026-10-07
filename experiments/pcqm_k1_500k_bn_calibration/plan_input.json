@@ -1,0 +1,143 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "k1-500k-bn-calibration",
+    "question": "Does training-member BN-only recalibration improve the selected epoch49 K1 predictor on its consumed full50K development cohort?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-500k-bn-calibration-20261007",
+      "observed_deficiency": "Frozen bottleneck evidence leaves clean inference normalization mismatch unresolved.",
+      "supporting_evidence_ids": [
+        "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+        "pcqm-matched-500k-v4-three-arm"
+      ],
+      "alternative_explanations": [
+        "Running statistics already adequate",
+        "Generalization or optimization limits",
+        "Selected-development diagnostic gain fails independent-role transfer"
+      ],
+      "changed_mechanism": "Reset and cumulatively recompute BN running buffers on16384 uniformly sampled train members with dropout disabled; all learned parameters fixed.",
+      "cheapest_falsifier": "One seeded training-feature calibration and paired baseline/calibrated full50K development inference under600s worker ceiling.",
+      "decision_changed_if_positive": "A gain>=0.001eV with positive paired-row95% lower bound nominates normalization mismatch for separate validation; close NO_TRAIN.",
+      "decision_changed_if_negative": "Deprioritize this BN-buffer explanation under the exact diagnostic; close NO_TRAIN.",
+      "expected_native_cost_ref": "cost-k1-500k-bn-calibration-expected",
+      "related_closed_family_ids": [
+        "k1-500k-frozen-bottleneck-diagnostic"
+      ],
+      "historical_unknowns": [
+        "Training seed variance",
+        "Independent-role transfer",
+        "Training-time BN intervention effect"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "b47003607f49d521ee078500881ccb800c11be87",
+      "source_config_identity": "a151a1718acf2dbd743e58ea64387ed497398f0308eafacbffe9ea94be5ed550",
+      "contract_refs": [
+        "experiments/pcqm_k1_500k_bn_calibration/protocol.md",
+        "experiments/pcqm_k1_500k_bn_calibration/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+        "pcqm-matched-500k-v4-three-arm"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_500k_bn_calibration/roles.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_500k_bn_calibration/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_bn_buffer_calibration",
+        "run_ids": [
+          "local-k1-500k-bn-calibration-20261007"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "b47003607f49d521ee078500881ccb800c11be87",
+        "evidence_refs": [
+          "experiments/pcqm_k1_500k_bn_calibration/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-500k-bn-calibration-expected"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_500k_bn_calibration/decision.md",
+      "next_allowed_actions": [
+        "Bounded local BN-only calibration diagnostic"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_500k_bn_calibration/protocol.md",
+    "comparison_blockers": [
+      "Selected, previously consumed development cohort and single trained seed",
+      "Parameter-free BN state adaptation is not training replay or adoption"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-500k-bn-calibration-expected",
+      "trajectory_id": "TB-k1-500k-bn-calibration-20261007",
+      "action_id": "A001",
+      "run_id": "local-k1-500k-bn-calibration-20261007",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU; four intra-op threads",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_500k_bn_calibration/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-500k-bn-calibration",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_500k_bn_calibration/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_500k_bn_calibration/roles.json"
+    ],
+    "source_commit": "b47003607f49d521ee078500881ccb800c11be87",
+    "state_timestamp": "2026-10-07T11:19:57.645674+00:00"
+  }
+}
