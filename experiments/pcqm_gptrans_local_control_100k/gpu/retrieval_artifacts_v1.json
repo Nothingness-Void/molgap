@@ -1,0 +1,64 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-local-control-s42",
+  "receipt_version": 1,
+  "files": [
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/best_model.pt",
+      "sha256": "a56a8ec333a22ea4bb0a3befa7444b40eea6faff5bf498ec0f7e05563c7bd34f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/last_checkpoint.pt",
+      "sha256": "cdc9c7fee6639c9d41dffa0306f75220146921c1cebb24e09690ef34a8e37381",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/development_predictions.pt",
+      "sha256": "eb522586dae96f18e644fdc9d985e05514a71779f7bf6315bb1d8031468ba8d4",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/canonical_trace.json",
+      "sha256": "05867128ddb15c3783228fbb7c783fdaed91e5ee43578499c468ae1b109ba0dd",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/frozen_reference.json",
+      "sha256": "aa52c9babb7f68da360da7544e1eb25e1944b653bc721359389299cbe98db512",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/checkpoint_epoch_09.pt",
+      "sha256": "fa9b26270e5c8614a7cd727abd302a80046d6a31011fbcb280920dd1171e8283",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/checkpoint_epoch_19.pt",
+      "sha256": "228fada67f538fefb650c00655c6762be0949ab4680ebbbc808a0bda90c93f45",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/checkpoint_epoch_29.pt",
+      "sha256": "1014ab8493d7ddd2d084b5ce90c928acfcd90ba04726812b4a874a9a8524222a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/checkpoint_epoch_39.pt",
+      "sha256": "8166c2c672067ade4d0465198ad3d75c9465769c16b15d67f389ee84c0cbeca6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/checkpoint_epoch_49.pt",
+      "sha256": "ad87eca49536c291fc69695faeae2e5770530c8e31eb2f5c0e0741cb8f580a22",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/checkpoint_epoch_59.pt",
+      "sha256": "cdc9c7fee6639c9d41dffa0306f75220146921c1cebb24e09690ef34a8e37381",
+      "state": "RETAINED"
+    }
+  ],
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": true
+}

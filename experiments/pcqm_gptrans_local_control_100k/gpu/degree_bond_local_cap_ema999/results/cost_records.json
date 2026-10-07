@@ -1,0 +1,36 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-g1-local-control-100k-s42-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/results/observed_metadata.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 6.382167833525
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.1910839167625
+        }
+      },
+      "platform": "kaggle2-t4-gptrans-local-control",
+      "run_id": "gptrans-local-control-s42:degree_bond_local_cap_ema999",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-local-control-100k-s42"
+    }
+  ],
+  "source_ref": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/results/observed_metadata.json",
+  "source_sha256": "f1e601636a76298779d6d81a2378a0e905976e5bbefe97f417d19604ba1953de"
+}

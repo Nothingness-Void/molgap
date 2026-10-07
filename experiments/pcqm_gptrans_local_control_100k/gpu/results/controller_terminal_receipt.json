@@ -1,0 +1,47 @@
+{
+  "format": "molgap-controller-terminal-receipt-v1",
+  "event": {
+    "attempt_id": "v1",
+    "claimed_at": "2026-10-07T07:29:15Z",
+    "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "created_at": "2026-10-07T07:25:01Z",
+    "decision_ref": "experiments/pcqm_gptrans_local_control_100k/gpu/results/interpretation.md",
+    "delivered_at": "2026-10-07T07:25:19Z",
+    "delivery_attempts": 1,
+    "event_id": "evt-8af86611412e3032022ae9a7",
+    "event_status": "CLOSED",
+    "event_type": "COMPLETE",
+    "monitor_generation": 1,
+    "outcome": {
+      "actual_complete_replay_pair": true,
+      "artifact_acceptance": true,
+      "comparison": "STRICT_CAUSAL",
+      "execution": "complete",
+      "scientific_disposition": "exact route closed without promotion",
+      "successor_authorized": false
+    },
+    "payload": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-local-control-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-local-control-s42",
+        "kernel_id": 137425845,
+        "version": 1
+      },
+      "version": 1
+    },
+    "run_id": "kaseichou/molgap-gptrans-local-control-s42:v1",
+    "finalized_at": "2026-10-07T07:38:32Z"
+  },
+  "decision_ref": "experiments/pcqm_gptrans_local_control_100k/gpu/results/interpretation.md",
+  "decision_sha256": "8e8cb06839cc23adcaaaa3a0d72d7b41be6d282bc1ffca46199154b181cdbf76",
+  "monitor_binding_ref": "experiments/pcqm_gptrans_local_control_100k/gpu/monitor_binding.json",
+  "monitor_binding_sha256": "d4aff89aba24cee426928d1aadfef59da897a4229335b59348b8556dbe5df1de",
+  "monitor_automation_id": "molgap-k1-conjugated-dual-kaggle2-monitor",
+  "monitor_automation_status": "PAUSED",
+  "monitor_target_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "unresolved_events": 0,
+  "successor_submitted": false,
+  "local_training_executed": false,
+  "model_inference_executed": false
+}

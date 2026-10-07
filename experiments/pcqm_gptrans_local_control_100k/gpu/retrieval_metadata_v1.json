@@ -1,0 +1,41 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-local-control-s42",
+  "version": 1,
+  "files": [
+    {
+      "path": "gptrans_local_control/startup.json",
+      "sha256": "51c9f2685c7ca74eddcfccd3a391d2f60fa21b87c901b77531d36760c3201881"
+    },
+    {
+      "path": "gptrans_local_control/job_summary.json",
+      "sha256": "c6d016aecf48608437d57c3ccd0c8cd7b980847008d5612c10e2525f232ee14d"
+    },
+    {
+      "path": "gptrans_local_control/native_cost.json",
+      "sha256": "29591390ee460f4daaecaf9256765fe6616135727ef679278aa9fe643bc8607f"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/arm_binding.json",
+      "sha256": "6d8794c848b7d32cfad62d6f9e730d945048a02afc14834cb7fd8e6dabb0027e"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/preflight/preflight.json",
+      "sha256": "d52cfae5c82fe8a376d7b2bfc64689172026bebea3c1f78b5df06f22a229bbca"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/completion_manifest.json",
+      "sha256": "2513ae0971fb635df22a00d6b4f28693e7bd631cbec86bb00d279706d3049df6"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/frozen_reference.json",
+      "sha256": "aa52c9babb7f68da360da7544e1eb25e1944b653bc721359389299cbe98db512"
+    },
+    {
+      "path": "gptrans_local_control/degree_bond_local_cap_ema999/training/canonical_trace.json",
+      "sha256": "05867128ddb15c3783228fbb7c783fdaed91e5ee43578499c468ae1b109ba0dd"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}
