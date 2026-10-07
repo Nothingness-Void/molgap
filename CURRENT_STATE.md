@@ -24,8 +24,18 @@ maintenance verification and its scientific limits, not live queue authority.
 
 ## Track B recommendation and constraints
 
-User-directed focus(2026-10-07): explain why the enhanced K1 package did not
-retain its advantage at500K. Full-data scale-transfer is deferred. Read the
+User-directed focus(2026-10-07): solve two K1 questions at500K:
+
+1. Why its observed epoch elapsed time is much greater than GPTrans-T's:
+   separate loader wait, forward/backward, optimizer, development evaluation
+   and checkpoint/publication costs under the owning frozen native runtime.
+   Two full stochastic forwards are verified work; their timing contribution
+   and paired CPU/loader contention have not been measured independently.
+2. Why the enhanced K1 package shows no improvement over its contextual older
+   500K endpoint: isolate the consistency contribution, BN-state sensitivity
+   and retained-pretraining coverage before proposing capacity/exposure changes.
+
+Full-data scale-transfer is deferred. Read the
 [500K cost/accuracy attribution](D:/w/k1-gptrans-500k-package/experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/cost_accuracy_attribution.md)
 and accepted[BN diagnostic](experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md)
 before another K1 action. Separate historical package improvements and live/EMA/
@@ -35,6 +45,11 @@ their endpoints do not constitute a matched same-package scale comparison.
 Any further execution needs a separately frozen discriminator for the remaining
 cause, using retained references and existing family/RML owners. No full run,
 unrelated module sweep or automatic retry is a next action for this focus.
+The authorized[500K consistency ablation](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/protocol.md)
+addresses the second question. Both arms retain two forwards, so it neither
+isolates single-pass overhead nor establishes a performance improvement.
+The missing native phase/operator profile is the first question's discriminator;
+freeze its prospective execution-only contract before any new profiling.
 
 Track B predicts PCQM4Mv2 Gap only and is separate from Track A. The accepted
 full EdgeState checkpoint remains the operational full-scale reference.
@@ -54,6 +69,14 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
+
+- **K1 consistency ablation at500K:** user-authorized weight0/0.1 question
+  submitted to Kaggle1. Exact run identity, dated scheduler/source observations
+  and return procedure remain in the[owner status](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/STATUS.md).
+  Both independently planned arms share retained pretraining, two forwards and
+  exposure; compare original and fixed BN-calibrated selected predictions.
+  Reconcile the exact run before continuation or acceptance. Submission is not
+  model adoption, training completion or replay qualification.
 
 - **K1 overnight 100K pairs:** two user-authorized two-arm screens are submitted
   to Kaggle3; implementation and acceptance remain on their separate owners.
