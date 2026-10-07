@@ -5,12 +5,35 @@ from pathlib import Path
 import pytest
 
 from molgap.gptrans_scale_profile import model_binding
-from molgap.gptrans_scale_local_acceptance import directional_signal
+from molgap.gptrans_scale_local_acceptance import directional_signal, terminal_acceptance_projection
 from molgap.evidence_pointers import load_json_object
 from molgap.research_memory import reference_qualification
 
 ROOT = Path(__file__).resolve().parents[1]
 MARKER = "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/reference_qualification.json"
+
+
+def test_terminal_projection_binds_observed_sources_without_mutating_acceptance():
+    result = {"accepted": True, "experiment_purpose": "architecture_comparison", "replay_ready": False}
+    original = deepcopy(result)
+    roles = [{"evidence_ref": "experiment/role_history.json"}]
+    costs = [{"evidence_ref": "experiment/cost_records.json"}]
+    decision = {"final": True, "outcome": "INCONCLUSIVE"}
+    out = terminal_acceptance_projection(result, source_ref="experiment/acceptance.json",
+        source_sha256="a" * 64, evidence_id="evidence", run_id="run", outcome={"scientific_status": "POSITIVE_BELOW_GATE"},
+        decision=decision, role_use={"official_validation": "untouched"}, roles=roles, costs=costs)
+    assert out["source_acceptance_sha256"] == "a" * 64
+    assert out["trajectory_decision"] == decision and out["roles"] == roles and out["costs"] == costs
+    assert out["evidence_id"] == "evidence" and out["run_id"] == "run"
+    assert not out["model_inference_executed"] and result == original
+
+
+def test_terminal_projection_rejects_unaccepted_or_noncausal_input():
+    for result in ({"accepted": False, "experiment_purpose": "architecture_comparison"},
+                   {"accepted": True, "experiment_purpose": "transfer_study"}):
+        with pytest.raises(ValueError):
+            terminal_acceptance_projection(result, source_ref="a", source_sha256="a" * 64,
+                evidence_id="e", run_id="r", outcome={}, decision={}, role_use={}, roles=[], costs=[])
 
 
 def test_legacy_g1_default_preserved():

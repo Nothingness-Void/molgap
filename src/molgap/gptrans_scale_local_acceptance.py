@@ -23,6 +23,18 @@ def directional_signal(analysis, matched, threshold):
     return gain >= threshold and analysis["paired_row_bootstrap"]["ci95"][1] < 0 and final_gain > 0 and tail_gain > 0
 
 
+def terminal_acceptance_projection(result, *, source_ref, source_sha256, evidence_id,
+                                   run_id, outcome, decision, role_use, roles, costs):
+    """Translate verified saved-output acceptance without rewriting raw evidence."""
+    if result.get("accepted") is not True or result.get("experiment_purpose") != "architecture_comparison":
+        raise ValueError("Verified architecture acceptance required for terminal projection")
+    return {"format": "molgap-local500k-terminal-acceptance-v1", "accepted": True,
+        "source_acceptance_ref": source_ref, "source_acceptance_sha256": source_sha256,
+        "evidence_id": evidence_id, "run_id": run_id, "outcome": outcome,
+        "trajectory_decision": decision, "role_use": role_use, "roles": roles, "costs": costs,
+        "model_inference_executed": False, "local_training_executed": False}
+
+
 def _require_actual_replay_pair(root, tid, reference_id):
     pool = load_json_object(root / "research_memory/derived/replay_pool.json")
     candidate = [row for row in pool["entries"] if row["trajectory_id"] == tid and row["comparison_role"] == "candidate"]
@@ -123,24 +135,33 @@ def close_local_outputs(root, records, acceptance):
     roles = [{"schema": "molgap-role-event-v1", "role_event_id": f"role-{tid}-{role}-{kind}", "trajectory_id": tid,
         "action_id": "A001", "run_id": run, "dataset_identity": bundle["comparison_identity"]["dataset_identity"],
         "row_manifest_hash": config["dataset_manifest_sha256"], "role_name": role, "access_kind": kind,
-        "selection_used": kind == "selection_used", "evidence_ref": rel(acceptance)}
+        "selection_used": kind == "selection_used", "evidence_ref": rel(target / "role_history.json")}
         for role, kinds in (("internal_train", ("training_membership", "labels_read", "metric_computed")),
             ("internal_development", ("prediction_input", "labels_read", "metric_computed", "selection_used"))) for kind in kinds]
     native = result["native_acceptance"]["native_cost"]
     costs = [{"schema": "molgap-cost-event-v1", "cost_event_id": "cost-" + tid + "-observed-v1", "trajectory_id": tid,
         "action_id": "A001", "run_id": run, "attempt_id": "v1", "category": "training", "platform": "kaggle2",
-        "hardware": "Tesla_T4", "evidence_ref": rel(screen / "native_cost.json"), "measurement": {
+        "hardware": "Tesla_T4", "evidence_ref": rel(target / "cost_records.json"), "measurement": {
             "device_hours": {"status": "measured", "value": native["allocated_device_hours"]},
             "wall_hours": {"status": "measured", "value": native["wall_seconds"] / 3600},
             "cpu_hours": {"status": "measurement_missing", "value": None}, "queue_hours": {"status": "measurement_missing", "value": None}}}]
-    save(target / "role_history.json", {"roles": roles})
-    save(target / "cost_records.json", {"costs": costs, "idle_allocation_counted": True})
+    save(target / "role_history.json", {"roles": roles, "source_acceptance_ref": rel(acceptance),
+        "source_acceptance_sha256": file_digest(acceptance)})
+    save(target / "cost_records.json", {"costs": costs, "idle_allocation_counted": True,
+        "native_cost_ref": rel(screen / "native_cost.json"),
+        "native_cost_sha256": file_digest(screen / "native_cost.json")})
     label = "POSITIVE_UNDER_CONTRACT" if result["historical_material_gate_passed"] else "INCONCLUSIVE"
     scientific = label if result["historical_material_gate_passed"] else "POSITIVE_BELOW_GATE" if result["directional_transfer_signal"] else "NEGATIVE_UNDER_CONTRACT"
     outcome = {"execution_status": "complete", "artifact_status": "accepted", "comparison_status": "strict_causal",
         "scientific_status": scientific, "transfer_status": "partial_evidence", "budget_decision": "stop_under_contract", "full_handoff_status": "not_authorized"}
     decision_path = target / "decision.md"
     atomic_write(decision_path, (f"# Equal-update500K local bridge\n\nOn {timestamp[:10]} independently accepted endpoints gave selected gain {result['selected_gain_eV']:.10f} eV, final gain {result['final_gain_eV']:.10f}, and final-ten mean {result['final_ten_mean_gain_eV']:.10f}. Directional signal={result['directional_transfer_signal']}; historical material gate passed={result['historical_material_gate_passed']}. The original control's noncausal claim remains unchanged. Single-seed equal-update evidence is not full convergence, seed stability, protected evaluation or a full-training release.\n").encode())
+    decision = {"final": True, "outcome": label, "decision_ref": rel(decision_path), "next_allowed_actions": ["Controller interpretation and the separately planned bounded NO_TRAIN probes only"], "reopen_conditions": ["explicit new compute decision"]}
+    raw_acceptance = acceptance
+    acceptance = target / "terminal_acceptance.json"
+    save(acceptance, terminal_acceptance_projection(result, source_ref=rel(raw_acceptance),
+        source_sha256=file_digest(raw_acceptance), evidence_id=eid, run_id=run,
+        outcome=outcome, decision=decision, role_use=role_use, roles=roles, costs=costs))
     role_plan = load(gpu / "scale_ema/comparison_readiness_prelaunch.json")["role_applicability_plan"]
     bind = lambda paths: {key: {"ref": rel(path), "sha256": file_digest(path)} for key, path in paths.items()}
     def side(identity, paths, events):
@@ -165,14 +186,13 @@ def close_local_outputs(root, records, acceptance):
         raise ValueError("500K strict comparison incomplete: " + str(readiness["blocker_codes"]))
     save(target / "comparison_readiness.json", readiness)
     authority = [root / BASE / "protocol.md", plan, gpu / "scale_ema/contract.json", gpu / "submission_v1.json", decision_path]
-    retained = set(paths.values()) | set(authority) | {target / "comparison_readiness.json", folder / "completion_manifest.json", screen / "native_cost.json"}
+    retained = set(paths.values()) | set(authority) | {raw_acceptance, target / "comparison_readiness.json", folder / "completion_manifest.json", screen / "native_cost.json"}
     retained.update(folder / name for name in result["native_acceptance"]["result"]["files"])
     evidence = {"format": "molgap-v5-evidence-envelope-v1", "contract": "MOLGAP-COMMON-V5-FINAL", "evidence_id": eid,
         "track": "C", "scope": "same-update500K local architecture comparison", "legacy_contract": "none-prospective-v5", "outcome": outcome,
         "role_use": role_use, "authority": {"pointers": [rel(path) for path in authority]}, "artifacts": _retained_artifacts(sorted(retained), trace_path, rel),
         "migration": {"migrated_at": timestamp, "training_executed": False, "inference_executed": False, "scientific_reinterpretation": False,
             "verification_scope": "saved predictions, native trace, source/config, runtime, roles and complete allocation"}}
-    decision = {"final": True, "outcome": label, "decision_ref": rel(decision_path), "next_allowed_actions": ["Controller interpretation and the separately planned bounded NO_TRAIN probes only"], "reopen_conditions": ["explicit new compute decision"]}
     save(target / "terminal_evidence.json", evidence)
     terminal = {"format": "molgap-rml-terminal-package-v1", "trajectory_id": tid, "run_id": run, "action_id": "A001", "finalized_at": timestamp,
         "acceptance_ref": rel(acceptance), "artifact_hashes": {rel(path): file_digest(path) for path in retained}, "evidence": evidence,
