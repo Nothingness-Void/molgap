@@ -25,7 +25,11 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
     BASE, MODES, RUN = base, modes, run
     root = root.resolve()
     read = lambda ref: load_json_object(root / ref)
-    if terminal_reference:
+    if (study or {}).get("frozen_reference_bundle_ref"):
+        from .server_acceptance import validate_server_scientific_prelaunch
+        bundle_ref = study["frozen_reference_bundle_ref"]
+        bundle = read(bundle_ref)
+    elif terminal_reference:
         from .research_memory.candidate_reference import enroll_terminal_candidate_reference
         reference = (study or {}).get("terminal_reference", {})
         prior = reference.get("experiment_ref", "experiments/pcqm_gptrans_input_ema_100k")
@@ -38,7 +42,7 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
     else:
         bundle = enroll_candidate_reference(root, OLD + "/gpu/degree_scale/rml_plan/candidate_qualification.json",
             BASE + "/reference", "reference-gptrans-g1-100k-s42-v1")
-    bundle_ref = BASE + "/reference/reference_bundle.json"
+    bundle_ref = (study or {}).get("frozen_reference_bundle_ref", BASE + "/reference/reference_bundle.json")
     identity = bundle["comparison_identity"]
     accepted = read(OLD + "/verification_recovery/acceptance_v2.json")
     initial = root / "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/degree_initial_state.pt"
@@ -58,7 +62,9 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         "baseline_retraining": False, "automatic_successor_authorized": False,
         "single_arm_reason": single_reason, "authority_ref": BASE + "/protocol.md"})
     roles = {kind: "not_applicable" if kind == "external_submission" else "applicable" for kind in ROLE_EVENT_KINDS}
-    atomic_json(root / role_ref, {"role_applicability": roles, "train_rows": [0,100000], "development_rows": [100000,150000],
+    scale_only = tuple(MODES) == ("scale_ema",)
+    matched_scale = scale_only and bool((study or {}).get("frozen_reference_bundle_ref"))
+    atomic_json(root / role_ref, {"role_applicability": roles, "train_rows": [0,500000] if scale_only else [0,100000], "development_rows": [500000,550000] if scale_only else [100000,150000],
         "official_validation": "forbidden", "test_dev": "forbidden", "test_challenge": "forbidden"})
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     implementation = normalized_source_sha256(root / "src/molgap/gptrans_author_variants.py")
@@ -82,28 +88,35 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         from .gptrans_capacity import MODES as capacity_modes
         transition = mode == "degree_pair_transition_ema999"
         local_control = mode == "degree_bond_local_cap_ema999"
-        capacity = mode in capacity_modes or transition or local_control
         scale = mode == "scale_ema"
+        model_mode = (study or {}).get("scale_model_variant", "degree_scale_ema999") if scale else mode
+        capacity = model_mode in capacity_modes or transition or local_control
         prepared_initial, prepared_file = initial, "degree_initial_state.pt"
         prepared_tensor_sha = source_arm["initialization"]["state_sha256"]
         expected_parameters = recipe["model_parameters"]
         if capacity:
             from .pcqm_gptrans_v4 import capacity_module
-            module = capacity_module(mode)
+            module = capacity_module(model_mode)
             freeze_initial, configuration = module.freeze_initial, module.configuration
             load_initial, architecture_identity = module.load_initial, module.architecture_identity
-            prepared_file = mode + "_initial.pt"
+            prepared_file = model_mode + "_initial.pt"
             prepared_initial = root / "platforms/_records/kaggle/initializations" / prepared_file
-            if prepared_initial.exists():
+            retained_facts = (study or {}).get("retained_initial_facts") if scale else None
+            if retained_facts:
+                facts = dict(retained_facts)
+                if (sha256_file(prepared_initial) != facts.pop("file_sha256")
+                        or facts["architecture_identity"] != architecture_identity(model_mode)):
+                    raise ValueError("Retained scale initialization/architecture differs")
+            elif prepared_initial.exists():
                 from .pcqm_gptrans_v4 import _state_sha256
-                model = load_initial(mode, prepared_initial)
+                model = load_initial(model_mode, prepared_initial)
                 facts = {"parameters": sum(p.numel() for p in model.parameters()),
-                    "state_sha256": _state_sha256(model), "architecture_identity": architecture_identity(mode)}
+                    "state_sha256": _state_sha256(model), "architecture_identity": architecture_identity(model_mode)}
             else:
-                facts = freeze_initial(mode, initial, prepared_initial)
+                facts = freeze_initial(model_mode, initial, prepared_initial)
             prepared_tensor_sha, expected_parameters = facts["state_sha256"], facts["parameters"]
             recipe.update(initial_state_sha256=sha256_file(prepared_initial), model_parameters=expected_parameters,
-                          capacity_configuration=configuration(mode), architecture_sha256=facts["architecture_identity"])
+                          capacity_configuration=configuration(model_mode), architecture_sha256=facts["architecture_identity"])
             capacity_inputs[prepared_file] = UploadArtifact.from_file(prepared_initial).to_workflow()
         if terminal_reference:
             recipe.update(optimizer_parameter_groups="bias-and-1d-no-decay-v1" if "group_decay" in mode else "single-group",
@@ -127,6 +140,10 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             recipe.update(dataset_identity="pcqm4mv2-ogb-fixed-500k-scnet-v1@" + FIXED_500K_MANIFEST_SHA256,
                 model_id="gptrans-g1-core12x256-pair32", data_role_fingerprint=canonical_fingerprint({"train":[0,500000],"development":[500000,550000]}),
                 row_order_fingerprint=canonical_fingerprint({"sampler":"seed42-continuous-fixed500k-step-v1","steps":46860,"batch":128}))
+            if matched_scale:
+                recipe.update(model_variant=model_mode, ema_decay=.999, experiment_purpose="architecture_comparison",
+                    comparison_class="prospective_only", reference_scope="qualified retained same-budget500K EMA999 control",
+                    model_id=facts["architecture_identity"], directional_transfer_gate_eV=.001)
         atomic_json(root / recipe_ref, recipe)
         recipes[mode] = recipe_ref
         arm = deepcopy(source_arm)
@@ -159,7 +176,11 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
                 row_membership_identity=FIXED_500K_MANIFEST_SHA256,
                 row_order_identity=arm["training"]["sampler"]["sha256"],
                 evaluation_role_identity="fixed500k:development-500000-550000", selection_role_identity="fixed500k:development-500000-550000")
-            purpose, fields = "transfer_study", []
+            if matched_scale:
+                candidate["architecture_config_identity"] = facts["architecture_identity"]
+                purpose, fields = "architecture_comparison", ["architecture_config_identity"]
+            else:
+                purpose, fields = "transfer_study", []
         elif capacity:
             candidate["architecture_config_identity"] = facts["architecture_identity"]
             purpose, fields = "architecture_comparison", ["architecture_config_identity"]
@@ -182,12 +203,12 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             purpose, fields = "mechanism_comparison", ["architecture_config_identity"]
         prelaunch = assess_comparison_prelaunch(candidate_id=trajectory,
             candidate_plan={"comparison_identity": candidate, "source_config_status": "frozen", "source_commit_or_archive": commit},
-            reference_id=None if scale else bundle["reference_id"], reference_bundle=None if scale else bundle, experiment_purpose=purpose,
+            reference_id=None if scale and not matched_scale else bundle["reference_id"], reference_bundle=None if scale and not matched_scale else bundle, experiment_purpose=purpose,
             intervention_group_id="gptrans-g1-followup", mechanism_id=mode,
             declared_intervention_fields=fields, role_applicability_plan=roles,
             trace_plan={k: True for k in TRACE_FIELD_DECLARATIONS}, runtime_qualification_plan={"status": "declared",
                 "runtime_certificate_required": True, "qualification_scope": identity["runtime_certificate_scope"]})
-        if scale:
+        if scale and not matched_scale:
             from .comparison_readiness import validate_server_comparison_prelaunch
             # A transfer study has no matched500K reference. Use the existing
             # explicitly noncausal gate; do not relax the scientific helper.
@@ -231,6 +252,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         if scale:
             t["state_at_start"]["role_snapshot_refs"] = [recipe_ref]
             t["hypothesis"]["cheapest_falsifier"] = "one live500K trajectory with two retained EMA views at equal updates;100K reference is context only"
+            if matched_scale:
+                t["hypothesis"]["cheapest_falsifier"] = "one matched500K local stream against retained same-budget control; no duplicate baseline"
         t["actions"] = [{"action_id": "A001", "type": "single_mechanism_screen", "source_commit": commit,
             "run_ids": [RUN + ":" + mode], "attempt_ids": ["v1"], "evidence_refs": [recipe_ref], "cost_event_ids": [cost]}]
         t["decision"].update(decision_ref=BASE + "/protocol.md", next_allowed_actions=["one isolated T4 arm then full saved-artifact acceptance"])
@@ -265,11 +288,17 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         if "scale_ema" in MODES:
             scale_tid = arms_config["scale_ema"]["trajectory_id"]
             config["scale_study"] = {"logical_run_id":RUN+":scale_ema", "physical_arm_trajectory_id":scale_tid,
-                "initial_file_sha256":accepted["degree_initial_file_sha256"],
+                "initial_file_sha256":arms_config["scale_ema"]["initial_file_sha256"],
                 "training_estimate_cap_hours":study["training_estimate_cap_hours"],
                 "view_trajectories":{view:scale_tid for view in ("ema9999","ema999")},
                 "role_plan":BASE+"/gpu/scale_ema/contract.json", "profiling_only":False,
                 "expected_optimizer_steps":46860, "expected_sample_presentations":5998080}
+            if matched_scale:
+                config["scale_study"].update(model_variant=model_mode,
+                    initial_file=arms_config["scale_ema"]["initial_file"], expected_parameters=expected_parameters,
+                    phase_profiling_steps=4)
+                config["dataset_manifest_sha256"] = FIXED_500K_MANIFEST_SHA256
+                config["directional_transfer_gate_eV"] = .001
         config.update(maximum_wall_seconds=int(wall_cap * 3600),
                       training_estimate_cap_hours=study.get("training_estimate_cap_hours", 4.5))
     if single_reason:

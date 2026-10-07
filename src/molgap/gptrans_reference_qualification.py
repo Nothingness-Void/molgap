@@ -8,18 +8,25 @@ from .research_memory.reference_qualification import verify_reference_qualificat
 from .research_memory.trace import atomic_write, file_digest, json_bytes
 
 
-def qualify_reference(repo_root: Path) -> dict:
+def qualify_reference(repo_root: Path, *, base_ref="experiments/pcqm_gptrans_v5_audit_reference",
+        finalized_ref=None, original_bundle_ref=None, prediction_ref=None, acceptance_ref=None,
+        terminal_control=False) -> dict:
     root = Path(repo_root).resolve()
-    base = root / "experiments/pcqm_gptrans_v5_audit_reference"
-    finalized = base / "rml_plan/rml_finalized"
+    base = root / base_ref
+    finalized = root / finalized_ref if finalized_ref else base / "rml_plan/rml_finalized"
     verified_receipt(finalized)
     destination = base / "results/reference_qualification"
-    marker = base / "rml_plan/reference_qualification.json"
+    marker = finalized.parent / "reference_qualification.json"
     rel = lambda p: p.resolve().relative_to(root).as_posix()
     if marker.exists():
         verify_reference_qualification(root, rel(marker))
-        return {"status": "ALREADY_QUALIFIED", "qualification_ref": rel(marker)}
-    original_bundle_path = base / "results/terminal/reference_bundle.json"
+        retained = load_json_object(marker)
+        bound = load_json_object(root / retained["qualified_bundle_ref"])
+        return {"status": "ALREADY_QUALIFIED", "qualification_ref": rel(marker),
+            "reference_bundle_ref": retained["qualified_bundle_ref"],
+            "reference_id": bound["reference_id"],
+            "trajectory_id": load_json_object(root / retained["trajectory_ref"])["trajectory_id"]}
+    original_bundle_path = root / original_bundle_ref if original_bundle_ref else base / "results/terminal/reference_bundle.json"
     old_bundle = load_json_object(original_bundle_path)
     original_manifest_path = finalized / "trace_manifest.json"
     manifest = load_json_object(original_manifest_path)
@@ -37,19 +44,20 @@ def qualify_reference(repo_root: Path) -> dict:
         verify_bound_artifact(root, ref, digest)
     for item in observed["native_cost_sources"]:
         verify_bound_artifact(root, item["ref"], item["sha256"])
-    prediction_path = base / "results/terminal/prediction_manifest.json"
+    prediction_path = root / prediction_ref if prediction_ref else base / "results/terminal/prediction_manifest.json"
     prediction = load_json_object(prediction_path)
     checkpoint = resolve_repo_pointer(root, prediction["artifact_locator"]).parent / "best_model.pt"
     if file_digest(checkpoint) != old_bundle["checkpoint_identity"]:
         raise ValueError("reference checkpoint differs from accepted bundle")
     manifest["reference_id"] = evidence["evidence_id"]
+    manifest["comparison_role"] = "reference"
     manifest["backtest_eligibility"] = {"eligible": True, "exclusion_reasons": []}
     bundle = deepcopy(old_bundle)
     bundle.update(reference_bundle_id=old_bundle["reference_bundle_id"] + "-qualified-v1",
                   trace_manifest_ref=rel(destination / "qualified_trace_manifest.json"),
                   role_history_ref=rel(destination / "role_history.json"),
                   cost_records_ref=rel(destination / "cost_records.json"),
-                  acceptance_ref=rel(base / "results/final_acceptance.json"),
+                  acceptance_ref=acceptance_ref or rel(base / "results/final_acceptance.json"),
                   qualification_ref=rel(marker))
     outputs = {destination / "reference_bundle.json": bundle,
                destination / "qualified_trace_manifest.json": manifest}
@@ -67,7 +75,7 @@ def qualify_reference(repo_root: Path) -> dict:
              *outputs, *(resolve_repo_pointer(root, ref) for ref in pointers)]
     hashes.update({rel(path): file_digest(path) for path in paths})
     descriptor = {
-        "format": "molgap-reference-qualification-v1",
+        "format": "molgap-terminal-control-enrollment-v1" if terminal_control else "molgap-reference-qualification-v1",
         "original_bundle_ref": rel(original_bundle_path),
         "original_manifest_ref": rel(original_manifest_path),
         "trajectory_ref": rel(finalized / "trajectory.json"),
@@ -78,6 +86,9 @@ def qualify_reference(repo_root: Path) -> dict:
         "semantics": "Additive control enrollment; original scientific outcomes and prospective bytes unchanged",
         "local_training_executed": False, "model_inference_executed": False,
         "successor_authorized": False}
+    if terminal_control:
+        descriptor.update(scientific_promotion=False,
+            original_comparison_status=evidence["outcome"]["comparison_status"])
     atomic_write(marker, json_bytes(descriptor))
     verify_reference_qualification(root, rel(marker))
     return {"status": "QUALIFIED", "qualification_ref": rel(marker),

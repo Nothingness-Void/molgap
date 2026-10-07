@@ -80,9 +80,7 @@ def author_child(stage: str, variant: str, context: dict, root: Path):
             atomic_json(retained, binding)
         from .gptrans_scale_profile import profile
         if stage == "preflight":
-            result = profile(Path(context["upload_root"]), root / "training", {
-                "initial_file_sha256": study["initial_file_sha256"],
-                "training_estimate_cap_hours": study["training_estimate_cap_hours"]}, source_identity=package)
+            result = profile(Path(context["upload_root"]), root / "training", study, source_identity=package)
             if not result["qualification_passed"]:
                 raise ValueError("Scale execution/calibration budget failed")
         elif stage == "training":

@@ -27,6 +27,19 @@ WARMUP = 5
 MEASURED = 30
 
 
+def model_binding(contract):
+    """Keep the legacy G1 default; allow only the frozen local-stream extension."""
+    variant = contract.get("model_variant", "degree_scale_ema999")
+    expected = {"degree_scale_ema999": ("degree_initial_state.pt", 5246817),
+                "degree_bond_local_ema999": ("degree_bond_local_ema999_initial.pt", 5871201)}
+    if variant not in expected:
+        raise ValueError("Unsupported fixed500K model variant")
+    filename, parameters = expected[variant]
+    if contract.get("initial_file", filename) != filename or contract.get("expected_parameters", parameters) != parameters:
+        raise ValueError("Scale model/initialization/parameter binding changed")
+    return variant, filename, parameters
+
+
 def clock_projection():
     """Counterfactual clocks, not observed parameter shrinkage or tuned decay."""
     lrs = [FrozenEpochScheduler.learning_rate(e) for e in range(60)]
@@ -40,6 +53,7 @@ def profile(inputs: Path, output: Path, contract: dict, *, source_identity: dict
     import torch
     from torch_geometric.loader import DataLoader
 
+    variant, initial_file, parameters = model_binding(contract)
     started = time.perf_counter()
     settings = configure_fp32_determinism(42)
     if torch.cuda.device_count() != 1 or "T4" not in torch.cuda.get_device_name(0):
@@ -59,16 +73,18 @@ def profile(inputs: Path, output: Path, contract: dict, *, source_identity: dict
     indices = torch.randperm(len(graphs), generator=torch.Generator().manual_seed(42))[:BATCH * (WARMUP + MEASURED)]
     loader = DataLoader(graphs, batch_size=BATCH, sampler=indices.tolist(), num_workers=4,
         persistent_workers=True, pin_memory=True, generator=torch.Generator().manual_seed(42))
-    mean_value, std_value = _run_target_stats([], "degree_scale_ema999", inputs / "target_transform.json")
+    mean_value, std_value = _run_target_stats([], variant, inputs / "target_transform.json")
     mean, std = torch.tensor(mean_value, device="cuda"), torch.tensor(std_value, device="cuda")
-    initial = inputs / "degree_initial_state.pt"
+    initial = inputs / initial_file
     if sha256_file(initial) != contract["initial_file_sha256"]:
         raise ValueError("Qualification initialization changed")
     fixture = next(iter(loader)).to("cuda")
     repeats = []
     for _ in range(2):
         configure_fp32_determinism(42)
-        model, optimizer, scheduler, unused_ema = _make_training_state(initial, "degree_scale_ema999")
+        model, optimizer, scheduler, unused_ema = _make_training_state(initial, variant)
+        if sum(p.numel() for p in model.parameters()) != parameters:
+            raise ValueError("Qualified model parameter count changed")
         del unused_ema
         scheduler.step(0)
         ema_slow = ExponentialMovingAverage(model, .9999)
@@ -81,7 +97,7 @@ def profile(inputs: Path, output: Path, contract: dict, *, source_identity: dict
     if repeats[0] != repeats[1]:
         raise RuntimeError("Deterministic optimizer-inclusive calibration failed")
     configure_fp32_determinism(42)
-    model, optimizer, scheduler, unused_ema = _make_training_state(initial, "degree_scale_ema999")
+    model, optimizer, scheduler, unused_ema = _make_training_state(initial, variant)
     del unused_ema
     scheduler.step(0)
     ema_slow, ema_fast = ExponentialMovingAverage(model, .9999), ExponentialMovingAverage(model, .999)

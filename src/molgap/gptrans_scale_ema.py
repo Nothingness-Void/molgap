@@ -48,9 +48,10 @@ def _recorder(path, view, trajectory_id, run_id):
 def train(inputs, output, *, config, source_identity):
     import torch
     from torch_geometric.loader import DataLoader
-    from .gptrans_scale_profile import profile
+    from .gptrans_scale_profile import model_binding, profile
+    variant, initial_file, parameters = model_binding(config)
     started = time.perf_counter()
-    initial, transform = inputs / "degree_initial_state.pt", inputs / "target_transform.json"
+    initial, transform = inputs / initial_file, inputs / "target_transform.json"
     if sha256_file(initial) != config["initial_file_sha256"]:
         raise ValueError("Scale initialization differs from the frozen plan")
     if torch.cuda.device_count() != 1 or "T4" not in torch.cuda.get_device_name(0):
@@ -64,18 +65,18 @@ def train(inputs, output, *, config, source_identity):
         return result
     qualification_path = output / "qualification.json"
     if not qualification_path.exists():
-        qualification = profile(inputs, output, {"initial_file_sha256": config["initial_file_sha256"],
-            "training_estimate_cap_hours": config["training_estimate_cap_hours"]}, source_identity=source_identity)
+        qualification = profile(inputs, output, config, source_identity=source_identity)
     else:
         qualification = json.loads(qualification_path.read_bytes())
-    if not qualification["qualification_passed"] or qualification["source_identity"] != source_identity:
+    if (not qualification["qualification_passed"] or qualification["source_identity"] != source_identity
+            or qualification["parameters"] != parameters):
         raise ValueError("Qualified scale execution/budget binding failed")
     root, manifest = find_cache(FIXED_500K_MANIFEST_SHA256)
     roles = load_roles(root, manifest)
     configure_fp32_determinism(42)
-    mean_value, std_value = native._run_target_stats([], "degree_scale_ema999", transform)
+    mean_value, std_value = native._run_target_stats([], variant, transform)
     mean, std = torch.tensor(mean_value, device="cuda"), torch.tensor(std_value, device="cuda")
-    model, optimizer, scheduler, unused = native._make_training_state(initial, "degree_scale_ema999")
+    model, optimizer, scheduler, unused = native._make_training_state(initial, variant)
     del unused
     averages = {name: native.ExponentialMovingAverage(model, decay) for name, decay in FILTERS.items()}
     records = {view: [] for view in FILTERS}
@@ -113,6 +114,14 @@ def train(inputs, output, *, config, source_identity):
         model.train()
         total = torch.zeros((), device="cuda")
         count = 0
+        profile_steps = config.get("phase_profiling_steps", 0) if rung == 0 and start == 0 else 0
+        if profile_steps not in (0, 4):
+            raise ValueError("Phase timing is limited to the prospectively declared first four updates")
+        profiler = None
+        if profile_steps:
+            profiler = torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU,
+                torch.profiler.ProfilerActivity.CUDA], record_shapes=True)
+            profiler.start()
         for batch in loader:
             if int(batch.num_graphs) != BATCH:
                 raise ValueError("Physical batch/tail identity changed")
@@ -121,12 +130,25 @@ def train(inputs, output, *, config, source_identity):
             averages["ema999"].update(model)
             total.add_(loss * BATCH)
             count += BATCH
+            if profiler is not None and count == profile_steps * BATCH:
+                profiler.stop()
+                profiler.export_chrome_trace(str(output / "optimizer_phase_profile.json"))
+                profiler = None
+        training_seconds = time.perf_counter() - began
         if count != RUNG_STEPS * BATCH:
             raise ValueError("Scale exposure changed")
         live = native._evaluate(model, averages["ema999"], roles["validation"], mean, std,
                                 weights="live", source_idx_start=500000)
         scores = {view: native._evaluate(model, avg, roles["validation"], mean, std,
                             source_idx_start=500000) for view, avg in averages.items()}
+        evaluation_seconds = time.perf_counter() - began - training_seconds
+        atomic_json(output / "timing" / f"rung_{rung:02d}.json", {
+            "training_including_loader_h2d_seconds": training_seconds,
+            "evaluation_seconds": evaluation_seconds, "profiling_updates": profile_steps,
+            "peak_allocated_bytes": torch.cuda.max_memory_allocated(),
+            "peak_reserved_bytes": torch.cuda.max_memory_reserved(),
+            "timing_scope": "native operator profile separates forward/autograd/AdamW; aggregate train includes loader/H2D",
+            "optimizer_steps": (rung + 1) * RUNG_STEPS})
         for view, score in scores.items():
             if score["mae_eV"] < best[view]["mae_eV"]:
                 best[view] = {"mae_eV": score["mae_eV"], "rung": rung}
@@ -164,7 +186,7 @@ def train(inputs, output, *, config, source_identity):
         print(f"scale-ema rung={rung:02d} live={live['mae_eV']:.8f} slow={scores['ema9999']['mae_eV']:.8f} fast={scores['ema999']['mae_eV']:.8f}", flush=True)
     result = {"format": "molgap-scale-ema-completion-v1", "complete": True, "configuration": config,
         "source_identity": source_identity, "optimizer_steps": TOTAL_STEPS, "sample_presentations": TOTAL_STEPS * BATCH,
-        "live_optimizer_streams": 1, "parameters": 5246817, "manifest_sha256": FIXED_500K_MANIFEST_SHA256,
+        "live_optimizer_streams": 1, "parameters": parameters, "manifest_sha256": FIXED_500K_MANIFEST_SHA256,
         "best": best, "training_executed": True, "development_role_read": True,
         "official_validation_role_read": False, "test_dev_role_read": False, "test_challenge_role_read": False}
     result["files"] = {p.relative_to(output).as_posix(): sha256_file(p) for p in output.rglob("*")

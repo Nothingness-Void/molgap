@@ -18,7 +18,8 @@ def verify_reference_qualification(root: Path, pointer: str, *, expected_bundle=
     if path is None:
         raise ValueError("reference qualification must be locally retained")
     record = load_json_object(path)
-    if record.get("format") != "molgap-reference-qualification-v1":
+    control_enrollment = record.get("format") == "molgap-terminal-control-enrollment-v1"
+    if record.get("format") != "molgap-reference-qualification-v1" and not control_enrollment:
         raise ValueError("unsupported reference qualification")
     bindings = record["artifact_hashes"]
     for ref, digest in bindings.items():
@@ -49,7 +50,8 @@ def verify_reference_qualification(root: Path, pointer: str, *, expected_bundle=
         raise ValueError("qualification manifest is not from accepted transaction")
     evidence = load_json_object(directory / "v5_evidence.json")
     terminal = load_json_object(directory / "terminal_input.json")
-    if (original["comparison_role"] != "reference" or manifest["comparison_role"] != "reference"
+    if (original["comparison_role"] not in ({"reference", "candidate"} if control_enrollment else {"reference"})
+            or manifest["comparison_role"] != "reference"
             or trajectory["decision"]["outcome"] == "ACTIVE"
             or trajectory["record_mode"] != "prospective"
             or evidence["outcome"]["execution_status"] != "complete"
@@ -62,6 +64,13 @@ def verify_reference_qualification(root: Path, pointer: str, *, expected_bundle=
                 trajectory["trajectory_id"], terminal["run_id"])):
         raise ValueError("qualification requires the control's own accepted terminal identity")
     mutable = {"reference_id", "backtest_eligibility"}
+    if control_enrollment:
+        # A complete observed control need not have won an earlier comparison.
+        # This view changes custody in a later comparison, never the old claim.
+        if (record.get("scientific_promotion") is not False
+                or record.get("original_comparison_status") != evidence["outcome"]["comparison_status"]):
+            raise ValueError("control enrollment must preserve the original scientific claim")
+        mutable.add("comparison_role")
     if {k: v for k, v in original.items() if k not in mutable} != {
             k: v for k, v in manifest.items() if k not in mutable}:
         raise ValueError("reference enrollment changed observed trace semantics")
@@ -99,6 +108,32 @@ def verify_reference_qualification(root: Path, pointer: str, *, expected_bundle=
             transform["asset_id"], transform["asset_sha256"], transform["target_identity"]):
         raise ValueError("qualified target transform identity changed")
     acceptance = load_json_object(resolve_repo_pointer(root, bundle["acceptance_ref"]))
+    if control_enrollment:
+        source = acceptance["source_acceptance_ref"]
+        digest = acceptance["source_acceptance_sha256"]
+        if terminal["artifact_hashes"].get(source) != digest or bindings.get(source) != digest:
+            raise ValueError("control acceptance is not bound to the original terminal transaction")
+        verify_bound_artifact(root, source, digest)
+        native = load_json_object(resolve_repo_pointer(root, source))
+        if native.get("accepted") is not True:
+            raise ValueError("control lacked independently accepted native artifacts")
+        # This enrollment format currently supports the retained shared-live
+        # scale producer only. Do not trust a newly written acceptance boolean.
+        if native.get("format") != "molgap-scale-ema-acceptance-v1":
+            raise ValueError("unsupported terminal control producer")
+        result = native["result"]
+        projected = {"best_ema_model_sha256": result["files"]["ema999/best_model.pt"],
+            "development_predictions_sha256": result["files"]["ema999/development_predictions.pt"],
+            "final_checkpoint_sha256": result["files"]["last_checkpoint.pt"],
+            "optimizer_steps": result["optimizer_steps"], "sample_presentations": result["sample_presentations"]}
+        if (any(acceptance[key] != value for key, value in projected.items())
+                or result["complete"] is not True or result["live_optimizer_streams"] != 1
+                or (result["optimizer_steps"], result["sample_presentations"], result["parameters"]) != (46860, 5998080, 5246817)
+                or any(result[key] is not False for key in ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"))
+                or identity["ema_decay"] != .999
+                or identity["optimizer_steps"] != result["optimizer_steps"]
+                or identity["sample_presentations"] != result["sample_presentations"]):
+            raise ValueError("control projection differs from accepted primary native evidence")
     prediction = load("prediction_manifest_ref")
     if (acceptance.get("accepted") is not True
             or acceptance["best_ema_model_sha256"] != bundle["checkpoint_identity"]
@@ -127,10 +162,12 @@ def verify_reference_qualification(root: Path, pointer: str, *, expected_bundle=
 def qualified_reference_manifest(root: Path, path: Path, manifest: dict) -> dict:
     """The marker lives outside the immutable finalization inventory."""
     marker = path.parent.parent / "reference_qualification.json"
-    if manifest["comparison_role"] != "reference" or not marker.is_file():
+    if not marker.is_file():
         return manifest
     pointer = marker.resolve().relative_to(Path(root).resolve()).as_posix()
     record = load_json_object(marker)
+    if manifest["comparison_role"] != "reference" and record.get("format") != "molgap-terminal-control-enrollment-v1":
+        return manifest
     if record.get("original_manifest_ref") != path.resolve().relative_to(Path(root).resolve()).as_posix():
         raise ValueError("reference qualification marker targets another manifest")
     return verify_reference_qualification(root, pointer)
