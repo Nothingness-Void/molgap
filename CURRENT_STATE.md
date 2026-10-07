@@ -6,21 +6,20 @@
 
 ## Server active screen
 
-The newly authorized [local-update control screen](experiments/pcqm_gptrans_local_control_100k/protocol.md)
-was submitted to Kaggle2, version1, and reconciled as RUNNING. Exact receipt,
-qualification limits and Luna B custody are in its
-[submission record](experiments/pcqm_gptrans_local_control_100k/gpu/submission_record.md).
-Startup outputs are not yet retrievable; runtime qualification is pending.
-It reuses the accepted uncapped local-bond comparator without baseline retraining.
-No extra seed,500K/full or automatic successor is authorized.
+The [local-update control screen](experiments/pcqm_gptrans_local_control_100k/gpu/results/interpretation.md)
+is independently accepted, STRICT_CAUSAL and admitted as a complete Replay
+pair against its frozen uncapped local-bond reference. The amplitude-control
+intervention worsened the selected endpoint and the exact route is closed.
+Its controller event and Luna binding are closed; the existing heartbeat is
+paused. No server training, extra seed,500K/full or successor is authorized.
 
 The [frozen GPTrans bottleneck diagnostic](experiments/pcqm_gptrans_bottleneck_audit/decision_terminal.md)
 is accepted and closed as NO_TRAIN / PAIRED_ENDPOINT, not a training Replay
 pair. The local-bond advantage survived its frozen later cohort; all local
 branches were connected, while the final Pair Transition branch was not.
-Local-update control remains a hypothesis needing separate authority, not a
-validated improvement. That closed diagnostic did not authorize a successor;
-the separate new screen above has its own user-approved protocol.
+The separately authorized control screen above did not support the proposed
+amplitude-suppression fix; preserve its declared scope rather than reopening a
+cap grid or treating the old diagnostic correlation as an established cause.
 
 The Kaggle2 [independent pair-transition100K screen](experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md)
 is independently accepted, STRICT_CAUSAL and admitted as a complete Replay
@@ -58,8 +57,8 @@ is independently accepted and RML-finalized. The local addon has a complete
 STRICT_CAUSAL Replay pair but remains below its frozen promotion gate. The500K
 shared-live EMA study supports the correction direction, remains noncausal
 PAIRED_ENDPOINT and is not a causal Replay pair or full-scale qualification.
-All four earlier authorized studies and the separately authorized pair-transition
-job are closed; the distinct new screen above is Luna's only active binding.
+All four earlier authorized studies, pair-transition and local-control jobs
+are closed; Luna has no active server training binding.
 Exact receipts and the [closed shared monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
 retain custody history. No automatic successor is authorized.
 The earlier monitor bindings are closed; the monitor never adopts desktop jobs.
