@@ -24,6 +24,18 @@ maintenance verification and its scientific limits, not live queue authority.
 
 ## Track B recommendation and constraints
 
+User-directed focus(2026-10-07): explain why the enhanced K1 package did not
+retain its advantage at500K. Full-data scale-transfer is deferred. Read the
+[500K cost/accuracy attribution](D:/w/k1-gptrans-500k-package/experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/cost_accuracy_attribution.md)
+and accepted[BN diagnostic](experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md)
+before another K1 action. Separate historical package improvements and live/EMA/
+BN output-state effects from capacity or exposure hypotheses. The strongest
+100K pretrained K1 includes a teacher term that the500K package omitted;
+their endpoints do not constitute a matched same-package scale comparison.
+Any further execution needs a separately frozen discriminator for the remaining
+cause, using retained references and existing family/RML owners. No full run,
+unrelated module sweep or automatic retry is a next action for this focus.
+
 Track B predicts PCQM4Mv2 Gap only and is separate from Track A. The accepted
 full EdgeState checkpoint remains the operational full-scale reference.
 The matched 500K architecture ordering and the full-data ordering have different
