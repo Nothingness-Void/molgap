@@ -52,6 +52,13 @@ role history in `models/REFERENCE_INDEX.md` and the owning submission records.
 
 ## Active Work and Unresolved Acceptance
 
+- **K1 consistency ablation at500K:** user-authorized weight0/0.1 pair with
+  identical retained pretraining and two forwards. Preparation and submission
+  stay on `codex/exp/k1-consistency-ablation-500k`; read
+  [protocol](experiments/pcqm_k1_consistency_ablation_500k/protocol.md) and
+  [status](experiments/pcqm_k1_consistency_ablation_500k/STATUS.md). Compare raw
+  selected and fixed BN-calibrated endpoints. No full-data training or adoption.
+
 Branch-local records absent here are linked through the
 [retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
 
