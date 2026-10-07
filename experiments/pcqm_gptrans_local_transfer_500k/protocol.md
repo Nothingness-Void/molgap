@@ -156,7 +156,7 @@ A provisional **directional-transfer research signal** requires:
 - complete comparable artifacts, actual runtime qualification and native cost.
 
 Use the existing paired-analysis owner with a prospectively frozen bootstrap
-recipe/seed; do not search over resampling settings. This0.001 criterion is a
+recipe/seed; do not search over resampling settings.
 5000 paired-row resamples with seed20260912 are supplied by the unchanged
 `k1_terminal_analysis.paired_saved_errors` owner. The bootstrap does not estimate
 training stochasticity. Four initial native optimizer updates are operator-profiled

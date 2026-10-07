@@ -1,0 +1,11 @@
+{
+  "estimated_wall_hours": 5,
+  "estimated_allocated_t4_hours": 10,
+  "maximum_wall_hours": 7,
+  "maximum_allocated_t4_hours": 14,
+  "allocated_devices": 2,
+  "baseline_retraining": false,
+  "automatic_successor_authorized": false,
+  "single_arm_reason": "The accepted equal-update500K G1 control is retained and qualified; train only the local candidate, account for both allocated T4s without inventing another experiment.",
+  "authority_ref": "experiments/pcqm_gptrans_local_transfer_500k/protocol.md"
+}

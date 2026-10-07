@@ -1,0 +1,148 @@
+{
+  "trajectory": {
+    "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+    "record_mode": "prospective",
+    "owner": "server",
+    "track": "C",
+    "family_id": "gptrans-g1-scale_ema",
+    "question": "Does the uncapped real-bond local stream retain its gain after genuine500K optimization at identical steps and unchanged normalized Gap recipe?",
+    "hypothesis": {
+      "hypothesis_id": "H-TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "observed_deficiency": "Does the uncapped real-bond local stream retain its gain after genuine500K optimization at identical steps and unchanged normalized Gap recipe?",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+        "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
+        "pcqm-gptrans-bottleneck-frozen-v1"
+      ],
+      "alternative_explanations": [
+        "Early acceleration can disappear at the common endpoint; the local stream can improve fit but not generalization; six million presentations do not establish full convergence."
+      ],
+      "changed_mechanism": "scale_ema",
+      "cheapest_falsifier": "one matched500K local stream against retained same-budget control; no duplicate baseline",
+      "related_closed_family_ids": [
+        "gptrans-pair-prenorm",
+        "gptrans-runtime-profiling"
+      ],
+      "expected_native_cost_ref": "cost-TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "decision_changed_if_positive": "controller interpretation only; no automatic scale or seed release",
+      "decision_changed_if_negative": "close this exact follow-up hypothesis",
+      "historical_unknowns": [
+        "training stochasticity unmeasured; material gate is a policy choice"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "b8811dded17041f8204ba7142d0fba337261363f",
+      "source_config_identity": "c1b47f0dac70d5833c118b6507ac955679152d7902babfc9a598f14e3066a3ed",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/contract.json",
+        "experiments/pcqm_gptrans_local_transfer_500k/protocol.md",
+        "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/comparison_readiness_prelaunch.json"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42"
+      ],
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-scale-ema-equal-updates-500k-s42"
+      ],
+      "prior_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42",
+        "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+        "TC-gptrans-bottleneck-frozen-v1"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+        "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
+        "pcqm-gptrans-bottleneck-frozen-v1"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/contract.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/budget.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "single_mechanism_screen",
+        "source_commit": "b8811dded17041f8204ba7142d0fba337261363f",
+        "run_ids": [
+          "gptrans-local-transfer500k-s42:scale_ema"
+        ],
+        "attempt_ids": [
+          "v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/contract.json"
+        ],
+        "cost_event_ids": [
+          "cost-TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_local_transfer_500k/protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one isolated T4 arm then full saved-artifact acceptance"
+      ],
+      "reopen_conditions": [
+        "terminal evidence or an infrastructure fault requiring controller diagnosis"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [
+      "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42"
+    ],
+    "available_actions": [
+      "RUN_G1_FOLLOWUP",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_G1_FOLLOWUP",
+    "policy_id": "gptrans-g1-followup",
+    "policy_version": "v1",
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/budget.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/contract.json"
+    ],
+    "state_timestamp": "2026-10-07T08:56:41.893724+00:00",
+    "source_commit": "b8811dded17041f8204ba7142d0fba337261363f"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "action_id": "A001",
+      "run_id": "gptrans-local-transfer500k-s42:scale_ema",
+      "attempt_id": "v1",
+      "category": "training",
+      "platform": "kaggle2-t4-gptrans-local-transfer500k",
+      "hardware": "one-of-two-independent-T4",
+      "evidence_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/budget.json",
+      "measurement": {
+        "device_hours": {
+          "status": "estimated",
+          "value": 5
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 5
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}
