@@ -65,3 +65,10 @@ research_memory/policies/pcqm-k1-colab-execution-profile.1.json -text
 experiments/pcqm_k1_bn_mechanism_a100/** -text
 research_memory/policies/pcqm-k1-bn-mechanism-a100.1.json -text
 src/molgap/k1_bn_mechanism.py -text
+experiments/pcqm_k1_late_weight_average/** -text
+experiments/pcqm_k1_complete_local_audit/** -text
+src/molgap/k1_weight_average_diagnostic.py -text
+src/molgap/k1_component_diagnostic.py -text
+src/molgap/frozen_diagnostic_closure.py -text
+research_memory/policies/pcqm-k1-late-weight-average.1.json -text
+research_memory/policies/pcqm-k1-complete-module-audit.1.json -text
