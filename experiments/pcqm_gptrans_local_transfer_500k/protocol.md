@@ -157,6 +157,12 @@ A provisional **directional-transfer research signal** requires:
 
 Use the existing paired-analysis owner with a prospectively frozen bootstrap
 recipe/seed; do not search over resampling settings. This0.001 criterion is a
+5000 paired-row resamples with seed20260912 are supplied by the unchanged
+`k1_terminal_analysis.paired_saved_errors` owner. The bootstrap does not estimate
+training stochasticity. Four initial native optimizer updates are operator-profiled
+without changing math or weights; per-rung train/evaluation and memory costs are retained.
+
+This0.001 criterion is a
 proposed practical research filter for this500K question, not a measured
 training-stochasticity floor or a replacement for the historical100K gate.
 Reference stochasticity is unavailable and must stay marked unavailable.

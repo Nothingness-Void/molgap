@@ -16,6 +16,27 @@ from .research_memory.terminal_wiring import close_terminal_arm
 from .research_memory.trace import atomic_write, file_digest, json_bytes, load_canonical_trace
 
 
+def directional_signal(analysis, matched, threshold):
+    gain = -analysis["candidate_minus_reference_eV"]
+    final_gain = matched[-1]["gain_eV"]
+    tail_gain = sum(row["gain_eV"] for row in matched[-10:]) / 10
+    return gain >= threshold and analysis["paired_row_bootstrap"]["ci95"][1] < 0 and final_gain > 0 and tail_gain > 0
+
+
+def _require_actual_replay_pair(root, tid, reference_id):
+    pool = load_json_object(root / "research_memory/derived/replay_pool.json")
+    candidate = [row for row in pool["entries"] if row["trajectory_id"] == tid and row["comparison_role"] == "candidate"]
+    if len(candidate) != 1 or candidate[0]["capability"] != "complete":
+        raise ValueError("Actual complete candidate Replay admission missing")
+    key = candidate[0]["comparability_key"]
+    reference = [row for row in pool["entries"] if row["reference_id"] == reference_id
+        and row["comparability_key"] == key and row["comparison_role"] == "reference" and row["capability"] == "complete"]
+    if len(reference) != 1:
+        raise ValueError("Actual complete reference Replay admission missing")
+    return {"actual_complete_replay_pair": True, "candidate_trajectory_id": tid,
+        "reference_trajectory_id": reference[0]["trajectory_id"], "comparability_key": key}
+
+
 def accept_local_outputs(root, records, package):
     import torch
     root, records = Path(root).resolve(), Path(records).resolve()
@@ -42,10 +63,7 @@ def accept_local_outputs(root, records, package):
     gain = -analysis["candidate_minus_reference_eV"]
     final_gain = matched[-1]["gain_eV"]
     tail_gain = sum(row["gain_eV"] for row in matched[-10:]) / 10
-    interval = analysis["paired_row_bootstrap"]
-    # The owning bootstrap reports its two-sided interval; never tune it here.
-    upper = interval["ci95"][1]
-    directional = gain >= config["directional_transfer_gate_eV"] and upper < 0 and final_gain > 0 and tail_gain > 0
+    directional = directional_signal(analysis, matched, config["directional_transfer_gate_eV"])
     prediction = {**bundle["prediction_manifest"], "artifact_locator": (folder / "ema999/development_predictions.pt").relative_to(root).as_posix(),
         "artifact_sha256": file_digest(folder / "ema999/development_predictions.pt")}
     for field, tensor in (("prediction_sha256", "prediction_eV"), ("source_idx_sha256", "source_idx"), ("target_sha256", "target_eV")):
@@ -79,6 +97,9 @@ def close_local_outputs(root, records, acceptance):
     folder = screen / "scale_ema/training"
     trace_path = folder / "ema999/canonical_trace.json"
     tid, run = config["arms"]["scale_ema"]["trajectory_id"], config["scale_study"]["logical_run_id"]
+    if (plan.parent / "rml_finalized/finalization.json").is_file():
+        closed = close_terminal_arm(root, plan, target / "terminal.json", trace=trace_path, arm_identifier="ema999")
+        return {"closure": closed, **_require_actual_replay_pair(root, tid, bundle["reference_id"])}
     eid = "pcqm-gptrans-g1-local-transfer-equal-updates-500k-s42"
     timestamp = datetime.now(timezone.utc).isoformat()
     ref_manifest = load(root / bundle["trace_manifest_ref"])
@@ -158,4 +179,5 @@ def close_local_outputs(root, records, acceptance):
         "decision": decision, "roles": roles, "costs": costs, "role_use": role_use, "trace_manifest": manifest,
         "comparison_readiness_ref": rel(target / "comparison_readiness.json")}
     save(target / "terminal.json", terminal)
-    return close_terminal_arm(root, plan, target / "terminal.json", trace=trace_path, arm_identifier="ema999")
+    closed = close_terminal_arm(root, plan, target / "terminal.json", trace=trace_path, arm_identifier="ema999")
+    return {"closure": closed, **_require_actual_replay_pair(root, tid, bundle["reference_id"])}

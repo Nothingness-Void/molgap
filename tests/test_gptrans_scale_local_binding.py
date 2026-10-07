@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from molgap.gptrans_scale_profile import model_binding
+from molgap.gptrans_scale_local_acceptance import directional_signal
 from molgap.evidence_pointers import load_json_object
 from molgap.research_memory import reference_qualification
 
@@ -40,6 +41,16 @@ def test_local_transport_reuses_owning_train_and_profile():
     assert "native._optimizer_step" in source and "native._evaluate" in source
     assert '"parameters": parameters' in source
     assert "model_binding(config)" in source
+
+
+def test_directional_signal_requires_interval_and_late_retention():
+    analysis = {"candidate_minus_reference_eV": -.002, "paired_row_bootstrap": {"ci95": [-.003, -.001]}}
+    rows = [{"gain_eV": .001} for _ in range(60)]
+    assert directional_signal(analysis, rows, .001)
+    assert not directional_signal(analysis, rows, .003)
+    bad_ci = {**analysis, "paired_row_bootstrap": {"ci95": [-.003, .0001]}}
+    assert not directional_signal(bad_ci, rows, .001)
+    assert not directional_signal(analysis, rows[:-1] + [{"gain_eV": -.001}], .001)
 
 
 def test_terminal_control_enrollment_does_not_promote_old_claim():
