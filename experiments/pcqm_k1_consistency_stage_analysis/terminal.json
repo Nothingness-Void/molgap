@@ -1,0 +1,251 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-k1-saved-trace-pair-20261008",
+  "run_id": "local-k1-saved-trace_pair-20261008",
+  "action_id": "A001",
+  "finalized_at": "2026-10-08T10:20:23.324021+00:00",
+  "acceptance_ref": "experiments/pcqm_k1_consistency_stage_analysis/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_consistency_stage_analysis/acceptance.json": "20ba827bab2e93ff5665eefb7392c2dd354922cbb18c53164d986e7aa0fa4de0",
+    "experiments/pcqm_k1_consistency_stage_analysis/attribution.md": "6a137caeac8f3d101fbcd4d43f114151c77de8a5610848e10e86e0fa855df6c5",
+    "experiments/pcqm_k1_consistency_stage_analysis/decision.md": "a767d07b5f09a0367656c66cf8509297b01d25a8de00602d6ad85f6e3c10f20a",
+    "experiments/pcqm_k1_consistency_stage_analysis/failure.json": "c1463e94b2ba5169ee4684688c781eaf7e9771a608ad87b765e0acbbf2a9d6ce",
+    "experiments/pcqm_k1_consistency_stage_analysis/inputs.json": "3afbd5d47b4486e936e5dfd45b0a0d9e4fb7725ce254cf18ba7a33e8de2b1db2",
+    "experiments/pcqm_k1_consistency_stage_analysis/plan_input.json": "5ccc1db6f793224e823bca6bae517e8d76573639cfb42c9557cfb56043fdd3dd",
+    "experiments/pcqm_k1_consistency_stage_analysis/plan_receipt.json": "76fd04c6be603661a074d80f195c506b88a620ea25e4180d15d94fdeff934503",
+    "experiments/pcqm_k1_consistency_stage_analysis/protocol.md": "22bdb87e9a992aa79779f8eb5b57d37055edba45fb9a6ed3cc33025f44117667",
+    "experiments/pcqm_k1_consistency_stage_analysis/README.md": "0b864f07fc446f15b3bdd5f6b41a6335ec57354b8cd89386be2602c7c99e86b5",
+    "experiments/pcqm_k1_consistency_stage_analysis/roles.json": "c67eebd4e699731216133eac76a140ee64439d17ca3b9ef3de4e64686e017607",
+    "experiments/pcqm_k1_consistency_stage_analysis/run.py": "971cbf8f4847695bfa67241efde3b9dddc8053cc9130dd2065e425bbdbc760ec",
+    "experiments/pcqm_k1_consistency_stage_analysis/terminal_decision.md": "983ca37a111d8e0f0b92415ffea7e7ba10ce668f0f349c4ba7824999fa294921",
+    "experiments/pcqm_k1_consistency_stage_analysis/executed_source/experiments/pcqm_k1_consistency_stage_analysis/run.py": "971cbf8f4847695bfa67241efde3b9dddc8053cc9130dd2065e425bbdbc760ec",
+    "experiments/pcqm_k1_consistency_stage_analysis/executed_source/src/molgap/frozen_diagnostic_closure.py": "f59098f58c286cb08d87ab44612db235faa4eb2c859e4e3812d8cc5137276349",
+    "experiments/pcqm_k1_consistency_stage_analysis/executed_source/src/molgap/k1_saved_analysis.py": "d355abdeb11f10ca0bcd17db34d331af95e712068a8da0b88bea1a782312fbcb",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/inspection_report.json": "a4303f4ddef8c5c423013c2686e09f246db34f2a6ada96e799cfe6e6822f8d16",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/owning_protocol.md": "181bb032a895ca6d6539c0467eff45748deaa065b3d6bd3dec4ff66d9e8ec8e5",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/stage_acceptance.md": "b1c4880cf391f668ec62f100e9e9411b9fb60fc6c5ac5fbf0f2b3bc6bafb9543",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_consistency/stage_manifest.json": "a889dea329b20ea1cef75cafc5bf01880d67524573dbdea652060ffc01a47c10",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_consistency/trace.json": "526bb97d1974b1a6f5b9e25f84f099efdc5ddec9cf72074648f7a85a96b8a9b3",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_mean2/stage_manifest.json": "6f642bf16aff245ee165e5caaf189c6b557dade802a68ee6176987d37e1a6395",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_mean2/trace.json": "df05d3606ba09fa98174e344d0ae3fecb606dc695070b905c63431f6b5937bc3"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "k1-saved-trace-pair-20261008-evidence",
+    "track": "B",
+    "scope": "trace_pair",
+    "legacy_contract": "pcqm-k1-saved-trace-pair-v1",
+    "migration": {
+      "migrated_at": "2026-10-08",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Metadata translation of separately recorded saved arithmetic or infrastructure failure; no model work in closure"
+    },
+    "outcome": {
+      "execution_status": "infrastructure_failed_before_metric_analysis",
+      "artifact_status": "local_hash_verified",
+      "comparison_status": "descriptive_saved_evidence_only",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "infrastructure_attempt_closed",
+      "full_handoff_status": "not_applicable"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_consistency_stage_analysis/protocol.md",
+        "experiments/pcqm_k1_consistency_stage_analysis/terminal_decision.md",
+        "experiments/pcqm_k1_consistency_stage_analysis/attribution.md",
+        "experiments/pcqm_k1_consistency_stage_analysis/acceptance.json"
+      ]
+    },
+    "role_use": {
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched",
+      "common": "untouched",
+      "ood": "untouched"
+    },
+    "observed_execution": {
+      "training_executed": false,
+      "inference_executed": false,
+      "training_replay_ready": false
+    },
+    "artifacts": [
+      {
+        "name": "acceptance.json",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/acceptance.json",
+        "sha256": "20ba827bab2e93ff5665eefb7392c2dd354922cbb18c53164d986e7aa0fa4de0",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "attribution.md",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attribution.md",
+        "sha256": "6a137caeac8f3d101fbcd4d43f114151c77de8a5610848e10e86e0fa855df6c5",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "decision.md",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/decision.md",
+        "sha256": "a767d07b5f09a0367656c66cf8509297b01d25a8de00602d6ad85f6e3c10f20a",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "failure.json",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/failure.json",
+        "sha256": "c1463e94b2ba5169ee4684688c781eaf7e9771a608ad87b765e0acbbf2a9d6ce",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "inputs.json",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/inputs.json",
+        "sha256": "3afbd5d47b4486e936e5dfd45b0a0d9e4fb7725ce254cf18ba7a33e8de2b1db2",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "plan_input.json",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/plan_input.json",
+        "sha256": "5ccc1db6f793224e823bca6bae517e8d76573639cfb42c9557cfb56043fdd3dd",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "plan_receipt.json",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/plan_receipt.json",
+        "sha256": "76fd04c6be603661a074d80f195c506b88a620ea25e4180d15d94fdeff934503",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "protocol.md",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/protocol.md",
+        "sha256": "22bdb87e9a992aa79779f8eb5b57d37055edba45fb9a6ed3cc33025f44117667",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "README.md",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/README.md",
+        "sha256": "0b864f07fc446f15b3bdd5f6b41a6335ec57354b8cd89386be2602c7c99e86b5",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "roles.json",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/roles.json",
+        "sha256": "c67eebd4e699731216133eac76a140ee64439d17ca3b9ef3de4e64686e017607",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "run.py",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/run.py",
+        "sha256": "971cbf8f4847695bfa67241efde3b9dddc8053cc9130dd2065e425bbdbc760ec",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "terminal_decision.md",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/terminal_decision.md",
+        "sha256": "983ca37a111d8e0f0b92415ffea7e7ba10ce668f0f349c4ba7824999fa294921",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/experiments/pcqm_k1_consistency_stage_analysis/run.py",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/executed_source/experiments/pcqm_k1_consistency_stage_analysis/run.py",
+        "sha256": "971cbf8f4847695bfa67241efde3b9dddc8053cc9130dd2065e425bbdbc760ec",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/frozen_diagnostic_closure.py",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/executed_source/src/molgap/frozen_diagnostic_closure.py",
+        "sha256": "f59098f58c286cb08d87ab44612db235faa4eb2c859e4e3812d8cc5137276349",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/k1_saved_analysis.py",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/executed_source/src/molgap/k1_saved_analysis.py",
+        "sha256": "d355abdeb11f10ca0bcd17db34d331af95e712068a8da0b88bea1a782312fbcb",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "source_snapshot/inspection_report.json",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/inspection_report.json",
+        "sha256": "a4303f4ddef8c5c423013c2686e09f246db34f2a6ada96e799cfe6e6822f8d16",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "source_snapshot/owning_protocol.md",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/owning_protocol.md",
+        "sha256": "181bb032a895ca6d6539c0467eff45748deaa065b3d6bd3dec4ff66d9e8ec8e5",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "source_snapshot/stage_acceptance.md",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/stage_acceptance.md",
+        "sha256": "b1c4880cf391f668ec62f100e9e9411b9fb60fc6c5ac5fbf0f2b3bc6bafb9543",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "source_snapshot/k1_pretrained_consistency/stage_manifest.json",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_consistency/stage_manifest.json",
+        "sha256": "a889dea329b20ea1cef75cafc5bf01880d67524573dbdea652060ffc01a47c10",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "source_snapshot/k1_pretrained_consistency/trace.json",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_consistency/trace.json",
+        "sha256": "526bb97d1974b1a6f5b9e25f84f099efdc5ddec9cf72074648f7a85a96b8a9b3",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "source_snapshot/k1_pretrained_mean2/stage_manifest.json",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_mean2/stage_manifest.json",
+        "sha256": "6f642bf16aff245ee165e5caaf189c6b557dade802a68ee6176987d37e1a6395",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "source_snapshot/k1_pretrained_mean2/trace.json",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_mean2/trace.json",
+        "sha256": "df05d3606ba09fa98174e344d0ae3fecb606dc695070b905c63431f6b5937bc3",
+        "availability": "locally_retained_hash_verified"
+      }
+    ]
+  },
+  "decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_consistency_stage_analysis/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately prospective authorized diagnostic; original training gate remains independent"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-saved-trace-pair-20261008-observed",
+      "trajectory_id": "TB-k1-saved-trace-pair-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-saved-trace_pair-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU saved-artifact arithmetic; no accelerator",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_consistency_stage_analysis/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": []
+}

@@ -38,7 +38,14 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
             raise ValueError(f"Result identity differs: {key}")
     if completion.get("inputs_sha256") != result["inputs_sha256"]:
         raise ValueError("Completion input identity differs")
-    train, dev = inputs["train_source_idx"], inputs["development_source_idx"]
+    saved = result["format"] == "molgap-k1-saved-analysis-v1"
+    if saved:
+        if result.get("inference_executed") is not False or result.get("kind") != inputs.get("kind"):
+            raise ValueError("Saved analysis cannot execute inference or change kind")
+        dev = list(range(*inputs["development_bounds"]))
+        train = []
+    else:
+        train, dev = inputs["train_source_idx"], inputs["development_source_idx"]
     if result["format"] == "molgap-k1-endpoint-average-diagnostic-v1":
         expected_roles = {"train_features": {"labels_read": train, "prediction_input": train},
                           "internal_development": {a:dev for a in ("labels_read", "prediction_input", "metric_computed", "selection_used")}}
@@ -52,6 +59,13 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
                           "internal_development_decoded": {"labels_read": dev},
                           "internal_development_retained_predictions": {a:dev for a in ("labels_read", "metric_computed")},
                           "internal_development": {a:sample_dev for a in ("prediction_input", "metric_computed", "selection_used")}}
+    elif saved:
+        if result["kind"] not in {"trace_pair", "bn_rows"}:
+            raise ValueError("Unknown saved analysis kind")
+        observed = [] if result["kind"] == "trace_pair" else dev
+        if result.get("observed_source_idx") != observed:
+            raise ValueError("Saved analysis observed membership differs")
+        expected_roles = {} if not observed else {"internal_development": {a:dev for a in ("labels_read", "metric_computed")}}
     else:
         raise ValueError("Unsupported diagnostic result format")
     if role_rows != expected_roles:
@@ -77,14 +91,15 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
     run = action["run_ids"][0]
     short = evidence_id.removeprefix("pcqm-")
     outcome = dict(execution_status="complete_no_training", artifact_status="local_hash_verified",
-                   comparison_status="consumed_role_frozen_diagnostic", scientific_status="NO_TRAIN",
+                   comparison_status="saved_artifact_descriptive" if saved else "consumed_role_frozen_diagnostic", scientific_status="NO_TRAIN",
                    transfer_status="not_evaluated", budget_decision="bounded_local_diagnostic_complete",
                    full_handoff_status="not_applicable")
     decision = dict(outcome="NO_TRAIN", decision_ref=f"{rel}/terminal_decision.md", next_allowed_actions=[],
                     reopen_conditions=["Separately prospective and authorized training or independent-role validation"])
     cost = dict(schema="molgap-cost-event-v1", cost_event_id=f"cost-{short}-observed", trajectory_id=tid,
                 action_id=action["action_id"], run_id=run, attempt_id="attempt-001", platform="local-windows",
-                hardware="CPU four intra-op threads; no accelerator", category="inference", evidence_ref=f"{rel}/acceptance.json",
+                hardware="CPU saved-artifact arithmetic; configured Torch four threads; no accelerator" if saved else "CPU four intra-op threads; no accelerator",
+                category="other" if saved else "inference", evidence_ref=f"{rel}/acceptance.json",
                 measurement={"wall_hours": {"value": wall / 3600, "status": "measured"},
                              "cpu_hours": {"value": cpu / 3600, "status": "measured"},
                              "device_hours": {"value": None, "status": "not_applicable"},
@@ -114,13 +129,14 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
             roles.append(dict(schema="molgap-role-event-v1", role_event_id=f"role-{short}-{role}-{access}",
                               trajectory_id=tid, action_id=action["action_id"], run_id=run,
                               dataset_identity="pcqm4mv2-ogb-fixed-500k-scnet-v1", row_manifest_hash=digest,
-                              role_name=role, access_kind=access, selection_used=role.startswith("internal_development"),
+                              role_name=role, access_kind=access, selection_used=False if saved else role.startswith("internal_development"),
                               evidence_ref=f"{rel}/acceptance.json"))
     acceptance = dict(format="molgap-local-frozen-diagnostic-acceptance-v1", evidence_id=evidence_id,
                       run_id=run, outcome=outcome, trajectory_decision=decision, role_use=role_use,
                       costs=costs, roles=roles, checks=result["checks"], comparison_class="CONTEXT_ONLY",
                       analysis_ref=f"{rel}/results/result.json", cost_scope="Worker hashing/loading/calibration/inference/analysis; excludes preparation/tests/Git and historical comparator execution",
-                      execution_scope="Frozen CPU inference, no optimizer, training trace or training replay-ready claim")
+                      execution_scope="Saved-artifact CPU arithmetic only; no inference, training, selection or training replay-ready claim" if saved else
+                      "Frozen CPU inference, no optimizer, training trace or training replay-ready claim")
     atomic_json(experiment / "acceptance.json", acceptance)
     paths = [p for p in experiment.rglob("*") if p.is_file() and "rml" not in p.relative_to(experiment).parts
              and "__pycache__" not in p.parts and p.name != "terminal.json"]
@@ -133,7 +149,7 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
                     role_use=role_use,
                     migration=dict(migrated_at=datetime.now(timezone.utc).date().isoformat(), training_executed=False,
                                    inference_executed=False, scientific_reinterpretation=False, verification_scope="Metadata finalization of separately executed local diagnostic; no model execution in closure"),
-                    observed_execution=dict(training_executed=False, inference_executed=True, training_replay_ready=False,
+                    observed_execution=dict(training_executed=False, inference_executed=not saved, training_replay_ready=False,
                                             execution_ref=f"{rel}/results/result.json"),
                     artifacts=[dict(name=n.removeprefix(rel + "/"), locator=n, sha256=h, availability="locally_retained_hash_verified")
                                for n, h in hashes.items() if n.startswith(rel + "/")])

@@ -1,0 +1,46 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-d7c6dfc6f61dde019b08274ad79e2e9ebdf495ab1faec5f886027f56ac22cc53",
+  "finalized_at": "2026-10-08T10:20:23.324021+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_consistency_stage_analysis/README.md": "0b864f07fc446f15b3bdd5f6b41a6335ec57354b8cd89386be2602c7c99e86b5",
+    "experiments/pcqm_k1_consistency_stage_analysis/acceptance.json": "20ba827bab2e93ff5665eefb7392c2dd354922cbb18c53164d986e7aa0fa4de0",
+    "experiments/pcqm_k1_consistency_stage_analysis/attribution.md": "6a137caeac8f3d101fbcd4d43f114151c77de8a5610848e10e86e0fa855df6c5",
+    "experiments/pcqm_k1_consistency_stage_analysis/decision.md": "a767d07b5f09a0367656c66cf8509297b01d25a8de00602d6ad85f6e3c10f20a",
+    "experiments/pcqm_k1_consistency_stage_analysis/executed_source/experiments/pcqm_k1_consistency_stage_analysis/run.py": "971cbf8f4847695bfa67241efde3b9dddc8053cc9130dd2065e425bbdbc760ec",
+    "experiments/pcqm_k1_consistency_stage_analysis/executed_source/src/molgap/frozen_diagnostic_closure.py": "f59098f58c286cb08d87ab44612db235faa4eb2c859e4e3812d8cc5137276349",
+    "experiments/pcqm_k1_consistency_stage_analysis/executed_source/src/molgap/k1_saved_analysis.py": "d355abdeb11f10ca0bcd17db34d331af95e712068a8da0b88bea1a782312fbcb",
+    "experiments/pcqm_k1_consistency_stage_analysis/failure.json": "c1463e94b2ba5169ee4684688c781eaf7e9771a608ad87b765e0acbbf2a9d6ce",
+    "experiments/pcqm_k1_consistency_stage_analysis/inputs.json": "3afbd5d47b4486e936e5dfd45b0a0d9e4fb7725ce254cf18ba7a33e8de2b1db2",
+    "experiments/pcqm_k1_consistency_stage_analysis/plan_input.json": "5ccc1db6f793224e823bca6bae517e8d76573639cfb42c9557cfb56043fdd3dd",
+    "experiments/pcqm_k1_consistency_stage_analysis/plan_receipt.json": "76fd04c6be603661a074d80f195c506b88a620ea25e4180d15d94fdeff934503",
+    "experiments/pcqm_k1_consistency_stage_analysis/protocol.md": "22bdb87e9a992aa79779f8eb5b57d37055edba45fb9a6ed3cc33025f44117667",
+    "experiments/pcqm_k1_consistency_stage_analysis/roles.json": "c67eebd4e699731216133eac76a140ee64439d17ca3b9ef3de4e64686e017607",
+    "experiments/pcqm_k1_consistency_stage_analysis/run.py": "971cbf8f4847695bfa67241efde3b9dddc8053cc9130dd2065e425bbdbc760ec",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/inspection_report.json": "a4303f4ddef8c5c423013c2686e09f246db34f2a6ada96e799cfe6e6822f8d16",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_consistency/stage_manifest.json": "a889dea329b20ea1cef75cafc5bf01880d67524573dbdea652060ffc01a47c10",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_consistency/trace.json": "526bb97d1974b1a6f5b9e25f84f099efdc5ddec9cf72074648f7a85a96b8a9b3",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_mean2/stage_manifest.json": "6f642bf16aff245ee165e5caaf189c6b557dade802a68ee6176987d37e1a6395",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/k1_pretrained_mean2/trace.json": "df05d3606ba09fa98174e344d0ae3fecb606dc695070b905c63431f6b5937bc3",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/owning_protocol.md": "181bb032a895ca6d6539c0467eff45748deaa065b3d6bd3dec4ff66d9e8ec8e5",
+    "experiments/pcqm_k1_consistency_stage_analysis/source_snapshot/stage_acceptance.md": "b1c4880cf391f668ec62f100e9e9411b9fb60fc6c5ac5fbf0f2b3bc6bafb9543",
+    "experiments/pcqm_k1_consistency_stage_analysis/terminal_decision.md": "983ca37a111d8e0f0b92415ffea7e7ba10ce668f0f349c4ba7824999fa294921"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TB-k1-saved-trace-pair-20261008-observed.json": "36dce92bd13b4ddbc4e291b9fdcdbb56449d070a273fabeea902e30f5f6dd1e8",
+    "prospective_snapshot.json": "51908a78fab56840de92bfcffda29c3f64fd7f5223c295a98aa7c0a624e23edd",
+    "terminal_input.json": "6fe2bcf14c5cd840240666283e26db745999fe9831139f5f681360054e0dd18b",
+    "trajectory.json": "20219d386c02c041f5f44acf96ae875db02a7ab4b58f80cc4c7d13c85236c796",
+    "v5_evidence.json": "436644d6d1a3e586c6c35e5d0f7aa8777a175987564bfac6a790d01abdfcbe53"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_consistency_stage_analysis/rml/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "d7c6dfc6f61dde019b08274ad79e2e9ebdf495ab1faec5f886027f56ac22cc53",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-saved-trace-pair-20261008"
+}

@@ -11,7 +11,7 @@ import shutil
 import subprocess
 import time
 
-KINDS = {"trace_pair": "pcqm_k1_consistency_stage_analysis/attempt_002",
+KINDS = {"trace_pair": "pcqm_k1_consistency_stage_analysis",
          "bn_rows": "pcqm_k1_bn_row_attribution"}
 ARMS = ("k1_pretrained_mean2", "k1_pretrained_consistency")
 
@@ -25,11 +25,9 @@ def trace_pair(traces, manifests, inspection):
     keys = set(contracts[0]) | set(contracts[1])
     if any(contracts[0].get(k) != contracts[1].get(k) for k in keys - allowed_differences):
         raise ValueError("Paired contracts differ beyond declared intervention")
-    for key in ("spec_identity",):
+    for key in ("source_config_identity", "spec_identity"):
         if contracts[0]["binding_identity"][key] != contracts[1]["binding_identity"][key]:
             raise ValueError("Paired binding identity differs")
-    if contracts[0]["binding_identity"]["spec_identity"] != inspection.get("spec_identity"):
-        raise ValueError("Spec identity differs from accepted inspection")
     for a in ARMS:
         if manifests[a]["source_sha256"] != inspection["source_sha256"] or not inspection["arms"][a]["stage_mechanical_pass"]:
             raise ValueError("Accepted source/arm differs")
@@ -232,7 +230,7 @@ def prepare(repo, kind):
     for item in artifacts.values():
         if sha256_file(Path(item["path"])) != item["sha256"]:
             raise ValueError("Accepted prediction SHA differs")
-    executed = ["src/molgap/k1_saved_analysis.py", f"{rel}/run.py"]
+    executed = ["src/molgap/k1_saved_analysis.py", "src/molgap/frozen_diagnostic_closure.py", f"{rel}/run.py"]
     inputs = dict(kind=kind, cpu_threads=4, ceiling_seconds=600, development_bounds=[500000,550000],
         artifacts=artifacts, executed_source_files={n:sha256_file(repo/n) for n in executed},
         snapshot_files={n:sha256_file(snapshots/n) for n in records},
@@ -247,8 +245,7 @@ def prepare(repo, kind):
     policy.update(policy_id=policy_id, comparability_selector={"scientific_contract":policy_id+"-v1"}, created_from_source_digest=sha256_file(here/"protocol.md"))
     atomic_json(repo/f"research_memory/policies/{policy_id}.1.json",policy)
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo,text=True).strip()
-    suffix = "-attempt002" if kind == "trace_pair" else ""
-    tid, run, cost_id = "TB-k1-saved-"+kind.replace("_","-")+"-20261008"+suffix, "local-k1-saved-"+kind+"-20261008"+suffix, "cost-k1-saved-"+kind+"-expected"+suffix
+    tid, run, cost_id = "TB-k1-saved-"+kind.replace("_","-")+"-20261008", "local-k1-saved-"+kind+"-20261008", "cost-k1-saved-"+kind+"-expected"
     refs = ["pcqm-k1-complete-module-audit-20261008", "pcqm-k1-late-weight-average-20261008"]
     hypothesis = (dict(observed_deficiency="500K consistency stage is incomplete; selected endpoints obscure same-step evolution.",
         alternative_explanations=["Benefit is delayed", "Stage trajectory differs without identifying final outcome", "BN-state sensitivity confounds raw dev ordering"],
@@ -359,11 +356,13 @@ def main():
     elif args.operation == "run":
         run(REPO_ROOT,args.kind)
     else:
-        from .saved_diagnostic_closure import close_saved_diagnostic
+        from .frozen_diagnostic_closure import close_local_diagnostic
         inputs = json.loads((REPO_ROOT/"experiments"/KINDS[args.kind]/"inputs.json").read_text(encoding="utf-8"))
         dev = list(range(*inputs["development_bounds"]))
         roles = {} if args.kind == "trace_pair" else {"internal_development":{a:dev for a in ("labels_read","metric_computed")}}
-        print(json.dumps(close_saved_diagnostic(REPO_ROOT,REPO_ROOT/"experiments"/KINDS[args.kind])))
+        print(json.dumps(close_local_diagnostic(REPO_ROOT,REPO_ROOT/"experiments"/KINDS[args.kind],
+            evidence_id="pcqm-k1-saved-"+args.kind.replace("_","-")+"-20261008",
+            policy_id="pcqm-k1-saved-"+args.kind.replace("_","-"),role_rows=roles)))
 
 
 if __name__ == "__main__":

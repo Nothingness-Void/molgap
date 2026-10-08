@@ -1,0 +1,44 @@
+{
+  "kind": "bn_rows",
+  "cpu_threads": 4,
+  "ceiling_seconds": 600,
+  "development_bounds": [
+    500000,
+    550000
+  ],
+  "artifacts": {
+    "selected_raw": {
+      "path": "D:\\\u6587\u6863\\molgap\\experiments\\pcqm_k1_500k_bn_calibration\\results\\original.pt",
+      "sha256": "e81c48f8f7008ad0a2c6d40e5e482e633fa56b786e5f995260244f2bb0c95518"
+    },
+    "selected_clean": {
+      "path": "D:\\\u6587\u6863\\molgap\\experiments\\pcqm_k1_500k_bn_calibration\\results\\calibrated.pt",
+      "sha256": "3d2a1074bc7627f611a5704558ab0a0767921f11242c6d22d7bf1ebcde40943a"
+    },
+    "gptrans": {
+      "path": "D:\\w\\k1-gptrans-500k-package\\platforms\\_records\\kaggle\\training\\pcqm_k1_gptrans_package_transfer_500k_s42_final\\gptrans_g1_bond_local_ema999\\best_predictions.pt",
+      "sha256": "5b6c8ff81ae017289211d8896e52238825e420a7b32ffd4ac035cf15b0a4789c"
+    },
+    "final_raw": {
+      "path": "D:\\\u6587\u6863\\molgap\\experiments\\pcqm_k1_late_weight_average\\results\\final_original.pt",
+      "sha256": "66340b8d354ddd951b65abda324bd5a23cbd3ca6a4900501d74139d5e1e0886b"
+    },
+    "final_clean": {
+      "path": "D:\\\u6587\u6863\\molgap\\experiments\\pcqm_k1_late_weight_average\\results\\final_clean_bn.pt",
+      "sha256": "175280e599f31a5a0a27bf22fde0cdb7e55d8ee052027eec658ba537dc2252ad"
+    }
+  },
+  "executed_source_files": {
+    "src/molgap/k1_saved_analysis.py": "d355abdeb11f10ca0bcd17db34d331af95e712068a8da0b88bea1a782312fbcb",
+    "src/molgap/frozen_diagnostic_closure.py": "f59098f58c286cb08d87ab44612db235faa4eb2c859e4e3812d8cc5137276349",
+    "experiments/pcqm_k1_bn_row_attribution/run.py": "0ad377a04d5acc302aa193e52df7658e11c25be25203cfc578243d46974a769f"
+  },
+  "snapshot_files": {
+    "accepted_average_result.json": "e6a3b262d1bb2c546e39899f6549af507acb41abe94a1bc6f9695972dcd290e3",
+    "accepted_average_decision.md": "02d4ba2ca10558907c1c4ead0e61900c61ae4bc216a2ceb7b0795a0bd44797e9"
+  },
+  "snapshot_origins": {
+    "accepted_average_result.json": "D:\\\u6587\u6863\\molgap\\experiments\\pcqm_k1_late_weight_average\\results\\result.json",
+    "accepted_average_decision.md": "D:\\\u6587\u6863\\molgap\\experiments\\pcqm_k1_late_weight_average\\terminal_decision.md"
+  }
+}

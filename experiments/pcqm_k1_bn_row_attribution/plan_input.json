@@ -1,0 +1,135 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-saved-bn-rows-20261008",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "k1-saved-bn_rows",
+    "question": "Is retained BN gain broad or tail-concentrated, and how does it overlap clean late deterioration?",
+    "hypothesis": {
+      "observed_deficiency": "Aggregate BN gains and late losses do not describe breadth/concentration or molecular overlap.",
+      "alternative_explanations": [
+        "Gain is concentrated in baseline-error tails",
+        "Broad small output-state shifts",
+        "Correlation is mechanical due to shared errors"
+      ],
+      "changed_mechanism": "No intervention: per-row decomposition of fixed raw/clean endpoint predictions",
+      "cheapest_falsifier": "Hash-verify and align retained50K predictions; fixed strata and error-delta arithmetic only",
+      "hypothesis_id": "H-TB-k1-saved-bn-rows-20261008",
+      "supporting_evidence_ids": [
+        "pcqm-k1-complete-module-audit-20261008",
+        "pcqm-k1-late-weight-average-20261008"
+      ],
+      "expected_native_cost_ref": "cost-k1-saved-bn_rows-expected",
+      "related_closed_family_ids": [
+        "k1-complete-module-audit",
+        "k1-late-weight-average"
+      ],
+      "decision_changed_if_positive": "Record a descriptive discriminator for the existing route; no promotion/early-stop/training release",
+      "decision_changed_if_negative": "Record insufficient or contrary descriptive evidence; no retry/new module"
+    },
+    "state_at_start": {
+      "source_commit": "f705fd8cdffda36a31aaeed88042b05638a0a348",
+      "source_config_identity": "a491b0db01656b37e57c368c805e25ba5ea34a4c2a2828c080b30d23c222e536",
+      "contract_refs": [
+        "experiments/pcqm_k1_bn_row_attribution/protocol.md",
+        "experiments/pcqm_k1_bn_row_attribution/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-complete-module-audit-20261008",
+        "pcqm-k1-late-weight-average-20261008"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_bn_row_attribution/roles.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_bn_row_attribution/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_saved_artifact_analysis",
+        "run_ids": [
+          "local-k1-saved-bn_rows-20261008"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "f705fd8cdffda36a31aaeed88042b05638a0a348",
+        "evidence_refs": [
+          "experiments/pcqm_k1_bn_row_attribution/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-saved-bn_rows-expected"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_bn_row_attribution/decision.md",
+      "next_allowed_actions": [
+        "One bounded saved-artifact CPU analysis"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_bn_row_attribution/protocol.md",
+    "comparison_blockers": [
+      "Consumed development and descriptive posthoc strata"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-saved-bn_rows-expected",
+      "trajectory_id": "TB-k1-saved-bn-rows-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-saved-bn_rows-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU saved-artifact arithmetic; no accelerator",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_bn_row_attribution/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-saved-bn-rows",
+    "policy_version": "1",
+    "state_timestamp": "2026-10-08T10:10:53.985023+00:00",
+    "source_commit": "f705fd8cdffda36a31aaeed88042b05638a0a348",
+    "budget_snapshot_ref": "experiments/pcqm_k1_bn_row_attribution/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_bn_row_attribution/roles.json"
+    ]
+  }
+}

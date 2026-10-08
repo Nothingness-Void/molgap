@@ -1,0 +1,33 @@
+{
+  "kind": "trace_pair",
+  "cpu_threads": 4,
+  "ceiling_seconds": 600,
+  "development_bounds": [
+    500000,
+    550000
+  ],
+  "artifacts": {},
+  "executed_source_files": {
+    "src/molgap/k1_saved_analysis.py": "d355abdeb11f10ca0bcd17db34d331af95e712068a8da0b88bea1a782312fbcb",
+    "src/molgap/frozen_diagnostic_closure.py": "f59098f58c286cb08d87ab44612db235faa4eb2c859e4e3812d8cc5137276349",
+    "experiments/pcqm_k1_consistency_stage_analysis/run.py": "971cbf8f4847695bfa67241efde3b9dddc8053cc9130dd2065e425bbdbc760ec"
+  },
+  "snapshot_files": {
+    "k1_pretrained_mean2/trace.json": "df05d3606ba09fa98174e344d0ae3fecb606dc695070b905c63431f6b5937bc3",
+    "k1_pretrained_mean2/stage_manifest.json": "6f642bf16aff245ee165e5caaf189c6b557dade802a68ee6176987d37e1a6395",
+    "k1_pretrained_consistency/trace.json": "526bb97d1974b1a6f5b9e25f84f099efdc5ddec9cf72074648f7a85a96b8a9b3",
+    "k1_pretrained_consistency/stage_manifest.json": "a889dea329b20ea1cef75cafc5bf01880d67524573dbdea652060ffc01a47c10",
+    "inspection_report.json": "a4303f4ddef8c5c423013c2686e09f246db34f2a6ada96e799cfe6e6822f8d16",
+    "stage_acceptance.md": "b1c4880cf391f668ec62f100e9e9411b9fb60fc6c5ac5fbf0f2b3bc6bafb9543",
+    "owning_protocol.md": "181bb032a895ca6d6539c0467eff45748deaa065b3d6bd3dec4ff66d9e8ec8e5"
+  },
+  "snapshot_origins": {
+    "k1_pretrained_mean2/trace.json": "D:\\w\\k1-consistency-500k\\platforms\\_records\\kaggle\\training\\pcqm_k1_consistency_ablation_500k_s42_v1\\stages\\k1_pretrained_mean2\\trace.json",
+    "k1_pretrained_mean2/stage_manifest.json": "D:\\w\\k1-consistency-500k\\platforms\\_records\\kaggle\\training\\pcqm_k1_consistency_ablation_500k_s42_v1\\stages\\k1_pretrained_mean2\\stage_manifest.json",
+    "k1_pretrained_consistency/trace.json": "D:\\w\\k1-consistency-500k\\platforms\\_records\\kaggle\\training\\pcqm_k1_consistency_ablation_500k_s42_v1\\stages\\k1_pretrained_consistency\\trace.json",
+    "k1_pretrained_consistency/stage_manifest.json": "D:\\w\\k1-consistency-500k\\platforms\\_records\\kaggle\\training\\pcqm_k1_consistency_ablation_500k_s42_v1\\stages\\k1_pretrained_consistency\\stage_manifest.json",
+    "inspection_report.json": "D:\\w\\k1-consistency-500k\\experiments\\pcqm_k1_consistency_ablation_500k\\submission_v1\\terminal_inspection\\inspection_report.json",
+    "stage_acceptance.md": "D:\\w\\k1-consistency-500k\\experiments\\pcqm_k1_consistency_ablation_500k\\submission_v1\\terminal_inspection\\stage_acceptance.md",
+    "owning_protocol.md": "D:\\w\\k1-consistency-500k\\experiments\\pcqm_k1_consistency_ablation_500k\\protocol.md"
+  }
+}

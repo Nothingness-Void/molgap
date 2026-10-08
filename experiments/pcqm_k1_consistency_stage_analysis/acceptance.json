@@ -1,0 +1,64 @@
+{
+  "evidence_id": "k1-saved-trace-pair-20261008-evidence",
+  "run_id": "local-k1-saved-trace_pair-20261008",
+  "outcome": {
+    "execution_status": "infrastructure_failed_before_metric_analysis",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "descriptive_saved_evidence_only",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "infrastructure_attempt_closed",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_consistency_stage_analysis/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately prospective authorized diagnostic; original training gate remains independent"
+    ]
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "common": "untouched",
+    "ood": "untouched"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-saved-trace-pair-20261008-observed",
+      "trajectory_id": "TB-k1-saved-trace-pair-20261008",
+      "action_id": "A001",
+      "run_id": "local-k1-saved-trace_pair-20261008",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU saved-artifact arithmetic; no accelerator",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_consistency_stage_analysis/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "checks": {},
+  "analysis_ref": "experiments/pcqm_k1_consistency_stage_analysis/failure.json",
+  "execution_scope": "Saved metadata/tensor arithmetic only; no model, new selection, training or replay-ready claim"
+}

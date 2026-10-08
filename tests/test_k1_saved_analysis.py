@@ -26,7 +26,7 @@ def trace_inputs():
         traces[arm] = dict(epochs=epochs)
         manifests[arm] = dict(
             contract=dict(arm=arm, loss_fingerprint=str(side),
-                          binding_identity=dict(source_config_identity="synthetic-config",
+                          binding_identity=dict(source_config_identity="synthetic-config-" + str(side),
                                                 spec_identity="synthetic-spec",
                                                 trajectory_id=arm), epochs=60,
                           steps_per_epoch=2, physical_batch_per_device=4,
@@ -37,7 +37,7 @@ def trace_inputs():
         accepted[arm] = dict(stage_mechanical_pass=True,
                              optimizer_steps=6, sample_presentations=24)
     inspection = dict(mechanical_stage_pass=True, disposition="ACTIVE_PARTIAL_STAGE",
-                      source_sha256="synthetic-source", arms=accepted,
+                      source_sha256="synthetic-source", spec_identity="synthetic-spec", arms=accepted,
                       budget=dict(training_allocated_T4_hours=1.0))
     return traces, manifests, inspection
 
@@ -60,7 +60,10 @@ def prediction_inputs(n=100, start=20, ties=False):
 
 
 def test_trace_matching_axes_and_objectives():
-    report = trace_pair(*trace_inputs())
+    traces, manifests, inspection = trace_inputs()
+    assert (manifests[ARMS[0]]["contract"]["binding_identity"]["source_config_identity"]
+            != manifests[ARMS[1]]["contract"]["binding_identity"]["source_config_identity"])
+    report = trace_pair(traces, manifests, inspection)
     assert report["completed_epochs"] == 3
     assert report["contract_epochs"] == 60
     assert [r["optimizer_steps"] for r in report["curve"]] == [2, 4, 6]
@@ -119,11 +122,14 @@ def test_trace_rejects_contract_mismatch():
         manifests[ARMS[1]]["contract"][field] = bad
         with pytest.raises(ValueError, match="contracts differ"):
             trace_pair(traces, manifests, inspection)
-    for field in ("source_config_identity", "spec_identity"):
-        traces, manifests, inspection = trace_inputs()
-        manifests[ARMS[1]]["contract"]["binding_identity"][field] = "different"
-        with pytest.raises(ValueError, match="binding identity"):
-            trace_pair(traces, manifests, inspection)
+    traces, manifests, inspection = trace_inputs()
+    manifests[ARMS[1]]["contract"]["binding_identity"]["spec_identity"] = "different"
+    with pytest.raises(ValueError, match="binding identity"):
+        trace_pair(traces, manifests, inspection)
+    traces, manifests, inspection = trace_inputs()
+    inspection["spec_identity"] = "different-accepted-spec"
+    with pytest.raises(ValueError, match="Spec identity"):
+        trace_pair(traces, manifests, inspection)
 
 
 def test_trace_rejects_unaccepted_or_inconsistent_endpoints():

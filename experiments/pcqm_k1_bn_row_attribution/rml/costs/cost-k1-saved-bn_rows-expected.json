@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "other",
+  "cost_event_id": "cost-k1-saved-bn_rows-expected",
+  "evidence_ref": "experiments/pcqm_k1_bn_row_attribution/protocol.md",
+  "hardware": "CPU saved-artifact arithmetic; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.16666666666666666
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-saved-bn_rows-20261008",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-saved-bn-rows-20261008"
+}

@@ -1,0 +1,46 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-c65fc0ab69af2f9d945d8cb620af65b3660e0b46fd461bd6831f43a9ff77ad25",
+  "finalized_at": "2026-10-08T10:20:32.859502+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_bn_row_attribution/README.md": "63256c5341b30254c5be054d035aeca45233484be0d945166378a58155075701",
+    "experiments/pcqm_k1_bn_row_attribution/acceptance.json": "3b4a769706ff3cb171e6d5430453ad98c31d9de95c3213e625d52b4807750234",
+    "experiments/pcqm_k1_bn_row_attribution/analysis_zh.md": "cbd5e134d450a0b30f90dea0c3cb76729c0a689f5cac8cbb42aa0bbad0d36948",
+    "experiments/pcqm_k1_bn_row_attribution/attribution.md": "f41d9ada4bad073cdebd436e8717b6711afc0a65189324ce27a3ea50fac19a80",
+    "experiments/pcqm_k1_bn_row_attribution/decision.md": "144328a6b37a0e717204411a5dbe80aac08c8fd5d40b73b1aa3bf62fbafddc71",
+    "experiments/pcqm_k1_bn_row_attribution/executed_source/experiments/pcqm_k1_bn_row_attribution/run.py": "0ad377a04d5acc302aa193e52df7658e11c25be25203cfc578243d46974a769f",
+    "experiments/pcqm_k1_bn_row_attribution/executed_source/src/molgap/frozen_diagnostic_closure.py": "f59098f58c286cb08d87ab44612db235faa4eb2c859e4e3812d8cc5137276349",
+    "experiments/pcqm_k1_bn_row_attribution/executed_source/src/molgap/k1_saved_analysis.py": "d355abdeb11f10ca0bcd17db34d331af95e712068a8da0b88bea1a782312fbcb",
+    "experiments/pcqm_k1_bn_row_attribution/inputs.json": "a491b0db01656b37e57c368c805e25ba5ea34a4c2a2828c080b30d23c222e536",
+    "experiments/pcqm_k1_bn_row_attribution/plan_input.json": "84fc982ad7e8b2118fe503851bf3e497ec1dfa260043e530faa94ae0b0c8304a",
+    "experiments/pcqm_k1_bn_row_attribution/plan_receipt.json": "cb1a637bf1875865f52ffed24cae0bf2501a44a953b6978fd63c56bfc5e6bfd5",
+    "experiments/pcqm_k1_bn_row_attribution/protocol.md": "a28a43d8269911bed652794fb14404ff2c940c870e9e84bfd2e302526444e382",
+    "experiments/pcqm_k1_bn_row_attribution/results/completion.json": "85e9f4e41d4dfcced54525156ce29a486bad29b75aa5a48011cdfb0bd38cb7d0",
+    "experiments/pcqm_k1_bn_row_attribution/results/result.json": "5202145db0a8d67ba34ce98ed5c042e6fb1f8ceeb0e362cb183843a3066fd1cb",
+    "experiments/pcqm_k1_bn_row_attribution/results/row_deltas.pt": "15796abd2d090296e07d720c2cdd8ddcb514f5b7fbdc73bccc4bc7e76b03dcef",
+    "experiments/pcqm_k1_bn_row_attribution/roles.json": "c7fcf7bda9d99e4be96470f093b3cbfa25d90da9e4efb05ef902690c06827143",
+    "experiments/pcqm_k1_bn_row_attribution/run.py": "0ad377a04d5acc302aa193e52df7658e11c25be25203cfc578243d46974a769f",
+    "experiments/pcqm_k1_bn_row_attribution/source_snapshot/accepted_average_decision.md": "02d4ba2ca10558907c1c4ead0e61900c61ae4bc216a2ceb7b0795a0bd44797e9",
+    "experiments/pcqm_k1_bn_row_attribution/source_snapshot/accepted_average_result.json": "e6a3b262d1bb2c546e39899f6549af507acb41abe94a1bc6f9695972dcd290e3",
+    "experiments/pcqm_k1_bn_row_attribution/terminal_decision.md": "b9b71490350ba6205d5e12fadfc7d9a13f890a9678aad55d75602cac858fc75d"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TB-k1-saved-bn-rows-20261008-observed.json": "cb698eda156f66198f4df57f7ee0bf8a4f04d8d7048a234b0dcb50ffdaca7a15",
+    "prospective_snapshot.json": "04dad5828c9d5ec176b833900311aa2b22e70799950190d4c430d0aabc4cf413",
+    "roles/role-TB-k1-saved-bn-rows-20261008-labels_read.json": "50a0b828d55ff29dc4015bc0a302c5a3e5102bc7a024d776ec2b7d0a53a4ce65",
+    "roles/role-TB-k1-saved-bn-rows-20261008-metric_computed.json": "26e5d66554d855703c19f0fe34f63fe7f1d27d9b24598bbd47984500aaa6fab6",
+    "terminal_input.json": "7a859d551741ed09490506d27cf07876312d1a0629c930a78341026d88ec891b",
+    "trajectory.json": "feb85c6bffe91fff47f9b1e6b7ad1227b66698af0f2511f5a50caf5c9aa0d44d",
+    "v5_evidence.json": "79c49361b2d0d41bff9c09d0ce824de86a6ab1d2687d4d5e6a9920c30a1720af"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_bn_row_attribution/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "c65fc0ab69af2f9d945d8cb620af65b3660e0b46fd461bd6831f43a9ff77ad25",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-saved-bn-rows-20261008"
+}
