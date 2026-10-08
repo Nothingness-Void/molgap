@@ -6,11 +6,15 @@
         "kaggle1-consistency-ablation-001"
       ],
       "cost_event_ids": [
-        "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-expected-training"
+        "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-expected-training",
+        "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-training",
+        "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-preflight",
+        "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-bootstrap-overhead"
       ],
       "evidence_refs": [
         "experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
-        "experiments/pcqm_k1_consistency_ablation_500k/plan.md"
+        "experiments/pcqm_k1_consistency_ablation_500k/plan.md",
+        "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/inspection_report.json"
       ],
       "run_ids": [
         "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency"
@@ -454,7 +458,9 @@
   "record_mode": "prospective",
   "result": {
     "evidence_ids": [],
-    "evidence_refs": []
+    "evidence_refs": [
+      "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/inspection_report.json"
+    ]
   },
   "schema": "molgap-trajectory-v1",
   "state_at_start": {
