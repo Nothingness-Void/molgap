@@ -90,7 +90,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         local_control = mode == "degree_bond_local_cap_ema999"
         scale = mode == "scale_ema"
         model_mode = (study or {}).get("scale_model_variant", "degree_scale_ema999") if scale else mode
-        capacity = model_mode in capacity_modes or transition or local_control
+        relation = mode in {"degree_local_connected_pair_ema999", "degree_local_bond_return_ema999"}
+        capacity = model_mode in capacity_modes or transition or local_control or relation
         prepared_initial, prepared_file = initial, "degree_initial_state.pt"
         prepared_tensor_sha = source_arm["initialization"]["state_sha256"]
         expected_parameters = recipe["model_parameters"]
@@ -108,10 +109,13 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
                         or facts["architecture_identity"] != architecture_identity(model_mode)):
                     raise ValueError("Retained scale initialization/architecture differs")
             elif prepared_initial.exists():
-                from .pcqm_gptrans_v4 import _state_sha256
-                model = load_initial(model_mode, prepared_initial)
-                facts = {"parameters": sum(p.numel() for p in model.parameters()),
-                    "state_sha256": _state_sha256(model), "architecture_identity": architecture_identity(model_mode)}
+                if relation:
+                    facts = module.read_initial_facts(mode, prepared_initial)
+                else:
+                    from .pcqm_gptrans_v4 import _state_sha256
+                    model = load_initial(model_mode, prepared_initial)
+                    facts = {"parameters": sum(p.numel() for p in model.parameters()),
+                        "state_sha256": _state_sha256(model), "architecture_identity": architecture_identity(model_mode)}
             else:
                 facts = freeze_initial(model_mode, initial, prepared_initial)
             prepared_tensor_sha, expected_parameters = facts["state_sha256"], facts["parameters"]
@@ -323,6 +327,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             workflow["required_modules"].append("molgap.gptrans_pair_transition")
         if "degree_bond_local_cap_ema999" in MODES:
             workflow["required_modules"].append("molgap.gptrans_local_control")
+        if any(mode in {"degree_local_connected_pair_ema999", "degree_local_bond_return_ema999"} for mode in MODES):
+            workflow["required_modules"].append("molgap.gptrans_local_relation")
         if "scale_ema" in MODES:
             workflow["artifacts"]["degree_initial_state.pt"] = UploadArtifact.from_file(initial).to_workflow()
     if "scale_ema" in MODES:

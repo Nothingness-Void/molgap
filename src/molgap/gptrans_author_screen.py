@@ -25,6 +25,7 @@ MODES += ("degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999",
 MODES += ("scale_ema",)
 MODES += ("degree_pair_transition_ema999",)
 MODES += ("degree_bond_local_cap_ema999",)
+MODES += ("degree_local_connected_pair_ema999", "degree_local_bond_return_ema999")
 
 
 def validate_arm_allocation(config):
@@ -90,7 +91,7 @@ def author_child(stage: str, variant: str, context: dict, root: Path):
             raise ValueError(stage)
         return
     from .gptrans_author_variants import MODES as supported_modes, PATH_MODES
-    if variant not in set(supported_modes) | {"degree_bond_local_cap_ema999"} or torch.cuda.device_count() != 1 or "T4" not in torch.cuda.get_device_name(0):
+    if variant not in set(supported_modes) | {"degree_bond_local_cap_ema999", "degree_local_connected_pair_ema999", "degree_local_bond_return_ema999"} or torch.cuda.device_count() != 1 or "T4" not in torch.cuda.get_device_name(0):
         raise RuntimeError("Each released author arm requires exactly one visible T4")
     package_dir = Path(context["package_dir"])
     spec = ExperimentSpec.from_json((package_dir / "experiment_spec.json").read_text())

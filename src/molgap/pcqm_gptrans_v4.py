@@ -51,6 +51,8 @@ AUTHOR_MODES = ("degree_scale", "path_bond_mean", "degree_path_bond_mean", "degr
 CAPACITY_MODES = ("degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999")
 CAPACITY_MODES += ("degree_pair_transition_ema999",)
 CAPACITY_MODES += ("degree_bond_local_cap_ema999",)
+LOCAL_RELATION_MODES = ("degree_local_connected_pair_ema999", "degree_local_bond_return_ema999")
+CAPACITY_MODES += LOCAL_RELATION_MODES
 AUTHOR_MODES += CAPACITY_MODES
 PATH_MODES = ("path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_ema999")
 
@@ -58,7 +60,8 @@ PATH_MODES = ("path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_
 def capacity_module(variant):
     """Keep old addon source identities while extending native trainer dispatch."""
     from importlib import import_module
-    module = ("gptrans_local_control" if variant == "degree_bond_local_cap_ema999" else
+    module = ("gptrans_local_relation" if variant in LOCAL_RELATION_MODES else
+              "gptrans_local_control" if variant == "degree_bond_local_cap_ema999" else
               "gptrans_pair_transition" if variant == "degree_pair_transition_ema999" else "gptrans_capacity")
     return import_module("molgap." + module)
 
@@ -748,6 +751,8 @@ def run_preflight(
     reserve = 1.0 - peak_reserved / total_memory
     graphs_per_second = PREFLIGHT_MEASURED_STEPS * PHYSICAL_BATCH / elapsed
     estimated_hours = SAMPLE_PRESENTATIONS / graphs_per_second / 3600.0
+    relation_connectivity = (capacity_module(variant).verify_connected_preflight(model)
+                             if variant in LOCAL_RELATION_MODES else None)
     if reserve < 0.15 or estimated_hours > MAX_ESTIMATED_TRAIN_HOURS:
         raise RuntimeError(f"V4 preflight failed: reserve={reserve:.3f}, estimate={estimated_hours:.2f}h")
 
@@ -796,6 +801,7 @@ def run_preflight(
         **({"path_sidecar_identity": path_identity} if path_identity is not None else {}),
         "initial_state_artifact_sha256": sha256_file(initial_state_path),
         "accepted": True,
+        **({"relation_connectivity": relation_connectivity} if relation_connectivity is not None else {}),
         "runtime_certificate_id": certificate_id,
         "runtime_certificate": certificate,
         "runtime_manifest": runtime,
@@ -1053,6 +1059,8 @@ def run_training(
         train_count = 0
         epoch_started = time.perf_counter()
         for batch_index, batch in enumerate(_training_loader(train_graphs, epoch)):
+            if variant in LOCAL_RELATION_MODES and batch_index == 0:
+                capacity_module(variant).begin_capture(model)
             if variant == "degree_bond_local_cap_ema999" and batch_index == 0:
                 from .gptrans_local_control import INSERTIONS
                 for depth in INSERTIONS:
@@ -1184,6 +1192,8 @@ def run_training(
                 "per_layer_per_molecule": torch.stack([model.blocks[i-1]._control_diagnostics for i in INSERTIONS]).cpu().tolist(),
                 "output_gradient_norm_last_batch": [float(model.blocks[i-1].output.weight.grad.detach().norm().cpu()) for i in INSERTIONS],
             }
+        if variant in LOCAL_RELATION_MODES:
+            row["local_relation_diagnostics"] = capacity_module(variant).diagnostics(model)
         trace.append(row)
         atomic_json(output / "trace.json", {"format": RUN_FORMAT, "rows": trace})
         native_checkpoint = _save_checkpoint(

@@ -124,6 +124,15 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         if mode == "degree_pair_transition_ema999":
             expected_config = __import__("molgap.gptrans_pair_transition", fromlist=["configuration"]).configuration(mode)
             require(observed.get("capacity_configuration") == expected_config, "Pair-transition configuration")
+        if mode in {"degree_local_connected_pair_ema999", "degree_local_bond_return_ema999"}:
+            from .gptrans_local_relation import configuration
+            require(observed.get("capacity_configuration") == configuration(mode), "Local relation configuration")
+            connectivity = preflight.get("relation_connectivity", {})
+            norms = connectivity.get("gradient_norms", [])
+            require(connectivity.get("all_return_gradients_connected") is True
+                    and len(norms) == len(configuration(mode)["changed_layers"])
+                    and all(type(x) in (float, int) and math.isfinite(x) and x > 0 for x in norms),
+                    "Observed local relation preflight connectivity")
         if mode == "degree_bond_local_cap_ema999":
             from .gptrans_local_control import CAP, INSERTIONS, configuration
             require(observed.get("capacity_configuration") == configuration(mode), "Local-control configuration")
@@ -145,6 +154,17 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
             require(sha256_file(training / name) == digest, "Checkpoint chunk: " + name)
         trace = load_canonical_trace(training / "canonical_trace.json")
         rows = load(training / "trace.json")["rows"]
+        if mode in {"degree_local_connected_pair_ema999", "degree_local_bond_return_ema999"}:
+            from .gptrans_local_relation import configuration
+            expected_layers = configuration(mode)["changed_layers"]
+            for row in rows:
+                diagnostic = row.get("local_relation_diagnostics", {})
+                require(diagnostic.get("mode") == mode and diagnostic.get("changed_layers") == expected_layers,
+                        "Local relation diagnostic binding")
+                for field in ("return_rms_first_scheduled_batch", "return_weight_norm_epoch_end", "return_gradient_norm_last_batch"):
+                    values = diagnostic.get(field, [])
+                    require(len(values) == len(expected_layers) and all(type(x) in (float, int) and math.isfinite(x) and x >= 0 for x in values),
+                            "Finite connected local relation diagnostic: " + field)
         if mode == "degree_bond_local_cap_ema999":
             for row in rows:
                 diagnostic = row.get("local_control_diagnostics", {})
