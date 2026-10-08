@@ -49,16 +49,17 @@ Further profiling/diagnostics require their own prospective scope and authority.
 
 ## Active Work and Unresolved Acceptance
 
-These are retained observations, not a new scheduler query. This local analysis
-did not query, resume, submit or adopt remote jobs. Reconcile exact owner/job/
+The2026-10-09 [Kaggle reconciliation](docs/operations/KAGGLE_ACCEPTANCE_20261009.md)
+queried exact owner/version and retrieved retained outputs, without resuming,
+submitting or adopting jobs. Reconcile exact owner/job/
 attempt and durable artifacts before acting; stale remote state is UNKNOWN.
 Branch-local evidence stays on the [retained checkout map](BRANCHES.md#retained-checkout-map).
 
 | Question | Retained observation / blocker | Owner entry |
 |---|---|---|
-| Consistency500K coefficient0/0.1 | V1 accepted partial23/60; V2 continuation last reports RUNNING. Full raw/clean endpoints, terminal costs and independent closures pending; both arms retain two forwards. | [Status](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/STATUS.md) |
-| Standalone K1 EMA100K | Startup ERROR with empty logs after one unchanged-package retry; cause and scientific endpoint unresolved, no further retry released. | [EMA handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md) |
-| Gaussian spectral100K | Last observation RUNNING; runtime qualification and terminal acceptance pending. | [Spectral handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md) |
+| Consistency500K coefficient0/0.1 | V2 COMPLETE, accepted partial46/60 with resumable states. Full raw/clean endpoints and independent terminal closures pending; both arms retain two forwards. | [Status](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/STATUS.md) |
+| Standalone K1 EMA100K | Version2 ERROR, empty outputs/log[]; cause, native cost and scientific endpoint unresolved, no further retry released. | [EMA handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md) |
+| Gaussian spectral100K | COMPLETE40/40, mechanical/native preflight verified; fresh-pair material gate fails. Scientific terminal packages and strict reference/RML closure pending; no scale-up. | [Spectral handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md) |
 
 No observation releases adoption, scale-up, heartbeat or server takeover.
 TPU request metadata did not establish actual TPU execution; allocation/runtime
