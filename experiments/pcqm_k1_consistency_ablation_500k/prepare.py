@@ -124,11 +124,12 @@ def main():
     p.add_argument("--continuation-from",type=Path)
     p.add_argument("--resume-root",type=Path)
     p.add_argument("--checkpoint-dataset")
+    p.add_argument("--source-dataset")
     a=p.parse_args()
     if a.continuation_from:
         if not all((a.resume_root,a.output,a.checkpoint_dataset)):
             p.error("Continuation needs resume-root, output and fresh checkpoint-dataset")
-        prepare_continuation(a.continuation_from,a.resume_root,a.output,TRUSTED_PICKLE,a.checkpoint_dataset,repo_root=ROOT,experiment_dir=EXP)
+        prepare_continuation(a.continuation_from,a.resume_root,a.output,TRUSTED_PICKLE,a.checkpoint_dataset,repo_root=ROOT,experiment_dir=EXP,source_dataset=a.source_dataset)
         return
     commit=subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
     inputs=STAGING/"inputs"

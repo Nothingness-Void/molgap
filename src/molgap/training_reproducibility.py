@@ -7,6 +7,7 @@ import json
 import os
 import platform
 import random
+import re
 import sys
 from collections.abc import Mapping
 from pathlib import Path
@@ -17,6 +18,25 @@ import numpy as np
 RUNTIME_MANIFEST_FORMAT = "molgap-runtime-manifest-v1"
 CHECKPOINT_FORMAT = "molgap-resumable-checkpoint-v1"
 MODEL_BUNDLE_FORMAT = "molgap-self-contained-model-v1"
+
+
+def retained_resume_artifacts(manifest: Mapping, retention: str | None = None) -> dict:
+    """Select a resume bundle without rewriting its producer's full manifest."""
+    artifacts = dict(manifest["artifacts"])
+    if retention is None:
+        return artifacts
+    if retention != "selected-and-resume-v1":
+        raise ValueError("Unknown resume retention policy")
+    required = {"last_checkpoint.pt", "best_model.pt", "best_predictions.pt",
+                "initial_state.pt", "runtime.json", "trace.json",
+                "scientific_contract.json", "data_manifest.json",
+                "runtime_certificate.json"}
+    missing = required - artifacts.keys()
+    if missing:
+        raise ValueError("Incomplete selected/resume bundle: " + ", ".join(sorted(missing)))
+    # Epoch predictions are historical diagnostic outputs, never resume inputs.
+    return {name: checksum for name, checksum in artifacts.items()
+            if not re.fullmatch(r"predictions_epoch_[0-9]+\.pt", name)}
 
 
 def canonical_fingerprint(value: Mapping) -> str:

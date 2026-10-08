@@ -12,7 +12,7 @@ from molgap.experiment_prospective import plan_prospective
 from molgap.experiment_source_inventory import SHARED_SOURCE_FILES
 from molgap.experiment_spec import ExperimentSpec
 from molgap.screen_policy import canonical_fingerprint
-from molgap.training_reproducibility import sha256_file
+from molgap.training_reproducibility import sha256_file, retained_resume_artifacts
 
 def read(path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
@@ -36,7 +36,8 @@ def pinned(inputs, entry):
 
 
 def prepare_continuation(previous, resume_root, output, pickle_input,
-                         checkpoint_dataset, max_stage_seconds=None, *, repo_root, experiment_dir):
+                         checkpoint_dataset, max_stage_seconds=None, *, repo_root, experiment_dir,
+                         source_dataset=None):
     """Keep prospective/scientific inputs frozen while rebinding executable source."""
     ROOT, EXP = Path(repo_root), Path(experiment_dir)
     import torch
@@ -60,6 +61,19 @@ def prepare_continuation(previous, resume_root, output, pickle_input,
     if not checkpoint_slug or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in checkpoint_slug):
         raise ValueError("Invalid checkpoint dataset slug")
     launch = read(source / "legacy_500k_launch.json")
+    if source_dataset is not None:
+        if (not source_dataset.startswith("nothingnessvoid/") or source_dataset.count("/") != 1
+                or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in source_dataset.split("/")[1])
+                or not source_dataset.split("/")[1]):
+            raise ValueError("Continuation source dataset must belong to Kaggle1")
+        previous_source = read(source / "dataset-metadata.json")
+        if source_dataset == previous_source["id"]:
+            raise ValueError("Use a fresh source dataset for changed executable bytes")
+        launch["dataset_sources"] = [source_dataset if d == previous_source["id"] else d
+                                     for d in launch["dataset_sources"]]
+        launch["source_mount"] = source_dataset.split("/")[1]
+        previous_source.update(id=source_dataset, title="MolGap K1 500K Continuation Source S42")
+        write(source / "dataset-metadata.json", previous_source)
     if max_stage_seconds is not None:
         launch["max_stage_seconds"] = max_stage_seconds
     launch.update(source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"],
@@ -78,7 +92,7 @@ def prepare_continuation(previous, resume_root, output, pickle_input,
             raise ValueError("Continuation must use this exact previous source/arm")
         destination = checkpoints / aid
         destination.mkdir()
-        for name, checksum in stage["artifacts"].items():
+        for name, checksum in retained_resume_artifacts(stage, "selected-and-resume-v1").items():
             path = prior / name
             if not path.resolve().is_relative_to(prior.resolve()) or sha256_file(path) != checksum:
                 raise ValueError("Retained resume artifact changed: " + name)
@@ -97,7 +111,8 @@ def prepare_continuation(previous, resume_root, output, pickle_input,
             raise ValueError("Paired continuation runtimes differ")
         distributions = runtime["installed_distributions"]
         arm["resume"] = {"mount": checkpoint_slug, "manifest_sha256": sha256_file(prior / "stage_manifest.json"),
-                         "source_sha256": old["archive_sha256"], "next_epoch": state["next_epoch"]}
+                         "source_sha256": old["archive_sha256"], "next_epoch": state["next_epoch"],
+                         "retention": "selected-and-resume-v1"}
         resume_summary[aid] = dict(arm["resume"], checkpoint_sha256=sha256_file(prior / "last_checkpoint.pt"),
                                   global_step=state["global_step"], runtime_software=state["runtime_software"])
     launch["runtime_distributions"] = distributions

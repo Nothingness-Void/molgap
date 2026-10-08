@@ -78,6 +78,7 @@ def start_logged(command, path, *, label, env=None):
 
 
 def resolve_resume(mounted, arm):
+    from molgap.training_reproducibility import retained_resume_artifacts
     if "resume" not in arm:
         return None
     resume = arm["resume"]
@@ -91,7 +92,7 @@ def resolve_resume(mounted, arm):
             or manifest["next_epoch"] != resume["next_epoch"]):
         raise RuntimeError(f"Resume cursor/source changed: {arm['arm_id']}")
     root = manifests[0].parent
-    for name, checksum in manifest["artifacts"].items():
+    for name, checksum in retained_resume_artifacts(manifest, resume.get("retention")).items():
         path = root / name
         if not path.resolve().is_relative_to(root.resolve()) or digest(path) != checksum:
             raise RuntimeError(f"Resume artifact changed: {arm['arm_id']}/{name}")
@@ -101,6 +102,7 @@ def resolve_resume(mounted, arm):
 
 def retain_completed_arm(resume_root, destination, arm, stage_epochs=60):
     """Keep a finished peer's original evidence without another GPU worker."""
+    from molgap.training_reproducibility import retained_resume_artifacts
     resume = arm.get("resume", {})
     if resume.get("next_epoch") != stage_epochs:
         return False
@@ -115,7 +117,7 @@ def retain_completed_arm(resume_root, destination, arm, stage_epochs=60):
         raise RuntimeError("Completed arm evidence disagrees with the pinned resume")
     destination = Path(destination)
     destination.mkdir(parents=True, exist_ok=False)
-    for name, checksum in manifest["artifacts"].items():
+    for name, checksum in retained_resume_artifacts(manifest, resume.get("retention")).items():
         source = root / name
         target = destination / name
         if not source.resolve().is_relative_to(root.resolve()) or not target.resolve().is_relative_to(destination.resolve()):
@@ -272,6 +274,8 @@ def _main():
                     command += ["--target-transform", str(transform)]
                 if resumes[aid] is not None:
                     command += ["--resume", str(resumes[aid]), "--resume-source-sha", arm["resume"]["source_sha256"]]
+                    if arm["resume"].get("retention"):
+                        command += ["--resume-retention", arm["resume"]["retention"]]
                 if phase == "preflight":
                     command += ["--preflight-only"]
                 worker, thread = start_logged(command, output / f"{phase}_{aid}.log", label=f"{phase}/{aid}", env=env)

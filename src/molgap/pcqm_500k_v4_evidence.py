@@ -10,7 +10,7 @@ from pathlib import Path
 
 from .training_reproducibility import (
     atomic_json, atomic_torch_save, build_runtime_manifest, capture_rng_state,
-    configure_fp32_determinism, restore_rng_state, sha256_file,
+    configure_fp32_determinism, restore_rng_state, sha256_file, retained_resume_artifacts,
 )
 from .screen_policy import canonical_fingerprint, validate_runtime_certificate
 from .pcqm_k1_scale_runner import find_cache, load_roles, _targets
@@ -197,7 +197,8 @@ def evaluate(model, graphs, mean, std):
 def run(arm, output, source_sha, stage_epochs=60, resume=None,
         resume_source_sha=None, max_stage_seconds=41_400,
         platform_id="kaggle1", preflight_only=False, *, initial_state=None,
-        initial_state_sha256=None, target_transform=None, binding_identity=None):
+        initial_state_sha256=None, target_transform=None, binding_identity=None,
+        resume_retention=None):
     import shutil
     import torch
     if not isinstance(stage_epochs, int) or stage_epochs < 1:
@@ -342,7 +343,7 @@ def run(arm, output, source_sha, stage_epochs=60, resume=None,
         if resume is not None:
             resume = Path(resume)
             prior_manifest = json.loads((resume / "stage_manifest.json").read_text(encoding="utf-8"))
-            for name, checksum in prior_manifest["artifacts"].items():
+            for name, checksum in retained_resume_artifacts(prior_manifest, resume_retention).items():
                 if sha256_file(resume / name) != checksum:
                     raise RuntimeError(f"Preflight resume artifact hash mismatch: {name}")
             prior_state = torch.load(resume / "last_checkpoint.pt", map_location="cpu", weights_only=False)
@@ -550,6 +551,7 @@ def main():
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--stage-epochs", type=int, default=4)
     parser.add_argument("--resume-source-sha")
+    parser.add_argument("--resume-retention", choices=["selected-and-resume-v1"])
     parser.add_argument("--max-stage-seconds", type=int, default=41_400)
     parser.add_argument("--platform-id", default="kaggle1")
     parser.add_argument("--preflight-only", action="store_true")
@@ -564,7 +566,8 @@ def main():
             args.preflight_only, initial_state=args.initial_state,
             initial_state_sha256=args.initial_state_sha256,
             target_transform=args.target_transform,
-            binding_identity=json.loads(args.binding_identity.read_text(encoding="utf-8")) if args.binding_identity else None)
+            binding_identity=json.loads(args.binding_identity.read_text(encoding="utf-8")) if args.binding_identity else None,
+            resume_retention=args.resume_retention)
     except Exception as error:
         atomic_json(args.output / "failure.json", {"type": type(error).__name__, "error": str(error)})
         raise
