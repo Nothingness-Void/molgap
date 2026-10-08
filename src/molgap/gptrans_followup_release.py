@@ -90,7 +90,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
         local_control = mode == "degree_bond_local_cap_ema999"
         scale = mode == "scale_ema"
         model_mode = (study or {}).get("scale_model_variant", "degree_scale_ema999") if scale else mode
-        relation = mode in {"degree_local_connected_pair_ema999", "degree_local_bond_return_ema999"}
+        from .pcqm_gptrans_v4 import RELATION_DIAGNOSTIC_MODES
+        relation = mode in RELATION_DIAGNOSTIC_MODES
         capacity = model_mode in capacity_modes or transition or local_control or relation
         prepared_initial, prepared_file = initial, "degree_initial_state.pt"
         prepared_tensor_sha = source_arm["initialization"]["state_sha256"]
@@ -329,6 +330,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             workflow["required_modules"].append("molgap.gptrans_local_control")
         if any(mode in {"degree_local_connected_pair_ema999", "degree_local_bond_return_ema999"} for mode in MODES):
             workflow["required_modules"].append("molgap.gptrans_local_relation")
+        if any(mode.startswith("degree_local_triplet_") for mode in MODES):
+            workflow["required_modules"].append("molgap.gptrans_triplet_communication")
         if "scale_ema" in MODES:
             workflow["artifacts"]["degree_initial_state.pt"] = UploadArtifact.from_file(initial).to_workflow()
     if "scale_ema" in MODES:

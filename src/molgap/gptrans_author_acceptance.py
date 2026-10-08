@@ -19,6 +19,7 @@ NO_READ = ("training_executed", "model_inference_executed", "labels_read",
 DIAGNOSTIC_TRACE_MODES = frozenset({
     "degree_bond_local_cap_ema999", "degree_local_connected_pair_ema999",
     "degree_local_bond_return_ema999",
+    "degree_local_triplet_aggregate_ema999", "degree_local_triplet_attention_ema999",
 })
 
 
@@ -38,7 +39,7 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
     from .k1_terminal_analysis import paired_saved_errors
     from .research_memory.trace import load_canonical_trace
     from .screen_policy import validate_runtime_certificate, canonical_fingerprint
-    from .pcqm_gptrans_v4 import BATCHES_PER_EPOCH, EPOCHS, EXPECTED_PARAMETERS, PHYSICAL_BATCH, RUN_FORMAT
+    from .pcqm_gptrans_v4 import BATCHES_PER_EPOCH, EPOCHS, EXPECTED_PARAMETERS, PHYSICAL_BATCH, RUN_FORMAT, RELATION_DIAGNOSTIC_MODES
 
     root, records = Path(repo_root).resolve(), Path(records).resolve()
     base = root / experiment_ref
@@ -130,8 +131,8 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
         if mode == "degree_pair_transition_ema999":
             expected_config = __import__("molgap.gptrans_pair_transition", fromlist=["configuration"]).configuration(mode)
             require(observed.get("capacity_configuration") == expected_config, "Pair-transition configuration")
-        if mode in {"degree_local_connected_pair_ema999", "degree_local_bond_return_ema999"}:
-            from .gptrans_local_relation import configuration
+        if mode in RELATION_DIAGNOSTIC_MODES:
+            configuration = capacity_module(mode).configuration
             require(observed.get("capacity_configuration") == configuration(mode), "Local relation configuration")
             connectivity = preflight.get("relation_connectivity", {})
             norms = connectivity.get("gradient_norms", [])
@@ -160,8 +161,8 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
             require(sha256_file(training / name) == digest, "Checkpoint chunk: " + name)
         trace = load_canonical_trace(training / "canonical_trace.json")
         rows = load(training / "trace.json")["rows"]
-        if mode in {"degree_local_connected_pair_ema999", "degree_local_bond_return_ema999"}:
-            from .gptrans_local_relation import configuration
+        if mode in RELATION_DIAGNOSTIC_MODES:
+            configuration = capacity_module(mode).configuration
             expected_layers = configuration(mode)["changed_layers"]
             for row in rows:
                 diagnostic = row.get("local_relation_diagnostics", {})
