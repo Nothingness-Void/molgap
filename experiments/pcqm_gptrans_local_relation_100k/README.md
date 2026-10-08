@@ -8,6 +8,7 @@ the accepted local-bond GPTrans without increasing node width?
 - [Freeze entry](freeze.py): thin declaration over the native release builder.
 - [Acceptance entry](accept.py): saved-output acceptance and shared RML closure.
 - [Model owner](../../src/molgap/gptrans_local_relation.py): only the two deltas.
+- [Submission record](gpu/submission_record.md): exact receipt, release and custody evidence.
 
 Live state belongs to `CURRENT_STATE.md`. Prospective/RML publication is not
 terminal Replay admission. The500K late-contribution proposal remains unexecuted

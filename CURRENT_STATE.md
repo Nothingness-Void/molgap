@@ -7,17 +7,19 @@
 ## Server active screen
 
 The authorized [local relation-flow dual100K](experiments/pcqm_gptrans_local_relation_100k/protocol.md)
-is in release preparation, not submitted. Two isolated seed42 T4 workers test
+is submitted on Kaggle2 and scheduler-confirmed RUNNING; its exact entry and
+mounts match the [physical receipt](experiments/pcqm_gptrans_local_relation_100k/gpu/submission_record.md).
+Remote optimizer preflight/startup evidence is not yet retrievable. Two isolated seed42 T4 workers test
 virtual-connected pair processing and same-block true-bond return against the
 accepted uncapped local parent. No baseline retraining or automatic successor
-is released. Submission state belongs to its GPU receipt.
+is released. Existing Luna B owns silent30-minute monitoring and terminal handoff.
 
 The [two-arm500K local-stream bridge](experiments/pcqm_gptrans_local_transfer_500k/gpu/results/interpretation.md)
 is accepted with a positive equal-update architecture result and an actual
 complete STRICT_CAUSAL Replay pair. Its benefit survived the500K endpoint;
 complete convergence and full-scale ranking remain unresolved. The retained
-control was reused without baseline retraining. Luna's heartbeat is paused and
-the event/binding closed; no training remains bound. No automatic successor,
+control was reused without baseline retraining. That campaign's event/binding
+is closed; its monitor has been reassigned to the new100K dual. No automatic successor,
 full training or extra seed is released. Protocol-bound NO_TRAIN probes need
 their own accepted-parent hashes and prospective records before execution.
 
@@ -55,7 +57,7 @@ The accepted [local/500K synthesis](experiments/pcqm_gptrans_capacity_relations_
 retains a below-gate complete local Replay pair and a noncausal500K EMA
 PAIRED_ENDPOINT, not full-scale qualification. All earlier studies are closed;
 the [closed monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
-retains custody history. All server training bindings are closed; the closed
+retains custody history. Earlier training bindings are closed; the closed
 campaigns release no automatic successor.
 The path + corrected-EMA combination is closed with a strict/complete Replay
 pair but no supported additive gain; preserve its
