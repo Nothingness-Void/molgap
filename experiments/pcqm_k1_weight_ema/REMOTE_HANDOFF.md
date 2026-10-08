@@ -1,5 +1,10 @@
 # Kaggle3 submission handoff - 2026-10-06
 
+2026-10-09 exact-version reconciliation again reports ERROR/empty outputs/log[].
+See [infrastructure acceptance](reconciliation_20261009/acceptance.md).
+No new failure discriminator or retry; science, costs and canonical closure
+remain pending rather than negative or zero.
+
 Owner: `codex/exp/k1-ema-100k-night-20261006`, checkout `D:/w/k1-ema-night`.
 Frozen Spec/package/source identities are in `submission_response.json`;
 private source custody is in `source_publication.json` and `source_verification.json`.
