@@ -1,0 +1,29 @@
+{
+  "id": 137483676,
+  "ref": "nothingnessvoid/molgap-k1-consistency-500k-pair-s42-v1",
+  "title": "MolGap K1 Consistency 500K Pair S42 V1",
+  "author": "Nothingness Void",
+  "slug": "molgap-k1-consistency-500k-pair-s42-v1",
+  "lastRunTime": "2026-10-05T07:13:14.390Z",
+  "language": "python",
+  "kernelType": "script",
+  "isPrivate": true,
+  "enableGpu": true,
+  "enableInternet": true,
+  "categoryIds": [
+    "gpu"
+  ],
+  "datasetDataSources": [
+    "nothingnessvoid/molgap-k1-consistency-500k-source-s42-v2",
+    "nothingnessvoid/molgap-k1-consistency-500k-resume-s42-stage23-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ],
+  "kernelDataSources": [],
+  "competitionDataSources": [],
+  "totalVotes": 0,
+  "modelDataSources": [],
+  "enableTpu": false,
+  "currentVersionNumber": 2,
+  "dockerImage": "gcr.io/kaggle-private-byod/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+  "machineShape": "NvidiaTeslaT4"
+}

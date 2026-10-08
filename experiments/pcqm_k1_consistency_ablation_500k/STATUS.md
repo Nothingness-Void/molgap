@@ -1,28 +1,43 @@
 # Execution status
 
-Kaggle1 V1 scheduler COMPLETE; both arms accepted as bounded STAGE_COMPLETE,
-23/60 epochs, not scientific terminal completion. Exact kernel137483676/version1
-and source/dataset/package/Spec identities match the frozen submission.
+Kaggle1 version2 continuation was accepted and authoritative snapshot is RUNNING.
+Exact kernel `nothingnessvoid/molgap-k1-consistency-500k-pair-s42-v1`, ID137483676,
+version2; script-version ID remains unknown. Exact API source bytes, T4 request
+and the three published mounts agree with the release-bound payload. Dataset
+membership matches; Kaggle reordered those mounts. The initial log is empty;
+actual native allocation, optimizer preflight and resumed training are not yet
+observed, and are not inferred from RUNNING.
 
-| Arm | Selected stage MAE, eV | Best epoch (1-based) | Resume epoch index |
-|---|---:|---:|---:|
-| k1_pretrained_mean2, coefficient0 | 0.109245628119 | 23 | 23 |
-| k1_pretrained_consistency, coefficient0.1 | 0.110386952758 | 21 | 23 |
+Both arms resume at epoch index23 (23/60 complete,89,838steps,
+11,499,264presentations) using verified model/optimizer/RNG/cursor state.
+Original scientific Spec and recipes are unchanged. Each bounded invocation
+allows at most32,400seconds, so another reconciled stage may be needed to60epochs.
+No default monitor, server takeover, full-data training or protected role use.
 
-Both have89,838 optimizer steps and11,499,264 sample presentations. Required
-selected/resume artifacts are retained and hash/cursor/runtime verified.
-Training allocation17.389569095 T4-hours;34.610430905 remain under the52hour
-training ceiling. No continuation was submitted in this acceptance.
+| Identity | Value |
+|---|---|
+| Spec | `65fc71b0a622a8661df33b061915e0630dfb57abf5e01546cfc1803489f23c12` |
+| V2 executable source commit | `529c138838eabe57b908b6039cd63b3e57c48595` |
+| V2 source archive SHA256 | `c3a94757a9fb77d8096e9f30a5af0fdcd7d494d5dfe1a041ea7f02471a257c74` |
+| V2 package identity | `dcd226df9827ec3b30cc90ad565dc85fadfab9e5ba1a13fba913eed3753af6a9` |
 
-Both prospective RML trajectories remain ACTIVE with measured stage costs;
-neither is strict replay-ready. Complete37remaining epochs per arm and the
-predeclared full50K/clean-BN analyses before scientific disposition.
-The retained continuation adapter currently requires unneeded per-epoch prediction
-files; reconcile that retention gap before preparation, preserving the original
-manifest and scientific contract. See [accepted stage record](submission_v1/terminal_inspection/stage_acceptance.md)
-and [return procedure](REMOTE_HANDOFF.md).
+Private source: `nothingnessvoid/molgap-k1-consistency-500k-source-s42-v2`.
+Private recovery: `nothingnessvoid/molgap-k1-consistency-500k-resume-s42-stage23-v1`.
+Graph: `nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1`.
+Original producer stage manifests and prospective launch bytes are unchanged;
+selected/resume retention omits only unneeded numbered epoch predictions.
+The shared retention repair passed32focused tests in one local run. Shared release
+checks passed before publication and were repeated by the existing submitter.
+No training artifacts were retrieved after this healthy submission.
 
-Frozen executable source commit:920fe036ef030dab3052f0245bdc650ce33b9203.
-Spec:65fc71b0a622a8661df33b061915e0630dfb57abf5e01546cfc1803489f23c12.
-Package:9da691f5e3fb4f406c9af9c50493c40f80c231a19dcf8f07fc0cc04628e9f4d0.
-Archive SHA256:acb6c461482c4b73f392b18bd69096bb3c01205877ff5a3c7ab8fbb653af4374.
+Version1 [bounded acceptance](submission_v1/terminal_inspection/stage_acceptance.md)
+retains selected MAE0.109245628119 (coefficient0) and0.110386952758(coefficient0.1).
+Its measured training allocation17.389569095T4hours leaves34.610430905 under52hours;
+version2 incremental costs remain unknown until an actual ledger is retained.
+Both independent RML trajectories remain ACTIVE and neither is replay-ready.
+
+Read [continuation authorization](continuation_authorization.md),
+[actual response](submission_v2/platform_response.json),
+[source verification](submission_v2/source_verification.json),
+[continuation binding](submission_v2/continuation_binding.json) and
+[return procedure](REMOTE_HANDOFF.md) before further action.

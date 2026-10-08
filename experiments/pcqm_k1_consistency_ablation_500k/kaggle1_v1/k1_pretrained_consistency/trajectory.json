@@ -3,7 +3,8 @@
     {
       "action_id": "A001",
       "attempt_ids": [
-        "kaggle1-consistency-ablation-001"
+        "kaggle1-consistency-ablation-001",
+        "kaggle1-consistency-ablation-002"
       ],
       "cost_event_ids": [
         "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-expected-training",
@@ -14,7 +15,9 @@
       "evidence_refs": [
         "experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
         "experiments/pcqm_k1_consistency_ablation_500k/plan.md",
-        "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/inspection_report.json"
+        "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/inspection_report.json",
+        "experiments/pcqm_k1_consistency_ablation_500k/continuation_authorization.md",
+        "experiments/pcqm_k1_consistency_ablation_500k/submission_v2/platform_response.json"
       ],
       "run_ids": [
         "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency"
@@ -459,7 +462,9 @@
   "result": {
     "evidence_ids": [],
     "evidence_refs": [
-      "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/inspection_report.json"
+      "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/inspection_report.json",
+      "experiments/pcqm_k1_consistency_ablation_500k/continuation_authorization.md",
+      "experiments/pcqm_k1_consistency_ablation_500k/submission_v2/platform_response.json"
     ]
   },
   "schema": "molgap-trajectory-v1",

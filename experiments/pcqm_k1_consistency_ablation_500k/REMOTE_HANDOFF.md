@@ -7,7 +7,7 @@ Use desktop project Python with `PYTHONPATH=D:/w/k1-consistency-500k/src` and
 the Kaggle workload skill. Explicit credential file:
 `D:/下载/Key/.kaggle1_default/kaggle.json`, owner `nothingnessvoid`; never print it.
 
-1. Query the exact kernel/version from [submission response](submission_v1/platform_response.json).
+1. Query the exact kernel/version from [submission response](submission_v2/platform_response.json).
    Healthy RUNNING/QUEUED does not justify downloading training files or retrying.
 2. At terminal state verify returned source/version, frozen source dataset and
    Spec. Retrieve only pair-state/invocation-cost and per-arm qualification,
@@ -38,8 +38,23 @@ the Kaggle workload skill. Explicit credential file:
    missing qualification or inherited historical cost stays an exclusion.
    Apply the BRANCHES adoption/archive route only after terminal disposition.
 
-Current preparation lives at
+Original version1 preparation lives at
 `platforms/_records/kaggle/staging/pcqm_k1_consistency_ablation_500k/v1/`.
 Its release, prospective and legacy launch bindings are preserved copies in
 `submission_v1/`. Initialization files are retained in its `inputs/` and the
 private source dataset. No official/common/OOD/test roles or full-data execution.
+
+## Version2 continuation location
+
+Latest prepared payload is
+`platforms/_records/kaggle/staging/pcqm_k1_consistency_ablation_500k/v2/`.
+Use the actual version2 response and STATUS before reconciliation. Preserve
+version1 archive `acb6c461482c4b73f392b18bd69096bb3c01205877ff5a3c7ab8fbb653af4374`
+as the producer of the pinned epoch23 recovery states. Version2 changes only
+resume retention/plumbing; Spec, prospective launch, initial state and recipes
+are frozen. `selected-and-resume-v1` now verifies required selected/resume inputs
+against the original full stage manifest without requesting numbered epoch
+predictions. Fresh source publication uses `--source-dataset` on prepare.py.
+Continue from the latest verified stage/package; never reuse the epoch23 checkpoint
+to duplicate progress after version2 has produced a later stage. No healthy tick
+artifact download or automatic resubmission.

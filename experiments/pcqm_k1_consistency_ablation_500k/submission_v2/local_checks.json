@@ -1,0 +1,9 @@
+{
+  "test_command": "project Python -m pytest -q tests/test_500k_resume_retention.py tests/test_legacy_500k_completed_reuse.py tests/test_k1_consistency_500k_ablation.py",
+  "exit_code": 0,
+  "passed": 32,
+  "test_runs": 1,
+  "delegated_model": "gpt-6-luna",
+  "reasoning_effort": "max",
+  "actual_remote_runtime_not_yet_qualified": true
+}

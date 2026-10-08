@@ -1,0 +1,15 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-consistency-500k-pair-s42-v1",
+  "kernel_id": 137483676,
+  "version": 2,
+  "entry_matches": true,
+  "entry_sha256": "7b1e376b69b25b7d8e0794fb647f12f39eb70d7db83cd16523fa502de6172484",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-k1-consistency-500k-source-s42-v2",
+    "nothingnessvoid/molgap-k1-consistency-500k-resume-s42-stage23-v1",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ],
+  "datasets_match": true,
+  "dataset_order_semantics": "Kaggle reorders the same three mounts; compare exact membership, not order",
+  "source_api_exact_bytes_retained": true
+}
