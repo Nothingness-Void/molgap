@@ -125,12 +125,22 @@ def main():
     p.add_argument("--resume-root",type=Path)
     p.add_argument("--checkpoint-dataset")
     p.add_argument("--source-dataset")
+    p.add_argument("--account",choices=("nothingnessvoid","nvoid912"))
+    p.add_argument("--run-reference")
+    p.add_argument("--graph-dataset")
+    p.add_argument("--platform-id",choices=("kaggle1-t4x2","kaggle3-t4x2"))
+    p.add_argument("--max-stage-seconds",type=int)
     a=p.parse_args()
     if a.continuation_from:
         if not all((a.resume_root,a.output,a.checkpoint_dataset)):
             p.error("Continuation needs resume-root, output and fresh checkpoint-dataset")
-        prepare_continuation(a.continuation_from,a.resume_root,a.output,TRUSTED_PICKLE,a.checkpoint_dataset,repo_root=ROOT,experiment_dir=EXP,source_dataset=a.source_dataset)
+        prepare_continuation(a.continuation_from,a.resume_root,a.output,TRUSTED_PICKLE,a.checkpoint_dataset,
+            max_stage_seconds=a.max_stage_seconds,repo_root=ROOT,experiment_dir=EXP,source_dataset=a.source_dataset,
+            account=a.account,run_reference=a.run_reference,graph_dataset=a.graph_dataset,platform_id=a.platform_id)
         return
+    if any(v is not None for v in (a.resume_root,a.checkpoint_dataset,a.source_dataset,a.account,
+                                  a.run_reference,a.graph_dataset,a.platform_id,a.max_stage_seconds)):
+        p.error("Continuation options require --continuation-from")
     commit=subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
     inputs=STAGING/"inputs"
     spec,pins,initial,transform=declare(commit,inputs)

@@ -37,7 +37,8 @@ def pinned(inputs, entry):
 
 def prepare_continuation(previous, resume_root, output, pickle_input,
                          checkpoint_dataset, max_stage_seconds=None, *, repo_root, experiment_dir,
-                         source_dataset=None):
+                         source_dataset=None, account=None, run_reference=None,
+                         graph_dataset=None, platform_id=None):
     """Keep prospective/scientific inputs frozen while rebinding executable source."""
     ROOT, EXP = Path(repo_root), Path(experiment_dir)
     import torch
@@ -48,40 +49,61 @@ def prepare_continuation(previous, resume_root, output, pickle_input,
     spec = ExperimentSpec.from_json((previous / "package/experiment_spec.json").read_text())
     if spec.identity != ExperimentSpec.from_json((EXP / "experiment_spec.json").read_text()).identity:
         raise ValueError("Continuation cannot change the owning frozen Spec")
+    launch = read(previous / "source_dataset/legacy_500k_launch.json")
+    prior_account, prior_run = launch["account"], launch["run_reference"]
+    account = prior_account if account is None else account
+    platforms = {"nothingnessvoid": "kaggle1-t4x2", "nvoid912": "kaggle3-t4x2"}
+    if account not in platforms:
+        raise ValueError("Unsupported continuation account")
+    platform_id = platforms[account] if platform_id is None else platform_id
+    if platform_id != platforms[account]:
+        raise ValueError("Continuation account/platform_id mismatch")
+    def owned_dataset(value):
+        if (not isinstance(value, str) or value.count("/") != 1
+                or value.split("/")[0] != account or not value.split("/")[1]
+                or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in value.split("/")[1])):
+            raise ValueError("Continuation datasets must have the same explicit owner")
+        return value
+    checkpoint_id = owned_dataset(checkpoint_dataset)
+    checkpoint_slug = checkpoint_id.split("/")[1]
+    previous_source = read(previous / "source_dataset/dataset-metadata.json")
+    source_id = owned_dataset(previous_source["id"] if source_dataset is None else source_dataset)
+    if source_dataset is not None and source_id == previous_source["id"]:
+        raise ValueError("Use a fresh source dataset for changed executable bytes")
+    graph_dataset = owned_dataset(account + "/pcqm4mv2-ogb-fixed-500k-scnet-v1" if graph_dataset is None else graph_dataset)
+    if graph_dataset != account + "/pcqm4mv2-ogb-fixed-500k-scnet-v1":
+        raise ValueError("Continuation must retain the accepted fixed500K graph dataset")
+    if checkpoint_id in launch["dataset_sources"] or checkpoint_id in {source_id, graph_dataset}:
+        raise ValueError("Use a fresh distinct checkpoint dataset")
+    if len({source_id.split("/")[1], graph_dataset.split("/")[1], checkpoint_slug}) != 3:
+        raise ValueError("Continuation dataset mounts must be distinct")
+    run_reference = account + "/" + prior_run.split("/")[-1] if run_reference is None else run_reference
+    if run_reference != account + "/" + prior_run.split("/")[-1]:
+        raise ValueError("Continuation must retain the kernel slug under its explicit owner")
+    prior_resume_mounts = {a["resume"]["mount"] for a in launch["arms"] if "resume" in a}
+    prior_graph = [d for d in launch["dataset_sources"] if d.split("/")[-1] == launch["graph_mount"]]
+    if len(prior_graph) != 1 or any(
+            d != previous_source["id"] and d != prior_graph[0]
+            and d.split("/")[-1] not in prior_resume_mounts for d in launch["dataset_sources"]):
+        raise ValueError("Unexpected previous dataset mounts")
+    original_data_identity = {a["arm_id"]: a["data"] for a in spec.to_dict()["arms"]}
     output.mkdir(parents=True, exist_ok=False)
     manifest = build_experiment_source_package(spec, ROOT, old["relative_allowlist"], output / "package")
     source, kernel, checkpoints = output / "source_dataset", output / "kernel", output / "checkpoint_dataset"
     shutil.copytree(previous / "source_dataset", source)
     shutil.copytree(previous / "kernel", kernel)
     checkpoints.mkdir()
-    checkpoint_id = checkpoint_dataset
-    if not checkpoint_id.startswith("nothingnessvoid/") or checkpoint_id.count("/") != 1:
-        raise ValueError("Continuation checkpoint dataset must belong to Kaggle1")
-    checkpoint_slug = checkpoint_id.split("/")[1]
-    if not checkpoint_slug or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in checkpoint_slug):
-        raise ValueError("Invalid checkpoint dataset slug")
-    launch = read(source / "legacy_500k_launch.json")
     if source_dataset is not None:
-        if (not source_dataset.startswith("nothingnessvoid/") or source_dataset.count("/") != 1
-                or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in source_dataset.split("/")[1])
-                or not source_dataset.split("/")[1]):
-            raise ValueError("Continuation source dataset must belong to Kaggle1")
-        previous_source = read(source / "dataset-metadata.json")
-        if source_dataset == previous_source["id"]:
-            raise ValueError("Use a fresh source dataset for changed executable bytes")
-        launch["dataset_sources"] = [source_dataset if d == previous_source["id"] else d
-                                     for d in launch["dataset_sources"]]
-        launch["source_mount"] = source_dataset.split("/")[1]
-        previous_source.update(id=source_dataset, title="MolGap K1 500K Continuation Source S42")
-        write(source / "dataset-metadata.json", previous_source)
+        previous_source.update(id=source_id, title="MolGap K1 500K Continuation Source S42")
+    previous_source["isPrivate"] = True
+    write(source / "dataset-metadata.json", previous_source)
     if max_stage_seconds is not None:
         launch["max_stage_seconds"] = max_stage_seconds
     launch.update(source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"],
                   package_identity=manifest["package_identity"])
-    prior_resume_mounts = {a["resume"]["mount"] for a in launch["arms"] if "resume" in a}
-    launch["dataset_sources"] = [d for d in launch["dataset_sources"]
-                                 if d.split("/")[-1] not in prior_resume_mounts]
-    launch["dataset_sources"] += [checkpoint_id]
+    launch.update(account=account, run_reference=run_reference, platform_id=platform_id,
+                  source_mount=source_id.split("/")[1], graph_mount=graph_dataset.split("/")[1],
+                  dataset_sources=[source_id, graph_dataset, checkpoint_id])
     distributions = None
     resume_summary = {}
     for arm in launch["arms"]:
@@ -123,6 +145,7 @@ def prepare_continuation(previous, resume_root, output, pickle_input,
         "EXPECTED_LAUNCH_SHA256 = None", "EXPECTED_LAUNCH_SHA256 = " + repr(sha256_file(source / "legacy_500k_launch.json")))
     (kernel / "run.py").write_text(entry, encoding="utf-8", newline="\n")
     metadata = read(kernel / "kernel-metadata.json")
+    metadata.update(id=run_reference, is_private=True)
     metadata["dataset_sources"] = launch["dataset_sources"]
     write(kernel / "kernel-metadata.json", metadata)
     write(checkpoints / "dataset-metadata.json", {"id": checkpoint_id, "title": "MolGap K1 500K Resume S42",
@@ -130,6 +153,10 @@ def prepare_continuation(previous, resume_root, output, pickle_input,
     write(output / "continuation_binding.json", {"prior_package_identity": old["package_identity"],
         "prior_source_sha256": old["archive_sha256"], "spec_identity": spec.identity,
         "resume_dataset": checkpoint_id, "arms": resume_summary,
+        "prior_account": prior_account, "account": account,
+        "prior_run_reference": prior_run, "run_reference": run_reference,
+        "platform_id": platform_id, "prior_graph_dataset": prior_graph[0],
+        "graph_dataset": graph_dataset, "original_data_identity": original_data_identity,
         "prospective_preserved": launch["prospective_sha256"]})
     report = check_release_inputs(spec, output / "package", expected_package_identity=manifest["package_identity"],
         recipe_files={a["arm_id"]: a["recipe"] for a in launch["arms"]},

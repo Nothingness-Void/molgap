@@ -1,0 +1,10 @@
+{
+  "targeted_tests": {
+    "tests/test_500k_account_continuation.py": 27,
+    "existing_resume_retention_consistency_composed_completed_reuse_v4_evidence_accelerator_push": 47,
+    "total": 74,
+    "status": "passed"
+  },
+  "scope": "synthetic local tests only; no real-model training or inference; remote native qualification pending",
+  "warning": "torch_geometric distributed deprecation"
+}

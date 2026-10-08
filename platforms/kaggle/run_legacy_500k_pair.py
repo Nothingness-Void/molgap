@@ -267,7 +267,7 @@ def _main():
                 command = [sys.executable, "-u", "-m", "molgap.pcqm_500k_v4_evidence", "--arm", aid,
                     "--output", str(output / ("qualification" if phase == "preflight" else "stages") / aid),
                     "--source-sha", config["source_archive_sha256"], "--stage-epochs", str(config["stage_epochs"]),
-                    "--max-stage-seconds", str(max(1, int(config["max_stage_seconds"] - (time.monotonic() - STARTED)))), "--platform-id", "kaggle1-t4x2",
+                    "--max-stage-seconds", str(max(1, int(config["max_stage_seconds"] - (time.monotonic() - STARTED)))), "--platform-id", config.get("platform_id", "kaggle1-t4x2"),
                     "--initial-state", str(inputs[aid]), "--initial-state-sha256", arm["initial_state_sha256"],
                     "--binding-identity", str(launch.parent / arm["binding"])]
                 if aid == "gptrans_g1_bond_local_ema999":
