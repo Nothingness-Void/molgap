@@ -7,12 +7,13 @@
 ## Server active screen
 
 The authorized [local relation-flow dual100K](experiments/pcqm_gptrans_local_relation_100k/protocol.md)
-is submitted on Kaggle2 and scheduler-confirmed RUNNING; its exact entry and
-mounts match the [physical receipt](experiments/pcqm_gptrans_local_relation_100k/gpu/submission_record.md).
-Remote optimizer preflight/startup evidence is not yet retrievable. Two isolated seed42 T4 workers test
-virtual-connected pair processing and same-block true-bond return against the
-accepted uncapped local parent. No baseline retraining or automatic successor
-is released. Existing Luna B owns silent30-minute monitoring and terminal handoff.
+is closed after independent acceptance: connected pair processing was positive
+below the frozen nomination gate; same-block bond return was worse. Both arms
+have actual complete STRICT_CAUSAL Replay pairs. The native INCONCLUSIVE labels
+remain unscored policy truth; see the [terminal interpretation](experiments/pcqm_gptrans_local_relation_100k/gpu/results/interpretation.md).
+Its event/binding are closed and existing Luna B is paused. No baseline
+retraining, successor, extra seed or automatic scale is released. No server
+training is active under this authorization.
 
 The [two-arm500K local-stream bridge](experiments/pcqm_gptrans_local_transfer_500k/gpu/results/interpretation.md)
 is accepted with a positive equal-update architecture result and an actual
