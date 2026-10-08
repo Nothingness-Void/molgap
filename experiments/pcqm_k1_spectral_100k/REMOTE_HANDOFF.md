@@ -1,5 +1,11 @@
 # Kaggle3 submission handoff - 2026-10-06
 
+2026-10-09 reconciliation supersedes the RUNNING observation below:
+COMPLETE, both40-epoch endpoints mechanically/native-preflight verified.
+The fresh-pair material gate fails; [acceptance and remaining terminal/RML blocker](reconciliation_20261009/acceptance.md)
+owns values and exclusions. No retry,500K or model adoption; owner remains open
+until canonical terminal packages and custody are resolved.
+
 Owner: `codex/exp/k1-spectral-100k-night-20261006`, `D:/w/k1-spectral-night`.
 [Prepared handoff](PREPARED_HANDOFF.md) owns frozen preparation identities.
 Published source byte checks: `source_verification.json`; cache pins were also

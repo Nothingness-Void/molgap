@@ -1,0 +1,78 @@
+{
+  "accepted": true,
+  "maximum_peak_memory_bytes": 12884901888,
+  "peak_memory_qualified": true,
+  "mode": "spectral",
+  "zero_initialization_delta": 0.0,
+  "spectral_qualification": {
+    "parameters": 3683905,
+    "sign_delta": 0.0,
+    "repeated_space_rotation_delta": 2.384185791015625e-07,
+    "repeated_space_rotations": 61,
+    "node_permutation_delta": 4.76837158203125e-07,
+    "maximum_absolute_delta": 1e-05
+  },
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      0.780063271522522,
+      0.780063271522522
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "ca39bff14584472fbd6325a8fd0ba125aa125ab4a600004a56c678b6b230642e",
+      "ca39bff14584472fbd6325a8fd0ba125aa125ab4a600004a56c678b6b230642e"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      0.780063271522522,
+      0.780063271522522
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "b5b9541375b53370abf0fb616931f8b55948633be9f40d00447a41daf380129c",
+      "b5b9541375b53370abf0fb616931f8b55948633be9f40d00447a41daf380129c"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.13277858100002504,
+      "samples_seconds": [
+        0.16083711800001765,
+        0.14282757699999138,
+        0.13277858100002504,
+        0.11649124800004529,
+        0.11526458800000228
+      ],
+      "peak_memory_bytes": 586744832
+    },
+    "spectral": {
+      "median_step_seconds": 0.12445057400003634,
+      "samples_seconds": [
+        0.12129661400001623,
+        0.12498073399996201,
+        0.1264668950000214,
+        0.12445057400003634,
+        0.1241789800000106
+      ],
+      "peak_memory_bytes": 590709760
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": -0.062721012208943,
+  "maximum_overhead_fraction": 0.25,
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"
+}
