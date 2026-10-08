@@ -1,0 +1,49 @@
+{
+  "format": "molgap-native500k-bounded-stage-inspection-v1",
+  "disposition": "ACTIVE_PARTIAL_STAGE",
+  "arms": {
+    "k1_pretrained_mean2": {
+      "stage_mechanical_pass": true,
+      "completed_epochs": 46,
+      "contract_epochs": 60,
+      "optimizer_steps": 179676,
+      "sample_presentations": 22998528,
+      "selected_epoch_one_based": 44,
+      "selected_mae_eV": 0.1051719555425644,
+      "last_epoch_mae_eV": 0.10717898607254028,
+      "retained_prefix_23_epochs_unchanged": true,
+      "resume_cursor_verified": true,
+      "runtime_certificate_verified": true,
+      "full_terminal_acceptance": false
+    },
+    "k1_pretrained_consistency": {
+      "stage_mechanical_pass": true,
+      "completed_epochs": 46,
+      "contract_epochs": 60,
+      "optimizer_steps": 179676,
+      "sample_presentations": 22998528,
+      "selected_epoch_one_based": 34,
+      "selected_mae_eV": 0.10559559775352478,
+      "last_epoch_mae_eV": 0.10686241835355759,
+      "retained_prefix_23_epochs_unchanged": true,
+      "resume_cursor_verified": true,
+      "runtime_certificate_verified": true,
+      "full_terminal_acceptance": false
+    }
+  },
+  "budget": {
+    "cumulative_training_T4_hours": 34.84185189143666,
+    "remaining_training_T4_hours": 17.15814810856334,
+    "training_cap_T4_hours": 52,
+    "remaining_epochs_per_arm": 14,
+    "queue_and_cpu_core_cost_unknown": true
+  },
+  "scope": "Hash-bound retained checkpoint/prediction/trace inspection; no forward/training/calibration/protected-role access",
+  "strict_replay_ready": false,
+  "terminal_blockers": [
+    "14 epochs remaining per arm",
+    "full60 selected endpoints unavailable",
+    "predeclared identical clean-BN endpoint analysis pending"
+  ],
+  "inspection_wall_seconds": 0.14088160000392236
+}

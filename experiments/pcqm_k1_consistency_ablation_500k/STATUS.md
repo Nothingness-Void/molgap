@@ -1,5 +1,13 @@
 # Execution status
 
+2026-10-09 reconciliation: version2 is COMPLETE with accepted bounded stages
+at46/60epochs in both arms, not terminal training. See [stage acceptance](submission_v2/terminal_inspection_20261009/stage_acceptance.md)
+for checkpoints, exact source, metrics and cumulative34.841852T4-hour training
+allocation. Fourteen epochs and the predeclared clean-BN endpoint comparison
+remain pending. No continuation was submitted by this acceptance.
+
+The retained submission-time observation below is historical, not current scheduler state.
+
 Kaggle1 version2 continuation was accepted and authoritative snapshot is RUNNING.
 Exact kernel `nothingnessvoid/molgap-k1-consistency-500k-pair-s42-v1`, ID137483676,
 version2; script-version ID remains unknown. Exact API source bytes, T4 request
