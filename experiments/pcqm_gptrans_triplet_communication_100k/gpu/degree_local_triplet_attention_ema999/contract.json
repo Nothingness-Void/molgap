@@ -1,0 +1,69 @@
+{
+  "format": "molgap-gptrans-v5-audit-reference-contract-v1",
+  "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "fixed_train_rows": [
+    0,
+    100000
+  ],
+  "fixed_development_rows": [
+    100000,
+    150000
+  ],
+  "initial_state_sha256": "d452895140dba6a2a214cca2e14a18f75434ad5cc3ea486f9050a49d55939ec7",
+  "architecture_sha256": "5bed70a353e7d34f66c8b145135146ff2bbb65933a587e8c760e9c7fad9fe9d2",
+  "model_parameters": 5889409,
+  "seed": 42,
+  "epochs": 60,
+  "physical_batch_per_device": 128,
+  "drop_last": true,
+  "optimizer_steps": 46860,
+  "sample_presentations": 5998080,
+  "precision": "fp32-no-tf32",
+  "optimizer": "AdamW-foreach-false-lr0.001-weight-decay0.05",
+  "schedule": "warmup4-cosine60-min-lr1e-6",
+  "loss": "train-normalized-gap-L1",
+  "ema_decay": 0.999,
+  "selection": "minimum-internal-development-EMA-MAE",
+  "observation_addition": "separate-live-model-development-MAE-each-epoch",
+  "geometry_used": false,
+  "protected_roles": "forbidden",
+  "platform": "kaggle2-t4-gptrans-triplet-communication",
+  "accelerator_request": "NvidiaTeslaT4",
+  "independent_models": 1,
+  "segment_epochs": 10,
+  "variant": "degree_local_triplet_attention_ema999",
+  "reference_id": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+  "capacity_configuration": {
+    "node_channels": 256,
+    "pair_channels": 32,
+    "layers": 12,
+    "heads": 2,
+    "ffn_ratio": 1,
+    "local_bond_channels": 64,
+    "degree_scale": 0.0897,
+    "dropout": 0.1,
+    "drop_path": 0.1,
+    "initialization": "retained-local-parent-exact;seed42-new-tensors-only-v1",
+    "parent_variant": "degree_bond_local_ema999",
+    "relation_mechanism": "tgt-style-triplet-attention",
+    "changed_layers": [
+      3,
+      6,
+      9,
+      12
+    ],
+    "head_channels": 8,
+    "directions": [
+      "inward",
+      "outward"
+    ],
+    "pair_scope": "all-valid-pairs-including-virtual",
+    "third_pair_gate": true,
+    "new_return_initialization": "zero",
+    "new_forward_rng": false,
+    "readout": "unchanged-virtual-node-plus-virtual-pair"
+  },
+  "optimizer_parameter_groups": "single-group",
+  "endpoint_path_encoding": "none"
+}

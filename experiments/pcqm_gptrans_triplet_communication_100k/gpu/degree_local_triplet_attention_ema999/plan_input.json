@@ -1,0 +1,148 @@
+{
+  "trajectory": {
+    "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+    "record_mode": "prospective",
+    "owner": "server",
+    "track": "C",
+    "family_id": "gptrans-g1-degree_local_triplet_attention_ema999",
+    "question": "Does query-conditioned triplet selection improve the same frozen parent sufficiently to justify its cubic compute?",
+    "hypothesis": {
+      "hypothesis_id": "H-TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "observed_deficiency": "Does query-conditioned triplet selection improve the same frozen parent sufficiently to justify its cubic compute?",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+        "pcqm-gptrans-g1-degree-local-connected-pair-ema999-100k-s42",
+        "pcqm-gptrans-g1-degree-local-bond-return-ema999-100k-s42"
+      ],
+      "alternative_explanations": [
+        "Query-dependent relation selection may overfit; TGT's geometric training could be essential for its reported benefit."
+      ],
+      "changed_mechanism": "degree_local_triplet_attention_ema999",
+      "cheapest_falsifier": "one matched seed42 screen against the accepted frozen local-bond model; no baseline retraining",
+      "related_closed_family_ids": [
+        "gptrans-pair-prenorm",
+        "gptrans-runtime-profiling"
+      ],
+      "expected_native_cost_ref": "cost-TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "decision_changed_if_positive": "controller interpretation only; no automatic scale or seed release",
+      "decision_changed_if_negative": "close this exact follow-up hypothesis",
+      "historical_unknowns": [
+        "training stochasticity unmeasured; material gate is a policy choice"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "f2475f00c544e75b42f3185af847ff045e795cf7",
+      "source_config_identity": "e40965fb6448db029d14056818a88fde851d07ce576ba7f0260b9db0391ff445",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/contract.json",
+        "experiments/pcqm_gptrans_triplet_communication_100k/protocol.md",
+        "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/comparison_readiness_prelaunch.json"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
+      ],
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "prior_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42",
+        "TC-gptrans-g1-local-connected-pair-100k-s42",
+        "TC-gptrans-g1-local-bond-return-100k-s42"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+        "pcqm-gptrans-g1-degree-local-connected-pair-ema999-100k-s42",
+        "pcqm-gptrans-g1-degree-local-bond-return-ema999-100k-s42"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_triplet_communication_100k/gpu/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/budget.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "single_mechanism_screen",
+        "source_commit": "f2475f00c544e75b42f3185af847ff045e795cf7",
+        "run_ids": [
+          "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999"
+        ],
+        "attempt_ids": [
+          "v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/contract.json"
+        ],
+        "cost_event_ids": [
+          "cost-TC-gptrans-g1-local-triplet-attention-100k-s42"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_triplet_communication_100k/protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one isolated T4 arm then full saved-artifact acceptance"
+      ],
+      "reopen_conditions": [
+        "terminal evidence or an infrastructure fault requiring controller diagnosis"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [
+      "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
+    ],
+    "available_actions": [
+      "RUN_G1_FOLLOWUP",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_G1_FOLLOWUP",
+    "policy_id": "gptrans-g1-followup",
+    "policy_version": "v1",
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/budget.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_triplet_communication_100k/gpu/role_plan.json"
+    ],
+    "state_timestamp": "2026-10-08T18:26:54.039040+00:00",
+    "source_commit": "f2475f00c544e75b42f3185af847ff045e795cf7"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "action_id": "A001",
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+      "attempt_id": "v1",
+      "category": "training",
+      "platform": "kaggle2-t4-gptrans-triplet-communication",
+      "hardware": "one-of-two-independent-T4",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/budget.json",
+      "measurement": {
+        "device_hours": {
+          "status": "estimated",
+          "value": 5
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 5
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}
