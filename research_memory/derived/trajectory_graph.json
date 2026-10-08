@@ -296,6 +296,21 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-saved-bn-rows-20261008:A001",
+      "target": "experiments/pcqm_k1_bn_row_attribution/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-saved-trace-pair-20261008-attempt002:A001",
+      "target": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-saved-trace-pair-20261008:A001",
+      "target": "experiments/pcqm_k1_consistency_stage_analysis/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-slot-readout-diagnostic-20261002:A001",
       "target": "experiments/pcqm_k1_slot_readout_diagnostic/inputs.json",
       "type": "action_produced_evidence"
@@ -1481,6 +1496,21 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "TB-k1-saved-bn-rows-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "TB-k1-saved-trace-pair-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-complete-module-audit-20261008",
+      "target": "TB-k1-saved-trace-pair-20261008-attempt002",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-consistency-fusion-transfer-20261004",
       "target": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
       "type": "prior_evidence"
@@ -1548,6 +1578,21 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-late-weight-average-20261008",
+      "target": "TB-k1-saved-bn-rows-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-late-weight-average-20261008",
+      "target": "TB-k1-saved-trace-pair-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-late-weight-average-20261008",
+      "target": "TB-k1-saved-trace-pair-20261008-attempt002",
       "type": "prior_evidence"
     },
     {
@@ -2083,6 +2128,18 @@
   ],
   "format": "molgap-rml-trajectory-graph-v1",
   "nodes": [
+    {
+      "id": "k1-saved-bn-rows-20261008-evidence",
+      "type": "evidence"
+    },
+    {
+      "id": "k1-saved-trace-pair-20261008-attempt002-evidence",
+      "type": "evidence"
+    },
+    {
+      "id": "k1-saved-trace-pair-20261008-evidence",
+      "type": "evidence"
+    },
     {
       "id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "type": "evidence"
@@ -2737,6 +2794,18 @@
     },
     {
       "id": "TB-k1-residual-reconciliation",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-saved-bn-rows-20261008",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-saved-trace-pair-20261008",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-saved-trace-pair-20261008-attempt002",
       "type": "trajectory"
     },
     {

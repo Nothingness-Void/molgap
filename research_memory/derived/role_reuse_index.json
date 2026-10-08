@@ -1,6 +1,118 @@
 {
-  "ambiguous_historical_role_record_count": 410,
+  "ambiguous_historical_role_record_count": 426,
   "coarse_historical_role_records": [
+    {
+      "evidence_id": "k1-saved-bn-rows-20261008-evidence",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-bn-rows-20261008-evidence",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "k1-saved-bn-rows-20261008-evidence",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-bn-rows-20261008-evidence",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-bn-rows-20261008-evidence",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-bn-rows-20261008-evidence",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-trace-pair-20261008-attempt002-evidence",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-trace-pair-20261008-attempt002-evidence",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-trace-pair-20261008-attempt002-evidence",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-trace-pair-20261008-attempt002-evidence",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-trace-pair-20261008-attempt002-evidence",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-trace-pair-20261008-evidence",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-trace-pair-20261008-evidence",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-trace-pair-20261008-evidence",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-trace-pair-20261008-evidence",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-saved-trace-pair-20261008-evidence",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
     {
       "evidence_id": "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "role_identity": null,
@@ -2872,7 +2984,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 245,
+  "explicit_role_event_count": 247,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "fixed50k_development",
@@ -4318,6 +4430,20 @@
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development": [
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-saved-bn-rows-20261008-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-saved-bn-rows-20261008"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-saved-bn-rows-20261008-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-saved-bn-rows-20261008"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-k1-500k-bn-calibration-internal_development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -4698,6 +4824,9 @@
   },
   "protected_roles_reported_untouched": {
     "test_challenge": [
+      "k1-saved-bn-rows-20261008-evidence",
+      "k1-saved-trace-pair-20261008-attempt002-evidence",
+      "k1-saved-trace-pair-20261008-evidence",
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
@@ -4787,6 +4916,9 @@
       "pcqm-xian-determinism-audit-20260915"
     ],
     "test_dev": [
+      "k1-saved-bn-rows-20261008-evidence",
+      "k1-saved-trace-pair-20261008-attempt002-evidence",
+      "k1-saved-trace-pair-20261008-evidence",
       "pcqm-chemical-aux-component-cache-retry2-no-train-20261001",
       "pcqm-chemical-aux-cpu-fixtures-inconclusive-20260930",
       "pcqm-chemical-aux-fixed-cache-no-train-20260930",
@@ -5781,6 +5913,20 @@
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-saved-bn-rows-20261008-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-saved-bn-rows-20261008"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-saved-bn-rows-20261008-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-saved-bn-rows-20261008"
+      },
       {
         "access_kind": "labels_read",
         "role_event_id": "role-k1-500k-bn-calibration-internal_development-labels_read",
@@ -7099,6 +7245,20 @@
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-saved-bn-rows-20261008-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-saved-bn-rows-20261008"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-saved-bn-rows-20261008-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-saved-bn-rows-20261008"
+      },
       {
         "access_kind": "labels_read",
         "role_event_id": "role-k1-500k-bn-calibration-internal_development-labels_read",

@@ -19,7 +19,13 @@ def close_saved_diagnostic(repo: Path, experiment: Path):
         return finalize(repo,f"{rel}/rml",f"{rel}/terminal.json")
     read = lambda name: json.loads((experiment/name).read_text(encoding="utf-8"))
     inputs, trajectory = read("inputs.json"), read("rml/trajectory.json")
+    for name,digest in inputs["snapshot_files"].items():
+        path = repo_local_path(experiment/"source_snapshot",name)
+        if sha256_file(path) != digest:
+            raise ValueError("Frozen metadata hash differs")
     failed = (experiment/"failure.json").is_file()
+    if failed and (experiment/"results/result.json").exists():
+        raise ValueError("Failure and completed result cannot coexist")
     result = read("failure.json" if failed else "results/result.json")
     if result["inputs_sha256"] != sha256_file(experiment/"inputs.json") or result["prospective_sha256"] != sha256_file(experiment/"rml/trajectory.json"):
         raise ValueError("Prospective/input identity differs")
@@ -92,7 +98,7 @@ def close_saved_diagnostic(repo: Path, experiment: Path):
     paths = [p for p in experiment.rglob("*") if p.is_file() and "rml" not in p.relative_to(experiment).parts
              and "rml_finalized" not in p.parts and "__pycache__" not in p.parts and p.name != "terminal.json"]
     # A parent attempt never hashes its independently planned child attempt.
-    paths = [p for p in paths if "attempt_002" not in p.relative_to(experiment).parts]
+    paths = [p for p in paths if not p.is_relative_to(experiment/"attempt_002")]
     hashes = {p.relative_to(repo).as_posix():sha256_file(p) for p in paths}
     evidence = dict(format="molgap-v5-evidence-envelope-v1",contract="MOLGAP-COMMON-V5-FINAL",evidence_id=eid,track="B",scope=inputs["kind"],
         legacy_contract="pcqm-k1-saved-"+inputs["kind"].replace("_","-")+"-v1",

@@ -6,6 +6,70 @@
   "references": [
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "descriptive_saved_evidence_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "k1-saved-bn-rows-20261008-evidence",
+      "role_use": {
+        "common": "untouched",
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "bn_rows",
+      "source_envelope": "experiments/pcqm_k1_bn_row_attribution/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "descriptive_saved_evidence_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "k1-saved-trace-pair-20261008-attempt002-evidence",
+      "role_use": {
+        "common": "untouched",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "trace_pair",
+      "source_envelope": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "descriptive_saved_evidence_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "k1-saved-trace-pair-20261008-evidence",
+      "role_use": {
+        "common": "untouched",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched"
+      },
+      "scientific_scope": "trace_pair",
+      "source_envelope": "experiments/pcqm_k1_consistency_stage_analysis/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "retained_local_metadata_verified"
       ],
       "comparison_status": "not_applicable_no_model_execution",

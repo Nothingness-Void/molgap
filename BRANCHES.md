@@ -13,23 +13,17 @@ dated evidence. Fetch before comparing a remote snapshot.
 
 ## New desktop experiment lifecycle
 
-Start each new desktop-owned research question from the verified current
-`molgap-desktop` tip in a dedicated `codex/exp/<question>` branch and separate
-worktree. Check the local/remote desktop relationship and working-tree state
-before choosing that base. Do not use a retained experiment branch, `archive`,
-or `molgap-server` as the base for a new desktop question.
-Select the question from desktop routing, RML, and the linked canonical evidence
-before inspecting implementation on another branch. A retained branch is read
-only when its own question or an explicit integration task requires it.
+New desktop questions start from the verified current `molgap-desktop` tip in a
+dedicated `codex/exp/<question>` branch and separate worktree. Verify upstream
+and worktree first; never base new questions on retained experiments, archive or server.
+Select from desktop routing/RML/canonical evidence before inspecting another
+branch; read that branch only for its own question or an explicit integration.
 
-Do the prospective plan, implementation, submission, remote reconciliation,
-training acceptance, scientific decision, and terminal RML update on the
-experiment branch. Keep retries and seeds for the same question there. A
-finished job is not itself a finished experiment: review acceptance and make
-the scientific and Git-routing decisions promptly after terminal evidence is
-available. Do not leave an accepted desktop result only on a temporary branch.
-Do not merge a live experiment merely because its kernel was submitted or
-finished.
+Plan, implementation, submission, reconciliation, acceptance, decision and RML
+stay on the experiment branch, including retries/seeds. A finished job is not
+a closed question: promptly accept/decide/route terminal evidence. Do not leave
+accepted desktop evidence only on temporary refs or merge a live experiment
+merely because a kernel was submitted/finished.
 
 After a reviewed terminal decision:
 
@@ -55,6 +49,7 @@ remote Git snapshots. Inspect only the question required by the task.
 
 | Question / owner | Retained checkout | Branch-local entry |
 |---|---|---|
+| Desktop accepted K1 saved-artifact attribution | `D:/w/k1-saved-attribution` | [Paired trace](experiments/pcqm_k1_consistency_stage_analysis/attempt_002/terminal_decision.md) and [BN rows](experiments/pcqm_k1_bn_row_attribution/terminal_decision.md); diagnostic non-promotion integration only, original500K owner unchanged |
 | Desktop accepted complete K1 local audit and fixed late-weight average | `D:/w/k1-weight-average-cpu` | [Consolidated analysis](experiments/pcqm_k1_complete_local_audit/analysis_zh.md), [NO_TRAIN audit decision](experiments/pcqm_k1_complete_local_audit/terminal_decision.md), [average decision](experiments/pcqm_k1_late_weight_average/terminal_decision.md); reviewed reusable controls/evidence follow the diagnostic non-promotion desktop route; no model adoption |
 | Desktop accepted K1 A100 BN mechanism diagnostic | `D:/w/k1-bn-mechanism` | [NO_TRAIN decision](experiments/pcqm_k1_bn_mechanism_a100/terminal_decision.md); reviewed evidence and reusable calibration controls follow the non-promotion desktop route; no model adoption |
 | Desktop accepted K1 A100 execution diagnostic | `D:/w/k1-colab-profile` | [NO_TRAIN decision](experiments/pcqm_k1_colab_execution_profile/terminal_decision.md); reviewed evidence/reusable profiler use the non-promotion desktop route; frozen source/sample payload retained in ignored staging and private Drive, no model adoption |
@@ -87,7 +82,6 @@ do not adopt jobs or infer scheduler state from the archived draft. Reopening
 archived qualification work requires explicit routing, not a successor by default.
 
 ## Historical Audit Pointer
-
 The [branch history](docs/operations/BRANCH_HISTORY.md) preserves the previous
 audit and cleanup records intact, including dated commit/reachability claims.
 The [2026-09-30 reconciliation](docs/operations/LOCAL_RECONCILIATION_20260930.md)
@@ -95,7 +89,6 @@ owns that inventory. Neither audit is current remote scheduler truth.
 Use a clean desktop worktree for integration and preserve unrelated changes.
 
 ## V5 workflow boundary
-
 The V5 contract is the stable operating topology for this checkout. The
 `molgap-desktop` branch owns full/evaluation/submission work and any explicitly
 desktop-owned 500K question; `molgap-server` owns its independent bounded

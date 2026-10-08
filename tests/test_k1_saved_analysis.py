@@ -1,11 +1,15 @@
 """Synthetic-only checks for saved K1 artifact arithmetic."""
 
 from copy import deepcopy
+import hashlib
+import json
+from unittest.mock import Mock
 
 import pytest
 import torch
 
 from molgap.k1_saved_analysis import ARMS, bn_rows, trace_pair
+from molgap import saved_diagnostic_closure as closure
 
 
 def trace_inputs():
@@ -248,3 +252,72 @@ def test_bn_shared_term_covariance_decomposition():
     observed = ((gain - gain.mean()) * (late - late.mean())).mean().item()
     assert covariance["observed"] == pytest.approx(observed)
     assert sum(covariance["terms"].values()) == pytest.approx(observed)
+
+
+def adapter_fixture(tmp_path, monkeypatch, snapshots=None):
+    experiment = tmp_path / "experiments" / "synthetic" / "attempt_002"
+    (experiment / "rml").mkdir(parents=True)
+    (experiment / "source_snapshot").mkdir()
+    (experiment / "inputs.json").write_text(
+        json.dumps(dict(snapshot_files=snapshots or {})), encoding="utf-8")
+    (experiment / "rml" / "trajectory.json").write_text("{}", encoding="utf-8")
+    finalize = Mock(side_effect=AssertionError("Unexpected finalization"))
+    atomic_json = Mock(side_effect=AssertionError("Unexpected canonical write"))
+    git = Mock(side_effect=AssertionError("Unexpected git call"))
+    monkeypatch.setattr(closure, "finalize", finalize)
+    monkeypatch.setattr(closure, "atomic_json", atomic_json)
+    monkeypatch.setattr(closure.subprocess, "check_output", git)
+    return experiment, finalize, atomic_json, git
+
+
+def test_adapter_rejects_stale_frozen_snapshot_before_writes(tmp_path, monkeypatch):
+    original = b'{"metadata": "frozen synthetic value"}'
+    experiment, finalize, atomic_json, git = adapter_fixture(
+        tmp_path, monkeypatch,
+        {"trace.json": hashlib.sha256(original).hexdigest()})
+    snapshot = experiment / "source_snapshot" / "trace.json"
+    snapshot.write_bytes(b'{"metadata": "changed synthetic value"}')
+    before = snapshot.read_bytes()
+    with pytest.raises(ValueError, match="Frozen metadata hash differs"):
+        closure.close_saved_diagnostic(tmp_path, experiment)
+    assert snapshot.read_bytes() == before
+    finalize.assert_not_called()
+    atomic_json.assert_not_called()
+    git.assert_not_called()
+
+
+def test_adapter_rejects_failure_and_completed_result_before_writes(tmp_path, monkeypatch):
+    experiment, finalize, atomic_json, git = adapter_fixture(tmp_path, monkeypatch)
+    (experiment / "results").mkdir()
+    failure = experiment / "failure.json"
+    result = experiment / "results" / "result.json"
+    failure.write_text('{"status": "synthetic failure"}', encoding="utf-8")
+    result.write_text('{"status": "complete"}', encoding="utf-8")
+    before = {path: path.read_bytes() for path in (failure, result)}
+    with pytest.raises(ValueError, match="cannot coexist"):
+        closure.close_saved_diagnostic(tmp_path, experiment)
+    assert {path: path.read_bytes() for path in before} == before
+    finalize.assert_not_called()
+    atomic_json.assert_not_called()
+    git.assert_not_called()
+
+
+def test_adapter_finalized_retry_delegates_without_overwriting(tmp_path, monkeypatch):
+    experiment, finalize, atomic_json, git = adapter_fixture(tmp_path, monkeypatch)
+    finalized = experiment / "rml" / "rml_finalized"
+    finalized.mkdir()
+    (finalized / "finalization.json").write_text("{}", encoding="utf-8")
+    for name in ("acceptance.json", "terminal.json"):
+        (experiment / name).write_text('{"synthetic": "immutable"}', encoding="utf-8")
+    # Invalid inputs prove the retry guard bypasses reconstruction entirely.
+    (experiment / "inputs.json").write_text("not JSON", encoding="utf-8")
+    before = {path: path.read_bytes() for path in experiment.rglob("*") if path.is_file()}
+    receipt = dict(status="ALREADY_FINALIZED", synthetic=True)
+    finalize.side_effect = None
+    finalize.return_value = receipt
+    assert closure.close_saved_diagnostic(tmp_path, experiment) is receipt
+    rel = experiment.relative_to(tmp_path).as_posix()
+    finalize.assert_called_once_with(tmp_path.resolve(), f"{rel}/rml", f"{rel}/terminal.json")
+    atomic_json.assert_not_called()
+    git.assert_not_called()
+    assert {path: path.read_bytes() for path in experiment.rglob("*") if path.is_file()} == before

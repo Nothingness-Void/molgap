@@ -13,6 +13,8 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| When does the retained500K consistency advantage change at matched exposure? | Accepted NO_TRAIN partial-stage analysis; middle-stage advantage reverses, no terminal/early-stop inference | [Paired trace analysis](pcqm_k1_consistency_stage_analysis/attempt_002/analysis_zh.md) |
+| Is retained K1 BN improvement driven by outliers, and where is late loss? | Accepted NO_TRAIN50K saved-prediction description; middle-error net gains and high-Gap late loss, no causal module verdict | [BN row attribution](pcqm_k1_bn_row_attribution/analysis_zh.md) |
 | What do all retained K1 modules, states and costs support as the next route? | Accepted NO_TRAIN complete local audit; fourteen frozen controls worsen, state/cost simplification prioritized conditionally, no adoption | [Complete audit](pcqm_k1_complete_local_audit/analysis_zh.md) |
 | Does fixed epoch49/60 parameter averaging rescue clean K1? | Accepted NO_TRAIN; equal endpoint average worsens selected-clean, true stepwise EMA unresolved | [Average decision](pcqm_k1_late_weight_average/terminal_decision.md) |
 | Does dropout or repeated calibration explain frozen K1 BN error? | Accepted NO_TRAIN A100 diagnostic: dropout-enabled buffer estimation degrades clean inference; clean repeated passes are near-null; no new material mechanism nomination or model adoption | [BN mechanism decision](pcqm_k1_bn_mechanism_a100/terminal_decision.md) |

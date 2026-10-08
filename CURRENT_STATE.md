@@ -2,225 +2,102 @@
 
 ## Reuse Navigation
 
-Start with the [modular workflow](docs/operations/EXPERIMENT_WORKFLOW.md), then
-the [operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
+Start with the [modular workflow](docs/operations/EXPERIMENT_WORKFLOW.md),
+[operation map](docs/operations/EXPERIMENT_ADDON_GUIDE.md#pick-the-operation)
 and [local CLI](docs/operations/EXPERIMENT_CLI.md), not a copied launcher.
-Remote operations belong to `kaggle-molgap-workloads`, `ims-molgap-workloads`
-and `scnet-bw-dcu-molgap`; reuse does not authorize execution.
+Platform skills own remote operations; reuse does not authorize execution.
+This file owns recommendations, blockers and queue observations, not evidence.
+[ROADMAP](ROADMAP.md) owns priorities; [BRANCHES](BRANCHES.md) owns checkout routing.
 
-This file owns the live recommendation, blockers and branch routing.
-Dated decisions and canonical RML evidence own historical results.
-Task ordering belongs to `ROADMAP.md`; checkout ownership to `BRANCHES.md`.
-The dated [local audit](docs/operations/LOCAL_AUDIT_20261001.md) records
-maintenance verification and its scientific limits, not live queue authority.
+## Production Identity
 
-## Production identity
-
-- Recommended Track A model: repaired-2M three-GPS dense pure 2D.
-- Registry key: `repaired_2m_dense_2d`; lower-cost preset: `repaired_2m_equal_2d`.
+- Track A recommendation: repaired-2M three-GPS dense pure 2D.
+- Registry: `repaired_2m_dense_2d`; lower-cost preset: `repaired_2m_equal_2d`.
 - Public loader: `load_repaired_2m_2d` in `src/molgap/inference.py`.
-- Decision: `production/04_evaluate/project_freeze/track_a_final_decision.md`.
-- Compatibility and model-asset hashes: `models/README.md`.
+- Authority: [Track A decision](production/04_evaluate/project_freeze/track_a_final_decision.md); [asset hashes](models/README.md).
 
-## Track B recommendation and constraints
+## Track B Recommendation and Blockers
 
-Use the [complete local K1 audit](experiments/pcqm_k1_complete_local_audit/analysis_zh.md)
-and its [canonical historical matrix](experiments/pcqm_k1_complete_local_audit/historical_evidence.md)
-before another K1 question. The accepted diagnostic does not change the model
-recommendation or release full training. Finish the owning consistency500K
-raw/clean-BN discriminator first; training-state and native-cost simplification
-is conditional on its result. Blind width/slot/module expansion, more tail
-epochs and this fixed endpoint average are not next actions. True EMA remains
-unqualified. The audit performed local CPU work only; existing remote jobs
-were neither queried nor advanced, so their authoritative state still requires
-reconciliation by their owners. Fixed retained-prediction blending is posthoc
-consumed-role evidence, not independent qualification or adoption.
+Track B predicts PCQM4Mv2 Gap only; it does not change Track A.
+Accepted full EdgeState remains the operational full-scale reference.
+[Scale reassessment](experiments/pcqm_scale_transfer_reassessment/decision.md)
+owns the limits of comparing500K and full contracts; their ordering is not causal.
+New screens retain V4 rows/recipe/runtime. The [GPTrans100K reference](experiments/pcqm_gptrans_t_100k_v4/decision.md)
+is reusable but closed for100K promotion.
+Official validation/test roles have recorded consumption; exploratory reuse or
+another submission needs explicit authority. See [reference roles](models/REFERENCE_INDEX.md).
 
-User-directed focus(2026-10-07): solve two K1 questions at500K:
+User-directed K1 focus remains cost and500K enhancement, not a full-data rerun:
 
-1. Why its observed epoch elapsed time is much greater than GPTrans-T's:
-   separate loader wait, forward/backward, optimizer, development evaluation
-   and checkpoint/publication costs under the owning frozen native runtime.
-   Two full stochastic forwards are verified work. The accepted bounded A100
-   profile measures their contribution; native T4 epoch phases and paired
-   CPU/loader contention remain unresolved.
-2. Why the enhanced K1 package shows no improvement over its contextual older
-   500K endpoint: isolate the consistency contribution, BN-state sensitivity
-   and retained-pretraining coverage before proposing capacity/exposure changes.
+1. Complete the already authorized consistency500K raw/identical clean-BN
+   endpoint acceptance before another module. Both arms use two forwards.
+2. Native T4 loader/forward/backward/optimizer/evaluation/publication phases
+   remain unmeasured; A100 microprofiling is not a T4 epoch-speed estimate.
+3. State/cost simplification is conditional on those discriminators. True EMA
+   and single-pass MAE equivalence remain unqualified; no blind width/slot
+   expansion, extra tail epochs, sparse endpoint average or distillation retry.
 
-Full-data scale-transfer is deferred. Read the
-[500K cost/accuracy attribution](D:/w/k1-gptrans-500k-package/experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/cost_accuracy_attribution.md)
-and accepted[BN diagnostic](experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md)
-before another K1 action. Separate historical package improvements and live/EMA/
-BN output-state effects from capacity or exposure hypotheses. The strongest
-100K pretrained K1 includes a teacher term that the500K package omitted;
-their endpoints do not constitute a matched same-package scale comparison.
-Any further execution needs a separately frozen discriminator for the remaining
-cause, using retained references and existing family/RML owners. No full run,
-unrelated module sweep or automatic retry is a next action for this focus.
-The authorized[500K consistency ablation](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/protocol.md)
-addresses the second question. Both arms retain two forwards, so it neither
-isolates single-pass overhead nor establishes a performance improvement.
-The missing native phase/operator profile is the first question's discriminator;
-freeze its prospective execution-only contract before any new profiling.
-
-The [accepted A100 execution diagnostic](experiments/pcqm_k1_colab_execution_profile/terminal_decision.md)
-isolates two-forward overhead on the retained training subset; loader-worker
-tuning has little benefit there. Its selected-state gradient probe does not
-establish a causal accuracy loss. Read the [attribution](experiments/pcqm_k1_colab_execution_profile/attribution.md)
-before another K1 action. Native T4 epoch phases and single-pass MAE equivalence
-remain unresolved; no model recommendation or training release changes.
-
-The [accepted A100 BN mechanism diagnostic](experiments/pcqm_k1_bn_mechanism_a100/terminal_decision.md)
-confirms a frozen buffer-state effect: dropout during BN estimation worsens
-clean inference, while duplicate clean cumulative passes are near-null.
-No predeclared new mechanism contrast clears its material nomination gate.
-It does not establish training-time dropout or double-forward harm. Use the
-already authorized consistency500K question's original and fixed clean-BN
-outputs to distinguish learned-weight benefit from output-state effects.
-The diagnostic is terminal NO_TRAIN; reusable controls and evidence are
-integrated without model adoption. Runtime release is user-confirmed.
-
-Track B predicts PCQM4Mv2 Gap only and is separate from Track A. The accepted
-full EdgeState checkpoint remains the operational full-scale reference.
-The matched 500K architecture ordering and the full-data ordering have different
-training and role contracts; they do not establish a causal architecture rank.
-See `experiments/pcqm_scale_transfer_reassessment/decision.md`.
-
-New screens use the frozen V4 row, recipe and runtime contract. The accepted
-GPTrans-T 100K reference is reusable but closed for 100K promotion:
-`experiments/pcqm_gptrans_t_100k_v4/decision.md`.
-Official validation has been consumed for recorded full-model selection and
-calibration. External test roles were used by the recorded EdgeState submission;
-that does not authorize exploratory reuse or another submission. See its
-role history in `models/REFERENCE_INDEX.md` and the owning submission records.
+Read the [complete K1 audit](experiments/pcqm_k1_complete_local_audit/analysis_zh.md)
+and [historical matrix](experiments/pcqm_k1_complete_local_audit/historical_evidence.md)
+before choosing a route. The [saved-trace analysis](experiments/pcqm_k1_consistency_stage_analysis/attempt_002/analysis_zh.md)
+and [BN row attribution](experiments/pcqm_k1_bn_row_attribution/analysis_zh.md)
+are accepted local descriptions, not terminal training truth, stopping policy or adoption.
+The [composed500K attribution](D:/w/k1-gptrans-500k-package/experiments/pcqm_k1_gptrans_package_transfer_500k/terminal_acceptance/cost_accuracy_attribution.md)
+owns package/state differences: best100K includes a teacher absent from500K;
+live/EMA/BN differences cannot be silently credited as architecture transfer.
+Further profiling/diagnostics require their own prospective scope and authority.
 
 ## Active Work and Unresolved Acceptance
 
-Branch-local records absent here are linked through the
-[retained checkout map](BRANCHES.md#retained-checkout-map), not substitute paths.
+These are retained observations, not a new scheduler query. This local analysis
+did not query, resume, submit or adopt remote jobs. Reconcile exact owner/job/
+attempt and durable artifacts before acting; stale remote state is UNKNOWN.
+Branch-local evidence stays on the [retained checkout map](BRANCHES.md#retained-checkout-map).
 
-- **K1 consistency ablation at500K:** user-authorized weight0/0.1 question
-  submitted to Kaggle1. Exact run identity, dated scheduler/source observations
-  and return procedure remain in the[owner status](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/STATUS.md).
-  Both independently planned arms share retained pretraining, two forwards and
-  exposure; compare original and fixed BN-calibrated selected predictions.
-  Reconcile the exact run before continuation or acceptance. Submission is not
-  model adoption, training completion or replay qualification.
+| Question | Retained observation / blocker | Owner entry |
+|---|---|---|
+| Consistency500K coefficient0/0.1 | V1 accepted partial23/60; V2 continuation last reports RUNNING. Full raw/clean endpoints, terminal costs and independent closures pending; both arms retain two forwards. | [Status](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/STATUS.md) |
+| Standalone K1 EMA100K | Startup ERROR with empty logs after one unchanged-package retry; cause and scientific endpoint unresolved, no further retry released. | [EMA handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md) |
+| Gaussian spectral100K | Last observation RUNNING; runtime qualification and terminal acceptance pending. | [Spectral handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md) |
 
-- **K1 overnight 100K pairs:** two user-authorized two-arm screens are submitted
-  to Kaggle3; implementation and acceptance remain on their separate owners.
-  Standalone parameter EMA is blocked by a terminal startup ERROR with empty
-  logs after one unchanged-package retry. The Gaussian spectral pair reports
-  RUNNING; remote qualification and terminal acceptance remain pending.
-  Exact submission identities, scheduler snapshots and return procedures are in
-  the [EMA owner handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md)
-  and [spectral owner handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md).
-  On desktop return, reconcile exact runs and durable artifacts before any
-  successor. No model adoption, scale-up, heartbeat or server takeover.
+No observation releases adoption, scale-up, heartbeat or server takeover.
+TPU request metadata did not establish actual TPU execution; allocation/runtime
+qualification stays pending under `platforms/_records/kaggle/preflight/`.
 
-- **K1 fixed equal fusion:** common-cohort frozen inference completed on 50K
-  internal-development rows outside both arms' training and checkpoint selection.
-  The fixed blend improves over consistency by2.812meV with positive paired-row
-  bounds, at approximately two single-model inference passes. Read the
-  [decision](experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md)
-  and [analysis](experiments/pcqm_k1_consistency_fusion_transfer/analysis_zh.md).
-  The authorized two-strength100K student question is now terminal: both40epoch
-  arms are NEGATIVE_UNDER_CONTRACT. Strong gains0.433meV over the best constituent
-  with paired-row bounds crossing zero and loses3.630meV to the teacher.
-  Read the [distillation decision](experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md)
-  and [attribution](experiments/pcqm_k1_fusion_distillation/terminal_acceptance/attribution.md).
-  Both independent RML records and full traces are imported here; complete history
-  is archived. Strict reference/runtime and cumulative strong-cost gaps remain
-  replay/READY exclusions. No distillation retry, adoption or scale-up is released.
+## Closed Evidence Navigation
 
-- **K1 dropout consistency:** paired100K40epoch question, owning branch
-  `codex/exp/k1-dropout-consistency`. Exact Kaggle3
-  [kernel](https://www.kaggle.com/code/nvoid912/molgap-k1-dropout-consistency-100k-s42-v1)
-  ID136942701/version3 is COMPLETE. Both40epoch arms passed mechanical acceptance
-  and independent terminal/RML publication. The1.5288meV numerical consistency
-  gain is retained; NEGATIVE_UNDER_CONTRACT records the missed3meV gate.
-  Read [accepted decision](experiments/pcqm_k1_dropout_consistency/terminal_acceptance/decision.md)
-  and [attribution](experiments/pcqm_k1_dropout_consistency/terminal_acceptance/attribution.md).
-  Desktop canonical discovery includes both results and full traces; reusable
-  encoding/continuation acceptance fixes are integrated. Complete history routes
-  to archive; no model adoption or scale-up. Strict replay/READY stays excluded
-  for resumed-control provenance, missing cumulative control native cost and
-  absent strict V5 readiness. There is no automatic monitor or server takeover.
+Decisions/attribution below own historical values and qualification exclusions;
+do not repeat them as current work or infer a successor from a negative result.
 
-- **K1 FLAG objective:** exact Kaggle3 ID136744623/version1 is COMPLETE;
-  accepted terminal NEGATIVE_UNDER_CONTRACT. No adoption or scale-up. Full history
-  is preserved in archive at custody merge `7c569e1a`; accepted canonical evidence
-  is now imported into desktop. Read [decision](experiments/pcqm_k1_flag/terminal_decision.md),
-  [attribution](experiments/pcqm_k1_flag/attribution.md), and
-  [STATUS](experiments/pcqm_k1_flag/STATUS.md). Runtime/reference and replay
-  qualification gaps remain exclusions, not an active GPU job.
+| Question | Authority / disposition |
+|---|---|
+| Complete module audit / late endpoint average | [Audit](experiments/pcqm_k1_complete_local_audit/terminal_decision.md), [average](experiments/pcqm_k1_late_weight_average/terminal_decision.md): NO_TRAIN, no adoption |
+| A100 execution and BN mechanisms | [Execution](experiments/pcqm_k1_colab_execution_profile/terminal_decision.md), [BN mechanism](experiments/pcqm_k1_bn_mechanism_a100/terminal_decision.md): NO_TRAIN, no training-time causal verdict |
+|500K BN / frozen bottleneck | [BN](experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md), [bottleneck](experiments/pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md): NO_TRAIN; capacity/exposure unresolved |
+| Fixed fusion / student distillation | [Fusion](experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md) diagnostic; [students](experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md) negative, archived; no adoption/retry |
+| Dropout pair | [Decision](experiments/pcqm_k1_dropout_consistency/terminal_acceptance/decision.md), [attribution](experiments/pcqm_k1_dropout_consistency/terminal_acceptance/attribution.md): negative under contract; replay/READY exclusions remain |
+| FLAG / slot96 | [FLAG](experiments/pcqm_k1_flag/STATUS.md), [slot96](experiments/pcqm_k1_slot_width96/STATUS.md): negative, archived, no active GPU job |
+| Chemical auxiliary | [Custody](experiments/pcqm_gptrans_chemical_aux/terminal_custody_decision.md): terminal inconclusive; exclusions unchanged, no duplicate acceptance |
+| K1 V4 / SSMA | [Owner entry](experiments/pcqm_k1_local_mixing_clean_aux/README.md): negative, no successor |
+| Centered logits | [Status](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md): scientifically closed; reference gap is not a retry trigger |
+| RML source custody | [Exact-hash recovery](docs/operations/INFRASTRUCTURE_REPAIR_20261003.md): historical qualification limits unchanged |
 
-- **K1 isolated slot96:** accepted terminal NEGATIVE_UNDER_CONTRACT; no adoption
-  or successor. Archive custody and accepted desktop evidence are linked in
-  [STATUS](experiments/pcqm_k1_slot_width96/STATUS.md).
+All closed transfer, geometry, initialization, Oracle and submission decisions
+are indexed by [experiments](experiments/README.md) and [RML](research_memory/README.md).
+Use the [attribution audit](research_memory/DESKTOP_ATTRIBUTION_AUDIT_20260928.md)
+before another same-family module; missing discriminators stay insufficient evidence.
+Archived qualification work remains paused with its original gaps; no reopening/
+retry/takeover is released. DSAR/DSMR stays server-owned and remote state UNKNOWN.
+The [dated local audit](docs/operations/LOCAL_AUDIT_20261001.md) is maintenance evidence, not queue truth.
 
-- **Chemical auxiliary:** both trained arms and the summary-only CPU feasibility
-  record are terminal INCONCLUSIVE; no adoption. Full owner history8f71783e is
-  preserved in archive71d2af06; accepted canonical evidence is imported here.
-  Strict reference, native cost, producer/physical-run identity and original CPU
-  test-receipt gaps remain explicit. Read [STATUS](experiments/pcqm_gptrans_chemical_aux/STATUS.md)
-  and [custody decision](experiments/pcqm_gptrans_chemical_aux/terminal_custody_decision.md).
-  Authenticated 2026-10-04 scheduler recheck is COMPLETE. No active GPU or CPU
-  feasibility action remains, and no duplicate acceptance is needed.
+## Operating Boundaries
 
-- **K1 V4 / SSMA:** exact Kaggle3 accuracy-pair acceptance and terminal RML
-  closure are complete; SSMA is NEGATIVE_UNDER_CONTRACT, no successor or adoption.
-  The [owning entry](experiments/pcqm_k1_local_mixing_clean_aux/README.md) links
-  accuracy evidence, earlier cost-gated attempts and unchanged qualification limits.
-- **Desktop RML custody:** the missing K1 raw trace was losslessly restored to its
-  exact pinned SHA. Frozen/portable checks passed on committed desktop repair;
-  the [recovery record](docs/operations/INFRASTRUCTURE_REPAIR_20261003.md) owns
-  verification and unchanged historical qualification limits.
-- **Centered logits:** scientifically closed; historical reference binding
-  excludes strict causal replay, not a training retry trigger. See
-  [STATUS](experiments/pcqm_gptrans_centered_logits_100k_kaggle1_pair/STATUS.md).
-- **TPU probes:** requested TPU metadata still executed on CPU; actual allocation
-  and compatibility qualification are required. See `platforms/_records/kaggle/preflight/`.
-
-## Archived Qualification Work
-
-Archived qualification gaps and replay exclusions remain unchanged; no reopening,
-retry or takeover is released. The [custody map](BRANCHES.md#retained-checkout-map)
-owns source history and the unreviewed supplement. DSAR/DSMR remote state is UNKNOWN.
-
-## Closed evidence entrypoints
-
-The accepted [K1 500K BN calibration diagnostic](experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md)
-improves the retained epoch49 predictor by1.245meV on the consumed full50K
-development cohort with frozen learned parameters. It nominates BN-state
-management for separate qualification; no model adoption or training release.
-
-The accepted [K1 500K frozen bottleneck diagnostic](experiments/pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md)
-retains measured slot dependency and heterogeneous clean tail-fit changes.
-Its NO_TRAIN closure changes no model recommendation and releases no training;
-capacity saturation and expanded-pretraining benefit remain untested.
-
-All accepted and historical module decisions are indexed in
-`experiments/README.md` and `research_memory/README.md`. Follow those pointers
-before selecting another module. No closed negative screen releases a successor.
-
-Use the [experiment index](experiments/README.md) for closed transfer, fusion,
-geometry, initialization, Oracle and submission questions. Use the
-[attribution audit](research_memory/DESKTOP_ATTRIBUTION_AUDIT_20260928.md)
-before another same-family module; dated records do not release successors.
-
-## Operating boundaries
-
+- V5 remains stable: [common contract](docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md), [desktop handoff](docs/operations/DESKTOP_AGENT_HANDOFF_V5_FINAL.md).
 - No default desktop heartbeat, server takeover or cross-machine live handoff.
-  Explicitly requested experiment monitors retain their own scope.
-- Remote work needs immutable source/configuration, atomic resumable state and
-  independently retrievable outputs. Reconcile scheduler and artifacts after downtime.
-- IMS access stays below `/lustre/home/users/sm2/chou/` under
-  `platforms/REMOTE_HANDOFF.md`.
-- Common/OOD/P8-hard and official roles are governed by their frozen contracts;
-  they are not implementation or screen-tuning data.
-- Geometry training/inference must remain ETKDGv3+MMFF consistent.
-- Router, MoE, replacement-data and closed fusion routes need a materially new
-  question and stop rule before reopening. The Track A delivery queue is in
-  `ROADMAP.md`.
+- Remote work requires frozen identities, resumable checkpoints, durable outputs;
+  reconcile scheduler/artifacts after downtime before continuation.
+- IMS access obeys [REMOTE_HANDOFF](platforms/REMOTE_HANDOFF.md) below `/lustre/home/users/sm2/chou/`.
+- Common/OOD/P8-hard and official roles are not debugging or screen-tuning data.
+- Generated geometry retains applicable ETKDGv3+MMFF train/inference consistency.
+- Router/MoE/replacement-data/closed fusion need a genuinely new question and stop rule.
+- Track A delivery priorities stay in ROADMAP; no Track B analysis modifies production.

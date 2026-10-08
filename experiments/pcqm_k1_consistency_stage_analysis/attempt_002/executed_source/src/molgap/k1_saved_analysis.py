@@ -245,13 +245,7 @@ def prepare(repo, kind):
     policy_id = "pcqm-k1-saved-" + kind.replace("_", "-")
     policy = json.loads((repo/"research_memory/policies/pcqm-k1-late-weight-average.1.json").read_text(encoding="utf-8"))
     policy.update(policy_id=policy_id, comparability_selector={"scientific_contract":policy_id+"-v1"}, created_from_source_digest=sha256_file(here/"protocol.md"))
-    policy_path = repo/f"research_memory/policies/{policy_id}.1.json"
-    if not policy_path.exists():
-        atomic_json(policy_path,policy)
-    else:
-        retained = json.loads(policy_path.read_text(encoding="utf-8"))
-        if any(retained.get(k) != v for k,v in policy.items() if k != "created_from_source_digest"):
-            raise ValueError("Existing policy semantics differ; do not overwrite its version")
+    atomic_json(repo/f"research_memory/policies/{policy_id}.1.json",policy)
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo,text=True).strip()
     suffix = "-attempt002" if kind == "trace_pair" else ""
     tid, run, cost_id = "TB-k1-saved-"+kind.replace("_","-")+"-20261008"+suffix, "local-k1-saved-"+kind+"-20261008"+suffix, "cost-k1-saved-"+kind+"-expected"+suffix
@@ -366,6 +360,9 @@ def main():
         run(REPO_ROOT,args.kind)
     else:
         from .saved_diagnostic_closure import close_saved_diagnostic
+        inputs = json.loads((REPO_ROOT/"experiments"/KINDS[args.kind]/"inputs.json").read_text(encoding="utf-8"))
+        dev = list(range(*inputs["development_bounds"]))
+        roles = {} if args.kind == "trace_pair" else {"internal_development":{a:dev for a in ("labels_read","metric_computed")}}
         print(json.dumps(close_saved_diagnostic(REPO_ROOT,REPO_ROOT/"experiments"/KINDS[args.kind])))
 
 

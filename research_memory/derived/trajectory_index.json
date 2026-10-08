@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "e92ebec86967b17a607914ae381e1f09ffc68b5106590cf1ee6e814c2ea27031",
+  "source_digest": "6f784653ecfc196a9869e38f2d17740ea801bd0eba688acad875731dc17108b4",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1342,6 +1342,54 @@
       ],
       "track": "B",
       "trajectory_id": "TB-k1-residual-reconciliation"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_bn_row_attribution/terminal_decision.md",
+      "family_id": "k1-saved-bn_rows",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_bn_row_attribution/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "k1-saved-bn-rows-20261008-evidence"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-saved-bn-rows-20261008"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_consistency_stage_analysis/terminal_decision.md",
+      "family_id": "k1-saved-trace_pair",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_consistency_stage_analysis/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "k1-saved-trace-pair-20261008-evidence"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-saved-trace-pair-20261008"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/terminal_decision.md",
+      "family_id": "k1-saved-trace_pair",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "k1-saved-trace-pair-20261008-attempt002-evidence"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-saved-trace-pair-20261008-attempt002"
     },
     {
       "completeness_status": "complete",

@@ -1,0 +1,251 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/README.md": "83b4332f92cdd2c574d2f031e49f1896ceff7a8ded15656c1c337b0ccd242c59",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/acceptance.json": "522690cd70534880f62010ff6c3aaa490129c51504cccd4a4f6c1dd175bb7790",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/analysis_zh.md": "001d3d87b59f3e1c2d9164e928f7e5810c65a7a875ceb3e38ba8aa978c4d6771",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/attribution.md": "7c11eb31fad0ce6aa2828eaa5c6d0896f4d78f806e71a088d97d796e3d148b7f",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/decision.md": "5c86c14aa012f7c289089305bfcaba52c1d4ca22a6218d28d3966b184505ace4",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/executed_source/src/molgap/k1_saved_analysis.py": "f4acf62a9fae399c44e43fb4e02f43b8ccabb9f98859e43ee35057e8101d150d",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/inputs.json": "2ec68316fd34f24c61847d51d55eb376ae39cffed37668af1b09ef3c75b75f8c",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/plan_input.json": "18fff204066915d0d1a58224a402f8ce85a3e2ce6c4f1159b8b6f17a5cff583b",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/plan_receipt.json": "46d5da6b3805191f265f3319827d9a7710d02cee925e2ffee7d26525d92ad469",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/protocol.md": "00d9f57fe6c8cec70432c4106cf019fd9f931715519c8301e7dfc0d4ff2f6ed7",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/results/completion.json": "f57139a323deda19f9c96af1f42106d7a15b72721a76ad5d40e51bfa286f83d1",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/results/result.json": "4a391bcff8895884ad99e153d7de09f5ec36d00448ef434957008f60d2546cd2",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/roles.json": "c67eebd4e699731216133eac76a140ee64439d17ca3b9ef3de4e64686e017607",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/run.py": "aaa5538dbe9d8df8a9c024f5d129df4a07ab88ef9cadaf8bcb51c45d7185a078",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/inspection_report.json": "a4303f4ddef8c5c423013c2686e09f246db34f2a6ada96e799cfe6e6822f8d16",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/k1_pretrained_consistency/stage_manifest.json": "a889dea329b20ea1cef75cafc5bf01880d67524573dbdea652060ffc01a47c10",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/k1_pretrained_consistency/trace.json": "526bb97d1974b1a6f5b9e25f84f099efdc5ddec9cf72074648f7a85a96b8a9b3",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/k1_pretrained_mean2/stage_manifest.json": "6f642bf16aff245ee165e5caaf189c6b557dade802a68ee6176987d37e1a6395",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/k1_pretrained_mean2/trace.json": "df05d3606ba09fa98174e344d0ae3fecb606dc695070b905c63431f6b5937bc3",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/owning_protocol.md": "181bb032a895ca6d6539c0467eff45748deaa065b3d6bd3dec4ff66d9e8ec8e5",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/stage_acceptance.md": "b1c4880cf391f668ec62f100e9e9411b9fb60fc6c5ac5fbf0f2b3bc6bafb9543",
+    "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/terminal_decision.md": "fa1b2fb9fcaabf2821496c67378053f3889cefa34a7862b5f6e0eceaacfdaebd"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-002",
+      "category": "other",
+      "cost_event_id": "cost-TB-k1-saved-trace-pair-20261008-attempt002-observed",
+      "evidence_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/acceptance.json",
+      "hardware": "CPU saved-artifact arithmetic; no accelerator",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.0007378472222222222
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.0007566390555555498
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "local-k1-saved-trace_pair-20261008-attempt002",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-saved-trace-pair-20261008-attempt002"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/terminal_decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Separately prospective authorized diagnostic; original training gate remains independent"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "522690cd70534880f62010ff6c3aaa490129c51504cccd4a4f6c1dd175bb7790"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/analysis_zh.md",
+        "name": "analysis_zh.md",
+        "sha256": "001d3d87b59f3e1c2d9164e928f7e5810c65a7a875ceb3e38ba8aa978c4d6771"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/attribution.md",
+        "name": "attribution.md",
+        "sha256": "7c11eb31fad0ce6aa2828eaa5c6d0896f4d78f806e71a088d97d796e3d148b7f"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/decision.md",
+        "name": "decision.md",
+        "sha256": "5c86c14aa012f7c289089305bfcaba52c1d4ca22a6218d28d3966b184505ace4"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/inputs.json",
+        "name": "inputs.json",
+        "sha256": "2ec68316fd34f24c61847d51d55eb376ae39cffed37668af1b09ef3c75b75f8c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/plan_input.json",
+        "name": "plan_input.json",
+        "sha256": "18fff204066915d0d1a58224a402f8ce85a3e2ce6c4f1159b8b6f17a5cff583b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/plan_receipt.json",
+        "name": "plan_receipt.json",
+        "sha256": "46d5da6b3805191f265f3319827d9a7710d02cee925e2ffee7d26525d92ad469"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/protocol.md",
+        "name": "protocol.md",
+        "sha256": "00d9f57fe6c8cec70432c4106cf019fd9f931715519c8301e7dfc0d4ff2f6ed7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/README.md",
+        "name": "README.md",
+        "sha256": "83b4332f92cdd2c574d2f031e49f1896ceff7a8ded15656c1c337b0ccd242c59"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/roles.json",
+        "name": "roles.json",
+        "sha256": "c67eebd4e699731216133eac76a140ee64439d17ca3b9ef3de4e64686e017607"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/run.py",
+        "name": "run.py",
+        "sha256": "aaa5538dbe9d8df8a9c024f5d129df4a07ab88ef9cadaf8bcb51c45d7185a078"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/terminal_decision.md",
+        "name": "terminal_decision.md",
+        "sha256": "fa1b2fb9fcaabf2821496c67378053f3889cefa34a7862b5f6e0eceaacfdaebd"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/executed_source/src/molgap/k1_saved_analysis.py",
+        "name": "executed_source/src/molgap/k1_saved_analysis.py",
+        "sha256": "f4acf62a9fae399c44e43fb4e02f43b8ccabb9f98859e43ee35057e8101d150d"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/results/completion.json",
+        "name": "results/completion.json",
+        "sha256": "f57139a323deda19f9c96af1f42106d7a15b72721a76ad5d40e51bfa286f83d1"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/results/result.json",
+        "name": "results/result.json",
+        "sha256": "4a391bcff8895884ad99e153d7de09f5ec36d00448ef434957008f60d2546cd2"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/inspection_report.json",
+        "name": "source_snapshot/inspection_report.json",
+        "sha256": "a4303f4ddef8c5c423013c2686e09f246db34f2a6ada96e799cfe6e6822f8d16"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/owning_protocol.md",
+        "name": "source_snapshot/owning_protocol.md",
+        "sha256": "181bb032a895ca6d6539c0467eff45748deaa065b3d6bd3dec4ff66d9e8ec8e5"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/stage_acceptance.md",
+        "name": "source_snapshot/stage_acceptance.md",
+        "sha256": "b1c4880cf391f668ec62f100e9e9411b9fb60fc6c5ac5fbf0f2b3bc6bafb9543"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/k1_pretrained_consistency/stage_manifest.json",
+        "name": "source_snapshot/k1_pretrained_consistency/stage_manifest.json",
+        "sha256": "a889dea329b20ea1cef75cafc5bf01880d67524573dbdea652060ffc01a47c10"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/k1_pretrained_consistency/trace.json",
+        "name": "source_snapshot/k1_pretrained_consistency/trace.json",
+        "sha256": "526bb97d1974b1a6f5b9e25f84f099efdc5ddec9cf72074648f7a85a96b8a9b3"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/k1_pretrained_mean2/stage_manifest.json",
+        "name": "source_snapshot/k1_pretrained_mean2/stage_manifest.json",
+        "sha256": "6f642bf16aff245ee165e5caaf189c6b557dade802a68ee6176987d37e1a6395"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/source_snapshot/k1_pretrained_mean2/trace.json",
+        "name": "source_snapshot/k1_pretrained_mean2/trace.json",
+        "sha256": "df05d3606ba09fa98174e344d0ae3fecb606dc695070b905c63431f6b5937bc3"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/protocol.md",
+        "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/terminal_decision.md",
+        "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/attribution.md",
+        "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/acceptance.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "k1-saved-trace-pair-20261008-attempt002-evidence",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-k1-saved-trace-pair-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-08",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Metadata translation of separately recorded saved arithmetic or infrastructure failure; no model work in closure"
+    },
+    "observed_execution": {
+      "inference_executed": false,
+      "training_executed": false,
+      "training_replay_ready": false
+    },
+    "outcome": {
+      "artifact_status": "local_hash_verified",
+      "budget_decision": "local_analysis_complete",
+      "comparison_status": "descriptive_saved_evidence_only",
+      "execution_status": "complete",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "common": "untouched",
+      "official_validation": "untouched",
+      "ood": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "trace_pair",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-08T10:25:11.425479+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [],
+  "run_id": "local-k1-saved-trace_pair-20261008-attempt002",
+  "trajectory_id": "TB-k1-saved-trace-pair-20261008-attempt002"
+}

@@ -1,0 +1,135 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-saved-trace-pair-20261008-attempt002",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "k1-saved-trace_pair",
+    "question": "When does the accepted partial consistency trajectory differ at matched exposure?",
+    "hypothesis": {
+      "observed_deficiency": "500K consistency stage is incomplete; selected endpoints obscure same-step evolution.",
+      "alternative_explanations": [
+        "Benefit is delayed",
+        "Stage trajectory differs without identifying final outcome",
+        "BN-state sensitivity confounds raw dev ordering"
+      ],
+      "changed_mechanism": "No intervention: align already accepted aggregate traces by actual steps/exposure",
+      "cheapest_falsifier": "Read two retained23-epoch traces and accepted metadata; no model/prediction tensors",
+      "hypothesis_id": "H-TB-k1-saved-trace-pair-20261008-attempt002",
+      "supporting_evidence_ids": [
+        "pcqm-k1-complete-module-audit-20261008",
+        "pcqm-k1-late-weight-average-20261008"
+      ],
+      "expected_native_cost_ref": "cost-k1-saved-trace_pair-expected-attempt002",
+      "related_closed_family_ids": [
+        "k1-complete-module-audit",
+        "k1-late-weight-average"
+      ],
+      "decision_changed_if_positive": "Record a descriptive discriminator for the existing route; no promotion/early-stop/training release",
+      "decision_changed_if_negative": "Record insufficient or contrary descriptive evidence; no retry/new module"
+    },
+    "state_at_start": {
+      "source_commit": "438bf9698fbb5e99ac097d31358abea5c9c4ddc5",
+      "source_config_identity": "2ec68316fd34f24c61847d51d55eb376ae39cffed37668af1b09ef3c75b75f8c",
+      "contract_refs": [
+        "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/protocol.md",
+        "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-complete-module-audit-20261008",
+        "pcqm-k1-late-weight-average-20261008"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/roles.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "local_saved_artifact_analysis",
+        "run_ids": [
+          "local-k1-saved-trace_pair-20261008-attempt002"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "438bf9698fbb5e99ac097d31358abea5c9c4ddc5",
+        "evidence_refs": [
+          "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-saved-trace_pair-expected-attempt002"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/decision.md",
+      "next_allowed_actions": [
+        "One bounded saved-artifact CPU analysis"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/protocol.md",
+    "comparison_blockers": [
+      "Partial trace is not terminal truth"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-saved-trace_pair-expected-attempt002",
+      "trajectory_id": "TB-k1-saved-trace-pair-20261008-attempt002",
+      "action_id": "A001",
+      "run_id": "local-k1-saved-trace_pair-20261008-attempt002",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU saved-artifact arithmetic; no accelerator",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-saved-trace-pair",
+    "policy_version": "1",
+    "state_timestamp": "2026-10-08T10:22:23.438123+00:00",
+    "source_commit": "438bf9698fbb5e99ac097d31358abea5c9c4ddc5",
+    "budget_snapshot_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/roles.json"
+    ]
+  }
+}

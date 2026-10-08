@@ -1,0 +1,70 @@
+{
+  "evidence_id": "k1-saved-trace-pair-20261008-attempt002-evidence",
+  "run_id": "local-k1-saved-trace_pair-20261008-attempt002",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "descriptive_saved_evidence_only",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "local_analysis_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately prospective authorized diagnostic; original training gate remains independent"
+    ]
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "common": "untouched",
+    "ood": "untouched"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-k1-saved-trace-pair-20261008-attempt002-observed",
+      "trajectory_id": "TB-k1-saved-trace-pair-20261008-attempt002",
+      "action_id": "A001",
+      "run_id": "local-k1-saved-trace_pair-20261008-attempt002",
+      "attempt_id": "attempt-002",
+      "platform": "local-windows",
+      "hardware": "CPU saved-artifact arithmetic; no accelerator",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.0007566390555555498,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.0007378472222222222,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "checks": {
+    "input_hashes_verified": true,
+    "prospective_before_execution": true,
+    "no_model_execution": true,
+    "alignment_verified": true,
+    "partial_or_consumed_role_limits_preserved": true
+  },
+  "analysis_ref": "experiments/pcqm_k1_consistency_stage_analysis/attempt_002/results/result.json",
+  "execution_scope": "Saved metadata/tensor arithmetic only; no model, new selection, training or replay-ready claim"
+}

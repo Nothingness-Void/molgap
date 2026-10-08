@@ -1,7 +1,7 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 88
+- Validated V5 evidence: 91
 - Evidence without trajectory: 0
 
 ## Trajectories
@@ -9,7 +9,7 @@
 - INCONCLUSIVE: 19
 - INFRASTRUCTURE_ONLY: 5
 - NEGATIVE_UNDER_CONTRACT: 21
-- NO_TRAIN: 35
+- NO_TRAIN: 38
 - POSITIVE_UNDER_CONTRACT: 8
 
 ## Transfer
@@ -18,8 +18,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 245
-- Coarse historical role records: 410
+- Explicit role events: 247
+- Coarse historical role records: 426
 - Repeatedly selected role identities: 19
 
 ## Cost
@@ -43,6 +43,10 @@
 - CPU four threads; no accelerator device_hours: not applicable (1 records); measurement_missing=0
 - CPU four threads; no accelerator queue_hours: not applicable (1 records); measurement_missing=0
 - CPU four threads; no accelerator wall_hours: measured=unknown (0 measured records), estimated=0.166667 (1 estimated record), measurement_missing=0, not_applicable=0
+- CPU saved-artifact arithmetic; no accelerator cpu_hours: measured=0.002387 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- CPU saved-artifact arithmetic; no accelerator device_hours: not applicable (6 records); measurement_missing=0
+- CPU saved-artifact arithmetic; no accelerator queue_hours: not applicable (6 records); measurement_missing=0
+- CPU saved-artifact arithmetic; no accelerator wall_hours: measured=0.002234 (2 measured records), estimated=0.500000 (3 estimated records), measurement_missing=1, not_applicable=0
 - CPU4threads; no accelerator cpu_hours: measured=0.019379 (2 measured records), estimated=0.666667 (2 estimated records), measurement_missing=1, not_applicable=0
 - CPU4threads; no accelerator device_hours: not applicable (5 records); measurement_missing=0
 - CPU4threads; no accelerator queue_hours: not applicable (5 records); measurement_missing=0
@@ -223,8 +227,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 154
-- Cost-event coverage: 88/99 trajectories; incomplete native measurement=70
+- Measurement-missing cost events: 158
+- Cost-event coverage: 91/102 trajectories; incomplete native measurement=71
 
 ## Screening Backtest
 - Status: available
@@ -232,9 +236,9 @@
 - Excluded traces: 15
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 74
+- [INFO] trace_unavailable_for_backtest: 77
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 70
+- [WARN] incomplete_native_cost_measurement: 71
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 35
+- [WARN] missing_explicit_role_identity: 37
 - [WARN] trajectory_without_v5_evidence: 11

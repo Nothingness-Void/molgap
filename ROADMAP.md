@@ -3,7 +3,6 @@
 This file owns task order, triggers, and exit conditions. Live state is in
 `CURRENT_STATE.md`; completed evidence belongs to experiment decisions, and
 track ownership is defined in `TRACKS.md`.
-
 ## Reuse Navigation
 
 First use the [modular workflow](docs/operations/EXPERIMENT_WORKFLOW.md), then
@@ -21,6 +20,7 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 
 | Priority | Task | Exit condition / owner |
 |---|---|---|
+| Closed diagnostic | Paired partial-stage curves and BN/late per-row attribution | Accepted saved-artifact NO_TRAIN; [trace interpretation](experiments/pcqm_k1_consistency_stage_analysis/attempt_002/analysis_zh.md) and [BN interpretation](experiments/pcqm_k1_bn_row_attribution/analysis_zh.md). Existing60-epoch raw/clean endpoint acceptance remains the next discriminator; no new training or stopping policy. |
 | Closed diagnostic | Complete K1 local module/state audit and sparse endpoint average | Accepted NO_TRAIN; use [consolidated route](experiments/pcqm_k1_complete_local_audit/analysis_zh.md#10-下一步一条主线两个问题分开验收) and its explicit remaining discriminators. No model adoption, new remote job or full release; existing consistency500K acceptance precedes conditional training-state/cost work. |
 | K1 focus1 | Explain and reduce500K epoch cost | Freeze a bounded training-only native profile; separate loader/forward/backward/optimizer/development/checkpoint costs and matched single/two-pass work. Attribute measured seconds before an equivalence-gated execution change; no unmeasured speed claim or recipe change. See CURRENT_STATE and the mapped500K attribution owner. |
 | K1 focus2 | Recover500K enhancement benefit | Complete and accept the authorized weight0/0.1 pair, compare raw and fixed BN-calibrated endpoints with aligned rows and measured native costs, then retain/remove the penalty according to its frozen gate. The two-pass pair does not isolate performance overhead; missing capacity/pretraining evidence stays unresolved. |
