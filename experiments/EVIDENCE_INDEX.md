@@ -10,6 +10,7 @@ those claims distinct.
 | Question | Verdict | Directory |
 |---|---|---|
 | Does the uncapped real-bond GPTrans stream retain its advantage after equal-update500K training, and where is the benefit lost? | Two-arm planning only; retained reference artifacts hash-verified, prospective qualification/release pending, no new scientific result | `pcqm_gptrans_local_transfer_500k/` |
+| Does virtual-connected pair processing or sparse same-block bond return improve the accepted local stream? | Dual100K protocol frozen for preparation; no submitted job or scientific result | `pcqm_gptrans_local_relation_100k/` |
 | Is a topology-defined motif graph a feasible new information-flow level for K1? | CPU partition accepted; GPU v1/v2 infrastructure-only and v3 scientifically negative, route closed | `pcqm_motif_hierarchy_100k/` |
 | Does one chemistry-separated local bond update improve K1 while preserving portable gains? | Both equal-capacity arms regressed; strict/replay-ready terminals retained, no scale-up | `pcqm_k1_chem_local_100k/` |
 | Can an independent pure-2D multi-hop MetaGIN-derived backbone beat frozen K1-v4? | No under the matched fixed-100K screen; strict negative terminal retained | `pcqm_metagin_2d_100k/` |

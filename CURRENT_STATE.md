@@ -6,6 +6,12 @@
 
 ## Server active screen
 
+The authorized [local relation-flow dual100K](experiments/pcqm_gptrans_local_relation_100k/protocol.md)
+is in release preparation, not submitted. Two isolated seed42 T4 workers test
+virtual-connected pair processing and same-block true-bond return against the
+accepted uncapped local parent. No baseline retraining or automatic successor
+is released. Submission state belongs to its GPU receipt.
+
 The [two-arm500K local-stream bridge](experiments/pcqm_gptrans_local_transfer_500k/gpu/results/interpretation.md)
 is accepted with a positive equal-update architecture result and an actual
 complete STRICT_CAUSAL Replay pair. Its benefit survived the500K endpoint;
