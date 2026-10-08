@@ -57,7 +57,7 @@ Branch-local evidence stays on the [retained checkout map](BRANCHES.md#retained-
 
 | Question | Retained observation / blocker | Owner entry |
 |---|---|---|
-| Consistency500K coefficient0/0.1 | V2 COMPLETE, accepted partial46/60 with resumable states. Full raw/clean endpoints and independent terminal closures pending; both arms retain two forwards. | [Status](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/STATUS.md) |
+| Consistency500K coefficient0/0.1 | Kaggle3 continuation ID137710959/version1 QUEUED (2026-10-09); resume accepted Kaggle1 V2 at46/60, unchanged recipes/two forwards. Native startup and full raw/clean endpoints pending; no local trigger or monitor. | [Status](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/STATUS.md), [returned identity](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-consistency-ablation-500k/experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/platform_response.json) |
 | Standalone K1 EMA100K | Version2 ERROR, empty outputs/log[]; cause, native cost and scientific endpoint unresolved, no further retry released. | [EMA handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md) |
 | Gaussian spectral100K | COMPLETE40/40, mechanical/native preflight verified; fresh-pair material gate fails. Scientific terminal packages and strict reference/RML closure pending; no scale-up. | [Spectral handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md) |
 
