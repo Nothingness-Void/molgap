@@ -1,0 +1,127 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-local-relation-dual-s42",
+  "version": 1,
+  "arms": [
+    {
+      "arm": "degree_local_connected_pair_ema999",
+      "kernel": "kaseichou/molgap-gptrans-local-relation-dual-s42",
+      "receipt_version": 1,
+      "files": [
+        {
+          "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/development_predictions.pt",
+          "sha256": "e8e923a72f4d25a109c1522a7f93284add12f491addff73c2c0e755fa7472bd3",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/canonical_trace.json",
+          "sha256": "49a6ce4474688a4accdba51b04e041ad6c4444f03ab5a3d3a73a4ac1434150ad",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/best_model.pt",
+          "sha256": "86e0e33c6d256b7435a23c25ed5b6cb4b0df29eee68d8f1a33ed840f59ea76f9",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/last_checkpoint.pt",
+          "sha256": "ec4f1cca0b27233512df9c58cc105ff5dbcafb9fe614d66b30c820ce1cf73459",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/checkpoint_epoch_09.pt",
+          "sha256": "0186d04e949fba1d2389833fef5a59a408ed5afa516615bed78baf444c4d3d2b",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/checkpoint_epoch_19.pt",
+          "sha256": "7a965e19a0df59cecd99d207b611994df0ea6568de8580cbf9c36def92b6bfc3",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/checkpoint_epoch_29.pt",
+          "sha256": "f73e209ba35f2195026c14e3660aaa330f243c24801e175a1197d0194c299c97",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/checkpoint_epoch_39.pt",
+          "sha256": "21772f0f08b1f2d750bf19fa57f2125a618ed05b0213182ccf83cabecaadf1e7",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/checkpoint_epoch_49.pt",
+          "sha256": "971e550553d5cc11257c7541314c81035efa6eec815cc4253de8ba20cd2c2b08",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/checkpoint_epoch_59.pt",
+          "sha256": "ec4f1cca0b27233512df9c58cc105ff5dbcafb9fe614d66b30c820ce1cf73459",
+          "state": "RETAINED"
+        }
+      ],
+      "transport": "version_specific_manifest_pinned_files",
+      "unselected_outputs_downloaded": false,
+      "platform_version_verified_by_output_api": true
+    },
+    {
+      "arm": "degree_local_bond_return_ema999",
+      "kernel": "kaseichou/molgap-gptrans-local-relation-dual-s42",
+      "receipt_version": 1,
+      "files": [
+        {
+          "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/development_predictions.pt",
+          "sha256": "21baa93f250a87fbb24675ca9e50b3a0da92a7872171c24302e27d827ce57d73",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/canonical_trace.json",
+          "sha256": "38b1af5acb117ec2b16def34c9c8caba0feb8be95c40f955aa0fe074735264af",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/best_model.pt",
+          "sha256": "e80e9975fca5612646e138e9922c9a0c7603b3e06b9e642b9d0da3e7f31a9e45",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/last_checkpoint.pt",
+          "sha256": "2bc5f9104e053c4280cc72f5fe7fb6c4b983dbf00f55b4c3b0869c954960b862",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/checkpoint_epoch_09.pt",
+          "sha256": "3b09f4d10bf1ae1b330541ab644c3e88f50b5d7444bcb7c3fbd28ba7b8cf96e6",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/checkpoint_epoch_19.pt",
+          "sha256": "2a8dd495bb250bb533ed9a6303a377de51a862cd3c427290b9ad745b3e12ba13",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/checkpoint_epoch_29.pt",
+          "sha256": "fea9f163f49954c0142d7dc3df0c32beebfb3dbf78919081422e59d12c1fc036",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/checkpoint_epoch_39.pt",
+          "sha256": "8210830b969ce31d4168b25ae5ce058f9a2b60384788bacb13b12490a8c8b9b3",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/checkpoint_epoch_49.pt",
+          "sha256": "c8c1eb186d0505d25477c7b66c45da784a1ebd9946964859d8076979020ed47e",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/checkpoint_epoch_59.pt",
+          "sha256": "2bc5f9104e053c4280cc72f5fe7fb6c4b983dbf00f55b4c3b0869c954960b862",
+          "state": "RETAINED"
+        }
+      ],
+      "transport": "version_specific_manifest_pinned_files",
+      "unselected_outputs_downloaded": false,
+      "platform_version_verified_by_output_api": true
+    }
+  ],
+  "unselected_outputs_downloaded": false
+}

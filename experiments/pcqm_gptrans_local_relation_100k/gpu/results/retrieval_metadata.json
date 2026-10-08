@@ -1,0 +1,61 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-local-relation-dual-s42",
+  "version": 1,
+  "files": [
+    {
+      "path": "gptrans_local_relation/startup.json",
+      "sha256": "370be50326da05d4f5de5824ea2e48ffcbc1b119956710eed6f202eece338655"
+    },
+    {
+      "path": "gptrans_local_relation/job_summary.json",
+      "sha256": "d455d62fe3768fd8089c743d5e47c1a5c1a44fddab214d09d06b05812cab28e3"
+    },
+    {
+      "path": "gptrans_local_relation/native_cost.json",
+      "sha256": "83cf8e5d4d2abf7a200483747e9014a73735c83567ed9b3c2095a2b424cd6cba"
+    },
+    {
+      "path": "gptrans_local_relation/degree_local_connected_pair_ema999/arm_binding.json",
+      "sha256": "345591f12a499c346950df22c802baaa647279e0939eb5faa939e07a28e901b5"
+    },
+    {
+      "path": "gptrans_local_relation/degree_local_connected_pair_ema999/preflight/preflight.json",
+      "sha256": "9dd98c9b0741bbb61a8d735ab57103dc935fd1d57c3d3b8e0239eb81559a1d3c"
+    },
+    {
+      "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/completion_manifest.json",
+      "sha256": "76e148f6698fb8981747467c4e69d1969ed2181d09a74de2eb2e6f51dc08d37a"
+    },
+    {
+      "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/trace.json",
+      "sha256": "73276be881ae91ab92bb710e28b6c5fd594ea02f18877e6e5764bc0a291a8da3"
+    },
+    {
+      "path": "gptrans_local_relation/degree_local_connected_pair_ema999/training/frozen_reference.json",
+      "sha256": "40b607c03a8b9783a54ac4a1c258f6c5ce3d1394e45271d021e77f853f01069d"
+    },
+    {
+      "path": "gptrans_local_relation/degree_local_bond_return_ema999/arm_binding.json",
+      "sha256": "457cdb136331918bffdd6576b7549fe00356ec710f18d675a7b920ba1e9e5e03"
+    },
+    {
+      "path": "gptrans_local_relation/degree_local_bond_return_ema999/preflight/preflight.json",
+      "sha256": "c8286f59eb2496da28ce7c21bfb431ab4c86d6c67f93bc54fa15dabfb92f7431"
+    },
+    {
+      "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/completion_manifest.json",
+      "sha256": "eec2b6f4e400395aceeb8ee3ac28bc70c8fd87b49fe3809e35f345f2c30b1cd9"
+    },
+    {
+      "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/trace.json",
+      "sha256": "ac0a11c357881929356d740941b657364fb122cff8123a10d4f07bd785787892"
+    },
+    {
+      "path": "gptrans_local_relation/degree_local_bond_return_ema999/training/frozen_reference.json",
+      "sha256": "fdd87986e544de78385229327d95fb7702e731e19d5d408871f741f91fc583c5"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}

@@ -1,0 +1,32 @@
+{
+  "attempt_id": "physical-v1",
+  "claimed_at": "2026-10-08T15:16:02Z",
+  "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "created_at": "2026-10-08T15:14:28Z",
+  "decision_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/results/interpretation.md",
+  "delivered_at": "2026-10-08T15:14:38Z",
+  "delivery_attempts": 1,
+  "event_id": "evt-1e6f95e4635a6b6e5367dbb6",
+  "event_status": "CLOSED",
+  "event_type": "COMPLETE",
+  "monitor_generation": 1,
+  "outcome": {
+    "acceptance": "accepted",
+    "complete_replay_pairs": 2,
+    "nomination_passed_arms": [],
+    "policy_terminal_truth_available": false,
+    "successor_submitted": false
+  },
+  "payload": {
+    "api_status": "COMPLETE",
+    "kernel": "kaseichou/molgap-gptrans-local-relation-dual-s42",
+    "resolved_latest_identity": {
+      "kernel": "kaseichou/molgap-gptrans-local-relation-dual-s42",
+      "kernel_id": 137648190,
+      "version": 1
+    },
+    "version": 1
+  },
+  "run_id": "kaseichou/molgap-gptrans-local-relation-dual-s42:v1",
+  "finalized_at": "2026-10-08T15:29:18Z"
+}

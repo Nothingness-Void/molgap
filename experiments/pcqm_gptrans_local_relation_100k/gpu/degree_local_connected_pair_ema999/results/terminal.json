@@ -1,0 +1,409 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/observed_metadata.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+    "experiments/pcqm_gptrans_capacity_relations_100k/gpu/screen_config.json": "6f0c7f77231f550f94fca7b1d8c6fc42c464904ede753d06fc6d2c7a1ad48668",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/comparison_readiness_prelaunch.json": "bb24d80158297ef2b1b302b8d0f8ed48a6acb88fa023ae7d052166e7c6bdfa7b",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/contract.json": "92c00b76bfb00f481c14be9729ed062fe018b5b23d56651191b549a15cc30a6c",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/candidate_trace_manifest.json": "346c1ecc1aea432d2d8534e204b99dc7530e4ca79eef92536bb0bcb7238e0aca",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/comparison_readiness.json": "105756d7c3d4d01c7bf3aec2691a8ad4d72bff0135cb047a220ace286d2ba101",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/cost_records.json": "77439a466a237f611dbc7f93f6ee0c2c8171d8482a350b62e17777e2ba04bf25",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/decision.md": "9a85e074c3ba901a131ccbd212ed12ed692af4ce9645596ee52e06f5019dbe9c",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/observed_metadata.json": "70ec888cd4786eb4f6c81f08243a485e6fb1a678e802c4c661cf476c374c0324",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/paired_analysis.json": "159757ec5ab277c6113850018e88cf5de87e2ad6e4c526011778467da1d20aa2",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/prediction_manifest.json": "a7c455a4b6779b844952c3824eb5a5bcd268aa969d2d7950c1e861efe3156b87",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/role_history.json": "4f3a51c78911103185b1b2323bf1c5ecef1db71084b414df4d8a079c8d7c52a3",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/runtime_certificate.json": "59dfb6907b17707010f3f297213b34b439aa4dff9aa295bce0f6097e158b2d63",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/rml_plan/trajectory.json": "75d1b008b00130353cb728f45d541f4ac52449d4f36e37d94a84321df70ba4fa",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/results/acceptance.json": "74415e63055e57893b35186f0a77cae0244add580feba2f99691972d3a249bc1",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/screen_config.json": "e7aa8e020cea03fb30cfc1373de2f024a2c3363992d6f2bae9e1dc3f100a8e9b",
+    "experiments/pcqm_gptrans_local_relation_100k/gpu/submission_v1.json": "2746ded9a8b18a16a9383ed107f5d53cc6bc3dd39c89fab32f88fed6e9ed23a0",
+    "experiments/pcqm_gptrans_local_relation_100k/protocol.md": "94f613afb90853527a966f3b30fad043eeb43ccecd07996c9bbf3b68ac39025c",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948",
+    "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/best_model.pt": "86e0e33c6d256b7435a23c25ed5b6cb4b0df29eee68d8f1a33ed840f59ea76f9",
+    "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/canonical_trace.json": "49a6ce4474688a4accdba51b04e041ad6c4444f03ab5a3d3a73a4ac1434150ad",
+    "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/completion_manifest.json": "76e148f6698fb8981747467c4e69d1969ed2181d09a74de2eb2e6f51dc08d37a",
+    "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/development_predictions.pt": "e8e923a72f4d25a109c1522a7f93284add12f491addff73c2c0e755fa7472bd3",
+    "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/last_checkpoint.pt": "ec4f1cca0b27233512df9c58cc105ff5dbcafb9fe614d66b30c820ce1cf73459",
+    "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/trace.json": "73276be881ae91ab92bb710e28b6c5fd594ea02f18877e6e5764bc0a291a8da3",
+    "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/native_cost.json": "83cf8e5d4d2abf7a200483747e9014a73735c83567ed9b3c2095a2b424cd6cba"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-g1-local-connected-pair-100k-s42-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/observed_metadata.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 4.5145705422011115
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 4.5145705422011115
+        }
+      },
+      "platform": "kaggle2-t4-gptrans-local-relation",
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "CLOSE"
+    ],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "explicit scale/combination compute authorization"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json",
+        "name": "target_transform.json",
+        "sha256": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/candidate_trace_manifest.json",
+        "name": "candidate_trace_manifest.json",
+        "sha256": "346c1ecc1aea432d2d8534e204b99dc7530e4ca79eef92536bb0bcb7238e0aca"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/comparison_readiness.json",
+        "name": "comparison_readiness.json",
+        "sha256": "105756d7c3d4d01c7bf3aec2691a8ad4d72bff0135cb047a220ace286d2ba101"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/cost_records.json",
+        "name": "cost_records.json",
+        "sha256": "77439a466a237f611dbc7f93f6ee0c2c8171d8482a350b62e17777e2ba04bf25"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/decision.md",
+        "name": "decision.md",
+        "sha256": "9a85e074c3ba901a131ccbd212ed12ed692af4ce9645596ee52e06f5019dbe9c"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/observed_metadata.json",
+        "name": "observed_metadata.json",
+        "sha256": "70ec888cd4786eb4f6c81f08243a485e6fb1a678e802c4c661cf476c374c0324"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/paired_analysis.json",
+        "name": "paired_analysis.json",
+        "sha256": "159757ec5ab277c6113850018e88cf5de87e2ad6e4c526011778467da1d20aa2"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/prediction_manifest.json",
+        "name": "prediction_manifest.json",
+        "sha256": "a7c455a4b6779b844952c3824eb5a5bcd268aa969d2d7950c1e861efe3156b87"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/role_history.json",
+        "name": "role_history.json",
+        "sha256": "4f3a51c78911103185b1b2323bf1c5ecef1db71084b414df4d8a079c8d7c52a3"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/runtime_certificate.json",
+        "name": "runtime_certificate.json",
+        "sha256": "59dfb6907b17707010f3f297213b34b439aa4dff9aa295bce0f6097e158b2d63"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/results/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "74415e63055e57893b35186f0a77cae0244add580feba2f99691972d3a249bc1"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/screen_config.json",
+        "name": "screen_config.json",
+        "sha256": "e7aa8e020cea03fb30cfc1373de2f024a2c3363992d6f2bae9e1dc3f100a8e9b"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json",
+        "name": "row_manifest.json",
+        "sha256": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json",
+        "name": "target_manifest.json",
+        "sha256": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/best_model.pt",
+        "name": "best_model.pt",
+        "sha256": "86e0e33c6d256b7435a23c25ed5b6cb4b0df29eee68d8f1a33ed840f59ea76f9"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/canonical_trace.json",
+        "name": "canonical_trace.json",
+        "sha256": "49a6ce4474688a4accdba51b04e041ad6c4444f03ab5a3d3a73a4ac1434150ad"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "76e148f6698fb8981747467c4e69d1969ed2181d09a74de2eb2e6f51dc08d37a"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/last_checkpoint.pt",
+        "name": "last_checkpoint.pt",
+        "sha256": "ec4f1cca0b27233512df9c58cc105ff5dbcafb9fe614d66b30c820ce1cf73459"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/native_cost.json",
+        "name": "native_cost.json",
+        "sha256": "83cf8e5d4d2abf7a200483747e9014a73735c83567ed9b3c2095a2b424cd6cba"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/development_predictions.pt",
+        "name": "development_predictions.pt",
+        "sha256": "e8e923a72f4d25a109c1522a7f93284add12f491addff73c2c0e755fa7472bd3"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/contract.json",
+        "name": "contract.json",
+        "sha256": "92c00b76bfb00f481c14be9729ed062fe018b5b23d56651191b549a15cc30a6c"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/trace.json",
+        "name": "trace.json",
+        "purpose": "analysis_diagnostics",
+        "sha256": "73276be881ae91ab92bb710e28b6c5fd594ea02f18877e6e5764bc0a291a8da3"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_local_relation_100k/protocol.md",
+        "experiments/pcqm_gptrans_capacity_relations_100k/gpu/screen_config.json",
+        "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/rml_plan/trajectory.json",
+        "experiments/pcqm_gptrans_local_relation_100k/gpu/submission_v1.json",
+        "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/comparison_readiness_prelaunch.json",
+        "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-g1-degree-local-connected-pair-ema999-100k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-08T15:24:24.570114+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "verified native artifacts and saved prediction tensors"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "internal_development": "consumed",
+      "internal_train": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "single_mechanism_screen_100k",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-08T15:24:24.570114+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development": "consumed",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_train-training_membership",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_train-labels_read",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_train-metric_computed",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_development-prediction_input",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_development-labels_read",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_development-selection_used",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+    }
+  ],
+  "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "424bd54293eac3bd583fe5183341df3620ab60ca18b39960edb2eaaffd76aa5a",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "ema999-each-step-selection",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+      "scientific_contract": "gptrans-v5-observation-reference-fp32-bs128-60epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+      "terminal_endpoint_identity": "46860-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "internal_development_ema_gap_mae_eV",
+    "model_identity": "424bd54293eac3bd583fe5183341df3620ab60ca18b39960edb2eaaffd76aa5a",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+    "reference_id": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+    "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_ema_over_60_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/terminal_evidence.json",
+    "trace_artifact_ref": "platforms/_records/kaggle/training/gptrans_local_relation_v1/gptrans_local_relation/degree_local_connected_pair_ema999/training/canonical_trace.json",
+    "trace_artifact_sha256": "49a6ce4474688a4accdba51b04e041ad6c4444f03ab5a3d3a73a4ac1434150ad",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42",
+    "weight_semantics": "ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+}
