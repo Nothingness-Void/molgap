@@ -176,7 +176,7 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
             target / "observed_metadata.json", training / "canonical_trace.json", training / "completion_manifest.json", training / "last_checkpoint.pt"})
         if followup:
             artifacts += [root / arm["prediction_manifest"]["artifact_locator"], gpu / mode / "contract.json"]
-        if mode == "degree_bond_local_cap_ema999":
+        if "diagnostic_trace" in arm:
             diagnostic = arm["diagnostic_trace"]
             verify_bound_artifact(root, diagnostic["ref"], diagnostic["sha256"])
             artifacts.append(root / diagnostic["ref"])
@@ -187,7 +187,7 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
             "artifacts": [{"name": p.name, "locator": rel(p), "sha256": hashes[rel(p)], "availability": "local_verified"} for p in artifacts],
             "migration": {"migrated_at": timestamp, "verification_scope": "verified native artifacts and saved prediction tensors",
                 "training_executed": False, "inference_executed": False, "scientific_reinterpretation": False}}
-        if mode == "degree_bond_local_cap_ema999":
+        if "diagnostic_trace" in arm:
             # The canonical trace owns replay axes; the redundant native log
             # supplies amplitude telemetry and must not become a second trace.
             for artifact in evidence["artifacts"]:

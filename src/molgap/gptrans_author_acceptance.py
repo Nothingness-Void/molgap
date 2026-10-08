@@ -15,6 +15,12 @@ from .training_reproducibility import sha256_file
 NO_READ = ("training_executed", "model_inference_executed", "labels_read",
            "official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")
 
+# Canonical observations own replay; native traces preserve mechanism telemetry.
+DIAGNOSTIC_TRACE_MODES = frozenset({
+    "degree_bond_local_cap_ema999", "degree_local_connected_pair_ema999",
+    "degree_local_bond_return_ema999",
+})
+
 
 def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
                             experiment_ref="experiments/pcqm_gptrans_author_alignment/gpu", selected_arms=None) -> dict:
@@ -276,7 +282,7 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
             "matched_trajectory": [{"epoch": i, "candidate_ema_dev_eV": r["ema_dev_metric"], "reference_ema_dev_eV": b["ema_dev_metric"],
                 "gain_eV": b["ema_dev_metric"]-r["ema_dev_metric"], "candidate_live_dev_eV": r["live_dev_metric"], "reference_live_dev_eV": b["live_dev_metric"]}
                 for i,(r,b) in enumerate(zip(trace["observations"], ref_trace["observations"]))]}
-        if mode == "degree_bond_local_cap_ema999":
+        if mode in DIAGNOSTIC_TRACE_MODES:
             arms[mode]["diagnostic_trace"] = {
                 "ref": (training / "trace.json").relative_to(root).as_posix(),
                 "sha256": sha256_file(training / "trace.json"),
