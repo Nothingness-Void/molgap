@@ -1,0 +1,37 @@
+{
+  "owner": "kaseichou",
+  "dataset": "kaseichou/molgap-gptrans-triplet-communication-source",
+  "publication_requested": true,
+  "publication_state": "RESPONSE_RECEIVED",
+  "upload_sha256": {
+    "dataset-metadata.json": "cb619fc743f85cf69b01786f655adb3d428c36894379b03d6603d626cf9938a5",
+    "degree_local_triplet_aggregate_ema999_initial.pt": "f391d94878e6cb949aba8afc9f39330a127a48a0f0d165dfca9dbf11755894dc",
+    "degree_local_triplet_attention_ema999_initial.pt": "d452895140dba6a2a214cca2e14a18f75434ad5cc3ea486f9050a49d55939ec7",
+    "experiment_spec.json": "0f6ba1032deac52853e9bc0cc16622739e64ae9e11d281e31e06a6290a7c1a8b",
+    "package_manifest.json": "e7a4b50a8a46bea33c7af5c6d821c2fa89738478a4297b809f179809441e0fc9",
+    "SOURCE_ARCHIVE_SHA256.txt": "0647d36c1a7d001b57aa301b4db4e3f7b48b11bd478f26772e870c5662fe5374",
+    "SOURCE_COMMIT.txt": "becb96f5a64562fc26e64e451032b8cb0cfea5e548d39478bc4295a6b03641b2",
+    "SOURCE_FILES.json": "1efb6acca4eb7d99209c24522d856a5bdccb0b5edbd7251ca0be1ac2602ba38b",
+    "source_payload.bin": "d19f62f4efacb18cd0d38b9c4aa68826a55bdfc1a422ce8b381fad7a17b1e622",
+    "target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026"
+  },
+  "gpu_submitted": false,
+  "remote_content_hashes_verified": false,
+  "runtime_hash_verification_required": true,
+  "response_error": "",
+  "response_invalid_files": null,
+  "layout_verified": true,
+  "mount_files": {
+    "SOURCE_ARCHIVE_SHA256.txt": 65,
+    "SOURCE_COMMIT.txt": 41,
+    "SOURCE_FILES.json": 49956,
+    "degree_local_triplet_aggregate_ema999_initial.pt": 23665379,
+    "degree_local_triplet_attention_ema999_initial.pt": 23709987,
+    "experiment_spec.json": 5828,
+    "package_manifest.json": 11834,
+    "source_payload.bin": 943108,
+    "target_transform.json": 695
+  },
+  "status": "layout_retrievable",
+  "prior_status_probe": "UNKNOWN_HTTP403"
+}

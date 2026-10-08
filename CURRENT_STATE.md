@@ -6,14 +6,23 @@
 
 ## Server active screen
 
+The authorized [triplet communication dual100K](experiments/pcqm_gptrans_triplet_communication_100k/protocol.md)
+was submitted on Kaggle2 as kernel137723341/version1, with T4 requested and
+source/metadata identity reconciled. Its first exact tick was QUEUED/SILENT;
+remote allocation, optimizer preflight and scientific outcome are not yet
+verified. The [release record](experiments/pcqm_gptrans_triplet_communication_100k/gpu/submission_record.md)
+binds two independent candidates to the retained local-bond reference. Existing
+Luna B and its30minute heartbeat are rebound; no new monitor/chat was created.
+No automatic successor, scale-up or extra seed is released.
+
 The authorized [local relation-flow dual100K](experiments/pcqm_gptrans_local_relation_100k/protocol.md)
 is closed after independent acceptance: connected pair processing was positive
 below the frozen nomination gate; same-block bond return was worse. Both arms
 have actual complete STRICT_CAUSAL Replay pairs. The native INCONCLUSIVE labels
 remain unscored policy truth; see the [terminal interpretation](experiments/pcqm_gptrans_local_relation_100k/gpu/results/interpretation.md).
-Its event/binding are closed and existing Luna B is paused. No baseline
+Its event/binding are closed; Luna B is reassigned to the triplet screen. No baseline
 retraining, successor, extra seed or automatic scale is released. No server
-training is active under this authorization.
+training remains active under that earlier authorization.
 
 The [two-arm500K local-stream bridge](experiments/pcqm_gptrans_local_transfer_500k/gpu/results/interpretation.md)
 is accepted with a positive equal-update architecture result and an actual

@@ -1,0 +1,20 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-triplet-communication-dual-s42",
+  "kernel_id": 137723341,
+  "version": 1,
+  "status": "QUEUED",
+  "metadata_sha256": "4e7e27deff0e5783e1fcf234522463ccd909149ee6c0bb53c7f7660024a9d571",
+  "remote_script_sha256": "c6e7ae863622c698e3718343294a54713d57846781ef2e0f965ea66977ff2976",
+  "staged_script_sha256": "f196bc59a6ae1ac2bf63eb62580c209dbf8b1f6034df18a0fa7a58e6d3b73b57",
+  "remote_script_lf_sha256": "f196bc59a6ae1ac2bf63eb62580c209dbf8b1f6034df18a0fa7a58e6d3b73b57",
+  "script_comparison": "exact_after_CRLF_to_LF_only_SDK_windows_pull",
+  "mounted_datasets": [
+    "kaseichou/molgap-gptrans-triplet-communication-source",
+    "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "is_private": true,
+  "gpu_requested": true,
+  "requested_accelerator": "NvidiaTeslaT4",
+  "allocation_verified_at_runtime": false,
+  "source_and_identity_reconciled": true
+}
