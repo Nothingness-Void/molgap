@@ -1,0 +1,37 @@
+{
+  "dataset": "nvoid912/molgap-k1-consistency-500k-source-s42-k3-v1",
+  "dataset_id": 12450539,
+  "status": "ready",
+  "private_verified": true,
+  "files": {
+    "SOURCE_ARCHIVE_SHA256.txt": 65,
+    "SOURCE_COMMIT.txt": 41,
+    "SOURCE_FILES.json": 12463,
+    "bindings/k1_pretrained_consistency.json": 259,
+    "bindings/k1_pretrained_mean2.json": 253,
+    "experiment_spec.json": 5486,
+    "inputs/initial_pins.json": 554,
+    "inputs/k1_initial.pt": 14783930,
+    "inputs/target_transform.json": 695,
+    "legacy_500k_launch.json": 4693,
+    "package_manifest.json": 3730,
+    "prospective/k1_pretrained_consistency/trajectory.json": 45633,
+    "prospective/k1_pretrained_mean2/trajectory.json": 45591,
+    "source_payload.bin": 226514
+  },
+  "inventory_matches": true,
+  "remote_byte_verified": [
+    {
+      "remote_path": "legacy_500k_launch.json",
+      "sha256": "0fbd25b0ba3aacc8af1f8eed7fdbcc9b22dfae12210c15df17cd6d21aeb60cc4",
+      "retained_path": "source_published_verification/0/legacy_500k_launch.json"
+    },
+    {
+      "remote_path": "source_payload.bin",
+      "sha256": "b2b7539d7fbd0fbff6e674ed632ab90be00f86e8484eb6f2e8cb3ddafe06a3fd",
+      "retained_path": "source_published_verification/1/source_payload.bin"
+    }
+  ],
+  "observed_at": "2026-10-08T17:01:15.115456+00:00",
+  "remaining_mounted_hash_verification": "mandatory CPU/native all-arm barrier before training"
+}

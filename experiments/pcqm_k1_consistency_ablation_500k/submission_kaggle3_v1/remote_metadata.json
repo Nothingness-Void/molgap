@@ -1,0 +1,21 @@
+{
+  "id": 137710959,
+  "ref": "nvoid912/molgap-k1-consistency-500k-pair-s42-v1",
+  "title": "MolGap K1 Consistency 500K Pair S42 V1",
+  "author": "Nvoid912",
+  "slug": "molgap-k1-consistency-500k-pair-s42-v1",
+  "lastRunTime": "2026-10-05T17:03:16.584Z",
+  "language": "python",
+  "kernelType": "script",
+  "isPrivate": true,
+  "enableGpu": true,
+  "enableInternet": true,
+  "datasetDataSources": [
+    "nvoid912/molgap-k1-consistency-500k-source-s42-k3-v1",
+    "nvoid912/molgap-k1-consistency-500k-resume-s42-stage46-v1",
+    "nvoid912/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ],
+  "enableTpu": false,
+  "currentVersionNumber": 1,
+  "machineShape": "NvidiaTeslaT4"
+}

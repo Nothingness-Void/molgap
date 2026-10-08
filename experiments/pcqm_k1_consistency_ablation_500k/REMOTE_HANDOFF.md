@@ -4,10 +4,12 @@ Owner checkout: `D:/w/k1-consistency-500k`, branch
 `codex/exp/k1-consistency-ablation-500k`; source, Spec and package identities
 are in [STATUS](STATUS.md). Do not route to server or create a default monitor.
 Use desktop project Python with `PYTHONPATH=D:/w/k1-consistency-500k/src` and
-the Kaggle workload skill. Explicit credential file:
-`D:/下载/Key/.kaggle1_default/kaggle.json`, owner `nothingnessvoid`; never print it.
+the Kaggle workload skill. Explicit credential file for the latest attempt:
+`D:/下载/Key/.kaggle3_cli/kaggle.json`, owner `nvoid912`; never print it.
+For historical Kaggle1 reconciliation only, use its explicit credential file
+`D:/下载/Key/.kaggle1_default/kaggle.json`, owner `nothingnessvoid`.
 
-1. Query the exact kernel/version from [submission response](submission_v2/platform_response.json).
+1. Query the exact kernel/version from [latest submission response](submission_kaggle3_v1/platform_response.json).
    Healthy RUNNING/QUEUED does not justify downloading training files or retrying.
 2. At terminal state verify returned source/version, frozen source dataset and
    Spec. Retrieve only pair-state/invocation-cost and per-arm qualification,
@@ -58,3 +60,28 @@ predictions. Fresh source publication uses `--source-dataset` on prepare.py.
 Continue from the latest verified stage/package; never reuse the epoch23 checkpoint
 to duplicate progress after version2 has produced a later stage. No healthy tick
 artifact download or automatic resubmission.
+
+## Kaggle3 continuation location
+
+Latest prepared payload:
+`platforms/_records/kaggle/staging/pcqm_k1_consistency_ablation_500k/kaggle3_v1/`.
+Physical kernel is `nvoid912/molgap-k1-consistency-500k-pair-s42-v1`,
+ID137710959/version1. Read STATUS, actual response and
+[authorization](continuation_authorization_kaggle3.md), not the historical
+Kaggle1 example above. Both arms resume from accepted epoch46. The private
+source and checkpoint dataset identities are in
+[continuation binding](submission_kaggle3_v1/continuation_binding.json);
+published privacy, layout and selected-byte checks are in that submission tree.
+
+The shared continuation adapter now accepts explicit `--account`,
+`--run-reference`, `--graph-dataset`, `--platform-id` and
+`--max-stage-seconds`, alongside fresh source/recovery dataset arguments.
+Account changes require all mounts to have the same explicit owner, an accepted
+byte-identical fixed500K mirror and unchanged scientific/prospective inputs.
+Frozen config labels the new native certificate `kaggle3-t4x2`; runtime/device
+equivalence remains mandatory. No new authorization follows from those options.
+
+SDK `kernels_status(...).to_dict()` omits QUEUED because its enum value is0.
+Retain and inspect `response.status.name` as in
+`submission_kaggle3_v1/scheduler_observation_v1.json`; an empty dict is not an
+unknown or failed job. No retry or local polling trigger is required for QUEUED.

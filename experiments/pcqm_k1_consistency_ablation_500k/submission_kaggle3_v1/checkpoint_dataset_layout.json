@@ -1,0 +1,51 @@
+{
+  "dataset": "nvoid912/molgap-k1-consistency-500k-resume-s42-stage46-v1",
+  "dataset_id": 12450550,
+  "status": "ready",
+  "private_verified": true,
+  "files": {
+    "k1_pretrained_consistency/best_model.pt": 14801401,
+    "k1_pretrained_consistency/best_predictions.pt": 801839,
+    "k1_pretrained_consistency/calibration.json": 755,
+    "k1_pretrained_consistency/data_manifest.json": 4790,
+    "k1_pretrained_consistency/initial_state.pt": 14800338,
+    "k1_pretrained_consistency/last_checkpoint.pt": 44370542,
+    "k1_pretrained_consistency/objective_components.json": 9177,
+    "k1_pretrained_consistency/objective_qualification.json": 140,
+    "k1_pretrained_consistency/progress.json": 77,
+    "k1_pretrained_consistency/runtime.json": 2625,
+    "k1_pretrained_consistency/runtime_certificate.json": 833,
+    "k1_pretrained_consistency/scientific_contract.json": 1926,
+    "k1_pretrained_consistency/stage_manifest.json": 6110,
+    "k1_pretrained_consistency/trace.json": 28296,
+    "k1_pretrained_mean2/best_model.pt": 14801401,
+    "k1_pretrained_mean2/best_predictions.pt": 801839,
+    "k1_pretrained_mean2/calibration.json": 755,
+    "k1_pretrained_mean2/data_manifest.json": 4790,
+    "k1_pretrained_mean2/initial_state.pt": 14800338,
+    "k1_pretrained_mean2/last_checkpoint.pt": 44370542,
+    "k1_pretrained_mean2/objective_components.json": 9171,
+    "k1_pretrained_mean2/objective_qualification.json": 140,
+    "k1_pretrained_mean2/progress.json": 77,
+    "k1_pretrained_mean2/runtime.json": 2625,
+    "k1_pretrained_mean2/runtime_certificate.json": 833,
+    "k1_pretrained_mean2/scientific_contract.json": 1912,
+    "k1_pretrained_mean2/stage_manifest.json": 6090,
+    "k1_pretrained_mean2/trace.json": 28284
+  },
+  "inventory_matches": true,
+  "remote_byte_verified": [
+    {
+      "remote_path": "k1_pretrained_mean2/stage_manifest.json",
+      "sha256": "4a09c3ee1ed559c930b2eb439a8da4fdbacb331aed03c74738b0b46f001a35a4",
+      "retained_path": "checkpoint_published_verification/0/stage_manifest.json"
+    },
+    {
+      "remote_path": "k1_pretrained_consistency/stage_manifest.json",
+      "sha256": "5fc2b59b82ca5ae835b1bf6327c77b55539caa312e30a25d006543a7dca6154a",
+      "retained_path": "checkpoint_published_verification/1/stage_manifest.json"
+    }
+  ],
+  "observed_at": "2026-10-08T17:01:18.276482+00:00",
+  "remaining_mounted_hash_verification": "mandatory CPU/native all-arm barrier before training"
+}

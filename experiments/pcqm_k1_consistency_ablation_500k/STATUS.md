@@ -1,5 +1,25 @@
 # Execution status
 
+2026-10-09 account migration: Kaggle3 accepted the same frozen pair as
+`nvoid912/molgap-k1-consistency-500k-pair-s42-v1`, ID137710959/version1.
+The authoritative [scheduler observation](submission_kaggle3_v1/scheduler_observation_v1.json)
+is QUEUED; actual allocation, optimizer qualification and resumed execution are
+not observed. API source bytes, private T4 request and dataset membership match
+the release-bound payload. See [response](submission_kaggle3_v1/platform_response.json),
+[verification](submission_kaggle3_v1/source_verification.json) and
+[migration authorization](continuation_authorization_kaggle3.md).
+
+Resume both arms from46/60,179676steps using the accepted version2
+model/optimizer/RNG states. Original Spec and recipes remain unchanged.
+Executable source commit `2cf7c56f84dacf89fd69c97c24cde0d284d81709`,
+archive `b2b7539d7fbd0fbff6e674ed632ab90be00f86e8484eb6f2e8cb3ddafe06a3fd`,
+package `a04a203a40a1207e454e413db525f0862e536f257474ae089d03a821a6e08e0f`.
+The30000-second window fits the remaining17.158148T4-hour training allowance;
+new native costs and terminal raw/clean-BN endpoints remain pending. Both RML
+trajectories stay ACTIVE, not training replay-ready. No local trigger or monitor.
+
+The previous Kaggle1 observations below remain historical evidence.
+
 2026-10-09 reconciliation: version2 is COMPLETE with accepted bounded stages
 at46/60epochs in both arms, not terminal training. See [stage acceptance](submission_v2/terminal_inspection_20261009/stage_acceptance.md)
 for checkpoints, exact source, metrics and cumulative34.841852T4-hour training
