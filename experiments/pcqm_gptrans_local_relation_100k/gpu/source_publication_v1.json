@@ -1,0 +1,38 @@
+{
+  "owner": "kaseichou",
+  "dataset": "kaseichou/molgap-gptrans-local-relation-source",
+  "publication_requested": true,
+  "publication_state": "RESPONSE_RECEIVED",
+  "layout_verified": true,
+  "remote_content_hashes_verified": false,
+  "runtime_hash_verification_required": true,
+  "gpu_submitted": false,
+  "prior_status_probe": "UNKNOWN_HTTP403",
+  "exact_owner_inventory_match": false,
+  "upload_sha256": {
+    "dataset-metadata.json": "d8c72b9ff03941e1d2247707bd5ba2fd4f118d80da3fc6bf09d7fabd57c1b03b",
+    "degree_local_bond_return_ema999_initial.pt": "7c78e5ceebeb45b1ce82f7164ed8120917231ef3777c9b839b0edbf052fad970",
+    "degree_local_connected_pair_ema999_initial.pt": "f649da2a1e109510449dc889abee96fd56a16e36440915bc959c0709f87b8d07",
+    "experiment_spec.json": "7eededdb820079c1a7ccb2ac871125601ba2dd19b105f7a7057dd37d82521ece",
+    "package_manifest.json": "d88f546b61a46c156874cea1775ca324e768a76f3f87f25f5def0af3c9cc3948",
+    "SOURCE_ARCHIVE_SHA256.txt": "21b8b1e77a62e821627a203bc6cf1c5860488dea4682429825db144829861ddf",
+    "SOURCE_COMMIT.txt": "e41c63a7c5c92705c8c43cdcce516cf60314a4413dc99e1a248fff95fce0bc05",
+    "SOURCE_FILES.json": "e9529357d3db5692ca7473cb96474e6f8f53481e89c557c4d86ca851cda7d4a5",
+    "source_payload.bin": "f8f3b386862048b8b9655c537bab810c6d66a51d59b403f22abbb7efff58ac28",
+    "target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026"
+  },
+  "response_error": "",
+  "response_invalid_files": null,
+  "status": "ready",
+  "mount_files": {
+    "SOURCE_ARCHIVE_SHA256.txt": 65,
+    "SOURCE_COMMIT.txt": 41,
+    "SOURCE_FILES.json": 49740,
+    "degree_local_bond_return_ema999_initial.pt": 23710089,
+    "degree_local_connected_pair_ema999_initial.pt": 23679830,
+    "experiment_spec.json": 5732,
+    "package_manifest.json": 11728,
+    "source_payload.bin": 939301,
+    "target_transform.json": 695
+  }
+}
