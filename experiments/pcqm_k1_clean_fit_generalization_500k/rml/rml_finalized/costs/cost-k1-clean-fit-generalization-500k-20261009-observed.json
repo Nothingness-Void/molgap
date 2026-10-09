@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "inference",
+  "cost_event_id": "cost-k1-clean-fit-generalization-500k-20261009-observed",
+  "evidence_ref": "experiments/pcqm_k1_clean_fit_generalization_500k/acceptance.json",
+  "hardware": "CPU four intra-op threads; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.2820095486111111
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.07401637675000024
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-clean-fit-generalization-500k-20261009",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+}

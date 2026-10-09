@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 426,
+  "ambiguous_historical_role_record_count": 434,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -1836,6 +1836,62 @@
       "state": "consumed"
     },
     {
+      "evidence_id": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "role_identity": null,
+      "role_name": "train_decoded",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "role_identity": null,
+      "role_name": "train_descriptive",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
       "evidence_id": "pcqm-k1-colab-execution-profile-20261007",
       "role_identity": null,
       "role_name": "development",
@@ -2984,7 +3040,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 247,
+  "explicit_role_event_count": 254,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "fixed50k_development",
@@ -4507,6 +4563,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-k1-late-weight-average-20261008-internal_development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -4642,6 +4726,22 @@
         "trajectory_id": "TB-k1-complete-module-audit-20261008"
       }
     ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4:train_descriptive": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-train_descriptive-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-train_descriptive-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4:train_features": [
       {
         "access_kind": "labels_read",
@@ -4734,6 +4834,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-bn-mechanism-a100-20261008"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-train_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad:train_prefix": [
@@ -4880,6 +4987,7 @@
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "pcqm-k1-bn-mechanism-a100-20261008",
+      "pcqm-k1-clean-fit-generalization-500k-20261009",
       "pcqm-k1-colab-execution-profile-20261007",
       "pcqm-k1-complete-module-audit-20261008",
       "pcqm-k1-consistency-fusion-transfer-20261004",
@@ -4972,6 +5080,7 @@
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "pcqm-k1-bn-mechanism-a100-20261008",
+      "pcqm-k1-clean-fit-generalization-500k-20261009",
       "pcqm-k1-colab-execution-profile-20261007",
       "pcqm-k1-complete-module-audit-20261008",
       "pcqm-k1-consistency-fusion-transfer-20261004",
@@ -5989,6 +6098,34 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-bn-mechanism-a100-20261008"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
       },
       {
         "access_kind": "labels_read",
@@ -7324,6 +7461,34 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-k1-late-weight-average-20261008-internal_development-labels_read",
         "selection_used": true,
         "semantics": "explicit",
@@ -7469,6 +7634,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-bn-mechanism-a100-20261008"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-clean-fit-generalization-500k-20261009-train_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad:train_prefix": [

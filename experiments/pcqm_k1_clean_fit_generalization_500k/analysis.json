@@ -1,0 +1,410 @@
+{
+  "metrics": {
+    "k1_pretrained_mean2_epoch49_original": {
+      "train_mae_eV": 0.06217992043821141,
+      "development_mae_eV": 0.10502289041042327,
+      "dev_minus_train_gap_eV": 0.04284296997221186
+    },
+    "k1_pretrained_mean2_epoch49_calibrated": {
+      "train_mae_eV": 0.0573150019190507,
+      "development_mae_eV": 0.10395200979709625,
+      "dev_minus_train_gap_eV": 0.04663700787804555
+    },
+    "k1_pretrained_mean2_epoch60_original": {
+      "train_mae_eV": 0.06196872203145176,
+      "development_mae_eV": 0.10556637926101685,
+      "dev_minus_train_gap_eV": 0.04359765722956509
+    },
+    "k1_pretrained_mean2_epoch60_calibrated": {
+      "train_mae_eV": 0.05604510358534753,
+      "development_mae_eV": 0.1038985907125473,
+      "dev_minus_train_gap_eV": 0.047853487127199765
+    },
+    "k1_pretrained_consistency_epoch49_original": {
+      "train_mae_eV": 0.06137475435389206,
+      "development_mae_eV": 0.10490407538890839,
+      "dev_minus_train_gap_eV": 0.04352932103501633
+    },
+    "k1_pretrained_consistency_epoch49_calibrated": {
+      "train_mae_eV": 0.056516515658586286,
+      "development_mae_eV": 0.10365894827842713,
+      "dev_minus_train_gap_eV": 0.04714243261984084
+    },
+    "k1_pretrained_consistency_epoch60_original": {
+      "train_mae_eV": 0.06165163533296436,
+      "development_mae_eV": 0.1057246065235138,
+      "dev_minus_train_gap_eV": 0.04407297119054944
+    },
+    "k1_pretrained_consistency_epoch60_calibrated": {
+      "train_mae_eV": 0.05597888244665228,
+      "development_mae_eV": 0.10444628034591674,
+      "dev_minus_train_gap_eV": 0.048467397899264464
+    }
+  },
+  "contrasts": {
+    "train_epoch_change_k1_pretrained_mean2_original": {
+      "first": "k1_pretrained_mean2_epoch49_original",
+      "second": "k1_pretrained_mean2_epoch60_original",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.00021119840675964952,
+        "ci95": [
+          -0.00048120744395419024,
+          4.531932063400735e-05
+        ],
+        "probability_better": 0.941,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "train_epoch_change_k1_pretrained_mean2_calibrated": {
+      "first": "k1_pretrained_mean2_epoch49_calibrated",
+      "second": "k1_pretrained_mean2_epoch60_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.0012698983337031677,
+        "ci95": [
+          -0.0015387686962640146,
+          -0.0010247639096633066
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "train_epoch_change_k1_pretrained_consistency_original": {
+      "first": "k1_pretrained_consistency_epoch49_original",
+      "second": "k1_pretrained_consistency_epoch60_original",
+      "error_change_second_minus_first_eV": {
+        "delta": 0.0002768809790723026,
+        "ci95": [
+          4.395401629153643e-06,
+          0.0005407122087490278
+        ],
+        "probability_better": 0.024,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "train_epoch_change_k1_pretrained_consistency_calibrated": {
+      "first": "k1_pretrained_consistency_epoch49_calibrated",
+      "second": "k1_pretrained_consistency_epoch60_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.0005376332119340077,
+        "ci95": [
+          -0.0007883834954554913,
+          -0.0002874096029700013
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "train_arm_change_epoch49_original": {
+      "first": "k1_pretrained_mean2_epoch49_original",
+      "second": "k1_pretrained_consistency_epoch49_original",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.0008051660843193531,
+        "ci95": [
+          -0.0014222671732568414,
+          -0.00018464697677700344
+        ],
+        "probability_better": 0.993,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "train_arm_change_epoch49_calibrated": {
+      "first": "k1_pretrained_mean2_epoch49_calibrated",
+      "second": "k1_pretrained_consistency_epoch49_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.000798486260464415,
+        "ci95": [
+          -0.0014694443299958948,
+          -0.0001230615183885675
+        ],
+        "probability_better": 0.987,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "train_arm_change_epoch60_original": {
+      "first": "k1_pretrained_mean2_epoch60_original",
+      "second": "k1_pretrained_consistency_epoch60_original",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.000317086698487401,
+        "ci95": [
+          -0.000948724458066863,
+          0.00028242760017747046
+        ],
+        "probability_better": 0.829,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "train_arm_change_epoch60_calibrated": {
+      "first": "k1_pretrained_mean2_epoch60_calibrated",
+      "second": "k1_pretrained_consistency_epoch60_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -6.622113869525492e-05,
+        "ci95": [
+          -0.0007098545920598553,
+          0.0005797464062197832
+        ],
+        "probability_better": 0.553,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "train_bn_change_k1_pretrained_mean2_epoch49": {
+      "first": "k1_pretrained_mean2_epoch49_original",
+      "second": "k1_pretrained_mean2_epoch49_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.00486491851916071,
+        "ci95": [
+          -0.005116129896850907,
+          -0.0046293725041323345
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "train_bn_change_k1_pretrained_mean2_epoch60": {
+      "first": "k1_pretrained_mean2_epoch60_original",
+      "second": "k1_pretrained_mean2_epoch60_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.0059236184461042285,
+        "ci95": [
+          -0.006197532416263129,
+          -0.0056474740991689035
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "train_bn_change_k1_pretrained_consistency_epoch49": {
+      "first": "k1_pretrained_consistency_epoch49_original",
+      "second": "k1_pretrained_consistency_epoch49_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.004858238695305772,
+        "ci95": [
+          -0.005101559241302312,
+          -0.0046196342293114865
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "train_bn_change_k1_pretrained_consistency_epoch60": {
+      "first": "k1_pretrained_consistency_epoch60_original",
+      "second": "k1_pretrained_consistency_epoch60_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.005672752886312082,
+        "ci95": [
+          -0.0059116142434504585,
+          -0.005421800768453977
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_epoch_change_k1_pretrained_mean2_original": {
+      "first": "k1_pretrained_mean2_epoch49_original",
+      "second": "k1_pretrained_mean2_epoch60_original",
+      "error_change_second_minus_first_eV": {
+        "delta": 0.0005434888505935669,
+        "ci95": [
+          0.0003852132518291473,
+          0.000711330757021904
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_epoch_change_k1_pretrained_mean2_calibrated": {
+      "first": "k1_pretrained_mean2_epoch49_calibrated",
+      "second": "k1_pretrained_mean2_epoch60_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -5.3419084548950196e-05,
+        "ci95": [
+          -0.00021239975011348725,
+          0.00010399171066284177
+        ],
+        "probability_better": 0.74,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_epoch_change_k1_pretrained_consistency_original": {
+      "first": "k1_pretrained_consistency_epoch49_original",
+      "second": "k1_pretrained_consistency_epoch60_original",
+      "error_change_second_minus_first_eV": {
+        "delta": 0.0008205311346054078,
+        "ci95": [
+          0.0006662865415811538,
+          0.0009601983641386032
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_epoch_change_k1_pretrained_consistency_calibrated": {
+      "first": "k1_pretrained_consistency_epoch49_calibrated",
+      "second": "k1_pretrained_consistency_epoch60_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": 0.000787332067489624,
+        "ci95": [
+          0.0006291706626415253,
+          0.0009309851804971695
+        ],
+        "probability_better": 0.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_arm_change_epoch49_original": {
+      "first": "k1_pretrained_mean2_epoch49_original",
+      "second": "k1_pretrained_consistency_epoch49_original",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.00011881502151489258,
+        "ci95": [
+          -0.000623115630030632,
+          0.0004192623113393783
+        ],
+        "probability_better": 0.66,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_arm_change_epoch49_calibrated": {
+      "first": "k1_pretrained_mean2_epoch49_calibrated",
+      "second": "k1_pretrained_consistency_epoch49_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.00029306151866912843,
+        "ci95": [
+          -0.000841467751979828,
+          0.00024114620101451864
+        ],
+        "probability_better": 0.855,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_arm_change_epoch60_original": {
+      "first": "k1_pretrained_mean2_epoch60_original",
+      "second": "k1_pretrained_consistency_epoch60_original",
+      "error_change_second_minus_first_eV": {
+        "delta": 0.00015822726249694824,
+        "ci95": [
+          -0.0003175280078649521,
+          0.0006831302340030668
+        ],
+        "probability_better": 0.295,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_arm_change_epoch60_calibrated": {
+      "first": "k1_pretrained_mean2_epoch60_calibrated",
+      "second": "k1_pretrained_consistency_epoch60_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": 0.0005476896333694458,
+        "ci95": [
+          3.547528278827668e-05,
+          0.0010809700322151183
+        ],
+        "probability_better": 0.017,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_bn_change_k1_pretrained_mean2_epoch49": {
+      "first": "k1_pretrained_mean2_epoch49_original",
+      "second": "k1_pretrained_mean2_epoch49_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.0010708806133270263,
+        "ci95": [
+          -0.0012100089154243468,
+          -0.0009310392013788223
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_bn_change_k1_pretrained_mean2_epoch60": {
+      "first": "k1_pretrained_mean2_epoch60_original",
+      "second": "k1_pretrained_mean2_epoch60_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.0016677885484695436,
+        "ci95": [
+          -0.0018184289256334306,
+          -0.001514329496383667
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_bn_change_k1_pretrained_consistency_epoch49": {
+      "first": "k1_pretrained_consistency_epoch49_original",
+      "second": "k1_pretrained_consistency_epoch49_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.0012451271104812621,
+        "ci95": [
+          -0.0013837818814516067,
+          -0.0011009874074459076
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    },
+    "development_bn_change_k1_pretrained_consistency_epoch60": {
+      "first": "k1_pretrained_consistency_epoch60_original",
+      "second": "k1_pretrained_consistency_epoch60_calibrated",
+      "error_change_second_minus_first_eV": {
+        "delta": -0.001278326177597046,
+        "ci95": [
+          -0.0014197945874929428,
+          -0.0011350499728918077
+        ],
+        "probability_better": 1.0,
+        "n_bootstrap": 1000,
+        "seed": 42
+      }
+    }
+  },
+  "sign": "positive error change means second is worse",
+  "wall_seconds": 3.3859959000001254,
+  "process_cpu_seconds": 4.859375,
+  "limits": [
+    "Train sample is calibration in-sample",
+    "Development selection consumed",
+    "No causal underfit proof",
+    "Row CI is not seed variation"
+  ],
+  "gap_changes_second_minus_first_eV": {
+    "epoch_change_k1_pretrained_mean2_original": 0.000754687257353226,
+    "epoch_change_k1_pretrained_mean2_calibrated": 0.0012164792491542176,
+    "epoch_change_k1_pretrained_consistency_original": 0.0005436501555331069,
+    "epoch_change_k1_pretrained_consistency_calibrated": 0.0013249652794236205,
+    "arm_change_epoch49_original": 0.0006863510628044717,
+    "arm_change_epoch49_calibrated": 0.0005054247417952962,
+    "arm_change_epoch60_original": 0.00047531396098435263,
+    "arm_change_epoch60_calibrated": 0.0006139107720646991,
+    "bn_change_k1_pretrained_mean2_epoch49": 0.003794037905833686,
+    "bn_change_k1_pretrained_mean2_epoch60": 0.0042558298976346776,
+    "bn_change_k1_pretrained_consistency_epoch49": 0.0036131115848245104,
+    "bn_change_k1_pretrained_consistency_epoch60": 0.004394426708715024
+  },
+  "gap_change_uncertainty": "Point difference only; train/dev rows are disjoint, not paired across roles. Per-role paired row intervals are retained separately.",
+  "analysis_source_sha256": {
+    "D:\\w\\k1-clean-fit\\experiments\\pcqm_k1_clean_fit_generalization_500k\\analyze.py": "0c9b2d85fdef8056d00bdde534cd4194ad71e67dcb1777b7d9bffc359153c084",
+    "D:\\w\\k1-clean-fit\\src\\molgap\\k1_clean_fit_diagnostic.py": "9795d2b23ddbaceda6d07d4ba0a34e5b204350ec3ea5198e4037c231a7c5c721"
+  }
+}

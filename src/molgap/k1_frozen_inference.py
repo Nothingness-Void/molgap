@@ -12,7 +12,8 @@ from .qm9_neural_atom import make_encoder
 
 def load_native500k_k1(path: Path, *, expected_sha256: str,
                       expected_source_sha256: str, expected_epoch: int,
-                      checkpoint_kind: str):
+                      checkpoint_kind: str,
+                      expected_arm: str = "k1_pretrained_consistency"):
     """Translate the retained native500K checkpoint through its K1 factory.
 
     The caller must use the accepted model source and bind the checkpoint bytes.
@@ -22,6 +23,8 @@ def load_native500k_k1(path: Path, *, expected_sha256: str,
     from .training_reproducibility import sha256_file
     from .v4_runtime import torch_load_compat
 
+    if expected_arm not in ("k1_pretrained_mean2", "k1_pretrained_consistency"):
+        raise ValueError("Unknown native500K K1 arm")
     if checkpoint_kind not in ("selected", "final"):
         raise ValueError("Unknown native500K checkpoint kind")
     if sha256_file(path) != expected_sha256:
@@ -29,7 +32,7 @@ def load_native500k_k1(path: Path, *, expected_sha256: str,
     state = torch_load_compat(path, map_location="cpu",
                               weights_only=checkpoint_kind == "selected")
     contract = state["contract"]
-    required = {"arm": "k1_pretrained_consistency", "parameters": 3658817,
+    required = {"arm": expected_arm, "parameters": 3658817,
                 "benchmark_id": "pcqm-composed500k-dev50k-60pass-v1",
                 "precision": "fp32", "geometry_used": False, "teacher_used": False}
     if any(contract.get(key) != value for key, value in required.items()):
