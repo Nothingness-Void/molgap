@@ -1,12 +1,12 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 49,
-  "event_count": 189,
+  "estimated_event_count": 50,
+  "event_count": 191,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-k1-a100-profile-failed-worker"
   ],
-  "measurement_missing_event_count": 159,
+  "measurement_missing_event_count": 161,
   "not_applicable_event_count": 71,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -1171,6 +1171,54 @@
         "not_applicable_records": 0,
         "unknown_records": 2
       },
+      "Tesla T4 (2 allocated; cuda0 active):cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4 (2 allocated; cuda0 active):device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.17095981645388886
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4 (2 allocated; cuda0 active):queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4 (2 allocated; cuda0 active):wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.08547990822694443
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
       "unknown:cpu_hours": {
         "estimated": {
           "known_records": 0,
@@ -1793,6 +1841,54 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.0033231060480555167
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Two allocated native T4 devices; cuda0 scratch workload:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Two allocated native T4 devices; cuda0 scratch workload:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.6666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Two allocated native T4 devices; cuda0 scratch workload:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Two allocated native T4 devices; cuda0 scratch workload:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -4252,6 +4348,56 @@
         "unknown_records": 0
       }
     },
+    "Tesla T4 (2 allocated; cuda0 active)": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.17095981645388886
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.08547990822694443
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "Tesla T4 x2 allocation; candidate assigned GPU0": {
       "cpu_hours": {
         "estimated": {
@@ -5250,6 +5396,56 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      }
+    },
+    "Two allocated native T4 devices; cuda0 scratch workload": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.6666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "Z100SM DCU": {
@@ -11397,6 +11593,104 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.046875731027778075
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-native-t4-cost-profile-20261009": {
+      "Tesla T4 (2 allocated; cuda0 active):cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4 (2 allocated; cuda0 active):device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.17095981645388886
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Tesla T4 (2 allocated; cuda0 active):queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4 (2 allocated; cuda0 active):wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.08547990822694443
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Two allocated native T4 devices; cuda0 scratch workload:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Two allocated native T4 devices; cuda0 scratch workload:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.6666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "Two allocated native T4 devices; cuda0 scratch workload:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Two allocated native T4 devices; cuda0 scratch workload:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.3333333333333333
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0

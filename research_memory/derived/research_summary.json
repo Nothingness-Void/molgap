@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 103,
+      "trajectories_total": 104,
       "with_complete_native_measurement": 21,
-      "with_cost_event": 92,
-      "with_incomplete_native_measurement": 71,
+      "with_cost_event": 93,
+      "with_incomplete_native_measurement": 72,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -1263,6 +1263,56 @@
           "unknown_records": 0
         }
       },
+      "Tesla T4 (2 allocated; cuda0 active)": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 1,
+            "known_total": 0.17095981645388886
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 1,
+            "known_total": 0.08547990822694443
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
       "Tesla T4 x2 allocation; candidate assigned GPU0": {
         "cpu_hours": {
           "estimated": {
@@ -2263,6 +2313,56 @@
           "unknown_records": 1
         }
       },
+      "Two allocated native T4 devices; cuda0 scratch workload": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 0.6666666666666666
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 0.3333333333333333
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
       "Z100SM DCU": {
         "cpu_hours": {
           "estimated": {
@@ -2564,17 +2664,17 @@
         }
       }
     },
-    "unknown_events": 159
+    "unknown_events": 161
   },
   "evidence": {
-    "validated": 92,
+    "validated": 93,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 78,
+      "count": 79,
       "severity": "INFO"
     },
     {
@@ -2584,7 +2684,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 71,
+      "count": 72,
       "severity": "WARN"
     },
     {
@@ -2604,19 +2704,19 @@
     }
   ],
   "roles": {
-    "coarse_historical": 434,
-    "explicit_events": 254,
+    "coarse_historical": 439,
+    "explicit_events": 256,
     "repeatedly_selected": 19
   },
-  "source_digest": "0f432381890d39b015c94a7c4576cc8b555abbe1db3ec6ccdb0098ec5c35613c",
+  "source_digest": "031dc5442b138a1266d823c758f2ef8268431379f1981faca8e37b889ea3d176",
   "trajectories": {
-    "count": 103,
+    "count": 104,
     "outcomes": {
       "CLOSED": 11,
       "INCONCLUSIVE": 19,
       "INFRASTRUCTURE_ONLY": 5,
       "NEGATIVE_UNDER_CONTRACT": 21,
-      "NO_TRAIN": 39,
+      "NO_TRAIN": 40,
       "POSITIVE_UNDER_CONTRACT": 8
     }
   },

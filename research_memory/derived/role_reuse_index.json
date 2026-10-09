@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 434,
+  "ambiguous_historical_role_record_count": 439,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -2375,6 +2375,41 @@
       "state": "consumed"
     },
     {
+      "evidence_id": "pcqm-k1-native-t4-cost-profile-20261009",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-native-t4-cost-profile-20261009",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-native-t4-cost-profile-20261009",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-native-t4-cost-profile-20261009",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-native-t4-cost-profile-20261009",
+      "role_identity": null,
+      "role_name": "train_probe",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
       "evidence_id": "pcqm-k1-pair-value-decoupled-100k-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -3040,7 +3075,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 254,
+  "explicit_role_event_count": 256,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "fixed50k_development",
@@ -4458,6 +4493,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-t4-profile-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-native-t4-cost-profile-20261009"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-t4-profile-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-native-t4-cost-profile-20261009"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:3ede8a342d5ca0205cb3d1220b1a3f4e62c91e3ec0026e1c4594c69203703e11:internal_development": [
@@ -5001,6 +5050,7 @@
       "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-late-weight-average-20261008",
+      "pcqm-k1-native-t4-cost-profile-20261009",
       "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
@@ -5094,6 +5144,7 @@
       "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-late-weight-average-20261008",
+      "pcqm-k1-native-t4-cost-profile-20261009",
       "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
@@ -7379,6 +7430,36 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629:train_probe": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-a100-profile-train_probe-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-a100-profile-train_probe-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-t4-profile-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-native-t4-cost-profile-20261009"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-t4-profile-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-native-t4-cost-profile-20261009"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development": [

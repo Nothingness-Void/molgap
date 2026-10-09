@@ -1556,6 +1556,27 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "matched_scratch_execution_counterfactual",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-native-t4-cost-profile-20261009",
+      "role_use": {
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_probe": "labels_read"
+      },
+      "scientific_scope": "desktop_k1_native_t4_execution_diagnostic",
+      "source_envelope": "experiments/pcqm_k1_t4_cost_quality/profile/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified"
       ],
       "comparison_status": "point_comparison_only_paired_interval_unavailable",
