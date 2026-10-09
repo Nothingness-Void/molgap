@@ -23,7 +23,7 @@ def main():
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     inputs = {"source_commit": commit, "accepted_profile_manifest": {
         "path": "D:/w/k1-colab-profile/platforms/_records/colab/staging/k1-profile-a100-20261007/payload/payload_manifest.json",
-        "sha256": sha256_file(old / "payload_manifest.json")},
+        "sha256": sha256_file(old / "payload_manifest_attempt002.json")},
         "source_overlays": {name: sha256_file(ROOT / name) for name in (
             "src/molgap/k1_execution_profile.py", "src/molgap/evidence_pointers.py")},
         "worker_ceiling_seconds": 900, "allocation_ceiling_seconds": 1200,
