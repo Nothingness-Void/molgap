@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "local-clean-bn-attempt3",
+  "category": "acceptance",
+  "cost_event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-clean-bn-attempt3",
+  "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+  "hardware": "CPU worker process; parent CPU unmeasured",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.16401909722222222
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measurement_missing",
+      "value": null
+    }
+  },
+  "platform": "local",
+  "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+}

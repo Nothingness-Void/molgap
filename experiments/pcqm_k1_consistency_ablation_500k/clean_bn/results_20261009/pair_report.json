@@ -1,0 +1,95 @@
+{
+  "status": "failed",
+  "started_at_utc": "2026-10-09T03:17:31.019219+00:00",
+  "arms": {
+    "k1_pretrained_mean2": {
+      "arm": "k1_pretrained_mean2",
+      "status": "failed",
+      "started_at_utc": "2026-10-09T03:17:31.257862+00:00",
+      "error": "ValueError: Nonfrozen dependency imported: molgap.constants",
+      "ended_at_utc": "2026-10-09T03:17:39.504732+00:00",
+      "phase": "failed",
+      "updated_at_utc": "2026-10-09T03:17:39.071036+00:00",
+      "wall_seconds": 7.812451499999952,
+      "process_cpu_seconds": 7.171875,
+      "worker_exitcode": 1,
+      "parent_observed_wall_seconds": 8.482710100000077,
+      "stop_reason": "worker_failure"
+    }
+  },
+  "inputs": {
+    "format": "molgap-k1-clean-bn-pair-v1",
+    "settings": {
+      "cpu_threads": 4,
+      "precision": "fp32",
+      "tf32_enabled": false,
+      "sample_seed": 20261008,
+      "train_rows": 500000,
+      "calibration_rows": 16384,
+      "development_rows": 50000,
+      "batch_size": 128,
+      "epoch_zero_based": 48,
+      "prediction_tolerance_eV": 0.0001,
+      "arm_wall_seconds": 600,
+      "pair_wall_seconds": 1200
+    },
+    "protocol": {
+      "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
+      "sha256": "181bb032a895ca6d6539c0467eff45748deaa065b3d6bd3dec4ff66d9e8ec8e5"
+    },
+    "source_archive": {
+      "path": "D:/w/k1-consistency-500k/platforms/_records/kaggle/staging/pcqm_k1_consistency_ablation_500k/kaggle3_v1/package/source.tar.gz",
+      "sha256": "b2b7539d7fbd0fbff6e674ed632ab90be00f86e8484eb6f2e8cb3ddafe06a3fd"
+    },
+    "source_inventory": {
+      "path": "D:/w/k1-consistency-500k/platforms/_records/kaggle/staging/pcqm_k1_consistency_ablation_500k/kaggle3_v1/package/SOURCE_FILES.json",
+      "sha256": "b60a02f7112577a8cb85469fd65bdb8dc1b9aa0b0befe0c2c9af75ff5eb2361d"
+    },
+    "frozen_source_root": "D:/w/k1-consistency-500k/platforms/_records/kaggle/staging/pcqm_k1_consistency_ablation_500k/kaggle3_v1/frozen_source",
+    "cache_root": "D:/\u6587\u6863/molgap-exp/molgap-500k-v4-evidence/data/cache/pcqm4mv2_500k_v4",
+    "manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "executed_source_files": {
+      "D:/w/k1-consistency-500k/src/molgap/k1_bn_diagnostic.py": "293517ca74a2aa64f85c91f5dbca6e0fff0fc0ddf1efff027c5447324d5154d8",
+      "D:/w/k1-consistency-500k/src/molgap/k1_frozen_inference.py": "2984b4abccab3eeec2f59d763649bcba41b77fdf40b4d9c4fc88a80c8d00a3c5",
+      "D:/w/k1-consistency-500k/src/molgap/k1_bn_calibration.py": "4eafbc4259cfe507f51913d18ef301e2f4c3542363379cea054b6f6ee3cb1e31",
+      "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/clean_bn/run.py": "481cad9bcb80923ebd0f5d27e66b30aad032eb8607c0681e2c93668e534495ae",
+      "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/clean_bn/prepare.py": "8e7690c491b2225d9d9d5a2d2820cd951a7cb0078259fd7b09037bac9706be3d",
+      "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/clean_bn/AUTHORIZATION.md": "93ea083aaebdaee77c17498b958086be58b0682baa6dd2bb27491d57d143e295"
+    },
+    "arms": {
+      "k1_pretrained_mean2": {
+        "trajectory": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/trajectory.json",
+          "sha256": "f03afac87af115262730397fc4ebe602cc81cce5a406139687892a6d8535aea0"
+        },
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
+        "checkpoint": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/best_model.pt",
+          "sha256": "c444a1259da7a3d6ac601afadf285dc0aa775591651056668c516ca02c9ca372"
+        },
+        "saved_predictions": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/best_predictions.pt",
+          "sha256": "cc32847989f91a066ba96f6fb36982f04deff06232eaf1ae4a672b3c3233a5cd"
+        }
+      },
+      "k1_pretrained_consistency": {
+        "trajectory": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/trajectory.json",
+          "sha256": "c1b50b9dcd01d634999b0e19d03705db2670d6d3ec668e4cd9cce9af851ee1b1"
+        },
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+        "checkpoint": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/best_model.pt",
+          "sha256": "c4ad6a54fa8168d19832517e5a397ad7a5e17950ada1fe443ced47c3ae7decff"
+        },
+        "saved_predictions": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/best_predictions.pt",
+          "sha256": "57463e4e578db6310eadfd2b46d9c57f50d0ef7e2aa12c3f883ace72e7265f55"
+        }
+      }
+    }
+  },
+  "updated_at_utc": "2026-10-09T03:17:39.506964+00:00",
+  "wall_seconds": 8.489433400000053,
+  "ended_at_utc": "2026-10-09T03:17:39.508968+00:00"
+}

@@ -1315,6 +1315,48 @@
     },
     {
       "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "500k",
+      "source_envelope": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "stop",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "durable_local_verified"
+      ],
+      "comparison_status": "context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
+      "role_use": {
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "500k",
+      "source_envelope": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "stop",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "locally_retained_hash_verified"
       ],
       "comparison_status": "same_cohort_retained_checkpoint_equal_blend",

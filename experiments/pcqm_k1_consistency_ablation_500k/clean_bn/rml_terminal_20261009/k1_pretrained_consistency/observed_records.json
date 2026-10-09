@@ -1,0 +1,474 @@
+{
+  "clean_bn_acceptance_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/analysis_final.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-consistency-ablation-001",
+      "category": "training",
+      "cost_event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-training",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "hardware": "Tesla T4; assignedGPU1 in2T4 pair",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 8.694784547646389
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 8.694784547646389
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-consistency-ablation-001",
+      "category": "preflight",
+      "cost_event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-preflight",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "hardware": "Tesla T4; assignedGPU1 in2T4 pair",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.005835226883055561
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.005835226883055561
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-consistency-ablation-001",
+      "category": "other",
+      "cost_event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-bootstrap-overhead",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "hardware": "Tesla T4; assignedGPU1 in2T4 pair",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.05080612667472148
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.05080612667472148
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-consistency-ablation-002",
+      "category": "training",
+      "cost_event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle1-consistency-ablation-002-training",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "hardware": "Tesla T4; one of two allocated devices; includes assigned idle capacity",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 8.726141398071944
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-consistency-ablation-002",
+      "category": "preflight",
+      "cost_event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle1-consistency-ablation-002-preflight",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "hardware": "Tesla T4; one of two allocated devices; includes assigned idle capacity",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.006112998666111101
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle1-consistency-ablation-002",
+      "category": "other",
+      "cost_event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle1-consistency-ablation-002-bootstrap-overhead",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "hardware": "Tesla T4; one of two allocated devices; includes assigned idle capacity",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.04903624761277873
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle3-consistency-ablation-001",
+      "category": "training",
+      "cost_event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle3-consistency-ablation-001-training",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "hardware": "Tesla T4; one of two allocated devices; includes assigned idle capacity",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 5.159237365973889
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle3-consistency-ablation-001",
+      "category": "preflight",
+      "cost_event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle3-consistency-ablation-001-preflight",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "hardware": "Tesla T4; one of two allocated devices; includes assigned idle capacity",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.005835061989722227
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "kaggle3-consistency-ablation-001",
+      "category": "other",
+      "cost_event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle3-consistency-ablation-001-bootstrap-overhead",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "hardware": "Tesla T4; one of two allocated devices; includes assigned idle capacity",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.049258205788888114
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "local-clean-bn-attempt3",
+      "category": "acceptance",
+      "cost_event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-clean-bn-attempt3",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "hardware": "CPU worker process; parent CPU unmeasured",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.16401909722222222
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "local",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    }
+  ],
+  "format": "molgap-rml-retained-observation-translation-v1",
+  "limits": [
+    "No strict reference was frozen",
+    "Physical jobs differ; strict replay unqualified",
+    "CPU/wall/T4 units are separate",
+    "Pair wall windows overlap across arms; no additive per-arm wall inferred",
+    "Queue and native CPU costs unknown",
+    "Parent CPU and preparation/testing/analysis cost unknown"
+  ],
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-train-training_membership",
+      "role_name": "train",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-selection_used",
+      "role_name": "internal_development",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-train-labels_read-clean-bn",
+      "role_name": "train",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed-clean-bn",
+      "role_name": "internal_development",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    }
+  ],
+  "training_inspection_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/inspection_report.json",
+  "translations": [
+    {
+      "event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-training",
+      "receipt_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/evidence/invocation_cost.json",
+      "source_event_ref": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-training.json",
+      "source_event_sha256": "bd94340b33476f027f0eed7c1aef868e130c83cbf0f8c512b5ee82f3de6b4ce3"
+    },
+    {
+      "event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-preflight",
+      "receipt_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/evidence/invocation_cost.json",
+      "source_event_ref": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-preflight.json",
+      "source_event_sha256": "edf939a42c83160b40cacfa7b3e471c1f35ab945c1aac449b6583a8f7bb4b20a"
+    },
+    {
+      "event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-bootstrap-overhead",
+      "receipt_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/evidence/invocation_cost.json",
+      "source_event_ref": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-bootstrap-overhead.json",
+      "source_event_sha256": "dc9dff1fdee9856f5fccc5e4cbb55b86bea20a8f50c645ed165d92f3d5bd98b3"
+    },
+    {
+      "event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle1-consistency-ablation-002-training",
+      "formula": "allocated_T4_seconds / 2 / 3600",
+      "receipt_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_v2/terminal_inspection_20261009/evidence/invocation_cost.json",
+      "receipt_sha256": "6aeec90d281b0a70e0cb4299aa62a73bf4384f2c97d9bf9bbe50027957936b97"
+    },
+    {
+      "event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle1-consistency-ablation-002-preflight",
+      "formula": "allocated_T4_seconds / 2 / 3600",
+      "receipt_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_v2/terminal_inspection_20261009/evidence/invocation_cost.json",
+      "receipt_sha256": "6aeec90d281b0a70e0cb4299aa62a73bf4384f2c97d9bf9bbe50027957936b97"
+    },
+    {
+      "event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle1-consistency-ablation-002-bootstrap-overhead",
+      "formula": "allocated_T4_seconds / 2 / 3600",
+      "receipt_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_v2/terminal_inspection_20261009/evidence/invocation_cost.json",
+      "receipt_sha256": "6aeec90d281b0a70e0cb4299aa62a73bf4384f2c97d9bf9bbe50027957936b97"
+    },
+    {
+      "event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle3-consistency-ablation-001-training",
+      "formula": "allocated_T4_seconds / 2 / 3600",
+      "receipt_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/invocation_cost.json",
+      "receipt_sha256": "9fd2029cb1823fa6c0a972a8972ad0b634048b24ac648baa99b55b6eca471650"
+    },
+    {
+      "event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle3-consistency-ablation-001-preflight",
+      "formula": "allocated_T4_seconds / 2 / 3600",
+      "receipt_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/invocation_cost.json",
+      "receipt_sha256": "9fd2029cb1823fa6c0a972a8972ad0b634048b24ac648baa99b55b6eca471650"
+    },
+    {
+      "event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle3-consistency-ablation-001-bootstrap-overhead",
+      "formula": "allocated_T4_seconds / 2 / 3600",
+      "receipt_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/invocation_cost.json",
+      "receipt_sha256": "9fd2029cb1823fa6c0a972a8972ad0b634048b24ac648baa99b55b6eca471650"
+    },
+    {
+      "event_id": "cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-clean-bn-attempt3",
+      "report_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/pair_report.json",
+      "report_sha256": "4b15a6490df5b9dcf53b9fb25a34efacfc0114b6f999dd9bfaaea1ccf19dd4a0",
+      "worker_process_cpu_seconds": 590.46875
+    },
+    {
+      "authority_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/raw_acceptance.md",
+      "authority_sha256": "64905bd046033fcfd2c37918fbdf1e62f3ace746cd1cd13ffffcb9dab2adc312",
+      "event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-train-training_membership",
+      "scope": "observed membership/selection/diagnostic only; no new data access"
+    },
+    {
+      "authority_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/raw_acceptance.md",
+      "authority_sha256": "64905bd046033fcfd2c37918fbdf1e62f3ace746cd1cd13ffffcb9dab2adc312",
+      "event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed",
+      "scope": "observed membership/selection/diagnostic only; no new data access"
+    },
+    {
+      "authority_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/stage_manifest.json",
+      "authority_sha256": "ecc0ef7d8d6faf8bb1144bd15906c33f1ce502745b94c64eadaad192a314d663",
+      "event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-selection_used",
+      "scope": "observed membership/selection/diagnostic only; no new data access"
+    },
+    {
+      "authority_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/analysis_final.json",
+      "authority_sha256": "99ca51bdd33607f93814f11d9d36fcac5834d8619bbc8b3815b8e28efed9d097",
+      "event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-train-labels_read-clean-bn",
+      "scope": "observed membership/selection/diagnostic only; no new data access"
+    },
+    {
+      "authority_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/analysis_final.json",
+      "authority_sha256": "99ca51bdd33607f93814f11d9d36fcac5834d8619bbc8b3815b8e28efed9d097",
+      "event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed-clean-bn",
+      "scope": "observed membership/selection/diagnostic only; no new data access"
+    }
+  ]
+}

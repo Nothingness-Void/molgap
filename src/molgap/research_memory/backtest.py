@@ -40,6 +40,8 @@ def build_screening_backtest(traces: list[dict[str, Any]]) -> dict[str, Any]:
     candidates = []
     for trace in traces:
         reasons = list(trace["backtest_eligibility"]["exclusion_reasons"])
+        if trace["reference_id"] is None:
+            reasons.append("missing_frozen_reference")
         if not trace["backtest_eligibility"]["eligible"]:
             reasons.append("canonical_trace_marked_ineligible")
         if trace["x_axis"] == "epochs":

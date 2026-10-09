@@ -100,6 +100,32 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference",
+        "missing_per_observation_cumulative_native_cost",
+        "multiple_physical_jobs_unqualified_for_strict_replay",
+        "one_seed_consumed_selection_role_not_independent_transfer",
+        "unobserved_checkpoint_identities"
+      ],
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference",
+        "missing_per_observation_cumulative_native_cost",
+        "multiple_physical_jobs_unqualified_for_strict_replay",
+        "one_seed_consumed_selection_role_not_independent_transfer",
+        "unobserved_checkpoint_identities"
+      ],
+      "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_mean2",
+      "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "control_cumulative_native_cost_missing",
         "cross_attempt_control_continuation",
         "strict_v5_comparison_readiness_not_established"
@@ -213,5 +239,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 25
+  "trace_count": 27
 }

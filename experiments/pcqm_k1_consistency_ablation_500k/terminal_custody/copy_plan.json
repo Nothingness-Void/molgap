@@ -1,0 +1,619 @@
+{
+  "source_root": "D:\\w\\k1-consistency-500k",
+  "source_commit": "1b0a8de2308bcb018a60acba103aac369970712e",
+  "destination_root": "D:\\\u6587\u6863\\molgap",
+  "files": [
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/budget.json",
+      "sha256": "e54a2dff807b1c7b4252a85c983538650958d51a82dd471f37207c1c99ad5253",
+      "bytes": 397
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/ATTRIBUTION.md",
+      "sha256": "a6b92b1a0bba45fca341d77a76098ae29ad7d2502a6bb130ee5050182cf363ae",
+      "bytes": 2121
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/DECISION.md",
+      "sha256": "c36ba62df695722ce020d203ce19aaa87052f9c27130ce62cdbb767eb3d74f80",
+      "bytes": 3959
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/inputs_attempt3.json",
+      "sha256": "519e9d30530742fda3ce2d14fa950d00ad48f2565dc9b07fecc8a643c0c3db88",
+      "bytes": 4490
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_20261009/pair_report.json",
+      "sha256": "3ba74a4b64a44df7a2597513d6ccb0e75cd5a30b0a4abc77108322d181bb3f91",
+      "bytes": 5494
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt2_20261009/pair_report.json",
+      "sha256": "b4c57c9c0965d34f9e0e6102502d4566e4abcad925e53e0be057a499ca5d244d",
+      "bytes": 5465
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/analysis_final.json",
+      "sha256": "99ca51bdd33607f93814f11d9d36fcac5834d8619bbc8b3815b8e28efed9d097",
+      "bytes": 7880
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/calibrated.pt",
+      "sha256": "3d2a1074bc7627f611a5704558ab0a0767921f11242c6d22d7bf1ebcde40943a",
+      "bytes": 802208
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/calibrated_buffers.pt",
+      "sha256": "45e3f73af67ef79c9f9685de43462b03812f6a0bbe8ec385bfdc8a148c3c8f0f",
+      "bytes": 45829
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/original.pt",
+      "sha256": "e81c48f8f7008ad0a2c6d40e5e482e633fa56b786e5f995260244f2bb0c95518",
+      "bytes": 802190
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/restored.pt",
+      "sha256": "578dd01d56b72a18ea36bb10237c33b49c3f974722592a060494f775cdecadf6",
+      "bytes": 802190
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/calibrated.pt",
+      "sha256": "af0e04253fe520ae962d0ccf4644fbc2d58728edd8d80ec314f312e503cc7985",
+      "bytes": 802208
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/calibrated_buffers.pt",
+      "sha256": "e454ce80d89e23210635fe4852bc0c355f96a971ac615816f61c5f2766e5736e",
+      "bytes": 45829
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/original.pt",
+      "sha256": "02e7c54e3590437c1db410c236b02698e77560220728053ff4225b9bc5fa1d3b",
+      "bytes": 802190
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/restored.pt",
+      "sha256": "14a04e9c4bfa7dd6d5f95897121d72a8ab29588bbb744ae92c34d458980ca5d0",
+      "bytes": 802190
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/pair_report.json",
+      "sha256": "4b15a6490df5b9dcf53b9fb25a34efacfc0114b6f999dd9bfaaea1ccf19dd4a0",
+      "bytes": 30785
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/rml_audit/k1_pretrained_consistency/canonical_trace.json",
+      "sha256": "8d68701b15e10b6e09c33e64229adcf133850be994c85f8e7cbae4a1ce57d7e5",
+      "bytes": 34301
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/rml_audit/k1_pretrained_mean2/canonical_trace.json",
+      "sha256": "82b8a9942222a4277ddf90f8e026b66af77def29a1bdd03b1ee4327ffe149bcc",
+      "bytes": 34288
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/RML_BLOCKERS.md",
+      "sha256": "cfc99b7570f2735c8134e7bd1cf788ad4cbf91f9d04012f11199586e67382f8a",
+      "bytes": 2122
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/dry_run_report.json",
+      "sha256": "d19006d28130355bf043aaaa807d918ad43aed4784e124ae76d125e5af9b1ec8",
+      "bytes": 2986
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/acceptance.json",
+      "sha256": "2c6cd7f0913f46288edad6ccd29b58d14c20e7d44f9b5733414c8d362cfa4b65",
+      "bytes": 1447
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_consistency/observed_records.json",
+      "sha256": "2d6bf83fb5b9d299b77fd2a00e0979c2d0303b01ce1fc6109a1314f75295e994",
+      "bytes": 23669
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_mean2/acceptance.json",
+      "sha256": "7d230684f472f20e01af22de422e0127311a0ad2c3d1ff4225d4a2d18222a4c5",
+      "bytes": 1435
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_mean2/observed_records.json",
+      "sha256": "94d4052807278af3c0718fe41583fa1c79ea3e3a83be84ad0c4ce2567fcfa813",
+      "bytes": 26127
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/OFFICIAL_CLOSURE.md",
+      "sha256": "f3751d7960e252dcf4db61564bb41cba52b08e34d4bcff0539d818b830617905",
+      "bytes": 755
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/official_closure_receipt.json",
+      "sha256": "ca687de98ad62eb2a5fc89cdb397bca851d02986aa8947e45fc9c023aafec34b",
+      "bytes": 651
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/README.md",
+      "sha256": "c22bd9513ffecc55f5ae8f33f9d83663678365a918c9334708d1173b27f36cdd",
+      "bytes": 2489
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/continuation_authorization.md",
+      "sha256": "cc5e9928c55c214ff1582a06872934f05e34ad8bf185c79e79dbb2d3f8ea58f5",
+      "bytes": 2204
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-expected-training.json",
+      "sha256": "076006533795bd7664cd498d420964235fff634bdc64bd81bba59ac7851de1c9",
+      "bytes": 922
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-bootstrap-overhead.json",
+      "sha256": "dc9dff1fdee9856f5fccc5e4cbb55b86bea20a8f50c645ed165d92f3d5bd98b3",
+      "bytes": 1000
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-preflight.json",
+      "sha256": "edf939a42c83160b40cacfa7b3e471c1f35ab945c1aac449b6583a8f7bb4b20a",
+      "bytes": 997
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-training.json",
+      "sha256": "bd94340b33476f027f0eed7c1aef868e130c83cbf0f8c512b5ee82f3de6b4ce3",
+      "bytes": 989
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-clean-bn-attempt3.json",
+      "sha256": "01226aba4914993a8b83c919402dafae554a9c0b26206648c0cc5cad7526090b",
+      "bytes": 1001
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle1-consistency-ablation-002-bootstrap-overhead.json",
+      "sha256": "f94d8d9149d2b80fe8aab0303385d602a06cde97e87c616862f8f5101b216f75",
+      "bytes": 1080
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle1-consistency-ablation-002-preflight.json",
+      "sha256": "b367cea5731c8cf3ca771f9496395498b01ae9c3a235056f6b72045f3fd7ba34",
+      "bytes": 1076
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle1-consistency-ablation-002-training.json",
+      "sha256": "225d2cbe7213697f1c84cb5d1f3060a19c07d55c4c43035a6a90832cb8150280",
+      "bytes": 1071
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle3-consistency-ablation-001-bootstrap-overhead.json",
+      "sha256": "3852d78a9360bc9681523b2057d89e5ce8c9d09c3fbb3a75d27cfcebb9c823e2",
+      "bytes": 1081
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle3-consistency-ablation-001-preflight.json",
+      "sha256": "d78e4a745528a9bfe409fae2e35c48451de52b9237b3d89365fcc9d6c87300d0",
+      "bytes": 1076
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-kaggle3-consistency-ablation-001-training.json",
+      "sha256": "001d4393611b06f93a99acc12ca5c48410778be65b162dee43a5009aa17e95ec",
+      "bytes": 1071
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-bootstrap-overhead.json",
+      "sha256": "0d1901b469a854920aad6f5300bbcf6b3750d72039cc24b4825ce7e27ed042da",
+      "bytes": 1025
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-preflight.json",
+      "sha256": "e9e8957949ba1dc47699baa1b24d9e5520221080323736c963c64194c25af85c",
+      "bytes": 1022
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-measured-v1-training.json",
+      "sha256": "aa0edb767c22e76e13e191ef66dae727346ae3f1020421e21f439e0fb28a1bfd",
+      "bytes": 1014
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/finalization.json",
+      "sha256": "e85d6499432e0bf357943098bdc33232039bd97d447a24f382a96719342b3b91",
+      "bytes": 14367
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/prospective_snapshot.json",
+      "sha256": "c1b50b9dcd01d634999b0e19d03705db2670d6d3ec668e4cd9cce9af851ee1b1",
+      "bytes": 46582
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/roles/role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed-clean-bn.json",
+      "sha256": "98b491415ba2e6f1d81ac39d202715d9d04c1517cbca2688a7252539ad40ee83",
+      "bytes": 796
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/roles/role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed.json",
+      "sha256": "fd6e594a60026a1dfbf3cbfb0a40be7e987488211db80618a8bfd88baa87e392",
+      "bytes": 786
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/roles/role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-selection_used.json",
+      "sha256": "a526b47aec494b57b30cc452c6d62b08954b672b15914bacd2dc82750074f553",
+      "bytes": 784
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/roles/role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-train-labels_read-clean-bn.json",
+      "sha256": "e619e7eda172290c26ae44b6a0c9e26dbc6a113181dd9ebaecc66d9f4b2a28c7",
+      "bytes": 758
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/roles/role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-train-training_membership.json",
+      "sha256": "e87c748618d19b064bc5f544356d30f572ac7c20b347ac00f86051381184b4ea",
+      "bytes": 765
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/terminal_input.json",
+      "sha256": "5a9e0fcc5c73a067eac67f69f68795a79234ca2d33a0a925801c3c310dca7c4e",
+      "bytes": 46456
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/trace.json",
+      "sha256": "8d68701b15e10b6e09c33e64229adcf133850be994c85f8e7cbae4a1ce57d7e5",
+      "bytes": 34301
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/trace_manifest.json",
+      "sha256": "6d77e86a40e5faf3a4a49b09f2b037bb29f3b1354fc0784b6c68faea547db3b0",
+      "bytes": 2891
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/trajectory.json",
+      "sha256": "693594cb92f91fca672e7955b9ead14de4283bdf1f986cb8a0a0eccfbb98fa70",
+      "bytes": 47382
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/v5_evidence.json",
+      "sha256": "f840ea9f85fe853d150728e60c4dc0c1ae943ed4bbcd94b010f3374289a52dd4",
+      "bytes": 16679
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/trajectory.json",
+      "sha256": "c1b50b9dcd01d634999b0e19d03705db2670d6d3ec668e4cd9cce9af851ee1b1",
+      "bytes": 46582
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-expected-training.json",
+      "sha256": "bc93c8b8c11f4f313be6b13568fe91a6c634397ba9fb8589ec9847980a19264e",
+      "bytes": 904
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-measured-v1-bootstrap-overhead.json",
+      "sha256": "41ff241501232a0b28e21bccb7c8b610ee8ccc70c7f01665b5a8f459d14da664",
+      "bytes": 982
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-measured-v1-preflight.json",
+      "sha256": "45ddc98069ed3ca5ae4bacded7a575f9093716f9cc094f93f766add94955f5eb",
+      "bytes": 979
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-measured-v1-training.json",
+      "sha256": "91422ba4b279d956037b704dfd0fe1b3170e906e84e0a4c2ba2a19cfacb7f7c2",
+      "bytes": 971
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1.json",
+      "sha256": "e26c552bb64fe7712985d899c79a1b7bda1316496d47bc584150568e67640f1d",
+      "bytes": 982
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt2.json",
+      "sha256": "e650f15b01f0dec7d9926f389f79a1c28436b30b1937d6498ebef09555b872b9",
+      "bytes": 991
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt3.json",
+      "sha256": "d7f61a3be536905d7b438f1b91d709c1fc86a1af984cb464b7c19da2e3549ae9",
+      "bytes": 977
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-kaggle1-consistency-ablation-002-bootstrap-overhead.json",
+      "sha256": "c315220ec59d2e76e5553d9bee37f0d02b4636654349654f78d008aba611e61e",
+      "bytes": 1056
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-kaggle1-consistency-ablation-002-preflight.json",
+      "sha256": "5d13cbebc9ee67ad9bbdd87b3b0d9ac9cfb4a448c2047ac72e8f63c00531823c",
+      "bytes": 1052
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-kaggle1-consistency-ablation-002-training.json",
+      "sha256": "b42549e7c20d51005cd75386820698772ff830bb75a59d3c105ace013362cc7d",
+      "bytes": 1047
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-kaggle3-consistency-ablation-001-bootstrap-overhead.json",
+      "sha256": "392ba4b7be59fb6058d35b65d08bb98b7fc837005275d6620ed8219c065465ee",
+      "bytes": 1057
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-kaggle3-consistency-ablation-001-preflight.json",
+      "sha256": "b84299015fa571ac910cd7110d4879b7154f17265973a98c6ecf06b4575a8a53",
+      "bytes": 1052
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-kaggle3-consistency-ablation-001-training.json",
+      "sha256": "6510f891baee026ecb1b986f5ae7962936d23a7fc6fda454ea8c710abe113dc0",
+      "bytes": 1047
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-measured-v1-bootstrap-overhead.json",
+      "sha256": "eb7a64333e00161cd52ca77a1b5ea9b6ec22d156f7357cb4fbcbcb2680e443a6",
+      "bytes": 1001
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-measured-v1-preflight.json",
+      "sha256": "cfcc90a04a520c55736d0de4445f3fade2ac481bb6c546e774b07fbe43334958",
+      "bytes": 998
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/costs/cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-measured-v1-training.json",
+      "sha256": "b5d2174538cbfdcc5bab051c958a29eeaeca26349d4af7045fa4a582b4e21ab7",
+      "bytes": 990
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/finalization.json",
+      "sha256": "dfec91150ab3f3337a44165d66d40904afedd8ca69d998df04abbbb393f72fa8",
+      "bytes": 14421
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/prospective_snapshot.json",
+      "sha256": "f03afac87af115262730397fc4ebe602cc81cce5a406139687892a6d8535aea0",
+      "bytes": 46522
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/roles/role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-metric_computed-clean-bn.json",
+      "sha256": "c8e532022e335c511e306911742411a95b129412e8c21ade1e1cc5aeee364445",
+      "bytes": 772
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/roles/role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-metric_computed.json",
+      "sha256": "a423105e00994a21917bf9bdec2f0b772af643ea9cdd168b9d7360df2829026e",
+      "bytes": 762
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/roles/role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-selection_used.json",
+      "sha256": "f013a5d6f5ef1ee2341c13eaf09e952d4baacdbfa0b986ac540c493f2ecd8ce5",
+      "bytes": 760
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/roles/role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-train-labels_read-clean-bn.json",
+      "sha256": "f12a600124be5ef28139041be1aa70efb5458756704dee6a8cb061f2eced468c",
+      "bytes": 734
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/roles/role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-train-training_membership.json",
+      "sha256": "b65e21947966e40fc8ef018efc3c5a3a3b755dbe89384b6982105706d79e6484",
+      "bytes": 741
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/terminal_input.json",
+      "sha256": "1924aabe3374923f55dea5657441a830d54caa142ef68a027bc8ad89fa03c521",
+      "bytes": 47993
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/trace.json",
+      "sha256": "82b8a9942222a4277ddf90f8e026b66af77def29a1bdd03b1ee4327ffe149bcc",
+      "bytes": 34288
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/trace_manifest.json",
+      "sha256": "7d4ff2308811a9bd1bfe07dd854d1e48040448645743718e5d52378209120522",
+      "bytes": 2867
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/trajectory.json",
+      "sha256": "af4fb5db51ad316ccc83a00ac2f57c6639b43f07f8f4bdfec5e50b5c8cc43b3c",
+      "bytes": 47454
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/v5_evidence.json",
+      "sha256": "497ddc908bf827eb1fde19d470b606fa664dd6ceb62fc33549a07a404dc797ac",
+      "bytes": 16529
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/trajectory.json",
+      "sha256": "f03afac87af115262730397fc4ebe602cc81cce5a406139687892a6d8535aea0",
+      "bytes": 46522
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/plan.md",
+      "sha256": "d166e4bba69e8bbaee1a18df64deea8cc1a85cbbe5f524469078c7ecc493d2db",
+      "bytes": 2662
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
+      "sha256": "181bb032a895ca6d6539c0467eff45748deaa065b3d6bd3dec4ff66d9e8ec8e5",
+      "bytes": 5130
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/role_plan.json",
+      "sha256": "7d16bb1a062ed992e9ac8a7a92258c5c2d53fbdf2d946c626bc40c89c4eda927",
+      "bytes": 504
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/STATUS.md",
+      "sha256": "9e7500bb584b66b983f46dfecb35c63e0d2d171ab91726cc8218584c3da6ea8b",
+      "bytes": 6473
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/package_manifest.json",
+      "sha256": "626553a05145e3244e85690adb18d8fd421ec91fc2935bb2875c887473e47859",
+      "bytes": 3730
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/invocation_cost.json",
+      "sha256": "9fd2029cb1823fa6c0a972a8972ad0b634048b24ac648baa99b55b6eca471650",
+      "bytes": 762
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/best_model.pt",
+      "sha256": "c4ad6a54fa8168d19832517e5a397ad7a5e17950ada1fe443ced47c3ae7decff",
+      "bytes": 14801401
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/best_predictions.pt",
+      "sha256": "57463e4e578db6310eadfd2b46d9c57f50d0ef7e2aa12c3f883ace72e7265f55",
+      "bytes": 801839
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/calibration.json",
+      "sha256": "36aa3762521886107b9c4019df2e29d95e0c3aa5f40715fe37141e77915843b9",
+      "bytes": 755
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/data_manifest.json",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "bytes": 4790
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/last_checkpoint.pt",
+      "sha256": "67cc1ed3b9699c6f27afed731389e7ba250075ddc5dbbfa979a05ba09383cc0a",
+      "bytes": 44373422
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/runtime.json",
+      "sha256": "84a0d498fa0679bda305eecd6940c042181eb05e09ae4f2cca8f662a9078c7dd",
+      "bytes": 2625
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/runtime_certificate.json",
+      "sha256": "dcded7797546e75700ec79a176a9cfe168040d85f76bb4f7e84057cd86dabb8a",
+      "bytes": 833
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/scientific_contract.json",
+      "sha256": "8edb6053fa9d66c98a87436df94f3761cf85d6f31155352d1ac353eca9ae4bf6",
+      "bytes": 1926
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/stage_manifest.json",
+      "sha256": "ecc0ef7d8d6faf8bb1144bd15906c33f1ce502745b94c64eadaad192a314d663",
+      "bytes": 5213
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/trace.json",
+      "sha256": "1d21142070a9121e7d675b2b9a6f538811303298775a0a64232b995efb4bd1f8",
+      "bytes": 36908
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/best_model.pt",
+      "sha256": "c444a1259da7a3d6ac601afadf285dc0aa775591651056668c516ca02c9ca372",
+      "bytes": 14801401
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/best_predictions.pt",
+      "sha256": "cc32847989f91a066ba96f6fb36982f04deff06232eaf1ae4a672b3c3233a5cd",
+      "bytes": 801839
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/calibration.json",
+      "sha256": "cd96eca6d4a07d6a0a95b41e8e05ebcd3364b7ee006165f95238a468dd9c81bc",
+      "bytes": 755
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/data_manifest.json",
+      "sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "bytes": 4790
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/last_checkpoint.pt",
+      "sha256": "07ca25e46d2afa37119c62e27aa0bfc9f67461aff4f9593b24467bf3bf28e3dd",
+      "bytes": 44373422
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/runtime.json",
+      "sha256": "84a0d498fa0679bda305eecd6940c042181eb05e09ae4f2cca8f662a9078c7dd",
+      "bytes": 2625
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/runtime_certificate.json",
+      "sha256": "209a7417f05d475bafaaa15cf656a3d23d641005fb6a033f57578fa423cb8a4d",
+      "bytes": 833
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/scientific_contract.json",
+      "sha256": "42109b00fe81260320696ad0ae3afa4dfd90881628dc81a3b21bd396b5d3e2c0",
+      "bytes": 1912
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/stage_manifest.json",
+      "sha256": "a70454381d6c4a9b09062788b3051dc1f77fa959a77a22ae62a3c4c448c2e720",
+      "bytes": 5193
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/trace.json",
+      "sha256": "4a6b33f55b93ae4d370344a2078318eefd9a71dfdbfe318e8e9f84ea15752424",
+      "bytes": 36909
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/inspection_report.json",
+      "sha256": "48260829af5a97a34402226d6f0ae71dc568eea31da22226a08f6585ae9b0243",
+      "bytes": 3817
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/raw_acceptance.md",
+      "sha256": "64905bd046033fcfd2c37918fbdf1e62f3ace746cd1cd13ffffcb9dab2adc312",
+      "bytes": 4074
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/retrieval_manifest.json",
+      "sha256": "14ffbe47d92642a2ef0e9aa976b5e29d3af15da40cadad2f8a043f1912f91600",
+      "bytes": 8390
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/scheduler_snapshot.json",
+      "sha256": "8354892dae4822ade28fedd601b5c9424dfd505ad5ee096e2fbf0a4fc8ca2164",
+      "bytes": 165
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/package_manifest.json",
+      "sha256": "ce08aeff10780d068bbfd9a98179b2913d1a1062e7f26a045ffa76dc14d82382",
+      "bytes": 3730
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/evidence/invocation_cost.json",
+      "sha256": "6b0a2d6a0f5f68ef5d11eb53a738a2f8ab4110950ce7321e851842008d269146",
+      "bytes": 754
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/inspection_report.json",
+      "sha256": "a4303f4ddef8c5c423013c2686e09f246db34f2a6ada96e799cfe6e6822f8d16",
+      "bytes": 3331
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_v2/package_manifest.json",
+      "sha256": "ebe77bb32e0488da7ebc511739709059bb25c5fd379a69cb9eafdafaa9e2986b",
+      "bytes": 3730
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_v2/platform_response.json",
+      "sha256": "9176e18d9ff5bba0143dcbc212f4dcdeba1801ea3917b1a1cb674976e6ad0733",
+      "bytes": 1369
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_v2/terminal_inspection_20261009/evidence/invocation_cost.json",
+      "sha256": "6aeec90d281b0a70e0cb4299aa62a73bf4384f2c97d9bf9bbe50027957936b97",
+      "bytes": 762
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/training_recipe_k1_pretrained_consistency.json",
+      "sha256": "4a26e63a5876343bb591225811b6f786805ab446b3acce997b142f79c2b6118d",
+      "bytes": 1558
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/training_recipe_k1_pretrained_mean2.json",
+      "sha256": "9b47a7e6eaf98f0380f3c17add98b905b22df271efd3de90775a7f146aaecb15",
+      "bytes": 1550
+    }
+  ],
+  "model_adoption": false,
+  "rejected_implementation_imported": false
+}

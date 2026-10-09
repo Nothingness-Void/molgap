@@ -10,7 +10,7 @@
     "run_id": {"type": "string", "minLength": 1},
     "contract_ref": {"type": "string", "minLength": 1},
     "model_identity": {"type": "string", "minLength": 1},
-    "reference_id": {"type": "string", "minLength": 1},
+    "reference_id": {"type": ["string", "null"], "minLength": 1},
     "comparison_role": {"enum": ["candidate", "reference"]},
     "x_axis": {"enum": ["optimizer_steps", "presentations", "epochs"]},
     "presentation_semantics_ref": {"type": "string", "minLength": 1},
@@ -46,5 +46,20 @@
       "additionalProperties": false
     }
   },
+  "allOf": [{
+    "if": {"properties": {"reference_id": {"type": "null"}}, "required": ["reference_id"]},
+    "then": {
+      "properties": {
+        "comparison_role": {"const": "candidate"},
+        "backtest_eligibility": {
+          "required": ["eligible", "exclusion_reasons"],
+          "properties": {
+            "eligible": {"const": false},
+            "exclusion_reasons": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "\\S"}}
+          }
+        }
+      }
+    }
+  }],
   "additionalProperties": false
 }

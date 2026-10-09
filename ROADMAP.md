@@ -22,8 +22,9 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 |---|---|---|
 | Closed diagnostic | Paired partial-stage curves and BN/late per-row attribution | Accepted saved-artifact NO_TRAIN; [trace interpretation](experiments/pcqm_k1_consistency_stage_analysis/attempt_002/analysis_zh.md) and [BN interpretation](experiments/pcqm_k1_bn_row_attribution/analysis_zh.md). Follow the terminal consistency disposition below; no new training or stopping policy. |
 | Closed diagnostic | Complete K1 local module/state audit and sparse endpoint average | Accepted NO_TRAIN; use [consolidated route](experiments/pcqm_k1_complete_local_audit/analysis_zh.md#10-下一步一条主线两个问题分开验收) and its explicit remaining discriminators. No model adoption, new remote job or full release; follow terminal consistency disposition before conditional training-state/cost work. |
-| K1 focus1 | Explain and reduce500K epoch cost | Freeze a bounded training-only native profile; separate loader/forward/backward/optimizer/development/checkpoint costs and matched single/two-pass work. Attribute measured seconds before an equivalence-gated execution change; no unmeasured speed claim or recipe change. See CURRENT_STATE and the mapped500K attribution owner. |
-| Custody pending | Consistency500K endpoint disposition | Raw and identical clean-BN material nomination fail; scientific/mechanical acceptance complete. Resolve missing-reference traced-RML storage honestly, preserve owner until routed, then archive negative history with canonical desktop discovery. No invented reference, retraining or replay claim. [Owning decision](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-consistency-ablation-500k/experiments/pcqm_k1_consistency_ablation_500k/clean_bn/DECISION.md). Two-pass cost/capacity/pretraining remain unresolved. |
+| K1 focus1 | Single/mean2 paired100K quality | Prerequisite diagnostics accepted; one bounded pair submitted. Reconcile the [owner run](D:/w/k1-t4-cost-quality/experiments/pcqm_k1_t4_cost_quality/STATUS.md), accept aligned endpoint/runtime/cost and attribute before another module. Ceiling8 allocated T4 device-hours/4 wall-hours; no500K/full or global speed extrapolation. |
+| Closed | Consistency500K endpoint custody | Both60epoch arms finalized with real traces and missing-reference replay exclusions. Full negative history archived; [canonical desktop custody](experiments/pcqm_k1_consistency_ablation_500k/README.md), no adoption or reference retraining. |
+| Closed diagnostic | Retained500K clean train/development fit | [Accepted NO_TRAIN](experiments/pcqm_k1_clean_fit_generalization_500k/INDEX.md); matched49/60 endpoints constrain tail-training interpretation, not a unique causal explanation or early-stop rule. |
 | Closed | K1 fixed-fusion output distillation | Both40epoch students independently finalized; weak/strong fail the frozen1meV compression criteria. Accepted evidence imported, full rejected history archived; no blind retry or scale-up. See `experiments/pcqm_k1_fusion_distillation/terminal_acceptance/decision.md` |
 | Closed | K1 dropout pair acceptance and attribution | Both40epoch arms finalized VALID/COMPLETE; canonical desktop RML retains the1.5288meV positive numerical benefit below3meV. Missing control native cost and resumed provenance remain explicit strict replay exclusions; no successor or scale-up |
 | Closed diagnostic | K1 fixed equal-blend transfer | Common-cohort frozen inference supports fusion nomination with measured two-pass cost; the separate distillation pair is closed below its compression gate, no model promotion. See `experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md` |
@@ -36,9 +37,8 @@ be replaced with stale RUNNING claims or automatic takeover.
 Old pretraining/geometry/precision qualification work is administratively paused
 in archive, not an automatic active queue. See [custody routing](BRANCHES.md#retained-checkout-map);
 reopen only with explicit direction, preserving original scientific blockers.
-Completed evidence is indexed by [experiments](experiments/README.md) and
-[RML](research_memory/README.md); review canonical decisions/attribution before
-another module. Do not reopen a closed candidate through seed/schedule changes.
+Completed evidence: [experiments](experiments/README.md), [RML](research_memory/README.md).
+Review canonical attribution first; never reopen through seed/schedule changes.
 
 New screens follow the [V4 reference](experiments/pcqm_gptrans_t_100k_v4/README.md)
 and [execution contract](platforms/V4_EXECUTION_CONTRACT.md): fixed data/row order,

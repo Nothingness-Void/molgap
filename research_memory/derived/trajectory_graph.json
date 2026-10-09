@@ -246,6 +246,56 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1:A001",
+      "target": "experiments/pcqm_k1_consistency_ablation_500k/continuation_authorization.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1:A001",
+      "target": "experiments/pcqm_k1_consistency_ablation_500k/plan.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1:A001",
+      "target": "experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1:A001",
+      "target": "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/inspection_report.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1:A001",
+      "target": "experiments/pcqm_k1_consistency_ablation_500k/submission_v2/platform_response.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1:A001",
+      "target": "experiments/pcqm_k1_consistency_ablation_500k/continuation_authorization.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1:A001",
+      "target": "experiments/pcqm_k1_consistency_ablation_500k/plan.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1:A001",
+      "target": "experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1:A001",
+      "target": "experiments/pcqm_k1_consistency_ablation_500k/submission_v1/terminal_inspection/inspection_report.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1:A001",
+      "target": "experiments/pcqm_k1_consistency_ablation_500k/submission_v2/platform_response.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-dropout-consistency2-kaggle3-100k-s42-v1:A001",
       "target": "experiments/pcqm_k1_dropout_consistency/protocol.md",
       "type": "action_produced_evidence"
@@ -801,6 +851,26 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-k1-500k-bn-calibration-20261007",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-500k-bn-calibration-20261007",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-k1-consistency-fusion-transfer-20261004",
       "target": "TB-k1-fusion-distill-strong-kaggle3-100k-s42-v1",
       "type": "parent_trajectory"
@@ -813,6 +883,16 @@
     {
       "source": "TB-k1-consistency-residual-screen-20261004",
       "target": "TB-k1-consistency-fusion-transfer-20261004",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-dropout-consistency2-kaggle3-100k-s42-v1",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-dropout-consistency2-kaggle3-100k-s42-v1",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
       "type": "parent_trajectory"
     },
     {
@@ -888,6 +968,16 @@
     {
       "source": "TB-matched-500k-v4-three-arm",
       "target": "TB-gptrans-noisy-nodes-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-matched-500k-v4-three-arm",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-matched-500k-v4-three-arm",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
       "type": "parent_trajectory"
     },
     {
@@ -1487,6 +1577,16 @@
     },
     {
       "source": "pcqm-k1-500k-bn-calibration-20261007",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-500k-bn-calibration-20261007",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-500k-bn-calibration-20261007",
       "target": "TB-k1-late-weight-average-20261008",
       "type": "prior_evidence"
     },
@@ -1503,6 +1603,16 @@
     {
       "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "target": "TB-k1-complete-module-audit-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
       "type": "prior_evidence"
     },
     {
@@ -1578,6 +1688,16 @@
     {
       "source": "pcqm-k1-consistency-residual-screen-20261004",
       "target": "TB-k1-consistency-fusion-transfer-20261004",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
       "type": "prior_evidence"
     },
     {
@@ -1788,6 +1908,16 @@
     {
       "source": "pcqm-matched-500k-v4-three-arm",
       "target": "TB-k1-500k-bottleneck-diagnostic-20261007",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-matched-500k-v4-three-arm",
+      "target": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
       "type": "prior_evidence"
     },
     {
@@ -2429,6 +2559,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-consistency-fusion-transfer-20261004",
       "type": "evidence"
     },
@@ -2806,6 +2944,14 @@
     },
     {
       "id": "TB-k1-complete-module-audit-20261008",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
       "type": "trajectory"
     },
     {
