@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "preflight",
+  "cost_event_id": "cost-k1-native-t4-profile-planned",
+  "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/profile/protocol.md",
+  "hardware": "Two allocated native T4 devices; cuda0 scratch workload",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0.6666666666666666
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.3333333333333333
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "molgap-k1-native-t4-profile-s42-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-native-t4-cost-profile-20261009"
+}

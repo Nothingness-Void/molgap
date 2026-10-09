@@ -1,0 +1,137 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-native-t4-cost-profile-20261009",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-native-t4-cost-profile",
+    "question": "How much native T4 optimizer-step time does single-forward save versus unpenalized mean2?",
+    "hypothesis": {
+      "hypothesis_id": "H-TB-k1-native-t4-cost-profile-20261009",
+      "supporting_evidence_ids": [
+        "pcqm-k1-colab-execution-profile-20261007",
+        "pcqm-k1-complete-module-audit-20261008"
+      ],
+      "observed_deficiency": "A100 selected-state profiling cannot establish native T4 cost or single-forward quality.",
+      "alternative_explanations": [
+        "T4 operator mix changes step savings",
+        "Evaluation/setup/idle allocations reduce whole-run savings",
+        "Two dropout/BN updates affect quality"
+      ],
+      "changed_mechanism": "Native T4 single L1 versus mean of two L1 scratch steps; consistency coefficient0",
+      "cheapest_falsifier": "Same accepted4096 train rows and selected state; two29-step cases,512-row eval and localFS write;900s worker/1200s allocation ceiling",
+      "decision_changed_if_positive": "If >=25% matched step savings, review separately bounded100K cost-quality pair; no automatic release",
+      "decision_changed_if_negative": "Close cost route without100K training; no blind hardware extrapolation",
+      "expected_native_cost_ref": "cost-k1-native-t4-profile-planned",
+      "related_closed_family_ids": [
+        "k1-execution-profile-a100"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "df80d6ce1451284c4142e275546983cc0b8ca89d",
+      "source_config_identity": "66b2bc1e446e405a4e41019ad628d8c248a90a70d7a28965c738a396d044af79",
+      "contract_refs": [
+        "experiments/pcqm_k1_t4_cost_quality/profile/protocol.md",
+        "experiments/pcqm_k1_t4_cost_quality/profile/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-colab-execution-profile-20261007",
+        "pcqm-k1-complete-module-audit-20261008"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_t4_cost_quality/profile/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_t4_cost_quality/profile/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "native_t4_scratch_execution_profile",
+        "run_ids": [
+          "molgap-k1-native-t4-profile-s42-v1"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "df80d6ce1451284c4142e275546983cc0b8ca89d",
+        "evidence_refs": [
+          "experiments/pcqm_k1_t4_cost_quality/profile/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-native-t4-profile-planned"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_t4_cost_quality/profile/protocol.md",
+      "next_allowed_actions": [
+        "One bounded native T4 diagnostic only"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_t4_cost_quality/profile/protocol.md",
+    "comparison_blockers": [
+      "execution diagnostic only; no accuracy or full-epoch cost qualification"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-native-t4-profile-planned",
+      "trajectory_id": "TB-k1-native-t4-cost-profile-20261009",
+      "action_id": "A001",
+      "run_id": "molgap-k1-native-t4-profile-s42-v1",
+      "attempt_id": "attempt-001",
+      "platform": "kaggle",
+      "hardware": "Two allocated native T4 devices; cuda0 scratch workload",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/profile/protocol.md",
+      "measurement": {
+        "device_hours": {
+          "value": 0.6666666666666666,
+          "status": "estimated"
+        },
+        "wall_hours": {
+          "value": 0.3333333333333333,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-native-t4-cost-profile",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_t4_cost_quality/profile/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_t4_cost_quality/profile/role_plan.json"
+    ],
+    "source_commit": "df80d6ce1451284c4142e275546983cc0b8ca89d",
+    "state_timestamp": "2026-10-09T09:07:16.929939+00:00"
+  }
+}

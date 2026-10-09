@@ -1,0 +1,16 @@
+{
+  "source_commit": "df80d6ce1451284c4142e275546983cc0b8ca89d",
+  "accepted_profile_manifest": {
+    "path": "D:/w/k1-colab-profile/platforms/_records/colab/staging/k1-profile-a100-20261007/payload/payload_manifest.json",
+    "sha256": "0d60f0fc509d730650792a9ef838b53bcfb066e3c705765ae9f00a6b44bacf26"
+  },
+  "source_overlays": {
+    "src/molgap/k1_execution_profile.py": "625fdde348ce2223f770d2e693defa085e76b6923df175b01d364ccb90f8f5e3",
+    "src/molgap/evidence_pointers.py": "bad2983c22ac7f914cca0d3bd50eb11c1d3b392ed39fbc89f3534d5cf987212a"
+  },
+  "worker_ceiling_seconds": 900,
+  "allocation_ceiling_seconds": 1200,
+  "allocated_device_count": 2,
+  "active_device_count": 1,
+  "cost_quality_release": "separate parent review required; no automatic training"
+}
