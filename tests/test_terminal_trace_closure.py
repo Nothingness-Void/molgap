@@ -26,6 +26,9 @@ import pytest
 from molgap.constants import REPO_ROOT
 from molgap.evidence_pointers import load_json_object
 from molgap.research_memory.finalize import verified_receipt
+from molgap.research_memory.compiler import compile_research_memory
+from molgap.research_memory.backtest import build_screening_backtest
+from molgap.research_memory.schemas import validate_trace_manifest
 from molgap.research_memory.paired import validate_ineligible_continuation
 from molgap.research_memory.terminal_wiring import (
     build_default_trace_manifest,
@@ -1047,6 +1050,136 @@ def test_build_default_trace_manifest_derives_from_contract_without_guessing(tmp
     assert comp["precision_identity"] == "bf16"
     assert comp["optimizer_identity"] == "adamw_custom"
     assert manifest["backtest_eligibility"]["eligible"] is False
+    assert manifest["reference_id"] == "ev-ref-1"
+
+
+@pytest.mark.parametrize("eligible,reasons,role", [
+    (True, ["missing_frozen_reference"], "candidate"),
+    (False, [], "candidate"),
+    (False, [" "], "candidate"),
+    (False, ["missing_frozen_reference"], "reference"),
+])
+def test_unreferenced_manifest_requires_explicit_ineligible_candidate(tmp_path, eligible, reasons, role):
+    manifest = build_default_trace_manifest(
+        tmp_path,
+        {"trajectory_id": "TB-unreferenced", "state_at_start": {
+            "contract_refs": ["contract.json"], "reference_ids": [],
+        }},
+        {"run_id": "run-unreferenced"},
+        {"observations": []},
+    )
+    manifest["comparison_role"] = role
+    manifest["backtest_eligibility"] = {"eligible": eligible, "exclusion_reasons": reasons}
+    with pytest.raises(ValueError):
+        validate_trace_manifest(manifest)
+
+
+@pytest.mark.parametrize("reference", ["missing", ""])
+def test_trace_manifest_still_requires_explicit_reference_field(tmp_path, reference):
+    manifest = build_default_trace_manifest(
+        tmp_path,
+        {"trajectory_id": "TB-unreferenced", "state_at_start": {
+            "contract_refs": ["contract.json"], "reference_ids": [],
+        }},
+        {"run_id": "run-unreferenced"},
+        {"observations": []},
+    )
+    assert validate_trace_manifest(manifest)["reference_id"] is None
+    if reference == "missing":
+        del manifest["reference_id"]
+    else:
+        manifest["reference_id"] = reference
+    with pytest.raises(ValueError):
+        validate_trace_manifest(manifest)
+
+
+def test_repository_validator_rejects_null_discarding_frozen_reference(tmp_path):
+    setup_mock_repo(tmp_path)
+    arm = create_candidate_arm(tmp_path, "validate_null", "TB-validate-null", "run-null", "ev-null")
+    manifest = build_default_trace_manifest(
+        tmp_path, load_json_object(arm["traj_path"]), load_json_object(arm["terminal_path"]),
+        {"observations": []},
+    )
+    manifest.update(reference_id=None,
+                    trace_artifact_ref=arm["trace_file_path"].relative_to(tmp_path).as_posix(),
+                    terminal_evidence_ref="experiments/ref_exp/v5_evidence.json")
+    manifest["backtest_eligibility"]["exclusion_reasons"] = ["missing_frozen_reference"]
+    (arm["exp_dir"] / "trace_manifest.json").write_bytes(json_bytes(manifest))
+    with pytest.raises(ValueError, match="cannot discard a frozen reference"):
+        validate_repository_records(tmp_path)
+
+
+def test_unreferenced_two_arm_trace_custody_preserves_inputs_and_excludes_replay(tmp_path):
+    setup_mock_repo(tmp_path)
+    arms = []
+    originals = []
+    for index in range(2):
+        arm = create_candidate_arm(
+            tmp_path, f"unreferenced_{index}", f"TB-unreferenced-{index}",
+            f"run-unreferenced-{index}", f"ev-unreferenced-{index}",
+        )
+        trajectory = load_json_object(arm["traj_path"])
+        trajectory["state_at_start"]["reference_ids"] = []
+        arm["traj_path"].write_bytes(json_bytes(trajectory))
+        originals.append({path: path.read_bytes() for path in (
+            arm["traj_path"], arm["terminal_path"], arm["trace_file_path"],
+            arm["exp_dir"] / "contract.json",
+        )})
+        arms.append(arm)
+
+    results = close_terminal_multi_arm(tmp_path, [
+        {"trajectory": arm["traj_path"], "terminal": arm["terminal_path"]} for arm in arms
+    ])
+    assert all(result["pipeline_status"] == "COMPLETE" for result in results)
+    validated = validate_repository_records(tmp_path)
+    manifests = [record for _, record in validated["records"]["traces"]]
+    assert len(manifests) == 2
+    for arm, original, manifest in zip(arms, originals, sorted(manifests, key=lambda m: m["trajectory_id"])):
+        assert all(path.read_bytes() == content for path, content in original.items())
+        finalized = arm["exp_dir"] / "rml_finalized"
+        assert verified_receipt(finalized)["trace_status"] == "available"
+        canonical = load_canonical_trace(finalized / "trace.json")
+        assert len(canonical["observations"]) == 2
+        assert canonical["provenance"][0]["sha256"] == file_digest(arm["trace_file_path"])
+        assert manifest["reference_id"] is None
+        assert manifest["backtest_eligibility"]["eligible"] is False
+        assert "missing_frozen_reference" in manifest["backtest_eligibility"]["exclusion_reasons"]
+        evidence = load_json_object(finalized / "v5_evidence.json")
+        assert evidence["outcome"]["comparison_status"] == "context_only"
+        terminal_trajectory = load_json_object(finalized / "trajectory.json")
+        assert terminal_trajectory["state_at_start"]["reference_ids"] == []
+        assert "comparison_readiness_ref" not in terminal_trajectory
+        retry = close_terminal_arm(tmp_path, arm["traj_path"], arm["terminal_path"])
+        assert retry["finalization_status"] == "ALREADY_FINALIZED"
+
+    outputs = {name: json.loads(payload) for name, payload in compile_research_memory(tmp_path).items()
+               if name.endswith(".json")}
+    screening = outputs["screening_backtest.json"]
+    assert screening["included_comparable_groups"] == []
+    assert all("missing_frozen_reference" in item["reasons"] for item in screening["excluded_traces"])
+    assert outputs["replay_pool.json"]["entries"] == []
+    assert outputs["replay_pool.json"]["action_entries"] == []
+    assert outputs["ready_for_desktop_index.json"]["valid"] == []
+
+    # Even a caller bypassing schema validation cannot group null references.
+    forged = copy.deepcopy(manifests)
+    for manifest in forged:
+        manifest["backtest_eligibility"] = {"eligible": True, "exclusion_reasons": []}
+    forged[1]["comparison_role"] = "reference"
+    assert build_screening_backtest(forged)["included_comparable_groups"] == []
+
+
+def test_null_trace_reference_cannot_discard_frozen_reference(tmp_path):
+    setup_mock_repo(tmp_path)
+    arm = create_candidate_arm(tmp_path, "discard_reference", "TB-discard", "run-discard", "ev-discard",
+                               manifest_in_terminal=True)
+    terminal = load_json_object(arm["terminal_path"])
+    terminal["trace_manifest"]["reference_id"] = None
+    terminal["trace_manifest"]["backtest_eligibility"]["exclusion_reasons"] = ["missing_frozen_reference"]
+    arm["terminal_path"].write_bytes(json_bytes(terminal))
+    with pytest.raises(ValueError, match="cannot discard a frozen reference"):
+        close_terminal_arm(tmp_path, arm["traj_path"], arm["terminal_path"])
+    assert not (arm["exp_dir"] / "rml_finalized").exists()
 
 
 # =========================================================================

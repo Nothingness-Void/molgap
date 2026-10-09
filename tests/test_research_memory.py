@@ -392,6 +392,13 @@ def test_ready_rejects_missing_reference():
         build_ready_package(trajectory, evidence, costs)
 
 
+def test_ready_rejects_unreferenced_frozen_state_even_with_qualified_evidence():
+    trajectory, evidence, costs = _ready_fixture()
+    trajectory["state_at_start"]["reference_ids"] = []
+    with pytest.raises(ValueError, match="compatible reference is absent from trajectory state"):
+        build_ready_package(trajectory, evidence, costs)
+
+
 def test_ready_rejects_empty_role_history():
     trajectory, evidence, costs = _ready_fixture()
     trajectory["readiness"]["role_history_refs"] = []

@@ -132,7 +132,7 @@ def _validate_staged(root: Path, staging: Path, destination: Path) -> None:
         validate_manifest_trace(manifest, records["trace.json"])
         for field in ("trace_artifact_ref", "terminal_evidence_ref", "contract_ref", "presentation_semantics_ref"):
             pointer(manifest[field])
-        if manifest["reference_id"] not in ids["evidence_id"]:
+        if manifest["reference_id"] is not None and manifest["reference_id"] not in ids["evidence_id"]:
             raise ValueError("unresolved trace reference")
 
 
@@ -302,7 +302,10 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
                 action["cost_event_ids"] = sorted(set(action["cost_event_ids"]) | {missing_cost["cost_event_id"]})
     if trace_bytes is not None:
         manifest = copy.deepcopy(package["trace_manifest"])
+        validate_trace_manifest(manifest)
         eligible = manifest["backtest_eligibility"]["eligible"]
+        if manifest["reference_id"] is None and (paired is not None or frozen["state_at_start"]["reference_ids"]):
+            raise ValueError("unreferenced trace cannot discard a frozen reference or same-run binding")
         if paired is not None:
             observation = validate_pair_observation(package.get("same_run_observation"))
             if package.get("continuation_ref") is not None:
@@ -342,6 +345,7 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         if manifest["contract_ref"] not in frozen["state_at_start"]["contract_refs"]:
             raise ValueError("manifest contract not frozen")
         if (paired is None
+                and manifest["reference_id"] is not None
                 and manifest["reference_id"] not in frozen["state_at_start"]["reference_ids"]):
             raise ValueError("manifest reference not frozen")
         manifest.update(trace_artifact_ref=prefix + "/trace.json",

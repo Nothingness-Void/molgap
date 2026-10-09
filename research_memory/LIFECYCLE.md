@@ -100,6 +100,16 @@ Evidence, terminal-package and acceptance `role_use` claims are checked against
 source-verified role events: consumed/read/used requires matching observed access,
 and untouched/not_applicable conflicts with any observed access for that role.
 
+Unpaired trajectories with no frozen reference IDs may retain a canonical
+candidate trace with `reference_id=null` only when `backtest_eligibility.eligible`
+is false and `exclusion_reasons` contains an explicit non-empty reason. The
+default closure manifest records `missing_frozen_reference`. This is trace
+custody, not a comparison: strict grouping and replay exclude these traces,
+and READY still requires its existing qualified frozen reference. Null cannot
+discard an existing frozen reference or same-run binding; reference-arm traces
+still bind their accepted evidence ID. Frozen prospective/source records and
+raw retained artifacts remain unchanged.
+
 The transaction stages under ignored `research_memory/.staging/`, validates
 record shapes, cross-links, trace and publication hashes, then renames one
 directory to `experiments/<question>/rml_finalized/`. That directory contains

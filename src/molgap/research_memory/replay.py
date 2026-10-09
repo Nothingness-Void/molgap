@@ -98,6 +98,8 @@ def build_replay_pool(root: Path, records: dict[str, list]) -> dict[str, Any]:
     from collections import Counter
     identities = Counter((m["trajectory_id"], m["run_id"]) for m in manifests)
     for manifest in sorted(manifests, key=lambda m: (m["trajectory_id"], m["run_id"])):
+        if manifest["reference_id"] is None:
+            continue
         key = _comparison_key(manifest)
         identity = (manifest["trajectory_id"], manifest["run_id"])
         trajectory = trajectories[manifest["trajectory_id"]]
