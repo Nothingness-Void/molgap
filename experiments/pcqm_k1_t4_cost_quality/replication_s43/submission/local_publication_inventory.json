@@ -1,0 +1,96 @@
+{
+  "format": "molgap-prepared-source-inventory-v1",
+  "files": [
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "bytes": 408,
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_t4_cost_quality/replication_s43/family_acceptance_plan.json",
+      "bytes": 1532,
+      "sha256": "21b37b408d3168b29dcce9eb1b8900cc8be3149b672dec8d7c76834dac33cf2e"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_t4_cost_quality/replication_s43/training_recipe_mean2.json",
+      "bytes": 927,
+      "sha256": "d821041415b1da11e28cbde12cb0f056ff37d134ded787d809c30990ccf3be16"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_t4_cost_quality/replication_s43/training_recipe_single.json",
+      "bytes": 931,
+      "sha256": "48e392f64669c6e83584cb8f644ecfab96b0914ecf55e946295b122b21fec761"
+    },
+    {
+      "path": "experiment_launch.json",
+      "bytes": 1388,
+      "sha256": "0dcd956db95284acbcce270e1a7599c709b11a8398bd2352a6f487e91caaf855"
+    },
+    {
+      "path": "experiment_spec.json",
+      "bytes": 5434,
+      "sha256": "921309ffd9dea1b94ee64b7e3724e7381da7c49f46bda2d5128f5f34dbe089a2"
+    },
+    {
+      "path": "initial_states/mean2.pt",
+      "bytes": 14779763,
+      "sha256": "dcd3a43ba454c17f6c43cf3a295810e65517d319b6232120a3fc0921e6d77ff0"
+    },
+    {
+      "path": "initial_states/single.pt",
+      "bytes": 14779763,
+      "sha256": "dcd3a43ba454c17f6c43cf3a295810e65517d319b6232120a3fc0921e6d77ff0"
+    },
+    {
+      "path": "package_manifest.json",
+      "bytes": 3183,
+      "sha256": "682eb4185709c6db586785a5dd8cdf88ecb74d0979694e5ee6f58c6c03a0c941"
+    },
+    {
+      "path": "prospective/mean2/trajectory.json",
+      "bytes": 50058,
+      "sha256": "74e70cc1b744b3e4780528e7d04cb9c9df66530ad7ce5ccc0f4f51e955c23f2c"
+    },
+    {
+      "path": "prospective/single/trajectory.json",
+      "bytes": 50065,
+      "sha256": "c790b9439f82b9f3204deb5e6eb4c929ebcdc2f8f8481ba73ede801dd76e60f4"
+    },
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "bytes": 65,
+      "sha256": "7626d74aa3f59eeb669c4489d2d0d9fb9977f06ea8192bf3fc74a74b2fe8970e"
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "bytes": 41,
+      "sha256": "a78dd017d650f269caa0482423482008859e2019e5d788db964e905316507b79"
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "bytes": 10496,
+      "sha256": "85c7444b059412008fd8b081bbd036de5c05e7b2e76f0dd969d642e0521baa09"
+    },
+    {
+      "path": "source_payload.bin",
+      "bytes": 204322,
+      "sha256": "4f1fc1002528f90a789f51b991f2f080959d64c3026eebfe0d74e18f66082b43"
+    }
+  ],
+  "cache_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "cache_shards_sha_verified": 3,
+  "cache_decoded": false,
+  "training_ran_locally": false,
+  "protected_roles_consumed": false,
+  "tests": {
+    "owner_shared_suite": {
+      "passed": 604,
+      "skipped": 4
+    },
+    "desktop_integration_suite": {
+      "passed": 148,
+      "skipped": 1
+    }
+  },
+  "native_qualification": "pending_remote; local release is syntax/import/identity only"
+}
