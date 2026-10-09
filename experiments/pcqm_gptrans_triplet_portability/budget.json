@@ -1,0 +1,11 @@
+{
+  "maximum_wall_seconds": 1800,
+  "maximum_allocated_t4_hours": 1,
+  "estimated_wall_minutes": [5, 15],
+  "maximum_allocated_devices": 2,
+  "active_workers": 1,
+  "training_executed": false,
+  "automatic_successor_authorized": false,
+  "authority_ref": "experiments/pcqm_gptrans_triplet_portability/protocol.md",
+  "scope": "bootstrap, setup, inference, idle devices and failures; queue/provisioning unmeasured"
+}

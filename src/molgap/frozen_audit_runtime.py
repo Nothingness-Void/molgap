@@ -47,8 +47,9 @@ def run_workers(*, inputs, output, source_root, entry_script, tasks, cap_seconds
     output.mkdir(parents=True, exist_ok=True)
     release = json.loads((inputs/"audit_release.json").read_text())
     devices = subprocess.check_output(["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"], text=True).strip().splitlines()
-    if len(devices) != len(tasks) or any("T4" not in item for item in devices):
-        raise ValueError("Frozen independent diagnostic tasks require actual T4x2")
+    if (not tasks or len(set(tasks)) != len(tasks) or len(devices) not in (1, 2)
+            or len(tasks) > len(devices) or any("T4" not in item for item in devices)):
+        raise ValueError("Frozen diagnostic tasks require isolated allocated T4 devices")
     ledger = AllocationLedger(spec_identity=release["identity"], hardware=devices,
         assignments={task:i for i,task in enumerate(tasks)}, started=allocation_started)
     ledger.write(output, "running")

@@ -233,14 +233,15 @@ def mechanism(inputs, cache, output, contract, deadline):
         test_dev_role_read=False, test_challenge_role_read=False))
 
 
-def portability(inputs, cache100k, cache500k, output, contract, deadline):
+def portability(inputs, cache100k, cache500k, output, contract, deadline, *, model_loader=None):
     import torch
     from torch.utils.data import Subset
     from torch_geometric.loader import DataLoader
     from .pcqm_k1_cross_scale_diagnostic import _accepted_development
     from .v4_runtime import state_dict_sha256
     transform = json.loads((inputs / "target_transform.json").read_text())
-    model = model_from_asset(inputs/"local_best.pt", contract["model_assets"]["local_best.pt"], transform)
+    loader_factory = model_from_asset if model_loader is None else model_loader
+    model = loader_factory(inputs/"local_best.pt", contract["model_assets"]["local_best.pt"], transform)
     frozen = state_dict_sha256(model.state_dict())
     events, joined = [], {}
     for role in ("original_100k", "unseen_500k"):

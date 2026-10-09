@@ -73,3 +73,6 @@ was prospectively authorized on Kaggle2; no scientific result was inferred.
 
 The 2026-10-06 [frozen bottleneck diagnostic](pcqm_gptrans_bottleneck_audit/decision.md)
 was authorized for eval-only derivatives and paired cohort inference, not training.
+
+The 2026-10-10 [triplet aggregation portability](pcqm_gptrans_triplet_portability/decision.md)
+was authorized for frozen inference on the predeclared later cohort, not500K training.
