@@ -1,0 +1,17 @@
+{
+  "original_100k": {
+    "rows": 50000,
+    "source_idx_start": 100000,
+    "source_idx_stop": 150000,
+    "prediction_progress_sha256": "ea36af2736f8e3a98fe580ae3ddc1eacb52defad9adff27b13ef6da836436ed0"
+  },
+  "unseen_500k": {
+    "rows": 10000,
+    "source_idx_start": 500000,
+    "source_idx_stop": 550000,
+    "row_selection": "frozen-RandomState42-without-replacement-sorted",
+    "reused_development": true,
+    "prediction_progress_sha256": "be06ca4e92ea1a7d33c26a17f2fcb333a32f5baf1e04b8fb11198500ae22bb03",
+    "reference_payload_sha256": "536e123b4d9b4e48859a0a0faa4a3a28a5e09ea0121875201426a1307935f6a1"
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "audit",
+      "cost_event_id": "cost-TC-gptrans-triplet-portability-s42-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_portability/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.06065376004611115
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.030326880023055575
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "gptrans-triplet-portability:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-triplet-portability-s42-v1"
+    }
+  ],
+  "evidence_id": "pcqm-gptrans-triplet-portability-s42-v1",
+  "format": "molgap-rml-terminal-acceptance-adapter-v1",
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "within_frozen_cap",
+    "comparison_status": "paired_endpoint_diagnostic",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "no_train_frozen_cohort_observations",
+    "transfer_status": "frozen_cohort_diagnostic_only"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "internal_development_500000_550000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_portability/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-triplet-portability-s42-v1-original_100k-prediction_input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "6edc381f94937e1623269f788c4ab5a6c1748088e4cabc4c343fcb017c8b1e62",
+      "run_id": "gptrans-triplet-portability:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-triplet-portability-s42-v1"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_portability/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-triplet-portability-s42-v1-original_100k-labels_read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "6edc381f94937e1623269f788c4ab5a6c1748088e4cabc4c343fcb017c8b1e62",
+      "run_id": "gptrans-triplet-portability:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-triplet-portability-s42-v1"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_portability/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-triplet-portability-s42-v1-original_100k-metric_computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "6edc381f94937e1623269f788c4ab5a6c1748088e4cabc4c343fcb017c8b1e62",
+      "run_id": "gptrans-triplet-portability:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-triplet-portability-s42-v1"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_portability/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-triplet-portability-s42-v1-unseen_500k-prediction_input",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "4122837bef191a9d5da4db76621b7955db3a729b0f6a4245f95f061820b22744",
+      "run_id": "gptrans-triplet-portability:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-triplet-portability-s42-v1"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_portability/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-triplet-portability-s42-v1-unseen_500k-labels_read",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "4122837bef191a9d5da4db76621b7955db3a729b0f6a4245f95f061820b22744",
+      "run_id": "gptrans-triplet-portability:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-triplet-portability-s42-v1"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_portability/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-triplet-portability-s42-v1-unseen_500k-metric_computed",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "4122837bef191a9d5da4db76621b7955db3a729b0f6a4245f95f061820b22744",
+      "run_id": "gptrans-triplet-portability:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-triplet-portability-s42-v1"
+    }
+  ],
+  "run_id": "gptrans-triplet-portability:v1",
+  "source_acceptance_ref": "experiments/pcqm_gptrans_triplet_portability/results/acceptance_summary.json",
+  "source_acceptance_sha256": "266baade690fc17df3c3494e862ff7296cf40e96970f4e952cd1c64695dcce11",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_triplet_portability/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "new mechanism evidence and explicit prospective authority"
+    ]
+  }
+}

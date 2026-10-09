@@ -1,0 +1,21 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-triplet-portability-s42",
+  "version": 1,
+  "files": [
+    {
+      "path": "gptrans_triplet_portability/output_manifest.json",
+      "sha256": "4bd18bcd2d68a5e4631772c5567b66c2b4cffc042595a2270aa47557319f2377"
+    },
+    {
+      "path": "gptrans_triplet_portability/allocation_ledger.json",
+      "sha256": "591f60f1356127378d086d1851d73fd907c83e3b15dc8500b74f86f4ee0adf63"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/terminal.json",
+      "sha256": "424bb936fd152dbbec20e20263706a5867f8ceed2e892ec12bb906eeb08e1920"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}

@@ -1,0 +1,114 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-triplet-portability-s42",
+  "receipt_version": 1,
+  "files": [
+    {
+      "path": "gptrans_triplet_portability/allocation.json",
+      "sha256": "14a307a4712d9701e051d11504a211f26d6e1ae445e86fd78eed297d14f052fd",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/allocation_ledger.json",
+      "sha256": "591f60f1356127378d086d1851d73fd907c83e3b15dc8500b74f86f4ee0adf63",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/environment.json",
+      "sha256": "d972fd76f971b52ddbd8cdffb46ccfa0b59304ddb836fc8a2da0ea3ba6e5a2f9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/role_events.json",
+      "sha256": "82c091b554d56ee00bb914751044e56d2b7a3f7f4a063d6394ba6c544ad049a1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/terminal.json",
+      "sha256": "424bb936fd152dbbec20e20263706a5867f8ceed2e892ec12bb906eeb08e1920",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/reproduction.json",
+      "sha256": "d45c585377dc9c2dee7b3b3c78773d69bd8b71702d049eb1ae330963ea1c5e7f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/runtime.json",
+      "sha256": "9bcf013d18dbc3078be253ade830b79fcefd117d01205ab86ebbf6c884acb225",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/unseen_500k/progress.json",
+      "sha256": "be06ca4e92ea1a7d33c26a17f2fcb333a32f5baf1e04b8fb11198500ae22bb03",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/unseen_500k/chunk_01.pt",
+      "sha256": "68c3e5c19210e54a106b7535eef28b8a8387e5fa74fd8e786b56b7b4fc6eefba",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/unseen_500k/chunk_00.pt",
+      "sha256": "19906cabd4adefb9906dac3c5953924af295131d77f12561abc8ea10aefa8aaa",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/original_100k/chunk_02.pt",
+      "sha256": "c38e5c4d241330c84377e4491a3073f1f68e170b9c2b266243dc158e016954f3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/original_100k/progress.json",
+      "sha256": "ea36af2736f8e3a98fe580ae3ddc1eacb52defad9adff27b13ef6da836436ed0",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/original_100k/chunk_08.pt",
+      "sha256": "611195c1f58cc4f64c3a1e7e1404e73654c936a8d38ec52286b45a08f24ffa96",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/original_100k/chunk_03.pt",
+      "sha256": "ffdea817d00edffef2506a704083d51afda3d912baf489220104164208aacdc9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/original_100k/chunk_04.pt",
+      "sha256": "84cfa1c4fbde2f0cab70b823b7903543965f632a29be62d2e44dc253344d8676",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/original_100k/chunk_07.pt",
+      "sha256": "98e437df102a8177338295d66aaf4d359f0681d816cf12e4f3a246283d7974a9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/original_100k/chunk_05.pt",
+      "sha256": "44cf2feb8a4d702649e1930bf69747decacedb8f73b5ccd0b8fdac2bc7211d7a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/original_100k/chunk_01.pt",
+      "sha256": "26ea209431b88b566962753250603a9daf5cc2fbaa055eb5d33acd6e1b126257",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/original_100k/chunk_06.pt",
+      "sha256": "c8c0eecf59a0b9701b5300e6344113f22298b9742303ba93577599b06cddafed",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/original_100k/chunk_09.pt",
+      "sha256": "6b0090f1c74fbc33d3de24bb14e0133d04dc514fb584ca3f07bd5914ff82610e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_triplet_portability/portability/original_100k/chunk_00.pt",
+      "sha256": "d4fd93b23586d48a51ba6017c7429d290e3aaf5fe8daef637fc93bf593b30367",
+      "state": "RETAINED"
+    }
+  ],
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": true
+}
