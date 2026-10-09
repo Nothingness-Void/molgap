@@ -12,7 +12,7 @@ def close(root, output, inputs):
     if (root / BASE / "rml_plan/rml_finalized").exists():
         return finalize(root, root / BASE / "rml_plan/trajectory.json", root / BASE / "results/terminal.json")
     decision = root / BASE / "decision.md"
-    if not (root / BASE / "decision_terminal.md").is_file() or "decision_terminal.md" not in decision.read_text():
+    if not (root / BASE / "decision_terminal.md").is_file() or "decision_terminal.md" not in decision.read_text(encoding="utf-8"):
         raise ValueError("Dated controller interpretation required before terminal closure")
     accepted = accept(output, inputs)
     frozen = json.loads((root / BASE / "rml_plan/trajectory.json").read_text())

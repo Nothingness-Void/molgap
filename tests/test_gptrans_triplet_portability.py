@@ -56,3 +56,11 @@ def test_no_training_or_geometry_calls():
         tree = ast.parse((ROOT / "src/molgap" / name).read_text())
         assert not any(isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr in {"step", "backward", "train"} for n in ast.walk(tree))
         assert not any(isinstance(n, ast.Attribute) and n.attr in {"pos", "edge_distance", "wedge_angle_cos"} for n in ast.walk(tree))
+
+
+def test_controller_decision_uses_utf8_on_windows():
+    tree = ast.parse((ROOT / "src/molgap/gptrans_triplet_portability_records.py").read_text(encoding="utf-8"))
+    calls = [n for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+             and isinstance(n.func.value, ast.Name) and n.func.value.id == "decision" and n.func.attr == "read_text"]
+    assert len(calls) == 1
+    assert any(k.arg == "encoding" and isinstance(k.value, ast.Constant) and k.value.value == "utf-8" for k in calls[0].keywords)
