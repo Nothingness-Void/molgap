@@ -1,0 +1,23 @@
+{
+  "status": "EXACT_ACCEPTED_CACHE_BYTES",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "shards": [
+    {
+      "file": "train/train_shard_0000.pt",
+      "sha256": "8cc4c6373c22c8f72ac302f514bb657c5b40a9a1c620c6228b760380ebec705e",
+      "rows": 50000
+    },
+    {
+      "file": "train/train_shard_0001.pt",
+      "sha256": "c8cb535c1da6e0f3f851aee530c7903ba6dae9e0856b0bcb695564103b8bd8bd",
+      "rows": 50000
+    },
+    {
+      "file": "train/train_shard_0002.pt",
+      "sha256": "f8c0d054d4794ce9a8887e6c1799806d89533f6ed3aeb93f3e838b7319ac842a",
+      "rows": 50000
+    }
+  ],
+  "decoded": false,
+  "protected_roles": "untouched"
+}

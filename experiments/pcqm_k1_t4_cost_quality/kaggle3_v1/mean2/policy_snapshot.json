@@ -1,0 +1,36 @@
+{
+  "action_rule": {
+    "action": "TRAIN_PAIR_100K",
+    "field": "parent_release_validated",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": "2026-10-09T09:35:13Z",
+    "approved_by": "User authorization: all proposed bounded analyses; parent artifact review",
+    "authority_ref": "experiments/pcqm_k1_t4_cost_quality/parent_release.json"
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "k1-t4-cost-quality-100k-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "Count both allocated T4 devices including idle, setup, qualification, evaluation and cleanup.",
+      "8 allocated T4 device-hours and 4 wall-hours are ceilings, not measured costs."
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "d0aa6c42dd570e8fbc0625f8fab50d3f512bd93fbd7d43070d44aeadbc96ba70",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "pcqm-k1-t4-cost-quality-100k-preparation",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "parent_release_validated"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "approved",
+  "version": "1"
+}

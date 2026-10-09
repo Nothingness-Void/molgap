@@ -336,6 +336,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-t4-cost-quality-mean2-100k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_t4_cost_quality/parent_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-t4-cost-quality-mean2-100k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_t4_cost_quality/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-t4-cost-quality-single-100k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_t4_cost_quality/parent_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-t4-cost-quality-single-100k-s42-v1:A001",
+      "target": "experiments/pcqm_k1_t4_cost_quality/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-v4-192-kaggle3-reference-custody-20261002:A001",
       "target": "experiments/pcqm_k1_slot_width96/reference_binding/mechanical_acceptance.json",
       "type": "action_produced_evidence"
@@ -1543,6 +1563,16 @@
     {
       "source": "pcqm-k1-consistency-fusion-transfer-20261004",
       "target": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-consistency-fusion-transfer-20261004",
+      "target": "TB-k1-t4-cost-quality-mean2-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-consistency-fusion-transfer-20261004",
+      "target": "TB-k1-t4-cost-quality-single-100k-s42-v1",
       "type": "prior_evidence"
     },
     {
@@ -2876,6 +2906,14 @@
     },
     {
       "id": "TB-k1-ssma-kaggle3-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-t4-cost-quality-mean2-100k-s42-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-t4-cost-quality-single-100k-s42-v1",
       "type": "trajectory"
     },
     {

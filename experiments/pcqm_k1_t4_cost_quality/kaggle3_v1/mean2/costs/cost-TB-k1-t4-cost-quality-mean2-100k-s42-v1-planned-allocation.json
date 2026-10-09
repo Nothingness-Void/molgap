@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kaggle3-cost-quality-001",
+  "category": "training",
+  "cost_event_id": "cost-TB-k1-t4-cost-quality-mean2-100k-s42-v1-planned-allocation",
+  "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/protocol.md",
+  "hardware": "Tesla T4; one of two allocated devices including idle time",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 4.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4.0
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "molgap-k1-t4-cost-quality-100k-s42-v1:mean2",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-t4-cost-quality-mean2-100k-s42-v1"
+}
