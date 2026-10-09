@@ -1245,6 +1245,30 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "consumed_role_frozen_diagnostic",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "role_use": {
+        "common": "untouched",
+        "internal_development": "consumed",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_decoded": "consumed",
+        "train_descriptive": "consumed"
+      },
+      "scientific_scope": "pcqm-k1-clean-fit-generalization-500k",
+      "source_envelope": "experiments/pcqm_k1_clean_fit_generalization_500k/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "matched_scratch_execution_counterfactual",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,

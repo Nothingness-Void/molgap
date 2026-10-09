@@ -1,0 +1,11 @@
+{
+  "status": "BLOCKED",
+  "prospective_planning": "PLANNED_BEFORE_INFERENCE",
+  "numerical_status": "complete",
+  "scientific_decision": "NO_TRAIN",
+  "metadata_finalization_published": false,
+  "api": "molgap.frozen_diagnostic_closure.close_local_diagnostic",
+  "error_type": "ValueError",
+  "error": "required repository pointer is missing: platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/best_model.pt",
+  "next_metadata_action": "Restore exact baseline-artifact custody under its owner, rebind the updated decision/package via the shared closure, then finalize/rebuild/check normally. No numerical retry."
+}

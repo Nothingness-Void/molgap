@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "6f784653ecfc196a9869e38f2d17740ea801bd0eba688acad875731dc17108b4",
+  "source_digest": "0f432381890d39b015c94a7c4576cc8b555abbe1db3ec6ccdb0098ec5c35613c",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1045,6 +1045,22 @@
       ],
       "track": "B",
       "trajectory_id": "TB-k1-bn-mechanism-a100-20261008"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_clean_fit_generalization_500k/terminal_decision.md",
+      "family_id": "k1-clean-fit-generalization",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_clean_fit_generalization_500k/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-clean-fit-generalization-500k-20261009"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009"
     },
     {
       "completeness_status": "complete",
