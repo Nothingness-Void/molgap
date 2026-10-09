@@ -291,7 +291,12 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("reference", "ssma", "clean_fingerprint")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint", "mean2")
+
+
+def _maximum_overhead(mode):
+    # The two-pass control intentionally doubles forwards; it is not an SSMA extension.
+    return 1.0 if mode == "mean2" else 0.25
 
 
 def _state_digest(state: dict) -> str:
@@ -302,6 +307,9 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
     """Enforce the historical exposure before loading a molecular role."""
     if mode not in ARM_MODES:
         raise ValueError("Unsupported K1 screen arm")
+    limit = recipe.get("allocation_wall_limit_seconds")
+    if limit is not None and (type(limit) is not int or not 120 <= limit <= 14400):
+        raise ValueError("Invalid allocation ceiling")
     expected = {"epochs": EPOCHS, "optimizer_steps": EPOCHS * STEPS_PER_EPOCH,
                 "sample_presentations": SAMPLE_EXPOSURE,
                 "development_rows": DEVELOPMENT_ROWS, "precision": "fp32"}
@@ -329,7 +337,7 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
     from .experiment_spec import _digest
     for name, value in (("source_idx_sha256", source_idx_sha256), ("target_sha256", target_sha256)):
         _digest(value, name)
-    if mode not in {"reference", "ssma"}:
+    if mode not in {"reference", "ssma", "mean2"}:
         raise ValueError("No executable screen recipe for this K1 addon")
     return {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
         "initialization_sha256": INITIAL_STATE_SHA256,
@@ -397,13 +405,18 @@ def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
         prediction = _forward(model, batch)
     target = (batch.y.view(-1) - mean) / std
     loss = functional.l1_loss(prediction, target)
+    absolute = (prediction.detach() - target).abs().sum()
+    if mode == "mean2":
+        second = _forward(model, batch)
+        loss = 0.5 * (loss + functional.l1_loss(second, target))
+        absolute = 0.5 * (absolute + (second.detach() - target).abs().sum())
     if mode == "clean_fingerprint":
         loss = loss + 0.1 * functional.binary_cross_entropy_with_logits(
             model.clean_fingerprint_head(representation), batch.chemical_fingerprint.float())
     loss.backward()
     torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
     optimizer.step()
-    return loss.detach(), (prediction.detach() - target).abs().sum(), int(target.numel())
+    return loss.detach(), absolute, int(target.numel())
 
 
 def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode):
@@ -434,6 +447,11 @@ def _validate_arm_binding(spec, context, mode):
                        "latent_channels": 64, "layer": 6, "seed": SEED}}
         if addons != [expected]:
             raise ValueError("SSMA executable addon differs from Spec")
+    if mode == "mean2":
+        expected = {"name": "k1_two_pass_mean", "version": "1", "config": {},
+            "source_sha256": normalized_source_sha256(Path(__file__))}
+        if addons != [expected]:
+            raise ValueError("Two-pass executable addon differs from Spec")
 
 
 def validate_screen_recipe(spec, arm_id, recipe):
@@ -485,7 +503,7 @@ def validate_runtime_preflight(directory, provenance):
         architecture.get("repeatability", {}).get("accepted") is not True or
         architecture.get("resume_roundtrip", {}).get("accepted") is not True or
         architecture.get("zero_initialization_delta") != 0.0 or
-        not 0 <= architecture.get("maximum_overhead_fraction", -1) <= 0.25 or
+        architecture.get("maximum_overhead_fraction") != _maximum_overhead(provenance.get("mode", "reference")) or
         not math.isfinite(architecture.get("synchronized_step_overhead_fraction", math.inf)) or
         architecture["synchronized_step_overhead_fraction"] > architecture["maximum_overhead_fraction"]):
         raise ValueError("K1 runtime calibration evidence differs from the gate")
@@ -500,8 +518,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     import torch
     from .experiment_family_workflow import RunContext
     from .training_reproducibility import capture_rng_state, restore_rng_state
-    if mode not in ("reference", "ssma") or label_cache is not None:
-        raise ValueError("This paired GPU qualification supports reference and SSMA only")
+    if mode not in ("reference", "ssma", "mean2") or label_cache is not None:
+        raise ValueError("This paired GPU qualification supports registered screen modes only")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
     context = RunContext.for_training(spec, package_dir,
@@ -615,11 +633,12 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
             "samples_seconds": samples, "peak_memory_bytes": torch.cuda.max_memory_allocated()}
         del model, optimizer
     overhead = timings[mode]["median_step_seconds"] / timings["reference"]["median_step_seconds"] - 1
-    architecture = {"accepted": overhead <= 0.25, "mode": mode, "zero_initialization_delta": zero_delta,
+    maximum_overhead = _maximum_overhead(mode)
+    architecture = {"accepted": overhead <= maximum_overhead, "mode": mode, "zero_initialization_delta": zero_delta,
         "repeated_optimizer_steps": 2,
         "repeatability": repeated, "resume_roundtrip": resume, "timings": timings,
         "selected_state_roundtrip_delta": selected_delta,
-        "synchronized_step_overhead_fraction": overhead, "maximum_overhead_fraction": 0.25,
+        "synchronized_step_overhead_fraction": overhead, "maximum_overhead_fraction": maximum_overhead,
         "formal_sample_presentations": 0, "fixture_sha256": _batch_sha256(batch),
         "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"}
     atomic_json(output / "architecture_preflight.json", architecture)
@@ -630,7 +649,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         "cpu_allocation_seconds": {"status": "missing", "value": None},
         "queue_seconds": {"status": "missing", "value": None}})
     if not architecture["accepted"]:
-        raise RuntimeError("SSMA exceeds synchronized optimizer-inclusive overhead gate")
+        raise RuntimeError("Registered mode exceeds synchronized optimizer-inclusive overhead gate")
     certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
         "platform_id": recipe.get("runtime_platform_id", context.platform + "-t4x2"),
         "accelerator": hardware, "precision": "fp32", "tf32_enabled": False,
@@ -673,7 +692,7 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     if declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
                                         "state_sha256": INITIAL_STATE_SHA256}:
         raise ValueError("K1 Spec initialization differs from executable state")
-    if mode in ("reference", "ssma") and label_cache is not None:
+    if mode in ("reference", "ssma", "mean2") and label_cache is not None:
         raise ValueError("Reference/SSMA does not consume chemical auxiliary labels")
     if mode == "clean_fingerprint":
         if label_cache is None or label_cache.components != ("fingerprints",):

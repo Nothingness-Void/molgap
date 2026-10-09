@@ -14,10 +14,15 @@ from .training_reproducibility import atomic_json
 
 
 def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path,
-                       launch_path: Path, output: Path) -> dict:
+                       launch_path: Path, output: Path, maximum_wall_seconds: float | None = None) -> dict:
     """Preflight every assigned arm before any formal training is spawned."""
     source_root, package_dir, input_root, output = map(Path, (source_root, package_dir, input_root, output))
     config = _json(launch_path)
+    if maximum_wall_seconds is not None and (
+        isinstance(maximum_wall_seconds, bool) or not isinstance(maximum_wall_seconds, (int, float))
+        or not 0 < maximum_wall_seconds <= 14400
+    ):
+        raise ValueError("Allocation ceiling must be positive and at most four hours")
     spec = ExperimentSpec.from_json((package_dir / "experiment_spec.json").read_text(encoding="utf-8"))
     jobs = validate_execution_plan(spec, config["jobs"])
     declaration = spec.to_dict()
@@ -36,6 +41,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                         "exit_reason": "not_started", "worker_wall_seconds": 0.0}
                        for j in jobs}}
     started = time.perf_counter()
+    deadline = None if maximum_wall_seconds is None else started + maximum_wall_seconds
+    if deadline is not None:
+        report["maximum_wall_seconds"] = maximum_wall_seconds
     atomic_json(output / "pair_state.json", report)
     for phase in ("preflight", "train"):
         workers = []
@@ -118,6 +126,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 row.update(started=True, terminal_status="running", exit_reason="worker_running")
                 atomic_json(output / "pair_state.json", report)
             while True:
+                if deadline is not None and time.perf_counter() >= deadline:
+                    report["stop_reason"] = "STOP_FOR_COST"
+                    raise TimeoutError("Frozen allocation ceiling exhausted; retain complete-epoch resume state")
                 running = False
                 phase_failed = False
                 for worker in workers:

@@ -9,12 +9,14 @@ import subprocess
 import sys
 import tarfile
 import types
+import time
 
 # Local preparation replaces this marker and binds the resulting entry bytes.
 EXPECTED_LAUNCH_SHA256 = None
 
 
 def main():
+    allocation_started = time.perf_counter()
     mounted = Path("/kaggle/input")
     configs = list(mounted.rglob("experiment_launch.json"))
     if len(configs) != 1:
@@ -28,9 +30,30 @@ def main():
         observed = hashlib.file_digest(stream, "sha256").hexdigest()
     if observed != config["expected_source_archive_sha256"]:
         raise RuntimeError("Frozen source archive hash mismatch")
+    with tarfile.open(archive, "r:gz") as bundle:
+        limits = []
+        for job in config["jobs"]:
+            stream = bundle.extractfile(job["recipe"])
+            if stream is None:
+                raise RuntimeError("Frozen arm recipe absent")
+            with stream:
+                limits.append(json.load(stream).get("allocation_wall_limit_seconds"))
+    if len(set(limits)) != 1:
+        raise ValueError("Every arm must agree on the allocation ceiling")
+    limit = limits[0]
+    if limit is not None and (type(limit) is not int or not 120 <= limit <= 14400):
+        raise ValueError("Frozen allocation ceiling outside supported bounds")
+
+    def remaining():
+        if limit is None:
+            return None
+        seconds = limit - (time.perf_counter() - allocation_started) - 60
+        if seconds <= 0:
+            raise TimeoutError("Allocation budget exhausted during bootstrap")
+        return seconds
     # Dependencies are platform bootstrap, never imported from another experiment.
     subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "numpy<2",
-                    "torch-geometric==2.6.1", "ogb==1.3.6"], check=True)
+                    "torch-geometric==2.6.1", "ogb==1.3.6"], check=True, timeout=remaining())
     root = Path("/kaggle/temp/molgap-workflow")
     root.mkdir(parents=True, exist_ok=False)
     package, source = root / "package", root / "source"
@@ -57,7 +80,8 @@ def main():
     if manifest["package_identity"] != config["expected_package_identity"] or manifest["spec_identity"] != config["spec_identity"]:
         raise RuntimeError("Frozen launch/Spec/package binding mismatch")
     run_two_phase_pair(source_root=source, package_dir=package, input_root=mounted,
-                       launch_path=launch, output=Path("/kaggle/working/experiment"))
+                       launch_path=launch, output=Path("/kaggle/working/experiment"),
+                       maximum_wall_seconds=remaining())
 
 
 if __name__ == "__main__":

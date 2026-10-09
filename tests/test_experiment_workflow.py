@@ -1084,6 +1084,54 @@ def test_pair_runtime_train_failure_drains_peer_and_freezes_per_worker_wall(
     assert {row["started"] for row in train_phase["workers"]} == {True}
 
 
+def test_pair_runtime_budget_terminates_workers_without_claiming_endpoint(tmp_path, monkeypatch):
+    from molgap import kaggle_pair_runtime as pair_runtime
+
+    spec = _candidate_pair_spec()
+    package = tmp_path / "package"
+    package.mkdir()
+    (package / "experiment_spec.json").write_bytes(spec.to_json().encode())
+    launch = tmp_path / "launch.json"
+    _write_json(launch, {"jobs": _jobs(spec)})
+    monkeypatch.setattr(pair_runtime.subprocess, "check_output",
+                        lambda *args, **kwargs: "Tesla T4\nTesla T4\n")
+    clock = [0.0]
+    monkeypatch.setattr(pair_runtime.time, "perf_counter", lambda: clock[0])
+    monkeypatch.setattr(pair_runtime.time, "sleep", lambda seconds: clock.__setitem__(0, clock[0] + seconds))
+    processes = []
+
+    class Process:
+        def __init__(self, command):
+            self.phase = command[command.index("--phase") + 1]
+            self.returncode = None
+            self.terminated = False
+
+        def poll(self):
+            return 0 if self.phase == "preflight" else self.returncode
+
+        def terminate(self):
+            self.terminated = True
+            self.returncode = -15
+
+        def wait(self, timeout=None):
+            return self.returncode
+
+    def spawn(command, **kwargs):
+        process = Process(command)
+        processes.append(process)
+        return process
+
+    monkeypatch.setattr(pair_runtime.subprocess, "Popen", spawn)
+    with pytest.raises(TimeoutError, match="allocation ceiling"):
+        pair_runtime.run_two_phase_pair(source_root=tmp_path, package_dir=package,
+            input_root=tmp_path, launch_path=launch, output=tmp_path / "output", maximum_wall_seconds=1)
+    state = json.loads((tmp_path / "output/pair_state.json").read_text())
+    assert state["status"] == "failed"
+    assert state["stop_reason"] == "STOP_FOR_COST"
+    assert all(process.terminated for process in processes if process.phase == "train")
+    assert all(arm["terminal_status"] == "cancelled" for arm in state["arms"].values())
+
+
 def test_check_workflow_binding_rejects_tampered_final_prospective_identity(tmp_path):
     spec = _candidate_pair_spec()
     staged = tmp_path / "source-dataset"
