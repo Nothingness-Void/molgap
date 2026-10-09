@@ -1,4 +1,6 @@
 # Scientific evidence and RML outputs must preserve bytes across checkouts.
+experiments/pcqm_k1_clean_second_100k/** -text
+research_memory/policies/pcqm-k1-clean-second-100k.1.json -text
 platforms/kaggle/resume_frozen_k1_arm.py -text
 experiments/pcqm_expert_oracle_feasibility/** -text
 research_memory/policies/pcqm-expert-oracle-feasibility.1.json -text
