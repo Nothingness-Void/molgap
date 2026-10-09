@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 434,
+  "ambiguous_historical_role_record_count": 444,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -2004,6 +2004,76 @@
       "state": "consumed"
     },
     {
+      "evidence_id": "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
       "evidence_id": "pcqm-k1-consistency-fusion-transfer-20261004",
       "role_identity": null,
       "role_name": "internal_development",
@@ -3040,7 +3110,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 254,
+  "explicit_role_event_count": 264,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "fixed50k_development",
@@ -3433,6 +3503,80 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed-clean-bn",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-metric_computed-clean-bn",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-train-labels_read-clean-bn",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-train-labels_read-clean-bn",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
       }
     ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:eb500009154d3b1e61d01bec79e8d0a36345bbd847442ae472b9a0525a55f157:internal_development": [
@@ -4990,6 +5134,8 @@
       "pcqm-k1-clean-fit-generalization-500k-20261009",
       "pcqm-k1-colab-execution-profile-20261007",
       "pcqm-k1-complete-module-audit-20261008",
+      "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
+      "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
       "pcqm-k1-consistency-fusion-transfer-20261004",
       "pcqm-k1-consistency-residual-screen-20261004",
       "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
@@ -5083,6 +5229,8 @@
       "pcqm-k1-clean-fit-generalization-500k-20261009",
       "pcqm-k1-colab-execution-profile-20261007",
       "pcqm-k1-complete-module-audit-20261008",
+      "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
+      "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
       "pcqm-k1-consistency-fusion-transfer-20261004",
       "pcqm-k1-consistency-residual-screen-20261004",
       "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
@@ -5374,6 +5522,50 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-consistency-fusion-transfer-20261004"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed-clean-bn",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-metric_computed-clean-bn",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
       }
     ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:eb500009154d3b1e61d01bec79e8d0a36345bbd847442ae472b9a0525a55f157:internal_development": [
@@ -6592,6 +6784,80 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-metric_computed-clean-bn",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-metric_computed-clean-bn",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-internal_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-train-labels_read-clean-bn",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-train-labels_read-clean-bn",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-train-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
       }
     ],
     "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed50k_development": [

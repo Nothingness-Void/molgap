@@ -1,0 +1,635 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-10-09T03:24:06.150500+00:00",
+  "arms": {
+    "k1_pretrained_mean2": {
+      "arm": "k1_pretrained_mean2",
+      "status": "complete",
+      "started_at_utc": "2026-10-09T03:24:06.380999+00:00",
+      "phase": "complete",
+      "updated_at_utc": "2026-10-09T03:26:43.441445+00:00",
+      "wall_seconds": 157.06129779999992,
+      "process_cpu_seconds": 589.109375,
+      "runtime": {
+        "format": "molgap-runtime-manifest-v1",
+        "python": "3.10.6 (tags/v3.10.6:9c7b4bd, Aug  1 2022, 21:53:49) [MSC v.1932 64 bit (AMD64)]",
+        "python_executable": "D:\\\u6587\u6863\\molgap\\.venv\\Scripts\\python.exe",
+        "platform": "Windows-10-10.0.26220-SP0",
+        "torch": "2.7.1+cu128",
+        "torch_cuda": "12.8",
+        "torch_hip": null,
+        "cudnn": 90701,
+        "accelerator": null,
+        "determinism": {
+          "seed": 20261008,
+          "precision": "fp32",
+          "tf32_enabled": false,
+          "cudnn_benchmark": false,
+          "cudnn_deterministic": true,
+          "deterministic_algorithms": true,
+          "cublas_workspace_config": ":4096:8",
+          "float32_matmul_precision": "highest",
+          "device": "cpu",
+          "cuda_device_count_visible": 0
+        },
+        "installed_distributions": [
+          "aiohappyeyeballs==2.7.1",
+          "aiohttp==3.14.3",
+          "aiosignal==1.4.0",
+          "alembic==1.18.5",
+          "async-timeout==5.0.1",
+          "attrs==26.1.0",
+          "bleach==6.4.0",
+          "certifi==2026.7.22",
+          "charset-normalizer==3.4.9",
+          "colorama==0.4.6",
+          "colorlog==6.12.0",
+          "contourpy==1.3.2",
+          "cycler==0.12.1",
+          "descriptastorus==2.8.0",
+          "exceptiongroup==1.3.1",
+          "filelock==3.29.0",
+          "fonttools==4.63.0",
+          "frozenlist==1.8.0",
+          "fsspec==2026.4.0",
+          "greenlet==3.5.4",
+          "idna==3.18",
+          "ijson==3.5.0",
+          "iniconfig==2.3.0",
+          "jinja2==3.1.6",
+          "joblib==1.5.3",
+          "kaggle==1.7.4.5",
+          "kagglehub==1.0.2",
+          "kagglesdk==0.1.28",
+          "kiwisolver==1.5.0",
+          "lightgbm==4.7.0",
+          "littleutils==0.2.4",
+          "mako==1.3.12",
+          "markupsafe==3.0.3",
+          "matplotlib==3.10.9",
+          "molgap==0.1.0",
+          "mpmath==1.3.0",
+          "multidict==6.7.1",
+          "narwhals==2.24.0",
+          "networkx==3.4.2",
+          "numpy==2.2.6",
+          "ogb==1.3.6",
+          "optuna==4.9.0",
+          "outdated==0.2.2",
+          "packaging==26.2",
+          "pandas-flavor==0.8.1",
+          "pandas==2.3.3",
+          "pillow==12.3.0",
+          "pip==22.2.1",
+          "pluggy==1.6.0",
+          "propcache==0.5.2",
+          "protobuf==7.36.1",
+          "psutil==7.2.2",
+          "pyarrow==25.0.0",
+          "pygments==2.20.0",
+          "pyparsing==3.3.2",
+          "pytest==9.1.1",
+          "python-dateutil==2.9.0.post0",
+          "python-slugify==9.0.0",
+          "pytz==2026.3.post1",
+          "pyyaml==6.0.3",
+          "rdkit==2026.3.4",
+          "requests==2.34.2",
+          "scikit-learn==1.7.2",
+          "scipy==1.15.3",
+          "seaborn==0.13.2",
+          "setuptools==83.0.0",
+          "six==1.17.0",
+          "sqlalchemy==2.0.51",
+          "sympy==1.14.0",
+          "text-unidecode==1.3",
+          "threadpoolctl==3.6.0",
+          "tomli==2.4.1",
+          "torch-geometric==2.7.0",
+          "torch==2.7.1+cu128",
+          "torch_cluster==1.6.3+pt27cu128",
+          "tqdm==4.70.0",
+          "typing_extensions==4.16.0",
+          "tzdata==2026.3",
+          "urllib3==2.7.0",
+          "webencodings==0.6.1",
+          "xarray==2025.6.1",
+          "xxhash==3.8.1",
+          "yarl==1.24.5"
+        ],
+        "installed_distributions_sha256": "9a5dfc0e0796796931e84e1b18cb32b9f2162fa5c75724cd378fe17dff5af08c",
+        "external_runtime_artifacts": {
+          "ogb": {
+            "version": "1.3.6",
+            "source_archive_sha256": null
+          }
+        },
+        "runtime_fingerprint": "40f84117381cf2cb504b1170d903145f67dda5a60f4795ceef650ea40da18d63"
+      },
+      "cpu_threads": 4,
+      "device": "cpu",
+      "autocast_enabled": false,
+      "cpu_processor": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+      "cpu_logical_count": 16,
+      "torch_build_config": "PyTorch built with:\n  - C++ Version: 201703\n  - MSVC 192930158\n  - Intel(R) oneAPI Math Kernel Library Version 2025.1-Product Build 20250306 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\n  - OpenMP 2019\n  - LAPACK is enabled (usually provided by MKL)\n  - CPU capability usage: AVX512\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=e2d141dbde55c2a4370fac5165b0561b6af4798b, CUDA_VERSION=12.8, CUDNN_VERSION=9.7.1, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/pytorch/.ci/pytorch/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /Zc:__cplusplus /bigobj /FS /utf-8 -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DLIBKINETO_NOXPUPTI=ON -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.7.1, USE_CUDA=ON, USE_CUDNN=ON, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, \n",
+      "calibration_source_idx_sha256": "263a68969a60c5a32ab4fb1074b902033d3e964be716e6ef4ed783d85da320b8",
+      "development_source_idx_sha256": "5b4fd543f8815acbfd2ac86db7a8b5e9263165853971de5b000e86d5de9f3d5b",
+      "row_hash_scope": "v4_runtime.state_dict_sha256({'source_idx': int64 ordered rows})",
+      "reconstruction_max_abs_eV": 1.9073486328125e-06,
+      "original_timing": {
+        "rows": 50000,
+        "wall_seconds": 46.90709969999989,
+        "process_cpu_seconds": 184.875,
+        "forward_seconds": 40.05775550000953,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "parameter_sha256_before": "79bbc562eedde5fe9860e0f94cb012d2f01437f7e429f76d7abc2af9975d3528",
+      "buffer_sha256_before": "7a81a5465747456bb0dac43871d3bc05932394a86c4bfd00f79ab33304c47d30",
+      "calibration": {
+        "rows": 16384,
+        "batches": 128,
+        "bn_modules": 18,
+        "wall_seconds": 12.902247199999692,
+        "process_cpu_seconds": 50.90625,
+        "parameters_unchanged": true,
+        "non_bn_buffers_unchanged": true,
+        "dropout_disabled": true,
+        "labels_used_for_calibration": false,
+        "buffer_sha256_before": "7a81a5465747456bb0dac43871d3bc05932394a86c4bfd00f79ab33304c47d30",
+        "buffer_sha256_calibrated": "7b52bc5d154f79f5e7f3720c0f9489f8f4a59f3e5c128754e36df216343f64e8",
+        "bn_changes": {
+          "local_blocks.0.norm1.module": {
+            "running_mean_rms_change": 0.01742609776556492,
+            "running_var_mean_before": 2.827467203140259,
+            "running_var_mean_after": 2.745175361633301
+          },
+          "local_blocks.0.norm3.module": {
+            "running_mean_rms_change": 0.005049591418355703,
+            "running_var_mean_before": 1.0798494815826416,
+            "running_var_mean_after": 1.0807727575302124
+          },
+          "local_blocks.1.norm1.module": {
+            "running_mean_rms_change": 0.048526499420404434,
+            "running_var_mean_before": 29.4235782623291,
+            "running_var_mean_after": 29.183115005493164
+          },
+          "local_blocks.1.norm3.module": {
+            "running_mean_rms_change": 0.0055955867283046246,
+            "running_var_mean_before": 1.227205514907837,
+            "running_var_mean_after": 1.2201998233795166
+          },
+          "local_blocks.2.norm1.module": {
+            "running_mean_rms_change": 0.039965879172086716,
+            "running_var_mean_before": 20.21770668029785,
+            "running_var_mean_after": 20.12470054626465
+          },
+          "local_blocks.2.norm3.module": {
+            "running_mean_rms_change": 0.007244393229484558,
+            "running_var_mean_before": 1.3202968835830688,
+            "running_var_mean_after": 1.3174562454223633
+          },
+          "local_blocks.3.norm1.module": {
+            "running_mean_rms_change": 0.04090317711234093,
+            "running_var_mean_before": 15.718829154968262,
+            "running_var_mean_after": 15.61804485321045
+          },
+          "local_blocks.3.norm3.module": {
+            "running_mean_rms_change": 0.005960704758763313,
+            "running_var_mean_before": 1.1930090188980103,
+            "running_var_mean_after": 1.193753719329834
+          },
+          "local_blocks.4.norm1.module": {
+            "running_mean_rms_change": 0.04275830090045929,
+            "running_var_mean_before": 16.44066619873047,
+            "running_var_mean_after": 16.440786361694336
+          },
+          "local_blocks.4.norm3.module": {
+            "running_mean_rms_change": 0.007958117872476578,
+            "running_var_mean_before": 1.200526237487793,
+            "running_var_mean_after": 1.1990495920181274
+          },
+          "local_blocks.5.norm1.module": {
+            "running_mean_rms_change": 0.05695997551083565,
+            "running_var_mean_before": 21.58017921447754,
+            "running_var_mean_after": 21.84239387512207
+          },
+          "local_blocks.5.norm3.module": {
+            "running_mean_rms_change": 0.007452715188264847,
+            "running_var_mean_before": 1.2613214254379272,
+            "running_var_mean_after": 1.2625702619552612
+          },
+          "local_blocks.6.norm1.module": {
+            "running_mean_rms_change": 0.06487521529197693,
+            "running_var_mean_before": 22.75880241394043,
+            "running_var_mean_after": 23.130956649780273
+          },
+          "local_blocks.6.norm3.module": {
+            "running_mean_rms_change": 0.004203179385513067,
+            "running_var_mean_before": 1.2387224435806274,
+            "running_var_mean_after": 1.2361316680908203
+          },
+          "local_blocks.7.norm1.module": {
+            "running_mean_rms_change": 0.07851367443799973,
+            "running_var_mean_before": 39.62776565551758,
+            "running_var_mean_after": 40.11469650268555
+          },
+          "local_blocks.7.norm3.module": {
+            "running_mean_rms_change": 0.003181976731866598,
+            "running_var_mean_before": 1.22588050365448,
+            "running_var_mean_after": 1.2192292213439941
+          },
+          "local_blocks.8.norm1.module": {
+            "running_mean_rms_change": 0.10427942126989365,
+            "running_var_mean_before": 72.05864715576172,
+            "running_var_mean_after": 72.11190032958984
+          },
+          "local_blocks.8.norm3.module": {
+            "running_mean_rms_change": 0.019208136945962906,
+            "running_var_mean_before": 2.331735134124756,
+            "running_var_mean_after": 2.2566959857940674
+          }
+        },
+        "buffers_restored": true
+      },
+      "parameter_sha256_calibrated": "79bbc562eedde5fe9860e0f94cb012d2f01437f7e429f76d7abc2af9975d3528",
+      "calibrated_timing": {
+        "rows": 50000,
+        "wall_seconds": 42.27322079999976,
+        "process_cpu_seconds": 166.96875,
+        "forward_seconds": 40.39801589999796,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "restored_timing": {
+        "rows": 50000,
+        "wall_seconds": 41.67818070000021,
+        "process_cpu_seconds": 165.078125,
+        "forward_seconds": 39.80572699999587,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "restored_prediction_exact": true,
+      "parameter_sha256_restored": "79bbc562eedde5fe9860e0f94cb012d2f01437f7e429f76d7abc2af9975d3528",
+      "buffer_sha256_restored": "7a81a5465747456bb0dac43871d3bc05932394a86c4bfd00f79ab33304c47d30",
+      "artifacts": {
+        "calibrated.pt": "af0e04253fe520ae962d0ccf4644fbc2d58728edd8d80ec314f312e503cc7985",
+        "calibrated_buffers.pt": "e454ce80d89e23210635fe4852bc0c355f96a971ac615816f61c5f2766e5736e",
+        "original.pt": "02e7c54e3590437c1db410c236b02698e77560220728053ff4225b9bc5fa1d3b",
+        "restored.pt": "14a04e9c4bfa7dd6d5f95897121d72a8ab29588bbb744ae92c34d458980ca5d0"
+      },
+      "ended_at_utc": "2026-10-09T03:26:43.441445+00:00",
+      "worker_exitcode": 0,
+      "parent_observed_wall_seconds": 157.78378380000004
+    },
+    "k1_pretrained_consistency": {
+      "arm": "k1_pretrained_consistency",
+      "status": "complete",
+      "started_at_utc": "2026-10-09T03:26:44.158400+00:00",
+      "phase": "complete",
+      "updated_at_utc": "2026-10-09T03:29:21.515098+00:00",
+      "wall_seconds": 157.35628880000013,
+      "process_cpu_seconds": 590.46875,
+      "runtime": {
+        "format": "molgap-runtime-manifest-v1",
+        "python": "3.10.6 (tags/v3.10.6:9c7b4bd, Aug  1 2022, 21:53:49) [MSC v.1932 64 bit (AMD64)]",
+        "python_executable": "D:\\\u6587\u6863\\molgap\\.venv\\Scripts\\python.exe",
+        "platform": "Windows-10-10.0.26220-SP0",
+        "torch": "2.7.1+cu128",
+        "torch_cuda": "12.8",
+        "torch_hip": null,
+        "cudnn": 90701,
+        "accelerator": null,
+        "determinism": {
+          "seed": 20261008,
+          "precision": "fp32",
+          "tf32_enabled": false,
+          "cudnn_benchmark": false,
+          "cudnn_deterministic": true,
+          "deterministic_algorithms": true,
+          "cublas_workspace_config": ":4096:8",
+          "float32_matmul_precision": "highest",
+          "device": "cpu",
+          "cuda_device_count_visible": 0
+        },
+        "installed_distributions": [
+          "aiohappyeyeballs==2.7.1",
+          "aiohttp==3.14.3",
+          "aiosignal==1.4.0",
+          "alembic==1.18.5",
+          "async-timeout==5.0.1",
+          "attrs==26.1.0",
+          "bleach==6.4.0",
+          "certifi==2026.7.22",
+          "charset-normalizer==3.4.9",
+          "colorama==0.4.6",
+          "colorlog==6.12.0",
+          "contourpy==1.3.2",
+          "cycler==0.12.1",
+          "descriptastorus==2.8.0",
+          "exceptiongroup==1.3.1",
+          "filelock==3.29.0",
+          "fonttools==4.63.0",
+          "frozenlist==1.8.0",
+          "fsspec==2026.4.0",
+          "greenlet==3.5.4",
+          "idna==3.18",
+          "ijson==3.5.0",
+          "iniconfig==2.3.0",
+          "jinja2==3.1.6",
+          "joblib==1.5.3",
+          "kaggle==1.7.4.5",
+          "kagglehub==1.0.2",
+          "kagglesdk==0.1.28",
+          "kiwisolver==1.5.0",
+          "lightgbm==4.7.0",
+          "littleutils==0.2.4",
+          "mako==1.3.12",
+          "markupsafe==3.0.3",
+          "matplotlib==3.10.9",
+          "molgap==0.1.0",
+          "mpmath==1.3.0",
+          "multidict==6.7.1",
+          "narwhals==2.24.0",
+          "networkx==3.4.2",
+          "numpy==2.2.6",
+          "ogb==1.3.6",
+          "optuna==4.9.0",
+          "outdated==0.2.2",
+          "packaging==26.2",
+          "pandas-flavor==0.8.1",
+          "pandas==2.3.3",
+          "pillow==12.3.0",
+          "pip==22.2.1",
+          "pluggy==1.6.0",
+          "propcache==0.5.2",
+          "protobuf==7.36.1",
+          "psutil==7.2.2",
+          "pyarrow==25.0.0",
+          "pygments==2.20.0",
+          "pyparsing==3.3.2",
+          "pytest==9.1.1",
+          "python-dateutil==2.9.0.post0",
+          "python-slugify==9.0.0",
+          "pytz==2026.3.post1",
+          "pyyaml==6.0.3",
+          "rdkit==2026.3.4",
+          "requests==2.34.2",
+          "scikit-learn==1.7.2",
+          "scipy==1.15.3",
+          "seaborn==0.13.2",
+          "setuptools==83.0.0",
+          "six==1.17.0",
+          "sqlalchemy==2.0.51",
+          "sympy==1.14.0",
+          "text-unidecode==1.3",
+          "threadpoolctl==3.6.0",
+          "tomli==2.4.1",
+          "torch-geometric==2.7.0",
+          "torch==2.7.1+cu128",
+          "torch_cluster==1.6.3+pt27cu128",
+          "tqdm==4.70.0",
+          "typing_extensions==4.16.0",
+          "tzdata==2026.3",
+          "urllib3==2.7.0",
+          "webencodings==0.6.1",
+          "xarray==2025.6.1",
+          "xxhash==3.8.1",
+          "yarl==1.24.5"
+        ],
+        "installed_distributions_sha256": "9a5dfc0e0796796931e84e1b18cb32b9f2162fa5c75724cd378fe17dff5af08c",
+        "external_runtime_artifacts": {
+          "ogb": {
+            "version": "1.3.6",
+            "source_archive_sha256": null
+          }
+        },
+        "runtime_fingerprint": "40f84117381cf2cb504b1170d903145f67dda5a60f4795ceef650ea40da18d63"
+      },
+      "cpu_threads": 4,
+      "device": "cpu",
+      "autocast_enabled": false,
+      "cpu_processor": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+      "cpu_logical_count": 16,
+      "torch_build_config": "PyTorch built with:\n  - C++ Version: 201703\n  - MSVC 192930158\n  - Intel(R) oneAPI Math Kernel Library Version 2025.1-Product Build 20250306 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\n  - OpenMP 2019\n  - LAPACK is enabled (usually provided by MKL)\n  - CPU capability usage: AVX512\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=e2d141dbde55c2a4370fac5165b0561b6af4798b, CUDA_VERSION=12.8, CUDNN_VERSION=9.7.1, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/pytorch/.ci/pytorch/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /Zc:__cplusplus /bigobj /FS /utf-8 -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DLIBKINETO_NOXPUPTI=ON -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.7.1, USE_CUDA=ON, USE_CUDNN=ON, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, \n",
+      "calibration_source_idx_sha256": "263a68969a60c5a32ab4fb1074b902033d3e964be716e6ef4ed783d85da320b8",
+      "development_source_idx_sha256": "5b4fd543f8815acbfd2ac86db7a8b5e9263165853971de5b000e86d5de9f3d5b",
+      "row_hash_scope": "v4_runtime.state_dict_sha256({'source_idx': int64 ordered rows})",
+      "reconstruction_max_abs_eV": 2.384185791015625e-06,
+      "original_timing": {
+        "rows": 50000,
+        "wall_seconds": 46.89477580000039,
+        "process_cpu_seconds": 185.34375,
+        "forward_seconds": 40.18576180000129,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "parameter_sha256_before": "f3dbf9ddb092b3bec64fb1eaaf82ea715c53b3597395ecbd55cf21bba639d676",
+      "buffer_sha256_before": "e9da5974668b4199576ccb6ca5ffa6b40ff31755330292a5e8c2859e03c87970",
+      "calibration": {
+        "rows": 16384,
+        "batches": 128,
+        "bn_modules": 18,
+        "wall_seconds": 13.240441700000247,
+        "process_cpu_seconds": 52.109375,
+        "parameters_unchanged": true,
+        "non_bn_buffers_unchanged": true,
+        "dropout_disabled": true,
+        "labels_used_for_calibration": false,
+        "buffer_sha256_before": "e9da5974668b4199576ccb6ca5ffa6b40ff31755330292a5e8c2859e03c87970",
+        "buffer_sha256_calibrated": "80956b54f6c3620f8f56c93b9b7b31a80111c91b22b594a04ea4cc8a45b6f043",
+        "bn_changes": {
+          "local_blocks.0.norm1.module": {
+            "running_mean_rms_change": 0.016352688893675804,
+            "running_var_mean_before": 2.767319679260254,
+            "running_var_mean_after": 2.6895439624786377
+          },
+          "local_blocks.0.norm3.module": {
+            "running_mean_rms_change": 0.004893428646028042,
+            "running_var_mean_before": 1.08395254611969,
+            "running_var_mean_after": 1.0839858055114746
+          },
+          "local_blocks.1.norm1.module": {
+            "running_mean_rms_change": 0.04952959343791008,
+            "running_var_mean_before": 29.04168701171875,
+            "running_var_mean_after": 28.79435920715332
+          },
+          "local_blocks.1.norm3.module": {
+            "running_mean_rms_change": 0.005223442334681749,
+            "running_var_mean_before": 1.2516371011734009,
+            "running_var_mean_after": 1.2442606687545776
+          },
+          "local_blocks.2.norm1.module": {
+            "running_mean_rms_change": 0.03529942408204079,
+            "running_var_mean_before": 19.193296432495117,
+            "running_var_mean_after": 19.11110496520996
+          },
+          "local_blocks.2.norm3.module": {
+            "running_mean_rms_change": 0.006552425213158131,
+            "running_var_mean_before": 1.3137348890304565,
+            "running_var_mean_after": 1.312727451324463
+          },
+          "local_blocks.3.norm1.module": {
+            "running_mean_rms_change": 0.04630524665117264,
+            "running_var_mean_before": 14.95792007446289,
+            "running_var_mean_after": 14.918766975402832
+          },
+          "local_blocks.3.norm3.module": {
+            "running_mean_rms_change": 0.005334708373993635,
+            "running_var_mean_before": 1.1741207838058472,
+            "running_var_mean_after": 1.1787402629852295
+          },
+          "local_blocks.4.norm1.module": {
+            "running_mean_rms_change": 0.038343898952007294,
+            "running_var_mean_before": 16.26824188232422,
+            "running_var_mean_after": 16.290193557739258
+          },
+          "local_blocks.4.norm3.module": {
+            "running_mean_rms_change": 0.004764297045767307,
+            "running_var_mean_before": 1.1905728578567505,
+            "running_var_mean_after": 1.1869498491287231
+          },
+          "local_blocks.5.norm1.module": {
+            "running_mean_rms_change": 0.0536138117313385,
+            "running_var_mean_before": 20.63525390625,
+            "running_var_mean_after": 20.866918563842773
+          },
+          "local_blocks.5.norm3.module": {
+            "running_mean_rms_change": 0.006536301225423813,
+            "running_var_mean_before": 1.2656927108764648,
+            "running_var_mean_after": 1.2664180994033813
+          },
+          "local_blocks.6.norm1.module": {
+            "running_mean_rms_change": 0.06747673451900482,
+            "running_var_mean_before": 22.522981643676758,
+            "running_var_mean_after": 22.82318878173828
+          },
+          "local_blocks.6.norm3.module": {
+            "running_mean_rms_change": 0.005542187951505184,
+            "running_var_mean_before": 1.237866759300232,
+            "running_var_mean_after": 1.2347127199172974
+          },
+          "local_blocks.7.norm1.module": {
+            "running_mean_rms_change": 0.08293267339468002,
+            "running_var_mean_before": 38.618099212646484,
+            "running_var_mean_after": 39.33671188354492
+          },
+          "local_blocks.7.norm3.module": {
+            "running_mean_rms_change": 0.004852671176195145,
+            "running_var_mean_before": 1.2494648694992065,
+            "running_var_mean_after": 1.2464760541915894
+          },
+          "local_blocks.8.norm1.module": {
+            "running_mean_rms_change": 0.10062140971422195,
+            "running_var_mean_before": 69.10934448242188,
+            "running_var_mean_after": 69.31661987304688
+          },
+          "local_blocks.8.norm3.module": {
+            "running_mean_rms_change": 0.018138756975531578,
+            "running_var_mean_before": 2.349539041519165,
+            "running_var_mean_after": 2.2325546741485596
+          }
+        },
+        "buffers_restored": true
+      },
+      "parameter_sha256_calibrated": "f3dbf9ddb092b3bec64fb1eaaf82ea715c53b3597395ecbd55cf21bba639d676",
+      "calibrated_timing": {
+        "rows": 50000,
+        "wall_seconds": 41.79394759999968,
+        "process_cpu_seconds": 165.171875,
+        "forward_seconds": 39.912668600000885,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "restored_timing": {
+        "rows": 50000,
+        "wall_seconds": 42.049222199999804,
+        "process_cpu_seconds": 166.21875,
+        "forward_seconds": 40.16502209999728,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "restored_prediction_exact": true,
+      "parameter_sha256_restored": "f3dbf9ddb092b3bec64fb1eaaf82ea715c53b3597395ecbd55cf21bba639d676",
+      "buffer_sha256_restored": "e9da5974668b4199576ccb6ca5ffa6b40ff31755330292a5e8c2859e03c87970",
+      "artifacts": {
+        "calibrated.pt": "3d2a1074bc7627f611a5704558ab0a0767921f11242c6d22d7bf1ebcde40943a",
+        "calibrated_buffers.pt": "45e3f73af67ef79c9f9685de43462b03812f6a0bbe8ec385bfdc8a148c3c8f0f",
+        "original.pt": "e81c48f8f7008ad0a2c6d40e5e482e633fa56b786e5f995260244f2bb0c95518",
+        "restored.pt": "578dd01d56b72a18ea36bb10237c33b49c3f974722592a060494f775cdecadf6"
+      },
+      "ended_at_utc": "2026-10-09T03:29:21.515098+00:00",
+      "worker_exitcode": 0,
+      "parent_observed_wall_seconds": 158.05338180000035
+    }
+  },
+  "inputs": {
+    "format": "molgap-k1-clean-bn-pair-v1",
+    "settings": {
+      "cpu_threads": 4,
+      "precision": "fp32",
+      "tf32_enabled": false,
+      "sample_seed": 20261008,
+      "train_rows": 500000,
+      "calibration_rows": 16384,
+      "development_rows": 50000,
+      "batch_size": 128,
+      "epoch_zero_based": 48,
+      "prediction_tolerance_eV": 0.0001,
+      "arm_wall_seconds": 600,
+      "pair_wall_seconds": 1200
+    },
+    "protocol": {
+      "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
+      "sha256": "181bb032a895ca6d6539c0467eff45748deaa065b3d6bd3dec4ff66d9e8ec8e5"
+    },
+    "source_archive": {
+      "path": "D:/w/k1-consistency-500k/platforms/_records/kaggle/staging/pcqm_k1_consistency_ablation_500k/kaggle3_v1/package/source.tar.gz",
+      "sha256": "b2b7539d7fbd0fbff6e674ed632ab90be00f86e8484eb6f2e8cb3ddafe06a3fd"
+    },
+    "source_inventory": {
+      "path": "D:/w/k1-consistency-500k/platforms/_records/kaggle/staging/pcqm_k1_consistency_ablation_500k/kaggle3_v1/package/SOURCE_FILES.json",
+      "sha256": "b60a02f7112577a8cb85469fd65bdb8dc1b9aa0b0befe0c2c9af75ff5eb2361d"
+    },
+    "frozen_source_root": "D:/w/k1-consistency-500k/platforms/_records/kaggle/staging/pcqm_k1_consistency_ablation_500k/kaggle3_v1/frozen_source",
+    "cache_root": "D:/\u6587\u6863/molgap-exp/molgap-500k-v4-evidence/data/cache/pcqm4mv2_500k_v4",
+    "manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "executed_source_files": {
+      "D:/w/k1-consistency-500k/src/molgap/k1_bn_diagnostic.py": "a2a373ad91d251141c9967ff5f9b3c15e6bd74e3a79ad97a81f572272a1a85b1",
+      "D:/w/k1-consistency-500k/src/molgap/k1_frozen_inference.py": "2984b4abccab3eeec2f59d763649bcba41b77fdf40b4d9c4fc88a80c8d00a3c5",
+      "D:/w/k1-consistency-500k/src/molgap/k1_bn_calibration.py": "4eafbc4259cfe507f51913d18ef301e2f4c3542363379cea054b6f6ee3cb1e31",
+      "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/clean_bn/run.py": "481cad9bcb80923ebd0f5d27e66b30aad032eb8607c0681e2c93668e534495ae",
+      "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/clean_bn/prepare.py": "2ffb7bfd502e3af540b6330b5ce85807859f9fdc6a4a5abad52d029298190620",
+      "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/clean_bn/AUTHORIZATION.md": "93ea083aaebdaee77c17498b958086be58b0682baa6dd2bb27491d57d143e295"
+    },
+    "arms": {
+      "k1_pretrained_mean2": {
+        "trajectory": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/trajectory.json",
+          "sha256": "f03afac87af115262730397fc4ebe602cc81cce5a406139687892a6d8535aea0"
+        },
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
+        "checkpoint": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/best_model.pt",
+          "sha256": "c444a1259da7a3d6ac601afadf285dc0aa775591651056668c516ca02c9ca372"
+        },
+        "saved_predictions": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/best_predictions.pt",
+          "sha256": "cc32847989f91a066ba96f6fb36982f04deff06232eaf1ae4a672b3c3233a5cd"
+        }
+      },
+      "k1_pretrained_consistency": {
+        "trajectory": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/trajectory.json",
+          "sha256": "c1b50b9dcd01d634999b0e19d03705db2670d6d3ec668e4cd9cce9af851ee1b1"
+        },
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+        "checkpoint": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/best_model.pt",
+          "sha256": "c4ad6a54fa8168d19832517e5a397ad7a5e17950ada1fe443ced47c3ae7decff"
+        },
+        "saved_predictions": {
+          "path": "D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/best_predictions.pt",
+          "sha256": "57463e4e578db6310eadfd2b46d9c57f50d0ef7e2aa12c3f883ace72e7265f55"
+        }
+      }
+    }
+  },
+  "updated_at_utc": "2026-10-09T03:29:21.994397+00:00",
+  "wall_seconds": 315.84671070000013,
+  "ended_at_utc": "2026-10-09T03:29:21.997411+00:00"
+}

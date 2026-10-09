@@ -13,6 +13,8 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does retained500K consistency pass the identical clean-BN nomination? | NEGATIVE_UNDER_CONTRACT; both true60epoch traces finalized, complete history archived, missing-reference replay exclusions retained | [Canonical custody](pcqm_k1_consistency_ablation_500k/README.md) |
+| Does retained500K late clean training fit improve together with development fit? | Accepted NO_TRAIN endpoint diagnostic; train fit improves but late consistency development worsens, no unique causal verdict or promotion | [Clean-fit decision](pcqm_k1_clean_fit_generalization_500k/terminal_decision.md) |
 | When does the retained500K consistency advantage change at matched exposure? | Accepted NO_TRAIN partial-stage analysis; middle-stage advantage reverses, no terminal/early-stop inference | [Paired trace analysis](pcqm_k1_consistency_stage_analysis/attempt_002/analysis_zh.md) |
 | Is retained K1 BN improvement driven by outliers, and where is late loss? | Accepted NO_TRAIN50K saved-prediction description; middle-error net gains and high-Gap late loss, no causal module verdict | [BN row attribution](pcqm_k1_bn_row_attribution/analysis_zh.md) |
 | What do all retained K1 modules, states and costs support as the next route? | Accepted NO_TRAIN complete local audit; fourteen frozen controls worsen, state/cost simplification prioritized conditionally, no adoption | [Complete audit](pcqm_k1_complete_local_audit/analysis_zh.md) |

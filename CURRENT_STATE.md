@@ -29,12 +29,14 @@ another submission needs explicit authority. See [reference roles](models/REFERE
 
 User-directed K1 focus remains cost and500K enhancement, not a full-data rerun:
 
-1. Consistency500K raw/identical clean-BN acceptance is scientifically closed
-   below its material gate. Resolve honest traced-RML custody, not more training;
-   use the owning decision and attribution before another module. Both arms use two forwards.
-2. Native T4 loader/forward/backward/optimizer/evaluation/publication phases
-   remain unmeasured; A100 microprofiling is not a T4 epoch-speed estimate.
-3. State/cost simplification is conditional on those discriminators. True EMA
+1. Consistency500K is closed below its material gate and formally finalized in
+   RML. [Canonical custody](experiments/pcqm_k1_consistency_ablation_500k/README.md)
+   retains both traces and missing-reference exclusions; no adoption or strict replay.
+2. [Clean-fit diagnostic](experiments/pcqm_k1_clean_fit_generalization_500k/INDEX.md)
+   is accepted NO_TRAIN. Native T4 cost profiling completed on Kaggle3; artifact
+   acceptance is pending on its mapped owner. No T4 epoch-speed extrapolation.
+3. Bounded single/mean2 paired100K training is authorized conditionally on accepted
+   diagnostics and frozen cost/quality gates, not submitted yet. True EMA
    and single-pass MAE equivalence remain unqualified; no blind width/slot
    expansion, extra tail epochs, sparse endpoint average or distillation retry.
 
@@ -58,7 +60,7 @@ Branch-local evidence stays on the [retained checkout map](BRANCHES.md#retained-
 
 | Question | Retained observation / blocker | Owner entry |
 |---|---|---|
-| Consistency500K coefficient0/0.1 | COMPLETE60/60; raw and identical clean-BN material nomination fail (2026-10-09). Scientific/mechanical acceptance complete; frozen reference gap blocks traced RML finalization. Keep owner for custody, no adoption/successor/replay-ready. | [Status](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/STATUS.md), [decision](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-consistency-ablation-500k/experiments/pcqm_k1_consistency_ablation_500k/clean_bn/DECISION.md), [RML blocker](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-consistency-ablation-500k/experiments/pcqm_k1_consistency_ablation_500k/clean_bn/RML_BLOCKERS.md) |
+| Native T4 cost / conditional100K quality | Kaggle3 `nvoid912/molgap-k1-native-t4-profile-s42-v1`, kernel137849502 version1: COMPLETE, outputs retrieved2026-10-09. Acceptance pending; no paired100K submission or500K/full release. | [Owner entry](D:/w/k1-t4-cost-quality/experiments/pcqm_k1_t4_cost_quality/README.md), [profile protocol](D:/w/k1-t4-cost-quality/experiments/pcqm_k1_t4_cost_quality/profile/protocol.md) |
 | Standalone K1 EMA100K | Version2 ERROR, empty outputs/log[]; cause, native cost and scientific endpoint unresolved, no further retry released. | [EMA handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md) |
 | Gaussian spectral100K | COMPLETE40/40, mechanical/native preflight verified; fresh-pair material gate fails. Scientific terminal packages and strict reference/RML closure pending; no scale-up. | [Spectral handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md) |
 
@@ -73,6 +75,7 @@ do not repeat them as current work or infer a successor from a negative result.
 
 | Question | Authority / disposition |
 |---|---|
+| Consistency500K / clean-fit | [Official custody](experiments/pcqm_k1_consistency_ablation_500k/README.md): negative, archived, strict replay excluded; [clean-fit](experiments/pcqm_k1_clean_fit_generalization_500k/INDEX.md): accepted NO_TRAIN, no unique causal attribution or promotion |
 | Complete module audit / late endpoint average | [Audit](experiments/pcqm_k1_complete_local_audit/terminal_decision.md), [average](experiments/pcqm_k1_late_weight_average/terminal_decision.md): NO_TRAIN, no adoption |
 | A100 execution and BN mechanisms | [Execution](experiments/pcqm_k1_colab_execution_profile/terminal_decision.md), [BN mechanism](experiments/pcqm_k1_bn_mechanism_a100/terminal_decision.md): NO_TRAIN, no training-time causal verdict |
 |500K BN / frozen bottleneck | [BN](experiments/pcqm_k1_500k_bn_calibration/terminal_decision.md), [bottleneck](experiments/pcqm_k1_500k_bottleneck_diagnostic/terminal_decision.md): NO_TRAIN; capacity/exposure unresolved |

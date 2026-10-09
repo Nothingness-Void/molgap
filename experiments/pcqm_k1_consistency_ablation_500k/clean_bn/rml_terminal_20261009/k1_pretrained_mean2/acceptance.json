@@ -1,0 +1,34 @@
+{
+  "evidence_id": "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
+  "format": "molgap-rml-retained-acceptance-binding-v1",
+  "mechanical_acceptance_ref": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/inspection_report.json",
+  "outcome": {
+    "artifact_status": "durable_local_verified",
+    "budget_decision": "closed",
+    "comparison_status": "context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "stop"
+  },
+  "ready_for_desktop": false,
+  "replay_ready": false,
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_mean2",
+  "scientific_decision_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/DECISION.md",
+  "secondary_acceptance_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/analysis_final.json",
+  "strict_comparison_qualified": false,
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/DECISION.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": []
+  }
+}

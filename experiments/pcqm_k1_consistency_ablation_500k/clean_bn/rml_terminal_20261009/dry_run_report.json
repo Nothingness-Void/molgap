@@ -1,0 +1,71 @@
+{
+  "actual_cost_summary": {
+    "cpu_worker_process_seconds_all_three_attempts": 1194.125,
+    "measured_training_event_count": 6,
+    "pair_wall_seconds_all_three_cpu_attempts": 333.2351263999999,
+    "scope": "Disjoint training allocations; CPU/wall separate; unknown queue, native/parent CPU and preparation cost remain unknown",
+    "training_T4_device_hours": 45.160326623384435
+  },
+  "arms": {
+    "k1_pretrained_consistency": {
+      "bound_inventory_sha256": "75c595590afdaa83e66752d64c1005a09b73b0a178b9248733add47de2368aff",
+      "observations": 60,
+      "optimizer_steps": 234360,
+      "reference_id": null,
+      "replay_delta": {
+        "corpus_added_count": 0,
+        "corpus_removed_count": 0,
+        "target_added_count": 0,
+        "target_removed_count": 0
+      },
+      "replay_eligible": false,
+      "sample_presentations": 29998080,
+      "status": "COMPLETE",
+      "temporary_publication_inventory_sha256": "e3b7260544177843b1e5e2df3aa183d92ec905796576120896f2e8892663d8e9",
+      "terminal_input_sha256": "5a9e0fcc5c73a067eac67f69f68795a79234ca2d33a0a925801c3c310dca7c4e",
+      "trace_status": "available",
+      "validation": "VALID"
+    },
+    "k1_pretrained_mean2": {
+      "bound_inventory_sha256": "65a08b21275ec42e59319b0c1ff797d5a7ec5218b8a4d3fd77015ab21ec2d235",
+      "observations": 60,
+      "optimizer_steps": 234360,
+      "reference_id": null,
+      "replay_delta": {
+        "corpus_added_count": 10,
+        "corpus_removed_count": 0,
+        "target_added_count": 0,
+        "target_removed_count": 0
+      },
+      "replay_eligible": false,
+      "sample_presentations": 29998080,
+      "status": "COMPLETE",
+      "temporary_publication_inventory_sha256": "c4fd5ab8dff83c16f59272ef74337bcde20d72a4ee5504422e2e84245876a91a",
+      "terminal_input_sha256": "1924aabe3374923f55dea5657441a830d54caa142ef68a027bc8ad89fa03c521",
+      "trace_status": "available",
+      "validation": "VALID"
+    }
+  },
+  "arms_input_ref": "arms.input.json",
+  "arms_input_sha256": "dbcd80693809238b7b258fb6c7b4ebfd7d0a376df9dc6a5eecb1476554d40ccf",
+  "checks": {
+    "derived_frozen": true,
+    "idempotent_retry": true,
+    "ready_excluded": true,
+    "replay_excluded": true,
+    "shared_recovery_reproduced_60_observations": true,
+    "strict_grouping_excluded": true,
+    "validation": "VALID"
+  },
+  "inventories": {
+    "copied_file_count": 1382,
+    "copied_inventory_sha256": "0db74be697faf67656de03b7f0a219b759bf8c30749f11de140ad38270c6ef69",
+    "original_input_inventory_sha256": "cd193e66b25dacb658cf743eb5b1f01f5b936cfa550cc06e6b66cefe67818cb0",
+    "original_inputs_unchanged": true,
+    "runtime_inventory_sha256": "3301a0d596ed3f2b557872294567efd276f38f5c6460837fd616991266d3a456",
+    "runtime_root": "D:/w/rml-unreferenced-trace/src"
+  },
+  "official_finalization_executed": false,
+  "replay_delta_scope": "Initial temporary rebuild adds existing corpus entries; target arms add/remove none",
+  "status": "PASSED_TEMPORARY_COPY_ONLY"
+}
