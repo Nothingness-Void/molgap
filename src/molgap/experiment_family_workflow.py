@@ -963,6 +963,15 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
     return descriptor
 
 
+def terminal_attempt_id(spec, arm_id, platform_version):
+    """A same-job pair shares an attempt; arm identity remains separate."""
+    if not platform_version:
+        return None
+    declaration = spec.to_dict()
+    prefix = declaration["logical_run_id"] if declaration["prospective"].get("same_run_replay") else arm_id
+    return prefix + "-v" + platform_version
+
+
 def _terminal_identity(spec, context):
     """One translator owns identity fields for complete and incomplete runs."""
     arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == context.arm_id)
@@ -979,7 +988,7 @@ def _terminal_identity(spec, context):
         "feature_identity": fact(arm["data"]["feature_sha256"]), "target": fact(arm["data"]["target"]),
         "initialization_identity": fact(canonical_fingerprint(arm["initialization"])),
         "source_commit": fact(context.source_commit), "source_package_sha256": fact(context.source_archive_sha256),
-        "attempt_id": fact(context.arm_id + "-v" + context.platform_version) if context.platform_version else
+        "attempt_id": fact(terminal_attempt_id(spec, context.arm_id, context.platform_version)) if context.platform_version else
             {"value": None, "missing_reason": "Platform attempt version not observed"},
         "platform": {"name": context.platform, "run_reference": fact(context.run_reference)},
     }

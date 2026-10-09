@@ -36,7 +36,8 @@ class TrainingAdapter:
 TRAINING_ADAPTERS = MappingProxyType({
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
-        (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2")), ("molgap.pcqm_wedge",)),
+        (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
+         ("k1_mean2_clean_second", "mean2_clean_second")), ("molgap.pcqm_wedge",)),
     ("gptrans_t", "1"): TrainingAdapter(
         ("gptrans_t", "1"), "molgap.gptrans_screen_workflow", "gptrans-v1",
         (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),
@@ -55,7 +56,8 @@ def training_adapter(arm: dict) -> TrainingAdapter:
 
 
 def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
-                        source_idx_sha256: str, target_sha256: str) -> dict:
+                        source_idx_sha256: str, target_sha256: str,
+                        seed: int | None = None, initialization_sha256: str | None = None) -> dict:
     """Build owned constants before freezing the Spec; never read development rows."""
     adapter = TRAINING_ADAPTERS.get(family)
     if adapter is None:
@@ -63,8 +65,16 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
     mode = "reference" if addon is None else dict(adapter.addon_modes).get(addon)
     if mode is None:
         raise ValueError("No executable recipe for this addon")
+    options = {}
+    if seed is not None or initialization_sha256 is not None:
+        if family != ("neural_atom_k1", "2"):
+            raise ValueError("Explicit seed initialization is not supported by this trainer")
+        if seed is not None:
+            options["seed"] = seed
+        if initialization_sha256 is not None:
+            options["initialization_sha256"] = initialization_sha256
     return import_module(adapter.module).build_screen_recipe(mode,
-        source_idx_sha256=source_idx_sha256, target_sha256=target_sha256)
+        source_idx_sha256=source_idx_sha256, target_sha256=target_sha256, **options)
 
 
 def check_family_recipes(spec, repo_root, recipes):

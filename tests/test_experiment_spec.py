@@ -17,6 +17,31 @@ def addon(name):
     return {"name": name, "version": "1", "config": {}, "source_sha256": "b" * 64}
 
 
+def test_seed43_is_bounded_to_explicit_k1_screen_replication(payload):
+    value = copy.deepcopy(payload)
+    candidate = value["arms"][1]
+    contract = FAMILIES[("neural_atom_k1", "2")]
+    candidate["family"]["version"] = "2"
+    candidate["data"]["roles"] = [dict(candidate["data"]["roles"][0], role=role)
+                                   for role in contract.roles]
+    candidate["training"]["recipe"] = ref(contract.recipe)
+    candidate["training"]["transform"] = ref(contract.transform)
+    candidate["training"]["sampler"] = ref("seed43-python-epoch-shuffle-v4")
+    candidate["initialization"]["seed"] = 43
+    assert ExperimentSpec(value).to_dict()["arms"][1]["initialization"]["seed"] == 43
+    candidate["training"]["sampler"] = ref(contract.sampler)
+    with pytest.raises(ValueError):
+        ExperimentSpec(value)
+    candidate["training"]["sampler"] = ref("seed43-python-epoch-shuffle-v4")
+    candidate["initialization"]["seed"] = 44
+    with pytest.raises(ValueError, match="seed 42"):
+        ExperimentSpec(value)
+    value = copy.deepcopy(payload)
+    value["arms"][0]["initialization"]["seed"] = 43
+    with pytest.raises(ValueError, match="seed 42"):
+        ExperimentSpec(value)
+
+
 def arm(family="gptrans_t"):
     contract = FAMILIES[(family, "1")]
     return {

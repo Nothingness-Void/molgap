@@ -91,7 +91,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                     "--input-root", str(input_root), "--output", str(arm_output),
                     "--launch", str(launch_path), "--arm", job["arm_id"], "--phase", phase]
                 env = dict(os.environ)
-                env.update(CUDA_VISIBLE_DEVICES=str(job["device"]), PYTHONHASHSEED="42",
+                arm = next(a for a in declaration["arms"] if a["arm_id"] == job["arm_id"])
+                env.update(CUDA_VISIBLE_DEVICES=str(job["device"]),
+                           PYTHONHASHSEED=str(arm["initialization"]["seed"]),
                            CUBLAS_WORKSPACE_CONFIG=":4096:8", PYTHONPATH=str(source_root / "src"))
                 row = worker_rows[job["arm_id"]]
                 try:

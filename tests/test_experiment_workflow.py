@@ -392,11 +392,16 @@ def workflow_case(tmp_path):
     _git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic workflow sources")
 
     payload = _spec_payload(arms, platform="kaggle")
+    source_commit = _git(repo, "rev-parse", "HEAD").strip()
     for arm, binding in zip(payload["arms"], payload["prospective"]["arms"]):
         plan_value = {
             "trajectory": {
                 "trajectory_id": binding["trajectory_id"],
-                "state_at_start": {"source_config_identity": canonical_fingerprint(arm)},
+                "state_at_start": {"source_config_identity": canonical_fingerprint(arm),
+                                   "source_commit": source_commit},
+                "actions": [{"source_commit": source_commit,
+                             "run_ids": [payload["logical_run_id"] + ":" + arm["arm_id"] + ":downstream"],
+                             "attempt_ids": [arm["arm_id"] + "-v1"]}],
             },
             "decision_state": {},
         }

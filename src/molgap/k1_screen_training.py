@@ -13,6 +13,7 @@ import os
 import random
 import struct
 import time
+from functools import lru_cache
 from pathlib import Path
 
 import numpy as np
@@ -98,20 +99,29 @@ ROLE_ACCESS_FINGERPRINT = _hash_mapping(
 )
 
 
-def epoch_order(epoch: int) -> list[int]:
+def _validate_seed(seed: int) -> int:
+    if type(seed) is not int or not 0 <= seed <= 2**32 - 1:
+        raise ValueError("K1 seed must be an integer in [0, 2**32 - 1]")
+    return seed
+
+
+def epoch_order(epoch: int, seed: int = SEED) -> list[int]:
     """Return a Python-version-stable row order for one complete-batch pass."""
     if not 0 <= epoch < EPOCHS:
         raise ValueError(f"epoch outside frozen range: {epoch}")
+    _validate_seed(seed)
     values = list(range(TRAIN_ROWS))
-    random.Random(SEED * 1_000_003 + epoch).shuffle(values)
+    random.Random(seed * 1_000_003 + epoch).shuffle(values)
     return values[:ROWS_PER_EPOCH]
 
 
-def compute_row_order_fingerprint() -> str:
+@lru_cache(maxsize=16, typed=True)
+def compute_row_order_fingerprint(seed: int = SEED) -> str:
+    _validate_seed(seed)
     digest = hashlib.sha256()
     for epoch in range(EPOCHS):
         digest.update(struct.pack("<I", epoch))
-        for index in epoch_order(epoch):
+        for index in epoch_order(epoch, seed):
             digest.update(struct.pack("<I", index))
     return digest.hexdigest()
 
@@ -233,11 +243,11 @@ def _target_stats(graphs) -> tuple[float, float]:
     return 5.3383002281188965, 1.275090217590332
 
 
-def _train_loader(graphs, epoch: int):
+def _train_loader(graphs, epoch: int, seed: int = SEED):
     from torch.utils.data import Subset
     from torch_geometric.loader import DataLoader
 
-    selected = Subset(graphs, epoch_order(epoch))
+    selected = Subset(graphs, epoch_order(epoch, seed))
     return DataLoader(
         selected,
         batch_size=BATCH_SIZE,
@@ -291,12 +301,42 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("reference", "ssma", "clean_fingerprint", "mean2")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint", "mean2", "mean2_clean_second")
+
+
+def build_initial_state(seed: int = SEED) -> dict:
+    """Construct fresh V4 K1 CPU tensors without consuming caller CPU RNG."""
+    import torch
+    _validate_seed(seed)
+    with torch.random.fork_rng(devices=[]), torch.device("cpu"):
+        torch.random.default_generator.manual_seed(seed)
+        model = make_encoder("neural_atom_k1")
+    return {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
+
+
+def _validate_initialization(seed: int, initialization_sha256: str) -> None:
+    from .experiment_spec import _digest
+    _digest(initialization_sha256, "initialization_sha256")
+    if seed == SEED and initialization_sha256 != INITIAL_STATE_SHA256:
+        raise ValueError("K1 historical initialization identity changed")
+
+
+def _load_initial_state(path: Path, recipe: dict) -> dict:
+    """Verify transported tensors, never regenerate them on another runtime."""
+    import torch
+    state = torch.load(path, map_location="cpu", weights_only=True)
+    if state_dict_sha256(state) != recipe["initialization_sha256"]:
+        raise ValueError("Pinned K1 initial tensor identity mismatch")
+    return state
+
+
+def _recipe_seed(recipe: dict) -> int:
+    return _validate_seed(recipe.get("training_recipe", {}).get("seed"))
 
 
 def _maximum_overhead(mode):
     # The two-pass control intentionally doubles forwards; it is not an SSMA extension.
-    return 1.0 if mode == "mean2" else 0.25
+    return 1.0 if mode in ("mean2", "mean2_clean_second") else 0.25
 
 
 def _state_digest(state: dict) -> str:
@@ -318,11 +358,11 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
         raise ValueError("K1 frozen acceptance exposure changed")
     if recipe.get("mode") != mode:
         raise ValueError("Recipe mode mismatch")
-    if recipe.get("row_order_fingerprint") != ROW_ORDER_FINGERPRINT:
+    seed = _recipe_seed(recipe)
+    if recipe.get("row_order_fingerprint") != compute_row_order_fingerprint(seed):
         raise ValueError("K1 historical Python sampler identity changed")
-    if recipe.get("initialization_sha256") != INITIAL_STATE_SHA256:
-        raise ValueError("K1 initialization identity changed")
-    expected_training = {"seed": 42, "batch_size": 128, "drop_last": True,
+    _validate_initialization(seed, recipe.get("initialization_sha256"))
+    expected_training = {"seed": seed, "batch_size": 128, "drop_last": True,
         "optimizer": "AdamW", "learning_rate": 4e-4, "weight_decay": 1e-5,
         "clip_grad_norm": 1.0, "scheduler": "CosineAnnealingLR",
         "scheduler_t_max": 40, "scheduler_eta_min": 1e-6,
@@ -332,17 +372,24 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
         raise ValueError("K1 executable training recipe changed")
 
 
-def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str) -> dict:
+def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str,
+                        seed: int = SEED, initialization_sha256: str | None = None) -> dict:
     """Build fixed family constants; callers pin real retained development rows."""
     from .experiment_spec import _digest
     for name, value in (("source_idx_sha256", source_idx_sha256), ("target_sha256", target_sha256)):
         _digest(value, name)
-    if mode not in {"reference", "ssma", "mean2"}:
+    _validate_seed(seed)
+    if initialization_sha256 is None:
+        if seed != SEED:
+            raise ValueError("Nonhistorical seed requires a frozen initialization_sha256")
+        initialization_sha256 = INITIAL_STATE_SHA256
+    _validate_initialization(seed, initialization_sha256)
+    if mode not in {"reference", "ssma", "mean2", "mean2_clean_second"}:
         raise ValueError("No executable screen recipe for this K1 addon")
-    return {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
-        "initialization_sha256": INITIAL_STATE_SHA256,
+    return {"mode": mode, "row_order_fingerprint": compute_row_order_fingerprint(seed),
+        "initialization_sha256": initialization_sha256,
         "development_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
-        "training_recipe": {"seed": SEED, "batch_size": BATCH_SIZE, "drop_last": True,
+        "training_recipe": {"seed": seed, "batch_size": BATCH_SIZE, "drop_last": True,
             "optimizer": "AdamW", "learning_rate": LEARNING_RATE, "weight_decay": WEIGHT_DECAY,
             "clip_grad_norm": 1.0, "scheduler": "CosineAnnealingLR", "scheduler_t_max": EPOCHS,
             "scheduler_eta_min": 1e-6, "ema": False, "selection": "best-development-live", "auxiliary_weight": 0.0},
@@ -351,12 +398,12 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
             "precision": "fp32", "source_idx_sha256": source_idx_sha256, "target_sha256": target_sha256}}
 
 
-def _attach_fingerprint_head(model):
+def _attach_fingerprint_head(model, seed=SEED):
     """Separate training head preserves the clean public Gap forward."""
     import torch
     import torch.nn as nn
     with torch.random.fork_rng(devices=[]):
-        torch.random.default_generator.manual_seed(SEED)
+        torch.random.default_generator.manual_seed(seed)
         model.clean_fingerprint_head = nn.Sequential(
             nn.Linear(192, 32), nn.SiLU(), nn.Linear(32, 512))
     return model
@@ -381,14 +428,14 @@ def _evaluate(model, loader, mean, std):
     return float((prediction - target).abs().mean()), target, prediction, source_idx
 
 
-def _make_screen_model(state, mode):
+def _make_screen_model(state, mode, seed=SEED):
     model = make_encoder("neural_atom_k1")
     model.load_state_dict(state, strict=True)
     if mode == "ssma":
         from .k1_joint_aggregation import attach_k1_joint_aggregation
-        attach_k1_joint_aggregation(model, mode="ssma", layer=6, seed=SEED)
+        attach_k1_joint_aggregation(model, mode="ssma", layer=6, seed=seed)
     elif mode == "clean_fingerprint":
-        _attach_fingerprint_head(model)
+        _attach_fingerprint_head(model, seed)
     return model.to("cuda")
 
 
@@ -406,8 +453,14 @@ def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
     target = (batch.y.view(-1) - mean) / std
     loss = functional.l1_loss(prediction, target)
     absolute = (prediction.detach() - target).abs().sum()
-    if mode == "mean2":
-        second = _forward(model, batch)
+    if mode in ("mean2", "mean2_clean_second"):
+        from contextlib import nullcontext
+        second_view = nullcontext()
+        if mode == "mean2_clean_second":
+            from .k1_clean_second import clean_second_view
+            second_view = clean_second_view(model)
+        with second_view:
+            second = _forward(model, batch)
         loss = 0.5 * (loss + functional.l1_loss(second, target))
         absolute = 0.5 * (absolute + (second.detach() - target).abs().sum())
     if mode == "clean_fingerprint":
@@ -422,19 +475,22 @@ def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
 def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode):
     if sha256_file(recipe_path) != context.training_recipe_sha256:
         raise ValueError("Runtime recipe bytes differ from Spec")
+    recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
+    validate_recipe(recipe, mode=mode)
     return {"format": "molgap-k1-runtime-provenance-v1", "context": context.to_dict(),
         "mode": mode, "recipe_sha256": sha256_file(recipe_path),
         "initial_state_file_sha256": sha256_file(initial_state_path),
-        "initialization_sha256": INITIAL_STATE_SHA256,
+        "initialization_sha256": recipe["initialization_sha256"],
         "runtime_fingerprint": runtime["runtime_fingerprint"],
-        "row_order_fingerprint": ROW_ORDER_FINGERPRINT}
+        "row_order_fingerprint": recipe["row_order_fingerprint"]}
 
 
-def _validate_arm_binding(spec, context, mode):
+def _validate_arm_binding(spec, context, mode, recipe):
+    seed = _recipe_seed(recipe)
     declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == context.arm_id)
-    if (declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
-                                          "state_sha256": INITIAL_STATE_SHA256} or
-        declaration["training"]["sampler"]["sha256"] != ROW_ORDER_FINGERPRINT or
+    if (declaration["initialization"] != {"kind": "frozen_state", "seed": seed,
+                                          "state_sha256": recipe["initialization_sha256"]} or
+        declaration["training"]["sampler"]["sha256"] != recipe["row_order_fingerprint"] or
         declaration["training"]["overrides"]):
         raise ValueError("K1 executable initialization/sampler/overrides differ from Spec")
     addons = declaration["addons"]
@@ -444,7 +500,7 @@ def _validate_arm_binding(spec, context, mode):
         expected = {"name": "k1_joint_aggregation", "version": "1",
             "source_sha256": normalized_source_sha256(Path(__file__).with_name("k1_joint_aggregation.py")),
             "config": {"degree_policy": "original-sum-above-four", "kappa": 4,
-                       "latent_channels": 64, "layer": 6, "seed": SEED}}
+                       "latent_channels": 64, "layer": 6, "seed": seed}}
         if addons != [expected]:
             raise ValueError("SSMA executable addon differs from Spec")
     if mode == "mean2":
@@ -452,6 +508,11 @@ def _validate_arm_binding(spec, context, mode):
             "source_sha256": normalized_source_sha256(Path(__file__))}
         if addons != [expected]:
             raise ValueError("Two-pass executable addon differs from Spec")
+    if mode == "mean2_clean_second":
+        expected = {"name": "k1_mean2_clean_second", "version": "1", "config": {},
+            "source_sha256": normalized_source_sha256(Path(__file__).with_name("k1_clean_second.py"))}
+        if addons != [expected]:
+            raise ValueError("Clean-second executable addon differs from Spec")
 
 
 def validate_screen_recipe(spec, arm_id, recipe):
@@ -461,7 +522,7 @@ def validate_screen_recipe(spec, arm_id, recipe):
     arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == arm_id)
     mode = training_adapter(arm).mode(arm)
     validate_recipe(recipe, mode=mode)
-    _validate_arm_binding(spec, SimpleNamespace(arm_id=arm_id), mode)
+    _validate_arm_binding(spec, SimpleNamespace(arm_id=arm_id), mode, recipe)
     if recipe.get("development_role_identity") != "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000":
         raise ValueError("K1 recipe lacks the fixed development role identity")
     from .experiment_family_workflow import EXPECTED
@@ -518,21 +579,20 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     import torch
     from .experiment_family_workflow import RunContext
     from .training_reproducibility import capture_rng_state, restore_rng_state
-    if mode not in ("reference", "ssma", "mean2") or label_cache is not None:
+    if mode not in ("reference", "ssma", "mean2", "mean2_clean_second") or label_cache is not None:
         raise ValueError("This paired GPU qualification supports registered screen modes only")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
+    seed = _recipe_seed(recipe)
+    row_order_sha256 = recipe["row_order_fingerprint"]
     context = RunContext.for_training(spec, package_dir,
         expected_package_identity=expected_package_identity, arm_id=arm_id,
         account=account, run_reference=run_reference)
-    _validate_arm_binding(spec, context, mode)
+    _validate_arm_binding(spec, context, mode, recipe)
     _validate_prospective(spec, context, input_root, trajectory_id)
-    declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
-    if ((context.family_name, context.family_version) != ("neural_atom_k1", "2") or
-        declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
-                                          "state_sha256": INITIAL_STATE_SHA256}):
+    if (context.family_name, context.family_version) != ("neural_atom_k1", "2"):
         raise ValueError("Preflight requires frozen K1 family/initialization")
-    determinism = configure_fp32_determinism(SEED)
+    determinism = configure_fp32_determinism(seed)
     runtime = build_runtime_manifest(determinism)
     hardware = torch.cuda.get_device_name(0)
     if "T4" not in hardware:
@@ -542,22 +602,20 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     provenance = _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
     atomic_json(output / "runtime_provenance.json", provenance)
     atomic_json(output / "runtime_manifest.json", runtime)
-    state = torch.load(initial_state_path, map_location="cpu", weights_only=True)
-    if state_dict_sha256(state) != INITIAL_STATE_SHA256:
-        raise ValueError("Pinned K1 initial tensor identity mismatch")
-    if compute_row_order_fingerprint() != ROW_ORDER_FINGERPRINT:
+    state = _load_initial_state(initial_state_path, recipe)
+    if compute_row_order_fingerprint(seed) != row_order_sha256:
         raise RuntimeError("Frozen row-order implementation changed")
     root, manifest = find_fixed_cache(input_root)
     roles = load_roles(root, manifest)
     mean_value, std_value = _target_stats(roles["train"])
-    batch = next(iter(_train_loader(roles["train"], 0))).to("cuda")
+    batch = next(iter(_train_loader(roles["train"], 0, seed))).to("cuda")
     if int(batch.num_graphs) != BATCH_SIZE:
         raise RuntimeError("Runtime calibration requires physical train batch128")
     mean, std = torch.tensor(mean_value, device="cuda"), torch.tensor(std_value, device="cuda")
     torch.cuda.synchronize()
     started = time.perf_counter()
-    reference = _make_screen_model(state, "reference").eval()
-    candidate = _make_screen_model(state, mode).eval()
+    reference = _make_screen_model(state, "reference", seed).eval()
+    candidate = _make_screen_model(state, mode, seed).eval()
     with torch.no_grad():
         zero_delta = float((_forward(reference, batch) - _forward(candidate, batch)).abs().max())
     if zero_delta != 0.0:
@@ -565,8 +623,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     del reference, candidate
     losses, states = [], []
     for _ in range(2):
-        configure_fp32_determinism(SEED)
-        model = _make_screen_model(state, mode).train()
+        configure_fp32_determinism(seed)
+        model = _make_screen_model(state, mode, seed).train()
         optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
         _optimizer_step(model, optimizer, batch, mean, std, mode)
         loss, _, _ = _optimizer_step(model, optimizer, batch, mean, std, mode)
@@ -581,8 +639,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     repeated = certify_numerical_repeatability(losses=losses, states=states)
     del states
     # Check the same model/optimizer/scheduler/RNG serialization as epoch resume.
-    configure_fp32_determinism(SEED)
-    model = _make_screen_model(state, mode).train()
+    configure_fp32_determinism(seed)
+    model = _make_screen_model(state, mode, seed).train()
     optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
     _optimizer_step(model, optimizer, batch, mean, std, mode)
@@ -590,7 +648,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     snapshot = output / "diagnostic_resume.pt"
     atomic_torch_save(snapshot, {"model": model.state_dict(), "optimizer": optimizer.state_dict(),
         "scheduler": scheduler.state_dict(), "rng_state": capture_rng_state(),
-        "cursor": {"epoch": 1, "next_batch": 0, "sampler_order_sha256": ROW_ORDER_FINGERPRINT}})
+        "cursor": {"epoch": 1, "next_batch": 0, "sampler_order_sha256": row_order_sha256}})
     uninterrupted, _, _ = _optimizer_step(model, optimizer, batch, mean, std, mode)
     continuous_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
     restored = torch.load(snapshot, map_location="cpu", weights_only=False)
@@ -604,7 +662,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     selected_path = output / "diagnostic_selected.pt"
     atomic_torch_save(selected_path, _clean_gap_state(model))
     selected_state = torch.load(selected_path, map_location="cpu", weights_only=True)
-    selected_model = _make_screen_model(state, mode).eval()
+    selected_model = _make_screen_model(state, mode, seed).eval()
     selected_model.load_state_dict(selected_state, strict=True)
     model.eval()
     with torch.no_grad():
@@ -615,8 +673,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     del model, optimizer, scheduler, continuous_state, restored
     timings = {}
     for profile_mode in ("reference", mode):
-        configure_fp32_determinism(SEED)
-        model = _make_screen_model(state, profile_mode).train()
+        configure_fp32_determinism(seed)
+        model = _make_screen_model(state, profile_mode, seed).train()
         optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
         for _ in range(2):
             _optimizer_step(model, optimizer, batch, mean, std, profile_mode)
@@ -681,18 +739,16 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
 
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
+    seed = _recipe_seed(recipe)
+    row_order_sha256 = recipe["row_order_fingerprint"]
     context = RunContext.for_training(spec, package_dir,
         expected_package_identity=expected_package_identity, arm_id=arm_id,
         account=account, run_reference=run_reference)
-    _validate_arm_binding(spec, context, mode)
+    _validate_arm_binding(spec, context, mode, recipe)
     _validate_prospective(spec, context, input_root, trajectory_id)
     if (context.family_name, context.family_version) != ("neural_atom_k1", "2"):
         raise ValueError("Expected registered K1 family output adapter")
-    declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
-    if declaration["initialization"] != {"kind": "frozen_state", "seed": SEED,
-                                        "state_sha256": INITIAL_STATE_SHA256}:
-        raise ValueError("K1 Spec initialization differs from executable state")
-    if mode in ("reference", "ssma", "mean2") and label_cache is not None:
+    if mode in ("reference", "ssma", "mean2", "mean2_clean_second") and label_cache is not None:
         raise ValueError("Reference/SSMA does not consume chemical auxiliary labels")
     if mode == "clean_fingerprint":
         if label_cache is None or label_cache.components != ("fingerprints",):
@@ -704,9 +760,9 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
             raise ValueError("Auxiliary cache differs from original K1 training role")
         if recipe.get("label_cache_identity") != label_cache.identity:
             raise ValueError("Auxiliary cache identity differs from frozen recipe")
-    if compute_row_order_fingerprint() != ROW_ORDER_FINGERPRINT:
+    if compute_row_order_fingerprint(seed) != row_order_sha256:
         raise RuntimeError("Frozen row-order implementation changed")
-    determinism = configure_fp32_determinism(SEED)
+    determinism = configure_fp32_determinism(seed)
     runtime = build_runtime_manifest(determinism)
     provenance = _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
     certificate = validate_runtime_preflight(preflight_dir or output, provenance)
@@ -719,10 +775,8 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     roles = load_roles(root, manifest)
     mean_value, std_value = _target_stats(roles["train"])
     # Load the exact backbone before constructing any extra trainable mechanism.
-    state = torch.load(initial_state_path, map_location="cpu", weights_only=True)
-    if _state_digest(state) != INITIAL_STATE_SHA256:
-        raise ValueError("Pinned K1 initial tensor identity mismatch")
-    model = _make_screen_model(state, mode)
+    state = _load_initial_state(initial_state_path, recipe)
+    model = _make_screen_model(state, mode, seed)
     optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE,
                                  weight_decay=WEIGHT_DECAY)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
@@ -750,7 +804,7 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         cursor = saved["cursor"]
         start_epoch = cursor["epoch"]
         if (type(start_epoch) is not int or not 1 <= start_epoch <= EPOCHS or
-            cursor["next_batch"] != 0 or cursor["sampler_order_sha256"] != ROW_ORDER_FINGERPRINT or
+            cursor["next_batch"] != 0 or cursor["sampler_order_sha256"] != row_order_sha256 or
             saved["optimizer_step"] != start_epoch * STEPS_PER_EPOCH or
             saved["sample_presentations"] != start_epoch * ROWS_PER_EPOCH):
             raise ValueError("Only acknowledged complete-epoch K1 resume is supported")
@@ -769,7 +823,7 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         model.train()
         absolute, rows = 0.0, 0
         started = time.perf_counter()
-        for batch in _train_loader(roles["train"], epoch):
+        for batch in _train_loader(roles["train"], epoch, seed):
             if label_cache is not None:
                 label_cache.attach(batch)
             batch = batch.to("cuda", non_blocking=True)
@@ -791,7 +845,7 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         session.checkpoint(model_state=model.state_dict(), optimizer_state=optimizer.state_dict(),
             scheduler_state=scheduler.state_dict(), rng_state=capture_rng_state(),
             cursor={"epoch": epoch + 1, "next_batch": 0,
-                    "sampler_order_sha256": ROW_ORDER_FINGERPRINT},
+                    "sampler_order_sha256": row_order_sha256},
             optimizer_step=step, sample_presentations=presentations)
         torch.cuda.synchronize()
         session.epoch_finished(epoch=epoch + 1, optimizer_step=step,

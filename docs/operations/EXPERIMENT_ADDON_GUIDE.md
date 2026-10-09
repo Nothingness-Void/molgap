@@ -9,6 +9,7 @@ contracts own detailed schemas and evidence rules.
 | Operation | Reuse owner | Boundary / next pointer |
 |---|---|---|
 | Prepare or accept a registered multi-arm run | `experiment_workflow.py`, local [CLI](EXPERIMENT_CLI.md) | The [workflow](EXPERIMENT_WORKFLOW.md) owns the concise plan and lifecycle. |
+| Draft a fixed100K K1 pair | [k1_pair_preparation.py](../../src/molgap/k1_pair_preparation.py): `build_inputs` | Reuses fixed data/target bindings and family recipes; fresh questions need fresh IDs, protocol and explicit release. Drafts do not publish RML or authorize training. |
 | Train GPTrans | [pcqm_gptrans_v4.py](../../src/molgap/pcqm_gptrans_v4.py): `run_training`; [pcqm_gptrans_full_runner.py](../../src/molgap/pcqm_gptrans_full_runner.py): `train_full` | Fixed V4 screen and full-role recipes are distinct; use their owning contract. |
 | Train EdgeState | [edge_state_training_core.py](../../src/molgap/edge_state_training_core.py): `save_checkpoint` / `restore_checkpoint`; [pcqm_official_edge_state.py](../../src/molgap/pcqm_official_edge_state.py): `train_official_edge_state` | The shared core supplies primitives; the official trainer owns its experiment. |
 | Change a candidate within a registered family | Family addon/mode hook plus frozen Spec recipe/config | Reuse the registered model, trainer, resume and output owners. See [profiles](EXPERIMENT_FAMILY_WORKFLOW.md). |
