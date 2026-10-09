@@ -1,0 +1,37 @@
+{
+  "release": {
+    "format": "molgap-frozen-inference-release-v1",
+    "experiment_purpose": "NO_TRAIN",
+    "source_commit": "7c977d3884d50fe710dc84964d342df96c09f4b9",
+    "archive_sha256": "47e85dcc86b3b4c0d5be58b8d6ef4e3987de2d2ec1edc32ad3808ccc9a6da642",
+    "contract_sha256": "c35f213825a2edb6d47e6af12deba9d95faf73999d2235247a6e34733ddba602",
+    "entry_sha256": "bd928b58270bf9faf12a939239826c73fff0dd994360d84425cbbcbbb2accfa5",
+    "metadata_sha256": "0cb2317443fca9195ca17080bda8d9209f4f792f101f24010e6658cb9308e7a8",
+    "kernel": "kaseichou/molgap-gptrans-triplet-portability-s42",
+    "dataset_sources": [
+      "kaseichou/molgap-gptrans-triplet-portability-inputs",
+      "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+      "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+    ],
+    "prospective_trajectory_id": "TC-gptrans-triplet-portability-s42-v1",
+    "prospective_sha256": "ec8dd8f3e253e6626d65e44cb96ca5a66a51ec5b7bc9c7e28141b5b6feff14dd",
+    "files": {
+      "source_payload.bin": "47e85dcc86b3b4c0d5be58b8d6ef4e3987de2d2ec1edc32ad3808ccc9a6da642",
+      "SOURCE_FILES.json": "8379316ae0e3d842d5feb5db6c712bec3a68eefba59519dde03281234c5b2d43",
+      "contract.json": "c35f213825a2edb6d47e6af12deba9d95faf73999d2235247a6e34733ddba602",
+      "target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+      "local_best.pt": "b34530bb0f38d53c38edb90cf7aedfcd74a7793326e5e1817d56b3b6a845e287",
+      "local_predictions.pt": "216c48ea6944e83dca2b8dcdfcd64cb668bf9377783ab3cad6bb81656df58c88",
+      "reference_predictions.pt": "330e7e5407bad13a849559a47dba75717d63d5d62a8ec6a1e168c4a3377bd7e0",
+      "reference_later.pt": "536e123b4d9b4e48859a0a0faa4a3a28a5e09ea0121875201426a1307935f6a1"
+    },
+    "identity": "70fc668f4a8d78ae1b663d8cc9df9317c21296da4b922ba4540bd8b1e09593ff"
+  },
+  "prospective": {
+    "trajectory_id": "TC-gptrans-triplet-portability-s42-v1",
+    "status": "PLANNED",
+    "path": "experiments/pcqm_gptrans_triplet_portability/rml_plan"
+  },
+  "inputs": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\prepared\\gptrans_triplet_portability_v1\\inputs",
+  "release_report": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\prepared\\gptrans_triplet_portability_v1\\release_report.json"
+}
