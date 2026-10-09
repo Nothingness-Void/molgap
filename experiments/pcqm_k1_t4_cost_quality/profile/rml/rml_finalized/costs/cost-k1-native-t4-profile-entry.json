@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "other",
+  "cost_event_id": "cost-k1-native-t4-profile-entry",
+  "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json",
+  "hardware": "Tesla T4 (2 allocated; cuda0 active)",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.17095981645388886
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.08547990822694443
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "molgap-k1-native-t4-profile-s42-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-native-t4-cost-profile-20261009"
+}

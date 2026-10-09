@@ -42,28 +42,80 @@ requirement. Parent handles Kaggle release, actual scheduler identity and
 retained output acceptance through the platform skill and `accept-workflow`.
 Strict readiness and the future mean2 accepted reference remain pending.
 
-## Parent release API gap
+## Optional Parent Release
 
-No `--parent-release-file` or release-enabled `build_inputs` parameter is exposed
-yet. The profiler produces `result.json` (`molgap-k1-native-t4-profile-v1`,
-`status=complete`) and hash-bound `completion.json`, but neither is a parent
-acceptance decision. No clean-fit decision schema/validator is available.
-An accepted boolean, completed worker or unbound timing ratio cannot release TRAIN.
+`build_inputs(..., parent_release_file=Path(...))` and `--parent-release-file`
+validate an explicit human-controller release before building fresh unpublished
+plans. Omit the option to retain PREPARE_ONLY behavior. No option publishes,
+trains, submits or overwrites a record. Existing question-root training plans or
+prospective output directories block release-enabled preparation.
 
-The release owner must provide repository-local `{path, sha256}` bindings for
-the profile acceptance and completed local clean-fit decision, plus a pinned
-release record. Reuse `evidence_pointers.resolve_repo_pointer` and
-`verify_bound_artifact` for confinement/hash checks. The owning acceptance
-validator must verify actual native T4 hardware/run/source/payload identity,
-complete retained timing artifacts, matched single/mean2 step savings >=0.25,
-and the completed clean-fit decision's absence of an urgent fitting failure.
-It must preserve the pair ceilings8 allocated T4 device-hours/14400 wall seconds,
-and distinguish accepted evidence from raw completion and planning estimates.
+The parent must author the following repository-local record inside this owning
+question, outside `profile/`. Every evidence pointer has exactly `path` and
+`sha256` (actual file-byte SHA256, not an accepted boolean). Placeholder hashes
+below are not a release:
 
-Until that API is frozen, parent release/publication is separate from these
-prep-only plans. Do not mutate a published plan or trajectory into TRAIN. Before
-publication, parent must freeze a distinct release-bound plan with chosen action
-`TRAIN_PAIR_100K`, action type `paired100k_after_parentrelease`, next allowed
-action exactly `A001` (the bounded pair only), and the release record in
-`contract_refs`. No automatic500K/full or remote action follows. This script
-does not synthesize those decisions or duplicate the acceptance validator.
+```json
+{
+  "format": "molgap-k1-t4-parent-release-v1",
+  "controller": "human-controller",
+  "approved_by": "human controller identity",
+  "approved_at": "explicit approval timestamp",
+  "source_commit": "exact source commit used for preparation",
+  "action": "TRAIN_PAIR_100K",
+  "allowed_actions": ["TRAIN_PAIR_100K"],
+  "budget": {"allocated_t4_device_hours": 8, "wall_seconds": 14400},
+  "profile_acceptance": {
+    "path": "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json",
+    "sha256": "actual SHA256"
+  },
+  "clean_fit": {
+    "terminal": {"path": "experiments/pcqm_k1_clean_fit_generalization_500k/terminal.json", "sha256": "actual SHA256"},
+    "acceptance": {"path": "experiments/pcqm_k1_clean_fit_generalization_500k/acceptance.json", "sha256": "actual SHA256"},
+    "decision": {"path": "experiments/pcqm_k1_clean_fit_generalization_500k/terminal_decision.md", "sha256": "actual SHA256"},
+    "finalization": {"path": "experiments/pcqm_k1_clean_fit_generalization_500k/closure_receipt.json", "sha256": "actual SHA256"},
+    "assessment": "NO_URGENT_FITTING_FAILURE",
+    "rationale": "Human assessment explaining why the pinned bounded NO_TRAIN findings require no urgent fit repair before this pair; preserve scientific limits."
+  }
+}
+```
+
+`validate_parent_release(root, release_file, source_commit=...)` reuses
+`resolve_repo_pointer` / `verify_bound_artifact`. It calls the parent-coordinated
+read-only `profile.close.accept(root)` only after that callable exists. This
+owner checks actual retained native T4 hardware/run/source/payload/timing bytes;
+the pinned acceptance's analysis must equal the recomputed owner analysis.
+`analysis.single_step_saving_fraction` must be finite and >=0.25. No copied
+native-profile validator, raw completion or `accepted=true` grants authority.
+
+Clean-fit bindings must name the canonical files integrated into this same
+repository. Its `molgap-rml-finalization-v1` receipt must finalize NO_TRAIN,
+bind `terminal_input.json` to the pinned terminal object's shared `json_bytes`
+serialization (the terminal file's raw bytes are independently SHA-pinned), and pin the acceptance
+and decision in `input_artifact_hashes`; terminal `artifact_hashes` must agree.
+Acceptance must retain complete/no-training, hash-verified, NO_TRAIN outcomes.
+The manual assessment is parent judgement, not a new scientific inference
+validator or causal underfit/overfit claim. The clean-fit NO_TRAIN disposition
+itself does not authorize this separate pair.
+
+```powershell
+$env:PYTHONPATH = (Join-Path (Get-Location) 'src')
+.\.venv\Scripts\python.exe experiments/pcqm_k1_t4_cost_quality/prepare_training.py --parent-release-file experiments/pcqm_k1_t4_cost_quality/parent_release.json --stage-local experiments/pcqm_k1_t4_cost_quality/release-draft-v1
+```
+
+The release file is SHA-bound in each fresh plan's `parent_release` and included
+in `contract_refs` before publication. Chosen action is `TRAIN_PAIR_100K`, action
+type is `paired100k_after_parentrelease`, next allowed action is exactly `A001`.
+Policy approval/budget pointers and prospective plan hashes/Spec identity are
+rebound together. Staging remains unpublished and `training_authorized=false`:
+parent registration, publication, executable-source and runtime/durability gates
+remain separate. Neither500K/full nor remote actions follow automatically.
+Never convert an already published PREPARE_ONLY trajectory into TRAIN.
+
+The active CLI root is `molgap.constants.REPO_ROOT`; explicit `root` callable
+arguments remain supported. The shared RML planner permits extra input fields
+but does not publish top-level `parent_release`. Its durable release binding is
+the contract pointer hashed into canonical `decision_state.source_hashes`.
+Preparation tests exercise this through read-only `_prepare_plan`, not publication.
+Human approval identity/authority must reflect the actual user instruction and
+parent assessment; the wrapper creates neither an approval record nor an identity.

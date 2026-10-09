@@ -1,0 +1,128 @@
+{
+  "evidence_id": "pcqm-k1-native-t4-cost-profile-20261009",
+  "run_id": "molgap-k1-native-t4-profile-s42-v1",
+  "outcome": {
+    "execution_status": "complete_execution_diagnostic",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "matched_scratch_execution_counterfactual",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "bounded_native_t4_diagnostic_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_t4_cost_quality/profile/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate prospective cost-quality authority"
+    ]
+  },
+  "role_use": {
+    "train_probe": "labels_read",
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-t4-profile-labels_read",
+      "trajectory_id": "TB-k1-native-t4-cost-profile-20261009",
+      "action_id": "A001",
+      "run_id": "molgap-k1-native-t4-profile-s42-v1",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_probe",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-t4-profile-prediction_input",
+      "trajectory_id": "TB-k1-native-t4-cost-profile-20261009",
+      "action_id": "A001",
+      "run_id": "molgap-k1-native-t4-profile-s42-v1",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_probe",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json"
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-native-t4-profile-entry",
+      "trajectory_id": "TB-k1-native-t4-cost-profile-20261009",
+      "action_id": "A001",
+      "run_id": "molgap-k1-native-t4-profile-s42-v1",
+      "attempt_id": "attempt-001",
+      "platform": "kaggle",
+      "hardware": "Tesla T4 (2 allocated; cuda0 active)",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": 0.17095981645388886,
+          "status": "measured"
+        },
+        "wall_hours": {
+          "value": 0.08547990822694443,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "analysis": {
+    "median_step_seconds": {
+      "single_w2": 0.169898623999984,
+      "double_mean2_w2": 0.2724083260000043
+    },
+    "single_step_saving_fraction": 0.37630898990957673,
+    "phase_mean_seconds": {
+      "backward": 0.11901089116668118,
+      "clip": 0.0075277293333329,
+      "forward_loss": 0.1195425206666793,
+      "h2d": 0.0008420686666189189,
+      "loader": 0.000660297000005509,
+      "optimizer": 0.03846320833332584
+    },
+    "sample_timings": {
+      "eval_role": "train_members_only",
+      "eval_rows": 512,
+      "eval_step_seconds": [
+        0.32330601399996794,
+        0.06756304199996066,
+        0.06543492599996625,
+        0.0670025119999309
+      ],
+      "eval_optimizer_steps": 0,
+      "localFS_atomic_checkpoint_write_seconds": 0.05764894900005402,
+      "localFS_checkpoint_bytes": 14805295,
+      "full50k_development_seconds": null,
+      "remote_upload_seconds": null
+    },
+    "worker_subset_seconds": 56.740963478000026,
+    "full_entry_wall_seconds": 307.72766961699995,
+    "allocated_T4_device_hours": 0.17095981645388886,
+    "scheduler_snapshot_status": "COMPLETE",
+    "accuracy_causality": "insufficient_evidence",
+    "global_cost_extrapolation": false
+  },
+  "execution_scope": "66 discarded scratch updates;512 train-member eval rows; no scientific training/selection",
+  "role_scope": "Prebuilt accepted sample reused; only4096 training labels decoded in this attempt, not500K",
+  "cost_scope": "Full entry allocation once; worker subset not additive; GPU busy/queue/upload/full50K unknown",
+  "scheduler_scope": "Parent-retained exact version COMPLETE snapshot; acceptance makes no remote query"
+}

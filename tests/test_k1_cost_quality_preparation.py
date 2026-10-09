@@ -1,6 +1,7 @@
 """Synthetic preparation/pair lifecycle only; no model execution or remote calls."""
 import copy
 import importlib.util
+import json
 from pathlib import Path
 
 import pytest
@@ -182,3 +183,239 @@ def test_initial_state_mismatch_stops_before_staging(monkeypatch):
     monkeypatch.setattr(prep, "inspect_frozen_state_artifact", reject)
     with pytest.raises(ValueError, match="tensor SHA"):
         prep.build_inputs(ROOT, source_commit="1" * 40, initial_state=prep.STATE)
+
+
+@pytest.fixture
+def release_inputs(tmp_path, monkeypatch):
+    def write(ref, value):
+        path = tmp_path / ref
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(_canonical(value).encode("utf-8"))
+        return {"path": ref, "sha256": prep.file_digest(path)}
+
+    decision = write(prep.CLEAN + "/terminal_decision.md", "NO_TRAIN descriptive only")
+    acceptance = write(prep.CLEAN + "/acceptance.json", {
+        "format": "molgap-local-frozen-diagnostic-acceptance-v1", "outcome": {
+            "execution_status": "complete_no_training", "artifact_status": "local_hash_verified",
+            "scientific_status": "NO_TRAIN"}})
+    hashes = {p["path"]: p["sha256"] for p in (decision, acceptance)}
+    terminal = write(prep.CLEAN + "/terminal.json", {
+        "format": "molgap-rml-terminal-package-v1", "trajectory_id": "clean-fit",
+        "acceptance_ref": acceptance["path"], "artifact_hashes": hashes,
+        "decision": {"outcome": "NO_TRAIN", "decision_ref": decision["path"]}})
+    finalization = write(prep.CLEAN + "/closure_receipt.json", {
+        "format": "molgap-rml-finalization-v1", "trajectory_id": "clean-fit",
+        "finalization_id": "finalize-test", "finalized_at": "2026-10-09", "outcome": "NO_TRAIN",
+        "input_artifact_hashes": hashes, "published_hashes": {"terminal_input.json":
+            prep.hashlib.sha256(prep.json_bytes(prep.read(tmp_path / terminal["path"]))).hexdigest()}})
+    profile = write(prep.REL + "/profile/acceptance.json", {"fixture": "synthetic owner receipt"})
+    release = {"format": prep.RELEASE_FORMAT, "controller": "human-controller",
+        "approved_by": "test-human", "approved_at": "2026-10-09", "source_commit": "1" * 40,
+        "action": "TRAIN_PAIR_100K", "allowed_actions": ["TRAIN_PAIR_100K"],
+        "budget": {"allocated_t4_device_hours": 8, "wall_seconds": 14400},
+        "profile_acceptance": profile, "clean_fit": {"terminal": terminal, "acceptance": acceptance,
+            "decision": decision, "finalization": finalization,
+            "assessment": "NO_URGENT_FITTING_FAILURE",
+            "rationale": "Human reviewed the bounded descriptive NO_TRAIN decision; no urgent fit repair precedes the pair."}}
+    release_ref = prep.REL + "/parent_release.json"
+    write(release_ref, release)
+    calls = []
+    def owner(root, path):
+        calls.append((root, path))
+        return {"status": "ACCEPTED", "native_step_reduction": .3}
+    monkeypatch.setattr(prep, "_validate_profile_release", owner)
+    return tmp_path, release_ref, release, write, calls
+
+
+def test_release_bound_fresh_plans_and_rehashed_spec(release_inputs, monkeypatch):
+    root, ref, release, write, calls = release_inputs
+    for name in ("experiments/pcqm_k1_slot_width96/reference_binding/original_reference_arm.json",
+                 "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+                 "experiments/pcqm_k1_fusion_distillation/training_recipe_distill_weak.json",
+                 prep.REL + "/protocol.md", "src/molgap/k1_screen_training.py",
+                 "docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md"):
+        path = root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes((ROOT / name).read_bytes())
+    monkeypatch.setattr(prep, "inspect_frozen_state_artifact", lambda *a, **k: {
+        "state_sha256": prep.STATE_SHA, "file_sha256": "f" * 64, "device": "cpu"})
+    records = prep.build_inputs(root, source_commit="1" * 40, initial_state=prep.STATE,
+                               parent_release_file=Path(ref))
+    assert len(calls) == 1
+    spec = ExperimentSpec(records["experiment_spec.json"])
+    for arm in spec.to_dict()["prospective"]["arms"]:
+        plan = records[f"training_plan_{arm['arm_id']}.json"]
+        assert plan["decision_state"]["chosen_action"] == "TRAIN_PAIR_100K"
+        assert plan["trajectory"]["decision"]["next_allowed_actions"] == ["A001"]
+        assert plan["trajectory"]["actions"][0]["type"] == "paired100k_after_parentrelease"
+        assert ref in plan["trajectory"]["state_at_start"]["contract_refs"]
+        assert plan["parent_release"]["sha256"] == prep.file_digest(root / ref)
+        assert arm["plan_spec_sha256"] == prep.canonical_fingerprint(plan)
+    assert records["workflow_plan.json"]["spec_identity"] == spec.identity
+    assert records["family_acceptance_plan.json"]["spec_identity"] == spec.identity
+    assert records["policy.json"]["approval"]["authority_ref"] == ref
+    assert records["preparation_report.json"]["training_authorized"] is False
+    assert records["preparation_report.json"]["prospective_published"] is False
+    assert not list(root.rglob("trajectory.json"))
+    # Nearest planner preparation only: verify binding without any publication.
+    from molgap.research_memory.plan import _PlanningSnapshot, _prepare_plan, _source_pointers
+    from molgap.research_memory.discovery import DiscoveredRecords
+    for name in ("role_plan.json", "training_recipe_mean2.json", "training_recipe_single.json"):
+        write(prep.REL + "/" + name, records[name])
+    write(prep.REL + "/evidence_review.md", "synthetic evidence review")
+    discovered = DiscoveredRecords((), (), (), (), (), ())
+    plan = records["training_plan_mean2.json"]
+    pointers = _source_pointers(root, plan["trajectory"], discovered)
+    snapshot = _PlanningSnapshot(discovered, "1" * 40, [], [prep.PRIOR], frozenset(),
+        frozenset(), [records["policy.json"]], {p: prep.file_digest(root / p) for p in pointers})
+    prepared = _prepare_plan(root, plan, prep.REL + "/test-unpublished", _snapshot=snapshot)
+    frozen = json.loads(prepared["files"]["trajectory.json"])
+    assert frozen["decision_state"]["source_hashes"][ref] == plan["parent_release"]["sha256"]
+    assert ref in frozen["state_at_start"]["contract_refs"]
+    assert frozen["decision_state"]["chosen_action"] == "TRAIN_PAIR_100K"
+    assert not prepared["destination"].exists()
+    write(prep.REL + "/training_plan_mean2.json", {})
+    with pytest.raises(ValueError, match="unpublished fresh"):
+        prep.build_inputs(root, source_commit="1" * 40, initial_state=prep.STATE, parent_release_file=Path(ref))
+
+
+@pytest.mark.parametrize("failure", ["tampered_sha", "tampered_profile", "raw_completion", "true_boolean", "wrong_budget",
+    "wrong_action", "extra_action", "missing_profile", "missing_decision", "missing_terminal",
+    "missing_finalization", "missing_acceptance", "missing_assessment", "boolean_assessment",
+    "empty_rationale", "nonhuman", "source_commit", "unfinalized", "receipt_pin", "terminal_pin", "remote_pin"])
+def test_release_fail_closed_independently(release_inputs, failure):
+    root, ref, release, write, calls = release_inputs
+    clean = release["clean_fit"]
+    if failure == "tampered_sha":
+        (root / clean["decision"]["path"]).write_bytes(b"tampered")
+    elif failure == "tampered_profile":
+        (root / release["profile_acceptance"]["path"]).write_bytes(b"tampered")
+    elif failure == "raw_completion":
+        release = {"status": "complete", "accepted": True}
+    elif failure == "true_boolean":
+        release = True
+    elif failure == "wrong_budget":
+        release["budget"]["allocated_t4_device_hours"] = 9
+    elif failure == "wrong_action":
+        release["action"] = "TRAIN_FULL"
+    elif failure == "extra_action":
+        release["allowed_actions"].append("TRAIN_FULL")
+    elif failure == "missing_profile":
+        del release["profile_acceptance"]
+    elif failure.startswith("missing_"):
+        del clean[failure.removeprefix("missing_")]
+    elif failure == "boolean_assessment":
+        clean["assessment"] = True
+    elif failure == "empty_rationale":
+        clean["rationale"] = " "
+    elif failure == "nonhuman":
+        release["controller"] = "agent"
+    elif failure == "source_commit":
+        release["source_commit"] = "2" * 40
+    elif failure in ("unfinalized", "receipt_pin", "terminal_pin"):
+        receipt = prep.read(root / clean["finalization"]["path"])
+        if failure == "unfinalized":
+            del receipt["finalized_at"]
+        elif failure == "receipt_pin":
+            receipt["input_artifact_hashes"][clean["decision"]["path"]] = "f" * 64
+        else:
+            receipt["published_hashes"]["terminal_input.json"] = "f" * 64
+        clean["finalization"] = write(clean["finalization"]["path"], receipt)
+    elif failure == "remote_pin":
+        release["profile_acceptance"]["path"] = "https://example.org/acceptance.json"
+    write(ref, release)
+    with pytest.raises(ValueError):
+        prep.validate_parent_release(root, Path(ref), source_commit="1" * 40)
+    assert calls == []
+
+
+@pytest.mark.parametrize("report", [True, {"accepted": True}, {"status": "complete"},
+    {"status": "ACCEPTED", "native_step_reduction": True},
+    {"status": "ACCEPTED", "native_step_reduction": .249},
+    {"status": "ACCEPTED", "native_step_reduction": float("nan")}])
+def test_profile_owner_return_is_not_boolean_authority(release_inputs, monkeypatch, report):
+    root, ref, release, write, calls = release_inputs
+    monkeypatch.setattr(prep, "_validate_profile_release", lambda *args: report)
+    with pytest.raises(ValueError):
+        prep.validate_parent_release(root, Path(ref), source_commit="1" * 40)
+
+
+def test_missing_owner_callable_blocks_release(release_inputs, monkeypatch):
+    root, ref, release, write, calls = release_inputs
+    monkeypatch.undo()
+    with pytest.raises(ValueError, match="callable is unavailable"):
+        prep.validate_parent_release(root, Path(ref), source_commit="1" * 40)
+
+
+@pytest.mark.parametrize("drift", [False, True])
+def test_profile_accept_callable_contract_is_read_only(tmp_path, drift):
+    directory = tmp_path / prep.REL / "profile"
+    directory.mkdir(parents=True)
+    # Synthetic owner tests only the adapter API; native validation is owner-tested.
+    (directory / "close.py").write_text(
+        "def accept(root):\n"
+        "    return {'analysis': {'single_step_saving_fraction': 0.3}}\n"
+        "def close(*args, **kwargs):\n"
+        "    raise AssertionError('publication must not be called')\n", encoding="utf-8")
+    acceptance = directory / "acceptance.json"
+    acceptance.write_text(_canonical({
+        "analysis": {"single_step_saving_fraction": .2 if drift else .3},
+        "outcome": {"artifact_status": "local_hash_verified", "scientific_status": "NO_TRAIN"}}),
+        encoding="utf-8")
+    if drift:
+        with pytest.raises(ValueError, match="differs from actual"):
+            prep._validate_profile_release(tmp_path, acceptance)
+    else:
+        assert prep._validate_profile_release(tmp_path, acceptance) == {
+            "status": "ACCEPTED", "native_step_reduction": .3}
+    with pytest.raises(ValueError, match="not raw completion"):
+        prep._validate_profile_release(tmp_path, directory / "completion.json")
+
+
+@pytest.mark.parametrize("field", ["outcome", "analysis"])
+def test_profile_nested_boolean_rejected_as_value_error(tmp_path, field):
+    directory = tmp_path / prep.REL / "profile"
+    directory.mkdir(parents=True)
+    (directory / "close.py").write_text(
+        "def accept(root):\n"
+        "    return {'analysis': {'single_step_saving_fraction': 0.3}}\n", encoding="utf-8")
+    record = {"analysis": {"single_step_saving_fraction": .3},
+        "outcome": {"artifact_status": "local_hash_verified", "scientific_status": "NO_TRAIN"}}
+    record[field] = True
+    path = directory / "acceptance.json"
+    path.write_text(_canonical(record), encoding="utf-8")
+    with pytest.raises(ValueError, match="not booleans"):
+        prep._validate_profile_release(tmp_path, path)
+
+
+@pytest.mark.parametrize("record_key,field", [("terminal", "decision"), ("terminal", "artifact_hashes"),
+    ("acceptance", "outcome"), ("finalization", "published_hashes"), ("finalization", "input_artifact_hashes")])
+def test_clean_fit_nested_boolean_rejected_as_value_error(release_inputs, record_key, field):
+    root, ref, release, write, calls = release_inputs
+    binding = release["clean_fit"][record_key]
+    record = prep.read(root / binding["path"])
+    record[field] = True
+    release["clean_fit"][record_key] = write(binding["path"], record)
+    write(ref, release)
+    with pytest.raises(ValueError, match="not booleans"):
+        prep.validate_parent_release(root, Path(ref), source_commit="1" * 40)
+    assert not calls
+
+
+def test_active_wrapper_uses_package_root():
+    from molgap.constants import REPO_ROOT
+    assert prep.ROOT == REPO_ROOT
+
+
+def test_integrated_clean_fit_receipt_binding_compatibility(release_inputs):
+    root, ref, release, write, calls = release_inputs
+    for key, binding in release["clean_fit"].items():
+        if not isinstance(binding, dict):
+            continue
+        path = root / binding["path"]
+        path.write_bytes((ROOT / binding["path"]).read_bytes())
+        binding["sha256"] = prep.file_digest(path)
+    write(ref, release)
+    validated = prep.validate_parent_release(root, Path(ref), source_commit="1" * 40)
+    assert validated["binding"]["sha256"] == prep.file_digest(root / ref)
+    assert len(calls) == 1

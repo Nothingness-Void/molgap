@@ -1,0 +1,26 @@
+{
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "gpu": "Tesla T4",
+  "determinism": {
+    "seed": 42,
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "float32_matmul_precision": "highest"
+  },
+  "payload_sha256": "d06f5ecdb4e399a9ed55bae081d98160cf90bef7bcecc6b4a984404d1dfd75be",
+  "started_at_unix": 1791537360.2616756,
+  "scientific_training": false,
+  "visible_gpu_count": 2,
+  "active_gpu_indices": [
+    0
+  ],
+  "gpu_names": [
+    "Tesla T4",
+    "Tesla T4"
+  ]
+}

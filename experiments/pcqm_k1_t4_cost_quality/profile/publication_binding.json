@@ -1,0 +1,23 @@
+{
+  "format": "molgap-native-t4-profile-publication-binding-v1",
+  "source_commit": "df80d6ce1451284c4142e275546983cc0b8ca89d",
+  "payload_manifest_sha256": "d06f5ecdb4e399a9ed55bae081d98160cf90bef7bcecc6b4a984404d1dfd75be",
+  "dataset": "nvoid912/molgap-k1-native-t4-profile-source-v1",
+  "requested_kernel": "nvoid912/molgap-k1-native-t4-profile-s42-v1",
+  "pins": {
+    "EXPECTED_PROFILE_MANIFEST_SHA256": "d06f5ecdb4e399a9ed55bae081d98160cf90bef7bcecc6b4a984404d1dfd75be",
+    "EXPECTED_SETUP_SHA256": "d8f183d41df1a5bd50ae2d2ea4f5ebe9d1b1fb7e55fffde51bb7affff11d05c7",
+    "EXPECTED_PROFILE_ARCHIVE_SHA256": "a5d7bc79a77a71a9b0b94f0cdc3bceb6cae8711a2fa111623da3fea5167a6cde",
+    "EXPECTED_UNPACK_SHA256": "2c6401136d509b3b4ab3832a8dce4d08b6948ccb34c103754a78182553c082b5"
+  },
+  "files": {
+    "kernel/kernel-metadata.json": "af7e17e3b69d55ae7220a11d6031cf5e5fd42bad947ae2289618b472d048235b",
+    "kernel/run.py": "da6037834133a7551cdecb5e450caa50e33972acce4d7fb3b20f4f90e44e6e45",
+    "source_dataset/dataset-metadata.json": "65a4c42beecf6cf4d2d9cfaa49d357fe936ea00476de74aff688f8b85b45eceb",
+    "source_dataset/payload_manifest.json": "d06f5ecdb4e399a9ed55bae081d98160cf90bef7bcecc6b4a984404d1dfd75be",
+    "source_dataset/source_payload.bin": "a5d7bc79a77a71a9b0b94f0cdc3bceb6cae8711a2fa111623da3fea5167a6cde",
+    "source_dataset/unpack.py": "2c6401136d509b3b4ab3832a8dce4d08b6948ccb34c103754a78182553c082b5"
+  },
+  "remote_action": false,
+  "sample_decoded": false
+}

@@ -1,0 +1,488 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-k1-native-t4-cost-profile-20261009",
+  "run_id": "molgap-k1-native-t4-profile-s42-v1",
+  "action_id": "A001",
+  "finalized_at": "2026-10-09T09:31:09.255437+00:00",
+  "acceptance_ref": "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_t4_cost_quality/profile/payload_plan.json": "d3be8131af2274416d4f63b8d8c0e9e8575eccefe2dcf4f73956c30a8413e88a",
+    "experiments/pcqm_k1_t4_cost_quality/profile/publication_binding.json": "522cdec1670459a926a373f18e8977415680d55254c7e1261d8792242bf87374",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/kernel/kernel-metadata.json": "af7e17e3b69d55ae7220a11d6031cf5e5fd42bad947ae2289618b472d048235b",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/kernel/run.py": "da6037834133a7551cdecb5e450caa50e33972acce4d7fb3b20f4f90e44e6e45",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/dataset-metadata.json": "65a4c42beecf6cf4d2d9cfaa49d357fe936ea00476de74aff688f8b85b45eceb",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/payload_manifest.json": "d06f5ecdb4e399a9ed55bae081d98160cf90bef7bcecc6b4a984404d1dfd75be",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/source_payload.bin": "a5d7bc79a77a71a9b0b94f0cdc3bceb6cae8711a2fa111623da3fea5167a6cde",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/unpack.py": "2c6401136d509b3b4ab3832a8dce4d08b6948ccb34c103754a78182553c082b5",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/payload_manifest.json": "d06f5ecdb4e399a9ed55bae081d98160cf90bef7bcecc6b4a984404d1dfd75be",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/bootstrap.py": "70ccee53940e2ea99811723fb21815c1dfedbfda19e640655cd014d2c068318f",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/kaggle_entry.py": "479ccef9b315fd87b485f7f7f4a7350a145daf9d92ae19f0111d531ba36c5dee",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/protocol.md": "d565166833cb6a83ff4d57589beaccce225c54e22b4ff52ab71d69a007a1bfe8",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/run.sh": "8b945c6b79d341f41952888ee380c90f9421d3d7e7fb6acf0d839f57edc2b7dd",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/selected.pt": "2e9cee13ebbf67031470e89acaf46d551238f937255fed601eb0922b93fdad92",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/setup.sh": "d8f183d41df1a5bd50ae2d2ea4f5ebe9d1b1fb7e55fffde51bb7affff11d05c7",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/train_probe.pt": "35f4dd04c3bb2d517801f975d90bcdc690b063f3996418c4c4aa939e8cf082ca",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/prospective/plan_receipt.json": "68157060fe13d81bc109b8a54c5eda07bf0403f18f24612be3f1dc712179148c",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/prospective/trajectory.json": "20a7577737a2ab875cd915ee62ea614f9e74d335ad70c90aa2af797ced517be6",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/constants.py": "d466ac1467034511bace9e7158093b364d80f423e4ee458c3e9a62bddcd65a63",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/evidence_pointers.py": "bad2983c22ac7f914cca0d3bd50eb11c1d3b392ed39fbc89f3534d5cf987212a",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/gps.py": "2744e98e9f190c7f9ea9281d41487f74ff49175d45f8e86b3d011fc2b9cc5ee5",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_execution_profile.py": "625fdde348ce2223f770d2e693defa085e76b6923df175b01d364ccb90f8f5e3",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_frozen_inference.py": "dd88f9e3bbbb5aac8f6c55c6482e3db9b969725bf1a1db1e6e7d26ed5223217e",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_pretrained_combo.py": "efa52103e1d03a4bb3de42559cf3541ddb34b2d5d5da29df204534fcc812eaf2",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_screen_training.py": "d8d0238890770a4582e9321fa81012ecf9725162884d71953e8e1af13ccc8d19",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/pcqm_gap_architecture.py": "0de3c77c50531d7f49e884c4c2bd5c67a554935c1996bd0eae952c4b5434c045",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/pcqm_wedge.py": "e8ccb24322a033bca3d56541377799b06aab8c8f04cdfbf8757cbf9f78fb742d",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/qm9_neural_atom.py": "39873ef5f171fdac660c4a06caf282ead778d908befd2bfbf4553e50558e8d49",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/screen_policy.py": "4c0cc0b7e5c784b7f09b31feea57b35af707acea9d6fc3927a53f1b988856cbe",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/training_reproducibility.py": "6608ee1a52e432c2f2a7f68e483f5cb5ec162f95d1d09d9d7b35d3ea7e3f48ba",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/v4_runtime.py": "3cd3206642133ff5ce60f8176f2ccd5b76456f99e94f674e81eb62b3b08b6d4c",
+    "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/__init__.py": "053a75f05ab6c3b4ba2c19b6a51f8e222b6c637d7177e453630da64aa5bf132f",
+    "experiments/pcqm_k1_t4_cost_quality/profile/plan_receipt.json": "68157060fe13d81bc109b8a54c5eda07bf0403f18f24612be3f1dc712179148c",
+    "experiments/pcqm_k1_t4_cost_quality/profile/submission_response.json": "c4d78e48b578eb5e8ca8b11c6d66114dda880895ea5267523228ccb596479436",
+    "experiments/pcqm_k1_t4_cost_quality/profile/scheduler_reconciliation_complete.json": "e9b36bbc5a6876d510716571ff48a346bcb753e05f0dd0f862fb3f4781c434fa",
+    "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/completion.json": "c116dabfe85c379cdcd33660bb79fd5e9770158618160e34e9c627d1ca66d5f2",
+    "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/single_w2.json": "325c9b83b6eee4039b8183b9a724953a2bd8379f2b8d87272475280b3fd5a63e",
+    "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/runtime.json": "5f47f48733feef122d45638df0fb43b0aef142c191ca1d876d832e15b9a48e4b",
+    "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/sample_timings.json": "f7729adcb0a9efb92acb4b38fbb59e19d7eec59d1af25d6156f41830808190e5",
+    "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/double_mean2_w2.json": "187092d4a25dca426e47b6c2d6beb6d926765af36bd5c8ac0df428dacf323f2a",
+    "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/phase_timings.json": "a2628049126bbe5d6bf2287c5cd595ff39b816bc180bd9502fa511fdd0fcd1d2",
+    "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/scratch_publication_probe.pt": "26c13228c00908b8ca3784c868dfa5650870503376973cf062245429d1554de7",
+    "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/result.json": "49dc66d9d08268351407110f1535e40f78606b428f8998b7de934b9d13aa1cd9",
+    "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/entry_observation.json": "d1ba13221dc22b4b0b0e074e5245f2339fb9be929fc5eb7b589fe243726507a6",
+    "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/worker_process_observation.json": "1a07dcaa6065a01326b71ba06ea19d67221be643210361f00dd9ed779814e5dc",
+    "experiments/pcqm_k1_t4_cost_quality/profile/protocol.md": "d565166833cb6a83ff4d57589beaccce225c54e22b4ff52ab71d69a007a1bfe8",
+    "experiments/pcqm_k1_t4_cost_quality/profile/inputs.json": "66b2bc1e446e405a4e41019ad628d8c248a90a70d7a28965c738a396d044af79",
+    "experiments/pcqm_k1_t4_cost_quality/profile/role_plan.json": "f8d126324f6405efebf6df368886f8702196cd71aaf64c49ced98ac4399d8e80",
+    "experiments/pcqm_k1_t4_cost_quality/profile/plan_input.json": "65346a1a9c49cfca10c0b5585dddf4f6e39bedeafe8b0915a3046923cbdd240e",
+    "experiments/pcqm_k1_t4_cost_quality/profile/terminal_decision.md": "b7f38dab3111f00837ed93ef9b45fb26aeb971cf0dcdec828130e280b5875711",
+    "experiments/pcqm_k1_t4_cost_quality/profile/attribution.md": "5ac6c86ef94bbacc5914edafb934bfcbee36bd7e089cba896dac9355f4b894bf",
+    "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json": "300294572cacb79ba2e522b889c194f05cea25f52ce33be9c62884ec569b9eb0"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-native-t4-cost-profile-20261009",
+    "track": "B",
+    "scope": "desktop_k1_native_t4_execution_diagnostic",
+    "legacy_contract": "pcqm-k1-native-t4-cost-profile-v1",
+    "outcome": {
+      "execution_status": "complete_execution_diagnostic",
+      "artifact_status": "local_hash_verified",
+      "comparison_status": "matched_scratch_execution_counterfactual",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "bounded_native_t4_diagnostic_complete",
+      "full_handoff_status": "not_applicable"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_t4_cost_quality/profile/protocol.md",
+        "experiments/pcqm_k1_t4_cost_quality/profile/terminal_decision.md",
+        "experiments/pcqm_k1_t4_cost_quality/profile/attribution.md",
+        "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json"
+      ]
+    },
+    "role_use": {
+      "train_probe": "labels_read",
+      "development": "untouched",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "migration": {
+      "migrated_at": "2026-10-09T09:31:09.255437+00:00",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Metadata/hash acceptance only; no model executed by finalizer"
+    },
+    "observed_execution": {
+      "training_executed": false,
+      "inference_executed": true,
+      "execution_ref": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/result.json"
+    },
+    "artifacts": [
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json",
+        "sha256": "300294572cacb79ba2e522b889c194f05cea25f52ce33be9c62884ec569b9eb0",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/attribution.md",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/attribution.md",
+        "sha256": "5ac6c86ef94bbacc5914edafb934bfcbee36bd7e089cba896dac9355f4b894bf",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/inputs.json",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/inputs.json",
+        "sha256": "66b2bc1e446e405a4e41019ad628d8c248a90a70d7a28965c738a396d044af79",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/payload_plan.json",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/payload_plan.json",
+        "sha256": "d3be8131af2274416d4f63b8d8c0e9e8575eccefe2dcf4f73956c30a8413e88a",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/plan_input.json",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/plan_input.json",
+        "sha256": "65346a1a9c49cfca10c0b5585dddf4f6e39bedeafe8b0915a3046923cbdd240e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/plan_receipt.json",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/plan_receipt.json",
+        "sha256": "68157060fe13d81bc109b8a54c5eda07bf0403f18f24612be3f1dc712179148c",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/protocol.md",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/protocol.md",
+        "sha256": "d565166833cb6a83ff4d57589beaccce225c54e22b4ff52ab71d69a007a1bfe8",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/publication_binding.json",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/publication_binding.json",
+        "sha256": "522cdec1670459a926a373f18e8977415680d55254c7e1261d8792242bf87374",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/role_plan.json",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/role_plan.json",
+        "sha256": "f8d126324f6405efebf6df368886f8702196cd71aaf64c49ced98ac4399d8e80",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/scheduler_reconciliation_complete.json",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/scheduler_reconciliation_complete.json",
+        "sha256": "e9b36bbc5a6876d510716571ff48a346bcb753e05f0dd0f862fb3f4781c434fa",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/submission_response.json",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/submission_response.json",
+        "sha256": "c4d78e48b578eb5e8ca8b11c6d66114dda880895ea5267523228ccb596479436",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_k1_t4_cost_quality/profile/terminal_decision.md",
+        "locator": "experiments/pcqm_k1_t4_cost_quality/profile/terminal_decision.md",
+        "sha256": "b7f38dab3111f00837ed93ef9b45fb26aeb971cf0dcdec828130e280b5875711",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/bootstrap.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/bootstrap.py",
+        "sha256": "70ccee53940e2ea99811723fb21815c1dfedbfda19e640655cd014d2c068318f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/kaggle_entry.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/kaggle_entry.py",
+        "sha256": "479ccef9b315fd87b485f7f7f4a7350a145daf9d92ae19f0111d531ba36c5dee",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/payload_manifest.json",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/payload_manifest.json",
+        "sha256": "d06f5ecdb4e399a9ed55bae081d98160cf90bef7bcecc6b4a984404d1dfd75be",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/prospective/plan_receipt.json",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/prospective/plan_receipt.json",
+        "sha256": "68157060fe13d81bc109b8a54c5eda07bf0403f18f24612be3f1dc712179148c",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/prospective/trajectory.json",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/prospective/trajectory.json",
+        "sha256": "20a7577737a2ab875cd915ee62ea614f9e74d335ad70c90aa2af797ced517be6",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/protocol.md",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/protocol.md",
+        "sha256": "d565166833cb6a83ff4d57589beaccce225c54e22b4ff52ab71d69a007a1bfe8",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/run.sh",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/run.sh",
+        "sha256": "8b945c6b79d341f41952888ee380c90f9421d3d7e7fb6acf0d839f57edc2b7dd",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/selected.pt",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/selected.pt",
+        "sha256": "2e9cee13ebbf67031470e89acaf46d551238f937255fed601eb0922b93fdad92",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/setup.sh",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/setup.sh",
+        "sha256": "d8f183d41df1a5bd50ae2d2ea4f5ebe9d1b1fb7e55fffde51bb7affff11d05c7",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/__init__.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/__init__.py",
+        "sha256": "053a75f05ab6c3b4ba2c19b6a51f8e222b6c637d7177e453630da64aa5bf132f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/constants.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/constants.py",
+        "sha256": "d466ac1467034511bace9e7158093b364d80f423e4ee458c3e9a62bddcd65a63",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/evidence_pointers.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/evidence_pointers.py",
+        "sha256": "bad2983c22ac7f914cca0d3bd50eb11c1d3b392ed39fbc89f3534d5cf987212a",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/gps.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/gps.py",
+        "sha256": "2744e98e9f190c7f9ea9281d41487f74ff49175d45f8e86b3d011fc2b9cc5ee5",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_execution_profile.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_execution_profile.py",
+        "sha256": "625fdde348ce2223f770d2e693defa085e76b6923df175b01d364ccb90f8f5e3",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_frozen_inference.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_frozen_inference.py",
+        "sha256": "dd88f9e3bbbb5aac8f6c55c6482e3db9b969725bf1a1db1e6e7d26ed5223217e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_pretrained_combo.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_pretrained_combo.py",
+        "sha256": "efa52103e1d03a4bb3de42559cf3541ddb34b2d5d5da29df204534fcc812eaf2",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_screen_training.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/k1_screen_training.py",
+        "sha256": "d8d0238890770a4582e9321fa81012ecf9725162884d71953e8e1af13ccc8d19",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/pcqm_gap_architecture.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/pcqm_gap_architecture.py",
+        "sha256": "0de3c77c50531d7f49e884c4c2bd5c67a554935c1996bd0eae952c4b5434c045",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/pcqm_wedge.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/pcqm_wedge.py",
+        "sha256": "e8ccb24322a033bca3d56541377799b06aab8c8f04cdfbf8757cbf9f78fb742d",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/qm9_neural_atom.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/qm9_neural_atom.py",
+        "sha256": "39873ef5f171fdac660c4a06caf282ead778d908befd2bfbf4553e50558e8d49",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/screen_policy.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/screen_policy.py",
+        "sha256": "4c0cc0b7e5c784b7f09b31feea57b35af707acea9d6fc3927a53f1b988856cbe",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/training_reproducibility.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/training_reproducibility.py",
+        "sha256": "6608ee1a52e432c2f2a7f68e483f5cb5ec162f95d1d09d9d7b35d3ea7e3f48ba",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/v4_runtime.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/src/molgap/v4_runtime.py",
+        "sha256": "3cd3206642133ff5ce60f8176f2ccd5b76456f99e94f674e81eb62b3b08b6d4c",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/train_probe.pt",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/payload/train_probe.pt",
+        "sha256": "35f4dd04c3bb2d517801f975d90bcdc690b063f3996418c4c4aa939e8cf082ca",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/kernel/kernel-metadata.json",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/kernel/kernel-metadata.json",
+        "sha256": "af7e17e3b69d55ae7220a11d6031cf5e5fd42bad947ae2289618b472d048235b",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/kernel/run.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/kernel/run.py",
+        "sha256": "da6037834133a7551cdecb5e450caa50e33972acce4d7fb3b20f4f90e44e6e45",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/dataset-metadata.json",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/dataset-metadata.json",
+        "sha256": "65a4c42beecf6cf4d2d9cfaa49d357fe936ea00476de74aff688f8b85b45eceb",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/payload_manifest.json",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/payload_manifest.json",
+        "sha256": "d06f5ecdb4e399a9ed55bae081d98160cf90bef7bcecc6b4a984404d1dfd75be",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/source_payload.bin",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/source_payload.bin",
+        "sha256": "a5d7bc79a77a71a9b0b94f0cdc3bceb6cae8711a2fa111623da3fea5167a6cde",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/unpack.py",
+        "locator": "platforms/_records/kaggle/staging/k1-native-t4-profile-20261009/publication/source_dataset/unpack.py",
+        "sha256": "2c6401136d509b3b4ab3832a8dce4d08b6948ccb34c103754a78182553c082b5",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/completion.json",
+        "locator": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/completion.json",
+        "sha256": "c116dabfe85c379cdcd33660bb79fd5e9770158618160e34e9c627d1ca66d5f2",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/double_mean2_w2.json",
+        "locator": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/double_mean2_w2.json",
+        "sha256": "187092d4a25dca426e47b6c2d6beb6d926765af36bd5c8ac0df428dacf323f2a",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/entry_observation.json",
+        "locator": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/entry_observation.json",
+        "sha256": "d1ba13221dc22b4b0b0e074e5245f2339fb9be929fc5eb7b589fe243726507a6",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/phase_timings.json",
+        "locator": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/phase_timings.json",
+        "sha256": "a2628049126bbe5d6bf2287c5cd595ff39b816bc180bd9502fa511fdd0fcd1d2",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/result.json",
+        "locator": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/result.json",
+        "sha256": "49dc66d9d08268351407110f1535e40f78606b428f8998b7de934b9d13aa1cd9",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/runtime.json",
+        "locator": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/runtime.json",
+        "sha256": "5f47f48733feef122d45638df0fb43b0aef142c191ca1d876d832e15b9a48e4b",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/sample_timings.json",
+        "locator": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/sample_timings.json",
+        "sha256": "f7729adcb0a9efb92acb4b38fbb59e19d7eec59d1af25d6156f41830808190e5",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/scratch_publication_probe.pt",
+        "locator": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/scratch_publication_probe.pt",
+        "sha256": "26c13228c00908b8ca3784c868dfa5650870503376973cf062245429d1554de7",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/single_w2.json",
+        "locator": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/single_w2.json",
+        "sha256": "325c9b83b6eee4039b8183b9a724953a2bd8379f2b8d87272475280b3fd5a63e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/worker_process_observation.json",
+        "locator": "platforms/_records/kaggle/training/k1_native_t4_profile_s42_v1/profile/worker_process_observation.json",
+        "sha256": "1a07dcaa6065a01326b71ba06ea19d67221be643210361f00dd9ed779814e5dc",
+        "availability": "locally_retained_hash_verified"
+      }
+    ]
+  },
+  "decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_t4_cost_quality/profile/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate prospective cost-quality authority"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-native-t4-profile-entry",
+      "trajectory_id": "TB-k1-native-t4-cost-profile-20261009",
+      "action_id": "A001",
+      "run_id": "molgap-k1-native-t4-profile-s42-v1",
+      "attempt_id": "attempt-001",
+      "platform": "kaggle",
+      "hardware": "Tesla T4 (2 allocated; cuda0 active)",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": 0.17095981645388886,
+          "status": "measured"
+        },
+        "wall_hours": {
+          "value": 0.08547990822694443,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-t4-profile-labels_read",
+      "trajectory_id": "TB-k1-native-t4-cost-profile-20261009",
+      "action_id": "A001",
+      "run_id": "molgap-k1-native-t4-profile-s42-v1",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_probe",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-t4-profile-prediction_input",
+      "trajectory_id": "TB-k1-native-t4-cost-profile-20261009",
+      "action_id": "A001",
+      "run_id": "molgap-k1-native-t4-profile-s42-v1",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_probe",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/profile/acceptance.json"
+    }
+  ]
+}
