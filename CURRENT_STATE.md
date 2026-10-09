@@ -29,8 +29,9 @@ another submission needs explicit authority. See [reference roles](models/REFERE
 
 User-directed K1 focus remains cost and500K enhancement, not a full-data rerun:
 
-1. Complete the already authorized consistency500K raw/identical clean-BN
-   endpoint acceptance before another module. Both arms use two forwards.
+1. Consistency500K raw/identical clean-BN acceptance is scientifically closed
+   below its material gate. Resolve honest traced-RML custody, not more training;
+   use the owning decision and attribution before another module. Both arms use two forwards.
 2. Native T4 loader/forward/backward/optimizer/evaluation/publication phases
    remain unmeasured; A100 microprofiling is not a T4 epoch-speed estimate.
 3. State/cost simplification is conditional on those discriminators. True EMA
@@ -57,7 +58,7 @@ Branch-local evidence stays on the [retained checkout map](BRANCHES.md#retained-
 
 | Question | Retained observation / blocker | Owner entry |
 |---|---|---|
-| Consistency500K coefficient0/0.1 | Kaggle3 ID137710959/version1 COMPLETE60/60 (2026-10-09); raw paired material gate fails. Identical clean-BN and independent terminal V5/RML closure pending; no adoption or successor. | [Status](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/STATUS.md), [raw acceptance](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-consistency-ablation-500k/experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/raw_acceptance.md) |
+| Consistency500K coefficient0/0.1 | COMPLETE60/60; raw and identical clean-BN material nomination fail (2026-10-09). Scientific/mechanical acceptance complete; frozen reference gap blocks traced RML finalization. Keep owner for custody, no adoption/successor/replay-ready. | [Status](D:/w/k1-consistency-500k/experiments/pcqm_k1_consistency_ablation_500k/STATUS.md), [decision](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-consistency-ablation-500k/experiments/pcqm_k1_consistency_ablation_500k/clean_bn/DECISION.md), [RML blocker](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-consistency-ablation-500k/experiments/pcqm_k1_consistency_ablation_500k/clean_bn/RML_BLOCKERS.md) |
 | Standalone K1 EMA100K | Version2 ERROR, empty outputs/log[]; cause, native cost and scientific endpoint unresolved, no further retry released. | [EMA handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md) |
 | Gaussian spectral100K | COMPLETE40/40, mechanical/native preflight verified; fresh-pair material gate fails. Scientific terminal packages and strict reference/RML closure pending; no scale-up. | [Spectral handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md) |
 
