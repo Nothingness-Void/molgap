@@ -4,6 +4,10 @@
 `nvoid912/molgap-k1-t4-cost-quality-100k-s42-v1`, ID137853937/version1, was
 accepted and [startup scheduler](scheduler_startup.json) observed RUNNING.
 Script-version ID remains unknown. RUNNING is not qualification or an epoch.
+The [post-check snapshot](scheduler_post_checks.json) also observed RUNNING;
+[output retrieval](output_post_checks.json) returned no available files, so
+preflight/epoch progress remains unknown, not zero. [Local checks](verification.md)
+record210 passed and RML portability without claiming a remote endpoint.
 
 [Submission response](submission_response.json) binds Spec, source/package and
 archive identity. [Raw API source verification](published_source_verification.json)
