@@ -482,7 +482,7 @@ class TargetIdentityBinding:
         if file_digest(path) != self.plan_sha256:
             raise ValueError("Target identity acceptance plan hash mismatch")
         plan = _json(path)
-        if plan.get("format") != "molgap-family-acceptance-plan-v1" or plan.get("spec_identity") != context.spec_identity:
+        if plan.get("format") not in {"molgap-family-acceptance-plan-v1", "molgap-family-same-run-acceptance-plan-v1"} or plan.get("spec_identity") != context.spec_identity:
             raise ValueError("Target identity plan/Spec mismatch")
         entries = [entry for entry in plan["arms"] if entry["arm_id"] == context.arm_id]
         if len(entries) != 1:
@@ -490,7 +490,8 @@ class TargetIdentityBinding:
         entry = entries[0]
         if entry["expected"] != expected or entry["contract"]["sha256"] != context.training_recipe_sha256:
             raise ValueError("Target identity plan/frozen expectations mismatch")
-        pointer = entry["reference_artifacts"]["target_manifest"]
+        pointer = (entry["target_manifest"] if plan["format"] == "molgap-family-same-run-acceptance-plan-v1"
+                   else entry["reference_artifacts"]["target_manifest"])
         if set(pointer) != {"path", "sha256"}:
             raise ValueError("Target identity requires a pinned manifest")
         _digest(pointer["sha256"], "target manifest digest")
@@ -673,6 +674,78 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict,
             "runtime_qualification": "NOT_EVALUATED"}
 
 
+def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> dict:
+    """Check frozen peer/target availability, never certify a future reference."""
+    declaration = spec.to_dict()
+    pair = declaration["prospective"].get("same_run_replay")
+    if pair is None:
+        raise ValueError("Same-run acceptance requires a prospective Spec pair")
+    arms = {arm["arm_id"]: arm for arm in declaration["arms"]}
+    if type(plan) is not dict or set(plan) != {"format", "spec_identity", "arms"} or plan["spec_identity"] != spec.identity:
+        raise ValueError("Acceptance plan/Spec mismatch")
+    entries = plan["arms"]
+    if type(entries) is not list or [entry.get("arm_id") for entry in entries] != list(arms):
+        raise ValueError("Acceptance plan requires exactly all Spec arms in order")
+    if set(arms) != {pair["reference_arm_id"], *pair["candidate_arm_ids"]}:
+        raise ValueError("Same-run acceptance cannot include unbound arms")
+    reference = arms[pair["reference_arm_id"]]
+    results, contracts, expectations = [], [], []
+    for entry in entries:
+        blockers = []
+        try:
+            if set(entry) != {"arm_id", "adapter", "expected", "contract", "target_manifest"}:
+                raise ValueError("Missing or unknown same-run acceptance fields")
+            arm = arms[entry["arm_id"]]
+            artifact_adapter(entry["adapter"], (arm["family"]["name"], arm["family"]["version"]))
+            for key in ("family", "base", "initialization", "data"):
+                if arm[key] != reference[key]:
+                    raise ValueError("Same-run peer identity differs: " + key)
+            for key in ("sampler", "transform", "overrides"):
+                if arm["training"][key] != reference["training"][key]:
+                    raise ValueError("Same-run peer training identity differs: " + key)
+            expected = entry["expected"]
+            if type(expected) is not dict or set(expected) != EXPECTED:
+                raise ValueError("Incomplete terminal expectations")
+            for key in ("epochs", "optimizer_steps", "sample_presentations", "development_rows"):
+                _positive(expected[key], key)
+            for key in ("source_idx_sha256", "target_sha256"):
+                _digest(expected[key], key)
+            if expected["precision"] not in {"fp32", "fp16", "bf16"}:
+                raise ValueError("Unsupported precision")
+            def pinned(pointer):
+                if type(pointer) is not dict or set(pointer) != {"path", "sha256"}:
+                    raise ValueError("Expected pinned repository artifact")
+                _digest(pointer["sha256"], "plan artifact digest")
+                path = _artifact_path(Path(repo_root).absolute(), pointer["path"])
+                if file_digest(path) != pointer["sha256"]:
+                    raise ValueError("Plan artifact hash mismatch")
+                return _json(path)
+            contract = pinned(entry["contract"])
+            if entry["contract"]["sha256"] != arm["training"]["recipe"]["sha256"] or contract.get("acceptance_requirements") != expected:
+                raise ValueError("Acceptance expectations are not pinned by the owning Spec recipe")
+            _development_role(contract)
+            target = pinned(entry["target_manifest"])
+            if target.get("development_target_sha256") != expected["target_sha256"] or target.get("target_encoding") not in {
+                "little-endian-float32-contiguous-raw-bytes", "little-endian-float64-contiguous-raw-bytes"
+            }:
+                raise ValueError("Target encoding/identity differs from frozen expectations")
+            contracts.append(contract)
+            expectations.append(expected)
+        except (ValueError, TypeError, KeyError, OSError) as exc:
+            blockers.append(str(exc))
+        results.append({"arm_id": entry["arm_id"], "status": "BLOCKED" if blockers else "AVAILABLE", "blockers": blockers})
+    if len(contracts) == len(entries) and (
+        any(expected != expectations[0] for expected in expectations)
+        or any(contract.get("training_recipe") != contracts[0].get("training_recipe") for contract in contracts)
+        or any(_development_role(contract) != _development_role(contracts[0]) for contract in contracts)
+    ):
+        for row in results:
+            row.update(status="BLOCKED", blockers=["Same-run peers differ in exposure, optimization or development identity"])
+    return {"status": "BLOCKED" if any(row["blockers"] for row in results) else "ACCEPTANCE_INPUTS_AVAILABLE",
+        "spec_identity": spec.identity, "arms": results, "trainer_execution": "NOT_VERIFIED",
+        "reference_authority": "prospective_same_run_only; terminal reference not yet accepted"}
+
+
 def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> dict:
     """Prelaunch capability and retained-reference check, without execution.
 
@@ -680,6 +753,8 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
     A passing plan only checks availability and schemas, not trainer execution.
     """
     from .comparison_readiness import validate_comparison_prelaunch, validate_reference_bundle, reference_bundle_digest
+    if type(plan) is dict and plan.get("format") == "molgap-family-same-run-acceptance-plan-v1":
+        return _check_same_run_acceptance_plan(spec, repo_root, plan)
     declaration = spec.to_dict()
     expected_arms = {a["arm_id"]: a for a in declaration["arms"]}
     results = []
@@ -888,6 +963,15 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
     return descriptor
 
 
+def terminal_attempt_id(spec, arm_id, platform_version):
+    """A same-job pair shares an attempt; arm identity remains separate."""
+    if not platform_version:
+        return None
+    declaration = spec.to_dict()
+    prefix = declaration["logical_run_id"] if declaration["prospective"].get("same_run_replay") else arm_id
+    return prefix + "-v" + platform_version
+
+
 def _terminal_identity(spec, context):
     """One translator owns identity fields for complete and incomplete runs."""
     arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == context.arm_id)
@@ -904,7 +988,7 @@ def _terminal_identity(spec, context):
         "feature_identity": fact(arm["data"]["feature_sha256"]), "target": fact(arm["data"]["target"]),
         "initialization_identity": fact(canonical_fingerprint(arm["initialization"])),
         "source_commit": fact(context.source_commit), "source_package_sha256": fact(context.source_archive_sha256),
-        "attempt_id": fact(context.arm_id + "-v" + context.platform_version) if context.platform_version else
+        "attempt_id": fact(terminal_attempt_id(spec, context.arm_id, context.platform_version)) if context.platform_version else
             {"value": None, "missing_reason": "Platform attempt version not observed"},
         "platform": {"name": context.platform, "run_reference": fact(context.run_reference)},
     }

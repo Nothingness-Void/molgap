@@ -91,7 +91,10 @@ def stage_acceptance_inputs(spec, repo_root, plan_path, destination):
         raise ValueError("Producer acceptance inputs are blocked")
     pointers = {plan_path: file_digest(path)}
     for arm in plan["arms"]:
-        for pointer in [arm["contract"], arm["comparison_prelaunch"], arm["reference_bundle"], *arm["reference_artifacts"].values()]:
+        arm_pointers = ([arm["contract"], arm["target_manifest"]]
+                        if plan["format"] == "molgap-family-same-run-acceptance-plan-v1" else
+                        [arm["contract"], arm["comparison_prelaunch"], arm["reference_bundle"], *arm["reference_artifacts"].values()])
+        for pointer in arm_pointers:
             prior = pointers.setdefault(pointer["path"], pointer["sha256"])
             if prior != pointer["sha256"]:
                 raise ValueError("Conflicting acceptance artifact pins")

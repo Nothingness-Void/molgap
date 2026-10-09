@@ -94,6 +94,12 @@ ADDONS = MappingProxyType({
     ("k1_joint_aggregation", "1"): AddonContract(
         "neural_atom_k1", "k1-local-aggregation", "molgap.k1_joint_aggregation",
     ),
+    ("k1_two_pass_mean", "1"): AddonContract(
+        "neural_atom_k1", "k1-training-objective", "molgap.k1_screen_training",
+    ),
+    ("k1_mean2_clean_second", "1"): AddonContract(
+        "neural_atom_k1", "k1-training-objective", "molgap.k1_screen_training",
+    ),
 })
 
 
@@ -198,10 +204,12 @@ def _arm(arm: dict) -> None:
     # Frozen legacy recipes have no override allowance. A reviewed new recipe
     # version must define typed bounds before any override can become executable.
     _object(training["overrides"], "", "training.overrides")
-    if init["seed"] != 42:
+    explicit_k1_replication = family == {"name": "neural_atom_k1", "version": "2"} and init["seed"] == 43
+    if init["seed"] != 42 and not explicit_k1_replication:
         raise ValueError("Frozen recipe initialization requires seed 42")
     _reference(training["objective"], "training.objective", name="normalized-gap-l1")
-    _reference(training["sampler"], "training.sampler", name=contract.sampler)
+    sampler_name = "seed43-python-epoch-shuffle-v4" if explicit_k1_replication else contract.sampler
+    _reference(training["sampler"], "training.sampler", name=sampler_name)
     _reference(training["transform"], "training.transform", name=contract.transform)
 
     _list(arm["addons"], "addons", nonempty=False)
@@ -234,6 +242,9 @@ def _arm(arm: dict) -> None:
             if addon["config"] != {"layer": 6, "latent_channels": 64, "kappa": 4,
                                     "seed": 42, "degree_policy": "original-sum-above-four"}:
                 raise ValueError("K1 extension differs from the bounded frozen configuration")
+        elif addon["name"] in {"k1_two_pass_mean", "k1_mean2_clean_second"}:
+            if family["version"] != "2" or len(arm["addons"]) != 1 or addon["config"] != {}:
+                raise ValueError("Two-pass mean requires K1 screen v2 and no additional change")
         else:
             _object(addon["config"], "", "addon.config")
         _digest(addon["source_sha256"], "addon.source_sha256")

@@ -27,7 +27,7 @@ the static training registry, its mode, and its output profile.
 
 | Family/version | Reference mode | Registered addon mode(s) | Output profile |
 |---|---|---|---|
-| `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma` | `k1-screen-v1` |
+| `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma`; `k1_two_pass_mean/1` → `mean2`; `k1_mean2_clean_second/1` → `mean2_clean_second` | `k1-screen-v1` |
 | `gptrans_t/1` | `reference` | `pair_prenorm/1`, `centered_logits/1`, `memory_value/1`, `memory_message/1` | `gptrans-v1` |
 
 The executable registry is in `experiment_execution.py`; the output profiles
@@ -42,6 +42,38 @@ contract, model/trainer adapter, output profile and reviewed source inventory
 once. A new addon within an existing family adds its reviewed mode hook and
 source path only when it introduces a new dependency. Unsupported families,
 addon versions, modes and platform allocations stop before execution.
+
+`mean2` changes only the training loss to the mean of two stochastic-forward
+L1 losses, without consistency penalty, teacher or EMA. Evaluation remains a
+single clean forward. Its intentional two-forward preflight cost ceiling is
+100% overhead versus single-forward; SSMA keeps its 25% ceiling. Neither is a
+scientific promotion rule. Scientific role (`reference`/`candidate`) is distinct
+from executable mode.
+
+`mean2_clean_second` keeps two equal supervised losses, one optimizer update
+and two training-mode BN updates. Only the second forward disables K1 dropout,
+including functional LocalGPSBlock and attention dropout. It is not consistency
+regularization, clean-evaluation BN calibration, EMA or an inference ensemble.
+
+K1 recipe construction accepts an explicit `seed` and `initialization_sha256`.
+Seed42 defaults retain their historical identity. Another seed requires a fresh
+CPU tensor artifact; both arms load its full pinned state, rather than expecting
+different runtime versions to reproduce random construction. The sampler and
+worker hash seed bind the declared seed. This interface grants no new seed run.
+
+Commit executable source and recipes first. Generate prospective actions against
+that exact HEAD, then prepare without another source commit in between. The
+workflow rejects source/action/run/attempt mismatches before publication:
+training traces use `logical_run_id:arm_id:downstream`; a same-job pair uses
+one shared `logical_run_id-vN` attempt, with N later verified from the launch
+response. It never rewrites old plans to fit observed execution.
+
+A recipe may additionally pin `allocation_wall_limit_seconds` (120--14400).
+Every arm must agree. The Kaggle bootstrap subtracts installation/setup time
+and reserves 60 seconds for cleanup before passing the remaining budget to the
+shared pair runner. Timeout records `STOP_FOR_COST`, retains the last atomic
+complete-epoch checkpoint, and cannot claim the planned endpoint. Historical
+recipes without this optional field keep their existing execution behavior.
 
 Build the family's fixed recipe before freezing the Spec. This helper uses the
 registered family builder; do not copy an old recipe JSON and edit constants.

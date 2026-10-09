@@ -338,3 +338,49 @@ def test_terminal_v2_binds_trajectory_and_arm_identity(tmp_path, case):
 def test_terminal_v1_still_uses_existing_contract(tmp_path, case):
     spec, payload = case
     assert len(translate_terminal_descriptor(tmp_path, spec, TerminalDescriptor(spec, payload))) == 2
+
+
+@pytest.mark.parametrize("changed", [None, "state_commit", "action_commit", "run", "attempt", "different_version"])
+def test_execution_identity_gate_before_any_publication(planning_case, monkeypatch, changed):
+    from molgap.experiment_family_workflow import terminal_attempt_id
+    root, _, original = planning_case
+    declaration = original.to_dict()
+    reference, candidate = declaration["arms"]
+    candidate["scientific_role"] = "candidate"
+    declaration["prospective"]["same_run_replay"] = {
+        "reference_arm_id": reference["arm_id"], "candidate_arm_ids": [candidate["arm_id"]]}
+    commit = "1" * 40
+    for index, (arm, binding) in enumerate(zip(declaration["arms"], declaration["prospective"]["arms"])):
+        trajectory = {"trajectory_id": binding["trajectory_id"],
+            "state_at_start": {"source_config_identity": canonical_fingerprint(arm), "source_commit": commit},
+            "actions": [{"source_commit": commit,
+                "run_ids": [declaration["logical_run_id"] + ":" + arm["arm_id"] + ":downstream"],
+                "attempt_ids": [declaration["logical_run_id"] + "-v1"]}]}
+        if index == 1:
+            action = trajectory["actions"][0]
+            if changed == "state_commit":
+                trajectory["state_at_start"]["source_commit"] = "2" * 40
+            elif changed == "action_commit":
+                action["source_commit"] = "2" * 40
+            elif changed == "run":
+                action["run_ids"] = [declaration["logical_run_id"] + ":" + arm["arm_id"]]
+            elif changed == "attempt":
+                action["attempt_ids"] = [arm["arm_id"] + "-v1"]
+            elif changed == "different_version":
+                action["attempt_ids"] = [declaration["logical_run_id"] + "-v2"]
+        raw = json.dumps({"trajectory": trajectory, "decision_state": {}}, sort_keys=True).encode()
+        (root / binding["plan_spec_ref"]).write_bytes(raw)
+        binding["plan_spec_sha256"] = hashlib.sha256(raw).hexdigest()
+    spec = ExperimentSpec(declaration)
+    planner = Mock(return_value=_planned(spec))
+    monkeypatch.setattr(prospective, "plan_many", planner)
+    monkeypatch.setattr(prospective, "rebuild_research_memory", Mock(return_value={}))
+    if changed:
+        with pytest.raises(ValueError, match="mismatch|share one physical attempt"):
+            prospective.plan_prospective(spec, root, execution_source_commit=commit)
+        planner.assert_not_called()
+    else:
+        result, code = prospective.plan_prospective(spec, root, execution_source_commit=commit)
+        assert code == 0 and result["rml_rebuilt"]
+        assert terminal_attempt_id(spec, reference["arm_id"], "1") == terminal_attempt_id(spec, candidate["arm_id"], "1")
+        assert terminal_attempt_id(spec, candidate["arm_id"], None) is None

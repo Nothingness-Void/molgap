@@ -102,7 +102,8 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         if release["errors"]:
             report.update(status="BLOCKED", stage="check_release", prospective_published=False)
             return report
-        prospective, code = plan_prospective(spec, repo_root)
+        prospective, code = plan_prospective(spec, repo_root,
+            execution_source_commit=manifest["source_commit"])
         record("prospective", prospective)
         if code:
             report.update(status="RECONCILIATION_REQUIRED", stage="prospective", prospective_published="inspect_plan_result")

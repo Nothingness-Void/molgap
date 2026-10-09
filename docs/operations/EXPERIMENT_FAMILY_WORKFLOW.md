@@ -4,6 +4,25 @@ The shared module connects an owning trainer's outputs to mechanical inspection
 and existing terminal/RML closure. Training, submission, runtime qualification
 and scientific decisions remain with their existing owners.
 
+## Prospective Same-Run Reference
+
+For an explicitly authorized fresh pair, use acceptance format
+`molgap-family-same-run-acceptance-plan-v1`, not a fabricated retained-reference
+bundle. Top-level fields are `format`, `spec_identity`, `arms`; each arm has
+`arm_id`, `adapter`, `expected`, `contract`, `target_manifest` (pinned local
+path/SHA256). Spec v2 must already declare `prospective.same_run_replay` for
+exactly those arms. Peer family/base/initialization/data/sampler/transform,
+optimization recipe, development identity and terminal exposure must match.
+The target manifest supplies byte encoding and target identity only.
+
+The shared checker/stager and `TargetIdentityBinding` support this format.
+`ACCEPTANCE_INPUTS_AVAILABLE` means the prospective inputs can be staged;
+its `reference_authority` explicitly says the terminal reference is not yet
+accepted. Runtime qualification, measured roles/cost, terminal reference
+acceptance and strict comparison remain separate downstream checks. Close the
+actual reference before its candidate using the existing RML pair protocol.
+The retained-reference format and its complete bundle requirements are unchanged.
+
 ## Capability matrix
 
 For a retained historical target encoding, use the explicit library binding
