@@ -1,0 +1,28 @@
+{
+  "status": "EXACT_RAW_API_SOURCE_VERIFIED",
+  "observed_at": "2026-10-09T09:44:01.209809+00:00",
+  "kernel": "nvoid912/molgap-k1-t4-cost-quality-100k-s42-v1",
+  "version_number": 1,
+  "raw_api_entry_sha256": "5aadc3ac466e8fad7280815438ad494c969b87f0d08e606f7cb64a19e1bcf035",
+  "remote_metadata": {
+    "id": "nvoid912/molgap-k1-t4-cost-quality-100k-s42-v1",
+    "id_no": 137853937,
+    "title": "molgap-k1-t4-cost-quality-100k-s42-v1",
+    "code_file": "molgap-k1-t4-cost-quality-100k-s42-v1.py",
+    "language": "python",
+    "kernel_type": "script",
+    "is_private": true,
+    "enable_gpu": true,
+    "enable_tpu": false,
+    "enable_internet": true,
+    "keywords": [],
+    "dataset_sources": [
+      "nvoid912/molgap-k1-t4-cost-quality-source-s42-v1",
+      "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "kernel_sources": [],
+    "competition_sources": [],
+    "model_sources": []
+  },
+  "sdk_pull_note": "Windows kernels_pull writes text with CRLF conversion; authoritative API blob source was compared byte-for-byte separately"
+}
