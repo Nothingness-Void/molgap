@@ -1,0 +1,57 @@
+{
+  "accepted": true,
+  "mode": "reference",
+  "zero_initialization_delta": 0.0,
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      0.7801737785339355,
+      0.7801737785339355
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "7f5ab2879f1a834e120519013d8efd2195e261b4eed5f5c2c09846afd614c73e",
+      "7f5ab2879f1a834e120519013d8efd2195e261b4eed5f5c2c09846afd614c73e"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      0.7801737785339355,
+      0.7801737785339355
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "6c66c4a0e33d36a3dcf481fa791cfa8f9a120da6a10d7594dfee5ce811310a4d",
+      "6c66c4a0e33d36a3dcf481fa791cfa8f9a120da6a10d7594dfee5ce811310a4d"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.12660714999992706,
+      "samples_seconds": [
+        0.11378897900021911,
+        0.12660714999992706,
+        0.17178883299993686,
+        0.13069765000000189,
+        0.1262290910003685
+      ],
+      "peak_memory_bytes": 572914176
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": 0.0,
+  "maximum_overhead_fraction": 0.25,
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"
+}

@@ -1,0 +1,394 @@
+{
+  "format": "molgap-k1-cost-quality-retained-acceptance-v1",
+  "physical_kernel": "nvoid912/molgap-k1-t4-cost-quality-100k-s42-v1",
+  "kernel_id": 137853937,
+  "version": 1,
+  "spec_identity": "10e5741d8e2b20ec2a1c0a4c9c60dc07acbf1963a5953ba74a75e1ec7a508203",
+  "source_commit": "a47268e54968e83c55f22196da6606d8f935bfda",
+  "source_archive_sha256": "fac57192cf002237f691a147e107d74622ab0211a2e41f5c71cb47c4cdef9aaa",
+  "runtime_qualification": {
+    "mean2": {
+      "format": "molgap-runtime-certificate-v1",
+      "status": "accepted",
+      "platform_id": "kaggle-t4x2",
+      "accelerator": "Tesla T4",
+      "precision": "fp32",
+      "tf32_enabled": false,
+      "deterministic_algorithms": true,
+      "physical_batch_per_device": 128,
+      "tail_batch_policy": "drop_last",
+      "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+      "software_fingerprint": "a6a07ae72d733fba94924a02bf0bb6a457366c5ff077f019da182332b12c7f0a",
+      "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+      "calibration_fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+      "calibration_output_sha256": "0fa9006e0f9bd4ae7b1267495a63293900f6fc1396a1bfed6faaa94a8dfcfc6f",
+      "calibration_checks_passed": true,
+      "provenance_sha256": "44e07db04d8b2b88ecfe2e4a442709f443d57f879b5d9769a43a6c20f240e16e",
+      "architecture_sha256": "2bb344c75e5111d357282faac05b2a9956b91a6c92aeb36a53d309a6ad3a1920"
+    },
+    "single": {
+      "format": "molgap-runtime-certificate-v1",
+      "status": "accepted",
+      "platform_id": "kaggle-t4x2",
+      "accelerator": "Tesla T4",
+      "precision": "fp32",
+      "tf32_enabled": false,
+      "deterministic_algorithms": true,
+      "physical_batch_per_device": 128,
+      "tail_batch_policy": "drop_last",
+      "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+      "software_fingerprint": "a6a07ae72d733fba94924a02bf0bb6a457366c5ff077f019da182332b12c7f0a",
+      "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+      "calibration_fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+      "calibration_output_sha256": "7f5ab2879f1a834e120519013d8efd2195e261b4eed5f5c2c09846afd614c73e",
+      "calibration_checks_passed": true,
+      "provenance_sha256": "cebc74b611c6516045b365ba971d73a7bd8829316edc79bdfa68352849631f1e",
+      "architecture_sha256": "9d4ab62916d182c07d78253b042f85c25109c3e949c58c9c9fc7bb366801ea52"
+    }
+  },
+  "native_cost_review": {
+    "matched_step_saving_pass": true,
+    "training_invocation_device_hours_lower_bound": {
+      "mean2": 2.4616330762122223,
+      "single": 1.5804963439597224
+    },
+    "idle_inclusive_pair_window_T4_device_hours": 4.9656540592711105,
+    "pair_window_scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost",
+    "bootstrap_seconds_reconstructed_from_frozen_clock": 219.07683243599968,
+    "last_logger_event_seconds": 9162.609533284,
+    "retained_log_encoding": "cp936 (SDK Windows text export; not raw API bytes)",
+    "whole_allocation_T4_device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "allocation_budget_pass": null,
+    "reason": "Logger and bootstrap clocks do not observe final platform allocation release; CPU/queue also unknown."
+  },
+  "mechanical": {
+    "mean2": {
+      "status": "MECHANICALLY_VERIFIED",
+      "blockers": [],
+      "context": {
+        "experiment_id": "pcqm-k1-t4-cost-quality-100k",
+        "logical_run_id": "molgap-k1-t4-cost-quality-100k-s42-v1",
+        "arm_id": "mean2",
+        "arm_identity": "8bdc5b3f917c806fb4f5430340cc63b99662b4470877dfe729f847b3808d8928",
+        "spec_identity": "10e5741d8e2b20ec2a1c0a4c9c60dc07acbf1963a5953ba74a75e1ec7a508203",
+        "family_name": "neural_atom_k1",
+        "family_version": "2",
+        "source_commit": "a47268e54968e83c55f22196da6606d8f935bfda",
+        "source_archive_sha256": "fac57192cf002237f691a147e107d74622ab0211a2e41f5c71cb47c4cdef9aaa",
+        "package_identity": "45c9e6ff349bb9b61642f6a69e654535b650a97c251a2fbc638975ca84b2b36b",
+        "training_recipe_sha256": "61d4e73fc06b761458638f8cf76ae2cc68988600f2b9a6cc451236389fa724d6",
+        "platform": "kaggle",
+        "account": "nvoid912",
+        "run_reference": "nvoid912/molgap-k1-t4-cost-quality-100k-s42-v1",
+        "platform_version": "1"
+      },
+      "observed": {
+        "producer_platform_version": null,
+        "target_identity": {
+          "encoding": "little-endian-float32-contiguous-raw-bytes",
+          "manifest": {
+            "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+            "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+          },
+          "acceptance_plan_sha256": "3fec6ffe771469248cc66ee6121ec964d6e6b47dc5877e5ab5c00762ae62c912"
+        },
+        "development_mae_eV": 0.1402572855657339,
+        "selected_epoch": 37,
+        "selected_optimizer_step": 28897,
+        "selected_weights": "live",
+        "progress": {
+          "epochs": 40,
+          "optimizer_steps": 31240,
+          "sample_presentations": 3998720
+        },
+        "costs": [
+          {
+            "hardware": "Tesla T4",
+            "metric": "wall_seconds",
+            "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+            "semantics": "process_wall",
+            "status": "measured",
+            "unit": "seconds",
+            "value": 8861.879074364
+          },
+          {
+            "hardware": "Tesla T4",
+            "metric": "device_seconds",
+            "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+            "semantics": "allocated_device",
+            "status": "measured",
+            "unit": "seconds",
+            "value": 8861.879074364
+          }
+        ],
+        "artifacts": {
+          "contract": {
+            "path": "training_contract.json",
+            "sha256": "61d4e73fc06b761458638f8cf76ae2cc68988600f2b9a6cc451236389fa724d6"
+          },
+          "predictions": {
+            "path": "development_predictions.pt",
+            "sha256": "3f49467f745a29bdfd3dc3e0a9bb1ef87172482411aa0031ac17150c0adbcc29"
+          },
+          "resume": {
+            "path": "last_checkpoint.pt",
+            "sha256": "7485ccb2ec066fff96e46799523bcf6aba3a32dddbc64903d5479cf962dcf63f"
+          },
+          "selected_model": {
+            "path": "selected_model.pt",
+            "sha256": "8e740ee85aceddd5d625daa7c61165ffba5bebbce0183c878501bba4e248c535"
+          },
+          "trace": {
+            "path": "canonical_trace.json",
+            "sha256": "ed1c0b5224d1b03de93c9e58394c769037f8e52a6a57848fdfc6bf85b7140456"
+          }
+        }
+      },
+      "scientific_acceptance": "NOT_EVALUATED",
+      "replay_readiness": "NOT_EVALUATED",
+      "runtime_qualification": "NOT_EVALUATED"
+    },
+    "single": {
+      "status": "MECHANICALLY_VERIFIED",
+      "blockers": [],
+      "context": {
+        "experiment_id": "pcqm-k1-t4-cost-quality-100k",
+        "logical_run_id": "molgap-k1-t4-cost-quality-100k-s42-v1",
+        "arm_id": "single",
+        "arm_identity": "9e871889fbddbca2ea5e69b0f464e0c8439be663155ab51226140b0983055746",
+        "spec_identity": "10e5741d8e2b20ec2a1c0a4c9c60dc07acbf1963a5953ba74a75e1ec7a508203",
+        "family_name": "neural_atom_k1",
+        "family_version": "2",
+        "source_commit": "a47268e54968e83c55f22196da6606d8f935bfda",
+        "source_archive_sha256": "fac57192cf002237f691a147e107d74622ab0211a2e41f5c71cb47c4cdef9aaa",
+        "package_identity": "45c9e6ff349bb9b61642f6a69e654535b650a97c251a2fbc638975ca84b2b36b",
+        "training_recipe_sha256": "feabb703a333398aee0d566396ea133554c3631d3b9f78e8a8b750e8815c914d",
+        "platform": "kaggle",
+        "account": "nvoid912",
+        "run_reference": "nvoid912/molgap-k1-t4-cost-quality-100k-s42-v1",
+        "platform_version": "1"
+      },
+      "observed": {
+        "producer_platform_version": null,
+        "target_identity": {
+          "encoding": "little-endian-float32-contiguous-raw-bytes",
+          "manifest": {
+            "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+            "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+          },
+          "acceptance_plan_sha256": "3fec6ffe771469248cc66ee6121ec964d6e6b47dc5877e5ab5c00762ae62c912"
+        },
+        "development_mae_eV": 0.1412944608205557,
+        "selected_epoch": 40,
+        "selected_optimizer_step": 31240,
+        "selected_weights": "live",
+        "progress": {
+          "epochs": 40,
+          "optimizer_steps": 31240,
+          "sample_presentations": 3998720
+        },
+        "costs": [
+          {
+            "hardware": "Tesla T4",
+            "metric": "wall_seconds",
+            "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+            "semantics": "process_wall",
+            "status": "measured",
+            "unit": "seconds",
+            "value": 5689.7868382550005
+          },
+          {
+            "hardware": "Tesla T4",
+            "metric": "device_seconds",
+            "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+            "semantics": "allocated_device",
+            "status": "measured",
+            "unit": "seconds",
+            "value": 5689.7868382550005
+          }
+        ],
+        "artifacts": {
+          "contract": {
+            "path": "training_contract.json",
+            "sha256": "feabb703a333398aee0d566396ea133554c3631d3b9f78e8a8b750e8815c914d"
+          },
+          "predictions": {
+            "path": "development_predictions.pt",
+            "sha256": "936d3ac06a1f77a4650b230acb2923b98267206ffea63c10529a4754f802b951"
+          },
+          "resume": {
+            "path": "last_checkpoint.pt",
+            "sha256": "92082741a99023a8f6f0876d7af241bd04bd8241ab97a6c332a6093f2ca707de"
+          },
+          "selected_model": {
+            "path": "selected_model.pt",
+            "sha256": "74310c93ad3db5e85ec3cf992f64de49237c162dc186c948de498ebc5f0dd1af"
+          },
+          "trace": {
+            "path": "canonical_trace.json",
+            "sha256": "9f78576e254a4faba63293709e9723dc92c6d845a78203772168fa3a8ad72132"
+          }
+        }
+      },
+      "scientific_acceptance": "NOT_EVALUATED",
+      "replay_readiness": "NOT_EVALUATED",
+      "runtime_qualification": "NOT_EVALUATED"
+    }
+  },
+  "development_rows": 50000,
+  "mae_eV": {
+    "mean2": 0.1402572855657339,
+    "single": 0.1412944608205557
+  },
+  "single_minus_mean2_eV": {
+    "delta": 0.0010371752548217774,
+    "ci95": [
+      0.00018049140775203704,
+      0.0019215955262184142
+    ],
+    "probability_better": 0.01,
+    "n_bootstrap": 1000,
+    "seed": 42
+  },
+  "quality_noninferiority_pass": false,
+  "material_precision_pass": false,
+  "same_device_preflight_step_saving_fraction": 0.4922490206385717,
+  "cross_device_preflight_step_saving_fraction": 0.4092761236100598,
+  "scientific_disposition": "NEGATIVE_UNDER_CONTRACT",
+  "rml_closure": {
+    "status": "BLOCKED",
+    "anomalies": [
+      {
+        "arm_id": "mean2",
+        "field": "run_id",
+        "planned": [
+          "molgap-k1-t4-cost-quality-100k-s42-v1:mean2"
+        ],
+        "observed": "molgap-k1-t4-cost-quality-100k-s42-v1:mean2:downstream"
+      },
+      {
+        "arm_id": "mean2",
+        "field": "source_commit",
+        "planned": "38572b120f93589e40f6632d9c281e39122c3345",
+        "observed": "a47268e54968e83c55f22196da6606d8f935bfda"
+      },
+      {
+        "arm_id": "mean2",
+        "field": "descriptor_attempt_id",
+        "planned": [
+          "kaggle3-cost-quality-001"
+        ],
+        "shared_descriptor_value": "mean2-v1"
+      },
+      {
+        "arm_id": "single",
+        "field": "run_id",
+        "planned": [
+          "molgap-k1-t4-cost-quality-100k-s42-v1:single"
+        ],
+        "observed": "molgap-k1-t4-cost-quality-100k-s42-v1:single:downstream"
+      },
+      {
+        "arm_id": "single",
+        "field": "source_commit",
+        "planned": "38572b120f93589e40f6632d9c281e39122c3345",
+        "observed": "a47268e54968e83c55f22196da6606d8f935bfda"
+      },
+      {
+        "arm_id": "single",
+        "field": "descriptor_attempt_id",
+        "planned": [
+          "kaggle3-cost-quality-001"
+        ],
+        "shared_descriptor_value": "single-v1"
+      }
+    ],
+    "strict_comparison_readiness": "NOT_ESTABLISHED",
+    "finalization_executed": false,
+    "reason": "Frozen prospective identities do not bind producer trace/package or translated attempt; originals preserved."
+  },
+  "trace_summary": {
+    "mean2": {
+      "selected_epoch": 37,
+      "best_dev_eV": 0.14025728404521942,
+      "final_dev_eV": 0.14028020203113556,
+      "final_online_train_eV": 0.089474793383051,
+      "train_metric_semantics": {
+        "direction": "minimize",
+        "metric": "MAE",
+        "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:training-0-100000",
+        "target": "Gap",
+        "timing": "online-pre-update; includes dropout; no auxiliary BCE",
+        "unit": "eV",
+        "weights": "live"
+      },
+      "cumulative_device_time_available": false
+    },
+    "single": {
+      "selected_epoch": 40,
+      "best_dev_eV": 0.141294464468956,
+      "final_dev_eV": 0.141294464468956,
+      "final_online_train_eV": 0.09823122263444056,
+      "train_metric_semantics": {
+        "direction": "minimize",
+        "metric": "MAE",
+        "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:training-0-100000",
+        "target": "Gap",
+        "timing": "online-pre-update; includes dropout; no auxiliary BCE",
+        "unit": "eV",
+        "weights": "live"
+      },
+      "cumulative_device_time_available": false
+    }
+  },
+  "limitations": [
+    "One seed; row bootstrap is not training stochasticity.",
+    "50K development has been repeatedly consumed for selection.",
+    "Preflight timing is a fixed-fixture measurement, not isolated formal-training step time.",
+    "Full entry allocation including bootstrap/idle/cleanup is not measured by per-arm cost files.",
+    "No500K/full release or production adoption."
+  ],
+  "training_executed_locally": false,
+  "inference_executed_locally": false,
+  "bindings": {
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/molgap-k1-t4-cost-quality-100k-s42-v1.log": "46a81a28767e543accb47e183bdef4be41367908316695f03b304ca2c9e35299",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/pair_state.json": "01b970e603a4ef62a3c571361e1066a077e5dd9c0336c224fda6dcb5d989ec78",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/allocation_cost.json": "88dfe6428931bed18a4784a558f1d746c623100ea85d986fc426e4956a8c5cb8",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/architecture_preflight.json": "d522f8ce4bdf038ee0716d98c1f43e1329b43224929ff90dd3c06d463442dc6b",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/canonical_trace.json": "ed1c0b5224d1b03de93c9e58394c769037f8e52a6a57848fdfc6bf85b7140456",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/canonical_trace.json.context.json": "939529bc7b4b284e09f2601d4aa8e784136e64e08372d0bb538a1aaebbca7c63",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/development_predictions.pt": "3f49467f745a29bdfd3dc3e0a9bb1ef87172482411aa0031ac17150c0adbcc29",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/diagnostic_cost.json": "a2e6820880934ced49221a10a69ffb5d3e331a3edad5a0b8bc37673219bf7b89",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/diagnostic_resume.pt": "086f0f308a7b46c532cbb29ec47230794002f9c38fcad978edeee04568e3ef0d",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/diagnostic_selected.pt": "5ac234f5875c44b5ca7226f27d371aaf8b4fe4291e8350e81a1cfcdced00dff1",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/last_checkpoint.pt": "7485ccb2ec066fff96e46799523bcf6aba3a32dddbc64903d5479cf962dcf63f",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/output_manifest.json": "90f8e21c75a1e10763553fdc32b2ec810c65c0081cb81a313109e1d30db71638",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/preflight.log": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/runtime_certificate.json": "4b461df0cae7d7d1f8f9b40a86c115594a8708c51ca4ea7ab9c758b8d395ea7d",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/runtime_manifest.json": "6adc19959c5aa18983aac0182ee34a88a4d5ecd91676f1142e232f570d428aaa",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/runtime_provenance.json": "b69e4ca098c7a6e26c0952d4907bbed707dc4f6696958775b24b421a39ef9f7c",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/selected_model.pt": "8e740ee85aceddd5d625daa7c61165ffba5bebbce0183c878501bba4e248c535",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/train.log": "8f3d77c655e0a0fc1a21205cee52b2c34eedd84112181d44fa8e06b3c3204afc",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/mean2/training_contract.json": "61d4e73fc06b761458638f8cf76ae2cc68988600f2b9a6cc451236389fa724d6",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/allocation_cost.json": "5ca32c79eb216d094c705aba36eaeebf3aeb7d8ee32cd7444df27b91e3d6ba08",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/architecture_preflight.json": "89664e42d0f20fa150c6bfdf05b23304aeb49ee1f0953f968138b9bb8d40b4ba",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/canonical_trace.json": "9f78576e254a4faba63293709e9723dc92c6d845a78203772168fa3a8ad72132",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/canonical_trace.json.context.json": "2b2d1707512bcc86fc411a8a398f0f1a142f851360b0806d00648a44959affb6",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/development_predictions.pt": "936d3ac06a1f77a4650b230acb2923b98267206ffea63c10529a4754f802b951",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/diagnostic_cost.json": "7bd7abae214096a9b012e0d88e639812fe8d91dec69f08691cb46192fd6b4a03",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/diagnostic_resume.pt": "26d1b0b2f98c89a4204d3f632dc4e913e258ec144ca60e63fea4d7ce573e7292",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/diagnostic_selected.pt": "3cf64674f1b377f46d80beaa03f99a32edee8255f1e70181cdcc13493a17ed88",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/last_checkpoint.pt": "92082741a99023a8f6f0876d7af241bd04bd8241ab97a6c332a6093f2ca707de",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/output_manifest.json": "f88487af71151cd99dcb6b869a15f7ac23f5b3eaa06ad6b43a9e8a25c06024ab",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/preflight.log": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/runtime_certificate.json": "84c86fd45a0c626347df0775fc440355fcaf3a52b7a2a96d5976cc74288bc931",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/runtime_manifest.json": "6adc19959c5aa18983aac0182ee34a88a4d5ecd91676f1142e232f570d428aaa",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/runtime_provenance.json": "58d29e7f8de456e98aed964f2446ee71eab286eeb1338266161ced27ea4f4371",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/selected_model.pt": "74310c93ad3db5e85ec3cf992f64de49237c162dc186c948de498ebc5f0dd1af",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/train.log": "9037800a96d9e165a6c01433a0b641953f8c855f37a53175ae0d33b297e55d70",
+    "platforms/_records/kaggle/training/k1_t4_cost_quality_100k_s42_v1/terminal_20261010/experiment/single/training_contract.json": "feabb703a333398aee0d566396ea133554c3631d3b9f78e8a8b750e8815c914d"
+  }
+}

@@ -1,5 +1,9 @@
 # K1 T4 cost-quality preparation
 
+Retained acceptance: [status](STATUS.md), [decision](terminal_acceptance/decision.md),
+[result](terminal_acceptance/result.json), [RML blockers](terminal_acceptance/RML_BLOCKERS.md).
+These pointers do not authorize repeating the preparation/submission examples.
+
 [Protocol](protocol.md) owns the frozen question and gates;
 [evidence review](evidence_review.md) owns rationale. `profile/` and shared
 trainer/runtime are parent/other-agent owned. This wrapper adds no model,

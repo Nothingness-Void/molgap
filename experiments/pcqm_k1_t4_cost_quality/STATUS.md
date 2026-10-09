@@ -1,5 +1,26 @@
 # Cost-quality pair status
 
+## Acceptance observation - 2026-10-10
+
+Exact Kaggle3 kernel ID137853937/version1 is COMPLETE; both arms completed40
+epochs/31240 steps/3998720 presentations. [Scheduler](scheduler_acceptance_20261010.json),
+[source observation](source_acceptance_20261010.json) and
+[retrieval](output_acceptance_20261010.json) retain separate authorities.
+[Decision](terminal_acceptance/decision.md): mechanical/native qualification pass;
+single fails frozen quality-noninferiority. [Attribution](terminal_acceptance/attribution.md)
+and [cost review](terminal_acceptance/cost_review.md) retain interpretation limits.
+Whole allocation release timing is missing; no adoption/retry/500K/full release.
+
+Formal RML closure/replay remains BLOCKED by
+[prospective identity mismatches](terminal_acceptance/RML_BLOCKERS.md).
+Original plans/source/trace bytes are unchanged. Keep this owner branch for
+custody; do not overwrite plans, hide trace evidence, bypass validators or retrain.
+[Result](terminal_acceptance/result.json) is reproducible with the thin
+[CPU-only inspector](accept_retained.py), using the retained prepared package
+and downloaded selected/resume states. No training or inference occurs.
+
+## Historical submission observation - 2026-10-09
+
 2026-10-09: exact Kaggle3 kernel
 `nvoid912/molgap-k1-t4-cost-quality-100k-s42-v1`, ID137853937/version1, was
 accepted and [startup scheduler](scheduler_startup.json) observed RUNNING.
