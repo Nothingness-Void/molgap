@@ -1,0 +1,603 @@
+{
+  "format": "molgap-worktree-local-artifact-materialization-v1",
+  "source_checkout": "D:\\\u6587\u6863\\molgap",
+  "mode": "hardlinks to existing retained immutable artifacts; no decode or inference",
+  "paths": [
+    {
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_distance_angle_triangle_edge_state_gps9/direct_gap_best.pt",
+      "bytes": 19810391
+    },
+    {
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_distance_angle_triangle_edge_state_gps9/direct_gap_development.pt",
+      "bytes": 801538
+    },
+    {
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_distance_angle_triangle_edge_state_gps9/direct_gap_last.pt",
+      "bytes": 59379928
+    },
+    {
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_edge_state_structural_gps9/direct_gap_best.pt",
+      "bytes": 19267551
+    },
+    {
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_edge_state_structural_gps9/direct_gap_development.pt",
+      "bytes": 801538
+    },
+    {
+      "path": "platforms/_records/scnet/pcqm_distance_angle_500k_20260923/remote/output/ogb_edge_state_structural_gps9/direct_gap_last.pt",
+      "bytes": 57727498
+    },
+    {
+      "path": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_gine_best.pt",
+      "bytes": 10116905
+    },
+    {
+      "path": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_gine_last.pt",
+      "bytes": 30240739
+    },
+    {
+      "path": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_official_valid_5k_predictions.csv",
+      "bytes": 225060
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/best_model.pt",
+      "bytes": 21071318
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/centered_logits/last_checkpoint.pt",
+      "bytes": 84390244
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/best_model.pt",
+      "bytes": 21071318
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_centered_logits_100k_kaggle1_pair_v1/raw/reference/last_checkpoint.pt",
+      "bytes": 84390244
+    },
+    {
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/descriptor_aux/family_outputs/development_predictions.pt",
+      "bytes": 803349
+    },
+    {
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/descriptor_aux/family_outputs/last_checkpoint.pt",
+      "bytes": 84913152
+    },
+    {
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/descriptor_aux/family_outputs/selected_model.pt",
+      "bytes": 21072594
+    },
+    {
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/reference/development_predictions.pt",
+      "bytes": 802080
+    },
+    {
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/fingerprint_aux/family_outputs/development_predictions.pt",
+      "bytes": 803349
+    },
+    {
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/fingerprint_aux/family_outputs/last_checkpoint.pt",
+      "bytes": 84913152
+    },
+    {
+      "path": "experiments/pcqm_gptrans_chemical_aux/submission_v4/terminal_outputs/fingerprint_aux/family_outputs/selected_model.pt",
+      "bytes": 21072594
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom/best_model.pt",
+      "bytes": 21255024
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/runtime/source.tar.gz",
+      "bytes": 505788
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom_bond/best_model.pt",
+      "bytes": 21258446
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_feature_denoising_s42_v2/raw/gptrans_feature_denoising_100k/full_atom_bond/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/best_model_bundle.pt",
+      "bytes": 21077951
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/last_checkpoint.pt",
+      "bytes": 84384740
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/resume_source_20260919.pt",
+      "bytes": 84383268
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_01.pt",
+      "bytes": 1179111
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_02.pt",
+      "bytes": 1179111
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_03.pt",
+      "bytes": 1179111
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_04.pt",
+      "bytes": 1179111
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_05.pt",
+      "bytes": 1179111
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/gptrans/valid_predictions_pass_06.pt",
+      "bytes": 1179111
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/best_model.pt",
+      "bytes": 21091114
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/last_checkpoint.pt",
+      "bytes": 84468734
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_angle/output/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/best_model.pt",
+      "bytes": 21091114
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/last_checkpoint.pt",
+      "bytes": 84435037
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_geometry_channels_100k_s42_v2/attempt_002/arms/distance_only/output/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/input_embedding_normal002/best_model.pt",
+      "bytes": 21071318
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/input_embedding_normal002/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/input_embedding_normal002/last_checkpoint.pt",
+      "bytes": 84390244
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/reference/best_model.pt",
+      "bytes": 21071318
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/reference/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_input_init_pair_retry3_v1/raw/reference/last_checkpoint.pt",
+      "bytes": 84390244
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/best_model.pt",
+      "bytes": 21089307
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/last_checkpoint.pt",
+      "bytes": 84463259
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16/output/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/best_model.pt",
+      "bytes": 23910393
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/last_checkpoint.pt",
+      "bytes": 95793573
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_local_inductive_bias_100k_s42_v2/attempt_002/arms/rwse16_local_edge/output/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_nodes_500k_s42_v1/pcqm_gptrans_noisy_nodes_500k/best_model.pt",
+      "bytes": 21209504
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_nodes_500k_s42_v1/pcqm_gptrans_noisy_nodes_500k/best_predictions.pt",
+      "bytes": 802262
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_pair_norm_500k_s42_v1/pcqm_gptrans_noisy_pair_norm_500k/best_model.pt",
+      "bytes": 21209568
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_noisy_pair_norm_500k_s42_v1/pcqm_gptrans_noisy_pair_norm_500k/best_predictions.pt",
+      "bytes": 802262
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/best_model.pt",
+      "bytes": 21071318
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/last_checkpoint.pt",
+      "bytes": 84390244
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_message/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/best_model.pt",
+      "bytes": 21071318
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/last_checkpoint.pt",
+      "bytes": 84390244
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_memory_dual_100k_kaggle1_v1/raw/memory_value/development_predictions.pt",
+      "bytes": 802517
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_norm_500k_s42_v1/gptrans_pair_update_norm/best_model.pt",
+      "bytes": 21086870
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_gptrans_pair_norm_500k_s42_v1/gptrans_pair_update_norm/best_predictions.pt",
+      "bytes": 802262
+    },
+    {
+      "path": "experiments/pcqm_k1_bn_row_attribution/results/row_deltas.pt",
+      "bytes": 2002790
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/atom_half.pt",
+      "bytes": 67735
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/baseline.pt",
+      "bytes": 100494
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/bond_half.pt",
+      "bytes": 67735
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/edge_memory_reset.pt",
+      "bytes": 67807
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/ffn_early_half.pt",
+      "bytes": 67780
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/ffn_late_half.pt",
+      "bytes": 67771
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/ffn_middle_half.pt",
+      "bytes": 67789
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/message_early_half.pt",
+      "bytes": 67880
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/message_late_half.pt",
+      "bytes": 67807
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/message_middle_half.pt",
+      "bytes": 67889
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/rwse_half.pt",
+      "bytes": 67735
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/slot3_half.pt",
+      "bytes": 67744
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/slot6_half.pt",
+      "bytes": 67744
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/slot9_half.pt",
+      "bytes": 67744
+    },
+    {
+      "path": "experiments/pcqm_k1_complete_local_audit/results/slot_all_half.pt",
+      "bytes": 67771
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/calibrated.pt",
+      "bytes": 802208
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/calibrated_buffers.pt",
+      "bytes": 45829
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/original.pt",
+      "bytes": 802190
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/restored.pt",
+      "bytes": 802190
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/calibrated.pt",
+      "bytes": 802208
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/calibrated_buffers.pt",
+      "bytes": 45829
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/original.pt",
+      "bytes": 802190
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/restored.pt",
+      "bytes": 802190
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/best_model.pt",
+      "bytes": 14801401
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/best_predictions.pt",
+      "bytes": 801839
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_consistency/last_checkpoint.pt",
+      "bytes": 44373422
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/best_model.pt",
+      "bytes": 14801401
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/best_predictions.pt",
+      "bytes": 801839
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/submission_kaggle3_v1/terminal_inspection_20261009/evidence/stages/k1_pretrained_mean2/last_checkpoint.pt",
+      "bytes": 44373422
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_fusion_transfer/inputs/train_shard_0002.pt",
+      "bytes": 203498165
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_fusion_transfer/inputs/train_shard_0010.pt",
+      "bytes": 213447349
+    },
+    {
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/development_predictions.pt",
+      "bytes": 803349
+    },
+    {
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/selected_model.pt",
+      "bytes": 14786472
+    },
+    {
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/development_predictions.pt",
+      "bytes": 803349
+    },
+    {
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/selected_model.pt",
+      "bytes": 14786408
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_residual_screen/inputs/mean2.pt",
+      "bytes": 803349
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_residual_screen/inputs/consistency2.pt",
+      "bytes": 803349
+    },
+    {
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_consistency2/last_checkpoint.pt",
+      "bytes": 44360595
+    },
+    {
+      "path": "experiments/pcqm_k1_dropout_consistency/recovery_reconciliation_v3/dropout_mean2/last_checkpoint.pt",
+      "bytes": 44360595
+    },
+    {
+      "path": "experiments/pcqm_k1_dropout_consistency/failure_reconciliation_v1/dropout_mean2/last_checkpoint.pt",
+      "bytes": 44360595
+    },
+    {
+      "path": "experiments/pcqm_k1_flag/qualification/initial_state.pt",
+      "bytes": 14779763
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_flag_kaggle3_v1/development_predictions.pt",
+      "bytes": 803285
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_flag_kaggle3_v1/selected_model.pt",
+      "bytes": 14786408
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_flag_kaggle3_v1/last_checkpoint.pt",
+      "bytes": 44360531
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/last_checkpoint.pt",
+      "bytes": 44364883
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/resume_source_20260919.pt",
+      "bytes": 44363987
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/valid_predictions_pass_01.pt",
+      "bytes": 1179111
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/valid_predictions_pass_02.pt",
+      "bytes": 1179111
+    },
+    {
+      "path": "platforms/_records/ims/convergence_resume_20260919/remote_outputs/k1/valid_predictions_pass_03.pt",
+      "bytes": 1179111
+    },
+    {
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_strong/last_checkpoint.pt",
+      "bytes": 44360595
+    },
+    {
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/development_predictions.pt",
+      "bytes": 803349
+    },
+    {
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/last_checkpoint.pt",
+      "bytes": 44360595
+    },
+    {
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v2_recovery/experiment/distill_strong/selected_model.pt",
+      "bytes": 14786408
+    },
+    {
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_weak/development_predictions.pt",
+      "bytes": 803349
+    },
+    {
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_weak/last_checkpoint.pt",
+      "bytes": 44360595
+    },
+    {
+      "path": "platforms/_records/kaggle/training/k1_fusion_distill_v1_failure/experiment/distill_weak/selected_model.pt",
+      "bytes": 14786408
+    },
+    {
+      "path": "experiments/pcqm_k1_late_weight_average/results/average_clean_bn.pt",
+      "bytes": 802262
+    },
+    {
+      "path": "experiments/pcqm_k1_late_weight_average/results/average_clean_bn_buffers.pt",
+      "bytes": 46189
+    },
+    {
+      "path": "experiments/pcqm_k1_late_weight_average/results/average_selected_bn.pt",
+      "bytes": 802353
+    },
+    {
+      "path": "experiments/pcqm_k1_late_weight_average/results/average_state.pt",
+      "bytes": 14797427
+    },
+    {
+      "path": "experiments/pcqm_k1_late_weight_average/results/final_clean_bn.pt",
+      "bytes": 802244
+    },
+    {
+      "path": "experiments/pcqm_k1_late_weight_average/results/final_clean_bn_buffers.pt",
+      "bytes": 46069
+    },
+    {
+      "path": "experiments/pcqm_k1_late_weight_average/results/final_original.pt",
+      "bytes": 802244
+    },
+    {
+      "path": "experiments/pcqm_k1_late_weight_average/results/fixed_clean_prediction_blend.pt",
+      "bytes": 802434
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/reference/family_outputs/development_predictions.pt",
+      "bytes": 803349
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/reference/family_outputs/last_checkpoint.pt",
+      "bytes": 44360595
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/reference/family_outputs/selected_model.pt",
+      "bytes": 14786408
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/development_predictions.pt",
+      "bytes": 803349
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/last_checkpoint.pt",
+      "bytes": 45134029
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_ssma_accuracy_kaggle3_v1/ssma/family_outputs/selected_model.pt",
+      "bytes": 15263069
+    },
+    {
+      "path": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/best_development_payload.pt",
+      "bytes": 802398
+    },
+    {
+      "path": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/best_model.pt",
+      "bytes": 14903903
+    },
+    {
+      "path": "platforms/_records/kaggle/training/k1_pair_value_s42_v2/pcqm_k1_pair_value_100k/neural_atom_k1_pair_token_value_decoupled/last_checkpoint.pt",
+      "bytes": 44673063
+    },
+    {
+      "path": "platforms/_records/kaggle/staging/pair_value_source_50a6db5_v2/source.tar.gz",
+      "bytes": 518095
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/family_outputs/slot96/development_predictions.pt",
+      "bytes": 803285
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/family_outputs/slot96/selected_model.pt",
+      "bytes": 15566312
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_slot_width96_kaggle3_v1/reconciliation_v1/family_outputs/slot96/last_checkpoint.pt",
+      "bytes": 46700307
+    },
+    {
+      "path": "experiments/pcqm_k1_slot_width96/ablation_rows.npz",
+      "bytes": 43843
+    },
+    {
+      "path": "experiments/pcqm_k1_slot_width96/qualification_initial_state.pt",
+      "bytes": 15564953
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/development_predictions.pt",
+      "bytes": 803349
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/last_checkpoint.pt",
+      "bytes": 44360595
+    },
+    {
+      "path": "platforms/_records/kaggle/training/pcqm_k1_width256_reference_kaggle3_v1/k1_pair/reference/selected_model.pt",
+      "bytes": 14786408
+    }
+  ]
+}

@@ -396,6 +396,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second:A001",
+      "target": "experiments/pcqm_k1_clean_second_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second:A001",
+      "target": "experiments/pcqm_k1_clean_second_100k/user_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-clean-second-100k-s42-v1-mean2:A001",
+      "target": "experiments/pcqm_k1_clean_second_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-clean-second-100k-s42-v1-mean2:A001",
+      "target": "experiments/pcqm_k1_clean_second_100k/user_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-scale-fit-retained-20261001:A001",
       "target": "experiments/pcqm_scale_fit_retained/inputs.json",
       "type": "action_produced_evidence"
@@ -1603,6 +1623,16 @@
     {
       "source": "pcqm-k1-bn-mechanism-a100-20261008",
       "target": "TB-k1-late-weight-average-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
       "type": "prior_evidence"
     },
     {
@@ -3007,6 +3037,14 @@
     },
     {
       "id": "TB-matched-500k-v4-three-arm",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
       "type": "trajectory"
     },
     {

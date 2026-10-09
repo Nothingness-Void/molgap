@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 105,
+      "trajectories_total": 107,
       "with_complete_native_measurement": 23,
-      "with_cost_event": 94,
-      "with_incomplete_native_measurement": 71,
+      "with_cost_event": 96,
+      "with_incomplete_native_measurement": 73,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -2113,6 +2113,56 @@
           "unknown_records": 0
         }
       },
+      "Tesla T4; one of two allocated devices including idle time": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 2
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 2,
+            "known_total": 7.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 2
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 2,
+            "known_total": 7.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
       "Tesla T4; one of two allocated devices; includes assigned idle capacity": {
         "cpu_hours": {
           "estimated": {
@@ -2764,7 +2814,7 @@
         }
       }
     },
-    "unknown_events": 183
+    "unknown_events": 185
   },
   "evidence": {
     "validated": 94,
@@ -2774,7 +2824,7 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 78,
+      "count": 80,
       "severity": "INFO"
     },
     {
@@ -2784,7 +2834,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 71,
+      "count": 73,
       "severity": "WARN"
     },
     {
@@ -2794,12 +2844,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 37,
+      "count": 39,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 11,
+      "count": 13,
       "severity": "WARN"
     }
   ],
@@ -2808,10 +2858,11 @@
     "explicit_events": 264,
     "repeatedly_selected": 20
   },
-  "source_digest": "51f20be87c9d9c48201a83cb2b61fd931e9a246ab859965ec26a22d3263079f1",
+  "source_digest": "e4c0d54fcae41c70ea3bb994eff5f3c35c9cabb1bc586f61909d5b3cd6700e4f",
   "trajectories": {
-    "count": 105,
+    "count": 107,
     "outcomes": {
+      "ACTIVE": 2,
       "CLOSED": 11,
       "INCONCLUSIVE": 19,
       "INFRASTRUCTURE_ONLY": 5,

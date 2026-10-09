@@ -5,6 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
+- ACTIVE: 2
 - CLOSED: 11
 - INCONCLUSIVE: 19
 - INFRASTRUCTURE_ONLY: 5
@@ -191,6 +192,10 @@
 - Tesla T4; one exclusive assigned device per arm device_hours: measured=unknown (0 measured records), estimated=36.000000 (6 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4; one exclusive assigned device per arm queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=6, not_applicable=0
 - Tesla T4; one exclusive assigned device per arm wall_hours: measured=unknown (0 measured records), estimated=36.000000 (6 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4; one of two allocated devices including idle time cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- Tesla T4; one of two allocated devices including idle time device_hours: measured=unknown (0 measured records), estimated=7.000000 (2 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4; one of two allocated devices including idle time queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- Tesla T4; one of two allocated devices including idle time wall_hours: measured=unknown (0 measured records), estimated=7.000000 (2 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4; one of two allocated devices; includes assigned idle capacity cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=12, not_applicable=0
 - Tesla T4; one of two allocated devices; includes assigned idle capacity device_hours: measured=27.991243 (12 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4; one of two allocated devices; includes assigned idle capacity queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=12, not_applicable=0
@@ -243,8 +248,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 183
-- Cost-event coverage: 94/105 trajectories; incomplete native measurement=71
+- Measurement-missing cost events: 185
+- Cost-event coverage: 96/107 trajectories; incomplete native measurement=73
 
 ## Screening Backtest
 - Status: available
@@ -252,9 +257,9 @@
 - Excluded traces: 17
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 78
+- [INFO] trace_unavailable_for_backtest: 80
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 71
+- [WARN] incomplete_native_cost_measurement: 73
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 37
-- [WARN] trajectory_without_v5_evidence: 11
+- [WARN] missing_explicit_role_identity: 39
+- [WARN] trajectory_without_v5_evidence: 13

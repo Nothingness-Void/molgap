@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "molgap-k1-clean-second-100k-s42-v1-v1",
+  "category": "training",
+  "cost_event_id": "cost-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-planned-allocation",
+  "evidence_ref": "experiments/pcqm_k1_clean_second_100k/protocol.md",
+  "hardware": "Tesla T4; one of two allocated devices including idle time",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 3.5
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 3.5
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "molgap-k1-clean-second-100k-s42-v1:clean_second:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+}
