@@ -3,6 +3,10 @@
 Question: does direct pair-to-pair exchange improve the qualified local-bond
 parent, and does query-conditioned selection justify its extra compute?
 
+[Accepted terminal interpretation](gpu/results/interpretation.md) retains both
+100K positives and prioritizes aggregation without a scale or seed-stability
+claim. Two actual complete Replay pairs are bound in the linked evidence.
+
 [Frozen protocol](protocol.md) owns mechanisms, contract, limits and authority.
 Live execution belongs to [CURRENT_STATE](../../CURRENT_STATE.md).
 `freeze.py` declares the study over the existing release owner; `accept.py`

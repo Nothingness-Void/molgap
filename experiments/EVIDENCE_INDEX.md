@@ -9,6 +9,7 @@ those claims distinct.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does direct pair-to-pair communication improve the qualified local parent, and is query matching worthwhile? | Both100K arms passed the frozen gate with complete STRICT_CAUSAL Replay pairs; aggregation prioritized for separately authorized transfer, no established attention advantage | [Triplet communication terminal](pcqm_gptrans_triplet_communication_100k/gpu/results/interpretation.md) |
 | Does the uncapped real-bond GPTrans stream retain its advantage after equal-update500K training, and where is the benefit lost? | Two-arm planning only; retained reference artifacts hash-verified, prospective qualification/release pending, no new scientific result | `pcqm_gptrans_local_transfer_500k/` |
 | Does virtual-connected pair processing or sparse same-block bond return improve the accepted local stream? | A positive below gate; B worse. Two accepted complete STRICT_CAUSAL Replay pairs, no promotion | [Local relation-flow terminal](pcqm_gptrans_local_relation_100k/gpu/results/interpretation.md) |
 | Is a topology-defined motif graph a feasible new information-flow level for K1? | CPU partition accepted; GPU v1/v2 infrastructure-only and v3 scientifically negative, route closed | `pcqm_motif_hierarchy_100k/` |
