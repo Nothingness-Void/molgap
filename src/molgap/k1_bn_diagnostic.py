@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 import importlib
+import importlib.util
 import json
 import multiprocessing
 import os
@@ -120,6 +121,17 @@ def _frozen_imports(inputs):
     root = Path(inputs["frozen_source_root"]) / "src/molgap"
     local = Path(__file__).resolve().parent
     molgap.__path__[:] = [str(root), str(local)]
+    # __init__ eagerly imports constants and copies its public values. Reload
+    # through the switched package path before any downstream owner binds them.
+    constants = importlib.import_module("molgap.constants")
+    exported = [name for name, value in vars(molgap).items()
+                if name.isupper() and name in vars(constants)
+                and value is vars(constants)[name]]
+    constants = importlib.reload(constants)
+    if Path(constants.__file__).resolve() != (root / "constants.py").resolve():
+        raise ValueError("Nonfrozen dependency imported: molgap.constants")
+    for name in exported:
+        setattr(molgap, name, vars(constants)[name])
     for name in ("k1_screen_training", "pcqm_k1_scale_runner", "v4_runtime",
                  "training_reproducibility", "pcqm_wedge", "pcqm_gap_architecture"):
         importlib.import_module(f"molgap.{name}")

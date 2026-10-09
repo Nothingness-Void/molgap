@@ -1,4 +1,5 @@
 """Bind the predeclared diagnostic to accepted artifacts; no model execution."""
+import argparse
 import json
 from pathlib import Path
 
@@ -8,6 +9,9 @@ from molgap.training_reproducibility import atomic_json, sha256_file
 
 def main():
     here = Path(__file__).resolve().parent
+    parser = argparse.ArgumentParser(allow_abbrev=False)
+    parser.add_argument("--output", type=Path, default=here / "inputs.json")
+    args = parser.parse_args()
     root = here.parents[2]
     question = here.parent
     package = root / "platforms/_records/kaggle/staging/pcqm_k1_consistency_ablation_500k/kaggle3_v1/package"
@@ -45,7 +49,7 @@ def main():
             "saved_predictions": bind(stages / arm / "best_predictions.pt"),
         }
     validate_inputs(inputs)
-    output = here / "inputs.json"
+    output = args.output.resolve()
     if output.exists():
         raise FileExistsError("Frozen diagnostic inputs already exist")
     atomic_json(output, inputs)

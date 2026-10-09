@@ -1,7 +1,10 @@
 """Synthetic binding/lifecycle tests: no retained model, cache or roles read."""
 import json
+import os
 from contextlib import contextmanager
 from pathlib import Path
+import subprocess
+import sys
 
 import pytest
 import torch
@@ -256,3 +259,61 @@ def test_json_duplicate_keys_fail_closed(tmp_path):
     path.write_text('{"arms": {}, "arms": {}}')
     with pytest.raises(ValueError, match="Duplicate"):
         diagnostic._json(path)
+
+
+@pytest.mark.parametrize("tampered", [False, True])
+def test_bootstrap_reloads_eager_constants_from_archive_in_subprocess(tmp_path, tampered):
+    import molgap
+    root = tmp_path / "synthetic_archive"
+    package = root / "src/molgap"
+    package.mkdir(parents=True)
+    exports = [name for name in vars(molgap) if name.isupper() and not name.startswith("_")]
+    sources = {
+        "constants.py": "\n".join(f"{name} = 'archived_{name}'" for name in exports) + "\n",
+        "k1_screen_training.py": "FORBIDDEN_MODEL_FIELDS = ()\ndef _forward(*args):\n    raise AssertionError('no model execution')\n",
+        "qm9_neural_atom.py": "def make_encoder(*args):\n    raise AssertionError('no model construction')\n",
+        "v4_runtime.py": "import hashlib\ndef normalized_source_sha256(path):\n    return hashlib.sha256(path.read_bytes().replace(b'\\r\\n', b'\\n').replace(b'\\r', b'\\n')).hexdigest()\n",
+        "pcqm_k1_scale_runner.py": "# synthetic import only\n",
+        "training_reproducibility.py": "# synthetic import only\n",
+        "pcqm_wedge.py": "# synthetic import only\n",
+        "pcqm_gap_architecture.py": "# synthetic import only\n",
+    }
+    for name, source in sources.items():
+        (package / name).write_text(source, encoding="utf-8")
+    inventory = tmp_path / "inventory.json"
+    atomic_json(inventory, {"files": [
+        {"path": f"src/molgap/{name}", "sha256": normalized_source_sha256(package / name)}
+        for name in sources]})
+    if tampered:
+        with (package / "constants.py").open("a", encoding="utf-8") as handle:
+            handle.write("# unpinned change\n")
+    code = """
+import json
+from pathlib import Path
+import sys
+import molgap
+from molgap.k1_bn_diagnostic import _frozen_imports
+root, inventory, tampered = sys.argv[1:]
+old_constants = molgap.constants
+old_root = molgap.REPO_ROOT
+assert Path(old_constants.__file__).resolve() != Path(root) / 'src/molgap/constants.py'
+inputs = {'frozen_source_root': root, 'source_inventory': {'path': inventory}}
+try:
+    _frozen_imports(inputs)
+except ValueError as exc:
+    assert tampered == 'True' and 'Nonfrozen dependency imported: molgap.constants' in str(exc), str(exc)
+else:
+    assert tampered == 'False', 'tampered archive must fail its unchanged hash gate'
+    assert molgap.constants is old_constants
+    assert Path(molgap.constants.__file__).resolve() == Path(root) / 'src/molgap/constants.py'
+    assert molgap.REPO_ROOT == 'archived_REPO_ROOT' and molgap.REPO_ROOT != old_root
+    for name in vars(molgap):
+        if name.isupper() and not name.startswith('_'):
+            assert getattr(molgap, name) is getattr(molgap.constants, name), name
+print('synthetic archived constants bootstrap verified')
+"""
+    env = dict(os.environ, PYTHONPATH=str(Path(diagnostic.__file__).resolve().parents[1]))
+    result = subprocess.run([sys.executable, "-c", code, str(root), str(inventory), str(tampered)],
+                            env=env, capture_output=True, text=True, timeout=30)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "bootstrap verified" in result.stdout
