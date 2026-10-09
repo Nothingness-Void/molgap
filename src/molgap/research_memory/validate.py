@@ -380,7 +380,11 @@ def validate_repository_records(repo_root: str | Path) -> dict[str, Any]:
             raise ValueError(
                 f"{path}:trajectory_id references missing ID: {record['trajectory_id']}"
             )
-        if record["reference_id"] not in evidence_ids:
+        if record["reference_id"] is None:
+            trajectory = trajectory_by_id[record["trajectory_id"]]
+            if trajectory["state_at_start"]["reference_ids"] or pair_binding(trajectory) is not None:
+                raise ValueError(f"{path}:unreferenced trace cannot discard a frozen reference or same-run binding")
+        elif record["reference_id"] not in evidence_ids:
             raise ValueError(
                 f"{path}:reference_id references missing ID: {record['reference_id']}"
             )

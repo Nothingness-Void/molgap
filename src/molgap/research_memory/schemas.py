@@ -317,7 +317,10 @@ def validate_trace_manifest(record: Mapping[str, Any]) -> dict[str, Any]:
     if record.get("schema") != TRACE_SCHEMA:
         raise ValueError("unsupported trace-manifest schema")
     _id(record, "trajectory_id", "trace manifest")
-    _id(record, "reference_id", "trace manifest")
+    if "reference_id" not in record:
+        raise ValueError("trace manifest.reference_id is required")
+    if record["reference_id"] is not None:
+        _id(record, "reference_id", "trace manifest")
     if record.get("comparison_role") not in {"candidate", "reference"}:
         raise ValueError("trace manifest.comparison_role must be candidate or reference")
     for field in (
@@ -337,7 +340,11 @@ def validate_trace_manifest(record: Mapping[str, Any]) -> dict[str, Any]:
     eligibility = _mapping(record.get("backtest_eligibility"), "trace manifest.backtest_eligibility")
     if not isinstance(eligibility.get("eligible"), bool):
         raise ValueError("trace backtest eligibility must be boolean")
-    _texts(eligibility, "exclusion_reasons", "trace manifest.backtest_eligibility")
+    reasons = _texts(eligibility, "exclusion_reasons", "trace manifest.backtest_eligibility")
+    if record["reference_id"] is None and (
+        eligibility["eligible"] or not reasons or record["comparison_role"] != "candidate"
+    ):
+        raise ValueError("unreferenced trace requires an explicitly ineligible candidate with exclusion reasons")
     identity = _mapping(record.get("comparability_identity"), "trace manifest.comparability_identity")
     for field in (
         "scientific_contract",

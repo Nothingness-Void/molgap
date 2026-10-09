@@ -512,7 +512,7 @@ def build_default_trace_manifest(
     state = trajectory.get("state_at_start", {})
     contract_refs = state.get("contract_refs", [])
     contract_ref = contract_refs[0] if contract_refs else ""
-    reference_id = state.get("reference_ids", [""])[0] if state.get("reference_ids") else ""
+    reference_id = state["reference_ids"][0] if state.get("reference_ids") else None
 
     # Load frozen contract if available to extract authoritative identities
     contract_obj: dict[str, Any] = {}
@@ -611,7 +611,8 @@ def build_default_trace_manifest(
         },
         "backtest_eligibility": {
             "eligible": False,
-            "exclusion_reasons": ["closure_synthesized_manifest_not_prelaunch_calibrated"],
+            "exclusion_reasons": ["closure_synthesized_manifest_not_prelaunch_calibrated"]
+            + (["missing_frozen_reference"] if reference_id is None else []),
         },
         "trace_fields": {
             "epoch_or_pass": True,
