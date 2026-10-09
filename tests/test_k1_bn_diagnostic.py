@@ -151,7 +151,9 @@ def arm_execution(inputs, tmp_path, monkeypatch):
     monkeypatch.setattr(diagnostic, "_verify_frozen_modules", lambda inputs: None)
     monkeypatch.setattr(loader, "DataLoader", lambda *args, **kwargs: [])
     monkeypatch.setattr(inference, "load_native500k_k1", lambda *args, **kwargs: (model, {"mean": 0, "std": 1}))
-    monkeypatch.setattr(training_reproducibility, "build_runtime_manifest", lambda settings: {"synthetic": True})
+    monkeypatch.setattr(torch.cuda, "device_count", lambda: 0)
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+    monkeypatch.setattr(training_reproducibility, "build_runtime_manifest", lambda settings: {"synthetic": True, "accelerator": None})
     calls = []
     def predict(*args, **kwargs):
         result = {name: value.clone() for name, value in original.items()}
@@ -272,9 +274,9 @@ def test_bootstrap_reloads_eager_constants_from_archive_in_subprocess(tmp_path, 
         "constants.py": "\n".join(f"{name} = 'archived_{name}'" for name in exports) + "\n",
         "k1_screen_training.py": "FORBIDDEN_MODEL_FIELDS = ()\ndef _forward(*args):\n    raise AssertionError('no model execution')\n",
         "qm9_neural_atom.py": "def make_encoder(*args):\n    raise AssertionError('no model construction')\n",
-        "v4_runtime.py": "import hashlib\ndef normalized_source_sha256(path):\n    return hashlib.sha256(path.read_bytes().replace(b'\\r\\n', b'\\n').replace(b'\\r', b'\\n')).hexdigest()\n",
+        "v4_runtime.py": Path(diagnostic.__file__).with_name("v4_runtime.py").read_text(encoding="utf-8"),
         "pcqm_k1_scale_runner.py": "# synthetic import only\n",
-        "training_reproducibility.py": "# synthetic import only\n",
+        "training_reproducibility.py": Path(diagnostic.__file__).with_name("training_reproducibility.py").read_text(encoding="utf-8"),
         "pcqm_wedge.py": "# synthetic import only\n",
         "pcqm_gap_architecture.py": "# synthetic import only\n",
     }
@@ -292,14 +294,34 @@ import json
 from pathlib import Path
 import sys
 import molgap
-from molgap.k1_bn_diagnostic import _frozen_imports
+from molgap import k1_bn_diagnostic as diagnostic
 root, inventory, tampered = sys.argv[1:]
 old_constants = molgap.constants
 old_root = molgap.REPO_ROOT
 assert Path(old_constants.__file__).resolve() != Path(root) / 'src/molgap/constants.py'
 inputs = {'frozen_source_root': root, 'source_inventory': {'path': inventory}}
+output = Path(root) / 'runtime_only'
+output.mkdir()
+def runtime_only(inputs, arm, output, deadline, progress):
+    import os
+    import torch
+    assert os.environ['CUDA_VISIBLE_DEVICES'] == '-1'
+    assert torch.cuda.device_count() == 0 and not torch.cuda.is_available()
+    def forbidden(*args, **kwargs):
+        raise AssertionError('CPU manifest must not query an accelerator')
+    torch.cuda.get_device_properties = forbidden
+    torch.cuda.get_device_name = forbidden
+    torch.cuda.get_device_capability = forbidden
+    runtime = diagnostic._cpu_runtime()
+    assert runtime['accelerator'] is None
+    assert runtime['determinism']['cuda_device_count_visible'] == 0
+    assert runtime['determinism']['device'] == 'cpu'
+    assert runtime['python_executable'] == sys.executable
+    assert runtime['installed_distributions'] and runtime['torch'] == torch.__version__
+    progress('runtime_verified', runtime=runtime)
+diagnostic._execute_arm = runtime_only
 try:
-    _frozen_imports(inputs)
+    diagnostic._arm_worker(inputs, 'synthetic', str(output))
 except ValueError as exc:
     assert tampered == 'True' and 'Nonfrozen dependency imported: molgap.constants' in str(exc), str(exc)
 else:
@@ -310,10 +332,13 @@ else:
     for name in vars(molgap):
         if name.isupper() and not name.startswith('_'):
             assert getattr(molgap, name) is getattr(molgap.constants, name), name
+    report = json.loads((output / 'report.json').read_text())
+    assert report['status'] == 'complete'
+    assert report['runtime']['determinism']['cuda_device_count_visible'] == 0
 print('synthetic archived constants bootstrap verified')
 """
     env = dict(os.environ, PYTHONPATH=str(Path(diagnostic.__file__).resolve().parents[1]))
     result = subprocess.run([sys.executable, "-c", code, str(root), str(inventory), str(tampered)],
-                            env=env, capture_output=True, text=True, timeout=30)
+                            env=env, capture_output=True, text=True, timeout=60)
     assert result.returncode == 0, result.stdout + result.stderr
     assert "bootstrap verified" in result.stdout

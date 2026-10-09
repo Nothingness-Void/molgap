@@ -206,19 +206,31 @@ def _utc():
     return datetime.now(timezone.utc).isoformat()
 
 
+def _cpu_runtime():
+    import torch
+    from .training_reproducibility import configure_fp32_determinism, build_runtime_manifest
+    visible = torch.cuda.device_count()
+    if visible != 0 or torch.cuda.is_available():
+        raise ValueError("CPU diagnostic requires zero visible CUDA devices")
+    settings = configure_fp32_determinism(SETTINGS["sample_seed"])
+    torch.set_default_dtype(torch.float32)
+    torch.set_num_threads(4)
+    settings.update(device="cpu", cuda_device_count_visible=visible)
+    runtime = build_runtime_manifest(settings)
+    if runtime["accelerator"] is not None:
+        raise ValueError("CPU runtime manifest unexpectedly contains an accelerator")
+    return runtime
+
+
 def _execute_arm(inputs, arm, output, deadline, progress):
     import numpy as np
     import torch
     from torch_geometric.loader import DataLoader
     from .k1_frozen_inference import load_native500k_k1, predict_clean
     from .k1_bn_calibration import recalibrated_batch_norm
-    from .training_reproducibility import (
-        atomic_torch_save, sha256_file, configure_fp32_determinism, build_runtime_manifest)
+    from .training_reproducibility import atomic_torch_save, sha256_file
     from .v4_runtime import state_dict_sha256
-    settings = configure_fp32_determinism(SETTINGS["sample_seed"])
-    torch.set_default_dtype(torch.float32)
-    torch.set_num_threads(4)
-    progress("runtime_configured", runtime=build_runtime_manifest(settings),
+    progress("runtime_configured", runtime=_cpu_runtime(),
              cpu_threads=torch.get_num_threads(), device="cpu", autocast_enabled=False,
              cpu_processor=__import__("platform").processor(), cpu_logical_count=os.cpu_count(),
              torch_build_config=torch.__config__.show())
@@ -294,7 +306,7 @@ def _execute_arm(inputs, arm, output, deadline, progress):
 def _arm_worker(inputs, arm, output):
     # Import only the source-pinned dependency tree before model/data access.
     started, cpu_started = time.perf_counter(), time.process_time()
-    os.environ["CUDA_VISIBLE_DEVICES"] = ""
+    os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
     report = {"arm": arm, "status": "running", "started_at_utc": _utc()}
     def progress(phase, **fields):
         from .training_reproducibility import atomic_json
