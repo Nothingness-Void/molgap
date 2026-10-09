@@ -1,0 +1,3 @@
+WORKER k1_pretrained_mean2 phase=load_cache preflight_only=True
+WORKER k1_pretrained_mean2 phase=qualification train_rows=500000 development_rows=50000
+PREFLIGHT ONLY PASS k1_pretrained_mean2 parameters=3658817 peak=1029701632

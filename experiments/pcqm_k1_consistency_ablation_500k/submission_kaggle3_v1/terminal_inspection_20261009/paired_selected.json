@@ -1,0 +1,17 @@
+{
+  "rows": 50000,
+  "reference_mae_eV": 0.10502289324760437,
+  "candidate_mae_eV": 0.10490407729625702,
+  "paired_gain_eV": 0.00011881595134735107,
+  "row_bootstrap_95pct_eV": [
+    -0.0004192612415552139,
+    0.0006231169499158858
+  ],
+  "candidate_better_row_fraction": 0.5038,
+  "reference_arm": "k1_pretrained_mean2",
+  "candidate_arm": "k1_pretrained_consistency",
+  "delta_candidate_minus_reference_eV": -0.00011881595134735107,
+  "material_threshold_eV": 0.001,
+  "candidate_material_gate_pass": false,
+  "row_interval_not_training_seed_variance": true
+}

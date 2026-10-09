@@ -1,5 +1,17 @@
 # Execution status
 
+2026-10-09 terminal reconciliation: Kaggle3 ID137710959/version1 is COMPLETE.
+Both arms finish60/60 with234360steps and29998080presentations; retained
+hashes, unchanged46-epoch prefix, resume state and native preflight pass.
+The [raw acceptance](submission_kaggle3_v1/terminal_inspection_20261009/raw_acceptance.md)
+owns the inspected comparison and failure-mode limits: selected consistency
+gain0.000118816eV is below1meV, with95% row interval crossing0. Cumulative
+training is45.160327T4device-hours under52. Identical selected-state clean-BN
+analysis and independent terminal V5/RML closure remain pending; no adoption,
+training replay-ready claim or new GPU job. Both trajectories remain open.
+
+The submission-time queue observation below is historical, not live scheduler state.
+
 2026-10-09 account migration: Kaggle3 accepted the same frozen pair as
 `nvoid912/molgap-k1-consistency-500k-pair-s42-v1`, ID137710959/version1.
 The authoritative [scheduler observation](submission_kaggle3_v1/scheduler_observation_v1.json)

@@ -1,0 +1,93 @@
+{
+  "format": "molgap-native500k-complete-training-inspection-v1",
+  "arms": {
+    "k1_pretrained_mean2": {
+      "completed_epochs": 60,
+      "optimizer_steps": 234360,
+      "sample_presentations": 29998080,
+      "selected_epoch_one_based": 49,
+      "selected_mae_eV": 0.10502289324760437,
+      "selected_mae_manifest_eV": 0.10502289235591888,
+      "last_epoch_mae_eV": 0.10556638985872269,
+      "retained_prefix_46_unchanged": true,
+      "artifact_hashes_verified": true,
+      "runtime_preflight_verified": true,
+      "finite_model_optimizer_verified": true,
+      "resume_cursor_verified": true,
+      "source_data_contract_verified": true
+    },
+    "k1_pretrained_consistency": {
+      "completed_epochs": 60,
+      "optimizer_steps": 234360,
+      "sample_presentations": 29998080,
+      "selected_epoch_one_based": 49,
+      "selected_mae_eV": 0.10490407729625702,
+      "selected_mae_manifest_eV": 0.10490408539772034,
+      "last_epoch_mae_eV": 0.10572461038827896,
+      "retained_prefix_46_unchanged": true,
+      "artifact_hashes_verified": true,
+      "runtime_preflight_verified": true,
+      "finite_model_optimizer_verified": true,
+      "resume_cursor_verified": true,
+      "source_data_contract_verified": true
+    }
+  },
+  "contract_differences": {
+    "arm": [
+      "k1_pretrained_mean2",
+      "k1_pretrained_consistency"
+    ],
+    "loss_fingerprint": [
+      "normalized-gap-two-pass-label-L1-plus0-disagreement-MSE",
+      "normalized-gap-two-pass-label-L1-plus0.1-disagreement-MSE"
+    ],
+    "binding_identity": [
+      {
+        "source_config_identity": "e49a9f0045bd552b5374191b4d5feb86d09d80b5c3e9e75e8e6c07790e2768b8",
+        "spec_identity": "65fc71b0a622a8661df33b061915e0630dfb57abf5e01546cfc1803489f23c12",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      },
+      {
+        "source_config_identity": "c9b13b62855ad644d6656e917ee2c3625a3b79f9c52d4acad900b37b0732dfcf",
+        "spec_identity": "65fc71b0a622a8661df33b061915e0630dfb57abf5e01546cfc1803489f23c12",
+        "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1"
+      }
+    ]
+  },
+  "paired_selected": {
+    "rows": 50000,
+    "reference_mae_eV": 0.10502289324760437,
+    "candidate_mae_eV": 0.10490407729625702,
+    "paired_gain_eV": 0.00011881595134735107,
+    "row_bootstrap_95pct_eV": [
+      -0.0004192612415552139,
+      0.0006231169499158858
+    ],
+    "candidate_better_row_fraction": 0.5038,
+    "reference_arm": "k1_pretrained_mean2",
+    "candidate_arm": "k1_pretrained_consistency",
+    "delta_candidate_minus_reference_eV": -0.00011881595134735107,
+    "material_threshold_eV": 0.001,
+    "candidate_material_gate_pass": false,
+    "row_interval_not_training_seed_variance": true
+  },
+  "budget": {
+    "incremental_training_T4_device_hours": 10.318474731947777,
+    "cumulative_training_T4_device_hours": 45.160326623384435,
+    "training_cap_T4_device_hours": 52,
+    "remaining_T4_training_device_hours": 6.839673376615565,
+    "migration_training_wall_hours": 5.159237365973889,
+    "migration_bootstrap_wall_hours": 5.2143306337525,
+    "migration_bootstrap_T4_device_hours": 10.428661267505,
+    "overlapping_bootstrap_training_costs_not_added": true
+  },
+  "disposition": "TRAINING_COMPLETE_RAW_COMPARISON_ONLY",
+  "full_terminal_acceptance": false,
+  "strict_replay_ready": false,
+  "terminal_blockers": [
+    "Predeclared identical clean-BN selected-state analysis pending",
+    "Independent per-arm terminal V5/RML closure pending"
+  ],
+  "scope": "retained metadata/checkpoint/prediction inspection only; no model forward/training/calibration/protected-role access",
+  "inspection_wall_seconds": 0.6012612999999192
+}
