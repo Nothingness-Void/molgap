@@ -37,9 +37,8 @@ be replaced with stale RUNNING claims or automatic takeover.
 Old pretraining/geometry/precision qualification work is administratively paused
 in archive, not an automatic active queue. See [custody routing](BRANCHES.md#retained-checkout-map);
 reopen only with explicit direction, preserving original scientific blockers.
-Completed evidence is indexed by [experiments](experiments/README.md) and
-[RML](research_memory/README.md); review canonical decisions/attribution before
-another module. Do not reopen a closed candidate through seed/schedule changes.
+Completed evidence: [experiments](experiments/README.md), [RML](research_memory/README.md).
+Review canonical attribution first; never reopen through seed/schedule changes.
 
 New screens follow the [V4 reference](experiments/pcqm_gptrans_t_100k_v4/README.md)
 and [execution contract](platforms/V4_EXECUTION_CONTRACT.md): fixed data/row order,
