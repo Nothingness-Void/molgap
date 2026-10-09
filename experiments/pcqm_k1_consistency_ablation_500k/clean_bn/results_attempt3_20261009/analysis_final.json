@@ -1,0 +1,153 @@
+{
+  "format": "molgap-k1-clean-bn-acceptance-v1",
+  "mechanical_status": "passed",
+  "original_cpu_pair": {
+    "rows": 50000,
+    "reference_mae_eV": 0.10502289041042327,
+    "candidate_mae_eV": 0.10490407538890839,
+    "paired_gain_eV": 0.00011881502151489258,
+    "row_bootstrap_95pct_eV": [
+      -0.0004192623113393783,
+      0.0006231156300306319
+    ],
+    "candidate_better_row_fraction": 0.5038,
+    "original_1mev_point_gate_passed": false,
+    "row_interval_positive": false,
+    "primary_consistency_gate_passed": false,
+    "primary_removal_gate_passed": false,
+    "original_material_nomination_gate_passed": false
+  },
+  "both_calibrated_pair": {
+    "rows": 50000,
+    "reference_mae_eV": 0.10395200979709625,
+    "candidate_mae_eV": 0.10365894827842713,
+    "paired_gain_eV": 0.00029306151866912843,
+    "row_bootstrap_95pct_eV": [
+      -0.00024114620101451872,
+      0.0008414677519798278
+    ],
+    "candidate_better_row_fraction": 0.50496,
+    "secondary_consistency_gate_passed": false,
+    "secondary_removal_direction_gate_passed": false,
+    "secondary_absolute_delta_eV": 0.00029306151866912843,
+    "primary_promotion_gate_applicable": false
+  },
+  "per_arm_normalization": {
+    "k1_pretrained_mean2": {
+      "rows": 50000,
+      "reference_mae_eV": 0.10502289041042327,
+      "candidate_mae_eV": 0.10395200979709625,
+      "paired_gain_eV": 0.0010708806133270263,
+      "row_bootstrap_95pct_eV": [
+        0.0009310392013788223,
+        0.0012100089154243468
+      ],
+      "candidate_better_row_fraction": 0.5288
+    },
+    "k1_pretrained_consistency": {
+      "rows": 50000,
+      "reference_mae_eV": 0.10490407538890839,
+      "candidate_mae_eV": 0.10365894827842713,
+      "paired_gain_eV": 0.0012451271104812621,
+      "row_bootstrap_95pct_eV": [
+        0.0011009874074459076,
+        0.0013837818814516067
+      ],
+      "candidate_better_row_fraction": 0.5284
+    }
+  },
+  "rml_finalization_audit": {
+    "k1_pretrained_mean2": {
+      "frozen_reference_ids": [],
+      "manifest_schema_error": "trace manifest.reference_id must match '^[A-Za-z0-9][A-Za-z0-9._:-]*$'; received ''",
+      "trace_retained": true,
+      "terminal_finalized": false,
+      "strict_comparison_qualified": false,
+      "replay_ready": false
+    },
+    "k1_pretrained_consistency": {
+      "frozen_reference_ids": [],
+      "manifest_schema_error": "trace manifest.reference_id must match '^[A-Za-z0-9][A-Za-z0-9._:-]*$'; received ''",
+      "trace_retained": true,
+      "terminal_finalized": false,
+      "strict_comparison_qualified": false,
+      "replay_ready": false
+    }
+  },
+  "role_observation": {
+    "per_arm_train_decoded_labels": 500000,
+    "per_arm_calibration_features": 16384,
+    "labels_used_for_bn": false,
+    "per_arm_consumed_development_rows": 50000,
+    "development_prediction_passes": 3,
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "cost_observation": {
+    "pair_wall_seconds": 315.84671070000013,
+    "worker_process_cpu_seconds": 1179.578125,
+    "parent_process_cpu_seconds": null,
+    "device_hours_status": "not_applicable",
+    "queue_hours_status": "not_applicable",
+    "unit": "CPU process seconds; separate from wall/T4 device hours",
+    "failed_attempts": [
+      {
+        "report_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_20261009/pair_report.json",
+        "report_sha256": "3ba74a4b64a44df7a2597513d6ccb0e75cd5a30b0a4abc77108322d181bb3f91",
+        "wall_seconds": 8.489433400000053,
+        "worker_process_cpu_seconds": 7.171875,
+        "errors": [
+          "ValueError: Nonfrozen dependency imported: molgap.constants"
+        ]
+      },
+      {
+        "report_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt2_20261009/pair_report.json",
+        "report_sha256": "b4c57c9c0965d34f9e0e6102502d4566e4abcad925e53e0be057a499ca5d244d",
+        "wall_seconds": 8.898982299999716,
+        "worker_process_cpu_seconds": 7.375,
+        "errors": [
+          "AssertionError: Invalid device id"
+        ]
+      }
+    ],
+    "all_diagnostic_attempt_wall_seconds": 333.2351263999999,
+    "all_diagnostic_worker_process_cpu_seconds": 1194.125,
+    "scope": "Bounded diagnostic invocations only; planning, tests and acceptance-analysis time not measured"
+  },
+  "artifact_hashes": {
+    "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/calibrated.pt": "af0e04253fe520ae962d0ccf4644fbc2d58728edd8d80ec314f312e503cc7985",
+    "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/calibrated_buffers.pt": "e454ce80d89e23210635fe4852bc0c355f96a971ac615816f61c5f2766e5736e",
+    "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/original.pt": "02e7c54e3590437c1db410c236b02698e77560220728053ff4225b9bc5fa1d3b",
+    "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_mean2/restored.pt": "14a04e9c4bfa7dd6d5f95897121d72a8ab29588bbb744ae92c34d458980ca5d0",
+    "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/calibrated.pt": "3d2a1074bc7627f611a5704558ab0a0767921f11242c6d22d7bf1ebcde40943a",
+    "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/calibrated_buffers.pt": "45e3f73af67ef79c9f9685de43462b03812f6a0bbe8ec385bfdc8a148c3c8f0f",
+    "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/original.pt": "e81c48f8f7008ad0a2c6d40e5e482e633fa56b786e5f995260244f2bb0c95518",
+    "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/k1_pretrained_consistency/restored.pt": "578dd01d56b72a18ea36bb10237c33b49c3f974722592a060494f775cdecadf6"
+  },
+  "input_provenance": {
+    "inputs_ref": "D:\\w\\k1-consistency-500k\\experiments\\pcqm_k1_consistency_ablation_500k\\clean_bn\\inputs_attempt3.json",
+    "inputs_sha256": "519e9d30530742fda3ce2d14fa950d00ad48f2565dc9b07fecc8a643c0c3db88",
+    "pair_report_sha256": "4b15a6490df5b9dcf53b9fb25a34efacfc0114b6f999dd9bfaaea1ccf19dd4a0"
+  },
+  "analysis_source": {
+    "D:\\w\\k1-consistency-500k\\experiments\\pcqm_k1_consistency_ablation_500k\\clean_bn\\accept.py": "5b2587a0dd7014466e740e12fdc00899d2da053b1688dfee380f8890f311cac9",
+    "D:\\w\\k1-consistency-500k\\experiments\\pcqm_gptrans_100k_transfer_control\\analyze_pair.py": "cc24d6825741a5ec36095372688254d42056d333c79501cca9a435e4d36b44d0"
+  },
+  "limits": [
+    "One training seed",
+    "Consumed selection role",
+    "CPU runtime differs from native T4",
+    "Secondary diagnostic cannot replace primary raw gate",
+    "Missing frozen reference blocks canonical traced finalization"
+  ],
+  "source_review": {
+    "original_analysis_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/analysis.json",
+    "original_analysis_sha256": "8d6e8313ec079fd7f4c76f9de2735908cd76c584607763c281d5376424b228ed",
+    "original_acceptance_source_snapshot": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/accept_source_initial.snapshot.py",
+    "original_acceptance_source_sha256": "5b2587a0dd7014466e740e12fdc00899d2da053b1688dfee380f8890f311cac9",
+    "reviewed_acceptance_source": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/accept.py",
+    "reviewed_acceptance_source_sha256": "6ef6fc5bb786cd209122b78e67f345c37e0a5c5d31f3b1c499716b8200f7e502",
+    "change": "Literal frozen protocol absolute nomination gate; numerical results unchanged; no inference or trace overwrite"
+  }
+}

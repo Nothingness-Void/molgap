@@ -1,5 +1,15 @@
 # Execution status
 
+2026-10-09 selected-state clean-BN diagnostic completed on local CPU; no new
+GPU job. [Decision](clean_bn/DECISION.md) owns the negative material nomination
+and [attribution](clean_bn/ATTRIBUTION.md) its limits. Both raw and identically
+calibrated paired intervals cross0 and gains remain below1meV. Mechanical
+diagnostic acceptance passes; [frozen-reference defect](clean_bn/RML_BLOCKERS.md)
+blocks traced RML finalization. Original trajectories remain ACTIVE for custody,
+not more training; no replay-ready, adoption, successor or branch deletion.
+
+The training-only reconciliation below predates this diagnostic.
+
 2026-10-09 terminal reconciliation: Kaggle3 ID137710959/version1 is COMPLETE.
 Both arms finish60/60 with234360steps and29998080presentations; retained
 hashes, unchanged46-epoch prefix, resume state and native preflight pass.

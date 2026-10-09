@@ -1,0 +1,53 @@
+{
+  "schema": "molgap-trace-manifest-v1",
+  "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_consistency-s42-v1",
+  "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_consistency",
+  "comparison_role": "candidate",
+  "reference_id": "",
+  "contract_ref": "experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
+  "terminal_evidence_ref": "pending",
+  "model_identity": "unspecified_in_contract",
+  "evaluation_role_identity": "internal_development",
+  "selection_semantics": "best_development_metric",
+  "weight_semantics": "live",
+  "metric_semantics": "Gap MAE in eV",
+  "presentation_semantics_ref": "experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
+  "trace_artifact_ref": "pending",
+  "x_axis": "optimizer_steps",
+  "exposure": {
+    "optimizer_steps": 234360,
+    "sample_presentations": 29998080
+  },
+  "comparability_identity": {
+    "scientific_contract": "experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
+    "dataset_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "architecture_identity": "unspecified_in_contract",
+    "optimizer_identity": "unspecified_in_contract",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "target_transform_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "internal_development",
+    "selection_role_identity": "best_development_metric",
+    "terminal_endpoint_identity": "endpoint_234360",
+    "matched_architecture_required": false,
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "closure_synthesized_manifest_not_prelaunch_calibrated"
+    ]
+  },
+  "trace_fields": {
+    "epoch_or_pass": true,
+    "optimizer_step": true,
+    "sample_presentations": true,
+    "learning_rate": true,
+    "live_train_metric": true,
+    "live_dev_metric": true,
+    "ema_dev_metric": false,
+    "checkpoint_identity": false
+  }
+}

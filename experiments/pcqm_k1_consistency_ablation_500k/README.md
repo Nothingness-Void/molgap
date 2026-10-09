@@ -3,6 +3,9 @@
 Desktop-owned question on `codex/exp/k1-consistency-ablation-500k`, based on
 verified desktop `a386a4a2c1ba9ce3a841fb775dec0d88dada7458`.
 Read [protocol](protocol.md), [evidence review](plan.md), and [status](STATUS.md).
+The [paired endpoint decision](clean_bn/DECISION.md) and
+[frozen-reference blocker](clean_bn/RML_BLOCKERS.md) own terminal science and
+unresolved traced-RML custody, respectively.
 Preparation reuses the retained bounded 500K trainer, source/release/planning
 owners and Kaggle adapter. The registered 100K workflow does not execute this
 500K family. Shared code provenance is in [reuse](reuse.md).

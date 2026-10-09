@@ -1,0 +1,275 @@
+{
+  "arm": "k1_pretrained_mean2",
+  "status": "complete",
+  "started_at_utc": "2026-10-09T03:24:06.380999+00:00",
+  "phase": "complete",
+  "updated_at_utc": "2026-10-09T03:26:43.441445+00:00",
+  "wall_seconds": 157.06129779999992,
+  "process_cpu_seconds": 589.109375,
+  "runtime": {
+    "format": "molgap-runtime-manifest-v1",
+    "python": "3.10.6 (tags/v3.10.6:9c7b4bd, Aug  1 2022, 21:53:49) [MSC v.1932 64 bit (AMD64)]",
+    "python_executable": "D:\\\u6587\u6863\\molgap\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-10-10.0.26220-SP0",
+    "torch": "2.7.1+cu128",
+    "torch_cuda": "12.8",
+    "torch_hip": null,
+    "cudnn": 90701,
+    "accelerator": null,
+    "determinism": {
+      "seed": 20261008,
+      "precision": "fp32",
+      "tf32_enabled": false,
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "deterministic_algorithms": true,
+      "cublas_workspace_config": ":4096:8",
+      "float32_matmul_precision": "highest",
+      "device": "cpu",
+      "cuda_device_count_visible": 0
+    },
+    "installed_distributions": [
+      "aiohappyeyeballs==2.7.1",
+      "aiohttp==3.14.3",
+      "aiosignal==1.4.0",
+      "alembic==1.18.5",
+      "async-timeout==5.0.1",
+      "attrs==26.1.0",
+      "bleach==6.4.0",
+      "certifi==2026.7.22",
+      "charset-normalizer==3.4.9",
+      "colorama==0.4.6",
+      "colorlog==6.12.0",
+      "contourpy==1.3.2",
+      "cycler==0.12.1",
+      "descriptastorus==2.8.0",
+      "exceptiongroup==1.3.1",
+      "filelock==3.29.0",
+      "fonttools==4.63.0",
+      "frozenlist==1.8.0",
+      "fsspec==2026.4.0",
+      "greenlet==3.5.4",
+      "idna==3.18",
+      "ijson==3.5.0",
+      "iniconfig==2.3.0",
+      "jinja2==3.1.6",
+      "joblib==1.5.3",
+      "kaggle==1.7.4.5",
+      "kagglehub==1.0.2",
+      "kagglesdk==0.1.28",
+      "kiwisolver==1.5.0",
+      "lightgbm==4.7.0",
+      "littleutils==0.2.4",
+      "mako==1.3.12",
+      "markupsafe==3.0.3",
+      "matplotlib==3.10.9",
+      "molgap==0.1.0",
+      "mpmath==1.3.0",
+      "multidict==6.7.1",
+      "narwhals==2.24.0",
+      "networkx==3.4.2",
+      "numpy==2.2.6",
+      "ogb==1.3.6",
+      "optuna==4.9.0",
+      "outdated==0.2.2",
+      "packaging==26.2",
+      "pandas-flavor==0.8.1",
+      "pandas==2.3.3",
+      "pillow==12.3.0",
+      "pip==22.2.1",
+      "pluggy==1.6.0",
+      "propcache==0.5.2",
+      "protobuf==7.36.1",
+      "psutil==7.2.2",
+      "pyarrow==25.0.0",
+      "pygments==2.20.0",
+      "pyparsing==3.3.2",
+      "pytest==9.1.1",
+      "python-dateutil==2.9.0.post0",
+      "python-slugify==9.0.0",
+      "pytz==2026.3.post1",
+      "pyyaml==6.0.3",
+      "rdkit==2026.3.4",
+      "requests==2.34.2",
+      "scikit-learn==1.7.2",
+      "scipy==1.15.3",
+      "seaborn==0.13.2",
+      "setuptools==83.0.0",
+      "six==1.17.0",
+      "sqlalchemy==2.0.51",
+      "sympy==1.14.0",
+      "text-unidecode==1.3",
+      "threadpoolctl==3.6.0",
+      "tomli==2.4.1",
+      "torch-geometric==2.7.0",
+      "torch==2.7.1+cu128",
+      "torch_cluster==1.6.3+pt27cu128",
+      "tqdm==4.70.0",
+      "typing_extensions==4.16.0",
+      "tzdata==2026.3",
+      "urllib3==2.7.0",
+      "webencodings==0.6.1",
+      "xarray==2025.6.1",
+      "xxhash==3.8.1",
+      "yarl==1.24.5"
+    ],
+    "installed_distributions_sha256": "9a5dfc0e0796796931e84e1b18cb32b9f2162fa5c75724cd378fe17dff5af08c",
+    "external_runtime_artifacts": {
+      "ogb": {
+        "version": "1.3.6",
+        "source_archive_sha256": null
+      }
+    },
+    "runtime_fingerprint": "40f84117381cf2cb504b1170d903145f67dda5a60f4795ceef650ea40da18d63"
+  },
+  "cpu_threads": 4,
+  "device": "cpu",
+  "autocast_enabled": false,
+  "cpu_processor": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+  "cpu_logical_count": 16,
+  "torch_build_config": "PyTorch built with:\n  - C++ Version: 201703\n  - MSVC 192930158\n  - Intel(R) oneAPI Math Kernel Library Version 2025.1-Product Build 20250306 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.7.1 (Git Hash 8d263e693366ef8db40acc569cc7d8edf644556d)\n  - OpenMP 2019\n  - LAPACK is enabled (usually provided by MKL)\n  - CPU capability usage: AVX512\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=e2d141dbde55c2a4370fac5165b0561b6af4798b, CUDA_VERSION=12.8, CUDNN_VERSION=9.7.1, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/pytorch/.ci/pytorch/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /Zc:__cplusplus /bigobj /FS /utf-8 -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DLIBKINETO_NOXPUPTI=ON -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.7.1, USE_CUDA=ON, USE_CUDNN=ON, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, \n",
+  "calibration_source_idx_sha256": "263a68969a60c5a32ab4fb1074b902033d3e964be716e6ef4ed783d85da320b8",
+  "development_source_idx_sha256": "5b4fd543f8815acbfd2ac86db7a8b5e9263165853971de5b000e86d5de9f3d5b",
+  "row_hash_scope": "v4_runtime.state_dict_sha256({'source_idx': int64 ordered rows})",
+  "reconstruction_max_abs_eV": 1.9073486328125e-06,
+  "original_timing": {
+    "rows": 50000,
+    "wall_seconds": 46.90709969999989,
+    "process_cpu_seconds": 184.875,
+    "forward_seconds": 40.05775550000953,
+    "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+  },
+  "parameter_sha256_before": "79bbc562eedde5fe9860e0f94cb012d2f01437f7e429f76d7abc2af9975d3528",
+  "buffer_sha256_before": "7a81a5465747456bb0dac43871d3bc05932394a86c4bfd00f79ab33304c47d30",
+  "calibration": {
+    "rows": 16384,
+    "batches": 128,
+    "bn_modules": 18,
+    "wall_seconds": 12.902247199999692,
+    "process_cpu_seconds": 50.90625,
+    "parameters_unchanged": true,
+    "non_bn_buffers_unchanged": true,
+    "dropout_disabled": true,
+    "labels_used_for_calibration": false,
+    "buffer_sha256_before": "7a81a5465747456bb0dac43871d3bc05932394a86c4bfd00f79ab33304c47d30",
+    "buffer_sha256_calibrated": "7b52bc5d154f79f5e7f3720c0f9489f8f4a59f3e5c128754e36df216343f64e8",
+    "bn_changes": {
+      "local_blocks.0.norm1.module": {
+        "running_mean_rms_change": 0.01742609776556492,
+        "running_var_mean_before": 2.827467203140259,
+        "running_var_mean_after": 2.745175361633301
+      },
+      "local_blocks.0.norm3.module": {
+        "running_mean_rms_change": 0.005049591418355703,
+        "running_var_mean_before": 1.0798494815826416,
+        "running_var_mean_after": 1.0807727575302124
+      },
+      "local_blocks.1.norm1.module": {
+        "running_mean_rms_change": 0.048526499420404434,
+        "running_var_mean_before": 29.4235782623291,
+        "running_var_mean_after": 29.183115005493164
+      },
+      "local_blocks.1.norm3.module": {
+        "running_mean_rms_change": 0.0055955867283046246,
+        "running_var_mean_before": 1.227205514907837,
+        "running_var_mean_after": 1.2201998233795166
+      },
+      "local_blocks.2.norm1.module": {
+        "running_mean_rms_change": 0.039965879172086716,
+        "running_var_mean_before": 20.21770668029785,
+        "running_var_mean_after": 20.12470054626465
+      },
+      "local_blocks.2.norm3.module": {
+        "running_mean_rms_change": 0.007244393229484558,
+        "running_var_mean_before": 1.3202968835830688,
+        "running_var_mean_after": 1.3174562454223633
+      },
+      "local_blocks.3.norm1.module": {
+        "running_mean_rms_change": 0.04090317711234093,
+        "running_var_mean_before": 15.718829154968262,
+        "running_var_mean_after": 15.61804485321045
+      },
+      "local_blocks.3.norm3.module": {
+        "running_mean_rms_change": 0.005960704758763313,
+        "running_var_mean_before": 1.1930090188980103,
+        "running_var_mean_after": 1.193753719329834
+      },
+      "local_blocks.4.norm1.module": {
+        "running_mean_rms_change": 0.04275830090045929,
+        "running_var_mean_before": 16.44066619873047,
+        "running_var_mean_after": 16.440786361694336
+      },
+      "local_blocks.4.norm3.module": {
+        "running_mean_rms_change": 0.007958117872476578,
+        "running_var_mean_before": 1.200526237487793,
+        "running_var_mean_after": 1.1990495920181274
+      },
+      "local_blocks.5.norm1.module": {
+        "running_mean_rms_change": 0.05695997551083565,
+        "running_var_mean_before": 21.58017921447754,
+        "running_var_mean_after": 21.84239387512207
+      },
+      "local_blocks.5.norm3.module": {
+        "running_mean_rms_change": 0.007452715188264847,
+        "running_var_mean_before": 1.2613214254379272,
+        "running_var_mean_after": 1.2625702619552612
+      },
+      "local_blocks.6.norm1.module": {
+        "running_mean_rms_change": 0.06487521529197693,
+        "running_var_mean_before": 22.75880241394043,
+        "running_var_mean_after": 23.130956649780273
+      },
+      "local_blocks.6.norm3.module": {
+        "running_mean_rms_change": 0.004203179385513067,
+        "running_var_mean_before": 1.2387224435806274,
+        "running_var_mean_after": 1.2361316680908203
+      },
+      "local_blocks.7.norm1.module": {
+        "running_mean_rms_change": 0.07851367443799973,
+        "running_var_mean_before": 39.62776565551758,
+        "running_var_mean_after": 40.11469650268555
+      },
+      "local_blocks.7.norm3.module": {
+        "running_mean_rms_change": 0.003181976731866598,
+        "running_var_mean_before": 1.22588050365448,
+        "running_var_mean_after": 1.2192292213439941
+      },
+      "local_blocks.8.norm1.module": {
+        "running_mean_rms_change": 0.10427942126989365,
+        "running_var_mean_before": 72.05864715576172,
+        "running_var_mean_after": 72.11190032958984
+      },
+      "local_blocks.8.norm3.module": {
+        "running_mean_rms_change": 0.019208136945962906,
+        "running_var_mean_before": 2.331735134124756,
+        "running_var_mean_after": 2.2566959857940674
+      }
+    },
+    "buffers_restored": true
+  },
+  "parameter_sha256_calibrated": "79bbc562eedde5fe9860e0f94cb012d2f01437f7e429f76d7abc2af9975d3528",
+  "calibrated_timing": {
+    "rows": 50000,
+    "wall_seconds": 42.27322079999976,
+    "process_cpu_seconds": 166.96875,
+    "forward_seconds": 40.39801589999796,
+    "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+  },
+  "restored_timing": {
+    "rows": 50000,
+    "wall_seconds": 41.67818070000021,
+    "process_cpu_seconds": 165.078125,
+    "forward_seconds": 39.80572699999587,
+    "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+  },
+  "restored_prediction_exact": true,
+  "parameter_sha256_restored": "79bbc562eedde5fe9860e0f94cb012d2f01437f7e429f76d7abc2af9975d3528",
+  "buffer_sha256_restored": "7a81a5465747456bb0dac43871d3bc05932394a86c4bfd00f79ab33304c47d30",
+  "artifacts": {
+    "calibrated.pt": "af0e04253fe520ae962d0ccf4644fbc2d58728edd8d80ec314f312e503cc7985",
+    "calibrated_buffers.pt": "e454ce80d89e23210635fe4852bc0c355f96a971ac615816f61c5f2766e5736e",
+    "original.pt": "02e7c54e3590437c1db410c236b02698e77560220728053ff4225b9bc5fa1d3b",
+    "restored.pt": "14a04e9c4bfa7dd6d5f95897121d72a8ab29588bbb744ae92c34d458980ca5d0"
+  },
+  "ended_at_utc": "2026-10-09T03:26:43.441445+00:00"
+}
