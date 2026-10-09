@@ -1,5 +1,5 @@
 {
-  "owner": "server", "closed": false,
+  "owner": "server", "closed": true,
   "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
   "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
   "credential_owner": "kaseichou",
@@ -7,7 +7,7 @@
   "jobs": [{
     "slot": "triplet-communication-dual-v1",
     "kernel": "kaseichou/molgap-gptrans-triplet-communication-dual-s42",
-    "kernel_id": 137723341, "version": 1, "closed": false,
+    "kernel_id": 137723341, "version": 1, "closed": true,
     "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/control/gptrans_triplet_communication_v1.json",
     "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/gptrans_triplet_communication_v1",
     "metadata_paths": ["gptrans_triplet_communication/startup.json", "gptrans_triplet_communication/job_summary.json", "gptrans_triplet_communication/native_cost.json"]

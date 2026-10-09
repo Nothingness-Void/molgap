@@ -1,0 +1,61 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-triplet-communication-dual-s42",
+  "version": 1,
+  "files": [
+    {
+      "path": "gptrans_triplet_communication/startup.json",
+      "sha256": "a9da8ab25d3f43970e777b2ba2b6d904d2c440278e74c91f6a291be6b025f03e"
+    },
+    {
+      "path": "gptrans_triplet_communication/job_summary.json",
+      "sha256": "2261596bbe8bbe98a083a2a71e72bb02858b40bc0b4c79d04c53a450733da585"
+    },
+    {
+      "path": "gptrans_triplet_communication/native_cost.json",
+      "sha256": "43d005729a102775c3cd61b348a085f88fa64b71fd67ab34aeaa3cb8677a6c8d"
+    },
+    {
+      "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/arm_binding.json",
+      "sha256": "30a5d258404875762e61a73dc23fd0bfe0d17dc5703e5c48aa068f2a7e6e48bd"
+    },
+    {
+      "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/preflight/preflight.json",
+      "sha256": "24cf731524bf8a7249c14a2ec47a244c17ad8496b32f48e7471281238b46bc77"
+    },
+    {
+      "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/completion_manifest.json",
+      "sha256": "805276433c60219e2093f6689263cb6ed4019ef67efa052b3ffb2d99f850d609"
+    },
+    {
+      "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/trace.json",
+      "sha256": "0595627d7bcf5d111efd00650f799d00cda86f8738cad88adf91fa58218845a2"
+    },
+    {
+      "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/frozen_reference.json",
+      "sha256": "a9c156f41b2485d7fea1e79b072448dcdad55bb2b1a6714af7158286ab9b9b2a"
+    },
+    {
+      "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/arm_binding.json",
+      "sha256": "7d769f9e5ffa04942a712353c61d342cbaa27a6b2ad135525d9236adf35dcbc4"
+    },
+    {
+      "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/preflight/preflight.json",
+      "sha256": "98246ded449213908cfde4dd3a94376324fd36ce02b2739112ec3a2e8e58a62f"
+    },
+    {
+      "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/completion_manifest.json",
+      "sha256": "35993dc1604652c9114631ce699cf39c11424f874987f7b5e0df9c5b9b0bd314"
+    },
+    {
+      "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/trace.json",
+      "sha256": "dd4ac5cfba658514a1674c7883b7f7f17aeb4b005d063c3c14e166c9af0fe51f"
+    },
+    {
+      "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/frozen_reference.json",
+      "sha256": "cb3ee77c532bb5714d0b4df6979eec25e413af196105b129da22c48577bda4b7"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}

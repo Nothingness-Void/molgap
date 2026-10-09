@@ -1,0 +1,127 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-triplet-communication-dual-s42",
+  "version": 1,
+  "arms": [
+    {
+      "arm": "degree_local_triplet_aggregate_ema999",
+      "kernel": "kaseichou/molgap-gptrans-triplet-communication-dual-s42",
+      "receipt_version": 1,
+      "files": [
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/development_predictions.pt",
+          "sha256": "216c48ea6944e83dca2b8dcdfcd64cb668bf9377783ab3cad6bb81656df58c88",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/canonical_trace.json",
+          "sha256": "12fc36951f054b806ee518c22ad8a1e262c14df3e8a1d8f4e13a447b0bf7c714",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/best_model.pt",
+          "sha256": "60078a750db6ad551677d60020dc856c92230b3f2a2a7684f6b2de1227a36d47",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/last_checkpoint.pt",
+          "sha256": "445213e8e6b1696ea06916a07534bd0483ca0f0b8f5d049de14197ad7445ee8d",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/checkpoint_epoch_09.pt",
+          "sha256": "ffbd775380483ac10820378d947a168d42b1248dbf403414b566cf5cb1d25a48",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/checkpoint_epoch_19.pt",
+          "sha256": "986b46802773d74e249488d79bb4bea5220fc7a729805c44fc782b9820510591",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/checkpoint_epoch_29.pt",
+          "sha256": "6a49adab8fa89c26d1243fd81ab2c4cad692759ce43af6897626277a4e9130c2",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/checkpoint_epoch_39.pt",
+          "sha256": "790b93e301c3411b07e42cbbe25e52385d8a5e08d0f4f7ac0c20ce3bfd98dbc0",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/checkpoint_epoch_49.pt",
+          "sha256": "75e24515b8df28f6ef58260360e82434048c097ae0d18b428265889fa5d00134",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/checkpoint_epoch_59.pt",
+          "sha256": "445213e8e6b1696ea06916a07534bd0483ca0f0b8f5d049de14197ad7445ee8d",
+          "state": "ALREADY_RETAINED"
+        }
+      ],
+      "transport": "version_specific_manifest_pinned_files",
+      "unselected_outputs_downloaded": false,
+      "platform_version_verified_by_output_api": true
+    },
+    {
+      "arm": "degree_local_triplet_attention_ema999",
+      "kernel": "kaseichou/molgap-gptrans-triplet-communication-dual-s42",
+      "receipt_version": 1,
+      "files": [
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/development_predictions.pt",
+          "sha256": "c1aa19f1473fcc64eac2b346c399fbc637853b27330fcc2fc21b3d8550c22ffb",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/canonical_trace.json",
+          "sha256": "0d08fe7c952db24f04f09843995821bcee0e9590de02d1de1c9f674851989d19",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/best_model.pt",
+          "sha256": "401746337d4f439ebbd394a52fffce1882f7961fdd0212674cadc5f3b7f90042",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/last_checkpoint.pt",
+          "sha256": "5b977e2370eb763e3b79c9a37f44f1ac545e88b25f26a4423b7c7455d3727fe9",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/checkpoint_epoch_09.pt",
+          "sha256": "c7548d483e17e4a5d969a25b0c8bfa0e70181e37decebb51a90e510d4f5fb2ce",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/checkpoint_epoch_19.pt",
+          "sha256": "7ed6db97a20af0f2b759dcf4ca1c629fa40342f281d1b4fee76c1a882f6eb3cd",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/checkpoint_epoch_29.pt",
+          "sha256": "22643adfd3089efa7d12578065ce0232885c7736d60bbe6bb9ed318c11af5e8a",
+          "state": "ALREADY_RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/checkpoint_epoch_39.pt",
+          "sha256": "b2f090b537d01138506aa996b7a3c6b880f2f5f0c0e0ff98a77ed3eddfe7a47a",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/checkpoint_epoch_49.pt",
+          "sha256": "e11a18eaff29b3139e6851b5ef481fba24ea111adea1a9da66a91a9005ebdc1a",
+          "state": "RETAINED"
+        },
+        {
+          "path": "gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/checkpoint_epoch_59.pt",
+          "sha256": "5b977e2370eb763e3b79c9a37f44f1ac545e88b25f26a4423b7c7455d3727fe9",
+          "state": "RETAINED"
+        }
+      ],
+      "transport": "version_specific_manifest_pinned_files",
+      "unselected_outputs_downloaded": false,
+      "platform_version_verified_by_output_api": true
+    }
+  ],
+  "retrieval_note": "First concurrent transfer ended with a transport error; idempotent sequential retrieval preserved and verified retained files. No remote task was retried."
+}

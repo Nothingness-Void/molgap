@@ -1,0 +1,409 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/observed_metadata.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+    "experiments/pcqm_gptrans_capacity_relations_100k/gpu/screen_config.json": "6f0c7f77231f550f94fca7b1d8c6fc42c464904ede753d06fc6d2c7a1ad48668",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/comparison_readiness_prelaunch.json": "71b19cda387d35a7aaf0df2d534caff22482442041ad6eacc14ab1cfc1511932",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/contract.json": "78ba3430fe08453447d4dd1c206a142fd8de1dbc5deff59ec31f4f14c5a65120",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/candidate_trace_manifest.json": "d0b989c4cf855852a945fca16115d8eaea3c342ee3c819ec3f1925240f0b4af4",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/comparison_readiness.json": "09dde91fcc8906296f7980eacf6245926346e34d3d209625722496889be40bce",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/cost_records.json": "469c80e0cb93cfc02939b6852cec8c90f99fb359d145f2b24fc2b49a8b19bc4c",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/decision.md": "1e9cb1e1a411b6b0ec4f8094894d124976499aaa3c55c4433cf3ccf43d09a36c",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/observed_metadata.json": "287b7792bac0f276a385b3095118734abd3fc8346529ccfd27495e119e062c9e",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/paired_analysis.json": "9b194cb87635822fec6555e95d4661bfa38840f8c382c7c7ec714ce5bfdfbd66",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/prediction_manifest.json": "720aa3c07ed07b1a6d9a4fedf6db84ddf1790c1c458b38a0cce3a16857ebeae9",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/role_history.json": "71145452a4248f84a9482aaa34c6263adaa47ffdfff1bf2b66035d9663e9738c",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/runtime_certificate.json": "59920d081a811696547e9428d55ccd6fa6b39d8c75e6a4ad64f15f42cf732875",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/rml_plan/trajectory.json": "f69abb9b0d400a879fecd31b2984fdeb91a3479339a903a2d6f8690087605a0f",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/acceptance.json": "f445214da43655bcc69ac2948328e6dc2829f193ee9f1322df57f512f000c23a",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/screen_config.json": "65d75329e76fb9ac40dc7206e5e8b299289b5967a9d3a9f5936ee20f4275c0ac",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/submission_v1.json": "1e67266b946f436626d06def8d07f47d583dc3ba4e0f4be639393f048fe249e5",
+    "experiments/pcqm_gptrans_triplet_communication_100k/protocol.md": "bb3a5572226aa8093c3d807e86fd612a99bb4c249b42da9c1380565f5e3219c9",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948",
+    "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/best_model.pt": "401746337d4f439ebbd394a52fffce1882f7961fdd0212674cadc5f3b7f90042",
+    "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/canonical_trace.json": "0d08fe7c952db24f04f09843995821bcee0e9590de02d1de1c9f674851989d19",
+    "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/completion_manifest.json": "35993dc1604652c9114631ce699cf39c11424f874987f7b5e0df9c5b9b0bd314",
+    "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/development_predictions.pt": "c1aa19f1473fcc64eac2b346c399fbc637853b27330fcc2fc21b3d8550c22ffb",
+    "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/last_checkpoint.pt": "5b977e2370eb763e3b79c9a37f44f1ac545e88b25f26a4423b7c7455d3727fe9",
+    "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/trace.json": "dd4ac5cfba658514a1674c7883b7f7f17aeb4b005d063c3c14e166c9af0fe51f",
+    "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/native_cost.json": "43d005729a102775c3cd61b348a085f88fa64b71fd67ab34aeaa3cb8677a6c8d"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-g1-local-triplet-attention-100k-s42-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/observed_metadata.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 5.162891340715833
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 5.162891340715833
+        }
+      },
+      "platform": "kaggle2-t4-gptrans-triplet-communication",
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "CLOSE"
+    ],
+    "outcome": "POSITIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "explicit scale/combination compute authorization"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json",
+        "name": "target_transform.json",
+        "sha256": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/candidate_trace_manifest.json",
+        "name": "candidate_trace_manifest.json",
+        "sha256": "d0b989c4cf855852a945fca16115d8eaea3c342ee3c819ec3f1925240f0b4af4"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/comparison_readiness.json",
+        "name": "comparison_readiness.json",
+        "sha256": "09dde91fcc8906296f7980eacf6245926346e34d3d209625722496889be40bce"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/cost_records.json",
+        "name": "cost_records.json",
+        "sha256": "469c80e0cb93cfc02939b6852cec8c90f99fb359d145f2b24fc2b49a8b19bc4c"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/decision.md",
+        "name": "decision.md",
+        "sha256": "1e9cb1e1a411b6b0ec4f8094894d124976499aaa3c55c4433cf3ccf43d09a36c"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/observed_metadata.json",
+        "name": "observed_metadata.json",
+        "sha256": "287b7792bac0f276a385b3095118734abd3fc8346529ccfd27495e119e062c9e"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/paired_analysis.json",
+        "name": "paired_analysis.json",
+        "sha256": "9b194cb87635822fec6555e95d4661bfa38840f8c382c7c7ec714ce5bfdfbd66"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/prediction_manifest.json",
+        "name": "prediction_manifest.json",
+        "sha256": "720aa3c07ed07b1a6d9a4fedf6db84ddf1790c1c458b38a0cce3a16857ebeae9"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/role_history.json",
+        "name": "role_history.json",
+        "sha256": "71145452a4248f84a9482aaa34c6263adaa47ffdfff1bf2b66035d9663e9738c"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/runtime_certificate.json",
+        "name": "runtime_certificate.json",
+        "sha256": "59920d081a811696547e9428d55ccd6fa6b39d8c75e6a4ad64f15f42cf732875"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/screen_config.json",
+        "name": "screen_config.json",
+        "sha256": "65d75329e76fb9ac40dc7206e5e8b299289b5967a9d3a9f5936ee20f4275c0ac"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json",
+        "name": "row_manifest.json",
+        "sha256": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json",
+        "name": "target_manifest.json",
+        "sha256": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/best_model.pt",
+        "name": "best_model.pt",
+        "sha256": "401746337d4f439ebbd394a52fffce1882f7961fdd0212674cadc5f3b7f90042"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/canonical_trace.json",
+        "name": "canonical_trace.json",
+        "sha256": "0d08fe7c952db24f04f09843995821bcee0e9590de02d1de1c9f674851989d19"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "35993dc1604652c9114631ce699cf39c11424f874987f7b5e0df9c5b9b0bd314"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/last_checkpoint.pt",
+        "name": "last_checkpoint.pt",
+        "sha256": "5b977e2370eb763e3b79c9a37f44f1ac545e88b25f26a4423b7c7455d3727fe9"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/native_cost.json",
+        "name": "native_cost.json",
+        "sha256": "43d005729a102775c3cd61b348a085f88fa64b71fd67ab34aeaa3cb8677a6c8d"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "f445214da43655bcc69ac2948328e6dc2829f193ee9f1322df57f512f000c23a"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/development_predictions.pt",
+        "name": "development_predictions.pt",
+        "sha256": "c1aa19f1473fcc64eac2b346c399fbc637853b27330fcc2fc21b3d8550c22ffb"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/contract.json",
+        "name": "contract.json",
+        "sha256": "78ba3430fe08453447d4dd1c206a142fd8de1dbc5deff59ec31f4f14c5a65120"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/trace.json",
+        "name": "trace.json",
+        "purpose": "analysis_diagnostics",
+        "sha256": "dd4ac5cfba658514a1674c7883b7f7f17aeb4b005d063c3c14e166c9af0fe51f"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_triplet_communication_100k/protocol.md",
+        "experiments/pcqm_gptrans_capacity_relations_100k/gpu/screen_config.json",
+        "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/rml_plan/trajectory.json",
+        "experiments/pcqm_gptrans_triplet_communication_100k/gpu/submission_v1.json",
+        "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/comparison_readiness_prelaunch.json",
+        "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-g1-degree-local-triplet-attention-ema999-100k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-09T00:12:23.122810+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "verified native artifacts and saved prediction tensors"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "POSITIVE_UNDER_CONTRACT",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "internal_development": "consumed",
+      "internal_train": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "single_mechanism_screen_100k",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-09T00:12:23.122810+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development": "consumed",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_train-training_membership",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_train-labels_read",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_train-metric_computed",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_development-prediction_input",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_development-labels_read",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_development-selection_used",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+    }
+  ],
+  "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "5bed70a353e7d34f66c8b145135146ff2bbb65933a587e8c760e9c7fad9fe9d2",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "ema999-each-step-selection",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+      "scientific_contract": "gptrans-v5-observation-reference-fp32-bs128-60epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+      "terminal_endpoint_identity": "46860-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "internal_development_ema_gap_mae_eV",
+    "model_identity": "5bed70a353e7d34f66c8b145135146ff2bbb65933a587e8c760e9c7fad9fe9d2",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+    "reference_id": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+    "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_ema_over_60_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/terminal_evidence.json",
+    "trace_artifact_ref": "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/canonical_trace.json",
+    "trace_artifact_sha256": "0d08fe7c952db24f04f09843995821bcee0e9590de02d1de1c9f674851989d19",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+    "weight_semantics": "ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+}

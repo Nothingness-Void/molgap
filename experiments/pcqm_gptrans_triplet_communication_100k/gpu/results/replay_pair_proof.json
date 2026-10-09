@@ -1,0 +1,101 @@
+{
+  "format": "molgap-actual-replay-admission-proof-v1",
+  "accepted": true,
+  "arms": {
+    "degree_local_triplet_aggregate_ema999": {
+      "trajectory_id": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "reference_id": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"ema999-each-step-selection\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"gptrans-v5-observation-reference-fp32-bs128-60epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"46860-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42\"}",
+      "capability": "complete",
+      "terminal_outcome": "POSITIVE_UNDER_CONTRACT",
+      "terminal_label": {
+        "promotion_passed": true,
+        "winner": true
+      },
+      "native_cost": {
+        "device_hours": 5.162891340715833,
+        "event_ids": [
+          "cost-TC-gptrans-g1-local-triplet-aggregate-100k-s42-observed-v1"
+        ],
+        "hardware": [
+          "Tesla_T4"
+        ],
+        "measurements": [
+          {
+            "cost_event_id": "cost-TC-gptrans-g1-local-triplet-aggregate-100k-s42-observed-v1",
+            "status": "measured",
+            "value": 5.162891340715833
+          }
+        ],
+        "planned_measurements": [
+          {
+            "cost_event_id": "cost-TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+            "status": "estimated",
+            "value": 5
+          }
+        ]
+      },
+      "trace_sha256": "12fc36951f054b806ee518c22ad8a1e262c14df3e8a1d8f4e13a447b0bf7c714",
+      "terminal_evidence_sha256": "fe95583bf3116df7e25763f9a66950d1bf550807f7a961e27edaf8c4c3e8178f",
+      "exclusion_reasons": [],
+      "reference_trajectory_id": "TC-gptrans-g1-bond-local-100k-s42",
+      "comparison_class": "STRICT_CAUSAL",
+      "observations": 60,
+      "terminal_optimizer_steps": 46860,
+      "terminal_sample_presentations": 5998080,
+      "reference_trace_sha256": "ccb150226f5159f6806954e6366112cc2129767002b0ac80660788a57ce4a646",
+      "closure_sha256": "0c0807cf2594df454edec643714fda37262853321a5e3cbf64943b453061b126"
+    },
+    "degree_local_triplet_attention_ema999": {
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "reference_id": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"ema999-each-step-selection\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"gptrans-v5-observation-reference-fp32-bs128-60epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"46860-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42\"}",
+      "capability": "complete",
+      "terminal_outcome": "POSITIVE_UNDER_CONTRACT",
+      "terminal_label": {
+        "promotion_passed": true,
+        "winner": true
+      },
+      "native_cost": {
+        "device_hours": 5.162891340715833,
+        "event_ids": [
+          "cost-TC-gptrans-g1-local-triplet-attention-100k-s42-observed-v1"
+        ],
+        "hardware": [
+          "Tesla_T4"
+        ],
+        "measurements": [
+          {
+            "cost_event_id": "cost-TC-gptrans-g1-local-triplet-attention-100k-s42-observed-v1",
+            "status": "measured",
+            "value": 5.162891340715833
+          }
+        ],
+        "planned_measurements": [
+          {
+            "cost_event_id": "cost-TC-gptrans-g1-local-triplet-attention-100k-s42",
+            "status": "estimated",
+            "value": 5
+          }
+        ]
+      },
+      "trace_sha256": "0d08fe7c952db24f04f09843995821bcee0e9590de02d1de1c9f674851989d19",
+      "terminal_evidence_sha256": "3c45c75f19ab1f834fec563c1bf16b4cbc95ae6b970a78c40c377f7e25a4a778",
+      "exclusion_reasons": [],
+      "reference_trajectory_id": "TC-gptrans-g1-bond-local-100k-s42",
+      "comparison_class": "STRICT_CAUSAL",
+      "observations": 60,
+      "terminal_optimizer_steps": 46860,
+      "terminal_sample_presentations": 5998080,
+      "reference_trace_sha256": "ccb150226f5159f6806954e6366112cc2129767002b0ac80660788a57ce4a646",
+      "closure_sha256": "1463d241ff71f14243ca17cc82b822c7cc9011b9277cea4f55473c171f8e5a05"
+    }
+  },
+  "independent_complete_replay_pairs": 2,
+  "policy_terminal_truth_available": true,
+  "pool_snapshot_sha256": "d5b8e598adc6018f8bdd767b9414b7d16fd365fbcc88ef163ede81cdeabccff5",
+  "pool_snapshot_scope": "Local rebuild includes preserved user historical reconciliation; this proof retains exact new entries and shared reference bindings without committing unrelated derived changes.",
+  "scientific_caveat": "Single-seed frozen 100K gate labels, not 500K transfer, full ranking or training-seed stability.",
+  "model_inference_executed": false,
+  "local_training_executed": false
+}

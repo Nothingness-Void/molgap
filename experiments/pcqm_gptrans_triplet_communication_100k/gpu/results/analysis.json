@@ -1,0 +1,329 @@
+{
+  "format": "molgap-accepted-triplet-communication-analysis-v1",
+  "acceptance_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/acceptance.json",
+  "acceptance_sha256": "f445214da43655bcc69ac2948328e6dc2829f193ee9f1322df57f512f000c23a",
+  "analysis_scope": "saved predictions and recorded telemetry only",
+  "model_inference_executed": false,
+  "local_training_executed": false,
+  "arms": {
+    "degree_local_triplet_aggregate_ema999": {
+      "parameters": 5880961,
+      "best_epoch": 38,
+      "material_gain_eV": 0.003049777398109436,
+      "material_gate_passed": true,
+      "epoch_mean_seconds": 290.04418222396674,
+      "final_ten_ema_change_eV": 0.00019977986812591553,
+      "final_live_dev_eV": 0.1399531215429306,
+      "paired_analysis": {
+        "rows": 50000,
+        "reference_mae_eV": 0.142358227481246,
+        "candidate_mae_eV": 0.13930845008313655,
+        "candidate_minus_reference_eV": -0.003049777398109436,
+        "paired_row_bootstrap": {
+          "delta": -0.003049777398109436,
+          "ci95": [
+            -0.003947774950742722,
+            -0.002177481544256211
+          ],
+          "probability_better": 1.0,
+          "n_bootstrap": 5000,
+          "seed": 20260912
+        },
+        "candidate_win_fraction": 0.51148,
+        "absolute_error_delta_quantiles_eV": [
+          -2.812171459197998,
+          -0.10176200866699218,
+          -0.04513061046600342,
+          -0.0016336441040039062,
+          0.041213274002075195,
+          0.09625921249389646,
+          1.7248706817626953
+        ],
+        "posthoc_reference_error_quintiles": [
+          {
+            "reference_error_quintile": 1,
+            "rows": 10000,
+            "reference_mae_eV": 0.015586216855049134,
+            "candidate_mae_eV": 0.05586518306732178,
+            "candidate_minus_reference_eV": 0.04027896621227264
+          },
+          {
+            "reference_error_quintile": 2,
+            "rows": 10000,
+            "reference_mae_eV": 0.04953482481241226,
+            "candidate_mae_eV": 0.06796286815404892,
+            "candidate_minus_reference_eV": 0.018428043341636658
+          },
+          {
+            "reference_error_quintile": 3,
+            "rows": 10000,
+            "reference_mae_eV": 0.0933182285785675,
+            "candidate_mae_eV": 0.09307223341464996,
+            "candidate_minus_reference_eV": -0.0002459951639175415
+          },
+          {
+            "reference_error_quintile": 4,
+            "rows": 10000,
+            "reference_mae_eV": 0.1626659429550171,
+            "candidate_mae_eV": 0.1439074239730835,
+            "candidate_minus_reference_eV": -0.018758518981933595
+          },
+          {
+            "reference_error_quintile": 5,
+            "rows": 10000,
+            "reference_mae_eV": 0.390685924205184,
+            "candidate_mae_eV": 0.33573454180657863,
+            "candidate_minus_reference_eV": -0.05495138239860535
+          }
+        ],
+        "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+      },
+      "positive_matched_ema_rungs": 59,
+      "matched_rungs": 60,
+      "final_live_train_mae_eV": 0.07132393170152006,
+      "final_ema_dev_mae_eV": 0.1399446427822113,
+      "terminal_relation_diagnostics": {
+        "changed_layers": [
+          3,
+          6,
+          9,
+          12
+        ],
+        "mode": "degree_local_triplet_aggregate_ema999",
+        "return_rms_first_scheduled_batch": [
+          0.6075993180274963,
+          0.7409217357635498,
+          0.32781195640563965,
+          1.514803171157837
+        ],
+        "return_weight_norm_epoch_end": [
+          3.932175874710083,
+          3.537538766860962,
+          3.5452370643615723,
+          4.718289375305176
+        ],
+        "return_gradient_norm_last_batch": [
+          0.013846256770193577,
+          0.008101399056613445,
+          0.0025072749704122543,
+          0.003139662789180875
+        ]
+      },
+      "raw_diagnostic_ref": {
+        "ref": "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/trace.json",
+        "sha256": "0595627d7bcf5d111efd00650f799d00cda86f8738cad88adf91fa58218845a2"
+      },
+      "native_preflight_profile": {
+        "warmup_steps": 5,
+        "measured_steps": 30,
+        "graphs_per_second": 402.3209831301467,
+        "elapsed_seconds": 9.544617757999958,
+        "estimated_training_hours": 4.14130359388776,
+        "maximum_estimated_training_hours": 6.0,
+        "peak_allocated_bytes": 1207273472,
+        "peak_reserved_bytes": 1224736768,
+        "total_memory_bytes": 15636037632,
+        "memory_reserve_fraction_from_reserved": 0.9216721782829743,
+        "gpu_utilization_percent": 13.0
+      }
+    },
+    "degree_local_triplet_attention_ema999": {
+      "parameters": 5889409,
+      "best_epoch": 46,
+      "material_gain_eV": 0.0030432899570465087,
+      "material_gate_passed": true,
+      "epoch_mean_seconds": 307.24966341128317,
+      "final_ten_ema_change_eV": 0.0002810060977935791,
+      "final_live_dev_eV": 0.13967496156692505,
+      "paired_analysis": {
+        "rows": 50000,
+        "reference_mae_eV": 0.142358227481246,
+        "candidate_mae_eV": 0.1393149375241995,
+        "candidate_minus_reference_eV": -0.0030432899570465087,
+        "paired_row_bootstrap": {
+          "delta": -0.0030432899570465087,
+          "ci95": [
+            -0.003916955387115479,
+            -0.0021277863973379134
+          ],
+          "probability_better": 1.0,
+          "n_bootstrap": 5000,
+          "seed": 20260912
+        },
+        "candidate_win_fraction": 0.50762,
+        "absolute_error_delta_quantiles_eV": [
+          -1.9858207702636719,
+          -0.10681028366088867,
+          -0.04718005657196045,
+          -0.001165151596069336,
+          0.04396510124206543,
+          0.09949688911437986,
+          2.4135568141937256
+        ],
+        "posthoc_reference_error_quintiles": [
+          {
+            "reference_error_quintile": 1,
+            "rows": 10000,
+            "reference_mae_eV": 0.015586216855049134,
+            "candidate_mae_eV": 0.05794560763835907,
+            "candidate_minus_reference_eV": 0.042359390783309935
+          },
+          {
+            "reference_error_quintile": 2,
+            "rows": 10000,
+            "reference_mae_eV": 0.04953482481241226,
+            "candidate_mae_eV": 0.07046289991140366,
+            "candidate_minus_reference_eV": 0.020928075098991392
+          },
+          {
+            "reference_error_quintile": 3,
+            "rows": 10000,
+            "reference_mae_eV": 0.0933182285785675,
+            "candidate_mae_eV": 0.09468294217586518,
+            "candidate_minus_reference_eV": 0.0013647135972976684
+          },
+          {
+            "reference_error_quintile": 4,
+            "rows": 10000,
+            "reference_mae_eV": 0.1626659429550171,
+            "candidate_mae_eV": 0.1414031717300415,
+            "candidate_minus_reference_eV": -0.021262771224975587
+          },
+          {
+            "reference_error_quintile": 5,
+            "rows": 10000,
+            "reference_mae_eV": 0.390685924205184,
+            "candidate_mae_eV": 0.33208006616532804,
+            "candidate_minus_reference_eV": -0.058605858039855956
+          }
+        ],
+        "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+      },
+      "positive_matched_ema_rungs": 57,
+      "matched_rungs": 60,
+      "final_live_train_mae_eV": 0.07135168998382656,
+      "final_ema_dev_mae_eV": 0.13966749608516693,
+      "terminal_relation_diagnostics": {
+        "changed_layers": [
+          3,
+          6,
+          9,
+          12
+        ],
+        "mode": "degree_local_triplet_attention_ema999",
+        "return_rms_first_scheduled_batch": [
+          0.7224794030189514,
+          1.0050249099731445,
+          0.5725904107093811,
+          1.3468258380889893
+        ],
+        "return_weight_norm_epoch_end": [
+          3.7623331546783447,
+          3.550189971923828,
+          3.6657562255859375,
+          4.44506311416626
+        ],
+        "return_gradient_norm_last_batch": [
+          0.009078203700482845,
+          0.00819280743598938,
+          0.0024588757660239935,
+          0.0013093966990709305
+        ]
+      },
+      "raw_diagnostic_ref": {
+        "ref": "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_attention_ema999/training/trace.json",
+        "sha256": "dd4ac5cfba658514a1674c7883b7f7f17aeb4b005d063c3c14e166c9af0fe51f"
+      },
+      "native_preflight_profile": {
+        "warmup_steps": 5,
+        "measured_steps": 30,
+        "graphs_per_second": 385.8225669296535,
+        "elapsed_seconds": 9.95276152599996,
+        "estimated_training_hours": 4.318392639892205,
+        "maximum_estimated_training_hours": 6.0,
+        "peak_allocated_bytes": 1373002752,
+        "peak_reserved_bytes": 1398800384,
+        "total_memory_bytes": 15636037632,
+        "memory_reserve_fraction_from_reserved": 0.9105399707444245,
+        "gpu_utilization_percent": 0.0
+      }
+    }
+  },
+  "attention_versus_aggregation": {
+    "rows": 50000,
+    "reference_mae_eV": 0.13930845008313655,
+    "candidate_mae_eV": 0.1393149375241995,
+    "candidate_minus_reference_eV": 6.487441062927246e-06,
+    "paired_row_bootstrap": {
+      "delta": 6.487441062927246e-06,
+      "ci95": [
+        -0.0008484976592063904,
+        0.0009294359084367751
+      ],
+      "probability_better": 0.4902,
+      "n_bootstrap": 5000,
+      "seed": 20260912
+    },
+    "candidate_win_fraction": 0.49776,
+    "absolute_error_delta_quantiles_eV": [
+      -2.0165040493011475,
+      -0.1024266719818115,
+      -0.04424595832824707,
+      0.0003077983856201172,
+      0.044686317443847656,
+      0.10074777603149412,
+      2.5465948581695557
+    ],
+    "posthoc_reference_error_quintiles": [
+      {
+        "reference_error_quintile": 1,
+        "rows": 10000,
+        "reference_mae_eV": 0.015274919962882995,
+        "candidate_mae_eV": 0.05730942258834839,
+        "candidate_minus_reference_eV": 0.042034502625465396
+      },
+      {
+        "reference_error_quintile": 2,
+        "rows": 10000,
+        "reference_mae_eV": 0.04854323579072952,
+        "candidate_mae_eV": 0.06894783490896225,
+        "candidate_minus_reference_eV": 0.020404599118232728
+      },
+      {
+        "reference_error_quintile": 3,
+        "rows": 10000,
+        "reference_mae_eV": 0.09180195033550262,
+        "candidate_mae_eV": 0.09537396516799927,
+        "candidate_minus_reference_eV": 0.003572014832496643
+      },
+      {
+        "reference_error_quintile": 4,
+        "rows": 10000,
+        "reference_mae_eV": 0.16051133251190186,
+        "candidate_mae_eV": 0.14200113959312438,
+        "candidate_minus_reference_eV": -0.018510192918777466
+      },
+      {
+        "reference_error_quintile": 5,
+        "rows": 10000,
+        "reference_mae_eV": 0.3804108118146658,
+        "candidate_mae_eV": 0.33294232536256313,
+        "candidate_minus_reference_eV": -0.04746848645210266
+      }
+    ],
+    "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+  },
+  "attention_to_aggregation_epoch_time_ratio": 1.0593202078917434,
+  "native_cost": {
+    "allocated_gpu_inventory": [
+      "GPU 0: Tesla T4 (UUID: GPU-92a82576-a5ad-d499-b9eb-6a94f4fc8c7b)",
+      "GPU 1: Tesla T4 (UUID: GPU-cc0e9852-c6e2-05f8-f022-8a8fba601075)"
+    ],
+    "allocated_gpu_count": 2,
+    "used_gpu_count": 2,
+    "wall_seconds": 18586.408826577,
+    "allocated_device_hours": 10.325782681431667,
+    "source_archive_sha256": "d19f62f4efacb18cd0d38b9c4aa68826a55bdfc1a422ce8b381fad7a17b1e622"
+  },
+  "decision": "Retain both 100K positives; prioritize aggregation for a separately authorized transfer test. No statistically established attention advantage, convergence/500K/full/seed stability claim, or automatic successor."
+}

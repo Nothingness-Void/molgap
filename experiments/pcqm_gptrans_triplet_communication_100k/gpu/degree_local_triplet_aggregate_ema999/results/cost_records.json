@@ -1,0 +1,36 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-g1-local-triplet-aggregate-100k-s42-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/results/observed_metadata.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 5.162891340715833
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 5.162891340715833
+        }
+      },
+      "platform": "kaggle2-t4-gptrans-triplet-communication",
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_aggregate_ema999",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+    }
+  ],
+  "source_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/results/observed_metadata.json",
+  "source_sha256": "7b866eff80378c9a009fd7583c922a171ee83166f3d75a8d61375a1a5e3cc5f4"
+}

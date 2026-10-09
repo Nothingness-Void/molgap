@@ -1,0 +1,21 @@
+{
+  "event_id": "evt-16cb70377c681764807597a1",
+  "event_status": "CLOSED",
+  "physical_run": {
+    "kernel_id": 137723341,
+    "version": 1
+  },
+  "decision_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/interpretation.md",
+  "scientific_outcome": {
+    "accepted": true,
+    "independent_complete_replay_pairs": 2,
+    "next_action": "CLOSE",
+    "scientific_status": "both_100k_positive_under_contract",
+    "successor_submitted": false,
+    "transfer_status": "not_evaluated"
+  },
+  "heartbeat_state": "PAUSED",
+  "model_inference_executed": false,
+  "local_training_executed": false,
+  "new_remote_job_submitted": false
+}
