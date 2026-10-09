@@ -199,15 +199,14 @@ def release_inputs(tmp_path, monkeypatch):
             "execution_status": "complete_no_training", "artifact_status": "local_hash_verified",
             "scientific_status": "NO_TRAIN"}})
     hashes = {p["path"]: p["sha256"] for p in (decision, acceptance)}
-    terminal = write(prep.CLEAN + "/terminal.json", {
+    terminal = write(prep.CLEAN + "/rml/rml_finalized/terminal_input.json", {
         "format": "molgap-rml-terminal-package-v1", "trajectory_id": "clean-fit",
         "acceptance_ref": acceptance["path"], "artifact_hashes": hashes,
         "decision": {"outcome": "NO_TRAIN", "decision_ref": decision["path"]}})
     finalization = write(prep.CLEAN + "/closure_receipt.json", {
         "format": "molgap-rml-finalization-v1", "trajectory_id": "clean-fit",
         "finalization_id": "finalize-test", "finalized_at": "2026-10-09", "outcome": "NO_TRAIN",
-        "input_artifact_hashes": hashes, "published_hashes": {"terminal_input.json":
-            prep.hashlib.sha256(prep.json_bytes(prep.read(tmp_path / terminal["path"]))).hexdigest()}})
+        "input_artifact_hashes": hashes, "published_hashes": {"terminal_input.json": terminal["sha256"]}})
     profile = write(prep.REL + "/profile/acceptance.json", {"fixture": "synthetic owner receipt"})
     release = {"format": prep.RELEASE_FORMAT, "controller": "human-controller",
         "approved_by": "test-human", "approved_at": "2026-10-09", "source_commit": "1" * 40,
@@ -415,7 +414,31 @@ def test_integrated_clean_fit_receipt_binding_compatibility(release_inputs):
         path = root / binding["path"]
         path.write_bytes((ROOT / binding["path"]).read_bytes())
         binding["sha256"] = prep.file_digest(path)
+    receipt = prep.read(root / release["clean_fit"]["finalization"]["path"])
+    assert release["clean_fit"]["terminal"]["sha256"] == receipt["published_hashes"]["terminal_input.json"]
     write(ref, release)
     validated = prep.validate_parent_release(root, Path(ref), source_commit="1" * 40)
     assert validated["binding"]["sha256"] == prep.file_digest(root / ref)
     assert len(calls) == 1
+
+
+def test_raw_question_terminal_pin_rejected_even_with_equivalent_json(release_inputs):
+    root, ref, release, write, calls = release_inputs
+    terminal = release["clean_fit"]["terminal"]
+    release["clean_fit"]["terminal"] = write(prep.CLEAN + "/terminal.json", prep.read(root / terminal["path"]))
+    write(ref, release)
+    with pytest.raises(ValueError, match="integrated canonical records"):
+        prep.validate_parent_release(root, Path(ref), source_commit="1" * 40)
+    assert not calls
+
+
+def test_finalized_terminal_reserialization_rejected_after_repin(release_inputs):
+    root, ref, release, write, calls = release_inputs
+    binding = release["clean_fit"]["terminal"]
+    path = root / binding["path"]
+    path.write_bytes(path.read_bytes() + b"\n")
+    binding["sha256"] = prep.file_digest(path)
+    write(ref, release)
+    with pytest.raises(ValueError, match="does not bind terminal input"):
+        prep.validate_parent_release(root, Path(ref), source_commit="1" * 40)
+    assert not calls

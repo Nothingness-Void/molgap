@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 import copy
-import hashlib
 import importlib.util
 import json
 import math
@@ -18,7 +17,7 @@ from molgap.experiment_source_inventory import SHARED_SOURCE_FILES
 from molgap.k1_screen_training import validate_recipe, validate_screen_recipe
 from molgap.research_memory.schemas import validate_cost_event, validate_trajectory
 from molgap.research_memory.policy import validate_policy
-from molgap.research_memory.trace import atomic_write, file_digest, json_bytes
+from molgap.research_memory.trace import atomic_write, file_digest
 from molgap.screen_policy import canonical_fingerprint
 from molgap.v4_runtime import inspect_frozen_state_artifact, normalized_source_sha256
 
@@ -103,7 +102,7 @@ def validate_parent_release(root: Path, release_file: Path, *, source_commit: st
     if not isinstance(clean, dict):
         raise ValueError("Missing clean-fit pins and manual assessment")
     paths = {key: _bound(root, clean.get(key)) for key in ("terminal", "acceptance", "decision", "finalization")}
-    for key, name in (("terminal", "terminal.json"), ("acceptance", "acceptance.json"),
+    for key, name in (("terminal", "rml/rml_finalized/terminal_input.json"), ("acceptance", "acceptance.json"),
                       ("decision", "terminal_decision.md"), ("finalization", "closure_receipt.json")):
         if paths[key] != (root / CLEAN / name).resolve():
             raise ValueError("Clean-fit pins must name the integrated canonical records")
@@ -134,7 +133,7 @@ def validate_parent_release(root: Path, release_file: Path, *, source_commit: st
         if (receipt.get("input_artifact_hashes", {}).get(pin["path"]) != pin["sha256"]
                 or terminal.get("artifact_hashes", {}).get(pin["path"]) != pin["sha256"]):
             raise ValueError("Clean-fit finalization/terminal does not pin accepted decision")
-    if receipt.get("published_hashes", {}).get("terminal_input.json") != hashlib.sha256(json_bytes(terminal)).hexdigest():
+    if receipt.get("published_hashes", {}).get("terminal_input.json") != clean["terminal"]["sha256"]:
         raise ValueError("Clean-fit finalization does not bind terminal input")
     if (clean.get("assessment") != "NO_URGENT_FITTING_FAILURE"
             or not isinstance(clean.get("rationale"), str) or not clean["rationale"].strip()):

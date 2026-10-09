@@ -70,7 +70,7 @@ below are not a release:
     "sha256": "actual SHA256"
   },
   "clean_fit": {
-    "terminal": {"path": "experiments/pcqm_k1_clean_fit_generalization_500k/terminal.json", "sha256": "actual SHA256"},
+    "terminal": {"path": "experiments/pcqm_k1_clean_fit_generalization_500k/rml/rml_finalized/terminal_input.json", "sha256": "actual SHA256"},
     "acceptance": {"path": "experiments/pcqm_k1_clean_fit_generalization_500k/acceptance.json", "sha256": "actual SHA256"},
     "decision": {"path": "experiments/pcqm_k1_clean_fit_generalization_500k/terminal_decision.md", "sha256": "actual SHA256"},
     "finalization": {"path": "experiments/pcqm_k1_clean_fit_generalization_500k/closure_receipt.json", "sha256": "actual SHA256"},
@@ -90,10 +90,12 @@ native-profile validator, raw completion or `accepted=true` grants authority.
 
 Clean-fit bindings must name the canonical files integrated into this same
 repository. Its `molgap-rml-finalization-v1` receipt must finalize NO_TRAIN,
-bind `terminal_input.json` to the pinned terminal object's shared `json_bytes`
-serialization (the terminal file's raw bytes are independently SHA-pinned), and pin the acceptance
+bind `terminal_input.json` to the exact raw-byte SHA of the pinned finalized
+`rml/rml_finalized/terminal_input.json`, and pin the acceptance
 and decision in `input_artifact_hashes`; terminal `artifact_hashes` must agree.
 Acceptance must retain complete/no-training, hash-verified, NO_TRAIN outcomes.
+The question-root `terminal.json` is not an eligible terminal pin, even if its
+JSON object is equivalent: different serialization does not match frozen custody.
 The manual assessment is parent judgement, not a new scientific inference
 validator or causal underfit/overfit claim. The clean-fit NO_TRAIN disposition
 itself does not authorize this separate pair.
