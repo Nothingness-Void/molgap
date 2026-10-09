@@ -1,5 +1,13 @@
 # Execution status
 
+2026-10-09 terminal custody is finalized for both arms. See the
+[official idempotent closure receipt](clean_bn/rml_terminal_20261009/official_closure_receipt.json)
+and [custody exclusions](clean_bn/rml_terminal_20261009/README.md).
+The original prospective references remain empty; actual 60-observation traces
+are retained with null reference and explicit replay exclusions. No strict
+comparison, model adoption, successor or full-training release was added.
+The earlier blocker and observations below remain historical evidence.
+
 2026-10-09 selected-state clean-BN diagnostic completed on local CPU; no new
 GPU job. [Decision](clean_bn/DECISION.md) owns the negative material nomination
 and [attribution](clean_bn/ATTRIBUTION.md) its limits. Both raw and identically

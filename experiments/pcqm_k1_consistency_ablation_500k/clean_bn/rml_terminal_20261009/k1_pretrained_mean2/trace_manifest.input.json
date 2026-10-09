@@ -1,0 +1,59 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "closure_synthesized_manifest_not_prelaunch_calibrated",
+      "missing_frozen_reference",
+      "multiple_physical_jobs_unqualified_for_strict_replay",
+      "unobserved_checkpoint_identities",
+      "missing_per_observation_cumulative_native_cost",
+      "one_seed_consumed_selection_role_not_independent_transfer"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "retained-K1-3658817-parameters",
+    "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "consumed-internal-development50K",
+    "lr_schedule_identity": "cosine60-epoch0-4e-4-epoch59-1e-6",
+    "matched_architecture_required": false,
+    "optimizer_identity": "adamw-unfused-foreachFalse-lr4e-4-wd1e-5-clip1",
+    "precision_identity": "fp32",
+    "row_split_identity": "global-randperm-seed42-plus-epoch-drop-last32",
+    "scientific_contract": "pcqm-composed500k-dev50k-60pass-v1",
+    "selection_role_identity": "best-development-live-60epochs",
+    "target_transform_identity": "45c1de3bec7070e1b53bb4d45950897b84b2e7f23a7f019f85b04e10c2256834",
+    "terminal_endpoint_identity": "endpoint_234360",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
+  "evaluation_role_identity": "consumed-internal-development50K",
+  "exposure": {
+    "optimizer_steps": 234360,
+    "sample_presentations": 29998080
+  },
+  "metric_semantics": "Development Gap MAE/eV; train scaled objective/eV-equivalent, not clean inference MAE",
+  "model_identity": "frozen-recipe-sha256:9b47a7e6eaf98f0380f3c17add98b905b22df271efd3de90775a7f146aaecb15",
+  "presentation_semantics_ref": "experiments/pcqm_k1_consistency_ablation_500k/protocol.md",
+  "reference_id": null,
+  "run_id": "molgap-k1-consistency-500k-pair-s42-v1:k1_pretrained_mean2",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best-development-live-60epochs",
+  "terminal_evidence_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/rml_terminal_20261009/k1_pretrained_mean2/evidence.input.json",
+  "trace_artifact_ref": "experiments/pcqm_k1_consistency_ablation_500k/clean_bn/results_attempt3_20261009/rml_audit/k1_pretrained_mean2/canonical_trace.json",
+  "trace_artifact_sha256": "82b8a9942222a4277ddf90f8e026b66af77def29a1bdd03b1ee4327ffe149bcc",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}
