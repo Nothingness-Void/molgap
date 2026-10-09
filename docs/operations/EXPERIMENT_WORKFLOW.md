@@ -149,7 +149,11 @@ the explicit `NvidiaTeslaT4` allocation only.
 }
 ```
 
-`prepare-workflow` requires a fresh output directory. It checks every arm and
+`prepare-workflow` requires a fresh output directory outside `experiments/`;
+use ignored `platforms/_records/<platform>/staging/` so staged trajectory copies
+cannot be rediscovered as canonical RML. In a new worktree, verify existing RML
+and materialize its declared retained artifacts before preparation; Git does
+not copy ignored artifacts between checkouts. It checks every arm and
 the pinned acceptance inputs, builds the immutable source package, runs the
 family's static recipe checks, and runs `check_release_inputs`. These checks
 bind the fixed recipe, initialization, sampler, roles, exposure and packaged
