@@ -287,4 +287,3 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
         report["blockers"] = [b for b in report["blockers"]
             if not b.startswith(("Parent must validate passed", "Release API pending:"))]
     return records
-
