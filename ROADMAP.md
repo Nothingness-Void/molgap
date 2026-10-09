@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| 1 | C-GPTRANS-TRIPLET-PORTABILITY | Execute the separately authorized frozen-checkpoint later-cohort diagnostic, reusing accepted parent predictions. | Independent saved-output NO_TRAIN acceptance, cost/role/terminal RML closure and controller interpretation; no automatic500K training |
+| — | C-GPTRANS-TRIPLET-PORTABILITY | Closed: positive but uncertain later-cohort point gain did not pass its frozen gate. | Preserve the [NO_TRAIN interpretation](experiments/pcqm_gptrans_triplet_portability/decision_terminal.md) and applicable complete diagnostic evidence; no500K training or automatic successor |
 | 1 | C-GPTRANS-TRIPLET-COMMUNICATION | Both100K positives accepted; aggregation retained as the lower-cost transfer-study priority. | Preserve the [terminal interpretation](experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/interpretation.md) and two complete Replay pairs; further execution requires separate authority |
 | — | C-GPTRANS-LOCAL-RELATION | Closed: A positive below nomination gate, B worse; both actual complete Replay pairs accepted. | Preserve the [terminal interpretation](experiments/pcqm_gptrans_local_relation_100k/gpu/results/interpretation.md); no automatic successor, scale or extra seed |
 | 1 | C-GPTRANS-LOCAL-TRANSFER | Positive same-budget500K result accepted with a complete Replay pair; retain without automatic expansion. | Preserve the [interpretation](experiments/pcqm_gptrans_local_transfer_500k/gpu/results/interpretation.md); late-exposure/full questions require new matched authority, and protocol-bound NO_TRAIN probes require accepted-parent hashes and separate records |

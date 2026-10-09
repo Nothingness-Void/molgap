@@ -7,12 +7,11 @@
 ## Server active screen
 
 The authorized [triplet frozen-cohort diagnostic](experiments/pcqm_gptrans_triplet_portability/protocol.md)
-is submitted to Kaggle2 with actual identity in its
-[receipt](experiments/pcqm_gptrans_triplet_portability/submission_receipt.json).
-It reuses accepted parent predictions and performs aggregation-checkpoint
-reproduction/later-cohort inference only. Existing Luna B owns the exact
-[binding](experiments/pcqm_gptrans_triplet_portability/monitor_binding.json).
-This NO_TRAIN action releases no500K training, extra seed or automatic successor.
+is accepted and closed NO_TRAIN / PAIRED_ENDPOINT. Its later-cohort point gain
+was positive but uncertain and did not pass the predeclared consideration gate;
+retain the [interpretation](experiments/pcqm_gptrans_triplet_portability/decision_terminal.md).
+Existing Luna B's event/binding are closed and heartbeat paused. This diagnostic
+is not a training Replay pair and releases no500K training, extra seed or successor.
 
 The authorized [triplet communication dual100K](experiments/pcqm_gptrans_triplet_communication_100k/protocol.md)
 is closed after independent saved-output acceptance. Both arms passed their

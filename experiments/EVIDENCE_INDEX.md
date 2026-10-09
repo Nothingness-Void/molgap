@@ -76,3 +76,5 @@ was authorized for eval-only derivatives and paired cohort inference, not traini
 
 The 2026-10-10 [triplet aggregation portability](pcqm_gptrans_triplet_portability/decision.md)
 was authorized for frozen inference on the predeclared later cohort, not500K training.
+Its [terminal interpretation](pcqm_gptrans_triplet_portability/decision_terminal.md)
+retained positive-but-uncertain point evidence without passing the frozen gate.
