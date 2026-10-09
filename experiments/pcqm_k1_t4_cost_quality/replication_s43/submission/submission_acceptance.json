@@ -1,0 +1,28 @@
+{
+  "format": "molgap-desktop-submission-observation-v1",
+  "kernel": "nvoid912/molgap-k1-cost-quality-100k-s43-v1",
+  "kernel_id": 137916988,
+  "version_number": 1,
+  "script_version_id": null,
+  "source_commit": "b984d506837b738082c2cbf2ae9209d6862810ea",
+  "package_identity": "7c183eaffc8e0d421a1ff4ba1762635107ff462a6b7d46dfd4ea5dbbc947e462",
+  "source_archive_sha256": "4f1fc1002528f90a789f51b991f2f080959d64c3026eebfe0d74e18f66082b43",
+  "state_observation": {
+    "kernel": "nvoid912/molgap-k1-cost-quality-100k-s43-v1",
+    "observed_at": "2026-10-09T19:12:51.703500+00:00",
+    "state": {
+      "status": "RUNNING",
+      "failureMessage": null
+    }
+  },
+  "private_and_gpu_metadata_verified": true,
+  "exact_entry_source_verified": true,
+  "dataset_layout_verified": true,
+  "launch_receipt_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/submission/launch/039662f0df20bc328b45b53f55d0e73cec03056bb1264f03a9170fb868b7b229.json",
+  "native_runtime_qualification": "pending",
+  "training_complete": false,
+  "scientific_acceptance": "pending",
+  "replay_ready": false,
+  "continuation_or_retry_authorized": false,
+  "heartbeat_or_local_trigger": false
+}
