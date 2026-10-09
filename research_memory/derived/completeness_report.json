@@ -1,9 +1,9 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 102,
-    "with_complete_native_measurement": 20,
-    "with_cost_event": 91,
+    "trajectories_total": 103,
+    "with_complete_native_measurement": 21,
+    "with_cost_event": 92,
     "with_incomplete_native_measurement": 71,
     "without_cost_event": 11
   },
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 77,
+      "count": 78,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -58,6 +58,7 @@
         "TB-k1-500k-bn-calibration-20261007",
         "TB-k1-500k-bottleneck-diagnostic-20261007",
         "TB-k1-bn-mechanism-a100-20261008",
+        "TB-k1-clean-fit-generalization-500k-20261009",
         "TB-k1-colab-execution-profile-20261007",
         "TB-k1-complete-module-audit-20261008",
         "TB-k1-consistency-fusion-transfer-20261004",

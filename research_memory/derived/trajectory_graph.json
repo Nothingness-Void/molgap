@@ -231,6 +231,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-clean-fit-generalization-500k-20261009:A001",
+      "target": "experiments/pcqm_k1_clean_fit_generalization_500k/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-colab-execution-profile-20261007:A001",
       "target": "experiments/pcqm_k1_colab_execution_profile/inputs.json",
       "type": "action_produced_evidence"
@@ -966,6 +971,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "k1-saved-bn-rows-20261008-evidence",
+      "target": "TB-k1-clean-fit-generalization-500k-20261009",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-distance-angle-triangle-500k-20260911",
       "target": "TB-pcqm-geometry-component-attribution-20260928",
       "type": "prior_evidence"
@@ -1578,6 +1588,11 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-late-weight-average-20261008",
+      "target": "TB-k1-clean-fit-generalization-500k-20261009",
       "type": "prior_evidence"
     },
     {
@@ -2357,6 +2372,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-colab-execution-profile-20261007",
       "type": "evidence"
     },
@@ -2726,6 +2745,10 @@
     },
     {
       "id": "TB-k1-bn-mechanism-a100-20261008",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-clean-fit-generalization-500k-20261009",
       "type": "trajectory"
     },
     {

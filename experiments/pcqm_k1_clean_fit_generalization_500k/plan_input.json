@@ -1,0 +1,138 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "k1-clean-fit-generalization",
+    "question": "How do matched clean train-sample and consumed-development errors change across frozen arms/epochs/BN states?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-clean-fit-generalization-20261009",
+      "observed_deficiency": "Optimizer-scaled train trace is not clean fit; late clean dev loss and BN sensitivity leave clean train gap unmeasured.",
+      "supporting_evidence_ids": [
+        "pcqm-k1-late-weight-average-20261008",
+        "k1-saved-bn-rows-20261008-evidence"
+      ],
+      "alternative_explanations": [
+        "Clean train and development move together",
+        "Development degrades despite improved sampled train fit",
+        "Calibration changes in-sample fit and dev differently"
+      ],
+      "changed_mechanism": "Frozen clean evaluation only; no model or training intervention",
+      "cheapest_falsifier": "Bounded CPU fixed16384 clean train predictions and retained/full50K dev endpoints",
+      "decision_changed_if_positive": "Describe observed clean-fit discrepancy; no causal proof or training release",
+      "decision_changed_if_negative": "Rule out this exact descriptive gap pattern; no blind retry",
+      "expected_native_cost_ref": "cost-k1-clean-fit-generalization-expected",
+      "related_closed_family_ids": [
+        "k1-late-weight-average",
+        "k1-saved-bn-rows"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "bb9b4ed1213e0e33906dd737fd8e6f038c5040a8",
+      "source_config_identity": "d24e0d752c5ce2613672ff028c723e0bf163d324d9a5df15e09485722d455566",
+      "contract_refs": [
+        "experiments/pcqm_k1_clean_fit_generalization_500k/protocol.md",
+        "experiments/pcqm_k1_clean_fit_generalization_500k/inputs.json",
+        "experiments/pcqm_k1_clean_fit_generalization_500k/evidence_review.md"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-late-weight-average-20261008",
+        "k1-saved-bn-rows-20261008-evidence"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_clean_fit_generalization_500k/roles.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_clean_fit_generalization_500k/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "authorized_local_clean_fit_diagnostic",
+        "run_ids": [
+          "local-k1-clean-fit-generalization-500k-20261009"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "bb9b4ed1213e0e33906dd737fd8e6f038c5040a8",
+        "evidence_refs": [
+          "experiments/pcqm_k1_clean_fit_generalization_500k/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-clean-fit-generalization-expected"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_clean_fit_generalization_500k/decision.md",
+      "next_allowed_actions": [
+        "One bounded CPU clean-fit diagnostic"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_clean_fit_generalization_500k/protocol.md",
+    "comparison_blockers": [
+      "Consumed selected development",
+      "Train calibration in-sample",
+      "No independent-role or strict training replay qualification"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-clean-fit-generalization-expected",
+      "trajectory_id": "TB-k1-clean-fit-generalization-500k-20261009",
+      "action_id": "A001",
+      "run_id": "local-k1-clean-fit-generalization-500k-20261009",
+      "attempt_id": "attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU four threads; no accelerator",
+      "category": "inference",
+      "evidence_ref": "experiments/pcqm_k1_clean_fit_generalization_500k/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.3333333333333333,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-clean-fit-generalization-500k",
+    "policy_version": "1",
+    "state_timestamp": "2026-10-09T08:11:53.841644+00:00",
+    "budget_snapshot_ref": "experiments/pcqm_k1_clean_fit_generalization_500k/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_clean_fit_generalization_500k/roles.json"
+    ],
+    "source_commit": "bb9b4ed1213e0e33906dd737fd8e6f038c5040a8"
+  }
+}

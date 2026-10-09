@@ -1,0 +1,501 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-10-09T08:12:32.170239+00:00",
+  "cases": {
+    "k1_pretrained_mean2_epoch49_original": {
+      "train": {
+        "rows": 16384,
+        "wall_seconds": 11.026829700000235,
+        "process_cpu_seconds": 43.453125,
+        "forward_seconds": 10.583824000004824,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "k1_pretrained_mean2_epoch49_calibrated": {
+      "train": {
+        "rows": 16384,
+        "wall_seconds": 10.717580600001384,
+        "process_cpu_seconds": 42.1875,
+        "forward_seconds": 10.301447199970426,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "k1_pretrained_mean2_epoch60_original": {
+      "train": {
+        "rows": 16384,
+        "wall_seconds": 11.554474799999298,
+        "process_cpu_seconds": 45.671875,
+        "forward_seconds": 11.079651600022771,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "rows": 50000,
+        "wall_seconds": 40.98920350000117,
+        "process_cpu_seconds": 160.59375,
+        "forward_seconds": 34.83411749999868,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "k1_pretrained_mean2_epoch60_calibrated": {
+      "train": {
+        "rows": 16384,
+        "wall_seconds": 10.653731400001561,
+        "process_cpu_seconds": 41.78125,
+        "forward_seconds": 10.224329500037129,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "rows": 50000,
+        "wall_seconds": 34.19916580000063,
+        "process_cpu_seconds": 135.46875,
+        "forward_seconds": 32.66489279998132,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "calibration": {
+        "rows": 16384,
+        "batches": 128,
+        "bn_modules": 18,
+        "num_batches_tracked": {
+          "local_blocks.0.norm1.module": 128,
+          "local_blocks.0.norm3.module": 128,
+          "local_blocks.1.norm1.module": 128,
+          "local_blocks.1.norm3.module": 128,
+          "local_blocks.2.norm1.module": 128,
+          "local_blocks.2.norm3.module": 128,
+          "local_blocks.3.norm1.module": 128,
+          "local_blocks.3.norm3.module": 128,
+          "local_blocks.4.norm1.module": 128,
+          "local_blocks.4.norm3.module": 128,
+          "local_blocks.5.norm1.module": 128,
+          "local_blocks.5.norm3.module": 128,
+          "local_blocks.6.norm1.module": 128,
+          "local_blocks.6.norm3.module": 128,
+          "local_blocks.7.norm1.module": 128,
+          "local_blocks.7.norm3.module": 128,
+          "local_blocks.8.norm1.module": 128,
+          "local_blocks.8.norm3.module": 128
+        },
+        "wall_seconds": 10.522357199999533,
+        "process_cpu_seconds": 41.546875,
+        "parameters_unchanged": true,
+        "non_bn_buffers_unchanged": true,
+        "dropout_disabled": true,
+        "passes_per_batch": 1,
+        "labels_used_for_calibration": false,
+        "buffer_sha256_before": "25dd0775cb164d7c3ff44cd2e4855efba27489455923c73301152144aceb0f80",
+        "buffer_sha256_calibrated": "2851e49656e2288d4c7c94296b4f4be887f481a5fd66b2b31920a9bc35f633fa",
+        "bn_changes": {
+          "local_blocks.0.norm1.module": {
+            "running_mean_rms_change": 0.016138488426804543,
+            "running_var_mean_before": 2.849921464920044,
+            "running_var_mean_after": 2.734907865524292
+          },
+          "local_blocks.0.norm3.module": {
+            "running_mean_rms_change": 0.005376738496124744,
+            "running_var_mean_before": 1.0840345621109009,
+            "running_var_mean_after": 1.0846692323684692
+          },
+          "local_blocks.1.norm1.module": {
+            "running_mean_rms_change": 0.05120228976011276,
+            "running_var_mean_before": 29.339134216308594,
+            "running_var_mean_after": 28.921409606933594
+          },
+          "local_blocks.1.norm3.module": {
+            "running_mean_rms_change": 0.006597557570785284,
+            "running_var_mean_before": 1.2277805805206299,
+            "running_var_mean_after": 1.2252076864242554
+          },
+          "local_blocks.2.norm1.module": {
+            "running_mean_rms_change": 0.046813465654850006,
+            "running_var_mean_before": 20.151809692382812,
+            "running_var_mean_after": 19.901933670043945
+          },
+          "local_blocks.2.norm3.module": {
+            "running_mean_rms_change": 0.008637058548629284,
+            "running_var_mean_before": 1.315750002861023,
+            "running_var_mean_after": 1.3215802907943726
+          },
+          "local_blocks.3.norm1.module": {
+            "running_mean_rms_change": 0.036840714514255524,
+            "running_var_mean_before": 15.711749076843262,
+            "running_var_mean_after": 15.454625129699707
+          },
+          "local_blocks.3.norm3.module": {
+            "running_mean_rms_change": 0.006105653941631317,
+            "running_var_mean_before": 1.189009666442871,
+            "running_var_mean_after": 1.1950105428695679
+          },
+          "local_blocks.4.norm1.module": {
+            "running_mean_rms_change": 0.03706027567386627,
+            "running_var_mean_before": 16.346282958984375,
+            "running_var_mean_after": 16.207073211669922
+          },
+          "local_blocks.4.norm3.module": {
+            "running_mean_rms_change": 0.007456059567630291,
+            "running_var_mean_before": 1.1966521739959717,
+            "running_var_mean_after": 1.2008020877838135
+          },
+          "local_blocks.5.norm1.module": {
+            "running_mean_rms_change": 0.05454595014452934,
+            "running_var_mean_before": 21.565961837768555,
+            "running_var_mean_after": 21.499391555786133
+          },
+          "local_blocks.5.norm3.module": {
+            "running_mean_rms_change": 0.008415908552706242,
+            "running_var_mean_before": 1.2589025497436523,
+            "running_var_mean_after": 1.2655091285705566
+          },
+          "local_blocks.6.norm1.module": {
+            "running_mean_rms_change": 0.05472040921449661,
+            "running_var_mean_before": 22.953157424926758,
+            "running_var_mean_after": 22.6961612701416
+          },
+          "local_blocks.6.norm3.module": {
+            "running_mean_rms_change": 0.004399729892611504,
+            "running_var_mean_before": 1.243685245513916,
+            "running_var_mean_after": 1.2407597303390503
+          },
+          "local_blocks.7.norm1.module": {
+            "running_mean_rms_change": 0.06927787512540817,
+            "running_var_mean_before": 39.18159484863281,
+            "running_var_mean_after": 38.87556076049805
+          },
+          "local_blocks.7.norm3.module": {
+            "running_mean_rms_change": 0.0034538465552031994,
+            "running_var_mean_before": 1.219730019569397,
+            "running_var_mean_after": 1.2146300077438354
+          },
+          "local_blocks.8.norm1.module": {
+            "running_mean_rms_change": 0.10344632714986801,
+            "running_var_mean_before": 71.53495788574219,
+            "running_var_mean_after": 70.02293395996094
+          },
+          "local_blocks.8.norm3.module": {
+            "running_mean_rms_change": 0.022085998207330704,
+            "running_var_mean_before": 2.258430004119873,
+            "running_var_mean_after": 2.2572922706604004
+          }
+        },
+        "buffers_restored": true
+      }
+    },
+    "k1_pretrained_consistency_epoch49_original": {
+      "train": {
+        "rows": 16384,
+        "wall_seconds": 10.787994999998773,
+        "process_cpu_seconds": 42.9375,
+        "forward_seconds": 10.362082699983148,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "k1_pretrained_consistency_epoch49_calibrated": {
+      "train": {
+        "rows": 16384,
+        "wall_seconds": 10.907214900002145,
+        "process_cpu_seconds": 43.109375,
+        "forward_seconds": 10.46701039999607,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "k1_pretrained_consistency_epoch60_original": {
+      "train": {
+        "rows": 16384,
+        "wall_seconds": 10.585745799999131,
+        "process_cpu_seconds": 41.75,
+        "forward_seconds": 10.180397900006938,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "rows": 50000,
+        "wall_seconds": 33.611677599998075,
+        "process_cpu_seconds": 132.90625,
+        "forward_seconds": 32.1087635000149,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "k1_pretrained_consistency_epoch60_calibrated": {
+      "train": {
+        "rows": 16384,
+        "wall_seconds": 10.525468899999396,
+        "process_cpu_seconds": 41.59375,
+        "forward_seconds": 10.113226699999359,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "rows": 50000,
+        "wall_seconds": 34.438656499998615,
+        "process_cpu_seconds": 135.84375,
+        "forward_seconds": 32.56647110003178,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "calibration": {
+        "rows": 16384,
+        "batches": 128,
+        "bn_modules": 18,
+        "num_batches_tracked": {
+          "local_blocks.0.norm1.module": 128,
+          "local_blocks.0.norm3.module": 128,
+          "local_blocks.1.norm1.module": 128,
+          "local_blocks.1.norm3.module": 128,
+          "local_blocks.2.norm1.module": 128,
+          "local_blocks.2.norm3.module": 128,
+          "local_blocks.3.norm1.module": 128,
+          "local_blocks.3.norm3.module": 128,
+          "local_blocks.4.norm1.module": 128,
+          "local_blocks.4.norm3.module": 128,
+          "local_blocks.5.norm1.module": 128,
+          "local_blocks.5.norm3.module": 128,
+          "local_blocks.6.norm1.module": 128,
+          "local_blocks.6.norm3.module": 128,
+          "local_blocks.7.norm1.module": 128,
+          "local_blocks.7.norm3.module": 128,
+          "local_blocks.8.norm1.module": 128,
+          "local_blocks.8.norm3.module": 128
+        },
+        "wall_seconds": 10.700607399998262,
+        "process_cpu_seconds": 42.4375,
+        "parameters_unchanged": true,
+        "non_bn_buffers_unchanged": true,
+        "dropout_disabled": true,
+        "passes_per_batch": 1,
+        "labels_used_for_calibration": false,
+        "buffer_sha256_before": "693475929b4a005b1e5216d20e9512b6b8f3179169266de87eaf210d4fdc9066",
+        "buffer_sha256_calibrated": "719594e079eacc76b36029a95b41fc4d5f34b4ed98bb11d234ec1941667504ad",
+        "bn_changes": {
+          "local_blocks.0.norm1.module": {
+            "running_mean_rms_change": 0.016303978860378265,
+            "running_var_mean_before": 2.779076337814331,
+            "running_var_mean_after": 2.6678810119628906
+          },
+          "local_blocks.0.norm3.module": {
+            "running_mean_rms_change": 0.004522503819316626,
+            "running_var_mean_before": 1.084518313407898,
+            "running_var_mean_after": 1.0835442543029785
+          },
+          "local_blocks.1.norm1.module": {
+            "running_mean_rms_change": 0.04963769391179085,
+            "running_var_mean_before": 28.90638542175293,
+            "running_var_mean_after": 28.50843620300293
+          },
+          "local_blocks.1.norm3.module": {
+            "running_mean_rms_change": 0.006341211963444948,
+            "running_var_mean_before": 1.252426266670227,
+            "running_var_mean_after": 1.2481577396392822
+          },
+          "local_blocks.2.norm1.module": {
+            "running_mean_rms_change": 0.04194262996315956,
+            "running_var_mean_before": 19.154905319213867,
+            "running_var_mean_after": 18.929861068725586
+          },
+          "local_blocks.2.norm3.module": {
+            "running_mean_rms_change": 0.008918753825128078,
+            "running_var_mean_before": 1.3034377098083496,
+            "running_var_mean_after": 1.3143463134765625
+          },
+          "local_blocks.3.norm1.module": {
+            "running_mean_rms_change": 0.03935730829834938,
+            "running_var_mean_before": 14.949493408203125,
+            "running_var_mean_after": 14.737549781799316
+          },
+          "local_blocks.3.norm3.module": {
+            "running_mean_rms_change": 0.0062048351392149925,
+            "running_var_mean_before": 1.176375389099121,
+            "running_var_mean_after": 1.180012822151184
+          },
+          "local_blocks.4.norm1.module": {
+            "running_mean_rms_change": 0.03648550063371658,
+            "running_var_mean_before": 16.213668823242188,
+            "running_var_mean_after": 16.111984252929688
+          },
+          "local_blocks.4.norm3.module": {
+            "running_mean_rms_change": 0.006111450027674437,
+            "running_var_mean_before": 1.1868144273757935,
+            "running_var_mean_after": 1.1868513822555542
+          },
+          "local_blocks.5.norm1.module": {
+            "running_mean_rms_change": 0.05342431738972664,
+            "running_var_mean_before": 20.64690399169922,
+            "running_var_mean_after": 20.565860748291016
+          },
+          "local_blocks.5.norm3.module": {
+            "running_mean_rms_change": 0.007366734556853771,
+            "running_var_mean_before": 1.2556747198104858,
+            "running_var_mean_after": 1.265454649925232
+          },
+          "local_blocks.6.norm1.module": {
+            "running_mean_rms_change": 0.054271399974823,
+            "running_var_mean_before": 22.578134536743164,
+            "running_var_mean_after": 22.375930786132812
+          },
+          "local_blocks.6.norm3.module": {
+            "running_mean_rms_change": 0.005722244270145893,
+            "running_var_mean_before": 1.2451854944229126,
+            "running_var_mean_after": 1.239628791809082
+          },
+          "local_blocks.7.norm1.module": {
+            "running_mean_rms_change": 0.06816837191581726,
+            "running_var_mean_before": 38.44797134399414,
+            "running_var_mean_after": 38.1452751159668
+          },
+          "local_blocks.7.norm3.module": {
+            "running_mean_rms_change": 0.0038405084051191807,
+            "running_var_mean_before": 1.2498382329940796,
+            "running_var_mean_after": 1.2460094690322876
+          },
+          "local_blocks.8.norm1.module": {
+            "running_mean_rms_change": 0.09977981448173523,
+            "running_var_mean_before": 68.70932006835938,
+            "running_var_mean_after": 67.53423309326172
+          },
+          "local_blocks.8.norm3.module": {
+            "running_mean_rms_change": 0.024502038955688477,
+            "running_var_mean_before": 2.2414629459381104,
+            "running_var_mean_after": 2.250683069229126
+          }
+        },
+        "buffers_restored": true
+      }
+    }
+  },
+  "runtime": {
+    "device": "cpu",
+    "cpu_threads": 4,
+    "software": {
+      "format": "molgap-runtime-manifest-v1",
+      "python": "3.10.6 (tags/v3.10.6:9c7b4bd, Aug  1 2022, 21:53:49) [MSC v.1932 64 bit (AMD64)]",
+      "python_executable": "D:\\\u6587\u6863\\molgap\\.venv\\Scripts\\python.exe",
+      "platform": "Windows-10-10.0.26220-SP0",
+      "torch": "2.7.1+cu128",
+      "torch_cuda": "12.8",
+      "torch_hip": null,
+      "cudnn": 90701,
+      "accelerator": null,
+      "determinism": {
+        "seed": 20261008,
+        "precision": "fp32",
+        "tf32_enabled": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true,
+        "cublas_workspace_config": ":4096:8",
+        "float32_matmul_precision": "highest",
+        "device": "cpu",
+        "cuda_device_count_visible": 0
+      },
+      "installed_distributions": [
+        "aiohappyeyeballs==2.7.1",
+        "aiohttp==3.14.3",
+        "aiosignal==1.4.0",
+        "alembic==1.18.5",
+        "async-timeout==5.0.1",
+        "attrs==26.1.0",
+        "bleach==6.4.0",
+        "certifi==2026.7.22",
+        "charset-normalizer==3.4.9",
+        "colorama==0.4.6",
+        "colorlog==6.12.0",
+        "contourpy==1.3.2",
+        "cycler==0.12.1",
+        "descriptastorus==2.8.0",
+        "exceptiongroup==1.3.1",
+        "filelock==3.29.0",
+        "fonttools==4.63.0",
+        "frozenlist==1.8.0",
+        "fsspec==2026.4.0",
+        "greenlet==3.5.4",
+        "idna==3.18",
+        "ijson==3.5.0",
+        "iniconfig==2.3.0",
+        "jinja2==3.1.6",
+        "joblib==1.5.3",
+        "kaggle==1.7.4.5",
+        "kagglehub==1.0.2",
+        "kagglesdk==0.1.28",
+        "kiwisolver==1.5.0",
+        "lightgbm==4.7.0",
+        "littleutils==0.2.4",
+        "mako==1.3.12",
+        "markupsafe==3.0.3",
+        "matplotlib==3.10.9",
+        "molgap==0.1.0",
+        "mpmath==1.3.0",
+        "multidict==6.7.1",
+        "narwhals==2.24.0",
+        "networkx==3.4.2",
+        "numpy==2.2.6",
+        "ogb==1.3.6",
+        "optuna==4.9.0",
+        "outdated==0.2.2",
+        "packaging==26.2",
+        "pandas-flavor==0.8.1",
+        "pandas==2.3.3",
+        "pillow==12.3.0",
+        "pip==22.2.1",
+        "pluggy==1.6.0",
+        "propcache==0.5.2",
+        "protobuf==7.36.1",
+        "psutil==7.2.2",
+        "pyarrow==25.0.0",
+        "pygments==2.20.0",
+        "pyparsing==3.3.2",
+        "pytest==9.1.1",
+        "python-dateutil==2.9.0.post0",
+        "python-slugify==9.0.0",
+        "pytz==2026.3.post1",
+        "pyyaml==6.0.3",
+        "rdkit==2026.3.4",
+        "requests==2.34.2",
+        "scikit-learn==1.7.2",
+        "scipy==1.15.3",
+        "seaborn==0.13.2",
+        "setuptools==83.0.0",
+        "six==1.17.0",
+        "sqlalchemy==2.0.51",
+        "sympy==1.14.0",
+        "text-unidecode==1.3",
+        "threadpoolctl==3.6.0",
+        "tomli==2.4.1",
+        "torch-geometric==2.7.0",
+        "torch==2.7.1+cu128",
+        "torch_cluster==1.6.3+pt27cu128",
+        "tqdm==4.70.0",
+        "typing_extensions==4.16.0",
+        "tzdata==2026.3",
+        "urllib3==2.7.0",
+        "webencodings==0.6.1",
+        "xarray==2025.6.1",
+        "xxhash==3.8.1",
+        "yarl==1.24.5"
+      ],
+      "installed_distributions_sha256": "9a5dfc0e0796796931e84e1b18cb32b9f2162fa5c75724cd378fe17dff5af08c",
+      "external_runtime_artifacts": {
+        "ogb": {
+          "version": "1.3.6",
+          "source_archive_sha256": null
+        }
+      },
+      "runtime_fingerprint": "40f84117381cf2cb504b1170d903145f67dda5a60f4795ceef650ea40da18d63"
+    }
+  },
+  "phase": "complete",
+  "updated_at_utc": "2026-10-09T08:16:49.388962+00:00",
+  "wall_seconds": 266.45895630000086,
+  "process_cpu_seconds": 1015.234375,
+  "format": "molgap-k1-clean-fit-diagnostic-v1",
+  "inputs_sha256": "d24e0d752c5ce2613672ff028c723e0bf163d324d9a5df15e09485722d455566",
+  "prospective_sha256": "2dfa55101063dcab7ef6c2454e6a0b6af5277817196de5962e8ed0334e3cbbf0",
+  "training_executed": false,
+  "gradients_computed": false,
+  "optimizer_created": false,
+  "checks": {
+    "source_and_artifact_hashes": true,
+    "exact_rows_targets": true,
+    "finite_predictions": true,
+    "matching_endpoint_buffers": true,
+    "state_restoration": true,
+    "protected_roles_untouched": true
+  },
+  "calibration_source_idx_sha256": "263a68969a60c5a32ab4fb1074b902033d3e964be716e6ef4ed783d85da320b8",
+  "development_source_idx_sha256": "5b4fd543f8815acbfd2ac86db7a8b5e9263165853971de5b000e86d5de9f3d5b",
+  "ended_at_utc": "2026-10-09T08:16:49.388962+00:00"
+}
