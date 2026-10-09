@@ -35,9 +35,9 @@ User-directed K1 focus remains cost and500K enhancement, not a full-data rerun:
 2. [Clean-fit diagnostic](experiments/pcqm_k1_clean_fit_generalization_500k/INDEX.md)
    is accepted NO_TRAIN. Native T4 profiling is accepted/finalized on its mapped
    owner; no T4 epoch-speed extrapolation or single-pass quality equivalence.
-3. Bounded single/mean2 paired100K is submitted on Kaggle3 after prerequisite
-   acceptance. Runtime qualification, costs and quality remain pending. True EMA
-   and single-pass MAE equivalence remain unqualified; no blind width/slot
+3. Bounded single/mean2 paired100K is complete; single fails frozen quality
+   noninferiority. Native step saving passes; full allocation/RML custody remains
+   pending on its owner. True EMA remains unqualified; no blind width/slot
    expansion, extra tail epochs, sparse endpoint average or distillation retry.
 
 Read the [complete K1 audit](experiments/pcqm_k1_complete_local_audit/analysis_zh.md)
@@ -60,7 +60,7 @@ Branch-local evidence stays on the [retained checkout map](BRANCHES.md#retained-
 
 | Question | Retained observation / blocker | Owner entry |
 |---|---|---|
-| Native T4 cost /100K quality | Profile finalized NO_TRAIN; paired100K Kaggle3 `nvoid912/molgap-k1-t4-cost-quality-100k-s42-v1`, ID137853937/version1: RUNNING at startup2026-10-09. Qualification/epoch/cost/quality pending; no500K/full release. | [Owner status](D:/w/k1-t4-cost-quality/experiments/pcqm_k1_t4_cost_quality/STATUS.md), [profile decision](D:/w/k1-t4-cost-quality/experiments/pcqm_k1_t4_cost_quality/profile/terminal_decision.md) |
+| Native T4 cost /100K quality | Kaggle3 ID137853937/version1 COMPLETE40/40 (2026-10-10); mechanical/native qualification pass, single fails quality gate. Full allocation timing and frozen prospective identities block complete RML closure; no adoption/retry/500K/full. | [Owner status](D:/w/k1-t4-cost-quality/experiments/pcqm_k1_t4_cost_quality/STATUS.md), [decision](D:/w/k1-t4-cost-quality/experiments/pcqm_k1_t4_cost_quality/terminal_acceptance/decision.md), [RML blockers](D:/w/k1-t4-cost-quality/experiments/pcqm_k1_t4_cost_quality/terminal_acceptance/RML_BLOCKERS.md) |
 | Standalone K1 EMA100K | Version2 ERROR, empty outputs/log[]; cause, native cost and scientific endpoint unresolved, no further retry released. | [EMA handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md) |
 | Gaussian spectral100K | COMPLETE40/40, mechanical/native preflight verified; fresh-pair material gate fails. Scientific terminal packages and strict reference/RML closure pending; no scale-up. | [Spectral handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md) |
 
