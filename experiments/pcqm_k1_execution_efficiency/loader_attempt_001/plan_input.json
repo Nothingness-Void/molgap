@@ -1,0 +1,140 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-loader-cpu-20261010",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-loader-attribution",
+    "question": "Does actual CPU graph collation or worker startup dominate the previously excluded input phase?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-loader-cpu-20261010",
+      "supporting_evidence_ids": [
+        "pcqm-k1-execution-efficiency-gpu-20261010",
+        "pcqm-k1-joint-execution-20261010"
+      ],
+      "observed_deficiency": "Accepted scratch step timing excluded actual loader startup/fetch; CPU contribution remains unknown.",
+      "alternative_explanations": [
+        "Windows spawn affects startup only",
+        "Graph collation is small",
+        "Pinning and GPU-consumer overlap change native ranking"
+      ],
+      "changed_mechanism": "Compare original loader worker counts0/2 without GPU/model execution",
+      "cheapest_falsifier": "Four balanced actual train-only CPU loader windows with exact batch hashes",
+      "decision_changed_if_positive": "Nominate native loader phase qualification; no default worker change",
+      "decision_changed_if_negative": "Deprioritize loader rewrite; retain default and investigate launch/sync",
+      "expected_native_cost_ref": "cost-k1-loader-cpu-estimate",
+      "related_closed_family_ids": [
+        "k1-execution-profile-a100"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "f1637c1849802865f343883b45e13b8602b96554",
+      "source_config_identity": "a241cbe30850351ac4a780ba3c8f060b132372018cc4f331a5a3c14b3587e97a",
+      "contract_refs": [
+        "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/README.md",
+        "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [
+        "TB-k1-joint-execution-20261010"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-k1-execution-efficiency-gpu-20261010",
+        "pcqm-k1-joint-execution-20261010"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/README.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "execution_profile",
+        "run_ids": [
+          "k1-loader-cpu-20261010"
+        ],
+        "attempt_ids": [
+          "loader-attempt-001"
+        ],
+        "source_commit": "f1637c1849802865f343883b45e13b8602b96554",
+        "evidence_refs": [
+          "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-loader-cpu-estimate"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/decision.md",
+      "next_allowed_actions": [
+        "Bounded TRAIN-only CPU collation"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/README.md",
+    "comparison_blockers": [
+      "Execution diagnostic is not scientific endpoint comparison",
+      "RTX5060 is not T4/A100"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-loader-cpu-estimate",
+      "trajectory_id": "TB-k1-loader-cpu-20261010",
+      "action_id": "A001",
+      "run_id": "k1-loader-cpu-20261010",
+      "attempt_id": "loader-attempt-001",
+      "platform": "local",
+      "hardware": "CPU four intra-op threads and optional owned workers; no accelerator",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/README.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.08333333333333333,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-execution-efficiency",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/README.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/role_plan.json"
+    ],
+    "source_commit": "f1637c1849802865f343883b45e13b8602b96554",
+    "state_timestamp": "2026-10-10T11:28:35.518355+00:00"
+  }
+}

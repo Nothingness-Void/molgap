@@ -22,6 +22,7 @@ ATTEMPT = HERE / "loader_attempt_001"
 REL = ATTEMPT.relative_to(ROOT).as_posix()
 TID = "TB-k1-loader-cpu-20261010"
 RUN = "k1-loader-cpu-20261010"
+COST_ID = "cost-k1-loader-cpu-estimate"
 
 
 def read(path):
@@ -60,17 +61,20 @@ def prepare():
         cheapest_falsifier="Four balanced actual train-only CPU loader windows with exact batch hashes",
         decision_changed_if_positive="Nominate native loader phase qualification; no default worker change",
         decision_changed_if_negative="Deprioritize loader rewrite; retain default and investigate launch/sync",
-        expected_native_cost_ref="cost-k1-loader-cpu-estimate")
+        expected_native_cost_ref=COST_ID)
     t["state_at_start"].update(source_commit=head, source_config_identity=sha256_file(ATTEMPT / "inputs.json"),
         contract_refs=[f"{REL}/README.md", f"{REL}/inputs.json"], parent_trajectory_ids=["TB-k1-joint-execution-20261010"],
         prior_evidence_ids=prior, role_snapshot_refs=[f"{REL}/role_plan.json"], budget_snapshot_ref=f"{REL}/README.md")
-    t["actions"] = [dict(action_id="A001", type="execution_profile", run_ids=[RUN], attempt_ids=["loader-attempt-001"],
-                         source_commit=head, evidence_refs=[f"{REL}/inputs.json"], cost_event_ids=["cost-k1-loader-cpu-estimate"])]
+    if ATTEMPT.name == "loader_attempt_002":
+        t["state_at_start"]["parent_trajectory_ids"].append("TB-k1-loader-cpu-20261010")
+        t["hypothesis"]["observed_deficiency"] += " Attempt001 lost check details at final rejection; preserve its failure attribution."
+    t["actions"] = [dict(action_id="A001", type="execution_profile", run_ids=[RUN], attempt_ids=[ATTEMPT.name.replace("_", "-")],
+                         source_commit=head, evidence_refs=[f"{REL}/inputs.json"], cost_event_ids=[COST_ID])]
     t["decision"].update(outcome="ACTIVE", decision_ref=f"{REL}/decision.md", next_allowed_actions=["Bounded TRAIN-only CPU collation"])
     spec["decision_state"].update(source_commit=head, state_timestamp=datetime.now(timezone.utc).isoformat(),
         role_snapshot_refs=[f"{REL}/role_plan.json"], budget_snapshot_ref=f"{REL}/README.md")
     cost = spec["costs"][0]
-    cost.update(cost_event_id="cost-k1-loader-cpu-estimate", trajectory_id=TID, run_id=RUN, attempt_id="loader-attempt-001",
+    cost.update(cost_event_id=COST_ID, trajectory_id=TID, run_id=RUN, attempt_id=ATTEMPT.name.replace("_", "-"),
                 hardware="CPU four intra-op threads and optional owned workers; no accelerator", evidence_ref=f"{REL}/README.md")
     cost["measurement"]["wall_hours"] = dict(value=300 / 3600, status="estimated")
     spec["costs"] = [cost]
@@ -133,9 +137,9 @@ def execute():
     parent_cpu = time.process_time() - cpu_started
     child_cpu = report["worker_process_cpu_seconds"]
     wall = time.perf_counter() - started
-    if not all(checks.values()) or wall > 300:
-        raise ValueError("CPU loader acceptance/budget failed")
-    result = dict(format="molgap-k1-saved-analysis-v1", kind=inputs["kind"], status="complete", checks=checks,
+    accepted = all(checks.values()) and wall <= 300
+    result = dict(format="molgap-k1-saved-analysis-v1", kind=inputs["kind"],
+        status="complete" if accepted else "mechanically_rejected", checks=checks,
         inputs_sha256=sha256_file(ATTEMPT / "inputs.json"), prospective_sha256=sha256_file(ATTEMPT / "rml/trajectory.json"),
         wall_seconds=wall, process_cpu_seconds=parent_cpu, worker_process_cpu_seconds=child_cpu,
         total_process_cpu_seconds=None,
@@ -147,13 +151,23 @@ def execute():
         limits=["Windows CPU fetch without GPU pinning/consumer; not native T4/A100 training throughput",
                 "Worker CPU sampled before shutdown; teardown CPU not included in observed sum"])
     atomic_json(output / "result.json", result)
-    atomic_json(output / "completion.json", dict(complete=True, inputs_sha256=result["inputs_sha256"],
+    atomic_json(output / "completion.json", dict(complete=accepted, inputs_sha256=result["inputs_sha256"],
                 files={"result.json": sha256_file(output / "result.json")}))
+    if not accepted:
+        raise ValueError(f"CPU loader rejection retained: checks={checks}, wall={wall:.3f}s")
     print(json.dumps(report["medians"]))
 
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("operation", choices=("prepare", "execute", "close"))
+    p.add_argument("--attempt", choices=("loader_attempt_001", "loader_attempt_002"), default="loader_attempt_001")
+    args = p.parse_args()
+    if args.attempt == "loader_attempt_002":
+        ATTEMPT = HERE / args.attempt
+        REL = ATTEMPT.relative_to(ROOT).as_posix()
+        TID += "-attempt002"
+        RUN += "-attempt002"
+        COST_ID += "-attempt002"
     {"prepare": prepare, "execute": execute,
-     "close": lambda: print(close_saved_diagnostic(ROOT, ATTEMPT))}[p.parse_args().operation]()
+     "close": lambda: print(close_saved_diagnostic(ROOT, ATTEMPT))}[args.operation]()

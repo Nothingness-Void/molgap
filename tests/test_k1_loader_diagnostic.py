@@ -1,5 +1,6 @@
 """CPU synthetic loader/control-flow checks, not molecular or native timing."""
 import pytest
+from types import SimpleNamespace
 
 from molgap.k1_loader_diagnostic import profile_loader_fetches
 
@@ -51,6 +52,34 @@ def test_fetch_failure_cleans_up_only_owned_iterator():
         profile_loader_fetches({"a": lambda: Iterator(events, "a", fail=True),
                                "b": lambda: Iterator(events, "b")})
     assert events == [("shutdown", "a")]
+
+
+def test_shutdown_joins_owned_handles_before_testing_liveness(monkeypatch):
+    import psutil
+    events = []
+    monkeypatch.setattr(psutil, "Process", lambda pid: SimpleNamespace(
+        cpu_times=lambda: SimpleNamespace(user=0.0, system=0.0)))
+
+    class Worker:
+        pid = 123
+        joined = False
+
+        def join(self, timeout):
+            assert timeout == 1.0
+            self.joined = True
+            events.append(("join", self.pid))
+
+        def is_alive(self):
+            return not self.joined
+
+    def create():
+        iterator = Iterator(events, "fixture")
+        iterator._workers = [Worker()]
+        return iterator
+
+    report, _ = profile_loader_fetches({"a": create, "b": create}, repeats=2)
+    assert len([event for event in events if event[0] == "join"]) == 4
+    assert all(c["workers_stopped"] for pair in report["windows"] for c in pair.values())
 
 
 @pytest.mark.parametrize("kwargs", [dict(repeats=1), dict(repeats=3), dict(repeats=True),

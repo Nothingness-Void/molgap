@@ -76,6 +76,8 @@ def profile_loader_fetches(factories, *, repeats=4, wall_seconds=180):
                     tick = time.perf_counter()
                     iterator._shutdown_workers()
                     if name in pair:
+                        for worker in workers:
+                            worker.join(timeout=1.0)
                         pair[name]["shutdown_seconds"] = time.perf_counter() - tick
                         pair[name]["workers_stopped"] = not any(w.is_alive() for w in workers)
                 elif name in pair:
