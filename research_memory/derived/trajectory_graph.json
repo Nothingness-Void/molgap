@@ -446,6 +446,26 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-molgap-k1-fused-layout-100k-s42-v1-fused_layout:A001",
+      "target": "experiments/pcqm_k1_fused_layout_t4/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-fused-layout-100k-s42-v1-fused_layout:A001",
+      "target": "experiments/pcqm_k1_fused_layout_t4/user_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-fused-layout-100k-s42-v1-reference:A001",
+      "target": "experiments/pcqm_k1_fused_layout_t4/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-fused-layout-100k-s42-v1-reference:A001",
+      "target": "experiments/pcqm_k1_fused_layout_t4/user_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-scale-fit-retained-20261001:A001",
       "target": "experiments/pcqm_scale_fit_retained/inputs.json",
       "type": "action_produced_evidence"
@@ -1686,6 +1706,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-colab-execution-profile-20261007",
+      "target": "TB-molgap-k1-fused-layout-100k-s42-v1-fused_layout",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-colab-execution-profile-20261007",
+      "target": "TB-molgap-k1-fused-layout-100k-s42-v1-reference",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-complete-module-audit-20261008",
       "target": "TB-k1-saved-bn-rows-20261008",
       "type": "prior_evidence"
@@ -1808,6 +1838,16 @@
     {
       "source": "pcqm-k1-late-weight-average-20261008",
       "target": "TB-k1-saved-trace-pair-20261008-attempt002",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+      "target": "TB-molgap-k1-fused-layout-100k-s42-v1-fused_layout",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+      "target": "TB-molgap-k1-fused-layout-100k-s42-v1-reference",
       "type": "prior_evidence"
     },
     {
@@ -3135,6 +3175,14 @@
     },
     {
       "id": "TB-molgap-k1-cost-quality-100k-s43-v1-single",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-molgap-k1-fused-layout-100k-s42-v1-fused_layout",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-molgap-k1-fused-layout-100k-s42-v1-reference",
       "type": "trajectory"
     },
     {

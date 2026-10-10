@@ -1,0 +1,81 @@
+{
+  "status": "REMOTE_BYTES_MATCH_LOCAL",
+  "dataset": "nothingnessvoid/k1-fused-layout-100k-s42-source-v1",
+  "files": [
+    {
+      "path": "experiment_launch.json",
+      "bytes": 1411,
+      "sha256": "28a1550bdaa5b5c4c44791c8ef43c3b125a93cd95b8e19c0a879c3292fd76599"
+    },
+    {
+      "path": "experiment_spec.json",
+      "bytes": 5429,
+      "sha256": "a54b46481954e98711d985b38c7523b50ec110039ba6cfa0d0dde13fe651f73c"
+    },
+    {
+      "path": "package_manifest.json",
+      "bytes": 3244,
+      "sha256": "8e6515050664b1084df27c348817b4cf4924fbc3f2e28c5f05f61d0e754d18e7"
+    },
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "bytes": 65,
+      "sha256": "cbcd46135bf632ca01228f754b0d92383006eab1f80e0db4e84b22789f6d727e"
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "bytes": 41,
+      "sha256": "7bea76fe981fbac82fdd7227e9c500aff2f74dc2ca03199f9ffe5c7901366b95"
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "bytes": 10811,
+      "sha256": "c3dacc6bacde4b9544ee16ccdd5a6526ad617e524f20bfdbb314519ce8dd6791"
+    },
+    {
+      "path": "source_payload.bin",
+      "bytes": 206552,
+      "sha256": "93f8116db38e510652929936fc631ef987bfa8b4aa5f27febe42cbe3ad833ca5"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_fused_layout_t4/family_acceptance_plan.json",
+      "bytes": 1520,
+      "sha256": "bc6ebd38f46cb08f82fa66109c4ab32aa3077debee7821707b6b1a5967803f11"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_fused_layout_t4/training_recipe_fused_layout.json",
+      "bytes": 1009,
+      "sha256": "0bd0c2ee27f754bdc7c3171ca42c63d07443dcb7d6ea4ffd5e6fca95437b9e84"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_fused_layout_t4/training_recipe_reference.json",
+      "bytes": 893,
+      "sha256": "649ffc006cf24ab0d9b57b4d0f4786753dde1c449ee75ec87244032d0db7aa5e"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "bytes": 408,
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+    },
+    {
+      "path": "initial_states/fused_layout.pt",
+      "bytes": 14779955,
+      "sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80"
+    },
+    {
+      "path": "initial_states/reference.pt",
+      "bytes": 14779955,
+      "sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80"
+    },
+    {
+      "path": "prospective/fused_layout/trajectory.json",
+      "bytes": 51683,
+      "sha256": "8c8e0c6e53dbfec2d5112c839967a246750b96f1e44a1690c824b922a16755c7"
+    },
+    {
+      "path": "prospective/reference/trajectory.json",
+      "bytes": 51662,
+      "sha256": "0af1fb958f2e93355dd63e1dc774adab003c69877d0f393a2b420460a5b6f3ec"
+    }
+  ]
+}

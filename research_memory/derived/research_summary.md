@@ -5,6 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
+- ACTIVE: 2
 - CLOSED: 12
 - INCONCLUSIVE: 19
 - INFRASTRUCTURE_ONLY: 7
@@ -195,10 +196,10 @@
 - Tesla T4; one exclusive assigned device per arm device_hours: measured=unknown (0 measured records), estimated=36.000000 (6 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4; one exclusive assigned device per arm queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=6, not_applicable=0
 - Tesla T4; one exclusive assigned device per arm wall_hours: measured=unknown (0 measured records), estimated=36.000000 (6 estimated records), measurement_missing=0, not_applicable=0
-- Tesla T4; one of two allocated devices including idle time cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
-- Tesla T4; one of two allocated devices including idle time device_hours: measured=unknown (0 measured records), estimated=14.000000 (4 estimated records), measurement_missing=0, not_applicable=0
-- Tesla T4; one of two allocated devices including idle time queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
-- Tesla T4; one of two allocated devices including idle time wall_hours: measured=unknown (0 measured records), estimated=14.000000 (4 estimated records), measurement_missing=0, not_applicable=0
+- Tesla T4; one of two allocated devices including idle time cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=6, not_applicable=0
+- Tesla T4; one of two allocated devices including idle time device_hours: measured=unknown (0 measured records), estimated=14.000000 (4 estimated records), measurement_missing=2, not_applicable=0
+- Tesla T4; one of two allocated devices including idle time queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=6, not_applicable=0
+- Tesla T4; one of two allocated devices including idle time wall_hours: measured=unknown (0 measured records), estimated=14.000000 (4 estimated records), measurement_missing=2, not_applicable=0
 - Tesla T4; one of two allocated devices; includes assigned idle capacity cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=12, not_applicable=0
 - Tesla T4; one of two allocated devices; includes assigned idle capacity device_hours: measured=27.991243 (12 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Tesla T4; one of two allocated devices; includes assigned idle capacity queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=12, not_applicable=0
@@ -251,8 +252,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 196
-- Cost-event coverage: 100/111 trajectories; incomplete native measurement=77
+- Measurement-missing cost events: 198
+- Cost-event coverage: 102/113 trajectories; incomplete native measurement=79
 
 ## Screening Backtest
 - Status: available
@@ -260,9 +261,9 @@
 - Excluded traces: 21
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 80
+- [INFO] trace_unavailable_for_backtest: 82
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 77
+- [WARN] incomplete_native_cost_measurement: 79
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 37
-- [WARN] trajectory_without_v5_evidence: 11
+- [WARN] missing_explicit_role_identity: 39
+- [WARN] trajectory_without_v5_evidence: 13

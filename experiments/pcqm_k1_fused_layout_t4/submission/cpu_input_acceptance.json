@@ -1,0 +1,21 @@
+{
+  "status": "CPU_FIXED_ROLES_VERIFIED",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "roles": {
+    "train": {
+      "rows": 100000,
+      "source_start": 0,
+      "source_last": 99999
+    },
+    "development": {
+      "rows": 50000,
+      "source_start": 100000,
+      "source_last": 149999
+    }
+  },
+  "target_mean": 5.3383002281188965,
+  "target_std": 1.275090217590332,
+  "cuda_initialized": false,
+  "scope": "Family-owned exact manifest/shard/source-order/target stats and first/last pure2D sample checks, no model execution or native qualification",
+  "source_module_sha256": "36507265254c33108a4e2a3abffe715dc43712858e06f7f904827cf5f60f3124"
+}

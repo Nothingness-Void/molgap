@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 111,
+    "trajectories_total": 113,
     "with_complete_native_measurement": 23,
-    "with_cost_event": 100,
-    "with_incomplete_native_measurement": 77,
+    "with_cost_event": 102,
+    "with_incomplete_native_measurement": 79,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 80,
+      "count": 82,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -84,6 +84,8 @@
         "TB-k1-v4-192-kaggle3-reference-custody-20261002",
         "TB-molgap-k1-cost-quality-100k-s43-v1-mean2",
         "TB-molgap-k1-cost-quality-100k-s43-v1-single",
+        "TB-molgap-k1-fused-layout-100k-s42-v1-fused_layout",
+        "TB-molgap-k1-fused-layout-100k-s42-v1-reference",
         "TB-pcqm-expert-oracle-feasibility-20260930",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
@@ -129,7 +131,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 77,
+      "count": 79,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -199,6 +201,8 @@
         "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
         "TB-molgap-k1-cost-quality-100k-s43-v1-mean2",
         "TB-molgap-k1-cost-quality-100k-s43-v1-single",
+        "TB-molgap-k1-fused-layout-100k-s42-v1-fused_layout",
+        "TB-molgap-k1-fused-layout-100k-s42-v1-reference",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
         "TB-pcqm-scale-fit-retained-20261001",
@@ -231,7 +235,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 37,
+      "count": 39,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
@@ -261,6 +265,8 @@
         "TB-k1-saved-trace-pair-20261008",
         "TB-k1-saved-trace-pair-20261008-attempt002",
         "TB-k1-ssma-kaggle3-100k-s42-v1",
+        "TB-molgap-k1-fused-layout-100k-s42-v1-fused_layout",
+        "TB-molgap-k1-fused-layout-100k-s42-v1-reference",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-pcqm-scale-transfer-reassessment-20260925",
@@ -275,7 +281,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 11,
+      "count": 13,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -286,6 +292,8 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
+        "TB-molgap-k1-fused-layout-100k-s42-v1-fused_layout",
+        "TB-molgap-k1-fused-layout-100k-s42-v1-reference",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],
