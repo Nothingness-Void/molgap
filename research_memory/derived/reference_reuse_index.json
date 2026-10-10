@@ -1535,6 +1535,50 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "exact_cpu_checkpoint_continuation",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-execution-checkpoint-recovery-20261010",
+      "role_use": {
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_decoded": "labels_read",
+        "train_executed": "prediction_input"
+      },
+      "scientific_scope": "desktop_k1_checkpoint_recovery",
+      "source_envelope": "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "matched_cpu_scratch_execution_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-execution-efficiency-20261010",
+      "role_use": {
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_probe_decoded": "labels_read",
+        "train_probe_executed": "prediction_input"
+      },
+      "scientific_scope": "desktop_k1_execution_efficiency",
+      "source_envelope": "experiments/pcqm_k1_execution_efficiency/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "engineering_checks_only",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
