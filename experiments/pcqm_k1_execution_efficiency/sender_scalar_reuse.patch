@@ -1,0 +1,15 @@
+diff --git a/src/molgap/colab_k1_screen.py b/src/molgap/colab_k1_screen.py
+--- a/src/molgap/colab_k1_screen.py
++++ b/src/molgap/colab_k1_screen.py
+@@ -232,8 +232,9 @@ def _step(arm, batch, mean, std, device, deadline):
+     arm["offset"] += 1
+     arm["steps"] += 1
+     arm["samples"] += owner.BS
+-    arm["train_loss_sum"] += float(loss)
+-    return float(loss)
++    scalar = float(loss)
++    arm["train_loss_sum"] += scalar
++    return scalar
+ 
+ 
+ def _evaluate(model, graphs, mean, std, device, deadline, expected):

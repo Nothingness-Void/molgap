@@ -20,3 +20,7 @@ or native accelerator throughput. Precision claims remain scoped to each attempt
 [CPU checkpoint-copy decision](checkpoint_io_attempt_001/terminal_decision.md)
 qualifies an opt-in scalar-copy helper on retained state and synthetic IO fixtures,
 not native sender throughput or end-to-end training savings.
+
+[Single loss-scalar proposal](sender_scalar_reuse.md) removes a duplicate host
+read in the frozen sender's next package, with CPU synthetic guard/counter parity;
+it is not applied or GPU speed-qualified.
