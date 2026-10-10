@@ -7,9 +7,9 @@
 ## Server active screen
 
 The authorized [source-dependence assay](experiments/pcqm_gptrans_source_dependence/protocol.md)
-is being prepared for bounded frozen-model observations on Kaggle2. It changes
-no model, runs no training and releases no automatic successor. Exact remote
-identity and monitor custody will be recorded only after submission reconciliation.
+is submitted and reconciled RUNNING on Kaggle2. It changes no model, runs no
+training and releases no automatic successor. Exact identity and existing Luna B
+custody are in its [status](experiments/pcqm_gptrans_source_dependence/STATUS.md).
 
 The authorized [triplet frozen-cohort diagnostic](experiments/pcqm_gptrans_triplet_portability/protocol.md)
 is accepted and closed NO_TRAIN / PAIRED_ENDPOINT. Its later-cohort point gain
