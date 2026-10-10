@@ -1,5 +1,6 @@
 from contextlib import contextmanager
 from copy import deepcopy
+from types import MappingProxyType
 
 import pytest
 import torch
@@ -229,3 +230,150 @@ def test_real_prediction_guard_checks_numel_dtype_and_finiteness_cpu_only():
                        torch.full((128,), float('nan'))):
         with pytest.raises(RuntimeError):
             _finite_output(None, (), prediction, expected_predictions=128)
+
+
+@pytest.mark.parametrize('flags', [dict(foreach=True, fused=False), dict(foreach=False, fused=True)])
+def test_extra_optimizer_context_comparison_classification_and_actual_snapshots(flags, tmp_path):
+    events, observed = [], []
+    declarations = {'layout_precision_optimizer': deepcopy(flags)}
+    original = deepcopy(declarations)
+
+    @contextmanager
+    def context(model, batch, device):
+        assert device.type == batch.x.device.type == 'cpu'
+        model.flagged_case = True
+        events.append('enter')
+        try:
+            yield
+        finally:
+            events.append('exit')
+            del model.flagged_case
+
+    def checked_step(model, opt, batch, mean, std):
+        if hasattr(model, 'flagged_case'):
+            for owner in [opt.defaults, *opt.param_groups]:
+                assert {name: owner[name] for name in flags} == flags
+                assert owner['lr'] == 4e-4 and owner['weight_decay'] == 1e-5
+                assert owner['betas'] == (0.9, 0.999) and owner['eps'] == 1e-8
+            observed.append(deepcopy(opt.defaults))
+        return step(model, opt, batch, mean, std)
+
+    result = probe_execution_efficiency(factory, [Batch() for _ in range(4)], 0., 1.,
+        optimizer_factory=optimizer, step_fn=checked_step, warmup=1, steps=3, repeats=2,
+        optimizer_cases=('foreach', 'fused'), extra_cases={'layout_precision_optimizer': context},
+        optimizer_case_flags=MappingProxyType({k: MappingProxyType(v) for k, v in declarations.items()}),
+        atol=1e-6, rtol=1e-5, return_checkpoint_snapshots=True)
+    assert declarations == original
+    row = result['cases']['layout_precision_optimizer']
+    assert row['status'] in {'qualified', 'numerical_mismatch'}
+    assert row['equivalence']['within_tolerance']
+    assert not any('foreach' in path or 'fused' in path for path in row['equivalence']['differences'])
+    assert row['optimizer_contract_change'] and row['declared_optimizer_flags'] == flags
+    assert not row['execution_only_admissible'] and not row['speed_candidate']
+    assert events == ['enter', 'exit'] * 11 and len(observed) == 11
+    for name in ('baseline', 'non_blocking', 'no_redundant_sync', 'transfer_and_sync', 'foreach', 'fused',
+                 'layout_precision_optimizer'):
+        case = result['cases'][name]
+        expected = (flags if name == 'layout_precision_optimizer' else
+                    {'foreach': name == 'foreach', 'fused': name == 'fused'})
+        assert case['optimizer_contract_change'] == (name in ('foreach', 'fused', 'layout_precision_optimizer'))
+        for group in case['final_checkpoint']['optimizer']['param_groups']:
+            assert {flag: group[flag] for flag in expected} == expected
+            assert group['lr'] == 4e-4 and group['weight_decay'] == 1e-5
+        if name in ('baseline', 'non_blocking', 'no_redundant_sync', 'transfer_and_sync'):
+            assert case['equivalence']['exact'] and case['execution_only_admissible']
+        else:
+            assert not case['execution_only_admissible'] and not case['speed_candidate']
+    path = tmp_path / 'flagged.pt'
+    torch.save(row['final_checkpoint'], path)
+    assert compare_states(row['final_checkpoint'], torch.load(path, weights_only=False))['exact']
+
+
+@pytest.mark.parametrize('declarations', [
+    [], [('layout', {'foreach': True, 'fused': False})],
+    {'': {'foreach': True, 'fused': False}}, {3: {'foreach': True, 'fused': False}},
+    {'dangling': {'foreach': True, 'fused': False}},
+    *[{name: {'foreach': True, 'fused': False}} for name in
+      ('baseline', 'non_blocking', 'no_redundant_sync', 'transfer_and_sync', 'foreach', 'fused')],
+    {'layout': None}, {'layout': [('foreach', True), ('fused', False)]},
+    {'layout': {}}, {'layout': {'foreach': True}},
+    {'layout': {'foreach': True, 'fused': False, 'other': False}},
+    {'layout': {'foreach': 1, 'fused': False}}, {'layout': {'foreach': True, 'fused': 0}},
+    {'layout': {'foreach': True, 'fused': True}}, {'layout': {'foreach': False, 'fused': False}},
+])
+def test_optimizer_flag_mapping_rejected_before_factory_or_step(declarations):
+    def forbidden(*args, **kwargs):
+        raise AssertionError('Invalid mapping reached factory/context/step')
+    with pytest.raises(ValueError, match='Optimizer'):
+        probe_execution_efficiency(forbidden, [Batch() for _ in range(4)], 0., 1.,
+            optimizer_factory=forbidden, step_fn=forbidden, warmup=1, extra_cases={'layout': forbidden},
+            optimizer_case_flags=declarations)
+
+
+def test_extra_optimizer_flags_cannot_normalize_other_hyperparameter_drift():
+    @contextmanager
+    def context(model, batch, device):
+        model.drift_case = True
+        yield
+        del model.drift_case
+
+    def changed_step(model, opt, batch, mean, std):
+        if hasattr(model, 'drift_case'):
+            opt.param_groups[0]['lr'] = 3e-4
+        return step(model, opt, batch, mean, std)
+
+    result = probe_execution_efficiency(factory, [Batch() for _ in range(4)], 0., 1.,
+        optimizer_factory=optimizer, step_fn=changed_step, warmup=1, extra_cases={'layout': context},
+        optimizer_case_flags={'layout': {'foreach': True, 'fused': False}},
+        return_checkpoint_snapshots=True)
+    row = result['cases']['layout']
+    assert not row['equivalence']['within_tolerance']
+    assert any(path.endswith('.lr') for path in row['equivalence']['differences'])
+    assert row['final_checkpoint']['optimizer']['param_groups'][0]['lr'] == 3e-4
+    assert row['final_checkpoint']['optimizer']['param_groups'][0]['foreach'] is True
+
+
+def test_extra_optimizer_context_keeps_finite_guard():
+    @contextmanager
+    def context(model, batch, device):
+        batch.x.fill_(float('nan'))
+        yield
+    row = run(extra_cases={'layout': context}, optimizer_case_flags={
+        'layout': {'foreach': True, 'fused': False}})['cases']['layout']
+    assert row['optimizer_contract_change']
+    assert row['status'] == 'failed_or_unsupported' and 'Non-finite forward' in row['reason']
+    assert not row['execution_only_admissible'] and not row['speed_candidate']
+
+
+def test_extra_optimizer_flags_require_existing_adamw():
+    @contextmanager
+    def context(*args):
+        raise AssertionError('Unsupported optimizer reached context')
+        yield
+    result = probe_execution_efficiency(factory, [Batch() for _ in range(4)], 0., 1.,
+        optimizer_factory=lambda model: torch.optim.SGD(model.parameters(), lr=4e-4),
+        step_fn=step, warmup=1, extra_cases={'layout': context},
+        optimizer_case_flags={'layout': {'foreach': True, 'fused': False}})
+    row = result['cases']['layout']
+    assert row['optimizer_contract_change'] and row['status'] == 'failed_or_unsupported'
+    assert "owner's AdamW" in row['reason']
+    assert not row['execution_only_admissible'] and not row['speed_candidate']
+
+
+def test_extra_optimizer_case_is_excluded_even_with_exact_numerical_state():
+    @contextmanager
+    def context(*args):
+        yield
+
+    def no_update_step(model, opt, batch, mean, std):
+        return model(batch.x).square().mean().detach()
+
+    result = probe_execution_efficiency(factory, [Batch() for _ in range(4)], 0., 1.,
+        optimizer_factory=optimizer, step_fn=no_update_step, warmup=1,
+        extra_cases={'layout': context}, optimizer_case_flags={'layout': {'foreach': True, 'fused': False}},
+        return_checkpoint_snapshots=True)
+    row = result['cases']['layout']
+    assert row['equivalence']['exact'] and row['status'] == 'qualified'
+    assert row['optimizer_contract_change']
+    assert not row['execution_only_admissible'] and not row['speed_candidate']
+    assert row['final_checkpoint']['optimizer']['param_groups'][0]['foreach'] is True

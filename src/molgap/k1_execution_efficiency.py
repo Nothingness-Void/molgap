@@ -7,6 +7,7 @@ loss extraction already waits for that stream. Other-stream work is unsupported.
 """
 from __future__ import annotations
 
+from collections.abc import Mapping
 from contextlib import nullcontext
 from copy import deepcopy
 import math
@@ -114,7 +115,7 @@ def _finite_output(_module, _inputs, output, *, expected_predictions=None):
 def probe_execution_efficiency(
     model_factory, ordered_batches, mean, std, *, optimizer_factory, step_fn,
     device="cpu", warmup=2, steps=3, repeats=2, wall_seconds=60.0,
-    optimizer_cases=(), extra_cases=None, atol=0.0, rtol=0.0,
+    optimizer_cases=(), extra_cases=None, optimizer_case_flags=None, atol=0.0, rtol=0.0,
     real_run=False, single_stream=True, equivalence_steps=3,
     return_checkpoint_snapshots=False,
 ):
@@ -124,6 +125,8 @@ def probe_execution_efficiency(
     creates the owner's optimizer; ``step_fn(model,opt,batch,mean,std)`` performs
     the unchanged owner step and returns a detached scalar loss. Extra cases map
     names to ``batch_context_factory(model,cpu_batch,device)->contextmanager``.
+    ``optimizer_case_flags`` optionally declares foreach/fused AdamW flags for
+    extra cases; these are optimizer-contract changes, never execution-only.
     Context entry/exit and H2D are measured. No context is installed by default.
     Equivalence uses only ``equivalence_steps`` updates, without timing warmup.
     Optional final checkpoint snapshots contain CPU tensors (not JSON values).
@@ -184,12 +187,24 @@ def probe_execution_efficiency(
         raise ValueError("Extra case names must be nonempty and not reserved")
     if set(optimizer_cases) - {"foreach", "fused"} or len(set(optimizer_cases)) != len(optimizer_cases):
         raise ValueError("Optimizer cases must be unique foreach/fused flags")
+    if optimizer_case_flags is not None and not isinstance(optimizer_case_flags, Mapping):
+        raise ValueError("Optimizer case flags must be a mapping")
+    case_optimizer_flags = {case: {"foreach": case == "foreach", "fused": case == "fused"}
+                            for case in optimizer_cases}
+    for name, flags in (optimizer_case_flags or {}).items():
+        if (not isinstance(name, str) or not name or name in reserved or name not in extra_cases):
+            raise ValueError("Optimizer flag names must be nonempty, nonreserved extra cases")
+        if (not isinstance(flags, Mapping) or set(flags) != {"foreach", "fused"}
+                or any(type(value) is not bool for value in flags.values())
+                or flags["foreach"] == flags["fused"]):
+            raise ValueError("Optimizer flags require exactly foreach/fused booleans, one enabled")
+        case_optimizer_flags[name] = dict(flags)
     cases = ["baseline", "non_blocking", "no_redundant_sync", "transfer_and_sync", *optimizer_cases, *extra_cases]
     started = time.perf_counter()
     deadline = started + wall_seconds
     entry_rng = capture_rng_state()
     report = {"status": "complete", "cases": {case: {"status": "not_run",
-              "optimizer_contract_change": case in optimizer_cases, "timings": [],
+              "optimizer_contract_change": case in case_optimizer_flags, "timings": [],
               "execution_only_admissible": False, "speed_candidate": False} for case in cases},
               "device": str(device), "timing_order": [], "equivalence_updates": equivalence_steps,
               "compared": ["loss", "full_gradients_before_clip", "full_gradients_after_clip",
@@ -218,12 +233,12 @@ def probe_execution_efficiency(
             raise ValueError("Model must be FP32")
         model.load_state_dict(deepcopy(initial_state), strict=True)
         optimizer = optimizer_factory(model)
-        if case in optimizer_cases:
+        if case in case_optimizer_flags:
             if not isinstance(optimizer, torch.optim.AdamW):
                 raise ValueError("foreach/fused probe requires owner's AdamW")
             for group in optimizer.param_groups:
-                group.update(foreach=case == "foreach", fused=case == "fused")
-            optimizer.defaults.update(foreach=case == "foreach", fused=case == "fused")
+                group.update(case_optimizer_flags[case])
+            optimizer.defaults.update(case_optimizer_flags[case])
         restore_rng_state(step_rng)
         sync()
         setup_seconds = time.perf_counter() - setup_start
@@ -301,7 +316,7 @@ def probe_execution_efficiency(
             row = report["cases"][case]
             try:
                 snapshots = baseline if case == "baseline" else execute(case, evidence=True)[0]
-                if case in optimizer_cases:
+                if case in case_optimizer_flags:
                     # Implementation flags are the declared contract delta, not numerical drift.
                     # Preserve all other hyperparameters and optimizer state in the comparison.
                     for ref, actual in zip(baseline, snapshots):
@@ -309,9 +324,9 @@ def probe_execution_efficiency(
                                                     actual["optimizer"]["param_groups"]):
                             for flag in ("foreach", "fused"):
                                 group[flag] = ref_group[flag]
-                    row["declared_optimizer_flags"] = {"foreach": case == "foreach", "fused": case == "fused"}
+                    row["declared_optimizer_flags"] = dict(case_optimizer_flags[case])
                 row["equivalence"] = compare_states(baseline, snapshots, atol=atol, rtol=rtol)
-                if case in optimizer_cases:
+                if case in case_optimizer_flags:
                     for actual in snapshots:
                         for group in actual["optimizer"]["param_groups"]:
                             group.update(row["declared_optimizer_flags"])
@@ -326,7 +341,7 @@ def probe_execution_efficiency(
                     "scope": "Scratch model/optimizer/RNG only; not full trainer checkpoint metadata"}
                 if return_checkpoint_snapshots:
                     row["final_checkpoint"] = {k: _snapshot(last[k]) for k in last["checkpoint_keys"]}
-                row["execution_only_admissible"] = row["equivalence"]["exact"] and case not in optimizer_cases
+                row["execution_only_admissible"] = row["equivalence"]["exact"] and case not in case_optimizer_flags
                 row["status"] = "qualified" if row["equivalence"]["exact"] else "numerical_mismatch"
                 del last, snapshots
             except (RuntimeError, ValueError, NotImplementedError) as error:

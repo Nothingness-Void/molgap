@@ -1,6 +1,7 @@
 """Explicit precision-contract diagnostics; never change family defaults."""
 from contextlib import contextmanager, ExitStack
 import math
+import statistics
 import time
 
 import torch
@@ -108,6 +109,41 @@ def probe_k1_precision(factory, batches, mean, std, *, deadline, warmup=3, steps
                        disposition="Separate precision contract; no strict-FP32 admission")
     report["limits"].append("TF32 permission is not proof of Tensor Core dispatch or final training MAE")
     return report
+
+
+def qualify_combined_report(report):
+    """Matched joint cost contrasts; optimizer/precision quality stays unknown."""
+    controls = {"baseline", "non_blocking", "no_redundant_sync", "transfer_and_sync", "cpu_layout"}
+    variants = {"fused_layout", "fused_tf32_layout"}
+    if (report.get("status") != "complete" or set(report.get("cases", {})) != controls | variants
+            or report.get("equivalence_updates") != 3 or report.get("contract_promotion") is not False):
+        raise ValueError("Incomplete joint diagnostic")
+    medians = {}
+    for name, row in report["cases"].items():
+        values = [t.get("seconds_per_step", float("nan")) for t in row.get("timings", [])]
+        if (row.get("status") not in {"qualified", "numerical_mismatch"} or len(values) != 4
+                or any(not math.isfinite(v) or v <= 0 for v in values)):
+            raise ValueError("Missing/failed joint timing window")
+        if name in controls and (not row.get("equivalence", {}).get("exact") or row.get("optimizer_contract_change")):
+            raise ValueError("Unchanged FP32 control failed")
+        if name in variants and (row.get("optimizer_contract_change") is not True
+                or row.get("execution_only_admissible") is not False
+                or row.get("declared_optimizer_flags") != {"foreach": False, "fused": True}):
+            raise ValueError("Optimizer change must remain explicitly non-admissible")
+        medians[name] = statistics.median(values)
+    contrasts = {}
+    for name, reference, candidate in (
+            ("fused_increment", "cpu_layout", "fused_layout"),
+            ("tf32_on_fused_increment", "fused_layout", "fused_tf32_layout"),
+            ("combined_total_not_single_mechanism", "baseline", "fused_tf32_layout")):
+        ref, actual = report["cases"][reference], report["cases"][candidate]
+        contrasts[name] = dict(reference=reference, candidate=candidate,
+            median_time_reduction=1-medians[candidate]/medians[reference],
+            paired_window_reductions=[1-a["seconds_per_step"]/b["seconds_per_step"]
+                                     for b,a in zip(ref["timings"],actual["timings"])])
+    return dict(contrasts=contrasts, median_seconds_per_step=medians,
+                strict_fp32_admission=False, generalization_accuracy_qualified=False,
+                full_training_saving_qualified=False)
 
 
 def profile_k1_step(factory, batch, mean, std, *, tf32, layout, deadline):
