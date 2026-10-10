@@ -2,6 +2,8 @@
 
 [Protocol](protocol.md) owns the nine-hour resource release and unchanged
 scientific recipe. This control stays on the parent experiment branch.
+[Remote handoff](REMOTE_HANDOFF.md) owns dated submission observations and
+exact API reconciliation pointers.
 
 `prepare.py` stages the existing RML planner, V4 source bundle and pinned parent
 initialization. The reusable platform bootstrap is
