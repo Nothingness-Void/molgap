@@ -25,3 +25,12 @@ reading, evidence rewriting or protected-role use occurred.
 
 See [closure receipts](closure_receipts.json) for finalizer identities and
 [result](terminal_decision.md) for measured windows and exclusions.
+
+Desktop integration: fast-forward to e54108b5 through the reviewed diagnostic
+non-promotion route. The same four targeted suites passed55 tests on desktop.
+Desktop RML rebuilt without a generated diff; check --frozen --portable passed.
+The isolated owner worktree's whole-repository portable check failed on unrelated
+historical ignored assets not copied there. This does not invalidate its accepted
+speed records and is not a claim that a fresh clone includes model payloads.
+User's four pre-existing untracked paths were untouched. No push or new GPU run
+was performed by the integration.
