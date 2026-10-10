@@ -27,7 +27,8 @@ def close(root,output,inputs):
     refs=[(output/name).relative_to(root).as_posix() for name in ("output_manifest.json",*manifest["files"]) if name.endswith(".json")]
     # Bind all observation chunks in evidence, not only a summary or worker flags.
     refs += [(output/name).relative_to(root).as_posix() for name in manifest["files"] if name.endswith(".pt")]
-    refs += [BASE+"/results/"+n+".json" for n in ("acceptance_summary","execution","role_row_manifests","role_history","cost_records")]
+    refs += [BASE+"/results/"+n+".json" for n in ("acceptance_summary","execution","role_row_manifests","role_history","cost_records",
+        "descriptive_analysis","metadata_retrieval","artifact_retrieval")]
     missing=dict(status="measurement_missing",value=None)
     paths=prepare_no_train_terminal(prefix=BASE,frozen=frozen,run_id=frozen["actions"][0]["run_ids"][0],
         evidence_id="pcqm-gptrans-source-dependence-s42-v1",outcome=dict(execution_status="complete",artifact_status="accepted",

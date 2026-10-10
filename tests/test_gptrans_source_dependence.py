@@ -62,3 +62,9 @@ def test_no_training_or_geometry_calls():
     tree=ast.parse((ROOT/"src/molgap/gptrans_source_dependence.py").read_text())
     assert not any(isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr in {"step","backward","train"} for n in ast.walk(tree))
     assert not any(isinstance(n,ast.Attribute) and n.attr in {"pos","edge_distance","wedge_angle_cos"} for n in ast.walk(tree))
+
+
+def test_saved_analysis_does_not_fit_or_analyze_labels():
+    tree=ast.parse((ROOT/"src/molgap/gptrans_source_dependence_analysis.py").read_text())
+    assert not any(isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr in {"step","backward","train","fit"} for n in ast.walk(tree))
+    assert not any(isinstance(n,ast.Subscript) and isinstance(n.slice,ast.Constant) and n.slice.value in {"target_eV","prediction_eV"} for n in ast.walk(tree))
