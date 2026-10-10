@@ -341,6 +341,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-local-speed-10ep-fused_layout-20261011:A001",
+      "target": "experiments/pcqm_k1_fused_layout_speed/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-local-speed-10ep-reference-20261011:A001",
+      "target": "experiments/pcqm_k1_fused_layout_speed/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-residual-reconciliation:A001",
       "target": "experiments/pcqm_k1_residual_reconciliation/analysis.json",
       "type": "action_produced_evidence"
@@ -1666,6 +1676,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-colab-execution-profile-20261007",
+      "target": "TB-k1-local-speed-10ep-fused_layout-20261011",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-colab-execution-profile-20261007",
+      "target": "TB-k1-local-speed-10ep-reference-20261011",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-complete-module-audit-20261008",
       "target": "TB-k1-saved-bn-rows-20261008",
       "type": "prior_evidence"
@@ -2642,6 +2662,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-local-speed-10ep-reference-20261011",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-pair-value-decoupled-100k-s42",
       "type": "evidence"
     },
@@ -3023,6 +3051,14 @@
     },
     {
       "id": "TB-k1-late-weight-average-20261008",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-local-speed-10ep-fused_layout-20261011",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-local-speed-10ep-reference-20261011",
       "type": "trajectory"
     },
     {

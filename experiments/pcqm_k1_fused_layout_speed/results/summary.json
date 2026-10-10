@@ -1,0 +1,31 @@
+{
+  "status": "COMPLETE_SPEED_PREFIX",
+  "completed_epochs": 10,
+  "batch_offset": 0,
+  "config_sha256": "5645ee220f61af6a87f3bc5ff0628b5f7d8a81e04f3ae95f27f2fa7a851509b1",
+  "source_commit": "113a20ceb162975dbf5416594cb728061c834198",
+  "allocation_wall_seconds": 1473.7789618968964,
+  "loader_seconds_shared": 13.15950939978211,
+  "checkpoint_seconds_shared": 17.56686570005695,
+  "checkpoint_sha256": "d26a696326698dbaeb48391add48970197584d58fe2369d062e375faa59ef994",
+  "results": {
+    "reference": {
+      "steps": 7810,
+      "samples": 999680,
+      "optimizer_step_seconds": 811.3637309002152,
+      "arm_pipeline_seconds": 819.5510544998906,
+      "steady_step_median_seconds": 0.10332144999847515,
+      "steady_pipeline_median_seconds": 0.10434005000206525
+    },
+    "fused_layout": {
+      "steps": 7810,
+      "samples": 999680,
+      "optimizer_step_seconds": 609.4760311006539,
+      "arm_pipeline_seconds": 621.8070369998604,
+      "steady_step_median_seconds": 0.0768255000039062,
+      "steady_pipeline_median_seconds": 0.0784054499999911
+    },
+    "pipeline_time_reduction_fraction": 0.24128334215944391,
+    "quality_evaluated": false
+  }
+}

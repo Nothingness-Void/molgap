@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 466,
+  "ambiguous_historical_role_record_count": 476,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -2599,6 +2599,76 @@
       "state": "consumed"
     },
     {
+      "evidence_id": "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "training_membership"
+    },
+    {
+      "evidence_id": "pcqm-k1-local-speed-10ep-reference-20261011",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-local-speed-10ep-reference-20261011",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-local-speed-10ep-reference-20261011",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-local-speed-10ep-reference-20261011",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-local-speed-10ep-reference-20261011",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "training_membership"
+    },
+    {
       "evidence_id": "pcqm-k1-pair-value-decoupled-100k-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -3264,7 +3334,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 280,
+  "explicit_role_event_count": 286,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -4815,6 +4885,50 @@
         "trajectory_id": "TB-k1-slot-width96-kaggle3-100k-s42-v1"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:TRAIN[0,100000):1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-speed-fused_layout-labels_read-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-speed-fused_layout-metric_computed-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-k1-speed-fused_layout-training_membership-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-speed-reference-labels_read-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-speed-reference-metric_computed-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-k1-speed-reference-training_membership-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:bbd330b12e8159e117376ef24fa106413bc9fc18032a0d43e95c5dae5e47953f:train_prefix_0_256": [
       {
         "access_kind": "labels_read",
@@ -5424,6 +5538,8 @@
       "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-late-weight-average-20261008",
+      "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+      "pcqm-k1-local-speed-10ep-reference-20261011",
       "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
@@ -5523,6 +5639,8 @@
       "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-gptrans-full-fusion-r3",
       "pcqm-k1-late-weight-average-20261008",
+      "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+      "pcqm-k1-local-speed-10ep-reference-20261011",
       "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
@@ -8102,6 +8220,50 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:TRAIN[0,100000):1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-speed-fused_layout-labels_read-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-speed-fused_layout-metric_computed-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-k1-speed-fused_layout-training_membership-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-speed-reference-labels_read-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-speed-reference-metric_computed-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-k1-speed-reference-training_membership-20261011",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development": [

@@ -1,0 +1,104 @@
+{
+  "evidence_id": "pcqm-k1-local-speed-10ep-reference-20261011",
+  "run_id": "k1-fused-layout-speed-100k-20261011",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "matched_speed_prefix_only",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "authorized10ep_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "decision_ref": "experiments/pcqm_k1_fused_layout_speed/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately authorized quality/native qualification"
+    ]
+  },
+  "role_use": {
+    "train": "training_membership",
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-speed-reference-training_membership-20261011",
+      "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011",
+      "action_id": "A001",
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1:TRAIN[0,100000)",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "train",
+      "access_kind": "training_membership",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fused_layout_speed/reference/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-speed-reference-labels_read-20261011",
+      "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011",
+      "action_id": "A001",
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1:TRAIN[0,100000)",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "train",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fused_layout_speed/reference/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-speed-reference-metric_computed-20261011",
+      "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011",
+      "action_id": "A001",
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1:TRAIN[0,100000)",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "train",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_fused_layout_speed/reference/acceptance.json"
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-speed-reference-measured-20261011",
+      "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011",
+      "action_id": "A001",
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "attempt_id": "local-attempt001",
+      "platform": "local",
+      "hardware": "NVIDIA GeForce RTX5060",
+      "category": "training",
+      "evidence_ref": "experiments/pcqm_k1_fused_layout_speed/reference/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "wall_hours": {
+          "value": 0.41058879243003,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "cost_scope": "Reference wall event owns the shared job window once; candidate adds no second allocation. Per-arm pipeline timings are analysis windows, not additive allocation costs",
+  "exact_device_release_time": "unknown",
+  "quality_evaluated": false
+}

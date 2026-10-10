@@ -1,0 +1,46 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "No scientific endpoint/development evaluation",
+      "Fused rounding differs",
+      "Local adapter resume equivalence not qualified"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "K1-ES-GPS9-192-RWSE16",
+    "dataset_identity": "fixed100k-v1",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "not_evaluated",
+    "lr_schedule_identity": "cosine40-first10",
+    "matched_architecture_required": true,
+    "optimizer_identity": "AdamW-foreachFalse-fusedFalse",
+    "precision_identity": "FP32-TF32off",
+    "row_split_identity": "TRAIN[0,100000)",
+    "scientific_contract": "local10ep-speed-only",
+    "selection_role_identity": "none",
+    "target_transform_identity": "frozen-100k-mean-std",
+    "terminal_endpoint_identity": "10ep-speed-prefix",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_k1_fused_layout_speed/protocol.md",
+  "evaluation_role_identity": "not_evaluated",
+  "exposure": {
+    "optimizer_steps": 7810,
+    "sample_presentations": 999680
+  },
+  "metric_semantics": "No retained quality metrics; speed-only TRAIN loss guards",
+  "model_identity": "K1-ES-GPS9-192",
+  "presentation_semantics_ref": "experiments/pcqm_k1_fused_layout_speed/protocol.md",
+  "reference_id": "pcqm-k1-local-speed-10ep-reference-20261011",
+  "run_id": "k1-fused-layout-speed-100k-20261011",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "none",
+  "terminal_evidence_ref": "experiments/pcqm_k1_fused_layout_speed/reference/rml/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_k1_fused_layout_speed/reference/rml/rml_finalized/trace.json",
+  "trace_artifact_sha256": "aa11b472a7a626df6fa3a77b0ecf95b677e4b913ba1149b8c833baef9df80172",
+  "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

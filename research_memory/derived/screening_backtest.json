@@ -166,6 +166,26 @@
     },
     {
       "reasons": [
+        "Fused rounding differs",
+        "Local adapter resume equivalence not qualified",
+        "No scientific endpoint/development evaluation",
+        "canonical_trace_marked_ineligible"
+      ],
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+    },
+    {
+      "reasons": [
+        "Fused rounding differs",
+        "Local adapter resume equivalence not qualified",
+        "No scientific endpoint/development evaluation",
+        "canonical_trace_marked_ineligible"
+      ],
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011"
+    },
+    {
+      "reasons": [
         "canonical_trace_marked_ineligible",
         "full_platform_release_native_cost_unknown",
         "strict_v5_comparison_readiness_not_established",
@@ -259,5 +279,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 29
+  "trace_count": 31
 }

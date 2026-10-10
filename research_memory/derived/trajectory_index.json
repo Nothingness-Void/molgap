@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "6bb04c47f895e47455065e7f973930c7207b3d3a4835468709e7b7149fdb0248",
+  "source_digest": "acc8c4e461a5580d0db6c1ac095c6be7c0975c47b0850f17b98c2583b9592242",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1332,6 +1332,38 @@
       ],
       "track": "B",
       "trajectory_id": "TB-k1-late-weight-average-20261008"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_fused_layout_speed/terminal_decision.md",
+      "family_id": "k1-local-fused-layout-speed",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_fused_layout_speed/fused_layout/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-local-speed-10ep-fused_layout-20261011"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_fused_layout_speed/terminal_decision.md",
+      "family_id": "k1-local-fused-layout-speed",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_fused_layout_speed/reference/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-local-speed-10ep-reference-20261011"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011"
     },
     {
       "completeness_status": "complete",

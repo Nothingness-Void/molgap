@@ -1,0 +1,21 @@
+{
+  "status": "PLANNED",
+  "results": [
+    {
+      "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011",
+      "status": "PLANNED",
+      "path": "experiments/pcqm_k1_fused_layout_speed/reference/rml"
+    },
+    {
+      "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011",
+      "status": "PLANNED",
+      "path": "experiments/pcqm_k1_fused_layout_speed/fused_layout/rml"
+    }
+  ],
+  "batch": {
+    "size": 2,
+    "source_commit": "113a20ceb162975dbf5416594cb728061c834198",
+    "policy_sha256": "60beecaac0e83c6513d2bb30a8cd8a0c6634dcaf8bb87506f61a3549452ff858",
+    "source_hashes_sha256": "cddde02117fe35fdea5bc64ecf72f55d8370b12681404da7be9c5d77cd44d887"
+  }
+}

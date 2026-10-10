@@ -1,0 +1,132 @@
+{
+  "trajectory": {
+    "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-local-fused-layout-speed",
+    "question": "Does fused AdamW plus CPU layout reduce real100K TRAIN execution time?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-local-speed-reference-20261011",
+      "supporting_evidence_ids": [
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "observed_deficiency": "Short joint scratch gain is not a real-stream end-to-end measurement",
+      "changed_mechanism": "Explicit unfused control versus fused AdamW and CPU layout, no TF32",
+      "cheapest_falsifier": "Ten TRAIN epochs per arm within shared3600s, no development reads",
+      "alternative_explanations": [
+        "Short-window gain is warmup-sensitive",
+        "Shared loading and saves dominate",
+        "RTX5060 does not transfer to A100/T4"
+      ],
+      "decision_changed_if_positive": "Retain local measured gain for a separately authorized native/quality qualification",
+      "decision_changed_if_negative": "Do not nominate this joint runtime from isolated microbenchmarks",
+      "expected_native_cost_ref": "cost-k1-local-speed-reference-estimate-20261011",
+      "related_closed_family_ids": [
+        "k1-execution-profile-a100"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "113a20ceb162975dbf5416594cb728061c834198",
+      "source_config_identity": "af64177e9fc503f25a91fbef4a32c59a7ef49592da9bd1bb0e741c96034b288b",
+      "contract_refs": [
+        "experiments/pcqm_k1_fused_layout_speed/protocol.md",
+        "experiments/pcqm_k1_fused_layout_speed/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_fused_layout_speed/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_fused_layout_speed/protocol.md",
+      "same_run_replay": {
+        "schema": "molgap-same-run-replay-binding-v1",
+        "spec_identity": "af64177e9fc503f25a91fbef4a32c59a7ef49592da9bd1bb0e741c96034b288b",
+        "logical_run_id": "k1-fused-layout-speed-100k-20261011",
+        "arm_id": "reference",
+        "comparison_role": "reference",
+        "reference_arm_id": "reference",
+        "reference_trajectory_id": "TB-k1-local-speed-10ep-reference-20261011",
+        "reference_trajectory_ref": "experiments/pcqm_k1_fused_layout_speed/reference/rml/trajectory.json"
+      }
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "execution_speed_training_prefix",
+        "run_ids": [
+          "k1-fused-layout-speed-100k-20261011"
+        ],
+        "attempt_ids": [
+          "local-attempt001"
+        ],
+        "source_commit": "113a20ceb162975dbf5416594cb728061c834198",
+        "evidence_refs": [
+          "experiments/pcqm_k1_fused_layout_speed/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-local-speed-reference-estimate-20261011"
+        ]
+      }
+    ],
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_fused_layout_speed/decision.md",
+      "next_allowed_actions": [
+        "Authorized local speed prefix only"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_fused_layout_speed/protocol.md",
+    "comparison_blockers": [
+      "Speed-only prefix; no scientific endpoint",
+      "RTX5060 only"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-local-speed-reference-estimate-20261011",
+      "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011",
+      "action_id": "A001",
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "attempt_id": "local-attempt001",
+      "platform": "local",
+      "hardware": "NVIDIA GeForce RTX5060",
+      "category": "training",
+      "evidence_ref": "experiments/pcqm_k1_fused_layout_speed/protocol.md",
+      "measurement": {
+        "device_hours": {
+          "value": 0.5,
+          "status": "estimated"
+        },
+        "wall_hours": {
+          "value": 0.5,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-local-speed",
+    "policy_version": "1",
+    "state_timestamp": "2026-10-10T17:11:05.739227+00:00"
+  }
+}

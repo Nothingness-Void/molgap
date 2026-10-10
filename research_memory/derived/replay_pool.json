@@ -10971,6 +10971,26 @@
     },
     {
       "reasons": [
+        "Fused rounding differs",
+        "Local adapter resume equivalence not qualified",
+        "No scientific endpoint/development evaluation",
+        "canonical_trace_marked_ineligible"
+      ],
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+    },
+    {
+      "reasons": [
+        "Fused rounding differs",
+        "Local adapter resume equivalence not qualified",
+        "No scientific endpoint/development evaluation",
+        "canonical_trace_marked_ineligible"
+      ],
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011"
+    },
+    {
+      "reasons": [
         "canonical_trace_marked_ineligible",
         "full_platform_release_native_cost_unknown",
         "strict_v5_comparison_readiness_not_established",
@@ -10998,5 +11018,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "a85befb947f6050c4eb0bb37256b9a15f08e77415b2b5d33afe26dddd52e4aa9"
+  "source_digest": "5910e0ebbfe1977c308fd74920240d66d26f1e773911fefaf925c2e4a53f610b"
 }

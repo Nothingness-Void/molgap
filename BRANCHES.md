@@ -13,6 +13,13 @@ dated evidence. Fetch before comparing a remote snapshot.
 
 ## New desktop experiment lifecycle
 
+Accepted local K1 execution-speed custody: `D:/w/k1-fused-quality`, branch
+`codex/exp/k1-fused-layout-speed-100k`. The
+[ten-epoch decision](experiments/pcqm_k1_fused_layout_speed/terminal_decision.md)
+routes reviewed reusable helpers and evidence by the diagnostic non-promotion
+rule below. Large source/checkpoint files remain in ignored owner custody;
+the production recommendation and remote jobs are unchanged.
+
 New desktop questions start from the verified current `molgap-desktop` tip in a
 dedicated `codex/exp/<question>` branch and separate worktree. Verify upstream
 and worktree first; never base new questions on retained experiments, archive or server.

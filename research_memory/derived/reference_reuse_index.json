@@ -1684,6 +1684,48 @@
     },
     {
       "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "matched_speed_prefix_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+      "role_use": {
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "training_membership"
+      },
+      "scientific_scope": "local_speed_prefix",
+      "source_envelope": "experiments/pcqm_k1_fused_layout_speed/fused_layout/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "matched_speed_prefix_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-local-speed-10ep-reference-20261011",
+      "role_use": {
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "training_membership"
+      },
+      "scientific_scope": "local_speed_prefix",
+      "source_envelope": "experiments/pcqm_k1_fused_layout_speed/reference/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
         "durable_local_verified"
       ],
       "comparison_status": "point_comparison_only_paired_interval_unavailable",

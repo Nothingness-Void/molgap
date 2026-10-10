@@ -17,7 +17,7 @@ from .training_reproducibility import (
     atomic_json, atomic_torch_save, build_runtime_manifest, capture_rng_state,
     configure_fp32_determinism, restore_rng_state, sha256_file,
 )
-from .v4_runtime import load_frozen_initial_state, make_adamw_compat, torch_load_compat
+from .v4_runtime import load_frozen_initial_state, make_adamw_compat, torch_load_compat, validate_standard_source_bundle
 
 ARMS = ("reference", "fused_layout")
 FORMAT = "molgap-k1-local-speed-v1"
@@ -35,6 +35,10 @@ def validate_config(config):
 
 
 def verify_source(root, config):
+    if sha256_file(root / "SOURCE_FILES.json") != config["source_inventory_sha256"]:
+        raise ValueError("Frozen inventory authority changed")
+    validate_standard_source_bundle(Path(config["source_archive"]),
+        config["source_package_sha256"], config["source_commit"])
     inventory = json.loads((root / "SOURCE_FILES.json").read_text())
     if inventory["source_commit"] != config["source_commit"]:
         raise ValueError("Source commit changed")

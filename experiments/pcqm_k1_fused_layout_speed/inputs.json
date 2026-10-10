@@ -1,0 +1,17 @@
+{
+  "format": "molgap-k1-local-speed-v1",
+  "epochs": 10,
+  "allocation_seconds": 3600,
+  "schedule_epochs": 40,
+  "batch_size": 128,
+  "precision": "fp32-tf32-off",
+  "development_access": false,
+  "initial_format": "molgap-k1-single-ema-initial-v1",
+  "initial_file_sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80",
+  "initial_tensor_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "source_commit": "113a20ceb162975dbf5416594cb728061c834198",
+  "arms": [
+    "reference",
+    "fused_layout"
+  ]
+}

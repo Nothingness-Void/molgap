@@ -1,0 +1,47 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-1e0d6ecc6bbe285756634c131700bbfb210991bf6bfeeec2907438b15fab16f0",
+  "finalized_at": "2026-10-10T17:45:50.348935+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_fused_layout_speed/attribution.md": "e0b542b9636a220a27e8a203cc9dbb5a8352b4c2e7db4cf50eef9684e6045839",
+    "experiments/pcqm_k1_fused_layout_speed/inputs.json": "2ecbf78e194280ee2117eaa945794a0e7b3602bfbf1ffac1fdc41a4d28694b97",
+    "experiments/pcqm_k1_fused_layout_speed/process_receipt.json": "60c1c7672a58ea07d544e375227e8f9de9b074515ec6c75b94354ff882b3f159",
+    "experiments/pcqm_k1_fused_layout_speed/protocol.md": "babc73875b5f65de922344f3e156f80df6674c8cfc1a23bc7c4c6680e7579125",
+    "experiments/pcqm_k1_fused_layout_speed/reference/acceptance.json": "0dc1d56d06eeff438e0df8ff65a5cdd6dc56bfa9ee3cbbdb3c5f8c0483f6d4e7",
+    "experiments/pcqm_k1_fused_layout_speed/reference/trace.json": "aa11b472a7a626df6fa3a77b0ecf95b677e4b913ba1149b8c833baef9df80172",
+    "experiments/pcqm_k1_fused_layout_speed/release.json": "af5e4269d04c21b3034c9eba3a6b2ce01ffcfdb2470a9ed3eb380011b3100d60",
+    "experiments/pcqm_k1_fused_layout_speed/results/SOURCE_FILES.json": "2d56fcd74a115bb948909b3bd9fb3edf5975006895a7a7c46085f869186023c1",
+    "experiments/pcqm_k1_fused_layout_speed/results/allocation.json": "49f3a3bb70fa873cccc5fc49d5408af892733f4b624bd93da3cc1f8a7b844c07",
+    "experiments/pcqm_k1_fused_layout_speed/results/allocation_terminal.json": "8f7df170a39a43aff2aec98df3c11083ec3894aaa13fc92aeb8c788b0b75ca1a",
+    "experiments/pcqm_k1_fused_layout_speed/results/cpu_acceptance.json": "03e4dff7b5af9a9158d5da143897d271a8640ba0779b7f66699b620ad2bc50e7",
+    "experiments/pcqm_k1_fused_layout_speed/results/executed_config.json": "5645ee220f61af6a87f3bc5ff0628b5f7d8a81e04f3ae95f27f2fa7a851509b1",
+    "experiments/pcqm_k1_fused_layout_speed/results/retained_artifacts.json": "a830ce2bb53cbfa7ed11ded0e65941a529b5e6fbe4dab3921ab33d34b39b99f7",
+    "experiments/pcqm_k1_fused_layout_speed/results/runtime.json": "aebe002d44bda9c1766054e3eca956d7c026985b32183c63c7a93ffdc7a67aa0",
+    "experiments/pcqm_k1_fused_layout_speed/results/summary.json": "b37b64717afd4a8cffffdf19bc3440acc6d9087d0404f22ef5e51feb5d8d1072",
+    "experiments/pcqm_k1_fused_layout_speed/results/timings.json": "c61d1171d01da99d7b83f49e0c7734bffd17063c9dfb9512b70eb7049d741303",
+    "experiments/pcqm_k1_fused_layout_speed/role_plan.json": "42d285ad0c7d92d2f4d753ba0b9ed882761447ed1a12662b8222b9ec93c693af",
+    "experiments/pcqm_k1_fused_layout_speed/terminal_decision.md": "5cefdc502d958c38d46b8a05f6679e9b1751da181a604e3b9b6427717e876368"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-k1-speed-reference-measured-20261011.json": "a5eaf3f2487275a671ee4c90b1cdf12aa1b88ab733861f3ac2f89477bff9d9ba",
+    "prospective_snapshot.json": "edd7a58651c4ce8ea09cb218c2d538c72267495f5bdb0d01e7d89e1fee08c763",
+    "roles/role-k1-speed-reference-labels_read-20261011.json": "727ab8f38d190eff738a1d16f066d131aa9a11a33c0e346f04217a0ce4461570",
+    "roles/role-k1-speed-reference-metric_computed-20261011.json": "370143674b5286a95320937a7a4d9315a45adcf2d0561970e7b2bdae91db6212",
+    "roles/role-k1-speed-reference-training_membership-20261011.json": "af1f22ae4fe748ad697a371160b54cc1619c5af7e0fa3472b447bed2123fb09c",
+    "terminal_input.json": "91633626947eba2dfc5a6d4d1ba98a949e9a29524d44208938a11fcfca910fe9",
+    "trace.json": "aa11b472a7a626df6fa3a77b0ecf95b677e4b913ba1149b8c833baef9df80172",
+    "trace_manifest.json": "e19baa6276182f698817e35390c05523e403f24ff797bd8f23ef883d5697c41d",
+    "trajectory.json": "2d0c732f0c0358be964903b4fbe3e99b0e4a3b538880e9c3de58efa611355cbd",
+    "v5_evidence.json": "a56aa6dcabf6e971ae63858784973523bf69370ae6b628ee3bf6ba9e6b98acea"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_fused_layout_speed/reference/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "1e0d6ecc6bbe285756634c131700bbfb210991bf6bfeeec2907438b15fab16f0",
+  "trace_status": "available",
+  "trajectory_id": "TB-k1-local-speed-10ep-reference-20261011"
+}

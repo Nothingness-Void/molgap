@@ -12,6 +12,7 @@ from pathlib import Path
 from molgap.research_memory.plan import plan_many
 from molgap.training_reproducibility import atomic_json, canonical_fingerprint, sha256_file
 from molgap.v4_bundle import build_v4_source_bundle
+from molgap.v4_runtime import validate_standard_source_bundle
 
 REL = "experiments/pcqm_k1_fused_layout_speed"
 RUN = "k1-fused-layout-speed-100k-20261011"
@@ -78,9 +79,22 @@ def prepare(root):
         plans.append({"spec": spec, "output": f"{REL}/{arm}/rml"})
     receipt = plan_many(root, plans)
     atomic_json(folder / "plan_receipt.json", receipt)
-    staging = root / "platforms/_records/local/staging" / RUN
+    package(root, inputs)
+
+
+def package(root, inputs):
+    folder = root / REL
+    commit = inputs["source_commit"]
+    for arm in inputs["arms"]:
+        trajectory = json.loads((folder / arm / "rml/trajectory.json").read_text())
+        if trajectory["state_at_start"]["source_commit"] != commit:
+            raise ValueError("Published source identity changed")
+        for pointer in (f"{REL}/protocol.md", f"{REL}/inputs.json", f"{REL}/role_plan.json", f"{REL}/decision.md"):
+            if sha256_file(root / pointer) != trajectory["decision_state"]["source_hashes"][pointer]:
+                raise ValueError(f"Published planning input changed: {pointer}")
+    staging = root / "platforms/_records/local/staging" / (RUN + "-source2")
     # Explicit reviewed import closure, including the legacy shard pickle owner.
-    names = ["__init__", "k1_local_speed", "k1_screen_training", "k1_execution_layout",
+    names = ["__init__", "constants", "k1_local_speed", "k1_screen_training", "k1_execution_layout",
         "k1_loader_reuse", "packed_graph_dataset", "qm9_neural_atom", "pcqm_gap_architecture",
         "gps", "edge_state_gps", "screen_policy", "training_reproducibility", "v4_runtime",
         "pcqm_wedge"]
@@ -88,13 +102,25 @@ def prepare(root):
         relative_paths=[f"src/molgap/{name}.py" for name in names], output_dir=staging,
         source_commit=commit)
     extracted = staging / "frozen"
-    extracted.mkdir()
+    extracted.mkdir(exist_ok=True)
+    if any(extracted.iterdir()):
+        raise ValueError("Recovery requires an empty, unpublished extracted directory")
+    validate_standard_source_bundle(Path(source["archive"]), source["archive_sha256"], commit)
     with tarfile.open(source["archive"], "r:gz") as archive:
-        archive.extractall(extracted, filter="data")
+        # Validated regular-file inventory only; portable to the project Python.
+        for member in archive.getmembers():
+            target = extracted / member.name
+            target.resolve().relative_to(extracted.resolve())
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with archive.extractfile(member) as handle, target.open("wb") as output:
+                import shutil
+                shutil.copyfileobj(handle, output)
     for name in ("SOURCE_COMMIT.txt", "SOURCE_FILES.json", "SOURCE_ARCHIVE_SHA256.txt"):
         import shutil
         shutil.copyfile(staging / name, extracted / name)
     config = copy.deepcopy(inputs)
+    config.update(source_archive=source["archive"], source_package_sha256=source["archive_sha256"],
+                  source_inventory_sha256=sha256_file(extracted / "SOURCE_FILES.json"))
     config.update(input_root="D:/文档/molgap/data/pcqm_fixed_100k_v1",
         initial_path="D:/w/k1-colab-500k-efficient/platforms/_records/colab/staging/k1-single-ema-500k-a100-20261010/initial_state.pt",
         prospective={arm: {"path": str(folder / arm / "rml/trajectory.json"),
@@ -110,4 +136,10 @@ def prepare(root):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", type=Path, required=True)
-    prepare(parser.parse_args().repo_root.resolve())
+    parser.add_argument("--recover-package", action="store_true")
+    args = parser.parse_args()
+    root = args.repo_root.resolve()
+    if args.recover_package:
+        package(root, json.loads((root / REL / "inputs.json").read_text()))
+    else:
+        prepare(root)

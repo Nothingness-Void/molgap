@@ -6,7 +6,7 @@ import torch
 from torch_geometric.data import Data, InMemoryDataset
 
 from molgap import k1_screen_training as owner
-from molgap.k1_local_speed import summarize, validate_config
+from molgap.k1_local_speed import summarize, validate_config, verify_source
 
 
 def config():
@@ -22,6 +22,17 @@ def test_contract_rejects_scope_expansion(key, value):
     c[key] = value
     with pytest.raises(ValueError):
         validate_config(c)
+
+
+def test_source_inventory_cannot_redefine_its_own_authority(tmp_path):
+    import json
+
+    inventory = tmp_path / "SOURCE_FILES.json"
+    inventory.write_text(json.dumps({"source_commit": "a" * 40, "files": []}))
+    expected = owner.sha256_file(inventory)
+    inventory.write_text(json.dumps({"source_commit": "a" * 40, "files": [{"path": "injected.py", "sha256": "b" * 64}]}))
+    with pytest.raises(ValueError, match="authority changed"):
+        verify_source(tmp_path, {"source_inventory_sha256": expected})
 
 
 def test_train_only_never_opens_development(tmp_path, monkeypatch):
@@ -57,3 +68,28 @@ def test_summary_retains_all_exposure_but_excludes_only_steady_warmup():
     assert result["quality_evaluated"] is False
     with pytest.raises(ValueError):
         summarize(rows[:-1])
+
+
+def test_saved_speed_acceptance_rejects_missing_steps_and_nonfinite_timing():
+    import importlib.util
+    import math
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parent.parent / "experiments/pcqm_k1_fused_layout_speed/accept.py"
+    spec = importlib.util.spec_from_file_location("local_speed_acceptance", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    rows = [{"arm": arm, "epoch": e, "batch": b, "samples": 128,
+        "step_seconds": 0.1, "pipeline_seconds": 0.11,
+        "learning_rate": 1e-6 + (4e-4 - 1e-6) * (1 + math.cos(math.pi * e / 40)) / 2}
+        for e in range(10) for b in range(781) for arm in ("reference", "fused_layout")]
+    assert module.inspect_rows(rows)
+    with pytest.raises(ValueError):
+        module.inspect_rows(rows[:-1])
+    rows[0]["step_seconds"] = float("nan")
+    with pytest.raises(ValueError):
+        module.inspect_rows(rows)
+    rows[0]["step_seconds"] = 0.1
+    rows[-1]["learning_rate"] = 1e-6
+    with pytest.raises(ValueError):
+        module.inspect_rows(rows)

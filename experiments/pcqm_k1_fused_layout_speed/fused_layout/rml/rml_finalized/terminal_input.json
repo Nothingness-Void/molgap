@@ -1,0 +1,318 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_fused_layout_speed/fused_layout/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_fused_layout_speed/attribution.md": "e0b542b9636a220a27e8a203cc9dbb5a8352b4c2e7db4cf50eef9684e6045839",
+    "experiments/pcqm_k1_fused_layout_speed/fused_layout/acceptance.json": "015193bc4ba1714b4564d8a38386b2430035ddb7dca53260ae9a32821ae911b7",
+    "experiments/pcqm_k1_fused_layout_speed/fused_layout/trace.json": "eb74225d7288df27cc67489a060f427efbf2a414a6f325b1d41f4c7e1267ec4c",
+    "experiments/pcqm_k1_fused_layout_speed/inputs.json": "2ecbf78e194280ee2117eaa945794a0e7b3602bfbf1ffac1fdc41a4d28694b97",
+    "experiments/pcqm_k1_fused_layout_speed/process_receipt.json": "60c1c7672a58ea07d544e375227e8f9de9b074515ec6c75b94354ff882b3f159",
+    "experiments/pcqm_k1_fused_layout_speed/protocol.md": "babc73875b5f65de922344f3e156f80df6674c8cfc1a23bc7c4c6680e7579125",
+    "experiments/pcqm_k1_fused_layout_speed/release.json": "af5e4269d04c21b3034c9eba3a6b2ce01ffcfdb2470a9ed3eb380011b3100d60",
+    "experiments/pcqm_k1_fused_layout_speed/results/SOURCE_FILES.json": "2d56fcd74a115bb948909b3bd9fb3edf5975006895a7a7c46085f869186023c1",
+    "experiments/pcqm_k1_fused_layout_speed/results/allocation.json": "49f3a3bb70fa873cccc5fc49d5408af892733f4b624bd93da3cc1f8a7b844c07",
+    "experiments/pcqm_k1_fused_layout_speed/results/allocation_terminal.json": "8f7df170a39a43aff2aec98df3c11083ec3894aaa13fc92aeb8c788b0b75ca1a",
+    "experiments/pcqm_k1_fused_layout_speed/results/cpu_acceptance.json": "03e4dff7b5af9a9158d5da143897d271a8640ba0779b7f66699b620ad2bc50e7",
+    "experiments/pcqm_k1_fused_layout_speed/results/executed_config.json": "5645ee220f61af6a87f3bc5ff0628b5f7d8a81e04f3ae95f27f2fa7a851509b1",
+    "experiments/pcqm_k1_fused_layout_speed/results/retained_artifacts.json": "a830ce2bb53cbfa7ed11ded0e65941a529b5e6fbe4dab3921ab33d34b39b99f7",
+    "experiments/pcqm_k1_fused_layout_speed/results/runtime.json": "aebe002d44bda9c1766054e3eca956d7c026985b32183c63c7a93ffdc7a67aa0",
+    "experiments/pcqm_k1_fused_layout_speed/results/summary.json": "b37b64717afd4a8cffffdf19bc3440acc6d9087d0404f22ef5e51feb5d8d1072",
+    "experiments/pcqm_k1_fused_layout_speed/results/timings.json": "c61d1171d01da99d7b83f49e0c7734bffd17063c9dfb9512b70eb7049d741303",
+    "experiments/pcqm_k1_fused_layout_speed/role_plan.json": "42d285ad0c7d92d2f4d753ba0b9ed882761447ed1a12662b8222b9ec93c693af",
+    "experiments/pcqm_k1_fused_layout_speed/terminal_decision.md": "5cefdc502d958c38d46b8a05f6679e9b1751da181a604e3b9b6427717e876368"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "local-attempt001",
+      "category": "training",
+      "cost_event_id": "cost-k1-speed-fused_layout-measured-20261011",
+      "evidence_ref": "experiments/pcqm_k1_fused_layout_speed/fused_layout/acceptance.json",
+      "hardware": "NVIDIA GeForce RTX5060",
+      "measurement": {
+        "cpu_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "not_applicable",
+          "value": null
+        }
+      },
+      "platform": "local",
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_fused_layout_speed/terminal_decision.md",
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "Separately authorized quality/native qualification"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/protocol.md",
+        "name": "protocol.md",
+        "sha256": "babc73875b5f65de922344f3e156f80df6674c8cfc1a23bc7c4c6680e7579125"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/inputs.json",
+        "name": "inputs.json",
+        "sha256": "2ecbf78e194280ee2117eaa945794a0e7b3602bfbf1ffac1fdc41a4d28694b97"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/role_plan.json",
+        "name": "role_plan.json",
+        "sha256": "42d285ad0c7d92d2f4d753ba0b9ed882761447ed1a12662b8222b9ec93c693af"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/release.json",
+        "name": "release.json",
+        "sha256": "af5e4269d04c21b3034c9eba3a6b2ce01ffcfdb2470a9ed3eb380011b3100d60"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/process_receipt.json",
+        "name": "process_receipt.json",
+        "sha256": "60c1c7672a58ea07d544e375227e8f9de9b074515ec6c75b94354ff882b3f159"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/terminal_decision.md",
+        "name": "terminal_decision.md",
+        "sha256": "5cefdc502d958c38d46b8a05f6679e9b1751da181a604e3b9b6427717e876368"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/attribution.md",
+        "name": "attribution.md",
+        "sha256": "e0b542b9636a220a27e8a203cc9dbb5a8352b4c2e7db4cf50eef9684e6045839"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/fused_layout/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "015193bc4ba1714b4564d8a38386b2430035ddb7dca53260ae9a32821ae911b7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/fused_layout/trace.json",
+        "name": "trace.json",
+        "sha256": "eb74225d7288df27cc67489a060f427efbf2a414a6f325b1d41f4c7e1267ec4c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/results/allocation.json",
+        "name": "allocation.json",
+        "sha256": "49f3a3bb70fa873cccc5fc49d5408af892733f4b624bd93da3cc1f8a7b844c07"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/results/allocation_terminal.json",
+        "name": "allocation_terminal.json",
+        "sha256": "8f7df170a39a43aff2aec98df3c11083ec3894aaa13fc92aeb8c788b0b75ca1a"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/results/cpu_acceptance.json",
+        "name": "cpu_acceptance.json",
+        "sha256": "03e4dff7b5af9a9158d5da143897d271a8640ba0779b7f66699b620ad2bc50e7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/results/executed_config.json",
+        "name": "executed_config.json",
+        "sha256": "5645ee220f61af6a87f3bc5ff0628b5f7d8a81e04f3ae95f27f2fa7a851509b1"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/results/retained_artifacts.json",
+        "name": "retained_artifacts.json",
+        "sha256": "a830ce2bb53cbfa7ed11ded0e65941a529b5e6fbe4dab3921ab33d34b39b99f7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/results/runtime.json",
+        "name": "runtime.json",
+        "sha256": "aebe002d44bda9c1766054e3eca956d7c026985b32183c63c7a93ffdc7a67aa0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/results/SOURCE_FILES.json",
+        "name": "SOURCE_FILES.json",
+        "sha256": "2d56fcd74a115bb948909b3bd9fb3edf5975006895a7a7c46085f869186023c1"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/results/summary.json",
+        "name": "summary.json",
+        "sha256": "b37b64717afd4a8cffffdf19bc3440acc6d9087d0404f22ef5e51feb5d8d1072"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_fused_layout_speed/results/timings.json",
+        "name": "timings.json",
+        "sha256": "c61d1171d01da99d7b83f49e0c7734bffd17063c9dfb9512b70eb7049d741303"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_fused_layout_speed/terminal_decision.md",
+        "experiments/pcqm_k1_fused_layout_speed/fused_layout/acceptance.json",
+        "experiments/pcqm_k1_fused_layout_speed/protocol.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-local-speed-10ep-fused_layout-20261011",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "local10ep-speed-only",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-10T17:45:50.348935+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Metadata acceptance of separately executed TRAIN speed prefix"
+    },
+    "observed_execution": {
+      "execution_ref": "experiments/pcqm_k1_fused_layout_speed/results/summary.json",
+      "inference_executed": false,
+      "training_executed": true,
+      "training_replay_ready": false
+    },
+    "outcome": {
+      "artifact_status": "local_hash_verified",
+      "budget_decision": "authorized10ep_complete",
+      "comparison_status": "matched_speed_prefix_only",
+      "execution_status": "complete",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "development": "untouched",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "training_membership"
+    },
+    "scope": "local_speed_prefix",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-10T17:45:50.348935+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1:TRAIN[0,100000)",
+      "evidence_ref": "experiments/pcqm_k1_fused_layout_speed/fused_layout/acceptance.json",
+      "role_event_id": "role-k1-speed-fused_layout-training_membership-20261011",
+      "role_name": "train",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1:TRAIN[0,100000)",
+      "evidence_ref": "experiments/pcqm_k1_fused_layout_speed/fused_layout/acceptance.json",
+      "role_event_id": "role-k1-speed-fused_layout-labels_read-20261011",
+      "role_name": "train",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1:TRAIN[0,100000)",
+      "evidence_ref": "experiments/pcqm_k1_fused_layout_speed/fused_layout/acceptance.json",
+      "role_event_id": "role-k1-speed-fused_layout-metric_computed-20261011",
+      "role_name": "train",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "k1-fused-layout-speed-100k-20261011",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+    }
+  ],
+  "run_id": "k1-fused-layout-speed-100k-20261011",
+  "same_run_observation": {
+    "attempt_id": "local-attempt001",
+    "logical_run_id": "k1-fused-layout-speed-100k-20261011",
+    "platform_name": "local",
+    "platform_run_reference": "local:\u865a\u7a7a\u7684\u6e38\u620f\u4e3b\u673a:pid42688:2026-10-10T17:12:50.6900830Z",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "113a20ceb162975dbf5416594cb728061c834198",
+    "source_package_sha256": "ef0806ea7cdff075f706c5e5b2c13ff5a5aab17809d4af3ef77ea24e628b5d43",
+    "spec_identity": "af64177e9fc503f25a91fbef4a32c59a7ef49592da9bd1bb0e741c96034b288b"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "No scientific endpoint/development evaluation",
+        "Fused rounding differs",
+        "Local adapter resume equivalence not qualified"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "K1-ES-GPS9-192-RWSE16",
+      "dataset_identity": "fixed100k-v1",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "not_evaluated",
+      "lr_schedule_identity": "cosine40-first10",
+      "matched_architecture_required": true,
+      "optimizer_identity": "AdamW-foreachFalse-fusedTrue",
+      "precision_identity": "FP32-TF32off",
+      "row_split_identity": "TRAIN[0,100000)",
+      "scientific_contract": "local10ep-speed-only",
+      "selection_role_identity": "none",
+      "target_transform_identity": "frozen-100k-mean-std",
+      "terminal_endpoint_identity": "10ep-speed-prefix",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_fused_layout_speed/protocol.md",
+    "evaluation_role_identity": "not_evaluated",
+    "exposure": {
+      "optimizer_steps": 7810,
+      "sample_presentations": 999680
+    },
+    "metric_semantics": "No retained quality metrics; speed-only TRAIN loss guards",
+    "model_identity": "K1-ES-GPS9-192",
+    "presentation_semantics_ref": "experiments/pcqm_k1_fused_layout_speed/protocol.md",
+    "reference_id": "pcqm-k1-local-speed-10ep-reference-20261011",
+    "run_id": "k1-fused-layout-speed-100k-20261011",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "none",
+    "terminal_evidence_ref": "experiments/pcqm_k1_fused_layout_speed/fused_layout/rml/rml_finalized/v5_evidence.json",
+    "trace_artifact_ref": "experiments/pcqm_k1_fused_layout_speed/fused_layout/trace.json",
+    "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+}

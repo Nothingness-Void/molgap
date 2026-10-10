@@ -1,0 +1,47 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-45ad7e86d4a0e113c6803ded4ba6843b9f61565b07c021dc71abd17292185b84",
+  "finalized_at": "2026-10-10T17:45:50.348935+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_fused_layout_speed/attribution.md": "e0b542b9636a220a27e8a203cc9dbb5a8352b4c2e7db4cf50eef9684e6045839",
+    "experiments/pcqm_k1_fused_layout_speed/fused_layout/acceptance.json": "015193bc4ba1714b4564d8a38386b2430035ddb7dca53260ae9a32821ae911b7",
+    "experiments/pcqm_k1_fused_layout_speed/fused_layout/trace.json": "eb74225d7288df27cc67489a060f427efbf2a414a6f325b1d41f4c7e1267ec4c",
+    "experiments/pcqm_k1_fused_layout_speed/inputs.json": "2ecbf78e194280ee2117eaa945794a0e7b3602bfbf1ffac1fdc41a4d28694b97",
+    "experiments/pcqm_k1_fused_layout_speed/process_receipt.json": "60c1c7672a58ea07d544e375227e8f9de9b074515ec6c75b94354ff882b3f159",
+    "experiments/pcqm_k1_fused_layout_speed/protocol.md": "babc73875b5f65de922344f3e156f80df6674c8cfc1a23bc7c4c6680e7579125",
+    "experiments/pcqm_k1_fused_layout_speed/release.json": "af5e4269d04c21b3034c9eba3a6b2ce01ffcfdb2470a9ed3eb380011b3100d60",
+    "experiments/pcqm_k1_fused_layout_speed/results/SOURCE_FILES.json": "2d56fcd74a115bb948909b3bd9fb3edf5975006895a7a7c46085f869186023c1",
+    "experiments/pcqm_k1_fused_layout_speed/results/allocation.json": "49f3a3bb70fa873cccc5fc49d5408af892733f4b624bd93da3cc1f8a7b844c07",
+    "experiments/pcqm_k1_fused_layout_speed/results/allocation_terminal.json": "8f7df170a39a43aff2aec98df3c11083ec3894aaa13fc92aeb8c788b0b75ca1a",
+    "experiments/pcqm_k1_fused_layout_speed/results/cpu_acceptance.json": "03e4dff7b5af9a9158d5da143897d271a8640ba0779b7f66699b620ad2bc50e7",
+    "experiments/pcqm_k1_fused_layout_speed/results/executed_config.json": "5645ee220f61af6a87f3bc5ff0628b5f7d8a81e04f3ae95f27f2fa7a851509b1",
+    "experiments/pcqm_k1_fused_layout_speed/results/retained_artifacts.json": "a830ce2bb53cbfa7ed11ded0e65941a529b5e6fbe4dab3921ab33d34b39b99f7",
+    "experiments/pcqm_k1_fused_layout_speed/results/runtime.json": "aebe002d44bda9c1766054e3eca956d7c026985b32183c63c7a93ffdc7a67aa0",
+    "experiments/pcqm_k1_fused_layout_speed/results/summary.json": "b37b64717afd4a8cffffdf19bc3440acc6d9087d0404f22ef5e51feb5d8d1072",
+    "experiments/pcqm_k1_fused_layout_speed/results/timings.json": "c61d1171d01da99d7b83f49e0c7734bffd17063c9dfb9512b70eb7049d741303",
+    "experiments/pcqm_k1_fused_layout_speed/role_plan.json": "42d285ad0c7d92d2f4d753ba0b9ed882761447ed1a12662b8222b9ec93c693af",
+    "experiments/pcqm_k1_fused_layout_speed/terminal_decision.md": "5cefdc502d958c38d46b8a05f6679e9b1751da181a604e3b9b6427717e876368"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-k1-speed-fused_layout-measured-20261011.json": "89cfc995f896c73d8826c20aabaf051c65516f09c589d8b04c62c14817b7def1",
+    "prospective_snapshot.json": "7cac7cca2600b2c18f0083a32986db5bd05e380f2d00977550420c68f01047b5",
+    "roles/role-k1-speed-fused_layout-labels_read-20261011.json": "1ba7fb9570f891d52109abc079a61bbebb4964a298e1405315ac3a9fb2396e73",
+    "roles/role-k1-speed-fused_layout-metric_computed-20261011.json": "5cc5275428a35325a004ede2deada1ac9e32c3e5d3c828aba0ee5d7795cbe0f9",
+    "roles/role-k1-speed-fused_layout-training_membership-20261011.json": "5d0c41cc71ed32c0458310b9d9dde0760814c141e0735e61c1b5b5bbe32e5012",
+    "terminal_input.json": "560e5bb2e4d40f1a482a8c91f0a1ed408a8020a5c2400ba91340e85ec85ea8c4",
+    "trace.json": "eb74225d7288df27cc67489a060f427efbf2a414a6f325b1d41f4c7e1267ec4c",
+    "trace_manifest.json": "59fb20b9570ae5d7c5149565afd792277114f1eb0055eca535112548aea90807",
+    "trajectory.json": "9d210559eb57d9f9f38cdb36f90bb33f6c77a46b5493a14f0fd00e7299289eac",
+    "v5_evidence.json": "7d0a94454d89a19b4a618db29af4a95cf173e3c43aae8a14e79b87c083f91893"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_fused_layout_speed/fused_layout/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "45ad7e86d4a0e113c6803ded4ba6843b9f61565b07c021dc71abd17292185b84",
+  "trace_status": "available",
+  "trajectory_id": "TB-k1-local-speed-10ep-fused_layout-20261011"
+}
