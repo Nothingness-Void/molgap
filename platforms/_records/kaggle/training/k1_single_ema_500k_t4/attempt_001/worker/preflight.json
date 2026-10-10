@@ -1,0 +1,40 @@
+{
+  "reference": {
+    "repeat": {
+      "losses": [
+        0.7732982635498047,
+        0.6916593909263611
+      ],
+      "model": "4d62daeec0c0c66aaac483e03381dd86ad0a4339ce02270e01a38d0ad8e78a05",
+      "ema": null
+    },
+    "exact_resume": true,
+    "initial_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+    "fixture_sha256": [
+      "99f9863ea22a5bb96cd8ed2e6ab13b44a8bb7d3304f5867b613ad15c9850c0bd",
+      "e76eb9b6dfabd5098c895d6fe8610cc777a37abba03883c812d0e804705c38e2"
+    ],
+    "formal_samples": 0
+  },
+  "ema999": {
+    "repeat": {
+      "losses": [
+        0.7732982635498047,
+        0.6916593909263611
+      ],
+      "model": "4d62daeec0c0c66aaac483e03381dd86ad0a4339ce02270e01a38d0ad8e78a05",
+      "ema": "17a0cac682db7902b458bae27160c38f0c5b8a692bae4395092d871189d201e0"
+    },
+    "exact_resume": true,
+    "initial_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+    "fixture_sha256": [
+      "99f9863ea22a5bb96cd8ed2e6ab13b44a8bb7d3304f5867b613ad15c9850c0bd",
+      "e76eb9b6dfabd5098c895d6fe8610cc777a37abba03883c812d0e804705c38e2"
+    ],
+    "formal_samples": 0
+  },
+  "memory": {
+    "peak_reserved_bytes": 637534208,
+    "total_bytes": 15636037632
+  }
+}

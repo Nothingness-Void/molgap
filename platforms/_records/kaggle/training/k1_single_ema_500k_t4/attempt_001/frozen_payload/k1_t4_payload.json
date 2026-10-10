@@ -1,0 +1,29 @@
+{
+  "wall_limit_seconds": 32400,
+  "files": {
+    "initial_state.pt": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80",
+    "inputs.json": "9a72664b78eb7be61bfbe0019feac0d13dad045eef269000e270b675c797fe79",
+    "prospective_cost.json": "018f711f44de0423f676e1c50c6e542003c399ccc50485a7e406d563002e2bb3",
+    "prospective_trajectory.json": "1bc66b810e929cce790cd2a36a17daf5eb062c66db541dd24d58d76c70e5c726",
+    "protocol.md": "f070ed738bd1e849e9c384a14b7a795a8314fafc76c78874ac703d5b23c32e04",
+    "role_plan.json": "a29fadb0e44780289dc3b9133d895a3433003ff6c1923a3c4819de5f7daa46db",
+    "SOURCE_ARCHIVE_SHA256.txt": "95c9c76780b7d648111c1155fcb96a09c38b19032112f20052d222a25446b64f",
+    "SOURCE_COMMIT.txt": "4ee9a1c86782b1c45f17f041592795de786fab90b6f67b278f996a8e16bdcfc0",
+    "SOURCE_FILES.json": "fb2f042a4a9f07e1b10d04c96b2982dbaa7a3484cb7da82de70358e45a646756",
+    "source_payload.bin": "dab721c1c13ac6a858b05ed9b6e238301187ced1981063d8aa15b6d1c63f1ed3"
+  },
+  "runconfig": {
+    "format": "molgap-colab-k1-paired500k-v2",
+    "accelerator": "T4",
+    "allocation_wall_limit_seconds": 32400,
+    "source_commit": "a858c4c474aad731fb058ce9cf64c25bfe5e20ef",
+    "source_package_sha256": "dab721c1c13ac6a858b05ed9b6e238301187ced1981063d8aa15b6d1c63f1ed3",
+    "job_id": "kaggle:nothingnessvoid/molgap-k1-single-ema-500k-t4-20261010:attempt-001",
+    "cpu_accepted_dataset_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "initial_format": "molgap-k1-single-ema-initial-v1",
+    "initial_state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
+  },
+  "graph_mount": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+  "manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "source_archive_storage_name": "source_payload.bin"
+}

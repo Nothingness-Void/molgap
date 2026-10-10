@@ -1,0 +1,126 @@
+{
+  "format": "molgap-v4-source-inventory-v1",
+  "source_commit": "a858c4c474aad731fb058ce9cf64c25bfe5e20ef",
+  "files": [
+    {
+      "path": "platforms/kaggle/training/k1_paired_500k.py",
+      "sha256": "2fc083dc47d176a25407885bd8b9bea043d64a05c00be1375f1eb614a3334134",
+      "bytes": 6336
+    },
+    {
+      "path": "src/molgap/__init__.py",
+      "sha256": "053a75f05ab6c3b4ba2c19b6a51f8e222b6c637d7177e453630da64aa5bf132f",
+      "bytes": 1355
+    },
+    {
+      "path": "src/molgap/colab_k1_screen.py",
+      "sha256": "ac13918013015c27b1f46020b0eabf2b4f7ad0eb18bb091a9e6033b94948dc34",
+      "bytes": 30487
+    },
+    {
+      "path": "src/molgap/constants.py",
+      "sha256": "d466ac1467034511bace9e7158093b364d80f423e4ee458c3e9a62bddcd65a63",
+      "bytes": 13482
+    },
+    {
+      "path": "src/molgap/edge_state_adapter.py",
+      "sha256": "002f770fcd2f44ec787dfd8d377e086debbdb633e87c1f0e2c0d024958ecdcf8",
+      "bytes": 4076
+    },
+    {
+      "path": "src/molgap/edge_state_training_core.py",
+      "sha256": "00cc1ab62256b324ef7041c3961b40ff7263fb84335accf24e69e398f4c60632",
+      "bytes": 20244
+    },
+    {
+      "path": "src/molgap/experiment_spec.py",
+      "sha256": "31f73ea6888aac05a89221de40920927c1f35f4a385b7696bb62e9db75612050",
+      "bytes": 17992
+    },
+    {
+      "path": "src/molgap/futility_gate.py",
+      "sha256": "a802a41990cce0e18ffa02223e6a58a4437ab6cfbee05d0cd9824625e3768bda",
+      "bytes": 1747
+    },
+    {
+      "path": "src/molgap/gps.py",
+      "sha256": "2744e98e9f190c7f9ea9281d41487f74ff49175d45f8e86b3d011fc2b9cc5ee5",
+      "bytes": 39106
+    },
+    {
+      "path": "src/molgap/k1_bn_calibration.py",
+      "sha256": "4e32954540591ed0d7033caaa81908f652ed2f467c78a284c02b0b126132fe57",
+      "bytes": 6611
+    },
+    {
+      "path": "src/molgap/k1_screen_training.py",
+      "sha256": "70dbf3e9e9a06a3eac011f2375303e35d17784686f1ebd5757affd362b6f4a05",
+      "bytes": 43748
+    },
+    {
+      "path": "src/molgap/k1_weight_ema.py",
+      "sha256": "9297fa0469b5fb0a8d01a2ad92a15e896a208b558535df71e17ebbb7cb84b70f",
+      "bytes": 921
+    },
+    {
+      "path": "src/molgap/pcqm_500k_v4_evidence.py",
+      "sha256": "9870b730e339421f736cab3f3d342e5fb4126a4b9468ac58dcffe866ef482638",
+      "bytes": 19758
+    },
+    {
+      "path": "src/molgap/pcqm_gap_architecture.py",
+      "sha256": "0de3c77c50531d7f49e884c4c2bd5c67a554935c1996bd0eae952c4b5434c045",
+      "bytes": 86997
+    },
+    {
+      "path": "src/molgap/pcqm_gap_data.py",
+      "sha256": "f6d0e5c9451214cb6ba3ba00a31ecc5d20848a5ed57677519658d356b009eb77",
+      "bytes": 17901
+    },
+    {
+      "path": "src/molgap/pcqm_gptrans_v4.py",
+      "sha256": "7ec7c44dd766296d7aa683c35e9adab4f6d245d91e2506d674d17d3c5ad73d9c",
+      "bytes": 42573
+    },
+    {
+      "path": "src/molgap/pcqm_k1_scale.py",
+      "sha256": "876e9f07b27ff815cf667f2c51377e00aef02147fa56e0fa08089b4aa3dceba4",
+      "bytes": 2999
+    },
+    {
+      "path": "src/molgap/pcqm_k1_scale_runner.py",
+      "sha256": "bb53c2de98a80e278488caab7b7ac547eb17f31f8784f386a5a089444bc44573",
+      "bytes": 18071
+    },
+    {
+      "path": "src/molgap/pcqm_topology.py",
+      "sha256": "12da67e50e7d11d408ef1b186e9cf6f8ea2547aba0917aa89a8d84de80cb15c1",
+      "bytes": 9786
+    },
+    {
+      "path": "src/molgap/pcqm_wedge.py",
+      "sha256": "e8ccb24322a033bca3d56541377799b06aab8c8f04cdfbf8757cbf9f78fb742d",
+      "bytes": 2525
+    },
+    {
+      "path": "src/molgap/qm9_neural_atom.py",
+      "sha256": "39873ef5f171fdac660c4a06caf282ead778d908befd2bfbf4553e50558e8d49",
+      "bytes": 20120
+    },
+    {
+      "path": "src/molgap/screen_policy.py",
+      "sha256": "4c0cc0b7e5c784b7f09b31feea57b35af707acea9d6fc3927a53f1b988856cbe",
+      "bytes": 12010
+    },
+    {
+      "path": "src/molgap/training_reproducibility.py",
+      "sha256": "6608ee1a52e432c2f2a7f68e483f5cb5ec162f95d1d09d9d7b35d3ea7e3f48ba",
+      "bytes": 5887
+    },
+    {
+      "path": "src/molgap/v4_runtime.py",
+      "sha256": "3cd3206642133ff5ce60f8176f2ccd5b76456f99e94f674e81eb62b3b08b6d4c",
+      "bytes": 11817
+    }
+  ]
+}

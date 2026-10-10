@@ -12,5 +12,9 @@ skill and existing explicit-account accelerator adapter. Preparation submits
 nothing. Frozen configuration/package bindings and actual API receipts live in
 `submission/`; canonical prospective records live in `rml/`.
 
-No terminal result, GPU-speed advantage or training replay readiness is claimed
-by preparation. A100 remains running under its original independent deadline.
+The [2026-10-11 partial terminal decision](terminal_acceptance/decision.md)
+accepts retained artifacts as STOP_FOR_COST / INCONCLUSIVE, not a complete60
+result or replay-ready promotion. [Attribution](terminal_acceptance/attribution.md)
+and [formal RML blockers](rml/terminal_closure_blockers.md) remain separate.
+Parent A100 custody is independent and was not reaccepted in this inspection;
+preparation or this dated observation cannot establish its live scheduler state.

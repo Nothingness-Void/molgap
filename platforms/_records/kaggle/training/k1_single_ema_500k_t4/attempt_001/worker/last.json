@@ -1,0 +1,38 @@
+{
+  "sha256": "06c9c3edfd7ca3f7fcb9007efd391ff695429ef5635b98f7c9ee7c4186b42bd4",
+  "status": "STOP_FOR_COST",
+  "trace_sha256": "2b4c582ab89d2140ccb155a450ef7c08c4163cb067bb08cdb57576ec3afd1ac2",
+  "elapsed_allocation_seconds": 32285.005044460297,
+  "matched_completed_epochs": 18,
+  "matched_prefix_selection": {
+    "reference": {
+      "epoch": 15,
+      "calibrated_mae_eV": 0.11723300814628601,
+      "snapshot": "reference/epoch_15.pt"
+    },
+    "ema999": {
+      "epoch": 17,
+      "calibrated_mae_eV": 0.11130744963884354,
+      "snapshot": "ema999/epoch_17.pt"
+    }
+  },
+  "complete": false,
+  "arms": {
+    "reference": {
+      "epoch": 19,
+      "offset": 0,
+      "steps": 74214,
+      "samples": 9499392,
+      "best": 0.11723300814628601,
+      "best_epoch": 15
+    },
+    "ema999": {
+      "epoch": 18,
+      "offset": 2912,
+      "steps": 73220,
+      "samples": 9372160,
+      "best": 0.11130744963884354,
+      "best_epoch": 17
+    }
+  }
+}

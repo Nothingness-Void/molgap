@@ -1,0 +1,33 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-single-ema-500k-t4-20261010",
+  "version_expected": 1,
+  "manifest_sha256": "a965db27b7f99f6972106dee3cbcfb0436bf581c57010a315a7b2dab51de1f89",
+  "files": [
+    {
+      "path": "worker/ema999/epoch_17.pt",
+      "sha256": "76a2f2c2fa8af6de1f15ece4ff2745b012c00a075fb9d10f4ecc8855c3c6c199",
+      "bytes": 16382629
+    },
+    {
+      "path": "worker/initial.pt",
+      "sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80",
+      "bytes": 14779955
+    },
+    {
+      "path": "worker/last.pt",
+      "sha256": "06c9c3edfd7ca3f7fcb9007efd391ff695429ef5635b98f7c9ee7c4186b42bd4",
+      "bytes": 143744846
+    },
+    {
+      "path": "worker/reference/epoch_15.pt",
+      "sha256": "a152ff13719ce3e6bd817eb49b6da2c204e752b6f7787f5991f6c3206794bd03",
+      "bytes": 16382629
+    },
+    {
+      "path": "worker/source.archive",
+      "sha256": "dab721c1c13ac6a858b05ed9b6e238301187ced1981063d8aa15b6d1c63f1ed3",
+      "bytes": 99104
+    }
+  ],
+  "all_outputs_downloaded": false
+}
