@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "loader-attempt-003",
+  "category": "preflight",
+  "cost_event_id": "cost-k1-loader-cpu-estimate-attempt003",
+  "evidence_ref": "experiments/pcqm_k1_execution_efficiency/loader_attempt_003/README.md",
+  "hardware": "CPU four intra-op threads and optional owned workers; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.08333333333333333
+    }
+  },
+  "platform": "local",
+  "run_id": "k1-loader-cpu-20261010-attempt003",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-loader-cpu-20261010-attempt003"
+}

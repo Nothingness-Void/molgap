@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "2cbdba101654ba742d9fc279e56afcd2c3c621eb44c16469f5957440e8e54ac9",
+  "source_digest": "b1c1a0f27e857bd84b45ce0d81fbf58f4094ddfbe1aaf2bb250d900a822b2a35",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1438,6 +1438,59 @@
       ],
       "track": "B",
       "trajectory_id": "TB-k1-late-weight-average-20261008"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/decision.md",
+      "family_id": "k1-loader-attribution",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-k1-joint-execution-20261010"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/rml/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-k1-loader-cpu-20261010"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_execution_efficiency/loader_attempt_002/decision.md",
+      "family_id": "k1-loader-attribution",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-k1-joint-execution-20261010",
+        "TB-k1-loader-cpu-20261010"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_execution_efficiency/loader_attempt_002/rml/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-k1-loader-cpu-20261010-attempt002"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_execution_efficiency/loader_attempt_003/terminal_decision.md",
+      "family_id": "k1-loader-attribution",
+      "outcome": "NO_TRAIN",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-k1-joint-execution-20261010",
+        "TB-k1-loader-cpu-20261010",
+        "TB-k1-loader-cpu-20261010-attempt002"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_execution_efficiency/loader_attempt_003/rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "k1-loader-cpu-20261010-attempt003-evidence"
+      ],
+      "track": "B",
+      "trajectory_id": "TB-k1-loader-cpu-20261010-attempt003"
     },
     {
       "completeness_status": "complete",

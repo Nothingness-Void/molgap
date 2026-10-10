@@ -124,7 +124,7 @@ def test_spawn_dual_probe_order_devices_and_metadata(spec, tmp_path, monkeypatch
 def _invoke_child(spec, directory, arm_index=0, worker="adapter_probe"):
     directory.mkdir()
     arm_id = spec.to_dict()["arms"][arm_index]["arm_id"]
-    runner._child(spec.to_json(), arm_id, worker, None, "", str(directory))
+    runner._child(spec.to_json(), arm_id, worker, None, "-1", str(directory))
 
 
 @pytest.mark.parametrize("index,module,build_name", [
@@ -146,13 +146,13 @@ def test_construct_static_dispatch_with_lightweight_factories(
     original_dispatch = runner._adapter
 
     def dispatch(arm):
-        assert os.environ["CUDA_VISIBLE_DEVICES"] == ""
+        assert os.environ["CUDA_VISIBLE_DEVICES"] == "-1"
         return original_dispatch(arm)
 
     def build(received, arm_id):
         assert received == spec
         assert arm_id == spec.to_dict()["arms"][index]["arm_id"]
-        assert os.environ["CUDA_VISIBLE_DEVICES"] == ""
+        assert os.environ["CUDA_VISIBLE_DEVICES"] == "-1"
         calls.append(("factory", arm_id))
         # No forward, checkpoint, device transfer or trainer interface exists.
         return SimpleNamespace(parameters=lambda: [SimpleNamespace(numel=lambda: 17)])
@@ -163,6 +163,7 @@ def test_construct_static_dispatch_with_lightweight_factories(
     _invoke_child(spec, directory, index, "construct")
     result = _read(directory / "arm_result.json")
     assert result["status"] == "SUCCEEDED"
+    assert result["visible_device"] == "-1"
     assert result["parameter_count"] == 17
     assert calls[:3] == [("python", 42), ("numpy", 42), ("torch", 42)]
     assert calls[3][0] == "factory"
@@ -259,6 +260,47 @@ def _fake_context(monkeypatch, behaviors):
     monkeypatch.setattr(runner.time, "monotonic", lambda: next(ticks))
     monkeypatch.setattr(runner.time, "sleep", lambda seconds: None)
     return processes
+
+
+@pytest.mark.parametrize("cpu", [None, "cpu", "CPU"])
+def test_cpu_visibility_normalization_and_actual_child_report(spec, tmp_path, monkeypatch, cpu):
+    monkeypatch.setitem(sys.modules, "torch", SimpleNamespace())
+    for key in ("CUDA_VISIBLE_DEVICES", "HIP_VISIBLE_DEVICES", "ROCR_VISIBLE_DEVICES"):
+        monkeypatch.setenv(key, "parent-unchanged")
+    assert runner._devices([cpu, "7"], 2) == ["-1", "7"]
+    assert runner._devices([0, "2"], 2) == ["0", "2"]
+    original_dispatch = runner._adapter
+    arms = spec.to_dict()["arms"]
+
+    def dispatch(arm):
+        expected = "-1" if arm["arm_id"] == arms[0]["arm_id"] else "7"
+        assert os.environ["CUDA_VISIBLE_DEVICES"] == expected
+        assert os.environ["HIP_VISIBLE_DEVICES"] == "parent-unchanged"
+        assert os.environ["ROCR_VISIBLE_DEVICES"] == "parent-unchanged"
+        metadata, _ = original_dispatch(arm)
+        return metadata, lambda *args: pytest.fail("CPU visibility probe must not construct a model")
+
+    original_child = runner._child
+
+    def child(*args):
+        # Parent receipt validation also dispatches adapters; only the child
+        # must have normalized visibility before adapter imports.
+        with monkeypatch.context() as child_context:
+            child_context.setattr(runner, "_adapter", dispatch)
+            original_child(*args)
+
+    monkeypatch.setattr(runner, "_child", child)
+    _fake_context(monkeypatch, ["ok", "ok"])
+    root = tmp_path / "visibility"
+    summary = runner.run_experiment(spec, root, [cpu, "7"], timeout_seconds=100)
+    assert summary["status"] == "SUCCEEDED"
+    for item, requested, visible in zip(summary["arms"], [cpu, "7"], ["-1", "7"]):
+        result = _read(root / item["result_path"])
+        assert result["requested_device"] == requested
+        assert result["visible_device"] == visible
+        assert result["parameter_count"] is None
+    for key in ("CUDA_VISIBLE_DEVICES", "HIP_VISIBLE_DEVICES", "ROCR_VISIBLE_DEVICES"):
+        assert os.environ[key] == "parent-unchanged"
 
 
 @pytest.mark.parametrize("behaviors,status,arm_statuses", [
@@ -423,7 +465,7 @@ def test_child_result_fail_closed(spec, tmp_path, monkeypatch, corruption):
     path = directory / "arm_result.json"
     valid = _read(path)
     record = {"path": path, "root": tmp_path, "arm": spec.to_dict()["arms"][0],
-              "requested": None, "visible": "",
+              "requested": None, "visible": "-1",
               "process": SimpleNamespace(pid=os.getpid(), exitcode=0)}
     result = copy.deepcopy(valid)
     raw = None
@@ -485,7 +527,7 @@ def test_parent_rejects_fabricated_frozen_success(declaration, tmp_path, monkeyp
     result.update(worker="construct", parameter_count=17)
     runner._atomic(path, result)
     record = {"path": path, "root": tmp_path, "arm": spec.to_dict()["arms"][0],
-              "requested": None, "visible": "",
+              "requested": None, "visible": "-1",
               "process": SimpleNamespace(pid=os.getpid(), exitcode=0)}
     assert runner._finish(record, spec, "construct")["status"] == "FAILED"
     assert "frozen_state" in _read(path)["error"]["message"]

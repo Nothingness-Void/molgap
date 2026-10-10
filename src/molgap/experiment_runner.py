@@ -105,7 +105,7 @@ def _devices(device_ids, count: int) -> list[str]:
     visible = []
     for value in device_ids:
         if value is None or (type(value) is str and value in {"cpu", "CPU"}):
-            visible.append("")
+            visible.append("-1")
         elif type(value) is int and value >= 0:
             visible.append(str(value))
         elif type(value) is str and re.fullmatch(r"0|[1-9][0-9]*", value):

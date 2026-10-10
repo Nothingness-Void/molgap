@@ -2,7 +2,7 @@
 import pytest
 from types import SimpleNamespace
 
-from molgap.k1_loader_diagnostic import profile_loader_fetches
+from molgap.k1_loader_diagnostic import profile_loader_fetches, profile_epoch_loader_reuse
 
 
 class Iterator:
@@ -96,3 +96,70 @@ def test_invalid_bounds_do_not_launch_loader(kwargs):
 def test_invalid_factories_rejected(factories):
     with pytest.raises(ValueError):
         profile_loader_fetches(factories)
+
+
+def test_reuse_profile_balances_windows_preserves_orders_and_closes_all(monkeypatch):
+    from contextlib import contextmanager
+    from molgap import k1_loader_reuse
+    pools = []
+
+    class Pool:
+        def __init__(self, loader, *, deterministic_dataset):
+            assert deterministic_dataset is True
+            self.closed = False
+            self._workers = [SimpleNamespace(pid=len(pools))]
+            self.orders = []
+            pools.append(self)
+
+        @contextmanager
+        def stream(self, rows):
+            assert not self.closed
+            self.orders.append(rows)
+            yield iter(rows)
+
+        def close(self):
+            self.closed = True
+
+    monkeypatch.setattr(k1_loader_reuse, "K1LoaderReuse", Pool)
+    orders = [[e, e + 1, e + 2] for e in range(4)]
+    report, batches = profile_epoch_loader_reuse(lambda: object(), orders)
+    assert len(pools) == 5 and all(p.closed for p in pools)
+    assert [p.orders for p in pools].count(orders) == 1
+    assert batches == {"cold": orders, "retained": orders}
+    assert [list(w) for w in report["windows"]] == [["cold", "retained"],
+        ["retained", "cold"], ["cold", "retained"], ["retained", "cold"]]
+    assert len({tuple(w["retained"]["worker_pids"]) for w in report["windows"]}) == 1
+    assert report["worker_process_cpu_seconds"] is None
+    assert all(c["workers_stopped"] for w in report["windows"] for c in w.values())
+
+
+def test_reuse_profile_cleans_up_after_fetch_error(monkeypatch):
+    from contextlib import contextmanager
+    from molgap import k1_loader_reuse
+    closed = []
+
+    class Pool:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        @contextmanager
+        def stream(self, rows):
+            def broken():
+                yield rows[0]
+                raise RuntimeError("fetch failed")
+            yield broken()
+
+        def close(self):
+            closed.append(self)
+
+    monkeypatch.setattr(k1_loader_reuse, "K1LoaderReuse", Pool)
+    with pytest.raises(RuntimeError, match="fetch failed"):
+        profile_epoch_loader_reuse(lambda: object(), [[1, 2]] * 4)
+    assert closed
+
+
+@pytest.mark.parametrize("orders,budget", [(None, 100), ([[1, 2]], 100),
+    ([[1, 2]] * 4, True), ([[1, 2]] * 4, float("nan")), ([[1, 2]] * 4, 301)])
+def test_reuse_profile_rejects_bounds_before_factory(orders, budget):
+    with pytest.raises(ValueError):
+        profile_epoch_loader_reuse(lambda: pytest.fail("invalid plan must not launch"), orders, wall_seconds=budget)

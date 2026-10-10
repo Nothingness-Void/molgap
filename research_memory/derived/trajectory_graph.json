@@ -371,6 +371,21 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-loader-cpu-20261010-attempt002:A001",
+      "target": "experiments/pcqm_k1_execution_efficiency/loader_attempt_002/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-loader-cpu-20261010-attempt003:A001",
+      "target": "experiments/pcqm_k1_execution_efficiency/loader_attempt_003/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-loader-cpu-20261010:A001",
+      "target": "experiments/pcqm_k1_execution_efficiency/loader_attempt_001/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-projection-execution-20261010:A001",
       "target": "experiments/pcqm_k1_execution_efficiency/projection_attempt_001/inputs.json",
       "type": "action_produced_evidence"
@@ -1006,8 +1021,38 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-k1-joint-execution-20261010",
+      "target": "TB-k1-loader-cpu-20261010",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-joint-execution-20261010",
+      "target": "TB-k1-loader-cpu-20261010-attempt002",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-joint-execution-20261010",
+      "target": "TB-k1-loader-cpu-20261010-attempt003",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-k1-kernel-trace-20261010",
       "target": "TB-k1-checkpoint-io-20261010",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-loader-cpu-20261010",
+      "target": "TB-k1-loader-cpu-20261010-attempt002",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-loader-cpu-20261010",
+      "target": "TB-k1-loader-cpu-20261010-attempt003",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-loader-cpu-20261010-attempt002",
+      "target": "TB-k1-loader-cpu-20261010-attempt003",
       "type": "parent_trajectory"
     },
     {
@@ -1842,6 +1887,21 @@
     },
     {
       "source": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "target": "TB-k1-loader-cpu-20261010",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "target": "TB-k1-loader-cpu-20261010-attempt002",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "target": "TB-k1-loader-cpu-20261010-attempt003",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-execution-efficiency-gpu-20261010",
       "target": "TB-k1-projection-execution-20261010",
       "type": "prior_evidence"
     },
@@ -1883,6 +1943,21 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-joint-execution-20261010",
+      "target": "TB-k1-loader-cpu-20261010",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-joint-execution-20261010",
+      "target": "TB-k1-loader-cpu-20261010-attempt002",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-joint-execution-20261010",
+      "target": "TB-k1-loader-cpu-20261010-attempt003",
       "type": "prior_evidence"
     },
     {
@@ -2480,6 +2555,10 @@
   "nodes": [
     {
       "id": "k1-checkpoint-io-20261010-evidence",
+      "type": "evidence"
+    },
+    {
+      "id": "k1-loader-cpu-20261010-attempt003-evidence",
       "type": "evidence"
     },
     {
@@ -3224,6 +3303,18 @@
     },
     {
       "id": "TB-k1-late-weight-average-20261008",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-loader-cpu-20261010",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-loader-cpu-20261010-attempt002",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-loader-cpu-20261010-attempt003",
       "type": "trajectory"
     },
     {

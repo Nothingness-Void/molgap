@@ -87,3 +87,79 @@ def profile_loader_fetches(factories, *, repeats=4, wall_seconds=180):
                 medians={name: {field: statistics.median(w[name][field] for w in observed)
                                for field in ("startup_seconds", "first_fetch_seconds", "steady_median_seconds", "all_fetch_seconds")}
                          for name in factories}), batches_by_case
+
+
+def profile_epoch_loader_reuse(factory, index_orders, *, wall_seconds=250):
+    """Cold versus retained original loader; caller owns exact epoch/resume orders.
+
+    No model or permutation generation. Whole iteration startup includes sampler
+    validation. Child CPU is unmeasured, not inferred from parent process time.
+    """
+    from .k1_loader_reuse import K1LoaderReuse
+
+    if (not callable(factory) or type(index_orders) is not list
+            or len(index_orders) != 4 or any(type(rows) is not list for rows in index_orders)):
+        raise ValueError("Require factory and four explicit index orders")
+    if type(wall_seconds) not in (int, float) or not math.isfinite(wall_seconds) or not 0 < wall_seconds <= 300:
+        raise ValueError("Invalid CPU diagnostic budget")
+    started = time.perf_counter()
+    retained = None
+    pools, windows, batches_by_case = [], [], {}
+    try:
+        for window, rows in enumerate(index_orders):
+            pair = {}
+            names = ["cold", "retained"] if window % 2 == 0 else ["retained", "cold"]
+            for name in names:
+                if time.perf_counter() - started > wall_seconds:
+                    raise TimeoutError("CPU loader diagnostic budget exhausted")
+                tick = time.perf_counter()
+                if name == "retained" and retained is not None:
+                    pool = retained
+                else:
+                    pool = K1LoaderReuse(factory(), deterministic_dataset=True)
+                    pools.append(pool)
+                    if name == "retained":
+                        retained = pool
+                samples, values = [], []
+                try:
+                    with pool.stream(rows) as iterator:
+                        startup = time.perf_counter() - tick
+                        while True:
+                            if time.perf_counter() - started > wall_seconds:
+                                raise TimeoutError("CPU loader diagnostic budget exhausted")
+                            tick = time.perf_counter()
+                            try:
+                                batch = next(iterator)
+                            except StopIteration:
+                                break
+                            samples.append(time.perf_counter() - tick)
+                            values.append(batch)
+                        pids = [w.pid for w in pool._workers]
+                    if len(samples) < 2:
+                        raise ValueError("Require at least two complete batches")
+                    pair[name] = dict(startup_seconds=startup, first_fetch_seconds=samples[0],
+                        steady_median_seconds=statistics.median(samples[1:]),
+                        all_fetch_seconds=sum(samples), batch_count=len(values), worker_pids=pids,
+                        fetch_samples_seconds=samples)
+                    batches_by_case.setdefault(name, []).append(values)
+                finally:
+                    if name == "cold":
+                        pool.close()
+            windows.append(pair)
+    finally:
+        # A failing close must not prevent another owned pool from being closed.
+        failures = []
+        for pool in pools:
+            try:
+                pool.close()
+            except Exception as exc:
+                failures.append(exc)
+        if failures:
+            raise RuntimeError("Owned loader cleanup failed") from failures[0]
+    for pair in windows:
+        for case in pair.values():
+            case["workers_stopped"] = True  # close() verified owned handles above.
+    return dict(windows=windows, worker_process_cpu_seconds=None,
+        medians={name: {field: statistics.median(w[name][field] for w in windows)
+            for field in ("startup_seconds", "first_fetch_seconds", "steady_median_seconds", "all_fetch_seconds")}
+            for name in ("cold", "retained")}), batches_by_case

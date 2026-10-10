@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 512,
+  "ambiguous_historical_role_record_count": 519,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-checkpoint-io-20261010-evidence",
@@ -35,6 +35,55 @@
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-attempt003-evidence",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-attempt003-evidence",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-attempt003-evidence",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-attempt003-evidence",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-attempt003-evidence",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-attempt003-evidence",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-attempt003-evidence",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
     },
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -3586,7 +3635,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 301,
+  "explicit_role_event_count": 302,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -5183,6 +5232,15 @@
         "trajectory_id": "TB-k1-500k-bottleneck-diagnostic-20261007"
       }
     ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-loader-cpu-20261010-attempt003-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-loader-cpu-20261010-attempt003"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629:train_decoded": [
       {
         "access_kind": "labels_read",
@@ -5830,6 +5888,7 @@
   "protected_roles_reported_untouched": {
     "test_challenge": [
       "k1-checkpoint-io-20261010-evidence",
+      "k1-loader-cpu-20261010-attempt003-evidence",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",
@@ -5937,6 +5996,7 @@
     ],
     "test_dev": [
       "k1-checkpoint-io-20261010-evidence",
+      "k1-loader-cpu-20261010-attempt003-evidence",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",

@@ -495,7 +495,7 @@ def _launch(source_root, data_root, entry, timeout_seconds, workspace, *, mode=L
     _atomic(request_path, request)
     env = {key: value for key, value in os.environ.items()
            if not key.upper().startswith("PYTHON")}
-    env.update(CUDA_VISIBLE_DEVICES="", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
+    env.update(CUDA_VISIBLE_DEVICES="-1", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
     with (workspace / "worker.log").open("wb") as log:
         child = subprocess.run([sys.executable, "-I", "-S", str(bootstrap),
                                 str(request_path), str(response_path)],
@@ -835,7 +835,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                     "modules": sorted(modules), "pickle_globals": sorted(pickle_globals), "dependency_paths": sorted({
                         sysconfig.get_path("purelib"), sysconfig.get_path("platlib")})})
                 env = {k: v for k, v in os.environ.items() if not k.upper().startswith("PYTHON")}
-                env.update(CUDA_VISIBLE_DEVICES="", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
+                env.update(CUDA_VISIBLE_DEVICES="-1", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
                 with (workspace / "worker.log").open("wb") as log:
                     subprocess.run([sys.executable, "-I", "-S", str(bootstrap), str(request), str(response)],
                         cwd=workspace, env=env, stdout=log, stderr=log, timeout=60, check=True)

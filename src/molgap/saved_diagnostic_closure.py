@@ -53,6 +53,10 @@ def close_saved_diagnostic(repo: Path, experiment: Path):
         raise ValueError("Unsupported failure closure")
     loader = inputs["kind"] == "loader_metadata"
     if loader:
+        attempts = trajectory["actions"][0].get("attempt_ids")
+        if (type(attempts) is not list or len(attempts) != 1
+                or type(attempts[0]) is not str or not attempts[0].strip()):
+            raise ValueError("Loader closure requires one recorded attempt identity")
         if (result["runtime"].get("cuda_initialized") is not False
                 or result["runtime"].get("cuda_visible_devices") not in ("", "-1")
                 or result["runtime"].get("cuda_available") is not False
@@ -107,7 +111,7 @@ def close_saved_diagnostic(repo: Path, experiment: Path):
         cpu_seconds = (total if type(total) in (int, float) and math.isfinite(total)
                        and total >= result["process_cpu_seconds"] else None)
     cost = dict(schema="molgap-cost-event-v1",cost_event_id="cost-"+tid+"-observed",trajectory_id=tid,action_id=action["action_id"],run_id=run,
-        attempt_id="attempt-002" if rel.endswith("attempt_002") else "attempt-001",platform="local-windows",hardware="CPU train graph collation; no accelerator" if loader else "CPU saved-artifact arithmetic; no accelerator",
+        attempt_id=attempts[0] if loader else ("attempt-002" if rel.endswith("attempt_002") else "attempt-001"),platform="local-windows",hardware="CPU train graph collation; no accelerator" if loader else "CPU saved-artifact arithmetic; no accelerator",
         category="other",evidence_ref=f"{rel}/acceptance.json",measurement=dict(
             wall_hours=dict(value=None if failed else result["wall_seconds"]/3600,status="measurement_missing" if failed else "measured"),
             cpu_hours=dict(value=None if cpu_seconds is None else cpu_seconds/3600,status="measurement_missing" if cpu_seconds is None else "measured"),

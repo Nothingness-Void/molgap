@@ -42,7 +42,7 @@ def custody(tmp_path, monkeypatch):
                   executed_source_files={"src/synthetic.txt": hashlib.sha256(source).hexdigest()})
     atomic_json(folder / "rml/trajectory.json", dict(
         trajectory_id="TB-loader-fixture", actions=[dict(
-            action_id="A001", run_ids=["run-loader"], source_commit=commit,
+            action_id="A001", run_ids=["run-loader"], attempt_ids=["loader-fixture-attempt003"], source_commit=commit,
         )],
     ))
     for name in ("protocol.md", "terminal_decision.md", "attribution.md"):
@@ -95,6 +95,7 @@ def test_loader_roles_source_custody_and_total_cpu(custody, hidden):
     for role in ("internal_development", "official_validation", "test_dev", "test_challenge", "common", "ood"):
         assert acceptance["role_use"][role] == "untouched"
     measurement = acceptance["costs"][0]["measurement"]
+    assert acceptance["costs"][0]["attempt_id"] == "loader-fixture-attempt003"
     assert measurement["cpu_hours"] == {"value": 8 / 3600, "status": "measured"}
     assert measurement["wall_hours"] == {"value": 12 / 3600, "status": "measured"}
     assert measurement["device_hours"] == {"value": None, "status": "not_applicable"}
@@ -109,6 +110,18 @@ def test_loader_roles_source_custody_and_total_cpu(custody, hidden):
     assert (folder / "rml/trajectory.json").read_bytes() == trajectory_before
     git.assert_called_once_with(["git", "show", "a" * 40 + ":src/synthetic.txt"], cwd=root.resolve())
     finalizer.assert_called_once_with(root.resolve(), "experiments/synthetic-loader/rml", "experiments/synthetic-loader/terminal.json")
+
+
+@pytest.mark.parametrize("attempts", [None, [], [""], [" "], [True], ["a", "b"]])
+def test_loader_attempt_identity_is_not_inferred_from_directory(custody, attempts):
+    root, folder, inputs, result, *_ = custody
+    trajectory = read(folder / "rml/trajectory.json")
+    trajectory["actions"][0]["attempt_ids"] = attempts
+    atomic_json(folder / "rml/trajectory.json", trajectory)
+    publish(folder, inputs, result)
+    with pytest.raises(ValueError, match="attempt identity"):
+        closure.close_saved_diagnostic(root, folder)
+    assert not (folder / "acceptance.json").exists()
 
 
 @pytest.mark.parametrize("total", ["absent", None, True, False, "8", -1, 1, float("nan"), float("inf")])

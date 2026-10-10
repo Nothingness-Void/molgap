@@ -119,6 +119,9 @@ def test_k1_manifest_rejects_extra_shards_before_staging(payload, manifest):
 
 @pytest.mark.parametrize("mutation", ["none", "wrong_scope", "wrong_shard", "wrong_role"])
 def test_partial_worker_receipt_is_explicitly_bounded(tmp_path, monkeypatch, mutation):
+    for key in ("CUDA_VISIBLE_DEVICES", "HIP_VISIBLE_DEVICES", "ROCR_VISIBLE_DEVICES"):
+        monkeypatch.setenv(key, "parent-unchanged")
+    monkeypatch.setenv("PYTHONPATH", "parent-python-path")
     root = tmp_path / "source"
     module = root / "src/molgap"
     module.mkdir(parents=True)
@@ -147,6 +150,13 @@ def test_partial_worker_receipt_is_explicitly_bounded(tmp_path, monkeypatch, mut
         result["batches"]["development"] = result["batches"].pop("train")
 
     def worker(command, **kwargs):
+        env = kwargs["env"]
+        assert env["CUDA_VISIBLE_DEVICES"] == "-1"
+        assert env["HIP_VISIBLE_DEVICES"] == env["ROCR_VISIBLE_DEVICES"] == ""
+        assert not any(key.upper().startswith("PYTHON") for key in env)
+        assert command[1:3] == ["-I", "-S"]
+        for key in ("CUDA_VISIBLE_DEVICES", "HIP_VISIBLE_DEVICES", "ROCR_VISIBLE_DEVICES"):
+            assert os.environ[key] == "parent-unchanged"
         Path(command[-1]).write_bytes(pf._canonical(result))
         return SimpleNamespace(returncode=0)
 
@@ -158,6 +168,55 @@ def test_partial_worker_receipt_is_explicitly_bounded(tmp_path, monkeypatch, mut
     else:
         with pytest.raises(ValueError, match="partial|topology"):
             pf._launch(root, tmp_path, entry, 30, stage, arm=arm)
+    for key in ("CUDA_VISIBLE_DEVICES", "HIP_VISIBLE_DEVICES", "ROCR_VISIBLE_DEVICES"):
+        assert os.environ[key] == "parent-unchanged"
+    assert os.environ["PYTHONPATH"] == "parent-python-path"
+
+
+def test_release_import_child_hides_cuda_without_changing_parent(tmp_path, monkeypatch):
+    from molgap import experiment_package
+
+    spec = SimpleNamespace(identity="synthetic", to_dict=lambda: {"arms": []})
+    monkeypatch.setattr(experiment_package, "verify_experiment_source_package",
+                        lambda path: {"package_identity": "package", "spec_identity": spec.identity,
+                                      "source_commit": "a" * 40, "archive_sha256": "b" * 64})
+
+    def unpack(package, source):
+        module = source / "src/molgap"
+        module.mkdir(parents=True)
+        (module / "__init__.py").write_text("", encoding="ascii")
+        (module / "synthetic.py").write_text("VALUE = 1\n", encoding="ascii")
+
+    monkeypatch.setattr(pf, "_unpack", unpack)
+    for key in ("CUDA_VISIBLE_DEVICES", "HIP_VISIBLE_DEVICES", "ROCR_VISIBLE_DEVICES"):
+        monkeypatch.setenv(key, "parent-unchanged")
+    monkeypatch.setenv("PYTHONPATH", "parent-python-path")
+    calls = []
+
+    def worker(command, **kwargs):
+        calls.append(command)
+        assert command[1:3] == ["-I", "-S"]
+        assert kwargs["env"]["CUDA_VISIBLE_DEVICES"] == "-1"
+        assert kwargs["env"]["HIP_VISIBLE_DEVICES"] == ""
+        assert kwargs["env"]["ROCR_VISIBLE_DEVICES"] == ""
+        assert not any(key.upper().startswith("PYTHON") for key in kwargs["env"])
+        request = pf._load(Path(command[-2]).read_bytes())
+        assert request["mode"] == "release-imports"
+        assert request["modules"] == ["molgap.synthetic"]
+        Path(command[-1]).write_bytes(pf._canonical({
+            "errors": [], "import_origins": {"molgap.synthetic": "src/molgap/synthetic.py"},
+        }))
+        return SimpleNamespace(returncode=0)
+
+    monkeypatch.setattr(pf.subprocess, "run", worker)
+    result = pf.check_release_inputs(spec, tmp_path / "package",
+        expected_package_identity="package", recipe_files={}, initial_states={},
+        required_modules=["molgap.synthetic"])
+    assert len(calls) == 1
+    assert result["errors"] == []
+    for key in ("CUDA_VISIBLE_DEVICES", "HIP_VISIBLE_DEVICES", "ROCR_VISIBLE_DEVICES"):
+        assert os.environ[key] == "parent-unchanged"
+    assert os.environ["PYTHONPATH"] == "parent-python-path"
 
 
 @pytest.mark.parametrize("raw", [b'{"x":1,"x":1}', b'{ "x": 1 }', b'{"x":NaN}', b'{}\n'])

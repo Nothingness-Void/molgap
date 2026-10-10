@@ -34,3 +34,7 @@ from unqualified loader/RNG/history-publication costs; frozen senders stay uncha
 
 [JSON publication sizing](JSON_PUBLICATION.md) isolates long-history encoding
 cost and qualifies optional compact output without dropping fields or checkpoints.
+
+[CPU loader attribution](loader_attempt_003/terminal_decision.md) separates
+Windows worker startup from actual collation with exact TRAIN batch hashes.
+It does not establish native GPU throughput or justify default worker changes.
