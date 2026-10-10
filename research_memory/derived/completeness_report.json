@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 120,
+    "trajectories_total": 121,
     "with_complete_native_measurement": 25,
-    "with_cost_event": 109,
-    "with_incomplete_native_measurement": 84,
+    "with_cost_event": 110,
+    "with_incomplete_native_measurement": 85,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 91,
+      "count": 92,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -77,6 +77,7 @@
         "TB-k1-loader-cpu-20261010",
         "TB-k1-loader-cpu-20261010-attempt002",
         "TB-k1-loader-cpu-20261010-attempt003",
+        "TB-k1-loader-cpu-20261010-reuse-attempt001",
         "TB-k1-projection-execution-20261010",
         "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
         "TB-k1-reference-kaggle3-100k-s42-v1",
@@ -140,7 +141,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 84,
+      "count": 85,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -201,6 +202,7 @@
         "TB-k1-loader-cpu-20261010",
         "TB-k1-loader-cpu-20261010-attempt002",
         "TB-k1-loader-cpu-20261010-attempt003",
+        "TB-k1-loader-cpu-20261010-reuse-attempt001",
         "TB-k1-projection-execution-20261010",
         "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
         "TB-k1-reference-kaggle3-100k-s42-v1",

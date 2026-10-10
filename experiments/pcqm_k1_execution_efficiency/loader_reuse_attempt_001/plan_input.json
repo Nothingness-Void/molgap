@@ -1,0 +1,143 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-loader-cpu-20261010-reuse-attempt001",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-loader-reuse",
+    "question": "Can original persistent workers be retained across deterministic epoch/resume orders with exact batches?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-loader-cpu-20261010-reuse-attempt001",
+      "supporting_evidence_ids": [
+        "pcqm-k1-execution-efficiency-gpu-20261010",
+        "pcqm-k1-joint-execution-20261010",
+        "k1-loader-cpu-20261010-attempt003-evidence"
+      ],
+      "observed_deficiency": "Accepted CPU loader attribution separates20.6s Windows cold startup from millisecond fetches; sender recreates loaders per epoch.",
+      "alternative_explanations": [
+        "Native Linux spawn/fork cost differs",
+        "Worker RNG continuation invalidates stochastic transforms",
+        "CPU-only fetch excludes GPU-consumer overlap"
+      ],
+      "changed_mechanism": "Retain original loader/list sampler and supply original epoch/resume indices in place",
+      "cheapest_falsifier": "Four balanced TRAIN-only windows, epochs0/1/2/3 and last-window processed cursor4, exact ordered batch hashes",
+      "decision_changed_if_positive": "Nominate opt-in immutable-dataset pool for owner qualification; no active sender patch",
+      "decision_changed_if_negative": "Keep cold loader; record exact batching or startup failure",
+      "expected_native_cost_ref": "cost-k1-loader-cpu-estimate-reuse-attempt001",
+      "related_closed_family_ids": [
+        "k1-execution-profile-a100"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "29b375386b2a9ce35921a6f63af2d3f6ee9cd18e",
+      "source_config_identity": "e4319cc4843c1e0f32bfb5053e81349b435cc26e021fe8d3a20099ba0ae67df5",
+      "contract_refs": [
+        "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/README.md",
+        "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [
+        "TB-k1-joint-execution-20261010",
+        "TB-k1-loader-cpu-20261010-attempt003"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-k1-execution-efficiency-gpu-20261010",
+        "pcqm-k1-joint-execution-20261010",
+        "k1-loader-cpu-20261010-attempt003-evidence"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/README.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "execution_profile",
+        "run_ids": [
+          "k1-loader-cpu-20261010-reuse-attempt001"
+        ],
+        "attempt_ids": [
+          "loader-reuse-attempt-001"
+        ],
+        "source_commit": "29b375386b2a9ce35921a6f63af2d3f6ee9cd18e",
+        "evidence_refs": [
+          "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-loader-cpu-estimate-reuse-attempt001"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/decision.md",
+      "next_allowed_actions": [
+        "Bounded TRAIN-only CPU collation"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/README.md",
+    "comparison_blockers": [
+      "Execution diagnostic is not scientific endpoint comparison",
+      "RTX5060 is not T4/A100"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-loader-cpu-estimate-reuse-attempt001",
+      "trajectory_id": "TB-k1-loader-cpu-20261010-reuse-attempt001",
+      "action_id": "A001",
+      "run_id": "k1-loader-cpu-20261010-reuse-attempt001",
+      "attempt_id": "loader-reuse-attempt-001",
+      "platform": "local",
+      "hardware": "CPU four intra-op threads and optional owned workers; no accelerator",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/README.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.08333333333333333,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-execution-efficiency",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/README.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/role_plan.json"
+    ],
+    "source_commit": "29b375386b2a9ce35921a6f63af2d3f6ee9cd18e",
+    "state_timestamp": "2026-10-10T12:11:24.352280+00:00"
+  }
+}

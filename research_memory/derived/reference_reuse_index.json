@@ -55,6 +55,29 @@
       "comparison_status": "descriptive_saved_evidence_only",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
+      "reference_id": "k1-loader-cpu-20261010-reuse-attempt001-evidence",
+      "role_use": {
+        "common": "untouched",
+        "internal_development": "untouched",
+        "official_validation": "untouched",
+        "ood": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "loader_metadata",
+      "source_envelope": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "descriptive_saved_evidence_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
       "reference_id": "k1-saved-bn-rows-20261008-evidence",
       "role_use": {
         "common": "untouched",

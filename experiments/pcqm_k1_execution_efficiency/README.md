@@ -38,3 +38,9 @@ cost and qualifies optional compact output without dropping fields or checkpoint
 [CPU loader attribution](loader_attempt_003/terminal_decision.md) separates
 Windows worker startup from actual collation with exact TRAIN batch hashes.
 It does not establish native GPU throughput or justify default worker changes.
+
+[Persistent loader qualification](loader_reuse_attempt_001/terminal_decision.md)
+measures cold versus retained workers with original epoch/resume indices. Reuse
+is optional and limited to immutable deterministic datasets; native sender
+training/resume qualification remains separate.
+See [focused regression and bookkeeping limits](LOADER_REUSE_VERIFICATION.md).

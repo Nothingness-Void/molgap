@@ -1,7 +1,7 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 107
+- Validated V5 evidence: 108
 - Evidence without trajectory: 0
 
 ## Trajectories
@@ -10,7 +10,7 @@
 - INCONCLUSIVE: 19
 - INFRASTRUCTURE_ONLY: 5
 - NEGATIVE_UNDER_CONTRACT: 24
-- NO_TRAIN: 50
+- NO_TRAIN: 51
 - POSITIVE_UNDER_CONTRACT: 8
 
 ## Transfer
@@ -19,8 +19,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 302
-- Coarse historical role records: 519
+- Explicit role events: 303
+- Coarse historical role records: 526
 - Repeatedly selected role identities: 21
 
 ## Cost
@@ -36,10 +36,10 @@
 - CPU device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=2
 - CPU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=2
 - CPU wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
-- CPU four intra-op threads and optional owned workers; no accelerator cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=0
-- CPU four intra-op threads and optional owned workers; no accelerator device_hours: not applicable (3 records); measurement_missing=0
-- CPU four intra-op threads and optional owned workers; no accelerator queue_hours: not applicable (3 records); measurement_missing=0
-- CPU four intra-op threads and optional owned workers; no accelerator wall_hours: measured=unknown (0 measured records), estimated=0.250000 (3 estimated records), measurement_missing=0, not_applicable=0
+- CPU four intra-op threads and optional owned workers; no accelerator cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
+- CPU four intra-op threads and optional owned workers; no accelerator device_hours: not applicable (4 records); measurement_missing=0
+- CPU four intra-op threads and optional owned workers; no accelerator queue_hours: not applicable (4 records); measurement_missing=0
+- CPU four intra-op threads and optional owned workers; no accelerator wall_hours: measured=unknown (0 measured records), estimated=0.333333 (4 estimated records), measurement_missing=0, not_applicable=0
 - CPU four intra-op threads; no accelerator cpu_hours: measured=0.501324 (4 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
 - CPU four intra-op threads; no accelerator device_hours: not applicable (6 records); measurement_missing=0
 - CPU four intra-op threads; no accelerator queue_hours: not applicable (6 records); measurement_missing=0
@@ -56,10 +56,10 @@
 - CPU saved-artifact arithmetic; no accelerator device_hours: not applicable (7 records); measurement_missing=0
 - CPU saved-artifact arithmetic; no accelerator queue_hours: not applicable (7 records); measurement_missing=0
 - CPU saved-artifact arithmetic; no accelerator wall_hours: measured=0.010255 (3 measured records), estimated=0.500000 (3 estimated records), measurement_missing=1, not_applicable=0
-- CPU train graph collation; no accelerator cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- CPU train graph collation; no accelerator device_hours: not applicable (1 records); measurement_missing=0
-- CPU train graph collation; no accelerator queue_hours: not applicable (1 records); measurement_missing=0
-- CPU train graph collation; no accelerator wall_hours: measured=0.026787 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
+- CPU train graph collation; no accelerator cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- CPU train graph collation; no accelerator device_hours: not applicable (2 records); measurement_missing=0
+- CPU train graph collation; no accelerator queue_hours: not applicable (2 records); measurement_missing=0
+- CPU train graph collation; no accelerator wall_hours: measured=0.059813 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - CPU worker process; parent CPU unmeasured cpu_hours: measured=0.331701 (4 measured records), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - CPU worker process; parent CPU unmeasured device_hours: not applicable (4 records); measurement_missing=0
 - CPU worker process; parent CPU unmeasured queue_hours: not applicable (4 records); measurement_missing=0
@@ -268,8 +268,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 211
-- Cost-event coverage: 109/120 trajectories; incomplete native measurement=84
+- Measurement-missing cost events: 213
+- Cost-event coverage: 110/121 trajectories; incomplete native measurement=85
 
 ## Screening Backtest
 - Status: available
@@ -277,9 +277,9 @@
 - Excluded traces: 19
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 91
+- [INFO] trace_unavailable_for_backtest: 92
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 84
+- [WARN] incomplete_native_cost_measurement: 85
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 40
 - [WARN] trajectory_without_v5_evidence: 13

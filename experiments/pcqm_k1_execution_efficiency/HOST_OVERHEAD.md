@@ -45,7 +45,7 @@ principal training bottleneck or a97% training-speed improvement.
 | Sender `_snapshot` / `_save` / `_paired` | Every128 steps or120s, both arm snapshots include all growing step histories and retained best payloads; `last.pt` and `trace.json` serialize the history again, then files are hashed. | Time snapshot, serialize, write and hash separately in the native sender. Existing [CPU copy fixture](checkpoint_io_attempt_001/terminal_decision.md) qualifies only scalar-copy reuse. Do not truncate traces or drop atomic/resumable state. |
 | Sender `_step`, lines218-236 | Forward finite guard, loss finite guard, clip guard, explicit device barrier, and two reads of the same loss. | The [one-scalar proposal](sender_scalar_reuse.md) has synthetic parity only. Removing just the barrier had no reliable local saving; retain failure guards. |
 | Sender `_paired`, line427 | Capture Python/NumPy/Torch/all-visible-CUDA RNG after every step even though arms switch only at epoch boundaries. | First measure native capture cost. Any deferred-capture proposal must retain exact RNG at every durable checkpoint, switch, exception and timeout; it is not adopted. |
-| Owner loader, `pcqm_500k_v4_evidence.loader` | A fresh loader per arm/epoch; `persistent_workers=True` does not reuse workers across distinct loader instances. PyG CPU collation/pinning and batch transfers remain outside the local step benchmark. | Time first-batch startup and steady fetch separately. Reusing a loader must preserve epoch order, processed cursor, drop-last, worker RNG and restart semantics. |
+| Owner loader, `pcqm_500k_v4_evidence.loader` | A fresh loader per arm/epoch; `persistent_workers=True` does not reuse workers across distinct loader instances. | [CPU attribution](loader_attempt_003/terminal_decision.md) and [persistent qualification](loader_reuse_attempt_001/terminal_decision.md) separate Windows startup from mixed steady fetches. Opt-in immutable-dataset reuse preserves original epoch/cursor tensor batches; native pinning/consumer and GPU checkpoint resume remain unqualified. |
 | K1 local blocks and deterministic backward | Accepted two-step CUDA trace has13350 FP32 kernels, including10030 elementwise calls; indexing-backward12.04ms and radix sort4.64ms remain after TF32. | Reuse [kernel attribution](kernel_attempt_001/terminal_decision.md). These are instrumented sums, not exclusive shares or full-training wall time. Fusion/segmented aggregation can change reduction/RNG semantics. |
 
 Under the sender's complete60-epoch, two-arm plan,3906 steps/epoch imply468720
@@ -70,3 +70,8 @@ rewrite. If publication grows dominant, preserve complete evidence with a review
 incremental trace format; otherwise prioritize the separately authorized FP32
 fused-optimizer quality check. TF32's modest extra gain and rejected projection
 reorders do not justify removing safeguards or changing the model blindly.
+
+The [accepted A100 phase study](../pcqm_k1_colab_execution_profile/attribution.md)
+found small loader/H2D waits in its bounded in-memory condition. That counterevidence
+rules out treating CPU collation as the established cause of all card parity;
+it does not measure full-shard startup or growing publication overhead.

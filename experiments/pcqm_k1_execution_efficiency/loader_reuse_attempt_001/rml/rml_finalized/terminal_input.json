@@ -1,0 +1,372 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/README.md": "6e8936a38ca7d9ce640b06fec1cfe014ebc86f3d3966b699121a571a11dcdcb2",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/acceptance.json": "e2e9c479e8e94ea94b02b86164c4c13613bd01d3d2c32ead0d9d0a91260c5cdb",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/attribution.md": "bc391f6bf018261a8591f0603fc0cb91963f47635644171c44fd8da25299bcde",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/decision.md": "9dea12103c7af9e8b8827da59596f5e20d1d9c4444204dbdfa480a5d7dd0093b",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/README.md": "00378bfe315b291250c3456428bb9921b14c0bf3ae973aad4b970ed0f4ab2054",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/decision.md": "6e5d393f628f291bf984b72f8095117a0c326134223075885acfaddf24970f47",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_check.py": "cf4ed287ae0865cb5decc94ddd9a24d8ce744331d7dcc6eaf77bc931a6d03180",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/loader_check.py": "c68158f325a998aece1709258343074bfd81486a24651462be7eceeeda5c7685",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/README.md": "6e8936a38ca7d9ce640b06fec1cfe014ebc86f3d3966b699121a571a11dcdcb2",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/decision.md": "9dea12103c7af9e8b8827da59596f5e20d1d9c4444204dbdfa480a5d7dd0093b",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/protocol.md": "5e7bc5b089ff241bf7c5c9aec959df0550a7e70f4d9fc793355c9c7fc4ac533f",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/protocol.md": "bbdd42300250ac0c146608901a6ca21cac51ac86c9d1d60ebe48f11f6e2747b8",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/run.py": "54a41bdde1af906cbc685c666a911c77ba2b332e2f0ced6fc11546d05410c673",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/edge_state_gps.py": "75ab51c6210842f6522195c8f525d8185fced09ff99773eaac585ff97b07c526",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/edge_state_training_core.py": "25a2557e35425f71d704ceba53e779f80926427411b5f1aba303d545800371db",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/gps.py": "88474ca49c06302d92fd2282a6d45fd467149efe0943c66d0bf5677c25bd3d4c",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/k1_execution_efficiency.py": "08355ea1f257770bf08749e1d6fd74c4c9bccb280d509b1a358a13c39280a839",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/k1_execution_layout.py": "b524dfe4ec5c798848bcb88eccf67d0c2c089a8ddc38bb3eaf461f389c041aee",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/k1_loader_diagnostic.py": "dccd228c7319c5796c4b97be01d6e1ef4d3783c00205c2dca2b99d76370eaad3",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/k1_loader_reuse.py": "9382963be561a3633fd864a94af29547f7247d5e4ebc09d9eb9776c0382c48ca",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/k1_screen_training.py": "5e23c59f0e2dfdd1ce789cb2bb9c0cae85d05035e12b66cbbbacc5a1d5947836",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/pcqm_500k_v4_evidence.py": "badc71c8aab0c333c38547552f5b0717890538d84e3e42a26151baafbdf48c4a",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/pcqm_gap_architecture.py": "0ad2ffc7930907fdb64475926d91c06967793a47fab31d3fe035df4cd9a0e3b0",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/pcqm_gptrans_v4.py": "cf2044b3d9094a7af47d0c2ea798265d00cb78dd2345f4d592cfe7ea9257742f",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/pcqm_k1_scale.py": "52d07cd7d10d72266cc63dcb1b80991b0511448f38eb5283300e9fa4dac75fab",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/qm9_neural_atom.py": "1074765cdd1242b2d2ab673706c97f1547049b11983947337a1e9356432bca33",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/saved_diagnostic_closure.py": "a1254f1cba1b20f265fa92cff3f3e399d042cdf34137d134d6301f2286765507",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/training_reproducibility.py": "b1de02d50e229a9c714b390f54013055e54ebb0cac75ad415e26c6de0b0c1677",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/v4_runtime.py": "34bb7430c6c48add83f4fe49fe1070f1175fce5c421464f121a196c4b3b57a1f",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/inputs.json": "e4319cc4843c1e0f32bfb5053e81349b435cc26e021fe8d3a20099ba0ae67df5",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/plan_input.json": "c2044531b01a0650eb8ba8b59bf8cdf033a69bd833ec944cb842d617d8abd6db",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/plan_receipt.json": "a8bd878298d47952aba4b9f3dc5b25b5f545ec5afd017343e46fec35bd64ddec",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/protocol.md": "5e7bc5b089ff241bf7c5c9aec959df0550a7e70f4d9fc793355c9c7fc4ac533f",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/results/completion.json": "e0affb4feadba9a0d4f1f0759c7bc993a1824ba85a8a5ef6ce0c4de492d8e799",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/results/result.json": "a28ddae9b13c99a242331557713594793ae72d27c99b0baa108fdf5c7e4b4025",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/role_plan.json": "2ab0f7cb429dd71b9fea6b45af13e1cd9f5252699fbc918667c94b4a605caca0",
+    "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/terminal_decision.md": "43139e5c17c7728572d6ade36098b33174823fece56bde3da2d097b1e191949b"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "loader-reuse-attempt-001",
+      "category": "other",
+      "cost_event_id": "cost-TB-k1-loader-cpu-20261010-reuse-attempt001-observed",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/acceptance.json",
+      "hardware": "CPU train graph collation; no accelerator",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.03302631938888933
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "k1-loader-cpu-20261010-reuse-attempt001",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-loader-cpu-20261010-reuse-attempt001"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/terminal_decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Separately prospective authorized diagnostic; original training gate remains independent"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "e2e9c479e8e94ea94b02b86164c4c13613bd01d3d2c32ead0d9d0a91260c5cdb"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/attribution.md",
+        "name": "attribution.md",
+        "sha256": "bc391f6bf018261a8591f0603fc0cb91963f47635644171c44fd8da25299bcde"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/decision.md",
+        "name": "decision.md",
+        "sha256": "9dea12103c7af9e8b8827da59596f5e20d1d9c4444204dbdfa480a5d7dd0093b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/inputs.json",
+        "name": "inputs.json",
+        "sha256": "e4319cc4843c1e0f32bfb5053e81349b435cc26e021fe8d3a20099ba0ae67df5"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/plan_input.json",
+        "name": "plan_input.json",
+        "sha256": "c2044531b01a0650eb8ba8b59bf8cdf033a69bd833ec944cb842d617d8abd6db"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/plan_receipt.json",
+        "name": "plan_receipt.json",
+        "sha256": "a8bd878298d47952aba4b9f3dc5b25b5f545ec5afd017343e46fec35bd64ddec"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/protocol.md",
+        "name": "protocol.md",
+        "sha256": "5e7bc5b089ff241bf7c5c9aec959df0550a7e70f4d9fc793355c9c7fc4ac533f"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/README.md",
+        "name": "README.md",
+        "sha256": "6e8936a38ca7d9ce640b06fec1cfe014ebc86f3d3966b699121a571a11dcdcb2"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/role_plan.json",
+        "name": "role_plan.json",
+        "sha256": "2ab0f7cb429dd71b9fea6b45af13e1cd9f5252699fbc918667c94b4a605caca0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/terminal_decision.md",
+        "name": "terminal_decision.md",
+        "sha256": "43139e5c17c7728572d6ade36098b33174823fece56bde3da2d097b1e191949b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_check.py",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/gpu_check.py",
+        "sha256": "cf4ed287ae0865cb5decc94ddd9a24d8ce744331d7dcc6eaf77bc931a6d03180"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/loader_check.py",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/loader_check.py",
+        "sha256": "c68158f325a998aece1709258343074bfd81486a24651462be7eceeeda5c7685"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/protocol.md",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/protocol.md",
+        "sha256": "bbdd42300250ac0c146608901a6ca21cac51ac86c9d1d60ebe48f11f6e2747b8"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/run.py",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/run.py",
+        "sha256": "54a41bdde1af906cbc685c666a911c77ba2b332e2f0ced6fc11546d05410c673"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/decision.md",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/decision.md",
+        "sha256": "6e5d393f628f291bf984b72f8095117a0c326134223075885acfaddf24970f47"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/README.md",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/README.md",
+        "sha256": "00378bfe315b291250c3456428bb9921b14c0bf3ae973aad4b970ed0f4ab2054"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/decision.md",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/decision.md",
+        "sha256": "9dea12103c7af9e8b8827da59596f5e20d1d9c4444204dbdfa480a5d7dd0093b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/protocol.md",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/protocol.md",
+        "sha256": "5e7bc5b089ff241bf7c5c9aec959df0550a7e70f4d9fc793355c9c7fc4ac533f"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/README.md",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/README.md",
+        "sha256": "6e8936a38ca7d9ce640b06fec1cfe014ebc86f3d3966b699121a571a11dcdcb2"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/edge_state_gps.py",
+        "name": "executed_source/src/molgap/edge_state_gps.py",
+        "sha256": "75ab51c6210842f6522195c8f525d8185fced09ff99773eaac585ff97b07c526"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/edge_state_training_core.py",
+        "name": "executed_source/src/molgap/edge_state_training_core.py",
+        "sha256": "25a2557e35425f71d704ceba53e779f80926427411b5f1aba303d545800371db"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/gps.py",
+        "name": "executed_source/src/molgap/gps.py",
+        "sha256": "88474ca49c06302d92fd2282a6d45fd467149efe0943c66d0bf5677c25bd3d4c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/k1_execution_efficiency.py",
+        "name": "executed_source/src/molgap/k1_execution_efficiency.py",
+        "sha256": "08355ea1f257770bf08749e1d6fd74c4c9bccb280d509b1a358a13c39280a839"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/k1_execution_layout.py",
+        "name": "executed_source/src/molgap/k1_execution_layout.py",
+        "sha256": "b524dfe4ec5c798848bcb88eccf67d0c2c089a8ddc38bb3eaf461f389c041aee"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/k1_loader_diagnostic.py",
+        "name": "executed_source/src/molgap/k1_loader_diagnostic.py",
+        "sha256": "dccd228c7319c5796c4b97be01d6e1ef4d3783c00205c2dca2b99d76370eaad3"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/k1_loader_reuse.py",
+        "name": "executed_source/src/molgap/k1_loader_reuse.py",
+        "sha256": "9382963be561a3633fd864a94af29547f7247d5e4ebc09d9eb9776c0382c48ca"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/k1_screen_training.py",
+        "name": "executed_source/src/molgap/k1_screen_training.py",
+        "sha256": "5e23c59f0e2dfdd1ce789cb2bb9c0cae85d05035e12b66cbbbacc5a1d5947836"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/pcqm_500k_v4_evidence.py",
+        "name": "executed_source/src/molgap/pcqm_500k_v4_evidence.py",
+        "sha256": "badc71c8aab0c333c38547552f5b0717890538d84e3e42a26151baafbdf48c4a"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/pcqm_gap_architecture.py",
+        "name": "executed_source/src/molgap/pcqm_gap_architecture.py",
+        "sha256": "0ad2ffc7930907fdb64475926d91c06967793a47fab31d3fe035df4cd9a0e3b0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/pcqm_gptrans_v4.py",
+        "name": "executed_source/src/molgap/pcqm_gptrans_v4.py",
+        "sha256": "cf2044b3d9094a7af47d0c2ea798265d00cb78dd2345f4d592cfe7ea9257742f"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/pcqm_k1_scale.py",
+        "name": "executed_source/src/molgap/pcqm_k1_scale.py",
+        "sha256": "52d07cd7d10d72266cc63dcb1b80991b0511448f38eb5283300e9fa4dac75fab"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/qm9_neural_atom.py",
+        "name": "executed_source/src/molgap/qm9_neural_atom.py",
+        "sha256": "1074765cdd1242b2d2ab673706c97f1547049b11983947337a1e9356432bca33"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/saved_diagnostic_closure.py",
+        "name": "executed_source/src/molgap/saved_diagnostic_closure.py",
+        "sha256": "a1254f1cba1b20f265fa92cff3f3e399d042cdf34137d134d6301f2286765507"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/training_reproducibility.py",
+        "name": "executed_source/src/molgap/training_reproducibility.py",
+        "sha256": "b1de02d50e229a9c714b390f54013055e54ebb0cac75ad415e26c6de0b0c1677"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/executed_source/src/molgap/v4_runtime.py",
+        "name": "executed_source/src/molgap/v4_runtime.py",
+        "sha256": "34bb7430c6c48add83f4fe49fe1070f1175fce5c421464f121a196c4b3b57a1f"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/results/completion.json",
+        "name": "results/completion.json",
+        "sha256": "e0affb4feadba9a0d4f1f0759c7bc993a1824ba85a8a5ef6ce0c4de492d8e799"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/results/result.json",
+        "name": "results/result.json",
+        "sha256": "a28ddae9b13c99a242331557713594793ae72d27c99b0baa108fdf5c7e4b4025"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/protocol.md",
+        "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/terminal_decision.md",
+        "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/attribution.md",
+        "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/acceptance.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "k1-loader-cpu-20261010-reuse-attempt001-evidence",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-k1-saved-loader-metadata-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-10",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Metadata translation of separately recorded saved arithmetic or infrastructure failure; no model work in closure"
+    },
+    "observed_execution": {
+      "inference_executed": false,
+      "training_executed": false,
+      "training_replay_ready": false
+    },
+    "outcome": {
+      "artifact_status": "local_hash_verified",
+      "budget_decision": "local_analysis_complete",
+      "comparison_status": "descriptive_saved_evidence_only",
+      "execution_status": "complete",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "common": "untouched",
+      "internal_development": "untouched",
+      "official_validation": "untouched",
+      "ood": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "consumed"
+    },
+    "scope": "loader_metadata",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-10T12:15:34.308786+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/acceptance.json",
+      "role_event_id": "role-TB-k1-loader-cpu-20261010-reuse-attempt001-labels_read",
+      "role_name": "train",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "run_id": "k1-loader-cpu-20261010-reuse-attempt001",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-k1-loader-cpu-20261010-reuse-attempt001"
+    }
+  ],
+  "run_id": "k1-loader-cpu-20261010-reuse-attempt001",
+  "trajectory_id": "TB-k1-loader-cpu-20261010-reuse-attempt001"
+}

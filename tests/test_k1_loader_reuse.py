@@ -67,6 +67,28 @@ def test_pyg_collater_and_pinning_options_untouched():
     assert loader.pin_memory is True
 
 
+@pytest.mark.parametrize("epoch,cursor", [(0, 0), (1, 0), (1, 1), (3, 1), (4, 2)])
+def test_original_subset_sender_batches_match_list_sampler_reuse(epoch, cursor, monkeypatch):
+    from torch.utils.data import Subset
+    from torch_geometric.data import Data
+    from molgap.pcqm_500k_v4_evidence import loader as original_loader
+    from molgap.k1_screen_training import _batch_sha256
+
+    monkeypatch.setenv("MOLGAP_V4_LOADER_WORKERS", "0")
+    # Synthetic one-node graphs only; no molecular cache, labels or checkpoints.
+    graphs = [Data(x=torch.zeros((1, 9), dtype=torch.long),
+                   edge_index=torch.zeros((2, 1), dtype=torch.long),
+                   edge_attr=torch.zeros((1, 3), dtype=torch.long),
+                   random_walk_pe=torch.zeros((1, 16)),
+                   y=torch.tensor([float(i)]), source_idx=torch.tensor(i)) for i in range(260)]
+    sampler = EpochPermutationBatchSampler(260, 128, seed=42, epoch=epoch, start_batch=cursor)
+    indices = sampler.indices[cursor * 128:].tolist()
+    reference = [_batch_sha256(b) for b in original_loader(Subset(graphs, indices))]
+    with K1LoaderReuse(original_loader(graphs, epoch=0), deterministic_dataset=True) as pool:
+        with pool.stream(indices) as batches:
+            assert [_batch_sha256(b) for b in batches] == reference
+
+
 @pytest.mark.parametrize("drop_last,expected", [(False, [[4, 3, 2], [1]]), (True, [[4, 3, 2]])])
 def test_original_batch_sampler_owns_partial_tail(drop_last, expected):
     loader = loader_for(drop_last=drop_last)
