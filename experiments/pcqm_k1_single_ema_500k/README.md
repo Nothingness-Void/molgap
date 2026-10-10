@@ -7,6 +7,8 @@ holdout evaluation. Source and terminal custody stay on
 
 - [Frozen protocol](protocol.md): scientific and resource boundaries.
 - [Evidence review](evidence_review.md): why this is not a closed experiment retry.
+- [Remote handoff](REMOTE_HANDOFF.md): dated launch observations, deadline and
+  reconciliation pointers; do not rerun an existing attempt.
 - `prepare.py`: existing RML planning and source/input identity bindings.
 - `build_notebook.py`: CPU data staging and bounded A100 platform adapter.
 - `rml/trajectory.json`: prospective record, published before diagnostics/training.

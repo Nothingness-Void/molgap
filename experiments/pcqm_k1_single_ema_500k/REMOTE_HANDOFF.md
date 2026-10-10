@@ -23,6 +23,35 @@ Preparation observation on 2026-10-10:
   absent in this worktree. It was not regenerated or treated as a new-code failure.
 - No A100 allocation or model execution had occurred at this observation.
 
+The subsequent global `check --frozen --portable` did not pass: this new
+worktree lacks additional ignored historical weights/predictions required by
+other trajectories' local artifact claims. No new prospective record appeared
+among those failures. This is not a whole-library portability or replay-ready
+claim; do not regenerate historical or protected-role artifacts to hide the gap.
+
+Submission observation on 2026-10-10:
+
+- Drive native upload completed; CPU hash verification matched the upload
+  binding and the attempt directory was absent before launch.
+- Selected A100, mounted Drive under the user's task-specific authorization,
+  and started only the prepared bounded launch cell, not Run All.
+- Conservative pre-connect budget anchor: Unix `1791611117`; immutable
+  deadline: Unix `1791625517`. This anchor includes preparation before GPU
+  connection and is not a measured accelerator-allocation timestamp.
+- Frozen environment setup completed. Worker stdout reported
+  `A100_PAIRED_K1_QUALIFICATION_PASSED`; Colab displayed `A100 (Python 3)`.
+- First nonzero durable-checkpoint receipt reported `RUNNING`, reference
+  epoch0 / optimizer step128 / sample presentations16384; EMA arm step0.
+  `matched_completed_epochs` was zero. This is launch verification, not a
+  terminal comparison, completed matched prefix or replay-ready acceptance.
+- Frozen payload and runconfig were retained before worker execution. The
+  stdout checkpoint destination is the worker `last.pt` below. Terminal
+  retrieval and independent hash verification remain pending.
+- Local ignored screenshot: staging run directory `a100_launch_verified.jpg`.
+  It is UI proof only, not authoritative V5 artifact or cost evidence.
+- The hard timer requests runtime release before the deadline; provider billing
+  tail and physical runtime identity remain unknown until observable evidence.
+
 Payload identity: [upload binding](submission/upload_binding.json).
 Its local ignored ZIP is under `platforms/_records/colab/staging/` with the run ID.
 Remote source payload destination:
