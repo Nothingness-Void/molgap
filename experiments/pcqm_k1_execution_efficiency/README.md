@@ -24,3 +24,13 @@ not native sender throughput or end-to-end training savings.
 [Single loss-scalar proposal](sender_scalar_reuse.md) removes a duplicate host
 read in the frozen sender's next package, with CPU synthetic guard/counter parity;
 it is not applied or GPU speed-qualified.
+
+[Joint fused/layout/TF32 decision](combined_attempt_001/terminal_decision.md)
+measures combination effects directly. It nominates a separately qualified
+optimizer contract, not a default change or a retrained MAE result.
+
+[Remaining host overhead](HOST_OVERHEAD.md) separates cached sampler metadata
+from unqualified loader/RNG/history-publication costs; frozen senders stay unchanged.
+
+[JSON publication sizing](JSON_PUBLICATION.md) isolates long-history encoding
+cost and qualifies optional compact output without dropping fields or checkpoints.

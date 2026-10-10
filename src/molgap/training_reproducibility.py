@@ -163,10 +163,14 @@ def atomic_torch_save(path: Path, value) -> None:
     os.replace(temporary, path)
 
 
-def atomic_json(path: Path, value: Mapping) -> None:
+def atomic_json(path: Path, value: Mapping, *, compact: bool = False) -> None:
+    if type(compact) is not bool:
+        raise ValueError("compact must be a bool")
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.tmp")
-    temporary.write_text(json.dumps(dict(value), indent=2) + "\n", encoding="utf-8")
+    payload = (json.dumps(dict(value), separators=(",", ":"), indent=None)
+               if compact else json.dumps(dict(value), indent=2))
+    temporary.write_text(payload + "\n", encoding="utf-8")
     os.replace(temporary, path)
 
 

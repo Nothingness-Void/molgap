@@ -19,6 +19,13 @@ existing family step, not a replacement model or training loop. No default enabl
 
 ## Dispositions and remaining candidates
 
+[Host-path audit](HOST_OVERHEAD.md) owns repeated sampler construction and growing
+history-publication findings. Its CPU metadata cache is optional infrastructure,
+not a native training-speed or quality certificate.
+[JSON decomposition](JSON_PUBLICATION.md) identifies encoding as the larger
+synthetic long-log cost and qualifies compact formatting through the existing
+atomic owner; no records or checkpoints are removed.
+
 | Candidate | Code owner | Minimum discriminator and risk |
 |---|---|---|
 | Project nodes before gathering endpoints | `gps.py::_PersistentEdgeUpdate.forward` | [Rejected as a strict-FP32 replacement](projection_attempt_001/terminal_decision.md): nonexact scratch state and mixed-sign timing windows. Algebraic equality is not bitwise equality. |
@@ -56,6 +63,12 @@ short-step comparisons are not independent training seeds or native hardware
 performance certificates. No new remote job or training is released by this review.
 
 ## Practical qualification order
+
+[Joint measured result](combined_attempt_001/terminal_decision.md): matched fused
+increment26.54%, TF32-on-fused increment5.60%, combined original-to-candidate32.34%
+step-time reduction. All paired windows positive for these contrasts; no retrained
+MAE or native epoch qualification. Layout-only windows are mixed in this attempt,
+so earlier about7% results are not a universal guarantee.
 
 1. Conservative execution candidate: existing CPU layout. Short CUDA state/RNG
    and resumed continuation are exact; independent local attempts show about7%

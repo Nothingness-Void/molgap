@@ -1,7 +1,7 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 105
+- Validated V5 evidence: 106
 - Evidence without trajectory: 0
 
 ## Trajectories
@@ -9,7 +9,7 @@
 - INCONCLUSIVE: 19
 - INFRASTRUCTURE_ONLY: 5
 - NEGATIVE_UNDER_CONTRACT: 24
-- NO_TRAIN: 48
+- NO_TRAIN: 49
 - POSITIVE_UNDER_CONTRACT: 8
 
 ## Transfer
@@ -18,8 +18,8 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 298
-- Coarse historical role records: 506
+- Explicit role events: 301
+- Coarse historical role records: 512
 - Repeatedly selected role identities: 21
 
 ## Cost
@@ -107,10 +107,10 @@
 - NVIDIA A100-SXM4-40GB device_hours: measured=0.068322 (3 measured records), estimated=0.666667 (2 estimated records), measurement_missing=4, not_applicable=0
 - NVIDIA A100-SXM4-40GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
 - NVIDIA A100-SXM4-40GB wall_hours: measured=0.079196 (5 measured records), estimated=0.666667 (2 estimated records), measurement_missing=2, not_applicable=0
-- NVIDIA GeForce RTX 5060 cpu_hours: measured=0.139405 (4 measured records), estimated=unknown (0 estimated records), measurement_missing=7, not_applicable=0
-- NVIDIA GeForce RTX 5060 device_hours: measured=0.009793 (1 measured record), estimated=1.250000 (6 estimated records), measurement_missing=4, not_applicable=0
-- NVIDIA GeForce RTX 5060 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=6
-- NVIDIA GeForce RTX 5060 wall_hours: measured=0.065050 (5 measured records), estimated=1.250000 (6 estimated records), measurement_missing=0, not_applicable=0
+- NVIDIA GeForce RTX 5060 cpu_hours: measured=0.194349 (5 measured records), estimated=unknown (0 estimated records), measurement_missing=8, not_applicable=0
+- NVIDIA GeForce RTX 5060 device_hours: measured=0.009793 (1 measured record), estimated=1.416667 (7 estimated records), measurement_missing=5, not_applicable=0
+- NVIDIA GeForce RTX 5060 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=6, not_applicable=7
+- NVIDIA GeForce RTX 5060 wall_hours: measured=0.081486 (6 measured records), estimated=1.416667 (7 estimated records), measurement_missing=0, not_applicable=0
 - NVIDIA_GeForce_RTX_5060 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA_GeForce_RTX_5060 device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - NVIDIA_GeForce_RTX_5060 queue_hours: not applicable (1 records); measurement_missing=0
@@ -259,8 +259,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 205
-- Cost-event coverage: 105/116 trajectories; incomplete native measurement=80
+- Measurement-missing cost events: 207
+- Cost-event coverage: 106/117 trajectories; incomplete native measurement=81
 
 ## Screening Backtest
 - Status: available
@@ -268,9 +268,9 @@
 - Excluded traces: 19
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 87
+- [INFO] trace_unavailable_for_backtest: 88
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 80
+- [WARN] incomplete_native_cost_measurement: 81
 - [WARN] missing_cost_event: 11
 - [WARN] missing_explicit_role_identity: 38
 - [WARN] trajectory_without_v5_evidence: 11

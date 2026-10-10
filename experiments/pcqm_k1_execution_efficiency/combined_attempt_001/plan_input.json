@@ -1,0 +1,142 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-joint-execution-20261010",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-joint-execution",
+    "question": "Do CPU layout, fused AdamW and TF32 retain their local gains when combined, and how does scratch update drift change?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-joint-execution-20261010",
+      "supporting_evidence_ids": [
+        "pcqm-k1-execution-efficiency-gpu-20261010",
+        "pcqm-k1-tf32-execution-20261010",
+        "pcqm-k1-kernel-trace-20261010"
+      ],
+      "observed_deficiency": "Isolated gains and scratch drift do not establish combined cost or numerical interaction",
+      "alternative_explanations": [
+        "Gains overlap",
+        "Fused optimizer exposes graph/launch bottlenecks",
+        "Combined numeric drift grows"
+      ],
+      "changed_mechanism": "Joint layout/fused and joint layout/fused/matmul TF32; unchanged factory and owner step",
+      "cheapest_falsifier": "Three scratch comparisons and four matched short timing windows",
+      "decision_changed_if_positive": "Nominate a jointly measured separate execution contract; no quality/default admission",
+      "decision_changed_if_negative": "Prefer simpler isolated candidate; no additive gain claim",
+      "expected_native_cost_ref": "cost-k1-joint-execution-estimate",
+      "related_closed_family_ids": [
+        "k1-execution-profile-a100"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "7fde33ff226e405ef2b693c9099655d4a35cdd44",
+      "source_config_identity": "27fe6eea0f4b87a90a493fe0cc4cf2069acc01da56f8e89a14342e8e6f3e843f",
+      "contract_refs": [
+        "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/README.md",
+        "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/inputs.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [
+        "TB-k1-tf32-execution-20261010"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-k1-execution-efficiency-gpu-20261010",
+        "pcqm-k1-tf32-execution-20261010",
+        "pcqm-k1-kernel-trace-20261010"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/README.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "execution_profile",
+        "run_ids": [
+          "k1-joint-execution-rtx5060-20261010"
+        ],
+        "attempt_ids": [
+          "combined-attempt-001"
+        ],
+        "source_commit": "7fde33ff226e405ef2b693c9099655d4a35cdd44",
+        "evidence_refs": [
+          "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-joint-execution-estimate"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/decision.md",
+      "next_allowed_actions": [
+        "Bounded idle-only joint execution diagnostic"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/README.md",
+    "comparison_blockers": [
+      "Execution diagnostic is not scientific endpoint comparison",
+      "RTX5060 is not T4/A100"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-joint-execution-estimate",
+      "trajectory_id": "TB-k1-joint-execution-20261010",
+      "action_id": "A001",
+      "run_id": "k1-joint-execution-rtx5060-20261010",
+      "attempt_id": "combined-attempt-001",
+      "platform": "local",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/README.md",
+      "measurement": {
+        "device_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "wall_hours": {
+          "value": 0.16666666666666666,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-execution-efficiency",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/README.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/role_plan.json"
+    ],
+    "source_commit": "7fde33ff226e405ef2b693c9099655d4a35cdd44",
+    "state_timestamp": "2026-10-10T10:46:10.515775+00:00"
+  }
+}

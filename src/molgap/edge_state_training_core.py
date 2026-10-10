@@ -6,6 +6,7 @@ import math
 import re
 from collections.abc import Mapping
 from dataclasses import asdict, dataclass
+from functools import lru_cache
 from pathlib import Path
 
 from .edge_state_adapter import build_edge_state_model, edge_state_metadata
@@ -143,6 +144,31 @@ class EpochPermutationBatchSampler:
         if sampler.order_sha256 != state["order_sha256"]:
             raise ValueError("EdgeState sampler row order differs on resume")
         return sampler
+
+
+@lru_cache(maxsize=2)
+def _epoch_permutation_metadata(dataset_size: int, batch_size: int,
+                                seed: int, epoch: int) -> tuple:
+    # Retain only immutable scalar metadata, never the sampler's index tensor.
+    return tuple(EpochPermutationBatchSampler(
+        dataset_size, batch_size, seed=seed, epoch=epoch,
+    ).state_for(0).items())
+
+
+def epoch_permutation_state(dataset_size: int, batch_size: int, *, seed: int,
+                            epoch: int, next_batch: int) -> dict:
+    """Opt-in cached checkpoint metadata using the existing sampler's row order."""
+    # Validate before cache lookup: bool/float keys can alias valid integer keys.
+    for name, value in (("dataset_size", dataset_size), ("batch_size", batch_size),
+                        ("seed", seed), ("epoch", epoch), ("next_batch", next_batch)):
+        _nonnegative_integer(value, name)
+    if batch_size == 0 or dataset_size < batch_size:
+        raise ValueError("Sampler requires at least one complete physical batch")
+    if next_batch > dataset_size // batch_size:
+        raise ValueError("Sampler resume cursor exceeds the full-batch count")
+    state = dict(_epoch_permutation_metadata(dataset_size, batch_size, seed, epoch))
+    state["next_batch"] = next_batch
+    return state
 
 
 def _verify_sampler_state(state: Mapping, binding: "EdgeStateTrainingBinding",

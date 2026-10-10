@@ -51,6 +51,30 @@ def close_saved_diagnostic(repo: Path, experiment: Path):
             raise ValueError("Runtime/kind differs")
     elif result.get("status") != "infrastructure_failed_before_metric_analysis" or inputs["kind"] != "trace_pair":
         raise ValueError("Unsupported failure closure")
+    loader = inputs["kind"] == "loader_metadata"
+    if loader:
+        if (result["runtime"].get("cuda_initialized") is not False
+                or result["runtime"].get("cuda_visible_devices") != ""):
+            raise ValueError("Loader runtime must hide CUDA without initializing it")
+        expected = inputs.get("source_idx")
+        if (type(expected) is not list or len(expected) != 4096
+                or any(type(i) is not int or not 0 <= i < 500000 for i in expected)
+                or len(set(expected)) != 4096):
+            raise ValueError("Loader requires 4096 unique exact train row integers")
+        observed = result.get("observed_source_idx")
+        if (type(observed) is not list or any(type(i) is not int for i in observed)
+                or observed != expected):
+            raise ValueError("Observed loader membership differs")
+        probe = inputs.get("train_probe")
+        if (type(probe) is not dict or type(probe.get("path")) is not str
+                or not probe["path"] or type(probe.get("sha256")) is not str):
+            raise ValueError("Loader train probe path/SHA binding required")
+        path = Path(probe["path"])
+        path = path if path.is_absolute() else repo_local_path(repo, path)
+        if not path.is_file() or sha256_file(path) != probe["sha256"]:
+            raise ValueError("Loader train probe binding differs")
+        if any(type(result[n]) not in (int, float) for n in ("wall_seconds", "process_cpu_seconds")):
+            raise ValueError("Invalid loader CPU observation")
     for name in ("terminal_decision.md","attribution.md"):
         if not (experiment/name).is_file():
             raise ValueError("Parent interpretation missing")
@@ -73,27 +97,38 @@ def close_saved_diagnostic(repo: Path, experiment: Path):
     outcome = dict(execution_status=result["status"],artifact_status="local_hash_verified",comparison_status="descriptive_saved_evidence_only",
         scientific_status="NO_TRAIN",transfer_status="not_evaluated",budget_decision="local_analysis_complete" if not failed else "infrastructure_attempt_closed",
         full_handoff_status="not_applicable")
+    cpu_seconds = None if failed else result["process_cpu_seconds"]
+    if loader:
+        # Parent process time excludes loader workers; never substitute it for total CPU.
+        total = result.get("total_process_cpu_seconds")
+        cpu_seconds = (total if type(total) in (int, float) and math.isfinite(total)
+                       and total >= result["process_cpu_seconds"] else None)
     cost = dict(schema="molgap-cost-event-v1",cost_event_id="cost-"+tid+"-observed",trajectory_id=tid,action_id=action["action_id"],run_id=run,
-        attempt_id="attempt-002" if rel.endswith("attempt_002") else "attempt-001",platform="local-windows",hardware="CPU saved-artifact arithmetic; no accelerator",
+        attempt_id="attempt-002" if rel.endswith("attempt_002") else "attempt-001",platform="local-windows",hardware="CPU train graph collation; no accelerator" if loader else "CPU saved-artifact arithmetic; no accelerator",
         category="other",evidence_ref=f"{rel}/acceptance.json",measurement=dict(
             wall_hours=dict(value=None if failed else result["wall_seconds"]/3600,status="measurement_missing" if failed else "measured"),
-            cpu_hours=dict(value=None if failed else result["process_cpu_seconds"]/3600,status="measurement_missing" if failed else "measured"),
+            cpu_hours=dict(value=None if cpu_seconds is None else cpu_seconds/3600,status="measurement_missing" if cpu_seconds is None else "measured"),
             device_hours=dict(value=None,status="not_applicable"),queue_hours=dict(value=None,status="not_applicable")))
-    expected = list(range(*inputs["development_bounds"])) if inputs["kind"] == "bn_rows" else []
+    if not loader:
+        expected = list(range(*inputs["development_bounds"])) if inputs["kind"] == "bn_rows" else []
     if result.get("observed_source_idx") != expected:
         raise ValueError("Observed membership differs")
     roles = []
     role_use = dict.fromkeys(("official_validation","test_dev","test_challenge","common","ood"),"untouched")
     if expected:
-        role_use["internal_development"] = "consumed"
+        role = "train" if loader else "internal_development"
+        role_use[role] = "consumed"
+        if loader:
+            role_use["internal_development"] = "untouched"
         digest = hashlib.sha256(b"".join(struct.pack("<q",i) for i in expected)).hexdigest()
-        for access in ("labels_read","metric_computed"):
+        for access in (("labels_read",) if loader else ("labels_read","metric_computed")):
             roles.append(dict(schema="molgap-role-event-v1",role_event_id=f"role-{tid}-{access}",trajectory_id=tid,action_id=action["action_id"],run_id=run,
-                dataset_identity="pcqm4mv2-ogb-fixed-500k-scnet-v1",row_manifest_hash=digest,role_name="internal_development",access_kind=access,
+                dataset_identity="pcqm4mv2-ogb-fixed-500k-scnet-v1",row_manifest_hash=digest,role_name=role,access_kind=access,
                 selection_used=False,evidence_ref=f"{rel}/acceptance.json"))
     acceptance = dict(evidence_id=eid,run_id=run,outcome=outcome,trajectory_decision=decision,role_use=role_use,costs=[cost],roles=roles,
         checks=result.get("checks",{}),analysis_ref=f"{rel}/"+("failure.json" if failed else "results/result.json"),
-        execution_scope="Saved metadata/tensor arithmetic only; no model, new selection, training or replay-ready claim")
+        execution_scope=("CPU train graph collation metadata only; labels deserialized, no prediction or metric, model, training or replay-ready claim"
+                         if loader else "Saved metadata/tensor arithmetic only; no model, new selection, training or replay-ready claim"))
     atomic_json(experiment/"acceptance.json",acceptance)
     paths = [p for p in experiment.rglob("*") if p.is_file() and "rml" not in p.relative_to(experiment).parts
              and "rml_finalized" not in p.parts and "__pycache__" not in p.parts and p.name != "terminal.json"]

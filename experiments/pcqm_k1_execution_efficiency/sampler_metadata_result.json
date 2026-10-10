@@ -1,0 +1,36 @@
+{
+  "scope": "synthetic integer sampler metadata only; no molecular roles",
+  "python": "3.10.6 (tags/v3.10.6:9c7b4bd, Aug  1 2022, 21:53:49) [MSC v.1932 64 bit (AMD64)]",
+  "torch": "2.7.1+cu128",
+  "cpu_threads": 4,
+  "rows": 500000,
+  "batch_size": 128,
+  "states_per_window": 60,
+  "distinct_epoch_keys": 2,
+  "windows_seconds": [
+    {
+      "original": 0.2755704000010155,
+      "cached": 0.009032699999806937
+    },
+    {
+      "cached": 0.008832600000459934,
+      "original": 0.27098300000216113
+    },
+    {
+      "original": 0.26856389999738894,
+      "cached": 0.008894999999029096
+    },
+    {
+      "cached": 0.008860600002662977,
+      "original": 0.27262419999897247
+    }
+  ],
+  "median_seconds": {
+    "original": 0.2718036000005668,
+    "cached": 0.008877800000846037
+  },
+  "metadata_exact": true,
+  "cuda_initialized": false,
+  "training_speed_qualified": false,
+  "rml_training_evidence": false
+}

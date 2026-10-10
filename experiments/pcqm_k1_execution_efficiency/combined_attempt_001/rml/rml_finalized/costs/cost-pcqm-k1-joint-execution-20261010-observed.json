@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "combined-attempt-001",
+  "category": "other",
+  "cost_event_id": "cost-pcqm-k1-joint-execution-20261010-observed",
+  "evidence_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/acceptance.json",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.05494357638888889
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.0164355258055558
+    }
+  },
+  "platform": "local",
+  "run_id": "k1-joint-execution-rtx5060-20261010",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-joint-execution-20261010"
+}

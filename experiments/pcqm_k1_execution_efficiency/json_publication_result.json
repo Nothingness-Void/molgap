@@ -1,0 +1,418 @@
+{
+  "scope": "synthetic CPU JSON only; no dataset/checkpoint/model/CUDA",
+  "source_default_unchanged": true,
+  "synthetic_not_rml_training_evidence": true,
+  "native_training_saving_qualified": false,
+  "measured": [
+    {
+      "synthetic_rows_per_arm": 0,
+      "windows": [
+        {
+          "pretty": {
+            "encode_seconds": 2.9499999072868377e-05,
+            "write_seconds": 0.001056000000971835,
+            "atomic_publication_seconds": 0.0022004999991622753,
+            "hash_seconds": 0.0004895999991276767,
+            "publication_hash_seconds": 0.002690099998289952,
+            "file_bytes": 122,
+            "sha256": "668a255db6484c021f958ceb1f9caa79e62b839db48cc7336ce5634dfad677d9"
+          },
+          "compact": {
+            "encode_seconds": 1.7499998648418114e-05,
+            "write_seconds": 0.0006442999983846676,
+            "atomic_publication_seconds": 0.001697499999863794,
+            "hash_seconds": 0.0005167999988771044,
+            "publication_hash_seconds": 0.0022142999987408984,
+            "file_bytes": 74,
+            "sha256": "e5a5bbf39c1721260a8b472236fa23028d47feba549ca7b8144f4c65e3b1df6d"
+          }
+        },
+        {
+          "compact": {
+            "encode_seconds": 1.5199999324977398e-05,
+            "write_seconds": 0.0007619000025442801,
+            "atomic_publication_seconds": 0.0019179999981133733,
+            "hash_seconds": 0.0005203000000619795,
+            "publication_hash_seconds": 0.002438299998175353,
+            "file_bytes": 74,
+            "sha256": "e5a5bbf39c1721260a8b472236fa23028d47feba549ca7b8144f4c65e3b1df6d"
+          },
+          "pretty": {
+            "encode_seconds": 2.4500001018168405e-05,
+            "write_seconds": 0.0007003000027907547,
+            "atomic_publication_seconds": 0.0020124000002397224,
+            "hash_seconds": 0.0005386000011640135,
+            "publication_hash_seconds": 0.002551000001403736,
+            "file_bytes": 122,
+            "sha256": "668a255db6484c021f958ceb1f9caa79e62b839db48cc7336ce5634dfad677d9"
+          }
+        },
+        {
+          "pretty": {
+            "encode_seconds": 2.6600002456689253e-05,
+            "write_seconds": 0.0007287000007636379,
+            "atomic_publication_seconds": 0.0019881000007444527,
+            "hash_seconds": 0.0005315000016707927,
+            "publication_hash_seconds": 0.0025196000024152454,
+            "file_bytes": 122,
+            "sha256": "668a255db6484c021f958ceb1f9caa79e62b839db48cc7336ce5634dfad677d9"
+          },
+          "compact": {
+            "encode_seconds": 1.6000001778593287e-05,
+            "write_seconds": 0.0007053000008454546,
+            "atomic_publication_seconds": 0.0018404000002192333,
+            "hash_seconds": 0.0005515000011655502,
+            "publication_hash_seconds": 0.0023919000013847835,
+            "file_bytes": 74,
+            "sha256": "e5a5bbf39c1721260a8b472236fa23028d47feba549ca7b8144f4c65e3b1df6d"
+          }
+        },
+        {
+          "compact": {
+            "encode_seconds": 1.5700003132224083e-05,
+            "write_seconds": 0.0007143000002542976,
+            "atomic_publication_seconds": 0.0017637999990256503,
+            "hash_seconds": 0.0005388999998103827,
+            "publication_hash_seconds": 0.002302699998836033,
+            "file_bytes": 74,
+            "sha256": "e5a5bbf39c1721260a8b472236fa23028d47feba549ca7b8144f4c65e3b1df6d"
+          },
+          "pretty": {
+            "encode_seconds": 2.5600002118153498e-05,
+            "write_seconds": 0.0006500999988929834,
+            "atomic_publication_seconds": 0.0020457999999052845,
+            "hash_seconds": 0.0005777000005764421,
+            "publication_hash_seconds": 0.0026235000004817266,
+            "file_bytes": 122,
+            "sha256": "668a255db6484c021f958ceb1f9caa79e62b839db48cc7336ce5634dfad677d9"
+          }
+        }
+      ],
+      "median_seconds": {
+        "pretty": {
+          "encode_seconds": 2.6100002287421376e-05,
+          "write_seconds": 0.0007145000017771963,
+          "hash_seconds": 0.0005350500014174031,
+          "atomic_publication_seconds": 0.0020291000000725035,
+          "publication_hash_seconds": 0.0025872500009427313
+        },
+        "compact": {
+          "encode_seconds": 1.5850002455408685e-05,
+          "write_seconds": 0.0007098000005498761,
+          "hash_seconds": 0.0005295999999361811,
+          "atomic_publication_seconds": 0.0018020999996224418,
+          "publication_hash_seconds": 0.0023473000001104083
+        }
+      },
+      "logical_payload_equal": true
+    },
+    {
+      "synthetic_rows_per_arm": 8192,
+      "windows": [
+        {
+          "pretty": {
+            "encode_seconds": 0.07168280000041705,
+            "write_seconds": 0.005972700000711484,
+            "atomic_publication_seconds": 0.08003109999845037,
+            "hash_seconds": 0.0025438999982725363,
+            "publication_hash_seconds": 0.08257499999672291,
+            "file_bytes": 3385756,
+            "sha256": "daa2a488746e75f84a1c8075891f03783c68e11121a120963802687e39cbe83b"
+          },
+          "compact": {
+            "encode_seconds": 0.016114399997604778,
+            "write_seconds": 0.0026286000029358547,
+            "atomic_publication_seconds": 0.02045409999846015,
+            "hash_seconds": 0.001835499999288004,
+            "publication_hash_seconds": 0.022289599997748155,
+            "file_bytes": 1861984,
+            "sha256": "88cd0c7089ee86877bb2e0f6b8759562d3bcb0e02b8cddffb49f1dd9089a730b"
+          }
+        },
+        {
+          "compact": {
+            "encode_seconds": 0.017126900002040202,
+            "write_seconds": 0.0025720999983604997,
+            "atomic_publication_seconds": 0.021667700002581114,
+            "hash_seconds": 0.0015098999974725302,
+            "publication_hash_seconds": 0.023177600000053644,
+            "file_bytes": 1861984,
+            "sha256": "88cd0c7089ee86877bb2e0f6b8759562d3bcb0e02b8cddffb49f1dd9089a730b"
+          },
+          "pretty": {
+            "encode_seconds": 0.07157809999989695,
+            "write_seconds": 0.004599899999448098,
+            "atomic_publication_seconds": 0.07833559999926365,
+            "hash_seconds": 0.003548900000168942,
+            "publication_hash_seconds": 0.08188449999943259,
+            "file_bytes": 3385756,
+            "sha256": "daa2a488746e75f84a1c8075891f03783c68e11121a120963802687e39cbe83b"
+          }
+        },
+        {
+          "pretty": {
+            "encode_seconds": 0.07209449999936623,
+            "write_seconds": 0.004181799999059876,
+            "atomic_publication_seconds": 0.07864950000293902,
+            "hash_seconds": 0.0025993999988713767,
+            "publication_hash_seconds": 0.0812489000018104,
+            "file_bytes": 3385756,
+            "sha256": "daa2a488746e75f84a1c8075891f03783c68e11121a120963802687e39cbe83b"
+          },
+          "compact": {
+            "encode_seconds": 0.016712200002075406,
+            "write_seconds": 0.0026318999989598524,
+            "atomic_publication_seconds": 0.02114340000116499,
+            "hash_seconds": 0.0015984999990905635,
+            "publication_hash_seconds": 0.022741900000255555,
+            "file_bytes": 1861984,
+            "sha256": "88cd0c7089ee86877bb2e0f6b8759562d3bcb0e02b8cddffb49f1dd9089a730b"
+          }
+        },
+        {
+          "compact": {
+            "encode_seconds": 0.016928000000916654,
+            "write_seconds": 0.0026588999971863814,
+            "atomic_publication_seconds": 0.021498100002645515,
+            "hash_seconds": 0.001561299999593757,
+            "publication_hash_seconds": 0.023059400002239272,
+            "file_bytes": 1861984,
+            "sha256": "88cd0c7089ee86877bb2e0f6b8759562d3bcb0e02b8cddffb49f1dd9089a730b"
+          },
+          "pretty": {
+            "encode_seconds": 0.06922429999758606,
+            "write_seconds": 0.004271900001185713,
+            "atomic_publication_seconds": 0.07590680000066641,
+            "hash_seconds": 0.0025378999998793006,
+            "publication_hash_seconds": 0.07844470000054571,
+            "file_bytes": 3385756,
+            "sha256": "daa2a488746e75f84a1c8075891f03783c68e11121a120963802687e39cbe83b"
+          }
+        }
+      ],
+      "median_seconds": {
+        "pretty": {
+          "encode_seconds": 0.071630450000157,
+          "write_seconds": 0.004435900000316906,
+          "hash_seconds": 0.0025716499985719565,
+          "atomic_publication_seconds": 0.07849255000110134,
+          "publication_hash_seconds": 0.0815667000006215
+        },
+        "compact": {
+          "encode_seconds": 0.01682010000149603,
+          "write_seconds": 0.0026302500009478536,
+          "hash_seconds": 0.0015798999993421603,
+          "atomic_publication_seconds": 0.021320750001905253,
+          "publication_hash_seconds": 0.022900650001247413
+        }
+      },
+      "logical_payload_equal": true
+    },
+    {
+      "synthetic_rows_per_arm": 65536,
+      "windows": [
+        {
+          "pretty": {
+            "encode_seconds": 0.5821448999995482,
+            "write_seconds": 0.034446900001057656,
+            "atomic_publication_seconds": 0.6223394000007829,
+            "hash_seconds": 0.017166900001029717,
+            "publication_hash_seconds": 0.6395063000018126,
+            "file_bytes": 27516012,
+            "sha256": "24416560720cfb0affd333b555404bfd7374598325091b29e9ac0fd4a6d953e8"
+          },
+          "compact": {
+            "encode_seconds": 0.141990000000078,
+            "write_seconds": 0.012302799997996772,
+            "atomic_publication_seconds": 0.15824950000023819,
+            "hash_seconds": 0.010413700001663528,
+            "publication_hash_seconds": 0.16866320000190171,
+            "file_bytes": 15326256,
+            "sha256": "9c69f3ca9007e7c094a81f134cd738fde687150fb6d5e4ccda6846c4d901af51"
+          }
+        },
+        {
+          "compact": {
+            "encode_seconds": 0.1429089000012027,
+            "write_seconds": 0.011682799999107374,
+            "atomic_publication_seconds": 0.1590788000030443,
+            "hash_seconds": 0.009637000002840068,
+            "publication_hash_seconds": 0.16871580000588438,
+            "file_bytes": 15326256,
+            "sha256": "9c69f3ca9007e7c094a81f134cd738fde687150fb6d5e4ccda6846c4d901af51"
+          },
+          "pretty": {
+            "encode_seconds": 0.6143652000027942,
+            "write_seconds": 0.036158299997623544,
+            "atomic_publication_seconds": 0.6578506000005291,
+            "hash_seconds": 0.019304400000692112,
+            "publication_hash_seconds": 0.6771550000012212,
+            "file_bytes": 27516012,
+            "sha256": "24416560720cfb0affd333b555404bfd7374598325091b29e9ac0fd4a6d953e8"
+          }
+        },
+        {
+          "pretty": {
+            "encode_seconds": 0.6018342999996094,
+            "write_seconds": 0.03694090000135475,
+            "atomic_publication_seconds": 0.6459084000016446,
+            "hash_seconds": 0.017540199998620665,
+            "publication_hash_seconds": 0.6634486000002653,
+            "file_bytes": 27516012,
+            "sha256": "24416560720cfb0affd333b555404bfd7374598325091b29e9ac0fd4a6d953e8"
+          },
+          "compact": {
+            "encode_seconds": 0.14411679999830085,
+            "write_seconds": 0.013893100000132108,
+            "atomic_publication_seconds": 0.16288929999791435,
+            "hash_seconds": 0.009846299999480834,
+            "publication_hash_seconds": 0.17273559999739518,
+            "file_bytes": 15326256,
+            "sha256": "9c69f3ca9007e7c094a81f134cd738fde687150fb6d5e4ccda6846c4d901af51"
+          }
+        },
+        {
+          "compact": {
+            "encode_seconds": 0.14914529999805382,
+            "write_seconds": 0.011958600000070874,
+            "atomic_publication_seconds": 0.16546519999974407,
+            "hash_seconds": 0.010494600002857624,
+            "publication_hash_seconds": 0.1759598000026017,
+            "file_bytes": 15326256,
+            "sha256": "9c69f3ca9007e7c094a81f134cd738fde687150fb6d5e4ccda6846c4d901af51"
+          },
+          "pretty": {
+            "encode_seconds": 0.608358199999202,
+            "write_seconds": 0.03464449999955832,
+            "atomic_publication_seconds": 0.650307600000815,
+            "hash_seconds": 0.0174302000013995,
+            "publication_hash_seconds": 0.6677378000022145,
+            "file_bytes": 27516012,
+            "sha256": "24416560720cfb0affd333b555404bfd7374598325091b29e9ac0fd4a6d953e8"
+          }
+        }
+      ],
+      "median_seconds": {
+        "pretty": {
+          "encode_seconds": 0.6050962499994057,
+          "write_seconds": 0.03540139999859093,
+          "hash_seconds": 0.01748520000001008,
+          "atomic_publication_seconds": 0.6481080000012298,
+          "publication_hash_seconds": 0.6655932000012399
+        },
+        "compact": {
+          "encode_seconds": 0.14351284999975178,
+          "write_seconds": 0.012130699999033823,
+          "hash_seconds": 0.010130000000572181,
+          "atomic_publication_seconds": 0.16098405000047933,
+          "publication_hash_seconds": 0.17072570000163978
+        }
+      },
+      "logical_payload_equal": true
+    },
+    {
+      "synthetic_rows_per_arm": 234360,
+      "windows": [
+        {
+          "pretty": {
+            "encode_seconds": 2.432795000000624,
+            "write_seconds": 0.21899430000121356,
+            "atomic_publication_seconds": 2.677848300001642,
+            "hash_seconds": 0.08853919999819482,
+            "publication_hash_seconds": 2.766387499999837,
+            "file_bytes": 99638866,
+            "sha256": "3f952bd07532061e5e1b7873a1d33ef9296f7a5759cffc5fabb84d2f9f2a094e"
+          },
+          "compact": {
+            "encode_seconds": 0.4616561999973783,
+            "write_seconds": 0.06760420000136946,
+            "atomic_publication_seconds": 0.5397683000010147,
+            "hash_seconds": 0.03537330000108341,
+            "publication_hash_seconds": 0.5751416000020981,
+            "file_bytes": 56047846,
+            "sha256": "4e083a953e649f06207b1b6c1c3c61461914e57c03c9ea0dbc54854474ab1b6f"
+          }
+        },
+        {
+          "compact": {
+            "encode_seconds": 0.42851410000002943,
+            "write_seconds": 0.06479890000264277,
+            "atomic_publication_seconds": 0.5070983999976306,
+            "hash_seconds": 0.03618370000185678,
+            "publication_hash_seconds": 0.5432820999994874,
+            "file_bytes": 56047846,
+            "sha256": "4e083a953e649f06207b1b6c1c3c61461914e57c03c9ea0dbc54854474ab1b6f"
+          },
+          "pretty": {
+            "encode_seconds": 2.3718503000018245,
+            "write_seconds": 0.14661900000282913,
+            "atomic_publication_seconds": 2.543311800000083,
+            "hash_seconds": 0.06187590000263299,
+            "publication_hash_seconds": 2.605187700002716,
+            "file_bytes": 99638866,
+            "sha256": "3f952bd07532061e5e1b7873a1d33ef9296f7a5759cffc5fabb84d2f9f2a094e"
+          }
+        },
+        {
+          "pretty": {
+            "encode_seconds": 2.4713950000004843,
+            "write_seconds": 0.1468081000020902,
+            "atomic_publication_seconds": 2.6441095000009227,
+            "hash_seconds": 0.06290540000190958,
+            "publication_hash_seconds": 2.7070149000028323,
+            "file_bytes": 99638866,
+            "sha256": "3f952bd07532061e5e1b7873a1d33ef9296f7a5759cffc5fabb84d2f9f2a094e"
+          },
+          "compact": {
+            "encode_seconds": 0.504936400000588,
+            "write_seconds": 0.07123090000095544,
+            "atomic_publication_seconds": 0.5890538999992714,
+            "hash_seconds": 0.03576939999766182,
+            "publication_hash_seconds": 0.6248232999969332,
+            "file_bytes": 56047846,
+            "sha256": "4e083a953e649f06207b1b6c1c3c61461914e57c03c9ea0dbc54854474ab1b6f"
+          }
+        },
+        {
+          "compact": {
+            "encode_seconds": 0.48908019999726093,
+            "write_seconds": 0.06412400000044727,
+            "atomic_publication_seconds": 0.5678958000025887,
+            "hash_seconds": 0.037646299999323674,
+            "publication_hash_seconds": 0.6055421000019123,
+            "file_bytes": 56047846,
+            "sha256": "4e083a953e649f06207b1b6c1c3c61461914e57c03c9ea0dbc54854474ab1b6f"
+          },
+          "pretty": {
+            "encode_seconds": 2.390422899999976,
+            "write_seconds": 0.14342800000304123,
+            "atomic_publication_seconds": 2.5555667000007816,
+            "hash_seconds": 0.06136319999859552,
+            "publication_hash_seconds": 2.616929899999377,
+            "file_bytes": 99638866,
+            "sha256": "3f952bd07532061e5e1b7873a1d33ef9296f7a5759cffc5fabb84d2f9f2a094e"
+          }
+        }
+      ],
+      "median_seconds": {
+        "pretty": {
+          "encode_seconds": 2.4116089500003,
+          "write_seconds": 0.14671355000245967,
+          "hash_seconds": 0.062390650002271286,
+          "atomic_publication_seconds": 2.599838100000852,
+          "publication_hash_seconds": 2.6619724000011047
+        },
+        "compact": {
+          "encode_seconds": 0.4753681999973196,
+          "write_seconds": 0.06620155000200612,
+          "hash_seconds": 0.0359765499997593,
+          "atomic_publication_seconds": 0.5538320500018017,
+          "publication_hash_seconds": 0.5903418500020052
+        }
+      },
+      "logical_payload_equal": true
+    }
+  ],
+  "fixture_wall_seconds": 18.344365000000835,
+  "storage_limits": "Local page-cache writes; no fsync, remote IO or native allocation qualification"
+}

@@ -1,0 +1,22 @@
+diff --git a/src/molgap/colab_k1_screen.py b/src/molgap/colab_k1_screen.py
+--- a/src/molgap/colab_k1_screen.py
++++ b/src/molgap/colab_k1_screen.py
+@@ -26,6 +26,6 @@ from pathlib import Path
+ 
+ from . import pcqm_500k_v4_evidence as owner
+-from .edge_state_training_core import EpochPermutationBatchSampler
++from .edge_state_training_core import EpochPermutationBatchSampler, epoch_permutation_state
+ from .k1_bn_calibration import recalibrated_batch_norm
+ from .k1_screen_training import FORBIDDEN_MODEL_FIELDS, _batch_sha256, _forward
+ from .k1_weight_ema import make_ema, update_ema
+@@ -282,8 +282,8 @@ def _save(output, arms, binding, runtime, train_rows, status, started):
+     snapshots = {name: _snapshot(arm) for name, arm in arms.items()}
+     for name, arm in arms.items():
+-        sampler = _sampler(range(train_rows), arm["epoch"], arm["offset"])
+-        snapshots[name]["sampler"] = sampler.state_for(arm["offset"])
++        snapshots[name]["sampler"] = epoch_permutation_state(
++            train_rows, owner.BS, seed=42, epoch=arm["epoch"], next_batch=arm["offset"])
+         assert_finite_state_dict(snapshots[name]["model"], label=name)
+     payload = {"format": FORMAT, "binding": binding, "runtime": runtime,
+                "arms": snapshots, "status": status}
+     atomic_torch_save(output / "last.pt", payload)

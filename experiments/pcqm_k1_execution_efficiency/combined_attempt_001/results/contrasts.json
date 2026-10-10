@@ -1,0 +1,49 @@
+{
+  "contrasts": {
+    "fused_increment": {
+      "reference": "cpu_layout",
+      "candidate": "fused_layout",
+      "median_time_reduction": 0.2653799316045835,
+      "paired_window_reductions": [
+        0.2615040565389052,
+        0.2435485725169133,
+        0.2992130727115072,
+        0.21045634146766856
+      ]
+    },
+    "tf32_on_fused_increment": {
+      "reference": "fused_layout",
+      "candidate": "fused_tf32_layout",
+      "median_time_reduction": 0.05595881864990915,
+      "paired_window_reductions": [
+        0.05336439912309088,
+        0.06242649814767365,
+        0.0783212090723544,
+        0.04944809832718078
+      ]
+    },
+    "combined_total_not_single_mechanism": {
+      "reference": "baseline",
+      "candidate": "fused_tf32_layout",
+      "median_time_reduction": 0.32344999175311095,
+      "paired_window_reductions": [
+        0.3203237614753284,
+        0.30563048880108934,
+        0.32960641852764405,
+        0.3666454743022587
+      ]
+    }
+  },
+  "median_seconds_per_step": {
+    "baseline": 0.08716687499994198,
+    "non_blocking": 0.0879728791665002,
+    "no_redundant_sync": 0.08411248749992714,
+    "transfer_and_sync": 0.08710757916651346,
+    "cpu_layout": 0.0850349875001181,
+    "fused_layout": 0.06246840833334015,
+    "fused_tf32_layout": 0.0589727500000663
+  },
+  "strict_fp32_admission": false,
+  "generalization_accuracy_qualified": false,
+  "full_training_saving_qualified": false
+}

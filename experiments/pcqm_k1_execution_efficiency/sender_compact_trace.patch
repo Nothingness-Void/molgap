@@ -1,0 +1,11 @@
+diff --git a/src/molgap/colab_k1_screen.py b/src/molgap/colab_k1_screen.py
+--- a/src/molgap/colab_k1_screen.py
++++ b/src/molgap/colab_k1_screen.py
+@@ -289,5 +289,6 @@ def _save(output, arms, binding, runtime, train_rows, status, started):
+     atomic_torch_save(output / "last.pt", payload)
+     atomic_json(output / "trace.json", {name: {"epochs": a["trace"], "steps": a["step_trace"]}
+-                                           for name, a in arms.items()})
++                                           for name, a in arms.items()},
++                compact=True)
+     matched = min(a["epoch"] for a in arms.values())
+     eligible = {}

@@ -1,0 +1,391 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-k1-joint-execution-20261010",
+  "run_id": "k1-joint-execution-rtx5060-20261010",
+  "action_id": "A001",
+  "finalized_at": "2026-10-10T10:49:16.182205+00:00",
+  "acceptance_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/acceptance.json": "c2198ee228f9d020ea2748fe58d21b0aa166564f1313e368130f453aeaacb777",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/attribution.md": "c14344a500fff67bc1a588f30c919a7a531423a774f8b3a995a8dba863a94e09",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/decision.md": "b2de35bac2d17f51d441fecb1002228344e99204ef8d04202383b94b993ff29e",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/inputs.json": "27fe6eea0f4b87a90a493fe0cc4cf2069acc01da56f8e89a14342e8e6f3e843f",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/plan_input.json": "f64722a227276cf212b11aefb62d5a2ea9ccfb2aea6dda785b9026055d069cd4",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/plan_receipt.json": "44cb8749fd67147503f16098769e9f5239089cdc292fdd0ff70bc15718da1b9f",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/README.md": "a694194bb52fbccf6b46cba2a11be270984578d0ef24168f80cf90a230865343",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/role_plan.json": "f4dfb7fe9e0bed97e00daa72fb6a6f3bd8dd8fe6ecf958c241f2c7731cbc5eef",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/terminal_decision.md": "3a2ceeeb2485f8f348727cf06546d17bc00e818aecd2d69da7de83c1d759272c",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/combined_check.py": "bd2051370052adce1eda0bc9417d8a6db8ecd60cfd01e9a69d0315474ebc716a",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_check.py": "cf4ed287ae0865cb5decc94ddd9a24d8ce744331d7dcc6eaf77bc931a6d03180",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/protocol.md": "bbdd42300250ac0c146608901a6ca21cac51ac86c9d1d60ebe48f11f6e2747b8",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/run.py": "54a41bdde1af906cbc685c666a911c77ba2b332e2f0ced6fc11546d05410c673",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/combined_attempt_001/decision.md": "b2de35bac2d17f51d441fecb1002228344e99204ef8d04202383b94b993ff29e",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/combined_attempt_001/README.md": "a694194bb52fbccf6b46cba2a11be270984578d0ef24168f80cf90a230865343",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/decision.md": "6e5d393f628f291bf984b72f8095117a0c326134223075885acfaddf24970f47",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/README.md": "00378bfe315b291250c3456428bb9921b14c0bf3ae973aad4b970ed0f4ab2054",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/cuda_execution_closure.py": "2f4e16b5f33b999a56abc51572f9a3db30b7b50fde01e6e74fcdf1b42bc640ae",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/edge_state_gps.py": "75ab51c6210842f6522195c8f525d8185fced09ff99773eaac585ff97b07c526",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/gps.py": "88474ca49c06302d92fd2282a6d45fd467149efe0943c66d0bf5677c25bd3d4c",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/k1_execution_efficiency.py": "08355ea1f257770bf08749e1d6fd74c4c9bccb280d509b1a358a13c39280a839",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/k1_execution_layout.py": "b524dfe4ec5c798848bcb88eccf67d0c2c089a8ddc38bb3eaf461f389c041aee",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/k1_precision_diagnostic.py": "863d11892476aa8fda56beb654f623723edc067d824b559478795ae706a9d7a9",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/k1_screen_training.py": "5e23c59f0e2dfdd1ce789cb2bb9c0cae85d05035e12b66cbbbacc5a1d5947836",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/pcqm_500k_v4_evidence.py": "badc71c8aab0c333c38547552f5b0717890538d84e3e42a26151baafbdf48c4a",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/pcqm_gap_architecture.py": "0ad2ffc7930907fdb64475926d91c06967793a47fab31d3fe035df4cd9a0e3b0",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/pcqm_gptrans_v4.py": "cf2044b3d9094a7af47d0c2ea798265d00cb78dd2345f4d592cfe7ea9257742f",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/pcqm_k1_scale.py": "52d07cd7d10d72266cc63dcb1b80991b0511448f38eb5283300e9fa4dac75fab",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/qm9_neural_atom.py": "1074765cdd1242b2d2ab673706c97f1547049b11983947337a1e9356432bca33",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/training_reproducibility.py": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/v4_runtime.py": "34bb7430c6c48add83f4fe49fe1070f1175fce5c421464f121a196c4b3b57a1f",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/results/completion.json": "7095500ff7df60e20100695d45f8b0374d83b591256a8778b7d6c685a1369bdd",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/results/contrasts.json": "8a3d58f63d134264a5dc80a8ef6f94bbf1b8f3d3fc159a3d291ee6953dca11f4",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/results/cost_observation.json": "b43c2ad0a7df2cf3e8dd801ef5b2b89fa33218fce6a4aa2a95b688624a3d5c2f",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/results/result.json": "df3edd5d637ef36c29d68a0d50895819f5c211f055ac1ca247aa3c63c069a47d",
+    "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/results/runtime.json": "f8f50f6f6611e290b790f7796799bb8ee2ba088ec7f9d197dfa47f75cef6bf7e"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-k1-joint-execution-20261010",
+    "track": "B",
+    "scope": "k1_joint_execution",
+    "legacy_contract": "pcqm-k1-joint-execution-v1",
+    "outcome": {
+      "execution_status": "complete_cuda_execution_diagnostic",
+      "artifact_status": "local_hash_verified",
+      "comparison_status": "descriptive_matched_cuda_scratch_only",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "bounded_local_diagnostic_complete",
+      "full_handoff_status": "not_applicable"
+    },
+    "role_use": {
+      "train_decoded": "labels_read",
+      "train_executed": "prediction_input",
+      "development": "untouched",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/README.md",
+        "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/terminal_decision.md",
+        "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/attribution.md",
+        "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/acceptance.json"
+      ]
+    },
+    "migration": {
+      "migrated_at": "2026-10-10",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Metadata closure of separately executed prospective CUDA scratch diagnostic"
+    },
+    "observed_execution": {
+      "training_executed": false,
+      "inference_executed": true,
+      "training_replay_ready": false,
+      "execution_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/results/result.json"
+    },
+    "artifacts": [
+      {
+        "name": "README.md",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/README.md",
+        "sha256": "a694194bb52fbccf6b46cba2a11be270984578d0ef24168f80cf90a230865343",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "acceptance.json",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/acceptance.json",
+        "sha256": "c2198ee228f9d020ea2748fe58d21b0aa166564f1313e368130f453aeaacb777",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "attribution.md",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/attribution.md",
+        "sha256": "c14344a500fff67bc1a588f30c919a7a531423a774f8b3a995a8dba863a94e09",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "decision.md",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/decision.md",
+        "sha256": "b2de35bac2d17f51d441fecb1002228344e99204ef8d04202383b94b993ff29e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/combined_attempt_001/README.md",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/combined_attempt_001/README.md",
+        "sha256": "a694194bb52fbccf6b46cba2a11be270984578d0ef24168f80cf90a230865343",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/combined_attempt_001/decision.md",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/combined_attempt_001/decision.md",
+        "sha256": "b2de35bac2d17f51d441fecb1002228344e99204ef8d04202383b94b993ff29e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/combined_check.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/combined_check.py",
+        "sha256": "bd2051370052adce1eda0bc9417d8a6db8ecd60cfd01e9a69d0315474ebc716a",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/README.md",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/README.md",
+        "sha256": "00378bfe315b291250c3456428bb9921b14c0bf3ae973aad4b970ed0f4ab2054",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/decision.md",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/decision.md",
+        "sha256": "6e5d393f628f291bf984b72f8095117a0c326134223075885acfaddf24970f47",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/gpu_check.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/gpu_check.py",
+        "sha256": "cf4ed287ae0865cb5decc94ddd9a24d8ce744331d7dcc6eaf77bc931a6d03180",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/protocol.md",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/protocol.md",
+        "sha256": "bbdd42300250ac0c146608901a6ca21cac51ac86c9d1d60ebe48f11f6e2747b8",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/run.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/run.py",
+        "sha256": "54a41bdde1af906cbc685c666a911c77ba2b332e2f0ced6fc11546d05410c673",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/cuda_execution_closure.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/cuda_execution_closure.py",
+        "sha256": "2f4e16b5f33b999a56abc51572f9a3db30b7b50fde01e6e74fcdf1b42bc640ae",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/edge_state_gps.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/edge_state_gps.py",
+        "sha256": "75ab51c6210842f6522195c8f525d8185fced09ff99773eaac585ff97b07c526",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/gps.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/gps.py",
+        "sha256": "88474ca49c06302d92fd2282a6d45fd467149efe0943c66d0bf5677c25bd3d4c",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/k1_execution_efficiency.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/k1_execution_efficiency.py",
+        "sha256": "08355ea1f257770bf08749e1d6fd74c4c9bccb280d509b1a358a13c39280a839",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/k1_execution_layout.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/k1_execution_layout.py",
+        "sha256": "b524dfe4ec5c798848bcb88eccf67d0c2c089a8ddc38bb3eaf461f389c041aee",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/k1_precision_diagnostic.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/k1_precision_diagnostic.py",
+        "sha256": "863d11892476aa8fda56beb654f623723edc067d824b559478795ae706a9d7a9",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/k1_screen_training.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/k1_screen_training.py",
+        "sha256": "5e23c59f0e2dfdd1ce789cb2bb9c0cae85d05035e12b66cbbbacc5a1d5947836",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/pcqm_500k_v4_evidence.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/pcqm_500k_v4_evidence.py",
+        "sha256": "badc71c8aab0c333c38547552f5b0717890538d84e3e42a26151baafbdf48c4a",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/pcqm_gap_architecture.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/pcqm_gap_architecture.py",
+        "sha256": "0ad2ffc7930907fdb64475926d91c06967793a47fab31d3fe035df4cd9a0e3b0",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/pcqm_gptrans_v4.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/pcqm_gptrans_v4.py",
+        "sha256": "cf2044b3d9094a7af47d0c2ea798265d00cb78dd2345f4d592cfe7ea9257742f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/pcqm_k1_scale.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/pcqm_k1_scale.py",
+        "sha256": "52d07cd7d10d72266cc63dcb1b80991b0511448f38eb5283300e9fa4dac75fab",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/qm9_neural_atom.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/qm9_neural_atom.py",
+        "sha256": "1074765cdd1242b2d2ab673706c97f1547049b11983947337a1e9356432bca33",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/training_reproducibility.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/training_reproducibility.py",
+        "sha256": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "executed_source/src/molgap/v4_runtime.py",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/executed_source/src/molgap/v4_runtime.py",
+        "sha256": "34bb7430c6c48add83f4fe49fe1070f1175fce5c421464f121a196c4b3b57a1f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "inputs.json",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/inputs.json",
+        "sha256": "27fe6eea0f4b87a90a493fe0cc4cf2069acc01da56f8e89a14342e8e6f3e843f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "plan_input.json",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/plan_input.json",
+        "sha256": "f64722a227276cf212b11aefb62d5a2ea9ccfb2aea6dda785b9026055d069cd4",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "plan_receipt.json",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/plan_receipt.json",
+        "sha256": "44cb8749fd67147503f16098769e9f5239089cdc292fdd0ff70bc15718da1b9f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/completion.json",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/results/completion.json",
+        "sha256": "7095500ff7df60e20100695d45f8b0374d83b591256a8778b7d6c685a1369bdd",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/contrasts.json",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/results/contrasts.json",
+        "sha256": "8a3d58f63d134264a5dc80a8ef6f94bbf1b8f3d3fc159a3d291ee6953dca11f4",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/cost_observation.json",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/results/cost_observation.json",
+        "sha256": "b43c2ad0a7df2cf3e8dd801ef5b2b89fa33218fce6a4aa2a95b688624a3d5c2f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/result.json",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/results/result.json",
+        "sha256": "df3edd5d637ef36c29d68a0d50895819f5c211f055ac1ca247aa3c63c069a47d",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/runtime.json",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/results/runtime.json",
+        "sha256": "f8f50f6f6611e290b790f7796799bb8ee2ba088ec7f9d197dfa47f75cef6bf7e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "role_plan.json",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/role_plan.json",
+        "sha256": "f4dfb7fe9e0bed97e00daa72fb6a6f3bd8dd8fe6ecf958c241f2c7731cbc5eef",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "terminal_decision.md",
+        "locator": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/terminal_decision.md",
+        "sha256": "3a2ceeeb2485f8f348727cf06546d17bc00e818aecd2d69da7de83c1d759272c",
+        "availability": "locally_retained_hash_verified"
+      }
+    ]
+  },
+  "decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately authorized numerical/native/quality qualification"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-pcqm-k1-joint-execution-20261010-observed",
+      "trajectory_id": "TB-k1-joint-execution-20261010",
+      "action_id": "A001",
+      "run_id": "k1-joint-execution-rtx5060-20261010",
+      "attempt_id": "combined-attempt-001",
+      "platform": "local",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.0164355258055558,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.05494357638888889,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-k1-joint-execution-20261010-train_decoded-labels_read",
+      "trajectory_id": "TB-k1-joint-execution-20261010",
+      "action_id": "A001",
+      "run_id": "k1-joint-execution-rtx5060-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-k1-joint-execution-20261010-train_executed-prediction_input",
+      "trajectory_id": "TB-k1-joint-execution-20261010",
+      "action_id": "A001",
+      "run_id": "k1-joint-execution-rtx5060-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8db6deee0c5782c37e7ea8c4b2faa32351fcbbc5dae424f6a92455c7e4fa0dd9",
+      "role_name": "train_executed",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-pcqm-k1-joint-execution-20261010-train_executed-metric_computed",
+      "trajectory_id": "TB-k1-joint-execution-20261010",
+      "action_id": "A001",
+      "run_id": "k1-joint-execution-rtx5060-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8db6deee0c5782c37e7ea8c4b2faa32351fcbbc5dae424f6a92455c7e4fa0dd9",
+      "role_name": "train_executed",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/combined_attempt_001/acceptance.json"
+    }
+  ]
+}

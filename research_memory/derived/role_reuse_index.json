@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 506,
+  "ambiguous_historical_role_record_count": 512,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-checkpoint-io-20261010-evidence",
@@ -2711,6 +2711,48 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-joint-execution-20261010",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-execution-20261010",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-execution-20261010",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-execution-20261010",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-execution-20261010",
+      "role_identity": null,
+      "role_name": "train_decoded",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
+      "evidence_id": "pcqm-k1-joint-execution-20261010",
+      "role_identity": null,
+      "role_name": "train_executed",
+      "semantics": "coarse_historical",
+      "state": "prediction_input"
+    },
+    {
       "evidence_id": "pcqm-k1-kernel-trace-20261010",
       "role_identity": null,
       "role_name": "development",
@@ -3544,7 +3586,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 298,
+  "explicit_role_event_count": 301,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -5162,6 +5204,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-projection-execution-20261010"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-joint-execution-20261010-train_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-joint-execution-20261010"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629:train_probe": [
@@ -5488,6 +5537,20 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-projection-execution-20261010"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-joint-execution-20261010-train_executed-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-joint-execution-20261010"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-joint-execution-20261010-train_executed-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-joint-execution-20261010"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:8db6deee0c5782c37e7ea8c4b2faa32351fcbbc5dae424f6a92455c7e4fa0dd9:train_probe_executed": [
@@ -5845,6 +5908,7 @@
       "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-gptrans-full-fusion-r3",
+      "pcqm-k1-joint-execution-20261010",
       "pcqm-k1-kernel-trace-20261010",
       "pcqm-k1-late-weight-average-20261008",
       "pcqm-k1-pair-value-decoupled-100k-s42",
@@ -5951,6 +6015,7 @@
       "pcqm-k1-fusion-distill-strong-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-fusion-distill-weak-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-gptrans-full-fusion-r3",
+      "pcqm-k1-joint-execution-20261010",
       "pcqm-k1-kernel-trace-20261010",
       "pcqm-k1-late-weight-average-20261008",
       "pcqm-k1-pair-value-decoupled-100k-s42",
@@ -8557,6 +8622,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-projection-execution-20261010"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-pcqm-k1-joint-execution-20261010-train_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-joint-execution-20261010"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629:train_probe": [
@@ -8819,6 +8891,36 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-pair-norm-500k-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:8db6deee0c5782c37e7ea8c4b2faa32351fcbbc5dae424f6a92455c7e4fa0dd9:train_executed": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-projection-train_executed-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-projection-execution-20261010"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-projection-train_executed-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-projection-execution-20261010"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-pcqm-k1-joint-execution-20261010-train_executed-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-joint-execution-20261010"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-pcqm-k1-joint-execution-20261010-train_executed-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-joint-execution-20261010"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:8db6deee0c5782c37e7ea8c4b2faa32351fcbbc5dae424f6a92455c7e4fa0dd9:train_probe_executed": [
