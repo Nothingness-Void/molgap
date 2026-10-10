@@ -1,0 +1,17 @@
+{
+  "format": "molgap-kaggle-allocation-entry-v1",
+  "status": "failed",
+  "error": {
+    "type": "RuntimeError",
+    "message": "Arm failed during preflight; retained logs identify the blocker"
+  },
+  "wall_start_utc": "2026-10-09T19:12:16.508580+00:00",
+  "observed_gpu_count": 2,
+  "gpu_count_source": "nvidia-smi",
+  "scope": "entry invocation through bootstrap completion, including setup, pip, extraction, preflight, training/evaluation and idle assigned GPU time; not device busy time",
+  "platform_release_scope": "not observed: queue, allocation before entry and platform release after entry are excluded",
+  "entire_platform_release_seconds": null,
+  "monotonic_seconds": 268.0115973090001,
+  "wall_end_utc": "2026-10-09T19:16:44.520179+00:00",
+  "allocated_device_seconds": 536.0231946180002
+}

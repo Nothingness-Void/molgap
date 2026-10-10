@@ -1,0 +1,56 @@
+{
+  "evidence_id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
+  "run_id": "molgap-k1-cost-quality-100k-s43-v1:single:downstream",
+  "outcome": {
+    "execution_status": "formal_arm_cancelled_by_all_arm_gate",
+    "artifact_status": "retained_preflight_metadata_hash_verified",
+    "comparison_status": "not_evaluated_missing_trained_reference_and_predictions",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "entry_window_measured_entire_platform_release_unknown",
+    "full_handoff_status": "not_released"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Explicit user authority for a new qualification review; no automatic retry. Replication scientific question remains unresolved."
+    ]
+  },
+  "role_use": {
+    "train": "labels_read",
+    "development": "prediction_input",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "formal_progress": {
+    "epoch": 0,
+    "optimizer_steps": 0,
+    "sample_presentations": 0
+  },
+  "preflight": {
+    "raw_status": "preflight_complete",
+    "accepted": true,
+    "observed_overhead_fraction": 0,
+    "maximum_overhead_fraction": 0.25
+  },
+  "infrastructure_qualification_cause": "mean2 optimizer-inclusive overhead 1.173459062413916 exceeds frozen max 1.0; all-arm preflight barrier prevents either formal training arm",
+  "formal_arm_disposition": "cancelled_after_own_preflight_pass_by_all_arm_gate",
+  "question_status": "unresolved",
+  "training_trace": {
+    "status": "unavailable",
+    "retained_rows": 0
+  },
+  "qualification_exclusions": [
+    "formal_training_not_started",
+    "full_training_trace_unavailable",
+    "trained_reference_unavailable",
+    "aligned_predictions_unavailable",
+    "scientific_comparison_not_evaluated",
+    "entire_platform_release_cost_unknown",
+    "producer_platform_version_not_observed"
+  ],
+  "retry_authorized": false
+}

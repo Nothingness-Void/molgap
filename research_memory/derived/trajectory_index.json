@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "f86a3602c81d5900a690c8ef947446b805adeee381d3fb22ad925475713b8372",
+  "source_digest": "3ffa3bfcfe53ea3240cb3a50c846bdac853aabe439db33ae133999153ef25bd6",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1631,29 +1631,33 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/user_release.json",
+      "decision_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/decision.md",
       "family_id": "k1-t4-cost-quality",
-      "outcome": "ACTIVE",
+      "outcome": "NO_TRAIN",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_t4_cost_quality/replication_s43/rml/mean2/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_t4_cost_quality/replication_s43/rml/mean2/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-cost-quality-s43-mean2-v1-no-train"
+      ],
       "track": "B",
       "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/user_release.json",
+      "decision_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/decision.md",
       "family_id": "k1-t4-cost-quality",
-      "outcome": "ACTIVE",
+      "outcome": "NO_TRAIN",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_t4_cost_quality/replication_s43/rml/single/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_t4_cost_quality/replication_s43/rml/single/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-cost-quality-s43-single-v1-no-train"
+      ],
       "track": "B",
       "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single"
     },

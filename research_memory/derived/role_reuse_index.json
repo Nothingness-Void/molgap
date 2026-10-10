@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 449,
+  "ambiguous_historical_role_record_count": 459,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -2130,6 +2130,76 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "prediction_input"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "prediction_input"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
       "evidence_id": "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
       "role_identity": null,
       "role_name": "fixed50k_development",
@@ -3145,9 +3215,10 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 266,
+  "explicit_role_event_count": 270,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
+    "development",
     "fixed50k_development",
     "internal_development",
     "official_train_prefix_0_100000",
@@ -4242,6 +4313,38 @@
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-s43-mean2-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-s43-single-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-s43-mean2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-s43-single-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:fixed50k_development": [
       {
         "access_kind": "labels_read",
@@ -5187,6 +5290,8 @@
       "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
       "pcqm-k1-consistency-fusion-transfer-20261004",
       "pcqm-k1-consistency-residual-screen-20261004",
+      "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "pcqm-k1-cost-quality-s43-single-v1-no-train",
       "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-flag-cpu-qualification-20261002",
@@ -5283,6 +5388,8 @@
       "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
       "pcqm-k1-consistency-fusion-transfer-20261004",
       "pcqm-k1-consistency-residual-screen-20261004",
+      "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "pcqm-k1-cost-quality-s43-single-v1-no-train",
       "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-flag-cpu-qualification-20261002",
@@ -7377,6 +7484,38 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-s43-mean2-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-s43-single-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-s43-mean2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-s43-single-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:fixed50k_development": [

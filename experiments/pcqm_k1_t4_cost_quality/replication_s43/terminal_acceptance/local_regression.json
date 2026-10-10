@@ -1,0 +1,12 @@
+{
+  "checkout": "molgap-desktop",
+  "head": "bddb4432c1007d23b027398278e63ecca320f996",
+  "command": "python -m pytest -q tests/test_experiment_family_workflow.py tests/test_experiment_terminal.py tests/test_k1_screen_training.py tests/test_k1_pair_preparation.py tests/test_terminal_trace_closure.py",
+  "passed": 439,
+  "skipped": 3,
+  "warnings": 1,
+  "elapsed_seconds": 196.62,
+  "scope": "Shared local infrastructure regression only; remote scientific acceptance separately consumes retained native certificates and artifacts",
+  "training_submitted": false,
+  "model_inference_performed": false
+}

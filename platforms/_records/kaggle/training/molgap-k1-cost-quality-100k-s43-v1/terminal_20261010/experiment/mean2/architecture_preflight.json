@@ -1,0 +1,68 @@
+{
+  "accepted": false,
+  "mode": "mean2",
+  "zero_initialization_delta": 0.0,
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      0.6600733995437622,
+      0.6600733995437622
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "b843ddb5ad708af6648f94c6b772cef109af80f5ee05bfb630705734eb921461",
+      "b843ddb5ad708af6648f94c6b772cef109af80f5ee05bfb630705734eb921461"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      0.6600733995437622,
+      0.6600733995437622
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "ea0a760ef4c85c0485be1b05664d42c2025fab0cab88823d5f7417ca0e169aa7",
+      "ea0a760ef4c85c0485be1b05664d42c2025fab0cab88823d5f7417ca0e169aa7"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.10279149300004065,
+      "samples_seconds": [
+        0.10315042899992477,
+        0.10504433699998117,
+        0.1024138299999322,
+        0.10279149300004065,
+        0.10259368599986374
+      ],
+      "peak_memory_bytes": 562286592
+    },
+    "mean2": {
+      "median_step_seconds": 0.22341310199999498,
+      "samples_seconds": [
+        0.22341310199999498,
+        0.22099727799991342,
+        0.22461130700003196,
+        0.21840337100002216,
+        0.23964841099996192
+      ],
+      "peak_memory_bytes": 944215552
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": 1.173459062413916,
+  "maximum_overhead_fraction": 1.0,
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "5e3aa1fbe3d595c9fddbcd623d1378c8cebaa3012b1c65975398d5426c157394",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"
+}

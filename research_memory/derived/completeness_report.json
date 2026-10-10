@@ -233,7 +233,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 41,
+      "count": 39,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
@@ -265,8 +265,6 @@
         "TB-k1-ssma-kaggle3-100k-s42-v1",
         "TB-k1-t4-cost-quality-mean2-100k-s42-v1",
         "TB-k1-t4-cost-quality-single-100k-s42-v1",
-        "TB-molgap-k1-cost-quality-100k-s43-v1-mean2",
-        "TB-molgap-k1-cost-quality-100k-s43-v1-single",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-pcqm-scale-transfer-reassessment-20260925",
@@ -281,7 +279,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 15,
+      "count": 13,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -294,8 +292,6 @@
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
         "TB-k1-t4-cost-quality-mean2-100k-s42-v1",
         "TB-k1-t4-cost-quality-single-100k-s42-v1",
-        "TB-molgap-k1-cost-quality-100k-s43-v1-mean2",
-        "TB-molgap-k1-cost-quality-100k-s43-v1-single",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],

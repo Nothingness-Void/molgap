@@ -6,7 +6,9 @@ Owner: `codex/exp/k1-t4-cost-quality-100k`; not a new seed42 retry.
 
 Exact job: `nvoid912/molgap-k1-cost-quality-100k-s43-v1`, ID137916988,
 version1. Submission-time scheduler observation: RUNNING, not training acceptance.
-Fresh seed43 `mean2`/`single` share this job. Native qualification is pending.
+Fresh seed43 `mean2`/`single` share this job. Submission-time pending
+qualification is historical; the [terminal attempt decision](terminal_acceptance/decision.md)
+records the observed gate failure and unresolved precision question.
 Frozen executable commit: `b984d506837b738082c2cbf2ae9209d6862810ea`.
 The two new canonical prospective records are under `rml/`; their planned
 shared attempt is `molgap-k1-cost-quality-100k-s43-v1-v1`.

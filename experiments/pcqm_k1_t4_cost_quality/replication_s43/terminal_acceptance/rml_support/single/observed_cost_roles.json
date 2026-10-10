@@ -1,0 +1,99 @@
+{
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-s43-single-platform-release-unobserved",
+      "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single",
+      "action_id": "A001",
+      "run_id": "molgap-k1-cost-quality-100k-s43-v1:single:downstream",
+      "attempt_id": "molgap-k1-cost-quality-100k-s43-v1-v1",
+      "platform": "kaggle",
+      "hardware": "Tesla T4",
+      "category": "infrastructure_failure",
+      "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/rml_support/single/observed_cost_roles.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-s43-single-train-labels_read",
+      "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single",
+      "action_id": "A001",
+      "run_id": "molgap-k1-cost-quality-100k-s43-v1:single:downstream",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "train",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/rml_support/single/observed_cost_roles.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-s43-single-development-prediction_input",
+      "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single",
+      "action_id": "A001",
+      "run_id": "molgap-k1-cost-quality-100k-s43-v1:single:downstream",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role_name": "development",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/rml_support/single/observed_cost_roles.json"
+    }
+  ],
+  "source_commit": "b984d506837b738082c2cbf2ae9209d6862810ea",
+  "source_code_ref": "src/molgap/k1_screen_training.py",
+  "source_code_sha256": "e3cf7c5cbcd90af64c7684ddd1c2917e39df9a02bddb734672c2f69eac822411",
+  "source_verified_execution": {
+    "preflight_ref": "platforms/_records/kaggle/training/molgap-k1-cost-quality-100k-s43-v1/terminal_20261010/experiment/single/architecture_preflight.json",
+    "runtime_provenance_ref": "platforms/_records/kaggle/training/molgap-k1-cost-quality-100k-s43-v1/terminal_20261010/experiment/single/runtime_provenance.json",
+    "producer_platform_version": null,
+    "launch_platform_version": "1",
+    "formal_training_started": false
+  },
+  "cost_semantics": {
+    "shared_entry_event_counted_once_on_arm": "mean2",
+    "shared_entry_allocated_T4_seconds": 536.0231946180002,
+    "shared_entry_wall_seconds": 268.0115973090001,
+    "shared_entry_gpu_count": 2,
+    "entry_scope": "entry invocation through bootstrap completion, including setup, pip, extraction, preflight, training/evaluation and idle assigned GPU time; not device busy time",
+    "platform_release_scope": "not observed: queue, allocation before entry and platform release after entry are excluded",
+    "per_arm_worker_wall_seconds": 54.52248374100009,
+    "worker_scope": "Preflight subprocess window only, excluding setup; not entire job or measured device busy time.",
+    "diagnostic_cost_ref": "platforms/_records/kaggle/training/molgap-k1-cost-quality-100k-s43-v1/terminal_20261010/experiment/single/diagnostic_cost.json",
+    "diagnostic_scope": "Narrower overlapping window; not added to shared entry allocation.",
+    "single_cost_event_scope": "Shared entry allocation for both GPUs is already counted once on mean2; single receives no invented zero allocation. Entire platform release remains separately measurement_missing.",
+    "hardware_identifier": "Tesla T4"
+  },
+  "role_semantics": {
+    "train": "All 100K training labels were read for target-hash/statistics verification; one real batch128 fixture was used for diagnostic optimizer/forward steps. No formal training membership event.",
+    "development": "Cache payloads loaded and source_idx order verified by load_roles; prediction_input denotes input/cache access only. No development prediction, metric, or selection.",
+    "row_manifest_hash_scope": "Train: exact SHA256 of retained fixed_cache_manifest.json defining ordered source_idx [0,100000) in two train shards, whose identity/ranges were verified by find_fixed_cache and load_roles. This is the cache row-manifest file hash, not an epoch permutation or a full-cohort model execution claim. Development: existing ordered source-index hash 3270b300... remains unchanged.",
+    "fixture_sha256": "5e3aa1fbe3d595c9fddbcd623d1378c8cebaa3012b1c65975398d5426c157394",
+    "formal_optimizer_steps": 0,
+    "formal_sample_presentations": 0,
+    "selection_used": false,
+    "train_row_manifest_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/rml_support/fixed_cache_manifest.json",
+    "train_row_manifest_hash_kind": "exact_cache_manifest_file_sha256",
+    "seed43_epoch_shuffle_fingerprint": "8c0f6c19f3d371a16aa96d4054462384d9ed696f5337fdb9a8a3d071dbf6f755",
+    "epoch_shuffle_scope": "Recipe sampler fingerprint, separate from observed label-read row membership; no formal epoch executed."
+  }
+}

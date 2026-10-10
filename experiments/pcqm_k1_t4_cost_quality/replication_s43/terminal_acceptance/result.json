@@ -1,0 +1,49 @@
+{
+  "format": "molgap-k1-replication-acceptance-v1",
+  "kernel_id": 137916988,
+  "version": 1,
+  "scheduler_status": "ERROR",
+  "qualification": {
+    "mean2": {
+      "accepted": false,
+      "observed_overhead_fraction": 1.173459062413916,
+      "maximum_overhead_fraction": 1.0,
+      "repeatability": true,
+      "resume_roundtrip": true
+    },
+    "single": {
+      "accepted": true
+    }
+  },
+  "formal_training_started": false,
+  "formal_progress": {
+    "epoch": 0,
+    "optimizer_steps": 0,
+    "sample_presentations": 0
+  },
+  "gap_mae_eV": null,
+  "row_bootstrap": null,
+  "scientific_outcome": "NO_TRAIN",
+  "cause": "mean2 optimizer-inclusive preflight overhead exceeded frozen ceiling; all-arm gate prevented both formal training arms",
+  "entry_T4_device_hours": 0.14889533183833337,
+  "entire_platform_release_cost": "UNKNOWN",
+  "retry_authorized": false,
+  "bindings": {
+    "pair_state": {
+      "path": "platforms/_records/kaggle/training/molgap-k1-cost-quality-100k-s43-v1/terminal_20261010/experiment/pair_state.json",
+      "sha256": "70c4075a49fa0350ddff64bd07cfcd1a3d8412029db0ca3f00cefe96cbab043b"
+    },
+    "mean2_preflight": {
+      "path": "platforms/_records/kaggle/training/molgap-k1-cost-quality-100k-s43-v1/terminal_20261010/experiment/mean2/architecture_preflight.json",
+      "sha256": "722f3346dcbdfd7cfc09426236809a47928cc92501846ce7992d3625dc190ef9"
+    },
+    "single_preflight": {
+      "path": "platforms/_records/kaggle/training/molgap-k1-cost-quality-100k-s43-v1/terminal_20261010/experiment/single/architecture_preflight.json",
+      "sha256": "5ef55de1d297ee437c62be871dbac2c5cef1a2062261c03dfaace8cbb2a96961"
+    },
+    "entry_cost": {
+      "path": "platforms/_records/kaggle/training/molgap-k1-cost-quality-100k-s43-v1/terminal_20261010/experiment/allocation_entry_observation.json",
+      "sha256": "e63242b06935824338a2bbcc88ad815655ac60e910e536874fda991b6979b178"
+    }
+  }
+}
