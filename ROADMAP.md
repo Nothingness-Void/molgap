@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| 1 | C-GPTRANS-SOURCE-DEPENDENCE | Authorized read-only source/gate observation on two accepted checkpoints. | Independent saved-output acceptance and NO_TRAIN / CONTEXT_ONLY interpretation; no automatic training successor. [Protocol](experiments/pcqm_gptrans_source_dependence/protocol.md) |
 | — | C-GPTRANS-TRIPLET-PORTABILITY | Closed: positive but uncertain later-cohort point gain did not pass its frozen gate. | Preserve the [NO_TRAIN interpretation](experiments/pcqm_gptrans_triplet_portability/decision_terminal.md) and applicable complete diagnostic evidence; no500K training or automatic successor |
 | 1 | C-GPTRANS-TRIPLET-COMMUNICATION | Both100K positives accepted; aggregation retained as the lower-cost transfer-study priority. | Preserve the [terminal interpretation](experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/interpretation.md) and two complete Replay pairs; further execution requires separate authority |
 | — | C-GPTRANS-LOCAL-RELATION | Closed: A positive below nomination gate, B worse; both actual complete Replay pairs accepted. | Preserve the [terminal interpretation](experiments/pcqm_gptrans_local_relation_100k/gpu/results/interpretation.md); no automatic successor, scale or extra seed |

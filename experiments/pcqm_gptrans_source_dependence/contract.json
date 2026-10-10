@@ -1,0 +1,81 @@
+{
+  "format": "molgap-gptrans-source-dependence-contract-v1",
+  "release_profile": "gptrans-source-dependence-v1",
+  "experiment_purpose": "NO_TRAIN",
+  "comparison_class": "CONTEXT_ONLY",
+  "training_executed": false,
+  "optimizer_steps": 0,
+  "physical_batch": 128,
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "allocation_cap_seconds": 1800,
+  "workers": [
+    "sources"
+  ],
+  "protected_roles_read": false,
+  "roles": {
+    "original_100k": [
+      100000,
+      150000
+    ],
+    "unseen_500k": [
+      500000,
+      550000
+    ]
+  },
+  "diagnostic_rows_per_role": 512,
+  "panel_selection": "RandomState42-choice-without-replacement-sorted-input-ID-only;later-within-retained10000",
+  "cohort_is_reused_development": true,
+  "weight_mode": "eval-EMA-frozen-no-update",
+  "observer_policy": "read-only-shadow-projections;bitwise-no-observer-prediction-check;unchanged-state-and-RNG",
+  "automatic_training_released": false,
+  "model_assets": {
+    "parent_best.pt": {
+      "kind": "local",
+      "epoch": 41,
+      "sha256": "2bb415bc2bf3b3fc66c293619d633c5f5f0b40d60c6e30d76f6b7d03ba1b246a",
+      "state_sha256": "7d52875b2db8e36287e665884223c811aa81c91c285e3c34c8bf2cb39c93fd89",
+      "source_checkpoint_sha256": "9b82e927f917f2513069f573e5c5bbd821ac59dcb1a714658e910b831e221e38",
+      "source_checkpoint": "platforms/_records/kaggle/training/gptrans_capacity_relations_v1/gptrans_local_scale/degree_bond_local_ema999/training/best_model.pt"
+    },
+    "triplet_best.pt": {
+      "kind": "triplet_aggregate",
+      "epoch": 38,
+      "parameter_count": 5880961,
+      "sha256": "b34530bb0f38d53c38edb90cf7aedfcd74a7793326e5e1817d56b3b6a845e287",
+      "state_sha256": "0a36532c644f780d394e1d9da2c632da3f3a2388ce42a8a794d8296acdf1113f",
+      "source_checkpoint_sha256": "60078a750db6ad551677d60020dc856c92230b3f2a2a7684f6b2de1227a36d47",
+      "source_checkpoint": "platforms/_records/kaggle/training/gptrans_triplet_communication_v1/gptrans_triplet_communication/degree_local_triplet_aggregate_ema999/training/best_model.pt"
+    }
+  },
+  "reference_payloads": {
+    "parent_original.pt": {
+      "sha256": "330e7e5407bad13a849559a47dba75717d63d5d62a8ec6a1e168c4a3377bd7e0"
+    },
+    "parent_later.pt": {
+      "sha256": "536e123b4d9b4e48859a0a0faa4a3a28a5e09ea0121875201426a1307935f6a1"
+    },
+    "triplet_original.pt": {
+      "sha256": "216c48ea6944e83dca2b8dcdfcd64cb668bf9377783ab3cad6bb81656df58c88"
+    },
+    "triplet_later.pt": {
+      "sha256": "56fa582ec482e696ef772ab682cbd6afe14602dcea36bb9e02b9c3dfff9a1cb0"
+    },
+    "panels.json": {
+      "sha256": "d05336c4cf14292ce987808a638e6ecb16e8e0cb2603b1a6b2f1f17130c6e73b"
+    }
+  },
+  "source_identities": {
+    "src/molgap/gptrans.py": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+    "src/molgap/gptrans_capacity.py": "716f1bdaf25eaa17d8ec8f7aecc6adffc06f04b9a3c1195b7b5d8adee0489aca",
+    "src/molgap/gptrans_local_relation.py": "22b6b976fd115227ef0acae11ad6c9ce0e4252a5c3f8b6dfad8398482748df73",
+    "src/molgap/gptrans_triplet_communication.py": "f3821faf439f38c36679afa1cd7db5c9fe6068da739db9472b4dbf2dee622954"
+  },
+  "target_transform_asset": "9462cf73ea022b030675a7f18f2e7682eda6f90b7a42b47affc2f0f4071353be",
+  "prior_later_manifest": {
+    "availability": "repository_retained",
+    "locator": "platforms/_records/kaggle/training/gptrans_triplet_portability_v1/gptrans_triplet_portability/output_manifest.json",
+    "name": "output_manifest",
+    "sha256": "4bd18bcd2d68a5e4631772c5567b66c2b4cffc042595a2270aa47557319f2377"
+  }
+}
