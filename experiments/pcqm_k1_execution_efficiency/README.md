@@ -44,3 +44,8 @@ measures cold versus retained workers with original epoch/resume indices. Reuse
 is optional and limited to immutable deterministic datasets; native sender
 training/resume qualification remains separate.
 See [focused regression and bookkeeping limits](LOADER_REUSE_VERIFICATION.md).
+
+[Packed-input qualification](loader_packed_attempt_001/terminal_decision.md)
+extends the probe to the actual ConcatDataset shape and catches cold first-fetch
+cost. The registered100K global-RNG loader is not silently switched to reuse.
+See [packed regression and packaging verification](PACKED_LOADER_VERIFICATION.md).

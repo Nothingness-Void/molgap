@@ -65,6 +65,27 @@ an explanation of early-epoch A100/T4 parity. The sender remains unchanged.
 
 ## Next useful check
 
+The2026-10-10 [one-shot native reconciliation](native_reconciliation_20261010.json)
+observed the exact existing Kaggle1 job RUNNING with no output files. It did not
+download artifacts, start a monitor, submit a job or qualify native phase timing.
+Do not substitute the user's displayed128-step intervals for a source-bound
+checkpoint/loader decomposition, or attribute their gaps to one phase blindly.
+
+Further static inspection of the unchanged sender identifies smaller Python
+bookkeeping: `k1_weight_ema.update_ema` rebuilds parameter/buffer dictionaries
+each step; `_step` traverses all parameters for dtype checks and creates/removes
+the finite-output hook every batch. Binding a fixed parameter tuple or reusing
+the callback can reduce traversal/allocation but needs replacement/mode guards.
+EMA must preserve ordered `mul_().add_()` and every-step buffer copies; foreach,
+`lerp_`, changed frequency or omitted buffers are not qualified exact changes.
+These are unmeasured candidates, not established dominant costs.
+
+RNG deferral has a stronger correctness obstacle: timeout/error publication uses
+the last successful step's retained RNG. Capturing only immediately before a
+save after a partially failed forward can bind advanced RNG to an older cursor.
+Retain per-step capture until a transaction-boundary design proves exact recovery;
+do not turn a static duplicate-work finding into a claimed safe speedup.
+
 Measure the native loader/checkpoint phase breakdown before another arithmetic
 rewrite. If publication grows dominant, preserve complete evidence with a reviewed
 incremental trace format; otherwise prioritize the separately authorized FP32

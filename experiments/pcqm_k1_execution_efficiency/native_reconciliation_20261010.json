@@ -1,0 +1,30 @@
+{
+  "recorded_at_utc": "2026-10-10T13:01:52Z",
+  "observed_at_utc": null,
+  "observation_date_utc": "2026-10-10",
+  "scope": "one read-only exact-job status and first output-list request",
+  "run_reference": "nothingnessvoid/molgap-k1-single-ema-500k-t4-20261010",
+  "owning_checkout": "D:/w/k1-colab-500k-efficient",
+  "owning_branch": "codex/exp/k1-colab-500k-efficient",
+  "identity_authority": "experiments/pcqm_k1_single_ema_500k/t4_native/submission/kernel_push.json",
+  "submitted_version": 1,
+  "observed_version": null,
+  "platform_status_response": {
+    "status": "RUNNING",
+    "failureMessage": null
+  },
+  "output_list": {
+    "files": [],
+    "more_pages": false
+  },
+  "artifacts_downloaded": false,
+  "new_submission": false,
+  "periodic_monitor": false,
+  "training_or_inference_executed_locally": false,
+  "native_phase_attribution": "pending retrievable source-bound trace",
+  "limitations": [
+    "Exact API observation timestamp was not retained; recorded_at is later bookkeeping time.",
+    "Scheduler status is not scientific or mechanical acceptance.",
+    "No source/config/output digest verification or native cost measurement follows from this query."
+  ]
+}

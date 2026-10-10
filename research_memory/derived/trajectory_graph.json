@@ -381,6 +381,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-loader-cpu-20261010-packed-attempt001:A001",
+      "target": "experiments/pcqm_k1_execution_efficiency/loader_packed_attempt_001/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-loader-cpu-20261010-reuse-attempt001:A001",
       "target": "experiments/pcqm_k1_execution_efficiency/loader_reuse_attempt_001/inputs.json",
       "type": "action_produced_evidence"
@@ -1042,6 +1047,11 @@
     },
     {
       "source": "TB-k1-joint-execution-20261010",
+      "target": "TB-k1-loader-cpu-20261010-packed-attempt001",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-joint-execution-20261010",
       "target": "TB-k1-loader-cpu-20261010-reuse-attempt001",
       "type": "parent_trajectory"
     },
@@ -1067,7 +1077,17 @@
     },
     {
       "source": "TB-k1-loader-cpu-20261010-attempt003",
+      "target": "TB-k1-loader-cpu-20261010-packed-attempt001",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-loader-cpu-20261010-attempt003",
       "target": "TB-k1-loader-cpu-20261010-reuse-attempt001",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-loader-cpu-20261010-reuse-attempt001",
+      "target": "TB-k1-loader-cpu-20261010-packed-attempt001",
       "type": "parent_trajectory"
     },
     {
@@ -1237,7 +1257,17 @@
     },
     {
       "source": "k1-loader-cpu-20261010-attempt003-evidence",
+      "target": "TB-k1-loader-cpu-20261010-packed-attempt001",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "k1-loader-cpu-20261010-attempt003-evidence",
       "target": "TB-k1-loader-cpu-20261010-reuse-attempt001",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "k1-loader-cpu-20261010-reuse-attempt001-evidence",
+      "target": "TB-k1-loader-cpu-20261010-packed-attempt001",
       "type": "prior_evidence"
     },
     {
@@ -1922,6 +1952,11 @@
     },
     {
       "source": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "target": "TB-k1-loader-cpu-20261010-packed-attempt001",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-execution-efficiency-gpu-20261010",
       "target": "TB-k1-loader-cpu-20261010-reuse-attempt001",
       "type": "prior_evidence"
     },
@@ -1983,6 +2018,11 @@
     {
       "source": "pcqm-k1-joint-execution-20261010",
       "target": "TB-k1-loader-cpu-20261010-attempt003",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-joint-execution-20261010",
+      "target": "TB-k1-loader-cpu-20261010-packed-attempt001",
       "type": "prior_evidence"
     },
     {
@@ -2589,6 +2629,10 @@
     },
     {
       "id": "k1-loader-cpu-20261010-attempt003-evidence",
+      "type": "evidence"
+    },
+    {
+      "id": "k1-loader-cpu-20261010-packed-attempt001-evidence",
       "type": "evidence"
     },
     {
@@ -3349,6 +3393,10 @@
     },
     {
       "id": "TB-k1-loader-cpu-20261010-attempt003",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-loader-cpu-20261010-packed-attempt001",
       "type": "trajectory"
     },
     {

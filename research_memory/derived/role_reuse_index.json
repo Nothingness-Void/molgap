@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 526,
+  "ambiguous_historical_role_record_count": 533,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-checkpoint-io-20261010-evidence",
@@ -80,6 +80,55 @@
     },
     {
       "evidence_id": "k1-loader-cpu-20261010-attempt003-evidence",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-packed-attempt001-evidence",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-packed-attempt001-evidence",
+      "role_identity": null,
+      "role_name": "internal_development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-packed-attempt001-evidence",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-packed-attempt001-evidence",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-packed-attempt001-evidence",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-packed-attempt001-evidence",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-loader-cpu-20261010-packed-attempt001-evidence",
       "role_identity": null,
       "role_name": "train",
       "semantics": "coarse_historical",
@@ -3684,7 +3733,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 303,
+  "explicit_role_event_count": 304,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -5291,6 +5340,13 @@
       },
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-loader-cpu-20261010-packed-attempt001-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-loader-cpu-20261010-packed-attempt001"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-TB-k1-loader-cpu-20261010-reuse-attempt001-labels_read",
         "selection_used": false,
         "semantics": "explicit",
@@ -5945,6 +6001,7 @@
     "test_challenge": [
       "k1-checkpoint-io-20261010-evidence",
       "k1-loader-cpu-20261010-attempt003-evidence",
+      "k1-loader-cpu-20261010-packed-attempt001-evidence",
       "k1-loader-cpu-20261010-reuse-attempt001-evidence",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
@@ -6054,6 +6111,7 @@
     "test_dev": [
       "k1-checkpoint-io-20261010-evidence",
       "k1-loader-cpu-20261010-attempt003-evidence",
+      "k1-loader-cpu-20261010-packed-attempt001-evidence",
       "k1-loader-cpu-20261010-reuse-attempt001-evidence",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
@@ -8726,6 +8784,13 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-loader-cpu-20261010-attempt003"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-k1-loader-cpu-20261010-packed-attempt001-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-loader-cpu-20261010-packed-attempt001"
       },
       {
         "access_kind": "labels_read",
