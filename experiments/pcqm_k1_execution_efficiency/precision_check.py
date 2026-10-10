@@ -76,7 +76,7 @@ def execute():
     from torch_geometric.loader import DataLoader
     from molgap.k1_screen_training import FORBIDDEN_MODEL_FIELDS
     from molgap.k1_frozen_inference import load_native500k_k1, predict_clean
-    from molgap.k1_precision_diagnostic import (matmul_tf32, prediction_drift, probe_k1_precision, profile_k1_step)
+    from molgap.k1_precision_diagnostic import (matmul_tf32, prediction_drift, probe_k1_precision, profile_k1_step, qualify_precision_report)
     from molgap.pcqm_500k_v4_evidence import make_model
     from molgap.training_reproducibility import configure_fp32_determinism, build_runtime_manifest
     from molgap.v4_runtime import state_dict_sha256
@@ -127,6 +127,7 @@ def execute():
     atomic_json(output / "scratch_probe.json", probe)
     if probe["status"] != "complete":
         raise TimeoutError("Scratch diagnostic budget exhausted; do not continue")
+    qualify_precision_report(probe)
     # Trained-state perturbations use the existing clean-inference owner, not a new loop.
     before = state_dict_sha256(model.state_dict())
     predictions, prediction_costs = {}, {}
@@ -161,6 +162,7 @@ def execute():
 
 
 def close():
+    from molgap.k1_precision_diagnostic import qualify_precision_report
     output = ATTEMPT / "results"
     inputs, result, completion = read(ATTEMPT / "inputs.json"), read(output / "result.json"), read(output / "completion.json")
     if (result["status"] != "complete" or completion["status"] != "complete" or result["observed_overrun_seconds"] > 0
@@ -172,8 +174,16 @@ def close():
         if sha256_file(output / name) != digest:
             raise ValueError("Output bytes differ")
     for name,digest in inputs["files"].items():
-        if sha256_file(ROOT / name) != digest:
+        snapshot = ATTEMPT / "executed_source" / name
+        if sha256_file(snapshot if snapshot.exists() else ROOT / name) != digest:
             raise ValueError("Executed source changed")
+    qualification = qualify_precision_report(read(output / "scratch_probe.json"))
+    profiles = [read(output / ("profile_"+name+".json")) for name in ("fp32", "layout", "tf32_layout")]
+    qualification.update(cuda_kernel_trace_available=all(bool(p["kernel_names"]) for p in profiles),
+        tensor_core_dispatch_qualified=False,
+        closure_source_files={Path(__file__).relative_to(ROOT).as_posix():sha256_file(Path(__file__)),
+                              "src/molgap/k1_precision_diagnostic.py":sha256_file(ROOT / "src/molgap/k1_precision_diagnostic.py")})
+    atomic_json(ATTEMPT / "mechanical_qualification.json", qualification)
     for name in ("terminal_decision.md", "attribution.md"):
         if not (ATTEMPT / name).exists():
             raise ValueError("Parent interpretation required")
@@ -192,7 +202,7 @@ def close():
         dataset_identity="pcqm4mv2-ogb-fixed-500k-scnet-v1",row_manifest_hash=digest,role_name="train_probe",
         access_kind=access,selection_used=False,evidence_ref=f"{REL}/acceptance.json") for access in ("labels_read","prediction_input","metric_computed")]
     role_use = dict(train_probe="consumed",development="untouched",official_validation="untouched",test_dev="untouched",test_challenge="untouched")
-    atomic_json(ATTEMPT / "acceptance.json",dict(evidence_id=EID,outcome=outcome,trajectory_decision=decision,costs=[cost],roles=roles,
+    atomic_json(ATTEMPT / "acceptance.json",dict(evidence_id=EID,run_id=RUN,outcome=outcome,trajectory_decision=decision,costs=[cost],roles=roles,
         role_use=role_use,training_replay_ready=False,generalization_accuracy_qualified=False,precision_contract_change=True))
     files = [p for p in ATTEMPT.rglob("*") if p.is_file() and "rml" not in p.relative_to(ATTEMPT).parts and p.name not in ("terminal.json","closure_receipt.json")]
     hashes = {p.relative_to(ROOT).as_posix():sha256_file(p) for p in files}

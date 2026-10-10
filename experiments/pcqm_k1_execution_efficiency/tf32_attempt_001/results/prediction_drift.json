@@ -1,0 +1,54 @@
+{
+  "tf32": {
+    "rows": 4096,
+    "exact": false,
+    "mean_abs_prediction_delta_eV": 0.00011617178097367287,
+    "p50_abs_prediction_delta_eV": 7.82012939453125e-05,
+    "p95_abs_prediction_delta_eV": 0.00036525726318359375,
+    "max_abs_prediction_delta_eV": 0.0008916854858398438,
+    "signed_mean_prediction_delta_eV": -2.133590169250965e-05,
+    "reference_train_sample_mae_eV": 0.06217623993870802,
+    "candidate_train_sample_mae_eV": 0.06217625681892969,
+    "train_sample_mae_delta_eV": 1.6880221664905548e-08,
+    "generalization_accuracy_qualified": false,
+    "precision_contract_change": true
+  },
+  "repeated_fp32": {
+    "rows": 4096,
+    "exact": true,
+    "mean_abs_prediction_delta_eV": 0.0,
+    "p50_abs_prediction_delta_eV": 0.0,
+    "p95_abs_prediction_delta_eV": 0.0,
+    "max_abs_prediction_delta_eV": 0.0,
+    "signed_mean_prediction_delta_eV": 0.0,
+    "reference_train_sample_mae_eV": 0.06217623993870802,
+    "candidate_train_sample_mae_eV": 0.06217623993870802,
+    "train_sample_mae_delta_eV": 0.0,
+    "generalization_accuracy_qualified": false,
+    "precision_contract_change": true
+  },
+  "timings": {
+    "fp32": {
+      "rows": 4096,
+      "wall_seconds": 1.005380899998272,
+      "process_cpu_seconds": 1.046875,
+      "forward_seconds": 0.9077062034606933,
+      "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+    },
+    "tf32": {
+      "rows": 4096,
+      "wall_seconds": 0.786894900000334,
+      "process_cpu_seconds": 1.234375,
+      "forward_seconds": 0.6939345226287842,
+      "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+    },
+    "fp32_repeat": {
+      "rows": 4096,
+      "wall_seconds": 0.9996487999997044,
+      "process_cpu_seconds": 1.421875,
+      "forward_seconds": 0.9026817302703858,
+      "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+    }
+  },
+  "speed_qualification": "One inference pass each, not repeated balanced speed evidence"
+}

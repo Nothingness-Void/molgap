@@ -43,9 +43,10 @@ def precision_case(*, tf32=False, layout=False):
 
 def prediction_drift(reference, candidate):
     """Aligned absolute prediction perturbation, not independent quality evidence."""
+    expected_shape = reference["source_idx"].shape
     for name in ("source_idx", "target_eV", "prediction_eV"):
         a, b = reference[name], candidate[name]
-        if a.shape != b.shape or a.ndim != 1 or not a.numel():
+        if a.shape != b.shape or a.shape != expected_shape or a.ndim != 1 or not a.numel():
             raise ValueError("Aligned nonempty vector predictions required")
         if not bool(torch.isfinite(a).all() and torch.isfinite(b).all()):
             raise ValueError("Nonfinite prediction artifact")
@@ -64,6 +65,30 @@ def prediction_drift(reference, candidate):
         signed_mean_prediction_delta_eV=float(difference.mean()), reference_train_sample_mae_eV=float(a),
         candidate_train_sample_mae_eV=float(b), train_sample_mae_delta_eV=float(b-a),
         generalization_accuracy_qualified=False, precision_contract_change=True)
+
+
+def qualify_precision_report(report, *, repeats=4):
+    """Reject missing/failed cases; TF32 need not be exact to be measured."""
+    expected = {"baseline", "non_blocking", "no_redundant_sync", "transfer_and_sync",
+                "cpu_layout", "tf32", "tf32_layout"}
+    if report.get("status") != "complete" or set(report.get("cases", {})) != expected:
+        raise ValueError("Incomplete precision case inventory")
+    for name, row in report["cases"].items():
+        if row.get("status") not in {"qualified", "numerical_mismatch"} or not isinstance(row.get("equivalence"), dict):
+            raise ValueError(f"Missing/failed numerical comparison: {name}")
+        timings = row.get("timings", [])
+        if len(timings) != repeats or any(not math.isfinite(t.get("seconds_per_step", float("nan")))
+                                        or t["seconds_per_step"] <= 0 for t in timings):
+            raise ValueError(f"Missing/invalid timing windows: {name}")
+        if name not in {"tf32", "tf32_layout"} and not row["equivalence"].get("exact"):
+            raise ValueError(f"Nonexact unchanged-FP32 control: {name}")
+    base, tf32 = report["cases"]["cpu_layout"], report["cases"]["tf32_layout"]
+    return dict(complete_cases=True, exact_fp32_controls=True, precision_contract_change=True,
+        precision_isolated_comparison="tf32_layout versus cpu_layout; both extra contexts without explicit barrier",
+        tf32_incremental_time_reduction=1-tf32["median_seconds_per_step"]/base["median_seconds_per_step"],
+        paired_tf32_incremental_savings=[1-t["seconds_per_step"]/b["seconds_per_step"]
+                                        for b,t in zip(base["timings"],tf32["timings"])],
+        strict_fp32_admission=False, generalization_accuracy_qualified=False)
 
 
 def probe_k1_precision(factory, batches, mean, std, *, deadline, warmup=3, steps=12, repeats=4):

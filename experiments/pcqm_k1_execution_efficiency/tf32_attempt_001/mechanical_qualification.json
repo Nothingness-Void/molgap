@@ -1,0 +1,21 @@
+{
+  "complete_cases": true,
+  "exact_fp32_controls": true,
+  "precision_contract_change": true,
+  "precision_isolated_comparison": "tf32_layout versus cpu_layout; both extra contexts without explicit barrier",
+  "tf32_incremental_time_reduction": 0.062294659483288384,
+  "paired_tf32_incremental_savings": [
+    0.059970881673476306,
+    0.052758588703883946,
+    0.06791841163511858,
+    0.11154456571357996
+  ],
+  "strict_fp32_admission": false,
+  "generalization_accuracy_qualified": false,
+  "cuda_kernel_trace_available": false,
+  "tensor_core_dispatch_qualified": false,
+  "closure_source_files": {
+    "experiments/pcqm_k1_execution_efficiency/precision_check.py": "f5fedfb34dc01200cf31699db43b4eadeea690a21c1d836b87626c17942e8f6d",
+    "src/molgap/k1_precision_diagnostic.py": "e6200c83c8e0bc7caa98c4bf50b6257905bf104d38449f284d2a70f1434bf15c"
+  }
+}

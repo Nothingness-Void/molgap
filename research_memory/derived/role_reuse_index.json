@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 484,
+  "ambiguous_historical_role_record_count": 489,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -3096,6 +3096,41 @@
       "state": "unknown"
     },
     {
+      "evidence_id": "pcqm-k1-tf32-execution-20261010",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-tf32-execution-20261010",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-tf32-execution-20261010",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-tf32-execution-20261010",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-tf32-execution-20261010",
+      "role_identity": null,
+      "role_name": "train_probe",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
       "evidence_id": "pcqm-k1-v4-100k-reference-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -3390,7 +3425,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 289,
+  "explicit_role_event_count": 292,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -5010,6 +5045,27 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-tf32-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-tf32-execution-20261010"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-tf32-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-tf32-execution-20261010"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-tf32-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-tf32-execution-20261010"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629:train_probe_decoded": [
@@ -5635,6 +5691,7 @@
       "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-ssma-kaggle3-unsubmitted-source-v1",
+      "pcqm-k1-tf32-execution-20261010",
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
       "pcqm-matched-500k-v4-three-arm",
@@ -5737,6 +5794,7 @@
       "pcqm-k1-ssma-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-ssma-kaggle3-runtime-no-train-s42-v1",
       "pcqm-k1-ssma-kaggle3-unsubmitted-source-v1",
+      "pcqm-k1-tf32-execution-20261010",
       "pcqm-k1-v4-100k-reference-s42",
       "pcqm-k1-v4-192-kaggle3-reference-custody-20261002",
       "pcqm-matched-500k-v4-three-arm",
@@ -8305,6 +8363,43 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629:train_probe": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-a100-profile-train_probe-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-a100-profile-train_probe-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-colab-execution-profile-20261007"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-tf32-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-tf32-execution-20261010"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-tf32-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-tf32-execution-20261010"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-tf32-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-tf32-execution-20261010"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629:train_probe_decoded": [

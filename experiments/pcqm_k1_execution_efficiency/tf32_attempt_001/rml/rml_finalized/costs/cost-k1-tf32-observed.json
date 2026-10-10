@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "tf32-attempt-001",
+  "category": "other",
+  "cost_event_id": "cost-k1-tf32-observed",
+  "evidence_ref": "experiments/pcqm_k1_execution_efficiency/tf32_attempt_001/acceptance.json",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.056553819444444445
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.019306779611111373
+    }
+  },
+  "platform": "local",
+  "run_id": "k1-tf32-rtx5060-20261010",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-tf32-execution-20261010"
+}

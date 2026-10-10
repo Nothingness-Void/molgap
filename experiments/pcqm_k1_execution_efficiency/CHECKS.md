@@ -30,3 +30,11 @@ Subsequent authorized idle-GPU test: see the separately frozen
 [RTX5060 decision](gpu_attempt_001/terminal_decision.md) and
 [attribution](gpu_attempt_001/attribution.md). The above CPU check remains a dated
 record; the GPU attempt neither replaces its failed publication nor reruns it.
+
+The separately prospective [TF32 attempt](tf32_attempt_001/terminal_decision.md)
+completed its bounded worker. Focused tests expanded to63 passed. Per-case closure
+qualification rejects failures hidden by top-level completion; actual controls
+are exact and all seven cases have four timing windows. The first metadata closure
+was rejected for a missing acceptance run_id; it was repaired without any model
+rerun, then finalized. Original executed source snapshots preserve bytes before
+later closure guards. GPU profiler/CUPTI and retrained quality gaps remain explicit.

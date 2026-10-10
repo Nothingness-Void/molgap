@@ -1,0 +1,104 @@
+{
+  "evidence_id": "pcqm-k1-tf32-execution-20261010",
+  "run_id": "k1-tf32-rtx5060-20261010",
+  "outcome": {
+    "execution_status": "complete_precision_diagnostic",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "local_train_only_numerical_perturbation",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "bounded_local_diagnostic_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_execution_efficiency/tf32_attempt_001/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately authorized native precision/quality qualification"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-tf32-observed",
+      "trajectory_id": "TB-k1-tf32-execution-20261010",
+      "action_id": "A001",
+      "run_id": "k1-tf32-rtx5060-20261010",
+      "attempt_id": "tf32-attempt-001",
+      "platform": "local",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/tf32_attempt_001/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.019306779611111373,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.056553819444444445,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-tf32-labels_read",
+      "trajectory_id": "TB-k1-tf32-execution-20261010",
+      "action_id": "A001",
+      "run_id": "k1-tf32-rtx5060-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_probe",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/tf32_attempt_001/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-tf32-prediction_input",
+      "trajectory_id": "TB-k1-tf32-execution-20261010",
+      "action_id": "A001",
+      "run_id": "k1-tf32-rtx5060-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_probe",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/tf32_attempt_001/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-tf32-metric_computed",
+      "trajectory_id": "TB-k1-tf32-execution-20261010",
+      "action_id": "A001",
+      "run_id": "k1-tf32-rtx5060-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_probe",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/tf32_attempt_001/acceptance.json"
+    }
+  ],
+  "role_use": {
+    "train_probe": "consumed",
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "training_replay_ready": false,
+  "generalization_accuracy_qualified": false,
+  "precision_contract_change": true
+}

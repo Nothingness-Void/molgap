@@ -396,6 +396,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-tf32-execution-20261010:A001",
+      "target": "experiments/pcqm_k1_execution_efficiency/tf32_attempt_001/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-v4-192-kaggle3-reference-custody-20261002:A001",
       "target": "experiments/pcqm_k1_slot_width96/reference_binding/mechanical_acceptance.json",
       "type": "action_produced_evidence"
@@ -943,6 +948,11 @@
     {
       "source": "TB-k1-execution-efficiency-20261010",
       "target": "TB-k1-execution-efficiency-gpu-20261010",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-execution-efficiency-gpu-20261010",
+      "target": "TB-k1-tf32-execution-20261010",
       "type": "parent_trajectory"
     },
     {
@@ -1778,6 +1788,11 @@
     {
       "source": "pcqm-k1-execution-efficiency-20261010",
       "target": "TB-k1-execution-efficiency-gpu-20261010",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "target": "TB-k1-tf32-execution-20261010",
       "type": "prior_evidence"
     },
     {
@@ -2743,6 +2758,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-tf32-execution-20261010",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-v4-100k-reference-s42",
       "type": "evidence"
     },
@@ -3144,6 +3163,10 @@
     },
     {
       "id": "TB-k1-ssma-kaggle3-100k-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-tf32-execution-20261010",
       "type": "trajectory"
     },
     {
