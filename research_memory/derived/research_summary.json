@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 110,
+      "trajectories_total": 111,
       "with_complete_native_measurement": 23,
-      "with_cost_event": 99,
-      "with_incomplete_native_measurement": 76,
+      "with_cost_event": 100,
+      "with_incomplete_native_measurement": 77,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -1058,6 +1058,56 @@
           "measured": {
             "known_records": 2,
             "known_total": 0.01639823805555352
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
+      "NVIDIA T4 physical allocation (one visible worker device)": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 18.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 9.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -2864,7 +2914,7 @@
         }
       }
     },
-    "unknown_events": 194
+    "unknown_events": 195
   },
   "evidence": {
     "validated": 98,
@@ -2874,7 +2924,7 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 81,
+      "count": 82,
       "severity": "INFO"
     },
     {
@@ -2884,7 +2934,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 76,
+      "count": 77,
       "severity": "WARN"
     },
     {
@@ -2894,12 +2944,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 38,
+      "count": 39,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 12,
+      "count": 13,
       "severity": "WARN"
     }
   ],
@@ -2908,11 +2958,11 @@
     "explicit_events": 280,
     "repeatedly_selected": 21
   },
-  "source_digest": "6090e8faecbfc675a3d12f9901aa99986664bccefb92aa89d4fb586c422ccffb",
+  "source_digest": "d50edd309a3473acd27ccb7c422d0e9b76ab73b3265f6a1e1eeece92497f119d",
   "trajectories": {
-    "count": 110,
+    "count": 111,
     "outcomes": {
-      "ACTIVE": 1,
+      "ACTIVE": 2,
       "CLOSED": 12,
       "INCONCLUSIVE": 19,
       "INFRASTRUCTURE_ONLY": 5,

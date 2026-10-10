@@ -371,6 +371,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-single-ema-500k-t4-20261010:A001",
+      "target": "experiments/pcqm_k1_single_ema_500k/t4_native/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-slot-readout-diagnostic-20261002:A001",
       "target": "experiments/pcqm_k1_slot_readout_diagnostic/inputs.json",
       "type": "action_produced_evidence"
@@ -1657,6 +1662,11 @@
     },
     {
       "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "TB-k1-single-ema-500k-t4-20261010",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
       "target": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second",
       "type": "prior_evidence"
     },
@@ -1678,6 +1688,11 @@
     {
       "source": "pcqm-k1-colab-execution-profile-20261007",
       "target": "TB-k1-single-ema-500k-a100-20261010",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-colab-execution-profile-20261007",
+      "target": "TB-k1-single-ema-500k-t4-20261010",
       "type": "prior_evidence"
     },
     {
@@ -3070,6 +3085,10 @@
     },
     {
       "id": "TB-k1-single-ema-500k-a100-20261010",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-single-ema-500k-t4-20261010",
       "type": "trajectory"
     },
     {

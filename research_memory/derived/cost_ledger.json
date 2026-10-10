@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 56,
-  "event_count": 224,
+  "estimated_event_count": 57,
+  "event_count": 225,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,7 +11,7 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 194,
+  "measurement_missing_event_count": 195,
   "not_applicable_event_count": 75,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -2526,6 +2526,54 @@
         "not_applicable_records": 0,
         "unknown_records": 0
       },
+      "NVIDIA T4 physical allocation (one visible worker device):cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA T4 physical allocation (one visible worker device):device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 18.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA T4 physical allocation (one visible worker device):queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA T4 physical allocation (one visible worker device):wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 9.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
       "NVIDIA_RTX_5060:cpu_hours": {
         "estimated": {
           "known_records": 0,
@@ -4774,6 +4822,56 @@
         "measured": {
           "known_records": 2,
           "known_total": 0.01639823805555352
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "NVIDIA T4 physical allocation (one visible worker device)": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 18.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 9.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -13256,6 +13354,56 @@
         "estimated": {
           "known_records": 1,
           "known_total": 4.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-k1-single-ema-500k-t4-20261010": {
+      "NVIDIA T4 physical allocation (one visible worker device):cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA T4 physical allocation (one visible worker device):device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 18.0
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "NVIDIA T4 physical allocation (one visible worker device):queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "NVIDIA T4 physical allocation (one visible worker device):wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 9.0
         },
         "measured": {
           "known_records": 0,

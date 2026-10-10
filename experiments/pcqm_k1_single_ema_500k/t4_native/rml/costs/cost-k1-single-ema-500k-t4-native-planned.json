@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "training",
+  "cost_event_id": "cost-k1-single-ema-500k-t4-native-planned",
+  "evidence_ref": "experiments/pcqm_k1_single_ema_500k/t4_native/protocol.md",
+  "hardware": "NVIDIA T4 physical allocation (one visible worker device)",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 18.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 9.0
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "k1-single-ema-500k-t4-20261010",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-single-ema-500k-t4-20261010"
+}

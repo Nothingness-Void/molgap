@@ -1,0 +1,27 @@
+{
+  "train": {
+    "bounds": [
+      0,
+      500000
+    ],
+    "labels_read": 500000
+  },
+  "internal_development": {
+    "bounds": [
+      500000,
+      550000
+    ],
+    "previously_selection_used": true
+  },
+  "bn_calibration": {
+    "bounds": [
+      0,
+      16384
+    ],
+    "labels_used_for_calibration": false
+  },
+  "official_validation": "prohibited",
+  "test_dev": "prohibited",
+  "test_challenge": "prohibited",
+  "common_ood_p8hard": "prohibited"
+}

@@ -1,0 +1,144 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-single-ema-500k-t4-20261010",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-single-ema-500k-native-cost",
+    "question": "What is native T4 throughput for the frozen A100 single-forward/EMA500K recipe?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-single-ema-500k-t4-20261010",
+      "supporting_evidence_ids": [
+        "pcqm-k1-bn-mechanism-a100-20261008",
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "observed_deficiency": "A100-only step timing cannot establish the paired recipe's T4 cost.",
+      "alternative_explanations": [
+        "GPU arithmetic limits",
+        "Small-kernel overhead",
+        "CPU or publication limits",
+        "Cross-platform runtime differences"
+      ],
+      "changed_mechanism": "No scientific mechanism change; explicitly qualified T4 execution control",
+      "cheapest_falsifier": "One user-bounded nine-hour same-recipe T4 pair with retained step/epoch timing",
+      "decision_changed_if_positive": "User may choose T4 for this workload; no automatic A100 stop",
+      "decision_changed_if_negative": "Reserve the A100 decision for measured evidence; no automatic retry",
+      "expected_native_cost_ref": "cost-k1-single-ema-500k-t4-native-planned",
+      "related_closed_family_ids": [
+        "k1-bn-mechanism-a100",
+        "k1-late-weight-average",
+        "k1-mean2-clean-second"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "a858c4c474aad731fb058ce9cf64c25bfe5e20ef",
+      "source_config_identity": "9a72664b78eb7be61bfbe0019feac0d13dad045eef269000e270b675c797fe79",
+      "contract_refs": [
+        "experiments/pcqm_k1_single_ema_500k/t4_native/protocol.md",
+        "experiments/pcqm_k1_single_ema_500k/t4_native/inputs.json",
+        "experiments/pcqm_k1_single_ema_500k/t4_native/README.md"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-bn-mechanism-a100-20261008",
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_single_ema_500k/t4_native/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_single_ema_500k/t4_native/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "bounded_native_cost_paired_500k",
+        "run_ids": [
+          "k1-single-ema-500k-t4-20261010:reference",
+          "k1-single-ema-500k-t4-20261010:ema999"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "a858c4c474aad731fb058ce9cf64c25bfe5e20ef",
+        "evidence_refs": [
+          "experiments/pcqm_k1_single_ema_500k/t4_native/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-single-ema-500k-t4-native-planned"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_single_ema_500k/t4_native/decision.md",
+      "next_allowed_actions": [
+        "One nine-hour Kaggle1 T4 pair"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "NO_COMPARISON",
+    "comparison_readiness_ref": "experiments/pcqm_k1_single_ema_500k/t4_native/protocol.md",
+    "comparison_blockers": [
+      "Native T4 qualification/timing pending",
+      "Hardware/runtime control is not a strict scientific endpoint",
+      "Consumed development"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-single-ema-500k-t4-native-planned",
+      "trajectory_id": "TB-k1-single-ema-500k-t4-20261010",
+      "action_id": "A001",
+      "run_id": "k1-single-ema-500k-t4-20261010",
+      "attempt_id": "attempt-001",
+      "platform": "kaggle",
+      "hardware": "NVIDIA T4 physical allocation (one visible worker device)",
+      "category": "training",
+      "evidence_ref": "experiments/pcqm_k1_single_ema_500k/t4_native/protocol.md",
+      "measurement": {
+        "device_hours": {
+          "value": 18.0,
+          "status": "estimated"
+        },
+        "wall_hours": {
+          "value": 9.0,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_BOUNDED_500K",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_BOUNDED_500K",
+    "policy_id": "pcqm-k1-single-ema-500k-t4-native",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_single_ema_500k/t4_native/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_single_ema_500k/t4_native/role_plan.json"
+    ],
+    "source_commit": "a858c4c474aad731fb058ce9cf64c25bfe5e20ef",
+    "state_timestamp": "2026-10-10T06:12:13.552564+00:00"
+  }
+}
