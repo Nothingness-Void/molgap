@@ -1,0 +1,40 @@
+{
+  "release": {
+    "format": "molgap-frozen-inference-release-v1",
+    "experiment_purpose": "NO_TRAIN",
+    "source_commit": "d43fd771f7cb697cc045f6f1543fb47f7cb8516c",
+    "archive_sha256": "4edced1627322550a0aba365f8d506cb47f09f04acd526aa25672787725dfb1c",
+    "contract_sha256": "612b9c357efacfadb5bbb3e2c3f1a3d0b092b66550add3bf03aaad871884d81a",
+    "entry_sha256": "2eaf05f52fa29790af8090f0c0fc2e9dd97207f13392084b12bf0a6e7bac582e",
+    "metadata_sha256": "588e8159994f0b71786b1d9ecb60d833fa3d13190843a59ba3c1c0a70725793d",
+    "kernel": "kaseichou/molgap-gptrans-source-dependence-s42",
+    "dataset_sources": [
+      "kaseichou/molgap-gptrans-source-dependence-inputs",
+      "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+      "kaseichou/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+    ],
+    "prospective_trajectory_id": "TC-gptrans-source-dependence-s42-v1",
+    "prospective_sha256": "2336833a230c0b8369327d552b09c13d70efe2ab644e86052daa5051b3715788",
+    "files": {
+      "source_payload.bin": "4edced1627322550a0aba365f8d506cb47f09f04acd526aa25672787725dfb1c",
+      "SOURCE_FILES.json": "10137c1f5a176ddd6dbf95bc790851e7456b963632aa7c58666711b4d3e52c02",
+      "contract.json": "612b9c357efacfadb5bbb3e2c3f1a3d0b092b66550add3bf03aaad871884d81a",
+      "target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+      "parent_best.pt": "2bb415bc2bf3b3fc66c293619d633c5f5f0b40d60c6e30d76f6b7d03ba1b246a",
+      "triplet_best.pt": "b34530bb0f38d53c38edb90cf7aedfcd74a7793326e5e1817d56b3b6a845e287",
+      "parent_original.pt": "330e7e5407bad13a849559a47dba75717d63d5d62a8ec6a1e168c4a3377bd7e0",
+      "parent_later.pt": "536e123b4d9b4e48859a0a0faa4a3a28a5e09ea0121875201426a1307935f6a1",
+      "triplet_original.pt": "216c48ea6944e83dca2b8dcdfcd64cb668bf9377783ab3cad6bb81656df58c88",
+      "triplet_later.pt": "56fa582ec482e696ef772ab682cbd6afe14602dcea36bb9e02b9c3dfff9a1cb0",
+      "panels.json": "d05336c4cf14292ce987808a638e6ecb16e8e0cb2603b1a6b2f1f17130c6e73b"
+    },
+    "identity": "fd1ac751fd6da70d370423e2a09ea215676a49b1ebf3948fa01e9df6ae3e8632"
+  },
+  "prospective": {
+    "trajectory_id": "TC-gptrans-source-dependence-s42-v1",
+    "status": "PLANNED",
+    "path": "experiments/pcqm_gptrans_source_dependence/rml_plan"
+  },
+  "inputs": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\prepared\\gptrans_source_dependence_v1\\inputs",
+  "release_report": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\prepared\\gptrans_source_dependence_v1\\release_report.json"
+}
