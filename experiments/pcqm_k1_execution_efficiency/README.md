@@ -8,3 +8,7 @@ launcher. The active Kaggle payload is immutable and outside this question.
 Reusable probes: `src/molgap/k1_execution_efficiency.py`.
 Opt-in CPU layout: `src/molgap/k1_execution_layout.py`; defaults unchanged.
 No production promotion, remote submission or development evaluation here.
+
+Bounded continuation: [projection decision](projection_attempt_001/terminal_decision.md)
+rejects project-before-gather/pack as direct strict-FP32 replacements. See its
+matched numerical/cost evidence rather than extrapolating from algebraic equality.
