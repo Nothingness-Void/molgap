@@ -1,0 +1,14 @@
+{
+  "format": "molgap-kaggle-allocation-entry-v1",
+  "status": "complete",
+  "error": null,
+  "wall_start_utc": "2026-10-09T19:16:29.069333+00:00",
+  "observed_gpu_count": 2,
+  "gpu_count_source": "nvidia-smi",
+  "scope": "entry invocation through bootstrap completion, including setup, pip, extraction, preflight, training/evaluation and idle assigned GPU time; not device busy time",
+  "platform_release_scope": "not observed: queue, allocation before entry and platform release after entry are excluded",
+  "entire_platform_release_seconds": null,
+  "monotonic_seconds": 9798.488286115999,
+  "wall_end_utc": "2026-10-09T21:59:47.557636+00:00",
+  "allocated_device_seconds": 19596.976572231997
+}

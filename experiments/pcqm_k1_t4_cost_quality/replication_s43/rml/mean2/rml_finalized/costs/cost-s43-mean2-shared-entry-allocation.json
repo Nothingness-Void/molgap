@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "molgap-k1-cost-quality-100k-s43-v1-v1",
+  "category": "infrastructure_failure",
+  "cost_event_id": "cost-s43-mean2-shared-entry-allocation",
+  "evidence_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/rml_support/mean2/observed_cost_roles.json",
+  "hardware": "Tesla T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.14889533183833337
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.07444766591916668
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "molgap-k1-cost-quality-100k-s43-v1:mean2:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2"
+}

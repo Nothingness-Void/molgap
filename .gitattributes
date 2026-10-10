@@ -1,4 +1,10 @@
 # Scientific evidence and RML outputs must preserve bytes across checkouts.
+platforms/_records/kaggle/training/molgap-k1-clean-second-100k-s42-v1/** -text
+platforms/_records/kaggle/training/molgap-k1-cost-quality-100k-s43-v1/** -text
+experiments/pcqm_k1_clean_second_100k/** -text
+experiments/pcqm_k1_t4_cost_quality/replication_s43/** -text
+research_memory/policies/pcqm-k1-clean-second-100k.1.json -text
+research_memory/policies/pcqm-k1-cost-quality-s43.1.json -text
 platforms/kaggle/resume_frozen_k1_arm.py -text
 experiments/pcqm_expert_oracle_feasibility/** -text
 research_memory/policies/pcqm-expert-oracle-feasibility.1.json -text

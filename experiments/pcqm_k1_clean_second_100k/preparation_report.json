@@ -1,0 +1,25 @@
+{
+  "blockers": [
+    "Remote publication and submission pending.",
+    "All-arm native runtime qualification pending before formal training.",
+    "Fresh strict reference, aligned terminal artifacts, role history and observed native cost remain pending."
+  ],
+  "chosen_action": "TRAIN_PAIR_100K",
+  "initial_state": {
+    "device": "cpu",
+    "file_sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+    "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+    "tensor_count": 367
+  },
+  "prospective_published": false,
+  "shared_source_count": 59,
+  "source_commit": "3342d047a2a390170ac1aab7b06b716f5734d17d",
+  "source_inventory_owner": "molgap.experiment_source_inventory.SHARED_SOURCE_FILES",
+  "status": "USER_RELEASE_BOUND_UNPUBLISHED",
+  "strict_ready": false,
+  "training_authorized": false,
+  "user_release": {
+    "path": "experiments/pcqm_k1_clean_second_100k/user_release.json",
+    "sha256": "e49904cd2310df02f98251382f5e22ce61bfb911eb5bd5f0b57a9ba6bc68f0f6"
+  }
+}

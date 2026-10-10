@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 105,
+    "trajectories_total": 109,
     "with_complete_native_measurement": 23,
-    "with_cost_event": 94,
-    "with_incomplete_native_measurement": 71,
+    "with_cost_event": 98,
+    "with_incomplete_native_measurement": 75,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 78,
+      "count": 80,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -82,6 +82,8 @@
         "TB-k1-ssma-kaggle3-100k-s42-v1",
         "TB-k1-ssma-kaggle3-100k-s42-v2",
         "TB-k1-v4-192-kaggle3-reference-custody-20261002",
+        "TB-molgap-k1-cost-quality-100k-s43-v1-mean2",
+        "TB-molgap-k1-cost-quality-100k-s43-v1-single",
         "TB-pcqm-expert-oracle-feasibility-20260930",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
@@ -127,7 +129,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 71,
+      "count": 75,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -191,6 +193,10 @@
         "TB-k1-ssma-kaggle3-100k-s42-v1",
         "TB-k1-ssma-kaggle3-100k-s42-v2",
         "TB-k1-v4-192-kaggle3-reference-custody-20261002",
+        "TB-molgap-k1-clean-second-100k-s42-v1-clean_second",
+        "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
+        "TB-molgap-k1-cost-quality-100k-s43-v1-mean2",
+        "TB-molgap-k1-cost-quality-100k-s43-v1-single",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
         "TB-pcqm-scale-fit-retained-20261001",

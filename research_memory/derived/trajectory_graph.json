@@ -396,6 +396,46 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second:A001",
+      "target": "experiments/pcqm_k1_clean_second_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second:A001",
+      "target": "experiments/pcqm_k1_clean_second_100k/user_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-clean-second-100k-s42-v1-mean2:A001",
+      "target": "experiments/pcqm_k1_clean_second_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-clean-second-100k-s42-v1-mean2:A001",
+      "target": "experiments/pcqm_k1_clean_second_100k/user_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2:A001",
+      "target": "experiments/pcqm_k1_t4_cost_quality/replication_s43/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2:A001",
+      "target": "experiments/pcqm_k1_t4_cost_quality/replication_s43/user_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-cost-quality-100k-s43-v1-single:A001",
+      "target": "experiments/pcqm_k1_t4_cost_quality/replication_s43/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-molgap-k1-cost-quality-100k-s43-v1-single:A001",
+      "target": "experiments/pcqm_k1_t4_cost_quality/replication_s43/user_release.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-scale-fit-retained-20261001:A001",
       "target": "experiments/pcqm_scale_fit_retained/inputs.json",
       "type": "action_produced_evidence"
@@ -1606,6 +1646,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-colab-execution-profile-20261007",
       "target": "TB-k1-bn-mechanism-a100-20261008",
       "type": "prior_evidence"
@@ -1638,6 +1688,16 @@
     {
       "source": "pcqm-k1-consistency-fusion-transfer-20261004",
       "target": "TB-k1-fusion-distill-weak-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-consistency-fusion-transfer-20261004",
+      "target": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-consistency-fusion-transfer-20261004",
+      "target": "TB-molgap-k1-cost-quality-100k-s43-v1-single",
       "type": "prior_evidence"
     },
     {
@@ -2506,6 +2566,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-colab-execution-profile-20261007",
       "type": "evidence"
     },
@@ -2527,6 +2595,14 @@
     },
     {
       "id": "pcqm-k1-consistency-residual-screen-20261004",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
       "type": "evidence"
     },
     {
@@ -3007,6 +3083,22 @@
     },
     {
       "id": "TB-matched-500k-v4-three-arm",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-molgap-k1-cost-quality-100k-s43-v1-single",
       "type": "trajectory"
     },
     {

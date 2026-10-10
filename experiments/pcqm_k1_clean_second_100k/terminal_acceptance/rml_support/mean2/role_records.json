@@ -1,0 +1,92 @@
+{
+  "observation_basis": "Frozen source/Spec/recipe and retained full40epoch trace, aligned predictions, selected/resume states and runtime provenance; no new role access or model execution in export.",
+  "observed_source_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/acceptance.json",
+  "role_use": {
+    "common_ood_p8_hard": "untouched",
+    "fixed50k_development": "selection_used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-official_train_prefix_0_100000-training_membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-official_train_prefix_0_100000-labels_read",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-prediction_input",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-labels_read",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-metric_computed",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-selection_used",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+    }
+  ]
+}

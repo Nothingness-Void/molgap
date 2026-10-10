@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 444,
+  "ambiguous_historical_role_record_count": 466,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -1892,6 +1892,90 @@
       "state": "consumed"
     },
     {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "common_ood_p8_hard",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "common_ood_p8_hard",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-colab-execution-profile-20261007",
       "role_identity": null,
       "role_name": "development",
@@ -2128,6 +2212,76 @@
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "prediction_input"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "prediction_input"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-cost-quality-s43-single-v1-no-train",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
     },
     {
       "evidence_id": "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
@@ -3110,9 +3264,10 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 264,
+  "explicit_role_event_count": 280,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
+    "development",
     "fixed50k_development",
     "internal_development",
     "official_train_prefix_0_100000",
@@ -3961,6 +4116,64 @@
         "trajectory_id": "TB-k1-full-convergence-20260919"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fixed50k_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_149999": [
       {
         "access_kind": "selection_used",
@@ -4184,6 +4397,34 @@
         "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v2"
       },
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
         "access_kind": "training_membership",
         "role_event_id": "role-TC-k1-v4-100k-reference-s42-train",
         "selection_used": false,
@@ -4205,6 +4446,38 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-s43-mean2-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-s43-single-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-s43-mean2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-s43-single-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:fixed50k_development": [
@@ -5132,12 +5405,16 @@
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "pcqm-k1-bn-mechanism-a100-20261008",
       "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
       "pcqm-k1-colab-execution-profile-20261007",
       "pcqm-k1-complete-module-audit-20261008",
       "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
       "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
       "pcqm-k1-consistency-fusion-transfer-20261004",
       "pcqm-k1-consistency-residual-screen-20261004",
+      "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "pcqm-k1-cost-quality-s43-single-v1-no-train",
       "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-flag-cpu-qualification-20261002",
@@ -5227,12 +5504,16 @@
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "pcqm-k1-bn-mechanism-a100-20261008",
       "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
       "pcqm-k1-colab-execution-profile-20261007",
       "pcqm-k1-complete-module-audit-20261008",
       "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
       "pcqm-k1-consistency-500k-k1_pretrained_mean2-s42-v1-terminal",
       "pcqm-k1-consistency-fusion-transfer-20261004",
       "pcqm-k1-consistency-residual-screen-20261004",
+      "pcqm-k1-cost-quality-s43-mean2-v1-no-train",
+      "pcqm-k1-cost-quality-s43-single-v1-no-train",
       "pcqm-k1-dropout-consistency2-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-flag-cpu-qualification-20261002",
@@ -5772,6 +6053,64 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-full-convergence-20260919"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fixed50k_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_149999": [
@@ -7082,6 +7421,64 @@
         "trajectory_id": "TB-k1-full-convergence-20260919"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fixed50k_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_149999": [
       {
         "access_kind": "selection_used",
@@ -7305,6 +7702,34 @@
         "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v2"
       },
       {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
         "access_kind": "training_membership",
         "role_event_id": "role-TC-k1-v4-100k-reference-s42-train",
         "selection_used": false,
@@ -7326,6 +7751,38 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-100k-local-reference-control-20260925"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-s43-mean2-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-s43-single-train-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-s43-mean2-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-s43-single-development-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:fixed50k_development": [

@@ -1,0 +1,13 @@
+{
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+  "ordering_semantics": "source_idx-ascending-100000-to-149999",
+  "prediction_ref": "platforms/_records/kaggle/training/molgap-k1-clean-second-100k-s42-v1/terminal_20261010/experiment/mean2/development_predictions.pt",
+  "prediction_sha256": "e105dcc2215d5d9c7ff1a461aaef895451dd2be3c1909d43b31a6030ff9878de",
+  "row_count": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+  "target_encoding": "little-endian-float32-contiguous-raw-bytes",
+  "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137",
+  "unique_source_idx": 50000,
+  "verification_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/result.json",
+  "verification_scope": "Export of parent completed finite/aligned shape/unique-index/hash acceptance; no predictions rescored."
+}

@@ -1,0 +1,31 @@
+{
+  "format": "molgap-desktop-paired-user-release-v1",
+  "source_commit": "3342d047a2a390170ac1aab7b06b716f5734d17d",
+  "approved_by": "user in current conversation",
+  "approved_at": "2026-10-10",
+  "authority_ref": "experiments/pcqm_k1_clean_second_100k/protocol.md",
+  "authorization": "Two independent Notebook slots, four arms total: confidence revalidation and new direction. Idle slots and15h quota confirmed by user.",
+  "action": "TRAIN_PAIR_100K",
+  "account": "nvoid912",
+  "run_reference": "nvoid912/molgap-k1-clean-second-100k-s42-v1",
+  "arms": [
+    "mean2",
+    "clean_second"
+  ],
+  "budget": {
+    "entry_wall_seconds": 12600,
+    "allocated_t4_device_hours_ceiling": 7,
+    "batch_entry_device_hours_ceiling": 14,
+    "user_reported_quota_hours": 15,
+    "quota_api_measured": false,
+    "unmeasured_release_margin_hours": 1
+  },
+  "role_plan_ref": "experiments/pcqm_k1_clean_second_100k/role_plan.json",
+  "conditions": [
+    "All-arm native qualification before training",
+    "No automatic retry",
+    "No protected roles,500K/full or production changes",
+    "Fresh mean2 control is explicitly one of four authorized arms",
+    "Both arms in one physical job with durable resumable output"
+  ]
+}

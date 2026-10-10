@@ -1,0 +1,30 @@
+{
+  "format": "molgap-desktop-paired-user-release-v1",
+  "source_commit": "b984d506837b738082c2cbf2ae9209d6862810ea",
+  "approved_by": "user in current conversation",
+  "approved_at": "2026-10-10",
+  "authority_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/protocol.md",
+  "authorization": "Design two independent Notebook slots, four arms total: confidence revalidation and a new direction; slots idle and15h quota confirmed by user.",
+  "action": "TRAIN_PAIR_100K",
+  "account": "nvoid912",
+  "run_reference": "nvoid912/molgap-k1-cost-quality-100k-s43-v1",
+  "arms": [
+    "mean2",
+    "single"
+  ],
+  "budget": {
+    "entry_wall_seconds": 12600,
+    "allocated_t4_device_hours_ceiling": 7,
+    "batch_entry_device_hours_ceiling": 14,
+    "user_reported_quota_hours": 15,
+    "quota_api_measured": false,
+    "unmeasured_release_margin_hours": 1
+  },
+  "role_plan_ref": "experiments/pcqm_k1_t4_cost_quality/replication_s43/role_plan.json",
+  "conditions": [
+    "All-arm native qualification before formal training",
+    "No automatic retry",
+    "No protected roles,500K/full or production changes",
+    "Both arms one physical job; retain immutable source and resumable durable outputs"
+  ]
+}

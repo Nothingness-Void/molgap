@@ -1,0 +1,37 @@
+{
+  "observed_at": "2026-10-09T19:12:01.084403+00:00",
+  "kernel": "nvoid912/molgap-k1-clean-second-100k-s42-v1",
+  "metadata": {
+    "metadata": {
+      "id": 137916849,
+      "ref": "nvoid912/molgap-k1-clean-second-100k-s42-v1",
+      "title": "molgap-k1-clean-second-100k-s42-v1",
+      "author": "Nvoid912",
+      "slug": "molgap-k1-clean-second-100k-s42-v1",
+      "lastRunTime": "2026-10-06T19:12:01.145Z",
+      "language": "python",
+      "kernelType": "script",
+      "isPrivate": true,
+      "enableGpu": true,
+      "enableInternet": true,
+      "categoryIds": [],
+      "datasetDataSources": [
+        "nvoid912/molgap-k1-clean-second-100k-s42-v1-source",
+        "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+      ],
+      "kernelDataSources": [],
+      "competitionDataSources": [],
+      "totalVotes": 0,
+      "modelDataSources": [],
+      "enableTpu": false,
+      "currentVersionNumber": 1,
+      "dockerImage": null,
+      "machineShape": "NvidiaTeslaT4"
+    }
+  },
+  "raw_source_sha256": "18bf487ef0746eea1788efc305ba8447f825f5826d89693cd9fd181016a66372",
+  "raw_source_matches_frozen": true,
+  "requested_device_count": 2,
+  "observed_device_count": null,
+  "native_runtime_qualification": "pending"
+}

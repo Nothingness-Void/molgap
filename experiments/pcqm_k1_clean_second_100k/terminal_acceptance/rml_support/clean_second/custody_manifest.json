@@ -1,0 +1,56 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "strict_v5_comparison_readiness_not_established",
+      "full_platform_release_native_cost_unknown",
+      "trace_cumulative_native_device_time_not_retained"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+    "lr_schedule_identity": "5149f49173d461a2ee525033e99117151ef8a6e819e82414ea07366bd9144717",
+    "matched_architecture_required": true,
+    "optimizer_identity": "807c8c09fcd1bdff36f33026816c5c9a44c5b0deb6fd91207d5d40b734520922",
+    "precision_identity": "fp32",
+    "row_split_identity": "55c16e35f7ac7600b4dafef2c59c615a1ff42f7a022c0d9a54f1890ab3c4c604",
+    "scientific_contract": "experiments/pcqm_k1_clean_second_100k/protocol.md",
+    "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+    "target_transform_identity": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+    "terminal_endpoint_identity": "endpoint_31240",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/pcqm_k1_clean_second_100k/protocol.md",
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d",
+  "presentation_semantics_ref": "experiments/pcqm_k1_clean_second_100k/protocol.md",
+  "reference_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+  "run_id": "molgap-k1-clean-second-100k-s42-v1:clean_second:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best-development-live",
+  "terminal_evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/acceptance.json",
+  "trace_artifact_ref": "platforms/_records/kaggle/training/molgap-k1-clean-second-100k-s42-v1/terminal_20261010/experiment/clean_second/canonical_trace.json",
+  "trace_artifact_sha256": "7da69800cfcbd6cf9786b0f1d207a4a19729a59f132105cef7afb9eb35ca9219",
+  "trace_fields": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

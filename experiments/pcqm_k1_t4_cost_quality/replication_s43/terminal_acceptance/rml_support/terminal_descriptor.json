@@ -1,0 +1,290 @@
+{
+  "arms": [
+    {
+      "arm_id": "mean2",
+      "arm_identity": "3bc5adae8377e3780e997b6e5dca0ae33597955eeaba385bccd2f47f2528b9f2",
+      "observed": {
+        "artifacts": {
+          "checkpoint": {
+            "locator": null,
+            "missing_reason": "Not retained for this incomplete attempt",
+            "sha256": null,
+            "status": "missing"
+          },
+          "metrics": {
+            "locator": null,
+            "missing_reason": "Not retained for this incomplete attempt",
+            "sha256": null,
+            "status": "missing"
+          },
+          "predictions": {
+            "locator": null,
+            "missing_reason": "Not retained for this incomplete attempt",
+            "sha256": null,
+            "status": "missing"
+          },
+          "trace": {
+            "locator": null,
+            "missing_reason": "Not retained for this incomplete attempt",
+            "sha256": null,
+            "status": "missing"
+          }
+        },
+        "costs": [
+          {
+            "metric": "preflight_worker_wall_seconds",
+            "reason": null,
+            "status": "measured",
+            "unit": "seconds",
+            "value": 54.522945243000095
+          },
+          {
+            "metric": "entire_platform_release_seconds",
+            "reason": "not observed: queue, allocation before entry and platform release after entry are excluded",
+            "status": "measurement_missing",
+            "unit": "seconds",
+            "value": null
+          }
+        ],
+        "identity": {
+          "arm_id": "mean2",
+          "attempt_id": {
+            "missing_reason": null,
+            "value": "molgap-k1-cost-quality-100k-s43-v1-v1"
+          },
+          "data_identity": {
+            "missing_reason": null,
+            "value": "29af8bd3c8d38ca939c6effc102b0e173612f395ecf7e4a96570784207ef5930"
+          },
+          "experiment_id": "molgap-k1-cost-quality-100k-s43-v1",
+          "family": {
+            "missing_reason": null,
+            "value": {
+              "name": "neural_atom_k1",
+              "version": "2"
+            }
+          },
+          "feature_identity": {
+            "missing_reason": null,
+            "value": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1"
+          },
+          "initialization_identity": {
+            "missing_reason": null,
+            "value": "3f0547ddeba39e3fb05b8573794e38767f4ba2ca7ec7dbaa16ab05a8edb402b6"
+          },
+          "logical_run_id": "molgap-k1-cost-quality-100k-s43-v1",
+          "platform": {
+            "name": "kaggle",
+            "run_reference": {
+              "missing_reason": null,
+              "value": "nvoid912/molgap-k1-cost-quality-100k-s43-v1"
+            }
+          },
+          "recipe_identity": {
+            "missing_reason": null,
+            "value": "6f0bf43db1275702284ff7446dd22349755a61ced80645c72f3f0ee7858c97a5"
+          },
+          "source_commit": {
+            "missing_reason": null,
+            "value": "b984d506837b738082c2cbf2ae9209d6862810ea"
+          },
+          "source_package_sha256": {
+            "missing_reason": null,
+            "value": "4f1fc1002528f90a789f51b991f2f080959d64c3026eebfe0d74e18f66082b43"
+          },
+          "spec_identity": "921309ffd9dea1b94ee64b7e3724e7381da7c49f46bda2d5128f5f34dbe089a2",
+          "split_identity": {
+            "missing_reason": null,
+            "value": "6b5352bd912140fec86bacf17b5c475bcbe10b8225e379d2ba70e9f323a7a7cf"
+          },
+          "target": {
+            "missing_reason": null,
+            "value": "pcqm4mv2-gap-eV-direct"
+          }
+        },
+        "missing_evidence": [
+          "formal_training_not_started",
+          "full_training_trace_unavailable",
+          "trained_reference_unavailable",
+          "aligned_predictions_unavailable",
+          "scientific_comparison_not_evaluated",
+          "entire_platform_release_cost_unknown",
+          "producer_platform_version_not_observed"
+        ],
+        "progress": {
+          "epoch": {
+            "missing_reason": null,
+            "value": 0
+          },
+          "samples": {
+            "missing_reason": null,
+            "value": 0
+          },
+          "step": {
+            "missing_reason": null,
+            "value": 0
+          }
+        },
+        "terminal": {
+          "exit_reason": {
+            "missing_reason": null,
+            "value": "mean2_preflight_overhead_exceeds_frozen_ceiling"
+          },
+          "status": {
+            "missing_reason": null,
+            "value": "failed"
+          }
+        }
+      },
+      "run_id": "molgap-k1-cost-quality-100k-s43-v1:mean2:downstream",
+      "terminal": "experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/rml_support/mean2/terminal.json",
+      "trajectory": "experiments/pcqm_k1_t4_cost_quality/replication_s43/rml/mean2/trajectory.json",
+      "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-mean2"
+    },
+    {
+      "arm_id": "single",
+      "arm_identity": "2738df7e815320ab03306b6b84d3f7d76aa9c91756585491a9faf4df9181fede",
+      "observed": {
+        "artifacts": {
+          "checkpoint": {
+            "locator": null,
+            "missing_reason": "Not retained for this incomplete attempt",
+            "sha256": null,
+            "status": "missing"
+          },
+          "metrics": {
+            "locator": null,
+            "missing_reason": "Not retained for this incomplete attempt",
+            "sha256": null,
+            "status": "missing"
+          },
+          "predictions": {
+            "locator": null,
+            "missing_reason": "Not retained for this incomplete attempt",
+            "sha256": null,
+            "status": "missing"
+          },
+          "trace": {
+            "locator": null,
+            "missing_reason": "Not retained for this incomplete attempt",
+            "sha256": null,
+            "status": "missing"
+          }
+        },
+        "costs": [
+          {
+            "metric": "preflight_worker_wall_seconds",
+            "reason": null,
+            "status": "measured",
+            "unit": "seconds",
+            "value": 54.52248374100009
+          },
+          {
+            "metric": "entire_platform_release_seconds",
+            "reason": "not observed: queue, allocation before entry and platform release after entry are excluded",
+            "status": "measurement_missing",
+            "unit": "seconds",
+            "value": null
+          }
+        ],
+        "identity": {
+          "arm_id": "single",
+          "attempt_id": {
+            "missing_reason": null,
+            "value": "molgap-k1-cost-quality-100k-s43-v1-v1"
+          },
+          "data_identity": {
+            "missing_reason": null,
+            "value": "29af8bd3c8d38ca939c6effc102b0e173612f395ecf7e4a96570784207ef5930"
+          },
+          "experiment_id": "molgap-k1-cost-quality-100k-s43-v1",
+          "family": {
+            "missing_reason": null,
+            "value": {
+              "name": "neural_atom_k1",
+              "version": "2"
+            }
+          },
+          "feature_identity": {
+            "missing_reason": null,
+            "value": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1"
+          },
+          "initialization_identity": {
+            "missing_reason": null,
+            "value": "3f0547ddeba39e3fb05b8573794e38767f4ba2ca7ec7dbaa16ab05a8edb402b6"
+          },
+          "logical_run_id": "molgap-k1-cost-quality-100k-s43-v1",
+          "platform": {
+            "name": "kaggle",
+            "run_reference": {
+              "missing_reason": null,
+              "value": "nvoid912/molgap-k1-cost-quality-100k-s43-v1"
+            }
+          },
+          "recipe_identity": {
+            "missing_reason": null,
+            "value": "95443b2bd257cfc96be244cb2ace7d4126ae7af424cd75fd73323195941789d4"
+          },
+          "source_commit": {
+            "missing_reason": null,
+            "value": "b984d506837b738082c2cbf2ae9209d6862810ea"
+          },
+          "source_package_sha256": {
+            "missing_reason": null,
+            "value": "4f1fc1002528f90a789f51b991f2f080959d64c3026eebfe0d74e18f66082b43"
+          },
+          "spec_identity": "921309ffd9dea1b94ee64b7e3724e7381da7c49f46bda2d5128f5f34dbe089a2",
+          "split_identity": {
+            "missing_reason": null,
+            "value": "6b5352bd912140fec86bacf17b5c475bcbe10b8225e379d2ba70e9f323a7a7cf"
+          },
+          "target": {
+            "missing_reason": null,
+            "value": "pcqm4mv2-gap-eV-direct"
+          }
+        },
+        "missing_evidence": [
+          "formal_training_not_started",
+          "full_training_trace_unavailable",
+          "trained_reference_unavailable",
+          "aligned_predictions_unavailable",
+          "scientific_comparison_not_evaluated",
+          "entire_platform_release_cost_unknown",
+          "producer_platform_version_not_observed"
+        ],
+        "progress": {
+          "epoch": {
+            "missing_reason": null,
+            "value": 0
+          },
+          "samples": {
+            "missing_reason": null,
+            "value": 0
+          },
+          "step": {
+            "missing_reason": null,
+            "value": 0
+          }
+        },
+        "terminal": {
+          "exit_reason": {
+            "missing_reason": null,
+            "value": "own_preflight_passed_formal_arm_cancelled_by_all_arm_gate"
+          },
+          "status": {
+            "missing_reason": null,
+            "value": "cancelled"
+          }
+        }
+      },
+      "run_id": "molgap-k1-cost-quality-100k-s43-v1:single:downstream",
+      "terminal": "experiments/pcqm_k1_t4_cost_quality/replication_s43/terminal_acceptance/rml_support/single/terminal.json",
+      "trajectory": "experiments/pcqm_k1_t4_cost_quality/replication_s43/rml/single/trajectory.json",
+      "trajectory_id": "TB-molgap-k1-cost-quality-100k-s43-v1-single"
+    }
+  ],
+  "experiment_id": "molgap-k1-cost-quality-100k-s43-v1",
+  "logical_run_id": "molgap-k1-cost-quality-100k-s43-v1",
+  "schema_version": "molgap-experiment-terminal-descriptor-v1",
+  "spec_identity": "921309ffd9dea1b94ee64b7e3724e7381da7c49f46bda2d5128f5f34dbe089a2"
+}
