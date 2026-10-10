@@ -6,7 +6,9 @@ Owner: `codex/exp/k1-clean-second-100k`; separate from seed43 replication.
 
 Exact job: `nvoid912/molgap-k1-clean-second-100k-s42-v1`, ID137916849,
 version1. Submission-time scheduler observation: RUNNING, not training acceptance.
-Fresh seed42 `mean2`/`clean_second` share this job. Native qualification is pending.
+Fresh seed42 `mean2`/`clean_second` share this job. Submission-time pending
+qualification is historical; the [terminal decision](terminal_acceptance/decision.md)
+owns the completed acceptance and its exclusions.
 Frozen executable commit: `3342d047a2a390170ac1aab7b06b716f5734d17d`.
 New canonical prospective records are under `rml/`; their planned shared
 attempt is `molgap-k1-clean-second-100k-s42-v1-v1`.

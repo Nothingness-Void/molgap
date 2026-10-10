@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 80,
+      "count": 78,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -82,8 +82,6 @@
         "TB-k1-ssma-kaggle3-100k-s42-v1",
         "TB-k1-ssma-kaggle3-100k-s42-v2",
         "TB-k1-v4-192-kaggle3-reference-custody-20261002",
-        "TB-molgap-k1-clean-second-100k-s42-v1-clean_second",
-        "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
         "TB-pcqm-expert-oracle-feasibility-20260930",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
@@ -227,7 +225,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 39,
+      "count": 37,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
@@ -257,8 +255,6 @@
         "TB-k1-saved-trace-pair-20261008",
         "TB-k1-saved-trace-pair-20261008-attempt002",
         "TB-k1-ssma-kaggle3-100k-s42-v1",
-        "TB-molgap-k1-clean-second-100k-s42-v1-clean_second",
-        "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-pcqm-scale-transfer-reassessment-20260925",
@@ -273,7 +269,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 13,
+      "count": 11,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -284,8 +280,6 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
-        "TB-molgap-k1-clean-second-100k-s42-v1-clean_second",
-        "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],

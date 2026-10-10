@@ -1,0 +1,68 @@
+{
+  "accepted": true,
+  "mode": "mean2_clean_second",
+  "zero_initialization_delta": 0.0,
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      0.7753903269767761,
+      0.7753903269767761
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "323ae284590bc5088910e38f9d13f50d7d8e8448e24edcfbc8f44fb41915258a",
+      "323ae284590bc5088910e38f9d13f50d7d8e8448e24edcfbc8f44fb41915258a"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      0.7753903269767761,
+      0.7753903269767761
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "7fa15c2b211a235adbd5f1b4ad35a34ac1c0a0fcf7dff0f36c5746e2a74b8b98",
+      "7fa15c2b211a235adbd5f1b4ad35a34ac1c0a0fcf7dff0f36c5746e2a74b8b98"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.11786204399993494,
+      "samples_seconds": [
+        0.11087989600002857,
+        0.11285344100008388,
+        0.11951222499999403,
+        0.11795107899990853,
+        0.11786204399993494
+      ],
+      "peak_memory_bytes": 572914176
+    },
+    "mean2_clean_second": {
+      "median_step_seconds": 0.2157605100001092,
+      "samples_seconds": [
+        0.2240796879999607,
+        0.22365728599993417,
+        0.2157605100001092,
+        0.20092052800009697,
+        0.19666171700009727
+      ],
+      "peak_memory_bytes": 936861184
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": 0.8306191092378163,
+  "maximum_overhead_fraction": 1.0,
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"
+}

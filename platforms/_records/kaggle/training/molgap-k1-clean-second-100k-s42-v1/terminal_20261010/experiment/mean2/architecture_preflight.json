@@ -1,0 +1,68 @@
+{
+  "accepted": true,
+  "mode": "mean2",
+  "zero_initialization_delta": 0.0,
+  "repeated_optimizer_steps": 2,
+  "repeatability": {
+    "accepted": true,
+    "losses": [
+      0.7798992395401001,
+      0.7798992395401001
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "0fa9006e0f9bd4ae7b1267495a63293900f6fc1396a1bfed6faaa94a8dfcfc6f",
+      "0fa9006e0f9bd4ae7b1267495a63293900f6fc1396a1bfed6faaa94a8dfcfc6f"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "resume_roundtrip": {
+    "accepted": true,
+    "losses": [
+      0.7798992395401001,
+      0.7798992395401001
+    ],
+    "loss_delta": 0.0,
+    "maximum_loss_delta": 1e-07,
+    "state_sha256": [
+      "434a0309517ca17e1a0d1b66ca3d6da63c71fc9394d55a181bd2a9616185bee8",
+      "434a0309517ca17e1a0d1b66ca3d6da63c71fc9394d55a181bd2a9616185bee8"
+    ],
+    "max_parameter_delta": 0.0,
+    "maximum_parameter_delta": 1e-07,
+    "max_parameter_name": ""
+  },
+  "timings": {
+    "reference": {
+      "median_step_seconds": 0.11871080500009157,
+      "samples_seconds": [
+        0.11136635100001513,
+        0.11287403300002552,
+        0.11871080500009157,
+        0.11913506899998083,
+        0.12126232799994341
+      ],
+      "peak_memory_bytes": 572914176
+    },
+    "mean2": {
+      "median_step_seconds": 0.21825425300005463,
+      "samples_seconds": [
+        0.2241561300000967,
+        0.2248094870000159,
+        0.21825425300005463,
+        0.20433742399995936,
+        0.2034668740000143
+      ],
+      "peak_memory_bytes": 951136768
+    }
+  },
+  "selected_state_roundtrip_delta": 0.0,
+  "synchronized_step_overhead_fraction": 0.8385373850332014,
+  "maximum_overhead_fraction": 1.0,
+  "formal_sample_presentations": 0,
+  "fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+  "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"
+}

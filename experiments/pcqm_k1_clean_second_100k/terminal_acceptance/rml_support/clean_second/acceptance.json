@@ -1,0 +1,163 @@
+{
+  "accepted_platform_version": "1",
+  "cost_scope": "Hardware is Tesla T4 for all events. Shared 19596.976572231997 allocated T4 seconds entry window counted once on mean2, not repeated on candidate. Entire platform allocation through release, queue and CPU are unknown; same-hardware measured plus missing remains incomplete, not zero. Per-arm training/diagnostic invocation windows overlap this entry and are non-additive observations only.",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "molgap-k1-clean-second-100k-s42-v1-v1",
+      "category": "other",
+      "cost_event_id": "cost-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-full-release-missing",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/acceptance.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:clean_second:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+    }
+  ],
+  "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+  "format": "molgap-k1-clean-second-terminal-acceptance-v1",
+  "mechanical_acceptance_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/result.json",
+  "observed_invocation_windows": {
+    "diagnostic_ref": "platforms/_records/kaggle/training/molgap-k1-clean-second-100k-s42-v1/terminal_20261010/experiment/clean_second/diagnostic_cost.json",
+    "training_ref": "platforms/_records/kaggle/training/molgap-k1-clean-second-100k-s42-v1/terminal_20261010/experiment/clean_second/allocation_cost.json"
+  },
+  "outcome": {
+    "artifact_status": "hash_verified_retained",
+    "budget_decision": "no_successor_or_scale_up",
+    "comparison_status": "PAIRED_ENDPOINT_single_seed_strict_readiness_not_established",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_evaluated"
+  },
+  "producer_platform_version": null,
+  "replay_eligible": false,
+  "replay_exclusions": [
+    "strict_v5_comparison_readiness_not_established",
+    "full_platform_release_native_cost_unknown",
+    "trace_cumulative_native_device_time_not_retained"
+  ],
+  "role_manifest_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/cache_role_manifest.json",
+  "role_manifest_semantics": "Common immutable fixed-cache role/shard manifest SHA, not epoch shuffle or development index tensor hash. Development tensor identity remains separately pinned in prediction manifest.",
+  "role_observation_basis": "Frozen source/Spec/recipe and retained full40epoch trace, aligned predictions, selected/resume states and runtime provenance; no new role access or model execution in export.",
+  "role_use": {
+    "common_ood_p8_hard": "untouched",
+    "fixed50k_development": "selection_used",
+    "official_train_prefix_0_100000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-official_train_prefix_0_100000-training_membership",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:clean_second:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-official_train_prefix_0_100000-labels_read",
+      "role_name": "official_train_prefix_0_100000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:clean_second:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-prediction_input",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:clean_second:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-labels_read",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:clean_second:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-metric_computed",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:clean_second:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/acceptance.json",
+      "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-selection_used",
+      "role_name": "fixed50k_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "molgap-k1-clean-second-100k-s42-v1:clean_second:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+    }
+  ],
+  "run_id": "molgap-k1-clean-second-100k-s42-v1:clean_second:downstream",
+  "runtime_qualification": "accepted_retained_native_certificate_and_complete_mechanical_outputs",
+  "scientific_metrics_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/result.json",
+  "shared_entry_allocation_ref": "platforms/_records/kaggle/training/molgap-k1-clean-second-100k-s42-v1/terminal_20261010/experiment/allocation_entry_observation.json",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "Distinct explicitly authorized decision-relevant prospective question; no automatic retry or scale-up."
+    ]
+  },
+  "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+}

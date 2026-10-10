@@ -1,0 +1,33 @@
+{
+  "costs": [
+    {
+      "metric": "wall_seconds",
+      "unit": "seconds",
+      "value": 9480.619279094,
+      "status": "measured",
+      "semantics": "process_wall",
+      "hardware": "Tesla T4",
+      "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue"
+    },
+    {
+      "metric": "device_seconds",
+      "unit": "seconds",
+      "value": 9480.619279094,
+      "status": "measured",
+      "semantics": "allocated_device",
+      "hardware": "Tesla T4",
+      "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue"
+    }
+  ],
+  "start_epoch": 0,
+  "end_epoch": 40,
+  "cpu_allocation_seconds": {
+    "status": "missing",
+    "value": null
+  },
+  "queue_seconds": {
+    "status": "missing",
+    "value": null
+  },
+  "scope": "one exclusive assigned T4 training window including development/checkpoint; lower bound excludes bootstrap/queue and earlier resume allocations"
+}

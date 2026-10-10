@@ -1,0 +1,245 @@
+{
+  "blocker_codes": [
+    "DECLARED_INTERVENTION_NOT_OBSERVED",
+    "SCIENTIFIC_CONTRACT_MISMATCH"
+  ],
+  "candidate_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/acceptance.json",
+      "sha256": "41e004ec6cff0d1852c9f8ef9b99365f6ba0e3df21fa34ec48aff49a922674bc"
+    },
+    "checkpoint": {
+      "ref": "platforms/_records/kaggle/training/molgap-k1-clean-second-100k-s42-v1/terminal_20261010/experiment/clean_second/selected_model.pt",
+      "sha256": "2f3b855aad6f79fa4183b81f0c8c4c1f4fb87459dbbde0ae0589de098f2d6f6d"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/cost_records.json",
+      "sha256": "e4a0a51b9643d17e3adc789af766d58e18b754a109bc93c682521d9ea593c7d2"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/decision.md",
+      "sha256": "a0e6ce0983bf215925ad4922ce60b270b8183f3430b18e444e84cc14226e7c01"
+    },
+    "paired_analysis": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/result.json",
+      "sha256": "547e5e9b71681de858b7a582e009f05b68b3c3432f5001c6b941a35947baa146"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/prediction_manifest.json",
+      "sha256": "36f40d503d5a547c7ca1f75eede839fb32c174f6a104fde6e0a42fe9428b7194"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/role_records.json",
+      "sha256": "bdd7c686cf4f8cdbdf0fde4e6575a30cd665e0e64e18c89b9841bd16d03d896f"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_slot_width96/reference_binding/row_manifest.json",
+      "sha256": "93055246a5d72067e063c7f366efa32b11909709a9363d87821c6c94af52920f"
+    },
+    "runtime_certificate": {
+      "ref": "platforms/_records/kaggle/training/molgap-k1-clean-second-100k-s42-v1/terminal_20261010/experiment/clean_second/runtime_certificate.json",
+      "sha256": "0f88eb46e66fa4d321c2229c3007c836b30fbb4156d581c0ddde811be4647693"
+    },
+    "source_config": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/source_config.json",
+      "sha256": "bf7dd0bfa42c3cbf74b1f1f7b799da9b7db6dd338f2b177958e158ec4376aa9a"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_transform.json",
+      "sha256": "7633713dd6128407cdd3035275ec56f44153ac316f42d7bca283ec25ef75de3d"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/clean_second/custody_manifest.json",
+      "sha256": "e15ccdaab71fdf046da8d25ddeb071b396765223374e949a810a22cd5ec7f7b0"
+    }
+  },
+  "candidate_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+  "candidate_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "candidate_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "candidate_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "comparison_class": "PAIRED_ENDPOINT",
+  "decision_scope": [
+    "paired endpoint prediction comparison",
+    "row bootstrap",
+    "ensemble analysis"
+  ],
+  "declared_intervention_fields": [
+    "architecture_config_identity"
+  ],
+  "experiment_purpose": "mechanism_comparison",
+  "forbidden_claims": [
+    "causal attribution to architecture or mechanism"
+  ],
+  "format": "molgap-comparison-readiness-v1",
+  "intervention_group_id": "clean-second-training-view",
+  "matched_fields": {
+    "architecture_config_identity": "f7c9d64141a0c178084f46e43256cdfbcc135eabd4c85626df1faa369940e01d",
+    "benchmark_identity": "pcqm4mv2-ogb-fixed-100k-gap-v4-s42-fp32-bs128-40epochs",
+    "checkpoint_selection_identity": "best-development-live",
+    "data_role_identity": "c853fd240f93cdc306084affd818a04e5c80869086c876e5407a458002d851f7",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "deterministic_algorithms": true,
+    "ema_decay": null,
+    "ema_enabled": false,
+    "ema_update_frequency": "not_applicable",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+    "evaluation_weight_source": "live",
+    "feature_identity": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+    "gradient_accumulation_steps": 1,
+    "optimizer_fused": null,
+    "optimizer_identity": "807c8c09fcd1bdff36f33026816c5c9a44c5b0deb6fd91207d5d40b734520922",
+    "optimizer_mode": "AdamW-default",
+    "optimizer_steps": 31240,
+    "physical_batch_per_device": 128,
+    "precision": "fp32",
+    "row_membership_identity": "55c16e35f7ac7600b4dafef2c59c615a1ff42f7a022c0d9a54f1890ab3c4c604",
+    "row_order_identity": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+    "runtime_certificate_scope": "kaggle-t4x2",
+    "sample_presentations": 3998720,
+    "schedule_identity": "5149f49173d461a2ee525033e99117151ef8a6e819e82414ea07366bd9144717",
+    "seed": 42,
+    "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+    "tail_batch_policy": "drop_last",
+    "target_identity": "pcqm4mv2-gap-eV-direct",
+    "target_transform_asset_sha256": "e6bad47d70baa12b9e300895f97b8053983eed87bd21859e6559d11442555f2f",
+    "target_transform_identity": "k1-v4-fixed-train-100k-fp32-gap-transform",
+    "tf32_enabled": false,
+    "weight_semantics": "live"
+  },
+  "mechanism_id": "dropout-off-second-supervised-view",
+  "mismatched_fields": {
+    "loss_identity": {
+      "candidate": "c7630770d030087c145c5e8a5c1aad8c2037ea34805b447b56a8286ae8d3a068",
+      "reference": "a81e5097dffb559c6fbec0ec96ad315448560f1a48eb5633691cd9d5e3c62882"
+    }
+  },
+  "missing_artifacts": [],
+  "missing_fields": [],
+  "qualification_notes": {
+    "architecture": "Identical K1 base architecture. No artificial mode/addon architecture hash mismatch.",
+    "frozen_loss_identity_mismatch": "Actual frozen objective hashes mean2 a81e5097dffb559c6fbec0ec96ad315448560f1a48eb5633691cd9d5e3c62882 and clean_second c7630770d030087c145c5e8a5c1aad8c2037ea34805b447b56a8286ae8d3a068 differ and remain unchanged.",
+    "infrastructure_limitation": "Shared mechanism/architecture intervention vocabulary permits only architecture_config_identity, not supervised second-view Dropout behavior or loss_identity. Actual architecture is matched, so DECLARED_INTERVENTION_NOT_OBSERVED and SCIENTIFIC_CONTRACT_MISMATCH remain explicit. No validator extension, post-hoc scope fix or rerun authorization.",
+    "missing_cost": "Entire platform release unknown; traces retain no cumulative native device time. Hardware remains Tesla T4; measured shared entry is counted once.",
+    "optimizer_fused": "Observed retained last_checkpoint optimizer param_group fused is null (default), not changed to a fabricated false.",
+    "ordinary_artifacts": "Fresh prediction manifests exported from parent mechanical/hash results; frozen accepted row/target/target-transform assets reused without new role access or target-stat recomputation. Source config, roles and cost metadata have distinct bindings.",
+    "scientific_scope": "Parent negative numerical nomination decision; no strict causal/independent-held-out/seed-variance or READY claim.",
+    "terminal_binding": "Evidence artifact only: attaching comparison_readiness_ref requires replay-eligible accepted reference in current finalizer. This pair is excluded."
+  },
+  "recoverable_without_training": [],
+  "reference_artifact_bindings": {
+    "acceptance": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/acceptance.json",
+      "sha256": "2e7cc4386f3a40b8d74eccd89e143c6745e170a494ee06fcbd64b9917aa20c81"
+    },
+    "checkpoint": {
+      "ref": "platforms/_records/kaggle/training/molgap-k1-clean-second-100k-s42-v1/terminal_20261010/experiment/mean2/selected_model.pt",
+      "sha256": "0042a82dd5554e2172b1e50026ff51c0dbfd1ff4ebf73aa61e4244168b1d181f"
+    },
+    "cost_records": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/cost_records.json",
+      "sha256": "a181b8275ae851e8606c9758aa889eef9627c9ded49710e707be380f8d17f91f"
+    },
+    "decision": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/decision.md",
+      "sha256": "a0e6ce0983bf215925ad4922ce60b270b8183f3430b18e444e84cc14226e7c01"
+    },
+    "prediction_manifest": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/prediction_manifest.json",
+      "sha256": "16d0ad369cea11963d9722b50c5395739959f33be326efca8690f0d5f8f7f2c3"
+    },
+    "role_history": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/role_records.json",
+      "sha256": "796347ca359670f9d2c07bdf546a8af99af12e775bda9b8cd9a0701d234d3fa2"
+    },
+    "row_manifest": {
+      "ref": "experiments/pcqm_k1_slot_width96/reference_binding/row_manifest.json",
+      "sha256": "93055246a5d72067e063c7f366efa32b11909709a9363d87821c6c94af52920f"
+    },
+    "runtime_certificate": {
+      "ref": "platforms/_records/kaggle/training/molgap-k1-clean-second-100k-s42-v1/terminal_20261010/experiment/mean2/runtime_certificate.json",
+      "sha256": "a69f231fe956b27cbbb3134eebfd2ab9b99f13acc54f119d0d7ce3c4286909ff"
+    },
+    "source_config": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/source_config.json",
+      "sha256": "289303d9a7e6385fa8dfe983660deabd25d50bea0a0ad26baf40bd847508ab01"
+    },
+    "target_manifest": {
+      "ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+    },
+    "target_transform_asset": {
+      "ref": "experiments/pcqm_k1_slot_width96/reference_binding/target_transform.json",
+      "sha256": "7633713dd6128407cdd3035275ec56f44153ac316f42d7bca283ec25ef75de3d"
+    },
+    "trace_manifest": {
+      "ref": "experiments/pcqm_k1_clean_second_100k/terminal_acceptance/rml_support/mean2/custody_manifest.json",
+      "sha256": "8dcde4c0f19f12f0d03c6e5ae28efad212d4245c9f7dc8e865c7db6b83143346"
+    }
+  },
+  "reference_bundle_id": "k1-clean-second-fresh-mean2-s42-v1-terminal-custody",
+  "reference_bundle_sha256": "41d414021689a1db6398375ff211c9e4ec6997e7e8957463b5a9ff3f003a9719",
+  "reference_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+  "reference_observed_role_event_kinds": [
+    "labels_read",
+    "metric_computed",
+    "prediction_input",
+    "selection_used",
+    "training_membership"
+  ],
+  "reference_prediction_status": "complete",
+  "reference_role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "reference_trace_field_availability": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "rerun_required_blockers": [
+    "DECLARED_INTERVENTION_NOT_OBSERVED",
+    "SCIENTIFIC_CONTRACT_MISMATCH"
+  ],
+  "role_status": "complete",
+  "row_alignment_status": "aligned",
+  "runtime_certificate_status": "accepted",
+  "stochasticity_status": "single_seed_training_variance_unknown",
+  "strict_ready": false,
+  "strict_status": "NOT_STRICT",
+  "trace_status": "complete"
+}

@@ -1,0 +1,26 @@
+{
+  "format": "molgap-k1-runtime-provenance-v1",
+  "context": {
+    "experiment_id": "molgap-k1-clean-second-100k-s42-v1",
+    "logical_run_id": "molgap-k1-clean-second-100k-s42-v1",
+    "arm_id": "clean_second",
+    "arm_identity": "5d64362aa8d696c29f0efb07e2d49c7109da34822901b1ba9cf061d14d590c02",
+    "spec_identity": "a98b2ffe226ece2e6bf7319611fc747560a30af1ee613f030c60da510e945716",
+    "family_name": "neural_atom_k1",
+    "family_version": "2",
+    "source_commit": "3342d047a2a390170ac1aab7b06b716f5734d17d",
+    "source_archive_sha256": "88dc03ada14431f701719bc8ae779e64a7f82d3c87816b9e67648b9dd0301fc5",
+    "package_identity": "d53576661207f90a143daf8502e8e92d686bf1aa388cff645362ebb4289a3766",
+    "training_recipe_sha256": "9fcfae93ba179ead05fa0956ee6f4f53c625577582cb633d27a316b5f3c38a6b",
+    "platform": "kaggle",
+    "account": "nvoid912",
+    "run_reference": "nvoid912/molgap-k1-clean-second-100k-s42-v1",
+    "platform_version": null
+  },
+  "mode": "mean2_clean_second",
+  "recipe_sha256": "9fcfae93ba179ead05fa0956ee6f4f53c625577582cb633d27a316b5f3c38a6b",
+  "initial_state_file_sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+  "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+  "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34"
+}

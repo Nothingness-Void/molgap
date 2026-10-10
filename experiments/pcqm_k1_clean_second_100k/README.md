@@ -9,6 +9,8 @@ Does replacing only the second stochastic training view with a Dropout-off
 view improve clean development Gap MAE against a fresh mean2 control?
 [Protocol](protocol.md) owns the arms, gate, authorization and resource scope;
 [evidence review](evidence_review.md) owns the rationale and evidence limits.
+The [terminal decision](terminal_acceptance/decision.md) and
+[attribution](terminal_acceptance/attribution.md) own the accepted result.
 
 The human user explicitly authorized four fresh arms across two notebooks
 within15 allocated T4 device-hours on2026-10-10. This directory owns slot2:

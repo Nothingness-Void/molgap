@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 444,
+  "ambiguous_historical_role_record_count": 456,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -1892,6 +1892,90 @@
       "state": "consumed"
     },
     {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "common_ood_p8_hard",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "common_ood_p8_hard",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "fixed50k_development",
+      "semantics": "coarse_historical",
+      "state": "selection_used"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "official_train_prefix_0_100000",
+      "semantics": "coarse_historical",
+      "state": "used"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-colab-execution-profile-20261007",
       "role_identity": null,
       "role_name": "development",
@@ -3110,7 +3194,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 264,
+  "explicit_role_event_count": 276,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "fixed50k_development",
@@ -3961,6 +4045,64 @@
         "trajectory_id": "TB-k1-full-convergence-20260919"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fixed50k_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_149999": [
       {
         "access_kind": "selection_used",
@@ -4182,6 +4324,34 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
       },
       {
         "access_kind": "training_membership",
@@ -5132,6 +5302,8 @@
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "pcqm-k1-bn-mechanism-a100-20261008",
       "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
       "pcqm-k1-colab-execution-profile-20261007",
       "pcqm-k1-complete-module-audit-20261008",
       "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
@@ -5227,6 +5399,8 @@
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "pcqm-k1-bn-mechanism-a100-20261008",
       "pcqm-k1-clean-fit-generalization-500k-20261009",
+      "pcqm-k1-clean-second-100k-s42-v1-clean_second-terminal",
+      "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
       "pcqm-k1-colab-execution-profile-20261007",
       "pcqm-k1-complete-module-audit-20261008",
       "pcqm-k1-consistency-500k-k1_pretrained_consistency-s42-v1-terminal",
@@ -5772,6 +5946,64 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-full-convergence-20260919"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fixed50k_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
       }
     ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_149999": [
@@ -7082,6 +7314,64 @@
         "trajectory_id": "TB-k1-full-convergence-20260919"
       }
     ],
+    "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fixed50k_development": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-labels_read",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-metric_computed",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-prediction_input",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-fixed50k_development-selection_used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-100k-v1:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_149999": [
       {
         "access_kind": "selection_used",
@@ -7303,6 +7593,34 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-ssma-kaggle3-100k-s42-v2"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-clean_second-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-clean_second"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-official_train_prefix_0_100000-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-molgap-k1-clean-second-100k-s42-v1-mean2-official_train_prefix_0_100000-training_membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
       },
       {
         "access_kind": "training_membership",
