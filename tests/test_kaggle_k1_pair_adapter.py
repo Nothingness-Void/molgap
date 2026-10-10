@@ -14,6 +14,7 @@ def test_adapter_reuses_worker_and_frozen_runtime():
     assert '"numpy==1.26.4"' in source
     assert 'deadline - time.time() - 30' in source
     assert source.count("__PAYLOAD_SHA256__") == 1
+    assert 'archive.name != "source_payload.bin"' in source
     assert "kaggle.json" not in source and "KAGGLE_KEY" not in source
 
 

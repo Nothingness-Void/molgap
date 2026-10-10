@@ -64,7 +64,10 @@ def main():
              "torch-geometric==2.6.1", "ogb==1.3.6"], 300)
     source = Path("/kaggle/temp/k1-single-ema-source")
     source.mkdir(exist_ok=False)
-    with tarfile.open(retained / "source.tar.gz") as bundle:
+    archive = retained / declaration["source_archive_storage_name"]
+    if archive.name != "source_payload.bin":
+        raise ValueError("Source archive must use non-extracting Kaggle storage")
+    with tarfile.open(archive) as bundle:
         for member in bundle.getmembers():
             if not (member.isfile() or member.isdir()) or not (
                     source / member.name).resolve().is_relative_to(source.resolve()):
@@ -90,7 +93,7 @@ def main():
                "--dataset-root", str(roots[0]), "--initial-path", str(retained / "initial_state.pt"),
                "--initial-sha256", declaration["files"]["initial_state.pt"],
                "--runconfig-path", str(config_path), "--runconfig-sha256", digest(config_path),
-               "--source-archive", str(retained / "source.tar.gz"),
+               "--source-archive", str(archive),
                "--output", str(OUTPUT / "worker"), "--deadline", str(deadline)]
     process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE,
                                stderr=subprocess.STDOUT, text=True, bufsize=1)

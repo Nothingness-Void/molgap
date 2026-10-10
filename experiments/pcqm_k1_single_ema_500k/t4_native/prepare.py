@@ -85,7 +85,8 @@ def main():
     bundle = build_v4_source_bundle(repo_root=ROOT, relative_paths=allowlist + [BOOTSTRAP],
         output_dir=stage / "source", source_commit=commit)
     for name in ("source.tar.gz", "SOURCE_FILES.json", "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt"):
-        shutil.copyfile(stage / "source" / name, source_dataset / name)
+        storage_name = "source_payload.bin" if name == "source.tar.gz" else name
+        shutil.copyfile(stage / "source" / name, source_dataset / storage_name)
     for name in ("inputs.json", "protocol.md", "role_plan.json"):
         shutil.copyfile(HERE / name, source_dataset / name)
     for relative, name in (("trajectory.json", "prospective_trajectory.json"),
@@ -100,6 +101,7 @@ def main():
         "initial_state_sha256": inputs["initial_tensor_sha256"]}
     files = {p.name: sha256_file(p) for p in source_dataset.iterdir() if p.is_file()}
     declaration = {"wall_limit_seconds": 32400, "files": files, "runconfig": runconfig,
+        "source_archive_storage_name": "source_payload.bin",
         "graph_mount": "pcqm4mv2-ogb-fixed-500k-scnet-v1", "manifest_sha256": inputs["manifest_sha256"]}
     atomic_json(source_dataset / "k1_t4_payload.json", declaration)
     atomic_json(source_dataset / "dataset-metadata.json", {"id": DATASET,
