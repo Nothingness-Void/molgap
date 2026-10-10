@@ -1,0 +1,124 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-source-dependence-s42",
+  "receipt_version": 1,
+  "files": [
+    {
+      "path": "gptrans_source_dependence/allocation.json",
+      "sha256": "9707df3e7187cf904fbcdfb175727d2a07816a43584b2063c375d14fa34e7c9f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/environment.json",
+      "sha256": "d972fd76f971b52ddbd8cdffb46ccfa0b59304ddb836fc8a2da0ea3ba6e5a2f9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/allocation_ledger.json",
+      "sha256": "bcffa4d12a0f2b86ec55a40b5bd970cbeca4b91416e4304c002807f6db12b2b8",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/runtime.json",
+      "sha256": "c665d8d5be5882948d50a08c8e50611a136b92a44948daffe80ea271c8ba049d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/triplet_unseen_500k_00.pt",
+      "sha256": "32dc12722f99853e9b8d646a8d5247c8a0d27138e5bae9389a0b317995da282e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/parent_original_100k_02.pt",
+      "sha256": "68a2d90f197f64c6761d661f1f110764e6a55ca0cb4ca1c3fe010dcf22d0bdea",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/parent_original_100k_03.pt",
+      "sha256": "b3e0767a272449afe5b2a3fce5fffc9bfee74b5cc3ec5378d262519251afa9c4",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/terminal.json",
+      "sha256": "bba2cd0647b7c8067dc2699236a04a4a1e026985c3d09f20e8be78adc6378a89",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/triplet_original_100k_00.pt",
+      "sha256": "3bc1e6c84c568c94eb199549684923f2045ad69922cd27ffa2a70537f3e07b7f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/triplet_unseen_500k_01.pt",
+      "sha256": "e6ce21e67171aff81f26ee2c398661eceb4011a6e06652f91374dbe595ac3b4f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/triplet_unseen_500k_02.pt",
+      "sha256": "6f1a6522b1ecb990f64a877cc1db561d6b580453a072371071ec0820fcbdf9be",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/triplet_original_100k_03.pt",
+      "sha256": "4f10f777b65d521697956ed4168eaee037454ed837dd9e4b33d4345e1f74a2a3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/role_events.json",
+      "sha256": "347d6cc64cda10b7fc6722cf74c695091b398d56bf7451e552dda554c7f387dc",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/triplet_unseen_500k_03.pt",
+      "sha256": "a9f137e7318d55f296963f17f4b2fae49f6965851153781d91b3520e69de125f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/parent_unseen_500k_01.pt",
+      "sha256": "4693127546e30a07ed5f894aad9aebe15d1b158580f1fe2786a9c18386f793a1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/progress.json",
+      "sha256": "b51a187b5bf493a65a7c17532dba749802c958566f6a30ff1f91206a7f874269",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/triplet_original_100k_01.pt",
+      "sha256": "ef68a7739756ca88cd3d44047e6482127f0a632f2ed676137ee7715f04396151",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/triplet_original_100k_02.pt",
+      "sha256": "c9904410ef542bfff26d48da3d06cdf66936e28fb5a8a498261f6d8d231d789b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/parent_original_100k_00.pt",
+      "sha256": "6b50bc699d6235ab1e305de18ff492430a85b0b2677e6e8b09e8991669761c48",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/parent_unseen_500k_00.pt",
+      "sha256": "a84705168c5434b93edbcca1b2d377bf900487f7cb4658689764e13420e879b3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/parent_unseen_500k_03.pt",
+      "sha256": "93a18ffe33940a09e6fad1a8fae0be16911fbe0c7bc875a2cb4f950094b01a50",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/parent_original_100k_01.pt",
+      "sha256": "7ea0f20d64a237525d747642437a1c0b178edc8e6f723adf054f6e98caceaf80",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_source_dependence/sources/parent_unseen_500k_02.pt",
+      "sha256": "e6b0e17b9ce541822fce7eba20fc48691238380d22d21bc9187175a59931c399",
+      "state": "RETAINED"
+    }
+  ],
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": true
+}

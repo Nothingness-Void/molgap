@@ -8,3 +8,7 @@ established. The [protocol](protocol.md), [role plan](role_plan.json),
 Prepared/reconciled submission evidence belongs in `release_binding.json` and
 `submission_receipt.json`. No successor training was released by this decision.
 No terminal scientific result was available at this dated release decision.
+
+The separately dated [terminal interpretation](decision_terminal.md) records
+independent acceptance and descriptive source/gate findings without a training
+claim or an automatic successor.

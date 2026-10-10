@@ -1,0 +1,28 @@
+{
+  "original_100k": {
+    "rows": 512,
+    "role_range": [
+      100000,
+      150000
+    ],
+    "panel_sha256": "d05336c4cf14292ce987808a638e6ecb16e8e0cb2603b1a6b2f1f17130c6e73b",
+    "reused_development": true,
+    "checkpoint_sha256": {
+      "parent": "2bb415bc2bf3b3fc66c293619d633c5f5f0b40d60c6e30d76f6b7d03ba1b246a",
+      "triplet": "b34530bb0f38d53c38edb90cf7aedfcd74a7793326e5e1817d56b3b6a845e287"
+    }
+  },
+  "unseen_500k": {
+    "rows": 512,
+    "role_range": [
+      500000,
+      550000
+    ],
+    "panel_sha256": "d05336c4cf14292ce987808a638e6ecb16e8e0cb2603b1a6b2f1f17130c6e73b",
+    "reused_development": true,
+    "checkpoint_sha256": {
+      "parent": "2bb415bc2bf3b3fc66c293619d633c5f5f0b40d60c6e30d76f6b7d03ba1b246a",
+      "triplet": "b34530bb0f38d53c38edb90cf7aedfcd74a7793326e5e1817d56b3b6a845e287"
+    }
+  }
+}

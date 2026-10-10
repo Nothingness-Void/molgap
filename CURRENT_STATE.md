@@ -7,9 +7,12 @@
 ## Server active screen
 
 The authorized [source-dependence assay](experiments/pcqm_gptrans_source_dependence/protocol.md)
-is submitted and reconciled RUNNING on Kaggle2. It changes no model, runs no
-training and releases no automatic successor. Exact identity and existing Luna B
-custody are in its [status](experiments/pcqm_gptrans_source_dependence/STATUS.md).
+is accepted and closed NO_TRAIN / CONTEXT_ONLY. Its cohort observations did not
+establish broad source collapse or gate starvation; retain the
+[terminal interpretation](experiments/pcqm_gptrans_source_dependence/decision_terminal.md).
+The applicable diagnostic RML record is finalized, not a training Replay pair.
+Its existing Luna B event/binding are closed and heartbeat paused. No successor
+training, scale-up or extra seed is released.
 
 The authorized [triplet frozen-cohort diagnostic](experiments/pcqm_gptrans_triplet_portability/protocol.md)
 is accepted and closed NO_TRAIN / PAIRED_ENDPOINT. Its later-cohort point gain

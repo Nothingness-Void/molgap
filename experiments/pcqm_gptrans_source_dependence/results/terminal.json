@@ -1,0 +1,416 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_source_dependence/results/terminal_acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_source_dependence/budget.json": "706639ca7e2927e2030e130a96a5648ac2746535a802d092ed5b05c565207483",
+    "experiments/pcqm_gptrans_source_dependence/contract.json": "612b9c357efacfadb5bbb3e2c3f1a3d0b092b66550add3bf03aaad871884d81a",
+    "experiments/pcqm_gptrans_source_dependence/decision.md": "545a84cc95479216172313cffeee8cfe2cfa81229f71bd71d1326e428f6fcced",
+    "experiments/pcqm_gptrans_source_dependence/decision_terminal.md": "2b3255d070abbe097970208efeb7093f0ef51a132d1a7e99eb579e9a1b4a4f58",
+    "experiments/pcqm_gptrans_source_dependence/protocol.md": "95b3f1a3454ac2d253687f30e6c8215ae1fadc415b4e884296ebd16f92a872c1",
+    "experiments/pcqm_gptrans_source_dependence/release_binding.json": "a0991b54626815e0121250df93bb5bc1035f7566c7791c84533d203206edd7cf",
+    "experiments/pcqm_gptrans_source_dependence/results/acceptance_summary.json": "afddc18c112e095b38d62058a9366b93219ce422fd2213b260ebc61ac05e2b7f",
+    "experiments/pcqm_gptrans_source_dependence/results/artifact_retrieval.json": "ce025160ce3334034c82bd2d3bbac7d9d17fc48160d42cc40959601c0d13fa5c",
+    "experiments/pcqm_gptrans_source_dependence/results/cost_records.json": "b555360df3093825963a8e19dafe7db37d79e4d6f5ccc9f2f214069d42da9831",
+    "experiments/pcqm_gptrans_source_dependence/results/descriptive_analysis.json": "5204a38e7a51a7875db6661fe3aebecf7f46639d2d8d1ab3963d051b8db94d00",
+    "experiments/pcqm_gptrans_source_dependence/results/execution.json": "5aa3de4c7aa4f9aa8dd475c2d45c59c66226c7cbdeda534451b233737911592f",
+    "experiments/pcqm_gptrans_source_dependence/results/metadata_retrieval.json": "e64aaa39d2d050818a16172c917b78ba13f9b67c333c8528c8cd124d9219bbab",
+    "experiments/pcqm_gptrans_source_dependence/results/role_history.json": "04c655c0da8402dc56906aa52c73312c88d5a83985a3fc5db1fb1eaf534a2d8d",
+    "experiments/pcqm_gptrans_source_dependence/results/role_row_manifests.json": "9a1f7dd7311bc3b76e135afe9b8ad7f14e1096e0695880678c3478614c3c8e42",
+    "experiments/pcqm_gptrans_source_dependence/results/terminal_acceptance.json": "6719df643f71f89bd6137c37085302869242ab3eb931f8c35117654c91b62b46",
+    "experiments/pcqm_gptrans_source_dependence/role_plan.json": "e750eeebba731ef4da41064d9fb1a0c4cd48402d092b81c44bf649062edb860d",
+    "experiments/pcqm_gptrans_source_dependence/submission_receipt.json": "476fc082a183450056391ce5116752d023cc6fa9f34ab63e6adeead75c51fa30",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/allocation.json": "9707df3e7187cf904fbcdfb175727d2a07816a43584b2063c375d14fa34e7c9f",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/allocation_ledger.json": "bcffa4d12a0f2b86ec55a40b5bd970cbeca4b91416e4304c002807f6db12b2b8",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/environment.json": "d972fd76f971b52ddbd8cdffb46ccfa0b59304ddb836fc8a2da0ea3ba6e5a2f9",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/output_manifest.json": "8f6f362b33df247b6f73bec70e43f186d5967bc4833ebddace554560b6720553",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_original_100k_00.pt": "6b50bc699d6235ab1e305de18ff492430a85b0b2677e6e8b09e8991669761c48",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_original_100k_01.pt": "7ea0f20d64a237525d747642437a1c0b178edc8e6f723adf054f6e98caceaf80",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_original_100k_02.pt": "68a2d90f197f64c6761d661f1f110764e6a55ca0cb4ca1c3fe010dcf22d0bdea",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_original_100k_03.pt": "b3e0767a272449afe5b2a3fce5fffc9bfee74b5cc3ec5378d262519251afa9c4",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_unseen_500k_00.pt": "a84705168c5434b93edbcca1b2d377bf900487f7cb4658689764e13420e879b3",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_unseen_500k_01.pt": "4693127546e30a07ed5f894aad9aebe15d1b158580f1fe2786a9c18386f793a1",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_unseen_500k_02.pt": "e6b0e17b9ce541822fce7eba20fc48691238380d22d21bc9187175a59931c399",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_unseen_500k_03.pt": "93a18ffe33940a09e6fad1a8fae0be16911fbe0c7bc875a2cb4f950094b01a50",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/progress.json": "b51a187b5bf493a65a7c17532dba749802c958566f6a30ff1f91206a7f874269",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/role_events.json": "347d6cc64cda10b7fc6722cf74c695091b398d56bf7451e552dda554c7f387dc",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/runtime.json": "c665d8d5be5882948d50a08c8e50611a136b92a44948daffe80ea271c8ba049d",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/terminal.json": "bba2cd0647b7c8067dc2699236a04a4a1e026985c3d09f20e8be78adc6378a89",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_original_100k_00.pt": "3bc1e6c84c568c94eb199549684923f2045ad69922cd27ffa2a70537f3e07b7f",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_original_100k_01.pt": "ef68a7739756ca88cd3d44047e6482127f0a632f2ed676137ee7715f04396151",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_original_100k_02.pt": "c9904410ef542bfff26d48da3d06cdf66936e28fb5a8a498261f6d8d231d789b",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_original_100k_03.pt": "4f10f777b65d521697956ed4168eaee037454ed837dd9e4b33d4345e1f74a2a3",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_unseen_500k_00.pt": "32dc12722f99853e9b8d646a8d5247c8a0d27138e5bae9389a0b317995da282e",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_unseen_500k_01.pt": "e6ce21e67171aff81f26ee2c398661eceb4011a6e06652f91374dbe595ac3b4f",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_unseen_500k_02.pt": "6f1a6522b1ecb990f64a877cc1db561d6b580453a072371071ec0820fcbdf9be",
+    "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_unseen_500k_03.pt": "a9f137e7318d55f296963f17f4b2fae49f6965851153781d91b3520e69de125f"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "audit",
+      "cost_event_id": "cost-TC-gptrans-source-dependence-s42-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_source_dependence/results/terminal_acceptance.json",
+      "hardware": "Tesla_T4_16GB",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 0.039385746788333335
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.019692873394166668
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "gptrans-source-dependence:v1",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-source-dependence-s42-v1"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_source_dependence/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "new mechanism evidence and explicit prospective authority"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/output_manifest.json",
+        "name": "output_manifest",
+        "sha256": "8f6f362b33df247b6f73bec70e43f186d5967bc4833ebddace554560b6720553"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/allocation.json",
+        "name": "allocation",
+        "sha256": "9707df3e7187cf904fbcdfb175727d2a07816a43584b2063c375d14fa34e7c9f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/environment.json",
+        "name": "environment",
+        "sha256": "d972fd76f971b52ddbd8cdffb46ccfa0b59304ddb836fc8a2da0ea3ba6e5a2f9"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/allocation_ledger.json",
+        "name": "allocation_ledger",
+        "sha256": "bcffa4d12a0f2b86ec55a40b5bd970cbeca4b91416e4304c002807f6db12b2b8"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/runtime.json",
+        "name": "runtime",
+        "sha256": "c665d8d5be5882948d50a08c8e50611a136b92a44948daffe80ea271c8ba049d"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/terminal.json",
+        "name": "terminal",
+        "sha256": "bba2cd0647b7c8067dc2699236a04a4a1e026985c3d09f20e8be78adc6378a89"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/role_events.json",
+        "name": "role_events",
+        "sha256": "347d6cc64cda10b7fc6722cf74c695091b398d56bf7451e552dda554c7f387dc"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/progress.json",
+        "name": "progress",
+        "sha256": "b51a187b5bf493a65a7c17532dba749802c958566f6a30ff1f91206a7f874269"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_unseen_500k_00.pt",
+        "name": "triplet_unseen_500k_00",
+        "sha256": "32dc12722f99853e9b8d646a8d5247c8a0d27138e5bae9389a0b317995da282e"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_original_100k_02.pt",
+        "name": "parent_original_100k_02",
+        "sha256": "68a2d90f197f64c6761d661f1f110764e6a55ca0cb4ca1c3fe010dcf22d0bdea"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_original_100k_03.pt",
+        "name": "parent_original_100k_03",
+        "sha256": "b3e0767a272449afe5b2a3fce5fffc9bfee74b5cc3ec5378d262519251afa9c4"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_original_100k_00.pt",
+        "name": "triplet_original_100k_00",
+        "sha256": "3bc1e6c84c568c94eb199549684923f2045ad69922cd27ffa2a70537f3e07b7f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_unseen_500k_01.pt",
+        "name": "triplet_unseen_500k_01",
+        "sha256": "e6ce21e67171aff81f26ee2c398661eceb4011a6e06652f91374dbe595ac3b4f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_unseen_500k_02.pt",
+        "name": "triplet_unseen_500k_02",
+        "sha256": "6f1a6522b1ecb990f64a877cc1db561d6b580453a072371071ec0820fcbdf9be"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_original_100k_03.pt",
+        "name": "triplet_original_100k_03",
+        "sha256": "4f10f777b65d521697956ed4168eaee037454ed837dd9e4b33d4345e1f74a2a3"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_unseen_500k_03.pt",
+        "name": "triplet_unseen_500k_03",
+        "sha256": "a9f137e7318d55f296963f17f4b2fae49f6965851153781d91b3520e69de125f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_unseen_500k_01.pt",
+        "name": "parent_unseen_500k_01",
+        "sha256": "4693127546e30a07ed5f894aad9aebe15d1b158580f1fe2786a9c18386f793a1"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_original_100k_01.pt",
+        "name": "triplet_original_100k_01",
+        "sha256": "ef68a7739756ca88cd3d44047e6482127f0a632f2ed676137ee7715f04396151"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/triplet_original_100k_02.pt",
+        "name": "triplet_original_100k_02",
+        "sha256": "c9904410ef542bfff26d48da3d06cdf66936e28fb5a8a498261f6d8d231d789b"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_original_100k_00.pt",
+        "name": "parent_original_100k_00",
+        "sha256": "6b50bc699d6235ab1e305de18ff492430a85b0b2677e6e8b09e8991669761c48"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_unseen_500k_00.pt",
+        "name": "parent_unseen_500k_00",
+        "sha256": "a84705168c5434b93edbcca1b2d377bf900487f7cb4658689764e13420e879b3"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_unseen_500k_03.pt",
+        "name": "parent_unseen_500k_03",
+        "sha256": "93a18ffe33940a09e6fad1a8fae0be16911fbe0c7bc875a2cb4f950094b01a50"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_original_100k_01.pt",
+        "name": "parent_original_100k_01",
+        "sha256": "7ea0f20d64a237525d747642437a1c0b178edc8e6f723adf054f6e98caceaf80"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "platforms/_records/kaggle/training/gptrans_source_dependence_v1/gptrans_source_dependence/sources/parent_unseen_500k_02.pt",
+        "name": "parent_unseen_500k_02",
+        "sha256": "e6b0e17b9ce541822fce7eba20fc48691238380d22d21bc9187175a59931c399"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_gptrans_source_dependence/results/acceptance_summary.json",
+        "name": "acceptance_summary",
+        "sha256": "afddc18c112e095b38d62058a9366b93219ce422fd2213b260ebc61ac05e2b7f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_gptrans_source_dependence/results/execution.json",
+        "name": "execution",
+        "sha256": "5aa3de4c7aa4f9aa8dd475c2d45c59c66226c7cbdeda534451b233737911592f"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_gptrans_source_dependence/results/role_row_manifests.json",
+        "name": "role_row_manifests",
+        "sha256": "9a1f7dd7311bc3b76e135afe9b8ad7f14e1096e0695880678c3478614c3c8e42"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_gptrans_source_dependence/results/role_history.json",
+        "name": "role_history",
+        "sha256": "04c655c0da8402dc56906aa52c73312c88d5a83985a3fc5db1fb1eaf534a2d8d"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_gptrans_source_dependence/results/cost_records.json",
+        "name": "cost_records",
+        "sha256": "b555360df3093825963a8e19dafe7db37d79e4d6f5ccc9f2f214069d42da9831"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_gptrans_source_dependence/results/descriptive_analysis.json",
+        "name": "descriptive_analysis",
+        "sha256": "5204a38e7a51a7875db6661fe3aebecf7f46639d2d8d1ab3963d051b8db94d00"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_gptrans_source_dependence/results/metadata_retrieval.json",
+        "name": "metadata_retrieval",
+        "sha256": "e64aaa39d2d050818a16172c917b78ba13f9b67c333c8528c8cd124d9219bbab"
+      },
+      {
+        "availability": "repository_retained",
+        "locator": "experiments/pcqm_gptrans_source_dependence/results/artifact_retrieval.json",
+        "name": "artifact_retrieval",
+        "sha256": "ce025160ce3334034c82bd2d3bbac7d9d17fc48160d42cc40959601c0d13fa5c"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_source_dependence/protocol.md",
+        "experiments/pcqm_gptrans_source_dependence/contract.json",
+        "experiments/pcqm_gptrans_source_dependence/role_plan.json",
+        "experiments/pcqm_gptrans_source_dependence/budget.json",
+        "experiments/pcqm_gptrans_source_dependence/release_binding.json",
+        "experiments/pcqm_gptrans_source_dependence/submission_receipt.json",
+        "experiments/pcqm_gptrans_source_dependence/decision.md",
+        "experiments/pcqm_gptrans_source_dependence/decision_terminal.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-source-dependence-s42-v1",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-10T18:22:28.756395+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "saved remote artifacts; no local model inference; distinct NO_TRAIN evidence"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "within_frozen_cap",
+      "comparison_status": "context_only",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "no_train_source_observations",
+      "transfer_status": "not_tested"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "used",
+      "internal_development_500000_550000": "used",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "frozen_source_dependence_NO_TRAIN_no_causal_training_claim",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-10T18:22:28.756395+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "used",
+    "internal_development_500000_550000": "used",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_source_dependence/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-source-dependence-s42-v1-original_100k-prediction_input",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1069ec720139f6b9bd5b1f53ef8bf800d1b30444ab5f4103d3e79a50e5937444",
+      "run_id": "gptrans-source-dependence:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-source-dependence-s42-v1"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_source_dependence/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-source-dependence-s42-v1-original_100k-labels_read",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1069ec720139f6b9bd5b1f53ef8bf800d1b30444ab5f4103d3e79a50e5937444",
+      "run_id": "gptrans-source-dependence:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-source-dependence-s42-v1"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_source_dependence/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-source-dependence-s42-v1-original_100k-metric_computed",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1069ec720139f6b9bd5b1f53ef8bf800d1b30444ab5f4103d3e79a50e5937444",
+      "run_id": "gptrans-source-dependence:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-source-dependence-s42-v1"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_source_dependence/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-source-dependence-s42-v1-unseen_500k-prediction_input",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "1edb567c2870f0eedffbd59939145ce809e42d7733f281f20bd3987cf3cc9135",
+      "run_id": "gptrans-source-dependence:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-source-dependence-s42-v1"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_source_dependence/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-source-dependence-s42-v1-unseen_500k-labels_read",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "1edb567c2870f0eedffbd59939145ce809e42d7733f281f20bd3987cf3cc9135",
+      "run_id": "gptrans-source-dependence:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-source-dependence-s42-v1"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_source_dependence/results/terminal_acceptance.json",
+      "role_event_id": "role-TC-gptrans-source-dependence-s42-v1-unseen_500k-metric_computed",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "1edb567c2870f0eedffbd59939145ce809e42d7733f281f20bd3987cf3cc9135",
+      "run_id": "gptrans-source-dependence:v1",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-source-dependence-s42-v1"
+    }
+  ],
+  "run_id": "gptrans-source-dependence:v1",
+  "trajectory_id": "TC-gptrans-source-dependence-s42-v1"
+}

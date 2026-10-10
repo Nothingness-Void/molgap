@@ -82,3 +82,5 @@ retained positive-but-uncertain point evidence without passing the frozen gate.
 The 2026-10-11 [source-dependence assay](pcqm_gptrans_source_dependence/decision.md)
 was authorized for read-only attention/gate observations on fixed input-only
 panels, not training or a causal training claim.
+Its [terminal interpretation](pcqm_gptrans_source_dependence/decision_terminal.md)
+did not establish broad source collapse or gate starvation and released no training.
