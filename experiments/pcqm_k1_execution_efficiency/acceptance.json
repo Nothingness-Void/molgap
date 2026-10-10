@@ -1,0 +1,153 @@
+{
+  "evidence_id": "pcqm-k1-execution-efficiency-20261010",
+  "run_id": "k1-execution-efficiency-local-20261010",
+  "outcome": {
+    "execution_status": "scratch_probe_complete_checkpoint_metadata_failed",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "matched_cpu_scratch_execution_only",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "scratch_probe_complete_worker_accounting_partial",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_execution_efficiency/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Fresh prospective and idle local GPU qualification; separate native T4 runtime contract"
+    ]
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-execution-efficiency-train_probe_decoded-labels_read",
+      "trajectory_id": "TB-k1-execution-efficiency-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-efficiency-local-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_probe_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-execution-efficiency-train_probe_executed-prediction_input",
+      "trajectory_id": "TB-k1-execution-efficiency-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-efficiency-local-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8db6deee0c5782c37e7ea8c4b2faa32351fcbbc5dae424f6a92455c7e4fa0dd9",
+      "role_name": "train_probe_executed",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-execution-efficiency-train_probe_executed-metric_computed",
+      "trajectory_id": "TB-k1-execution-efficiency-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-efficiency-local-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8db6deee0c5782c37e7ea8c4b2faa32351fcbbc5dae424f6a92455c7e4fa0dd9",
+      "role_name": "train_probe_executed",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/acceptance.json"
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-execution-efficiency-cpu-observed",
+      "trajectory_id": "TB-k1-execution-efficiency-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-efficiency-local-20261010",
+      "attempt_id": "cpu-attempt-001",
+      "platform": "local-windows",
+      "hardware": "CPU four intra-op threads; no accelerator work",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.0656402355555555,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "role_use": {
+    "train_probe_decoded": "labels_read",
+    "train_probe_executed": "prediction_input",
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "checks": {
+    "prospective": true,
+    "source_snapshot": true,
+    "artifact_hashes": true,
+    "baseline_replay": true,
+    "train_only": true,
+    "bounded_scratch_probe": true
+  },
+  "case_qualification": {
+    "baseline": {
+      "exact": true,
+      "execution_only_admissible": true,
+      "status": "qualified"
+    },
+    "non_blocking": {
+      "exact": true,
+      "execution_only_admissible": true,
+      "status": "qualified"
+    },
+    "no_redundant_sync": {
+      "exact": true,
+      "execution_only_admissible": true,
+      "status": "qualified"
+    },
+    "transfer_and_sync": {
+      "exact": true,
+      "execution_only_admissible": true,
+      "status": "qualified"
+    },
+    "foreach": {
+      "exact": true,
+      "execution_only_admissible": false,
+      "status": "qualified"
+    },
+    "fused": {
+      "exact": false,
+      "execution_only_admissible": false,
+      "status": "numerical_mismatch"
+    },
+    "cpu_layout": {
+      "exact": true,
+      "execution_only_admissible": true,
+      "status": "qualified"
+    }
+  },
+  "checkpoint_resume_exact": null,
+  "execution_scope": "Discarded scratch updates on training-only members; no scientific fitting/selection",
+  "gpu_qualification": "not_run_background_load",
+  "training_replay_ready": false,
+  "cost_scope": "Measured scratch-probe wall only; total worker wall, process CPU, preparation and test costs unavailable",
+  "infrastructure_failure_ref": "experiments/pcqm_k1_execution_efficiency/infrastructure_failure.json"
+}

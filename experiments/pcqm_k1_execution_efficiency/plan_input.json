@@ -1,0 +1,137 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-execution-efficiency-20261010",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-execution-efficiency",
+    "question": "Which K1 execution changes reduce scratch-step cost without changing tensors or RNG?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-execution-efficiency-20261010",
+      "supporting_evidence_ids": [
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "observed_deficiency": "Small operators and repeated host/device shape synchronizations may limit the current FP32 K1 loop.",
+      "alternative_explanations": [
+        "Local edge computation dominates",
+        "Existing guards still synchronize",
+        "Windows local runtime is not T4"
+      ],
+      "changed_mechanism": "Opt-in CPU dense layout, nonblocking transfer and redundant-barrier removal; optimizer paths diagnosed separately",
+      "cheapest_falsifier": "Three exact scratch steps then repeated short BS128 train-only timing windows",
+      "decision_changed_if_positive": "Nominate an exactly equivalent execution addon for separate native runtime qualification",
+      "decision_changed_if_negative": "Keep default execution and record the missing bottleneck discriminator",
+      "expected_native_cost_ref": "cost-k1-execution-efficiency-local-estimate",
+      "related_closed_family_ids": [
+        "k1-execution-profile-a100"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "d2ec1754c18b00cf0502abde8904a30930d7f8e1",
+      "source_config_identity": "e02bf554b1c1998ea3538ad600e971f59ace8f8562ecf4653e343029a5f7a006",
+      "contract_refs": [
+        "experiments/pcqm_k1_execution_efficiency/protocol.md",
+        "experiments/pcqm_k1_execution_efficiency/inputs.json",
+        "experiments/pcqm_k1_execution_efficiency/evidence_review.md"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_execution_efficiency/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_execution_efficiency/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "execution_profile",
+        "run_ids": [
+          "k1-execution-efficiency-local-20261010"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "d2ec1754c18b00cf0502abde8904a30930d7f8e1",
+        "evidence_refs": [
+          "experiments/pcqm_k1_execution_efficiency/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-execution-efficiency-local-estimate"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_execution_efficiency/decision.md",
+      "next_allowed_actions": [
+        "Bounded local execution-only diagnostic when GPU idle"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "CONTEXT_ONLY",
+    "comparison_readiness_ref": "experiments/pcqm_k1_execution_efficiency/protocol.md",
+    "comparison_blockers": [
+      "Execution diagnostic is not scientific endpoint comparison",
+      "RTX5060 is not T4/A100"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-execution-efficiency-local-estimate",
+      "trajectory_id": "TB-k1-execution-efficiency-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-efficiency-local-20261010",
+      "attempt_id": "attempt-001",
+      "platform": "local",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "category": "preflight",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/protocol.md",
+      "measurement": {
+        "device_hours": {
+          "value": 0.5,
+          "status": "estimated"
+        },
+        "wall_hours": {
+          "value": 0.5,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_DIAGNOSTIC",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_DIAGNOSTIC",
+    "policy_id": "pcqm-k1-execution-efficiency",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_execution_efficiency/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_execution_efficiency/role_plan.json"
+    ],
+    "source_commit": "d2ec1754c18b00cf0502abde8904a30930d7f8e1",
+    "state_timestamp": "2026-10-10T07:11:01.926444+00:00"
+  }
+}

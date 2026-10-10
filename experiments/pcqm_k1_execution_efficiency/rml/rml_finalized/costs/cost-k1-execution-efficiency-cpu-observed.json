@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "cpu-attempt-001",
+  "category": "other",
+  "cost_event_id": "cost-k1-execution-efficiency-cpu-observed",
+  "evidence_ref": "experiments/pcqm_k1_execution_efficiency/acceptance.json",
+  "hardware": "CPU four intra-op threads; no accelerator work",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.0656402355555555
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "k1-execution-efficiency-local-20261010",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-execution-efficiency-20261010"
+}

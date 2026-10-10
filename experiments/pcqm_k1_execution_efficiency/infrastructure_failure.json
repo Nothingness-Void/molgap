@@ -1,0 +1,16 @@
+{
+  "attempt_id": "cpu-attempt-001",
+  "phase": "checkpoint_publication_metadata",
+  "exception_type": "TypeError",
+  "message": "'int' object is not callable",
+  "source_line": "checkpoint_path.stat().st_size()",
+  "source_commit": "d2ec1754",
+  "probe_result_retained": true,
+  "checkpoint_resume_executed": false,
+  "completion_receipt_retained": false,
+  "worker_exit_code": 1,
+  "worker_wall_seconds": null,
+  "process_cpu_seconds": null,
+  "authority": "Parent-observed local exec session 37925 terminal traceback",
+  "disposition": "Preserve completed probe and exact source snapshot; separate prospective checkpoint-only recovery, never repeat the timing suite merely for a receipt"
+}
