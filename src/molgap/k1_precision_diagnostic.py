@@ -94,6 +94,8 @@ def qualify_precision_report(report, *, repeats=4):
 def probe_k1_precision(factory, batches, mean, std, *, deadline, warmup=3, steps=12, repeats=4):
     """Reuse the strict scratch probe; classify TF32 as a separate contract."""
     from .k1_execution_efficiency import probe_k1_execution_efficiency
+    if not torch.cuda.is_available() or torch.cuda.get_device_capability()[0] < 8:
+        raise ValueError("TF32 requires an Ampere-or-later CUDA device; T4 is unsupported")
     report = probe_k1_execution_efficiency(factory, batches, mean, std, device="cuda",
         wall_seconds=deadline-time.perf_counter(), warmup=warmup, steps=steps, repeats=repeats,
         equivalence_steps=3, atol=1e-6, rtol=1e-5,

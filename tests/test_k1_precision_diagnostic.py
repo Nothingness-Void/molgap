@@ -3,7 +3,7 @@ from copy import deepcopy
 import pytest
 import torch
 
-from molgap.k1_precision_diagnostic import matmul_tf32, prediction_drift, qualify_precision_report
+from molgap.k1_precision_diagnostic import matmul_tf32, prediction_drift, qualify_precision_report, probe_k1_precision
 
 
 @pytest.mark.parametrize("enabled", [False, True])
@@ -85,3 +85,11 @@ def test_complete_top_level_never_masks_case_failure(failure):
         del report["cases"]["tf32"]
     with pytest.raises(ValueError):
         qualify_precision_report(report)
+
+
+@pytest.mark.parametrize("available,capability", [(False, (8, 0)), (True, (7, 5))])
+def test_tf32_probe_rejects_unavailable_or_t4(monkeypatch, available, capability):
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: available)
+    monkeypatch.setattr(torch.cuda, "get_device_capability", lambda: capability)
+    with pytest.raises(ValueError, match="Ampere"):
+        probe_k1_precision(None, None, 0., 1., deadline=1.)

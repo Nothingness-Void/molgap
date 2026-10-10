@@ -41,6 +41,13 @@ Hardware dispatch is an explicit evidence gap in the Windows profiler result.
 describes the speed/rounding tradeoff and hardware dependence; its large-A100-GEMM
 example is not a K1 speed prediction.
 
+T4 is Turing and does not provide TF32 Tensor Cores. The precision probe rejects
+CUDA capability below8 (or unavailable CUDA); a permissive backend flag is not
+hardware support. Native TF32 qualification means A100/Ampere-or-later, not T4.
+T4 Tensor Core use would require a separately validated FP16/mixed-precision
+contract, not enabling TF32. Sources: [T4 datasheet](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/tesla-t4/t4-tensor-core-datasheet.pdf)
+and the PyTorch CUDA semantics linked above.
+
 Small frozen-output perturbations do not qualify retrained MAE. Local same-seed
 short-step comparisons are not independent training seeds or native hardware
 performance certificates. No new remote job or training is released by this review.

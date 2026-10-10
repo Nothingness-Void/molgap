@@ -32,7 +32,8 @@ Subsequent authorized idle-GPU test: see the separately frozen
 record; the GPU attempt neither replaces its failed publication nor reruns it.
 
 The separately prospective [TF32 attempt](tf32_attempt_001/terminal_decision.md)
-completed its bounded worker. Focused tests expanded to63 passed. Per-case closure
+completed its bounded worker. Focused tests expanded to65 passed after the
+Ampere-or-later capability guard (T4 unsupported). Per-case closure
 qualification rejects failures hidden by top-level completion; actual controls
 are exact and all seven cases have four timing windows. The first metadata closure
 was rejected for a missing acceptance run_id; it was repaired without any model
