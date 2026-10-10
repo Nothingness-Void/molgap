@@ -1,0 +1,10 @@
+{
+  "schema": "molgap-policy-v1", "policy_id": "pcqm-k1-local-speed", "version": "1",
+  "status": "candidate", "policy_type": "research_action",
+  "comparability_selector": {"scientific_contract": "pcqm-k1-local-10ep-speed-v1"},
+  "required_observable_fields": ["user_requested_scope_reviewed"],
+  "action_rule": {"action": "RUN_DIAGNOSTIC", "field": "user_requested_scope_reviewed", "operator": "eq", "threshold": 1},
+  "promotion_rule": null, "early_stop_rule": null, "observation_point": null,
+  "borderline_action": "NO_TRAIN", "cost_model": {"kind": "measured_only", "assumptions": []},
+  "approval": {"approved_by": null, "approved_at": null, "authority_ref": null}
+}

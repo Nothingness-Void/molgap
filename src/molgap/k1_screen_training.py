@@ -134,15 +134,7 @@ ROW_ORDER_FINGERPRINT = (
 class _PackedGraphDatasetFactory:
     @staticmethod
     def load(path: Path):
-        import torch
-        from torch_geometric.data import InMemoryDataset
-
-        class PackedGraphDataset(InMemoryDataset):
-            def __init__(self, source: Path):
-                super().__init__(root=None)
-                self.data, self.slices = torch.load(
-                    source, map_location="cpu", weights_only=False
-                )
+        from .packed_graph_dataset import PackedGraphDataset
 
         payload = PackedGraphDataset(path)
         for field in FORBIDDEN_MODEL_FIELDS:
@@ -198,21 +190,28 @@ def find_fixed_cache(input_root: Path) -> tuple[Path, dict]:
     return root, manifest
 
 
-def load_roles(root: Path, manifest: dict):
+def load_roles(root: Path, manifest: dict, *, selected_roles=("train", "development")):
     import torch
     from torch.utils.data import ConcatDataset
 
-    roles = {"train": [], "development": []}
+    if not selected_roles or len(set(selected_roles)) != len(selected_roles) or not set(selected_roles) <= {"train", "development"}:
+        raise ValueError("Select distinct fixed-cache roles")
+    roles = {name: [] for name in selected_roles}
     aggregate = hashlib.sha256()
     expected_start = {"train": 0, "development": TRAIN_ROWS}
     for item in manifest["geometry_shards"]:
+        role = item["role"]
+        aggregate.update(
+            f"{role}\tstore/geometry/{item['file']}\t{item['sha256']}\n".encode("ascii")
+        )
+        if role not in roles:
+            continue
         path = root / item["file"]
         if sha256_file(path) != item["sha256"]:
             raise RuntimeError(f"Fixed shard changed: {item['file']}")
         payload = _PackedGraphDatasetFactory.load(path)
         if len(payload) != item["rows"]:
             raise RuntimeError(f"Fixed shard row count changed: {item['file']}")
-        role = item["role"]
         source_idx = payload._data.source_idx.view(-1).long()
         start = expected_start[role]
         expected = torch.arange(start, start + len(payload), dtype=torch.long)
@@ -220,13 +219,11 @@ def load_roles(root: Path, manifest: dict):
             raise RuntimeError(f"Source order changed: {item['file']}")
         expected_start[role] += len(payload)
         roles[role].append(payload)
-        aggregate.update(
-            f"{role}\tstore/geometry/{item['file']}\t{item['sha256']}\n".encode("ascii")
-        )
     if aggregate.hexdigest() != FIXED_GEOMETRY_SHA256:
         raise RuntimeError("Fixed aggregate recomputation changed")
     combined = {name: ConcatDataset(parts) for name, parts in roles.items()}
-    if len(combined["train"]) != TRAIN_ROWS or len(combined["development"]) != DEVELOPMENT_ROWS:
+    counts = {"train": TRAIN_ROWS, "development": DEVELOPMENT_ROWS}
+    if any(len(combined[name]) != counts[name] for name in selected_roles):
         raise RuntimeError("Fixed role counts changed")
     return combined
 
