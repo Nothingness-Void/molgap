@@ -1,6 +1,7 @@
 {
   "schema": "molgap-policy-v1", "policy_id": "pcqm-k1-local-speed", "version": "1",
   "status": "candidate", "policy_type": "research_action",
+  "created_from_source_digest": "babc73875b5f65de922344f3e156f80df6674c8cfc1a23bc7c4c6680e7579125",
   "comparability_selector": {"scientific_contract": "pcqm-k1-local-10ep-speed-v1"},
   "required_observable_fields": ["user_requested_scope_reviewed"],
   "action_rule": {"action": "RUN_DIAGNOSTIC", "field": "user_requested_scope_reviewed", "operator": "eq", "threshold": 1},
