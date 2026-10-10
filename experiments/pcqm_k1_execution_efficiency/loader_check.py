@@ -54,7 +54,7 @@ def prepare():
     t = spec["trajectory"]
     t.update(trajectory_id=TID, family_id="k1-loader-attribution", comparison_readiness_ref=f"{REL}/README.md",
              question="Does actual CPU graph collation or worker startup dominate the previously excluded input phase?")
-    t["hypothesis"].update(hypothesis_id="H-k1-loader-cpu-20261010", supporting_evidence_ids=prior,
+    t["hypothesis"].update(hypothesis_id="H-" + TID.removeprefix("TB-"), supporting_evidence_ids=prior,
         observed_deficiency="Accepted scratch step timing excluded actual loader startup/fetch; CPU contribution remains unknown.",
         changed_mechanism="Compare original loader worker counts0/2 without GPU/model execution",
         alternative_explanations=["Windows spawn affects startup only", "Graph collation is small", "Pinning and GPU-consumer overlap change native ranking"],
