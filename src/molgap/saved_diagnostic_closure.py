@@ -54,8 +54,11 @@ def close_saved_diagnostic(repo: Path, experiment: Path):
     loader = inputs["kind"] == "loader_metadata"
     if loader:
         if (result["runtime"].get("cuda_initialized") is not False
-                or result["runtime"].get("cuda_visible_devices") != ""):
-            raise ValueError("Loader runtime must hide CUDA without initializing it")
+                or result["runtime"].get("cuda_visible_devices") not in ("", "-1")
+                or result["runtime"].get("cuda_available") is not False
+                or type(result["runtime"].get("cuda_device_count")) is not int
+                or result["runtime"]["cuda_device_count"] != 0):
+            raise ValueError("Loader runtime must hide unavailable CUDA without initializing it")
         expected = inputs.get("source_idx")
         if (type(expected) is not list or len(expected) != 4096
                 or any(type(i) is not int or not 0 <= i < 500000 for i in expected)

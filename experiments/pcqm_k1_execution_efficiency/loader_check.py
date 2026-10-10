@@ -1,7 +1,7 @@
 """CPU loader adapter using existing identity, loader, IO and RML owners."""
 import os
 # The dedicated process must hide CUDA before any family/Torch imports.
-os.environ["CUDA_VISIBLE_DEVICES"] = ""
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 import argparse
 from copy import deepcopy
@@ -68,6 +68,10 @@ def prepare():
     if ATTEMPT.name == "loader_attempt_002":
         t["state_at_start"]["parent_trajectory_ids"].append("TB-k1-loader-cpu-20261010")
         t["hypothesis"]["observed_deficiency"] += " Attempt001 lost check details at final rejection; preserve its failure attribution."
+    elif ATTEMPT.name == "loader_attempt_003":
+        t["state_at_start"]["parent_trajectory_ids"].extend([
+            "TB-k1-loader-cpu-20261010", "TB-k1-loader-cpu-20261010-attempt002"])
+        t["hypothesis"]["observed_deficiency"] += " Attempt002 retained exact batches but observed unexpected CUDA initialization under empty visibility."
     t["actions"] = [dict(action_id="A001", type="execution_profile", run_ids=[RUN], attempt_ids=[ATTEMPT.name.replace("_", "-")],
                          source_commit=head, evidence_refs=[f"{REL}/inputs.json"], cost_event_ids=[COST_ID])]
     t["decision"].update(outcome="ACTIVE", decision_ref=f"{REL}/decision.md", next_allowed_actions=["Bounded TRAIN-only CPU collation"])
@@ -105,8 +109,8 @@ def execute():
     if observed != inputs["source_idx"] or len(graphs) != 4096 or any(
             not 0 <= int(g.source_idx) < 500000 or any(k in g for k in FORBIDDEN_MODEL_FIELDS) for g in graphs):
         raise ValueError("Training-only membership/schema changed")
-    if torch.cuda.is_initialized():
-        raise ValueError("CPU-only process initialized CUDA")
+    if torch.cuda.is_initialized() or torch.cuda.is_available() or torch.cuda.device_count() != 0:
+        raise ValueError("CPU-only process did not actually hide CUDA")
 
     def factory(workers):
         def create():
@@ -123,7 +127,8 @@ def execute():
         else:
             os.environ["MOLGAP_V4_LOADER_WORKERS"] = previous
     checks = dict(batch_membership_exact=True, batch_tensor_bytes_exact=True, owned_workers_stopped=True,
-                  cuda_uninitialized=not torch.cuda.is_initialized())
+                  cuda_uninitialized=not torch.cuda.is_initialized(),
+                  cuda_unavailable=not torch.cuda.is_available() and torch.cuda.device_count() == 0)
     reference = None
     for windows in batches.values():
         for values in windows:
@@ -144,8 +149,9 @@ def execute():
         wall_seconds=wall, process_cpu_seconds=parent_cpu, worker_process_cpu_seconds=child_cpu,
         total_process_cpu_seconds=None,
         observed_parent_plus_worker_cpu_seconds=None if child_cpu is None else parent_cpu + child_cpu,
-        runtime=dict(device="cpu", cpu_threads=4, torch=torch.__version__, cuda_initialized=False,
-                     cuda_visible_devices="", effective_pin_memory=False), observed_source_idx=observed,
+        runtime=dict(device="cpu", cpu_threads=4, torch=torch.__version__, cuda_initialized=torch.cuda.is_initialized(),
+                     cuda_visible_devices=os.environ["CUDA_VISIBLE_DEVICES"], cuda_available=torch.cuda.is_available(),
+                     cuda_device_count=torch.cuda.device_count(), effective_pin_memory=False), observed_source_idx=observed,
         training_executed=False, inference_executed=False, optimizer_created=False, gradients_computed=False,
         loader_profile=report, batch_hashes=reference,
         limits=["Windows CPU fetch without GPU pinning/consumer; not native T4/A100 training throughput",
@@ -161,13 +167,14 @@ def execute():
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("operation", choices=("prepare", "execute", "close"))
-    p.add_argument("--attempt", choices=("loader_attempt_001", "loader_attempt_002"), default="loader_attempt_001")
+    p.add_argument("--attempt", choices=("loader_attempt_001", "loader_attempt_002", "loader_attempt_003"), default="loader_attempt_001")
     args = p.parse_args()
-    if args.attempt == "loader_attempt_002":
+    if args.attempt != "loader_attempt_001":
         ATTEMPT = HERE / args.attempt
         REL = ATTEMPT.relative_to(ROOT).as_posix()
-        TID += "-attempt002"
-        RUN += "-attempt002"
-        COST_ID += "-attempt002"
+        suffix = "-attempt" + args.attempt.rsplit("_", 1)[1]
+        TID += suffix
+        RUN += suffix
+        COST_ID += suffix
     {"prepare": prepare, "execute": execute,
      "close": lambda: print(close_saved_diagnostic(ROOT, ATTEMPT))}[args.operation]()

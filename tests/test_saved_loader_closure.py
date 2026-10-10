@@ -52,7 +52,8 @@ def custody(tmp_path, monkeypatch):
                   training_executed=False, inference_executed=False,
                   optimizer_created=False, gradients_computed=False,
                   runtime=dict(device="cpu", cpu_threads=4,
-                               cuda_initialized=False, cuda_visible_devices=""),
+                               cuda_initialized=False, cuda_visible_devices="",
+                               cuda_available=False, cuda_device_count=0),
                   wall_seconds=12, process_cpu_seconds=2,
                   total_process_cpu_seconds=8,
                   observed_source_idx=inputs["source_idx"].copy())
@@ -73,8 +74,11 @@ def custody(tmp_path, monkeypatch):
     return tmp_path, folder, inputs, result, probe, source, git, finalizer
 
 
-def test_loader_roles_source_custody_and_total_cpu(custody):
+@pytest.mark.parametrize("hidden", ["", "-1"])
+def test_loader_roles_source_custody_and_total_cpu(custody, hidden):
     root, folder, inputs, result, probe, source, git, finalizer = custody
+    result["runtime"]["cuda_visible_devices"] = hidden
+    publish(folder, inputs, result)
     result_before = (folder / "results/result.json").read_bytes()
     trajectory_before = (folder / "rml/trajectory.json").read_bytes()
     assert closure.close_saved_diagnostic(root, folder)["status"] == "synthetic-finalizer-delegation"
@@ -148,6 +152,8 @@ def test_partial_parent_plus_worker_sample_never_becomes_total_cpu(custody, incl
     "model_flag_zero", "model_flag_missing", "false_checks", "numeric_checks", "no_checks",
     "cuda", "cuda_initialized", "cuda_initialized_zero", "cuda_initialized_missing",
     "cuda_visible_devices", "cuda_visible_devices_none", "cuda_visible_devices_missing",
+    "cuda_available_true", "cuda_available_zero", "cuda_available_missing",
+    "cuda_count_bool", "cuda_count_float", "cuda_count_nonzero", "cuda_count_negative", "cuda_count_missing",
     "threads", "kind", "wall_limit", "parent_cpu_bool",
 ])
 def test_loader_refuses_invalid_evidence_before_closure_writes(custody, mutation):
@@ -202,6 +208,22 @@ def test_loader_refuses_invalid_evidence_before_closure_writes(custody, mutation
         result["runtime"]["cuda_visible_devices"] = None
     elif mutation == "cuda_visible_devices_missing":
         result["runtime"].pop("cuda_visible_devices")
+    elif mutation == "cuda_available_true":
+        result["runtime"]["cuda_available"] = True
+    elif mutation == "cuda_available_zero":
+        result["runtime"]["cuda_available"] = 0
+    elif mutation == "cuda_available_missing":
+        result["runtime"].pop("cuda_available")
+    elif mutation == "cuda_count_bool":
+        result["runtime"]["cuda_device_count"] = False
+    elif mutation == "cuda_count_float":
+        result["runtime"]["cuda_device_count"] = 0.0
+    elif mutation == "cuda_count_nonzero":
+        result["runtime"]["cuda_device_count"] = 1
+    elif mutation == "cuda_count_negative":
+        result["runtime"]["cuda_device_count"] = -1
+    elif mutation == "cuda_count_missing":
+        result["runtime"].pop("cuda_device_count")
     elif mutation == "threads":
         result["runtime"]["cpu_threads"] = 8
     elif mutation == "kind":
@@ -227,6 +249,8 @@ def test_old_nonloader_roles_and_parent_cost_unchanged(custody, kind):
     inputs.pop("source_idx")
     result["runtime"].pop("cuda_initialized")
     result["runtime"].pop("cuda_visible_devices")
+    result["runtime"].pop("cuda_available")
+    result["runtime"].pop("cuda_device_count")
     inputs["development_bounds"] = [500000, 500003]
     result["observed_source_idx"] = list(range(500000, 500003)) if kind == "bn_rows" else []
     publish(folder, inputs, result)
