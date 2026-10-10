@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 61,
-  "event_count": 235,
+  "estimated_event_count": 62,
+  "event_count": 237,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,8 +11,8 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 204,
-  "not_applicable_event_count": 82,
+  "measurement_missing_event_count": 205,
+  "not_applicable_event_count": 84,
   "retry_event_ids": [],
   "totals_by_category": {
     "acceptance": {
@@ -1280,8 +1280,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 2,
-          "known_total": 0.002387152777777778
+          "known_records": 3,
+          "known_total": 0.020217013888888892
         },
         "not_applicable_records": 0,
         "unknown_records": 4
@@ -1295,7 +1295,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 6,
+        "not_applicable_records": 7,
         "unknown_records": 0
       },
       "CPU saved-artifact arithmetic; no accelerator:queue_hours": {
@@ -1307,7 +1307,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 6,
+        "not_applicable_records": 7,
         "unknown_records": 0
       },
       "CPU saved-artifact arithmetic; no accelerator:wall_hours": {
@@ -1316,8 +1316,8 @@
           "known_total": 0.5
         },
         "measured": {
-          "known_records": 2,
-          "known_total": 0.002233504388889034
+          "known_records": 3,
+          "known_total": 0.010255070027778857
         },
         "not_applicable_records": 0,
         "unknown_records": 1
@@ -1756,6 +1756,54 @@
       }
     },
     "preflight": {
+      "CPU four intra-op threads; no accelerator:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "CPU four intra-op threads; no accelerator:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU four intra-op threads; no accelerator:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU four intra-op threads; no accelerator:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.05
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
       "CPU4threads; no accelerator:cpu_hours": {
         "estimated": {
           "known_records": 2,
@@ -4130,7 +4178,7 @@
           "known_total": 0.5013237847222223
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "device_hours": {
         "estimated": {
@@ -4141,7 +4189,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 5,
+        "not_applicable_records": 6,
         "unknown_records": 0
       },
       "queue_hours": {
@@ -4153,13 +4201,13 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 5,
+        "not_applicable_records": 6,
         "unknown_records": 0
       },
       "wall_hours": {
         "estimated": {
-          "known_records": 1,
-          "known_total": 0.16666666666666666
+          "known_records": 2,
+          "known_total": 0.21666666666666667
         },
         "measured": {
           "known_records": 4,
@@ -4276,8 +4324,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 2,
-          "known_total": 0.002387152777777778
+          "known_records": 3,
+          "known_total": 0.020217013888888892
         },
         "not_applicable_records": 0,
         "unknown_records": 4
@@ -4291,7 +4339,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 6,
+        "not_applicable_records": 7,
         "unknown_records": 0
       },
       "queue_hours": {
@@ -4303,7 +4351,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 6,
+        "not_applicable_records": 7,
         "unknown_records": 0
       },
       "wall_hours": {
@@ -4312,8 +4360,8 @@
           "known_total": 0.5
         },
         "measured": {
-          "known_records": 2,
-          "known_total": 0.002233504388889034
+          "known_records": 3,
+          "known_total": 0.010255070027778857
         },
         "not_applicable_records": 0,
         "unknown_records": 1
@@ -11349,6 +11397,104 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      }
+    },
+    "TB-k1-checkpoint-io-20261010": {
+      "CPU four intra-op threads; no accelerator:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "CPU four intra-op threads; no accelerator:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU four intra-op threads; no accelerator:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU four intra-op threads; no accelerator:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.05
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "CPU saved-artifact arithmetic; no accelerator:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.017829861111111112
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      },
+      "CPU saved-artifact arithmetic; no accelerator:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU saved-artifact arithmetic; no accelerator:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU saved-artifact arithmetic; no accelerator:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.008021565638889823
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       }
     },
     "TB-k1-clean-fit-generalization-500k-20261009": {

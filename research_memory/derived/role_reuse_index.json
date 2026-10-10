@@ -1,6 +1,41 @@
 {
-  "ambiguous_historical_role_record_count": 501,
+  "ambiguous_historical_role_record_count": 506,
   "coarse_historical_role_records": [
+    {
+      "evidence_id": "k1-checkpoint-io-20261010-evidence",
+      "role_identity": null,
+      "role_name": "common",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-checkpoint-io-20261010-evidence",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-checkpoint-io-20261010-evidence",
+      "role_identity": null,
+      "role_name": "ood",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-checkpoint-io-20261010-evidence",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "k1-checkpoint-io-20261010-evidence",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
       "role_identity": null,
@@ -5731,6 +5766,7 @@
   },
   "protected_roles_reported_untouched": {
     "test_challenge": [
+      "k1-checkpoint-io-20261010-evidence",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",
@@ -5836,6 +5872,7 @@
       "pcqm-xian-determinism-audit-20260915"
     ],
     "test_dev": [
+      "k1-checkpoint-io-20261010-evidence",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",

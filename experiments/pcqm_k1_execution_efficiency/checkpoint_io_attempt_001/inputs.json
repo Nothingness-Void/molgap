@@ -1,0 +1,37 @@
+{
+  "kind": "checkpoint_io",
+  "cpu_threads": 4,
+  "ceiling_seconds": 180,
+  "repeats": 3,
+  "sizes": [
+    0,
+    128,
+    8192,
+    32768,
+    65536
+  ],
+  "source_commit": "3d5f7b2d71628bf7e61f55df1f9a2dbf5985a124",
+  "executed_source_files": {
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_check.py": "d7b3a8e0299be4e9b136cb597671ed7e0a7e6f2b87def553ce27c2a79506d427",
+    "src/molgap/checkpoint_snapshot.py": "17c6c8feb3b79020b654d13bd99ff0db941f3d29a083c50a097473d33c0e3f13",
+    "src/molgap/training_reproducibility.py": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa",
+    "src/molgap/k1_execution_efficiency.py": "b2d4cd62a194ddfce12d344fe4af1a8e95f4e1db7ec46d498fe8af40c9eca852",
+    "src/molgap/saved_diagnostic_closure.py": "6fdaa024d604d8914fae61d385d2df4937e5f0886b01a8440ac94f98c9c0d7dd",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/README.md": "ed65574328c723b71c75f96396bb2a52d262fdadf34ca35b8445f57f5fd00e91",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/decision.md": "a0ff87a294d4b1867e3a1cfca9e13983d511d67c640ba09a92392b4761ddf59a"
+  },
+  "snapshot_files": {
+    "colab_k1_screen.py": "ac13918013015c27b1f46020b0eabf2b4f7ad0eb18bb091a9e6033b94948dc34"
+  },
+  "development_bounds": [
+    0,
+    0
+  ],
+  "checkpoint": {
+    "path": "D:\\w\\k1-execution-efficiency\\platforms\\_records\\local\\staging\\k1-execution-efficiency\\cuda-scratch.pt",
+    "sha256": "b940a3f4aa5dedc40f8cbd6705ef8b7a1e24efd2ca4770d94a8d4ec64dd1f2b0",
+    "receipt_ref": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/results/checkpoint_resume.json"
+  },
+  "synthetic_telemetry": true,
+  "molecular_data_read": false
+}

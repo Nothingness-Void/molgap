@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "checkpoint-io-attempt-001",
+  "category": "preflight",
+  "cost_event_id": "cost-k1-checkpoint-io-estimate",
+  "evidence_ref": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/README.md",
+  "hardware": "CPU four intra-op threads; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.05
+    }
+  },
+  "platform": "local",
+  "run_id": "k1-checkpoint-io-cpu-20261010",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-checkpoint-io-20261010"
+}

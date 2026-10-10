@@ -1,0 +1,45 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-19dea98dc086343acf2dd84f17b139fe642d2cfc606b98e7d69e5c398d4f2ce5",
+  "finalized_at": "2026-10-10T10:19:17.989573+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/README.md": "ed65574328c723b71c75f96396bb2a52d262fdadf34ca35b8445f57f5fd00e91",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/acceptance.json": "4d8ce11befe2d6124f1de6aedf942344de0214fd05999d7435ad0c20eb45d1e0",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/attribution.md": "875c1ef95786a48a3a47a4b9ddba216abf88a99aa6e3bd532f7ae53a05423a4f",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/decision.md": "a0ff87a294d4b1867e3a1cfca9e13983d511d67c640ba09a92392b4761ddf59a",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_check.py": "d7b3a8e0299be4e9b136cb597671ed7e0a7e6f2b87def553ce27c2a79506d427",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/README.md": "ed65574328c723b71c75f96396bb2a52d262fdadf34ca35b8445f57f5fd00e91",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/decision.md": "a0ff87a294d4b1867e3a1cfca9e13983d511d67c640ba09a92392b4761ddf59a",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/checkpoint_snapshot.py": "17c6c8feb3b79020b654d13bd99ff0db941f3d29a083c50a097473d33c0e3f13",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/k1_execution_efficiency.py": "b2d4cd62a194ddfce12d344fe4af1a8e95f4e1db7ec46d498fe8af40c9eca852",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/saved_diagnostic_closure.py": "6fdaa024d604d8914fae61d385d2df4937e5f0886b01a8440ac94f98c9c0d7dd",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/training_reproducibility.py": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/inputs.json": "8da94c145a4221b98dec82df386037b1191e109b6fc84d6c6e4e6a9c96852842",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/plan_input.json": "21fd4e75bd609c0df294881fad643c6271ebcd4105e563d2b96c4a8416b71f8b",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/plan_receipt.json": "15442b393fc1042a2b174685ef4d826dd4221d277ff3357766a8cecfc9bda59d",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/protocol.md": "bbae8154351018625f4a66e476b4389e7b40b408856bf08fcdd30111d365f2fe",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/results/completion.json": "08ca1eb163dcce7eb6b365183b80d480b22841d32ca0417922857b9c496505eb",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/results/progress.json": "1c414704accf2dc7f8c4d5a73a9036f3e2e89343d4af50c24bd8634364271dc0",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/results/result.json": "5bea9360cf497b628fdb3de468dfd9e329aea399abe019e7f58165a5523afaf6",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/role_plan.json": "25df705ef7e9c903c5ee8a36b4b611e45177f1a08f4ca85bd05b78e1ddc46d49",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/source_snapshot/colab_k1_screen.py": "ac13918013015c27b1f46020b0eabf2b4f7ad0eb18bb091a9e6033b94948dc34",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/terminal_decision.md": "47c3fafb6e41354c858363bda1ee1c2160e535b68874e82974cc5d33217d5bf8"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TB-k1-checkpoint-io-20261010-observed.json": "773ea3e393dd3558696f2c4c3bfced85937f3faa55ce9f3c8fce3315308e3f20",
+    "prospective_snapshot.json": "597301c5fdc27ca0105e96f21cd22a1b942efebe313747abfab102340d6b0187",
+    "terminal_input.json": "7aa4d510a9b02ed23d35a636ce0273ecbdfa1fbdf060ce9540b70145f3933d2e",
+    "trajectory.json": "a495d3f65f79a8c9cdd5dd210fd5896031c2efb3dd6b247ad47f454e6c68f309",
+    "v5_evidence.json": "fb681ffe9e538979301a224e0e45123e56cd7cd4858be2e8b3a8d9d51d1f088f"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/rml/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "19dea98dc086343acf2dd84f17b139fe642d2cfc606b98e7d69e5c398d4f2ce5",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-checkpoint-io-20261010"
+}

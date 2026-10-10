@@ -1,0 +1,460 @@
+{
+  "format": "molgap-k1-saved-analysis-v1",
+  "kind": "checkpoint_io",
+  "status": "complete",
+  "checks": {
+    "exact_snapshots": true,
+    "exact_roundtrip": true,
+    "input_unchanged": true,
+    "cpu_step_states_preserved": true,
+    "rng_unchanged": true,
+    "cuda_uninitialized": true
+  },
+  "inputs_sha256": "8da94c145a4221b98dec82df386037b1191e109b6fc84d6c6e4e6a9c96852842",
+  "prospective_sha256": "597301c5fdc27ca0105e96f21cd22a1b942efebe313747abfab102340d6b0187",
+  "wall_seconds": 28.87763630000336,
+  "process_cpu_seconds": 64.1875,
+  "runtime": {
+    "device": "cpu",
+    "cpu_threads": 4,
+    "torch": "2.7.1+cu128"
+  },
+  "observed_source_idx": [],
+  "training_executed": false,
+  "inference_executed": false,
+  "optimizer_created": false,
+  "gradients_computed": false,
+  "synthetic_fixture_not_training_evidence": true,
+  "timings": [
+    {
+      "synthetic_rows_per_arm": 0,
+      "repeat_samples": [
+        {
+          "baseline": {
+            "copy_seconds": 0.005783299999166047,
+            "publication_hash_seconds": 0.10170930000094813,
+            "copy_publication_seconds": 0.10749260000011418,
+            "pt_bytes": 44322217,
+            "json_bytes": 37,
+            "hashes": {
+              "checkpoint.pt": "98e5dacf27375404c1705fe0813b86fe3c4f72d7364ed71a82bf275631f3d67a",
+              "telemetry.json": "c639bb224a0009920d5f46ba54fcaedc785d217a26caa4c9c3832cc19f85d8ed"
+            }
+          },
+          "candidate": {
+            "copy_seconds": 0.0055375000010826625,
+            "publication_hash_seconds": 0.0748265000001993,
+            "copy_publication_seconds": 0.08036400000128197,
+            "pt_bytes": 44322217,
+            "json_bytes": 37,
+            "hashes": {
+              "checkpoint.pt": "98e5dacf27375404c1705fe0813b86fe3c4f72d7364ed71a82bf275631f3d67a",
+              "telemetry.json": "c639bb224a0009920d5f46ba54fcaedc785d217a26caa4c9c3832cc19f85d8ed"
+            }
+          }
+        },
+        {
+          "candidate": {
+            "copy_seconds": 0.005562800000916468,
+            "publication_hash_seconds": 0.07811150000270572,
+            "copy_publication_seconds": 0.08367430000362219,
+            "pt_bytes": 44322217,
+            "json_bytes": 37,
+            "hashes": {
+              "checkpoint.pt": "98e5dacf27375404c1705fe0813b86fe3c4f72d7364ed71a82bf275631f3d67a",
+              "telemetry.json": "c639bb224a0009920d5f46ba54fcaedc785d217a26caa4c9c3832cc19f85d8ed"
+            }
+          },
+          "baseline": {
+            "copy_seconds": 0.0062576999989687465,
+            "publication_hash_seconds": 0.0779709999987972,
+            "copy_publication_seconds": 0.08422869999776594,
+            "pt_bytes": 44322217,
+            "json_bytes": 37,
+            "hashes": {
+              "checkpoint.pt": "98e5dacf27375404c1705fe0813b86fe3c4f72d7364ed71a82bf275631f3d67a",
+              "telemetry.json": "c639bb224a0009920d5f46ba54fcaedc785d217a26caa4c9c3832cc19f85d8ed"
+            }
+          }
+        },
+        {
+          "baseline": {
+            "copy_seconds": 0.0059672999996109866,
+            "publication_hash_seconds": 0.07574469999963185,
+            "copy_publication_seconds": 0.08171199999924283,
+            "pt_bytes": 44322217,
+            "json_bytes": 37,
+            "hashes": {
+              "checkpoint.pt": "98e5dacf27375404c1705fe0813b86fe3c4f72d7364ed71a82bf275631f3d67a",
+              "telemetry.json": "c639bb224a0009920d5f46ba54fcaedc785d217a26caa4c9c3832cc19f85d8ed"
+            }
+          },
+          "candidate": {
+            "copy_seconds": 0.005818000001454493,
+            "publication_hash_seconds": 0.07674710000355844,
+            "copy_publication_seconds": 0.08256510000501294,
+            "pt_bytes": 44322217,
+            "json_bytes": 37,
+            "hashes": {
+              "checkpoint.pt": "98e5dacf27375404c1705fe0813b86fe3c4f72d7364ed71a82bf275631f3d67a",
+              "telemetry.json": "c639bb224a0009920d5f46ba54fcaedc785d217a26caa4c9c3832cc19f85d8ed"
+            }
+          }
+        }
+      ],
+      "median_copy_seconds": {
+        "baseline": 0.0059672999996109866,
+        "candidate": 0.005562800000916468
+      },
+      "median_copy_publication_seconds": {
+        "baseline": 0.08422869999776594,
+        "candidate": 0.08256510000501294
+      }
+    },
+    {
+      "synthetic_rows_per_arm": 128,
+      "repeat_samples": [
+        {
+          "baseline": {
+            "copy_seconds": 0.006918399998539826,
+            "publication_hash_seconds": 0.07655789999989793,
+            "copy_publication_seconds": 0.08347629999843775,
+            "pt_bytes": 44342569,
+            "json_bytes": 46707,
+            "hashes": {
+              "checkpoint.pt": "21a898193f2baf8b2972c63625159ad2d962fed9f5911cbe21e1ae5b2cc1169f",
+              "telemetry.json": "eac8b54679033ac5a22160814b0cdff109cd49574ec9502d8f428625a52506c7"
+            }
+          },
+          "candidate": {
+            "copy_seconds": 0.005491199997777585,
+            "publication_hash_seconds": 0.08358530000259634,
+            "copy_publication_seconds": 0.08907650000037393,
+            "pt_bytes": 44342569,
+            "json_bytes": 46707,
+            "hashes": {
+              "checkpoint.pt": "21a898193f2baf8b2972c63625159ad2d962fed9f5911cbe21e1ae5b2cc1169f",
+              "telemetry.json": "eac8b54679033ac5a22160814b0cdff109cd49574ec9502d8f428625a52506c7"
+            }
+          }
+        },
+        {
+          "candidate": {
+            "copy_seconds": 0.00569299999915529,
+            "publication_hash_seconds": 0.09641199999896344,
+            "copy_publication_seconds": 0.10210499999811873,
+            "pt_bytes": 44342569,
+            "json_bytes": 46707,
+            "hashes": {
+              "checkpoint.pt": "21a898193f2baf8b2972c63625159ad2d962fed9f5911cbe21e1ae5b2cc1169f",
+              "telemetry.json": "eac8b54679033ac5a22160814b0cdff109cd49574ec9502d8f428625a52506c7"
+            }
+          },
+          "baseline": {
+            "copy_seconds": 0.0069733999989693984,
+            "publication_hash_seconds": 0.0801456999979564,
+            "copy_publication_seconds": 0.0871190999969258,
+            "pt_bytes": 44342569,
+            "json_bytes": 46707,
+            "hashes": {
+              "checkpoint.pt": "21a898193f2baf8b2972c63625159ad2d962fed9f5911cbe21e1ae5b2cc1169f",
+              "telemetry.json": "eac8b54679033ac5a22160814b0cdff109cd49574ec9502d8f428625a52506c7"
+            }
+          }
+        },
+        {
+          "baseline": {
+            "copy_seconds": 0.0072900999984995,
+            "publication_hash_seconds": 0.08005509999929927,
+            "copy_publication_seconds": 0.08734519999779877,
+            "pt_bytes": 44342569,
+            "json_bytes": 46707,
+            "hashes": {
+              "checkpoint.pt": "21a898193f2baf8b2972c63625159ad2d962fed9f5911cbe21e1ae5b2cc1169f",
+              "telemetry.json": "eac8b54679033ac5a22160814b0cdff109cd49574ec9502d8f428625a52506c7"
+            }
+          },
+          "candidate": {
+            "copy_seconds": 0.03202389999933075,
+            "publication_hash_seconds": 0.08143310000014026,
+            "copy_publication_seconds": 0.11345699999947101,
+            "pt_bytes": 44342569,
+            "json_bytes": 46707,
+            "hashes": {
+              "checkpoint.pt": "21a898193f2baf8b2972c63625159ad2d962fed9f5911cbe21e1ae5b2cc1169f",
+              "telemetry.json": "eac8b54679033ac5a22160814b0cdff109cd49574ec9502d8f428625a52506c7"
+            }
+          }
+        }
+      ],
+      "median_copy_seconds": {
+        "baseline": 0.0069733999989693984,
+        "candidate": 0.00569299999915529
+      },
+      "median_copy_publication_seconds": {
+        "baseline": 0.0871190999969258,
+        "candidate": 0.10210499999811873
+      }
+    },
+    {
+      "synthetic_rows_per_arm": 8192,
+      "repeat_samples": [
+        {
+          "baseline": {
+            "copy_seconds": 0.06130470000061905,
+            "publication_hash_seconds": 0.19154880000132835,
+            "copy_publication_seconds": 0.2528535000019474,
+            "pt_bytes": 45678185,
+            "json_bytes": 3090755,
+            "hashes": {
+              "checkpoint.pt": "3969c808762143a7e0d6e2157e0abf79144c470d9d7a562df4fe897e3db7e8a7",
+              "telemetry.json": "a79453eff88fd977aa6eb75e90fa653e90e39c7438909ded2e28020d5ad9efce"
+            }
+          },
+          "candidate": {
+            "copy_seconds": 0.018471300001692725,
+            "publication_hash_seconds": 0.21606899999824236,
+            "copy_publication_seconds": 0.2345402999999351,
+            "pt_bytes": 45678185,
+            "json_bytes": 3090755,
+            "hashes": {
+              "checkpoint.pt": "3969c808762143a7e0d6e2157e0abf79144c470d9d7a562df4fe897e3db7e8a7",
+              "telemetry.json": "a79453eff88fd977aa6eb75e90fa653e90e39c7438909ded2e28020d5ad9efce"
+            }
+          }
+        },
+        {
+          "candidate": {
+            "copy_seconds": 0.02246200000081444,
+            "publication_hash_seconds": 0.1917516000030446,
+            "copy_publication_seconds": 0.21421360000385903,
+            "pt_bytes": 45678185,
+            "json_bytes": 3090755,
+            "hashes": {
+              "checkpoint.pt": "3969c808762143a7e0d6e2157e0abf79144c470d9d7a562df4fe897e3db7e8a7",
+              "telemetry.json": "a79453eff88fd977aa6eb75e90fa653e90e39c7438909ded2e28020d5ad9efce"
+            }
+          },
+          "baseline": {
+            "copy_seconds": 0.060359999999491265,
+            "publication_hash_seconds": 0.190596699998423,
+            "copy_publication_seconds": 0.25095669999791426,
+            "pt_bytes": 45678185,
+            "json_bytes": 3090755,
+            "hashes": {
+              "checkpoint.pt": "3969c808762143a7e0d6e2157e0abf79144c470d9d7a562df4fe897e3db7e8a7",
+              "telemetry.json": "a79453eff88fd977aa6eb75e90fa653e90e39c7438909ded2e28020d5ad9efce"
+            }
+          }
+        },
+        {
+          "baseline": {
+            "copy_seconds": 0.06092550000175834,
+            "publication_hash_seconds": 0.19586940000226605,
+            "copy_publication_seconds": 0.2567949000040244,
+            "pt_bytes": 45678185,
+            "json_bytes": 3090755,
+            "hashes": {
+              "checkpoint.pt": "3969c808762143a7e0d6e2157e0abf79144c470d9d7a562df4fe897e3db7e8a7",
+              "telemetry.json": "a79453eff88fd977aa6eb75e90fa653e90e39c7438909ded2e28020d5ad9efce"
+            }
+          },
+          "candidate": {
+            "copy_seconds": 0.020575999998982297,
+            "publication_hash_seconds": 0.1898494999986724,
+            "copy_publication_seconds": 0.2104254999976547,
+            "pt_bytes": 45678185,
+            "json_bytes": 3090755,
+            "hashes": {
+              "checkpoint.pt": "3969c808762143a7e0d6e2157e0abf79144c470d9d7a562df4fe897e3db7e8a7",
+              "telemetry.json": "a79453eff88fd977aa6eb75e90fa653e90e39c7438909ded2e28020d5ad9efce"
+            }
+          }
+        }
+      ],
+      "median_copy_seconds": {
+        "baseline": 0.06092550000175834,
+        "candidate": 0.020575999998982297
+      },
+      "median_copy_publication_seconds": {
+        "baseline": 0.2528535000019474,
+        "candidate": 0.21421360000385903
+      }
+    },
+    {
+      "synthetic_rows_per_arm": 32768,
+      "repeat_samples": [
+        {
+          "baseline": {
+            "copy_seconds": 0.22931149999931222,
+            "publication_hash_seconds": 0.5251924000003783,
+            "copy_publication_seconds": 0.7545038999996905,
+            "pt_bytes": 49754793,
+            "json_bytes": 12522091,
+            "hashes": {
+              "checkpoint.pt": "eba3a486cceff651631a259db881245e0ec0ef665f025d5ee5ab5d2847be5e6c",
+              "telemetry.json": "753ece383cab11b0ba978ced2cec70bc2cc96a214ad40854218e356f840fb6cc"
+            }
+          },
+          "candidate": {
+            "copy_seconds": 0.0566021999984514,
+            "publication_hash_seconds": 0.5376576999988174,
+            "copy_publication_seconds": 0.5942598999972688,
+            "pt_bytes": 49754793,
+            "json_bytes": 12522091,
+            "hashes": {
+              "checkpoint.pt": "eba3a486cceff651631a259db881245e0ec0ef665f025d5ee5ab5d2847be5e6c",
+              "telemetry.json": "753ece383cab11b0ba978ced2cec70bc2cc96a214ad40854218e356f840fb6cc"
+            }
+          }
+        },
+        {
+          "candidate": {
+            "copy_seconds": 0.056235000000015134,
+            "publication_hash_seconds": 0.5418028999993112,
+            "copy_publication_seconds": 0.5980378999993263,
+            "pt_bytes": 49754793,
+            "json_bytes": 12522091,
+            "hashes": {
+              "checkpoint.pt": "eba3a486cceff651631a259db881245e0ec0ef665f025d5ee5ab5d2847be5e6c",
+              "telemetry.json": "753ece383cab11b0ba978ced2cec70bc2cc96a214ad40854218e356f840fb6cc"
+            }
+          },
+          "baseline": {
+            "copy_seconds": 0.2235008999996353,
+            "publication_hash_seconds": 0.5260345000024245,
+            "copy_publication_seconds": 0.7495354000020598,
+            "pt_bytes": 49754793,
+            "json_bytes": 12522091,
+            "hashes": {
+              "checkpoint.pt": "eba3a486cceff651631a259db881245e0ec0ef665f025d5ee5ab5d2847be5e6c",
+              "telemetry.json": "753ece383cab11b0ba978ced2cec70bc2cc96a214ad40854218e356f840fb6cc"
+            }
+          }
+        },
+        {
+          "baseline": {
+            "copy_seconds": 0.23081380000076024,
+            "publication_hash_seconds": 0.5280648000007204,
+            "copy_publication_seconds": 0.7588786000014807,
+            "pt_bytes": 49754793,
+            "json_bytes": 12522091,
+            "hashes": {
+              "checkpoint.pt": "eba3a486cceff651631a259db881245e0ec0ef665f025d5ee5ab5d2847be5e6c",
+              "telemetry.json": "753ece383cab11b0ba978ced2cec70bc2cc96a214ad40854218e356f840fb6cc"
+            }
+          },
+          "candidate": {
+            "copy_seconds": 0.054320899998856476,
+            "publication_hash_seconds": 0.5268991000011738,
+            "copy_publication_seconds": 0.5812200000000303,
+            "pt_bytes": 49754793,
+            "json_bytes": 12522091,
+            "hashes": {
+              "checkpoint.pt": "eba3a486cceff651631a259db881245e0ec0ef665f025d5ee5ab5d2847be5e6c",
+              "telemetry.json": "753ece383cab11b0ba978ced2cec70bc2cc96a214ad40854218e356f840fb6cc"
+            }
+          }
+        }
+      ],
+      "median_copy_seconds": {
+        "baseline": 0.22931149999931222,
+        "candidate": 0.056235000000015134
+      },
+      "median_copy_publication_seconds": {
+        "baseline": 0.7545038999996905,
+        "candidate": 0.5942598999972688
+      }
+    },
+    {
+      "synthetic_rows_per_arm": 65536,
+      "repeat_samples": [
+        {
+          "baseline": {
+            "copy_seconds": 0.4443399000010686,
+            "publication_hash_seconds": 0.980133000000933,
+            "copy_publication_seconds": 1.4244729000020016,
+            "pt_bytes": 55190377,
+            "json_bytes": 25156627,
+            "hashes": {
+              "checkpoint.pt": "21cb632a2279ebed3fc626e22325ed2769f32f5462bab44361ea201d9d1dd371",
+              "telemetry.json": "7209f8d703cab12d24e21e7e57f8bdf38d31723e9a77df0b80c15aa8f84bcf9b"
+            }
+          },
+          "candidate": {
+            "copy_seconds": 0.10600700000213692,
+            "publication_hash_seconds": 0.9219654000007722,
+            "copy_publication_seconds": 1.0279724000029091,
+            "pt_bytes": 55190377,
+            "json_bytes": 25156627,
+            "hashes": {
+              "checkpoint.pt": "21cb632a2279ebed3fc626e22325ed2769f32f5462bab44361ea201d9d1dd371",
+              "telemetry.json": "7209f8d703cab12d24e21e7e57f8bdf38d31723e9a77df0b80c15aa8f84bcf9b"
+            }
+          }
+        },
+        {
+          "candidate": {
+            "copy_seconds": 0.10440190000008442,
+            "publication_hash_seconds": 0.9362615999998525,
+            "copy_publication_seconds": 1.040663499999937,
+            "pt_bytes": 55190377,
+            "json_bytes": 25156627,
+            "hashes": {
+              "checkpoint.pt": "21cb632a2279ebed3fc626e22325ed2769f32f5462bab44361ea201d9d1dd371",
+              "telemetry.json": "7209f8d703cab12d24e21e7e57f8bdf38d31723e9a77df0b80c15aa8f84bcf9b"
+            }
+          },
+          "baseline": {
+            "copy_seconds": 0.4438332999998238,
+            "publication_hash_seconds": 0.9358020999970904,
+            "copy_publication_seconds": 1.3796353999969142,
+            "pt_bytes": 55190377,
+            "json_bytes": 25156627,
+            "hashes": {
+              "checkpoint.pt": "21cb632a2279ebed3fc626e22325ed2769f32f5462bab44361ea201d9d1dd371",
+              "telemetry.json": "7209f8d703cab12d24e21e7e57f8bdf38d31723e9a77df0b80c15aa8f84bcf9b"
+            }
+          }
+        },
+        {
+          "baseline": {
+            "copy_seconds": 0.4410442999978841,
+            "publication_hash_seconds": 0.9270914000007906,
+            "copy_publication_seconds": 1.3681356999986747,
+            "pt_bytes": 55190377,
+            "json_bytes": 25156627,
+            "hashes": {
+              "checkpoint.pt": "21cb632a2279ebed3fc626e22325ed2769f32f5462bab44361ea201d9d1dd371",
+              "telemetry.json": "7209f8d703cab12d24e21e7e57f8bdf38d31723e9a77df0b80c15aa8f84bcf9b"
+            }
+          },
+          "candidate": {
+            "copy_seconds": 0.10444830000051297,
+            "publication_hash_seconds": 0.936564499999804,
+            "copy_publication_seconds": 1.041012800000317,
+            "pt_bytes": 55190377,
+            "json_bytes": 25156627,
+            "hashes": {
+              "checkpoint.pt": "21cb632a2279ebed3fc626e22325ed2769f32f5462bab44361ea201d9d1dd371",
+              "telemetry.json": "7209f8d703cab12d24e21e7e57f8bdf38d31723e9a77df0b80c15aa8f84bcf9b"
+            }
+          }
+        }
+      ],
+      "median_copy_seconds": {
+        "baseline": 0.4438332999998238,
+        "candidate": 0.10444830000051297
+      },
+      "median_copy_publication_seconds": {
+        "baseline": 1.3796353999969142,
+        "candidate": 1.040663499999937
+      }
+    }
+  ],
+  "limits": [
+    "CPU checkpoint plus synthetic telemetry; not complete two-arm native worker publication",
+    "Local file writes/page cache; no fsync power-loss or remote storage durability/throughput qualification",
+    "No training end-to-end saving, role access, checkpoint-frequency change or log deletion"
+  ]
+}

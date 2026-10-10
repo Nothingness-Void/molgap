@@ -1,0 +1,244 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/README.md": "ed65574328c723b71c75f96396bb2a52d262fdadf34ca35b8445f57f5fd00e91",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/acceptance.json": "4d8ce11befe2d6124f1de6aedf942344de0214fd05999d7435ad0c20eb45d1e0",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/attribution.md": "875c1ef95786a48a3a47a4b9ddba216abf88a99aa6e3bd532f7ae53a05423a4f",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/decision.md": "a0ff87a294d4b1867e3a1cfca9e13983d511d67c640ba09a92392b4761ddf59a",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_check.py": "d7b3a8e0299be4e9b136cb597671ed7e0a7e6f2b87def553ce27c2a79506d427",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/README.md": "ed65574328c723b71c75f96396bb2a52d262fdadf34ca35b8445f57f5fd00e91",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/decision.md": "a0ff87a294d4b1867e3a1cfca9e13983d511d67c640ba09a92392b4761ddf59a",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/checkpoint_snapshot.py": "17c6c8feb3b79020b654d13bd99ff0db941f3d29a083c50a097473d33c0e3f13",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/k1_execution_efficiency.py": "b2d4cd62a194ddfce12d344fe4af1a8e95f4e1db7ec46d498fe8af40c9eca852",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/saved_diagnostic_closure.py": "6fdaa024d604d8914fae61d385d2df4937e5f0886b01a8440ac94f98c9c0d7dd",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/training_reproducibility.py": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/inputs.json": "8da94c145a4221b98dec82df386037b1191e109b6fc84d6c6e4e6a9c96852842",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/plan_input.json": "21fd4e75bd609c0df294881fad643c6271ebcd4105e563d2b96c4a8416b71f8b",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/plan_receipt.json": "15442b393fc1042a2b174685ef4d826dd4221d277ff3357766a8cecfc9bda59d",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/protocol.md": "bbae8154351018625f4a66e476b4389e7b40b408856bf08fcdd30111d365f2fe",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/results/completion.json": "08ca1eb163dcce7eb6b365183b80d480b22841d32ca0417922857b9c496505eb",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/results/progress.json": "1c414704accf2dc7f8c4d5a73a9036f3e2e89343d4af50c24bd8634364271dc0",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/results/result.json": "5bea9360cf497b628fdb3de468dfd9e329aea399abe019e7f58165a5523afaf6",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/role_plan.json": "25df705ef7e9c903c5ee8a36b4b611e45177f1a08f4ca85bd05b78e1ddc46d49",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/source_snapshot/colab_k1_screen.py": "ac13918013015c27b1f46020b0eabf2b4f7ad0eb18bb091a9e6033b94948dc34",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/terminal_decision.md": "47c3fafb6e41354c858363bda1ee1c2160e535b68874e82974cc5d33217d5bf8"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "attempt-001",
+      "category": "other",
+      "cost_event_id": "cost-TB-k1-checkpoint-io-20261010-observed",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/acceptance.json",
+      "hardware": "CPU saved-artifact arithmetic; no accelerator",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measured",
+          "value": 0.017829861111111112
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.008021565638889823
+        }
+      },
+      "platform": "local-windows",
+      "run_id": "k1-checkpoint-io-cpu-20261010",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-checkpoint-io-20261010"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/terminal_decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Separately prospective authorized diagnostic; original training gate remains independent"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "4d8ce11befe2d6124f1de6aedf942344de0214fd05999d7435ad0c20eb45d1e0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/attribution.md",
+        "name": "attribution.md",
+        "sha256": "875c1ef95786a48a3a47a4b9ddba216abf88a99aa6e3bd532f7ae53a05423a4f"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/decision.md",
+        "name": "decision.md",
+        "sha256": "a0ff87a294d4b1867e3a1cfca9e13983d511d67c640ba09a92392b4761ddf59a"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/inputs.json",
+        "name": "inputs.json",
+        "sha256": "8da94c145a4221b98dec82df386037b1191e109b6fc84d6c6e4e6a9c96852842"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/plan_input.json",
+        "name": "plan_input.json",
+        "sha256": "21fd4e75bd609c0df294881fad643c6271ebcd4105e563d2b96c4a8416b71f8b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/plan_receipt.json",
+        "name": "plan_receipt.json",
+        "sha256": "15442b393fc1042a2b174685ef4d826dd4221d277ff3357766a8cecfc9bda59d"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/protocol.md",
+        "name": "protocol.md",
+        "sha256": "bbae8154351018625f4a66e476b4389e7b40b408856bf08fcdd30111d365f2fe"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/README.md",
+        "name": "README.md",
+        "sha256": "ed65574328c723b71c75f96396bb2a52d262fdadf34ca35b8445f57f5fd00e91"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/role_plan.json",
+        "name": "role_plan.json",
+        "sha256": "25df705ef7e9c903c5ee8a36b4b611e45177f1a08f4ca85bd05b78e1ddc46d49"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/terminal_decision.md",
+        "name": "terminal_decision.md",
+        "sha256": "47c3fafb6e41354c858363bda1ee1c2160e535b68874e82974cc5d33217d5bf8"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_check.py",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_check.py",
+        "sha256": "d7b3a8e0299be4e9b136cb597671ed7e0a7e6f2b87def553ce27c2a79506d427"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/decision.md",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/decision.md",
+        "sha256": "a0ff87a294d4b1867e3a1cfca9e13983d511d67c640ba09a92392b4761ddf59a"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/README.md",
+        "name": "executed_source/experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/README.md",
+        "sha256": "ed65574328c723b71c75f96396bb2a52d262fdadf34ca35b8445f57f5fd00e91"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/checkpoint_snapshot.py",
+        "name": "executed_source/src/molgap/checkpoint_snapshot.py",
+        "sha256": "17c6c8feb3b79020b654d13bd99ff0db941f3d29a083c50a097473d33c0e3f13"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/k1_execution_efficiency.py",
+        "name": "executed_source/src/molgap/k1_execution_efficiency.py",
+        "sha256": "b2d4cd62a194ddfce12d344fe4af1a8e95f4e1db7ec46d498fe8af40c9eca852"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/saved_diagnostic_closure.py",
+        "name": "executed_source/src/molgap/saved_diagnostic_closure.py",
+        "sha256": "6fdaa024d604d8914fae61d385d2df4937e5f0886b01a8440ac94f98c9c0d7dd"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/executed_source/src/molgap/training_reproducibility.py",
+        "name": "executed_source/src/molgap/training_reproducibility.py",
+        "sha256": "593a6012c83e411b92f483fb144c3bac7788a12abeb4ae30504fc5de0c7572aa"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/results/completion.json",
+        "name": "results/completion.json",
+        "sha256": "08ca1eb163dcce7eb6b365183b80d480b22841d32ca0417922857b9c496505eb"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/results/progress.json",
+        "name": "results/progress.json",
+        "sha256": "1c414704accf2dc7f8c4d5a73a9036f3e2e89343d4af50c24bd8634364271dc0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/results/result.json",
+        "name": "results/result.json",
+        "sha256": "5bea9360cf497b628fdb3de468dfd9e329aea399abe019e7f58165a5523afaf6"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/source_snapshot/colab_k1_screen.py",
+        "name": "source_snapshot/colab_k1_screen.py",
+        "sha256": "ac13918013015c27b1f46020b0eabf2b4f7ad0eb18bb091a9e6033b94948dc34"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/protocol.md",
+        "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/terminal_decision.md",
+        "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/attribution.md",
+        "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/acceptance.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "k1-checkpoint-io-20261010-evidence",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-k1-saved-checkpoint-io-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-10",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Metadata translation of separately recorded saved arithmetic or infrastructure failure; no model work in closure"
+    },
+    "observed_execution": {
+      "inference_executed": false,
+      "training_executed": false,
+      "training_replay_ready": false
+    },
+    "outcome": {
+      "artifact_status": "local_hash_verified",
+      "budget_decision": "local_analysis_complete",
+      "comparison_status": "descriptive_saved_evidence_only",
+      "execution_status": "complete",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "common": "untouched",
+      "official_validation": "untouched",
+      "ood": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "checkpoint_io",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-10T10:19:17.989573+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [],
+  "run_id": "k1-checkpoint-io-cpu-20261010",
+  "trajectory_id": "TB-k1-checkpoint-io-20261010"
+}

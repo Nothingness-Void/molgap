@@ -16,3 +16,7 @@ matched numerical/cost evidence rather than extrapolating from algebraic equalit
 [Isolated CUDA trace](kernel_attempt_001/terminal_decision.md) provides actual
 SIMT-to-TensorOp kernel dispatch attribution; it does not qualify retrained MAE
 or native accelerator throughput. Precision claims remain scoped to each attempt.
+
+[CPU checkpoint-copy decision](checkpoint_io_attempt_001/terminal_decision.md)
+qualifies an opt-in scalar-copy helper on retained state and synthetic IO fixtures,
+not native sender throughput or end-to-end training savings.

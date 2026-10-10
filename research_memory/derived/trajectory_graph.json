@@ -231,6 +231,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-checkpoint-io-20261010:A001",
+      "target": "experiments/pcqm_k1_execution_efficiency/checkpoint_io_attempt_001/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-clean-fit-generalization-500k-20261009:A001",
       "target": "experiments/pcqm_k1_clean_fit_generalization_500k/inputs.json",
       "type": "action_produced_evidence"
@@ -993,6 +998,11 @@
     {
       "source": "TB-k1-gptrans-full-fusion-r3",
       "target": "TB-k1-full-convergence-20260919",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-kernel-trace-20261010",
+      "target": "TB-k1-checkpoint-io-20261010",
       "type": "parent_trajectory"
     },
     {
@@ -1812,6 +1822,11 @@
     },
     {
       "source": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "target": "TB-k1-checkpoint-io-20261010",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-execution-efficiency-gpu-20261010",
       "target": "TB-k1-projection-execution-20261010",
       "type": "prior_evidence"
     },
@@ -1853,6 +1868,11 @@
     {
       "source": "pcqm-k1-gptrans-full-fusion-r3",
       "target": "TB-pcqm-scale-transfer-attribution",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-kernel-trace-20261010",
+      "target": "TB-k1-checkpoint-io-20261010",
       "type": "prior_evidence"
     },
     {
@@ -2433,6 +2453,10 @@
   ],
   "format": "molgap-rml-trajectory-graph-v1",
   "nodes": [
+    {
+      "id": "k1-checkpoint-io-20261010-evidence",
+      "type": "evidence"
+    },
     {
       "id": "k1-saved-bn-rows-20261008-evidence",
       "type": "evidence"
@@ -3083,6 +3107,10 @@
     },
     {
       "id": "TB-k1-bn-mechanism-a100-20261008",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-checkpoint-io-20261010",
       "type": "trajectory"
     },
     {
