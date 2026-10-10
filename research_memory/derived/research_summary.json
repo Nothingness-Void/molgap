@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 109,
+      "trajectories_total": 110,
       "with_complete_native_measurement": 23,
-      "with_cost_event": 98,
-      "with_incomplete_native_measurement": 75,
+      "with_cost_event": 99,
+      "with_incomplete_native_measurement": 76,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -911,6 +911,56 @@
           },
           "not_applicable_records": 0,
           "unknown_records": 1
+        }
+      },
+      "NVIDIA A100": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 4.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 4.0
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
         }
       },
       "NVIDIA A100-SXM4-40GB": {
@@ -2814,7 +2864,7 @@
         }
       }
     },
-    "unknown_events": 193
+    "unknown_events": 194
   },
   "evidence": {
     "validated": 98,
@@ -2824,7 +2874,7 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 80,
+      "count": 81,
       "severity": "INFO"
     },
     {
@@ -2834,7 +2884,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 75,
+      "count": 76,
       "severity": "WARN"
     },
     {
@@ -2844,12 +2894,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 37,
+      "count": 38,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 11,
+      "count": 12,
       "severity": "WARN"
     }
   ],
@@ -2858,10 +2908,11 @@
     "explicit_events": 280,
     "repeatedly_selected": 21
   },
-  "source_digest": "6bb04c47f895e47455065e7f973930c7207b3d3a4835468709e7b7149fdb0248",
+  "source_digest": "6090e8faecbfc675a3d12f9901aa99986664bccefb92aa89d4fb586c422ccffb",
   "trajectories": {
-    "count": 109,
+    "count": 110,
     "outcomes": {
+      "ACTIVE": 1,
       "CLOSED": 12,
       "INCONCLUSIVE": 19,
       "INFRASTRUCTURE_ONLY": 5,

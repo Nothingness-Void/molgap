@@ -5,6 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
+- ACTIVE: 1
 - CLOSED: 12
 - INCONCLUSIVE: 19
 - INFRASTRUCTURE_ONLY: 5
@@ -95,6 +96,10 @@
 - LOCAL_CPU_UNSPECIFIED device_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED queue_hours: not applicable (6 records); measurement_missing=0
 - LOCAL_CPU_UNSPECIFIED wall_hours: measured=0.008734 (4 measured records), estimated=0.250000 (1 estimated record), measurement_missing=1, not_applicable=0
+- NVIDIA A100 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NVIDIA A100 device_hours: measured=unknown (0 measured records), estimated=4.000000 (1 estimated record), measurement_missing=0, not_applicable=0
+- NVIDIA A100 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NVIDIA A100 wall_hours: measured=unknown (0 measured records), estimated=4.000000 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA A100-SXM4-40GB cpu_hours: measured=0.064568 (2 measured records), estimated=unknown (0 estimated records), measurement_missing=7, not_applicable=0
 - NVIDIA A100-SXM4-40GB device_hours: measured=0.068322 (3 measured records), estimated=0.666667 (2 estimated records), measurement_missing=4, not_applicable=0
 - NVIDIA A100-SXM4-40GB queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=9, not_applicable=0
@@ -247,8 +252,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 193
-- Cost-event coverage: 98/109 trajectories; incomplete native measurement=75
+- Measurement-missing cost events: 194
+- Cost-event coverage: 99/110 trajectories; incomplete native measurement=76
 
 ## Screening Backtest
 - Status: available
@@ -256,9 +261,9 @@
 - Excluded traces: 19
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 80
+- [INFO] trace_unavailable_for_backtest: 81
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 75
+- [WARN] incomplete_native_cost_measurement: 76
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 37
-- [WARN] trajectory_without_v5_evidence: 11
+- [WARN] missing_explicit_role_identity: 38
+- [WARN] trajectory_without_v5_evidence: 12

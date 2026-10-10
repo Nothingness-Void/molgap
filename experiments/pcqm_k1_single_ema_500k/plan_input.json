@@ -1,0 +1,144 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-single-ema-500k-a100-20261010",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-single-ema-clean-bn-500k",
+    "question": "Does stepwise EMA improve matched500K single-forward K1 with clean BN within4 A100 hours?",
+    "hypothesis": {
+      "hypothesis_id": "H-k1-single-ema-500k-a100-20261010",
+      "supporting_evidence_ids": [
+        "pcqm-k1-bn-mechanism-a100-20261008",
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "observed_deficiency": "Single saves work but failed100K quality noninferiority; frozen BN state has recoverable500K error.",
+      "alternative_explanations": [
+        "EMA does not help",
+        "EMA/BN mismatch",
+        "partial-horizon slow startup",
+        "seed uncertainty"
+      ],
+      "changed_mechanism": "Stepwise parameter EMA0.999; identical single-forward training and clean BN on both arms",
+      "cheapest_falsifier": "One matched-prefix500K pair under4 total A100 hours",
+      "decision_changed_if_positive": "Nominate separate reviewed qualification, never automatically adopt or scale",
+      "decision_changed_if_negative": "Retain failure or partial ambiguity; no automatic retry",
+      "expected_native_cost_ref": "cost-k1-single-ema-500k-a100-planned",
+      "related_closed_family_ids": [
+        "k1-bn-mechanism-a100",
+        "k1-late-weight-average",
+        "k1-mean2-clean-second"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "c6f04e2d12c359f5b74e2615a3b638961858680f",
+      "source_config_identity": "4a29704eb4edceba2a1315050a96bd4928da30a23f7e75d40ac4387c996115d0",
+      "contract_refs": [
+        "experiments/pcqm_k1_single_ema_500k/protocol.md",
+        "experiments/pcqm_k1_single_ema_500k/inputs.json",
+        "experiments/pcqm_k1_single_ema_500k/evidence_review.md"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-bn-mechanism-a100-20261008",
+        "pcqm-k1-colab-execution-profile-20261007"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_single_ema_500k/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_single_ema_500k/protocol.md"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "bounded_paired_500k_training",
+        "run_ids": [
+          "k1-single-ema-500k-a100-20261010:reference",
+          "k1-single-ema-500k-a100-20261010:ema999"
+        ],
+        "attempt_ids": [
+          "attempt-001"
+        ],
+        "source_commit": "c6f04e2d12c359f5b74e2615a3b638961858680f",
+        "evidence_refs": [
+          "experiments/pcqm_k1_single_ema_500k/inputs.json"
+        ],
+        "cost_event_ids": [
+          "cost-k1-single-ema-500k-a100-planned"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_single_ema_500k/decision.md",
+      "next_allowed_actions": [
+        "One four-hour Colab A100 pair"
+      ],
+      "reopen_conditions": []
+    },
+    "comparison_class": "NO_COMPARISON",
+    "comparison_readiness_ref": "experiments/pcqm_k1_single_ema_500k/protocol.md",
+    "comparison_blockers": [
+      "Native qualification/reference not yet observed",
+      "Partial screen is not completed endpoint",
+      "Consumed development"
+    ],
+    "reference_bundle_id": null
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-single-ema-500k-a100-planned",
+      "trajectory_id": "TB-k1-single-ema-500k-a100-20261010",
+      "action_id": "A001",
+      "run_id": "k1-single-ema-500k-a100-20261010",
+      "attempt_id": "attempt-001",
+      "platform": "colab",
+      "hardware": "NVIDIA A100",
+      "category": "training",
+      "evidence_ref": "experiments/pcqm_k1_single_ema_500k/protocol.md",
+      "measurement": {
+        "device_hours": {
+          "value": 4.0,
+          "status": "estimated"
+        },
+        "wall_hours": {
+          "value": 4.0,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_BOUNDED_500K",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_BOUNDED_500K",
+    "policy_id": "pcqm-k1-single-ema-500k-a100",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_single_ema_500k/protocol.md",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_single_ema_500k/role_plan.json"
+    ],
+    "source_commit": "c6f04e2d12c359f5b74e2615a3b638961858680f",
+    "state_timestamp": "2026-10-10T05:27:19.164969+00:00"
+  }
+}

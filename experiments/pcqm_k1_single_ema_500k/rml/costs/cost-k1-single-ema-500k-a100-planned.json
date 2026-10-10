@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "training",
+  "cost_event_id": "cost-k1-single-ema-500k-a100-planned",
+  "evidence_ref": "experiments/pcqm_k1_single_ema_500k/protocol.md",
+  "hardware": "NVIDIA A100",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 4.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4.0
+    }
+  },
+  "platform": "colab",
+  "run_id": "k1-single-ema-500k-a100-20261010",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-single-ema-500k-a100-20261010"
+}
