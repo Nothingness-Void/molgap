@@ -89,7 +89,8 @@ def prepare(root, initial, *, draft):
 def write(path, value):
     # Canonical bytes match the package recipe hash and LF-normalized snapshot.
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
+    payload = json.dumps(value, sort_keys=True, separators=(",", ":"))
+    path.write_text(payload, encoding="utf-8")
 
 
 if __name__ == "__main__":
