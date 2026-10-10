@@ -54,3 +54,42 @@ and the PyTorch CUDA semantics linked above.
 Small frozen-output perturbations do not qualify retrained MAE. Local same-seed
 short-step comparisons are not independent training seeds or native hardware
 performance certificates. No new remote job or training is released by this review.
+
+## Practical qualification order
+
+1. Conservative execution candidate: existing CPU layout. Short CUDA state/RNG
+   and resumed continuation are exact; independent local attempts show about7%
+   step-time reduction. Native loader/epoch/storage timing remains unqualified.
+2. Larger speed candidate: foreach/fused AdamW. Their local22.79%/25.12% time
+   reduction exceeds the isolated TF32 gain, but rounding and optimizer contract
+   differ. Do not infer quality preservation from smaller scratch tensor errors.
+3. TF32 is a precision candidate for Ampere-or-later, not a T4 optimization.
+   The matched-layout increment is6.23%; frozen TRAIN prediction drift is small,
+   but retrained development MAE is unknown. Reuse `precision_case` rather than
+   adding another training loop. Any quality comparison needs separate authority.
+4. Scalar snapshot helper is locally exact on CPU and helps long metadata
+   fixtures. Full-history serialization/write cost remains; its24.57% largest
+   fixture publication reduction is not a training-step saving.
+
+Do not add these percentages: they measure different scopes/windows. Neither
+projection reorder is a direct replacement. No default or active source changed.
+
+## Local compile capability observation
+
+2026-10-10, required project Python, CPU metadata-only command:
+
+```python
+import importlib.util, platform, torch
+platform.system()                         # Windows
+torch.__version__                         # 2.7.1+cu128
+callable(getattr(torch, "compile", None))  # True
+importlib.util.find_spec("triton")         # None
+torch.cuda.is_initialized()               # False
+```
+
+The compile API exists but Triton is not installed in this environment. A CUDA
+Inductor/Triton fusion test is therefore not qualified here; no compile/model
+execution or dependency installation occurred. This is a local capability gap,
+not proof that all torch.compile backends or a Linux native runtime are unusable.
+Do not spend a GPU run on this path without first preparing a compatible backend
+and separately budgeting startup, RNG, BN, exactness and steady-state checks.
