@@ -1,0 +1,57 @@
+{
+  "format": "molgap-literature-linked-followup-design-v1",
+  "review_date_jst": "2026-10-10",
+  "scope": "research_and_unexecuted_diagnostic_design",
+  "record_ref": "experiments/pcqm_gptrans_triplet_portability/research_followup.md",
+  "training_executed": false,
+  "model_inference_executed": false,
+  "remote_job_submitted": false,
+  "protected_roles_read": false,
+  "terminal_rml_or_replay_claim": false,
+  "keywords": ["triplet gated aggregation ablation", "graph source dropout", "dropout before softmax", "molecular generalization", "graph scaling node edge exposure"],
+  "primary_sources": [
+    {
+      "id": "tgt-icml2024",
+      "paper": "https://arxiv.org/html/2402.04538v2",
+      "read_sections": ["3.1", "4.4 tables9-10", "D.1", "hyperparameters"],
+      "implementation": ["https://github.com/shamim-hussain/tgt/blob/master/lib/tgt/layers/layers.py", "https://github.com/shamim-hussain/tgt/blob/master/lib/tgt/layers/triplet.py"],
+      "qualification": "mechanism_and_ablation_motivation_not_local_pure2D_effect"
+    },
+    {
+      "id": "dropkey-cvpr2023",
+      "paper": "https://arxiv.org/html/2208.02646v4",
+      "read_sections": ["3.1-3.2", "4.1.1 generalization, schedule, entropy, expectation alignment"],
+      "qualification": "vision_regularization_evidence_not_molecular_validation"
+    },
+    {
+      "id": "graph-scaling-log2025",
+      "paper": "https://arxiv.org/html/2402.02054v3",
+      "publication": "https://proceedings.mlr.press/v269/liu25c.html",
+      "read_sections": ["3", "5", "6", "limitations", "I"],
+      "qualification": "structural_exposure_motivation_not_GPTrans_scaling_prediction"
+    },
+    {
+      "id": "molecular-scalability-neurips2024",
+      "paper": "https://arxiv.org/html/2404.11568v3",
+      "read_sections": ["5.2 task-head ablations", "5.3", "E.2-E.3"],
+      "qualification": "multitask_scaling_context_not_direct_gap_recipe"
+    }
+  ],
+  "local_evidence_refs": [
+    "experiments/pcqm_gptrans_triplet_portability/decision_terminal.md",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/interpretation.md",
+    "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/results/interpretation.md",
+    "experiments/pcqm_gptrans_local_control_100k/gpu/results/interpretation.md",
+    "experiments/pcqm_gptrans_decay_clock_100k/gpu/results/interpretation.md",
+    "experiments/pcqm_gptrans_local_transfer_500k/gpu/results/interpretation.md"
+  ],
+  "observed_deficiency": "gain_attenuates_without_optimizer_updates_and_late_development_erodes",
+  "missing_measurements": ["cross_cohort_source_concentration", "cross_cohort_gate_mass", "input_only_structural_shift_localization"],
+  "decisions": {
+    "gate_removal_or_renormalization": "NOT_RELEASED_UNSUBSTANTIATED_DEFECT_RATIONALE",
+    "source_regularization": "CONDITIONAL_DIAGNOSTIC_PRIORITY_NOT_PROVEN_FIX",
+    "width_ffn_cap_or_extra_seed_grid": "NOT_RELEASED",
+    "next_training_release": false,
+    "automatic_successor": false
+  }
+}
