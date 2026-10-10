@@ -9,6 +9,8 @@ holdout evaluation. Source and terminal custody stay on
 - [Evidence review](evidence_review.md): why this is not a closed experiment retry.
 - [Remote handoff](REMOTE_HANDOFF.md): dated launch observations, deadline and
   reconciliation pointers; do not rerun an existing attempt.
+- [T4 native-cost control](t4_native/README.md): user-released Kaggle1 API pair;
+  same scientific recipe, separate nine-hour allocation and frozen source.
 - `prepare.py`: existing RML planning and source/input identity bindings.
 - `build_notebook.py`: CPU data staging and bounded A100 platform adapter.
 - `rml/trajectory.json`: prospective record, published before diagnostics/training.

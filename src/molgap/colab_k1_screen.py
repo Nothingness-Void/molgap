@@ -5,7 +5,8 @@ cosine60 schedule (reviewed against retained owner 031a890b). Neither its
 Kaggle launch loop nor its metric-based futility gates apply here.
 Run/preflight require CPU-accepted fixed500K input and a parent-frozen source
 archive/config. The parent must enforce a hard allocation watchdog, including
-setup, before 14400 seconds; cooperative deadlines cannot interrupt a kernel.
+setup, within the frozen allocation budget; cooperative deadlines cannot
+interrupt a kernel. Legacy configs retain the A100/14400-second boundary.
 """
 from __future__ import annotations
 
@@ -38,6 +39,41 @@ TRAIN_ROWS = 500_000
 DEV_ROWS = 50_000
 CALIBRATION_ROWS = 16_384
 FORMAT = "molgap-colab-k1-paired500k-v1"
+CONFIG_FORMAT_V2 = "molgap-colab-k1-paired500k-v2"
+
+
+def _allocation_contract(config):
+    required = {"format", "source_commit", "source_package_sha256", "job_id",
+                "cpu_accepted_dataset_manifest_sha256", "initial_format",
+                "initial_state_sha256", "allocation_started_unix"}
+    if not isinstance(config, dict):
+        raise ValueError("Runconfig schema/identity changed")
+    if config.get("format") == FORMAT and set(config) == required:
+        accelerator, limit = "A100", 14400
+    elif config.get("format") == CONFIG_FORMAT_V2 and set(config) == required | {
+            "accelerator", "allocation_wall_limit_seconds"}:
+        accelerator, limit = config["accelerator"], config["allocation_wall_limit_seconds"]
+        if type(accelerator) is not str or accelerator not in {"A100", "T4"}:
+            raise ValueError("Accelerator must be explicitly pinned to A100 or T4")
+        ceiling = 14400 if accelerator == "A100" else 32400
+        if type(limit) is not int or not 0 < limit <= ceiling:
+            raise ValueError("Allocation wall limit outside the pinned accelerator budget")
+    else:
+        raise ValueError("Runconfig schema/identity changed")
+    if not config["job_id"]:
+        raise ValueError("Runconfig schema/identity changed")
+    return accelerator, limit
+
+
+def _require_accelerator(accelerator):
+    import torch
+    if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
+        raise ValueError(f"Exactly one visible {accelerator} required")
+    name = torch.cuda.get_device_name(0)
+    models = {model for model in ("A100", "T4")
+              if re.search(rf"(?<![A-Za-z0-9]){model}(?![A-Za-z0-9])", name)}
+    if models != {accelerator}:
+        raise ValueError(f"Exactly one visible {accelerator} required; observed {name}")
 
 
 def _check(deadline):
@@ -431,13 +467,17 @@ def _paired(arms, roles, mean, std, output, binding, runtime, device, deadline,
 def execute(*, mode, dataset_root, initial_path, initial_sha256, runconfig_path,
             runconfig_sha256, source_archive, output, deadline, resume=None,
             resume_sha256=None):
-    """Preflight or run on one A100; deadline is absolute Unix time, not a duration.
+    """Preflight or run on one pinned GPU; deadline is absolute Unix time.
 
     Config keys: format, source_commit, source_package_sha256, job_id,
     cpu_accepted_dataset_manifest_sha256, initial_format, initial_state_sha256,
     allocation_started_unix. Its file bytes are pinned by runconfig_sha256.
+    V1 retains exactly these keys and A100/14400 seconds. CONFIG_FORMAT_V2
+    additionally requires accelerator (A100 or T4) and integer
+    allocation_wall_limit_seconds (positive, <=14400 A100 or <=32400 T4).
     Resume uses the same config/allocation window and verified last.pt SHA.
-    Output must be the parent's durable Drive directory, not worker-only storage.
+    Parent owns prospective records and the hard allocation watchdog. Output
+    must be independently durable/retrievable, not worker-only storage.
     """
     import torch
     if mode not in {"run", "preflight"}:
@@ -446,11 +486,7 @@ def execute(*, mode, dataset_root, initial_path, initial_sha256, runconfig_path,
     if sha256_file(config_path) != runconfig_sha256:
         raise ValueError("Runconfig hash mismatch")
     config = json.loads(config_path.read_text(encoding="utf-8"))
-    required = {"format", "source_commit", "source_package_sha256", "job_id",
-                "cpu_accepted_dataset_manifest_sha256", "initial_format",
-                "initial_state_sha256", "allocation_started_unix"}
-    if set(config) != required or config["format"] != FORMAT or not config["job_id"]:
-        raise ValueError("Runconfig schema/identity changed")
+    accelerator, wall_limit = _allocation_contract(config)
     if type(config["source_commit"]) is not str or not re.fullmatch(r"[0-9a-f]{40}", config["source_commit"]):
         raise ValueError("Source commit must be a full Git SHA")
     for digest in (config["source_package_sha256"], config["initial_state_sha256"],
@@ -461,8 +497,9 @@ def execute(*, mode, dataset_root, initial_path, initial_sha256, runconfig_path,
         raise ValueError("CPU acceptance must bind the fixed500K manifest")
     started = config["allocation_started_unix"]
     if not all(type(v) in (float, int) and math.isfinite(v) for v in (started, deadline)) or not (
-            started <= time.time() and 0 < deadline - started <= 14400):
-        raise ValueError("Deadline must remain within the original four-hour total allocation")
+            started <= time.time() and 0 < deadline - started <= wall_limit):
+        boundary = "four-hour total" if config["format"] == FORMAT else f"{wall_limit}-second total"
+        raise ValueError(f"Deadline must remain within the original {boundary} allocation")
     cutoff = time.perf_counter() + deadline - time.time() - 120
     publication_deadline = cutoff + 105
     if sha256_file(Path(source_archive)) != config["source_package_sha256"]:
@@ -489,8 +526,7 @@ def execute(*, mode, dataset_root, initial_path, initial_sha256, runconfig_path,
         roles, mean, std, manifest = _data(Path(dataset_root))
         atomic_json(output / "sample_manifest.json", manifest)
         _check(cutoff)
-        if not torch.cuda.is_available() or torch.cuda.device_count() != 1 or "A100" not in torch.cuda.get_device_name(0):
-            raise ValueError("Exactly one visible A100 required")
+        _require_accelerator(accelerator)
         settings = configure_fp32_determinism(42)
         runtime = build_runtime_manifest(settings)
         atomic_json(output / "runtime.json", runtime)
@@ -507,7 +543,7 @@ def execute(*, mode, dataset_root, initial_path, initial_sha256, runconfig_path,
                 arms[name]["ema"] = make_ema(arms[name]["model"])
         torch.cuda.reset_peak_memory_stats()
         _qualify(arms, roles["train"], mean, std, output, "cuda", cutoff)
-        print("A100_PAIRED_K1_QUALIFICATION_PASSED", flush=True)
+        print(f"{accelerator}_PAIRED_K1_QUALIFICATION_PASSED", flush=True)
         if mode == "preflight":
             result = {"status": "PREFLIGHT_COMPLETE", "complete": False, "formal_samples": 0}
         else:

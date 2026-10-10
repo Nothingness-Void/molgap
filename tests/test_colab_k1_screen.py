@@ -1,4 +1,4 @@
-"""Synthetic CPU graphs only; no real data, A100 allocation or role access."""
+"""Synthetic CPU graphs only; no real data, GPU allocation or role access."""
 import copy
 import json
 import math
@@ -122,6 +122,9 @@ def test_pair_same_live_training_order_initial_rng_and_full_lr_horizon(toy, tmp_
     assert screen._exact(arms["reference"]["rng"], arms["ema999"]["rng"])
     for name, arm in arms.items():
         assert arm["steps"] == 4 and arm["samples"] == 512
+        assert len(arm["step_trace"]) == 4
+        assert all(math.isfinite(row["seconds"]) and row["seconds"] >= 0
+                   and row["allocation_seconds"] >= 0 for row in arm["step_trace"])
         assert [r["lr"] for r in arm["trace"]] == [screen.owner.schedule(0), screen.owner.schedule(1)]
         selected = torch.load(tmp_path / name / "best.pt", weights_only=False)
         assert selected["selection"] == ("live-calibrated" if name == "reference" else "ema-calibrated")
@@ -338,6 +341,129 @@ def test_original_total_allocation_deadline_not_reset(tmp_path):
     inputs["deadline"] += 1
     with pytest.raises(ValueError, match="four-hour total"):
         screen.execute(**inputs)
+
+
+def test_legacy_config_keeps_exact_a100_contract(tmp_path):
+    inputs = config_inputs(tmp_path)
+    config = json.loads(inputs["runconfig_path"].read_text())
+    before = copy.deepcopy(config)
+    assert screen._allocation_contract(config) == ("A100", 14400)
+    assert config == before
+    config["accelerator"] = "T4"
+    with pytest.raises(ValueError, match="schema"):
+        screen._allocation_contract(config)
+
+
+@pytest.mark.parametrize("accelerator,limit", [("T4", 32400), ("T4", 14400), ("A100", 14400)])
+def test_versioned_budget_uses_original_total_window(tmp_path, monkeypatch, accelerator, limit):
+    inputs = config_inputs(tmp_path, format=screen.CONFIG_FORMAT_V2,
+                           accelerator=accelerator, allocation_wall_limit_seconds=limit)
+    config = json.loads(inputs["runconfig_path"].read_text())
+    assert screen._allocation_contract(config) == (accelerator, limit)
+    inputs["deadline"] = config["allocation_started_unix"] + limit
+    observed_cutoffs = []
+    monkeypatch.setattr(screen, "_check", observed_cutoffs.append)
+    monkeypatch.setattr(screen, "_data", lambda *args: (_ for _ in ()).throw(
+        ValueError("synthetic boundary reached")))
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: pytest.fail("GPU queried"))
+    with pytest.raises(ValueError, match="boundary reached"):
+        screen.execute(**inputs)
+    assert observed_cutoffs[0] - time.perf_counter() == pytest.approx(limit - 120, abs=5)
+    assert json.loads((inputs["output"] / "binding.json").read_text())["config"] == config
+    inputs["deadline"] += 1
+    with pytest.raises(ValueError, match="original .*total allocation"):
+        screen.execute(**inputs)
+
+
+@pytest.mark.parametrize("changes,message", [
+    ({"accelerator": "T40"}, "Accelerator"),
+    ({"accelerator": "a100"}, "Accelerator"),
+    ({"accelerator": None}, "Accelerator"),
+    ({"accelerator": ["T4"]}, "Accelerator"),
+    ({"accelerator": "A100", "allocation_wall_limit_seconds": 32400}, "wall limit"),
+    ({"allocation_wall_limit_seconds": 32401}, "wall limit"),
+    ({"allocation_wall_limit_seconds": 0}, "wall limit"),
+    ({"allocation_wall_limit_seconds": -1}, "wall limit"),
+    ({"allocation_wall_limit_seconds": True}, "wall limit"),
+    ({"allocation_wall_limit_seconds": 32400.0}, "wall limit"),
+    ({"allocation_wall_limit_seconds": "32400"}, "wall limit"),
+    ({"allocation_wall_limit_seconds": float("nan")}, "wall limit"),
+    ({"allocation_wall_limit_seconds": float("inf")}, "wall limit"),
+    ({"format": screen.FORMAT}, "schema"),
+    ({"format": "unknown"}, "schema"),
+    ({"extra": "not allowed"}, "schema"),
+])
+def test_versioned_config_fails_closed_before_data_or_gpu(tmp_path, monkeypatch, changes, message):
+    fields = dict(format=screen.CONFIG_FORMAT_V2, accelerator="T4",
+                  allocation_wall_limit_seconds=32400)
+    fields.update(changes)
+    monkeypatch.setattr(screen, "_data", lambda *args: pytest.fail("dataset read"))
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: pytest.fail("GPU queried"))
+    with pytest.raises(ValueError, match=message):
+        screen.execute(**config_inputs(tmp_path, **fields))
+
+
+@pytest.mark.parametrize("missing", ["accelerator", "allocation_wall_limit_seconds"])
+def test_versioned_config_requires_both_pins(tmp_path, missing):
+    inputs = config_inputs(tmp_path, format=screen.CONFIG_FORMAT_V2,
+                           accelerator="T4", allocation_wall_limit_seconds=32400)
+    config = json.loads(inputs["runconfig_path"].read_text())
+    del config[missing]
+    with pytest.raises(ValueError, match="schema"):
+        screen._allocation_contract(config)
+
+
+@pytest.mark.parametrize("accelerator,name,count,available,valid", [
+    ("A100", "NVIDIA A100-SXM4-40GB", 1, True, True),
+    ("T4", "Tesla T4", 1, True, True),
+    ("T4", "NVIDIA T4", 1, True, True),
+    ("T4", "NVIDIA A100-SXM4-40GB", 1, True, False),
+    ("A100", "Tesla T4", 1, True, False),
+    ("T4", "Tesla T40", 1, True, False),
+    ("A100", "NVIDIA A1000", 1, True, False),
+    ("T4", "A100 T4", 1, True, False),
+    ("T4", "Tesla T4", 2, True, False),
+    ("T4", "Tesla T4", 0, True, False),
+    ("T4", "Tesla T4", 1, False, False),
+])
+def test_pinned_single_visible_accelerator(monkeypatch, accelerator, name, count, available, valid):
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: available)
+    monkeypatch.setattr(torch.cuda, "device_count", lambda: count)
+    monkeypatch.setattr(torch.cuda, "get_device_name", lambda index: name)
+    if valid:
+        screen._require_accelerator(accelerator)
+    else:
+        with pytest.raises(ValueError, match=f"Exactly one visible {accelerator}"):
+            screen._require_accelerator(accelerator)
+
+
+@pytest.mark.parametrize("accelerator,observed", [("A100", "Tesla T4"), ("T4", "NVIDIA A100-SXM4-40GB")])
+def test_execute_hardware_mismatch_is_no_train(tmp_path, monkeypatch, accelerator, observed):
+    fields = {} if accelerator == "A100" else dict(
+        format=screen.CONFIG_FORMAT_V2, accelerator="T4", allocation_wall_limit_seconds=32400)
+    inputs = config_inputs(tmp_path, **fields)
+    monkeypatch.setattr(screen, "_data", lambda *args: ({}, 1, 1, {}))
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(torch.cuda, "device_count", lambda: 1)
+    monkeypatch.setattr(torch.cuda, "get_device_name", lambda index: observed)
+    monkeypatch.setattr(screen.owner, "make_model", lambda *args: pytest.fail("model constructed"))
+    monkeypatch.setattr(screen, "build_runtime_manifest", lambda *args: pytest.fail("runtime invented"))
+    with pytest.raises(ValueError, match=f"Exactly one visible {accelerator}"):
+        screen.execute(**inputs)
+    terminal = json.loads((inputs["output"] / "terminal.json").read_text())
+    assert terminal["status"] == "NO_TRAIN" and not terminal["complete"]
+
+
+def test_expired_t4_budget_never_reads_data_or_gpu(tmp_path, monkeypatch):
+    inputs = config_inputs(tmp_path, format=screen.CONFIG_FORMAT_V2, accelerator="T4",
+                           allocation_wall_limit_seconds=32400,
+                           allocation_started_unix=time.time() - 32400)
+    config = json.loads(inputs["runconfig_path"].read_text())
+    inputs["deadline"] = config["allocation_started_unix"] + 32400
+    monkeypatch.setattr(screen, "_data", lambda *args: pytest.fail("expired dataset read"))
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: pytest.fail("expired GPU queried"))
+    result = screen.execute(**inputs)
+    assert result["status"] == "STOP_FOR_COST" and not result["complete"]
 
 
 def test_expired_preflight_never_reads_dataset(tmp_path, monkeypatch):
