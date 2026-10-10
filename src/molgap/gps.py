@@ -67,13 +67,13 @@ class GPSWrapper(nn.Module):
         h = self.encode(x, edge_index, edge_attr, batch)
         return self.head(h)
 
-    def _pool(self, h, batch):
+    def _pool(self, h, batch, *, size=None):
         from torch_geometric.nn import global_max_pool, global_mean_pool
 
-        mean = global_mean_pool(h, batch)
+        mean = global_mean_pool(h, batch) if size is None else global_mean_pool(h, batch, size=size)
         if self.pooling == "mean":
             return mean
-        maximum = global_max_pool(h, batch)
+        maximum = global_max_pool(h, batch) if size is None else global_max_pool(h, batch, size=size)
         return self.pool_proj(torch.cat([mean, maximum], dim=-1))
 
     def _embed_nodes(self, x):
