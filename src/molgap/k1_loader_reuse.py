@@ -14,6 +14,9 @@ class K1LoaderReuse:
     Packed feature backing supports tensors/scalars only, plus a flat slice
     field dictionary. Python row containers are refused without traversal.
     Normal PyG lazy graph-cache population is not part of the backing signature.
+    ``preserve_global_rng=True`` instead requires generator=None and the stock
+    PyTorch 2.7.1 Map iterator on a CPU default device. Later persistent resets
+    emulate the main CPU base-seed draw of a fresh iterator, not worker reseeding.
 
     Pass flattened exact-int indices from the existing epoch sampler, already
     sliced for its processed resume cursor and dropped tail. No order is generated
@@ -22,10 +25,12 @@ class K1LoaderReuse:
     supplied loader directly while this owner is live.
     """
 
-    def __init__(self, loader, *, deterministic_dataset: bool):
+    def __init__(self, loader, *, deterministic_dataset: bool, preserve_global_rng: bool = False):
         import torch
         from torch.utils.data import BatchSampler, DataLoader
 
+        if type(preserve_global_rng) is not bool:
+            raise ValueError("preserve_global_rng must be an exact bool")
         if deterministic_dataset is not True:
             raise ValueError("Explicit deterministic immutable dataset authority required")
         if not isinstance(loader, DataLoader):
@@ -35,7 +40,9 @@ class K1LoaderReuse:
             raise ValueError("Original literal list sampler required")
         if type(loader.batch_sampler) is not BatchSampler or loader.batch_sampler.sampler is not loader.sampler:
             raise ValueError("Batch sampler must alias the original sampler list")
-        if not isinstance(loader.generator, torch.Generator) or loader.generator.device.type != "cpu":
+        if preserve_global_rng:
+            self._check_global_rng_contract(loader)
+        elif not isinstance(loader.generator, torch.Generator) or loader.generator.device.type != "cpu":
             raise ValueError("Explicit CPU loader generator required")
         if loader.num_workers > 0 and loader.persistent_workers is not True:
             raise ValueError("Worker reuse requires persistent workers")
@@ -48,12 +55,43 @@ class K1LoaderReuse:
         self._dataset_binding = dataset_state
         self._sampler = loader.sampler
         self._generator = loader.generator
+        self._preserve_global_rng = preserve_global_rng
         self._iterator = None
         self._workers = ()
         self._active = False
         self._poisoned = False
         self._closed = False
         self._cleanup_done = False
+
+    @staticmethod
+    def _check_global_rng_contract(loader):
+        import torch
+        from torch.utils.data import DataLoader
+        from torch.utils.data.dataloader import _DatasetKind
+        from torch.utils import _device
+
+        # Source-audited 2.7.1 draws one int64 base seed in __init__, none in
+        # Map _reset. Restrict versions/iterator overrides rather than repeatedly
+        # parsing installed source or guessing semantics for another backend.
+        if str(torch.__version__).split("+", 1)[0] != "2.7.1":
+            raise ValueError("Global RNG preservation supports stock PyTorch 2.7.1 only")
+        if (loader._dataset_kind != _DatasetKind.Map
+                or type(loader).__iter__ is not DataLoader.__iter__
+                or type(loader)._get_iterator is not DataLoader._get_iterator
+                or "__iter__" in loader.__dict__ or "_get_iterator" in loader.__dict__):
+            raise ValueError("Global RNG preservation requires native Map iterator semantics")
+        if loader.generator is not None:
+            raise ValueError("Global RNG preservation requires generator=None")
+        # Inspect legacy defaults and factory modes before get_default_device
+        # can allocate on an unindexed accelerator. Device contexts need not be
+        # reflected in get_default_device (or _device.CURRENT_DEVICE).
+        legacy_default = getattr(torch._C, "_get_default_device", None)
+        if legacy_default is None or torch.device(legacy_default()).type != "cpu":
+            raise ValueError("Global RNG preservation requires a CPU default device")
+        modes = torch.overrides._get_current_function_mode_stack()
+        if (any(type(mode) is not _device.DeviceContext or mode.device.type != "cpu"
+                for mode in modes) or torch.get_default_device().type != "cpu"):
+            raise ValueError("Global RNG preservation requires a CPU default device")
 
     @staticmethod
     def _dataset_state(dataset):
@@ -107,6 +145,8 @@ class K1LoaderReuse:
         return (tuple(children), tuple(cumulative))
 
     def _check_loader(self):
+        if self._preserve_global_rng:
+            self._check_global_rng_contract(self.loader)
         if (self.loader.dataset is not self._dataset
                 or self._dataset_state(self._dataset) != self._dataset_binding):
             raise ValueError("Authorized dataset membership changed")
@@ -137,6 +177,9 @@ class K1LoaderReuse:
         expected_batches = None
         try:
             self._sampler[:] = rows
+            if self._preserve_global_rng and self.loader.num_workers > 0 and self._iterator is not None:
+                import torch
+                torch.empty((), dtype=torch.int64).random_(generator=None).item()
             iterator = iter(self.loader)
             if self._iterator is not None and self.loader.num_workers > 0 and iterator is not self._iterator:
                 raise RuntimeError("Persistent loader replaced its owned iterator")

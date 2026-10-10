@@ -49,3 +49,6 @@ See [focused regression and bookkeeping limits](LOADER_REUSE_VERIFICATION.md).
 extends the probe to the actual ConcatDataset shape and catches cold first-fetch
 cost. The registered100K global-RNG loader is not silently switched to reuse.
 See [packed regression and packaging verification](PACKED_LOADER_VERIFICATION.md).
+
+[Global loader RNG compatibility](GLOBAL_LOADER_RNG.md) adds an explicit optional
+Torch2.7.1 path with synthetic main-RNG parity, not registered-trainer adoption.
