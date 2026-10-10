@@ -159,10 +159,16 @@ class _NeuralAtomMixerFactory:
             def compute_update(self, hidden, batch):
                 layout = getattr(self, "_execution_dense_layout", None)
                 normalized = self.node_norm(hidden)
-                dense, valid = (to_dense_batch(normalized, batch) if layout is None
-                                else layout.pack(normalized, batch))
-                keys = self.node_key(dense)
-                values = self.node_value(dense)
+                if getattr(self, "_execution_project_before_pack", False):
+                    if layout is None:
+                        raise ValueError("Projection reorder requires a CPU layout")
+                    keys, valid = layout.pack(self.node_key(normalized), batch)
+                    values, _ = layout.pack(self.node_value(normalized), batch)
+                else:
+                    dense, valid = (to_dense_batch(normalized, batch) if layout is None
+                                    else layout.pack(normalized, batch))
+                    keys = self.node_key(dense)
+                    values = self.node_value(dense)
                 seeds = self.slot_seed[: self.active_slots]
                 queries = self.slot_query(seeds)
                 logits = torch.einsum("kd,bnd->bkn", queries, keys)

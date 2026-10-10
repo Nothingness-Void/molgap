@@ -310,7 +310,10 @@ class _PersistentEdgeUpdate(nn.Module):
         edge_state: torch.Tensor,
     ) -> torch.Tensor:
         source, target = edge_index
-        context = edge_state + self.source(h[source]) + self.target(h[target])
+        if getattr(self, "_execution_project_before_gather", False):
+            context = edge_state + self.source(h)[source] + self.target(h)[target]
+        else:
+            context = edge_state + self.source(h[source]) + self.target(h[target])
         return self.output_norm(edge_state + self.update(context))
 
 
