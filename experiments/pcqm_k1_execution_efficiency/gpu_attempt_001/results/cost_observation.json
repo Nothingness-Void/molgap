@@ -1,0 +1,11 @@
+{
+  "worker_wall_seconds": 67.0656272999986,
+  "process_cpu_seconds": 207.40625,
+  "cpu_children_seconds": 0,
+  "execution_device": "cuda",
+  "gpu_busy_seconds": null,
+  "budget_mode": "cooperative; no beyond-budget checkpoint-work grace",
+  "wall_limit_seconds": 600,
+  "observed_overrun_seconds": 0.0,
+  "cost_scope": "Whole run() including preparation/imports; module import, test suite and parent overhead excluded"
+}

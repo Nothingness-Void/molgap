@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 478,
+  "ambiguous_historical_role_record_count": 484,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -2438,6 +2438,48 @@
       "state": "prediction_input"
     },
     {
+      "evidence_id": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "role_identity": null,
+      "role_name": "train_probe_decoded",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
+      "evidence_id": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "role_identity": null,
+      "role_name": "train_probe_executed",
+      "semantics": "coarse_historical",
+      "state": "prediction_input"
+    },
+    {
       "evidence_id": "pcqm-k1-flag-cpu-qualification-20261002",
       "role_identity": null,
       "role_name": "internal_development",
@@ -3348,7 +3390,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 286,
+  "explicit_role_event_count": 289,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -4973,6 +5015,13 @@
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629:train_probe_decoded": [
       {
         "access_kind": "labels_read",
+        "role_event_id": "role-k1-execution-efficiency-gpu-train_probe_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010"
+      },
+      {
+        "access_kind": "labels_read",
         "role_event_id": "role-k1-execution-efficiency-train_probe_decoded-labels_read",
         "selection_used": false,
         "semantics": "explicit",
@@ -5237,6 +5286,20 @@
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:8db6deee0c5782c37e7ea8c4b2faa32351fcbbc5dae424f6a92455c7e4fa0dd9:train_probe_executed": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-execution-efficiency-gpu-train_probe_executed-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-execution-efficiency-gpu-train_probe_executed-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010"
+      },
       {
         "access_kind": "metric_computed",
         "role_event_id": "role-k1-execution-efficiency-train_probe_executed-metric_computed",
@@ -5553,6 +5616,7 @@
       "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-execution-checkpoint-recovery-20261010",
       "pcqm-k1-execution-efficiency-20261010",
+      "pcqm-k1-execution-efficiency-gpu-20261010",
       "pcqm-k1-flag-cpu-qualification-20261002",
       "pcqm-k1-flag-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-full-convergence-20260919",
@@ -5654,6 +5718,7 @@
       "pcqm-k1-dropout-mean2-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-execution-checkpoint-recovery-20261010",
       "pcqm-k1-execution-efficiency-20261010",
+      "pcqm-k1-execution-efficiency-gpu-20261010",
       "pcqm-k1-flag-cpu-qualification-20261002",
       "pcqm-k1-flag-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-full-convergence-20260919",
@@ -8242,6 +8307,22 @@
         "trajectory_id": "TB-k1-slot96-cpu-qualification-20261002"
       }
     ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629:train_probe_decoded": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-execution-efficiency-gpu-train_probe_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010"
+      },
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-k1-execution-efficiency-train_probe_decoded-labels_read",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-execution-efficiency-20261010"
+      }
+    ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development": [
       {
         "access_kind": "labels_read",
@@ -8449,6 +8530,36 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-pair-norm-500k-s42"
+      }
+    ],
+    "pcqm4mv2-ogb-fixed-500k-scnet-v1:8db6deee0c5782c37e7ea8c4b2faa32351fcbbc5dae424f6a92455c7e4fa0dd9:train_probe_executed": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-execution-efficiency-gpu-train_probe_executed-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-execution-efficiency-gpu-train_probe_executed-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-k1-execution-efficiency-train_probe_executed-metric_computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-execution-efficiency-20261010"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-k1-execution-efficiency-train_probe_executed-prediction_input",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-k1-execution-efficiency-20261010"
       }
     ],
     "pcqm4mv2-ogb-fixed-500k-scnet-v1:8fb4d70862858ff04de0e5bdf9f67a1a0b1692c838bd1331cb891e233cbff5d4:train_features": [

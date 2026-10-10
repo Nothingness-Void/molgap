@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "gpu-attempt-001",
+  "category": "other",
+  "cost_event_id": "cost-k1-execution-efficiency-gpu-observed",
+  "evidence_ref": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/acceptance.json",
+  "hardware": "RTX5060; local CUDA scratch diagnostic",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.05761284722222222
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.018629340916666275
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "k1-execution-efficiency-rtx5060-20261010",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010"
+}

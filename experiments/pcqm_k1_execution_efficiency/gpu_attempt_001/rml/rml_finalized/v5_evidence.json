@@ -1,0 +1,132 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "7788866dfc646574ab70f203f6d0962e77d944cac60560e25a76b2d4f857993b"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/attribution.md",
+      "name": "attribution.md",
+      "sha256": "1821b680fc042c83a2be1e93c4d172739f10721d88821a6acb5f92055de1ab5f"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/decision.md",
+      "name": "decision.md",
+      "sha256": "6e5d393f628f291bf984b72f8095117a0c326134223075885acfaddf24970f47"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/inputs.json",
+      "name": "inputs.json",
+      "sha256": "f99dc06d3237ac4b8e09a3f85f3e6150e9b0b5f63d3d32035e8fa3c9edb1c9e5"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/plan_input.json",
+      "name": "plan_input.json",
+      "sha256": "debcd83486b413eccecf6b4c4596d97db5ec9c7b2e5eae82577405ebcd7865f9"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/plan_receipt.json",
+      "name": "plan_receipt.json",
+      "sha256": "2d989dcc13318a8893cf5ac4d794d1fbe57a0e47ce49519ce56c01b462dfc1aa"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/README.md",
+      "name": "README.md",
+      "sha256": "00378bfe315b291250c3456428bb9921b14c0bf3ae973aad4b970ed0f4ab2054"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/role_plan.json",
+      "name": "role_plan.json",
+      "sha256": "2a25367796f3d4948ee96f571a03744e091f228e404d2af39c79766c42bef034"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "cc78f046d32ab217e53642f61a51b252e8254e735f3cfa96b6f70ff5d09692e7"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/results/checkpoint_resume.json",
+      "name": "results/checkpoint_resume.json",
+      "sha256": "9f7f21ebd169da01e899f1e8a4a7a5958d4ac5e5b360bd569269581b6bb602a3"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/results/completion.json",
+      "name": "results/completion.json",
+      "sha256": "d7b5ef81115809b18ffdee436f17f0286cdb347dcf28f5132b956f308d732bfd"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/results/cost_observation.json",
+      "name": "results/cost_observation.json",
+      "sha256": "06a115e27765f9a35967b682f7fd992b927d5cc0edf0270661d34c2def5a3045"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/results/result.json",
+      "name": "results/result.json",
+      "sha256": "0d1e37d06da666c0f67357b33357318dbcc21c9d9b68e66b1aaf602417bfed40"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/results/runtime.json",
+      "name": "results/runtime.json",
+      "sha256": "13b0a217353a22fca5721be53158277e15a2a55b6ba43d2bccfe4d7790d0c40c"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/README.md",
+      "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/terminal_decision.md",
+      "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/attribution.md",
+      "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-k1-execution-efficiency-gpu-20261010",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-k1-execution-efficiency-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-10",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata closure of separately executed prospective GPU scratch diagnostic"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/results/result.json",
+    "inference_executed": true,
+    "training_executed": false,
+    "training_replay_ready": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "bounded_local_gpu_diagnostic_complete",
+    "comparison_status": "matched_local_cuda_scratch_only",
+    "execution_status": "complete_gpu_scratch_diagnostic",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_probe_decoded": "labels_read",
+    "train_probe_executed": "prediction_input"
+  },
+  "scope": "desktop_k1_gpu_execution_efficiency",
+  "track": "B"
+}

@@ -25,3 +25,8 @@ identity; never rerun the old completed attempt with edited inputs.
 Routing remains pending integration review/native execution qualification on this
 question branch. Its accepted diagnostic code/evidence can use the explicit
 non-promotion desktop route in BRANCHES.md; there is no model adoption or push.
+
+Subsequent authorized idle-GPU test: see the separately frozen
+[RTX5060 decision](gpu_attempt_001/terminal_decision.md) and
+[attribution](gpu_attempt_001/attribution.md). The above CPU check remains a dated
+record; the GPU attempt neither replaces its failed publication nor reruns it.

@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 111,
+      "trajectories_total": 112,
       "with_complete_native_measurement": 24,
-      "with_cost_event": 100,
-      "with_incomplete_native_measurement": 76,
+      "with_cost_event": 101,
+      "with_incomplete_native_measurement": 77,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -1074,12 +1074,12 @@
             "known_total": 0.0105078125
           },
           "not_applicable_records": 0,
-          "unknown_records": 3
+          "unknown_records": 4
         },
         "device_hours": {
           "estimated": {
-            "known_records": 2,
-            "known_total": 0.6666666666666666
+            "known_records": 3,
+            "known_total": 0.8333333333333333
           },
           "measured": {
             "known_records": 1,
@@ -1098,12 +1098,12 @@
             "known_total": null
           },
           "not_applicable_records": 3,
-          "unknown_records": 1
+          "unknown_records": 2
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 2,
-            "known_total": 0.6666666666666666
+            "known_records": 3,
+            "known_total": 0.8333333333333333
           },
           "measured": {
             "known_records": 2,
@@ -1361,6 +1361,56 @@
           },
           "not_applicable_records": 0,
           "unknown_records": 23
+        }
+      },
+      "RTX5060; local CUDA scratch diagnostic": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 1,
+            "known_total": 0.05761284722222222
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 1,
+          "unknown_records": 0
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 1,
+            "known_total": 0.018629340916666275
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
         }
       },
       "Tesla T4": {
@@ -2914,17 +2964,17 @@
         }
       }
     },
-    "unknown_events": 196
+    "unknown_events": 198
   },
   "evidence": {
-    "validated": 100,
+    "validated": 101,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 82,
+      "count": 83,
       "severity": "INFO"
     },
     {
@@ -2934,7 +2984,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 76,
+      "count": 77,
       "severity": "WARN"
     },
     {
@@ -2954,19 +3004,19 @@
     }
   ],
   "roles": {
-    "coarse_historical": 478,
-    "explicit_events": 286,
+    "coarse_historical": 484,
+    "explicit_events": 289,
     "repeatedly_selected": 21
   },
-  "source_digest": "0d39b345ce8d493adf94f8ef7a612da51a22aabc2a933bcfe475829f8588dfad",
+  "source_digest": "bb4fba8bd6fde191d8038606c506dff48c989c805c091745f70692eea06ae72a",
   "trajectories": {
-    "count": 111,
+    "count": 112,
     "outcomes": {
       "CLOSED": 12,
       "INCONCLUSIVE": 19,
       "INFRASTRUCTURE_ONLY": 5,
       "NEGATIVE_UNDER_CONTRACT": 24,
-      "NO_TRAIN": 43,
+      "NO_TRAIN": 44,
       "POSITIVE_UNDER_CONTRACT": 8
     }
   },

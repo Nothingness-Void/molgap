@@ -1,0 +1,150 @@
+{
+  "evidence_id": "pcqm-k1-execution-efficiency-gpu-20261010",
+  "run_id": "k1-execution-efficiency-rtx5060-20261010",
+  "outcome": {
+    "execution_status": "complete_gpu_scratch_diagnostic",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "matched_local_cuda_scratch_only",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "bounded_local_gpu_diagnostic_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately prospective native runtime qualification"
+    ]
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-execution-efficiency-gpu-train_probe_decoded-labels_read",
+      "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-efficiency-rtx5060-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_probe_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-execution-efficiency-gpu-train_probe_executed-prediction_input",
+      "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-efficiency-rtx5060-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8db6deee0c5782c37e7ea8c4b2faa32351fcbbc5dae424f6a92455c7e4fa0dd9",
+      "role_name": "train_probe_executed",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-execution-efficiency-gpu-train_probe_executed-metric_computed",
+      "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-efficiency-rtx5060-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "8db6deee0c5782c37e7ea8c4b2faa32351fcbbc5dae424f6a92455c7e4fa0dd9",
+      "role_name": "train_probe_executed",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/acceptance.json"
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-execution-efficiency-gpu-observed",
+      "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-efficiency-rtx5060-20261010",
+      "attempt_id": "gpu-attempt-001",
+      "platform": "local-windows",
+      "hardware": "RTX5060; local CUDA scratch diagnostic",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.018629340916666275,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.05761284722222222,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "role_use": {
+    "train_probe_decoded": "labels_read",
+    "train_probe_executed": "prediction_input",
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "checks": {
+    "prospective": true,
+    "artifact_hashes": true,
+    "train_only": true,
+    "complete_worker": true
+  },
+  "case_qualification": {
+    "baseline": {
+      "exact": true,
+      "execution_only_admissible": true,
+      "status": "qualified"
+    },
+    "non_blocking": {
+      "exact": true,
+      "execution_only_admissible": true,
+      "status": "qualified"
+    },
+    "no_redundant_sync": {
+      "exact": true,
+      "execution_only_admissible": true,
+      "status": "qualified"
+    },
+    "transfer_and_sync": {
+      "exact": true,
+      "execution_only_admissible": true,
+      "status": "qualified"
+    },
+    "foreach": {
+      "exact": false,
+      "execution_only_admissible": false,
+      "status": "numerical_mismatch"
+    },
+    "fused": {
+      "exact": false,
+      "execution_only_admissible": false,
+      "status": "numerical_mismatch"
+    },
+    "cpu_layout": {
+      "exact": true,
+      "execution_only_admissible": true,
+      "status": "qualified"
+    }
+  },
+  "checkpoint_resume_exact": true,
+  "execution_scope": "Discarded CUDA scratch updates, not scientific fitting or native T4 qualification",
+  "gpu_qualification": "local_scratch_only",
+  "training_replay_ready": false,
+  "cost_scope": "Whole run() including preparation/imports; module import, test suite and parent overhead excluded"
+}

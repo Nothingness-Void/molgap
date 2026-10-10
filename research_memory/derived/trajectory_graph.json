@@ -316,6 +316,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-execution-efficiency-gpu-20261010:A001",
+      "target": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-flag-cpu-qualification-20261002:A001",
       "target": "experiments/pcqm_k1_flag/protocol.md",
       "type": "action_produced_evidence"
@@ -933,6 +938,11 @@
     {
       "source": "TB-k1-execution-efficiency-20261010",
       "target": "TB-k1-execution-checkpoint-recovery-20261010",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-execution-efficiency-20261010",
+      "target": "TB-k1-execution-efficiency-gpu-20261010",
       "type": "parent_trajectory"
     },
     {
@@ -1756,8 +1766,18 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-execution-checkpoint-recovery-20261010",
+      "target": "TB-k1-execution-efficiency-gpu-20261010",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-execution-efficiency-20261010",
       "target": "TB-k1-execution-checkpoint-recovery-20261010",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-execution-efficiency-20261010",
+      "target": "TB-k1-execution-efficiency-gpu-20261010",
       "type": "prior_evidence"
     },
     {
@@ -2647,6 +2667,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-execution-efficiency-gpu-20261010",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-flag-cpu-qualification-20261002",
       "type": "evidence"
     },
@@ -3036,6 +3060,10 @@
     },
     {
       "id": "TB-k1-execution-efficiency-20261010",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-execution-efficiency-gpu-20261010",
       "type": "trajectory"
     },
     {

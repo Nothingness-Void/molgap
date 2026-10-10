@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "gpu-attempt-001",
+  "category": "preflight",
+  "cost_event_id": "cost-k1-execution-efficiency-gpu-estimate",
+  "evidence_ref": "experiments/pcqm_k1_execution_efficiency/gpu_attempt_001/README.md",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0.16666666666666666
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.16666666666666666
+    }
+  },
+  "platform": "local",
+  "run_id": "k1-execution-efficiency-rtx5060-20261010",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-execution-efficiency-gpu-20261010"
+}
