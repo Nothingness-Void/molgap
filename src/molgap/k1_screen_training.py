@@ -298,7 +298,7 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("reference", "ssma", "clean_fingerprint", "mean2", "mean2_clean_second")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint", "mean2", "mean2_clean_second", "fused_layout")
 
 
 def build_initial_state(seed: int = SEED) -> dict:
@@ -367,6 +367,13 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
         "auxiliary_weight": 0.1 if mode == "clean_fingerprint" else 0.0}
     if recipe.get("training_recipe") != expected_training:
         raise ValueError("K1 executable training recipe changed")
+    policy = recipe.get("execution_policy")
+    if mode == "fused_layout":
+        if policy != {"adamw_fused": True, "adamw_foreach": False,
+                      "cpu_layout": True, "loader": "original-epoch-loader"}:
+            raise ValueError("Fused-layout execution policy changed")
+    elif policy is not None:
+        raise ValueError("Execution overrides require the fused-layout addon")
 
 
 def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str,
@@ -381,9 +388,9 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
             raise ValueError("Nonhistorical seed requires a frozen initialization_sha256")
         initialization_sha256 = INITIAL_STATE_SHA256
     _validate_initialization(seed, initialization_sha256)
-    if mode not in {"reference", "ssma", "mean2", "mean2_clean_second"}:
+    if mode not in {"reference", "ssma", "mean2", "mean2_clean_second", "fused_layout"}:
         raise ValueError("No executable screen recipe for this K1 addon")
-    return {"mode": mode, "row_order_fingerprint": compute_row_order_fingerprint(seed),
+    recipe = {"mode": mode, "row_order_fingerprint": compute_row_order_fingerprint(seed),
         "initialization_sha256": initialization_sha256,
         "development_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
         "training_recipe": {"seed": seed, "batch_size": BATCH_SIZE, "drop_last": True,
@@ -393,6 +400,10 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
         "acceptance_requirements": {"epochs": EPOCHS, "optimizer_steps": EPOCHS * STEPS_PER_EPOCH,
             "sample_presentations": SAMPLE_EXPOSURE, "development_rows": DEVELOPMENT_ROWS,
             "precision": "fp32", "source_idx_sha256": source_idx_sha256, "target_sha256": target_sha256}}
+    if mode == "fused_layout":
+        recipe["execution_policy"] = {"adamw_fused": True, "adamw_foreach": False,
+                                      "cpu_layout": True, "loader": "original-epoch-loader"}
+    return recipe
 
 
 def _attach_fingerprint_head(model, seed=SEED):
@@ -469,6 +480,27 @@ def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
     return loss.detach(), absolute, int(target.numel())
 
 
+def _screen_optimizer(model, mode):
+    import torch
+    if mode == "fused_layout":
+        from .v4_runtime import make_adamw_compat
+        return make_adamw_compat(model.parameters(), lr=LEARNING_RATE,
+                                 weight_decay=WEIGHT_DECAY, fused=True, foreach=False)
+    # Keep the historical optimizer's native defaults, including foreach=None.
+    return torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
+
+
+def _screen_step(model, optimizer, cpu_batch, mean, std, mode):
+    from contextlib import nullcontext
+    context = nullcontext()
+    if mode == "fused_layout":
+        from .k1_execution_layout import cpu_layout_context
+        context = cpu_layout_context(model, cpu_batch, "cuda")
+    with context:
+        batch = cpu_batch.to("cuda", non_blocking=True)
+        return _optimizer_step(model, optimizer, batch, mean, std, mode)
+
+
 def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode):
     if sha256_file(recipe_path) != context.training_recipe_sha256:
         raise ValueError("Runtime recipe bytes differ from Spec")
@@ -510,6 +542,11 @@ def _validate_arm_binding(spec, context, mode, recipe):
             "source_sha256": normalized_source_sha256(Path(__file__).with_name("k1_clean_second.py"))}
         if addons != [expected]:
             raise ValueError("Clean-second executable addon differs from Spec")
+    if mode == "fused_layout":
+        expected = {"name": "k1_fused_layout", "version": "1", "config": {},
+            "source_sha256": normalized_source_sha256(Path(__file__))}
+        if addons != [expected]:
+            raise ValueError("Fused-layout executable addon differs from Spec")
 
 
 def validate_screen_recipe(spec, arm_id, recipe):
@@ -576,7 +613,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     import torch
     from .experiment_family_workflow import RunContext
     from .training_reproducibility import capture_rng_state, restore_rng_state
-    if mode not in ("reference", "ssma", "mean2", "mean2_clean_second") or label_cache is not None:
+    if mode not in ("reference", "ssma", "mean2", "mean2_clean_second", "fused_layout") or label_cache is not None:
         raise ValueError("This paired GPU qualification supports registered screen modes only")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
@@ -605,7 +642,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     root, manifest = find_fixed_cache(input_root)
     roles = load_roles(root, manifest)
     mean_value, std_value = _target_stats(roles["train"])
-    batch = next(iter(_train_loader(roles["train"], 0, seed))).to("cuda")
+    cpu_fixture = next(iter(_train_loader(roles["train"], 0, seed)))
+    batch = cpu_fixture.clone().to("cuda")
     if int(batch.num_graphs) != BATCH_SIZE:
         raise RuntimeError("Runtime calibration requires physical train batch128")
     mean, std = torch.tensor(mean_value, device="cuda"), torch.tensor(std_value, device="cuda")
@@ -614,7 +652,14 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     reference = _make_screen_model(state, "reference", seed).eval()
     candidate = _make_screen_model(state, mode, seed).eval()
     with torch.no_grad():
-        zero_delta = float((_forward(reference, batch) - _forward(candidate, batch)).abs().max())
+        if mode == "fused_layout":
+            from .k1_execution_layout import cpu_layout_context
+            fixture = cpu_fixture.clone()
+            with cpu_layout_context(candidate, fixture, "cuda"):
+                candidate_prediction = _forward(candidate, fixture.to("cuda"))
+        else:
+            candidate_prediction = _forward(candidate, batch)
+        zero_delta = float((_forward(reference, batch) - candidate_prediction).abs().max())
     if zero_delta != 0.0:
         raise RuntimeError("Zero-added initialization differs from frozen reference")
     del reference, candidate
@@ -622,9 +667,9 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     for _ in range(2):
         configure_fp32_determinism(seed)
         model = _make_screen_model(state, mode, seed).train()
-        optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
-        _optimizer_step(model, optimizer, batch, mean, std, mode)
-        loss, _, _ = _optimizer_step(model, optimizer, batch, mean, std, mode)
+        optimizer = _screen_optimizer(model, mode)
+        _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode)
+        loss, _, _ = _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode)
         if mode == "ssma" and not any(
             parameter.grad is not None and bool(torch.isfinite(parameter.grad).all())
             and float(parameter.grad.abs().sum()) > 0
@@ -638,22 +683,22 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     # Check the same model/optimizer/scheduler/RNG serialization as epoch resume.
     configure_fp32_determinism(seed)
     model = _make_screen_model(state, mode, seed).train()
-    optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
+    optimizer = _screen_optimizer(model, mode)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
-    _optimizer_step(model, optimizer, batch, mean, std, mode)
+    _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode)
     scheduler.step()
     snapshot = output / "diagnostic_resume.pt"
     atomic_torch_save(snapshot, {"model": model.state_dict(), "optimizer": optimizer.state_dict(),
         "scheduler": scheduler.state_dict(), "rng_state": capture_rng_state(),
         "cursor": {"epoch": 1, "next_batch": 0, "sampler_order_sha256": row_order_sha256}})
-    uninterrupted, _, _ = _optimizer_step(model, optimizer, batch, mean, std, mode)
+    uninterrupted, _, _ = _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode)
     continuous_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
     restored = torch.load(snapshot, map_location="cpu", weights_only=False)
     model.load_state_dict(restored["model"], strict=True)
     optimizer.load_state_dict(restored["optimizer"])
     scheduler.load_state_dict(restored["scheduler"])
     restore_rng_state(restored["rng_state"])
-    resumed, _, _ = _optimizer_step(model, optimizer, batch, mean, std, mode)
+    resumed, _, _ = _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode)
     resume = certify_numerical_repeatability(losses=[float(uninterrupted.cpu()), float(resumed.cpu())],
         states=[continuous_state, model.state_dict()])
     selected_path = output / "diagnostic_selected.pt"
@@ -672,16 +717,16 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     for profile_mode in ("reference", mode):
         configure_fp32_determinism(seed)
         model = _make_screen_model(state, profile_mode, seed).train()
-        optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
+        optimizer = _screen_optimizer(model, profile_mode)
         for _ in range(2):
-            _optimizer_step(model, optimizer, batch, mean, std, profile_mode)
+            _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, profile_mode)
         torch.cuda.synchronize()
         torch.cuda.reset_peak_memory_stats()
         samples = []
         for _ in range(5):
             torch.cuda.synchronize()
             tick = time.perf_counter()
-            _optimizer_step(model, optimizer, batch, mean, std, profile_mode)
+            _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, profile_mode)
             torch.cuda.synchronize()
             samples.append(time.perf_counter() - tick)
         timings[profile_mode] = {"median_step_seconds": float(np.median(samples)),
@@ -774,8 +819,7 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     # Load the exact backbone before constructing any extra trainable mechanism.
     state = _load_initial_state(initial_state_path, recipe)
     model = _make_screen_model(state, mode, seed)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE,
-                                 weight_decay=WEIGHT_DECAY)
+    optimizer = _screen_optimizer(model, mode)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
     mean = torch.tensor(mean_value, device="cuda")
     std = torch.tensor(std_value, device="cuda")
@@ -816,6 +860,14 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         restore_rng_state(saved["rng_state"])
     torch.cuda.synchronize()
     allocation_started = time.perf_counter()
+    timing_path = session.root / "execution_times.json"
+    timing_rows = json.loads(timing_path.read_text()) if timing_path.exists() else []
+    if not timing_path.exists() and start_epoch and mode != "fused_layout":
+        timing_rows = [{"epoch": index + 1, "timing": None,
+                        "reason": "Historical checkpoint predates execution timing retention"}
+                       for index in range(start_epoch)]
+    if len(timing_rows) != start_epoch:
+        raise ValueError("Execution timing and complete-epoch cursor disagree")
     for epoch in range(start_epoch, EPOCHS):
         model.train()
         absolute, rows = 0.0, 0
@@ -823,14 +875,18 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         for batch in _train_loader(roles["train"], epoch, seed):
             if label_cache is not None:
                 label_cache.attach(batch)
-            batch = batch.to("cuda", non_blocking=True)
-            _, batch_absolute, batch_rows = _optimizer_step(model, optimizer, batch, mean, std, mode)
+            _, batch_absolute, batch_rows = _screen_step(model, optimizer, batch, mean, std, mode)
             absolute += float(batch_absolute)
             rows += batch_rows
         if rows != ROWS_PER_EPOCH:
             raise RuntimeError("Frozen optimizer exposure changed")
+        torch.cuda.synchronize()
+        train_seconds = time.perf_counter() - started
+        dev_started = time.perf_counter()
         validation_mae, target_eV, prediction_eV, source_idx = _evaluate(
             model, development_loader, mean, std)
+        torch.cuda.synchronize()
+        dev_seconds = time.perf_counter() - dev_started
         step, presentations = (epoch + 1) * STEPS_PER_EPOCH, (epoch + 1) * ROWS_PER_EPOCH
         if validation_mae < best:
             best = validation_mae
@@ -850,6 +906,11 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
             live_train_metric=absolute / rows * std_value, learning_rate=observed_lr,
             checkpoint_identity="sha256:" + sha256_file(checkpoint),
             wall_time_seconds=time.perf_counter() - started)
+        timing_rows.append({"epoch": epoch + 1, "optimizer_steps": step,
+            "sample_presentations": presentations, "train_seconds": train_seconds,
+            "development_seconds": dev_seconds, "epoch_pipeline_seconds": time.perf_counter() - started,
+            "scope": "train includes loader/H2D/optimizer; development is common clean inference; pipeline includes selected/last IO"})
+        atomic_json(timing_path, timing_rows)
         print(f"{arm_id} epoch={epoch+1} train_normalized_mae={absolute/rows:.6f} "
               f"dev={validation_mae:.6f}eV seconds={time.perf_counter()-started:.1f}", flush=True)
     torch.cuda.synchronize()

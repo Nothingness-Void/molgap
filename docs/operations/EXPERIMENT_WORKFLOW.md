@@ -27,7 +27,7 @@ the static training registry, its mode, and its output profile.
 
 | Family/version | Reference mode | Registered addon mode(s) | Output profile |
 |---|---|---|---|
-| `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma`; `k1_two_pass_mean/1` → `mean2`; `k1_mean2_clean_second/1` → `mean2_clean_second` | `k1-screen-v1` |
+| `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma`; `k1_two_pass_mean/1` → `mean2`; `k1_mean2_clean_second/1` → `mean2_clean_second`; `k1_fused_layout/1` → `fused_layout` | `k1-screen-v1` |
 | `gptrans_t/1` | `reference` | `pair_prenorm/1`, `centered_logits/1`, `memory_value/1`, `memory_message/1` | `gptrans-v1` |
 
 The executable registry is in `experiment_execution.py`; the output profiles
@@ -54,6 +54,12 @@ from executable mode.
 and two training-mode BN updates. Only the second forward disables K1 dropout,
 including functional LocalGPSBlock and attention dropout. It is not consistency
 regularization, clean-evaluation BN calibration, EMA or an inference ensemble.
+
+`fused_layout` keeps the reference single-forward objective and original epoch
+loader. Its pinned execution policy enables fused AdamW (foreach=False) and
+CPU layout reuse for training; development remains common clean inference.
+Fused rounding is different, so native preflight and complete quality acceptance
+are required before any replacement. See the [T4 pair protocol](../../experiments/pcqm_k1_fused_layout_t4/protocol.md).
 
 K1 recipe construction accepts an explicit `seed` and `initialization_sha256`.
 Seed42 defaults retain their historical identity. Another seed requires a fresh

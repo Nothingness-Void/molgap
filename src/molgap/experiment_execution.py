@@ -37,7 +37,8 @@ TRAINING_ADAPTERS = MappingProxyType({
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
         (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
-         ("k1_mean2_clean_second", "mean2_clean_second")), ("molgap.pcqm_wedge",)),
+         ("k1_mean2_clean_second", "mean2_clean_second"),
+         ("k1_fused_layout", "fused_layout")), ("molgap.pcqm_wedge",)),
     ("gptrans_t", "1"): TrainingAdapter(
         ("gptrans_t", "1"), "molgap.gptrans_screen_workflow", "gptrans-v1",
         (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),

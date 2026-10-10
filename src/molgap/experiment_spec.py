@@ -100,6 +100,9 @@ ADDONS = MappingProxyType({
     ("k1_mean2_clean_second", "1"): AddonContract(
         "neural_atom_k1", "k1-training-objective", "molgap.k1_screen_training",
     ),
+    ("k1_fused_layout", "1"): AddonContract(
+        "neural_atom_k1", "k1-execution", "molgap.k1_screen_training",
+    ),
 })
 
 
@@ -242,7 +245,7 @@ def _arm(arm: dict) -> None:
             if addon["config"] != {"layer": 6, "latent_channels": 64, "kappa": 4,
                                     "seed": 42, "degree_policy": "original-sum-above-four"}:
                 raise ValueError("K1 extension differs from the bounded frozen configuration")
-        elif addon["name"] in {"k1_two_pass_mean", "k1_mean2_clean_second"}:
+        elif addon["name"] in {"k1_two_pass_mean", "k1_mean2_clean_second", "k1_fused_layout"}:
             if family["version"] != "2" or len(arm["addons"]) != 1 or addon["config"] != {}:
                 raise ValueError("Two-pass mean requires K1 screen v2 and no additional change")
         else:

@@ -31,13 +31,16 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
                  state_timestamp: str = "2026-10-09", approved_release: dict | None = None,
                  relative_dir: str = REL, logical_run_id: str = RUN,
                  initialization_seed: int = 42, initialization_sha256: str = STATE_SHA,
-                 candidate_addon: str | None = None, allocation_wall_limit_seconds: int = 14400,
+                 candidate_addon: str | None = None, allocation_wall_limit_seconds: int | None = 14400,
+                 reference_arm_id: str = "mean2", reference_addon: str | None = "k1_two_pass_mean",
                  candidate_arm_id: str = "single", family_id: str = "k1-t4-cost-quality",
                  policy_id: str = POLICY, question: str | None = None,
                  changed_mechanism: str | None = None, supporting_evidence_ids: list[str] | None = None,
                  parent_trajectory_ids: list[str] | None = None,
                  hypothesis_overrides: dict | None = None, experiment_id: str | None = None,
                  source_dataset: str | None = None,
+                 account: str = "nvoid912", kernel: str | None = None, title: str | None = None,
+                 dataset: str = "nvoid912/pcqm4mv2-ogb-fixed-100k-v1",
                  candidate_addon_source: str = "src/molgap/k1_screen_training.py",
                  candidate_objective: dict | None = None, _state_inspector=None) -> dict:
     """Build unpublished drafts; parent binds fresh protocol/release before publication.
@@ -45,6 +48,8 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
     Candidate addons are validated by the family registry. Their default objective
     describes a dropout-bearing first view and clean second view, both with BN
     training enabled. Other mechanisms must supply candidate_objective explicitly.
+    A reference without an addon retains the original single-forward objective.
+    None allocation duration omits the launcher ceiling and leaves costs unknown.
     """
     root = Path(root)
     initial_state = Path(initial_state)
@@ -57,18 +62,23 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
         raise ValueError("logical_run_id must be a fresh lowercase RUN slug")
     if fresh and (rel == REL or run == RUN):
         raise ValueError("Fresh records require both a fresh relative_dir and logical_run_id")
-    if type(allocation_wall_limit_seconds) is not int or allocation_wall_limit_seconds <= 60:
+    if allocation_wall_limit_seconds is not None and (
+            type(allocation_wall_limit_seconds) is not int or allocation_wall_limit_seconds <= 60):
         raise ValueError("Allocation wall limit must leave the 60s cleanup reserve")
-    if (not isinstance(candidate_arm_id, str) or not candidate_arm_id or candidate_arm_id == "mean2"
-            or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789_-" for c in candidate_arm_id)):
-        raise ValueError("candidate_arm_id must be distinct from mean2 and path-safe")
-    arm_ids = ("mean2", candidate_arm_id)
+    arm_ids = (reference_arm_id, candidate_arm_id)
+    if (reference_arm_id == candidate_arm_id or any(
+            not isinstance(arm_id, str) or not arm_id
+            or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789_-" for c in arm_id)
+            for arm_id in arm_ids)):
+        raise ValueError("Reference and candidate arm IDs must be distinct and path-safe")
     customized = (fresh or initialization_seed != 42 or initialization_sha256 != STATE_SHA
                   or candidate_addon is not None or allocation_wall_limit_seconds != 14400
                   or candidate_arm_id != "single" or family_id != "k1-t4-cost-quality"
+                  or reference_arm_id != "mean2" or reference_addon != "k1_two_pass_mean"
+                  or account != "nvoid912" or dataset != "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
                   or policy_id != POLICY or any(value is not None for value in (
                       question, changed_mechanism, supporting_evidence_ids, parent_trajectory_ids,
-                      hypothesis_overrides, experiment_id, source_dataset, candidate_objective))
+                      hypothesis_overrides, experiment_id, source_dataset, candidate_objective, kernel, title))
                   or candidate_addon_source != "src/molgap/k1_screen_training.py")
     if customized and not fresh:
         raise ValueError("Changed records require fresh identities; frozen seed42 records cannot be reused")
@@ -79,6 +89,8 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
                 raise ValueError("Fresh records cannot replace existing plans or RML outputs")
     if approved_release is not None and customized:
         raise ValueError("Fresh records remain drafts; parent must bind the new explicit release after building")
+    if candidate_addon not in (None, "k1_mean2_clean_second") and candidate_objective is None:
+        raise ValueError("Other candidate addons require an explicit candidate_objective")
     prior_ids = [PRIOR] if supporting_evidence_ids is None else list(supporting_evidence_ids)
     parents = [] if parent_trajectory_ids is None else list(parent_trajectory_ids)
     release = approved_release
@@ -99,21 +111,24 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
         "cost_model": {"kind": "measured_only", "assumptions": [
             "Count both allocated T4 devices including idle, setup, qualification, evaluation and cleanup.",
             (f"{2 * allocation_wall_limit_seconds / 3600:g} allocated T4 device-hours and "
-             f"{allocation_wall_limit_seconds / 3600:g} wall-hours are ceilings, not measured costs.") ]},
+             f"{allocation_wall_limit_seconds / 3600:g} wall-hours are ceilings, not measured costs."
+             if allocation_wall_limit_seconds is not None else
+             "Allocation duration is unknown; native hardware/session limits apply, with no automatic retry.") ]},
         "approval": {"approved_by": None, "approved_at": None, "authority_ref": None},
         "created_from_source_digest": file_digest(root / protocol)}
     validate_policy(policy)
     records["policy.json"] = policy
     records["role_plan.json"] = {"train": [0, 100000], "development": [100000, 150000],
-        "dataset": "nvoid912/pcqm4mv2-ogb-fixed-100k-v1", "development_usage": "per-epoch selection and frozen paired endpoint",
+        "dataset": dataset, "development_usage": "per-epoch selection and frozen paired endpoint",
         "official_validation": False, "test_dev": False, "test_challenge": False,
         "common_ood_p8_hard": False, "actual_consumption": "pending"}
-    for arm_id, role, addon in (("mean2", "reference", "k1_two_pass_mean"), (candidate_arm_id, "candidate", candidate_addon)):
+    for arm_id, role, addon in ((reference_arm_id, "reference", reference_addon), (candidate_arm_id, "candidate", candidate_addon)):
         recipe = build_family_recipe(("neural_atom_k1", "2"), addon=addon,
             source_idx_sha256=expected["source_idx_sha256"], target_sha256=expected["target_sha256"],
             seed=initialization_seed, initialization_sha256=initialization_sha256)
         # Allocation lifetime is a launcher bound, not an optimizer/recipe override.
-        recipe["allocation_wall_limit_seconds"] = allocation_wall_limit_seconds
+        if allocation_wall_limit_seconds is not None:
+            recipe["allocation_wall_limit_seconds"] = allocation_wall_limit_seconds
         validate_recipe(recipe, mode=recipe["mode"])
         if recipe["acceptance_requirements"] != expected:
             raise ValueError("Authoritative fixed100K exposure mismatch")
@@ -127,7 +142,7 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
         arm["addons"] = [] if addon is None else [{"name": addon, "version": "1", "config": {},
             "source_sha256": normalized_source_sha256(resolve_repo_pointer(root, addon_source))}]
         arm["training"]["recipe"]["sha256"] = canonical_fingerprint(recipe)
-        if addon is not None:
+        if role == "reference" and addon == "k1_two_pass_mean":
             arm["training"]["objective"]["sha256"] = canonical_fingerprint({
                 "base_loss": "normalized-gap-l1", "forward_passes": 2,
                 "reduction": "arithmetic-mean-of-two-dropout-bearing-L1-losses",
@@ -155,8 +170,10 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
             "attempt_id": run + "-v1" if fresh else "kaggle3-cost-quality-001", "platform": "kaggle",
             "hardware": "Tesla T4; one of two allocated devices including idle time",
             "category": "training", "evidence_ref": protocol, "measurement": {
-                "device_hours": {"status": "estimated", "value": allocation_wall_limit_seconds / 3600},
-                "wall_hours": {"status": "estimated", "value": allocation_wall_limit_seconds / 3600},
+                "device_hours": {"status": "estimated" if allocation_wall_limit_seconds is not None else "measurement_missing",
+                                 "value": allocation_wall_limit_seconds / 3600 if allocation_wall_limit_seconds is not None else None},
+                "wall_hours": {"status": "estimated" if allocation_wall_limit_seconds is not None else "measurement_missing",
+                               "value": allocation_wall_limit_seconds / 3600 if allocation_wall_limit_seconds is not None else None},
                 "cpu_hours": {"status": "measurement_missing", "value": None},
                 "queue_hours": {"status": "measurement_missing", "value": None}}}
         validate_cost_event(cost)
@@ -205,7 +222,7 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
         "experiment_id": experiment_id if experiment_id is not None else (run if fresh else "pcqm-k1-t4-cost-quality-100k"), "logical_run_id": run, "arms": arms,
         "platform": {"name": "kaggle", "accelerator": "Tesla T4", "device_count": 2,
             "cpu_cores": 4, "memory_gib": 29, "atomic_checkpoints": True, "retrievable_chunks": True},
-        "prospective": {"arms": bindings, "same_run_replay": {"reference_arm_id": "mean2", "candidate_arm_ids": [candidate_arm_id]}},
+        "prospective": {"arms": bindings, "same_run_replay": {"reference_arm_id": reference_arm_id, "candidate_arm_ids": [candidate_arm_id]}},
         "evidence": {"policy": {"name": "molgap-v5", "version": "1",
             "sha256": normalized_source_sha256(root / "docs/operations/MOLGAP_COMMON_DIRECTION_V5_FINAL.md")},
             "required_artifacts": ["v5_evidence", "costs", "roles", "trace_manifest", "terminal_artifact"]},
@@ -229,13 +246,18 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
     records["family_acceptance_plan.json"] = {"format": "molgap-family-same-run-acceptance-plan-v1",
         "spec_identity": spec.identity, "arms": acceptance}
     source = source_dataset if source_dataset is not None else (
-        "nvoid912/" + run + "-source" if fresh else "nvoid912/molgap-k1-t4-cost-quality-source-s42-v1")
+        account + "/" + run + "-source" if fresh else "nvoid912/molgap-k1-t4-cost-quality-source-s42-v1")
+    allocation_blocker = (
+        f"Parent must verify recipe-bound {allocation_wall_limit_seconds}s allocation timeout and 60s cleanup reserve, durable complete-epoch recovery/output custody."
+        if allocation_wall_limit_seconds is not None else
+        "Parent must verify native hardware/session limits, no automatic retry and durable complete-epoch recovery/output custody; allocation duration remains unknown.")
     records["workflow_plan.json"] = {"format": "molgap-experiment-workflow-v1", "spec_identity": spec.identity,
         "source_files": [], "arms": [{"arm_id": a["arm_id"], "device": i,
             "recipe": rel + f"/training_recipe_{a['arm_id']}.json", "initial_state": initial_state.as_posix()}
             for i, a in enumerate(arms)], "acceptance_plan": rel + "/family_acceptance_plan.json",
-        "kaggle": {"account": "nvoid912", "kernel": "nvoid912/" + run, "title": run,
-            "datasets": [source, "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"], "source_dataset": source, "accelerator": "NvidiaTeslaT4"}}
+        "kaggle": {"account": account, "kernel": kernel if kernel is not None else account + "/" + run,
+            "title": title if title is not None else run,
+            "datasets": [source, dataset], "source_dataset": source, "accelerator": "NvidiaTeslaT4"}}
     records["preparation_report.json"] = {"status": "LOCAL_DRAFT_ONLY", "initial_state": state_report,
         "source_inventory_owner": "molgap.experiment_source_inventory.SHARED_SOURCE_FILES",
         "shared_source_count": len(SHARED_SOURCE_FILES), "source_commit": source_commit,
@@ -243,7 +265,7 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
         "blockers": ["Parent must commit executable source and rebind plans before prepare-workflow.",
             "Parent must validate passed native T4 profile and completed local diagnostic/no urgent fitting failure.",
             "Release API pending: raw profile completion is not acceptance; profile-acceptance and clean-fit decision schemas/validator are required for a separate release-bound prospective plan.",
-            f"Parent must verify recipe-bound {allocation_wall_limit_seconds}s allocation timeout and 60s cleanup reserve, durable complete-epoch recovery/output custody.",
+            allocation_blocker,
             "Register explicit local policy through RML owner before prospective publication.",
             "Parent must review mean2 objective/addon functional binding in committed executable source before prepare-workflow.",
             "Strict runtime, paired artifacts, observed allocation costs and same-run accepted reference remain pending."]}
@@ -252,7 +274,7 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
             "Parent must commit executable source and rebind plans before prepare-workflow.",
             "Parent must review the fresh protocol, evidence review and hypothesis before publication.",
             "Parent must bind the new explicit user release after building; legacy parent release is not applicable.",
-            f"Parent must verify recipe-bound {allocation_wall_limit_seconds}s allocation timeout and 60s cleanup reserve, durable complete-epoch recovery/output custody.",
+            allocation_blocker,
             "Register explicit local policy through RML owner before prospective publication.",
             "Strict runtime, paired artifacts, observed allocation costs and fresh same-run accepted reference remain pending."]
     if release is not None:
