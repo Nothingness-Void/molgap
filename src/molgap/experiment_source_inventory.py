@@ -32,6 +32,7 @@ SHARED_SOURCE_FILES = (
     'src/molgap/k1_screen_training.py',
     'src/molgap/kaggle_pair_runtime.py',
     'src/molgap/kaggle_workflow.py',
+    'src/molgap/packed_graph_dataset.py',
     'src/molgap/pcqm_gap_architecture.py',
     'src/molgap/pcqm_gptrans_v4.py',
     'src/molgap/pcqm_wedge.py',

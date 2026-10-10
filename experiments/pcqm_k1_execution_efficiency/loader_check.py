@@ -10,6 +10,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import tempfile
 import time
 
 from molgap.research_memory.plan import plan
@@ -37,9 +38,12 @@ def prepare():
     files = [*parent["files"], Path(__file__).relative_to(ROOT).as_posix(),
              "src/molgap/k1_loader_diagnostic.py", "src/molgap/saved_diagnostic_closure.py",
              f"{REL}/README.md", f"{REL}/protocol.md", f"{REL}/decision.md"]
-    reuse = ATTEMPT.name == "loader_reuse_attempt_001"
+    packed = ATTEMPT.name == "loader_packed_attempt_001"
+    reuse = ATTEMPT.name in {"loader_reuse_attempt_001", "loader_packed_attempt_001"}
     if reuse:
         files.extend(["src/molgap/k1_loader_reuse.py", "src/molgap/edge_state_training_core.py"])
+    if packed:
+        files.extend(["src/molgap/packed_graph_dataset.py", "src/molgap/pcqm_k1_scale_runner.py", "src/molgap/pcqm_wedge.py"])
     hashes = {n: hashlib.sha256(subprocess.check_output(["git", "show", f"{head}:{n}"], cwd=ROOT)).hexdigest() for n in files}
     if any(sha256_file(ROOT / n) != h for n, h in hashes.items()):
         raise ValueError("Executable Git bytes differ")
@@ -56,6 +60,8 @@ def prepare():
     prior = ["pcqm-k1-execution-efficiency-gpu-20261010", "pcqm-k1-joint-execution-20261010"]
     if reuse:
         prior.append("k1-loader-cpu-20261010-attempt003-evidence")
+    if packed:
+        prior.append("k1-loader-cpu-20261010-reuse-attempt001-evidence")
     t = spec["trajectory"]
     t.update(trajectory_id=TID, family_id="k1-loader-attribution", comparison_readiness_ref=f"{REL}/README.md",
              question="Does actual CPU graph collation or worker startup dominate the previously excluded input phase?")
@@ -88,6 +94,16 @@ def prepare():
             alternative_explanations=["Native Linux spawn/fork cost differs", "Worker RNG continuation invalidates stochastic transforms", "CPU-only fetch excludes GPU-consumer overlap"],
             decision_changed_if_positive="Nominate opt-in immutable-dataset pool for owner qualification; no active sender patch",
             decision_changed_if_negative="Keep cold loader; record exact batching or startup failure")
+        if packed:
+            t["state_at_start"]["parent_trajectory_ids"].append("TB-k1-loader-cpu-20261010-reuse-attempt001")
+            t["question"] = "Does deterministic original packed-shard ConcatDataset support exact epoch/resume worker reuse on Windows spawn?"
+            t["hypothesis"].update(
+                observed_deficiency="Accepted list probe did not qualify the actual packed-shard input type; previous locally defined class cannot support Windows spawn.",
+                changed_mechanism="Extract unchanged packed reader to a spawn-importable shared owner and retain its deterministic ConcatDataset loader",
+                cheapest_falsifier="Hash-pinned4096 TRAIN graphs packed into two temporary shards, four balanced original cold/retained windows and exact batch hashes",
+                alternative_explanations=["Packed separation changes fetch cost", "Native Linux fork cost differs", "Input cache identity or transforms invalidate reuse"],
+                decision_changed_if_positive="Qualify actual packed input shape and nominate native owner integration without new scientific training",
+                decision_changed_if_negative="Retain exact unsupported/failure boundary; do not claim real500K input support")
     t["actions"] = [dict(action_id="A001", type="execution_profile", run_ids=[RUN], attempt_ids=[ATTEMPT.name.replace("_", "-")],
                          source_commit=head, evidence_refs=[f"{REL}/inputs.json"], cost_event_ids=[COST_ID])]
     t["decision"].update(outcome="ACTIVE", decision_ref=f"{REL}/decision.md", next_allowed_actions=["Bounded TRAIN-only CPU collation"])
@@ -135,21 +151,42 @@ def execute():
         return create
 
     previous = os.environ.get("MOLGAP_V4_LOADER_WORKERS")
-    reuse = ATTEMPT.name == "loader_reuse_attempt_001"
+    packed = ATTEMPT.name == "loader_packed_attempt_001"
+    reuse = ATTEMPT.name in {"loader_reuse_attempt_001", "loader_packed_attempt_001"}
     index_orders = None
+    temporary = None
+    packed_cache_identity = None
+    original_list_hashes = None
     try:
         if reuse:
             from molgap.edge_state_training_core import EpochPermutationBatchSampler
             index_orders = [EpochPermutationBatchSampler(len(graphs), 128, seed=42,
                 epoch=e, start_batch=4 if e == 3 else 0) for e in range(4)]
             index_orders = [s.indices[s.start_batch * 128:].tolist() for s in index_orders]
+            dataset = graphs
+            if packed:
+                from torch.utils.data import ConcatDataset, Subset
+                from torch_geometric.data import InMemoryDataset
+                from molgap.packed_graph_dataset import PackedGraphDataset
+                from molgap.training_reproducibility import atomic_torch_save
+                os.environ["MOLGAP_V4_LOADER_WORKERS"] = "0"
+                original_list_hashes = {str(w): [_batch_sha256(b) for b in loader(Subset(graphs, rows))]
+                                       for w, rows in enumerate(index_orders)}
+                temporary = tempfile.TemporaryDirectory(prefix="molgap-k1-packed-loader-")
+                paths = [Path(temporary.name) / f"shard_{i:02d}.pt" for i in range(2)]
+                for i, path in enumerate(paths):
+                    atomic_torch_save(path, InMemoryDataset.collate(graphs[i * 2048:(i + 1) * 2048]))
+                packed_cache_identity = [dict(rows=2048, sha256=sha256_file(p)) for p in paths]
+                dataset = ConcatDataset([PackedGraphDataset(p) for p in paths])
             def original_factory():
                 os.environ["MOLGAP_V4_LOADER_WORKERS"] = "2"
-                return loader(graphs, epoch=0)
+                return loader(dataset, epoch=0)
             report, batches = profile_epoch_loader_reuse(original_factory, index_orders)
         else:
             report, batches = profile_loader_fetches({"workers0": factory(0), "workers2": factory(2)}, wall_seconds=250)
     finally:
+        if temporary is not None:
+            temporary.cleanup()
         if previous is None:
             os.environ.pop("MOLGAP_V4_LOADER_WORKERS", None)
         else:
@@ -175,6 +212,9 @@ def execute():
     if reuse:
         worker_sets = [w["retained"]["worker_pids"] for w in report["windows"]]
         checks["same_retained_workers"] = len(worker_sets[0]) == 2 and all(p == worker_sets[0] for p in worker_sets)
+    if packed:
+        checks["packed_concat_input"] = type(dataset).__name__ == "ConcatDataset" and len(dataset.datasets) == 2
+        checks["packed_matches_original_list_batches"] = reference == original_list_hashes
     parent_cpu = time.process_time() - cpu_started
     child_cpu = report["worker_process_cpu_seconds"]
     wall = time.perf_counter() - started
@@ -189,7 +229,7 @@ def execute():
                      cuda_visible_devices=os.environ["CUDA_VISIBLE_DEVICES"], cuda_available=torch.cuda.is_available(),
                      cuda_device_count=torch.cuda.device_count(), effective_pin_memory=False), observed_source_idx=observed,
         training_executed=False, inference_executed=False, optimizer_created=False, gradients_computed=False,
-        loader_profile=report, batch_hashes=reference,
+        loader_profile=report, batch_hashes=reference, packed_cache_identity=packed_cache_identity,
         limits=["Windows CPU fetch without GPU pinning/consumer; not native T4/A100 training throughput",
                 "Worker CPU sampled before shutdown; teardown CPU not included in observed sum"])
     atomic_json(output / "result.json", result)
@@ -203,12 +243,13 @@ def execute():
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("operation", choices=("prepare", "execute", "close"))
-    p.add_argument("--attempt", choices=("loader_attempt_001", "loader_attempt_002", "loader_attempt_003", "loader_reuse_attempt_001"), default="loader_attempt_001")
+    p.add_argument("--attempt", choices=("loader_attempt_001", "loader_attempt_002", "loader_attempt_003", "loader_reuse_attempt_001", "loader_packed_attempt_001"), default="loader_attempt_001")
     args = p.parse_args()
     if args.attempt != "loader_attempt_001":
         ATTEMPT = HERE / args.attempt
         REL = ATTEMPT.relative_to(ROOT).as_posix()
-        suffix = "-reuse-attempt001" if args.attempt == "loader_reuse_attempt_001" else "-attempt" + args.attempt.rsplit("_", 1)[1]
+        suffix = ("-packed-attempt001" if args.attempt == "loader_packed_attempt_001" else
+                  "-reuse-attempt001" if args.attempt == "loader_reuse_attempt_001" else "-attempt" + args.attempt.rsplit("_", 1)[1])
         TID += suffix
         RUN += suffix
         COST_ID += suffix

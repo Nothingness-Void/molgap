@@ -1,4 +1,4 @@
-"""CPU scalar datasets and mocked workers; no graphs, models or accelerators."""
+"""CPU synthetic scalar shards and owned workers; no molecular inputs or models."""
 import numpy as np
 import pytest
 import torch
@@ -6,6 +6,191 @@ from torch.utils.data import DataLoader
 
 from molgap.edge_state_training_core import EpochPermutationBatchSampler
 from molgap.k1_loader_reuse import K1LoaderReuse
+
+
+@pytest.fixture
+def packed_concat(tmp_path):
+    from torch.utils.data import ConcatDataset
+    from torch_geometric.data import Data, InMemoryDataset
+    from molgap.packed_graph_dataset import PackedGraphDataset
+
+    children = []
+    for start, stop in [(0, 5), (5, 11)]:
+        path = tmp_path / f"scalar_{start}.pt"
+        graphs = [Data(x=torch.tensor([[i]]), source_idx=torch.tensor(i))
+                  for i in range(start, stop)]
+        torch.save(InMemoryDataset.collate(graphs), path)
+        children.append(PackedGraphDataset(path))
+    return ConcatDataset(children)
+
+
+def test_packed_admission_never_accesses_rows_or_data(packed_concat, monkeypatch):
+    from molgap.packed_graph_dataset import PackedGraphDataset
+    from torch_geometric.data import InMemoryDataset
+
+    def forbidden(*args):
+        pytest.fail("Admission must not access rows or .data")
+
+    monkeypatch.setattr(PackedGraphDataset, "__getitem__", forbidden)
+    monkeypatch.setattr(PackedGraphDataset, "get", forbidden)
+    monkeypatch.setattr(InMemoryDataset, "data",
+                        property(forbidden, InMemoryDataset.data.fset))
+    for method in ("tolist", "numpy", "item", "__iter__"):
+        monkeypatch.setattr(torch.Tensor, method, forbidden)
+    with K1LoaderReuse(loader_for(packed_concat), deterministic_dataset=True) as pool:
+        pool._check_loader()
+    assert all(child._data_list is None for child in packed_concat.datasets)
+
+
+@pytest.mark.parametrize("container", [list, tuple])
+@pytest.mark.parametrize("location", ["feature", "slices"])
+def test_packed_python_row_containers_refused_without_walking(packed_concat, container, location):
+    class NoWalk:
+        def __repr__(self):
+            pytest.fail("Row container elements must never be inspected")
+
+    rows = container([NoWalk()] * 10000)
+    child = packed_concat.datasets[0]
+    if location == "feature":
+        child._data.smiles = rows
+    else:
+        child.slices["smiles"] = rows
+    loader = loader_for(packed_concat)
+    with pytest.raises(ValueError, match="list/tuple backing is unsupported"):
+        K1LoaderReuse(loader, deterministic_dataset=True)
+    assert loader.sampler == [0, 1, 2]
+    assert child._data_list is None
+
+
+def test_packed_signature_ignores_normal_lazy_cache_population(packed_concat):
+    pool = K1LoaderReuse(loader_for(packed_concat), deterministic_dataset=True)
+    child = packed_concat.datasets[0]
+    assert child._data_list is None
+    try:
+        child.get(0)  # Synthetic scalar graph; legitimate main-process cache fill.
+        cache = child._data_list
+        assert cache[0] is not None
+        pool._check_loader()
+        child.get(1)
+        pool._check_loader()
+        assert child._data_list is cache
+    finally:
+        pool.close()
+
+
+@pytest.mark.parametrize("change", ["membership", "nested", "sizes", "data", "slices",
+                                   "tensor", "slice_tensor", "transform", "pre_transform",
+                                   "pre_filter", "_indices"])
+def test_packed_mutations_fail_before_sampler_change(packed_concat, change):
+    import copy
+    from torch.utils.data import ConcatDataset
+
+    loader = loader_for(packed_concat)
+    pool = K1LoaderReuse(loader, deterministic_dataset=True)
+    child = packed_concat.datasets[0]
+    if change == "membership":
+        packed_concat.datasets.reverse()
+    elif change == "nested":
+        packed_concat.datasets[0] = ConcatDataset([child])
+    elif change == "sizes":
+        packed_concat.cumulative_sizes[0] += 1
+    elif change == "data":
+        child._data = child._data.clone()
+    elif change == "slices":
+        child.slices = copy.copy(child.slices)
+    elif change == "tensor":
+        child._data.x.add_(1)
+    elif change == "slice_tensor":
+        child.slices["x"].add_(1)
+    elif change == "_indices":
+        child._indices = [0]
+    else:
+        setattr(child, change, lambda graph: graph)
+    try:
+        with pytest.raises(ValueError):
+            with pool.stream([0]):
+                pytest.fail("Changed packed data must be refused")
+        assert loader.sampler == [0, 1, 2]
+    finally:
+        pool.close()
+
+
+def test_packed_rejects_subclasses_and_generic_children(packed_concat):
+    from torch.utils.data import ConcatDataset, Subset
+    from molgap.packed_graph_dataset import PackedGraphDataset
+
+    class CustomConcat(ConcatDataset):
+        pass
+
+    class CustomShard(PackedGraphDataset):
+        pass
+
+    child = packed_concat.datasets[0]
+    custom = object.__new__(CustomShard)
+    custom.__dict__.update(child.__dict__)
+    for dataset in [child, CustomConcat([child]), ConcatDataset([custom]),
+                    ConcatDataset([[0, 1]]), ConcatDataset([Subset(child, [0])]),
+                    ConcatDataset([packed_concat])]:
+        with pytest.raises(ValueError):
+            K1LoaderReuse(loader_for(dataset), deterministic_dataset=True)
+    with pytest.raises(ValueError, match="authority"):
+        K1LoaderReuse(loader_for(packed_concat), deterministic_dataset=False)
+
+
+def test_windows_spawn_packed_reuse_matches_legacy_batch_hashes(packed_concat):
+    import hashlib
+    from torch.utils.data import ConcatDataset
+    from torch_geometric.data import InMemoryDataset
+    from torch_geometric.loader import DataLoader as PyGDataLoader
+
+    class Legacy(InMemoryDataset):
+        def __init__(self, shared):
+            super().__init__(root=None)
+            self.data, self.slices = shared._data, shared.slices
+
+    legacy = ConcatDataset([Legacy(child) for child in packed_concat.datasets])
+
+    def make(dataset, workers):
+        kwargs = {"multiprocessing_context": "spawn", "timeout": 30} if workers else {}
+        return PyGDataLoader(dataset, sampler=list(range(11)), batch_size=3,
+                             drop_last=True, generator=torch.Generator().manual_seed(42),
+                             num_workers=workers, persistent_workers=workers > 0,
+                             pin_memory=False, **kwargs)
+
+    def hashes(iterator):
+        return [hashlib.sha256(b.x.numpy().tobytes() + b.source_idx.numpy().tobytes()
+                              + b.ptr.numpy().tobytes()).hexdigest() for b in iterator]
+
+    loader = make(packed_concat, 2)
+    pool = K1LoaderReuse(loader, deterministic_dataset=True)
+    owned = ()
+    try:
+        orders = [list(range(11))]  # Exercise the native dropped tail too.
+        for epoch, cursor in [(0, 0), (1, 1), (2, 3)]:
+            sampler = EpochPermutationBatchSampler(11, 3, seed=42, epoch=epoch, start_batch=cursor)
+            orders.append([i for batch in sampler for i in batch])
+        for rows in orders:
+            reference = make(legacy, 0)
+            reference.sampler[:] = rows
+            expected = hashes(iter(reference))
+            with pool.stream(rows) as iterator:
+                assert hashes(iterator) == expected
+                if owned:
+                    assert pool._workers == owned
+                owned = pool._workers
+            assert not pool._poisoned
+        assert len(owned) == 2
+        with pool.stream(list(range(11))) as iterator:
+            next(iterator)
+        assert pool._poisoned
+        with pytest.raises(RuntimeError, match="poisoned"):
+            with pool.stream([0]):
+                pytest.fail("Prefetched partial stream must not be replayed")
+    finally:
+        pool.close()
+    assert all(not worker.is_alive() for worker in owned)
+    assert loader._iterator is None
+    assert all(child._data_list is None for child in packed_concat.datasets)
 
 
 def loader_for(dataset=None, *, workers=0, drop_last=False):

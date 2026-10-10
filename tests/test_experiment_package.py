@@ -16,6 +16,21 @@ from molgap.screen_policy import canonical_fingerprint
 from test_experiment_spec import payload  # Reuse the existing synthetic fixture.
 
 
+def test_reviewed_packed_source_owner_is_not_a_dataset_artifact():
+    from molgap.experiment_package import _name
+    assert _name("src/molgap/packed_graph_dataset.py") == "src/molgap/packed_graph_dataset.py"
+
+
+@pytest.mark.parametrize("path", ["src/molgap/other_dataset.py", "src/molgap/packed_graph_dataset.json",
+    "src/molgap/packed_graph_dataset.py.env", "src/molgap/packed_graph_dataset.py/keys.json",
+    "data/src/molgap/packed_graph_dataset.py", "datasets/packed_graph_dataset.py",
+    "src/molgap/packed_graph_dataset.pt", "SRC/molgap/packed_graph_dataset.py"])
+def test_packed_owner_exception_does_not_relax_artifact_boundaries(path):
+    from molgap.experiment_package import _name
+    with pytest.raises(ValueError, match="reserved|sensitive|Unsafe"):
+        _name(path)
+
+
 def git(root, *args):
     return subprocess.run(["git", *args], cwd=root, check=True,
                           capture_output=True).stdout.decode().strip()

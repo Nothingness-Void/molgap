@@ -127,14 +127,7 @@ def find_cache(expected_sha256: str) -> tuple[Path, dict]:
 def load_roles(root: Path, manifest: dict):
     import torch
     from torch.utils.data import ConcatDataset
-    from torch_geometric.data import InMemoryDataset
-
-    class PackedGraphDataset(InMemoryDataset):
-        def __init__(self, path: Path):
-            super().__init__(root=None)
-            self.data, self.slices = torch_load_compat(
-                path, map_location="cpu", weights_only=False
-            )
+    from .packed_graph_dataset import PackedGraphDataset
 
     roles = {"train": [], "validation": []}
     fixed_aggregate = hashlib.sha256()

@@ -5,11 +5,15 @@ from contextlib import contextmanager
 class K1LoaderReuse:
     """Exclusively own a fresh loader with caller-authorized deterministic data.
 
-    ``deterministic_dataset=True`` asserts that the plain list/tuple and its
+    ``deterministic_dataset=True`` asserts that the plain list/tuple or exact
+    ConcatDataset of shared PackedGraphDataset shards and all their cached
     elements remain immutable and have no stochastic transforms or worker-RNG
     contract. Retained workers continue their RNG state, unlike fresh workers
     seeded by the original per-epoch recipe; stochastic datasets are unsupported.
     The loader generator is not reseeded. This is not fresh-worker RNG parity.
+    Packed feature backing supports tensors/scalars only, plus a flat slice
+    field dictionary. Python row containers are refused without traversal.
+    Normal PyG lazy graph-cache population is not part of the backing signature.
 
     Pass flattened exact-int indices from the existing epoch sampler, already
     sliced for its processed resume cursor and dropped tail. No order is generated
@@ -26,8 +30,7 @@ class K1LoaderReuse:
             raise ValueError("Explicit deterministic immutable dataset authority required")
         if not isinstance(loader, DataLoader):
             raise ValueError("Expected an already constructed DataLoader")
-        if type(loader.dataset) not in (list, tuple):
-            raise ValueError("Only immutable caller-owned plain list/tuple datasets are supported")
+        dataset_state = self._dataset_state(loader.dataset)
         if type(loader.sampler) is not list:
             raise ValueError("Original literal list sampler required")
         if type(loader.batch_sampler) is not BatchSampler or loader.batch_sampler.sampler is not loader.sampler:
@@ -42,7 +45,7 @@ class K1LoaderReuse:
             raise ValueError("Loader already has an iterator; exclusive fresh ownership required")
         self.loader = loader
         self._dataset = loader.dataset
-        self._members = tuple(loader.dataset)
+        self._dataset_binding = dataset_state
         self._sampler = loader.sampler
         self._generator = loader.generator
         self._iterator = None
@@ -52,10 +55,60 @@ class K1LoaderReuse:
         self._closed = False
         self._cleanup_done = False
 
+    @staticmethod
+    def _dataset_state(dataset):
+        from torch.utils.data import ConcatDataset
+
+        if type(dataset) in (list, tuple):
+            return tuple(id(member) for member in dataset)
+        if type(dataset) is not ConcatDataset:
+            raise ValueError("Only plain list/tuple or exact packed ConcatDataset supported")
+        from .packed_graph_dataset import PackedGraphDataset
+        import torch
+
+        def backing(value):
+            # Metadata only: no tensor values, graph separation or .data access.
+            if type(value) is torch.Tensor:
+                if value.device.type != "cpu":
+                    raise ValueError("Packed backing tensors must be CPU tensors")
+                try:
+                    version = value._version
+                except RuntimeError as error:
+                    raise ValueError("Packed tensor mutation tracking required") from error
+                return (id(value), version, tuple(value.shape), value.dtype, value.layout)
+            if isinstance(value, (list, tuple)):
+                raise ValueError("Packed Python list/tuple backing is unsupported; no row traversal")
+            if type(value) in (int, float, bool, str, type(None)):
+                return (type(value), repr(value))
+            raise ValueError("Unsupported packed backing metadata")
+
+        if type(dataset.datasets) is not list or not dataset.datasets:
+            raise ValueError("Exact nonempty packed shard membership required")
+        children = []
+        cumulative = []
+        total = 0
+        for child in dataset.datasets:
+            if type(child) is not PackedGraphDataset:
+                raise ValueError("Only exact shared PackedGraphDataset children supported")
+            if (any(getattr(child, name) is not None
+                    for name in ("transform", "pre_transform", "pre_filter", "_indices"))):
+                raise ValueError("Packed transforms and index selections are unsupported")
+            children.append((id(child), id(child._data), id(child.slices),
+                             tuple((key, backing(value))
+                                   for key, value in child._data.to_dict().items()),
+                             tuple((key, backing(value)) for key, value in child.slices.items())
+                             if type(child.slices) is dict else backing(child.slices)))
+            total += len(child)
+            cumulative.append(total)
+        if (type(dataset.cumulative_sizes) is not list
+                or any(type(n) is not int for n in dataset.cumulative_sizes)
+                or dataset.cumulative_sizes != cumulative):
+            raise ValueError("Packed concat sizes changed")
+        return (tuple(children), tuple(cumulative))
+
     def _check_loader(self):
         if (self.loader.dataset is not self._dataset
-                or len(self._dataset) != len(self._members)
-                or any(a is not b for a, b in zip(self._dataset, self._members))):
+                or self._dataset_state(self._dataset) != self._dataset_binding):
             raise ValueError("Authorized dataset membership changed")
         if (self.loader.sampler is not self._sampler
                 or self.loader.batch_sampler.sampler is not self._sampler
@@ -74,7 +127,8 @@ class K1LoaderReuse:
             raise RuntimeError("Overlapping loader iterations are forbidden")
         self._check_loader()
         rows = list(indices)
-        if (any(type(i) is not int or not 0 <= i < len(self._dataset) for i in rows)
+        size = len(self._dataset)
+        if (any(type(i) is not int or not 0 <= i < size for i in rows)
                 or len(set(rows)) != len(rows)):
             raise ValueError("Indices must be unique exact ints within the dataset")
         self._active = True

@@ -633,6 +633,7 @@ def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates
         assert release_spec == spec
         assert (package_dir / "package_manifest.json").is_file()
         assert "molgap.pcqm_wedge" in kwargs["required_modules"]
+        assert "molgap.packed_graph_dataset" in kwargs["required_modules"]
         assert "molgap.experiment_training_worker" in kwargs["required_modules"]
         for arm_id, recipe_path in kwargs["recipe_files"].items():
             assert _sha((repo / recipe_path).read_bytes()) == next(
@@ -683,6 +684,7 @@ def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates
     assert events.index("package") < events.index("release") < events.index("prospective")
     assert events.index("prospective") < events.index("rebuild") < events.index("final_binding")
     assert "src/molgap/pcqm_wedge.py" in package_manifest["relative_allowlist"]
+    assert "src/molgap/packed_graph_dataset.py" in package_manifest["relative_allowlist"]
     assert (Path(result["source_dataset_dir"]) / "experiment_launch.json").is_file()
     assert (Path(result["kernel_dir"]) / "run.py").is_file()
     assert result["prospective_published"] is True
@@ -1200,6 +1202,7 @@ def test_real_shared_source_inventory_clean_imports_training_owners(tmp_path):
         "molgap.gptrans_screen_workflow",
         "molgap.experiment_training_worker",
         "molgap.pcqm_wedge",
+        "molgap.packed_graph_dataset",
     ]
     bootstrap = tmp_path / "bootstrap.py"
     request, response = tmp_path / "request.json", tmp_path / "response.json"
@@ -1215,7 +1218,7 @@ def test_real_shared_source_inventory_clean_imports_training_owners(tmp_path):
     })
     env = {key: value for key, value in os.environ.items()
            if not key.upper().startswith("PYTHON")}
-    env.update(CUDA_VISIBLE_DEVICES="", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
+    env.update(CUDA_VISIBLE_DEVICES="-1", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
     subprocess.run(
         [sys.executable, "-I", "-S", str(bootstrap), str(request), str(response)],
         cwd=tmp_path, env=env, check=True, capture_output=True, timeout=60,

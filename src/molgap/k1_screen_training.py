@@ -134,15 +134,7 @@ ROW_ORDER_FINGERPRINT = (
 class _PackedGraphDatasetFactory:
     @staticmethod
     def load(path: Path):
-        import torch
-        from torch_geometric.data import InMemoryDataset
-
-        class PackedGraphDataset(InMemoryDataset):
-            def __init__(self, source: Path):
-                super().__init__(root=None)
-                self.data, self.slices = torch.load(
-                    source, map_location="cpu", weights_only=False
-                )
+        from .packed_graph_dataset import PackedGraphDataset
 
         payload = PackedGraphDataset(path)
         for field in FORBIDDEN_MODEL_FIELDS:
