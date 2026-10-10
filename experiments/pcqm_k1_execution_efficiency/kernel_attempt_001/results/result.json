@@ -1,0 +1,15 @@
+{
+  "status": "complete_diagnostic",
+  "cases": [
+    "bundled_fp32",
+    "bundled_tf32",
+    "isolated_fp32",
+    "isolated_tf32"
+  ],
+  "worker_wall_seconds": 44.605481699996744,
+  "process_cpu_seconds": 49.453125,
+  "cpu_cost_scope": "Measured child CPU only; parent CPU unavailable",
+  "inputs_sha256": "73932f6c73ca36b7b80224a221d90e82d405f8c8db720ee044287a536525a36c",
+  "prospective_sha256": "eebc796641693380502b73f9edb0b01f8256446ccaf1524269382c61337a42a5",
+  "scientific_training": false
+}

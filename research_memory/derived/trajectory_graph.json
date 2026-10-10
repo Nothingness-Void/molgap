@@ -351,6 +351,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-kernel-trace-20261010:A001",
+      "target": "experiments/pcqm_k1_execution_efficiency/kernel_attempt_001/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-late-weight-average-20261008:A001",
       "target": "experiments/pcqm_k1_late_weight_average/inputs.json",
       "type": "action_produced_evidence"
@@ -1018,6 +1023,11 @@
     {
       "source": "TB-k1-ssma-kaggle3-100k-s42-v2",
       "target": "TB-k1-ssma-accuracy-kaggle3-100k-s42-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-tf32-execution-20261010",
+      "target": "TB-k1-kernel-trace-20261010",
       "type": "parent_trajectory"
     },
     {
@@ -1866,6 +1876,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-projection-execution-20261010",
+      "target": "TB-k1-kernel-trace-20261010",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-residual-reconciliation",
       "target": "TB-pcqm-expert-oracle-feasibility-20260930",
       "type": "prior_evidence"
@@ -1918,6 +1933,11 @@
     {
       "source": "pcqm-k1-slot96-cpu-qualification-20261002",
       "target": "TB-k1-slot-width96-kaggle3-100k-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-tf32-execution-20261010",
+      "target": "TB-k1-kernel-trace-20261010",
       "type": "prior_evidence"
     },
     {
@@ -2730,6 +2750,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-kernel-trace-20261010",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-late-weight-average-20261008",
       "type": "evidence"
     },
@@ -3131,6 +3155,10 @@
     },
     {
       "id": "TB-k1-gptrans-full-fusion-r3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-kernel-trace-20261010",
       "type": "trajectory"
     },
     {

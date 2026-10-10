@@ -1,0 +1,331 @@
+{
+  "cases": {
+    "bundled_fp32": {
+      "status": "unavailable",
+      "error": {
+        "type": "RuntimeError",
+        "message": "Unsupported CUPTI API version 26, expected 28"
+      },
+      "diagnostics": {
+        "apiVersion": 26,
+        "errors": [
+          "scope: RuntimeError('Unsupported CUPTI API version 26, expected 28')"
+        ],
+        "dropped_records": null,
+        "dropped_records_complete": false,
+        "records": [],
+        "success": false,
+        "callbacks_retained": false
+      },
+      "gpu_time": null
+    },
+    "bundled_tf32": {
+      "status": "unavailable",
+      "error": {
+        "type": "RuntimeError",
+        "message": "Unsupported CUPTI API version 26, expected 28"
+      },
+      "diagnostics": {
+        "apiVersion": 26,
+        "errors": [
+          "scope: RuntimeError('Unsupported CUPTI API version 26, expected 28')"
+        ],
+        "dropped_records": null,
+        "dropped_records_complete": false,
+        "records": [],
+        "success": false,
+        "callbacks_retained": false
+      },
+      "gpu_time": null
+    },
+    "isolated_fp32": {
+      "kernel_records": 13350,
+      "unique_names": 113,
+      "groups": {
+        "all": {
+          "calls": 13350,
+          "summed_kernel_ns": 63569726
+        },
+        "elementwise": {
+          "calls": 10030,
+          "summed_kernel_ns": 14746761
+        },
+        "gemm": {
+          "calls": 708,
+          "summed_kernel_ns": 20105076
+        },
+        "simt": {
+          "calls": 442,
+          "summed_kernel_ns": 9389389
+        },
+        "radixsort": {
+          "calls": 532,
+          "summed_kernel_ns": 4642460
+        },
+        "indexing_backward": {
+          "calls": 124,
+          "summed_kernel_ns": 12039714
+        }
+      },
+      "traced_kernel_union_ns": 63569726,
+      "trace_span_ns": 181119846,
+      "device_ids": [
+        0
+      ],
+      "stream_ids": [
+        7
+      ],
+      "top_kernels": [
+        {
+          "name": "_ZN44_GLOBAL__N__516f300d_11_Indexing_cu_2a2c434e33indexing_backward_kernel_stride_1IfEEvPKxS2_PKT_PS3_xxxxb",
+          "calls": 22,
+          "summed_kernel_ns": 11304840
+        },
+        {
+          "name": "_Z18sgemm_largek_lds64ILb1ELb0ELi5ELi5ELi4ELi4ELi4ELi34EEvPfPKfS2_iiiiiiS2_S2_ffiiPiS3_",
+          "calls": 186,
+          "summed_kernel_ns": 9380173
+        },
+        {
+          "name": "_ZN14at_cuda_detail3cub29DeviceRadixSortOnesweepKernelINS0_21DeviceRadixSortPolicyIxN2at4cuda3cub6detail10OpaqueTypeILi8EEEyE9Policy900ELb0ExS8_yiiNS0_6detail21identity_decomposer_tEEEvPT5_SE_PT3_PKSF_PT1_PKSJ_PT2_PKSN_T4_iiT6_",
+          "calls": 286,
+          "summed_kernel_ns": 4203577
+        },
+        {
+          "name": "_ZN7cutlass7Kernel2I43cutlass_80_simt_sgemm_256x128_8x4_nn_align1EEvNT_6ParamsE",
+          "calls": 63,
+          "summed_kernel_ns": 2745978
+        },
+        {
+          "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIfEESt5arrayIPcLy1EEEEviT0_T1_",
+          "calls": 2042,
+          "summed_kernel_ns": 2230696
+        },
+        {
+          "name": "_ZN7cutlass7Kernel2I42cutlass_80_simt_sgemm_128x64_8x5_nt_align1EEvNT_6ParamsE",
+          "calls": 78,
+          "summed_kernel_ns": 2218845
+        },
+        {
+          "name": "_ZN7cutlass7Kernel2I42cutlass_80_simt_sgemm_128x64_8x5_nn_align1EEvNT_6ParamsE",
+          "calls": 87,
+          "summed_kernel_ns": 1547614
+        },
+        {
+          "name": "_ZN7cutlass7Kernel2I41cutlass_80_simt_sgemm_64x64_8x5_nt_align1EEvNT_6ParamsE",
+          "calls": 118,
+          "summed_kernel_ns": 1399644
+        },
+        {
+          "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_13AUnaryFunctorIfffNS0_15binary_internal10MulFunctorIfEEEESt5arrayIPcLy2EEEEviT0_T1_",
+          "calls": 1260,
+          "summed_kernel_ns": 1355452
+        },
+        {
+          "name": "_Z18sgemm_largek_lds64ILb0ELb0ELi5ELi5ELi4ELi4ELi4ELi32EEvPfPKfS2_iiiiiiS2_S2_ffiiPiS3_",
+          "calls": 60,
+          "summed_kernel_ns": 1307228
+        },
+        {
+          "name": "_Z48fmha_cutlassB_f32_aligned_64x64_k32_dropout_sm80N22PyTorchMemEffAttention23AttentionBackwardKernelIN7cutlass4arch4Sm80EfLb1ELb1ELb0ELi64ELi64ELi32ELb0EE6ParamsE",
+          "calls": 6,
+          "summed_kernel_ns": 1186813
+        },
+        {
+          "name": "_ZN2at6native45_GLOBAL__N__c56b89ea_12_Embedding_cu_a90d51c333embedding_backward_feature_kernelIffxEEvPKT1_PKT_PS6_ixi",
+          "calls": 18,
+          "summed_kernel_ns": 1143805
+        },
+        {
+          "name": "_ZN2at6native29vectorized_elementwise_kernelILi2ENS0_11FillFunctorIxEESt5arrayIPcLy1EEEEviT0_T1_",
+          "calls": 850,
+          "summed_kernel_ns": 1140263
+        },
+        {
+          "name": "_ZN2at6native13reduce_kernelILi128ELi4ENS0_8ReduceOpIfNS0_14func_wrapper_tIfZNS0_11sum_functorIfffEclERNS_14TensorIteratorEEUlffE_EEjfLi4ELi4EEEEEvT1_",
+          "calls": 188,
+          "summed_kernel_ns": 982144
+        },
+        {
+          "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_15CUDAFunctor_addIfEESt5arrayIPcLy3EEEEviT0_T1_",
+          "calls": 360,
+          "summed_kernel_ns": 971034
+        },
+        {
+          "name": "_ZN8cublasLt8epilogue4impl12globalKernelILi8ELi32EfffLb1ELb1ELi1EEEviixPT1_18cublasLtEpilogue_tiPT2_xPvxxxPT3_xPi",
+          "calls": 144,
+          "summed_kernel_ns": 824125
+        },
+        {
+          "name": "_ZN2at6native53_GLOBAL__N__87a90936_20_layer_norm_kernel_cu_3ff0b71f28vectorized_layer_norm_kernelIffEEviT0_PKT_S6_S6_PS3_S7_PS4_",
+          "calls": 54,
+          "summed_kernel_ns": 804544
+        },
+        {
+          "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZZZNS0_44_GLOBAL__N__55f24f0f_7_Lerp_cu_f53a8b09_479618lerp_scalar_kernelERNS_18TensorIteratorBaseERKN3c106ScalarEENKUlvE0_clEvENKUlvE0_clEvEUlffE_St5arrayIPcLy3EEEEviT0_T1_",
+          "calls": 626,
+          "summed_kernel_ns": 793833
+        },
+        {
+          "name": "_ZN2at6native44_GLOBAL__N__516f300d_11_Indexing_cu_2a2c434e21indexSelectLargeIndexIfxjLi2ELi2ELin2ELb1EEEvNS_4cuda6detail10TensorInfoIT_T1_EENS5_IKS6_S7_EENS5_IKT0_S7_EEiiS7_S7_x",
+          "calls": 60,
+          "summed_kernel_ns": 744931
+        },
+        {
+          "name": "_ZN8cublasLt19splitKreduce_kernelILi32ELi16EiffffLb0EfffLb1ELb0ELb0EEEvNS_18cublasSplitKParamsIT4_EEPKT2_PKT8_PT7_PT3_PKS2_SF_PKT9_S6_PSG_PvxPS2_PiSL_SL_SF_SF_SF_SF_SF_",
+          "calls": 288,
+          "summed_kernel_ns": 741946
+        }
+      ],
+      "limits": [
+        "Two instrumented owner steps, not uninstrumented throughput or long-run GPU utilization",
+        "Name groups overlap; sums are not category shares or hardware instruction counts"
+      ]
+    },
+    "isolated_tf32": {
+      "kernel_records": 12938,
+      "unique_names": 114,
+      "groups": {
+        "all": {
+          "calls": 12938,
+          "summed_kernel_ns": 50499513
+        },
+        "elementwise": {
+          "calls": 10030,
+          "summed_kernel_ns": 14964723
+        },
+        "gemm": {
+          "calls": 708,
+          "summed_kernel_ns": 8642525
+        },
+        "tensorop": {
+          "calls": 688,
+          "summed_kernel_ns": 8613757
+        },
+        "radixsort": {
+          "calls": 532,
+          "summed_kernel_ns": 4637709
+        },
+        "indexing_backward": {
+          "calls": 124,
+          "summed_kernel_ns": 12066778
+        }
+      },
+      "traced_kernel_union_ns": 50499513,
+      "trace_span_ns": 180468045,
+      "device_ids": [
+        0
+      ],
+      "stream_ids": [
+        7
+      ],
+      "top_kernels": [
+        {
+          "name": "_ZN44_GLOBAL__N__516f300d_11_Indexing_cu_2a2c434e33indexing_backward_kernel_stride_1IfEEvPKxS2_PKT_PS3_xxxxb",
+          "calls": 22,
+          "summed_kernel_ns": 11332023
+        },
+        {
+          "name": "_ZN14at_cuda_detail3cub29DeviceRadixSortOnesweepKernelINS0_21DeviceRadixSortPolicyIxN2at4cuda3cub6detail10OpaqueTypeILi8EEEyE9Policy900ELb0ExS8_yiiNS0_6detail21identity_decomposer_tEEEvPT5_SE_PT3_PKSF_PT1_PKSJ_PT2_PKSN_T4_iiT6_",
+          "calls": 286,
+          "summed_kernel_ns": 4198898
+        },
+        {
+          "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIfEESt5arrayIPcLy1EEEEviT0_T1_",
+          "calls": 2042,
+          "summed_kernel_ns": 2234451
+        },
+        {
+          "name": "_ZN7cutlass7Kernel2I52cutlass_80_tensorop_s1688gemm_128x256_16x3_nn_align4EEvNT_6ParamsE",
+          "calls": 90,
+          "summed_kernel_ns": 1650685
+        },
+        {
+          "name": "_ZN7cutlass7Kernel2I52cutlass_80_tensorop_s1688gemm_128x256_16x3_tn_align4EEvNT_6ParamsE",
+          "calls": 54,
+          "summed_kernel_ns": 1555769
+        },
+        {
+          "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_13AUnaryFunctorIfffNS0_15binary_internal10MulFunctorIfEEEESt5arrayIPcLy2EEEEviT0_T1_",
+          "calls": 1260,
+          "summed_kernel_ns": 1348029
+        },
+        {
+          "name": "_Z48fmha_cutlassB_f32_aligned_64x64_k32_dropout_sm80N22PyTorchMemEffAttention23AttentionBackwardKernelIN7cutlass4arch4Sm80EfLb1ELb1ELb0ELi64ELi64ELi32ELb0EE6ParamsE",
+          "calls": 6,
+          "summed_kernel_ns": 1185083
+        },
+        {
+          "name": "_ZN7cutlass7Kernel2I51cutlass_80_tensorop_s1688gemm_256x64_16x4_nt_align4EEvNT_6ParamsE",
+          "calls": 54,
+          "summed_kernel_ns": 1160798
+        },
+        {
+          "name": "_ZN2at6native45_GLOBAL__N__c56b89ea_12_Embedding_cu_a90d51c333embedding_backward_feature_kernelIffxEEvPKT1_PKT_PS6_ixi",
+          "calls": 18,
+          "summed_kernel_ns": 1143838
+        },
+        {
+          "name": "_ZN2at6native29vectorized_elementwise_kernelILi2ENS0_11FillFunctorIxEESt5arrayIPcLy1EEEEviT0_T1_",
+          "calls": 850,
+          "summed_kernel_ns": 1142776
+        },
+        {
+          "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_15CUDAFunctor_addIfEESt5arrayIPcLy3EEEEviT0_T1_",
+          "calls": 360,
+          "summed_kernel_ns": 974454
+        },
+        {
+          "name": "_ZN2at6native13reduce_kernelILi128ELi4ENS0_8ReduceOpIfNS0_14func_wrapper_tIfZNS0_11sum_functorIfffEclERNS_14TensorIteratorEEUlffE_EEjfLi4ELi4EEEEEvT1_",
+          "calls": 188,
+          "summed_kernel_ns": 969564
+        },
+        {
+          "name": "_ZN2at6native53_GLOBAL__N__87a90936_20_layer_norm_kernel_cu_3ff0b71f28vectorized_layer_norm_kernelIffEEviT0_PKT_S6_S6_PS3_S7_PS4_",
+          "calls": 54,
+          "summed_kernel_ns": 805246
+        },
+        {
+          "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZZZNS0_44_GLOBAL__N__55f24f0f_7_Lerp_cu_f53a8b09_479618lerp_scalar_kernelERNS_18TensorIteratorBaseERKN3c106ScalarEENKUlvE0_clEvENKUlvE0_clEvEUlffE_St5arrayIPcLy3EEEEviT0_T1_",
+          "calls": 626,
+          "summed_kernel_ns": 794097
+        },
+        {
+          "name": "_ZN2at6native44_GLOBAL__N__516f300d_11_Indexing_cu_2a2c434e21indexSelectLargeIndexIfxjLi2ELi2ELin2ELb1EEEvNS_4cuda6detail10TensorInfoIT_T1_EENS5_IKS6_S7_EENS5_IKT0_S7_EEiiS7_S7_x",
+          "calls": 60,
+          "summed_kernel_ns": 744766
+        },
+        {
+          "name": "_ZN44_GLOBAL__N__516f300d_11_Indexing_cu_2a2c434e24indexing_backward_kernelIfLi4EEEvPKxS2_PKT_PS3_xxxxb",
+          "calls": 102,
+          "summed_kernel_ns": 734755
+        },
+        {
+          "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZZZNS0_19addcdiv_cuda_kernelERNS_18TensorIteratorBaseERKN3c106ScalarEENKUlvE0_clEvENKUlvE5_clEvEUlfffE_St5arrayIPcLy4EEEEviT0_T1_",
+          "calls": 626,
+          "summed_kernel_ns": 675492
+        },
+        {
+          "name": "_ZN7cutlass7Kernel2I51cutlass_80_tensorop_s1688gemm_64x128_32x3_nt_align4EEvNT_6ParamsE",
+          "calls": 64,
+          "summed_kernel_ns": 638206
+        },
+        {
+          "name": "_ZN7cutlass7Kernel2I51cutlass_80_tensorop_s1688gemm_64x128_32x3_tn_align4EEvNT_6ParamsE",
+          "calls": 54,
+          "summed_kernel_ns": 633340
+        },
+        {
+          "name": "_ZN2at6native13reduce_kernelILi512ELi1ENS0_8ReduceOpIxNS0_14func_wrapper_tIxZNS0_11sum_functorIxxxEclERNS_14TensorIteratorEEUlxxE_EEjxLi4ELi4EEEEEvT1_",
+          "calls": 20,
+          "summed_kernel_ns": 616540
+        }
+      ],
+      "limits": [
+        "Two instrumented owner steps, not uninstrumented throughput or long-run GPU utilization",
+        "Name groups overlap; sums are not category shares or hardware instruction counts"
+      ]
+    }
+  },
+  "closure_source_sha256": "3e1e43d2842c42975edbdd8a0825831be97e06cec1898a2aa842da5bfbfe464e"
+}

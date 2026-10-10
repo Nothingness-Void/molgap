@@ -1729,6 +1729,28 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "instrumented_scratch_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "pcqm-k1-kernel-trace-20261010",
+      "role_use": {
+        "development": "untouched",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train_decoded": "labels_read",
+        "train_executed": "prediction_input"
+      },
+      "scientific_scope": "k1_kernel_attribution",
+      "source_envelope": "experiments/pcqm_k1_execution_efficiency/kernel_attempt_001/rml/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "consumed_role_frozen_diagnostic",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,

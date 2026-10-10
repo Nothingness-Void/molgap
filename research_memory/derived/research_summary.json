@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 114,
+      "trajectories_total": 115,
       "with_complete_native_measurement": 24,
-      "with_cost_event": 103,
-      "with_incomplete_native_measurement": 79,
+      "with_cost_event": 104,
+      "with_incomplete_native_measurement": 80,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -1070,23 +1070,23 @@
             "known_total": null
           },
           "measured": {
-            "known_records": 3,
-            "known_total": 0.1256684027777778
+            "known_records": 4,
+            "known_total": 0.13940538194444446
           },
           "not_applicable_records": 0,
-          "unknown_records": 6
+          "unknown_records": 7
         },
         "device_hours": {
           "estimated": {
-            "known_records": 5,
-            "known_total": 1.1666666666666665
+            "known_records": 6,
+            "known_total": 1.25
           },
           "measured": {
             "known_records": 1,
             "known_total": 0.009792833833331922
           },
           "not_applicable_records": 0,
-          "unknown_records": 3
+          "unknown_records": 4
         },
         "queue_hours": {
           "estimated": {
@@ -1097,17 +1097,17 @@
             "known_records": 0,
             "known_total": null
           },
-          "not_applicable_records": 5,
-          "unknown_records": 4
+          "not_applicable_records": 6,
+          "unknown_records": 5
         },
         "wall_hours": {
           "estimated": {
-            "known_records": 5,
-            "known_total": 1.1666666666666665
+            "known_records": 6,
+            "known_total": 1.25
           },
           "measured": {
-            "known_records": 4,
-            "known_total": 0.052659614194442636
+            "known_records": 5,
+            "known_total": 0.06505002577777506
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -2964,17 +2964,17 @@
         }
       }
     },
-    "unknown_events": 202
+    "unknown_events": 204
   },
   "evidence": {
-    "validated": 103,
+    "validated": 104,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 85,
+      "count": 86,
       "severity": "INFO"
     },
     {
@@ -2984,7 +2984,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 79,
+      "count": 80,
       "severity": "WARN"
     },
     {
@@ -3004,19 +3004,19 @@
     }
   ],
   "roles": {
-    "coarse_historical": 495,
-    "explicit_events": 295,
+    "coarse_historical": 501,
+    "explicit_events": 298,
     "repeatedly_selected": 21
   },
-  "source_digest": "f772fb1baa44bd3c2cd6ab4517ab2070e8ebe813d7d39d3b4d1c75943d49b4ae",
+  "source_digest": "1b4fc97e13db497c11daff7752114eedd0e8d6feb4e3a4fbb591dd47629cebbf",
   "trajectories": {
-    "count": 114,
+    "count": 115,
     "outcomes": {
       "CLOSED": 12,
       "INCONCLUSIVE": 19,
       "INFRASTRUCTURE_ONLY": 5,
       "NEGATIVE_UNDER_CONTRACT": 24,
-      "NO_TRAIN": 46,
+      "NO_TRAIN": 47,
       "POSITIVE_UNDER_CONTRACT": 8
     }
   },

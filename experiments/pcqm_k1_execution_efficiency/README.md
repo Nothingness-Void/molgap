@@ -12,3 +12,7 @@ No production promotion, remote submission or development evaluation here.
 Bounded continuation: [projection decision](projection_attempt_001/terminal_decision.md)
 rejects project-before-gather/pack as direct strict-FP32 replacements. See its
 matched numerical/cost evidence rather than extrapolating from algebraic equality.
+
+[Isolated CUDA trace](kernel_attempt_001/terminal_decision.md) provides actual
+SIMT-to-TensorOp kernel dispatch attribution; it does not qualify retrained MAE
+or native accelerator throughput. Precision claims remain scoped to each attempt.

@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "kernel-attempt-001",
+  "category": "preflight",
+  "cost_event_id": "cost-k1-kernel-estimate",
+  "evidence_ref": "experiments/pcqm_k1_execution_efficiency/kernel_attempt_001/README.md",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0.08333333333333333
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.08333333333333333
+    }
+  },
+  "platform": "local",
+  "run_id": "k1-kernel-rtx5060-20261010",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-kernel-trace-20261010"
+}
