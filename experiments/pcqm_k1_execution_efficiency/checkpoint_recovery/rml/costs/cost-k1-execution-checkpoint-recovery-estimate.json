@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "preflight",
+  "cost_event_id": "cost-k1-execution-checkpoint-recovery-estimate",
+  "evidence_ref": "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/README.md",
+  "hardware": "CPU; no accelerator work",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.03333333333333333
+    }
+  },
+  "platform": "local",
+  "run_id": "k1-execution-checkpoint-recovery-local-20261010",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-execution-checkpoint-recovery-20261010"
+}

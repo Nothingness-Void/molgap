@@ -1,0 +1,105 @@
+{
+  "evidence_id": "pcqm-k1-execution-checkpoint-recovery-20261010",
+  "run_id": "k1-execution-checkpoint-recovery-local-20261010",
+  "outcome": {
+    "execution_status": "complete_checkpoint_diagnostic",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "exact_cpu_checkpoint_continuation",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "bounded_cpu_checkpoint_recovery_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately prospective idle-GPU or native T4 execution qualification"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-checkpoint-recovery-observed",
+      "trajectory_id": "TB-k1-execution-checkpoint-recovery-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-checkpoint-recovery-local-20261010",
+      "attempt_id": "attempt-001",
+      "platform": "local",
+      "hardware": "CPU; no accelerator work",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.0011605028888885096,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.003068576388888889,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "not_applicable"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-checkpoint-recovery-train_decoded-labels_read",
+      "trajectory_id": "TB-k1-execution-checkpoint-recovery-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-checkpoint-recovery-local-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "19ac574d18401f17a3033844ce489b7b956095898c97fb28efa056c68383f629",
+      "role_name": "train_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-checkpoint-recovery-train_executed-prediction_input",
+      "trajectory_id": "TB-k1-execution-checkpoint-recovery-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-checkpoint-recovery-local-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "9a3c02e7e8a67450071a90a89bb27c10a64a0a998777089ad1285214d3bfab7f",
+      "role_name": "train_executed",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-k1-checkpoint-recovery-train_executed-metric_computed",
+      "trajectory_id": "TB-k1-execution-checkpoint-recovery-20261010",
+      "action_id": "A001",
+      "run_id": "k1-execution-checkpoint-recovery-local-20261010",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-500k-scnet-v1",
+      "row_manifest_hash": "9a3c02e7e8a67450071a90a89bb27c10a64a0a998777089ad1285214d3bfab7f",
+      "role_name": "train_executed",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/acceptance.json"
+    }
+  ],
+  "role_use": {
+    "train_decoded": "labels_read",
+    "train_executed": "prediction_input",
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "checkpoint_resume_exact": true,
+  "gpu_qualification": false,
+  "training_replay_ready": false
+}

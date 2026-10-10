@@ -1,0 +1,36 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-ad958d1169ababb13778eebf28a0068ad2837bb38519af0b3751aadcff4d9c08",
+  "finalized_at": "2026-10-10T07:28:15.828439+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/README.md": "6bf20dec35307554a9fed707776334e23e0080c4c4b88d8137e4e91660a9e744",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/acceptance.json": "8aecd1fe24b7c8f7b2f6f993db37e0a99c1ca020988d59c47340037e9bb11cb7",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/attribution.md": "b9d8dee354058702612ff7661d6158a8abe05c0e866829ea1ebdca636720cdfd",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/decision.md": "b0b8194d5f29077c34eabc371be87cc72fce1844bc9194625d95cbd9cbd10942",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/inputs.json": "068a033f03c449b7ca0bcc0190d94d8b3d61b9bfe80eca6efc4d29340bd595e8",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/plan_input.json": "d71447a66fa2942e84bbab8083103bbf4cb2d1ba7d448cdd00802697604a6a75",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/plan_receipt.json": "5da2512c43ac495490cf82acd66a725314eba14d1aba4719314a7948a83f1c5c",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/result.json": "25005b6c0d8889a446538b6e61b81232bfe1cae48c34d7e2c1abf9c40797d6c4",
+    "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/role_plan.json": "ef48bdc5a72c48099921cd9bb6fc8c51ed669d5096da262da8f308940dd17a81"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-k1-checkpoint-recovery-observed.json": "41f849e4777b746c50f275d4a68ce8fa982e4eaeccb5bde25c302490f604a723",
+    "prospective_snapshot.json": "4921a4bef5e6a040b589922591062551a1c4a384ac632164a17d520bf2093d24",
+    "roles/role-k1-checkpoint-recovery-train_decoded-labels_read.json": "7621d9182678fcd1f04575b5c5b1d77c13cc442ad90145e554b3c70711a11698",
+    "roles/role-k1-checkpoint-recovery-train_executed-metric_computed.json": "1311f8bc4bb4b51ab34f223c11cdfa11598dc0f56456eef48cb5003b76e655f7",
+    "roles/role-k1-checkpoint-recovery-train_executed-prediction_input.json": "96ed39a4703853952d013489d7c66fabe78fe2a773c1c48ef16235caa7d8084f",
+    "terminal_input.json": "40589d2af3fdec4bf3bdd7377418009a63dfe584df55d645f541d3bfd6b22883",
+    "trajectory.json": "26a73fbfe2503e9ef762a3e11dce5f45cedb90a40e149564970e209c7715494d",
+    "v5_evidence.json": "44b9eb3d71e40dd7a6856fbe8e996cc86d8cb02124561b8dd92469258f804453"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_k1_execution_efficiency/checkpoint_recovery/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "ad958d1169ababb13778eebf28a0068ad2837bb38519af0b3751aadcff4d9c08",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-k1-execution-checkpoint-recovery-20261010"
+}
