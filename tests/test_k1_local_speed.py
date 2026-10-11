@@ -6,7 +6,10 @@ import torch
 from torch_geometric.data import Data, InMemoryDataset
 
 from molgap import k1_screen_training as owner
-from molgap.k1_local_speed import summarize, validate_config, verify_source
+from molgap.k1_local_speed import (
+    EPOCH_FORMAT, summarize, summarize_epochs, timed_train_epoch,
+    validate_config, verify_source,
+)
 
 
 def config():
@@ -22,6 +25,51 @@ def test_contract_rejects_scope_expansion(key, value):
     c[key] = value
     with pytest.raises(ValueError):
         validate_config(c)
+
+
+def test_engineering_mode_has_no_rml_authority():
+    c = {**config(), "format": EPOCH_FORMAT, "rml_recording": False}
+    assert validate_config(c) == c
+    for changed in ({"rml_recording": True}, {"prospective": {}}):
+        with pytest.raises(ValueError):
+            validate_config({**c, **changed})
+
+
+def test_epoch_summary_checks_matched_exposure():
+    rows = [{"arm": arm, "epoch": epoch, "steps": owner.STEPS_PER_EPOCH,
+             "samples": owner.ROWS_PER_EPOCH, "train_seconds": seconds}
+            for epoch in range(1, 11)
+            for arm, seconds in (("reference", 10.0), ("fused_layout", 8.0))]
+    result = summarize_epochs(rows)
+    assert result["reference"]["steps"] == 7810
+    assert result["time_reduction_fraction"] == pytest.approx(0.2)
+    assert result["rml_recording"] is False
+    with pytest.raises(ValueError):
+        summarize_epochs(rows[:-1])
+    rows[0]["train_seconds"] = float("nan")
+    with pytest.raises(ValueError):
+        summarize_epochs(rows)
+
+
+@pytest.mark.parametrize("arm", ["reference", "fused_layout"])
+def test_epoch_adapter_reuses_train_step_without_per_batch_sync(monkeypatch, arm):
+    from types import SimpleNamespace
+    from molgap import k1_local_speed as speed
+
+    calls, syncs = [], []
+    monkeypatch.setattr(torch.cuda, "synchronize", lambda: syncs.append(1))
+    monkeypatch.setattr(owner, "STEPS_PER_EPOCH", 2)
+    monkeypatch.setattr(owner, "ROWS_PER_EPOCH", 256)
+    monkeypatch.setattr(owner, "_train_loader", lambda train, epoch: [1, 2])
+    def step(model, optimizer, batch, mean, std, mode, **kwargs):
+        calls.append((mode, kwargs))
+        return torch.tensor(1.0), torch.tensor(128.0), 128
+    monkeypatch.setattr(owner, "_screen_step", step)
+    row = timed_train_epoch(SimpleNamespace(train=lambda: None),
+        SimpleNamespace(param_groups=[{"lr": 4e-4}]), [], 0.0, 1.0, arm, 0)
+    assert row["steps"] == 2
+    assert len(syncs) == 2
+    assert calls == [(arm, {"original_execution": arm == "reference"})] * 2
 
 
 def test_source_inventory_cannot_redefine_its_own_authority(tmp_path):

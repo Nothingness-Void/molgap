@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import statistics
 import threading
@@ -16,21 +17,26 @@ from .k1_loader_reuse import K1LoaderReuse
 from .training_reproducibility import (
     atomic_json, atomic_torch_save, build_runtime_manifest, capture_rng_state,
     configure_fp32_determinism, restore_rng_state, sha256_file,
+    sum_scalar_metrics,
 )
 from .v4_runtime import load_frozen_initial_state, make_adamw_compat, torch_load_compat, validate_standard_source_bundle
 
 ARMS = ("reference", "fused_layout")
 FORMAT = "molgap-k1-local-speed-v1"
+EPOCH_FORMAT = "molgap-k1-local-epoch-speed-v2"
 
 
 def validate_config(config):
-    if (config.get("format") != FORMAT or config.get("epochs") != 10
+    if (config.get("format") not in (FORMAT, EPOCH_FORMAT) or config.get("epochs") != 10
             or config.get("allocation_seconds") != 3600
             or config.get("schedule_epochs") != owner.EPOCHS
             or config.get("batch_size") != owner.BATCH_SIZE
             or config.get("development_access") is not False
             or config.get("precision") != "fp32-tf32-off"):
         raise ValueError("Expected the authorized 10ep/60min TRAIN-only FP32 contract")
+    if config["format"] == EPOCH_FORMAT and (
+            config.get("rml_recording") is not False or "prospective" in config):
+        raise ValueError("Engineering timing mode has no RML/prospective publication")
     return config
 
 
@@ -91,6 +97,10 @@ def run(config_path, output, source_root, *, resume=False):
 
     config = validate_config(json.loads(config_path.read_text()))
     verify_source(source_root, config)
+    if config["format"] == EPOCH_FORMAT:
+        if resume:
+            raise ValueError("No automatic continuation of the engineering timing budget")
+        return run_epoch_speed(config_path, config, output)
     for arm in ARMS:
         path = Path(config["prospective"][arm]["path"])
         if sha256_file(path) != config["prospective"][arm]["sha256"]:
@@ -262,6 +272,149 @@ def run(config_path, output, source_root, *, resume=False):
             })
         finally:
             watchdog.cancel()
+
+
+def timed_train_epoch(model, optimizer, train, mean, std, arm, epoch):
+    """Match the native epoch pipeline, not a per-step synchronized profiler."""
+    import torch
+
+    model.train()
+    torch.cuda.synchronize()
+    started = time.perf_counter()
+    values, total, samples, steps = [], 0.0, 0, 0
+    # Both arms keep the original per-epoch loader lifecycle.
+    for batch in owner._train_loader(train, epoch):
+        _, absolute, count = owner._screen_step(
+            model, optimizer, batch, mean, std, arm,
+            original_execution=arm == "reference")
+        if arm == "reference":
+            total += float(absolute)
+        else:
+            values.append(absolute)
+        samples += count
+        steps += 1
+    if arm != "reference":
+        total = sum_scalar_metrics(values)
+    torch.cuda.synchronize()
+    elapsed = time.perf_counter() - started
+    if not math.isfinite(total):
+        raise RuntimeError("Nonfinite TRAIN accumulator")
+    if steps != owner.STEPS_PER_EPOCH or samples != owner.ROWS_PER_EPOCH:
+        raise RuntimeError("TRAIN exposure changed")
+    # No training metric is reported as a quality result.
+    return {"arm": arm, "epoch": epoch + 1, "steps": steps,
+            "samples": samples, "train_seconds": elapsed,
+            "learning_rate": optimizer.param_groups[0]["lr"]}
+
+
+def summarize_epochs(rows):
+    result = {}
+    for arm in ARMS:
+        selected = [r for r in rows if r["arm"] == arm]
+        if [r["epoch"] for r in selected] != list(range(1, len(selected) + 1)):
+            raise ValueError("Missing or duplicate epoch timing")
+        for row in selected:
+            if (row["steps"] != owner.STEPS_PER_EPOCH
+                    or row["samples"] != owner.ROWS_PER_EPOCH
+                    or not math.isfinite(row["train_seconds"]) or row["train_seconds"] <= 0):
+                raise ValueError("Invalid timing/exposure")
+        steady = selected[1:]
+        result[arm] = {"epochs": len(selected),
+            "steps": sum(r["steps"] for r in selected),
+            "samples": sum(r["samples"] for r in selected),
+            "train_seconds": sum(r["train_seconds"] for r in selected),
+            "steady_epoch_median_seconds": statistics.median(
+                r["train_seconds"] for r in steady) if steady else None}
+    if result[ARMS[0]]["epochs"] != result[ARMS[1]]["epochs"]:
+        raise ValueError("Unmatched epoch exposure")
+    ref, cand = (result[a]["train_seconds"] for a in ARMS)
+    result.update(time_reduction_fraction=1 - cand / ref if ref else None,
+                  speedup_ratio=ref / cand if cand else None,
+                  quality_evaluated=False, rml_recording=False)
+    return result
+
+
+def run_epoch_speed(config_path, config, output):
+    import torch
+
+    if output.exists() and any(output.iterdir()):
+        raise ValueError("Engineering timing output must be empty")
+    output.mkdir(parents=True, exist_ok=True)
+    started = time.perf_counter()
+    train, mean, std, initial, initial_identity = cpu_inputs(config)
+    atomic_json(output / "cpu_acceptance.json", {
+        "train_rows": len(train), "manifest_sha256": owner.FIXED_MANIFEST_SHA256,
+        "initial": initial_identity, "development_decoded": False,
+        "cuda_initialized": torch.cuda.is_initialized(),
+        "cpu_prepare_seconds": time.perf_counter() - started})
+    allocation_start = time.perf_counter()
+
+    def timeout():
+        atomic_json(output / "watchdog.json", {"status": "STOP_FOR_COST",
+            "reason": "3600s engineering timing ceiling; no automatic continuation"})
+        os._exit(124)
+
+    watchdog = threading.Timer(config["allocation_seconds"], timeout)
+    watchdog.daemon = True
+    watchdog.start()
+    models, optimizers, schedulers, rngs, rows = {}, {}, {}, {}, []
+    checkpoint_seconds = 0.0
+    config_sha = sha256_file(config_path)
+    try:
+        runtime = configure_fp32_determinism(owner.SEED)
+        if "RTX 5060" not in torch.cuda.get_device_name(0):
+            raise RuntimeError("This engineering benchmark is RTX5060 only")
+        atomic_json(output / "runtime.json", build_runtime_manifest(runtime))
+        for arm in ARMS:
+            model = owner.make_encoder("neural_atom_k1")
+            model.load_state_dict(initial, strict=True)
+            models[arm] = model.to("cuda").train()
+            optimizers[arm] = owner._screen_optimizer(model, arm)
+            schedulers[arm] = torch.optim.lr_scheduler.CosineAnnealingLR(
+                optimizers[arm], T_max=owner.EPOCHS, eta_min=1e-6)
+        configure_fp32_determinism(owner.SEED)
+        for arm in ARMS:
+            rngs[arm] = capture_rng_state()
+        for epoch in range(config["epochs"]):
+            if time.perf_counter() - allocation_start >= config["allocation_seconds"] - 150:
+                break
+            # Alternate whole-epoch order without per-batch synchronization overhead.
+            for arm in ARMS if epoch % 2 == 0 else ARMS[::-1]:
+                restore_rng_state(rngs[arm])
+                rows.append(timed_train_epoch(models[arm], optimizers[arm], train,
+                                               mean, std, arm, epoch))
+                rngs[arm] = capture_rng_state()
+                schedulers[arm].step()
+            io_start = time.perf_counter()
+            atomic_torch_save(output / "last.pt", {
+                "format": EPOCH_FORMAT, "config_sha256": config_sha,
+                "completed_epochs": epoch + 1, "timings": rows,
+                "arms": {arm: {"model": models[arm].state_dict(),
+                    "optimizer": optimizers[arm].state_dict(),
+                    "scheduler": schedulers[arm].state_dict(), "rng": rngs[arm]}
+                    for arm in ARMS}})
+            checkpoint_seconds += time.perf_counter() - io_start
+            atomic_json(output / "timings.json", {"rows": rows})
+            progress = {"completed_epochs": epoch + 1, "results": summarize_epochs(rows)}
+            atomic_json(output / "progress.json", progress)
+            print(json.dumps(progress), flush=True)
+        summary = {"status": "COMPLETE_SPEED_PREFIX" if len(rows) == 20 else "STOP_FOR_COST",
+            "config_sha256": config_sha, "source_commit": config["source_commit"],
+            "allocation_wall_seconds": time.perf_counter() - allocation_start,
+            "checkpoint_seconds": checkpoint_seconds, "results": summarize_epochs(rows),
+            "checkpoint_sha256": sha256_file(output / "last.pt"),
+            "limitations": ["One seed; alternating epochs, not repeated trials",
+                "Nonexclusive desktop GPU; no T4/A100 extrapolation",
+                "No development, quality, or RML result"]}
+        atomic_json(output / "summary.json", summary)
+        print(json.dumps(summary), flush=True)
+        return summary
+    except BaseException as error:
+        atomic_json(output / "failure.json", {"type": type(error).__name__,
+            "error": str(error), "last_matched_checkpoint": str(output / "last.pt")})
+        raise
+    finally:
+        watchdog.cancel()
 
 
 def main():
