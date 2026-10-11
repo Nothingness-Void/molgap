@@ -123,8 +123,8 @@ def normalized_source_sha256(path: Path) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
-def inspect_frozen_state_artifact(path: Path, *, expected_state_sha256: str) -> dict:
-    """Inspect trusted CPU tensor bytes without constructing or executing a model."""
+def read_frozen_state_artifact(path: Path, *, expected_state_sha256: str) -> tuple[Mapping, dict]:
+    """Read and validate flat or enveloped CPU tensors without model execution."""
     import torch
 
     payload = torch_load_compat(path, map_location="cpu", weights_only=True)
@@ -140,8 +140,13 @@ def inspect_frozen_state_artifact(path: Path, *, expected_state_sha256: str) -> 
         raise ValueError("Frozen initialization tensor SHA differs from Spec")
     if "model_state" in payload and payload.get("state_sha256", observed) != observed:
         raise ValueError("Initialization envelope tensor SHA is inconsistent")
-    return {"file_sha256": sha256_file(path), "state_sha256": observed,
-            "tensor_count": len(state), "device": "cpu"}
+    return state, {"file_sha256": sha256_file(path), "state_sha256": observed,
+                   "tensor_count": len(state), "device": "cpu"}
+
+
+def inspect_frozen_state_artifact(path: Path, *, expected_state_sha256: str) -> dict:
+    """Inspect using the same transport validation as the consuming loader."""
+    return read_frozen_state_artifact(path, expected_state_sha256=expected_state_sha256)[1]
 
 
 def load_frozen_initial_state(
