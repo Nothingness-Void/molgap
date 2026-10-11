@@ -13,3 +13,6 @@ canonical trace through an opt-in execution context. No epoch loop is copied.
 The dated [v1 failure](gpu/failure_v1.md), [v2 failure](gpu/failure_v2.md), and
 [v3 release observation](gpu/submission_record_v3.md) retain operational
 provenance; neither constitutes a scientific terminal decision.
+
+The optional [v2 tuning layer](tuning_v2.md) records CPU-budget and development
+input-cache implementation, local verification and remaining remote qualification.

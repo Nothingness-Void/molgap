@@ -24,6 +24,10 @@ unchanged local-bond model under two declared execution backends, not a new
 architecture or scale-up. Its requested forty-pass scope retains the original
 sixty-pass learning-rate horizon; it was not relabeled as sixty-pass completion.
 
+The requested [v2 execution tuning layer](experiments/pcqm_gptrans_execution40/tuning_v2.md)
+is implemented and locally checked; it is opt-in and not remotely qualified.
+No new training or profiling job has been submitted for that implementation.
+
 The authorized [source-dependence assay](experiments/pcqm_gptrans_source_dependence/protocol.md)
 is accepted and closed NO_TRAIN / CONTEXT_ONLY. Its cohort observations did not
 establish broad source collapse or gate starvation; retain the
