@@ -34,9 +34,9 @@ def child(stage, arm, context, root):
     if config["spec_identity"] != spec.identity or package["archive_sha256"] != context["archive_sha256"]:
         raise ValueError("Source/Spec binding changed")
     plan = next(row for row in spec.to_dict()["prospective"]["arms"] if row["arm_id"] == arm)
-    # The server release workflow publishes plans locally; the archive carries
-    # their pinned declaration, not an assumed unmounted prospective directory.
-    staged = Path(__file__).resolve().parents[2] / plan["plan_spec_ref"]
+    # Source text is LF-normalized by the packager. The transport artifact
+    # preserves the declaration's exact bytes, including its Spec-bound SHA.
+    staged = Path(context["upload_root"]) / (arm + "_plan.json")
     if sha256_file(staged) != plan["plan_spec_sha256"]:
         raise ValueError("Prospective declaration bytes changed")
     from .research_memory.schemas import validate_trajectory

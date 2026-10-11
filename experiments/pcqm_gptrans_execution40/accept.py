@@ -9,5 +9,6 @@ if __name__ == "__main__":
     parser.add_argument("--records", type=Path, required=True)
     parser.add_argument("--package", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--receipt-ref", default="experiments/pcqm_gptrans_execution40/gpu/submission_v1.json")
     args = parser.parse_args()
-    atomic_json(args.output, accept(Path(__file__).resolve().parents[2], args.records, args.package))
+    atomic_json(args.output, accept(Path(__file__).resolve().parents[2], args.records, args.package, receipt_ref=args.receipt_ref))

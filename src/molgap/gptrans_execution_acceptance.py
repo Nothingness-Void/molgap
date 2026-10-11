@@ -31,13 +31,13 @@ def verified_files(folder, manifest):
                  and sha256_file(path) == digest, "Output confinement/hash: " + name)
 
 
-def accept(root, records, package):
+def accept(root, records, package, *, receipt_ref=BASE+"/submission_v1.json"):
     """Load predictions only; no model/checkpoint inference or training."""
     import torch
     root, records, package = Path(root), Path(records), Path(package)
     load = lambda p: json.loads(p.read_text())
     base = root / BASE
-    config, receipt = load(base / "screen_config.json"), load(base / "submission_v1.json")
+    config, receipt = load(base / "screen_config.json"), load(root / receipt_ref)
     spec = ExperimentSpec.from_json((base / "spec.json").read_text())
     frozen = verify_experiment_source_package(package)
     _require(receipt["status"] == "submitted" and receipt["reconciliation_required"] is False, "Physical receipt")

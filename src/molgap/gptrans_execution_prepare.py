@@ -143,6 +143,8 @@ def freeze(root):
         dataset_metadata={"title":"MolGap GPTrans Execution40 Source", "id":"kaseichou/molgap-gptrans-execution40-source",
                           "licenses":[{"name":"other"}],"isPrivate":True},
         required_modules=["molgap.gptrans_execution_study","molgap.gptrans_execution_backend","molgap.pcqm_gptrans_v4"])
+    for arm_id, plan_ref in zip(ARMS, plan_refs):
+        workflow["artifacts"][arm_id + "_plan.json"] = UploadArtifact.from_file(root / plan_ref).to_workflow()
     # Reuse the reviewed family payload, not a repository-wide sensitive-file scan.
     sources = [p for p in workflow["source_paths"] if p.startswith("src/molgap/")]
     sources += ["src/molgap/gptrans_execution_backend.py", "src/molgap/gptrans_execution_study.py",

@@ -115,6 +115,7 @@ def test_execution_source_does_not_assume_published_plan_mount():
     source = Path('src/molgap/gptrans_execution_study.py').read_text()
     assert 'plan_spec_sha256' in source
     assert '/ "prospective"' not in source
+    assert '(arm + "_plan.json")' in source
 
 
 def test_execution_retention_rejects_missing_prefix_before_tensor_loading(tmp_path):
