@@ -65,7 +65,8 @@ def test_layout_wraps_transfer_and_owner_step_then_cleans_up(monkeypatch, mode):
         finally:
             events.append("layout-exit")
     class Batch:
-        def to(self, device, *, non_blocking):
+        def to(self, device, *fields, non_blocking):
+            assert fields == ("x", "edge_index", "edge_attr", "batch", "random_walk_pe", "y")
             events.append("transfer")
             return self
     monkeypatch.setattr(k1_execution_layout, "cpu_layout_context", layout)

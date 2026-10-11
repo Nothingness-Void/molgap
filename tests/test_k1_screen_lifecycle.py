@@ -38,7 +38,7 @@ def lifecycle(tmp_path, monkeypatch):
 
     monkeypatch.setattr(owner, "configure_fp32_determinism", configure)
     monkeypatch.setattr(owner, "build_runtime_manifest", lambda determinism:
-                        {"runtime_fingerprint": "2" * 64})
+                        {"runtime_fingerprint": "2" * 64, "torch": "2.7.1+synthetic"})
     monkeypatch.setattr(owner, "_validate_prospective", lambda *args: None)
     monkeypatch.setattr(owner, "validate_runtime_preflight", lambda *args:
                         {"accelerator": "Tesla T4 synthetic"})
@@ -97,7 +97,8 @@ def lifecycle(tmp_path, monkeypatch):
             "b" * 64, "neural_atom_k1", "2", "c" * 40, "d" * 64, "e" * 64,
             sha256_file(recipe_path), "kaggle", "synthetic", "synthetic/kernel", None)
         monkeypatch.setattr(RunContext, "for_training", lambda *args, **kwargs: context)
-        addons = [] if mode == "reference" else [{"name": "k1_fused_layout",
+        addons = [] if mode == "reference" else [{"name": "k1_initialized_layout"
+            if mode == "initialized_layout" else "k1_fused_layout",
             "version": "1", "config": {},
             "source_sha256": normalized_source_sha256(Path(owner.__file__))}]
         arm = {"arm_id": mode, "initialization": {"kind": "frozen_state", "seed": 42,
@@ -114,7 +115,7 @@ def lifecycle(tmp_path, monkeypatch):
     return request, started_epochs
 
 
-@pytest.mark.parametrize("mode", ["reference", "fused_layout"])
+@pytest.mark.parametrize("mode", ["reference", "fused_layout", "initialized_layout"])
 def test_actual_loop_writes_40_epoch_timing_and_verified_terminal(lifecycle, mode):
     request, started = lifecycle
     args = request(mode)
@@ -160,7 +161,7 @@ def test_local_prefix_runs_ten_epochs_without_shortening_cosine_schedule(lifecyc
     assert checkpoint["scheduler"]["T_max"] == 40 and checkpoint["scheduler"]["last_epoch"] == 10
 
 
-@pytest.mark.parametrize("mode", ["reference", "fused_layout"])
+@pytest.mark.parametrize("mode", ["reference", "fused_layout", "initialized_layout"])
 def test_complete_epoch_resume_keeps_timing_trace_and_schedule(lifecycle, monkeypatch, mode):
     request, started = lifecycle
     args = request(mode)

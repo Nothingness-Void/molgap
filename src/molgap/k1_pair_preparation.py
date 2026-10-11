@@ -42,7 +42,8 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
                  account: str = "nvoid912", kernel: str | None = None, title: str | None = None,
                  dataset: str = "nvoid912/pcqm4mv2-ogb-fixed-100k-v1",
                  candidate_addon_source: str = "src/molgap/k1_screen_training.py",
-                 candidate_objective: dict | None = None, _state_inspector=None) -> dict:
+                 candidate_objective: dict | None = None,
+                 execution_torch_version: str | None = None, _state_inspector=None) -> dict:
     """Build unpublished drafts; parent binds fresh protocol/release before publication.
 
     Candidate addons are validated by the family registry. Their default objective
@@ -80,6 +81,7 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
                       question, changed_mechanism, supporting_evidence_ids, parent_trajectory_ids,
                       hypothesis_overrides, experiment_id, source_dataset, candidate_objective, kernel, title))
                   or candidate_addon_source != "src/molgap/k1_screen_training.py")
+    customized = customized or execution_torch_version is not None
     if customized and not fresh:
         raise ValueError("Changed records require fresh identities; frozen seed42 records cannot be reused")
     if fresh:
@@ -125,7 +127,8 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
     for arm_id, role, addon in ((reference_arm_id, "reference", reference_addon), (candidate_arm_id, "candidate", candidate_addon)):
         recipe = build_family_recipe(("neural_atom_k1", "2"), addon=addon,
             source_idx_sha256=expected["source_idx_sha256"], target_sha256=expected["target_sha256"],
-            seed=initialization_seed, initialization_sha256=initialization_sha256)
+            seed=initialization_seed, initialization_sha256=initialization_sha256,
+            execution_torch_version=execution_torch_version if role == "candidate" else None)
         # Allocation lifetime is a launcher bound, not an optimizer/recipe override.
         if allocation_wall_limit_seconds is not None:
             recipe["allocation_wall_limit_seconds"] = allocation_wall_limit_seconds

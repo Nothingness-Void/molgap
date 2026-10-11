@@ -18,11 +18,19 @@ RUN = "molgap-k1-fused-layout-100k-s42-v1"
 
 
 def prepare(root, initial, *, draft, attempt=1):
-    if attempt not in (1, 2, 3):
+    if attempt not in (1, 2, 3, 4):
         raise ValueError("Only explicitly released attempts are supported")
+    initialized = attempt == 4
     rel = REL if attempt == 1 else REL + f"/attempt_{attempt:03d}"
     run = RUN if attempt == 1 else f"molgap-k1-fused-layout-100k-s42-v{attempt}"
+    if initialized:
+        rel = REL + "/initialized_layout_100k"
+        run = "molgap-k1-initialized-layout-100k-s42-v1"
+    candidate = "initialized_layout" if initialized else "fused_layout"
+    addon = "k1_initialized_layout" if initialized else "k1_fused_layout"
     policy_id = "k1-native-fused-layout-100k" + (f"-attempt{attempt:03d}" if attempt > 1 else "")
+    if initialized:
+        policy_id = "k1-native-initialized-layout-100k"
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     folder = root / rel
     original = json.loads((root / "experiments/pcqm_k1_slot_width96/reference_binding/original_reference_arm.json").read_text())
@@ -30,23 +38,30 @@ def prepare(root, initial, *, draft, attempt=1):
     records = build_inputs(root, source_commit=commit, initial_state=initial,
         state_timestamp=datetime.now(timezone.utc).isoformat(), relative_dir=rel,
         logical_run_id=run, reference_arm_id="reference", reference_addon=None,
-        candidate_arm_id="fused_layout", candidate_addon="k1_fused_layout",
+        candidate_arm_id=candidate, candidate_addon=addon,
         candidate_objective={"base_loss": "normalized-gap-l1", "forward_passes": 1,
             "optimizer_updates_per_batch": 1, "consistency_penalty": False,
             "batchnorm_updates_per_batch": 1},
-        allocation_wall_limit_seconds=None, family_id="k1-native-fused-layout",
+        allocation_wall_limit_seconds=None,
+        execution_torch_version="2.11.0" if initialized else None,
+        family_id="k1-native-initialized-layout" if initialized else "k1-native-fused-layout",
         policy_id=policy_id, account="nothingnessvoid",
-        source_dataset=f"nothingnessvoid/k1-fused-layout-100k-s42-source-v{attempt}",
+        source_dataset=("nothingnessvoid/k1-initialized-layout-100k-s42-source-v1" if initialized
+                        else f"nothingnessvoid/k1-fused-layout-100k-s42-source-v{attempt}"),
         dataset="nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1", title=run,
         parent_trajectory_ids=([f"TB-molgap-k1-fused-layout-100k-s42-v{attempt - 1}-{arm}"
                                for arm in ("reference", "fused_layout")] if attempt > 1 else []),
-        question="Does fused AdamW plus CPU layout reduce native T4 cost without degrading complete100K K1 quality?",
-        changed_mechanism="Single-forward K1 with fused AdamW plus CPU layout; no loader/architecture/objective changes.",
+        question=("Does scoped safety-fill removal plus CPU layout reduce native T4 cost without degrading complete100K K1 quality?" if initialized
+                  else "Does fused AdamW plus CPU layout reduce native T4 cost without degrading complete100K K1 quality?"),
+        changed_mechanism=("Native AdamW and single-forward K1 with CPU layout and TRAIN-step safety fill disabled; deterministic algorithms stay enabled." if initialized
+                           else "Single-forward K1 with fused AdamW plus CPU layout; no loader/architecture/objective changes."),
         supporting_evidence_ids=["pcqm-k1-local-speed-10ep-fused_layout-20261011",
                                  "pcqm-k1-colab-execution-profile-20261007"],
         hypothesis_overrides={
-            "observed_deficiency": "RTX5060 TRAIN-only10ep cannot qualify native-default T4 speed or40ep quality.",
-            "alternative_explanations": ["Native foreach already closes the speed gap", "Fused rounding degrades quality", "Development/IO/shared CPU hides step gain"],
+            "observed_deficiency": ("Old native fused/layout40ep saved only4.51%; RTX5060 scratch safety-fill savings do not qualify Torch2.11 native T4 or full quality." if initialized
+                                    else "RTX5060 TRAIN-only10ep cannot qualify native-default T4 speed or40ep quality."),
+            "alternative_explanations": (["Torch2.11 safety-fill implementation differs", "Shape-dependent uninitialized storage changes updates", "Development/IO/shared CPU hides step gain"] if initialized
+                                         else ["Native foreach already closes the speed gap", "Fused rounding degrades quality", "Development/IO/shared CPU hides step gain"]),
             "cheapest_falsifier": "Native all-arm qualification then one authorized fixed100K/40ep pair, no protected roles",
             "related_closed_family_ids": ["k1-local-fused-layout-speed"],
             "decision_changed_if_positive": "Nominate runtime for separately reviewed deployment; no automatic500K/full/promotion",
@@ -54,7 +69,7 @@ def prepare(root, initial, *, draft, attempt=1):
     for arm in records["experiment_spec.json"]["arms"]:
         arm["training"]["objective"] = original["training"]["objective"].copy()
     if draft:
-        for arm in ("reference", "fused_layout"):
+        for arm in ("reference", candidate):
             write(folder / f"training_recipe_{arm}.json", records[f"training_recipe_{arm}.json"])
         print("Recipes drafted; commit source/protocol/recipes before final binding.")
         return
@@ -63,10 +78,10 @@ def prepare(root, initial, *, draft, attempt=1):
     policy.update(status="approved", action_rule={"field": "user_release_validated", "operator": "eq",
                                                  "threshold": 1, "action": "TRAIN_PAIR_100K"})
     policy["required_observable_fields"] = ["user_release_validated"]
-    policy["approval"] = {"approved_by": "user", "approved_at": "2026-10-11",
+    policy["approval"] = {"approved_by": "user", "approved_at": "2026-10-12" if initialized else "2026-10-11",
                           "authority_ref": authority}
     validate_policy(policy)
-    for arm in ("reference", "fused_layout"):
+    for arm in ("reference", candidate):
         plan = records[f"training_plan_{arm}.json"]
         trajectory = plan["trajectory"]
         declaration = next(a for a in records["experiment_spec.json"]["arms"] if a["arm_id"] == arm)
@@ -74,7 +89,9 @@ def prepare(root, initial, *, draft, attempt=1):
         trajectory["state_at_start"]["contract_refs"].append(authority)
         trajectory["actions"][0].update(type="user_authorized_native_t4_pair_100k",
                                       evidence_refs=[rel + "/protocol.md", authority])
-        if attempt > 1:
+        if initialized:
+            trajectory["state_at_start"]["contract_refs"].append(REL + "/execution_audit/deep_profile_20261012.md")
+        elif attempt > 1:
             trajectory["state_at_start"]["contract_refs"].extend(
                 [REL + "/protocol.md", (REL if attempt == 2 else REL + "/attempt_002")
                  + "/terminal_acceptance/decision.md"])
@@ -109,6 +126,6 @@ if __name__ == "__main__":
     parser.add_argument("--repo-root", type=Path, required=True)
     parser.add_argument("--initial-state", type=Path, required=True)
     parser.add_argument("--draft", action="store_true")
-    parser.add_argument("--attempt", type=int, choices=(1, 2, 3), default=1)
+    parser.add_argument("--attempt", type=int, choices=(1, 2, 3, 4), default=1)
     args = parser.parse_args()
     prepare(args.repo_root.resolve(), args.initial_state.resolve(), draft=args.draft, attempt=args.attempt)

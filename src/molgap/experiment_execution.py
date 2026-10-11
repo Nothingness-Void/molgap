@@ -39,7 +39,8 @@ TRAINING_ADAPTERS = MappingProxyType({
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
         (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
          ("k1_mean2_clean_second", "mean2_clean_second"),
-         ("k1_fused_layout", "fused_layout")), ("molgap.pcqm_wedge",),
+         ("k1_fused_layout", "fused_layout"),
+         ("k1_initialized_layout", "initialized_layout")), ("molgap.pcqm_wedge",),
         target_identity_in_completion=True),
     ("gptrans_t", "1"): TrainingAdapter(
         ("gptrans_t", "1"), "molgap.gptrans_screen_workflow", "gptrans-v1",
@@ -60,7 +61,8 @@ def training_adapter(arm: dict) -> TrainingAdapter:
 
 def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
                         source_idx_sha256: str, target_sha256: str,
-                        seed: int | None = None, initialization_sha256: str | None = None) -> dict:
+                        seed: int | None = None, initialization_sha256: str | None = None,
+                        execution_torch_version: str | None = None) -> dict:
     """Build owned constants before freezing the Spec; never read development rows."""
     adapter = TRAINING_ADAPTERS.get(family)
     if adapter is None:
@@ -69,6 +71,10 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
     if mode is None:
         raise ValueError("No executable recipe for this addon")
     options = {}
+    if execution_torch_version is not None:
+        if family != ("neural_atom_k1", "2") or mode != "initialized_layout":
+            raise ValueError("Execution runtime pin requires initialized-layout K1")
+        options["execution_torch_version"] = execution_torch_version
     if seed is not None or initialization_sha256 is not None:
         if family != ("neural_atom_k1", "2"):
             raise ValueError("Explicit seed initialization is not supported by this trainer")

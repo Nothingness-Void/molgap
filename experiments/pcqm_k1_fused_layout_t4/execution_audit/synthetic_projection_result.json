@@ -1,0 +1,154 @@
+{
+  "format": "molgap-k1-synthetic-execution-profile-v1",
+  "status": "complete",
+  "runtime": {
+    "torch": "2.7.1+cu128",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060",
+    "determinism": {
+      "seed": 42,
+      "precision": "fp32",
+      "tf32_enabled": false,
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "deterministic_algorithms": true,
+      "cublas_workspace_config": ":4096:8",
+      "float32_matmul_precision": "highest"
+    }
+  },
+  "source_sha256": {
+    "k1_execution_profile.py": "89beb005234073afa5885fa96d377b1c5f7395a053fdeea68625951a9ff0f029",
+    "k1_execution_layout.py": "3306ce4842bd98f03abeaa553c67b3dc04e2c13b56334f879359e481156c7a9b",
+    "k1_screen_training.py": "27e8f68bac172c8461f9072b467b62ce904d7cfae0be85936757e80509e462f5",
+    "gps.py": "4c7a8bdd1204bda549c003b864d0b9c0091ec81d43754bd35c98a87ec3ffead2",
+    "qm9_neural_atom.py": "029cc3c3d570c18b7d2ee261cd440fc7323bd6efb584f32e4c176c2f68aa830d",
+    "training_reproducibility.py": "75db743529a7d3e77e25a3dcb42fdb2e00d067178349c75c083fea51b8e2e943"
+  },
+  "shape": {
+    "graphs": 128,
+    "nodes": 3068,
+    "directed_edges": 6392,
+    "max_nodes": 40
+  },
+  "optimizer": "AdamW native defaults; lr=4e-4 weight_decay=1e-5",
+  "parity": {
+    "cpu_layout": {
+      "state": {
+        "different_tensors": 0,
+        "max_absolute_difference": 0.0
+      },
+      "grad": {
+        "different_tensors": 0,
+        "max_absolute_difference": 0.0
+      },
+      "loss_equal": true,
+      "absolute_equal": true,
+      "rng_equal": true
+    },
+    "project_nodes": {
+      "state": {
+        "different_tensors": 308,
+        "max_absolute_difference": 1.7315149307250977e-05
+      },
+      "grad": {
+        "different_tensors": 312,
+        "max_absolute_difference": 2.3283064365386963e-08
+      },
+      "loss_equal": true,
+      "absolute_equal": true,
+      "rng_equal": true
+    }
+  },
+  "timings": [
+    {
+      "round": 0,
+      "mode": "original",
+      "steps": 24,
+      "seconds": 2.1906875999993645,
+      "seconds_per_step": 0.09127864999997352,
+      "peak_allocated_bytes": 869723648
+    },
+    {
+      "round": 0,
+      "mode": "cpu_layout",
+      "steps": 24,
+      "seconds": 2.065124000000651,
+      "seconds_per_step": 0.08604683333336045,
+      "peak_allocated_bytes": 869693952
+    },
+    {
+      "round": 0,
+      "mode": "project_nodes",
+      "steps": 24,
+      "seconds": 2.0753006000013556,
+      "seconds_per_step": 0.08647085833338981,
+      "peak_allocated_bytes": 780633600
+    },
+    {
+      "round": 1,
+      "mode": "project_nodes",
+      "steps": 24,
+      "seconds": 2.1574311000003945,
+      "seconds_per_step": 0.08989296250001644,
+      "peak_allocated_bytes": 780633600
+    },
+    {
+      "round": 1,
+      "mode": "cpu_layout",
+      "steps": 24,
+      "seconds": 2.122971900000266,
+      "seconds_per_step": 0.08845716250001108,
+      "peak_allocated_bytes": 869693952
+    },
+    {
+      "round": 1,
+      "mode": "original",
+      "steps": 24,
+      "seconds": 2.1846721999972942,
+      "seconds_per_step": 0.0910280083332206,
+      "peak_allocated_bytes": 869723648
+    },
+    {
+      "round": 2,
+      "mode": "cpu_layout",
+      "steps": 24,
+      "seconds": 2.0379909000002954,
+      "seconds_per_step": 0.0849162875000123,
+      "peak_allocated_bytes": 869693952
+    },
+    {
+      "round": 2,
+      "mode": "project_nodes",
+      "steps": 24,
+      "seconds": 2.0416208999995433,
+      "seconds_per_step": 0.08506753749998097,
+      "peak_allocated_bytes": 780633600
+    },
+    {
+      "round": 2,
+      "mode": "original",
+      "steps": 24,
+      "seconds": 2.2231265000009444,
+      "seconds_per_step": 0.09263027083337268,
+      "peak_allocated_bytes": 869723648
+    }
+  ],
+  "median_seconds_per_step": {
+    "original": 0.09127864999997352,
+    "cpu_layout": 0.08604683333336045,
+    "project_nodes": 0.08647085833338981
+  },
+  "time_reduction_vs_original": {
+    "cpu_layout": 0.05731698120660844,
+    "project_nodes": 0.052671590416653924
+  },
+  "local_gpu_wall_seconds": 26.05800630000158,
+  "quality_claim": false,
+  "rml_record": false,
+  "molecular_roles_consumed": [],
+  "limits": [
+    "synthetic single batch including clone/H2D/layout, no data loading",
+    "nonexclusive desktop GPU; not full training throughput",
+    "numerical parity is not MAE or seed variance"
+  ]
+}

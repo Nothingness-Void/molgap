@@ -299,7 +299,12 @@ def _batch_sha256(batch) -> str:
 
 
 INITIAL_STATE_SHA256 = "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
-ARM_MODES = ("reference", "ssma", "clean_fingerprint", "mean2", "mean2_clean_second", "fused_layout")
+ARM_MODES = ("reference", "ssma", "clean_fingerprint", "mean2", "mean2_clean_second",
+             "fused_layout", "initialized_layout")
+INITIALIZED_LAYOUT_POLICY = {"adamw_fused": False, "adamw_foreach": None,
+    "cpu_layout": True, "fill_uninitialized_memory": False,
+    "loader": "original-epoch-loader", "torch_version": "2.7.1"}
+INITIALIZED_LAYOUT_RUNTIME_PINS = ("2.7.1", "2.11.0")
 
 
 def build_initial_state(seed: int = SEED) -> dict:
@@ -385,6 +390,14 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
         if policy != {"adamw_fused": True, "adamw_foreach": False,
                       "cpu_layout": True, "loader": "original-epoch-loader"}:
             raise ValueError("Fused-layout execution policy changed")
+    elif mode == "initialized_layout":
+        expected_policy = INITIALIZED_LAYOUT_POLICY.copy()
+        if type(policy) is dict:
+            expected_policy["torch_version"] = policy.get("torch_version")
+        if (type(policy) is not dict or type(policy.get("torch_version")) is not str
+                or policy["torch_version"] not in INITIALIZED_LAYOUT_RUNTIME_PINS or
+                canonical_fingerprint(policy) != canonical_fingerprint(expected_policy)):
+            raise ValueError("Initialized-layout execution policy changed")
     elif policy is not None:
         raise ValueError("Execution overrides require the fused-layout addon")
 
@@ -403,7 +416,8 @@ def _execution_scope(spec, recipe):
 
 
 def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str,
-                        seed: int = SEED, initialization_sha256: str | None = None) -> dict:
+                        seed: int = SEED, initialization_sha256: str | None = None,
+                        execution_torch_version: str | None = None) -> dict:
     """Build fixed family constants; callers pin real retained development rows."""
     from .experiment_spec import _digest
     for name, value in (("source_idx_sha256", source_idx_sha256), ("target_sha256", target_sha256)):
@@ -414,7 +428,12 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
             raise ValueError("Nonhistorical seed requires a frozen initialization_sha256")
         initialization_sha256 = INITIAL_STATE_SHA256
     _validate_initialization(seed, initialization_sha256)
-    if mode not in {"reference", "ssma", "mean2", "mean2_clean_second", "fused_layout"}:
+    if execution_torch_version is not None and (mode != "initialized_layout"
+            or type(execution_torch_version) is not str
+            or execution_torch_version not in INITIALIZED_LAYOUT_RUNTIME_PINS):
+        raise ValueError("Unsupported initialized-layout execution runtime pin")
+    if mode not in {"reference", "ssma", "mean2", "mean2_clean_second", "fused_layout",
+                    "initialized_layout"}:
         raise ValueError("No executable screen recipe for this K1 addon")
     recipe = {"mode": mode, "row_order_fingerprint": compute_row_order_fingerprint(seed),
         "initialization_sha256": initialization_sha256,
@@ -429,6 +448,10 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
     if mode == "fused_layout":
         recipe["execution_policy"] = {"adamw_fused": True, "adamw_foreach": False,
                                       "cpu_layout": True, "loader": "original-epoch-loader"}
+    elif mode == "initialized_layout":
+        recipe["execution_policy"] = INITIALIZED_LAYOUT_POLICY.copy()
+        if execution_torch_version is not None:
+            recipe["execution_policy"]["torch_version"] = execution_torch_version
     return recipe
 
 
@@ -460,17 +483,43 @@ def _model_batch_to_device(batch, device, *, training: bool, auxiliary: bool = F
     return batch.to(device, *fields, non_blocking=True)
 
 
-def _evaluate(model, loader, mean, std, *, original_execution=False):
+def _evaluate(model, loader, mean, std, *, original_execution=False,
+              prediction_chunk_rows=None):
+    """Keep per-batch arithmetic; optionally amortize bounded prediction copies."""
     import torch
+    if prediction_chunk_rows is not None and (type(prediction_chunk_rows) is not int
+            or not 1 <= prediction_chunk_rows <= 65536):
+        raise ValueError("Prediction copy chunk must be 1..65536 rows or None")
     model.eval()
     targets, predictions, source_indices = [], [], []
+    pending, pending_rows = [], 0
+
+    def flush():
+        nonlocal pending_rows
+        if pending:
+            predictions.append(torch.cat(pending).cpu())
+            pending.clear()
+            pending_rows = 0
+
     with torch.no_grad():
         for batch in loader:
             batch = (batch.to("cuda", non_blocking=True) if original_execution else
                      _model_batch_to_device(batch, "cuda", training=False))
-            predictions.append((_forward(model, batch) * std + mean).float().cpu())
+            prediction = (_forward(model, batch) * std + mean).float()
+            if prediction_chunk_rows is None:
+                predictions.append(prediction.cpu())
+            else:
+                rows = prediction.numel()
+                if pending_rows + rows > prediction_chunk_rows:
+                    flush()
+                if rows >= prediction_chunk_rows:
+                    predictions.append(prediction.cpu())
+                else:
+                    pending.append(prediction)
+                    pending_rows += rows
             targets.append(batch.y.view(-1).float().cpu())
             source_indices.append(batch.source_idx.view(-1).long().cpu())
+        flush()
     target, prediction, source_idx = map(torch.cat, (targets, predictions, source_indices))
     return float((prediction - target).abs().mean()), target, prediction, source_idx
 
@@ -529,17 +578,108 @@ def _screen_optimizer(model, mode):
     return torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
 
-def _screen_step(model, optimizer, cpu_batch, mean, std, mode, *, original_execution=False):
-    from contextlib import nullcontext
-    context = nullcontext()
-    if mode == "fused_layout":
-        from .k1_execution_layout import cpu_layout_context
-        context = cpu_layout_context(model, cpu_batch, "cuda")
-    with context:
-        batch = (cpu_batch.to("cuda", non_blocking=True) if original_execution else
-                 _model_batch_to_device(cpu_batch, "cuda", training=True,
+def _screen_step(model, optimizer, cpu_batch, mean, std, mode, *, original_execution=False,
+                 device="cuda"):
+    from contextlib import ExitStack
+    with ExitStack() as stack:
+        if mode == "initialized_layout":
+            import torch
+            from .training_reproducibility import deterministic_memory_fill_context
+            if str(torch.__version__).split("+", 1)[0] not in INITIALIZED_LAYOUT_RUNTIME_PINS:
+                raise ValueError("Initialized layout requires qualified PyTorch runtime admission")
+            if original_execution:
+                raise ValueError("Initialized layout cannot request original execution")
+            stack.enter_context(deterministic_memory_fill_context(enabled=False))
+        if mode in {"fused_layout", "initialized_layout"}:
+            from .k1_execution_layout import cpu_layout_context
+            stack.enter_context(cpu_layout_context(model, cpu_batch, device))
+        batch = (cpu_batch.to(device, non_blocking=True) if original_execution else
+                 _model_batch_to_device(cpu_batch, device, training=True,
                                         auxiliary=mode == "clean_fingerprint"))
         return _optimizer_step(model, optimizer, batch, mean, std, mode)
+
+
+def _step_identity(model, optimizer, loss, absolute, count):
+    """Fingerprint all scratch-step outputs, including moments and both RNGs."""
+    import torch
+    gradients = {name: parameter.grad for name, parameter in model.named_parameters()
+                 if parameter.grad is not None}
+    saved = optimizer.state_dict()
+    moments = {f"{index}/{key}": value for index, values in saved["state"].items()
+               for key, value in values.items()}
+    return {"loss": float(loss), "absolute": float(absolute), "samples": count,
+        "model_sha256": state_dict_sha256(model.state_dict()),
+        "gradient_sha256": state_dict_sha256(gradients),
+        "gradient_names": sorted(gradients),
+        "optimizer_sha256": state_dict_sha256(moments),
+        "optimizer_groups_sha256": canonical_fingerprint({"groups": saved["param_groups"]}),
+        "cpu_rng_sha256": state_dict_sha256({"cpu": torch.get_rng_state()}),
+        "cuda_rng_sha256": state_dict_sha256({str(i): state for i, state in
+            enumerate(torch.cuda.get_rng_state_all() if torch.cuda.is_available() else [])})}
+
+
+def qualify_initialized_layout(state, fixtures, mean, std, *, seed=SEED, device="cuda"):
+    """Fail closed on exact multi-step reference equality; scratch states only."""
+    if not isinstance(fixtures, (list, tuple)) or not 2 <= len(fixtures) <= 8:
+        raise ValueError("Initialized-layout qualification requires 2..8 owned CPU fixtures")
+    import torch
+    from .training_reproducibility import capture_rng_state, restore_rng_state
+    observations = {}
+    _validate_seed(seed)
+    if (not torch.are_deterministic_algorithms_enabled()
+            or torch.is_deterministic_algorithms_warn_only_enabled()
+            or torch.utils.deterministic.fill_uninitialized_memory is not True):
+        raise ValueError("Reference qualification requires fail-closed determinism and safety fill")
+    caller_rng = capture_rng_state()
+    try:
+        for mode in ("reference", "initialized_layout"):
+            configure_fp32_determinism(seed)
+            model = make_encoder("neural_atom_k1").to(device).train()
+            model.load_state_dict(state, strict=True)
+            optimizer = _screen_optimizer(model, mode)
+            rows = []
+            for fixture in fixtures:
+                loss, absolute, count = _screen_step(model, optimizer, fixture.clone(),
+                    mean, std, mode, device=device)
+                rows.append(_step_identity(model, optimizer, loss, absolute, count))
+            observations[mode] = rows
+            del model, optimizer
+    finally:
+        restore_rng_state(caller_rng)
+    if observations["reference"] != observations["initialized_layout"]:
+        raise RuntimeError("Initialized-layout reference step identity differs")
+    return {"accepted": True, "optimizer_steps": len(fixtures),
+            "reference_mode": "reference", "observations": observations,
+            "scope": "same fixtures; native AdamW; model/gradient/moments/metrics/CPU-CUDA RNG exact"}
+
+
+def _validate_initialized_reference_evidence(evidence):
+    import re
+    fields = {"loss", "absolute", "samples", "model_sha256", "gradient_sha256",
+              "gradient_names", "optimizer_sha256", "optimizer_groups_sha256",
+              "cpu_rng_sha256", "cuda_rng_sha256"}
+    if (type(evidence) is not dict or evidence.get("accepted") is not True
+            or type(evidence.get("optimizer_steps")) is not int
+            or evidence["optimizer_steps"] != 2 or evidence.get("reference_mode") != "reference"):
+        raise ValueError("Initialized-layout exact reference evidence is required")
+    observations = evidence.get("observations")
+    if (type(observations) is not dict or set(observations) != {"reference", "initialized_layout"}
+            or type(observations["reference"]) is not list or len(observations["reference"]) != 2
+            or observations["reference"] != observations["initialized_layout"]):
+        raise ValueError("Initialized-layout reference observations differ")
+    for row in observations["reference"]:
+        if (type(row) is not dict or set(row) != fields or type(row["samples"]) is not int
+                or row["samples"] != BATCH_SIZE or type(row["gradient_names"]) is not list
+                or not row["gradient_names"] or
+                any(type(name) is not str or not name for name in row["gradient_names"])):
+            raise ValueError("Malformed initialized-layout reference observation")
+        for key in ("loss", "absolute"):
+            if (isinstance(row[key], bool) or not isinstance(row[key], (float, int))
+                    or not math.isfinite(row[key]) or row[key] < 0):
+                raise ValueError("Nonfinite initialized-layout reference metric")
+        if any(type(row[key]) is not str or not re.fullmatch(r"[0-9a-f]{64}", row[key])
+               for key in fields if key.endswith("_sha256")):
+            raise ValueError("Missing initialized-layout step fingerprint")
 
 
 def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode):
@@ -547,6 +687,10 @@ def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
         raise ValueError("Runtime recipe bytes differ from Spec")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
+    if mode == "initialized_layout":
+        observed = str(runtime.get("torch", "")).split("+", 1)[0]
+        if observed != recipe["execution_policy"]["torch_version"]:
+            raise ValueError("Initialized-layout observed runtime differs from frozen recipe")
     return {"format": "molgap-k1-runtime-provenance-v1", "context": context.to_dict(),
         "mode": mode, "recipe_sha256": sha256_file(recipe_path),
         "initial_state_file_sha256": sha256_file(initial_state_path),
@@ -588,6 +732,11 @@ def _validate_arm_binding(spec, context, mode, recipe):
             "source_sha256": normalized_source_sha256(Path(__file__))}
         if addons != [expected]:
             raise ValueError("Fused-layout executable addon differs from Spec")
+    if mode == "initialized_layout":
+        expected = {"name": "k1_initialized_layout", "version": "1", "config": {},
+            "source_sha256": normalized_source_sha256(Path(__file__))}
+        if addons != [expected]:
+            raise ValueError("Initialized-layout executable addon differs from Spec")
 
 
 def validate_screen_recipe(spec, arm_id, recipe):
@@ -643,6 +792,12 @@ def validate_runtime_preflight(directory, provenance):
         not math.isfinite(architecture.get("synchronized_step_overhead_fraction", math.inf)) or
         architecture["synchronized_step_overhead_fraction"] > architecture["maximum_overhead_fraction"]):
         raise ValueError("K1 runtime calibration evidence differs from the gate")
+    if provenance.get("mode") == "initialized_layout":
+        _validate_initialized_reference_evidence(architecture.get("reference_equivalence"))
+        if (architecture["resume_roundtrip"].get("loss_delta") != 0.0
+                or len(architecture["resume_roundtrip"].get("state_sha256", [])) != 2
+                or len(set(architecture["resume_roundtrip"]["state_sha256"])) != 1):
+            raise ValueError("Initialized-layout exact reference/resume evidence is required")
     return certificate
 
 
@@ -695,7 +850,7 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     reference = _make_screen_model(state, "reference", seed).eval()
     candidate = _make_screen_model(state, mode, seed).eval()
     with torch.no_grad():
-        if mode == "fused_layout":
+        if mode in {"fused_layout", "initialized_layout"}:
             from .k1_execution_layout import cpu_layout_context
             fixture = cpu_fixture.clone()
             with cpu_layout_context(candidate, fixture, "cuda"):
@@ -706,6 +861,10 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     if zero_delta != 0.0:
         raise RuntimeError("Zero-added initialization differs from frozen reference")
     del reference, candidate
+    reference_equivalence = None
+    if mode == "initialized_layout":
+        reference_equivalence = qualify_initialized_layout(
+            state, [cpu_fixture, cpu_fixture], mean, std, seed=seed)
     losses, states = [], []
     for _ in range(2):
         configure_fp32_determinism(seed)
@@ -744,6 +903,9 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     resumed, _, _ = _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode, **execution_options)
     resume = certify_numerical_repeatability(losses=[float(uninterrupted.cpu()), float(resumed.cpu())],
         states=[continuous_state, model.state_dict()])
+    if mode == "initialized_layout" and (resume["loss_delta"] != 0.0
+            or len(set(resume["state_sha256"])) != 1):
+        raise RuntimeError("Initialized-layout resume must be bitwise exact")
     selected_path = output / "diagnostic_selected.pt"
     atomic_torch_save(selected_path, _clean_gap_state(model))
     selected_state = torch.load(selected_path, map_location="cpu", weights_only=True)
@@ -784,6 +946,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         "synchronized_step_overhead_fraction": overhead, "maximum_overhead_fraction": maximum_overhead,
         "formal_sample_presentations": 0, "fixture_sha256": _batch_sha256(batch),
         "resume_scope": "model/AdamW/cosine/RNG roundtrip; next step on fixed fixture; no epoch consumption"}
+    if reference_equivalence is not None:
+        architecture["reference_equivalence"] = reference_equivalence
     atomic_json(output / "architecture_preflight.json", architecture)
     torch.cuda.synchronize()
     atomic_json(output / "diagnostic_cost.json", {"costs": _allocation_costs(

@@ -10,6 +10,7 @@ import platform
 import random
 import sys
 from collections.abc import Mapping
+from contextlib import contextmanager
 from pathlib import Path
 
 import numpy as np
@@ -18,6 +19,29 @@ import numpy as np
 RUNTIME_MANIFEST_FORMAT = "molgap-runtime-manifest-v1"
 CHECKPOINT_FORMAT = "molgap-resumable-checkpoint-v1"
 MODEL_BUNDLE_FORMAT = "molgap-self-contained-model-v1"
+
+
+@contextmanager
+def deterministic_memory_fill_context(*, enabled: bool):
+    """Scope the process-global safety fill; never disable deterministic algorithms.
+
+    Exclusive execution workers only. Turning the fill off requires separate
+    qualification that the executed graph never reads uninitialized storage;
+    this helper supplies neither that evidence nor training authorization.
+    """
+    import torch
+
+    if type(enabled) is not bool:
+        raise ValueError("Memory fill selection must be an exact bool")
+    if (not torch.are_deterministic_algorithms_enabled()
+            or torch.is_deterministic_algorithms_warn_only_enabled()):
+        raise ValueError("Fail-closed deterministic algorithms are required")
+    previous = torch.utils.deterministic.fill_uninitialized_memory
+    try:
+        torch.utils.deterministic.fill_uninitialized_memory = enabled
+        yield
+    finally:
+        torch.utils.deterministic.fill_uninitialized_memory = previous
 
 
 def canonical_fingerprint(value: Mapping) -> str:

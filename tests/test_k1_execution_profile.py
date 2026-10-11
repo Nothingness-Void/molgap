@@ -32,6 +32,25 @@ def test_gradient_relation_handles_aligned_conflicting_and_zero_cpu_gradients():
     assert zero_supervised["cosine"] is None
 
 
+@pytest.mark.parametrize("limit", [0, 29, 181, True, 60.0])
+def test_synthetic_profile_rejects_invalid_budget_without_gpu_work(tmp_path, limit):
+    from molgap.k1_execution_profile import run_synthetic_local
+
+    with pytest.raises(ValueError, match="ceiling"):
+        run_synthetic_local(tmp_path / "new", maximum_seconds=limit)
+    assert not (tmp_path / "new").exists()
+
+
+def test_synthetic_profile_refuses_to_overwrite_existing_output(tmp_path):
+    from molgap.k1_execution_profile import run_synthetic_local
+
+    marker = tmp_path / "retained.txt"
+    marker.write_text("preserve", encoding="ascii")
+    with pytest.raises(FileExistsError, match="fresh"):
+        run_synthetic_local(tmp_path)
+    assert marker.read_text(encoding="ascii") == "preserve"
+
+
 def test_notebook_code_cells_compile_without_running_them():
     notebook = json.loads((PROFILE / "MolGap_K1_A100_Profile.ipynb").read_text(encoding="utf-8"))
     assert notebook["metadata"]["colab"]["gpuType"] == "A100"

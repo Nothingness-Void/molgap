@@ -1,0 +1,182 @@
+{
+  "format": "molgap-k1-synthetic-execution-profile-v1",
+  "status": "complete",
+  "runtime": {
+    "torch": "2.7.1+cu128",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060",
+    "determinism": {
+      "seed": 42,
+      "precision": "fp32",
+      "tf32_enabled": false,
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "deterministic_algorithms": true,
+      "cublas_workspace_config": ":4096:8",
+      "float32_matmul_precision": "highest"
+    }
+  },
+  "source_sha256": {
+    "k1_execution_profile.py": "3de7c5fe12f74ab40bb16d371f9c018b69868921b485c7ce0a5e78df247e8339",
+    "k1_execution_layout.py": "32b074858bb31958cc30c49b1b0662fd5a4b5eff4d79b2b95dc25f40e522b64a",
+    "k1_screen_training.py": "21c6bcfff488709e8282419cb057cb409672865ac101e0c50af9c7f2ac89f80e",
+    "gps.py": "a189cac6144c9ab235b6d76ea450944cb192ebe676b39111d94099db5489deb9",
+    "qm9_neural_atom.py": "9465295dc2666fc2cb7f361bf0e24dfd84c85e7e70be044c6bde78713a8232b5",
+    "training_reproducibility.py": "75db743529a7d3e77e25a3dcb42fdb2e00d067178349c75c083fea51b8e2e943"
+  },
+  "shape": {
+    "graphs": 128,
+    "nodes": 3068,
+    "directed_edges": 6392,
+    "max_nodes": 40
+  },
+  "optimizer": "AdamW native defaults; lr=4e-4 weight_decay=1e-5",
+  "parity": {
+    "cpu_layout": {
+      "state": {
+        "different_tensors": 0,
+        "max_absolute_difference": 0.0
+      },
+      "grad": {
+        "different_tensors": 0,
+        "max_absolute_difference": 0.0
+      },
+      "loss_equal": true,
+      "absolute_equal": true,
+      "rng_equal": true
+    }
+  },
+  "timings": [
+    {
+      "round": 0,
+      "mode": "original",
+      "steps": 24,
+      "seconds": 2.2390707999984443,
+      "seconds_per_step": 0.09329461666660184,
+      "peak_allocated_bytes": 869932544
+    },
+    {
+      "round": 0,
+      "mode": "cpu_layout",
+      "steps": 24,
+      "seconds": 2.124222999998892,
+      "seconds_per_step": 0.08850929166662051,
+      "peak_allocated_bytes": 869902848
+    },
+    {
+      "round": 1,
+      "mode": "cpu_layout",
+      "steps": 24,
+      "seconds": 2.1344435999999405,
+      "seconds_per_step": 0.08893514999999752,
+      "peak_allocated_bytes": 869902848
+    },
+    {
+      "round": 1,
+      "mode": "original",
+      "steps": 24,
+      "seconds": 2.3759826999994402,
+      "seconds_per_step": 0.09899927916664335,
+      "peak_allocated_bytes": 869932544
+    },
+    {
+      "round": 2,
+      "mode": "cpu_layout",
+      "steps": 24,
+      "seconds": 2.2231312000003527,
+      "seconds_per_step": 0.09263046666668136,
+      "peak_allocated_bytes": 869902848
+    },
+    {
+      "round": 2,
+      "mode": "original",
+      "steps": 24,
+      "seconds": 2.221112200000789,
+      "seconds_per_step": 0.09254634166669955,
+      "peak_allocated_bytes": 869932544
+    }
+  ],
+  "median_seconds_per_step": {
+    "original": 0.09329461666660184,
+    "cpu_layout": 0.08893514999999752
+  },
+  "time_reduction_vs_original": {
+    "cpu_layout": 0.04672795518506001
+  },
+  "synthetic_evaluation": {
+    "timings": [
+      {
+        "prediction_chunk_rows": null,
+        "seconds": 1.5420487000010326,
+        "rows": 4096,
+        "output_bitwise_equal": true
+      },
+      {
+        "prediction_chunk_rows": 512,
+        "seconds": 1.500411000000895,
+        "rows": 4096,
+        "output_bitwise_equal": true
+      },
+      {
+        "prediction_chunk_rows": 4096,
+        "seconds": 1.491616299997986,
+        "rows": 4096,
+        "output_bitwise_equal": true
+      },
+      {
+        "prediction_chunk_rows": 4096,
+        "seconds": 1.4853509999993548,
+        "rows": 4096,
+        "output_bitwise_equal": true
+      },
+      {
+        "prediction_chunk_rows": 512,
+        "seconds": 1.5201194000001124,
+        "rows": 4096,
+        "output_bitwise_equal": true
+      },
+      {
+        "prediction_chunk_rows": null,
+        "seconds": 1.5063445000014326,
+        "rows": 4096,
+        "output_bitwise_equal": true
+      },
+      {
+        "prediction_chunk_rows": 512,
+        "seconds": 1.4719565999985207,
+        "rows": 4096,
+        "output_bitwise_equal": true
+      },
+      {
+        "prediction_chunk_rows": null,
+        "seconds": 1.4873125000012806,
+        "rows": 4096,
+        "output_bitwise_equal": true
+      },
+      {
+        "prediction_chunk_rows": 4096,
+        "seconds": 1.4923576000001049,
+        "rows": 4096,
+        "output_bitwise_equal": true
+      }
+    ],
+    "median_seconds": {
+      "None": 1.5063445000014326,
+      "512": 1.500411000000895,
+      "4096": 1.491616299997986
+    },
+    "time_reduction_vs_batch_copy": {
+      "512": 0.003939005984707977,
+      "4096": 0.009777444670480473
+    }
+  },
+  "local_gpu_wall_seconds": 32.783243500001845,
+  "quality_claim": false,
+  "rml_record": false,
+  "molecular_roles_consumed": [],
+  "limits": [
+    "synthetic single batch including clone/H2D/layout, no data loading",
+    "nonexclusive desktop GPU; not full training throughput",
+    "numerical parity is not MAE or seed variance"
+  ]
+}

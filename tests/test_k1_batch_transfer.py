@@ -80,3 +80,35 @@ def test_real_pyg_transfer_keeps_metadata_cpu_with_meta_device(training):
         assert batch.y.device.type == "meta"
     else:
         assert batch.y is target and target.device.type == "cpu"
+
+
+@pytest.mark.parametrize("chunk_rows", [1, 2, 3, 4, 7, 65536])
+@pytest.mark.parametrize("original_execution", [False, True])
+def test_prediction_copy_chunks_preserve_arithmetic_order_and_tail(
+        monkeypatch, chunk_rows, original_execution):
+    batches = [synthetic_batch() for _ in range(3)]
+    batches.append(Batch.from_data_list([Data(x=torch.zeros(1, 9, dtype=torch.long),
+        y=torch.tensor([7.]), source_idx=torch.tensor([6]))]))
+    for index, batch in enumerate(batches[:-1]):
+        batch.source_idx = torch.arange(2 * index, 2 * index + 2)
+    monkeypatch.setattr(owner, "_model_batch_to_device", lambda batch, *args, **kwargs: batch)
+    monkeypatch.setattr(Data, "to", lambda batch, *args, **kwargs: batch)
+    monkeypatch.setattr(owner, "_forward", lambda model, batch: batch.y.view(-1) / 3)
+    model = torch.nn.Linear(1, 1)
+    original = owner._evaluate(model, batches, 0.17, 1.23, original_execution=original_execution)
+    chunked = owner._evaluate(model, batches, 0.17, 1.23, original_execution=original_execution,
+                              prediction_chunk_rows=chunk_rows)
+    assert original[0] == chunked[0]
+    assert all(torch.equal(a, b) for a, b in zip(original[1:], chunked[1:]))
+    assert torch.equal(chunked[3], torch.arange(7))
+    assert not model.training
+
+
+@pytest.mark.parametrize("chunk_rows", [0, -1, 65537, True, 4.0, "4"])
+def test_prediction_copy_chunks_fail_before_model_or_role_access(chunk_rows):
+    class ForbiddenModel:
+        def eval(self):
+            raise AssertionError("Must reject before evaluating model")
+
+    with pytest.raises(ValueError, match="Prediction copy chunk"):
+        owner._evaluate(ForbiddenModel(), None, 0., 1., prediction_chunk_rows=chunk_rows)
