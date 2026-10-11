@@ -1,0 +1,29 @@
+/usr/local/lib/python3.13/dist-packages/outdated/__init__.py:36: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import parse_version
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 50, in <module>
+    main()
+    ~~~~^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 31, in main
+    result = execute_training_phase(spec=spec, job=job, phase=args.phase,
+        source_root=args.source_root, package_dir=args.package_dir,
+    ...<3 lines>...
+        prospective_sha256=config["prospective_sha256"][job["arm_id"]],
+        target_identity=target_identity)
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_execution.py", line 194, in execute_training_phase
+    result = runner(spec=spec, package_dir=package_dir,
+        expected_package_identity=expected_package_identity, arm_id=job["arm_id"],
+        mode=adapter.mode(arm), recipe_path=recipe, initial_state_path=initial,
+        input_root=input_root, output=output, account=account,
+        run_reference=run_reference, trajectory_id=job["trajectory_id"], **options)
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/k1_screen_training.py", line 639, in run_screen_preflight
+    state = _load_initial_state(initial_state_path, recipe)
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/k1_screen_training.py", line 325, in _load_initial_state
+    if state_dict_sha256(state) != recipe["initialization_sha256"]:
+       ~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/v4_runtime.py", line 111, in state_dict_sha256
+    tensor = value.detach().cpu().contiguous()
+             ^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'detach'
