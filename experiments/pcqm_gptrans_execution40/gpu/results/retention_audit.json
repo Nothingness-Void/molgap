@@ -1,0 +1,112 @@
+{
+  "format": "molgap-execution40-retention-audit-v1",
+  "model_inference_executed": false,
+  "model_constructed": false,
+  "resume_executed": false,
+  "arms": {
+    "execution_original": {
+      "checkpoint_chunks": [
+        {
+          "epoch": 9,
+          "sha256": "2ff8abac73cde1a67882859793f27f6607914d2b7c7583121cb8ae5c44700275",
+          "optimizer_steps": 7810,
+          "rng_schema_valid": true,
+          "finite_state": true,
+          "floating_model_and_ema_dtype": "float32"
+        },
+        {
+          "epoch": 19,
+          "sha256": "ba6e4ac9253fd35b6fe0133b519a94b1c5c075f690e3e2f793d6dcca52a57683",
+          "optimizer_steps": 15620,
+          "rng_schema_valid": true,
+          "finite_state": true,
+          "floating_model_and_ema_dtype": "float32"
+        },
+        {
+          "epoch": 29,
+          "sha256": "4c5a11a603a1b193c3e7021e00e3d934e17fa89feef90127d8187c4753bb3d0b",
+          "optimizer_steps": 23430,
+          "rng_schema_valid": true,
+          "finite_state": true,
+          "floating_model_and_ema_dtype": "float32"
+        },
+        {
+          "epoch": 39,
+          "sha256": "9ff4bd5139976986dfc563050cd727e44870ea88b47bef9a628b0e2fd91639d7",
+          "optimizer_steps": 31240,
+          "rng_schema_valid": true,
+          "finite_state": true,
+          "floating_model_and_ema_dtype": "float32"
+        }
+      ],
+      "last_matches_epoch39": true,
+      "selected_model_matches_final_ema": true,
+      "trace_run_id": "gptrans-execution40-dual-s42:execution_original",
+      "trace_trajectory_id": "TC-gptrans-execution40-original-100k-s42"
+    },
+    "execution_optimized": {
+      "checkpoint_chunks": [
+        {
+          "epoch": 9,
+          "sha256": "8be8f69a6be5101899f4f3aa60d8520f852a905c654af7dc12f1940aab5fd877",
+          "optimizer_steps": 7810,
+          "rng_schema_valid": true,
+          "finite_state": true,
+          "floating_model_and_ema_dtype": "float32"
+        },
+        {
+          "epoch": 19,
+          "sha256": "b94f5c3bf0f10bccc973da586cdbd1a99dc17d2270ad3edc503d305ce1f89f39",
+          "optimizer_steps": 15620,
+          "rng_schema_valid": true,
+          "finite_state": true,
+          "floating_model_and_ema_dtype": "float32"
+        },
+        {
+          "epoch": 29,
+          "sha256": "7b89a51c0751612396348d4f4d1f8075103c607146cce7147df7b90bbb854b41",
+          "optimizer_steps": 23430,
+          "rng_schema_valid": true,
+          "finite_state": true,
+          "floating_model_and_ema_dtype": "float32"
+        },
+        {
+          "epoch": 39,
+          "sha256": "0db6050ce1f2ca9b0b565c6b2b3dcdb665b8cdd667a7bba95204203bb216537d",
+          "optimizer_steps": 31240,
+          "rng_schema_valid": true,
+          "finite_state": true,
+          "floating_model_and_ema_dtype": "float32"
+        }
+      ],
+      "last_matches_epoch39": true,
+      "selected_model_matches_final_ema": true,
+      "trace_run_id": "gptrans-execution40-dual-s42:execution_optimized",
+      "trace_trajectory_id": "TC-gptrans-execution40-optimized-100k-s42"
+    }
+  },
+  "predictions": {
+    "identical": false,
+    "mean_absolute_prediction_difference_eV": 0.07366495158672333,
+    "max_absolute_prediction_difference_eV": 3.0128304958343506
+  },
+  "cost": {
+    "failed_attempts": [
+      {
+        "version": 1,
+        "wall_seconds": 13.336087777999978,
+        "allocated_device_hours": 0.007408937654444433
+      },
+      {
+        "version": 2,
+        "wall_seconds": 80.77364423300003,
+        "allocated_device_hours": 0.04487424679611113
+      }
+    ],
+    "v3_allocated_device_hours": 5.365305711572779,
+    "total_allocated_t4_hours_python_window": 5.417588896023334,
+    "exact_platform_billing": "measurement_missing",
+    "provisioning_outside_python_window": "measurement_missing"
+  },
+  "accepted": true
+}

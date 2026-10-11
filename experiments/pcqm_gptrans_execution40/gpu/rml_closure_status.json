@@ -1,0 +1,30 @@
+{
+  "format": "molgap-execution40-rml-closure-status-v1",
+  "scope": "delivery_experiment",
+  "terminal_training_scope": "40 epochs of the frozen 60-epoch learning-rate horizon",
+  "rml_finalization_status": "BLOCKED_REFERENCE_BINDING",
+  "replay_ready": false,
+  "canonical_traces_retained": true,
+  "prospective_reference_ids": [],
+  "prospective_same_run_pair_binding": false,
+  "reason": "Both frozen prospective trajectories have empty reference_ids and no same_run_pair binding. The current finalizer requires a trace manifest reference frozen in the trajectory; its eligible same-run candidate path additionally requires a strict comparison. This delivery comparison must not claim STRICT_CAUSAL.",
+  "implementation_pointers": [
+    "src/molgap/research_memory/finalize.py",
+    "src/molgap/research_memory/terminal_wiring.py",
+    "research_memory/LIFECYCLE.md"
+  ],
+  "prospective_paths": [
+    "experiments/pcqm_gptrans_execution40/gpu/execution_original/rml_plan/trajectory.json",
+    "experiments/pcqm_gptrans_execution40/gpu/execution_optimized/rml_plan/trajectory.json"
+  ],
+  "prohibited_workarounds": [
+    "invent a frozen reference after the run",
+    "reinterpret the historical 60-epoch reference as the fresh 40-epoch control",
+    "hide an available training trace",
+    "claim strict causal architecture evidence for a delivery experiment",
+    "relax shared scientific or replay gates to force admission"
+  ],
+  "terminal_evidence_owner": "experiments/pcqm_gptrans_execution40/gpu/results/acceptance.json",
+  "no_training_rerun_needed_for_saved_output_acceptance": true,
+  "future_requirement": "Design a reviewed noncausal standalone-trace retention path before claiming canonical RML finalization; preserve original prospective bytes and the explicit qualification gap."
+}

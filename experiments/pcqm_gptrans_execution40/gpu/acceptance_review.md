@@ -49,3 +49,14 @@ visible regardless of best-checkpoint selection.
 The backend-focused synthetic suite passed29 tests after these additions. The
 version3 remote payload was unchanged; final data-dependent qualification and
 applicable RML closure still required terminal outputs.
+
+## Terminal acceptance correction
+
+After exact version3 output retrieval, independent Windows recomputation of
+the epoch18 cosine LR differed from the Linux record by one floating-point
+ULP. The adapter retained exact raw/canonical LR equality and exact exposure
+counters, permitting at most2ULP only for local formula recomputation. Finite
+values, changed schedules and raw/canonical disagreement remain fail-closed.
+The focused suite passed35 tests; real saved-output acceptance then passed.
+No remote source or scientific recipe changed. The terminal decision records
+the separate unresolved canonical RML reference-binding limitation.

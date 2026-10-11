@@ -1,8 +1,10 @@
 # GPTrans execution efficiency
 
 Question: can audited execution overhead be removed without material accuracy
-regression? [Protocol](protocol.md) owns scope/gates; this study has no scientific
-terminal decision yet. Live operation is routed by the root state document.
+regression? [Protocol](protocol.md) owns scope/gates; the
+[terminal delivery decision](decision_terminal.md) records the qualified
+forty-pass result and the explicit canonical RML closure gap. Live operation
+is routed by the root state document.
 
 `freeze.py` composes existing Spec/prospective/source release APIs. The worker
 reuses the native GPTrans trainer, scheduler, evaluation, atomic checkpoint and

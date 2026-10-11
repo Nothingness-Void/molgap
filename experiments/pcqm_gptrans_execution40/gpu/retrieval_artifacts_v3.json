@@ -1,0 +1,569 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-execution40-dual-s42",
+  "receipt_version": 3,
+  "files": [
+    {
+      "path": "gptrans_execution40/execution_original/preflight.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/arm_binding.json",
+      "sha256": "7f3230d14f9cd881a9e01f614fbad21bfcdf20ad3baf2c95682c3e94f5702467",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/training.log",
+      "sha256": "efa11bb2bf1fe651d5a9cbd884715c2ee7002fd72b6f916139569956379d881d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/preflight/runtime_certificate.json",
+      "sha256": "e81edc5f03bd16b2c2c8f8b8f8d3256996a186788cc287475782461dc8450ca7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/preflight/runtime_manifest.json",
+      "sha256": "bb52107938ce1b7efe8526c5c8ceac6d0c6853e285740f1bc0b2a86731c7bebb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/preflight/preflight.json",
+      "sha256": "dafa27845059481809e4b9b197276d5f93fc4029a218d65a2499ddabe19b5c90",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/training/best_model.pt",
+      "sha256": "25281b0e87254be123c8f9114ba183b805da8ecc463e5bc51051bd70996ba94f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/training/last_checkpoint.pt",
+      "sha256": "9ff4bd5139976986dfc563050cd727e44870ea88b47bef9a628b0e2fd91639d7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/training/trace.json",
+      "sha256": "507f1c4ed7af013ed06e211134c710f951fdb1d71c3d15504b8a8c5e9342dcad",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/training/checkpoint_epoch_39.pt",
+      "sha256": "9ff4bd5139976986dfc563050cd727e44870ea88b47bef9a628b0e2fd91639d7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/training/checkpoint_epoch_09.pt",
+      "sha256": "2ff8abac73cde1a67882859793f27f6607914d2b7c7583121cb8ae5c44700275",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/training/development_predictions.pt",
+      "sha256": "72e16aa0afa77b3c44739808a779aeb925c160885924f60211d925f4ce656665",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/training/partial_manifest.json",
+      "sha256": "e83612c4380dd4493406e0a25ae90c97dc98cfd4dc7b5d09a8a4daf7f7a5a9df",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/training/checkpoint_epoch_29.pt",
+      "sha256": "4c5a11a603a1b193c3e7021e00e3d934e17fa89feef90127d8187c4753bb3d0b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/training/canonical_trace.json",
+      "sha256": "aced746c16430619a6a0d6078af47f0ffc759d2563c39ff6e96c185492493bae",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/training/checkpoint_epoch_19.pt",
+      "sha256": "ba6e4ac9253fd35b6fe0133b519a94b1c5c075f690e3e2f793d6dcca52a57683",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_39.json",
+      "sha256": "0a1b6b785abf77fbd786311fab4516142f07a48bcaa54d0e49ea6458c9b6563d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_23.json",
+      "sha256": "184f42e94478f19e65f1518ad9934afd36cfbfa272d8e67589a5bd2a1eea3884",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_09.json",
+      "sha256": "8a410e87db447838e74b396a99d24ed15eb26745e66e7b9e80f713ff14ab563d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_31.json",
+      "sha256": "91d3891d9f313b3dbdd657b0cfd6098d78bca0b933de06433774476a29ae2be2",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_05.json",
+      "sha256": "5332a55aa7768645e7daf8c923f56f80d8fd262af9b79b6d272cd0ad6824b574",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_25.json",
+      "sha256": "a88792941b81b057146ad718a99cf95bbb0ea56fed94b589bbd11f6d8170a369",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_19.json",
+      "sha256": "7aeec3cc1fcadfe9e322e9928b5b3aae6c31db74765a2f897c33b62011e73385",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_28.json",
+      "sha256": "b8818018fc1f1cc9c1f5512bbd4da0e5527d818279a1802794a2fded8b56183b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_21.json",
+      "sha256": "0ca64a0c3472fe1df08e1a4f60d5a2b6b30d1149f690e671bd586976877c22e6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_06.json",
+      "sha256": "1e060ccc643ccc2502d6623880ef2f7882fe41274c8e2618078ab0a575cbdfa2",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_10.json",
+      "sha256": "bb7d05727cef0f8c03e2d1d618a32cfd97817285cf31f66980782b15626b94f3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_16.json",
+      "sha256": "21c9f9ca6d11a1dfcecbab7101beae61dab3d5dcc6ab6544e4fd9d8629cf5854",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_34.json",
+      "sha256": "95911d741d22b59934fe3dd8d2c48575e6366aac62a4692f80fd311346e97cb1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_18.json",
+      "sha256": "c7bbf11b6c91de7274aa8b19cb91b48c4e87319a0d5f554244b9c3f0d847b2d7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_20.json",
+      "sha256": "9553db774e190dc11d287fddb267c37a4bcff6f32ff6938854a1e0ce4289f8ba",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_08.json",
+      "sha256": "b4559a888414d4991816afa19e4c0fbe00963bd0add53251a431c71235af34bb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_33.json",
+      "sha256": "5242435c386599262d1fdc31f8faa9468a3e5b9c10ebe9ff9a15fa9917d69763",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_01.json",
+      "sha256": "1a2664346da2704b34fe8a58a6c0441bebfbe52e45c3bcc99cc83f8a53054c24",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_03.json",
+      "sha256": "19ca703a3e9b461dd0bd354c9a9f40847711f7af2d6ad4680aee55742b04b4d7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_22.json",
+      "sha256": "0fff767df67f12d19df15dcde2f411c5db0e5b46751a99121bf9c2d1eb4dbd61",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_29.json",
+      "sha256": "86a22b13d3664e6d857cd6f270a22446c07ead6c458954c86649eb77f9573948",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_13.json",
+      "sha256": "91b30489e3712dd7d9c66894abfdb100f330453170dda4fc441f8c3c11696180",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_07.json",
+      "sha256": "6290737c2e6a33a2fea32ad58f4f193fe78c07010b4edfa649ab85666f697aaf",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_17.json",
+      "sha256": "cf2a34a2c51cc2afb1b0be4e2f82e341aedccf75da65011bdf57dffd05a103da",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_15.json",
+      "sha256": "c12b07c70d59677b8325c7a0103efd3e846884c76fb704ec44741b254143e300",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_00.json",
+      "sha256": "52bcfe1b5e14f4b43b27dbb7f8cbf6f83b32761dbcbc084bd96e617f4eec7488",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_32.json",
+      "sha256": "04b7a7766b4187c05c97f4fd49e8c13b60ac96b9b0975f3709fc147e37cc2e86",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_38.json",
+      "sha256": "dd09f94ef1e353b4e664cf0314d605fe94fa8d6dc4405bde8e259060dd7ce223",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_12.json",
+      "sha256": "32a06cd237411d3f1127e07178f68903fc96e5575c8d5c0412bbe5a81ecb47ff",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_30.json",
+      "sha256": "515516e65728e895645e89015004bc11a31872a7c2ab797400cf04239ec988ab",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_27.json",
+      "sha256": "f76f6d2411109e7d63d1dcf64931e541fd797d955512e59955734fff63aeba20",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_14.json",
+      "sha256": "1378a9c9919d6082250a0e2bf93ab34055b1790f28cd67acd6718b3863bda444",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_02.json",
+      "sha256": "f4751a6b16fd9def4f75d56d1b98d0746be27b57eca911c3ad86b55965630926",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_11.json",
+      "sha256": "2f5d66d69412e2c81039fcb1a329a08aa20e477800ad83b133a12c3ed1add69b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_36.json",
+      "sha256": "860adcef5fff942075c3e6fcf466f55d18e9555a5818b501052ab10ebb039eb1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_35.json",
+      "sha256": "7c8f8ae185f3271da297af1109afaea9b203dcfda01caac6e284bcfd7e6e7e5f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_24.json",
+      "sha256": "2ef113f49a7a52937681689e402f31bae644598d1cb2b478dc11dcecb32c3aca",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_26.json",
+      "sha256": "687f3f6866ffbb6b07dbf295f18500a95ca56d1d1b5dc0f75dad808bca57a501",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_37.json",
+      "sha256": "882f2ebd0ecc503cd12b5f4ab8fc298c5a3d7aaa93ecfba6c6e98ff4ce0f2d0d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/phase_timing/epoch_04.json",
+      "sha256": "2371a7dd5aa96abc23dcaee1bf0eb9e1e71a00935c596441cf6c93d7eaf4495d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/preflight.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/arm_binding.json",
+      "sha256": "76ec19f9bad3f8d3a3ae6d55235cf6cbf3e4741b6b255d2a0286af8b28ac2e69",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/training.log",
+      "sha256": "fedcf8164c99b4706eb5ff187a4e7b951e4304b8558dae9cccc9afe7626d01ea",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/preflight/runtime_certificate.json",
+      "sha256": "dd9092b8daeaf2758552fd166d675f79c065702ebd0d3c3ee9db5b0c24e07526",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/preflight/runtime_manifest.json",
+      "sha256": "bb52107938ce1b7efe8526c5c8ceac6d0c6853e285740f1bc0b2a86731c7bebb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/preflight/preflight.json",
+      "sha256": "d283a443bedbb57635098b6be85bdb35b291a7c5893dd6ee393f6c0b8a78f837",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/training/best_model.pt",
+      "sha256": "e696240e832f8165c5992f418e953f42d062e104a27608b4f0c3ba9c640aa38c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/training/last_checkpoint.pt",
+      "sha256": "0db6050ce1f2ca9b0b565c6b2b3dcdb665b8cdd667a7bba95204203bb216537d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/training/trace.json",
+      "sha256": "7c1e7582160fb49a52197a9e4b1bf455af4efe7494eddf9f1094693a21b6d5fb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/training/checkpoint_epoch_39.pt",
+      "sha256": "0db6050ce1f2ca9b0b565c6b2b3dcdb665b8cdd667a7bba95204203bb216537d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/training/checkpoint_epoch_09.pt",
+      "sha256": "8be8f69a6be5101899f4f3aa60d8520f852a905c654af7dc12f1940aab5fd877",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/training/development_predictions.pt",
+      "sha256": "982976346f998668971f6522a5493e37d07ec602ae460ac4ff2e97894df6780e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/training/partial_manifest.json",
+      "sha256": "ac96db893b4a480f3738a2224f5406973a6d6d451ea2606e644d4a28b2e5b8b8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/training/checkpoint_epoch_29.pt",
+      "sha256": "7b89a51c0751612396348d4f4d1f8075103c607146cce7147df7b90bbb854b41",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/training/canonical_trace.json",
+      "sha256": "5d8ece3051e2240da8ec88090aa490e3e776c09384326cc20833821af8c305eb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/training/checkpoint_epoch_19.pt",
+      "sha256": "b94f5c3bf0f10bccc973da586cdbd1a99dc17d2270ad3edc503d305ce1f89f39",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_39.json",
+      "sha256": "4344887e99afa709badc4958ce9aa5bb8602b714de22c7ddd4787ebaa92f9fbe",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_23.json",
+      "sha256": "82c74915441d7c9febed88dc2a42e68ef5bcc66236570b532f109d6a9cb107fa",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_09.json",
+      "sha256": "6047a70939ea4c424603d259a13eff3233c240dc21e3107fa698a45b32dabd1f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_31.json",
+      "sha256": "d3d31d4e0ec4220fea64306a8b3ee1b0745fd2c52321723c47c216f128bb7b7b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_05.json",
+      "sha256": "08acbecb07ef01c4a3e624673c8340ef25fb103df9c7e2b08c05fddb6f9e0ed5",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_25.json",
+      "sha256": "9039802d324a27c318693e15d18267537a88d000368464aeff00526bffb654c9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_19.json",
+      "sha256": "5e049ffb689517bd99c398fb4be60c46927f66217d7c0fa0d9acc7c080323be4",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_28.json",
+      "sha256": "4f7d8af97ae932f9e0a462a120cafbb15b734b768b60727aa585bd09519e1c93",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_21.json",
+      "sha256": "0b77a3ecc438a7e8124e833fbebbce10e6480ba7e7202cb4bc0eef1aa7db42e8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_06.json",
+      "sha256": "85368f725d8d6c40f6ff1790b56f2d77135b021562d85bc728a34346c3df0aab",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_10.json",
+      "sha256": "d6107a8b5bda1fb702db5078b57654e4eaccce58f9a0cf9f6a4d8d7c4aed204c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_16.json",
+      "sha256": "21e24574d4b070b72a86bc1f4c20f8fd26624fffbaddf85379daac4131011056",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_34.json",
+      "sha256": "faf6ec29c6bbbd523ea3283a5456e31b9d39f3e04523fdc0754c14ab4514906a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_18.json",
+      "sha256": "d04bc28e5a2f8fcd235b7d1b764293bf0f4d74cbc6ae8db863b57707bb6e3c69",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_20.json",
+      "sha256": "78a3699b365fcb4d3ffae50fd34564b43ad0a4f04dc2f9f6ed1e18c375828fbb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_08.json",
+      "sha256": "ee47f0b73b9c42851b987f7d13ccb3e5ae20cdb3ba50323ff53a30de3e63cc27",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_33.json",
+      "sha256": "3afa1bf0009074de4d21b876a97234684e39570f4d9739dd308f78339bf8c380",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_01.json",
+      "sha256": "71a2e7acd0484899224895411231d568497ca91d3477ef7bca8efb1aaabe6415",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_03.json",
+      "sha256": "e6eb6fe890e5789d8374001bb9d04519523975f07d622cf7f9aac281a16be104",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_22.json",
+      "sha256": "2b3beaa4eaf776bc65ddc179efe79fdf4d6be8ffeb72d0d72d1409f6c4837bf1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_29.json",
+      "sha256": "5341dee64bb821d0d6e3861da71d89e5c0dbf986abc6299ad1ef2dd9ed7736a4",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_13.json",
+      "sha256": "e3d2678e75190f5022412914de18b45734d3a62eee89d6d6d7806f35c8d535a0",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_07.json",
+      "sha256": "535ea953042b7eb6324e17f79bc7fb0753496e06229d1cb775790f2c3304014b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_17.json",
+      "sha256": "f1ba121dddd65b1a3a7dcb49d9c360dcb8ca1b7a0324c9d442da669e0acbe98b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_15.json",
+      "sha256": "723146c3caaa8447d879fb2e6cf8ca40484edcf8db83e47323dd0f87b5d7ff7b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_00.json",
+      "sha256": "0623e979296c49e2e050e59ee7ec2562f634fb6aaf22969f8f29930e9bd360b3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_32.json",
+      "sha256": "4b90b69710fc3d8df3f48fdf14b3098a490a76ef542d5eedc061b0ba0bf12e13",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_38.json",
+      "sha256": "1002e86a3c021bb3b938d099429c79802ad50dc9a4cf573652cc811a9eb1bcde",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_12.json",
+      "sha256": "eca28063e7d88539c9a2b2146ef3cfd57ebc090f4345f7bb75611f1045028bfa",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_30.json",
+      "sha256": "15283ff5d7dcaeff001bbf2a66dccd34dae6c5c66b466c5eaf725aed94117ff2",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_27.json",
+      "sha256": "a84cc292e98af25388f4cb957b0d2c27b423b56efbfb822e819be3f047b389be",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_14.json",
+      "sha256": "8aaf77861be54e086d93d704c389ca7dbab3d34133f1372c136bb21f53c08ae7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_02.json",
+      "sha256": "bc00d62ede4f2b33268349672a8d0000930677b0c6ea62856163be2e62b96ce1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_11.json",
+      "sha256": "2935674646621875f5c2535cb9f97497d4e5605553b309dfce42128ef95a4fc2",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_36.json",
+      "sha256": "c53e0c448ecf4ccbe3abca69224db182b2333511795530220fbf8733b98f0595",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_35.json",
+      "sha256": "daf178433432b6c134d87ead96cc2385ed8d512bf2ce491cb9be4f8bec0a3751",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_24.json",
+      "sha256": "ec53fd89b8df2dc688227dcc417bb8342c72340f20b6f2d0ef306aff998123f0",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_26.json",
+      "sha256": "f1b1cd7ab7ce289805d21c7aca586fd8257a55f47f92c2fc064ca4bb2fac4724",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_37.json",
+      "sha256": "d369900cbf5eabcc1f1458040613345e516eb15db6693400d1ea338d0a2f26e3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/phase_timing/epoch_04.json",
+      "sha256": "0ee1b6f7ef101aa804ac8ce94f3edb868936f045c6a4a44fabf9f41b575a16a2",
+      "state": "RETAINED"
+    }
+  ],
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": true
+}

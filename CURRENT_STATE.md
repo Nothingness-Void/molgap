@@ -7,17 +7,22 @@
 ## Server active screen
 
 The authorized [original/optimized execution40 assay](experiments/pcqm_gptrans_execution40/protocol.md)
-is submitted as Kaggle2 kernel138147173/version3 and was observed RUNNING.
+completed as Kaggle2 kernel138147173/version3 and passed independent saved-output
+delivery acceptance. Preserve the [terminal decision](experiments/pcqm_gptrans_execution40/decision_terminal.md):
+this is a scoped execution qualification, not architecture promotion or
+standalone speed equivalence. Canonical RML closure is explicitly blocked by
+the original missing reference binding; no Replay-ready claim is made.
 Versions1/2 failed before formal training at transport/dependency gates; their
 [v1 diagnosis](experiments/pcqm_gptrans_execution40/gpu/failure_v1.md),
 [v2 diagnosis](experiments/pcqm_gptrans_execution40/gpu/failure_v2.md) and costs
 are retained. Its corrected [receipt](experiments/pcqm_gptrans_execution40/gpu/submission_v3.json) and
 [existing-B binding](experiments/pcqm_gptrans_execution40/gpu/monitor_binding.json)
-own physical identity and custody; the existing30-minute heartbeat is active.
+own physical identity and custody; the terminal event is closed and the existing
+heartbeat is paused. No successor is authorized.
 It compares the
 unchanged local-bond model under two declared execution backends, not a new
 architecture or scale-up. Its requested forty-pass scope retains the original
-sixty-pass learning-rate horizon and requires separate saved-output acceptance.
+sixty-pass learning-rate horizon; it was not relabeled as sixty-pass completion.
 
 The authorized [source-dependence assay](experiments/pcqm_gptrans_source_dependence/protocol.md)
 is accepted and closed NO_TRAIN / CONTEXT_ONLY. Its cohort observations did not

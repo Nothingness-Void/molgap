@@ -1,0 +1,274 @@
+{
+  "accepted": true,
+  "format": "molgap-execution40-acceptance-v1",
+  "model_inference_executed": false,
+  "training_executed": false,
+  "comparison_class": "PAIRED_ENDPOINT",
+  "experiment_purpose": "delivery_experiment",
+  "arms": {
+    "execution_original": {
+      "parameters": 5871201,
+      "stage_wall_seconds": 9587.772591995,
+      "best_epoch": 39,
+      "selected_ema_mae_eV": 0.14267474907815456,
+      "best_live_mae_eV": 0.14732122421264648,
+      "best_live_epoch": 38,
+      "final_live_mae_eV": 0.14787687361240387,
+      "final_ema_mae_eV": 0.1426747441291809,
+      "epoch_seconds": [
+        271.081293876,
+        252.33584283200003,
+        254.11889710599985,
+        255.40950477699994,
+        247.84777622599972,
+        251.34556814100006,
+        247.9904462909999,
+        254.45215650199998,
+        254.76149654799974,
+        251.778824258,
+        249.88029681499984,
+        254.69794557100022,
+        256.247253818,
+        255.1730219049996,
+        253.64904269599992,
+        252.47513691699987,
+        256.4133536090003,
+        248.059150348,
+        244.59889221699996,
+        243.53784659400026,
+        249.66061921500022,
+        242.8982575809996,
+        243.65095024000038,
+        254.9396116730004,
+        270.2890113909998,
+        255.22462745200028,
+        249.97566393099987,
+        248.5303075390002,
+        247.88899316399966,
+        246.31234676900021,
+        241.43246066400025,
+        244.40153769099925,
+        204.21531608499936,
+        182.86822482800017,
+        181.95091424300153,
+        181.90488378899863,
+        183.84575641399897,
+        182.91723449799974,
+        184.35538776000067,
+        185.38272854599927
+      ],
+      "phase_timing": {
+        "optimizer_call_seconds": 7237.255539582142,
+        "training_batches": 31240,
+        "evaluation_seconds": 2211.055859459997,
+        "evaluation_passes": 80,
+        "checkpoint_publication_seconds": 11.047232486994062
+      },
+      "timing_summary": {
+        "first_epoch_seconds": 271.081293876,
+        "post_first_epoch_seconds": {
+          "count": 39,
+          "mean": 237.626084272923,
+          "q25": 243.21805208749993,
+          "median": 248.5303075390002,
+          "q75": 254.28552680399991,
+          "min": 181.90488378899863,
+          "max": 270.2890113909998
+        },
+        "epoch_scope": "Native row timer excludes subsequent resume-checkpoint publication; not GPU-only time",
+        "complete_stage_presentations_per_second": 417.06454357695145,
+        "complete_stage_scope": "Includes loading, training, live/EMA evaluation and artifact publication; excludes preflight",
+        "synchronized_evaluation_seconds": 2211.055859459997,
+        "evaluation_stage_fraction": 0.23061204656710843,
+        "resume_checkpoint_publication_seconds": 11.047232486994062,
+        "checkpoint_scope": "Wrapped native resume-checkpoint saves, not every output/chunk publication",
+        "optimizer_call_seconds": 7237.255539582142,
+        "optimizer_scope": "CPU enqueue duration, not synchronized GPU compute; do not subtract to infer a GPU bottleneck"
+      },
+      "memory": {
+        "optimizer_preflight": {
+          "peak_allocated_bytes": 1074344960,
+          "peak_reserved_bytes": 1109393408,
+          "total_memory_bytes": 15636037632
+        },
+        "training_peak_bytes": null,
+        "training_peak_status": "measurement_missing",
+        "reason": "Released forty-pass worker records optimizer-preflight peaks, not training-stage peaks"
+      },
+      "runtime_certificate_id": "c056b871a2bfcd8db454969200fee76ab27d7a9a966f8fb7103eb9cee2d7e6f7"
+    },
+    "execution_optimized": {
+      "parameters": 5871201,
+      "stage_wall_seconds": 8161.518125033,
+      "best_epoch": 39,
+      "selected_ema_mae_eV": 0.14199575872838496,
+      "best_live_mae_eV": 0.14752377569675446,
+      "best_live_epoch": 39,
+      "final_live_mae_eV": 0.14752377569675446,
+      "final_ema_mae_eV": 0.14199575781822205,
+      "epoch_seconds": [
+        220.03437254499988,
+        207.254406454,
+        204.15423509800007,
+        206.83646945700002,
+        202.75574764499993,
+        205.66962843200008,
+        206.50193967099995,
+        198.32558050299986,
+        202.9258079350002,
+        202.06495769799994,
+        204.41739536500017,
+        205.92126186300038,
+        202.28466544000003,
+        202.7343102519999,
+        203.39068198800032,
+        205.4984720289999,
+        209.20735940699979,
+        206.18407866399957,
+        202.5464964720004,
+        200.80900470800043,
+        202.33892668600038,
+        205.79340758099988,
+        195.8781527129995,
+        194.43209467500037,
+        193.97479546999966,
+        200.46590001499953,
+        201.41878447199997,
+        197.37644325700057,
+        196.37467836399992,
+        208.18851420600004,
+        214.23931967000044,
+        211.4040602490004,
+        204.09649516199988,
+        201.28953647700018,
+        196.08878569700028,
+        197.9051353649993,
+        202.07267458800015,
+        198.45778067599895,
+        196.38726285400116,
+        194.9106176819987
+      ],
+      "phase_timing": {
+        "optimizer_call_seconds": 5480.069590381966,
+        "training_batches": 31240,
+        "evaluation_seconds": 2491.5332330479987,
+        "evaluation_passes": 80,
+        "checkpoint_publication_seconds": 11.029075236999233
+      },
+      "timing_summary": {
+        "first_epoch_seconds": 220.03437254499988,
+        "post_first_epoch_seconds": {
+          "count": 39,
+          "mean": 202.37374012666666,
+          "q25": 198.3916805894994,
+          "median": 202.5464964720004,
+          "q75": 205.73151800649998,
+          "min": 193.97479546999966,
+          "max": 214.23931967000044
+        },
+        "epoch_scope": "Native row timer excludes subsequent resume-checkpoint publication; not GPU-only time",
+        "complete_stage_presentations_per_second": 489.94806342892633,
+        "complete_stage_scope": "Includes loading, training, live/EMA evaluation and artifact publication; excludes preflight",
+        "synchronized_evaluation_seconds": 2491.5332330479987,
+        "evaluation_stage_fraction": 0.30527815963625327,
+        "resume_checkpoint_publication_seconds": 11.029075236999233,
+        "checkpoint_scope": "Wrapped native resume-checkpoint saves, not every output/chunk publication",
+        "optimizer_call_seconds": 5480.069590381966,
+        "optimizer_scope": "CPU enqueue duration, not synchronized GPU compute; do not subtract to infer a GPU bottleneck"
+      },
+      "memory": {
+        "optimizer_preflight": {
+          "peak_allocated_bytes": 1072749056,
+          "peak_reserved_bytes": 1111490560,
+          "total_memory_bytes": 15636037632
+        },
+        "training_peak_bytes": null,
+        "training_peak_status": "measurement_missing",
+        "reason": "Released forty-pass worker records optimizer-preflight peaks, not training-stage peaks"
+      },
+      "runtime_certificate_id": "c1339859fa5a08e183802a6cfb05d0b7a065c5e6dad12f1cb18b7a99a2ff162d"
+    }
+  },
+  "paired_accuracy": {
+    "rows": 50000,
+    "reference_mae_eV": 0.14267474907815456,
+    "candidate_mae_eV": 0.14199575872838496,
+    "candidate_minus_reference_eV": -0.0006789903497695923,
+    "paired_row_bootstrap": {
+      "delta": -0.0006789903497695923,
+      "ci95": [
+        -0.0015226476892232896,
+        0.00017323128998279473
+      ],
+      "probability_better": 0.9452,
+      "n_bootstrap": 5000,
+      "seed": 20260912
+    },
+    "candidate_win_fraction": 0.50132,
+    "absolute_error_delta_quantiles_eV": [
+      -3.0128304958343506,
+      -0.09534716606140137,
+      -0.04278099536895752,
+      -0.0002262592315673828,
+      0.042020320892333984,
+      0.09324359893798828,
+      2.36074161529541
+    ],
+    "posthoc_reference_error_quintiles": [
+      {
+        "reference_error_quintile": 1,
+        "rows": 10000,
+        "reference_mae_eV": 0.015576379895210267,
+        "candidate_mae_eV": 0.05500747902393341,
+        "candidate_minus_reference_eV": 0.03943109912872315
+      },
+      {
+        "reference_error_quintile": 2,
+        "rows": 10000,
+        "reference_mae_eV": 0.049650146996974946,
+        "candidate_mae_eV": 0.06799066206216813,
+        "candidate_minus_reference_eV": 0.018340515065193175
+      },
+      {
+        "reference_error_quintile": 3,
+        "rows": 10000,
+        "reference_mae_eV": 0.0938672756433487,
+        "candidate_mae_eV": 0.09353366961479187,
+        "candidate_minus_reference_eV": -0.00033360602855682375
+      },
+      {
+        "reference_error_quintile": 4,
+        "rows": 10000,
+        "reference_mae_eV": 0.16345329623222352,
+        "candidate_mae_eV": 0.14686941664218903,
+        "candidate_minus_reference_eV": -0.016583879590034486
+      },
+      {
+        "reference_error_quintile": 5,
+        "rows": 10000,
+        "reference_mae_eV": 0.3908266466230154,
+        "candidate_mae_eV": 0.34657756629884245,
+        "candidate_minus_reference_eV": -0.044249080324172976
+      }
+    ],
+    "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+  },
+  "complete_stage_speedup": 1.1747535746551117,
+  "native_cost": {
+    "allocated_gpu_inventory": [
+      "GPU 0: Tesla T4 (UUID: GPU-586aeea4-84f6-6f4d-b473-b50e6c2d59eb)",
+      "GPU 1: Tesla T4 (UUID: GPU-6f4b284c-90af-68dc-33b6-86d69588bf8a)"
+    ],
+    "allocated_gpu_count": 2,
+    "used_gpu_count": 2,
+    "wall_seconds": 9657.550280831001,
+    "allocated_device_hours": 5.365305711572779,
+    "source_archive_sha256": "bcfa2fb8e295d64146e2bd9167702f22b7668f9264fc5d8a876b525cc52f56d2"
+  },
+  "speed_gate_passed": true,
+  "selected_accuracy_gate_passed": true,
+  "paired_interval_gate_passed": true,
+  "delivery_gate_passed": true,
+  "protected_role_access": false,
+  "scientific_caveat": "Execution/accuracy qualification, not architecture or scale superiority"
+}

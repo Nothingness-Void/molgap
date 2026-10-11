@@ -1,0 +1,75 @@
+{
+  "format": "molgap-server-terminal-event-snapshot-v1",
+  "binding": {
+    "A_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "B_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+    "attempt_id": "v3",
+    "budget_reserved_native": {
+      "allocated_t4_hours": 14
+    },
+    "campaign_id": "gptrans-execution40",
+    "chain_id": "execution40-dual-v3",
+    "decision_ref": "experiments/pcqm_gptrans_execution40/protocol.md",
+    "monitor_generation": 3,
+    "owner_scope": "server",
+    "reference_identity": null,
+    "release_identity": "0917fe37dac8e7312a27ea8abdad01a17afdff7d7d1531a86cd60eb7c03db04d",
+    "remote_job_identity": {
+      "kernel": "kaseichou/molgap-gptrans-execution40-dual-s42",
+      "kernel_id": 138147173,
+      "version": 3
+    },
+    "remote_platform": "kaggle2",
+    "run_id": "kaseichou/molgap-gptrans-execution40-dual-s42:v3"
+  },
+  "last_observation": {
+    "detail": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-execution40-dual-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-execution40-dual-s42",
+        "kernel_id": 138147173,
+        "version": 3
+      },
+      "version": 3
+    },
+    "observed_at": "2026-10-11T11:55:01Z",
+    "remote_state_version": null,
+    "status": "COMPLETE"
+  },
+  "event": {
+    "attempt_id": "v3",
+    "claimed_at": "2026-10-11T11:56:07Z",
+    "claimed_by": "01a025a1-3b87-7781-8a91-f183193f7865",
+    "created_at": "2026-10-11T11:55:01Z",
+    "decision_ref": "experiments/pcqm_gptrans_execution40/decision_terminal.md",
+    "delivered_at": "2026-10-11T11:55:21Z",
+    "delivery_attempts": 1,
+    "event_id": "evt-40e01fea7efae25f18b6a374",
+    "event_status": "CLOSED",
+    "event_type": "COMPLETE",
+    "finalized_at": "2026-10-11T12:04:29Z",
+    "monitor_generation": 3,
+    "outcome": {
+      "artifact_status": "complete",
+      "comparison_class": "PAIRED_ENDPOINT",
+      "delivery_gate_passed": true,
+      "execution_status": "complete",
+      "replay_ready": false,
+      "rml_finalization": "BLOCKED_REFERENCE_BINDING",
+      "successor_authorized": false
+    },
+    "payload": {
+      "api_status": "COMPLETE",
+      "kernel": "kaseichou/molgap-gptrans-execution40-dual-s42",
+      "resolved_latest_identity": {
+        "kernel": "kaseichou/molgap-gptrans-execution40-dual-s42",
+        "kernel_id": 138147173,
+        "version": 3
+      },
+      "version": 3
+    },
+    "run_id": "kaseichou/molgap-gptrans-execution40-dual-s42:v3"
+  },
+  "heartbeat_status": "PAUSED"
+}

@@ -1,0 +1,29 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-execution40-dual-s42",
+  "version": 3,
+  "files": [
+    {
+      "path": "gptrans_execution40/startup.json",
+      "sha256": "b5c489c690fdcca24593b042e2ee28d87664ab3588d88bccf3a27b18e8a6c3aa"
+    },
+    {
+      "path": "gptrans_execution40/job_summary.json",
+      "sha256": "e0d10c69b2ab6dc2a444d340323da116289a5a3a0bd29ea2fd104cae28caaeb7"
+    },
+    {
+      "path": "gptrans_execution40/native_cost.json",
+      "sha256": "d65f264a756578dba994712b257019cec33651a9e31a98001640667547013bdd"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/execution_completion.json",
+      "sha256": "9c98fc33e8f0cb86797eb95b32acea916ec01d0aa7348b1de30922b12fecb67f"
+    },
+    {
+      "path": "gptrans_execution40/execution_optimized/execution_completion.json",
+      "sha256": "18a8df8cf8c3765d9b951e9d36fd025ce8df7b6af21b7a35c501150cda50e747"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}
