@@ -1,0 +1,44 @@
+{
+  "device_time_semantics": null,
+  "metric_semantics": {
+    "ema_dev_metric": null,
+    "live_dev_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+      "target": "Gap",
+      "unit": "eV",
+      "weights": "live"
+    },
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:training-0-100000",
+      "target": "Gap",
+      "timing": "online-pre-update; includes dropout; no auxiliary BCE",
+      "unit": "eV",
+      "weights": "live"
+    }
+  },
+  "observations": [
+    {
+      "checkpoint_identity": "sha256:cc17fc1d536ab0c399cb68e1c11d733d1c0f3ab93b70cbd792f1d89b25863b40",
+      "cumulative_device_time_seconds": null,
+      "cumulative_wall_time_seconds": null,
+      "device_time_seconds": null,
+      "ema_dev_metric": null,
+      "epoch_or_pass": 1,
+      "event": "observation",
+      "learning_rate": 0.0004,
+      "live_dev_metric": 0.3325817584991455,
+      "live_train_metric": 0.35060363154022683,
+      "optimizer_step": 781,
+      "sample_presentations": 99968,
+      "sequence": 0,
+      "wall_time_seconds": 158.095516588
+    }
+  ],
+  "run_id": "molgap-k1-fused-layout-100k-s42-v2:fused_layout:downstream",
+  "schema": "molgap-trace-v1",
+  "trajectory_id": "TB-molgap-k1-fused-layout-100k-s42-v2-fused_layout"
+}

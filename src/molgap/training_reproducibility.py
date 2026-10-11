@@ -163,11 +163,20 @@ def atomic_torch_save(path: Path, value) -> None:
     os.replace(temporary, path)
 
 
-def atomic_json(path: Path, value: Mapping) -> None:
+def atomic_json(path: Path, value: Mapping | list) -> None:
+    """Write JSON objects or row arrays without exposing a partial destination."""
+    if isinstance(value, Mapping):
+        value = dict(value)
+    elif not isinstance(value, list):
+        raise TypeError("Expected a JSON object or array")
+    payload = json.dumps(value, indent=2) + "\n"
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.tmp")
-    temporary.write_text(json.dumps(dict(value), indent=2) + "\n", encoding="utf-8")
-    os.replace(temporary, path)
+    try:
+        temporary.write_text(payload, encoding="utf-8")
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def sha256_file(path: Path) -> str:

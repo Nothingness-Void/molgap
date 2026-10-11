@@ -46,6 +46,16 @@ unchanged; its terminal RML envelope gap is not repaired by this new submission.
 
 ## Next reconciliation
 
+The2026-10-11 terminal reconciliation supersedes the startup RUNNING observation:
+Kaggle ERROR; both native preflights passed and both workers retained one epoch,
+then failed writing the timing-list through Mapping-only `atomic_json`.
+Read the [partial decision / attribution](terminal_acceptance/decision.md) and
+[checked report](terminal_acceptance/acceptance.json). No complete40epoch
+speed/quality result, retry, continuation or formal RML closure is released.
+The [2026-10-11 local repair](terminal_acceptance/infrastructure_repair.md)
+records the shared writer/release-gate fix and CPU regressions. It is not a
+republished source package or another remote attempt.
+
 When desktop returns, use the platform skill for this exact kernel/version and
 durable outputs. Verify all-arm native certificates before interpreting formal
 trace, then inspect matched40epochs, saved predictions and train/dev/entry

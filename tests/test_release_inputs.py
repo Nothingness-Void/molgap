@@ -38,6 +38,14 @@ def release(tmp_path, payload, request):
             if name == "k1_screen_training.py" and loader_mode == "broken":
                 source += (b"\ndef _load_initial_state(path, recipe):\n"
                            b"    raise ValueError('packaged broken K1 loader')\n")
+            if name == "training_reproducibility.py" and loader_mode == "broken_output_io":
+                source += (b"\ndef atomic_json(path, value):\n"
+                           b"    path.parent.mkdir(parents=True, exist_ok=True)\n"
+                           b"    path.write_text(json.dumps(dict(value)))\n")
+            if name == "training_reproducibility.py" and loader_mode == "rewrapped_output_io":
+                source += (b"\ndef atomic_json(path, value):\n"
+                           b"    path.parent.mkdir(parents=True, exist_ok=True)\n"
+                           b"    path.write_text(json.dumps({'rows': value} if isinstance(value, list) else value))\n")
             (module / name).write_bytes(source)
             allowlist.append("src/molgap/" + name)
         # Importable model owner, but any constructor use fails inside the clean worker.
@@ -104,10 +112,23 @@ def test_packaged_k1_loader_accepts_real_wrapper_without_model_construction(rele
     digest = spec.to_dict()["arms"][1]["initialization"]["state_sha256"]
     assert checks["family_initialization:neural_atom_k1"] == {
         "state_sha256": digest, "tensor_count": 1, "device": "cpu"}
+    assert checks["family_output_io:neural_atom_k1"] == {
+        "object_roundtrip": True, "timing_array_roundtrip": True, "device": "cpu"}
     assert "family_initialization:gptrans_t" not in checks
     assert checks["initialization:neural_atom_k1"]["state_sha256"] == digest
     assert checks["clean_import:package"]["molgap.k1_screen_training"] == "src/molgap/k1_screen_training.py"
     assert checks["clean_import:package"]["molgap.v4_runtime"] == "src/molgap/v4_runtime.py"
+
+
+@pytest.mark.parametrize("release", ["broken_output_io", "rewrapped_output_io"], indirect=True)
+def test_initialization_pass_cannot_hide_packaged_output_writer_failure(release):
+    spec, package, options = release
+    report = check_release_inputs(spec, package, **options)
+    assert report["status"] == "RELEASE_INPUTS_FAILED"
+    assert "family_initialization:neural_atom_k1" in report["checks"]
+    assert "family_output_io:neural_atom_k1" not in report["checks"]
+    assert any(error["check"] == "family_output_io" and error["item"] == "neural_atom_k1"
+               for error in report["errors"])
 
 
 def test_lf_recipe_and_isolated_imports_pass(release):

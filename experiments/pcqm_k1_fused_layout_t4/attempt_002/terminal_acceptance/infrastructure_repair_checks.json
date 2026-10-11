@@ -1,0 +1,37 @@
+{
+  "check": "actual_frozen_attempt002_negative_control",
+  "frozen_source_commit": "6b526e4333beca85008ddec085969430e073c4fc",
+  "frozen_package_identity": "92a7317840866a38bd649ce98ebc5823bc9971ba7050e35980c85a8cd0be2dd3",
+  "status": "RELEASE_INPUTS_FAILED",
+  "errors": [
+    {
+      "check": "family_output_io",
+      "item": "reference",
+      "message": "dictionary update sequence element #0 has length 7; 2 is required"
+    },
+    {
+      "check": "family_output_io",
+      "item": "fused_layout",
+      "message": "dictionary update sequence element #0 has length 7; 2 is required"
+    }
+  ],
+  "initializations": {
+    "family_initialization:fused_layout": {
+      "device": "cpu",
+      "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "tensor_count": 367
+    },
+    "family_initialization:reference": {
+      "device": "cpu",
+      "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "tensor_count": 367
+    }
+  },
+  "verifier_is_uncommitted_local_repair": true,
+  "verifier_sha256": "8a009247ed8abee48c52dbfc93d063092281b038832cf49e61f7eacf1db03edd",
+  "model_constructed": false,
+  "training": false,
+  "inference": false,
+  "scientific_roles_consumed": false,
+  "remote_submission": false
+}

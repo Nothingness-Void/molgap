@@ -722,7 +722,7 @@ def _release_imports(request):
                 value = getattr(value, part)
         except Exception as exc:
             errors.append({"check": "pickle_symbol", "item": f"{module}.{symbol}", "message": str(exc)})
-    initialization_checks = {}
+    initialization_checks, output_io_checks = {}, {}
     for item in request.get("initializations", []):
         try:
             if item["family"] != ["neural_atom_k1", "2"]:
@@ -737,8 +737,28 @@ def _release_imports(request):
         except Exception as exc:
             errors.append({"check": "family_initialization", "item": item["arm_id"],
                            "message": str(exc)})
+            continue
+        try:
+            # Exercise the actual packaged trainer's writer, not the bootstrap's
+            # own JSON helper. Timing arrays are persisted after its first epoch.
+            with tempfile.TemporaryDirectory(dir=root.parent, prefix="output-io-") as temporary:
+                path = Path(temporary) / "nested" / "fixture.json"
+                record = {"epoch": 1, "optimizer_steps": 1, "sample_presentations": 1,
+                          "train_seconds": 1.0, "development_seconds": 1.0,
+                          "epoch_pipeline_seconds": 2.0, "scope": "CPU release fixture"}
+                trainer.atomic_json(path, record)
+                if json.loads(path.read_text(encoding="utf-8")) != record:
+                    raise ValueError("Packaged object writer changed payload")
+                trainer.atomic_json(path, [record])
+                if json.loads(path.read_text(encoding="utf-8")) != [record]:
+                    raise ValueError("Packaged timing array writer changed payload")
+            output_io_checks[item["arm_id"]] = {
+                "object_roundtrip": True, "timing_array_roundtrip": True, "device": "cpu"}
+        except Exception as exc:
+            errors.append({"check": "family_output_io", "item": item["arm_id"],
+                           "message": str(exc)})
     return {"errors": errors, "import_origins": _origins(root),
-            "initialization_checks": initialization_checks}
+            "initialization_checks": initialization_checks, "output_io_checks": output_io_checks}
 
 
 def check_release_inputs(spec, package_dir, *, expected_package_identity,
@@ -866,6 +886,8 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                 errors.extend(result["errors"])
                 for arm_id, state_report in result.get("initialization_checks", {}).items():
                     checked[f"family_initialization:{arm_id}"] = state_report
+                for arm_id, io_report in result.get("output_io_checks", {}).items():
+                    checked[f"family_output_io:{arm_id}"] = io_report
                 return result["import_origins"]
             check("clean_import", "package", imports)
     if entry_script:

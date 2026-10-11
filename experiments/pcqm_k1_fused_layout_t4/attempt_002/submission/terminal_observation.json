@@ -1,0 +1,125 @@
+{
+  "observed_at": "2026-10-11T05:38:22.257839+00:00",
+  "kernel": "nothingnessvoid/molgap-k1-fused-layout-100k-s42-v2",
+  "kernel_id": 138119131,
+  "submit_receipt_version": 1,
+  "status": {
+    "status": "ERROR",
+    "failureMessage": null
+  },
+  "output_api_version_verified": false,
+  "producer_manifest_available": false,
+  "files": [
+    {
+      "path": "experiment/allocation_entry_observation.json",
+      "sha256": "ce01ae5a336bbe6916a7bc3bd6869033deb8ea1f432c03805fccc07e196ec515",
+      "bytes": 802
+    },
+    {
+      "path": "experiment/fused_layout/architecture_preflight.json",
+      "sha256": "39f78973c42b5bdc05ceb21eda1ab5d605c2cacaf5e8b9fc691e073576dec2d3",
+      "bytes": 2004
+    },
+    {
+      "path": "experiment/fused_layout/canonical_trace.json",
+      "sha256": "90cee7a3325bd5c800e3b31776754c0996dc0cba8f56100f66d1dee324fe3c35",
+      "bytes": 1405
+    },
+    {
+      "path": "experiment/fused_layout/canonical_trace.json.context.json",
+      "sha256": "85d45d9eeb8b418af6f9212b8be745b22de88ba1012ddbd54dfd175f8a2e6de5",
+      "bytes": 957
+    },
+    {
+      "path": "experiment/fused_layout/diagnostic_cost.json",
+      "sha256": "c50b78703d52935740dab1f902144f83815ee7af00c1d6b66dee45e1eea6ce95",
+      "bytes": 775
+    },
+    {
+      "path": "experiment/fused_layout/preflight.log",
+      "sha256": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c",
+      "bytes": 349
+    },
+    {
+      "path": "experiment/fused_layout/runtime_certificate.json",
+      "sha256": "f1660ed2ce5121357f10a14c7317c1026d64d056667b16eb2e7d2d7df0894960",
+      "bytes": 993
+    },
+    {
+      "path": "experiment/fused_layout/runtime_manifest.json",
+      "sha256": "6adc19959c5aa18983aac0182ee34a88a4d5ecd91676f1142e232f570d428aaa",
+      "bytes": 25209
+    },
+    {
+      "path": "experiment/fused_layout/runtime_provenance.json",
+      "sha256": "e59e997e90ab71051571ab5767cc990af6c3a7da6480ff0661e6b181fb78559f",
+      "bytes": 1471
+    },
+    {
+      "path": "experiment/fused_layout/train.log",
+      "sha256": "69451f867d948b15b6416dc37a30080551be4d323d57d0ba6060675b6ff54607",
+      "bytes": 1993
+    },
+    {
+      "path": "experiment/fused_layout/training_contract.json",
+      "sha256": "0bd0c2ee27f754bdc7c3171ca42c63d07443dcb7d6ea4ffd5e6fca95437b9e84",
+      "bytes": 1009
+    },
+    {
+      "path": "experiment/pair_state.json",
+      "sha256": "ac2e620a3475a526e474fbdefdb5895e00e2f18a593a857b4fffed11ce507542",
+      "bytes": 2129
+    },
+    {
+      "path": "experiment/reference/architecture_preflight.json",
+      "sha256": "dfc86bf8e997e64edf30590ecff7331298c9a8d9cba26e18edc241c14cf1c7d2",
+      "bytes": 1688
+    },
+    {
+      "path": "experiment/reference/canonical_trace.json",
+      "sha256": "fc85b2c5eca9654431bc37836ca28052b28b4e2d4b312292088c2203d2f9c394",
+      "bytes": 1404
+    },
+    {
+      "path": "experiment/reference/canonical_trace.json.context.json",
+      "sha256": "8e50bf380a4225a3f947be5984d50196bece13e0f84b79ab673059d35e30870b",
+      "bytes": 954
+    },
+    {
+      "path": "experiment/reference/diagnostic_cost.json",
+      "sha256": "c8ddfc4e4064132baa59798bd783989a6941770251b474caa59337308c15ddbc",
+      "bytes": 775
+    },
+    {
+      "path": "experiment/reference/preflight.log",
+      "sha256": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c",
+      "bytes": 349
+    },
+    {
+      "path": "experiment/reference/runtime_certificate.json",
+      "sha256": "6cc9b51ded70a154f0a3cc6da7ce0ac5ffceb1434c9a878ce22b06e439546b8e",
+      "bytes": 993
+    },
+    {
+      "path": "experiment/reference/runtime_manifest.json",
+      "sha256": "6adc19959c5aa18983aac0182ee34a88a4d5ecd91676f1142e232f570d428aaa",
+      "bytes": 25209
+    },
+    {
+      "path": "experiment/reference/runtime_provenance.json",
+      "sha256": "98d9656b6912887a993800766d8e689be8791e3cd5b5999df11a82c36a0b9425",
+      "bytes": 1465
+    },
+    {
+      "path": "experiment/reference/train.log",
+      "sha256": "69451f867d948b15b6416dc37a30080551be4d323d57d0ba6060675b6ff54607",
+      "bytes": 1993
+    },
+    {
+      "path": "experiment/reference/training_contract.json",
+      "sha256": "649ffc006cf24ab0d9b57b4d0f4786753dde1c449ee75ec87244032d0db7aa5e",
+      "bytes": 893
+    }
+  ],
+  "unselected_outputs_downloaded": false
+}

@@ -168,6 +168,10 @@ K1 v2 release also reads the staged initial artifact through the frozen package'
 actual family loader in a CPU-only subprocess. Both flat and `model_state`
 envelopes share the validated reader; generic tensor inspection alone is not
 transport compatibility. This check constructs no model and grants no GPU release.
+The same isolated worker checks the packaged K1 trainer's JSON object and
+timing-array roundtrips before publication. CPU synthetic loop regressions in
+`tests/test_k1_screen_lifecycle.py` cover epoch output, interruption/resume and
+terminal inspection; neither check substitutes for native GPU qualification.
 The prospective planner validates all arms before publishing. The workflow then
 freezes the launch config and
 runs `check_workflow_binding` over the config, staged dataset mounts, T4 and
