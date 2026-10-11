@@ -60,6 +60,16 @@ def validate_execution_fields(arm, observed):
     _require(observed == expected_execution_fields(arm), "Frozen scientific fields differ")
 
 
+def validate_recorded_learning_rate(epoch, native_value, canonical_value):
+    from .pcqm_gptrans_v4 import FrozenEpochScheduler
+    expected = FrozenEpochScheduler.learning_rate(epoch)
+    # Linux/Windows libm cosine can differ at the last bit. Retained records
+    # must agree exactly; only independent local recomputation permits 2 ULP.
+    _require(math.isfinite(native_value) and native_value == canonical_value
+             and abs(native_value - expected) <= 2 * math.ulp(expected),
+             "Frozen learning-rate path")
+
+
 def verified_files(folder, manifest):
     files = manifest["files"]
     required = {"training/partial_manifest.json", "training/trace.json", "training/canonical_trace.json",
@@ -155,11 +165,10 @@ def accept(root, records, package, *, receipt_ref):
         rows = load(folder / "training/trace.json")["rows"]
         trace = load_canonical_trace(folder / "training/canonical_trace.json")
         _require(len(rows) == len(trace["observations"]) == 40, "All forty observations")
-        from .pcqm_gptrans_v4 import FrozenEpochScheduler
         for epoch, (r,t) in enumerate(zip(rows, trace["observations"])):
             _require(r["epoch"] == epoch and r["cumulative_optimizer_steps"] == t["optimizer_step"] == (epoch+1)*781
-                and r["cumulative_sample_presentations"] == t["sample_presentations"] == (epoch+1)*99968
-                and r["learning_rate"] == FrozenEpochScheduler.learning_rate(epoch), "Native exposure/LR")
+                and r["cumulative_sample_presentations"] == t["sample_presentations"] == (epoch+1)*99968, "Native exposure")
+            validate_recorded_learning_rate(epoch, r["learning_rate"], t["learning_rate"])
             for native, canonical in (("train_mae_eV","live_train_metric"), ("live_development_mae_eV","live_dev_metric"),
                     ("development_mae_eV","ema_dev_metric")):
                 _require(math.isfinite(r[native]) and r[native] == t[canonical], "Canonical metrics")

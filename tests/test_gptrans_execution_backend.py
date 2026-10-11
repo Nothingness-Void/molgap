@@ -223,3 +223,25 @@ def test_execution_timing_report_rejects_invalid_epoch_timings(value):
     rows[3]['elapsed_seconds'] = value
     with pytest.raises(ValueError, match='finite timings'):
         timing_summary(rows, 2000., {})
+
+
+def test_recorded_schedule_allows_only_libm_roundoff_in_local_recomputation():
+    import math
+    from molgap.gptrans_execution_acceptance import validate_recorded_learning_rate
+    from molgap.pcqm_gptrans_v4 import FrozenEpochScheduler
+    expected = FrozenEpochScheduler.learning_rate(18)
+    adjacent = math.nextafter(expected, math.inf)
+    validate_recorded_learning_rate(18, expected, expected)
+    validate_recorded_learning_rate(18, adjacent, adjacent)
+    with pytest.raises(ValueError, match='learning-rate'):
+        validate_recorded_learning_rate(18, adjacent, expected)
+    with pytest.raises(ValueError, match='learning-rate'):
+        validate_recorded_learning_rate(18, expected + 3 * math.ulp(expected),
+                                       expected + 3 * math.ulp(expected))
+
+
+@pytest.mark.parametrize('value', [float('nan'), float('inf'), 0., -1., 0.0008])
+def test_recorded_schedule_rejects_nonfinite_or_changed_rates(value):
+    from molgap.gptrans_execution_acceptance import validate_recorded_learning_rate
+    with pytest.raises(ValueError, match='learning-rate'):
+        validate_recorded_learning_rate(18, value, value)
