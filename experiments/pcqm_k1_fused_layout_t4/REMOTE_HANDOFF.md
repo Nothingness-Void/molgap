@@ -1,5 +1,10 @@
 # Native T4 pair handoff
 
+The [initialized-layout handoff](initialized_layout_100k/REMOTE_HANDOFF.md)
+owns the separately authorized native-AdamW variant and its actual submission.
+The [attempt003 decision](attempt_003/terminal_acceptance/decision.md) owns the
+completed fused-AdamW pair; observations below are dated history, not its live state.
+
 The explicitly authorized [timing-IO retry003](attempt_003/REMOTE_HANDOFF.md)
 has its own source, prospective records and actual API receipt. Use that owner
 entry for its dated state. [Attempt002](attempt_002/REMOTE_HANDOFF.md) and the

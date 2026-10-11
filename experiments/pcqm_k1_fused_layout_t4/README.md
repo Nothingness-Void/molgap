@@ -2,7 +2,8 @@
 
 The user-authorized [initialized-layout variant](initialized_layout_100k/protocol.md)
 uses native AdamW and scoped TRAIN safety-fill removal, not fused AdamW. It has
-fresh declarations and prospective identities; its handoff owns remote status.
+fresh declarations and prospective identities; its
+[handoff](initialized_layout_100k/REMOTE_HANDOFF.md) owns remote status.
 
 Question: does fused AdamW plus CPU layout retain single-forward K1 quality
 while reducing a complete fixed100K run's native execution cost?
