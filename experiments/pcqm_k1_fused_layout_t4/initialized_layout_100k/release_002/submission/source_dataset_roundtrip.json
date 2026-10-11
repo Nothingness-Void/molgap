@@ -1,0 +1,83 @@
+{
+  "observed_at": "2026-10-11T17:48:59.970593+00:00",
+  "status": "REMOTE_BYTES_MATCH_LOCAL",
+  "dataset": "nothingnessvoid/k1-initialized-layout-100k-s42-source-v2",
+  "retrieval": "Authenticated per-file dataset REST; mount paths and exact hashes",
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "bytes": 65,
+      "sha256": "1a15e98601bd52e3ffeac5a06bd5403d3dd39cd4f05e42ef2c06a7eebab8b999"
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "bytes": 41,
+      "sha256": "37fd45399e3f6a0d3596e3c3080c9469fc7d6f366f12737b1eab3ec6eddb3d7b"
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "bytes": 10889,
+      "sha256": "263111a33d45b823962a93377dac6aa66b92c5f21975e43b280e422e0074621a"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_fused_layout_t4/initialized_layout_100k/release_002/family_acceptance_plan.json",
+      "bytes": 1604,
+      "sha256": "43d144c3d9b62fef513a17df5f0e540a8d8f003191ef772d3863e04ec6843da0"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_fused_layout_t4/initialized_layout_100k/release_002/training_recipe_initialized_layout.json",
+      "bytes": 1074,
+      "sha256": "782df47046ce7eecdf9a1bc376a6baa37600b70ebb976be17c220dd5a368a40e"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_fused_layout_t4/initialized_layout_100k/release_002/training_recipe_reference.json",
+      "bytes": 893,
+      "sha256": "649ffc006cf24ab0d9b57b4d0f4786753dde1c449ee75ec87244032d0db7aa5e"
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "bytes": 408,
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+    },
+    {
+      "path": "experiment_launch.json",
+      "bytes": 1573,
+      "sha256": "3e4e4b8e40f1e18ffad210b08ddd4fea6151931ebc7c7fbf1250186646548152"
+    },
+    {
+      "path": "experiment_spec.json",
+      "bytes": 5639,
+      "sha256": "2d77fa933ae9345f1591b71955f7c473faf8d67016ac94fdd917845757dfb1f7"
+    },
+    {
+      "path": "initial_states/initialized_layout.pt",
+      "bytes": 14779955,
+      "sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80"
+    },
+    {
+      "path": "initial_states/reference.pt",
+      "bytes": 14779955,
+      "sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80"
+    },
+    {
+      "path": "package_manifest.json",
+      "bytes": 3340,
+      "sha256": "fe4e69515de971b08e2ecc7c776e2bfaa1cf06c0b796f401054745571113ecc6"
+    },
+    {
+      "path": "prospective/initialized_layout/trajectory.json",
+      "bytes": 54737,
+      "sha256": "ec2a935591ec47209f6a4c1b439a5179734201d1b86981a81197df7db4c4d6c4"
+    },
+    {
+      "path": "prospective/reference/trajectory.json",
+      "bytes": 54674,
+      "sha256": "9a2fea6746fb561aa9705a7dac2d5f0dc74a80b4120ed54dd6ac87cd83ff748c"
+    },
+    {
+      "path": "source_payload.bin",
+      "bytes": 212353,
+      "sha256": "923743640e74447bea3ace18c3520f225c0b3ae112dbf5cb3ff7f32683394dd5"
+    }
+  ]
+}
