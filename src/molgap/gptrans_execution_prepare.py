@@ -83,7 +83,7 @@ def freeze(root):
                 "CPU contention and first-use costs can change timing; foreach roundoff can change trajectories."],
             changed_mechanism="execution-only backend" if optimized else "fresh matched timing control",
             cheapest_falsifier="one paired seed42 dual40 test explicitly authorized by the user",
-            related_closed_family_ids=[], expected_native_cost_ref="cost-"+tid,
+            related_closed_family_ids=["gptrans-runtime-profiling"], expected_native_cost_ref="cost-"+tid,
             decision_changed_if_positive="consider an independently qualified execution backend, not architecture promotion",
             decision_changed_if_negative="retain the original backend",
             historical_unknowns=["full forty-pass numerical/selection drift is unmeasured"])

@@ -17,7 +17,9 @@
       ],
       "changed_mechanism": "execution-only backend",
       "cheapest_falsifier": "one paired seed42 dual40 test explicitly authorized by the user",
-      "related_closed_family_ids": [],
+      "related_closed_family_ids": [
+        "gptrans-runtime-profiling"
+      ],
       "expected_native_cost_ref": "cost-TC-gptrans-execution40-optimized-100k-s42",
       "decision_changed_if_positive": "consider an independently qualified execution backend, not architecture promotion",
       "decision_changed_if_negative": "retain the original backend",
