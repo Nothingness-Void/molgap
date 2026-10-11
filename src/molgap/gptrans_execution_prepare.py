@@ -90,6 +90,7 @@ def freeze(root):
         prelaunch = assess_comparison_prelaunch(candidate_id=tid,
             candidate_plan={"comparison_identity": {}, "source_config_status":"frozen", "source_commit_or_archive":commit},
             reference_id=None, reference_bundle=None, experiment_purpose="delivery_experiment",
+            intervention_group_id="execution40", declared_intervention_fields=[],
             role_applicability_plan=roles, trace_plan={k:True for k in TRACE_FIELD_DECLARATIONS},
             runtime_qualification_plan={"status":"declared", "runtime_certificate_required":True,
                                         "qualification_scope":"per-arm T4 deterministic optimizer-inclusive repeat"})
@@ -142,8 +143,11 @@ def freeze(root):
         dataset_metadata={"title":"MolGap GPTrans Execution40 Source", "id":"kaseichou/molgap-gptrans-execution40-source",
                           "licenses":[{"name":"other"}],"isPrivate":True},
         required_modules=["molgap.gptrans_execution_study","molgap.gptrans_execution_backend","molgap.pcqm_gptrans_v4"])
-    tracked=subprocess.check_output(["git","ls-files","-z","--","src/molgap"],cwd=root).decode().split("\0")
-    workflow["source_paths"]=[p for p in tracked if p.endswith(".py") and "/archive/" not in p]+[
+    # Reuse the reviewed family payload, not a repository-wide sensitive-file scan.
+    sources = [p for p in workflow["source_paths"] if p.startswith("src/molgap/")]
+    sources += ["src/molgap/gptrans_execution_backend.py", "src/molgap/gptrans_execution_study.py",
+                "src/molgap/gptrans_execution_prepare.py", "src/molgap/gptrans_execution_acceptance.py"]
+    workflow["source_paths"]=sorted(set(sources))+[
         *recipes.values(), *plan_refs, workflow["entry_template"],BASE+"/gpu/kernel-metadata.json",BASE+"/gpu/screen_config.json"]
     atomic_json(root / BASE / "gpu/release_workflow.json",workflow)
     return {"spec_identity":frozen.identity,"source_commit":commit,"submission_performed":False}
