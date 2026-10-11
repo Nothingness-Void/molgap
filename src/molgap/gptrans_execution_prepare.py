@@ -79,7 +79,7 @@ def freeze(root):
             "Does the opt-in execution backend reduce complete forty-pass runtime without material accuracy regression?" if optimized else
             "What is the matched original-backend forty-pass speed/accuracy control?")
         t["hypothesis"].update(hypothesis_id="H-"+tid, observed_deficiency=t["question"],
-            supporting_evidence_ids=["pcqm-gptrans-g1-bond-local-100k-s42"], alternative_explanations=[
+            supporting_evidence_ids=["pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"], alternative_explanations=[
                 "CPU contention and first-use costs can change timing; foreach roundoff can change trajectories."],
             changed_mechanism="execution-only backend" if optimized else "fresh matched timing control",
             cheapest_falsifier="one paired seed42 dual40 test explicitly authorized by the user",
@@ -101,7 +101,7 @@ def freeze(root):
         t["state_at_start"].update(source_commit=commit, source_config_identity=canonical_fingerprint(arm),
             contract_refs=[recipe_ref,BASE+"/protocol.md",prelaunch_ref], reference_ids=[],
             parent_trajectory_ids=["TC-gptrans-g1-bond-local-100k-s42"],
-            prior_trajectory_ids=["TC-gptrans-g1-bond-local-100k-s42"], prior_evidence_ids=["pcqm-gptrans-g1-bond-local-100k-s42"],
+            prior_trajectory_ids=["TC-gptrans-g1-bond-local-100k-s42"], prior_evidence_ids=["pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"],
             role_snapshot_refs=[role_ref],budget_snapshot_ref=budget_ref)
         t["actions"]=[{"action_id":"A001","type":"single_mechanism_screen","source_commit":commit,
             "run_ids":[RUN+":"+arm_id],"attempt_ids":["v1"],"evidence_refs":[recipe_ref],"cost_event_ids":["cost-"+tid]}]

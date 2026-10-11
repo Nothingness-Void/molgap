@@ -10,7 +10,7 @@
       "hypothesis_id": "H-TC-gptrans-execution40-original-100k-s42",
       "observed_deficiency": "What is the matched original-backend forty-pass speed/accuracy control?",
       "supporting_evidence_ids": [
-        "pcqm-gptrans-g1-bond-local-100k-s42"
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
       ],
       "alternative_explanations": [
         "CPU contention and first-use costs can change timing; foreach roundoff can change trajectories."
@@ -41,7 +41,7 @@
         "TC-gptrans-g1-bond-local-100k-s42"
       ],
       "prior_evidence_ids": [
-        "pcqm-gptrans-g1-bond-local-100k-s42"
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
       ],
       "role_snapshot_refs": [
         "experiments/pcqm_gptrans_execution40/gpu/role_plan.json"
