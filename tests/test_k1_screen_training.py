@@ -187,21 +187,57 @@ def test_nonhistorical_runtime_validation_never_reconstructs(monkeypatch):
     _validate_arm_binding(spec, SimpleNamespace(arm_id="single"), "reference", fresh)
 
 
-def test_transported_initial_tensor_hash_is_verified_without_reconstruction(tmp_path, monkeypatch):
+@pytest.mark.parametrize("wrapped", [False, True], ids=["flat", "envelope"])
+def test_transported_initial_tensor_hash_is_verified_without_reconstruction(tmp_path, monkeypatch, wrapped):
     import torch
     import molgap.k1_screen_training as trainer
     state = {"toy_tensor": torch.arange(4, dtype=torch.float32)}
     initial = tmp_path / "initial.pt"
-    torch.save(state, initial)
+    digest = state_dict_sha256(state)
+    torch.save({"model_state": state, "state_sha256": digest} if wrapped else state, initial)
     fresh = seed43_recipe(state_dict_sha256(state))
     def forbidden(*args, **kwargs):
         pytest.fail("Loading pinned tensors must not regenerate initialization")
     monkeypatch.setattr(trainer, "make_encoder", forbidden)
+    monkeypatch.setattr(trainer, "build_initial_state", forbidden)
     loaded = _load_initial_state(initial, fresh)
+    assert loaded.keys() == state.keys()
+    assert state_dict_sha256(loaded) == digest
+    assert all(value.device.type == "cpu" for value in loaded.values())
     assert torch.equal(loaded["toy_tensor"], state["toy_tensor"])
-    torch.save({"toy_tensor": state["toy_tensor"] + 1}, initial)
-    with pytest.raises(ValueError, match="tensor identity"):
+    changed = {"toy_tensor": state["toy_tensor"] + 1}
+    torch.save({"model_state": changed, "state_sha256": state_dict_sha256(changed)}
+               if wrapped else changed, initial)
+    with pytest.raises(ValueError, match="^Pinned K1 initial tensor identity mismatch$"):
         _load_initial_state(initial, fresh)
+
+
+@pytest.mark.parametrize("corruption", ["envelope_sha", "nan", "nontensor", "empty"])
+def test_initial_state_corruption_is_rejected_without_model(tmp_path, monkeypatch, corruption):
+    import torch
+    import molgap.k1_screen_training as trainer
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("Transport validation must not construct a model")
+
+    monkeypatch.setattr(trainer, "make_encoder", forbidden)
+    monkeypatch.setattr(trainer, "build_initial_state", forbidden)
+    state = {"weight": torch.arange(3, dtype=torch.float32)}
+    digest = state_dict_sha256(state)
+    if corruption == "nan":
+        state["weight"][0] = float("nan")
+        digest = state_dict_sha256(state)
+    elif corruption == "nontensor":
+        state["metadata"] = "not a tensor"
+    elif corruption == "empty":
+        state = {}
+    path = tmp_path / "initial.pt"
+    torch.save({"model_state": state,
+                "state_sha256": "0" * 64 if corruption == "envelope_sha" else digest}, path)
+    error, message = (RuntimeError, "non-finite") if corruption == "nan" else (
+        ValueError, "envelope tensor SHA" if corruption == "envelope_sha" else "nonempty tensor")
+    with pytest.raises(error, match=message):
+        _load_initial_state(path, {"initialization_sha256": digest})
 
 
 def test_seed42_rejects_initialization_drift():

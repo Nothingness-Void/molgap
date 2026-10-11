@@ -16,6 +16,9 @@ from molgap.v4_runtime import (
     sample_std_compat,
     torch_load_compat,
     validate_standard_source_bundle,
+    read_frozen_state_artifact,
+    inspect_frozen_state_artifact,
+    state_dict_sha256,
 )
 from molgap.v4_submission import (
     RUN_SPEC_FORMAT,
@@ -26,6 +29,65 @@ from molgap.v4_submission import (
     validate_run_spec,
     write_run_spec,
 )
+
+
+@pytest.mark.parametrize("wrapped", [False, True])
+def test_frozen_state_reader_and_inspector_share_tensor_identity(tmp_path, wrapped):
+    from molgap.training_reproducibility import sha256_file
+
+    state = {"weight": torch.arange(4, dtype=torch.float32), "count": torch.tensor(2)}
+    digest = state_dict_sha256(state)
+    path = tmp_path / "initial.pt"
+    torch.save({"model_state": state, "state_sha256": digest} if wrapped else state, path)
+    loaded, report = read_frozen_state_artifact(path, expected_state_sha256=digest)
+    assert loaded.keys() == state.keys()
+    assert all(torch.equal(loaded[name], value) for name, value in state.items())
+    assert all(value.device.type == "cpu" for value in loaded.values())
+    assert report == {"file_sha256": sha256_file(path), "state_sha256": digest,
+                      "tensor_count": 2, "device": "cpu"}
+    assert inspect_frozen_state_artifact(path, expected_state_sha256=digest) == report
+
+
+def test_frozen_state_inspector_delegates_to_reader(tmp_path, monkeypatch):
+    import molgap.v4_runtime as runtime
+
+    path, report = tmp_path / "unused.pt", {"sentinel": True}
+    calls = []
+    def reader(actual_path, *, expected_state_sha256):
+        calls.append((actual_path, expected_state_sha256))
+        return {}, report
+    monkeypatch.setattr(runtime, "read_frozen_state_artifact", reader)
+    assert runtime.inspect_frozen_state_artifact(path, expected_state_sha256="a" * 64) is report
+    assert calls == [(path, "a" * 64)]
+
+
+@pytest.mark.parametrize("inspector", [False, True], ids=["reader", "inspector"])
+@pytest.mark.parametrize("corruption", ["wrong_sha", "envelope_sha", "nan", "inf", "nontensor", "empty", "not_mapping"])
+def test_frozen_state_validation_rejects_corruption(tmp_path, inspector, corruption):
+    state = {"weight": torch.arange(3, dtype=torch.float32)}
+    digest = state_dict_sha256(state)
+    error, message = ValueError, "nonempty tensor"
+    if corruption in ("nan", "inf"):
+        state["weight"][0] = float(corruption)
+        digest = state_dict_sha256(state)
+        error, message = RuntimeError, "non-finite"
+    elif corruption == "nontensor":
+        state["metadata"] = 1
+    elif corruption == "empty":
+        state = {}
+    elif corruption == "not_mapping":
+        state = [state["weight"]]
+    elif corruption == "wrong_sha":
+        digest = "0" * 64
+        message = "tensor SHA differs"
+    elif corruption == "envelope_sha":
+        message = "envelope tensor SHA"
+    path = tmp_path / "initial.pt"
+    torch.save({"model_state": state,
+                "state_sha256": "0" * 64 if corruption == "envelope_sha" else digest}, path)
+    operation = inspect_frozen_state_artifact if inspector else read_frozen_state_artifact
+    with pytest.raises(error, match=message):
+        operation(path, expected_state_sha256=digest)
 
 
 def test_legacy_torch_load_and_adamw_signatures(monkeypatch, tmp_path):

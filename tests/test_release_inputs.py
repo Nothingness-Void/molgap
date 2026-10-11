@@ -1,5 +1,6 @@
 """Synthetic release regressions; no real graph roles, models or network."""
 import hashlib
+import json
 import zipfile
 from pathlib import Path
 
@@ -8,14 +9,15 @@ import torch
 
 from molgap.experiment_package import build_experiment_source_package
 from molgap.experiment_preflight import check_release_inputs
-from molgap.experiment_spec import ExperimentSpec
+from molgap.experiment_spec import ExperimentSpec, FAMILIES
 from molgap.v4_runtime import state_dict_sha256, inspect_frozen_state_artifact
 from test_experiment_package import git
 from test_experiment_spec import payload
 
 
 @pytest.fixture
-def release(tmp_path, payload):
+def release(tmp_path, payload, request):
+    loader_mode = getattr(request, "param", "generic")
     root = tmp_path / "repo"
     root.mkdir()
     git(root, "init")
@@ -28,23 +30,84 @@ def release(tmp_path, payload):
     (module / "loader.py").write_bytes(b"from .child import VALUE\n")
     (module / "child.py").write_bytes(b"VALUE = 1\n")
     (root / "recipe.json").write_bytes(b'{"epochs":10}\r\n')
+    allowlist = ["src/molgap/__init__.py", "src/molgap/loader.py", "src/molgap/child.py", "recipe.json"]
+    if loader_mode != "generic":
+        owner = Path(__file__).resolve().parents[1] / "src/molgap"
+        for name in ("k1_screen_training.py", "v4_runtime.py", "screen_policy.py", "training_reproducibility.py"):
+            source = (owner / name).read_bytes()
+            if name == "k1_screen_training.py" and loader_mode == "broken":
+                source += (b"\ndef _load_initial_state(path, recipe):\n"
+                           b"    raise ValueError('packaged broken K1 loader')\n")
+            (module / name).write_bytes(source)
+            allowlist.append("src/molgap/" + name)
+        # Importable model owner, but any constructor use fails inside the clean worker.
+        (module / "qm9_neural_atom.py").write_bytes(
+            b"def make_encoder(*args, **kwargs):\n"
+            b"    raise AssertionError('release check constructed a model')\n")
+        allowlist.append("src/molgap/qm9_neural_atom.py")
+        digest = state_dict_sha256({"weight": torch.arange(3, dtype=torch.float32)})
+        recipe_bytes = json.dumps({"initialization_sha256": digest}, sort_keys=True,
+                                  separators=(",", ":")).encode("ascii")
+        (root / "recipe.json").write_bytes(recipe_bytes)
+        candidate = payload["arms"][1]
+        contract = FAMILIES[("neural_atom_k1", "2")]
+        candidate["family"]["version"] = "2"
+        candidate["training"]["recipe"]["name"] = contract.recipe
+        candidate["training"]["sampler"]["name"] = contract.sampler
+        candidate["training"]["transform"]["name"] = contract.transform
+        candidate["data"]["roles"] = [dict(candidate["data"]["roles"][0], role=role)
+                                      for role in contract.roles]
     git(root, "add", ".")
     git(root, "-c", "commit.gpgsign=false", "commit", "-m", "fixture")
     states = {}
     for arm in payload["arms"]:
         state = {"weight": torch.arange(3, dtype=torch.float32)}
         arm["initialization"]["state_sha256"] = state_dict_sha256(state)
-        arm["training"]["recipe"]["sha256"] = hashlib.sha256(b'{"epochs":10}\n').hexdigest()
+        packaged_recipe = (root / "recipe.json").read_bytes().replace(b"\r\n", b"\n")
+        arm["training"]["recipe"]["sha256"] = hashlib.sha256(packaged_recipe).hexdigest()
         path = tmp_path / (arm["arm_id"] + ".pt")
-        torch.save(state, path)
+        torch.save({"model_state": state, "state_sha256": state_dict_sha256(state)}
+                   if loader_mode != "generic" else state, path)
         states[arm["arm_id"]] = path
     spec = ExperimentSpec(payload)
     package = tmp_path / "package"
     manifest = build_experiment_source_package(spec, root,
-        ["src/molgap/__init__.py", "src/molgap/loader.py", "src/molgap/child.py", "recipe.json"], package)
+        allowlist, package)
     return spec, package, {"expected_package_identity": manifest["package_identity"],
         "recipe_files": {a["arm_id"]: "recipe.json" for a in payload["arms"]},
         "initial_states": states, "required_modules": ["molgap.loader"]}
+
+
+@pytest.mark.parametrize("release", ["broken"], indirect=True)
+def test_generic_inspector_pass_cannot_hide_broken_packaged_k1_loader(release):
+    spec, package, options = release
+    arm_id = "neural_atom_k1"
+    digest = spec.to_dict()["arms"][1]["initialization"]["state_sha256"]
+    assert inspect_frozen_state_artifact(options["initial_states"][arm_id],
+                                         expected_state_sha256=digest)["state_sha256"] == digest
+    report = check_release_inputs(spec, package, **options)
+    assert report["status"] == "RELEASE_INPUTS_FAILED"
+    assert report["checks"]["initialization:" + arm_id]["state_sha256"] == digest
+    assert report["errors"] == [{"check": "family_initialization", "item": arm_id,
+                                  "message": "packaged broken K1 loader"}]
+    assert "family_initialization:" + arm_id not in report["checks"]
+    assert report["checks"]["clean_import:package"]["molgap.k1_screen_training"] == "src/molgap/k1_screen_training.py"
+
+
+@pytest.mark.parametrize("release", ["repaired"], indirect=True)
+def test_packaged_k1_loader_accepts_real_wrapper_without_model_construction(release):
+    spec, package, options = release
+    report = check_release_inputs(spec, package, **options)
+    assert report["status"] == "LOCAL_RELEASE_INPUTS_VERIFIED"
+    assert report["errors"] == []
+    checks = report["checks"]
+    digest = spec.to_dict()["arms"][1]["initialization"]["state_sha256"]
+    assert checks["family_initialization:neural_atom_k1"] == {
+        "state_sha256": digest, "tensor_count": 1, "device": "cpu"}
+    assert "family_initialization:gptrans_t" not in checks
+    assert checks["initialization:neural_atom_k1"]["state_sha256"] == digest
+    assert checks["clean_import:package"]["molgap.k1_screen_training"] == "src/molgap/k1_screen_training.py"
+    assert checks["clean_import:package"]["molgap.v4_runtime"] == "src/molgap/v4_runtime.py"
 
 
 def test_lf_recipe_and_isolated_imports_pass(release):

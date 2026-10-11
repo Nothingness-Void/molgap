@@ -157,8 +157,13 @@ not copy ignored artifacts between checkouts. It checks every arm and
 the pinned acceptance inputs, builds the immutable source package, runs the
 family's static recipe checks, and runs `check_release_inputs`. These checks
 bind the fixed recipe, initialization, sampler, roles, exposure and packaged
-bootstrap before prospective publication. The prospective planner validates
-all arms before publishing. The workflow then freezes the launch config and
+bootstrap before prospective publication.
+K1 v2 release also reads the staged initial artifact through the frozen package's
+actual family loader in a CPU-only subprocess. Both flat and `model_state`
+envelopes share the validated reader; generic tensor inspection alone is not
+transport compatibility. This check constructs no model and grants no GPU release.
+The prospective planner validates all arms before publishing. The workflow then
+freezes the launch config and
 runs `check_workflow_binding` over the config, staged dataset mounts, T4 and
 device shape, kernel metadata, prospective trajectory hashes and final entry
 script hash. `release_report.json` records this final binding; the Kaggle

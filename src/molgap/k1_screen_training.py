@@ -320,10 +320,14 @@ def _validate_initialization(seed: int, initialization_sha256: str) -> None:
 
 def _load_initial_state(path: Path, recipe: dict) -> dict:
     """Verify transported tensors, never regenerate them on another runtime."""
-    import torch
-    state = torch.load(path, map_location="cpu", weights_only=True)
-    if state_dict_sha256(state) != recipe["initialization_sha256"]:
-        raise ValueError("Pinned K1 initial tensor identity mismatch")
+    from .v4_runtime import read_frozen_state_artifact
+    try:
+        state, _ = read_frozen_state_artifact(
+            path, expected_state_sha256=recipe["initialization_sha256"])
+    except ValueError as exc:
+        if str(exc) == "Frozen initialization tensor SHA differs from Spec":
+            raise ValueError("Pinned K1 initial tensor identity mismatch") from exc
+        raise
     return state
 
 
