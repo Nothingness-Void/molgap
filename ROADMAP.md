@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| 1 | C-GPTRANS-EXECUTION40 | Prepare and release the authorized matched original/optimized T4x2 execution assay. | [Forty-pass protocol](experiments/pcqm_gptrans_execution40/protocol.md); compare complete-stage speed and retained accuracy without architecture promotion |
 | — | C-GPTRANS-SOURCE-DEPENDENCE | Closed: source/gate observations did not establish the proposed broad cohort-collapse rationale. | Preserve [NO_TRAIN / CONTEXT_ONLY interpretation](experiments/pcqm_gptrans_source_dependence/decision_terminal.md); no automatic training successor |
 | — | C-GPTRANS-TRIPLET-PORTABILITY | Closed: positive but uncertain later-cohort point gain did not pass its frozen gate. | Preserve the [NO_TRAIN interpretation](experiments/pcqm_gptrans_triplet_portability/decision_terminal.md) and applicable complete diagnostic evidence; no500K training or automatic successor |
 | 1 | C-GPTRANS-TRIPLET-COMMUNICATION | Both100K positives accepted; aggregation retained as the lower-cost transfer-study priority. | Preserve the [terminal interpretation](experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/interpretation.md) and two complete Replay pairs; further execution requires separate authority |

@@ -6,6 +6,12 @@
 
 ## Server active screen
 
+The authorized [original/optimized execution40 assay](experiments/pcqm_gptrans_execution40/protocol.md)
+is in local preparation; no remote job has been submitted. It compares the
+unchanged local-bond model under two declared execution backends, not a new
+architecture or scale-up. Its requested forty-pass scope retains the original
+sixty-pass learning-rate horizon and requires separate saved-output acceptance.
+
 The authorized [source-dependence assay](experiments/pcqm_gptrans_source_dependence/protocol.md)
 is accepted and closed NO_TRAIN / CONTEXT_ONLY. Its cohort observations did not
 establish broad source collapse or gate starvation; retain the
