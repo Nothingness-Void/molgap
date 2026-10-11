@@ -2,6 +2,7 @@
 import json
 import hashlib
 import math
+import statistics
 from pathlib import Path
 import tarfile
 
@@ -16,6 +17,34 @@ from .training_reproducibility import sha256_file
 BASE = "experiments/pcqm_gptrans_execution40/gpu"
 ARMS = ("execution_original", "execution_optimized")
 PROTECTED = ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")
+
+
+def timing_summary(rows, wall, phases):
+    """Summarize recorded scopes, not a reconstructed GPU-only training timer."""
+    seconds = [r["elapsed_seconds"] for r in rows]
+    _require(len(seconds) == 40 and math.isfinite(wall) and wall > 0
+             and all(math.isfinite(v) and v > 0 for v in seconds), "Forty finite timings")
+    for name in ("optimizer_call_seconds", "evaluation_seconds", "checkpoint_publication_seconds"):
+        _require(math.isfinite(phases[name]) and 0 <= phases[name] <= wall,
+                 "Phase timing scope: " + name)
+    _require(phases["training_batches"] == 31240 and phases["evaluation_passes"] == 80,
+             "Phase counters differ from forty-pass training/live/EMA evaluation")
+    steady = seconds[1:]
+    q25, median, q75 = statistics.quantiles(steady, n=4, method="inclusive")
+    return {
+        "first_epoch_seconds": seconds[0],
+        "post_first_epoch_seconds": {"count": len(steady), "mean": statistics.mean(steady),
+            "q25": q25, "median": median, "q75": q75, "min": min(steady), "max": max(steady)},
+        "epoch_scope": "Native row timer excludes subsequent resume-checkpoint publication; not GPU-only time",
+        "complete_stage_presentations_per_second": 3998720 / wall,
+        "complete_stage_scope": "Includes loading, training, live/EMA evaluation and artifact publication; excludes preflight",
+        "synchronized_evaluation_seconds": phases["evaluation_seconds"],
+        "evaluation_stage_fraction": phases["evaluation_seconds"] / wall,
+        "resume_checkpoint_publication_seconds": phases["checkpoint_publication_seconds"],
+        "checkpoint_scope": "Wrapped native resume-checkpoint saves, not every output/chunk publication",
+        "optimizer_call_seconds": phases["optimizer_call_seconds"],
+        "optimizer_scope": "CPU enqueue duration, not synchronized GPU compute; do not subtract to infer a GPU bottleneck",
+    }
 
 
 def expected_execution_fields(arm):
@@ -146,8 +175,15 @@ def accept(root, records, package, *, receipt_ref):
         _require(math.isfinite(wall) and wall > 0, "Complete stage timing")
         results[arm] = {"parameters":completion["parameters"], "stage_wall_seconds":wall,
             "best_epoch":selected["epoch"], "selected_ema_mae_eV":mae,
+            "best_live_mae_eV":min(r["live_development_mae_eV"] for r in rows),
+            "best_live_epoch":min(rows, key=lambda r:r["live_development_mae_eV"])["epoch"],
             "final_live_mae_eV":rows[-1]["live_development_mae_eV"], "final_ema_mae_eV":rows[-1]["development_mae_eV"],
             "epoch_seconds":[r["elapsed_seconds"] for r in rows], "phase_timing":completion["phase_timing"],
+            "timing_summary":timing_summary(rows, wall, completion["phase_timing"]),
+            "memory": {"optimizer_preflight": {k:preflight["optimizer_step_calibration"][k]
+                for k in ("peak_allocated_bytes", "peak_reserved_bytes", "total_memory_bytes")},
+                "training_peak_bytes":None, "training_peak_status":"measurement_missing",
+                "reason":"Released forty-pass worker records optimizer-preflight peaks, not training-stage peaks"},
             "runtime_certificate_id":preflight["runtime_certificate_id"]}
         payloads[arm] = payload
     paired = paired_saved_errors(payloads[ARMS[0]],payloads[ARMS[1]])

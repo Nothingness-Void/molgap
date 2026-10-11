@@ -197,3 +197,29 @@ def test_packaged_plan_uses_planner_defaults_before_validation():
         validate_trajectory(plan)
     source = Path('src/molgap/gptrans_execution_study.py').read_text()
     assert '_prepare_trajectory(json.loads(staged.read_text()))' in source
+
+
+def test_execution_timing_report_preserves_scopes_and_observed_counters():
+    from molgap.gptrans_execution_acceptance import timing_summary
+    rows = [{'elapsed_seconds': 10. + i} for i in range(40)]
+    phases = dict(optimizer_call_seconds=20., evaluation_seconds=80.,
+        checkpoint_publication_seconds=40., training_batches=31240, evaluation_passes=80)
+    result = timing_summary(rows, 2000., phases)
+    assert result['first_epoch_seconds'] == 10.
+    assert result['post_first_epoch_seconds']['count'] == 39
+    assert result['post_first_epoch_seconds']['median'] == 30.
+    assert result['complete_stage_presentations_per_second'] == 3998720 / 2000
+    assert result['evaluation_stage_fraction'] == .04
+    assert 'not synchronized GPU compute' in result['optimizer_scope']
+    phases['training_batches'] = 31239
+    with pytest.raises(ValueError, match='Phase counters'):
+        timing_summary(rows, 2000., phases)
+
+
+@pytest.mark.parametrize('value', [float('nan'), float('inf'), -1., 0.])
+def test_execution_timing_report_rejects_invalid_epoch_timings(value):
+    from molgap.gptrans_execution_acceptance import timing_summary
+    rows = [{'elapsed_seconds': 10.} for _ in range(40)]
+    rows[3]['elapsed_seconds'] = value
+    with pytest.raises(ValueError, match='finite timings'):
+        timing_summary(rows, 2000., {})

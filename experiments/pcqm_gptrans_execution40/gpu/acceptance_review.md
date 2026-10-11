@@ -27,3 +27,25 @@ source. No remote payload, training recipe, threshold, model, dataset or source
 dataset version changed. No training or inference occurred locally. Real outputs
 and terminal RML closure were still unavailable; these tests did not constitute
 training acceptance or delivery qualification.
+
+## Timing-report preparation
+
+The saved-output report additionally separates first-pass timing from the39
+post-first-pass observations, with inclusive quartiles, extrema and mean. Full
+stage throughput uses the actual3,998,720 presentations divided by recorded
+stage wall; it includes evaluation/loading/publication, not GPU-only training.
+Synchronized evaluation and wrapped resume-checkpoint publication retain their
+own scopes. CPU optimizer enqueue time is not relabeled GPU compute or used
+to infer an unmeasured bottleneck. The report checks31,240 training batches and
+80 live/EMA evaluation passes against the frozen40-pass scope.
+
+Preflight allocated/reserved memory peaks are separately labeled. Training-stage
+memory peaks were not emitted by the released worker and remain explicitly
+measurement_missing; preflight observations do not fill that gap. Best live
+metrics are trace-derived, while selected EMA metrics remain independently
+recomputed from retained predictions. Final live and EMA endpoints remain
+visible regardless of best-checkpoint selection.
+
+The backend-focused synthetic suite passed29 tests after these additions. The
+version3 remote payload was unchanged; final data-dependent qualification and
+applicable RML closure still required terminal outputs.
