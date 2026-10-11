@@ -1,8 +1,9 @@
 # Native T4 pair handoff
 
-The explicitly authorized [repaired attempt002](attempt_002/REMOTE_HANDOFF.md)
+The explicitly authorized [timing-IO retry003](attempt_003/REMOTE_HANDOFF.md)
 has its own source, prospective records and actual API receipt. Use that owner
-entry for its dated state; the attempt001 observations below remain historical.
+entry for its dated state. [Attempt002](attempt_002/REMOTE_HANDOFF.md) and the
+attempt001 observations below remain historical; neither completed40epochs.
 
 [Attempt001 acceptance](terminal_acceptance/decision.md) supersedes the queue
 observation for this attempt: ERROR during initial-state loading, neither arm

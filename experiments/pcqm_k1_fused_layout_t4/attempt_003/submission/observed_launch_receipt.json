@@ -1,0 +1,132 @@
+{
+  "binding": {
+    "arms": [
+      {
+        "arm_id": "reference",
+        "arm_identity": "35417047711e77f5fb0b9e4658eb37b35a5555b46725085de5b349f1bace76de"
+      },
+      {
+        "arm_id": "fused_layout",
+        "arm_identity": "c0d466f1328773f52da8c3b17e3b127469ca5741a7763c731e7ae057234de069"
+      }
+    ],
+    "experiment_id": "molgap-k1-fused-layout-100k-s42-v3",
+    "logical_run_id": "molgap-k1-fused-layout-100k-s42-v3",
+    "package_identity": "97fc370188d37c9a15027f64e18bc4fef17dacdbd5db61a081f5d4d2a1780f70",
+    "requested_logical_platform": "kaggle",
+    "source_archive_sha256": "d9f09a783dd7b72e04f105fd7c7ec3c77b08a7f699b9acf3f2dd697132b37ced",
+    "source_commit": "e4876d35fca740e35bdfb908836c7a2cda7aab0e",
+    "spec_identity": "53c08fe5c1cd47920aa04ab09158d5df6d7a13ba2f7a1e0e68f15c2e3d93b69c",
+    "spec_sha256": "53c08fe5c1cd47920aa04ab09158d5df6d7a13ba2f7a1e0e68f15c2e3d93b69c"
+  },
+  "canonical_platform_reference": {
+    "missing_reason": null,
+    "value": "nothingnessvoid/molgap-k1-fused-layout-100k-s42-v3"
+  },
+  "cost": {
+    "missing_reason": "not_observed",
+    "value": null
+  },
+  "format": "molgap-experiment-launch-receipt",
+  "launch_identity": "75340bd164d69c4e2d6d4f821c8322dc2f40362b6722d08f3ba337cc0cb66d80",
+  "limitations": [
+    "Local receipt/reconcile core only; SUBMIT_UNIMPLEMENTED.",
+    "Envelope observations are caller supplied, not independently authenticated.",
+    "No runtime qualification, scientific acceptance or execution authority."
+  ],
+  "monitor_paths": {
+    "missing_reason": "not_reported",
+    "value": null
+  },
+  "next_action": "INSPECT_DURABLE_PLATFORM_STATE",
+  "physical_runs": {
+    "missing_reason": null,
+    "value": [
+      {
+        "arm_ids": [
+          "reference",
+          "fused_layout"
+        ],
+        "canonical_reference": "nothingnessvoid/molgap-k1-fused-layout-100k-s42-v3",
+        "platform_version": {
+          "missing_reason": null,
+          "value": "1"
+        },
+        "run_identity": "kaggle-kernel-138131630-v1"
+      }
+    ]
+  },
+  "platform_version": {
+    "missing_reason": null,
+    "value": "1"
+  },
+  "receipt_identity": "8fa10e28467e92046bbd495b78485e11d1289a3da063208fcf30aa3866e79a80",
+  "reconciliation_result": "ACCEPTED",
+  "response": {
+    "binding": {
+      "arms": [
+        {
+          "arm_id": "reference",
+          "arm_identity": "35417047711e77f5fb0b9e4658eb37b35a5555b46725085de5b349f1bace76de"
+        },
+        {
+          "arm_id": "fused_layout",
+          "arm_identity": "c0d466f1328773f52da8c3b17e3b127469ca5741a7763c731e7ae057234de069"
+        }
+      ],
+      "experiment_id": "molgap-k1-fused-layout-100k-s42-v3",
+      "logical_run_id": "molgap-k1-fused-layout-100k-s42-v3",
+      "package_identity": "97fc370188d37c9a15027f64e18bc4fef17dacdbd5db61a081f5d4d2a1780f70",
+      "requested_logical_platform": "kaggle",
+      "source_archive_sha256": "d9f09a783dd7b72e04f105fd7c7ec3c77b08a7f699b9acf3f2dd697132b37ced",
+      "source_commit": "e4876d35fca740e35bdfb908836c7a2cda7aab0e",
+      "spec_identity": "53c08fe5c1cd47920aa04ab09158d5df6d7a13ba2f7a1e0e68f15c2e3d93b69c",
+      "spec_sha256": "53c08fe5c1cd47920aa04ab09158d5df6d7a13ba2f7a1e0e68f15c2e3d93b69c"
+    },
+    "canonical_platform_reference": {
+      "missing_reason": null,
+      "value": "nothingnessvoid/molgap-k1-fused-layout-100k-s42-v3"
+    },
+    "conflict_kind": null,
+    "format": "molgap-platform-response",
+    "mode": "observed",
+    "monitor_paths": {
+      "missing_reason": "not_reported",
+      "value": null
+    },
+    "outcome": "accepted",
+    "physical_runs": {
+      "missing_reason": null,
+      "value": [
+        {
+          "arm_ids": [
+            "reference",
+            "fused_layout"
+          ],
+          "canonical_reference": "nothingnessvoid/molgap-k1-fused-layout-100k-s42-v3",
+          "platform_version": {
+            "missing_reason": null,
+            "value": "1"
+          },
+          "run_identity": "kaggle-kernel-138131630-v1"
+        }
+      ]
+    },
+    "platform_version": {
+      "missing_reason": null,
+      "value": "1"
+    },
+    "timestamp": {
+      "missing_reason": null,
+      "value": "2026-10-11T06:30:44.648798+00:00"
+    },
+    "version": 1
+  },
+  "submission_state": "ACCEPTED",
+  "submitter_status": "SUBMIT_UNIMPLEMENTED",
+  "timestamp": {
+    "missing_reason": null,
+    "value": "2026-10-11T06:30:44.648798+00:00"
+  },
+  "version": 1
+}
