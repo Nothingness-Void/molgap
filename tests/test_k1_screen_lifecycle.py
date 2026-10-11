@@ -32,7 +32,11 @@ def lifecycle(tmp_path, monkeypatch):
     monkeypatch.setattr(owner, "SAMPLE_EXPOSURE", 160)
     monkeypatch.setattr(owner, "DEVELOPMENT_ROWS", 3)
     monkeypatch.setattr(owner, "compute_row_order_fingerprint", lambda seed: "1" * 64)
-    monkeypatch.setattr(owner, "configure_fp32_determinism", lambda seed: {})
+    def configure(seed):
+        torch.random.default_generator.manual_seed(seed)
+        return {}
+
+    monkeypatch.setattr(owner, "configure_fp32_determinism", configure)
     monkeypatch.setattr(owner, "build_runtime_manifest", lambda determinism:
                         {"runtime_fingerprint": "2" * 64})
     monkeypatch.setattr(owner, "_validate_prospective", lambda *args: None)
@@ -61,17 +65,17 @@ def lifecycle(tmp_path, monkeypatch):
     monkeypatch.setattr(owner, "_screen_optimizer", lambda model, mode:
                         torch.optim.AdamW(model.parameters(), lr=4e-4, weight_decay=1e-5))
 
-    def step(model, optimizer, batch, mean, std, mode):
+    def step(model, optimizer, batch, mean, std, mode, **execution_options):
         optimizer.zero_grad(set_to_none=True)
         model.weight.grad = torch.ones_like(model.weight)
         optimizer.step()
-        return None, 0.5, 2
+        return None, torch.tensor(0.5), 2
 
     monkeypatch.setattr(owner, "_screen_step", step)
     idx = torch.tensor([101, 102, 103], dtype=torch.int64)
     target = torch.zeros(3, dtype=torch.float64)
 
-    def evaluate(model, *args):
+    def evaluate(model, *args, **execution_options):
         prediction = model.weight.detach().double().reshape(1).repeat(3)
         return float(prediction.abs().mean()), target.clone(), prediction, idx.clone()
 
@@ -131,6 +135,32 @@ def test_actual_loop_writes_40_epoch_timing_and_verified_terminal(lifecycle, mod
 
 
 @pytest.mark.parametrize("mode", ["reference", "fused_layout"])
+def test_local_prefix_runs_ten_epochs_without_shortening_cosine_schedule(lifecycle, monkeypatch, mode):
+    request, started = lifecycle
+    args = request(mode)
+    recipe = json.loads(args["recipe_path"].read_text())
+    recipe["local_execution_prefix"] = {"epochs": 10, "accelerator": "NVIDIA GeForce RTX 5060",
+        "original_execution": mode == "reference", "purpose": "execution-quality-prefix"}
+    recipe["acceptance_requirements"].update(epochs=10, optimizer_steps=20, sample_presentations=40)
+    atomic_json(args["recipe_path"], recipe)
+    from dataclasses import replace
+    context_factory = RunContext.for_training
+    monkeypatch.setattr(RunContext, "for_training", lambda *a, **k: replace(
+        context_factory(*a, **k), platform="local", training_recipe_sha256=sha256_file(args["recipe_path"])))
+    declaration = args["spec"].to_dict()
+    declaration["platform"] = {"name": "local", "device_count": 1, "accelerator": "NVIDIA GeForce RTX 5060"}
+    args["spec"] = SimpleNamespace(to_dict=lambda: declaration)
+    monkeypatch.setattr(torch.cuda, "get_device_name", lambda device: "NVIDIA GeForce RTX 5060")
+    monkeypatch.setattr(owner, "validate_runtime_preflight", lambda *a: {"accelerator": "NVIDIA GeForce RTX 5060"})
+    report = owner.run_screen_arm(**args)
+    assert report["status"] == "MECHANICALLY_VERIFIED", report
+    assert started == list(range(10))
+    assert report["observed"]["progress"] == {"epochs": 10, "optimizer_steps": 20, "sample_presentations": 40}
+    checkpoint = torch.load(args["output"] / "last_checkpoint.pt", weights_only=True)
+    assert checkpoint["scheduler"]["T_max"] == 40 and checkpoint["scheduler"]["last_epoch"] == 10
+
+
+@pytest.mark.parametrize("mode", ["reference", "fused_layout"])
 def test_complete_epoch_resume_keeps_timing_trace_and_schedule(lifecycle, monkeypatch, mode):
     request, started = lifecycle
     args = request(mode)
@@ -178,9 +208,10 @@ def test_complete_epoch_resume_keeps_timing_trace_and_schedule(lifecycle, monkey
     assert costs[1]["status"] == "missing" and costs[1]["value"] is None
 
 
-def test_resume_never_invents_missing_fused_timing(lifecycle, monkeypatch):
+@pytest.mark.parametrize("mode", ["reference", "fused_layout"])
+def test_resume_never_invents_missing_timing(lifecycle, monkeypatch, mode):
     request, started = lifecycle
-    args = request("fused_layout")
+    args = request(mode)
     evaluate = owner._evaluate
     evaluations = 0
 
@@ -201,3 +232,205 @@ def test_resume_never_invents_missing_fused_timing(lifecycle, monkeypatch):
         owner.run_screen_arm(**args)
     assert started == []
     assert not (args["output"] / "execution_times.json").exists()
+
+
+@pytest.mark.parametrize("mode", ["reference", "fused_layout"])
+def test_non_auxiliary_arm_rejects_label_cache(lifecycle, mode):
+    request, started = lifecycle
+    with pytest.raises(ValueError, match="does not consume chemical auxiliary labels"):
+        owner.run_screen_arm(**request(mode), label_cache=object())
+    assert started == []
+
+
+@pytest.mark.parametrize("change", ["missing_selected", "missing_predictions", "wrong_context",
+                                   "nonfinite_weights", "wrong_metric", "wrong_rows", "nonfinite_predictions"])
+def test_resume_checks_existing_selection_before_any_new_step(lifecycle, monkeypatch, change):
+    request, started = lifecycle
+    args = request("reference")
+    evaluate = owner._evaluate
+    calls = 0
+
+    def interrupt(model, *values):
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            raise RuntimeError("synthetic interruption")
+        return evaluate(model, *values)
+
+    monkeypatch.setattr(owner, "_evaluate", interrupt)
+    with pytest.raises(RuntimeError, match="synthetic interruption"):
+        owner.run_screen_arm(**args)
+    root = args["output"]
+    checkpoint_sha = sha256_file(root / "last_checkpoint.pt")
+    trace = (root / "canonical_trace.json").read_bytes()
+    if change.startswith("missing_"):
+        (root / ("selected_model.pt" if change == "missing_selected" else "development_predictions.pt")).unlink()
+    else:
+        path = root / ("development_predictions.pt" if change in {"wrong_rows", "nonfinite_predictions"} else "selected_model.pt")
+        payload = torch.load(path, weights_only=True)
+        if change == "wrong_context":
+            payload["context"]["arm_id"] = "foreign"
+        elif change == "nonfinite_weights":
+            payload["model"]["weight"].fill_(float("nan"))
+        elif change == "wrong_metric":
+            payload["development_mae_eV"] += 1
+        elif change == "wrong_rows":
+            payload["source_idx"][0] = 999
+        else:
+            payload["prediction_eV"][0] = float("nan")
+        torch.save(payload, path)
+    started.clear()
+    monkeypatch.setattr(owner, "_evaluate", evaluate)
+    with pytest.raises((ValueError, OSError, RuntimeError)):
+        owner.run_screen_arm(**args)
+    assert started == []
+    assert sha256_file(root / "last_checkpoint.pt") == checkpoint_sha
+    assert (root / "canonical_trace.json").read_bytes() == trace
+
+
+@pytest.mark.parametrize("mode", ["reference", "fused_layout"])
+def test_deferred_metrics_keep_weights_trace_rng_and_scheduler(lifecycle, monkeypatch, mode):
+    request, _ = lifecycle
+    args = request(mode)
+    assert owner.run_screen_arm(**args)["status"] == "MECHANICALLY_VERIFIED"
+    deferred = torch.load(args["output"] / "last_checkpoint.pt", weights_only=True)
+    deferred_trace = load_canonical_trace(args["output"] / "canonical_trace.json")
+
+    def historical_sum(values):
+        total = 0.0
+        for value in values:
+            total += float(value)
+        return total
+
+    monkeypatch.setattr(owner, "sum_scalar_metrics", historical_sum)
+    original_args = {**args, "output": args["output"].parent / (mode + "_original_sum")}
+    assert owner.run_screen_arm(**original_args)["status"] == "MECHANICALLY_VERIFIED"
+    original = torch.load(original_args["output"] / "last_checkpoint.pt", weights_only=True)
+    original_trace = load_canonical_trace(original_args["output"] / "canonical_trace.json")
+    assert all(torch.equal(value, original["model"][name]) for name, value in deferred["model"].items())
+    assert deferred["scheduler"] == original["scheduler"]
+    assert torch.equal(deferred["rng_state"]["torch"], original["rng_state"]["torch"])
+    assert [r["live_train_metric"] for r in deferred_trace["observations"]] == [
+        r["live_train_metric"] for r in original_trace["observations"]]
+
+
+def test_completion_forwards_binding_and_inspects_only_once(lifecycle, monkeypatch):
+    import molgap.experiment_family_workflow as family
+    request, _ = lifecycle
+    args = request("reference")
+    inspect = family.inspect_output
+    bindings = []
+
+    def checked_output(*args, **kwargs):
+        bindings.append(kwargs.get("target_identity"))
+        return inspect(*args, **kwargs)
+
+    monkeypatch.setattr(family, "inspect_output", checked_output)
+    # An unverified binding must block, not disappear at the trainer boundary.
+    invalid = {"encoding": "unverified"}
+    report = owner.run_screen_arm(**args, target_identity=invalid)
+    assert report["status"] == "BLOCKED"
+    assert bindings == [invalid]
+    assert any("explicit pinned target identity" in b for b in report["blockers"])
+
+
+@pytest.mark.parametrize("invalid", [float("nan"), float("inf"), -1., True])
+def test_invalid_development_never_overwrites_acknowledged_checkpoint(lifecycle, monkeypatch, invalid):
+    request, _ = lifecycle
+    args = request("reference")
+    evaluate = owner._evaluate
+    calls, previous = 0, {}
+
+    def unhealthy(model, *values):
+        nonlocal calls
+        calls += 1
+        result = evaluate(model, *values)
+        if calls == 2:
+            previous["checkpoint"] = sha256_file(args["output"] / "last_checkpoint.pt")
+            previous["selected"] = sha256_file(args["output"] / "selected_model.pt")
+            return (invalid, *result[1:])
+        return result
+
+    monkeypatch.setattr(owner, "_evaluate", unhealthy)
+    with pytest.raises(RuntimeError, match="preserving last acknowledged checkpoint"):
+        owner.run_screen_arm(**args)
+    assert sha256_file(args["output"] / "last_checkpoint.pt") == previous["checkpoint"]
+    assert sha256_file(args["output"] / "selected_model.pt") == previous["selected"]
+    checkpoint = torch.load(args["output"] / "last_checkpoint.pt", weights_only=True)
+    assert checkpoint["cursor"]["epoch"] == 1
+    assert len(json.loads((args["output"] / "execution_times.json").read_text())) == 1
+    assert len(load_canonical_trace(args["output"] / "canonical_trace.json")["observations"]) == 1
+
+
+@pytest.mark.parametrize("change", ["missing", "model", "optimizer"])
+def test_resume_requires_checkpoint_bytes_bound_by_last_trace(lifecycle, monkeypatch, change):
+    request, started = lifecycle
+    args = request("reference")
+    evaluate = owner._evaluate
+    calls = 0
+
+    def interrupt(model, *values):
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            raise RuntimeError("synthetic interruption")
+        return evaluate(model, *values)
+
+    monkeypatch.setattr(owner, "_evaluate", interrupt)
+    with pytest.raises(RuntimeError, match="synthetic interruption"):
+        owner.run_screen_arm(**args)
+    checkpoint = args["output"] / "last_checkpoint.pt"
+    trace_path = args["output"] / "canonical_trace.json"
+    before = trace_path.read_bytes()
+    if change == "missing":
+        checkpoint.unlink()
+    else:
+        saved = torch.load(checkpoint, weights_only=True)
+        if change == "model": saved["model"]["weight"].add_(1.)
+        else: saved["optimizer"]["param_groups"][0]["lr"] = 0.1
+        torch.save(saved, checkpoint)
+    started.clear()
+    monkeypatch.setattr(owner, "_evaluate", evaluate)
+    with pytest.raises(ValueError, match="hash mismatch|no resume checkpoint"):
+        owner.run_screen_arm(**args)
+    assert started == []
+    assert trace_path.read_bytes() == before
+
+
+@pytest.mark.parametrize("change", ["epoch", "steps", "samples", "negative", "nan", "scope", "pipeline", "wrapped", "legacy"])
+def test_resume_rejects_corrupt_timing_before_any_new_step(lifecycle, monkeypatch, change):
+    request, started = lifecycle
+    args = request("fused_layout")
+    evaluate = owner._evaluate
+    calls = 0
+
+    def interrupt(model, *values):
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            raise RuntimeError("synthetic interruption")
+        return evaluate(model, *values)
+
+    monkeypatch.setattr(owner, "_evaluate", interrupt)
+    with pytest.raises(RuntimeError, match="synthetic interruption"):
+        owner.run_screen_arm(**args)
+    path = args["output"] / "execution_times.json"
+    timing = json.loads(path.read_text())
+    row = timing[0]
+    if change == "epoch": row["epoch"] = 2
+    elif change == "steps": row["optimizer_steps"] += 1
+    elif change == "samples": row["sample_presentations"] = True
+    elif change == "negative": row["train_seconds"] = -1
+    elif change == "nan": row["development_seconds"] = float("nan")
+    elif change == "scope": row["scope"] = ""
+    elif change == "pipeline": row["epoch_pipeline_seconds"] = 0
+    elif change == "wrapped": timing = {"rows": timing}
+    elif change == "legacy": timing = [{"epoch": 1, "timing": None, "reason": "unverified legacy"}]
+    atomic_json(path, timing)
+    before = path.read_bytes()
+    started.clear()
+    monkeypatch.setattr(owner, "_evaluate", evaluate)
+    with pytest.raises(ValueError, match="[Ee]xecution|[Tt]iming"):
+        owner.run_screen_arm(**args)
+    assert started == []
+    assert path.read_bytes() == before

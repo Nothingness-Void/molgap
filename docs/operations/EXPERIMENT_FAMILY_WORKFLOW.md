@@ -42,6 +42,7 @@ retain the same binding. This does not alter a frozen recipe or scientific gate.
 | `FamilyOutputSession` | Atomic selected/resume/prediction outputs and observed epoch recording |
 | `StageRecorder` | Existing canonical RML recorder with distinct phase/run identities |
 | `inspect_output` | Frozen requirements, hashes, rows/targets, finite state, exposure and selected endpoint |
+| `validate_retained_selection` | Existing selection/prediction/trace checks before resume; not terminal acceptance |
 | `check_acceptance_plan` | Adapter availability and pinned owning comparison/reference inputs |
 | `build_verified_terminal_descriptor` | Deterministic translation into the existing descriptor |
 | `close_verified_outputs` | Inspect every arm before existing terminal/RML closure |
@@ -93,6 +94,10 @@ Read [the addon guide](EXPERIMENT_ADDON_GUIDE.md), then add event hooks:
    DataLoader prefetch. `tensor_safe_rng_state` translates the existing capture
    helper's NumPy array to primitive data for `weights_only=True` loading.
    The owning resume loader can pass that state to `restore_rng_state`.
+   Registered K1 screen resume also requires the last checkpoint hash to match
+   the acknowledged trace, contiguous valid epoch timing, and retained selection
+   checked by `validate_retained_selection` with the same pinned target binding.
+   Missing or inconsistent files require reconciliation, not a silent restart.
 7. Call `complete(runtime=..., hardware=..., observed_costs=...)`. Required
    runtime keys are `platform`, `account`, `precision`, `source_commit`, and
    `source_archive_sha256`; optional `runtime_certificate_id` is a SHA256

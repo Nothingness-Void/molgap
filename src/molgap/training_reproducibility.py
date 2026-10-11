@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import importlib.metadata
 import json
+import math
 import os
 import platform
 import random
@@ -145,13 +146,24 @@ def build_runtime_manifest(determinism: Mapping) -> dict:
 def assert_finite_state_dict(state_dict: Mapping, *, label: str) -> None:
     import torch
 
-    failures = [
-        name
-        for name, value in state_dict.items()
-        if torch.is_tensor(value) and not bool(torch.isfinite(value).all())
-    ]
+    failures, device_flags = [], {}
+    for name, value in state_dict.items():
+        if not torch.is_tensor(value):
+            continue
+        finite = torch.isfinite(value).all()
+        if value.device.type == "cpu":
+            if not bool(finite):
+                failures.append(name)
+        else:
+            device_flags.setdefault(value.device, []).append((name, finite))
+    # Keep each exact per-tensor check, but avoid a host/device barrier per key.
+    for flags in device_flags.values():
+        observed = torch.stack([flag for _, flag in flags]).cpu().tolist()
+        failures.extend(name for (name, _), finite in zip(flags, observed) if not finite)
     if failures:
-        raise RuntimeError(f"{label} contains non-finite tensors: {failures[:8]}")
+        failed = set(failures)
+        ordered = [name for name in state_dict if name in failed]
+        raise RuntimeError(f"{label} contains non-finite tensors: {ordered[:8]}")
 
 
 def atomic_torch_save(path: Path, value) -> None:
@@ -159,8 +171,43 @@ def atomic_torch_save(path: Path, value) -> None:
 
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.tmp")
-    torch.save(value, temporary)
-    os.replace(temporary, path)
+    try:
+        torch.save(value, temporary)
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def sum_scalar_metrics(values) -> float:
+    """Transfer detached batch scalars once, preserving Python addition order.
+
+    Do not replace this with a tensor sum: that changes the retained metric's
+    reduction precision/order. Values have no connection to backward or RNG.
+    """
+    import torch
+
+    values = list(values)
+    if not values:
+        return 0.0
+    if isinstance(values[0], torch.Tensor):
+        first = values[0]
+        if any(not isinstance(v, torch.Tensor) or v.ndim != 0
+               or v.dtype != first.dtype or v.device != first.device
+               or not v.is_floating_point() for v in values):
+            raise ValueError("Expected matching floating-point scalar metrics")
+        values = torch.stack([v.detach() for v in values]).cpu().tolist()
+    elif any(isinstance(v, (bool, torch.Tensor)) or not isinstance(v, (int, float))
+             for v in values):
+        raise ValueError("Expected scalar metrics, not mixed tensor/host values")
+    total = 0.0
+    for value in values:
+        value = float(value)
+        if not math.isfinite(value):
+            raise ValueError("Nonfinite scalar metric")
+        total += value
+    if not math.isfinite(total):
+        raise ValueError("Nonfinite scalar metric total")
+    return total
 
 
 def atomic_json(path: Path, value: Mapping | list) -> None:

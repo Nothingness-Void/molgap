@@ -1,0 +1,28 @@
+{
+  "scope": "CPU-only deterministic sampler/metadata encoding; no graphs, model, GPU or roles",
+  "python": "3.10.6",
+  "platform": "Windows-10-10.0.26220-SP0",
+  "epochs": 40,
+  "rows_per_epoch": 99968,
+  "seed": 42,
+  "repeats": 3,
+  "timings": {
+    "original": [
+      1.120476800000688,
+      1.2092474000000948,
+      1.2806883000012022
+    ],
+    "batched": [
+      0.8579052000004594,
+      0.9224426000000676,
+      0.9870299000012892
+    ]
+  },
+  "source_order_sha256": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+  "median_seconds": {
+    "original": 1.2092474000000948,
+    "batched": 0.9224426000000676
+  },
+  "encoding_time_reduction_fraction": 0.23717628005650848,
+  "gpu_speed_gain": "NOT_MEASURED"
+}

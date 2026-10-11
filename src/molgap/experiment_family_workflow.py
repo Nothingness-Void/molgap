@@ -516,6 +516,85 @@ class TargetIdentityBinding:
                         "acceptance_plan_sha256": self.plan_sha256}
 
 
+def _inspect_predictions(path, *, context, expected, target_identity):
+    import torch
+    payload = torch.load(path, map_location="cpu", weights_only=True)
+    if type(payload) is not dict or not {"source_idx", "target_eV", "prediction_eV", "context"} <= payload.keys():
+        raise ValueError("Unsupported predictions payload")
+    _check_context(payload["context"], context)
+    if any(value is True for key, value in payload.items() if key in {"official_validation_used", "test_dev_used", "test_challenge_used"}):
+        raise ValueError("Protected role consumption declared")
+    tensors = [payload[key] for key in ("source_idx", "target_eV", "prediction_eV")]
+    if any(not isinstance(t, torch.Tensor) or t.ndim != 1 or len(t) != expected["development_rows"] for t in tensors):
+        raise ValueError("Prediction/target/row shape mismatch")
+    idx, target, prediction = tensors
+    if idx.dtype != torch.int64 or len(torch.unique(idx)) != len(idx):
+        raise ValueError("Invalid or duplicate source rows")
+    if not prediction.is_floating_point() or not torch.isfinite(prediction).all():
+        raise ValueError("Nonfinite or nonfloating predictions")
+    if tensor_digest(idx, role="source_idx") != expected["source_idx_sha256"]:
+        raise ValueError("Development row identity mismatch")
+    observed = {}
+    if target_identity is None:
+        target_sha256 = tensor_digest(target, role="target")
+    else:
+        if not isinstance(target_identity, TargetIdentityBinding):
+            raise ValueError("Expected explicit pinned target identity binding")
+        target_sha256, observed["target_identity"] = target_identity.digest(
+            target, context=context, expected=expected)
+    if target_sha256 != expected["target_sha256"]:
+        raise ValueError("Development target identity mismatch")
+    observed["development_mae_eV"] = (prediction.double() - target.double()).abs().mean().item()
+    return observed
+
+
+def _inspect_selected_state(state, *, rows, trace, profile, observed):
+    step, epoch = state.get("optimizer_step"), state.get("epoch")
+    if type(epoch) is not int or not 1 <= epoch <= len(rows) or type(step) is not int or step not in {r["optimizer_step"] for r in rows}:
+        raise ValueError("Selected endpoint is outside the retained trace")
+    if state.get("weights") not in {"live", "ema"} or (state["weights"] == "ema" and not profile.ema_required):
+        raise ValueError("Unsupported selected weight semantics")
+    selected = rows[epoch - 1]
+    if selected["optimizer_step"] != step:
+        raise ValueError("Selected epoch/step disagree")
+    metric = "ema_dev_metric" if state["weights"] == "ema" else "live_dev_metric"
+    semantics = trace["metric_semantics"][metric]
+    if not semantics or semantics.get("unit") != "eV" or semantics.get("weights") != state["weights"]:
+        raise ValueError("Selected development metric semantics missing or mismatched")
+    for value in (state.get("development_mae_eV"), selected[metric]):
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not math.isclose(value, observed["development_mae_eV"], rel_tol=1e-6, abs_tol=1e-8):
+            raise ValueError("Selected trace/checkpoint/prediction metric mismatch")
+    observed.update(selected_epoch=epoch, selected_optimizer_step=step, selected_weights=state["weights"])
+
+
+def validate_retained_selection(output_dir: Path, *, context: RunContext, adapter: str,
+                                contract: dict, trace: dict, target_identity=None) -> dict:
+    """Check existing selection before resume; not terminal or replay acceptance."""
+    import torch
+    from .training_reproducibility import assert_finite_state_dict
+    root = Path(output_dir).absolute()
+    _safe_local(root)
+    trace = validate_canonical_trace(trace)
+    _validate_development_semantics(contract, trace["metric_semantics"])
+    if trace["run_id"] != context.logical_run_id + ":" + context.arm_id + ":downstream":
+        raise ValueError("Trace arm/stage identity mismatch")
+    rows = [row for row in trace["observations"] if row["event"] == "observation"]
+    if not rows or [row["epoch_or_pass"] for row in rows] != list(range(1, len(rows) + 1)):
+        raise ValueError("Selection requires contiguous acknowledged epochs")
+    observed = _inspect_predictions(_artifact_path(root, "development_predictions.pt"),
+        context=context, expected=contract["acceptance_requirements"], target_identity=target_identity)
+    state = torch.load(_artifact_path(root, "selected_model.pt"), map_location="cpu", weights_only=True)
+    if type(state) is not dict:
+        raise ValueError("selected_model context identity mismatch")
+    _check_context(state.get("context"), context)
+    if not isinstance(state.get("model"), dict) or not state["model"] or not all(isinstance(t, torch.Tensor) for t in state["model"].values()):
+        raise ValueError("selected_model: missing tensor model state")
+    assert_finite_state_dict(state["model"], label="selected_model")
+    _inspect_selected_state(state, rows=rows, trace=trace,
+        profile=artifact_adapter(adapter, (context.family_name, context.family_version)), observed=observed)
+    return observed
+
+
 def inspect_terminal_output(item: dict) -> dict:
     """Carry an explicit encoding binding through every closure reinspection."""
     kwargs = {"context": item["context"], "expected": item["expected"]}
@@ -579,32 +658,8 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict,
         for key, value in progress.items():
             if type(value) is not int or value != expected[key]:
                 raise ValueError(f"Progress mismatch: {key}")
-        payload = torch.load(paths["predictions"], map_location="cpu", weights_only=True)
-        if type(payload) is not dict or not {"source_idx", "target_eV", "prediction_eV", "context"} <= payload.keys():
-            raise ValueError("Unsupported predictions payload")
-        _check_context(payload["context"], context)
-        if any(value is True for key, value in payload.items() if key in {"official_validation_used", "test_dev_used", "test_challenge_used"}):
-            raise ValueError("Protected role consumption declared")
-        tensors = [payload[key] for key in ("source_idx", "target_eV", "prediction_eV")]
-        if any(not isinstance(t, torch.Tensor) or t.ndim != 1 or len(t) != expected["development_rows"] for t in tensors):
-            raise ValueError("Prediction/target/row shape mismatch")
-        idx, target, prediction = tensors
-        if idx.dtype != torch.int64 or len(torch.unique(idx)) != len(idx):
-            raise ValueError("Invalid or duplicate source rows")
-        if not prediction.is_floating_point() or not torch.isfinite(prediction).all():
-            raise ValueError("Nonfinite or nonfloating predictions")
-        if tensor_digest(idx, role="source_idx") != expected["source_idx_sha256"]:
-            raise ValueError("Development row identity mismatch")
-        if target_identity is None:
-            target_sha256 = tensor_digest(target, role="target")
-        else:
-            if not isinstance(target_identity, TargetIdentityBinding):
-                raise ValueError("Expected explicit pinned target identity binding")
-            target_sha256, observed["target_identity"] = target_identity.digest(
-                target, context=context, expected=expected)
-        if target_sha256 != expected["target_sha256"]:
-            raise ValueError("Development target identity mismatch")
-        observed["development_mae_eV"] = (prediction.double() - target.double()).abs().mean().item()
+        observed.update(_inspect_predictions(paths["predictions"], context=context,
+            expected=expected, target_identity=target_identity))
         trace = validate_canonical_trace(_json(paths["trace"]))
         _validate_development_semantics(contract, trace["metric_semantics"])
         rows = [r for r in trace["observations"] if r["event"] == "observation"]
@@ -629,22 +684,7 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict,
                 raise ValueError(f"{role}: missing tensor model state")
             assert_finite_state_dict(state["model"], label=role)
             if role == "selected_model":
-                step, epoch = state.get("optimizer_step"), state.get("epoch")
-                if type(epoch) is not int or not 1 <= epoch <= progress["epochs"] or type(step) is not int or step not in {r["optimizer_step"] for r in rows}:
-                    raise ValueError("Selected endpoint is outside the retained trace")
-                if state.get("weights") not in {"live", "ema"} or (state["weights"] == "ema" and not profile.ema_required):
-                    raise ValueError("Unsupported selected weight semantics")
-                selected = rows[epoch - 1]
-                if selected["optimizer_step"] != step:
-                    raise ValueError("Selected epoch/step disagree")
-                metric = "ema_dev_metric" if state["weights"] == "ema" else "live_dev_metric"
-                semantics = trace["metric_semantics"][metric]
-                if not semantics or semantics.get("unit") != "eV" or semantics.get("weights") != state["weights"]:
-                    raise ValueError("Selected development metric semantics missing or mismatched")
-                for value in (state.get("development_mae_eV"), selected[metric]):
-                    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not math.isclose(value, observed["development_mae_eV"], rel_tol=1e-6, abs_tol=1e-8):
-                        raise ValueError("Selected trace/checkpoint/prediction metric mismatch")
-                observed.update(selected_epoch=epoch, selected_optimizer_step=step, selected_weights=state["weights"])
+                _inspect_selected_state(state, rows=rows, trace=trace, profile=profile, observed=observed)
             else:
                 if any(not isinstance(state.get(key), dict) or not state[key] for key in profile.resume_keys):
                     raise ValueError("Incomplete checkpoint/resume state")

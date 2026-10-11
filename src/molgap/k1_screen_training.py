@@ -26,6 +26,7 @@ from .training_reproducibility import (
     build_runtime_manifest,
     configure_fp32_determinism,
     sha256_file,
+    sum_scalar_metrics,
 )
 from .v4_runtime import state_dict_sha256, certify_numerical_repeatability, normalized_source_sha256
 
@@ -121,8 +122,8 @@ def compute_row_order_fingerprint(seed: int = SEED) -> str:
     digest = hashlib.sha256()
     for epoch in range(EPOCHS):
         digest.update(struct.pack("<I", epoch))
-        for index in epoch_order(epoch, seed):
-            digest.update(struct.pack("<I", index))
+        # Exact historical little-endian bytes, without millions of Python calls.
+        digest.update(np.asarray(epoch_order(epoch, seed), dtype="<u4").tobytes())
     return digest.hexdigest()
 
 
@@ -351,8 +352,16 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
     limit = recipe.get("allocation_wall_limit_seconds")
     if limit is not None and (type(limit) is not int or not 120 <= limit <= 14400):
         raise ValueError("Invalid allocation ceiling")
-    expected = {"epochs": EPOCHS, "optimizer_steps": EPOCHS * STEPS_PER_EPOCH,
-                "sample_presentations": SAMPLE_EXPOSURE,
+    prefix = recipe.get("local_execution_prefix")
+    if prefix is not None and (type(prefix) is not dict or type(prefix.get("epochs")) is not int
+            or type(prefix.get("original_execution")) is not bool
+            or prefix != {"epochs": 10, "accelerator": "NVIDIA GeForce RTX 5060",
+            "original_execution": mode == "reference", "purpose": "execution-quality-prefix"}
+            or mode not in {"reference", "fused_layout"}):
+        raise ValueError("Unsupported local execution prefix")
+    epochs = 10 if prefix is not None else EPOCHS
+    expected = {"epochs": epochs, "optimizer_steps": epochs * STEPS_PER_EPOCH,
+                "sample_presentations": epochs * ROWS_PER_EPOCH if prefix is not None else SAMPLE_EXPOSURE,
                 "development_rows": DEVELOPMENT_ROWS, "precision": "fp32"}
     requirements = recipe.get("acceptance_requirements", {})
     if any(requirements.get(key) != value for key, value in expected.items()):
@@ -378,6 +387,19 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
             raise ValueError("Fused-layout execution policy changed")
     elif policy is not None:
         raise ValueError("Execution overrides require the fused-layout addon")
+
+
+def _execution_scope(spec, recipe):
+    """Local prefixes require a local declaration, never a remote gate override."""
+    declaration = spec.to_dict()
+    prefix = recipe.get("local_execution_prefix")
+    if prefix is None:
+        return EPOCHS, "T4", {}
+    platform = declaration["platform"]
+    if (platform["name"] != "local" or platform["device_count"] != 1
+            or platform["accelerator"] != prefix["accelerator"]):
+        raise ValueError("RTX5060 prefix requires the frozen single-device local Spec")
+    return prefix["epochs"], prefix["accelerator"], {"original_execution": prefix["original_execution"]}
 
 
 def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str,
@@ -426,13 +448,26 @@ def _clean_gap_state(model) -> dict:
             if not key.startswith("clean_fingerprint_head.")}
 
 
-def _evaluate(model, loader, mean, std):
+def _model_batch_to_device(batch, device, *, training: bool, auxiliary: bool = False):
+    """Transfer only model/loss inputs; keep source IDs and boundaries on CPU."""
+    fields = ["x", "edge_index", "edge_attr", "batch", "random_walk_pe"]
+    if training:
+        fields.append("y")
+    if auxiliary:
+        if not training:
+            raise ValueError("Auxiliary inputs belong to training only")
+        fields.append("chemical_fingerprint")
+    return batch.to(device, *fields, non_blocking=True)
+
+
+def _evaluate(model, loader, mean, std, *, original_execution=False):
     import torch
     model.eval()
     targets, predictions, source_indices = [], [], []
     with torch.no_grad():
         for batch in loader:
-            batch = batch.to("cuda", non_blocking=True)
+            batch = (batch.to("cuda", non_blocking=True) if original_execution else
+                     _model_batch_to_device(batch, "cuda", training=False))
             predictions.append((_forward(model, batch) * std + mean).float().cpu())
             targets.append(batch.y.view(-1).float().cpu())
             source_indices.append(batch.source_idx.view(-1).long().cpu())
@@ -494,14 +529,16 @@ def _screen_optimizer(model, mode):
     return torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
 
-def _screen_step(model, optimizer, cpu_batch, mean, std, mode):
+def _screen_step(model, optimizer, cpu_batch, mean, std, mode, *, original_execution=False):
     from contextlib import nullcontext
     context = nullcontext()
     if mode == "fused_layout":
         from .k1_execution_layout import cpu_layout_context
         context = cpu_layout_context(model, cpu_batch, "cuda")
     with context:
-        batch = cpu_batch.to("cuda", non_blocking=True)
+        batch = (cpu_batch.to("cuda", non_blocking=True) if original_execution else
+                 _model_batch_to_device(cpu_batch, "cuda", training=True,
+                                        auxiliary=mode == "clean_fingerprint"))
         return _optimizer_step(model, optimizer, batch, mean, std, mode)
 
 
@@ -612,29 +649,31 @@ def validate_runtime_preflight(directory, provenance):
 def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: str,
                          arm_id: str, mode: str, recipe_path: Path, initial_state_path: Path,
                          input_root: Path, output: Path, account: str, run_reference: str,
-                         trajectory_id: str, label_cache=None) -> dict:
+                         trajectory_id: str, label_cache=None, prospective_root: Path | None = None) -> dict:
     """Isolated real-training-batch qualification; never counts as formal exposure."""
     import torch
-    from .experiment_family_workflow import RunContext
+    from .experiment_family_workflow import RunContext, tensor_safe_rng_state
     from .training_reproducibility import capture_rng_state, restore_rng_state
     if mode not in ("reference", "ssma", "mean2", "mean2_clean_second", "fused_layout") or label_cache is not None:
         raise ValueError("This paired GPU qualification supports registered screen modes only")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
+    _, required_accelerator, execution_options = _execution_scope(spec, recipe)
     seed = _recipe_seed(recipe)
     row_order_sha256 = recipe["row_order_fingerprint"]
     context = RunContext.for_training(spec, package_dir,
         expected_package_identity=expected_package_identity, arm_id=arm_id,
         account=account, run_reference=run_reference)
     _validate_arm_binding(spec, context, mode, recipe)
-    _validate_prospective(spec, context, input_root, trajectory_id)
+    _validate_prospective(spec, context, prospective_root or input_root, trajectory_id)
     if (context.family_name, context.family_version) != ("neural_atom_k1", "2"):
         raise ValueError("Preflight requires frozen K1 family/initialization")
     determinism = configure_fp32_determinism(seed)
     runtime = build_runtime_manifest(determinism)
     hardware = torch.cuda.get_device_name(0)
-    if "T4" not in hardware:
-        raise RuntimeError("Paired qualification requires an exclusive assigned T4")
+    if ((required_accelerator == "T4" and "T4" not in hardware)
+            or (required_accelerator != "T4" and hardware != required_accelerator)):
+        raise RuntimeError("Paired qualification requires the declared accelerator")
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     provenance = _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
@@ -672,8 +711,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         configure_fp32_determinism(seed)
         model = _make_screen_model(state, mode, seed).train()
         optimizer = _screen_optimizer(model, mode)
-        _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode)
-        loss, _, _ = _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode)
+        _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode, **execution_options)
+        loss, _, _ = _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode, **execution_options)
         if mode == "ssma" and not any(
             parameter.grad is not None and bool(torch.isfinite(parameter.grad).all())
             and float(parameter.grad.abs().sum()) > 0
@@ -689,20 +728,20 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     model = _make_screen_model(state, mode, seed).train()
     optimizer = _screen_optimizer(model, mode)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
-    _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode)
+    _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode, **execution_options)
     scheduler.step()
     snapshot = output / "diagnostic_resume.pt"
     atomic_torch_save(snapshot, {"model": model.state_dict(), "optimizer": optimizer.state_dict(),
-        "scheduler": scheduler.state_dict(), "rng_state": capture_rng_state(),
+        "scheduler": scheduler.state_dict(), "rng_state": tensor_safe_rng_state(capture_rng_state()),
         "cursor": {"epoch": 1, "next_batch": 0, "sampler_order_sha256": row_order_sha256}})
-    uninterrupted, _, _ = _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode)
+    uninterrupted, _, _ = _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode, **execution_options)
     continuous_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
-    restored = torch.load(snapshot, map_location="cpu", weights_only=False)
+    restored = torch.load(snapshot, map_location="cpu", weights_only=True)
     model.load_state_dict(restored["model"], strict=True)
     optimizer.load_state_dict(restored["optimizer"])
     scheduler.load_state_dict(restored["scheduler"])
     restore_rng_state(restored["rng_state"])
-    resumed, _, _ = _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode)
+    resumed, _, _ = _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, mode, **execution_options)
     resume = certify_numerical_repeatability(losses=[float(uninterrupted.cpu()), float(resumed.cpu())],
         states=[continuous_state, model.state_dict()])
     selected_path = output / "diagnostic_selected.pt"
@@ -723,14 +762,14 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         model = _make_screen_model(state, profile_mode, seed).train()
         optimizer = _screen_optimizer(model, profile_mode)
         for _ in range(2):
-            _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, profile_mode)
+            _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, profile_mode, **execution_options)
         torch.cuda.synchronize()
         torch.cuda.reset_peak_memory_stats()
         samples = []
         for _ in range(5):
             torch.cuda.synchronize()
             tick = time.perf_counter()
-            _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, profile_mode)
+            _screen_step(model, optimizer, cpu_fixture.clone(), mean, std, profile_mode, **execution_options)
             torch.cuda.synchronize()
             samples.append(time.perf_counter() - tick)
         timings[profile_mode] = {"median_step_seconds": float(np.median(samples)),
@@ -749,13 +788,14 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     torch.cuda.synchronize()
     atomic_json(output / "diagnostic_cost.json", {"costs": _allocation_costs(
         time.perf_counter() - started, hardware, scope="diagnostic_window_excludes_bootstrap_queue"),
-        "scope": "one exclusive assigned T4 diagnostic window; bootstrap and queue excluded",
+        "scope": f"one assigned {hardware} diagnostic window; bootstrap and queue excluded",
         "cpu_allocation_seconds": {"status": "missing", "value": None},
         "queue_seconds": {"status": "missing", "value": None}})
     if not architecture["accepted"]:
         raise RuntimeError("Registered mode exceeds synchronized optimizer-inclusive overhead gate")
     certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
-        "platform_id": recipe.get("runtime_platform_id", context.platform + "-t4x2"),
+        "platform_id": recipe.get("runtime_platform_id", context.platform + (
+            "-rtx5060-prefix" if recipe.get("local_execution_prefix") else "-t4x2")),
         "accelerator": hardware, "precision": "fp32", "tf32_enabled": False,
         "deterministic_algorithms": True, "physical_batch_per_device": BATCH_SIZE,
         "tail_batch_policy": "drop_last", "runtime_fingerprint": runtime["runtime_fingerprint"],
@@ -769,10 +809,38 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     return certificate
 
 
+def _load_execution_times(path: Path, completed_epochs: int) -> list:
+    """Reject corrupt/missing cost observations before any resumed optimizer step."""
+    if not path.exists():
+        if completed_epochs:
+            raise ValueError("Execution timing and complete-epoch cursor disagree")
+        return []
+    records = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(records, list) or len(records) != completed_epochs:
+        raise ValueError("Execution timing and complete-epoch cursor disagree")
+    counters = {"epoch", "optimizer_steps", "sample_presentations"}
+    durations = {"train_seconds", "development_seconds", "epoch_pipeline_seconds"}
+    for epoch, row in enumerate(records, 1):
+        if not isinstance(row, dict) or set(row) != counters | durations | {"scope"}:
+            raise ValueError("Malformed retained execution timing row")
+        expected = {"epoch": epoch, "optimizer_steps": epoch * STEPS_PER_EPOCH,
+                    "sample_presentations": epoch * ROWS_PER_EPOCH}
+        if any(type(row[key]) is not int or row[key] != value for key, value in expected.items()):
+            raise ValueError("Execution timing exposure/order differs from cursor")
+        if (any(isinstance(row[key], bool) or not isinstance(row[key], (int, float))
+                or not math.isfinite(row[key]) or row[key] < 0 for key in durations)
+                or not isinstance(row["scope"], str) or not row["scope"].strip()):
+            raise ValueError("Invalid retained execution timing measurement")
+        if row["epoch_pipeline_seconds"] + 1e-9 < row["train_seconds"] + row["development_seconds"]:
+            raise ValueError("Execution pipeline timing excludes measured work")
+    return records
+
+
 def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
                    arm_id: str, mode: str, recipe_path: Path, initial_state_path: Path,
                    input_root: Path, output: Path, account: str, run_reference: str,
-                   trajectory_id: str, label_cache=None, preflight_dir: Path | None = None) -> dict:
+                   trajectory_id: str, label_cache=None, preflight_dir: Path | None = None,
+                   target_identity=None, prospective_root: Path | None = None) -> dict:
     """Execute the owning V4 epoch loop with shared durable-output hooks.
 
     Resume is restricted to acknowledged complete epochs. Re-created epoch
@@ -780,21 +848,22 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     corruption, pretraining, alternate geometry cache or protected role is used.
     """
     import torch
-    from .experiment_family_workflow import FamilyOutputSession, RunContext
+    from .experiment_family_workflow import FamilyOutputSession, RunContext, validate_retained_selection
     from .training_reproducibility import capture_rng_state, restore_rng_state
 
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)
+    planned_epochs, required_accelerator, execution_options = _execution_scope(spec, recipe)
     seed = _recipe_seed(recipe)
     row_order_sha256 = recipe["row_order_fingerprint"]
     context = RunContext.for_training(spec, package_dir,
         expected_package_identity=expected_package_identity, arm_id=arm_id,
         account=account, run_reference=run_reference)
     _validate_arm_binding(spec, context, mode, recipe)
-    _validate_prospective(spec, context, input_root, trajectory_id)
+    _validate_prospective(spec, context, prospective_root or input_root, trajectory_id)
     if (context.family_name, context.family_version) != ("neural_atom_k1", "2"):
         raise ValueError("Expected registered K1 family output adapter")
-    if mode in ("reference", "ssma", "mean2", "mean2_clean_second") and label_cache is not None:
+    if mode != "clean_fingerprint" and label_cache is not None:
         raise ValueError("Reference/SSMA does not consume chemical auxiliary labels")
     if mode == "clean_fingerprint":
         if label_cache is None or label_cache.components != ("fingerprints",):
@@ -813,8 +882,10 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     provenance = _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
     certificate = validate_runtime_preflight(preflight_dir or output, provenance)
     hardware = torch.cuda.get_device_name(0)
-    if certificate.get("accelerator") != hardware or "T4" not in hardware:
-        raise ValueError("Runtime accelerator differs from qualified T4")
+    if (certificate.get("accelerator") != hardware
+            or (required_accelerator == "T4" and "T4" not in hardware)
+            or (required_accelerator != "T4" and hardware != required_accelerator)):
+        raise ValueError("Runtime accelerator differs from qualified declaration")
     Path(output).mkdir(parents=True, exist_ok=True)
     atomic_json(Path(output) / "runtime_provenance.json", provenance)
     root, manifest = find_fixed_cache(input_root)
@@ -842,53 +913,66 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     atomic_json(session.root / "runtime_certificate.json", certificate)
     start_epoch, best = 0, math.inf
     checkpoint = session.root / "last_checkpoint.pt"
+    observations = [row for row in session.stage.recorder.record["observations"]
+                    if row["event"] == "observation"]
     if checkpoint.exists():
-        saved = torch.load(checkpoint, map_location="cpu", weights_only=False)
+        if not observations or observations[-1]["checkpoint_identity"] != "sha256:" + sha256_file(checkpoint):
+            raise ValueError("Trace/checkpoint hash mismatch; reconcile before resume")
+        saved = torch.load(checkpoint, map_location="cpu", weights_only=True)
         if saved["context"] != context.to_dict():
             raise ValueError("K1 resume source/arm identity mismatch")
         cursor = saved["cursor"]
         start_epoch = cursor["epoch"]
-        if (type(start_epoch) is not int or not 1 <= start_epoch <= EPOCHS or
+        if (type(start_epoch) is not int or not 1 <= start_epoch <= planned_epochs or
             cursor["next_batch"] != 0 or cursor["sampler_order_sha256"] != row_order_sha256 or
             saved["optimizer_step"] != start_epoch * STEPS_PER_EPOCH or
             saved["sample_presentations"] != start_epoch * ROWS_PER_EPOCH):
             raise ValueError("Only acknowledged complete-epoch K1 resume is supported")
-        observations = [row for row in session.stage.recorder.record["observations"]
-                        if row["event"] == "observation"]
         if len(observations) != start_epoch:
             raise ValueError("Trace and durable checkpoint disagree; reconcile before resume")
+        selection = validate_retained_selection(session.root, context=context, adapter="k1-screen-v1",
+            contract=recipe, trace=session.stage.recorder.record, target_identity=target_identity)
+        if selection["selected_weights"] != "live" or not math.isclose(
+                selection["development_mae_eV"], min(row["live_dev_metric"] for row in observations),
+                rel_tol=1e-6, abs_tol=1e-8):
+            raise ValueError("Retained selection disagrees with acknowledged best metric")
         model.load_state_dict(saved["model"], strict=True)
         optimizer.load_state_dict(saved["optimizer"])
         scheduler.load_state_dict(saved["scheduler"])
         best = min(row["live_dev_metric"] for row in observations)
         restore_rng_state(saved["rng_state"])
+    elif observations:
+        raise ValueError("Acknowledged trace has no resume checkpoint; cannot restart")
     torch.cuda.synchronize()
     allocation_started = time.perf_counter()
     timing_path = session.root / "execution_times.json"
-    timing_rows = json.loads(timing_path.read_text()) if timing_path.exists() else []
-    if not timing_path.exists() and start_epoch and mode != "fused_layout":
-        timing_rows = [{"epoch": index + 1, "timing": None,
-                        "reason": "Historical checkpoint predates execution timing retention"}
-                       for index in range(start_epoch)]
-    if len(timing_rows) != start_epoch:
-        raise ValueError("Execution timing and complete-epoch cursor disagree")
-    for epoch in range(start_epoch, EPOCHS):
+    timing_rows = _load_execution_times(timing_path, start_epoch)
+    for epoch in range(start_epoch, planned_epochs):
         model.train()
-        absolute, rows = 0.0, 0
+        absolute_values, absolute, rows = [], 0.0, 0
         started = time.perf_counter()
         for batch in _train_loader(roles["train"], epoch, seed):
             if label_cache is not None:
                 label_cache.attach(batch)
-            _, batch_absolute, batch_rows = _screen_step(model, optimizer, batch, mean, std, mode)
-            absolute += float(batch_absolute)
+            _, batch_absolute, batch_rows = _screen_step(model, optimizer, batch, mean, std, mode, **execution_options)
+            if execution_options.get("original_execution"):
+                absolute += float(batch_absolute)
+            else:
+                absolute_values.append(batch_absolute)
             rows += batch_rows
         if rows != ROWS_PER_EPOCH:
             raise RuntimeError("Frozen optimizer exposure changed")
         torch.cuda.synchronize()
+        if not execution_options.get("original_execution"):
+            absolute = sum_scalar_metrics(absolute_values)
+        del absolute_values
         train_seconds = time.perf_counter() - started
         dev_started = time.perf_counter()
         validation_mae, target_eV, prediction_eV, source_idx = _evaluate(
-            model, development_loader, mean, std)
+            model, development_loader, mean, std, **execution_options)
+        if (isinstance(validation_mae, bool) or not isinstance(validation_mae, (int, float))
+                or not math.isfinite(validation_mae) or validation_mae < 0):
+            raise RuntimeError("Invalid development MAE; preserving last acknowledged checkpoint")
         torch.cuda.synchronize()
         dev_seconds = time.perf_counter() - dev_started
         step, presentations = (epoch + 1) * STEPS_PER_EPOCH, (epoch + 1) * ROWS_PER_EPOCH
@@ -924,13 +1008,13 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         costs[1].update(value=None, status="missing",
             reason="Previous resume segments lack a retained allocated-device ledger")
     atomic_json(session.root / "allocation_cost.json", {"costs": costs,
-        "start_epoch": start_epoch, "end_epoch": EPOCHS,
+        "start_epoch": start_epoch, "end_epoch": planned_epochs,
         "cpu_allocation_seconds": {"status": "missing", "value": None},
         "queue_seconds": {"status": "missing", "value": None},
-        "scope": "one exclusive assigned T4 training window including development/checkpoint; "
+        "scope": "one assigned device training window including development/checkpoint; "
                  "lower bound excludes bootstrap/queue and earlier resume allocations"})
     return session.complete(runtime={"platform": context.platform, "account": context.account,
         "precision": "fp32", "source_commit": context.source_commit,
         "source_archive_sha256": context.source_archive_sha256,
         "runtime_certificate_id": canonical_fingerprint(certificate)}, hardware=hardware,
-        observed_costs=costs)
+        observed_costs=costs, target_identity=target_identity)

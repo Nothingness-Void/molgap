@@ -14,4 +14,10 @@ The [attempt001 acceptance](terminal_acceptance/decision.md) records a native
 initialization-interface failure before either arm trained; no speed/MAE result.
 The explicitly authorized [repaired attempt002](attempt_002/REMOTE_HANDOFF.md)
 retains separate source/config/prospective and platform identity.
+The [attempt003 handoff](attempt_003/REMOTE_HANDOFF.md) owns its frozen release
+and API receipt. Later local changes cannot modify that published source.
+The [CPU execution audit](execution_audit/README.md) records reusable execution
+changes, regression coverage and the remaining native-validation boundary.
+The [local5060 prefix](local_5060_prefix/protocol.md) is a separately authorized
+10epoch speed/quality diagnostic of the audited source, not a remote retry.
 No model promotion, protected evaluation, automatic continuation or heartbeat.
