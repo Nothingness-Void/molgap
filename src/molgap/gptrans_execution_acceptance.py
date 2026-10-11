@@ -1,5 +1,6 @@
 """Saved-output acceptance for the explicitly bounded execution assay."""
 import json
+import hashlib
 import math
 from pathlib import Path
 import tarfile
@@ -17,6 +18,19 @@ ARMS = ("execution_original", "execution_optimized")
 PROTECTED = ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")
 
 
+def expected_execution_fields(arm):
+    """Derive metadata only; neither model construction nor inference executes."""
+    _require(arm in ARMS, "Unknown execution arm")
+    from . import pcqm_gptrans_v4 as native
+    from .gptrans_execution_backend import backend
+    with backend(native, arm == ARMS[1]):
+        return native._scientific_fields("degree_bond_local_ema999")
+
+
+def validate_execution_fields(arm, observed):
+    _require(observed == expected_execution_fields(arm), "Frozen scientific fields differ")
+
+
 def verified_files(folder, manifest):
     files = manifest["files"]
     required = {"training/partial_manifest.json", "training/trace.json", "training/canonical_trace.json",
@@ -31,7 +45,7 @@ def verified_files(folder, manifest):
                  and sha256_file(path) == digest, "Output confinement/hash: " + name)
 
 
-def accept(root, records, package, *, receipt_ref=BASE+"/submission_v1.json"):
+def accept(root, records, package, *, receipt_ref):
     """Load predictions only; no model/checkpoint inference or training."""
     import torch
     root, records, package = Path(root), Path(records), Path(package)
@@ -52,6 +66,13 @@ def accept(root, records, package, *, receipt_ref=BASE+"/submission_v1.json"):
         and frozen["archive_sha256"] == receipt["release_binding"]["source_archive_sha256"], "Requested source binding")
     with tarfile.open(package / "source.tar.gz", "r:gz") as archive:
         _require(config == json.loads(archive.extractfile(BASE+"/screen_config.json").read()), "Frozen configuration")
+        # Bind the independent field derivation to released code, not the worker's
+        # self-reported certificate and not an unrelated newer local recipe.
+        from .v4_runtime import normalized_source_sha256
+        for name in ("pcqm_gptrans_v4.py", "gptrans_execution_backend.py"):
+            archived = archive.extractfile("src/molgap/" + name).read()
+            _require(normalized_source_sha256(root / "src/molgap" / name)
+                     == hashlib.sha256(archived).hexdigest(), "Released contract provider: " + name)
     screen = records / config["output_subdirectory"]
     startup, summary, cost = (load(screen / name) for name in ("startup.json", "job_summary.json", "native_cost.json"))
     _require(startup["spec_identity"] == spec.identity and startup["source_archive_sha256"] == frozen["archive_sha256"], "Startup/source")
@@ -74,17 +95,29 @@ def accept(root, records, package, *, receipt_ref=BASE+"/submission_v1.json"):
         binding = load(folder / "arm_binding.json")
         _require(binding == completion["binding"] and binding["spec_identity"] == spec.identity
             and binding["source_archive_sha256"] == frozen["archive_sha256"]
+            and binding["package_identity"] == frozen["package_identity"]
+            and binding["arm"] == arm and binding["study"] == config["execution_study"]
             and binding["trajectory_id"] == config["arms"][arm]["trajectory_id"], "Arm/source/prospective identity")
         partial = load(folder / "training/partial_manifest.json")
         _require(partial == completion["native_partial_manifest"] and partial["complete"] is False
             and partial["completed_epochs"] == partial["next_epoch"] == 40
+            and partial["source_archive_sha256"] == frozen["archive_sha256"]
+            and partial["manifest_sha256"] == config["dataset_manifest_sha256"]
             and partial["canonical_trace_sha256"] == sha256_file(folder / "training/canonical_trace.json")
             and partial["checkpoint_sha256"] == sha256_file(folder / "training/last_checkpoint.pt"), "Native prefix/checkpoint")
         preflight = load(folder / "preflight/preflight.json")
         _require(preflight["accepted"] is True and preflight["parameters"] == completion["parameters"] == 5871201
             and preflight["initial_state_artifact_sha256"] == completion["initial_state_artifact_sha256"] == config["arms"][arm]["initial_file_sha256"]
-            and preflight["source_archive_sha256"] == frozen["archive_sha256"], "Calibration/initialization")
+            and preflight["source_archive_sha256"] == frozen["archive_sha256"]
+            and preflight["source_commit"] == frozen["source_commit"]
+            and preflight["manifest_sha256"] == config["dataset_manifest_sha256"]
+            and preflight["variant"] == "degree_bond_local_ema999" and preflight["ema_decay"] == .999
+            and preflight["capacity_architecture_identity"] == config["arms"][arm]["comparison_identity"]["architecture_config_identity"]
+            and all(preflight[k] is False for k in PROTECTED), "Calibration/initialization/data")
+        _require(load(folder / "preflight/runtime_certificate.json") == preflight["runtime_certificate"],
+                 "Retained and embedded runtime certificate differ")
         fields = completion["scientific_fields"]
+        validate_execution_fields(arm, fields)
         validate_runtime_certificate(preflight["runtime_certificate"], {**fields,
             "platform_id":config["platform_id"], "accelerator":preflight["runtime_certificate"]["accelerator"],
             "runtime_certificate_id":preflight["runtime_certificate_id"]})
@@ -101,6 +134,7 @@ def accept(root, records, package, *, receipt_ref=BASE+"/submission_v1.json"):
             for native, canonical in (("train_mae_eV","live_train_metric"), ("live_development_mae_eV","live_dev_metric"),
                     ("development_mae_eV","ema_dev_metric")):
                 _require(math.isfinite(r[native]) and r[native] == t[canonical], "Canonical metrics")
+            _require(math.isfinite(r["elapsed_seconds"]) and r["elapsed_seconds"] > 0, "Finite epoch timing")
         payload = torch.load(folder / "training/development_predictions.pt", map_location="cpu", weights_only=True)
         _require(payload["source_idx"].view(-1).numel() == 50000
             and torch.equal(payload["source_idx"].view(-1), torch.arange(100000,150000))

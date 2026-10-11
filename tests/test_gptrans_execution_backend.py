@@ -140,6 +140,53 @@ def test_execution_retention_rejects_missing_prefix_before_tensor_loading(tmp_pa
         verified_files(tmp_path, {'files':{}})
 
 
+@pytest.mark.parametrize('arm', ['execution_original', 'execution_optimized'])
+def test_acceptance_fields_match_declared_execution_backend(arm):
+    from molgap.gptrans_execution_acceptance import expected_execution_fields, validate_execution_fields
+    fields = expected_execution_fields(arm)
+    validate_execution_fields(arm, fields)
+    assert fields['precision'] == 'fp32' and fields['seed'] == 42
+    assert fields['execution_backend'] == ('optimized-v1' if arm.endswith('optimized') else 'original-v1')
+    # This field belongs to the native horizon; actual40 exposure is separately checked.
+    assert fields['sample_exposure'] == 5998080
+
+
+@pytest.mark.parametrize('key,value', [
+    ('precision', 'bf16'), ('seed', 43), ('target_fingerprint', 'another-target'),
+    ('optimizer_fingerprint', '0' * 64), ('schedule_fingerprint', '0' * 64),
+    ('execution_backend', 'original-v1'), ('sample_exposure', 3998720),
+])
+def test_acceptance_rejects_self_consistent_but_unfrozen_fields(key, value):
+    from molgap.gptrans_execution_acceptance import expected_execution_fields, validate_execution_fields
+    observed = expected_execution_fields('execution_optimized')
+    observed[key] = value
+    with pytest.raises(ValueError, match='Frozen scientific fields'):
+        validate_execution_fields('execution_optimized', observed)
+
+
+@pytest.mark.parametrize('key,value', [('physical_batch_per_device', 64), ('tf32_enabled', True)])
+def test_runtime_gate_rejects_batch_or_tf32_drift_even_with_rehashed_certificate(key, value):
+    from molgap.screen_policy import canonical_fingerprint, validate_runtime_certificate
+    from molgap.gptrans_execution_acceptance import expected_execution_fields
+    certificate = {
+        'format': 'molgap-runtime-certificate-v1', 'status': 'accepted',
+        'platform_id': 'synthetic', 'accelerator': 'Tesla T4', 'precision': 'fp32',
+        'tf32_enabled': False, 'deterministic_algorithms': True,
+        'physical_batch_per_device': 128, 'tail_batch_policy': 'drop_last',
+        'calibration_checks_passed': True,
+        **{k: 'a' * 64 for k in ('software_fingerprint', 'determinism_fingerprint',
+            'calibration_fixture_sha256', 'calibration_output_sha256', 'runtime_fingerprint')},
+    }
+    contract = {**expected_execution_fields('execution_original'),
+        'platform_id': 'synthetic', 'accelerator': 'Tesla T4',
+        'runtime_certificate_id': canonical_fingerprint(certificate)}
+    validate_runtime_certificate(certificate, contract)
+    certificate[key] = value
+    contract['runtime_certificate_id'] = canonical_fingerprint(certificate)
+    with pytest.raises(ValueError, match='Runtime certificate mismatch'):
+        validate_runtime_certificate(certificate, contract)
+
+
 def test_packaged_plan_uses_planner_defaults_before_validation():
     import json
     from molgap.research_memory.plan import _prepare_trajectory
