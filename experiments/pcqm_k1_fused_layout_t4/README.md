@@ -12,4 +12,6 @@ and dated queue observation; use it before reconciliation.
 Runtime qualification, science, measured cost and RML closure remain pending.
 The [attempt001 acceptance](terminal_acceptance/decision.md) records a native
 initialization-interface failure before either arm trained; no speed/MAE result.
+The explicitly authorized [repaired attempt002](attempt_002/REMOTE_HANDOFF.md)
+retains separate source/config/prospective and platform identity.
 No model promotion, protected evaluation, automatic continuation or heartbeat.

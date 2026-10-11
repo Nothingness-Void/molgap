@@ -1,0 +1,135 @@
+{
+  "status": "RELEASE_INPUTS_FAILED",
+  "spec_identity": "a54b46481954e98711d985b38c7523b50ec110039ba6cfa0d0dde13fe651f73c",
+  "package_identity": "253e48c2d54611114d160d6fe62e074bc0b23c2b9768b2fe0cd7918e86c1de28",
+  "source_commit": "fdcaee6a30496804315e5c8650d48ac1f41ffb7f",
+  "source_archive_sha256": "93f8116db38e510652929936fc631ef987bfa8b4aa5f27febe42cbe3ad833ca5",
+  "inputs": {
+    "package": "D:\\w\\k1-fused-t4\\platforms\\_records\\kaggle\\staging\\k1-fused-layout-100k-s42-v1\\package",
+    "recipe_files": {
+      "fused_layout": "experiments/pcqm_k1_fused_layout_t4/training_recipe_fused_layout.json",
+      "reference": "experiments/pcqm_k1_fused_layout_t4/training_recipe_reference.json"
+    },
+    "initial_states": {
+      "fused_layout": "D:\\w\\k1-fused-t4\\platforms\\_records\\kaggle\\staging\\k1-fused-layout-100k-s42-v1\\source_dataset\\initial_states\\fused_layout.pt",
+      "reference": "D:\\w\\k1-fused-t4\\platforms\\_records\\kaggle\\staging\\k1-fused-layout-100k-s42-v1\\source_dataset\\initial_states\\reference.pt"
+    },
+    "required_modules": [
+      "molgap.experiment_training_worker",
+      "molgap.k1_screen_training",
+      "molgap.pcqm_wedge"
+    ],
+    "pickle_inputs": [],
+    "entry_script": null,
+    "input_root": "D:\\w\\k1-fused-t4\\platforms\\_records\\kaggle\\staging\\k1-fused-layout-100k-s42-v1\\source_dataset"
+  },
+  "checks": {
+    "syntax:platforms/kaggle/run_experiment.py": true,
+    "syntax:src/molgap/comparison_readiness.py": true,
+    "syntax:src/molgap/constants.py": true,
+    "syntax:src/molgap/evidence_pointers.py": true,
+    "syntax:src/molgap/experiment_execution.py": true,
+    "syntax:src/molgap/experiment_family_artifacts.py": true,
+    "syntax:src/molgap/experiment_family_workflow.py": true,
+    "syntax:src/molgap/experiment_launch.py": true,
+    "syntax:src/molgap/experiment_package.py": true,
+    "syntax:src/molgap/experiment_preflight.py": true,
+    "syntax:src/molgap/experiment_prospective.py": true,
+    "syntax:src/molgap/experiment_source_inventory.py": true,
+    "syntax:src/molgap/experiment_spec.py": true,
+    "syntax:src/molgap/experiment_terminal.py": true,
+    "syntax:src/molgap/experiment_training_worker.py": true,
+    "syntax:src/molgap/experiment_workflow.py": true,
+    "syntax:src/molgap/gps.py": true,
+    "syntax:src/molgap/gptrans.py": true,
+    "syntax:src/molgap/gptrans_memory.py": true,
+    "syntax:src/molgap/gptrans_screen_workflow.py": true,
+    "syntax:src/molgap/gptrans_variants.py": true,
+    "syntax:src/molgap/k1_clean_second.py": true,
+    "syntax:src/molgap/k1_execution_layout.py": true,
+    "syntax:src/molgap/k1_joint_aggregation.py": true,
+    "syntax:src/molgap/k1_screen_training.py": true,
+    "syntax:src/molgap/kaggle_pair_runtime.py": true,
+    "syntax:src/molgap/kaggle_workflow.py": true,
+    "syntax:src/molgap/packed_graph_dataset.py": true,
+    "syntax:src/molgap/pcqm_gap_architecture.py": true,
+    "syntax:src/molgap/pcqm_gptrans_v4.py": true,
+    "syntax:src/molgap/pcqm_wedge.py": true,
+    "syntax:src/molgap/qm9_gape.py": true,
+    "syntax:src/molgap/qm9_local_hierarchy.py": true,
+    "syntax:src/molgap/qm9_neural_atom.py": true,
+    "syntax:src/molgap/screen_policy.py": true,
+    "syntax:src/molgap/training_reproducibility.py": true,
+    "syntax:src/molgap/v4_bundle.py": true,
+    "syntax:src/molgap/v4_runtime.py": true,
+    "syntax:src/molgap/v5_common.py": true,
+    "syntax:src/molgap/__init__.py": true,
+    "syntax:src/molgap/research_memory/backtest.py": true,
+    "syntax:src/molgap/research_memory/compiler.py": true,
+    "syntax:src/molgap/research_memory/cost.py": true,
+    "syntax:src/molgap/research_memory/derived.py": true,
+    "syntax:src/molgap/research_memory/discovery.py": true,
+    "syntax:src/molgap/research_memory/finalize.py": true,
+    "syntax:src/molgap/research_memory/paired.py": true,
+    "syntax:src/molgap/research_memory/paths.py": true,
+    "syntax:src/molgap/research_memory/pipeline.py": true,
+    "syntax:src/molgap/research_memory/plan.py": true,
+    "syntax:src/molgap/research_memory/policy.py": true,
+    "syntax:src/molgap/research_memory/recovery.py": true,
+    "syntax:src/molgap/research_memory/references.py": true,
+    "syntax:src/molgap/research_memory/replay.py": true,
+    "syntax:src/molgap/research_memory/roles.py": true,
+    "syntax:src/molgap/research_memory/schemas.py": true,
+    "syntax:src/molgap/research_memory/summary.py": true,
+    "syntax:src/molgap/research_memory/terminal_wiring.py": true,
+    "syntax:src/molgap/research_memory/trace.py": true,
+    "syntax:src/molgap/research_memory/validate.py": true,
+    "syntax:src/molgap/research_memory/__init__.py": true,
+    "recipe:reference": "649ffc006cf24ab0d9b57b4d0f4786753dde1c449ee75ec87244032d0db7aa5e",
+    "initialization:reference": {
+      "file_sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80",
+      "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "tensor_count": 367,
+      "device": "cpu"
+    },
+    "recipe:fused_layout": "0bd0c2ee27f754bdc7c3171ca42c63d07443dcb7d6ea4ffd5e6fca95437b9e84",
+    "initialization:fused_layout": {
+      "file_sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80",
+      "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "tensor_count": 367,
+      "device": "cpu"
+    },
+    "module:molgap.experiment_training_worker": true,
+    "module:molgap.k1_screen_training": true,
+    "module:molgap.pcqm_wedge": true,
+    "module:molgap.v4_runtime": true,
+    "clean_import:package": {
+      "molgap": "src/molgap/__init__.py",
+      "molgap.constants": "src/molgap/constants.py",
+      "molgap.experiment_training_worker": "src/molgap/experiment_training_worker.py",
+      "molgap.k1_screen_training": "src/molgap/k1_screen_training.py",
+      "molgap.pcqm_wedge": "src/molgap/pcqm_wedge.py",
+      "molgap.qm9_neural_atom": "src/molgap/qm9_neural_atom.py",
+      "molgap.screen_policy": "src/molgap/screen_policy.py",
+      "molgap.training_reproducibility": "src/molgap/training_reproducibility.py",
+      "molgap.v4_runtime": "src/molgap/v4_runtime.py"
+    },
+    "input_layout:mount": true
+  },
+  "errors": [
+    {
+      "check": "family_initialization",
+      "item": "reference",
+      "message": "'str' object has no attribute 'detach'"
+    },
+    {
+      "check": "family_initialization",
+      "item": "fused_layout",
+      "message": "'str' object has no attribute 'detach'"
+    }
+  ],
+  "limitations": [
+    "Selected imports and trusted pickle GLOBAL dependencies only; dynamic paths are not proven.",
+    "No model execution, GPU qualification, scientific acceptance or submission authority."
+  ]
+}

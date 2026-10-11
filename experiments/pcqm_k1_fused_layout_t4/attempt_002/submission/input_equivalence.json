@@ -1,0 +1,26 @@
+{
+  "status": "UNCHANGED_FIXED_INPUTS_AND_RECIPE",
+  "original_cpu_input_acceptance_ref": "experiments/pcqm_k1_fused_layout_t4/submission/cpu_input_acceptance.json",
+  "original_cpu_input_acceptance_sha256": "3772ebe15e2573867e19ad9b1abc3fa6c57dbee1cf821cf71f0fc0b3296d7734",
+  "scope": "Compare exact predeclared family/initialization/data/training and recipe bytes; no graph reload, training/inference or new role access",
+  "family_loader_real_artifact_checks": {
+    "reference": {
+      "device": "cpu",
+      "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "tensor_count": 367
+    },
+    "fused_layout": {
+      "device": "cpu",
+      "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "tensor_count": 367
+    }
+  },
+  "original_source_commit": "fdcaee6a30496804315e5c8650d48ac1f41ffb7f",
+  "repaired_source_commit": "6b526e4333beca85008ddec085969430e073c4fc",
+  "tests": {
+    "scoped_owner_passed": 75,
+    "integration_passed": 230,
+    "integration_host_skip": 1,
+    "desktop_scoped_passed": 75
+  }
+}

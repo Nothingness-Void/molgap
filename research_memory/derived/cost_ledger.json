@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 57,
-  "event_count": 229,
+  "event_count": 231,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,7 +11,7 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 198,
+  "measurement_missing_event_count": 200,
   "not_applicable_event_count": 79,
   "retry_event_ids": [],
   "totals_by_category": {
@@ -3448,7 +3448,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 6
+        "unknown_records": 8
       },
       "Tesla T4; one of two allocated devices including idle time:device_hours": {
         "estimated": {
@@ -3460,7 +3460,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 4
       },
       "Tesla T4; one of two allocated devices including idle time:queue_hours": {
         "estimated": {
@@ -3472,7 +3472,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 6
+        "unknown_records": 8
       },
       "Tesla T4; one of two allocated devices including idle time:wall_hours": {
         "estimated": {
@@ -3484,7 +3484,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 4
       },
       "Tesla T4; one of two allocated devices; includes assigned idle capacity:cpu_hours": {
         "estimated": {
@@ -5890,7 +5890,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 6
+        "unknown_records": 8
       },
       "device_hours": {
         "estimated": {
@@ -5902,7 +5902,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 4
       },
       "queue_hours": {
         "estimated": {
@@ -5914,7 +5914,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 6
+        "unknown_records": 8
       },
       "wall_hours": {
         "estimated": {
@@ -5926,7 +5926,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 4
       }
     },
     "Tesla T4; one of two allocated devices; includes assigned idle capacity": {
@@ -14396,6 +14396,106 @@
       }
     },
     "TB-molgap-k1-fused-layout-100k-s42-v1-reference": {
+      "Tesla T4; one of two allocated devices including idle time:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; one of two allocated devices including idle time:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; one of two allocated devices including idle time:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; one of two allocated devices including idle time:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      }
+    },
+    "TB-molgap-k1-fused-layout-100k-s42-v2-fused_layout": {
+      "Tesla T4; one of two allocated devices including idle time:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; one of two allocated devices including idle time:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; one of two allocated devices including idle time:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "Tesla T4; one of two allocated devices including idle time:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      }
+    },
+    "TB-molgap-k1-fused-layout-100k-s42-v2-reference": {
       "Tesla T4; one of two allocated devices including idle time:cpu_hours": {
         "estimated": {
           "known_records": 0,
