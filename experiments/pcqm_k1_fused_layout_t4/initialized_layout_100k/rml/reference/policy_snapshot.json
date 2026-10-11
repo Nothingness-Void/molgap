@@ -1,0 +1,36 @@
+{
+  "action_rule": {
+    "action": "TRAIN_PAIR_100K",
+    "field": "user_release_validated",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": "2026-10-12",
+    "approved_by": "user",
+    "authority_ref": "experiments/pcqm_k1_fused_layout_t4/initialized_layout_100k/user_release.json"
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "molgap-k1-initialized-layout-100k-s42-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "Count both allocated T4 devices including idle, setup, qualification, evaluation and cleanup.",
+      "Allocation duration is unknown; native hardware/session limits apply, with no automatic retry."
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "e17a6357341552e68edfd643a32fc64084b1701ca7a6ee409d0cce1f4696a1b0",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "k1-native-initialized-layout-100k",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_release_validated"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "approved",
+  "version": "1"
+}

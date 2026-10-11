@@ -18,19 +18,24 @@ RUN = "molgap-k1-fused-layout-100k-s42-v1"
 
 
 def prepare(root, initial, *, draft, attempt=1):
-    if attempt not in (1, 2, 3, 4):
+    if attempt not in (1, 2, 3, 4, 5):
         raise ValueError("Only explicitly released attempts are supported")
-    initialized = attempt == 4
+    initialized = attempt in (4, 5)
     rel = REL if attempt == 1 else REL + f"/attempt_{attempt:03d}"
     run = RUN if attempt == 1 else f"molgap-k1-fused-layout-100k-s42-v{attempt}"
     if initialized:
         rel = REL + "/initialized_layout_100k"
         run = "molgap-k1-initialized-layout-100k-s42-v1"
+        if attempt == 5:
+            rel += "/release_002"
+            run = "molgap-k1-initialized-layout-100k-s42-v2"
     candidate = "initialized_layout" if initialized else "fused_layout"
     addon = "k1_initialized_layout" if initialized else "k1_fused_layout"
     policy_id = "k1-native-fused-layout-100k" + (f"-attempt{attempt:03d}" if attempt > 1 else "")
     if initialized:
         policy_id = "k1-native-initialized-layout-100k"
+        if attempt == 5:
+            policy_id += "-release002"
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     folder = root / rel
     original = json.loads((root / "experiments/pcqm_k1_slot_width96/reference_binding/original_reference_arm.json").read_text())
@@ -46,10 +51,12 @@ def prepare(root, initial, *, draft, attempt=1):
         execution_torch_version="2.11.0" if initialized else None,
         family_id="k1-native-initialized-layout" if initialized else "k1-native-fused-layout",
         policy_id=policy_id, account="nothingnessvoid",
-        source_dataset=("nothingnessvoid/k1-initialized-layout-100k-s42-source-v1" if initialized
+        source_dataset=(f"nothingnessvoid/k1-initialized-layout-100k-s42-source-v{attempt - 3}" if initialized
                         else f"nothingnessvoid/k1-fused-layout-100k-s42-source-v{attempt}"),
         dataset="nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1", title=run,
-        parent_trajectory_ids=([f"TB-molgap-k1-fused-layout-100k-s42-v{attempt - 1}-{arm}"
+        parent_trajectory_ids=([f"TB-molgap-k1-initialized-layout-100k-s42-v1-{arm}"
+                               for arm in ("reference", "initialized_layout")] if attempt == 5 else
+                              [f"TB-molgap-k1-fused-layout-100k-s42-v{attempt - 1}-{arm}"
                                for arm in ("reference", "fused_layout")] if attempt > 1 else []),
         question=("Does scoped safety-fill removal plus CPU layout reduce native T4 cost without degrading complete100K K1 quality?" if initialized
                   else "Does fused AdamW plus CPU layout reduce native T4 cost without degrading complete100K K1 quality?"),
@@ -126,6 +133,6 @@ if __name__ == "__main__":
     parser.add_argument("--repo-root", type=Path, required=True)
     parser.add_argument("--initial-state", type=Path, required=True)
     parser.add_argument("--draft", action="store_true")
-    parser.add_argument("--attempt", type=int, choices=(1, 2, 3, 4), default=1)
+    parser.add_argument("--attempt", type=int, choices=(1, 2, 3, 4, 5), default=1)
     args = parser.parse_args()
     prepare(args.repo_root.resolve(), args.initial_state.resolve(), draft=args.draft, attempt=args.attempt)

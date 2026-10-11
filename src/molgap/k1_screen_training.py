@@ -809,7 +809,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     import torch
     from .experiment_family_workflow import RunContext, tensor_safe_rng_state
     from .training_reproducibility import capture_rng_state, restore_rng_state
-    if mode not in ("reference", "ssma", "mean2", "mean2_clean_second", "fused_layout") or label_cache is not None:
+    if mode not in ("reference", "ssma", "mean2", "mean2_clean_second", "fused_layout",
+                    "initialized_layout") or label_cache is not None:
         raise ValueError("This paired GPU qualification supports registered screen modes only")
     recipe = json.loads(Path(recipe_path).read_text(encoding="utf-8"))
     validate_recipe(recipe, mode=mode)

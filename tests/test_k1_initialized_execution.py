@@ -164,6 +164,18 @@ def test_unqualified_runtime_fails_before_transfer(monkeypatch):
         owner._screen_step(None, None, None, 0., 1., "initialized_layout", device="cpu")
 
 
+def test_registered_mode_reaches_native_preflight_recipe_boundary(tmp_path):
+    # CPU-only sentry: distinguish admission to the owner from a missing recipe.
+    with pytest.raises(FileNotFoundError):
+        owner.run_screen_preflight(spec=None, package_dir=tmp_path,
+            expected_package_identity="1" * 64, arm_id="candidate",
+            mode="initialized_layout", recipe_path=tmp_path / "absent.json",
+            initial_state_path=tmp_path / "absent.pt", input_root=tmp_path,
+            output=tmp_path / "not-created", account="synthetic",
+            run_reference="synthetic/not-submitted", trajectory_id="synthetic")
+    assert not (tmp_path / "not-created").exists()
+
+
 @pytest.mark.parametrize("version", ["2.7.1", "2.11.0"])
 def test_explicit_native_runtime_recipe_pin(version):
     frozen = build_family_recipe(("neural_atom_k1", "2"), addon="k1_initialized_layout",

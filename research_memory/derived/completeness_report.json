@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 117,
+    "trajectories_total": 119,
     "with_complete_native_measurement": 23,
-    "with_cost_event": 106,
-    "with_incomplete_native_measurement": 83,
+    "with_cost_event": 108,
+    "with_incomplete_native_measurement": 85,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 86,
+      "count": 88,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -90,6 +90,8 @@
         "TB-molgap-k1-fused-layout-100k-s42-v2-reference",
         "TB-molgap-k1-fused-layout-100k-s42-v3-fused_layout",
         "TB-molgap-k1-fused-layout-100k-s42-v3-reference",
+        "TB-molgap-k1-initialized-layout-100k-s42-v1-initialized_layout",
+        "TB-molgap-k1-initialized-layout-100k-s42-v1-reference",
         "TB-pcqm-expert-oracle-feasibility-20260930",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
@@ -135,7 +137,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 83,
+      "count": 85,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -211,6 +213,8 @@
         "TB-molgap-k1-fused-layout-100k-s42-v2-reference",
         "TB-molgap-k1-fused-layout-100k-s42-v3-fused_layout",
         "TB-molgap-k1-fused-layout-100k-s42-v3-reference",
+        "TB-molgap-k1-initialized-layout-100k-s42-v1-initialized_layout",
+        "TB-molgap-k1-initialized-layout-100k-s42-v1-reference",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
         "TB-pcqm-scale-fit-retained-20261001",
@@ -243,7 +247,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 43,
+      "count": 45,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
@@ -279,6 +283,8 @@
         "TB-molgap-k1-fused-layout-100k-s42-v2-reference",
         "TB-molgap-k1-fused-layout-100k-s42-v3-fused_layout",
         "TB-molgap-k1-fused-layout-100k-s42-v3-reference",
+        "TB-molgap-k1-initialized-layout-100k-s42-v1-initialized_layout",
+        "TB-molgap-k1-initialized-layout-100k-s42-v1-reference",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-pcqm-scale-transfer-reassessment-20260925",
@@ -293,7 +299,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 17,
+      "count": 19,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -310,6 +316,8 @@
         "TB-molgap-k1-fused-layout-100k-s42-v2-reference",
         "TB-molgap-k1-fused-layout-100k-s42-v3-fused_layout",
         "TB-molgap-k1-fused-layout-100k-s42-v3-reference",
+        "TB-molgap-k1-initialized-layout-100k-s42-v1-initialized_layout",
+        "TB-molgap-k1-initialized-layout-100k-s42-v1-reference",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],
