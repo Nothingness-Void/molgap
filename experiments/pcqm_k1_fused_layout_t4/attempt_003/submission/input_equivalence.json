@@ -1,0 +1,52 @@
+{
+  "status": "UNCHANGED_FIXED_INPUTS_AND_RECIPE",
+  "arm_checks": {
+    "reference": {
+      "family": true,
+      "initialization": true,
+      "data": true,
+      "training": true,
+      "addons": true
+    },
+    "fused_layout": {
+      "family": true,
+      "initialization": true,
+      "data": true,
+      "training": true,
+      "addons": true
+    }
+  },
+  "recipe_bytes_identical": {
+    "reference": true,
+    "fused_layout": true
+  },
+  "original_cpu_input_acceptance_ref": "experiments/pcqm_k1_fused_layout_t4/submission/cpu_input_acceptance.json",
+  "original_cpu_input_acceptance_sha256": "3772ebe15e2573867e19ad9b1abc3fa6c57dbee1cf821cf71f0fc0b3296d7734",
+  "scope": "Reuse existing accepted unchanged cache; no new graph/model/role consumption",
+  "release_checks": {
+    "family_initialization:fused_layout": {
+      "device": "cpu",
+      "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "tensor_count": 367
+    },
+    "family_initialization:reference": {
+      "device": "cpu",
+      "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "tensor_count": 367
+    },
+    "family_output_io:fused_layout": {
+      "device": "cpu",
+      "object_roundtrip": true,
+      "timing_array_roundtrip": true
+    },
+    "family_output_io:reference": {
+      "device": "cpu",
+      "object_roundtrip": true,
+      "timing_array_roundtrip": true
+    }
+  },
+  "scoped_regression_tests": {
+    "passed": 27,
+    "warning": "PyG deprecation"
+  }
+}
