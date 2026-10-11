@@ -83,13 +83,15 @@ def child(stage, variant, context):
         raise ValueError(stage)
 
 
-def worker(variant, device, context, deadline):
+def worker(variant, device, context, deadline, *, stages=None):
     root = ROOT / variant
     root.mkdir(parents=True, exist_ok=True)
     env = os.environ.copy()
     env.update(CUDA_VISIBLE_DEVICES=str(device), MOLGAP_VARIANT=variant,
                MOLGAP_CONTEXT=json.dumps(context), PYTHONUNBUFFERED="1")
-    stages = ("preflight", "training") if context.get("author_screen") else ("checks", "preflight", "training")
+    stages = stages or (("preflight", "training") if context.get("author_screen") else ("checks", "preflight", "training"))
+    if any(stage not in {"checks", "preflight", "training"} for stage in stages):
+        raise ValueError("Unsupported worker phase")
     for stage in stages:
         env["MOLGAP_STAGE"] = stage
         remaining = deadline - time.monotonic()

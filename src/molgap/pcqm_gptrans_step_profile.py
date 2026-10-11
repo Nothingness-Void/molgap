@@ -138,9 +138,9 @@ class ForeachExponentialMovingAverage(ExponentialMovingAverage):
                 floating_sources.append(value.detach())
             else:
                 target.copy_(value)
-        torch._foreach_mul_(floating_targets, EMA_DECAY)
+        torch._foreach_mul_(floating_targets, self.decay)
         torch._foreach_add_(
-            floating_targets, floating_sources, alpha=1.0 - EMA_DECAY
+            floating_targets, floating_sources, alpha=1.0 - self.decay
         )
 
 

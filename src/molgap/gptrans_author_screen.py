@@ -27,6 +27,7 @@ MODES += ("degree_pair_transition_ema999",)
 MODES += ("degree_bond_local_cap_ema999",)
 MODES += ("degree_local_connected_pair_ema999", "degree_local_bond_return_ema999")
 MODES += ("degree_local_triplet_aggregate_ema999", "degree_local_triplet_attention_ema999")
+MODES += ("execution_original", "execution_optimized")
 
 
 def validate_arm_allocation(config):
@@ -59,6 +60,9 @@ def restore_source_package(upload_root: Path, output: Path, expected_sha256: str
 
 def author_child(stage: str, variant: str, context: dict, root: Path):
     """Bind calls, and prevent an unrelated retained prefix from being resumed."""
+    if variant in {"execution_original", "execution_optimized"}:
+        from .gptrans_execution_study import child
+        return child(stage, variant, context, root)
     from .pcqm_gptrans_v4 import run_preflight, run_training
     import torch
     if variant == "scale_ema":
@@ -178,14 +182,21 @@ def run_author_screen(upload_root: Path, source_root: Path, output: Path, archiv
         "official_validation_role_read": False, "test_dev_role_read": False, "test_challenge_role_read": False})
     outcomes = []
     try:
-        with concurrent.futures.ThreadPoolExecutor(max_workers=len(modes)) as executor:
-            futures = {executor.submit(scheduler.worker, arm, device, context,
-                       started + config["maximum_wall_seconds"]): arm for device, arm in enumerate(modes)}
-            for future in concurrent.futures.as_completed(futures):
-                try:
-                    outcomes.append(future.result())
-                except Exception as error:
-                    outcomes.append({"variant": futures[future], "complete": False, "error": str(error)})
+        phases = (("preflight",), ("training",)) if config.get("execution_study") else (None,)
+        for phase in phases:
+            outcomes = []
+            with concurrent.futures.ThreadPoolExecutor(max_workers=len(modes)) as executor:
+                futures = {executor.submit(scheduler.worker, arm, device, context,
+                           started + config["maximum_wall_seconds"], stages=phase): arm for device, arm in enumerate(modes)}
+                for future in concurrent.futures.as_completed(futures):
+                    try:
+                        outcomes.append(future.result())
+                    except Exception as error:
+                        outcomes.append({"variant": futures[future], "complete": False, "error": str(error)})
+            if phase is not None:
+                atomic_json(output / (phase[0] + "_phase.json"), {"outcomes": outcomes})
+            if not all(row["complete"] for row in outcomes):
+                break
     finally:
         elapsed = time.monotonic() - started
         atomic_json(output / "job_summary.json", {"outcomes": outcomes, "elapsed_seconds": elapsed})
