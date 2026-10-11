@@ -17,13 +17,6 @@ from .pcqm_gptrans_prenorm_500k import (
     optimizer_for,
 )
 from .pcqm_gptrans_v4 import EMA_DECAY, ExponentialMovingAverage, _forward, _state_sha256
-from .pcqm_k1_pair_token_batch_profile import (
-    _cohorts,
-    _graph_sizes,
-    _load_train_only,
-    _loader,
-    _normalizer,
-)
 from .pcqm_k1_scale import FIXED_500K_MANIFEST_SHA256
 from .pcqm_k1_scale_runner import find_cache
 from .training_reproducibility import (
@@ -488,6 +481,8 @@ def _fixed_overhead_proxy(batches, mean, std, output_root: Path) -> dict:
 
 
 def _load_batches(graphs, indices) -> tuple[list, dict]:
+    from .pcqm_k1_pair_token_batch_profile import _loader
+
     selected = indices[: (WARMUP_STEPS + MEASURED_STEPS) * BATCH_SIZE]
     loader = _loader(graphs, selected, BATCH_SIZE)
     iterator = iter(loader)
@@ -634,6 +629,11 @@ def run(
     slurm_job_id: str,
 ) -> dict:
     import torch
+
+    # Training reuses the EMA primitive without the unrelated K1 cohort tools.
+    from .pcqm_k1_pair_token_batch_profile import (
+        _cohorts, _graph_sizes, _load_train_only, _normalizer,
+    )
 
     output_root.mkdir(parents=True, exist_ok=True)
     settings = configure_fp32_determinism(SEED)

@@ -1,0 +1,33 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-execution40-dual-s42",
+  "version": 2,
+  "files": [
+    {
+      "path": "gptrans_execution40/startup.json",
+      "sha256": "5c93ce83e22851cbb472432b2657262c162376c898d2ddb2c03984cd565ea9ef"
+    },
+    {
+      "path": "gptrans_execution40/job_summary.json",
+      "sha256": "b0e1d8fc12a8fe93c0f781d5de92e5648d9a4cbd201b617863b0dbacf832ed79"
+    },
+    {
+      "path": "gptrans_execution40/native_cost.json",
+      "sha256": "8a143281d785243c0a07989410f74aeef46eb311112ad14cafa0eed49cd82e52"
+    },
+    {
+      "path": "gptrans_execution40/preflight_phase.json",
+      "sha256": "5ec2639ddf0bfef1def77e190e0f7e0fbdc11a7976be42449297fa614d243765"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/preflight/preflight.json",
+      "sha256": "9d2c59b17314245ab1d8ca9f3efe81b7150443fd6b1002348f7d2cd9e3cd8e08"
+    },
+    {
+      "path": "gptrans_execution40/execution_original/preflight/runtime_certificate.json",
+      "sha256": "e81edc5f03bd16b2c2c8f8b8f8d3256996a186788cc287475782461dc8450ca7"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}

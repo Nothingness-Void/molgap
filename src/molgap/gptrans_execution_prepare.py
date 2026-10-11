@@ -142,7 +142,8 @@ def freeze(root):
         kernel_metadata=BASE+"/gpu/kernel-metadata.json",
         dataset_metadata={"title":"MolGap GPTrans Execution40 Source", "id":"kaseichou/molgap-gptrans-execution40-source",
                           "licenses":[{"name":"other"}],"isPrivate":True},
-        required_modules=["molgap.gptrans_execution_study","molgap.gptrans_execution_backend","molgap.pcqm_gptrans_v4"])
+        required_modules=["molgap.gptrans_execution_study","molgap.gptrans_execution_backend",
+                          "molgap.pcqm_gptrans_step_profile","molgap.pcqm_gptrans_v4"])
     for arm_id, plan_ref in zip(ARMS, plan_refs):
         workflow["artifacts"][arm_id + "_plan.json"] = UploadArtifact.from_file(root / plan_ref).to_workflow()
     # Reuse the reviewed family payload, not a repository-wide sensitive-file scan.

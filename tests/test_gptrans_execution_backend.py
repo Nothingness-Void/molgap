@@ -74,6 +74,22 @@ def test_foreach_ema_respects_own_decay_and_reload():
         assert all(torch.equal(base.state[key], fast.state[key]) for key in base.state)
 
 
+def test_execution_ema_import_does_not_require_k1_profile():
+    import subprocess
+    import sys
+
+    # A fresh interpreter prevents an earlier test import masking the missing mount.
+    code = (
+        "import sys; "
+        "sys.modules['molgap.pcqm_k1_pair_token_batch_profile'] = None; "
+        "from molgap.pcqm_gptrans_step_profile import ForeachExponentialMovingAverage; "
+        "from molgap.gptrans_execution_backend import backend; "
+        "assert callable(ForeachExponentialMovingAverage.update)"
+    )
+    result = subprocess.run([sys.executable, '-c', code], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+
+
 def test_buffered_cpu_evaluation_preserves_payload_and_live_weights():
     from molgap.pcqm_gptrans_v4 import ExponentialMovingAverage
     model = torch.nn.Linear(1, 1)
