@@ -7,13 +7,13 @@
   "credential_file": "C:/Users/Adminn/Downloads/key/kaggle_2.json",
   "jobs": [
     {
-      "slot": "execution40-dual-v2",
+      "slot": "execution40-dual-v3",
       "kernel": "kaseichou/molgap-gptrans-execution40-dual-s42",
       "kernel_id": 138147173,
-      "version": 2,
+      "version": 3,
       "closed": false,
-      "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/control/gptrans_execution40_v2.json",
-      "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/gptrans_execution40_v2",
+      "control_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\control\\gptrans_execution40_v3.json",
+      "output_directory": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\training\\gptrans_execution40_v3",
       "metadata_paths": [
         "gptrans_execution40/startup.json",
         "gptrans_execution40/job_summary.json",
@@ -32,8 +32,11 @@
   "comparison_class": "PAIRED_ENDPOINT",
   "postrun_requires_actual_replay_pool_admission": false,
   "successor_authorized": false,
-  "prepared_package": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/prepared/gptrans_execution40_v6/release/source",
+  "prepared_package": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\prepared\\gptrans_execution40_v7\\release\\source",
   "acceptance_entry": "experiments/pcqm_gptrans_execution40/accept.py",
-  "receipt_ref": "experiments/pcqm_gptrans_execution40/gpu/submission_v2.json",
-  "failed_attempt_cost_ref": "experiments/pcqm_gptrans_execution40/gpu/failure_v1.md"
+  "receipt_ref": "experiments/pcqm_gptrans_execution40/gpu/submission_v3.json",
+  "failed_attempt_cost_refs": [
+    "experiments/pcqm_gptrans_execution40/gpu/failure_v1.md",
+    "experiments/pcqm_gptrans_execution40/gpu/failure_v2.md"
+  ]
 }

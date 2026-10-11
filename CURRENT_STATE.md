@@ -7,10 +7,11 @@
 ## Server active screen
 
 The authorized [original/optimized execution40 assay](experiments/pcqm_gptrans_execution40/protocol.md)
-is submitted as Kaggle2 kernel138147173/version2 and was observed RUNNING.
-Version1 failed before training at the prospective transport-byte gate; its
-[diagnosis](experiments/pcqm_gptrans_execution40/gpu/failure_v1.md) and native cost
-are retained. Its corrected [receipt](experiments/pcqm_gptrans_execution40/gpu/submission_v2.json) and
+is submitted as Kaggle2 kernel138147173/version3 and was observed RUNNING.
+Versions1/2 failed before formal training at transport/dependency gates; their
+[v1 diagnosis](experiments/pcqm_gptrans_execution40/gpu/failure_v1.md),
+[v2 diagnosis](experiments/pcqm_gptrans_execution40/gpu/failure_v2.md) and costs
+are retained. Its corrected [receipt](experiments/pcqm_gptrans_execution40/gpu/submission_v3.json) and
 [existing-B binding](experiments/pcqm_gptrans_execution40/gpu/monitor_binding.json)
 own physical identity and custody; the existing30-minute heartbeat is active.
 It compares the
