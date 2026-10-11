@@ -82,6 +82,8 @@ def test_cache_rejects_changed_rows_or_batch(kind):
     ('cpu_threads', 0), ('cpu_threads', True), ('training_workers', -1),
     ('development_workers', True), ('independent_models', 0), ('total_cpu_budget', 1),
     ('development_cache_bytes', 0), ('cache_development', 1),
+    ('selective_transfers', 1), ('cache_ema_plan', 1), ('reuse_weight_backup', 1),
+    ('reuse_loaded_datasets', 1),
 ])
 def test_resource_validation_fails_closed(field, value):
     with pytest.raises(ValueError):
@@ -90,7 +92,7 @@ def test_resource_validation_fails_closed(field, value):
 
 def owner():
     names = ('_make_model', '_training_loader', '_development_loader', '_forward',
-             '_make_training_state', '_optimizer_step', '_evaluate', '_save_checkpoint')
+             '_make_training_state', '_optimizer_step', '_evaluate', '_save_checkpoint', '_load_datasets')
     result = SimpleNamespace(**{name: lambda *a, **k: None for name in names},
         PHYSICAL_BATCH=128, DEVELOPMENT_ROWS=130, SEED=42, LOADER_WORKERS=4,
         LEARNING_RATE=.001, _weight_decay=lambda v: .05,
@@ -123,7 +125,7 @@ def test_cached_live_ema_results_rng_and_owner_restore_match_streaming(monkeypat
             outputs.append(output)
             states.append(torch.get_rng_state())
             assert report['phase_timing']['evaluation_passes'] == 4
-            assert native._scientific_fields()['execution_backend'].startswith('optimized-tuning-v2:')
+            assert native._scientific_fields()['execution_backend'].startswith('optimized-tuning-v3:')
             assert all(torch.equal(initial[k], model.state_dict()[k]) for k in initial)
             if cached:
                 assert report['development_caches'][0]['cold_passes'] == 1
@@ -241,3 +243,88 @@ def test_cache_rejects_invalid_role_offset(start):
     with pytest.raises(ValueError):
         PreparedDevelopmentCache([], rows=130, batch_size=128, max_bytes=100000,
                                  source_start=start)
+
+
+@pytest.mark.parametrize('selective,backup', [(False, False), (True, False), (False, True), (True, True)])
+def test_new_evaluation_switches_match_v1_payload_and_rng(monkeypatch, selective, backup):
+    monkeypatch.setattr(torch.cuda, 'synchronize', lambda: None)
+    model, data = torch.nn.Linear(1, 1), graphs()
+    ema = ExponentialMovingAverage(model, .999)
+    with torch.no_grad():
+        model.weight.add_(.1)
+    outputs, states = [], []
+    for changed in (False, True):
+        native = owner()
+        config = replace(profile(True), selective_transfers=selective if changed else False,
+                         reuse_weight_backup=backup if changed else False)
+        torch.manual_seed(420)
+        with tuned_backend(native, config):
+            outputs.append(native._evaluate(model, ema, data, torch.tensor(0.), torch.tensor(1.), device='cpu'))
+            states.append(torch.get_rng_state())
+    assert outputs[0]['mae_eV'] == outputs[1]['mae_eV']
+    assert all(torch.equal(outputs[0][k], outputs[1][k]) for k in ('prediction_eV', 'target_eV', 'source_idx'))
+    assert torch.equal(states[0], states[1])
+
+
+def test_training_state_hook_reuses_native_optimizer_and_reports_ema_plan():
+    from molgap.gptrans_execution_hotpath import BoundForeachEMA
+    native, model = owner(), torch.nn.Linear(1, 1)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=.001, foreach=False)
+    scheduler = SimpleNamespace()
+    native._make_training_state = lambda: (model, optimizer, scheduler, ExponentialMovingAverage(model, .999))
+    original = native._make_training_state
+    with tuned_backend(native, profile(True)) as report:
+        observed_model, observed_optimizer, observed_scheduler, ema = native._make_training_state()
+        assert observed_model is model and observed_optimizer is optimizer and observed_scheduler is scheduler
+        assert optimizer.param_groups[0]['foreach'] is True
+        assert isinstance(ema, BoundForeachEMA)
+        ema.update(model)
+        ema.update(model)
+    assert native._make_training_state is original
+    assert report['ema_tensor_plans'] == [dict(plan_builds=1, update_calls=2)]
+
+
+def test_cache_overflow_does_not_keep_recounting_tensor_storage(monkeypatch):
+    from molgap import gptrans_execution_tuning as module
+    calls = []
+    def count(batch):
+        calls.append(batch)
+        return 1000
+    monkeypatch.setattr(module, '_cpu_storage_bytes', count)
+    cache = PreparedDevelopmentCache(source(graphs()), rows=130, batch_size=128, max_bytes=1)
+    list(cache)
+    list(cache)
+    assert len(calls) == 1
+
+
+def test_ema_reporting_does_not_keep_preflight_models_alive():
+    import gc
+    import weakref
+    native = owner()
+    def factory():
+        model = torch.nn.Linear(1, 1)
+        return model, torch.optim.AdamW(model.parameters()), None, ExponentialMovingAverage(model, .999)
+    native._make_training_state = factory
+    with tuned_backend(native, profile(True)) as report:
+        model, optimizer, scheduler, ema = native._make_training_state()
+        ema.update(model)
+        model_ref, ema_ref = weakref.ref(model), weakref.ref(ema)
+        del model, optimizer, scheduler, ema
+        gc.collect()
+        assert model_ref() is None and ema_ref() is None
+    assert report['ema_tensor_plans'] == [dict(plan_builds=1, update_calls=1)]
+
+
+def test_context_reuses_loaded_datasets_and_restores_loader_owner(tmp_path):
+    path = tmp_path / 'train.pt'
+    path.write_bytes(b'synthetic')
+    native, calls = owner(), []
+    def load(paths):
+        calls.append(paths)
+        return object(), []
+    native._load_datasets = load
+    with tuned_backend(native, profile(True)) as report:
+        first = native._load_datasets((path,))
+        assert native._load_datasets((path,)) is first
+    assert native._load_datasets is load and len(calls) == 1
+    assert report['dataset_cache'] == dict(loads=1, hits=1)

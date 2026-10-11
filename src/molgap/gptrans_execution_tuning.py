@@ -16,6 +16,9 @@ from .gptrans_execution_backend import (
     EpochBatches, PreparedLoader, assert_static_dataset, backend, buffered_evaluate,
 )
 from .screen_policy import canonical_fingerprint
+from .gptrans_execution_hotpath import (
+    BoundForeachEMA, ReusedWeightView, TransferLoader, development_cpu_view, LoadedDatasetCache,
+)
 
 
 @dataclass(frozen=True)
@@ -27,6 +30,10 @@ class ExecutionTuning:
     total_cpu_budget: int = 4
     development_cache_bytes: int = 256 * 1024 * 1024
     cache_development: bool = True
+    selective_transfers: bool = True
+    cache_ema_plan: bool = True
+    reuse_weight_backup: bool = True
+    reuse_loaded_datasets: bool = True
 
     def __post_init__(self):
         for name in ("cpu_threads", "independent_models", "total_cpu_budget", "development_cache_bytes"):
@@ -35,8 +42,10 @@ class ExecutionTuning:
         for name in ("training_workers", "development_workers"):
             if type(getattr(self, name)) is not int or getattr(self, name) < 0:
                 raise ValueError("Nonnegative worker count required: " + name)
-        if type(self.cache_development) is not bool:
-            raise ValueError("cache_development must be boolean")
+        for name in ('cache_development', 'selective_transfers', 'cache_ema_plan',
+                     'reuse_weight_backup', 'reuse_loaded_datasets'):
+            if type(getattr(self, name)) is not bool:
+                raise ValueError(name + " must be boolean")
         # Workers are single-threaded by PyTorch; both persistent pools can live
         # concurrently. This is a declared process budget, not CPU utilization.
         demand = self.independent_models * (
@@ -75,13 +84,16 @@ def _cpu_storage_bytes(batch):
 
 class PreparedDevelopmentCache:
     """Publish only an exhausted, row-validated pass; overflow streams normally."""
-    def __init__(self, source, *, rows, batch_size, max_bytes, source_start=100000):
+    def __init__(self, source, *, rows, batch_size, max_bytes, source_start=100000,
+                 retain_model_inputs=False):
         if (type(rows) is not int or rows < 1 or type(max_bytes) is not int or max_bytes < 1
-                or batch_size != 128 or type(source_start) is not int or source_start < 0):
+                or batch_size != 128 or type(source_start) is not int or source_start < 0
+                or type(retain_model_inputs) is not bool):
             raise ValueError("Invalid cache rows, budget or physical batch")
         self.source = source
         self.rows, self.batch_size, self.max_bytes = rows, batch_size, max_bytes
         self.source_start = source_start
+        self.retain_model_inputs = retain_model_inputs
         self.batches = None
         self.busy = False
         self.disabled_reason = None
@@ -100,14 +112,16 @@ class PreparedDevelopmentCache:
                 return
             self.stats["cold_passes"] += 1
             for batch in self.source:
+                if self.retain_model_inputs:
+                    batch = development_cpu_view(batch)
                 count = min(self.batch_size, self.rows - cursor)
                 index = getattr(batch, "source_idx", getattr(batch, "row_index", None))
                 if (count <= 0 or int(batch.num_graphs) != count or index is None
                         or not torch.equal(index.view(-1), torch.arange(
                             self.source_start + cursor, self.source_start + cursor + count))):
                     raise ValueError("Development cache row count/order changed")
-                measured = _cpu_storage_bytes(batch)
                 if self.disabled_reason is None:
+                    measured = _cpu_storage_bytes(batch)
                     size += measured
                     if size > self.max_bytes:
                         pending.clear()
@@ -133,14 +147,16 @@ class PreparedDevelopmentCache:
 
 @contextmanager
 def tuned_backend(owner, tuning: ExecutionTuning, *, timing_root=None):
-    """Keep native training/evaluation ownership and expose explicit v2 identity."""
+    """Keep native training/evaluation ownership and expose explicit v3 identity."""
     from torch_geometric.loader import DataLoader
     if not isinstance(tuning, ExecutionTuning) or owner.PHYSICAL_BATCH != 128:
         raise ValueError("Explicit tuning and frozen BS128 required")
     previous_threads = torch.get_num_threads()
     previous_env = {key: os.environ.get(key) for key in tuning.environment()}
-    loaders, caches = {}, {}
-    report = {"format": "molgap-gptrans-execution-tuning-v2", "tuning": asdict(tuning),
+    loaders, caches, ema_statistics = {}, {}, []
+    weight_view = ReusedWeightView()
+    dataset_cache = LoadedDatasetCache(owner._load_datasets) if tuning.reuse_loaded_datasets else None
+    report = {"format": "molgap-gptrans-execution-tuning-v3", "tuning": asdict(tuning),
               "tuning_identity": tuning.identity, "previous_cpu_threads": previous_threads,
               "cpu_count_reported_by_os": os.cpu_count(), "remote_qualified": False,
               "cache_budget_scope": "retained tensor storage, not total process RSS"}
@@ -148,7 +164,8 @@ def tuned_backend(owner, tuning: ExecutionTuning, *, timing_root=None):
         torch.set_num_threads(tuning.cpu_threads)
         os.environ.update(tuning.environment())
         with backend(owner, True, timing_root) as timing:
-            names = ("_training_loader", "_development_loader", "_evaluate", "_scientific_fields")
+            names = ("_training_loader", "_development_loader", "_evaluate", "_scientific_fields",
+                     "_make_training_state", "_load_datasets")
             saved = {name: getattr(owner, name) for name in names}
             def make_loader(graphs, workers, **kwargs):
                 options = dict(num_workers=workers, persistent_workers=workers > 0, pin_memory=True)
@@ -166,7 +183,7 @@ def tuned_backend(owner, tuning: ExecutionTuning, *, timing_root=None):
                 _, loader, sampler, generator = loaders[key]
                 sampler.epoch = epoch
                 generator.manual_seed(owner.SEED + epoch)
-                return loader
+                return TransferLoader(loader, training=True) if tuning.selective_transfers else loader
             def development_loader(graphs):
                 # Preserve v1's main CPU RNG draw, even on warm cache hits.
                 torch.empty((), dtype=torch.int64).random_()
@@ -178,14 +195,24 @@ def tuned_backend(owner, tuning: ExecutionTuning, *, timing_root=None):
                     loaders[key] = (graphs, loader)
                     if tuning.cache_development:
                         caches[key] = PreparedDevelopmentCache(loader, rows=owner.DEVELOPMENT_ROWS,
-                            batch_size=128, max_bytes=tuning.development_cache_bytes)
+                            batch_size=128, max_bytes=tuning.development_cache_bytes,
+                            retain_model_inputs=tuning.selective_transfers)
                 return caches.get(key, loaders[key][1])
+            def evaluation_inputs(graphs):
+                source = development_loader(graphs)
+                return TransferLoader(source, training=False) if tuning.selective_transfers else source
             def evaluate(model, ema, graphs, mean, std, **kwargs):
                 torch.cuda.synchronize()
                 began = time.perf_counter()
                 try:
-                    return buffered_evaluate(owner, owner._forward, development_loader,
-                        model, ema, graphs, mean, std, **kwargs)
+                    if not tuning.reuse_weight_backup:
+                        return buffered_evaluate(owner, owner._forward, evaluation_inputs,
+                            model, ema, graphs, mean, std, **kwargs)
+                    options = dict(kwargs)
+                    weights = options.pop('weights', 'ema')
+                    with weight_view.use(model, ema, weights):
+                        return buffered_evaluate(owner, owner._forward, evaluation_inputs,
+                            model, ema, graphs, mean, std, weights='live', **options)
                 finally:
                     torch.cuda.synchronize()
                     timing["evaluation_seconds"] += time.perf_counter() - began
@@ -193,20 +220,37 @@ def tuned_backend(owner, tuning: ExecutionTuning, *, timing_root=None):
                     report["development_caches"] = [
                         {**cache.stats, "disabled_reason": cache.disabled_reason}
                         for cache in caches.values()]
+                    report['weight_backup_allocations'] = weight_view.allocations
+                    report['weight_backup_tensor_bytes'] = weight_view.retained_tensor_bytes
+            def training_state(*args, **kwargs):
+                model, optimizer, scheduler, ema = saved['_make_training_state'](*args, **kwargs)
+                if tuning.cache_ema_plan:
+                    bound = BoundForeachEMA(model, ema.decay)
+                    bound.load_state_dict(ema.state_dict())
+                    ema = bound
+                    ema_statistics.append(bound.statistics)
+                return model, optimizer, scheduler, ema
             def scientific_fields(*args, **kwargs):
                 fields = saved["_scientific_fields"](*args, **kwargs)
-                fields["execution_backend"] = "optimized-tuning-v2:" + tuning.identity
+                fields["execution_backend"] = "optimized-tuning-v3:" + tuning.identity
                 return fields
-            for name, fn in zip(names, (training_loader, development_loader, evaluate, scientific_fields)):
+            for name, fn in zip(names, (training_loader, development_loader, evaluate,
+                                       scientific_fields, training_state,
+                                       dataset_cache if dataset_cache is not None else saved['_load_datasets'])):
                 setattr(owner, name, fn)
             report["phase_timing"] = timing
             try:
                 yield report
             finally:
+                report['ema_tensor_plans'] = [dict(stats) for stats in ema_statistics]
+                report['dataset_cache'] = dict(dataset_cache.statistics) if dataset_cache is not None else None
                 for name, value in saved.items():
                     setattr(owner, name, value)
     finally:
         try:
+            weight_view.clear()
+            if dataset_cache is not None:
+                dataset_cache.clear()
             for cache in caches.values():
                 cache.clear()
             for item in loaders.values():
