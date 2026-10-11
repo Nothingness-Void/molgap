@@ -7,7 +7,13 @@
 ## Server active screen
 
 The authorized [original/optimized execution40 assay](experiments/pcqm_gptrans_execution40/protocol.md)
-is in local preparation; no remote job has been submitted. It compares the
+is submitted as Kaggle2 kernel138147173/version2 and was observed RUNNING.
+Version1 failed before training at the prospective transport-byte gate; its
+[diagnosis](experiments/pcqm_gptrans_execution40/gpu/failure_v1.md) and native cost
+are retained. Its corrected [receipt](experiments/pcqm_gptrans_execution40/gpu/submission_v2.json) and
+[existing-B binding](experiments/pcqm_gptrans_execution40/gpu/monitor_binding.json)
+own physical identity and custody; the existing30-minute heartbeat is active.
+It compares the
 unchanged local-bond model under two declared execution backends, not a new
 architecture or scale-up. Its requested forty-pass scope retains the original
 sixty-pass learning-rate horizon and requires separate saved-output acceptance.

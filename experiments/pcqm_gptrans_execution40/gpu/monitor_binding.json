@@ -1,0 +1,39 @@
+{
+  "owner": "server",
+  "closed": false,
+  "controller_thread_id": "01a025a1-3b87-7781-8a91-f183193f7865",
+  "monitor_thread_id": "01a04479-ca44-7d31-95c4-6be485f256cc",
+  "credential_owner": "kaseichou",
+  "credential_file": "C:/Users/Adminn/Downloads/key/kaggle_2.json",
+  "jobs": [
+    {
+      "slot": "execution40-dual-v2",
+      "kernel": "kaseichou/molgap-gptrans-execution40-dual-s42",
+      "kernel_id": 138147173,
+      "version": 2,
+      "closed": false,
+      "control_state": "C:/Users/Adminn/Documents/molgap/platforms/_records/control/gptrans_execution40_v2.json",
+      "output_directory": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/training/gptrans_execution40_v2",
+      "metadata_paths": [
+        "gptrans_execution40/startup.json",
+        "gptrans_execution40/job_summary.json",
+        "gptrans_execution40/native_cost.json",
+        "gptrans_execution40/execution_original/execution_completion.json",
+        "gptrans_execution40/execution_optimized/execution_completion.json"
+      ]
+    }
+  ],
+  "retrieval": {
+    "method": "molgap.kaggle_output_retrieval.retrieve_exact_metadata",
+    "use_exact_job_metadata_paths": true,
+    "bulk_output_download_allowed": false
+  },
+  "experiment_purpose": "delivery_experiment",
+  "comparison_class": "PAIRED_ENDPOINT",
+  "postrun_requires_actual_replay_pool_admission": false,
+  "successor_authorized": false,
+  "prepared_package": "C:/Users/Adminn/Documents/molgap/platforms/_records/kaggle/prepared/gptrans_execution40_v6/release/source",
+  "acceptance_entry": "experiments/pcqm_gptrans_execution40/accept.py",
+  "receipt_ref": "experiments/pcqm_gptrans_execution40/gpu/submission_v2.json",
+  "failed_attempt_cost_ref": "experiments/pcqm_gptrans_execution40/gpu/failure_v1.md"
+}
