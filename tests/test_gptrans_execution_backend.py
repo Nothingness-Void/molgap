@@ -121,3 +121,15 @@ def test_execution_retention_rejects_missing_prefix_before_tensor_loading(tmp_pa
     from molgap.gptrans_execution_acceptance import verified_files
     with pytest.raises(ValueError, match='retention'):
         verified_files(tmp_path, {'files':{}})
+
+
+def test_packaged_plan_uses_planner_defaults_before_validation():
+    import json
+    from molgap.research_memory.plan import _prepare_trajectory
+    from molgap.research_memory.schemas import validate_trajectory
+    for arm in ('execution_original','execution_optimized'):
+        path = Path('experiments/pcqm_gptrans_execution40/gpu') / arm / 'plan_input.json'
+        plan = _prepare_trajectory(json.loads(path.read_text()))
+        validate_trajectory(plan)
+    source = Path('src/molgap/gptrans_execution_study.py').read_text()
+    assert '_prepare_trajectory(json.loads(staged.read_text()))' in source

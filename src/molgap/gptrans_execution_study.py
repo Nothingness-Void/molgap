@@ -40,7 +40,8 @@ def child(stage, arm, context, root):
     if sha256_file(staged) != plan["plan_spec_sha256"]:
         raise ValueError("Prospective declaration bytes changed")
     from .research_memory.schemas import validate_trajectory
-    trajectory = json.loads(staged.read_text())["trajectory"]
+    from .research_memory.plan import _prepare_trajectory
+    trajectory = _prepare_trajectory(json.loads(staged.read_text()))
     validate_trajectory(trajectory)
     if trajectory["trajectory_id"] != plan["trajectory_id"] or trajectory["decision"]["outcome"] != "ACTIVE":
         raise ValueError("Missing bound active prospective arm")
