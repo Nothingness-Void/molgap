@@ -3,6 +3,9 @@
 Implementation record, 2026-10-12. This is infrastructure maintenance, not a
 new model result, runtime certificate, training trajectory or Replay pair.
 
+The [subsequent deep audit](deep_execution_audit.md) owns the v3 extension;
+this file preserves the earlier v2 implementation record and its test count.
+
 ## Evidence and scope
 
 The [accepted delivery result](decision_terminal.md) motivated two execution

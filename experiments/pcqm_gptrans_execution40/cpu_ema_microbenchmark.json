@@ -1,0 +1,22 @@
+{
+  "scope": "CPU synthetic EMA state update only; no molecular forward/backward",
+  "tensor_count": 256,
+  "cpu_threads": 1,
+  "updates_per_repeat": 200,
+  "repeats": 5,
+  "warmup_updates_per_variant": 1,
+  "torch_version": "2.7.1+cpu",
+  "module_source_sha256": "9c6444e08c725f1de4cebff3c31fa9c532408caaa310003de72892fa42230d3a",
+  "results": {
+    "v1": {
+      "median_seconds_per_update": 0.001760983499698341,
+      "repeat_seconds_per_update": [0.0017615524999564515, 0.0017541979998350144, 0.0017747105000307784, 0.001760983499698341, 0.0017499480000697076]
+    },
+    "bound": {
+      "median_seconds_per_update": 0.0015022845001658426,
+      "repeat_seconds_per_update": [0.0015024815005017444, 0.0015022845001658426, 0.0015620109997689724, 0.0015007400000467896, 0.0014976739999838173]
+    }
+  },
+  "ratio_v1_over_bound": 1.1722037333833502,
+  "gpu_speedup_measured": false
+}

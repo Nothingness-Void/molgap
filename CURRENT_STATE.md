@@ -24,7 +24,7 @@ unchanged local-bond model under two declared execution backends, not a new
 architecture or scale-up. Its requested forty-pass scope retains the original
 sixty-pass learning-rate horizon; it was not relabeled as sixty-pass completion.
 
-The requested [v2 execution tuning layer](experiments/pcqm_gptrans_execution40/tuning_v2.md)
+The requested [execution tuning layer](experiments/pcqm_gptrans_execution40/deep_execution_audit.md)
 is implemented and locally checked; it is opt-in and not remotely qualified.
 No new training or profiling job has been submitted for that implementation.
 

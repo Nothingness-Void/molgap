@@ -16,3 +16,5 @@ provenance; neither constitutes a scientific terminal decision.
 
 The optional [v2 tuning layer](tuning_v2.md) records CPU-budget and development
 input-cache implementation, local verification and remaining remote qualification.
+The [deep execution audit](deep_execution_audit.md) records the subsequent
+opt-in v3 hot-path improvements, synthetic checks and unchanged IO boundaries.
