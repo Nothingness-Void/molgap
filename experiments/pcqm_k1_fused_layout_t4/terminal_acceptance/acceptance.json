@@ -1,0 +1,133 @@
+{
+  "mechanical_disposition": "ACCEPTED_INFRASTRUCTURE_FAILURE",
+  "scientific_disposition": "NOT_EVALUABLE_NO_FORMAL_TRAINING",
+  "kernel": "nothingnessvoid/molgap-k1-fused-layout-100k-s42-v1",
+  "kernel_id": 138066440,
+  "version": 1,
+  "output_api_version_verified": false,
+  "runtime_output_platform_version": null,
+  "native_preflight": "FAILED_INITIAL_STATE_CONTAINER_MISMATCH",
+  "formal_training": {
+    "reference": {
+      "runtime_provenance": "platforms\\_records\\kaggle\\training\\k1_fused_layout_100k_s42_v1\\attempt_001\\experiment\\reference\\runtime_provenance.json",
+      "initial_file_sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80",
+      "serialized_container_keys": [
+        "format",
+        "model_state",
+        "state_sha256"
+      ],
+      "generic_initialization_inspector": {
+        "file_sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80",
+        "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+        "tensor_count": 367,
+        "device": "cpu"
+      },
+      "frozen_loader_error_reproduced_on_cpu": {
+        "type": "AttributeError",
+        "message": "'str' object has no attribute 'detach'"
+      },
+      "formal_training_started": false,
+      "completed_epochs": 0,
+      "formal_optimizer_steps": 0,
+      "formal_sample_presentations": 0,
+      "shared_RunContext_binding_validated": true
+    },
+    "fused_layout": {
+      "runtime_provenance": "platforms\\_records\\kaggle\\training\\k1_fused_layout_100k_s42_v1\\attempt_001\\experiment\\fused_layout\\runtime_provenance.json",
+      "initial_file_sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80",
+      "serialized_container_keys": [
+        "format",
+        "model_state",
+        "state_sha256"
+      ],
+      "generic_initialization_inspector": {
+        "file_sha256": "0ce2cb3206a7a59a059b5efb09922a5d6e4478058ce2dbfec1434f3086fb5a80",
+        "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+        "tensor_count": 367,
+        "device": "cpu"
+      },
+      "frozen_loader_error_reproduced_on_cpu": {
+        "type": "AttributeError",
+        "message": "'str' object has no attribute 'detach'"
+      },
+      "formal_training_started": false,
+      "completed_epochs": 0,
+      "formal_optimizer_steps": 0,
+      "formal_sample_presentations": 0,
+      "shared_RunContext_binding_validated": true
+    }
+  },
+  "speedup": null,
+  "reference_mae_eV": null,
+  "candidate_mae_eV": null,
+  "paired_row_bootstrap": null,
+  "nomination_gate": "NOT_EVALUATED",
+  "native_cost": {
+    "entry_invocation_wall_seconds": 234.70644356299994,
+    "allocated_T4_device_seconds_in_entry_window": 469.4128871259999,
+    "allocated_T4_device_hours_in_entry_window": 0.13039246864611106,
+    "entire_platform_release_seconds": null,
+    "queue_seconds": null,
+    "gpu_busy_seconds": null,
+    "provider_billing_units": null
+  },
+  "retained_files": [
+    {
+      "path": "experiment/allocation_entry_observation.json",
+      "sha256": "822a2b5087b47b1fdc8995b20d28ddb10235ec55fbe99e661476ec3d1f3ba8ff",
+      "bytes": 806
+    },
+    {
+      "path": "experiment/fused_layout/preflight.log",
+      "sha256": "092900ffb17d869c452adb080813f827267b79d7ca5e4eb0a23ef73231c8187c",
+      "bytes": 2096
+    },
+    {
+      "path": "experiment/fused_layout/runtime_manifest.json",
+      "sha256": "6adc19959c5aa18983aac0182ee34a88a4d5ecd91676f1142e232f570d428aaa",
+      "bytes": 25209
+    },
+    {
+      "path": "experiment/fused_layout/runtime_provenance.json",
+      "sha256": "7de1f533513d30b2a77e0e3b0d7acb0d7291b7588e12ab97bd0a62958da2090f",
+      "bytes": 1471
+    },
+    {
+      "path": "experiment/pair_state.json",
+      "sha256": "6796ff229e89f1139b9bde70299b43beda0ba1624b749b42bf8272c49db6afa7",
+      "bytes": 1503
+    },
+    {
+      "path": "experiment/reference/preflight.log",
+      "sha256": "092900ffb17d869c452adb080813f827267b79d7ca5e4eb0a23ef73231c8187c",
+      "bytes": 2096
+    },
+    {
+      "path": "experiment/reference/runtime_manifest.json",
+      "sha256": "6adc19959c5aa18983aac0182ee34a88a4d5ecd91676f1142e232f570d428aaa",
+      "bytes": 25209
+    },
+    {
+      "path": "experiment/reference/runtime_provenance.json",
+      "sha256": "c56c846fa69e68a6d934eb21ab8b059f27896e941f9f86d0b0cd15e65d7609ec",
+      "bytes": 1465
+    }
+  ],
+  "local_validation": {
+    "cpu_seconds": 0.26135599999997794,
+    "cuda_initialized": false,
+    "model_constructed": false,
+    "training": false,
+    "inference": false,
+    "graph_role_reloaded": false
+  },
+  "limitations": [
+    "No formal training or saved predictions; cannot estimate optimization gain",
+    "Output API identifies latest session, not independently pinned script version; response and runtime source/config identity aligned",
+    "No family training output manifest or V5 terminal envelope; formal RML closure remains blocked",
+    "Runtime qualification failure is not evidence against the candidate model or fused optimizer"
+  ],
+  "next_allowed_action": "No automatic retry; fix/retest exact initial transport interface before separately authorized submission",
+  "frozen_loader_source_sha256": "36507265254c33108a4e2a3abffe715dc43712858e06f7f904827cf5f60f3124",
+  "frozen_source_commit": "fdcaee6a30496804315e5c8650d48ac1f41ffb7f"
+}

@@ -10,4 +10,6 @@ This is a fresh desktop-owned question, not a retry of single/mean2 or EMA.
 The [remote handoff](REMOTE_HANDOFF.md) links exact API identity, source custody
 and dated queue observation; use it before reconciliation.
 Runtime qualification, science, measured cost and RML closure remain pending.
+The [attempt001 acceptance](terminal_acceptance/decision.md) records a native
+initialization-interface failure before either arm trained; no speed/MAE result.
 No model promotion, protected evaluation, automatic continuation or heartbeat.

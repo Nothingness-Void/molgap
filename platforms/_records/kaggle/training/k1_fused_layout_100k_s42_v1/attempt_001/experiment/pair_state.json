@@ -1,0 +1,55 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "a54b46481954e98711d985b38c7523b50ec110039ba6cfa0d0dde13fe651f73c",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "reference",
+          "device": 0,
+          "started": true,
+          "terminal_status": "failed",
+          "exit_reason": "preflight_worker_exit_1",
+          "returncode": 1,
+          "worker_wall_seconds": 21.507990752999945
+        },
+        {
+          "arm_id": "fused_layout",
+          "device": 1,
+          "started": true,
+          "terminal_status": "failed",
+          "exit_reason": "preflight_worker_exit_1",
+          "returncode": 1,
+          "worker_wall_seconds": 21.507168438000008
+        }
+      ],
+      "status": "failed"
+    }
+  ],
+  "status": "failed",
+  "arms": {
+    "reference": {
+      "device": 0,
+      "training_started": false,
+      "started": true,
+      "terminal_status": "failed",
+      "exit_reason": "preflight_worker_exit_1",
+      "worker_wall_seconds": 21.507990752999945
+    },
+    "fused_layout": {
+      "device": 1,
+      "training_started": false,
+      "started": true,
+      "terminal_status": "failed",
+      "exit_reason": "preflight_worker_exit_1",
+      "worker_wall_seconds": 21.507168438000008
+    }
+  },
+  "pair_process_wall_seconds": 21.50959212300006,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost"
+}

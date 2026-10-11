@@ -1,5 +1,9 @@
 # Native T4 pair handoff
 
+[Attempt001 acceptance](terminal_acceptance/decision.md) supersedes the queue
+observation for this attempt: ERROR during initial-state loading, neither arm
+trained. Reconcile retained failure evidence; no automatic retry is authorized.
+
 2026-10-11 JST. Desktop-owned question on `codex/exp/k1-fused-layout-t4-100k`,
 local custody `D:/w/k1-fused-t4`. No server takeover or heartbeat.
 

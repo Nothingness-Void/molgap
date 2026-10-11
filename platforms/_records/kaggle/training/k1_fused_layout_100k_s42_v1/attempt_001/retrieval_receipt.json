@@ -1,0 +1,49 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-fused-layout-100k-s42-v1",
+  "expected_kernel_id": 138066440,
+  "expected_version": 1,
+  "output_api_version_verified": false,
+  "manifest_available": false,
+  "files": [
+    {
+      "path": "experiment/allocation_entry_observation.json",
+      "sha256": "822a2b5087b47b1fdc8995b20d28ddb10235ec55fbe99e661476ec3d1f3ba8ff",
+      "bytes": 806
+    },
+    {
+      "path": "experiment/fused_layout/preflight.log",
+      "sha256": "092900ffb17d869c452adb080813f827267b79d7ca5e4eb0a23ef73231c8187c",
+      "bytes": 2096
+    },
+    {
+      "path": "experiment/fused_layout/runtime_manifest.json",
+      "sha256": "6adc19959c5aa18983aac0182ee34a88a4d5ecd91676f1142e232f570d428aaa",
+      "bytes": 25209
+    },
+    {
+      "path": "experiment/fused_layout/runtime_provenance.json",
+      "sha256": "7de1f533513d30b2a77e0e3b0d7acb0d7291b7588e12ab97bd0a62958da2090f",
+      "bytes": 1471
+    },
+    {
+      "path": "experiment/pair_state.json",
+      "sha256": "6796ff229e89f1139b9bde70299b43beda0ba1624b749b42bf8272c49db6afa7",
+      "bytes": 1503
+    },
+    {
+      "path": "experiment/reference/preflight.log",
+      "sha256": "092900ffb17d869c452adb080813f827267b79d7ca5e4eb0a23ef73231c8187c",
+      "bytes": 2096
+    },
+    {
+      "path": "experiment/reference/runtime_manifest.json",
+      "sha256": "6adc19959c5aa18983aac0182ee34a88a4d5ecd91676f1142e232f570d428aaa",
+      "bytes": 25209
+    },
+    {
+      "path": "experiment/reference/runtime_provenance.json",
+      "sha256": "c56c846fa69e68a6d934eb21ab8b059f27896e941f9f86d0b0cd15e65d7609ec",
+      "bytes": 1465
+    }
+  ]
+}
