@@ -7,8 +7,10 @@
 ## Server active screen
 
 The user authorized the [original/v3-tuned execution40 dual](experiments/pcqm_gptrans_execution_tuning40/protocol.md).
-Its frozen declarations reuse the native model/trainer and existing Kaggle2
-T4x2 lifecycle; the new receipt/binding own physical status after submission.
+Its [receipt](experiments/pcqm_gptrans_execution_tuning40/gpu/submission_v1.json)
+and [binding](experiments/pcqm_gptrans_execution_tuning40/gpu/monitor_binding.json)
+identify Kaggle2 kernel138254522/version1, observed RUNNING. Existing Luna B
+owns its active30-minute silent heartbeat; runtime/startup evidence is pending.
 This is delivery qualification, not architecture promotion or a claimed
 training Replay-Ready pair. No successor is authorized.
 
