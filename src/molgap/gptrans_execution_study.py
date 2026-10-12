@@ -61,8 +61,30 @@ def child(stage, arm, context, root):
         initial_state_path=initial, target_transform_path=Path(context["target_transform_path"]),
         platform_id="kaggle2-t4-gptrans-execution40")
     optimized = arm == ARMS[1]
+    tuning_config = study.get("tuning")
+    if tuning_config is not None:
+        from .gptrans_execution_tuning import ExecutionTuning, tuned_backend
+        tuning = ExecutionTuning(**tuning_config)
+        execution_context = (tuned_backend(native, tuning, timing_root=root / "phase_timing" if stage == "training" else None)
+                             if optimized else backend(native, False, root / "phase_timing" if stage == "training" else None))
+    else:
+        execution_context = backend(native, optimized, root / "phase_timing" if stage == "training" else None)
     began = time.perf_counter()
-    with backend(native, optimized, root / "phase_timing" if stage == "training" else None) as timing:
+    with execution_context as report:
+        timing = report["phase_timing"] if tuning_config is not None and optimized else report
+        if tuning_config is not None:
+            import os
+            resources = {"torch_threads": torch.get_num_threads(), "os_cpu_count": os.cpu_count(),
+                         "affinity": sorted(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else None,
+                         "training_workers": tuning.training_workers if optimized else native.LOADER_WORKERS,
+                         "development_workers": tuning.development_workers if optimized else 0}
+            for name in ("/sys/fs/cgroup/cpu.max", "/sys/fs/cgroup/cpu/cpu.cfs_quota_us",
+                         "/sys/fs/cgroup/cpu/cpu.cfs_period_us"):
+                resource_path = Path(name)
+                if resource_path.is_file():
+                    resources[name] = resource_path.read_text().strip()
+            atomic_json(root / (stage + "_resources.json"), resources)
+            torch.cuda.reset_peak_memory_stats()
         if stage == "preflight":
             result = native.run_preflight(output=root / "preflight", **arguments["preflight"])
             if result["optimizer_step_calibration"]["estimated_training_hours"] * EPOCHS / native.EPOCHS > 5:
@@ -88,3 +110,20 @@ def child(stage, arm, context, root):
                 "test_dev_role_read": False, "test_challenge_role_read": False,
                 "files": {p.relative_to(root).as_posix(): sha256_file(p) for p in root.rglob("*")
                           if p.is_file() and p.name != "execution_completion.json"}})
+            if tuning_config is not None:
+                completion_path = root / "execution_completion.json"
+                completion = json.loads(completion_path.read_text())
+                completion["peak_allocated_cuda_bytes"] = torch.cuda.max_memory_allocated()
+                completion["peak_reserved_cuda_bytes"] = torch.cuda.max_memory_reserved()
+                atomic_json(completion_path, completion)
+    if tuning_config is not None and optimized:
+        # Context-exit counters include the final EMA/cache cleanup; publish them
+        # separately rather than taking an incomplete in-context snapshot.
+        report_path = root / (stage + "_tuning_report.json")
+        atomic_json(report_path, report)
+        if stage == "training":
+            completion_path = root / "execution_completion.json"
+            completion = json.loads(completion_path.read_text())
+            completion["files"][report_path.name] = sha256_file(report_path)
+            completion["stage_wall_seconds_including_loading_and_publication"] = time.perf_counter() - began
+            atomic_json(completion_path, completion)

@@ -47,17 +47,22 @@ def timing_summary(rows, wall, phases):
     }
 
 
-def expected_execution_fields(arm):
+def expected_execution_fields(arm, *, tuning=None):
     """Derive metadata only; neither model construction nor inference executes."""
     _require(arm in ARMS, "Unknown execution arm")
     from . import pcqm_gptrans_v4 as native
     from .gptrans_execution_backend import backend
-    with backend(native, arm == ARMS[1]):
+    if tuning is not None and arm == ARMS[1]:
+        from .gptrans_execution_tuning import ExecutionTuning, tuned_backend
+        context = tuned_backend(native, ExecutionTuning(**tuning))
+    else:
+        context = backend(native, arm == ARMS[1])
+    with context:
         return native._scientific_fields("degree_bond_local_ema999")
 
 
-def validate_execution_fields(arm, observed):
-    _require(observed == expected_execution_fields(arm), "Frozen scientific fields differ")
+def validate_execution_fields(arm, observed, *, tuning=None):
+    _require(observed == expected_execution_fields(arm, tuning=tuning), "Frozen scientific fields differ")
 
 
 def validate_recorded_learning_rate(epoch, native_value, canonical_value):
@@ -84,11 +89,12 @@ def verified_files(folder, manifest):
                  and sha256_file(path) == digest, "Output confinement/hash: " + name)
 
 
-def accept(root, records, package, *, receipt_ref):
+def accept(root, records, package, *, receipt_ref, base_ref=BASE):
     """Load predictions only; no model/checkpoint inference or training."""
     import torch
     root, records, package = Path(root), Path(records), Path(package)
     load = lambda p: json.loads(p.read_text())
+    BASE = base_ref
     base = root / BASE
     config, receipt = load(base / "screen_config.json"), load(root / receipt_ref)
     spec = ExperimentSpec.from_json((base / "spec.json").read_text())
@@ -108,7 +114,10 @@ def accept(root, records, package, *, receipt_ref):
         # Bind the independent field derivation to released code, not the worker's
         # self-reported certificate and not an unrelated newer local recipe.
         from .v4_runtime import normalized_source_sha256
-        for name in ("pcqm_gptrans_v4.py", "gptrans_execution_backend.py"):
+        providers = ["pcqm_gptrans_v4.py", "gptrans_execution_backend.py", "gptrans_execution_study.py"]
+        if config["execution_study"].get("tuning"):
+            providers += ["gptrans_execution_tuning.py", "gptrans_execution_hotpath.py"]
+        for name in providers:
             archived = archive.extractfile("src/molgap/" + name).read()
             _require(normalized_source_sha256(root / "src/molgap" / name)
                      == hashlib.sha256(archived).hexdigest(), "Released contract provider: " + name)
@@ -156,7 +165,7 @@ def accept(root, records, package, *, receipt_ref):
         _require(load(folder / "preflight/runtime_certificate.json") == preflight["runtime_certificate"],
                  "Retained and embedded runtime certificate differ")
         fields = completion["scientific_fields"]
-        validate_execution_fields(arm, fields)
+        validate_execution_fields(arm, fields, tuning=config["execution_study"].get("tuning"))
         validate_runtime_certificate(preflight["runtime_certificate"], {**fields,
             "platform_id":config["platform_id"], "accelerator":preflight["runtime_certificate"]["accelerator"],
             "runtime_certificate_id":preflight["runtime_certificate_id"]})

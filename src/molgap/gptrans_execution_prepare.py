@@ -18,7 +18,9 @@ RUN = "gptrans-execution40-dual-s42"
 ARMS = ("execution_original", "execution_optimized")
 
 
-def freeze(root):
+def freeze(root, *, base=BASE, run=RUN, tuning=None):
+    BASE, RUN = base, run
+    experiment_id = "gptrans-execution-tuning40" if tuning is not None else "gptrans-execution40"
     root = Path(root).resolve()
     read = lambda p: json.loads((root / p).read_text())
     previous = ExperimentSpec.from_json((root / OLD / "gpu/spec.json").read_text()).to_dict()
@@ -31,12 +33,12 @@ def freeze(root):
         raise ValueError("Retained shared initialization changed")
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     policy = read("research_memory/policies/gptrans-g1-followup.v1.json")
-    policy.update(policy_id="gptrans-execution40", comparability_selector={"scientific_contract":"gptrans-execution40-fp32-bs128-horizon60"},
+    policy.update(policy_id=experiment_id, comparability_selector={"scientific_contract":experiment_id+"-fp32-bs128-horizon60"},
         required_observable_fields=["user_authorized_matched_execution40"],
         created_from_source_digest=sha256_file(root / BASE / "protocol.md"),
         approval={"activation":"user-authorized execution assay; no automatic successor", "authority_ref":BASE+"/protocol.md"},
         action_rule={"field":"user_authorized_matched_execution40", "operator":"eq", "threshold":True, "action":"RUN_EXECUTION40"})
-    atomic_json(root / "research_memory/policies/gptrans-execution40.v1.json", policy)
+    atomic_json(root / ("research_memory/policies/"+experiment_id+".v1.json"), policy)
     role_ref, budget_ref = BASE + "/gpu/role_plan.json", BASE + "/gpu/budget.json"
     roles = {kind: "not_applicable" if kind == "external_submission" else "applicable" for kind in ROLE_EVENT_KINDS}
     atomic_json(root / role_ref, {"role_applicability": roles, "train_rows": [0,100000],
@@ -48,8 +50,12 @@ def freeze(root):
         "baseline_retraining_reason": "user-authorized matched execution/accuracy test; not a candidate architecture screen",
         "automatic_successor_authorized": False})
     spec = deepcopy(previous)
-    spec.update(experiment_id="gptrans-execution40", logical_run_id=RUN,
+    spec.update(experiment_id=experiment_id, logical_run_id=RUN,
                 arms=[], prospective={"arms":[]})
+    if tuning is not None:
+        from dataclasses import asdict
+        tuning = asdict(tuning)
+        spec["prospective"]["same_run_replay"] = {"reference_arm_id": ARMS[0], "candidate_arm_ids": [ARMS[1]]}
     recipes, config_arms, plan_refs = {}, {}, []
     for arm_id in ARMS:
         folder = BASE + "/gpu/" + arm_id
@@ -65,6 +71,10 @@ def freeze(root):
             optimizer_execution={"foreach": optimized, "fused": False},
             ema_execution="tensor-list" if optimized else "per-tensor",
             protected_roles_forbidden=True)
+        if tuning is not None and optimized:
+            from .gptrans_execution_tuning import ExecutionTuning
+            recipe.update(execution_backend="optimized-tuning-v3:"+ExecutionTuning(**tuning).identity,
+                          execution_tuning=tuning)
         atomic_json(root / recipe_ref, recipe)
         recipes[arm_id] = recipe_ref
         arm = deepcopy(prior_arm)
@@ -72,10 +82,10 @@ def freeze(root):
         arm["training"]["recipe"]["sha256"] = normalized_source_sha256(root / recipe_ref)
         for role in arm["data"]["roles"]:
             role["usage_sha256"] = sha256_file(root / role_ref)
-        tid = "TC-gptrans-execution40-" + ("optimized" if optimized else "original") + "-100k-s42"
+        tid = "TC-"+experiment_id+"-" + ("optimized" if optimized else "original") + "-100k-s42"
         plan = read(OLD + "/gpu/" + model + "/plan_input.json")
         t = plan["trajectory"]
-        t.update(trajectory_id=tid, family_id="gptrans-execution40", question=
+        t.update(trajectory_id=tid, family_id=experiment_id, question=
             "Does the opt-in execution backend reduce complete forty-pass runtime without material accuracy regression?" if optimized else
             "What is the matched original-backend forty-pass speed/accuracy control?")
         t["hypothesis"].update(hypothesis_id="H-"+tid, observed_deficiency=t["question"],
@@ -90,7 +100,7 @@ def freeze(root):
         prelaunch = assess_comparison_prelaunch(candidate_id=tid,
             candidate_plan={"comparison_identity": {}, "source_config_status":"frozen", "source_commit_or_archive":commit},
             reference_id=None, reference_bundle=None, experiment_purpose="delivery_experiment",
-            intervention_group_id="execution40", declared_intervention_fields=[],
+            intervention_group_id=experiment_id, declared_intervention_fields=[],
             role_applicability_plan=roles, trace_plan={k:True for k in TRACE_FIELD_DECLARATIONS},
             runtime_qualification_plan={"status":"declared", "runtime_certificate_required":True,
                                         "qualification_scope":"per-arm T4 deterministic optimizer-inclusive repeat"})
@@ -110,7 +120,7 @@ def freeze(root):
             next_allowed_actions=["one isolated forty-pass execution assay then saved-output acceptance"],
             reopen_conditions=["terminal evidence or infrastructure diagnosis"])
         plan["decision_state"].update(active_reference_ids=[],available_actions=["RUN_EXECUTION40","DEFER"],
-            chosen_action="RUN_EXECUTION40",policy_id="gptrans-execution40",budget_snapshot_ref=budget_ref,
+            chosen_action="RUN_EXECUTION40",policy_id=experiment_id,budget_snapshot_ref=budget_ref,
             role_snapshot_refs=[role_ref],state_timestamp=datetime.now(timezone.utc).isoformat(),source_commit=commit)
         plan["costs"][0].update(cost_event_id="cost-"+tid,trajectory_id=tid,run_id=RUN+":"+arm_id,
                                 platform="kaggle2",evidence_ref=budget_ref)
@@ -131,6 +141,10 @@ def freeze(root):
         "execution_study":{"epochs":40,"schedule_horizon_epochs":60,"model_variant":model,
             "physical_batch":128,"precision":"fp32","tf32_enabled":False},
         "material_gate_eV":None}
+    if tuning is not None:
+        config["execution_study"]["tuning"] = tuning
+        config.update(requested_kernel="kaseichou/molgap-gptrans-tuning40-dual-s42",
+                      output_subdirectory="gptrans_tuning40")
     for k in ("reference_bundle_ref","reference_bundle_sha256"):
         config.pop(k,None)
     atomic_json(root / BASE / "gpu/screen_config.json",config)
@@ -144,12 +158,17 @@ def freeze(root):
                           "licenses":[{"name":"other"}],"isPrivate":True},
         required_modules=["molgap.gptrans_execution_study","molgap.gptrans_execution_backend",
                           "molgap.pcqm_gptrans_step_profile","molgap.pcqm_gptrans_v4"])
+    if tuning is not None:
+        workflow["dataset_metadata"].update(title="MolGap GPTrans Tuning40 Source", id="kaseichou/molgap-gptrans-tuning40-source")
+        workflow["required_modules"] += ["molgap.gptrans_execution_tuning", "molgap.gptrans_execution_hotpath"]
     for arm_id, plan_ref in zip(ARMS, plan_refs):
         workflow["artifacts"][arm_id + "_plan.json"] = UploadArtifact.from_file(root / plan_ref).to_workflow()
     # Reuse the reviewed family payload, not a repository-wide sensitive-file scan.
     sources = [p for p in workflow["source_paths"] if p.startswith("src/molgap/")]
     sources += ["src/molgap/gptrans_execution_backend.py", "src/molgap/gptrans_execution_study.py",
                 "src/molgap/gptrans_execution_prepare.py", "src/molgap/gptrans_execution_acceptance.py"]
+    if tuning is not None:
+        sources += ["src/molgap/gptrans_execution_tuning.py", "src/molgap/gptrans_execution_hotpath.py"]
     workflow["source_paths"]=sorted(set(sources))+[
         *recipes.values(), *plan_refs, workflow["entry_template"],BASE+"/gpu/kernel-metadata.json",BASE+"/gpu/screen_config.json"]
     atomic_json(root / BASE / "gpu/release_workflow.json",workflow)
