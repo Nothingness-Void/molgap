@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/kaggle/working/gptrans_triplet_followup/verified_source/src/molgap/gptrans_kaggle_runtime.py", line 158, in <module>
+    main()
+    ~~~~^^
+  File "/kaggle/working/gptrans_triplet_followup/verified_source/src/molgap/gptrans_kaggle_runtime.py", line 130, in main
+    child(os.environ["MOLGAP_STAGE"], mode, json.loads(os.environ["MOLGAP_CONTEXT"]))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/gptrans_triplet_followup/verified_source/src/molgap/gptrans_kaggle_runtime.py", line 68, in child
+    author_child(stage, variant, context, root)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/gptrans_triplet_followup/verified_source/src/molgap/gptrans_author_screen.py", line 129, in author_child
+    result = run_preflight(output=root / "preflight", **arguments["preflight"])
+  File "/kaggle/working/gptrans_triplet_followup/verified_source/src/molgap/pcqm_gptrans_v4.py", line 690, in run_preflight
+    model, optimizer, scheduler, ema = _make_training_state(initial_state_path, variant)
+                                       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/gptrans_triplet_followup/verified_source/src/molgap/pcqm_gptrans_v4.py", line 474, in _make_training_state
+    model = _make_model(initial_state_path, variant).to("cuda")
+            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/gptrans_triplet_followup/verified_source/src/molgap/pcqm_gptrans_v4.py", line 298, in _make_model
+    return load_initial(variant, initial_state_path)
+  File "/kaggle/working/gptrans_triplet_followup/verified_source/src/molgap/gptrans_triplet_followup.py", line 175, in load_initial
+    facts = read_initial_facts(mode, path)
+  File "/kaggle/working/gptrans_triplet_followup/verified_source/src/molgap/gptrans_triplet_followup.py", line 169, in read_initial_facts
+    raise ValueError("Follow-up initial state differs from frozen aggregate parent/delta")
+ValueError: Follow-up initial state differs from frozen aggregate parent/delta

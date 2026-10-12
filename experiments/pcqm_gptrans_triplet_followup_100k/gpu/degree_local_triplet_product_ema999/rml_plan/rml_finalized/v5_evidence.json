@@ -1,0 +1,90 @@
+{
+  "artifacts": [
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/failure_results/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "dee88f5a5b5180b2ebc0ace1196ad39904ed2dbfbf0c1314dec960445d53d85b"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/failure_results/decision.md",
+      "name": "decision.md",
+      "sha256": "55c4b7f8b9e274ccb9353934e5997ae38d5be1d7445e8588d7fe4401cdcf0529"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/gptrans_triplet_followup_v1/gptrans_triplet_followup/startup.json",
+      "name": "startup.json",
+      "sha256": "9ee2c2cf824e05fe18fc8255ce11ff91cf9b4c2440a05702dd088570a7503c13"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/gptrans_triplet_followup_v1/gptrans_triplet_followup/job_summary.json",
+      "name": "job_summary.json",
+      "sha256": "6cd674e491eec60a1935f9c3b11cc2c264386182a8509866e3996c69533f8799"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/gptrans_triplet_followup_v1/gptrans_triplet_followup/native_cost.json",
+      "name": "native_cost.json",
+      "sha256": "11f864eedf224b26cd4278e072eda280959fb92a6be22f97fcf339659f8ca6e6"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/gptrans_triplet_followup_v1/gptrans_triplet_followup/degree_local_triplet_product_ema999/preflight.log",
+      "name": "preflight.log",
+      "sha256": "843e8d3ef198ac1fbee61e2f1a054c274440f0476ab8ca9b3828eb3bdd8133a8"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/training/gptrans_triplet_followup_v1/gptrans_triplet_followup/degree_local_triplet_product_ema999/arm_binding.json",
+      "name": "arm_binding.json",
+      "sha256": "916abd51f69f70b231249fbc48a3775a9057d8e558601585b8309bca4c572248"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/results/acceptance_partial_v1.json",
+      "name": "acceptance_partial_v1.json",
+      "sha256": "75e29e7c450feaf09b2815ee075eab4555ada971505dba03d65d01d3dedbdbf3"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/rml_plan/trajectory.json",
+      "experiments/pcqm_gptrans_triplet_followup_100k/gpu/submission_v1.json",
+      "experiments/pcqm_gptrans_triplet_followup_100k/protocol.md",
+      "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/comparison_readiness_prelaunch.json",
+      "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/contract.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-g1-local-triplet-product-initialization-failure-100k-s42-v1",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-12T22:12:47.629372+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Retained worker stack and source-bound partial execution, no scientific endpoint"
+  },
+  "outcome": {
+    "artifact_status": "retained_partial",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "not_evaluated",
+    "execution_status": "infrastructure_failed",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "untouched",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "failed_companion_initialization",
+  "track": "C"
+}
