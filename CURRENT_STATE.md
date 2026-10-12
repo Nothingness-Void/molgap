@@ -60,6 +60,13 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+K1 mean2 versus single-forward EMA500K is desktop-owned on
+`codex/exp/k1-mean2-single-ema-500k-20261013` (see [checkout map](BRANCHES.md#retained-checkout-map)).
+Kaggle1 API accepted kernelID138365645/version1; scheduler observation on
+2026-10-13 JST was QUEUED, not native training evidence. One T4x2 allocation,
+60-epoch targets and nine-hour total ceiling; no automatic continuation/monitor.
+Reconcile the exact owning run before acceptance or any successor.
+
 The2026-10-09 [Kaggle reconciliation](docs/operations/KAGGLE_ACCEPTANCE_20261009.md)
 queried exact owner/version and retrieved retained outputs, without resuming,
 submitting or adopting jobs. Reconcile exact owner/job/
