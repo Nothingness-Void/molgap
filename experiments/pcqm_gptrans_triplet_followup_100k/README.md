@@ -14,5 +14,13 @@ exist prospectively: the deferred action requires their actual accepted values,
 a linked NO_TRAIN plan and verified matching loader before its own release.
 It is not claimed executable or terminal-complete in advance.
 
+The [partial terminal interpretation](gpu/results/interpretation.md) owns the
+saved-output comparison and learning-curve analysis. The complete drop arm's
+`gpu/degree_local_triplet_drop_ema999/results/` retains its native acceptance,
+strict comparison and actual Replay admission; the product arm's
+`gpu/degree_local_triplet_product_ema999/failure_results/` retains its execution
+failure, bounded diagnosis and allocated idle cost, without a training Replay
+claim. Neither the failed mechanism nor the entire dual is relabeled accepted.
+
 The actual submission receipt and monitor binding belong under `gpu/`. Live
 job state routes through root `CURRENT_STATE.md`.
