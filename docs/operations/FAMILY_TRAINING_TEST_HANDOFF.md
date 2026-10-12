@@ -40,6 +40,16 @@ replay readiness. At acceptance the code was still on the implementation branch;
 Git integration is separate from test execution. Any later implementation edit
 requires applicable revalidation.
 
+## Git Integration Record
+
+On 2026-10-12, implementation commit
+`d1b23b0a6ab6d7580f82ec88bdcd16081a188426` was fast-forwarded into local
+`molgap-desktop` with user approval. Parent inspected identical implementation
+and test trees against the owning branch; no test was rerun. Only documentation
+changed after the external rerun. The user's workflow edit was restored without
+conflict and remains uncommitted; unrelated untracked content was untouched.
+No push, remote submission, model promotion or native qualification occurred.
+
 ## Corrective History
 
 User-supplied first-run report on this uncommitted tree at base `e351689b`:
