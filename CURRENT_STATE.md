@@ -12,6 +12,17 @@ run/recipe/runtime-specific; historical entrypoints and job custody are unchange
 
 ## Server active screen
 
+The authorized [triplet follow-up dual100K](experiments/pcqm_gptrans_triplet_followup_100k/protocol.md)
+is submitted as Kaggle2 kernel138367521/version1; its
+[reconciled receipt](experiments/pcqm_gptrans_triplet_followup_100k/gpu/submission_v1.json)
+and [existing-B binding](experiments/pcqm_gptrans_triplet_followup_100k/gpu/monitor_binding.json)
+own live custody. Two isolated arms test triplet-return regularization and
+channelwise relation composition against the frozen accepted aggregate.
+The prospective plans passed validation; terminal Replay readiness is not yet
+claimed. The [deferred full-role audit](experiments/pcqm_gptrans_triplet_followup_100k/gpu/post100k_audit_action.json)
+is packaged separately and remains blocked until real100K acceptance and
+accepted-parent bindings exist. No new training successor or scale-up is released.
+
 The [original/v3-tuned execution40 dual](experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md)
 is accepted and closed: Kaggle2 kernel138254522/version1 passed its scoped
 speed/accuracy delivery gates. Its event/binding are closed and existing Luna B
