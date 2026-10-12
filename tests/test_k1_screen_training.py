@@ -1,6 +1,8 @@
 """CPU initialization and frozen-contract checks; no molecular role access."""
 import copy
 import json
+import hashlib
+import struct
 from types import SimpleNamespace
 
 import pytest
@@ -40,6 +42,16 @@ def test_historical_sampler_and_exposure():
     assert epoch_order(0) != epoch_order(1)
     assert EPOCHS * STEPS_PER_EPOCH == 31240
     assert SAMPLE_EXPOSURE == 3998720
+
+
+@pytest.mark.parametrize("seed", [42, 43, 44])
+def test_batched_sampler_hash_matches_original_scalar_encoding(seed):
+    original = hashlib.sha256()
+    for epoch in range(EPOCHS):
+        original.update(struct.pack("<I", epoch))
+        for index in epoch_order(epoch, seed):
+            original.update(struct.pack("<I", index))
+    assert compute_row_order_fingerprint(seed) == original.hexdigest()
 
 
 @pytest.mark.parametrize("mode", ["reference", "ssma", "clean_fingerprint"])

@@ -20,6 +20,7 @@ class TrainingAdapter:
     artifact_adapter: str
     addon_modes: tuple[tuple[str, str], ...]
     serialization_modules: tuple[str, ...] = ()
+    target_identity_in_completion: bool = False
 
     def mode(self, arm: dict) -> str:
         addons = arm["addons"]
@@ -37,12 +38,19 @@ TRAINING_ADAPTERS = MappingProxyType({
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
         (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
-         ("k1_mean2_clean_second", "mean2_clean_second")), ("molgap.pcqm_wedge",)),
+         ("k1_mean2_clean_second", "mean2_clean_second"),
+         ("k1_fused_layout", "fused_layout"),
+         ("k1_initialized_layout", "initialized_layout")), ("molgap.pcqm_wedge",),
+        target_identity_in_completion=True),
     ("gptrans_t", "1"): TrainingAdapter(
         ("gptrans_t", "1"), "molgap.gptrans_screen_workflow", "gptrans-v1",
         (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),
          ("memory_value", "memory_value"), ("memory_message", "memory_message")), ("molgap.pcqm_wedge",)),
 })
+
+# Recommendation for new declarations only; addon=None remains the frozen reference.
+RECOMMENDED_K1_EXECUTION_ADDON = "k1_initialized_layout"
+RECOMMENDED_K1_EXECUTION_TORCH_VERSION = "2.11.0"
 
 
 def training_adapter(arm: dict) -> TrainingAdapter:
@@ -57,7 +65,8 @@ def training_adapter(arm: dict) -> TrainingAdapter:
 
 def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
                         source_idx_sha256: str, target_sha256: str,
-                        seed: int | None = None, initialization_sha256: str | None = None) -> dict:
+                        seed: int | None = None, initialization_sha256: str | None = None,
+                        execution_torch_version: str | None = None) -> dict:
     """Build owned constants before freezing the Spec; never read development rows."""
     adapter = TRAINING_ADAPTERS.get(family)
     if adapter is None:
@@ -66,6 +75,10 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
     if mode is None:
         raise ValueError("No executable recipe for this addon")
     options = {}
+    if execution_torch_version is not None:
+        if family != ("neural_atom_k1", "2") or mode != "initialized_layout":
+            raise ValueError("Execution runtime pin requires initialized-layout K1")
+        options["execution_torch_version"] = execution_torch_version
     if seed is not None or initialization_sha256 is not None:
         if family != ("neural_atom_k1", "2"):
             raise ValueError("Explicit seed initialization is not supported by this trainer")
@@ -190,12 +203,18 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     owner = import_module(adapter.module)
     runner = owner.run_screen_preflight if phase == "preflight" else owner.run_screen_arm
     options = {} if phase == "preflight" else {"preflight_dir": output}
+    if staged_root.resolve() != Path(input_root).resolve():
+        if adapter.family != ("neural_atom_k1", "2"):
+            raise ValueError("Separate prospective/data roots are not supported by this family")
+        options["prospective_root"] = staged_root
+    if phase == "train" and adapter.target_identity_in_completion:
+        options["target_identity"] = target_identity
     result = runner(spec=spec, package_dir=package_dir,
         expected_package_identity=expected_package_identity, arm_id=job["arm_id"],
         mode=adapter.mode(arm), recipe_path=recipe, initial_state_path=initial,
         input_root=input_root, output=output, account=account,
         run_reference=run_reference, trajectory_id=job["trajectory_id"], **options)
-    if phase == "train" and target_identity is not None:
+    if phase == "train" and target_identity is not None and not adapter.target_identity_in_completion:
         # Retained family trainers keep their frozen completion call. The owning
         # inspection applies the explicit contract encoding at dispatch closure.
         from .experiment_family_workflow import inspect_output

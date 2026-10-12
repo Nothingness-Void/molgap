@@ -73,6 +73,8 @@ def _name(value) -> str:
     # This exact reviewed source owner is not a retained artifact directory.
     if value == "src/molgap/experiment_family_artifacts.py":
         tokens.discard("artifacts")
+    if value == "src/molgap/packed_graph_dataset.py":
+        tokens.discard("dataset")
     if (set(lowered) & _BLOCKED_PARTS or tokens & _BLOCKED_PARTS
             or any(part == ".env" or part.startswith(".env.") for part in lowered)
             or path.suffix.lower() in _BLOCKED_SUFFIXES

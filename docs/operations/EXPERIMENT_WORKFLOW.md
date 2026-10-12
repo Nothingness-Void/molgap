@@ -4,6 +4,9 @@ This is the entry point for the registered local-to-Kaggle training path. It
 owns preparation and acceptance orchestration. It does not own scientific
 authorization, a trainer loop, or platform submission.
 
+For new compatible K1 execution declarations, follow the selected
+[initialized-layout policy](K1_EXECUTION.md). Frozen references stay unchanged.
+
 ## Owners
 
 | Layer | Owner | Responsibility |
@@ -27,7 +30,7 @@ the static training registry, its mode, and its output profile.
 
 | Family/version | Reference mode | Registered addon mode(s) | Output profile |
 |---|---|---|---|
-| `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma`; `k1_two_pass_mean/1` → `mean2`; `k1_mean2_clean_second/1` → `mean2_clean_second` | `k1-screen-v1` |
+| `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma`; `k1_two_pass_mean/1` → `mean2`; `k1_mean2_clean_second/1` → `mean2_clean_second`; `k1_fused_layout/1` → `fused_layout`; `k1_initialized_layout/1` → `initialized_layout` | `k1-screen-v1` |
 | `gptrans_t/1` | `reference` | `pair_prenorm/1`, `centered_logits/1`, `memory_value/1`, `memory_message/1` | `gptrans-v1` |
 
 The executable registry is in `experiment_execution.py`; the output profiles
@@ -54,6 +57,12 @@ from executable mode.
 and two training-mode BN updates. Only the second forward disables K1 dropout,
 including functional LocalGPSBlock and attention dropout. It is not consistency
 regularization, clean-evaluation BN calibration, EMA or an inference ensemble.
+
+`initialized_layout` keeps native AdamW and scopes TRAIN safety fill off while
+reusing CPU layout; deterministic algorithms remain enabled. It is the selected
+execution policy for new compatible K1 declarations, subject to native preflight.
+`fused_layout` changes optimizer rounding and is not the selected policy.
+Selection, fallback, runtime pins and evidence are owned by [K1 execution](K1_EXECUTION.md).
 
 K1 recipe construction accepts an explicit `seed` and `initialization_sha256`.
 Seed42 defaults retain their historical identity. Another seed requires a fresh
@@ -162,6 +171,8 @@ K1 v2 release also reads the staged initial artifact through the frozen package'
 actual family loader in a CPU-only subprocess. Both flat and `model_state`
 envelopes share the validated reader; generic tensor inspection alone is not
 transport compatibility. This check constructs no model and grants no GPU release.
+The same isolated worker checks packaged trainer JSON object/timing-array
+roundtrips before publication, without model construction or role consumption.
 The prospective planner validates all arms before publishing. The workflow then
 freezes the launch config and
 runs `check_workflow_binding` over the config, staged dataset mounts, T4 and

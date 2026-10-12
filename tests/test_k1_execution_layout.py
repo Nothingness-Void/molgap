@@ -7,6 +7,7 @@ from torch_geometric.utils import to_dense_batch
 
 from molgap.k1_execution_layout import cpu_layout_context, layout_from_cpu_batch
 from molgap.qm9_neural_atom import _NeuralAtomMixerFactory
+from molgap.qm9_neural_atom import make_encoder
 
 
 def batch_fixture():
@@ -74,3 +75,47 @@ def test_mixer_forward_gradient_and_rng_exact_and_context_cleanup():
             raise RuntimeError("test cleanup")
     assert not hasattr(candidate, "_execution_dense_layout")
     assert set(mixer.state_dict()) == set(candidate.state_dict())
+
+
+def test_full_synthetic_k1_step_matches_outputs_gradients_weights_and_rng():
+    from molgap.k1_screen_training import _optimizer_step
+
+    previous = torch.get_num_threads()
+    torch.set_num_threads(1)
+    try:
+        torch.random.default_generator.manual_seed(42)
+        graphs = []
+        for n in (1, 2, 5):
+            forward = torch.stack((torch.arange(n - 1), torch.arange(1, n)))
+            edges = torch.cat((forward, forward.flip(0)), dim=1)
+            graphs.append(Data(x=torch.zeros(n, 9, dtype=torch.long), edge_index=edges,
+                edge_attr=torch.zeros(edges.shape[1], 3, dtype=torch.long),
+                random_walk_pe=torch.randn(n, 16), y=torch.randn(1)))
+        batch = Batch.from_data_list(graphs)
+        reference = make_encoder("neural_atom_k1").train()
+        # Exercise keys/values, not just the default zero-initialized return path.
+        for mixer in reference.neural_atom_mixers.values():
+            torch.nn.init.normal_(mixer.return_projection.weight, std=0.01)
+        candidate = copy.deepcopy(reference)
+        original_state_keys = set(reference.state_dict())
+        a = torch.optim.AdamW(reference.parameters(), lr=4e-4, weight_decay=1e-5, foreach=False)
+        b = torch.optim.AdamW(candidate.parameters(), lr=4e-4, weight_decay=1e-5, foreach=False)
+        rng = torch.get_rng_state().clone()
+        baseline = _optimizer_step(reference, a, batch, 0., 1.)
+        baseline_rng = torch.get_rng_state().clone()
+        torch.set_rng_state(rng)
+        with cpu_layout_context(candidate, batch, "cpu"):
+            optimized = _optimizer_step(candidate, b, batch, 0., 1.)
+        assert torch.equal(baseline_rng, torch.get_rng_state())
+        assert torch.equal(baseline[0], optimized[0])
+        assert torch.equal(baseline[1], optimized[1]) and baseline[2] == optimized[2] == 3
+        for first, second in zip(reference.parameters(), candidate.parameters()):
+            assert torch.equal(first, second)
+            assert (first.grad is None) == (second.grad is None)
+            if first.grad is not None:
+                assert torch.equal(first.grad, second.grad)
+        assert set(candidate.state_dict()) == original_state_keys
+        assert all(torch.equal(v, candidate.state_dict()[k]) for k, v in reference.state_dict().items())
+        assert not hasattr(candidate, "_execution_graph_count")
+    finally:
+        torch.set_num_threads(previous)

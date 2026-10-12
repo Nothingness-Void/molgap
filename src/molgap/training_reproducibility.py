@@ -4,11 +4,13 @@ from __future__ import annotations
 import hashlib
 import importlib.metadata
 import json
+import math
 import os
 import platform
 import random
 import sys
 from collections.abc import Mapping
+from contextlib import contextmanager
 from pathlib import Path
 
 import numpy as np
@@ -17,6 +19,29 @@ import numpy as np
 RUNTIME_MANIFEST_FORMAT = "molgap-runtime-manifest-v1"
 CHECKPOINT_FORMAT = "molgap-resumable-checkpoint-v1"
 MODEL_BUNDLE_FORMAT = "molgap-self-contained-model-v1"
+
+
+@contextmanager
+def deterministic_memory_fill_context(*, enabled: bool):
+    """Scope the process-global safety fill; never disable deterministic algorithms.
+
+    Exclusive execution workers only. Turning the fill off requires separate
+    qualification that the executed graph never reads uninitialized storage;
+    this helper supplies neither that evidence nor training authorization.
+    """
+    import torch
+
+    if type(enabled) is not bool:
+        raise ValueError("Memory fill selection must be an exact bool")
+    if (not torch.are_deterministic_algorithms_enabled()
+            or torch.is_deterministic_algorithms_warn_only_enabled()):
+        raise ValueError("Fail-closed deterministic algorithms are required")
+    previous = torch.utils.deterministic.fill_uninitialized_memory
+    try:
+        torch.utils.deterministic.fill_uninitialized_memory = enabled
+        yield
+    finally:
+        torch.utils.deterministic.fill_uninitialized_memory = previous
 
 
 def canonical_fingerprint(value: Mapping) -> str:
@@ -145,13 +170,24 @@ def build_runtime_manifest(determinism: Mapping) -> dict:
 def assert_finite_state_dict(state_dict: Mapping, *, label: str) -> None:
     import torch
 
-    failures = [
-        name
-        for name, value in state_dict.items()
-        if torch.is_tensor(value) and not bool(torch.isfinite(value).all())
-    ]
+    failures, device_flags = [], {}
+    for name, value in state_dict.items():
+        if not torch.is_tensor(value):
+            continue
+        finite = torch.isfinite(value).all()
+        if value.device.type == "cpu":
+            if not bool(finite):
+                failures.append(name)
+        else:
+            device_flags.setdefault(value.device, []).append((name, finite))
+    # Keep each exact per-tensor check, but avoid a host/device barrier per key.
+    for flags in device_flags.values():
+        observed = torch.stack([flag for _, flag in flags]).cpu().tolist()
+        failures.extend(name for (name, _), finite in zip(flags, observed) if not finite)
     if failures:
-        raise RuntimeError(f"{label} contains non-finite tensors: {failures[:8]}")
+        failed = set(failures)
+        ordered = [name for name in state_dict if name in failed]
+        raise RuntimeError(f"{label} contains non-finite tensors: {ordered[:8]}")
 
 
 def atomic_torch_save(path: Path, value) -> None:
@@ -159,15 +195,59 @@ def atomic_torch_save(path: Path, value) -> None:
 
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.tmp")
-    torch.save(value, temporary)
-    os.replace(temporary, path)
+    try:
+        torch.save(value, temporary)
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
-def atomic_json(path: Path, value: Mapping) -> None:
+def sum_scalar_metrics(values) -> float:
+    """Transfer detached batch scalars once, preserving Python addition order.
+
+    Do not replace this with a tensor sum: that changes the retained metric's
+    reduction precision/order. Values have no connection to backward or RNG.
+    """
+    import torch
+
+    values = list(values)
+    if not values:
+        return 0.0
+    if isinstance(values[0], torch.Tensor):
+        first = values[0]
+        if any(not isinstance(v, torch.Tensor) or v.ndim != 0
+               or v.dtype != first.dtype or v.device != first.device
+               or not v.is_floating_point() for v in values):
+            raise ValueError("Expected matching floating-point scalar metrics")
+        values = torch.stack([v.detach() for v in values]).cpu().tolist()
+    elif any(isinstance(v, (bool, torch.Tensor)) or not isinstance(v, (int, float))
+             for v in values):
+        raise ValueError("Expected scalar metrics, not mixed tensor/host values")
+    total = 0.0
+    for value in values:
+        value = float(value)
+        if not math.isfinite(value):
+            raise ValueError("Nonfinite scalar metric")
+        total += value
+    if not math.isfinite(total):
+        raise ValueError("Nonfinite scalar metric total")
+    return total
+
+
+def atomic_json(path: Path, value: Mapping | list) -> None:
+    """Write JSON objects or row arrays without exposing a partial destination."""
+    if isinstance(value, Mapping):
+        value = dict(value)
+    elif not isinstance(value, list):
+        raise TypeError("Expected a JSON object or array")
+    payload = json.dumps(value, indent=2) + "\n"
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.tmp")
-    temporary.write_text(json.dumps(dict(value), indent=2) + "\n", encoding="utf-8")
-    os.replace(temporary, path)
+    try:
+        temporary.write_text(payload, encoding="utf-8")
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def sha256_file(path: Path) -> str:

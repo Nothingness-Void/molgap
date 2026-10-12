@@ -40,6 +40,8 @@ def repo(tmp_path):
     git(root, "config", "core.autocrlf", "false")
     (root / "src").mkdir()
     (root / "src" / "example.py").write_bytes(b"VALUE = 1\r\n")
+    (root / "src" / "molgap").mkdir()
+    (root / "src" / "molgap" / "packed_graph_dataset.py").write_bytes(b"VALUE = 2\r\n")
     (root / "README.md").write_bytes(b"Synthetic source\n")
     git(root, "add", ".")
     git(root, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic source")
@@ -87,6 +89,43 @@ def test_binding_and_reproducibility(package, repo, payload, tmp_path):
         assert archive.extractfile("src/example.py").read() == b"VALUE = 1\n"
     identity_fields = {key: value for key, value in manifest.items() if key != "package_identity"}
     assert manifest["package_identity"] == canonical_fingerprint(identity_fields)
+
+
+def test_exact_reviewed_dataset_source_roundtrip(repo, payload, tmp_path):
+    name = "src/molgap/packed_graph_dataset.py"
+    output = tmp_path / "reviewed-source"
+    manifest = build_experiment_source_package(ExperimentSpec(payload), repo, [name], output)
+    assert manifest == verify_experiment_source_package(output, repo)
+    assert manifest["relative_allowlist"] == [name]
+    with tarfile.open(output / "source.tar.gz") as archive:
+        assert archive.getnames() == [name]
+        assert archive.extractfile(name).read() == b"VALUE = 2\n"
+
+
+@pytest.mark.parametrize("name", [
+    "src/molgap/other_dataset.py", "src/molgap/packed_graph_datasets.py",
+    "src/molgap/packed_graph_dataset.json", "src/molgap/packed_graph_dataset.py.pt",
+    "src/molgap/PACKED_GRAPH_DATASET.py", "src/Molgap/packed_graph_dataset.py",
+    "src/other/packed_graph_dataset.py", "src/molgap/nested/packed_graph_dataset.py",
+    "src/molgap/dataset/packed_graph_dataset.py", "datasets/packed_graph_dataset.py",
+    "data/src/molgap/packed_graph_dataset.py", "artifacts/src/molgap/packed_graph_dataset.py",
+    "src/molgap/packed_graph_dataset.py/loader.py",
+    "src/molgap/packed_graph_dataset.py/../loader.py",
+    "./src/molgap/packed_graph_dataset.py", "src//molgap/packed_graph_dataset.py",
+])
+def test_reviewed_dataset_source_exception_is_exact(repo, payload, tmp_path, name):
+    with pytest.raises(ValueError, match="reserved or sensitive|Unsafe source path"):
+        build_experiment_source_package(ExperimentSpec(payload), repo, [name], tmp_path / "bad")
+
+
+@pytest.mark.parametrize("state", ["dirty", "staged"])
+def test_reviewed_dataset_source_still_requires_committed_bytes(repo, payload, tmp_path, state):
+    name = "src/molgap/packed_graph_dataset.py"
+    (repo / name).write_bytes(b"changed\n")
+    if state == "staged":
+        git(repo, "add", name)
+    with pytest.raises(RuntimeError):
+        build_experiment_source_package(ExperimentSpec(payload), repo, [name], tmp_path / "bad")
 
 
 @pytest.mark.parametrize("sidecar", [
