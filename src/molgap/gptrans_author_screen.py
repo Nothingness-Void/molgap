@@ -27,6 +27,7 @@ MODES += ("degree_pair_transition_ema999",)
 MODES += ("degree_bond_local_cap_ema999",)
 MODES += ("degree_local_connected_pair_ema999", "degree_local_bond_return_ema999")
 MODES += ("degree_local_triplet_aggregate_ema999", "degree_local_triplet_attention_ema999")
+MODES += ("degree_local_triplet_drop_ema999", "degree_local_triplet_product_ema999")
 MODES += ("execution_original", "execution_optimized")
 
 

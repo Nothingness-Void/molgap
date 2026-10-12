@@ -19,7 +19,7 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         *, experiment_ref: str = "experiments/pcqm_gptrans_author_alignment") -> list[dict]:
     root = Path(repo_root).resolve()
     base = root / experiment_ref
-    capacity_studies = {"experiments/pcqm_gptrans_capacity_nodes_100k", "experiments/pcqm_gptrans_capacity_relations_100k", "experiments/pcqm_gptrans_pair_transition_100k", "experiments/pcqm_gptrans_local_control_100k", "experiments/pcqm_gptrans_local_relation_100k", "experiments/pcqm_gptrans_triplet_communication_100k"}
+    capacity_studies = {"experiments/pcqm_gptrans_capacity_nodes_100k", "experiments/pcqm_gptrans_capacity_relations_100k", "experiments/pcqm_gptrans_pair_transition_100k", "experiments/pcqm_gptrans_local_control_100k", "experiments/pcqm_gptrans_local_relation_100k", "experiments/pcqm_gptrans_triplet_communication_100k", "experiments/pcqm_gptrans_triplet_followup_100k"}
     followup = experiment_ref in capacity_studies or experiment_ref in {"experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k", "experiments/pcqm_gptrans_path_ema_combination_100k", "experiments/pcqm_gptrans_readout_100k", "experiments/pcqm_gptrans_decay_clock_100k"}
     if experiment_ref not in capacity_studies and experiment_ref not in {"experiments/pcqm_gptrans_author_alignment", "experiments/pcqm_gptrans_input_ema_100k", "experiments/pcqm_gptrans_recipe_paths_100k", "experiments/pcqm_gptrans_pair_scale_100k", "experiments/pcqm_gptrans_path_ema_combination_100k", "experiments/pcqm_gptrans_readout_100k", "experiments/pcqm_gptrans_decay_clock_100k"}:
         raise ValueError("Unsupported terminal experiment adapter")
@@ -122,7 +122,7 @@ def close_author_outputs(repo_root: Path, records: Path, acceptance: Path,
         decision_text = (
             f"# {mode}: bounded terminal decision\n\nOn 2026-10-01, saved outputs passed independent acceptance. "
             f"Frozen EMA MAE: {arm['paired_analysis']['candidate_mae_eV']:.10f} eV; "
-            f"reference gain: {arm['material_gain_eV']:.10f} eV against this protocol's 0.003 eV gate. "
+            f"reference gain: {arm['material_gain_eV']:.10f} eV against this protocol's {config['material_gate_eV']} eV gate. "
             f"Parameters: {arm['parameters']}; selected epoch: {arm['best_epoch']}.\n\n"
             "The result is a paired endpoint, not a STRICT_CAUSAL claim: the immutable reference bundles role/cost/acceptance "
             "in one metadata file, incompatible with the distinct-binding gate. Row bootstrap does not measure "

@@ -20,6 +20,7 @@ DIAGNOSTIC_TRACE_MODES = frozenset({
     "degree_bond_local_cap_ema999", "degree_local_connected_pair_ema999",
     "degree_local_bond_return_ema999",
     "degree_local_triplet_aggregate_ema999", "degree_local_triplet_attention_ema999",
+    "degree_local_triplet_drop_ema999", "degree_local_triplet_product_ema999",
 })
 
 

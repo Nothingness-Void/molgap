@@ -289,6 +289,7 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             output_subdirectory="gptrans_recipe_path_screen")
     if study:
         config.update(requested_kernel=study["kernel"], output_subdirectory=study["output_subdirectory"])
+        config["material_gate_eV"] = study.get("material_gate_eV", config["material_gate_eV"])
         config["platform_id"] = study.get("platform_id", config["platform_id"])
         if "scale_ema" in MODES:
             scale_tid = arms_config["scale_ema"]["trajectory_id"]
@@ -332,6 +333,8 @@ def freeze_followup(root: Path, *, base=BASE, modes=MODES, run=RUN, terminal_ref
             workflow["required_modules"].append("molgap.gptrans_local_relation")
         if any(mode.startswith("degree_local_triplet_") for mode in MODES):
             workflow["required_modules"].append("molgap.gptrans_triplet_communication")
+        if any(mode in {"degree_local_triplet_drop_ema999", "degree_local_triplet_product_ema999"} for mode in MODES):
+            workflow["required_modules"].append("molgap.gptrans_triplet_followup")
         if "scale_ema" in MODES:
             workflow["artifacts"]["degree_initial_state.pt"] = UploadArtifact.from_file(initial).to_workflow()
     if "scale_ema" in MODES:

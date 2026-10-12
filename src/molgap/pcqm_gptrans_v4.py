@@ -53,7 +53,8 @@ CAPACITY_MODES += ("degree_pair_transition_ema999",)
 CAPACITY_MODES += ("degree_bond_local_cap_ema999",)
 LOCAL_RELATION_MODES = ("degree_local_connected_pair_ema999", "degree_local_bond_return_ema999")
 TRIPLET_COMMUNICATION_MODES = ("degree_local_triplet_aggregate_ema999", "degree_local_triplet_attention_ema999")
-RELATION_DIAGNOSTIC_MODES = LOCAL_RELATION_MODES + TRIPLET_COMMUNICATION_MODES
+TRIPLET_FOLLOWUP_MODES = ("degree_local_triplet_drop_ema999", "degree_local_triplet_product_ema999")
+RELATION_DIAGNOSTIC_MODES = LOCAL_RELATION_MODES + TRIPLET_COMMUNICATION_MODES + TRIPLET_FOLLOWUP_MODES
 CAPACITY_MODES += RELATION_DIAGNOSTIC_MODES
 AUTHOR_MODES += CAPACITY_MODES
 PATH_MODES = ("path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_ema999")
@@ -62,7 +63,8 @@ PATH_MODES = ("path_bond_mean", "degree_path_bond_mean", "degree_path_bond_mean_
 def capacity_module(variant):
     """Keep old addon source identities while extending native trainer dispatch."""
     from importlib import import_module
-    module = ("gptrans_triplet_communication" if variant in TRIPLET_COMMUNICATION_MODES else
+    module = ("gptrans_triplet_followup" if variant in TRIPLET_FOLLOWUP_MODES else
+              "gptrans_triplet_communication" if variant in TRIPLET_COMMUNICATION_MODES else
               "gptrans_local_relation" if variant in LOCAL_RELATION_MODES else
               "gptrans_local_control" if variant == "degree_bond_local_cap_ema999" else
               "gptrans_pair_transition" if variant == "degree_pair_transition_ema999" else "gptrans_capacity")
