@@ -1,0 +1,34 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "gptrans-execution-tuning40",
+  "version": "v1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {
+    "scientific_contract": "gptrans-execution-tuning40-fp32-bs128-horizon60"
+  },
+  "required_observable_fields": [
+    "user_authorized_matched_execution40"
+  ],
+  "created_from_source_digest": "6d60ec2d6f87ec49331c2fbf7d7e604a227842658a0cb0d0f217c496d2ecd7e7",
+  "approval": {
+    "activation": "user-authorized execution assay; no automatic successor",
+    "authority_ref": "experiments/pcqm_gptrans_execution_tuning40/protocol.md"
+  },
+  "cost_model": {
+    "kind": "measured_only",
+    "assumptions": [
+      "native T4 allocation; no hardware conversion"
+    ]
+  },
+  "observation_point": null,
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "action_rule": {
+    "field": "user_authorized_matched_execution40",
+    "operator": "eq",
+    "threshold": true,
+    "action": "RUN_EXECUTION40"
+  },
+  "borderline_action": "DEFER"
+}

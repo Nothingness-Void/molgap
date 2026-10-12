@@ -1,0 +1,137 @@
+{
+  "trajectory": {
+    "trajectory_id": "TC-gptrans-execution-tuning40-optimized-100k-s42",
+    "record_mode": "prospective",
+    "owner": "server",
+    "track": "C",
+    "family_id": "gptrans-execution-tuning40",
+    "question": "Does the opt-in execution backend reduce complete forty-pass runtime without material accuracy regression?",
+    "hypothesis": {
+      "hypothesis_id": "H-TC-gptrans-execution-tuning40-optimized-100k-s42",
+      "observed_deficiency": "Does the opt-in execution backend reduce complete forty-pass runtime without material accuracy regression?",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
+      ],
+      "alternative_explanations": [
+        "CPU contention and first-use costs can change timing; foreach roundoff can change trajectories."
+      ],
+      "changed_mechanism": "execution-only backend",
+      "cheapest_falsifier": "one paired seed42 dual40 test explicitly authorized by the user",
+      "related_closed_family_ids": [
+        "gptrans-runtime-profiling"
+      ],
+      "expected_native_cost_ref": "cost-TC-gptrans-execution-tuning40-optimized-100k-s42",
+      "decision_changed_if_positive": "consider an independently qualified execution backend, not architecture promotion",
+      "decision_changed_if_negative": "retain the original backend",
+      "historical_unknowns": [
+        "full forty-pass numerical/selection drift is unmeasured"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "f914be06a0f6a8ab868b25ec7ccefcbb7964b1bd",
+      "source_config_identity": "deb672c50041c05eef8ff264bd35203e3be89ed9684e3339c6f8a303a1374733",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_execution_tuning40/gpu/execution_optimized/contract.json",
+        "experiments/pcqm_gptrans_execution_tuning40/protocol.md",
+        "experiments/pcqm_gptrans_execution_tuning40/gpu/execution_optimized/comparison_readiness_prelaunch.json"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "prior_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_execution_tuning40/gpu/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_execution_tuning40/gpu/budget.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "single_mechanism_screen",
+        "source_commit": "f914be06a0f6a8ab868b25ec7ccefcbb7964b1bd",
+        "run_ids": [
+          "gptrans-tuning40-dual-s42:execution_optimized"
+        ],
+        "attempt_ids": [
+          "v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_execution_tuning40/gpu/execution_optimized/contract.json"
+        ],
+        "cost_event_ids": [
+          "cost-TC-gptrans-execution-tuning40-optimized-100k-s42"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_execution_tuning40/protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one isolated forty-pass execution assay then saved-output acceptance"
+      ],
+      "reopen_conditions": [
+        "terminal evidence or infrastructure diagnosis"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_EXECUTION40",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_EXECUTION40",
+    "policy_id": "gptrans-execution-tuning40",
+    "policy_version": "v1",
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_execution_tuning40/gpu/budget.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_execution_tuning40/gpu/role_plan.json"
+    ],
+    "state_timestamp": "2026-10-12T02:39:19.121681+00:00",
+    "source_commit": "f914be06a0f6a8ab868b25ec7ccefcbb7964b1bd"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-execution-tuning40-optimized-100k-s42",
+      "trajectory_id": "TC-gptrans-execution-tuning40-optimized-100k-s42",
+      "action_id": "A001",
+      "run_id": "gptrans-tuning40-dual-s42:execution_optimized",
+      "attempt_id": "v1",
+      "category": "training",
+      "platform": "kaggle2",
+      "hardware": "one-of-two-independent-T4",
+      "evidence_ref": "experiments/pcqm_gptrans_execution_tuning40/gpu/budget.json",
+      "measurement": {
+        "device_hours": {
+          "status": "estimated",
+          "value": 4
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 4
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}

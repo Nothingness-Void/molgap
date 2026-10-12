@@ -6,6 +6,12 @@
 
 ## Server active screen
 
+The user authorized the [original/v3-tuned execution40 dual](experiments/pcqm_gptrans_execution_tuning40/protocol.md).
+Its frozen declarations reuse the native model/trainer and existing Kaggle2
+T4x2 lifecycle; the new receipt/binding own physical status after submission.
+This is delivery qualification, not architecture promotion or a claimed
+training Replay-Ready pair. No successor is authorized.
+
 The authorized [original/optimized execution40 assay](experiments/pcqm_gptrans_execution40/protocol.md)
 completed as Kaggle2 kernel138147173/version3 and passed independent saved-output
 delivery acceptance. Preserve the [terminal decision](experiments/pcqm_gptrans_execution40/decision_terminal.md):
@@ -18,7 +24,7 @@ Versions1/2 failed before formal training at transport/dependency gates; their
 are retained. Its corrected [receipt](experiments/pcqm_gptrans_execution40/gpu/submission_v3.json) and
 [existing-B binding](experiments/pcqm_gptrans_execution40/gpu/monitor_binding.json)
 own physical identity and custody; the terminal event is closed and the existing
-heartbeat is paused. No successor is authorized.
+heartbeat was paused at that closure. That old run has no successor authority.
 It compares the
 unchanged local-bond model under two declared execution backends, not a new
 architecture or scale-up. Its requested forty-pass scope retains the original
@@ -26,7 +32,7 @@ sixty-pass learning-rate horizon; it was not relabeled as sixty-pass completion.
 
 The requested [execution tuning layer](experiments/pcqm_gptrans_execution40/deep_execution_audit.md)
 is implemented and locally checked; it is opt-in and not remotely qualified.
-No new training or profiling job has been submitted for that implementation.
+Its separately authorized dual qualification is routed above.
 
 The authorized [source-dependence assay](experiments/pcqm_gptrans_source_dependence/protocol.md)
 is accepted and closed NO_TRAIN / CONTEXT_ONLY. Its cohort observations did not

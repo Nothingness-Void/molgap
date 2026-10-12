@@ -1,0 +1,43 @@
+{
+  "format": "molgap-comparison-prelaunch-v1",
+  "candidate_id": "TC-gptrans-execution-tuning40-original-100k-s42",
+  "reference_id": null,
+  "reference_bundle_id": null,
+  "reference_bundle_sha256": null,
+  "experiment_purpose": "delivery_experiment",
+  "intervention_group_id": "gptrans-execution-tuning40",
+  "mechanism_id": null,
+  "planned_status": "PRELAUNCH_NONCAUSAL_PLANNED",
+  "prelaunch_ready": true,
+  "declared_intervention_fields": [],
+  "matched_fields": {},
+  "mismatched_fields": {},
+  "missing_fields": [],
+  "blocker_codes": [],
+  "candidate_source_config_status": "frozen",
+  "candidate_source_commit_or_archive": "f914be06a0f6a8ab868b25ec7ccefcbb7964b1bd",
+  "role_applicability_plan": {
+    "external_submission": "not_applicable",
+    "labels_read": "applicable",
+    "metric_computed": "applicable",
+    "prediction_input": "applicable",
+    "selection_used": "applicable",
+    "training_membership": "applicable"
+  },
+  "trace_plan": {
+    "checkpoint_identity": true,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "runtime_qualification_plan": {
+    "status": "declared",
+    "runtime_certificate_required": true,
+    "qualification_scope": "per-arm T4 deterministic optimizer-inclusive repeat"
+  },
+  "terminal_candidate_artifacts_required": false
+}
