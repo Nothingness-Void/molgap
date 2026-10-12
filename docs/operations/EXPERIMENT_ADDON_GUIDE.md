@@ -176,3 +176,10 @@ alone and record why two arms were not feasible.
 The shared code makes identities and evidence flows reusable. It does not make
 an experiment scientifically valid, authorize resource use, submit a job, or
 promote a candidate.
+
+
+## Shared family training
+
+New K1/GPTrans training interfaces use the [shared core](FAMILY_TRAINING_CORE.md).
+Server integration scope and compatibility are recorded in
+[the integration record](SHARED_TRAINING_SERVER_INTEGRATION.md).

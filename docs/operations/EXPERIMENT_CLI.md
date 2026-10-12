@@ -262,3 +262,10 @@ incomplete checkpoint transport over the original prepared package and a
 reconciled receipt. Their fields, supported limits and allocation-retention
 option `accept-workflow --execution-root ROOT` are defined once in the
 [registered workflow](REGISTERED_EXPERIMENT_WORKFLOW.md#recover-an-incomplete-workflow).
+
+
+## Shared family training
+
+New K1/GPTrans training interfaces use the [shared core](FAMILY_TRAINING_CORE.md).
+Server integration scope and compatibility are recorded in
+[the integration record](SHARED_TRAINING_SERVER_INTEGRATION.md).

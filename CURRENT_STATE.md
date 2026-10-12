@@ -4,6 +4,12 @@
 > [conditional history index](docs/operations/CURRENT_STATE_HISTORY_INDEX.md)
 > and the linked experiment decisions; task order lives in `ROADMAP.md`.
 
+## Shared infrastructure
+
+The [reviewed desktop training core](docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md)
+is integrated for new K1/GPTrans declarations. Native qualification remains
+run/recipe/runtime-specific; historical entrypoints and job custody are unchanged.
+
 ## Server active screen
 
 The [original/v3-tuned execution40 dual](experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md)

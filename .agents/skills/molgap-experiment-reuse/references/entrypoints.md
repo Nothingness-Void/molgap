@@ -30,6 +30,17 @@ for the operation needed. A direct call to the same library is equivalent.
 
 ## Training / construction
 
+For new K1/GPTrans training declarations, start with the
+[shared core](../../../../docs/operations/FAMILY_TRAINING_CORE.md):
+`FamilyRecipe` -> `build_family_recipe(configuration=...)` ->
+`prepare-family-training` -> owning platform release/submission -> shared
+worker/session -> `inspect_output` -> existing V5/RML closure.
+The new interface versions are K1/3 and GPTrans/2, not scientific contracts.
+Keep historical entrypoints/source pins for retained experiments. Read the
+[server integration](../../../../docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md)
+before extending modes; mechanical inspection never implies Replay-Ready.
+
+
 For repeated GPTrans or EdgeState variants, read only the selected family
 section of [the standard workflow](../../../../docs/operations/EXPERIMENT_WORKFLOW.md).
 Use `gptrans_screen_adapter.gptrans_screen_arguments` for its explicitly

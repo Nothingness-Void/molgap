@@ -98,3 +98,10 @@ owns the static family/addon registry, preparation, acceptance, and recovery
 contracts. The [CLI reference](docs/operations/EXPERIMENT_CLI.md) owns command
 arguments and result meanings. The [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md)
 is the new-agent route; this file only maps code ownership.
+
+
+## Shared family training
+
+New K1/GPTrans training interfaces use the [shared core](docs/operations/FAMILY_TRAINING_CORE.md).
+Server integration scope and compatibility are recorded in
+[the integration record](docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md).

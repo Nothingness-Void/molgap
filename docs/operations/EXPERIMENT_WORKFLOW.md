@@ -192,3 +192,10 @@ Focused tests use temporary source repositories, small trusted tensors, metadata
 and mocked family dispatch. They do not train, infer, access protected roles,
 publish prospective experiments in this repository, or contact a platform.
 No measured five-minute end-to-end submission claim follows from these tests.
+
+
+## Shared family training
+
+New K1/GPTrans training interfaces use the [shared core](FAMILY_TRAINING_CORE.md).
+Server integration scope and compatibility are recorded in
+[the integration record](SHARED_TRAINING_SERVER_INTEGRATION.md).
