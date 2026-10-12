@@ -13,7 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
-| 1 | C-GPTRANS-EXECUTION-TUNING | Run the user-authorized original/v3-tuned dual40 delivery assay. | [Frozen protocol](experiments/pcqm_gptrans_execution_tuning40/protocol.md); independent speed/accuracy acceptance, no automatic successor or causal Replay claim |
+| — | C-GPTRANS-EXECUTION-TUNING | Closed: scoped v3 speed/accuracy delivery qualification passed; noncausal canonical RML finalization remains blocked. | Preserve [terminal decision](experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md); no automatic successor or causal Replay claim |
 | — | C-GPTRANS-EXECUTION40 | Closed: scoped delivery qualification passed; canonical RML closure remains blocked by missing prospective reference binding. | Preserve [terminal decision](experiments/pcqm_gptrans_execution40/decision_terminal.md); no automatic successor, replay claim or architecture promotion |
 | — | C-GPTRANS-SOURCE-DEPENDENCE | Closed: source/gate observations did not establish the proposed broad cohort-collapse rationale. | Preserve [NO_TRAIN / CONTEXT_ONLY interpretation](experiments/pcqm_gptrans_source_dependence/decision_terminal.md); no automatic training successor |
 | — | C-GPTRANS-TRIPLET-PORTABILITY | Closed: positive but uncertain later-cohort point gain did not pass its frozen gate. | Preserve the [NO_TRAIN interpretation](experiments/pcqm_gptrans_triplet_portability/decision_terminal.md) and applicable complete diagnostic evidence; no500K training or automatic successor |

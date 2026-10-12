@@ -1,0 +1,25 @@
+{
+  "format": "molgap-execution40-rml-closure-status-v1",
+  "scope": "delivery_experiment",
+  "comparison_class": "PAIRED_ENDPOINT",
+  "terminal_training_scope": "40 epochs of the frozen 60-epoch learning-rate horizon",
+  "rml_finalization_status": "BLOCKED_NONCAUSAL_SAME_RUN_FINALIZATION",
+  "replay_ready": false,
+  "canonical_traces_retained": true,
+  "prospective_same_run_pair_binding": true,
+  "reason": "Both original prospective plans froze provenance.same_run_replay before release. The current eligible same-run training finalizer requires strict comparison; this delivery experiment must remain noncausal. Empty provenance.reference_ids cannot substitute an unrelated historical reference. Complete native evidence and accepted delivery metrics are retained, but canonical terminal RML publication is not claimed.",
+  "prospective_paths": [
+    "experiments/pcqm_gptrans_execution_tuning40/gpu/execution_original/rml_plan/trajectory.json",
+    "experiments/pcqm_gptrans_execution_tuning40/gpu/execution_optimized/rml_plan/trajectory.json"
+  ],
+  "terminal_evidence_owner": "experiments/pcqm_gptrans_execution_tuning40/gpu/results/acceptance.json",
+  "terminal_decision_ref": "experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md",
+  "no_training_rerun_needed_for_saved_output_acceptance": true,
+  "prohibited_workarounds": [
+    "change delivery_experiment to a causal purpose after execution",
+    "hide available training traces",
+    "invent a previously frozen historical reference",
+    "relax strict replay gates to force admission"
+  ],
+  "future_requirement": "A separately reviewed noncausal training-evidence retention/finalization path, preserving original plans and scientific replay restrictions."
+}

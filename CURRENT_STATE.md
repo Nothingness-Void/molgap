@@ -6,13 +6,13 @@
 
 ## Server active screen
 
-The user authorized the [original/v3-tuned execution40 dual](experiments/pcqm_gptrans_execution_tuning40/protocol.md).
-Its [receipt](experiments/pcqm_gptrans_execution_tuning40/gpu/submission_v1.json)
-and [binding](experiments/pcqm_gptrans_execution_tuning40/gpu/monitor_binding.json)
-identify Kaggle2 kernel138254522/version1, observed RUNNING. Existing Luna B
-owns its active30-minute silent heartbeat; runtime/startup evidence is pending.
-This is delivery qualification, not architecture promotion or a claimed
-training Replay-Ready pair. No successor is authorized.
+The [original/v3-tuned execution40 dual](experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md)
+is accepted and closed: Kaggle2 kernel138254522/version1 passed its scoped
+speed/accuracy delivery gates. Its event/binding are closed and existing Luna B
+heartbeat paused. The opt-in v3 execution layer is remotely qualified only for
+this allocation/workload, not architecture promotion or a training Replay-Ready
+pair. The noncausal canonical-finalization limitation is retained; no successor
+is authorized.
 
 The authorized [original/optimized execution40 assay](experiments/pcqm_gptrans_execution40/protocol.md)
 completed as Kaggle2 kernel138147173/version3 and passed independent saved-output
@@ -33,8 +33,8 @@ architecture or scale-up. Its requested forty-pass scope retains the original
 sixty-pass learning-rate horizon; it was not relabeled as sixty-pass completion.
 
 The requested [execution tuning layer](experiments/pcqm_gptrans_execution40/deep_execution_audit.md)
-is implemented and locally checked; it is opt-in and not remotely qualified.
-Its separately authorized dual qualification is routed above.
+is opt-in and has passed the scoped remote dual qualification routed above.
+This does not authorize changes to historical scientific references or other runs.
 
 The authorized [source-dependence assay](experiments/pcqm_gptrans_source_dependence/protocol.md)
 is accepted and closed NO_TRAIN / CONTEXT_ONLY. Its cohort observations did not

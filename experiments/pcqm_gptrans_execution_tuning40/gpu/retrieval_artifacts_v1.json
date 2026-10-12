@@ -1,0 +1,599 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-tuning40-dual-s42",
+  "receipt_version": 1,
+  "files": [
+    {
+      "path": "gptrans_tuning40/execution_original/preflight_resources.json",
+      "sha256": "7de22b6aaf52de6f1768174d52e9faf780d1ff5d50e507c58dd578b8ef52af6d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training.log",
+      "sha256": "58c6964320a09dc831e9f7ce567302598759fcaec0c936572df2df810ffc873c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/preflight.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training_resources.json",
+      "sha256": "7de22b6aaf52de6f1768174d52e9faf780d1ff5d50e507c58dd578b8ef52af6d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/arm_binding.json",
+      "sha256": "5a3c349555f1bc640f8ffb33128404be09487a7ef7300d0e615529cf3510916a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_30.json",
+      "sha256": "fc253d4ec030ec4dbd16a16c5a8d24dc6dffc28369858b5d87c22da6f1c81aae",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_32.json",
+      "sha256": "ee945c9a8bf2d547ad8a8f914790d49d3c027158dcbd4bc83cc6ab02a1682e95",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_16.json",
+      "sha256": "3d26ec81167a5f55cc92e9b6be1df4fe29e5a008e6a26641b62cf4607b4adebc",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_24.json",
+      "sha256": "a9890e8ca889864900347c8d281c8bc5d18f40cae99bbf949d60ec54ff75d05f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_12.json",
+      "sha256": "bdb8835d448f8813b1fb2d22ada4cac055a3b75b2f9f8c62c1a8bdef14d32dfd",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_14.json",
+      "sha256": "4eda93a4badaa700299df97f9cf2ab1331d08a5e2cd89084387cf843fc82d48c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_25.json",
+      "sha256": "f7365b2f30b4159700aa3cca92d4097f9e0dafb7b73fd6ba1ee3cf5b8a2950e9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_31.json",
+      "sha256": "b56e188fed7f844f9fc0d3f2ea076d00070c8a3893ca41deb85a695be4e00fe1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_17.json",
+      "sha256": "fdd159ef8ae61c095a60282688addcd15f84b6e68b639a2c2fbc629cb5e47731",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_07.json",
+      "sha256": "c2e1b33e448ebb816ad683a9357a0409e5dab22c6617a525b6d6d91c9630ecea",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_33.json",
+      "sha256": "cea8ddb90cf2a7fdf0aa5cee12c4510d157be15f0f34a54d4a643f5d70c6098d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_22.json",
+      "sha256": "38ff208c4ee01d0180445049ba6b7f9d8f72b3a59d781fcd704990f53af671a6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_08.json",
+      "sha256": "fd9c2029a696ba774c2668b5c8ce0dfdeb49950b08dc636dce9205c0570f72d3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_35.json",
+      "sha256": "8a23dab266fd8b85eb3407052d96c36b5f2b716be7359a4d5eda692565b6e486",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_18.json",
+      "sha256": "40a02a899c73945a040dbe470721fdcb0916713d2c78c6dc845ef0c6816d94f8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_19.json",
+      "sha256": "3f49db10934bd7b0f543495361ff8fdeac6f72f9971a9e3b30d00c73d177c255",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_02.json",
+      "sha256": "d6d707689192b72d3ae40bc032c70101c48d892857821ff5cb8912db56551622",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_06.json",
+      "sha256": "8a293c7312feedbfba93f888f0572ff33b3ba6bbc5d172c0a427de102023bcb7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_28.json",
+      "sha256": "b56a4c8e8b3c02c1722d890fb0cf35000ce871b8b8ba88d20e99ce79097637e8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_34.json",
+      "sha256": "4ebc8d0b0d9b4cd9a539c3d8d523795f9012a67e464c5f182f409bd9fa1fddc2",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_00.json",
+      "sha256": "22ce5fd1fab917532d739d24a8e5a250b2503535696425f7ddcc90a80df30f8c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_01.json",
+      "sha256": "32adfef4e75b593a933b3dce13e447cfbae9b97a225d2d649a23c7d097d0db34",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_36.json",
+      "sha256": "86a5c045c16707bb95a5172037c2092d36a92841022ebe238fb65f501b4587ac",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_39.json",
+      "sha256": "5d297cbe430c01b67b01a16d785c5adaf768602daed38984516a257ed3cf19f6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_29.json",
+      "sha256": "6ea4a0e09962c0edef506ee0f43f6583fee0332455e6d8ab52aa227e1e782f87",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_20.json",
+      "sha256": "0157dee68566a33e2f3d3a65ba3a1782fd0e9f0aa366a78b5967c754a1ba988a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_23.json",
+      "sha256": "cdad1c666c284d2bec66b433a017c9bf59f28517d972b2a4bb9879d5c0e64f42",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_04.json",
+      "sha256": "af737a39b6bfc934109df6c645c6367de2e96e911864bc5aafce2be4dfc68430",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_27.json",
+      "sha256": "9461d9ceabba2deeafa14de2d20410382001725ffbaf10ebeea957481b4c251f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_15.json",
+      "sha256": "806c4e3f1e924bc326a962920bf5c65236ee4a8b72bb44aff1c61b68453df641",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_09.json",
+      "sha256": "1fd1bedf62975f99d62667870de681dd5cfe46a72e1abad5f1671d1243533e09",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_37.json",
+      "sha256": "ccd379df2f90df66c49a3d7f4b05e2c585beb2730fcb42962be2b89f05c5c755",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_21.json",
+      "sha256": "dabb945637ecdde05a0feb7dd14654d74a7da8efeadd965a6cd7f045039460d7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_03.json",
+      "sha256": "4843648d6c3352f1696b4513c44502cd1f3d59f7e53296ad92d305e60fc7d0da",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_10.json",
+      "sha256": "b25fe66bcc25fd647ad5fd3f4249338a4557a960cdcc6aeb354908601ef9535b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_11.json",
+      "sha256": "6f528240eecce11ea76f2155b5e5600f85822bd2b9940b23e43e113b8185eba9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_26.json",
+      "sha256": "f3f1d38224b1e2eb03d078ecf94e32ebfbef37b096215c69e86da8a38154c07a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_13.json",
+      "sha256": "9df763e6b87bd89de90e81cd2536c74e0e593e89a3bb272df5a1c8249e1433c7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_05.json",
+      "sha256": "1fd98c03c9b23a28645686b317483db8bd0d892d3b3e6578f6ddcb8fb7f85739",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/phase_timing/epoch_38.json",
+      "sha256": "b5181afe2b10f019db460c3a33f4130f215b6f1bdc582db75537b42b6e27c1d3",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/preflight/preflight.json",
+      "sha256": "5839b2a342f5e071919097f0a8b46452448e6bacb274e05e0dd060a3257c36fb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/preflight/runtime_manifest.json",
+      "sha256": "bb52107938ce1b7efe8526c5c8ceac6d0c6853e285740f1bc0b2a86731c7bebb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/preflight/runtime_certificate.json",
+      "sha256": "e81edc5f03bd16b2c2c8f8b8f8d3256996a186788cc287475782461dc8450ca7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training/best_model.pt",
+      "sha256": "3db38f4a3246921c21243597c2637ad94182d15919546649ecccd7ebdeaf8bd0",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training/checkpoint_epoch_29.pt",
+      "sha256": "0daf4d7d790f7dee59c22637b309d20f440a3f653cd303bc9bc3a05a75140750",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training/partial_manifest.json",
+      "sha256": "488d887350ce4b6ecbe79b4cd76b2ea4c2af0dbe8e7419fee7075d20201b3182",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training/trace.json",
+      "sha256": "bdf563b654dfaf8383452037ca85178e9def46748d382c390974e963199fc1ec",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training/checkpoint_epoch_39.pt",
+      "sha256": "3ca165028555fc7b90e00ba331767e7906c7c0b17dc5624d3c5f29e3a410ce60",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training/checkpoint_epoch_19.pt",
+      "sha256": "24f09acf03c54d85a197d5cd23ede363a82f9e38ea9df98549b4c456dcb3b5cb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training/canonical_trace.json",
+      "sha256": "ac7fc2f6e091e7804a7515db6605cf1713c70fc8ad054d2e1389541e83fe802e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training/checkpoint_epoch_09.pt",
+      "sha256": "1846e2f740a6102f3a5fa3499591427051bedf727a9567559de00142f267c4b1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training/last_checkpoint.pt",
+      "sha256": "3ca165028555fc7b90e00ba331767e7906c7c0b17dc5624d3c5f29e3a410ce60",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/training/development_predictions.pt",
+      "sha256": "72e16aa0afa77b3c44739808a779aeb925c160885924f60211d925f4ce656665",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/preflight_resources.json",
+      "sha256": "69e35058d1dd8c047cb7b6f5703b2e34f6cdf03d1e4f32e5cb333200b607126b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training.log",
+      "sha256": "4e2cf6c8f0b9dd5d17e6b39d805a77bf9427e476332dee6e18c16ed28c2650ce",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/preflight.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training_resources.json",
+      "sha256": "69e35058d1dd8c047cb7b6f5703b2e34f6cdf03d1e4f32e5cb333200b607126b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/preflight_tuning_report.json",
+      "sha256": "0687cd39f1fd935b7095e55557932a2a583c78ac383b3a182a015d520bf38bd9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/arm_binding.json",
+      "sha256": "89e43413fa5b4b2d2cdffcd393a76771a9740a6fd467fc4f34c6bb7295548d80",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_30.json",
+      "sha256": "e93cb377a90e635440753c05348318f954510ff96ad1b99c027bd7cbe1dc389f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_32.json",
+      "sha256": "82e7ac6e94b331d3fd4b3f296b8013915177e75d6f5652d3d9e4bf8a16e4030c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_16.json",
+      "sha256": "9cdb2365d022e16143479d9c37b6d5193d45f74303682f8732cd6dc200b79667",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_24.json",
+      "sha256": "c14d1a75a37cb0ca9469de15cca75440106e10c5c1ada5512a62fdaee0615c70",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_12.json",
+      "sha256": "d26d9dcd1667e9066aac8ea01a10ecd10605c6ebdfb5bfad1156e7e3fe4e8f3f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_14.json",
+      "sha256": "b377ed4827b3258cd5b01623ce1f0e99df26275074a5a91e2058b83bd85e83c1",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_25.json",
+      "sha256": "1214ecfd1ab12575224d59c8a5890c81a0e1f32ed0c6512f3838a13e3e042e14",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_31.json",
+      "sha256": "296dbb81bff4986ac390fdf7db782cff51a712ce06643adb641ec234e8bc2da9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_17.json",
+      "sha256": "0c9ed4fe441759d00f18930569602b8b642aff9a4ae4eb7ab213af4d21ab2de9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_07.json",
+      "sha256": "6c63bd56ea400fa3f41d3efc5cfc909a739d31cd98b50cce9ef4cfbb0db5659f",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_33.json",
+      "sha256": "883c963ba3285e4af50c641ef82143c6c1e183001a0e52713aaeb15f26631eda",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_22.json",
+      "sha256": "e28637f7d20783f1309bdaa8b321c047fa8629a5e9554c43359af274b0ef613d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_08.json",
+      "sha256": "93c0da13dbfeffcdc4ca023ac0d5d76e75e525df566361c09a9df305a8d054ed",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_35.json",
+      "sha256": "10674848df279d4b834391fd0bc0d772d1ce4a10a734c7cccabd8b929c3ecbea",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_18.json",
+      "sha256": "c32e66f484a97111c2c5c639f6d5f5458244bac02333a87fccdbf2a78a02d8e2",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_19.json",
+      "sha256": "8984dd6d69d73c292e6fdaef0c0407bd37d9996d0f1e6c9176ef2b2ee7b62fda",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_02.json",
+      "sha256": "ecdd09debb2885c2598182294b472e99b8870ebe6eea00f9cbd9cade71562467",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_06.json",
+      "sha256": "98fac0e9b1697bcf4dfc3ef952f83d9cd52fe18550e7366fd030f82b1aea5324",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_28.json",
+      "sha256": "a3b04e237e05f5371ecb3b304901651abca494c1b85c64f6815ddb52ca46c100",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_34.json",
+      "sha256": "220a8920816f859bc28c8e58e043a22e84074116898e1647e36d6bfa241d692a",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_00.json",
+      "sha256": "ef7acc11b2e9a92452a1895091a680aedc03a320ef96814adcd1ed2246d3993c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_01.json",
+      "sha256": "cfee80da2419c32d45b6cd35c156454e9a444b5a55ecc382e9a97bd3f8cbbb55",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_36.json",
+      "sha256": "e7159607dd9ed242b4fb5fd199ef3f3fb9b933623bfa4ef753caec6e1845bdfc",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_39.json",
+      "sha256": "247481d63577d105971c4f76e72e3282f2379abac1e7461206bd7428d6363bb9",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_29.json",
+      "sha256": "cd3cdcd0c64435e598d60dec6dc201b6d80e6fedaa50a5b3156ed807793c85a6",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_20.json",
+      "sha256": "6630667c23041ff417c75c1252cd09b690ac577c60915701f35d652aaac5ab3d",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_23.json",
+      "sha256": "59fb740fda910ac8b0933c591e21d5efd7f47b141af1807993ed558019857a4c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_04.json",
+      "sha256": "4906b1e171830364a2aa0959e6000aad844dca58665a3c1781cea7a207e33140",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_27.json",
+      "sha256": "b210022c17afa75110cfe876da11493abf43f28e18a7f04af951beb8f08a1398",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_15.json",
+      "sha256": "44ab17ae58d8a59d19a530ff4629e24fbfe3f0d44252081f5a584151373684ad",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_09.json",
+      "sha256": "44e1c680676c2b659a517a1a7f6df1e0c8d728fe0222aeb6541c1861c7231fab",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_37.json",
+      "sha256": "5326bf63a49153e907cf1a8f3d0ed770bcd8c1bdf4ac0cc004b88c5160626fb2",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_21.json",
+      "sha256": "0c6a50f8d23d5bdcc92719edcdb36a05b259f300d3fe6dc20a78ac8db68701e8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_03.json",
+      "sha256": "2705dd3477eb25ab479ad9a528987a3b788d10b208c8d2ded79afdbbfaf1f56c",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_10.json",
+      "sha256": "8e803ebe69789b54692fce26ce8a1524760309405f4154329b719db9ad3f8ca7",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_11.json",
+      "sha256": "543a0dfc9088262a396a33c20922210833b6df777f70daf4273fa96a9ef59317",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_26.json",
+      "sha256": "07d1178ba3c80e376e7af3b8b3248d60bdcfc45c5d1bd4d66236143eab8ec084",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_13.json",
+      "sha256": "4f7b891900895d21625c7364c4324a56a111792d5d3e4802feefd8d3e4e4c313",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_05.json",
+      "sha256": "8ac8eedf1eb6fe4daa922a0d50599cf0a2ed1297de9d191b913ef88cbc16ea31",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/phase_timing/epoch_38.json",
+      "sha256": "12bb063cf544e86d0a09a9f4cb22dfe91c155e0917b3bc2b89340f21f7fe6de8",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/preflight/preflight.json",
+      "sha256": "74a8aaf54385cac5153b109db0ea1fdd54b6efb3336c0f9350da00b3b5aaf178",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/preflight/runtime_manifest.json",
+      "sha256": "bb52107938ce1b7efe8526c5c8ceac6d0c6853e285740f1bc0b2a86731c7bebb",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/preflight/runtime_certificate.json",
+      "sha256": "dd9092b8daeaf2758552fd166d675f79c065702ebd0d3c3ee9db5b0c24e07526",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training/best_model.pt",
+      "sha256": "5496d62a918100fbd86d0ed2e9796392b03df03f7b1ad7f591aaee10876412ee",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training/checkpoint_epoch_29.pt",
+      "sha256": "4dde3342bbad8ea183e912e9a1e14c145c8ccbceeadc99d81639c05ef174d1f5",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training/partial_manifest.json",
+      "sha256": "bd777ea5b85ab2484b2e1297c53e5d365252407247b1c405800ce6bcf4938601",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training/trace.json",
+      "sha256": "9f772768530e103c1bab13084ba70c31ccdb82132bf23932ab4e338490b9ece1",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training/checkpoint_epoch_39.pt",
+      "sha256": "84cbd31fbbce0fa1de26e05dbce6d5caa20003a9dd843f3b79de147dbc32d671",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training/checkpoint_epoch_19.pt",
+      "sha256": "96dfa073f2dbf52844560c4fc9fef2cccc7401b35b048fe18b5f7fd25707e825",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training/canonical_trace.json",
+      "sha256": "efcf88c470fa25ad2aa447c7544605398a44ca5765229c1a0407bce1da8e21d4",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training/checkpoint_epoch_09.pt",
+      "sha256": "22476bdda4082a25c9aaab3ba899747ced372d943e17676e7a8f583b47e85a74",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training/last_checkpoint.pt",
+      "sha256": "84cbd31fbbce0fa1de26e05dbce6d5caa20003a9dd843f3b79de147dbc32d671",
+      "state": "RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training/development_predictions.pt",
+      "sha256": "982976346f998668971f6522a5493e37d07ec602ae460ac4ff2e97894df6780e",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training_tuning_report.json",
+      "sha256": "8141aa4c92088efabdc0224442a34a483e47e6a039d77d61c95704b10c99dd1d",
+      "state": "ALREADY_RETAINED"
+    }
+  ],
+  "transport": "version_specific_manifest_pinned_files",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": true
+}

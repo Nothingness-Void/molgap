@@ -1,0 +1,33 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-tuning40-dual-s42",
+  "version": 1,
+  "files": [
+    {
+      "path": "gptrans_tuning40/startup.json",
+      "sha256": "f01b63da80e2040f8c041af06d4fe990411eca6b6e215804bccb2ed1957dbe06"
+    },
+    {
+      "path": "gptrans_tuning40/job_summary.json",
+      "sha256": "9c287123fd5a81444e1479a87cb5a6a84bae098d164cc2bb2e44c9685384fab9"
+    },
+    {
+      "path": "gptrans_tuning40/native_cost.json",
+      "sha256": "08556b2a2ab5ed58dde1c0d670fa70e4a26a606fc4a088d56cbcea6c25d8986f"
+    },
+    {
+      "path": "gptrans_tuning40/execution_original/execution_completion.json",
+      "sha256": "7de2a899bed09660ede6b12e01806493cdafbb2fca9cefad93313397f5e1fd0d"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/execution_completion.json",
+      "sha256": "b75732500ea408b89b5001fbe69a6b3b3e38ce02bab60b07c2ae2fc4e234c9d4"
+    },
+    {
+      "path": "gptrans_tuning40/execution_optimized/training_tuning_report.json",
+      "sha256": "8141aa4c92088efabdc0224442a34a483e47e6a039d77d61c95704b10c99dd1d"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}
