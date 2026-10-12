@@ -1,0 +1,23 @@
+{
+  "status": "COMPLETE",
+  "question": "Does single-forward K1 with True EMA and Clean-BN match or exceed mean2 at lower cost?",
+  "device": "NVIDIA GeForce RTX 5060",
+  "best_live_epoch": 37,
+  "best_live_mae_eV": 0.13937018811702728,
+  "final_live_mae_eV": 0.13941995799541473,
+  "ref_mean2_mae_eV": 0.140257285566,
+  "live_gain_vs_mean2_meV": 0.887097448972722,
+  "best_raw_ema_mae_eV": 0.15653292834758759,
+  "best_clean_bn_ema_mae_eV": 0.14309905469417572,
+  "clean_bn_recovery_meV": 13.43387365341187,
+  "total_training_wall_seconds": 1325.8525190000146,
+  "total_wall_seconds": 1913.2330871000013,
+  "peak_vram_mb": 490.625,
+  "decision": "NON_INFERIOR_AND_FAVORABLE",
+  "artifacts": {
+    "best_ema_checkpoint": "experiments/pcqm_k1_single_true_ema_100k/artifacts/best_ema_checkpoint.pt",
+    "selected_clean_bn_model": "experiments/pcqm_k1_single_true_ema_100k/artifacts/selected_clean_bn_model.pt",
+    "development_predictions": "experiments/pcqm_k1_single_true_ema_100k/artifacts/development_predictions.pt",
+    "trace": "experiments/pcqm_k1_single_true_ema_100k/trace.jsonl"
+  }
+}

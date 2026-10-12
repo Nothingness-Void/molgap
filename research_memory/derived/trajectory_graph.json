@@ -1026,6 +1026,11 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
+      "target": "TB-pcqm-k1-single-true-ema-100k",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-pcqm-geometry-component-attribution-20260928",
       "target": "TB-pcqm-geometry-reliability-screen-20260928",
       "type": "parent_trajectory"
@@ -1666,6 +1671,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "target": "TB-pcqm-k1-single-true-ema-100k",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-colab-execution-profile-20261007",
       "target": "TB-k1-bn-mechanism-a100-20261008",
       "type": "prior_evidence"
@@ -2238,6 +2248,11 @@
     {
       "source": "pcqm-gptrans-t-500k-bridge",
       "target": "TB-pcqm-scale-transfer-diagnostic",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "target": "TB-pcqm-k1-single-true-ema-100k",
       "type": "reference_used"
     },
     {
@@ -3147,6 +3162,10 @@
     },
     {
       "id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-single-true-ema-100k",
       "type": "trajectory"
     },
     {

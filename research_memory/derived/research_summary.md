@@ -5,6 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
+- ACTIVE: 1
 - CLOSED: 12
 - INCONCLUSIVE: 19
 - INFRASTRUCTURE_ONLY: 7
@@ -103,6 +104,10 @@
 - NVIDIA GeForce RTX 5060 device_hours: measured=0.009793 (1 measured record), estimated=0.166667 (1 estimated record), measurement_missing=1, not_applicable=0
 - NVIDIA GeForce RTX 5060 queue_hours: not applicable (3 records); measurement_missing=0
 - NVIDIA GeForce RTX 5060 wall_hours: measured=0.016398 (2 measured records), estimated=0.166667 (1 estimated record), measurement_missing=0, not_applicable=0
+- NVIDIA GeForce RTX 5060; local desktop execution cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NVIDIA GeForce RTX 5060; local desktop execution device_hours: measured=unknown (0 measured records), estimated=0.500000 (1 estimated record), measurement_missing=0, not_applicable=0
+- NVIDIA GeForce RTX 5060; local desktop execution queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- NVIDIA GeForce RTX 5060; local desktop execution wall_hours: measured=unknown (0 measured records), estimated=0.500000 (1 estimated record), measurement_missing=0, not_applicable=0
 - NVIDIA GeForce RTX5060 cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=3, not_applicable=1
 - NVIDIA GeForce RTX5060 device_hours: measured=unknown (0 measured records), estimated=1.000000 (2 estimated records), measurement_missing=1, not_applicable=1
 - NVIDIA GeForce RTX5060 queue_hours: not applicable (4 records); measurement_missing=0
@@ -251,8 +256,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 196
-- Cost-event coverage: 100/111 trajectories; incomplete native measurement=77
+- Measurement-missing cost events: 197
+- Cost-event coverage: 101/112 trajectories; incomplete native measurement=78
 
 ## Screening Backtest
 - Status: available
@@ -260,9 +265,9 @@
 - Excluded traces: 21
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 80
+- [INFO] trace_unavailable_for_backtest: 81
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 77
+- [WARN] incomplete_native_cost_measurement: 78
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 37
-- [WARN] trajectory_without_v5_evidence: 11
+- [WARN] missing_explicit_role_identity: 38
+- [WARN] trajectory_without_v5_evidence: 12

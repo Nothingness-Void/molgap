@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-single-true-ema-100k-v1",
+  "category": "training",
+  "cost_event_id": "cost-TB-pcqm-k1-single-true-ema-100k-planned",
+  "evidence_ref": "experiments/pcqm_k1_single_true_ema_100k/protocol.md",
+  "hardware": "NVIDIA GeForce RTX 5060; local desktop execution",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0.5
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.5
+    }
+  },
+  "platform": "local",
+  "run_id": "pcqm-k1-single-true-ema-100k:desktop:local",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-k1-single-true-ema-100k"
+}

@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 111,
+    "trajectories_total": 112,
     "with_complete_native_measurement": 23,
-    "with_cost_event": 100,
-    "with_incomplete_native_measurement": 77,
+    "with_cost_event": 101,
+    "with_incomplete_native_measurement": 78,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 80,
+      "count": 81,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -87,6 +87,7 @@
         "TB-pcqm-expert-oracle-feasibility-20260930",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
+        "TB-pcqm-k1-single-true-ema-100k",
         "TB-pcqm-scale-fit-retained-20261001",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
@@ -129,7 +130,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 77,
+      "count": 78,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -201,6 +202,7 @@
         "TB-molgap-k1-cost-quality-100k-s43-v1-single",
         "TB-pcqm-geometry-component-attribution-20260928",
         "TB-pcqm-geometry-reliability-screen-20260928",
+        "TB-pcqm-k1-single-true-ema-100k",
         "TB-pcqm-scale-fit-retained-20261001",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
@@ -231,7 +233,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 37,
+      "count": 38,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
@@ -261,6 +263,7 @@
         "TB-k1-saved-trace-pair-20261008",
         "TB-k1-saved-trace-pair-20261008-attempt002",
         "TB-k1-ssma-kaggle3-100k-s42-v1",
+        "TB-pcqm-k1-single-true-ema-100k",
         "TB-pcqm-scale-transfer-attribution",
         "TB-pcqm-scale-transfer-diagnostic",
         "TB-pcqm-scale-transfer-reassessment-20260925",
@@ -275,7 +278,7 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 11,
+      "count": 12,
       "items": [
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
@@ -286,6 +289,7 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
+        "TB-pcqm-k1-single-true-ema-100k",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],

@@ -1,0 +1,85 @@
+{
+  "schema": "molgap-trajectory-v1",
+  "trajectory_id": "TB-pcqm-k1-single-true-ema-100k",
+  "record_mode": "prospective",
+  "track": "B",
+  "owner": "desktop",
+  "family_id": "k1-single-true-ema",
+  "question": "Does single-forward K1 with step-wise True EMA (0.9999) and Clean-BN match or exceed mean2 accuracy at >=35% lower cost on 100K PCQM4Mv2?",
+  "hypothesis": {
+    "hypothesis_id": "H-TB-pcqm-k1-single-true-ema-100k",
+    "observed_deficiency": "Double-forward pass adds ~40-70% training step overhead, while training Dropout corrupts BN running statistics and lack of True EMA impairs generalization.",
+    "supporting_evidence_ids": [
+      "pcqm-k1-bn-mechanism-a100-20261008",
+      "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal"
+    ],
+    "alternative_explanations": [
+      "Single-forward loss gradient lacks stochastic second-view regularization.",
+      "True EMA requires more steps than 40 epochs to wash out initialization.",
+      "Clean-BN recalibration on 16K samples might overfit."
+    ],
+    "changed_mechanism": "Single forward pass per step + step-wise BoundForeachEMA (decay 0.9999) + post-selection Clean-BN calibration on 16,384 training molecules.",
+    "cheapest_falsifier": "One 40-epoch 100K PCQM4Mv2 training run evaluated on fixed 50K development set with strictly frozen seed 42 and batch size 128.",
+    "related_closed_family_ids": [
+      "k1-clean-second-view",
+      "k1-dropout-consistency",
+      "k1-bn-mechanism"
+    ],
+    "decision_changed_if_positive": "Advance to 500K scale-up candidate under pre-registered efficiency and accuracy gates.",
+    "decision_changed_if_negative": "Close K1 single-forward EMA route; retain mean2 or explore alternative state regularizers.",
+    "expected_native_cost_ref": "cost-TB-pcqm-k1-single-true-ema-100k-planned",
+    "historical_unknowns": [
+      "True EMA convergence curve on K1",
+      "Exact Clean-BN recovery magnitude under EMA weights"
+    ]
+  },
+  "state_at_start": {
+    "source_commit": "e351689b",
+    "source_config_identity": "k1-single-true-ema-config-v1",
+    "contract_refs": [
+      "experiments/pcqm_k1_single_true_ema_100k/protocol.md"
+    ],
+    "reference_ids": [
+      "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal"
+    ],
+    "parent_trajectory_ids": [
+      "TB-molgap-k1-clean-second-100k-s42-v1-mean2"
+    ],
+    "prior_evidence_ids": [
+      "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal"
+    ],
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_single_true_ema_100k/protocol.md"
+    ],
+    "budget_snapshot_ref": "experiments/pcqm_k1_single_true_ema_100k/protocol.md"
+  },
+  "actions": [
+    {
+      "action_id": "A001",
+      "type": "single_true_ema_clean_bn_100k_training",
+      "run_ids": [
+        "pcqm-k1-single-true-ema-100k:desktop:local"
+      ],
+      "attempt_ids": [
+        "pcqm-k1-single-true-ema-100k-v1"
+      ],
+      "source_commit": "e351689b",
+      "evidence_refs": [],
+      "cost_event_ids": [
+        "cost-TB-pcqm-k1-single-true-ema-100k-planned"
+      ]
+    }
+  ],
+  "result": {
+    "evidence_ids": [],
+    "evidence_refs": []
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_single_true_ema_100k/protocol.md",
+    "outcome": "ACTIVE",
+    "next_allowed_actions": [
+      "A001"
+    ],
+    "reopen_conditions": []
+  }
+}

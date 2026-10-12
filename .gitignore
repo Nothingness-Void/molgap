@@ -42,6 +42,7 @@ data/raw/**/*.csv
 data/raw/*.json
 data/raw/*.zip
 data/raw/pcqm4m-v2/
+data/pcqm_*/
 data/raw/phase3_*.csv
 data/raw/archive-r02-router-candidates/
 data/raw/phase8_repair_v2_checkpoint_dataset/
@@ -174,6 +175,7 @@ platforms/_records/**/inputs/**
 # Presentation outputs live on the dedicated presentation-assets branch. Keep
 # source diagrams and the builder in the main branch without accumulating
 # generated light/dark variants or inspection workspaces here.
+*.pptx
 production/04_evaluate/project_freeze/figures/*.pdf
 production/04_evaluate/project_freeze/figures/*.png
 production/04_evaluate/project_freeze/figures/*.svg

@@ -6,10 +6,10 @@
   },
   "cost": {
     "completeness": {
-      "trajectories_total": 111,
+      "trajectories_total": 112,
       "with_complete_native_measurement": 23,
-      "with_cost_event": 100,
-      "with_incomplete_native_measurement": 77,
+      "with_cost_event": 101,
+      "with_incomplete_native_measurement": 78,
       "without_cost_event": 11
     },
     "totals_by_hardware": {
@@ -1008,6 +1008,56 @@
           "measured": {
             "known_records": 2,
             "known_total": 0.01639823805555352
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        }
+      },
+      "NVIDIA GeForce RTX 5060; local desktop execution": {
+        "cpu_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "device_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 0.5
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 0
+        },
+        "queue_hours": {
+          "estimated": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
+          },
+          "not_applicable_records": 0,
+          "unknown_records": 1
+        },
+        "wall_hours": {
+          "estimated": {
+            "known_records": 1,
+            "known_total": 0.5
+          },
+          "measured": {
+            "known_records": 0,
+            "known_total": null
           },
           "not_applicable_records": 0,
           "unknown_records": 0
@@ -2864,7 +2914,7 @@
         }
       }
     },
-    "unknown_events": 196
+    "unknown_events": 197
   },
   "evidence": {
     "validated": 100,
@@ -2874,7 +2924,7 @@
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 80,
+      "count": 81,
       "severity": "INFO"
     },
     {
@@ -2884,7 +2934,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 77,
+      "count": 78,
       "severity": "WARN"
     },
     {
@@ -2894,12 +2944,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 37,
+      "count": 38,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 11,
+      "count": 12,
       "severity": "WARN"
     }
   ],
@@ -2908,10 +2958,11 @@
     "explicit_events": 286,
     "repeatedly_selected": 21
   },
-  "source_digest": "acc8c4e461a5580d0db6c1ac095c6be7c0975c47b0850f17b98c2583b9592242",
+  "source_digest": "74403369fa13738250b78c116632de677f87b4995f93eccb4163069818f15bc8",
   "trajectories": {
-    "count": 111,
+    "count": 112,
     "outcomes": {
+      "ACTIVE": 1,
       "CLOSED": 12,
       "INCONCLUSIVE": 19,
       "INFRASTRUCTURE_ONLY": 7,
