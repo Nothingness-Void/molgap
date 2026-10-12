@@ -6,24 +6,8 @@ import weakref
 
 import torch
 
-from .pcqm_gptrans_v4 import ExponentialMovingAverage
 
 MODEL_FIELDS = ('x', 'edge_index', 'edge_attr', 'batch', 'execution_layout')
-
-
-class ForeachExponentialMovingAverage(ExponentialMovingAverage):
-    """Reviewed server tensor-list EMA, without importing the profiling runner."""
-    def update(self, model) -> None:
-        floating_targets, floating_sources = [], []
-        for name, value in model.state_dict().items():
-            target = self.state[name]
-            if value.is_floating_point():
-                floating_targets.append(target)
-                floating_sources.append(value.detach())
-            else:
-                target.copy_(value)
-        torch._foreach_mul_(floating_targets, self.decay)
-        torch._foreach_add_(floating_targets, floating_sources, alpha=1.0 - self.decay)
 
 
 class LoadedDatasetCache:
@@ -74,10 +58,13 @@ def development_cpu_view(batch):
     return result
 
 
-class BoundForeachEMA(ForeachExponentialMovingAverage):
-    """Reuse tensor lists, retaining the v1 foreach equation and strict topology."""
-    def __init__(self, model, decay):
-        super().__init__(model, decay)
+class BoundForeachEMA:
+    """One cached tensor-list EMA implementation for all live training callers."""
+    def __init__(self, model, decay=0.9999):
+        if decay not in (0.9999, 0.999):
+            raise ValueError("EMA decay must be a reviewed frozen value")
+        self.decay = decay
+        self.state = {name: value.detach().clone() for name, value in model.state_dict().items()}
         self._binding = None
         # Reports retain this plain counter dict, never the EMA/model tensors.
         self.statistics = dict(plan_builds=0, update_calls=0)
@@ -91,8 +78,13 @@ class BoundForeachEMA(ForeachExponentialMovingAverage):
         return self.statistics['update_calls']
 
     def load_state_dict(self, state):
-        super().load_state_dict(state)
+        if state.keys() != self.state.keys():
+            raise RuntimeError("EMA state identity changed")
+        self.state = {name: value.clone() for name, value in state.items()}
         self._binding = None
+
+    def state_dict(self):
+        return self.state
 
     def _bind(self, model):
         raw = model.state_dict(keep_vars=True)
@@ -153,7 +145,7 @@ class BoundForeachEMA(ForeachExponentialMovingAverage):
 
 
 class BatchTransferView:
-    """Transfer only fields consumed by the qualified local-bond model/step."""
+    """Transfer only fields consumed by registered GPTrans model/step owners."""
     def __init__(self, batch, *, training):
         self.batch_data = batch
         self.training = training
@@ -175,6 +167,10 @@ class TransferLoader:
     @property
     def loader(self):
         return self.source.loader
+
+    @property
+    def generator(self):
+        return self.loader.generator
 
     def __len__(self):
         return len(self.source)

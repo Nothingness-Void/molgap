@@ -10,7 +10,22 @@ from molgap.gptrans_execution_backend import prepare_layout
 from molgap.gptrans_execution_hotpath import (
     BoundForeachEMA, BatchTransferView, ReusedWeightView, development_cpu_view, LoadedDatasetCache,
 )
-from molgap.gptrans_execution_hotpath import ForeachExponentialMovingAverage
+class ScalarEMA:
+    """Test-only arithmetic oracle; never a live training backend."""
+    def __init__(self, model, decay):
+        self.decay = decay
+        self.state = {k: v.detach().clone() for k, v in model.state_dict().items()}
+
+    @torch.no_grad()
+    def update(self, model):
+        for name, value in model.state_dict().items():
+            if value.is_floating_point():
+                self.state[name].mul_(self.decay).add_(value, alpha=1 - self.decay)
+            else:
+                self.state[name].copy_(value)
+
+    def state_dict(self):
+        return self.state
 
 
 def layer():
@@ -22,7 +37,7 @@ def layer():
 @pytest.mark.parametrize('decay', [.999, .9999])
 def test_bound_ema_exactly_matches_v1_across_updates_and_resume(decay):
     model = layer()
-    expected, actual = ForeachExponentialMovingAverage(model, decay), BoundForeachEMA(model, decay)
+    expected, actual = ScalarEMA(model, decay), BoundForeachEMA(model, decay)
     rng = torch.get_rng_state().clone()
     for step in range(10):
         with torch.no_grad():
@@ -118,7 +133,7 @@ def test_selective_transfer_leaves_unused_fields_and_eval_targets_on_cpu(trainin
 
 def test_weight_backup_reuses_storage_restores_live_and_preserves_rng():
     model = layer()
-    ema = ForeachExponentialMovingAverage(model, .999)
+    ema = ScalarEMA(model, .999)
     with torch.no_grad():
         model[0].weight.add_(1.)
         model.counter.add_(3)
@@ -146,7 +161,7 @@ def test_cpu_optimizer_gradient_and_resume_parity_with_bound_ema():
     # Elementary CPU arithmetic regression, not a MolGap model/training run.
     left, right = layer(), layer()
     right.load_state_dict(left.state_dict())
-    expected = ForeachExponentialMovingAverage(left, .999)
+    expected = ScalarEMA(left, .999)
     actual = BoundForeachEMA(right, .999)
     opts = [torch.optim.AdamW(m.parameters(), lr=.001, foreach=True) for m in (left, right)]
     x, target = torch.tensor([[.2, .4]]), torch.tensor([[.1]])
@@ -172,7 +187,7 @@ def test_cpu_optimizer_gradient_and_resume_parity_with_bound_ema():
 @pytest.mark.parametrize('fault', ['body', 'partial_load'])
 def test_weight_view_restores_on_body_or_partial_load_failure(fault):
     model = layer()
-    ema = ForeachExponentialMovingAverage(model, .999)
+    ema = ScalarEMA(model, .999)
     with torch.no_grad():
         model[0].weight.add_(1.)
     before = {k: v.clone() for k, v in model.state_dict().items()}
@@ -199,7 +214,7 @@ def test_weight_view_live_does_not_allocate_and_nested_views_are_rejected():
 
 def test_weight_view_preserves_native_load_hooks():
     model = layer()
-    ema, calls = ForeachExponentialMovingAverage(model, .999), []
+    ema, calls = ScalarEMA(model, .999), []
     handle = model.register_load_state_dict_post_hook(lambda m, incompatible: calls.append(m))
     with ReusedWeightView().use(model, ema, 'ema'):
         pass

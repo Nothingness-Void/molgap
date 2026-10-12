@@ -46,6 +46,10 @@ def test_frozen_model_identity_and_backward():
     batch.edge_index = edge_index
     batch.edge_attr = edge_attr
     batch.batch = torch.tensor([0, 0, 0, 1, 1, 1], dtype=torch.long)
+    batch.ptr = torch.tensor([0, 3, 6], dtype=torch.long)
+    batch.num_graphs = 2
+    from molgap.gptrans_execution_backend import prepare_layout
+    prepare_layout(batch)
     prediction = _forward(model, batch)
     assert prediction.shape == (2,)
     assert torch.isfinite(prediction).all()
@@ -102,8 +106,13 @@ def test_schedule_and_contract_are_frozen():
     contract = json.loads(
         (ROOT / "experiments/pcqm_gptrans_t_100k_v4/training_contract.json").read_text()
     )
+    # Historical contracts are immutable, not live-default training recipes.
     for key, value in fields.items():
-        assert contract[key] == value
+        if key not in ("execution_policy", "optimizer_fingerprint"):
+            assert contract[key] == value
+    assert "execution_policy" not in contract
+    assert fields["execution_policy"]["adamw_foreach"] is True
+    assert fields["optimizer_fingerprint"] != contract["optimizer_fingerprint"]
 
 
 def test_remote_payload_requires_v4_guards():

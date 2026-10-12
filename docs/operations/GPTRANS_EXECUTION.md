@@ -1,93 +1,66 @@
-# GPTrans Execution Tuning
+# GPTrans Default Execution
 
-This page owns reusable execution selection, not a scientific contract or compute
-release. The server v3 implementation is retained as shared infrastructure;
-existing desktop reference recipes are not silently changed.
+The registered `gptrans_t/1` workflow automatically uses accelerated execution
+for both native preflight and training. Do not wrap entrypoints in
+`tuned_backend`, copy a trainer or choose an execution addon.
 
-## Reusable owners
-
-| Module | Responsibility |
-|---|---|
-| `gptrans_execution_backend.py` | CPU layout, persistent loaders, buffered evaluation, foreach optimizer/EMA context and phase timing |
-| `gptrans_execution_hotpath.py` | Bound EMA tensor plans, selective transfers, reusable live-weight backup and process-local dataset reuse |
-| `gptrans_execution_tuning.py` | Explicit resource/cache configuration, bounded development cache and scoped composition over the native trainer |
-
-Use `ExecutionTuning` and `tuned_backend`, not a copied training loop. The same
-scope must be applied in each independently released preflight/training worker:
+## Entry and Owners
 
 ```python
-from molgap.gptrans_execution_tuning import ExecutionTuning, tuned_backend
-from molgap.training_reproducibility import atomic_json
+from molgap.experiment_execution import build_family_recipe
 
-# owner is the declared, compatible local-bond family trainer, not any GPTrans.
-with tuned_backend(owner, ExecutionTuning(), timing_root=output / "phase_timing") as report:
-    result = owner.run_training(**released_training_arguments)
-atomic_json(output / "execution_tuning.json", report)
+recipe = build_family_recipe(
+    ("gptrans_t", "1"),  # optional registered scientific addon only
+    source_idx_sha256="<frozen-source-index-sha256>",
+    target_sha256="<frozen-target-sha256>",
+)
 ```
 
-Default tuning matches the reviewed v3 profile: one Torch thread, one training
-worker, no development workers and256MiB CPU development-tensor cache. Overflow
-streams the complete development role; it never drops rows. Resource settings
-are explicit and identity-bound, not permission to claim an entire mixed-arm
-Notebook fits the optimized arm's CPU budget. Loaded-dataset reuse is process
-local; preflight/training separation may yield no hits. Native hash acceptance
-must still happen; this cache is not a cryptographic input verifier.
+| Owner | Responsibility |
+|---|---|
+| `pcqm_gptrans_v4.py` | Native model/step/schedule/selection/resume; automatic accelerated entrypoints |
+| `gptrans_execution_backend.py` | CPU layout, fast dense assembly, prepared loaders, buffered evaluation and timing |
+| `gptrans_execution_hotpath.py` | One bound tensor-list EMA, selective transfer, reusable weight backup and dataset reuse |
+| `gptrans_execution_tuning.py` | Default scoped resource/cache composition and execution identity |
+| `gptrans_screen_workflow.py` | Spec/recipe binding and normalized family outputs |
 
-These contexts mutate one isolated worker's owner hooks; do not share the owner
-across concurrent training threads. Runtime/weights/hooks are restored on normal
-or exceptional exit. EMA plans reject topology/storage changes. Thread/worker,
-cache, transfer and EMA switches change the tuning identity and must be frozen
-in the new recipe/source declaration and measured-cost report.
+The default is one Torch thread, one TRAIN worker, zero development workers,
+256MiB CPU development-tensor cache, foreach AdamW and cached EMA plans.
+Overflow streams the complete role; no rows are dropped. Dataset reuse is
+process-local, not a content verifier. Native hash acceptance remains required.
+The source/recipe binds this policy; `execution_report.json` retains counters.
+The shared architecture constructor remains usable by inference and diagnostics;
+registered run scopes bind fast inputs, not a second model or training loop.
 
-## Compatibility and gates
+Scientific addons share the same base. Input-changing addons must supply a
+reviewed accelerated input adapter rather than silently falling back. Scopes
+are process-isolated, reject nesting and restore hooks/threads/environment on
+exception. Do not share an owner across concurrent training threads.
 
-The accepted scope is the server's `degree_bond_local_ema999` trainer on T4x2,
-fixed100K TRAIN/internal50K development, FP32/noTF32, BS128,40 epochs of an
-unchanged60-epoch schedule. Backend model checks and trainer-hook checks fail
-closed for incompatible owners. Desktop's legacy `pcqm_gptrans_v4` does not
-implement that local-bond owner interface and is intentionally rejected before
-context mutation. Supplying its module to this context is not supported.
-The registered legacy `gptrans_t/1` workflow remains unchanged; there is no
-new generic addon, model factory,500K/full trainer or platform submitter here.
-An addon must use its compatible native owner and existing package/preflight/
-acceptance path; platform skills still own submission. No hidden fallback.
+## Gates and History
 
-The base optimized backend enables foreach AdamW and EMA. It is not bitwise
-equivalent to the original optimizer path; both optimizer-inclusive preflights
-and the applicable paired quality gate remain mandatory. V3 selected predictions
-matched the earlier optimized-v1 run, not the original arm. Different models,
-datasets, scales and hardware require their own applicable contracts and native
-qualification; this integration is not that qualification. Native default EMA
-remains .9999; explicit .999 support is added for the reviewed family owner.
-Do not edit frozen jobs, scientific references, production registry or V5/RML
-gates to fit this implementation.
+Foreach AdamW is not a bitwise-equivalent optimizer replacement. New jobs have
+new source/recipe/execution identity and require their own optimizer-inclusive
+native preflight and applicable quality checks. Model/loss, FP32/noTF32, BS128,
+schedule and native EMA decay .9999 are unchanged. No precision/BN/dropout
+shortcut, automatic release, new platform submitter or500K/full trainer is added.
 
-## Retained authority
+Old recipes/checkpoints/completions without this execution identity cannot
+silently continue through the live wheel. Use their frozen source package for
+historical replay/resume. Immutable snapshots and scientific references remain
+unchanged; this is not production promotion or a V5/RML contract amendment.
+An old foreach=False reference is not a strict comparator for this default.
+Missing compatible frozen reference means pending, never automatic retraining.
 
-Source: server `bdc4d238f4c628e745b74cea58d5fa50c0542e98`.
-The [server decision](https://github.com/Nothingness-Void/molgap/blob/bdc4d238f4c628e745b74cea58d5fa50c0542e98/experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md)
-records passed speed/accuracy delivery gates, not an architecture win or strict
-causal comparison. Exact-byte [local snapshots and source hashes](../../platforms/_records/integrations/gptrans_execution_tuning_v3/provenance.json)
-retain the acceptance, protocol, retention audit and RML closure limitation.
-Snapshots preserve original relative references; resolve them in the pinned
-server tree, not as desktop paths. Artifact payloads remain with their owner;
-this import is not an independent checkpoint/prediction reacceptance.
+Reviewed source origin: server `bdc4d238f4c628e745b74cea58d5fa50c0542e98`.
+Its [decision](https://github.com/Nothingness-Void/molgap/blob/bdc4d238f4c628e745b74cea58d5fa50c0542e98/experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md)
+and [exact snapshots/provenance](../../platforms/_records/integrations/gptrans_execution_tuning_v3/provenance.json)
+own native evidence. That T4x2 local-bond run passed speed/quality delivery
+gates over40 epochs of its60-epoch schedule:11.768% lower complete-stage wall,
+small MAE change with row CI including zero. It was not an architecture win.
 
-Server terminal training RML finalization remains blocked for this noncausal
-same-run delivery experiment; it is not training Replay-Ready. No server RML,
-generated indexes, monitor, scheduler or research models were merged. The only
-port adaptations move the foreach EMA primitive out of the profiling runner,
-add compatible optional EMA decay and fail incompatible owner hooks early.
-The original complete-stage gain applies to that allocation, not standalone
-T4, A100/DCU,500K/full or other GPTrans families.
-
-## Port verification
-
-2026-10-12 JST: local project-venv CPU/synthetic regressions passed189 tests,
-with1 host-limited skip. Suites cover the three execution modules, native V4,
-screen workflow, dispatch and packaging. They test cache overflow/row order,
-PyG transfer isolation, EMA/state resume, exception cleanup and incompatible
-owner rejection. No molecular training, inference or new remote qualification
-was executed. Native non-EMA entrypoints are preserved; V5/RML gates and model
-registry are unchanged. The retained server report remains the native-performance
-authority, not these synthetic tests.
+The v3 cache layer matched earlier optimized-v1 predictions, not the original
+optimizer arm. The registered desktop core integration is CPU/synthetic-tested,
+not independently native-performance-qualified. No universal GPU/500K/full
+gain is claimed. Server terminal training RML finalization remains blocked for
+the noncausal same-run delivery experiment; do not label it replay-ready.

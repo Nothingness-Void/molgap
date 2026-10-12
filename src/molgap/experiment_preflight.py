@@ -359,7 +359,7 @@ def _model_smoke(runtime, arm, batch, stats, path, generator, result):
     result["initial_state_checked"] = True
     optimizer = runtime.make_adamw_compat(
         model.parameters(), lr=runtime.LEARNING_RATE,
-        weight_decay=runtime.WEIGHT_DECAY, fused=False)
+        weight_decay=runtime.WEIGHT_DECAY, fused=False, foreach=True)
     scheduler = runtime.FrozenEpochScheduler(optimizer)
     scheduler.step(0)
     model.train()
@@ -367,7 +367,9 @@ def _model_smoke(runtime, arm, batch, stats, path, generator, result):
     mean, std = stats
     if not math.isfinite(mean) or not math.isfinite(std) or std <= 0:
         raise ValueError("Invalid real training target statistics")
-    prediction = runtime._forward(model, batch)
+    execution = importlib.import_module("molgap.gptrans_execution_backend")
+    execution.bind_model_layout(model)
+    prediction = execution.prepared_forward(model, batch)
     target = (batch.y.view(-1).float() - mean) / std
     if prediction.shape != target.shape or not bool(torch.isfinite(prediction).all()):
         raise ValueError("Nonfinite or incorrectly shaped model output")

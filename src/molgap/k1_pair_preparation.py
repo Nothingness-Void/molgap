@@ -128,7 +128,7 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
         recipe = build_family_recipe(("neural_atom_k1", "2"), addon=addon,
             source_idx_sha256=expected["source_idx_sha256"], target_sha256=expected["target_sha256"],
             seed=initialization_seed, initialization_sha256=initialization_sha256,
-            execution_torch_version=execution_torch_version if role == "candidate" else None)
+            execution_torch_version=execution_torch_version)
         # Allocation lifetime is a launcher bound, not an optimizer/recipe override.
         if allocation_wall_limit_seconds is not None:
             recipe["allocation_wall_limit_seconds"] = allocation_wall_limit_seconds

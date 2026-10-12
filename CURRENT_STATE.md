@@ -50,14 +50,12 @@ owns package/state differences: best100K includes a teacher absent from500K;
 live/EMA/BN differences cannot be silently credited as architecture transfer.
 Further profiling/diagnostics require their own prospective scope and authority.
 
-New compatible K1 training declarations use the user-selected
-[initialized-layout execution policy](docs/operations/K1_EXECUTION.md).
-Original references and scientific/compute gates stay unchanged; this is not a
-production-model promotion or a release for another training run.
-
-Server local-bond GPTrans v3 execution helpers are available through the
-[shared tuning entry](docs/operations/GPTRANS_EXECUTION.md). Legacy desktop
-GPTrans references remain unchanged; this is not a new model or training release.
+Registered K1 and GPTrans preflight/training use accelerated execution by default:
+[K1 policy](docs/operations/K1_EXECUTION.md),
+[GPTrans policy](docs/operations/GPTRANS_EXECUTION.md).
+No execution addon or slow fallback. New recipes bind execution identity;
+historical jobs retain frozen packages. Native qualification and scientific/
+compute gates remain mandatory; this is not a model promotion or new job release.
 
 ## Active Work and Unresolved Acceptance
 

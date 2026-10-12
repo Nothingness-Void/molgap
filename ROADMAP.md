@@ -1,8 +1,7 @@
 # Roadmap - Priorities and Backlog
 
-This file owns task order, triggers, and exit conditions. Live state is in
-`CURRENT_STATE.md`; completed evidence belongs to experiment decisions, and
-track ownership is defined in `TRACKS.md`.
+This file owns task order/triggers/exits. CURRENT_STATE.md owns live state,
+experiment decisions own evidence, TRACKS.md owns tracks.
 ## Reuse Navigation
 
 First use the [modular workflow](docs/operations/EXPERIMENT_WORKFLOW.md), then
@@ -13,8 +12,7 @@ Reuse existing family, analysis and acceptance owners; this is not execution aut
 
 ## Goal and Active Queue
 
-Select a direct-Gap PCQM4Mv2 model under the applicable frozen contract.
-Desktop owns its screens/full/evaluation/submission; server discovery stays independent.
+Select a direct-Gap PCQM4Mv2 model under its frozen contract; desktop and server remain independent.
 Use [BRANCHES](BRANCHES.md#retained-checkout-map) for branch-local evidence missing
 from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers.
 

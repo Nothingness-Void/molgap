@@ -144,8 +144,9 @@ def test_single_forward_reference_and_fused_candidate_bindings(draft_root, limit
                  "batchnorm_updates_per_batch": 1}
     records = prep.build_inputs(draft_root, source_commit="1" * 40, initial_state=state,
         relative_dir=rel, logical_run_id=run, reference_arm_id="reference", reference_addon=None,
-        candidate_arm_id="fused_layout", candidate_addon="k1_fused_layout",
+        candidate_arm_id="mean2_clean_second", candidate_addon="k1_mean2_clean_second",
         candidate_objective=objective, allocation_wall_limit_seconds=limit,
+        candidate_addon_source="src/molgap/k1_clean_second.py",
         account="nothingnessvoid", kernel="nothingnessvoid/fused-layout-kernel",
         title="K1 Fused Layout", source_dataset="nothingnessvoid/fused-source",
         dataset="nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
@@ -161,13 +162,13 @@ def test_single_forward_reference_and_fused_candidate_bindings(draft_root, limit
     assert reference["training"]["objective"] == original["training"]["objective"]
     assert candidate["training"]["objective"]["sha256"] == prep.canonical_fingerprint(objective)
     assert training_adapter(reference).mode(reference) == "reference"
-    assert training_adapter(candidate).mode(candidate) == "fused_layout"
-    assert candidate["addons"] == [{"name": "k1_fused_layout", "version": "1", "config": {},
-        "source_sha256": prep.normalized_source_sha256(draft_root / "src/molgap/k1_screen_training.py")}]
+    assert training_adapter(candidate).mode(candidate) == "mean2_clean_second"
+    assert candidate["addons"] == [{"name": "k1_mean2_clean_second", "version": "1", "config": {},
+        "source_sha256": prep.normalized_source_sha256(draft_root / "src/molgap/k1_clean_second.py")}]
     assert reference["initialization"] == candidate["initialization"]
     assert reference["training"]["sampler"] == candidate["training"]["sampler"]
     assert spec.to_dict()["prospective"]["same_run_replay"] == {
-        "reference_arm_id": "reference", "candidate_arm_ids": ["fused_layout"]}
+        "reference_arm_id": "reference", "candidate_arm_ids": ["mean2_clean_second"]}
     for binding in spec.to_dict()["prospective"]["arms"]:
         arm_id = binding["arm_id"]
         recipe = records[f"training_recipe_{arm_id}.json"]
@@ -240,12 +241,12 @@ def test_both_arm_ids_are_confined(draft_root, reference, candidate):
             reference_arm_id=reference, candidate_arm_id=candidate)
 
 
-def test_fused_addon_cannot_inherit_two_forward_objective(draft_root):
+def test_other_scientific_addon_requires_explicit_objective(draft_root):
     with pytest.raises(ValueError, match="explicit candidate_objective"):
         prep.build_inputs(draft_root, source_commit="1" * 40, initial_state=Path("missing.pt"),
             relative_dir="experiments/seed43", logical_run_id="molgap-fresh-pair",
             reference_arm_id="reference", reference_addon=None,
-            candidate_arm_id="fused_layout", candidate_addon="k1_fused_layout")
+            candidate_arm_id="ssma", candidate_addon="k1_joint_aggregation")
 
 
 def test_legacy_defaults_preserve_mean2_and_nvoid912(draft_root):

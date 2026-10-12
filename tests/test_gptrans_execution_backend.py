@@ -57,12 +57,12 @@ def test_static_dataset_rejects_transform():
 
 
 def test_foreach_ema_respects_own_decay_and_reload():
-    from molgap.gptrans_execution_hotpath import ForeachExponentialMovingAverage
+    from test_gptrans_execution_hotpath import ScalarEMA
     from molgap.pcqm_gptrans_v4 import ExponentialMovingAverage
     # An elementary CPU layer tests arithmetic only; no MolGap model executes.
     layer = torch.nn.Linear(2, 1)
     for decay in (.999, .9999):
-        base, fast = ExponentialMovingAverage(layer, decay), ForeachExponentialMovingAverage(layer, decay)
+        base, fast = ScalarEMA(layer, decay), ExponentialMovingAverage(layer, decay)
         for index in range(3):
             with torch.no_grad():
                 layer.weight.add_(.001)
@@ -83,9 +83,9 @@ def test_execution_ema_import_does_not_require_k1_profile():
         "import sys; "
         "sys.modules['molgap.pcqm_k1_pair_token_batch_profile'] = None; "
         "sys.modules['molgap.pcqm_gptrans_step_profile'] = None; "
-        "from molgap.gptrans_execution_hotpath import ForeachExponentialMovingAverage; "
+        "from molgap.gptrans_execution_hotpath import BoundForeachEMA; "
         "from molgap.gptrans_execution_backend import backend; "
-        "assert callable(ForeachExponentialMovingAverage.update)"
+        "assert callable(BoundForeachEMA.update)"
     )
     result = subprocess.run([sys.executable, '-c', code], capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
@@ -99,7 +99,7 @@ def test_buffered_cpu_evaluation_preserves_payload_and_live_weights():
     b = prepare_layout(batch())
     result = buffered_evaluate(SimpleNamespace(DEVELOPMENT_ROWS=2),
         lambda model, batch: batch.y.view(-1) + .01, lambda graphs:[b],
-        model, ema, None, torch.tensor(0.), torch.tensor(1.), device='cpu')
+        model, None, torch.tensor(0.), torch.tensor(1.), device='cpu')
     assert result['source_idx'].tolist() == [100000, 100001]
     assert result['mae_eV'] == float((result['prediction_eV'] - result['target_eV']).abs().mean())
     assert all(torch.equal(initial[k], model.state_dict()[k]) for k in initial)
@@ -112,20 +112,16 @@ def test_optimized_input_assembly_has_no_gpu_scalar_or_mask_equality():
     assert '.item(' not in text and 'torch.equal' not in text and 'to_dense_batch' not in text
 
 
-def test_persistent_dev_creation_preserves_original_main_rng_draw():
-    from torch_geometric.loader import DataLoader
+def test_instrumentation_restores_native_methods():
     from molgap.gptrans_execution_backend import backend
-    names = ('_make_model', '_training_loader', '_development_loader', '_forward',
-             '_make_training_state', '_optimizer_step', '_evaluate', '_save_checkpoint', '_scientific_fields')
-    owner = SimpleNamespace(**{name: lambda *a, **k: None for name in names}, PHYSICAL_BATCH=128)
-    graphs = [Data(x=torch.ones(1,1))]
-    torch.manual_seed(420)
-    next(iter(DataLoader(graphs, num_workers=0)))
-    expected = torch.get_rng_state()
-    torch.manual_seed(420)
-    with backend(owner, True):
-        owner._development_loader(graphs)
-        assert torch.equal(torch.get_rng_state(), expected)
+    events = []
+    owner = SimpleNamespace(_optimizer_step=lambda: events.append("step"),
+                            _save_checkpoint=lambda: None)
+    original = owner._optimizer_step
+    with backend(owner) as report:
+        owner._optimizer_step()
+        assert report["training_batches"] == 1
+    assert events == ["step"] and owner._optimizer_step is original
 
 
 def test_native_default_ema_equation_is_unchanged():

@@ -5,11 +5,16 @@ import hashlib
 import json
 import math
 import subprocess
+import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
+
+from .gptrans_execution_hotpath import BoundForeachEMA, TransferLoader
+from .gptrans_execution_backend import PreparedLoader
+from .gptrans_execution_tuning import accelerated_run, execution_policy
 
 from .screen_policy import (
     REFERENCE_MATCH_FIELDS,
@@ -54,7 +59,7 @@ MIN_LEARNING_RATE = 1.0e-6
 WEIGHT_DECAY = 0.05
 GRADIENT_CLIP = 1.0
 EMA_DECAY = 0.9999
-LOADER_WORKERS = 4
+LOADER_WORKERS = 1
 EXPECTED_PARAMETERS = 5_246_817
 EXPECTED_INITIAL_MODEL_SHA256 = (
     "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6"
@@ -225,7 +230,7 @@ def _training_loader(graphs, epoch: int):
     import torch
     from torch_geometric.loader import DataLoader
 
-    return DataLoader(
+    return TransferLoader(PreparedLoader(DataLoader(
         graphs,
         batch_sampler=DeterministicEpochBatchSampler(len(graphs), epoch),
         num_workers=LOADER_WORKERS,
@@ -233,13 +238,14 @@ def _training_loader(graphs, epoch: int):
         pin_memory=True,
         prefetch_factor=2 if LOADER_WORKERS > 0 else None,
         generator=torch.Generator().manual_seed(SEED + epoch),
-    )
+    )), training=True)
 
 
 def _development_loader(graphs):
     from torch_geometric.loader import DataLoader
 
-    return DataLoader(graphs, batch_size=PHYSICAL_BATCH, shuffle=False, num_workers=0)
+    return TransferLoader(PreparedLoader(DataLoader(graphs, batch_size=PHYSICAL_BATCH,
+        shuffle=False, num_workers=0)), training=False)
 
 
 def _target_stats(shards) -> tuple[float, float]:
@@ -395,37 +401,12 @@ def _verify_model_identity(model) -> tuple[int, str]:
 
 
 def _forward(model, batch):
-    return model(
-        batch.x,
-        batch.edge_index,
-        batch.edge_attr,
-        batch.batch,
-        getattr(batch, "random_walk_pe", None),
-    ).view(-1)
+    """Shared architecture call; registered runs bind the prepared-input owner."""
+    return model(batch.x, batch.edge_index, batch.edge_attr, batch.batch,
+                 getattr(batch, "random_walk_pe", None)).view(-1)
 
 
-class ExponentialMovingAverage:
-    def __init__(self, model, decay: float = EMA_DECAY) -> None:
-        if decay not in (EMA_DECAY, 0.999):
-            raise ValueError("EMA decay must be a reviewed frozen value")
-        self.decay = decay
-        self.state = {name: value.detach().clone() for name, value in model.state_dict().items()}
-
-    def update(self, model) -> None:
-        for name, value in model.state_dict().items():
-            target = self.state[name]
-            if value.is_floating_point():
-                target.mul_(self.decay).add_(value.detach(), alpha=1.0 - self.decay)
-            else:
-                target.copy_(value)
-
-    def state_dict(self):
-        return self.state
-
-    def load_state_dict(self, state) -> None:
-        if state.keys() != self.state.keys():
-            raise RuntimeError("EMA state identity changed")
-        self.state = {name: value.clone() for name, value in state.items()}
+ExponentialMovingAverage = BoundForeachEMA
 
 
 class FrozenEpochScheduler:
@@ -456,6 +437,7 @@ class FrozenEpochScheduler:
 
 
 def _make_training_state(initial_state_path: Path, variant: str = "reference"):
+    _require_accelerated_scope()
     import torch
 
     model = _make_model(initial_state_path, variant).to("cuda")
@@ -465,7 +447,7 @@ def _make_training_state(initial_state_path: Path, variant: str = "reference"):
         lr=LEARNING_RATE,
         weight_decay=WEIGHT_DECAY,
         fused=False,
-        foreach=False,
+        foreach=True,
     )
     scheduler = FrozenEpochScheduler(optimizer)
     ema = ExponentialMovingAverage(model)
@@ -491,44 +473,27 @@ def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bo
     return loss.detach()
 
 
-def _evaluate(model, ema, graphs, mean, std) -> dict:
-    import torch
-
-    live_state = {name: value.detach().clone() for name, value in model.state_dict().items()}
-    model.load_state_dict(ema.state_dict(), strict=True)
-    model.eval()
-    predictions = []
-    targets = []
-    source_indices = []
-    with torch.no_grad():
-        for batch in _development_loader(graphs):
-            batch = batch.to("cuda", non_blocking=True)
-            predictions.append((_forward(model, batch) * std + mean).cpu())
-            targets.append(batch.y.view(-1).float().cpu())
-            source_idx = getattr(batch, "source_idx", getattr(batch, "row_index", None))
-            if source_idx is None:
-                raise RuntimeError("Development graphs have no source identity")
-            source_indices.append(source_idx.view(-1).long().cpu())
-    model.load_state_dict(live_state, strict=True)
-    prediction = torch.cat(predictions)
-    target = torch.cat(targets)
-    source_idx = torch.cat(source_indices)
-    if prediction.numel() != DEVELOPMENT_ROWS:
-        raise RuntimeError("Development prediction count changed")
-    expected = torch.arange(100_000, 150_000, dtype=torch.long)
-    if not torch.equal(source_idx, expected):
-        raise RuntimeError("Development source order changed")
-    return {
-        "mae_eV": float((prediction - target).abs().mean()),
-        "prediction_eV": prediction,
-        "target_eV": target,
-        "source_idx": source_idx,
-    }
+def _evaluate(model, ema, graphs, mean, std, *, weights="ema", device="cuda",
+              source_idx_start=100000) -> dict:
+    from .gptrans_execution_backend import buffered_evaluate
+    from .gptrans_execution_hotpath import ReusedWeightView
+    view = ReusedWeightView()
+    try:
+        with view.use(model, ema, weights):
+            return buffered_evaluate(sys.modules[__name__], _forward, _development_loader,
+                model, graphs, mean, std, device=device, source_idx_start=source_idx_start)
+    finally:
+        view.clear()
 
 
-def _scientific_fields() -> dict:
+def _weight_decay(variant="reference"):
+    return WEIGHT_DECAY
+
+
+def _scientific_fields(variant="reference") -> dict:
     return {
         "benchmark_id": "ogb-lsc-pcqm4mv2-gap-internal-100k-v4",
+        "execution_policy": execution_policy(),
         "data_role_fingerprint": canonical_fingerprint(
             {"manifest_sha256": MANIFEST_SHA256, "train": [0, 100_000], "development": [100_000, 150_000]}
         ),
@@ -542,7 +507,7 @@ def _scientific_fields() -> dict:
         "seed": SEED,
         "precision": "fp32",
         "optimizer_fingerprint": canonical_fingerprint(
-            {"name": "torch-adamw", "foreach": False, "fused": False, "lr": LEARNING_RATE, "weight_decay": WEIGHT_DECAY}
+            {"name": "torch-adamw", "foreach": True, "fused": False, "lr": LEARNING_RATE, "weight_decay": WEIGHT_DECAY}
         ),
         "schedule_fingerprint": canonical_fingerprint(
             {"name": "epoch-warmup-cosine-v1", "epochs": EPOCHS, "warmup_epochs": WARMUP_EPOCHS, "minimum_lr": MIN_LEARNING_RATE}
@@ -583,6 +548,12 @@ def validate_source_archive(
     )
 
 
+def _require_accelerated_scope():
+    if not getattr(sys.modules[__name__], "_accelerated_execution_active", False):
+        raise RuntimeError("GPTrans training requires the registered accelerated entrypoint")
+
+
+@accelerated_run
 def run_preflight(
     *,
     dataset_root: Path,
@@ -596,6 +567,7 @@ def run_preflight(
     variant: str = "reference",
     runtime_calibration_fingerprint: str | None = None,
 ) -> dict:
+    _require_accelerated_scope()
     determinism = configure_fp32_determinism(SEED)
     import torch
 
@@ -787,6 +759,7 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
     )
 
 
+@accelerated_run
 def run_training(
     *,
     dataset_root: Path,
@@ -801,6 +774,7 @@ def run_training(
     variant: str = "reference",
     runtime_calibration_fingerprint: str | None = None,
 ) -> dict:
+    _require_accelerated_scope()
     determinism = configure_fp32_determinism(SEED)
     import torch
 
@@ -810,7 +784,11 @@ def run_training(
     completion_path = output / "completion_manifest.json"
     if completion_path.is_file():
         completion = json.loads(completion_path.read_text(encoding="utf-8"))
-        if completion.get("complete") is True and completion.get("variant", "reference") == variant:
+        if (completion.get("complete") is True and completion.get("variant", "reference") == variant
+                and canonical_fingerprint({"policy": completion.get("execution_policy")}) ==
+                    canonical_fingerprint({"policy": execution_policy()})
+                and completion.get("source_commit") == source_commit
+                and completion.get("source_archive_sha256") == source_archive_sha256):
             return completion
         raise RuntimeError("Existing completion manifest is incompatible")
     validate_source_archive(source_archive, source_archive_sha256, source_commit)
@@ -884,6 +862,9 @@ def run_training(
             raise RuntimeError("Checkpoint source identity changed")
         model.load_state_dict(checkpoint["model"], strict=True)
         optimizer.load_state_dict(checkpoint["optimizer"])
+        if any(group.get("foreach") is not True or group.get("fused") is not False
+               for group in optimizer.param_groups):
+            raise RuntimeError("Checkpoint optimizer does not use accelerated execution")
         scheduler.load_state_dict(checkpoint["scheduler"])
         ema.load_state_dict(checkpoint["ema"])
         restore_rng_state(checkpoint["rng_state"])
@@ -1023,6 +1004,7 @@ def run_training(
     atomic_json(output / "frozen_reference.json", reference)
     completion = {
         "format": RUN_FORMAT,
+        "execution_policy": execution_policy(),
         "variant": variant,
         "parameters": EXPECTED_PARAMETERS,
         "variant_source_sha256": preflight.get("variant_source_sha256"),

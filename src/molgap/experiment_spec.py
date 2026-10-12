@@ -100,6 +100,7 @@ ADDONS = MappingProxyType({
     ("k1_mean2_clean_second", "1"): AddonContract(
         "neural_atom_k1", "k1-training-objective", "molgap.k1_screen_training",
     ),
+    # Historical declaration compatibility only; live training dispatch retires these.
     ("k1_fused_layout", "1"): AddonContract(
         "neural_atom_k1", "k1-execution", "molgap.k1_screen_training",
     ),

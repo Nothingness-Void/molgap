@@ -38,20 +38,13 @@ TRAINING_ADAPTERS = MappingProxyType({
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
         (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
-         ("k1_mean2_clean_second", "mean2_clean_second"),
-         ("k1_fused_layout", "fused_layout"),
-         ("k1_initialized_layout", "initialized_layout")), ("molgap.pcqm_wedge",),
+         ("k1_mean2_clean_second", "mean2_clean_second")), ("molgap.pcqm_wedge",),
         target_identity_in_completion=True),
     ("gptrans_t", "1"): TrainingAdapter(
         ("gptrans_t", "1"), "molgap.gptrans_screen_workflow", "gptrans-v1",
         (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),
          ("memory_value", "memory_value"), ("memory_message", "memory_message")), ("molgap.pcqm_wedge",)),
 })
-
-# Recommendation for new declarations only; addon=None remains the frozen reference.
-RECOMMENDED_K1_EXECUTION_ADDON = "k1_initialized_layout"
-RECOMMENDED_K1_EXECUTION_TORCH_VERSION = "2.11.0"
-
 
 def training_adapter(arm: dict) -> TrainingAdapter:
     key = (arm["family"]["name"], arm["family"]["version"])
@@ -76,8 +69,8 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
         raise ValueError("No executable recipe for this addon")
     options = {}
     if execution_torch_version is not None:
-        if family != ("neural_atom_k1", "2") or mode != "initialized_layout":
-            raise ValueError("Execution runtime pin requires initialized-layout K1")
+        if family != ("neural_atom_k1", "2"):
+            raise ValueError("Execution runtime pin requires K1")
         options["execution_torch_version"] = execution_torch_version
     if seed is not None or initialization_sha256 is not None:
         if family != ("neural_atom_k1", "2"):

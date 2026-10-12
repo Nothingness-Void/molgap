@@ -38,7 +38,7 @@ def lifecycle(tmp_path, monkeypatch):
 
     monkeypatch.setattr(owner, "configure_fp32_determinism", configure)
     monkeypatch.setattr(owner, "build_runtime_manifest", lambda determinism:
-                        {"runtime_fingerprint": "2" * 64, "torch": "2.7.1+synthetic"})
+                        {"runtime_fingerprint": "2" * 64, "torch": "2.11.0+synthetic"})
     monkeypatch.setattr(owner, "_validate_prospective", lambda *args: None)
     monkeypatch.setattr(owner, "validate_runtime_preflight", lambda *args:
                         {"accelerator": "Tesla T4 synthetic"})
@@ -97,10 +97,11 @@ def lifecycle(tmp_path, monkeypatch):
             "b" * 64, "neural_atom_k1", "2", "c" * 40, "d" * 64, "e" * 64,
             sha256_file(recipe_path), "kaggle", "synthetic", "synthetic/kernel", None)
         monkeypatch.setattr(RunContext, "for_training", lambda *args, **kwargs: context)
-        addons = [] if mode == "reference" else [{"name": "k1_initialized_layout"
-            if mode == "initialized_layout" else "k1_fused_layout",
+        addon_names = {"mean2": "k1_two_pass_mean", "mean2_clean_second": "k1_mean2_clean_second"}
+        addon_source = Path(owner.__file__).with_name("k1_clean_second.py") if mode == "mean2_clean_second" else Path(owner.__file__)
+        addons = [] if mode == "reference" else [{"name": addon_names[mode],
             "version": "1", "config": {},
-            "source_sha256": normalized_source_sha256(Path(owner.__file__))}]
+            "source_sha256": normalized_source_sha256(addon_source)}]
         arm = {"arm_id": mode, "initialization": {"kind": "frozen_state", "seed": 42,
                 "state_sha256": initial_sha},
             "training": {"sampler": {"sha256": recipe["row_order_fingerprint"]},
@@ -115,7 +116,7 @@ def lifecycle(tmp_path, monkeypatch):
     return request, started_epochs
 
 
-@pytest.mark.parametrize("mode", ["reference", "fused_layout", "initialized_layout"])
+@pytest.mark.parametrize("mode", ["reference", "mean2", "mean2_clean_second"])
 def test_actual_loop_writes_40_epoch_timing_and_verified_terminal(lifecycle, mode):
     request, started = lifecycle
     args = request(mode)
@@ -135,33 +136,18 @@ def test_actual_loop_writes_40_epoch_timing_and_verified_terminal(lifecycle, mod
     assert not list(root.glob(".*.tmp"))
 
 
-@pytest.mark.parametrize("mode", ["reference", "fused_layout"])
-def test_local_prefix_runs_ten_epochs_without_shortening_cosine_schedule(lifecycle, monkeypatch, mode):
+def test_retired_local_prefix_fails_before_role_access(lifecycle):
     request, started = lifecycle
-    args = request(mode)
+    args = request("reference")
     recipe = json.loads(args["recipe_path"].read_text())
-    recipe["local_execution_prefix"] = {"epochs": 10, "accelerator": "NVIDIA GeForce RTX 5060",
-        "original_execution": mode == "reference", "purpose": "execution-quality-prefix"}
-    recipe["acceptance_requirements"].update(epochs=10, optimizer_steps=20, sample_presentations=40)
+    recipe["local_execution_prefix"] = {"epochs": 10, "original_execution": True}
     atomic_json(args["recipe_path"], recipe)
-    from dataclasses import replace
-    context_factory = RunContext.for_training
-    monkeypatch.setattr(RunContext, "for_training", lambda *a, **k: replace(
-        context_factory(*a, **k), platform="local", training_recipe_sha256=sha256_file(args["recipe_path"])))
-    declaration = args["spec"].to_dict()
-    declaration["platform"] = {"name": "local", "device_count": 1, "accelerator": "NVIDIA GeForce RTX 5060"}
-    args["spec"] = SimpleNamespace(to_dict=lambda: declaration)
-    monkeypatch.setattr(torch.cuda, "get_device_name", lambda device: "NVIDIA GeForce RTX 5060")
-    monkeypatch.setattr(owner, "validate_runtime_preflight", lambda *a: {"accelerator": "NVIDIA GeForce RTX 5060"})
-    report = owner.run_screen_arm(**args)
-    assert report["status"] == "MECHANICALLY_VERIFIED", report
-    assert started == list(range(10))
-    assert report["observed"]["progress"] == {"epochs": 10, "optimizer_steps": 20, "sample_presentations": 40}
-    checkpoint = torch.load(args["output"] / "last_checkpoint.pt", weights_only=True)
-    assert checkpoint["scheduler"]["T_max"] == 40 and checkpoint["scheduler"]["last_epoch"] == 10
+    with pytest.raises(ValueError, match="Retired execution prefix"):
+        owner.run_screen_arm(**args)
+    assert started == []
 
 
-@pytest.mark.parametrize("mode", ["reference", "fused_layout", "initialized_layout"])
+@pytest.mark.parametrize("mode", ["reference", "mean2", "mean2_clean_second"])
 def test_complete_epoch_resume_keeps_timing_trace_and_schedule(lifecycle, monkeypatch, mode):
     request, started = lifecycle
     args = request(mode)
@@ -209,7 +195,7 @@ def test_complete_epoch_resume_keeps_timing_trace_and_schedule(lifecycle, monkey
     assert costs[1]["status"] == "missing" and costs[1]["value"] is None
 
 
-@pytest.mark.parametrize("mode", ["reference", "fused_layout"])
+@pytest.mark.parametrize("mode", ["reference", "mean2"])
 def test_resume_never_invents_missing_timing(lifecycle, monkeypatch, mode):
     request, started = lifecycle
     args = request(mode)
@@ -235,7 +221,7 @@ def test_resume_never_invents_missing_timing(lifecycle, monkeypatch, mode):
     assert not (args["output"] / "execution_times.json").exists()
 
 
-@pytest.mark.parametrize("mode", ["reference", "fused_layout"])
+@pytest.mark.parametrize("mode", ["reference", "mean2"])
 def test_non_auxiliary_arm_rejects_label_cache(lifecycle, mode):
     request, started = lifecycle
     with pytest.raises(ValueError, match="does not consume chemical auxiliary labels"):
@@ -289,7 +275,7 @@ def test_resume_checks_existing_selection_before_any_new_step(lifecycle, monkeyp
     assert (root / "canonical_trace.json").read_bytes() == trace
 
 
-@pytest.mark.parametrize("mode", ["reference", "fused_layout"])
+@pytest.mark.parametrize("mode", ["reference", "mean2"])
 def test_deferred_metrics_keep_weights_trace_rng_and_scheduler(lifecycle, monkeypatch, mode):
     request, _ = lifecycle
     args = request(mode)
@@ -401,7 +387,7 @@ def test_resume_requires_checkpoint_bytes_bound_by_last_trace(lifecycle, monkeyp
 @pytest.mark.parametrize("change", ["epoch", "steps", "samples", "negative", "nan", "scope", "pipeline", "wrapped", "legacy"])
 def test_resume_rejects_corrupt_timing_before_any_new_step(lifecycle, monkeypatch, change):
     request, started = lifecycle
-    args = request("fused_layout")
+    args = request("mean2")
     evaluate = owner._evaluate
     calls = 0
 

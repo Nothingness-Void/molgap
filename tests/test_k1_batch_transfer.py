@@ -83,9 +83,8 @@ def test_real_pyg_transfer_keeps_metadata_cpu_with_meta_device(training):
 
 
 @pytest.mark.parametrize("chunk_rows", [1, 2, 3, 4, 7, 65536])
-@pytest.mark.parametrize("original_execution", [False, True])
 def test_prediction_copy_chunks_preserve_arithmetic_order_and_tail(
-        monkeypatch, chunk_rows, original_execution):
+        monkeypatch, chunk_rows):
     batches = [synthetic_batch() for _ in range(3)]
     batches.append(Batch.from_data_list([Data(x=torch.zeros(1, 9, dtype=torch.long),
         y=torch.tensor([7.]), source_idx=torch.tensor([6]))]))
@@ -95,8 +94,8 @@ def test_prediction_copy_chunks_preserve_arithmetic_order_and_tail(
     monkeypatch.setattr(Data, "to", lambda batch, *args, **kwargs: batch)
     monkeypatch.setattr(owner, "_forward", lambda model, batch: batch.y.view(-1) / 3)
     model = torch.nn.Linear(1, 1)
-    original = owner._evaluate(model, batches, 0.17, 1.23, original_execution=original_execution)
-    chunked = owner._evaluate(model, batches, 0.17, 1.23, original_execution=original_execution,
+    original = owner._evaluate(model, batches, 0.17, 1.23)
+    chunked = owner._evaluate(model, batches, 0.17, 1.23,
                               prediction_chunk_rows=chunk_rows)
     assert original[0] == chunked[0]
     assert all(torch.equal(a, b) for a, b in zip(original[1:], chunked[1:]))

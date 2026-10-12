@@ -15,6 +15,7 @@ from molgap.k1_screen_training import (
     build_initial_state, build_screen_recipe, _validate_arm_binding,
     _runtime_provenance, _maximum_overhead,
     _load_initial_state,
+    ACCELERATED_EXECUTION_POLICY,
 )
 from molgap.v4_runtime import state_dict_sha256, normalized_source_sha256
 from molgap.training_reproducibility import sha256_file
@@ -23,6 +24,7 @@ from molgap.screen_policy import canonical_fingerprint
 
 def recipe(mode="ssma"):
     return {"mode": mode, "row_order_fingerprint": ROW_ORDER_FINGERPRINT,
+            "execution_policy": ACCELERATED_EXECUTION_POLICY.copy(),
             "initialization_sha256": INITIAL_STATE_SHA256,
             "training_recipe": {"seed": 42, "batch_size": 128, "drop_last": True,
                 "optimizer": "AdamW", "learning_rate": 4e-4, "weight_decay": 1e-5,
@@ -55,7 +57,7 @@ def test_batched_sampler_hash_matches_original_scalar_encoding(seed):
 
 
 @pytest.mark.parametrize("mode", ["reference", "ssma", "clean_fingerprint"])
-def test_historical_recipe(mode):
+def test_accelerated_recipe_keeps_historical_scientific_exposure(mode):
     validate_recipe(recipe(mode), mode=mode)
 
 
@@ -79,7 +81,8 @@ def test_reject_continuous_sampler_substitution():
 def preflight_files(root, *, accepted=True):
     provenance = {"runtime_fingerprint": "1" * 64, "context": {"arm_id": "reference"}}
     architecture = {"accepted": accepted, "repeatability": {"accepted": True},
-        "resume_roundtrip": {"accepted": True}, "zero_initialization_delta": 0.0,
+        "resume_roundtrip": {"accepted": True, "loss_delta": 0.,
+                            "state_sha256": ["2" * 64] * 2}, "zero_initialization_delta": 0.0,
         "maximum_overhead_fraction": 0.25, "synchronized_step_overhead_fraction": 0.20}
     certificate = {"status": "accepted", "calibration_checks_passed": True,
         "runtime_fingerprint": provenance["runtime_fingerprint"],
@@ -125,7 +128,7 @@ def test_allocation_cost_window_keeps_wall_and_allocated_device_separate():
     assert len(costs) == 2
 
 
-def test_default_builder_preserves_historical_mapping():
+def test_default_builder_binds_acceleration_without_changing_scientific_mapping():
     expected = recipe("reference")
     expected["development_role_identity"] = "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000"
     expected["acceptance_requirements"].update(source_idx_sha256="1" * 64, target_sha256="2" * 64)
@@ -310,7 +313,8 @@ def test_seed43_provenance_and_preflight_identity(seed43_sha, tmp_path):
     initial = tmp_path / "initial.pt"
     initial.write_bytes(b"file identity only; no checkpoint loaded")
     context = SimpleNamespace(training_recipe_sha256=sha256_file(recipe_path), to_dict=lambda: {"arm_id": "single"})
-    provenance = _runtime_provenance(context, recipe_path, initial, {"runtime_fingerprint": "1" * 64}, "reference")
+    provenance = _runtime_provenance(context, recipe_path, initial,
+        {"runtime_fingerprint": "1" * 64, "torch": fresh["execution_policy"]["torch_version"]}, "reference")
     assert provenance["initialization_sha256"] == seed43_sha
     assert provenance["row_order_fingerprint"] == fresh["row_order_fingerprint"]
     assert provenance["initial_state_file_sha256"] == sha256_file(initial)

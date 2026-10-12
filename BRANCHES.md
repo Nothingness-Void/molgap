@@ -1,8 +1,7 @@
 # Branch routing
 
-This file owns checkout routing, not model or job status. Read CURRENT_STATE.md
-for the desktop state, ROADMAP.md for its queue, and the owning experiment for
-dated evidence. Fetch before comparing a remote snapshot.
+This file owns checkout routing, not model/job status. CURRENT_STATE.md owns state,
+ROADMAP.md owns queue order; experiment decisions own dated evidence. Fetch before remote comparison.
 
 | Long-lived branch | Role |
 |---|---|
@@ -13,24 +12,18 @@ dated evidence. Fetch before comparing a remote snapshot.
 
 ## New desktop experiment lifecycle
 
-Accepted local K1 execution-speed custody: `D:/w/k1-fused-quality`, branch
-`codex/exp/k1-fused-layout-speed-100k`. The
-[ten-epoch decision](experiments/pcqm_k1_fused_layout_speed/terminal_decision.md)
-routes reviewed reusable helpers and evidence by the diagnostic non-promotion
-rule below. Large source/checkpoint files remain in ignored owner custody;
-the production recommendation and remote jobs are unchanged.
+Accepted local K1 execution-speed custody: `D:/w/k1-fused-quality`,
+`codex/exp/k1-fused-layout-speed-100k`; [decision](experiments/pcqm_k1_fused_layout_speed/terminal_decision.md)
+owns diagnostic non-promotion routing. Large ignored artifacts stay with the owner; production/jobs unchanged.
 
-New desktop questions start from the verified current `molgap-desktop` tip in a
-dedicated `codex/exp/<question>` branch and separate worktree. Verify upstream
-and worktree first; never base new questions on retained experiments, archive or server.
-Select from desktop routing/RML/canonical evidence before inspecting another
-branch; read that branch only for its own question or an explicit integration.
+New questions use a separate `codex/exp/<question>` worktree from verified desktop,
+never a retained experiment/archive/server tip. Verify upstream/worktree first.
+Query desktop routing/RML/evidence; inspect other branches only for their question or explicit integration.
 
-Plan, implementation, submission, reconciliation, acceptance, decision and RML
-stay on the experiment branch, including retries/seeds. A finished job is not
-a closed question: promptly accept/decide/route terminal evidence. Do not leave
-accepted desktop evidence only on temporary refs or merge a live experiment
-merely because a kernel was submitted/finished.
+Keep plans/implementation/submission/reconciliation/acceptance/decision/RML,
+including seeds/retries, on the experiment branch. A finished job is not closure.
+Promptly accept/decide/route evidence; never leave accepted evidence only on temporary
+refs or merge live work merely because a kernel was submitted/finished.
 
 After a reviewed terminal decision:
 
@@ -41,18 +34,15 @@ After a reviewed terminal decision:
 | Negative under its contract | Merge the complete experiment history into `archive`. Bring only the accepted canonical decision/evidence needed for desktop RML discovery into `molgap-desktop`; do not merge rejected implementation. Rebuild and check desktop RML. |
 | Pending, incomplete, or terminal without an adoption/archive decision | Keep the experiment branch until its routing decision is recorded. |
 
-Verify the experiment tip is durably reachable from the destination before
-deleting its temporary ref. An archive preservation merge may retain ancestry
-without changing the archive tree; it does not turn an old branch into a live
-work entry point. Promotion from `molgap-desktop` to `master` is separate.
+Delete a temporary ref only after durable destination reachability. Archive merges
+may preserve ancestry without changing the tree or making old work live.
+Desktop-to-master promotion remains separate.
 
 ## Retained Checkout Map
 
-These retained records are not present in the integration checkout.
-Use the mapped owner or archived source; do not create substitute directories.
-Paths are local checkout locators, not portable artifact provenance.
-Check branch/HEAD/status before reading or integrating; fetch before comparing
-remote Git snapshots. Inspect only the question required by the task.
+Use mapped owners/archive for records absent from integration; do not create substitutes.
+Paths are local locators, not portable provenance. Verify branch/HEAD/status; fetch before remote comparison.
+Inspect only the task's question.
 
 | Question / owner | Retained checkout | Branch-local entry |
 |---|---|---|
@@ -85,15 +75,11 @@ remote Git snapshots. Inspect only the question required by the task.
 | Desktop retained scale-fit cache | `D:/w/scale-fit` | [Accepted terminal navigation](experiments/pcqm_scale_fit_retained/STATUS.md); diagnostic implementation/evidence integrated into desktop, ignored predictions retained here; no training release |
 | Desktop K1 slot/readout diagnostic: `codex/exp/k1-slot-readout-diagnostic` | `D:/w/k1-slot-diagnostic` | [Accepted NO_TRAIN diagnostic](experiments/pcqm_k1_slot_readout_diagnostic/README.md); evidence retained on owner branch, no model promotion |
 
-The user-directed [archive custody record](https://github.com/Nothingness-Void/molgap/blob/b1435ba939c39d88b6af55aca04c0b62f82314c3/docs/operations/BRANCH_ARCHIVE_20261001.md)
-owns exact source/supplement tips and preserved qualification gaps. Four old
-temporary refs were retired locally/remotely after their archive push; detached
-worktrees and ignored artifacts remain. The pretraining supplement was saved
-as an unreviewed snapshot, not accepted Desktop evidence. Administrative archival
-does not finalize a scientific trajectory or qualify replay. Chemical auxiliary terminal histories are preserved in archive with exclusions;
-retained owner checkout keeps ignored artifacts. DSAR/DSMR stays server-owned;
-do not adopt jobs or infer scheduler state from the archived draft. Reopening
-archived qualification work requires explicit routing, not a successor by default.
+The [archive custody record](https://github.com/Nothingness-Void/molgap/blob/b1435ba939c39d88b6af55aca04c0b62f82314c3/docs/operations/BRANCH_ARCHIVE_20261001.md)
+owns exact tips, retired refs, retained artifacts and qualification gaps.
+Pretraining's supplement remains unreviewed; archival does not finalize science/replay.
+Chemical auxiliary exclusions remain; DSAR/DSMR stays server-owned, not live scheduler evidence.
+Never adopt archived jobs or reopen qualification without explicit routing.
 
 ## Historical Audit Pointer
 The [branch history](docs/operations/BRANCH_HISTORY.md) preserves the previous

@@ -12,9 +12,9 @@ $repoRoot = (Get-Location).Path
 .\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/edge_state_v1.json
 ```
 
-The module is a new unified local entry point, not a complete migration. Existing
-scripts remain available as family/platform-specific entry points and are not
-deleted or redirected. No package-level export or installation entry point is
+The module is the unified local entry point, not a migration of every historical
+script. Historical replay uses frozen source packages; family/platform-specific
+owners remain separate. No package-level export or installation entry point is
 required for `python -m molgap.experiment_cli` in an installed checkout.
 For the registered prepare-to-accept lifecycle, start with the
 [modular workflow](EXPERIMENT_WORKFLOW.md), then use the short
@@ -23,6 +23,9 @@ identity/evidence and the frozen execution payload; Kaggle executes it only
 after the platform skill and existing adapter submit the kernel. This CLI does
 not submit. `run-diagnostic` is not frozen-checkpoint inference. Platform
 submission and retrieval stay in the applicable workload skill and adapter.
+Registered K1 and GPTrans preflight/training use accelerated defaults; add only
+scientific addons, not execution switches. See [K1](K1_EXECUTION.md) and
+[GPTrans](GPTRANS_EXECUTION.md) for identity and historical-replay boundaries.
 For producer output inspection and guarded terminal closure, see the
 [family workflow](EXPERIMENT_FAMILY_WORKFLOW.md). Its additional local commands
 are `check-acceptance`, `inspect-output`, and `accept-terminal`, retaining the

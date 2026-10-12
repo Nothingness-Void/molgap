@@ -4,10 +4,11 @@ This is the entry point for the registered local-to-Kaggle training path. It
 owns preparation and acceptance orchestration. It does not own scientific
 authorization, a trainer loop, or platform submission.
 
-For new compatible K1 execution declarations, follow the selected
-[initialized-layout policy](K1_EXECUTION.md). Frozen references stay unchanged.
-For the reviewed server local-bond GPTrans execution layer, use the
-[v3 tuning entry](GPTRANS_EXECUTION.md); it does not replace legacy GPTrans dispatch.
+Both registered families use accelerated execution by default, including
+`addon=None`. No original/optimized switch or execution addon is needed:
+[K1](K1_EXECUTION.md), [GPTrans](GPTRANS_EXECUTION.md).
+Scientific addons compose on that base. Freeze a new recipe/source identity;
+historical jobs use their own immutable packages, never silently migrated inputs.
 
 ## Owners
 
@@ -32,7 +33,7 @@ the static training registry, its mode, and its output profile.
 
 | Family/version | Reference mode | Registered addon mode(s) | Output profile |
 |---|---|---|---|
-| `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma`; `k1_two_pass_mean/1` → `mean2`; `k1_mean2_clean_second/1` → `mean2_clean_second`; `k1_fused_layout/1` → `fused_layout`; `k1_initialized_layout/1` → `initialized_layout` | `k1-screen-v1` |
+| `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma`; `k1_two_pass_mean/1` → `mean2`; `k1_mean2_clean_second/1` → `mean2_clean_second` | `k1-screen-v1` |
 | `gptrans_t/1` | `reference` | `pair_prenorm/1`, `centered_logits/1`, `memory_value/1`, `memory_message/1` | `gptrans-v1` |
 
 The executable registry is in `experiment_execution.py`; the output profiles
@@ -60,11 +61,11 @@ and two training-mode BN updates. Only the second forward disables K1 dropout,
 including functional LocalGPSBlock and attention dropout. It is not consistency
 regularization, clean-evaluation BN calibration, EMA or an inference ensemble.
 
-`initialized_layout` keeps native AdamW and scopes TRAIN safety fill off while
-reusing CPU layout; deterministic algorithms remain enabled. It is the selected
-execution policy for new compatible K1 declarations, subject to native preflight.
-`fused_layout` changes optimizer rounding and is not the selected policy.
-Selection, fallback, runtime pins and evidence are owned by [K1 execution](K1_EXECUTION.md).
+K1's default CPU layout and scoped TRAIN safety-fill policy preserve native
+AdamW; GPTrans's default binds foreach AdamW, cached EMA and development reuse.
+Execution-only addons are retired. Every arm still needs native preflight;
+old recipes without the new policy are rejected, not silently upgraded.
+Details and evidence belong to [K1](K1_EXECUTION.md) / [GPTrans](GPTRANS_EXECUTION.md).
 
 K1 recipe construction accepts an explicit `seed` and `initialization_sha256`.
 Seed42 defaults retain their historical identity. Another seed requires a fresh

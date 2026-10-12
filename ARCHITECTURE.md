@@ -30,7 +30,7 @@ ownership index, not execution authority or a copy of scientific contracts.
 
 | Module | Owns | Edit when |
 |---|---|---|
-| `gptrans_execution_backend.py`, `gptrans_execution_hotpath.py`, `gptrans_execution_tuning.py` | Reviewed server local-bond execution contexts, resource/cache settings, transfer/EMA reuse | Changing shared execution mechanics; see [compatibility and evidence](docs/operations/GPTRANS_EXECUTION.md), not a legacy trainer replacement |
+| `gptrans_execution_backend.py`, `gptrans_execution_hotpath.py`, `gptrans_execution_tuning.py` | Automatic accelerated native training scopes, resource/cache settings, transfer/EMA reuse | Changing shared execution mechanics; see [default policy and evidence](docs/operations/GPTRANS_EXECUTION.md); no slow backend choice |
 | `experiment_workflow.py`, `kaggle_workflow.py` | Local lifecycle and static platform dispatch; Kaggle plan validation, staging, freezing and final release binding | Changing local orchestration or the registered Kaggle preparation adapter; only Kaggle is registered here |
 | `experiment_execution.py`, `experiment_training_worker.py` | Static family/addon/mode dispatch and fixed per-arm training subprocess | Registering an executable family/mode or changing worker bindings |
 | `experiment_source_inventory.py` | Reviewed shared bootstrap paths; family serialized-module dependencies live in `experiment_execution.py` | Adding/removing a reviewed packaged dependency |

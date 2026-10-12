@@ -1,74 +1,54 @@
-# K1 Execution Selection
+# K1 Default Execution
 
-This page owns selection instructions, not an old contract or submission release.
-For new compatible single-forward `neural_atom_k1/2` declarations, select
-`k1_initialized_layout/1`. The registered family trainer owns execution:
-CPU dense-layout reuse and scoped TRAIN safety-fill removal, native AdamW,
-unchanged model/loss/batch/precision/schedule. Deterministic algorithms stay on;
-the fill setting is restored after each step and clean evaluation stays common.
-Do not copy the trainer or combine this addon with another unsupported addon.
+The registered `neural_atom_k1/2` trainer always uses the adopted accelerated
+execution. No execution addon or original/optimized switch is needed. Scientific
+`addon=None` means single-forward baseline, not a slow backend.
 
-## Reusable entry
+`k1_screen_training.py` owns CPU dense-layout reuse, selective transfer, deferred
+TRAIN metric copies and scoped TRAIN safety-fill removal. Deterministic
+algorithms stay on; native AdamW, model/loss, BS128, FP32, order and schedule stay
+unchanged. Fill/layout state is restored even after exceptions.
+
+## Entry
 
 ```python
-from molgap.experiment_execution import (
-    build_family_recipe,
-    RECOMMENDED_K1_EXECUTION_ADDON,
-    RECOMMENDED_K1_EXECUTION_TORCH_VERSION,
-)
+from molgap.experiment_execution import build_family_recipe
 
-addon = RECOMMENDED_K1_EXECUTION_ADDON
 recipe = build_family_recipe(
-    ("neural_atom_k1", "2"), addon=addon,
+    ("neural_atom_k1", "2"),  # addon=None: accelerated single-forward baseline
     source_idx_sha256="<frozen-source-index-sha256>",
     target_sha256="<frozen-target-sha256>",
-    execution_torch_version=RECOMMENDED_K1_EXECUTION_TORCH_VERSION,
 )
 ```
 
-Freeze the recipe and declare the same addon/version/config/source SHA in the
-Spec; use [workflow](EXPERIMENT_WORKFLOW.md) and [CLI](EXPERIMENT_CLI.md).
-The runtime pin is explicit, not an instruction to install/downgrade Torch.
-An unqualified runtime fails closed. Existing native all-arm qualification and
-exact reference/resume checks are mandatory before formal training. Different
-software/hardware/input contracts need their applicable qualification. This
-screen interface is not permission or an implementation for500K/full training.
+Scientific addons (`ssma`, `mean2`, `mean2_clean_second`) share this execution.
+Freeze the new recipe/source/Spec through the [workflow](EXPERIMENT_WORKFLOW.md)
+and [CLI](EXPERIMENT_CLI.md); platform skills own submission.
 
-`addon=None` deliberately remains the original reference path. Frozen recipes,
-existing jobs and checkpoints are not rewritten. Reference fallback for a new
-task requires its declared contract; a failed preflight never silently changes
-policy or launches a retry. This execution selection changes neither production
-models/registry nor scientific or compute release gates.
+The recipe binds `execution_policy`, default Torch2.11.0. Explicit2.7.1 pinning
+is supported for its compatible runtime, not permission to install/downgrade
+Torch. Every released arm still requires native preflight, repeatability and
+exact resume checks. CPU regressions do not grant native execution authority.
 
-## Dated selection authority
+## Historical Boundary
 
-2026-10-12 JST: the user explicitly selected the latest initialized-layout
-implementation after reviewing the native paired100K/40epoch result.
-This is engineering selection despite a failed nomination gate, not a claim
-that the frozen >=10% speed gate passed. Retained result: TRAIN time decreased
-7.31237%, full epoch pipeline time5.83105%, with byte-equal50000 predictions,
-selected/final model and final optimizer/RNG state. That one run does not prove
-all graphs, scales, runtimes or hardware behave identically. Fused AdamW is not
-the selected policy.
+Execution-only `k1_initialized_layout` and `k1_fused_layout` addons and the old
+original-execution diagnostic prefix are retired from live dispatch. Old recipes
+without the new policy fail closed. Reproduce or resume old jobs with their
+retained immutable source package, not by modifying their recipe/checkpoint.
+No historical evidence, production model, registry or V5/RML gate is changed.
+The registered screen is100K; adoption does not implement/release500K or full.
 
-Evidence owner: `codex/exp/k1-fused-layout-t4-100k`, native kernelID138206744,
-version1, executable source `cd615aa4716a43f984de8223ab50b137d4b45eab`.
-Follow its [result inspection](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-fused-layout-t4-100k/experiments/pcqm_k1_fused_layout_t4/initialized_layout_100k/release_002/terminal_acceptance/decision.md),
+## Evidence
+
+2026-10-12: user adopted initialized-layout after the native100K/40epoch T4 pair.
+TRAIN decreased7.31237%; epoch pipeline5.83105%;50000 predictions and final
+model/optimizer/RNG states were byte-equal. The frozen >=10% nomination gate
+failed; adoption is an explicit engineering tradeoff, not a passed gate.
+
+Evidence owner: `codex/exp/k1-fused-layout-t4-100k`, kernelID138206744/version1.
+Follow the [decision](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-fused-layout-t4-100k/experiments/pcqm_k1_fused_layout_t4/initialized_layout_100k/release_002/terminal_acceptance/decision.md),
 [detailed review](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-fused-layout-t4-100k/experiments/pcqm_k1_fused_layout_t4/initialized_layout_100k/release_002/terminal_acceptance/detailed_review.md)
-and [selection record](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-fused-layout-t4-100k/experiments/pcqm_k1_fused_layout_t4/initialized_layout_100k/adoption.md).
-Formal terminal RML closure stays on that owner and remains pending; selection
-does not fabricate missing role/cost/comparison-readiness evidence or replay-ready
-status. Only reviewed reusable execution/transport helpers are integrated here,
-not the full experiment branch or server work.
-
-## Integration verification
-
-Reusable source was selected from owner `d601daa1` onto desktop `2d1202ee`;
-no frozen experiment/source package was rewritten. Local CPU regressions first
-reported416 passes,1 host-limited skip and1 missing branch-local test template.
-That test now reuses existing declaration fixtures; targeted rerun2 passes and
-the complete initialized-execution/Spec test files135 passes. These batches
-overlap and are not a single summed test count. No GPU training/inference ran.
-Desktop RML frozen check passes in the primary checkout; an isolated checkout
-without existing ignored historical checkpoints cannot perform that check.
-This does not qualify pending terminal records or whole-repository portability.
+and [adoption](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-fused-layout-t4-100k/experiments/pcqm_k1_fused_layout_t4/initialized_layout_100k/adoption.md).
+Terminal RML closure remains pending on that owner. The one native run is not
+proof of equality/speed at other scales, hardware or with scientific addons.

@@ -324,7 +324,7 @@ def test_check_family_recipes_rejects_legacy_gptrans_contract_and_hash_tampering
     spec = ExperimentSpec(_spec_payload([arm]))
     relative_recipe = recipe_path.resolve().relative_to(ROOT.resolve()).as_posix()
 
-    with pytest.raises(ValueError, match="requires frozen acceptance_requirements"):
+    with pytest.raises(ValueError, match="frozen recipe changed: execution_policy"):
         check_family_recipes(spec, ROOT, {"frozen_gptrans": relative_recipe})
 
     changed = spec.to_dict()

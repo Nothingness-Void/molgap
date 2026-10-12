@@ -1,6 +1,6 @@
-"""Spec-bound adapter for the owning, unchanged GPTrans fixed-100K V4 loop.
+"""Spec-bound adapter for the default accelerated GPTrans fixed-100K loop.
 
-Legacy trainer files remain intact. The normalized bundle is a mechanical
+Frozen historical packages remain intact. Normalized output is mechanical
 translation, not scientific acceptance or a new resume loader.
 """
 from __future__ import annotations
@@ -47,7 +47,8 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
 
 def _validate_recipe_fields(recipe):
     for key, value in owner._scientific_fields().items():
-        if recipe.get(key) != value:
+        if (owner.canonical_fingerprint({"value": recipe.get(key)}) !=
+                owner.canonical_fingerprint({"value": value})):
             raise ValueError("GPTrans frozen recipe changed: " + key)
     fixed = {"epochs": owner.EPOCHS, "train_rows": owner.TRAIN_ROWS,
         "development_rows": owner.DEVELOPMENT_ROWS, "physical_batch_per_device": owner.PHYSICAL_BATCH,
