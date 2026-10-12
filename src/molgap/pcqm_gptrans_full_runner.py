@@ -194,21 +194,10 @@ def _forward(model, batch):
 
 
 def _optimizer_step(model, optimizer, batch, mean, std, *, finite_check: bool):
-    import torch
-    import torch.nn.functional as functional
-
-    optimizer.zero_grad(set_to_none=True)
-    prediction = _forward(model, batch)
-    target = (batch.y.view(-1).float() - mean) / std
-    loss = functional.l1_loss(prediction, target)
-    if finite_check and not bool(torch.isfinite(loss)):
-        raise RuntimeError("GPTrans-T loss became non-finite")
-    loss.backward()
-    gradient_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), GRADIENT_CLIP)
-    if finite_check and not bool(torch.isfinite(gradient_norm)):
-        raise RuntimeError("GPTrans-T gradient became non-finite")
-    optimizer.step()
-    return loss.detach()
+    from .family_training_core import normalized_gap_update
+    return normalized_gap_update(model, optimizer, batch, mean, std,
+        forward=_forward, clip_norm=GRADIENT_CLIP, check_finite=finite_check,
+        cast_target_float=True, label="GPTrans-T")
 
 
 def _runtime_gate():
@@ -461,61 +450,54 @@ def train_full(*, dataset_root: Path, manifest_path: Path, output: Path,
     started = segment_started
     segment_loss = torch.zeros((), dtype=torch.float64, device="cuda")
     segment_rows = 0
-    pause = False
-    while global_step < TOTAL_STEPS:
-        pass_index, start_batch = divmod(global_step, BATCHES_PER_PASS)
-        loader = _loader(graphs, pass_index=pass_index, start_batch=start_batch)
-        model.train()
-        for batch in loader:
-            if int(batch.num_graphs) != PHYSICAL_BATCH:
-                raise RuntimeError("Training encountered a partial batch")
-            batch = batch.to("cuda", non_blocking=True)
-            next_step = global_step + 1
-            _set_learning_rate(optimizer, _learning_rate(next_step))
-            loss = _optimizer_step(model, optimizer, batch, mean, std,
-                                   finite_check=next_step % 50 == 0)
-            ema.update(model)
-            global_step = next_step
-            segment_loss += loss.double() * PHYSICAL_BATCH
-            segment_rows += PHYSICAL_BATCH
-            wall_due = (max_wall_seconds is not None
-                        and time.perf_counter() - started >= max_wall_seconds - 300)
-            complete = global_step == TOTAL_STEPS
-            if (global_step % CHECKPOINT_EVERY_STEPS == 0) or wall_due or complete:
-                torch.cuda.synchronize()
-                now = time.perf_counter()
-                trace.append({
-                    "global_step": global_step,
-                    "sample_presentations": global_step * PHYSICAL_BATCH,
-                    "train_normalized_mae": float(segment_loss.cpu()) / segment_rows,
-                    "segment_seconds": now - segment_started,
-                    "graphs_per_second": segment_rows / (now - segment_started),
-                    "learning_rate": optimizer.param_groups[0]["lr"],
-                })
-                _save_checkpoint(
-                    checkpoint_path, model=model, ema=ema, optimizer=optimizer,
-                    global_step=global_step, target_stats=target_stats,
-                    trace=trace, cache_sha256=manifest["aggregates"]["topology"],
-                    runtime_fingerprint=runtime["runtime_fingerprint"],
-                    certificate_id=certificate_id, source_commit=source_commit,
-                    source_archive_sha256=source_archive_sha256,
-                    initial_model_sha256=initial_model_sha256,
-                )
-                atomic_json(trace_path, {"segments": trace})
-                print(f"gptrans_t_full step={global_step}/{TOTAL_STEPS} "
-                      f"train_norm_mae={trace[-1]['train_normalized_mae']:.6f} "
-                      f"lr={trace[-1]['learning_rate']:.3e} "
-                      f"{trace[-1]['graphs_per_second']:.1f} graphs/s", flush=True)
-                segment_started = now
-                segment_loss = torch.zeros((), dtype=torch.float64, device="cuda")
-                segment_rows = 0
-            if wall_due:
-                pause = True
-                break
-            if complete:
-                break
-        if pause:
-            break
+    from .family_training_core import LoopPlan, run_training_loop
+    def step_batch(batch, *, check_finite):
+        batch = batch.to("cuda", non_blocking=True)
+        return _optimizer_step(model, optimizer, batch, mean, std, finite_check=check_finite)
+
+    def observe(processed):
+        nonlocal segment_loss, segment_rows
+        segment_loss += processed.value.double() * PHYSICAL_BATCH
+        segment_rows += PHYSICAL_BATCH
+
+    def persist(progress):
+        nonlocal segment_started, segment_loss, segment_rows
+        torch.cuda.synchronize()
+        now = time.perf_counter()
+        trace.append({
+            "global_step": progress.optimizer_step,
+            "sample_presentations": progress.sample_presentations,
+            "train_normalized_mae": float(segment_loss.cpu()) / segment_rows,
+            "segment_seconds": now - segment_started,
+            "graphs_per_second": segment_rows / (now - segment_started),
+            "learning_rate": optimizer.param_groups[0]["lr"],
+        })
+        _save_checkpoint(checkpoint_path, model=model, ema=ema, optimizer=optimizer,
+            global_step=progress.optimizer_step, target_stats=target_stats,
+            trace=trace, cache_sha256=manifest["aggregates"]["topology"],
+            runtime_fingerprint=runtime["runtime_fingerprint"],
+            certificate_id=certificate_id, source_commit=source_commit,
+            source_archive_sha256=source_archive_sha256,
+            initial_model_sha256=initial_model_sha256)
+        atomic_json(trace_path, {"segments": trace})
+        print(f"gptrans_t_full step={progress.optimizer_step}/{TOTAL_STEPS} "
+              f"train_norm_mae={trace[-1]['train_normalized_mae']:.6f} "
+              f"lr={trace[-1]['learning_rate']:.3e} "
+              f"{trace[-1]['graphs_per_second']:.1f} graphs/s", flush=True)
+        segment_started = now
+        segment_loss = torch.zeros((), dtype=torch.float64, device="cuda")
+        segment_rows = 0
+
+    plan = LoopPlan(TRAIN_ROWS, PHYSICAL_BATCH, TOTAL_STEPS,
+                    CHECKPOINT_EVERY_STEPS, 50, checkpoint_at_pass=False)
+    progress = run_training_loop(model, plan,
+        lambda pass_index, offset: _loader(graphs, pass_index=pass_index, start_batch=offset),
+        step_batch, persist, start_step=global_step,
+        before_step=lambda step: _set_learning_rate(optimizer, _learning_rate(step)),
+        after_step=lambda step: ema.update(model), observe_batch=observe,
+        should_pause=lambda: max_wall_seconds is not None and
+            time.perf_counter() - started >= max_wall_seconds - 300)
+    global_step = progress.optimizer_step
 
     complete = global_step == TOTAL_STEPS
     result = {

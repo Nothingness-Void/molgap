@@ -241,18 +241,9 @@ def progress_from_step(global_step: int) -> tuple[int, int]:
 
 
 def _load_graphs(paths: list[Path]):
-    import torch
     from torch.utils.data import ConcatDataset
-    from torch_geometric.data import InMemoryDataset
-
-    class PackedGraphDataset(InMemoryDataset):
-        def __init__(self, path: Path):
-            super().__init__(root=None)
-            self.data, self.slices = torch_load_compat(
-                path, map_location="cpu", weights_only=False, mmap=True
-            )
-
-    shards = [PackedGraphDataset(path) for path in paths]
+    from .packed_graph_dataset import PackedGraphDataset
+    shards = [PackedGraphDataset(path, mmap=True) for path in paths]
     graphs = ConcatDataset(shards)
     if len(graphs) != TRAIN_ROWS:
         raise RuntimeError("Loaded full-role row count changed")
@@ -403,25 +394,11 @@ def validate_source_archive(source_archive: Path, source_commit: str) -> str:
 
 
 def _optimizer_step(model, optimizer, batch, mean, std, *, check_finite: bool):
-    import torch
-    import torch.nn.functional as functional
-
+    from .family_training_core import normalized_gap_update
     from .qm9_gape import forward_gap
-
-    optimizer.zero_grad(set_to_none=True)
-    prediction = forward_gap(model, batch, augmented=False)
-    target = (batch.y.view(-1) - mean) / std
-    loss = functional.l1_loss(prediction, target)
-    if check_finite and not bool(torch.isfinite(loss)):
-        raise RuntimeError("Training loss became non-finite")
-    loss.backward()
-    gradient_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), GRADIENT_CLIP)
-    if check_finite and not bool(torch.isfinite(gradient_norm)):
-        raise RuntimeError("Gradient norm became non-finite")
-    optimizer.step()
-    # Keep the value on-device. Converting every batch to float would force a
-    # CUDA synchronization and materially reduce throughput.
-    return loss.detach()
+    return normalized_gap_update(model, optimizer, batch, mean, std,
+        forward=lambda model, batch: forward_gap(model, batch, augmented=False),
+        clip_norm=GRADIENT_CLIP, check_finite=check_finite, cast_target_float=False)
 
 
 def run_preflight(
@@ -743,71 +720,49 @@ def train_full(
     segment_started = started
     segment_loss = torch.zeros((), dtype=torch.float64, device="cuda")
     segment_rows = 0
-    stop_for_walltime = False
-    while global_step < MAX_OPTIMIZER_STEPS:
-        pass_index, start_batch = progress_from_step(global_step)
-        loader = _loader(graphs, pass_index=pass_index, start_batch=start_batch)
-        model.train()
-        for batch in loader:
-            if int(batch.num_graphs) != PHYSICAL_BATCH:
-                raise RuntimeError("Training observed a non-128 physical batch")
-            batch = batch.to("cuda", non_blocking=True)
-            loss = _optimizer_step(
-                model,
-                optimizer,
-                batch,
-                mean,
-                std,
-                check_finite=(global_step + 1) % FINITE_CHECK_EVERY_STEPS == 0,
-            )
-            scheduler.step()
-            global_step += 1
-            segment_loss += loss.double() * PHYSICAL_BATCH
-            segment_rows += PHYSICAL_BATCH
+    from .family_training_core import LoopPlan, run_training_loop
+    def step_batch(batch, *, check_finite):
+        batch = batch.to("cuda", non_blocking=True)
+        return _optimizer_step(model, optimizer, batch, mean, std,
+                               check_finite=check_finite)
 
-            checkpoint_due = global_step % CHECKPOINT_EVERY_STEPS == 0
-            walltime_due = (
-                max_wall_seconds is not None
-                and time.perf_counter() - started >= max_wall_seconds - 300
-            )
-            complete = global_step == MAX_OPTIMIZER_STEPS
-            if checkpoint_due or walltime_due or complete:
-                torch.cuda.synchronize()
-                now = time.perf_counter()
-                trace.append(
-                    {
-                        "global_step": global_step,
-                        "sample_presentations": global_step * PHYSICAL_BATCH,
-                        "train_normalized_mae": float(segment_loss.cpu()) / segment_rows,
-                        "training_seconds": now - segment_started,
-                        "graphs_per_second": segment_rows / (now - segment_started),
-                        "learning_rate": optimizer.param_groups[0]["lr"],
-                    }
-                )
-                _save_checkpoint(
-                    checkpoint_path,
-                    model=model,
-                    optimizer=optimizer,
-                    scheduler=scheduler,
-                    global_step=global_step,
-                    target_stats=target_stats,
-                    trace=trace,
-                    runtime_fingerprint=runtime["runtime_fingerprint"],
-                    runtime_certificate_ids=runtime_certificate_ids,
-                    source_commit=source_commit,
-                    source_archive_sha256=source_archive_sha256,
-                )
-                atomic_json(trace_path, {"segments": trace})
-                segment_started = now
-                segment_loss = torch.zeros((), dtype=torch.float64, device="cuda")
-                segment_rows = 0
-            if walltime_due:
-                stop_for_walltime = True
-                break
-            if complete:
-                break
-        if stop_for_walltime:
-            break
+    def observe(processed):
+        nonlocal segment_loss, segment_rows
+        segment_loss += processed.value.double() * PHYSICAL_BATCH
+        segment_rows += PHYSICAL_BATCH
+
+    def persist(progress):
+        nonlocal segment_loss, segment_rows, segment_started
+        torch.cuda.synchronize()
+        now = time.perf_counter()
+        trace.append({
+            "global_step": progress.optimizer_step,
+            "sample_presentations": progress.sample_presentations,
+            "train_normalized_mae": float(segment_loss.cpu()) / segment_rows,
+            "training_seconds": now - segment_started,
+            "graphs_per_second": segment_rows / (now - segment_started),
+            "learning_rate": optimizer.param_groups[0]["lr"],
+        })
+        _save_checkpoint(checkpoint_path, model=model, optimizer=optimizer,
+            scheduler=scheduler, global_step=progress.optimizer_step,
+            target_stats=target_stats, trace=trace,
+            runtime_fingerprint=runtime["runtime_fingerprint"],
+            runtime_certificate_ids=runtime_certificate_ids, source_commit=source_commit,
+            source_archive_sha256=source_archive_sha256)
+        atomic_json(trace_path, {"segments": trace})
+        segment_started = now
+        segment_loss = torch.zeros((), dtype=torch.float64, device="cuda")
+        segment_rows = 0
+
+    plan = LoopPlan(TRAIN_ROWS, PHYSICAL_BATCH, MAX_OPTIMIZER_STEPS,
+                    CHECKPOINT_EVERY_STEPS, FINITE_CHECK_EVERY_STEPS, checkpoint_at_pass=False)
+    progress = run_training_loop(model, plan,
+        lambda pass_index, offset: _loader(graphs, pass_index=pass_index, start_batch=offset),
+        step_batch, persist, start_step=global_step,
+        after_step=lambda step: scheduler.step(), observe_batch=observe,
+        should_pause=lambda: max_wall_seconds is not None and
+            time.perf_counter() - started >= max_wall_seconds - 300)
+    global_step = progress.optimizer_step
 
     status = "paused" if global_step < MAX_OPTIMIZER_STEPS else "complete"
     result = {

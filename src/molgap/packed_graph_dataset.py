@@ -9,8 +9,8 @@ from .v4_runtime import torch_load_compat
 class PackedGraphDataset(InMemoryDataset):
     """Keep PyG's inherited separation and lazy graph-cache semantics."""
 
-    def __init__(self, path: Path):
+    def __init__(self, path: Path, *, mmap: bool = False):
         super().__init__(root=None)
         self.data, self.slices = torch_load_compat(
-            path, map_location="cpu", weights_only=False
+            path, map_location="cpu", weights_only=False, **({"mmap": True} if mmap else {})
         )

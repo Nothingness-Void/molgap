@@ -1,6 +1,7 @@
 # Modular Experiment Workflow
 
-This is the entry point for the registered local-to-Kaggle training path. It
+This is the entry point for shared family training preparation and the legacy
+registered local-to-Kaggle comparison path. It
 owns preparation and acceptance orchestration. It does not own scientific
 authorization, a trainer loop, or platform submission.
 
@@ -9,16 +10,22 @@ Both registered families use accelerated execution by default, including
 [K1](K1_EXECUTION.md), [GPTrans](GPTRANS_EXECUTION.md).
 Scientific addons compose on that base. Freeze a new recipe/source identity;
 historical jobs use their own immutable packages, never silently migrated inputs.
+Cross-scale K1/GPTrans code and platform-neutral `prepare-family-training` are
+documented in [Shared Family Training Core](FAMILY_TRAINING_CORE.md). See its
+[CPU acceptance and native limits](FAMILY_TRAINING_TEST_HANDOFF.md#external-acceptance).
+Use that entry for new cross-scale training; the legacy Kaggle comparison
+workflow is not a universal platform submitter.
 
 ## Owners
 
 | Layer | Owner | Responsibility |
 |---|---|---|
-| Lifecycle | `experiment_workflow.py`; `prepare-workflow` / `accept-workflow` in the local CLI | Reuse package, release-check, prospective-planning, family-output inspection and existing terminal closure owners. |
+| Shared preparation | `experiment_workflow.prepare_family_training`; `prepare-family-training` in the local CLI | Stage source/init and prospective identity for any declared platform; skills supply remote release and submission. |
+| Legacy comparison lifecycle | `experiment_workflow.py`; `prepare-workflow` / `accept-workflow` in the local CLI | Reuse package, release-check, prospective-planning, family-output inspection and existing terminal closure owners. |
 | Family execution | `experiment_execution.py`; `experiment_training_worker.py` | Static family/addon-to-trainer dispatch and one isolated subprocess per arm/phase. No caller-selected import or callback. |
 | Platform preparation | Static platform registry in `experiment_workflow.py`; `kaggle_workflow.py` | Platform-owned plan validation, input staging/freezing and final release binding. Kaggle is the only registered preparation adapter in this entry point. |
 | Kaggle runtime | `platforms/kaggle/run_experiment.py`; `kaggle_pair_runtime.py` | Verify the frozen launch/package and observed T4 allocation; preflight every arm before spawning any training arm. |
-| Platform operations | `kaggle-molgap-workloads` skill and existing Kaggle adapters | Publish the prepared dataset/kernel, submit, reconcile the exact run/version, and retrieve retained outputs. |
+| Platform operations | Platform workload skills and existing adapters | Publish, submit, reconcile exact jobs and retrieve durable outputs; no training-loop duplication. |
 
 The all-arm barrier runs the registered preflight phase for every assigned arm.
 Training starts only after every preflight exits successfully. A failure stops
@@ -33,6 +40,8 @@ the static training registry, its mode, and its output profile.
 
 | Family/version | Reference mode | Registered addon mode(s) | Output profile |
 |---|---|---|---|
+| `neural_atom_k1/3` | `reference` | Same reviewed K1 modes below; [shared session](FAMILY_TRAINING_CORE.md#public-entry) | `k1-session-v1` |
+| `gptrans_t/2` | `reference` | Same reviewed GPTrans modes below; [shared session](FAMILY_TRAINING_CORE.md#public-entry) | `gptrans-session-v1` |
 | `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma`; `k1_two_pass_mean/1` → `mean2`; `k1_mean2_clean_second/1` → `mean2_clean_second` | `k1-screen-v1` |
 | `gptrans_t/1` | `reference` | `pair_prenorm/1`, `centered_logits/1`, `memory_value/1`, `memory_message/1` | `gptrans-v1` |
 

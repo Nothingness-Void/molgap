@@ -48,12 +48,12 @@ def _parser() -> argparse.ArgumentParser:
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
                  "launch-receipt", "terminal", "plan-prospective", "check-release",
                  "check-acceptance", "inspect-output", "accept-terminal",
-                 "prepare-workflow", "accept-workflow", "build-terminal"):
+                 "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal"):
         command = commands.add_parser(name)
         command.add_argument("--spec", required=True, type=_local)
-        if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal", "prepare-workflow", "accept-workflow"}:
+        if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal", "prepare-workflow", "prepare-family-training", "accept-workflow"}:
             command.add_argument("--repo-root", required=True, type=_local)
-        if name in {"package", "preflight", "run-diagnostic", "prepare-workflow"}:
+        if name in {"package", "preflight", "run-diagnostic", "prepare-workflow", "prepare-family-training"}:
             command.add_argument("--output", required=True, type=_local)
         if name in {"preflight", "launch-receipt", "check-release", "inspect-output", "accept-terminal", "accept-workflow", "build-terminal"}:
             command.add_argument("--package", required=True, type=_local)
@@ -65,7 +65,7 @@ def _parser() -> argparse.ArgumentParser:
             source.add_argument("--execution-state", type=_local)
             command.add_argument("--locations", required=True, type=_local)
             command.add_argument("--output", required=True, type=_local)
-        elif name == "prepare-workflow":
+        elif name in {"prepare-workflow", "prepare-family-training"}:
             command.add_argument("--plan", required=True, type=_local)
         elif name == "accept-workflow":
             command.add_argument("--receipt", required=True, type=_local)
@@ -117,6 +117,11 @@ def _dispatch(args) -> tuple[dict, int]:
         raise ValueError("Expected canonical ExperimentSpec JSON bytes (no newline)")
     if args.command == "validate-spec":
         return {"spec_identity": spec.identity, "spec": spec.to_dict()}, 0
+    if args.command == "prepare-family-training":
+        from .experiment_workflow import prepare_family_training
+        from .experiment_family_workflow import _json
+        result = prepare_family_training(spec, args.repo_root, _json(args.plan), args.output)
+        return result, 0 if result["status"] == "SOURCE_INPUTS_PREPARED" else 1
     if args.command == "build-terminal":
         from .experiment_family_workflow import (RunContext, _json, build_incomplete_terminal_descriptor,
                                                  incomplete_observations_from_execution)

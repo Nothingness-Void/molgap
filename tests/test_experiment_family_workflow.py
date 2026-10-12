@@ -1766,7 +1766,16 @@ def test_k1_session_completion_uses_frozen_float32_target_binding(
         assert any(reason in blocker for blocker in result["blockers"])
 
 
-def test_training_worker_retains_completion_blockers(tmp_path, launch_contexts, monkeypatch):
+@pytest.mark.parametrize("module,phase,status,allowed", [
+    (None, "train", "BLOCKED", False),
+    (None, "train", "PAUSED", False),
+    ("molgap.pcqm_k1_scale_runner", "train", "PAUSED", False),
+    ("molgap.family_training_runner", "preflight", "PAUSED", False),
+    ("molgap.family_training_runner", "train", "PAUSED", True),
+])
+def test_training_worker_retains_completion_blockers(
+    tmp_path, launch_contexts, monkeypatch, module, phase, status, allowed,
+):
     import molgap.experiment_execution as execution
     from molgap.experiment_training_worker import main
 
@@ -1775,24 +1784,31 @@ def test_training_worker_retains_completion_blockers(tmp_path, launch_contexts, 
     package.mkdir()
     (package / "experiment_spec.json").write_text(spec.to_json(), encoding="utf-8")
     launch_path = tmp_path / "worker-launch.json"
+    job = {"arm_id": "neural_atom_k1"}
+    if module is not None:
+        job["module"] = module
     launch_path.write_bytes(json_bytes({
-        "jobs": [{"arm_id": "neural_atom_k1"}],
+        "jobs": [job],
         "expected_package_identity": "a" * 64,
         "account": "synthetic-account", "run_reference": "synthetic-account/workload-1",
         "prospective_sha256": {"neural_atom_k1": "b" * 64},
     }))
     monkeypatch.setattr(execution, "validate_execution_plan", lambda _spec, jobs: jobs)
     monkeypatch.setattr(execution, "execute_training_phase", lambda **kwargs: {
-        "status": "BLOCKED", "blockers": ["Development target identity mismatch", "second blocker"],
+        "status": status,
+        "blockers": [] if allowed else ["Development target identity mismatch", "second blocker"],
     })
-
+    argv = ["--source-root", str(tmp_path), "--package-dir", str(package),
+            "--input-root", str(tmp_path), "--output", str(tmp_path / "worker-output"),
+            "--launch", str(launch_path), "--arm", "neural_atom_k1", "--phase", phase]
+    if allowed:
+        main(argv)
+        return
     with pytest.raises(RuntimeError) as error:
-        main(["--source-root", str(tmp_path), "--package-dir", str(package),
-              "--input-root", str(tmp_path), "--output", str(tmp_path / "worker-output"),
-              "--launch", str(launch_path), "--arm", "neural_atom_k1", "--phase", "train"])
+        main(argv)
 
     message = str(error.value)
-    assert "arm=neural_atom_k1, phase=train, status=BLOCKED" in message
+    assert f"arm=neural_atom_k1, phase={phase}, status={status}" in message
     assert "Development target identity mismatch; second blocker" in message
 
 

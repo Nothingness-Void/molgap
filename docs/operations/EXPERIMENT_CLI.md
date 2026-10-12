@@ -1,5 +1,10 @@
 # Unified Local Experiment CLI
 
+Cross-scale K1/GPTrans `prepare-family-training` staging is described in
+[Shared Family Training Core](FAMILY_TRAINING_CORE.md). It prepares source and
+inputs, not submission/full admission/scientific acceptance. See
+[CPU acceptance and native limits](FAMILY_TRAINING_TEST_HANDOFF.md#external-acceptance).
+
 Run from the selected checkout using its configured project environment.
 These examples assume PowerShell is already at that checkout's root; use its
 own `.venv`, not an old worktree path or system Python:

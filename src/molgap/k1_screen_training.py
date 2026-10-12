@@ -371,7 +371,7 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
     if recipe.get("row_order_fingerprint") != compute_row_order_fingerprint(seed):
         raise ValueError("K1 historical Python sampler identity changed")
     _validate_initialization(seed, recipe.get("initialization_sha256"))
-    expected_training = {"seed": seed, "batch_size": 128, "drop_last": True,
+    expected_training = {"seed": seed, "batch_size": BATCH_SIZE, "drop_last": True,
         "optimizer": "AdamW", "learning_rate": 4e-4, "weight_decay": 1e-5,
         "clip_grad_norm": 1.0, "scheduler": "CosineAnnealingLR",
         "scheduler_t_max": 40, "scheduler_eta_min": 1e-6,
@@ -508,37 +508,40 @@ def _make_screen_model(state, mode, seed=SEED):
     return model.to("cuda")
 
 
-def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
-    """Original V4 optimizer-inclusive step, with optional clean auxiliary loss."""
-    import torch
+def _optimizer_step(model, optimizer, batch, mean, std, mode="reference", *,
+                    clip_norm=1.0, check_finite=False):
+    """Family loss hook on the scale-independent optimizer core."""
     import torch.nn.functional as functional
-    optimizer.zero_grad(set_to_none=True)
-    if mode == "clean_fingerprint":
-        representation = model.encode(batch.x, batch.edge_index, batch.edge_attr,
-                                       batch.batch, batch.random_walk_pe)
-        prediction = model.head(representation).view(-1)
-    else:
-        prediction = _forward(model, batch)
-    target = (batch.y.view(-1) - mean) / std
-    loss = functional.l1_loss(prediction, target)
-    absolute = (prediction.detach() - target).abs().sum()
-    if mode in ("mean2", "mean2_clean_second"):
-        from contextlib import nullcontext
-        second_view = nullcontext()
-        if mode == "mean2_clean_second":
-            from .k1_clean_second import clean_second_view
-            second_view = clean_second_view(model)
-        with second_view:
-            second = _forward(model, batch)
-        loss = 0.5 * (loss + functional.l1_loss(second, target))
-        absolute = 0.5 * (absolute + (second.detach() - target).abs().sum())
-    if mode == "clean_fingerprint":
-        loss = loss + 0.1 * functional.binary_cross_entropy_with_logits(
-            model.clean_fingerprint_head(representation), batch.chemical_fingerprint.float())
-    loss.backward()
-    torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-    optimizer.step()
-    return loss.detach(), absolute, int(target.numel())
+    from .family_training_core import optimizer_update
+
+    def loss_builder():
+        if mode == "clean_fingerprint":
+            representation = model.encode(batch.x, batch.edge_index, batch.edge_attr,
+                                           batch.batch, batch.random_walk_pe)
+            prediction = model.head(representation).view(-1)
+        else:
+            prediction = _forward(model, batch)
+        target = (batch.y.view(-1) - mean) / std
+        loss = functional.l1_loss(prediction, target)
+        absolute = (prediction.detach() - target).abs().sum()
+        if mode in ("mean2", "mean2_clean_second"):
+            from contextlib import nullcontext
+            second_view = nullcontext()
+            if mode == "mean2_clean_second":
+                from .k1_clean_second import clean_second_view
+                second_view = clean_second_view(model)
+            with second_view:
+                second = _forward(model, batch)
+            loss = 0.5 * (loss + functional.l1_loss(second, target))
+            absolute = 0.5 * (absolute + (second.detach() - target).abs().sum())
+        if mode == "clean_fingerprint":
+            loss = loss + 0.1 * functional.binary_cross_entropy_with_logits(
+                model.clean_fingerprint_head(representation), batch.chemical_fingerprint.float())
+        return loss, (absolute, int(target.numel()))
+
+    loss, (absolute, rows) = optimizer_update(model, optimizer, loss_builder,
+        clip_norm=clip_norm, check_finite=check_finite)
+    return loss, absolute, rows
 
 
 def _screen_optimizer(model, mode):
@@ -992,21 +995,39 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
     allocation_started = time.perf_counter()
     timing_path = session.root / "execution_times.json"
     timing_rows = _load_execution_times(timing_path, start_epoch)
-    for epoch in range(start_epoch, planned_epochs):
+    from .family_training_core import LoopPlan, run_training_loop
+    absolute_values, rows, started = [], 0, 0.0
+    def begin_pass(epoch, offset):
+        nonlocal absolute_values, rows, started
+        if offset:
+            raise ValueError("K1 screen resume requires a complete epoch")
         model.train()
-        absolute_values, absolute, rows = [], 0.0, 0
+        absolute_values, rows = [], 0
         started = time.perf_counter()
-        for batch in _train_loader(roles["train"], epoch, seed):
-            if label_cache is not None:
-                label_cache.attach(batch)
-            _, batch_absolute, batch_rows = _screen_step(model, optimizer, batch, mean, std, mode, **execution_options)
-            absolute_values.append(batch_absolute)
-            rows += batch_rows
+
+    def step_batch(batch, *, check_finite):
+        if label_cache is not None:
+            label_cache.attach(batch)
+        return _screen_step(model, optimizer, batch, mean, std, mode, **execution_options)
+
+    def observe(result):
+        nonlocal rows
+        _, batch_absolute, batch_rows = result.value
+        if batch_rows != result.rows:
+            raise RuntimeError("K1 kernel exposure differs from input batch")
+        absolute_values.append(batch_absolute)
+        rows += batch_rows
+
+    def persist(progress):
+        nonlocal best, absolute_values
+        epoch = progress.pass_index - 1
+        if progress.next_batch:
+            raise RuntimeError("K1 screen cannot publish a partial-epoch result")
         if rows != ROWS_PER_EPOCH:
             raise RuntimeError("Frozen optimizer exposure changed")
         torch.cuda.synchronize()
         absolute = sum_scalar_metrics(absolute_values)
-        del absolute_values
+        absolute_values = []
         train_seconds = time.perf_counter() - started
         dev_started = time.perf_counter()
         validation_mae, target_eV, prediction_eV, source_idx = _evaluate(
@@ -1042,6 +1063,12 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         atomic_json(timing_path, timing_rows)
         print(f"{arm_id} epoch={epoch+1} train_normalized_mae={absolute/rows:.6f} "
               f"dev={validation_mae:.6f}eV seconds={time.perf_counter()-started:.1f}", flush=True)
+    plan = LoopPlan(ROWS_PER_EPOCH, BATCH_SIZE, planned_epochs * STEPS_PER_EPOCH,
+                    STEPS_PER_EPOCH)
+    run_training_loop(model, plan,
+        lambda epoch, offset: _train_loader(roles["train"], epoch, seed),
+        step_batch, persist, start_step=start_epoch * STEPS_PER_EPOCH,
+        before_pass=begin_pass, observe_batch=observe)
     torch.cuda.synchronize()
     costs = _allocation_costs(time.perf_counter() - allocation_started, hardware,
         scope="training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue")

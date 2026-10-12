@@ -45,12 +45,8 @@ def validate_plan(spec, plan):
 def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
                  metadata, initial_states, jobs, acceptance_plan_path=None):
     staged = output / "source_dataset"
-    staged.mkdir()
-    for path in package.iterdir():
-        shutil.copyfile(path, staged / ("source_payload.bin" if path.name == "source.tar.gz" else path.name))
-    (staged / "initial_states").mkdir()
-    for arm_id, initial in initial_states.items():
-        shutil.copyfile(initial, staged / "initial_states" / (arm_id + ".pt"))
+    from .experiment_package import stage_source_inputs
+    stage_source_inputs(package, staged, initial_states)
     acceptance_binding = None
     if acceptance_plan_path is not None:
         acceptance_binding = stage_acceptance_inputs(spec, repo_root, acceptance_plan_path, staged / "acceptance")

@@ -727,15 +727,22 @@ def _release_imports(request):
     initialization_checks, output_io_checks = {}, {}
     for item in request.get("initializations", []):
         try:
-            if item["family"] != ["neural_atom_k1", "2"]:
+            if item["family"] not in (["neural_atom_k1", "2"], ["neural_atom_k1", "3"], ["gptrans_t", "2"]):
                 raise ValueError("Unsupported family initialization check")
-            trainer = importlib.import_module("molgap.k1_screen_training")
             runtime = importlib.import_module("molgap.v4_runtime")
-            recipe = _load(Path(item["recipe_path"]).read_bytes())
-            state = trainer._load_initial_state(Path(item["path"]), recipe)
-            initialization_checks[item["arm_id"]] = {
-                "state_sha256": runtime.state_dict_sha256(state),
-                "tensor_count": len(state), "device": "cpu"}
+            if item["family"] == ["neural_atom_k1", "2"]:
+                trainer = importlib.import_module("molgap.k1_screen_training")
+                recipe = _load(Path(item["recipe_path"]).read_bytes())
+                state = trainer._load_initial_state(Path(item["path"]), recipe)
+            else:
+                trainer = importlib.import_module("molgap.family_training_runner")
+                _, recipe = trainer.read_recipe(Path(item["recipe_path"]))
+                factory = importlib.import_module("molgap.family_training_kernel")
+                model, initialization = factory.load_family_model(recipe, Path(item["path"]))
+            initialization_checks[item["arm_id"]] = (
+                {"state_sha256": runtime.state_dict_sha256(state), "tensor_count": len(state), "device": "cpu"}
+                if item["family"] == ["neural_atom_k1", "2"] else
+                {"state_sha256": initialization["state_sha256"], "tensor_count": initialization["tensor_count"], "device": "cpu"})
         except Exception as exc:
             errors.append({"check": "family_initialization", "item": item["arm_id"],
                            "message": str(exc)})
@@ -833,10 +840,11 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                         expected_state_sha256=declaration["initialization"]["state_sha256"])
                     if input_root and not p.resolve().is_relative_to(Path(input_root).resolve()):
                         raise ValueError("Initialization is outside the staged input root")
-                    if (declaration["family"]["name"], declaration["family"]["version"]) == ("neural_atom_k1", "2"):
+                    if (declaration["family"]["name"], declaration["family"]["version"]) in {
+                            ("neural_atom_k1", "2"), ("neural_atom_k1", "3"), ("gptrans_t", "2")}:
                         modules.update({"molgap.k1_screen_training", "molgap.v4_runtime"})
                         family_initializations.append({"arm_id": a,
-                            "family": ["neural_atom_k1", "2"], "path": str(p),
+                            "family": [declaration["family"]["name"], declaration["family"]["version"]], "path": str(p),
                             "recipe_path": str(_under(source, _relative(recipe_files[a])))})
                     return result
                 check("initialization", arm_id, initialization)

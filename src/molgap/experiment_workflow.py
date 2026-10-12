@@ -32,6 +32,73 @@ def _platform_adapter(name):
     return import_module(_PLATFORM_ADAPTERS[name])
 
 
+def prepare_family_training(spec, repo_root, plan, output):
+    """Stage the shared worker for any platform; skills add platform release/metadata.
+
+    No reference, scientific acceptance or full-scale admission is inferred.
+    Those owning gates remain prerequisites for an authorized job submission.
+    """
+    from .experiment_package import stage_source_inputs
+    from .experiment_source_inventory import SHARED_SOURCE_FILES
+    from .experiment_launch import publish_immutable_bytes
+    from .research_memory.trace import file_digest
+    from .family_training_runner import INTERFACES
+    if (type(plan) is not dict or set(plan) != {"format", "spec_identity", "arms", "source_files"}
+            or plan["format"] != "molgap-family-training-preparation-v1" or plan["spec_identity"] != spec.identity):
+        raise ValueError("Shared preparation plan/Spec mismatch")
+    repo_root, output = Path(repo_root).absolute(), Path(output).absolute()
+    _safe_local(repo_root)
+    _safe_local(output)
+    if output.exists() or any(output.is_relative_to(repo_root / name) for name in ("experiments", "research_memory")):
+        raise ValueError("Use a fresh ignored staging directory, not canonical research trees")
+    declaration = spec.to_dict()
+    if any((arm["family"]["name"], arm["family"]["version"]) not in INTERFACES.values() for arm in declaration["arms"]):
+        raise ValueError("Shared preparation requires shared K1/GPTrans interfaces")
+    bindings = {entry["arm_id"]: entry for entry in declaration["prospective"].get("arms", [])}
+    if type(plan["arms"]) is not list:
+        raise ValueError("Expected explicit arm bindings")
+    jobs, recipes, initial_states = [], {}, {}
+    for entry in plan["arms"]:
+        if type(entry) is not dict or set(entry) != {"arm_id", "device", "recipe", "initial_state"}:
+            raise ValueError("Expected arm/device/recipe/initial_state")
+        arm_id = entry["arm_id"]
+        if arm_id not in bindings or arm_id in recipes:
+            raise ValueError("Unknown or duplicate arm")
+        recipes[arm_id], initial_states[arm_id] = entry["recipe"], Path(entry["initial_state"]).absolute()
+        jobs.append({"arm_id": arm_id, "device": entry["device"], "recipe": entry["recipe"],
+            "initial_state": "initial_states/" + arm_id + ".pt", "trajectory_id": bindings[arm_id]["trajectory_id"]})
+    validated = validate_execution_plan(spec, jobs)
+    check_family_recipes(spec, repo_root, recipes)
+    source_files = _allowlist(sorted(set(SHARED_SOURCE_FILES) | set(plan["source_files"]) | set(recipes.values())))
+    output.mkdir(parents=True)
+    package = output / "package"
+    manifest = build_experiment_source_package(spec, repo_root, source_files, package)
+    staged = stage_source_inputs(package, output / "inputs", initial_states)
+    release = check_release_inputs(spec, package, expected_package_identity=manifest["package_identity"],
+        recipe_files=recipes, initial_states={arm: staged / "initial_states" / (arm + ".pt") for arm in initial_states},
+        required_modules=sorted({module for job in validated for module in job["required_modules"]}
+            | {"molgap.experiment_training_worker", "molgap.family_training_outputs"}), input_root=staged)
+    _atomic(output / "release_report.json", release)
+    if release["errors"]:
+        return {"status": "BLOCKED", "release": release, "submitted": False, "prospective_published": False}
+    prospective, code = plan_prospective(spec, repo_root, execution_source_commit=manifest["source_commit"])
+    _atomic(output / "prospective_report.json", prospective)
+    if code:
+        return {"status": "RECONCILIATION_REQUIRED", "prospective": prospective, "submitted": False}
+    hashes = {}
+    for arm_id, binding in bindings.items():
+        path = _artifact_path(repo_root, binding["output"] + "/trajectory.json")
+        target = staged / "prospective" / arm_id / "trajectory.json"
+        publish_immutable_bytes(target, path.read_bytes())
+        hashes[arm_id] = file_digest(target)
+    report = {"status": "SOURCE_INPUTS_PREPARED", "spec_identity": spec.identity,
+        "expected_package_identity": manifest["package_identity"], "jobs": jobs,
+        "prospective_sha256": hashes, "platform": declaration["platform"]["name"],
+        "submitted": False, "scientific_acceptance": "NOT_EVALUATED", "replay_readiness": "NOT_EVALUATED"}
+    _atomic(output / "prepared_training.json", report)
+    return report
+
+
 def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path) -> dict:
     """Validate and stage once, publish prospective RML only after static gates.
 

@@ -15,9 +15,14 @@ class ArtifactAdapter:
     family: tuple[str, str]
     resume_keys: tuple[str, ...]
     ema_required: bool
+    protocol: str = "screen"
 
 
 ADAPTERS = MappingProxyType({
+    "k1-session-v1": ArtifactAdapter("k1-session-v1", ("neural_atom_k1", "3"),
+        ("model", "optimizer", "scheduler", "rng_state"), False, "family-session"),
+    "gptrans-session-v1": ArtifactAdapter("gptrans-session-v1", ("gptrans_t", "2"),
+        ("model", "optimizer", "scheduler", "rng_state"), False, "family-session"),
     "k1-screen-v1": ArtifactAdapter("k1-screen-v1", ("neural_atom_k1", "2"),
                                     ("model", "optimizer", "scheduler", "rng_state"), False),
     "k1-v1": ArtifactAdapter("k1-v1", ("neural_atom_k1", "1"),

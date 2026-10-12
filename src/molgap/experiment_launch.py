@@ -151,7 +151,7 @@ def _validate_binding(value):
         _opaque(value[key])
     if type(value["source_commit"]) is not str or not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", value["source_commit"]):
         raise ValueError("Invalid source commit")
-    if type(value["requested_logical_platform"]) is not str or value["requested_logical_platform"] not in {"local", "kaggle", "scnet", "ims"}:
+    if type(value["requested_logical_platform"]) is not str or value["requested_logical_platform"] not in {"local", "kaggle", "scnet", "ims", "colab"}:
         raise ValueError("Invalid logical platform")
     if type(value["arms"]) is not list or not value["arms"]:
         raise ValueError("Expected ordered arms")

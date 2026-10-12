@@ -30,8 +30,9 @@ ownership index, not execution authority or a copy of scientific contracts.
 
 | Module | Owns | Edit when |
 |---|---|---|
+| `family_training_*.py` | K1/GPTrans common loop, pinned recipe/data, accelerated family hooks, persistent loaders and resumable session | See [owners and migration status](docs/operations/FAMILY_TRAINING_CORE.md); public registration/native qualification and artifact acceptance remain explicit gates |
 | `gptrans_execution_backend.py`, `gptrans_execution_hotpath.py`, `gptrans_execution_tuning.py` | Automatic accelerated native training scopes, resource/cache settings, transfer/EMA reuse | Changing shared execution mechanics; see [default policy and evidence](docs/operations/GPTRANS_EXECUTION.md); no slow backend choice |
-| `experiment_workflow.py`, `kaggle_workflow.py` | Local lifecycle and static platform dispatch; Kaggle plan validation, staging, freezing and final release binding | Changing local orchestration or the registered Kaggle preparation adapter; only Kaggle is registered here |
+| `experiment_workflow.py`, `kaggle_workflow.py` | Platform-neutral family preparation plus legacy Kaggle comparison lifecycle and release binding | Changing shared preparation or the legacy Kaggle adapter; workload skills own remote submission |
 | `experiment_execution.py`, `experiment_training_worker.py` | Static family/addon/mode dispatch and fixed per-arm training subprocess | Registering an executable family/mode or changing worker bindings |
 | `experiment_source_inventory.py` | Reviewed shared bootstrap paths; family serialized-module dependencies live in `experiment_execution.py` | Adding/removing a reviewed packaged dependency |
 | `kaggle_pair_runtime.py`, `platforms/kaggle/run_experiment.py` | Frozen Kaggle bootstrap and all-arm preflight barrier before training | Changing the generic Kaggle launch and phase barrier |

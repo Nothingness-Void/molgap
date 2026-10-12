@@ -211,18 +211,9 @@ class DeterministicEpochBatchSampler:
 
 
 def _load_datasets(paths: tuple[Path, ...]):
-    import torch
     from torch.utils.data import ConcatDataset
-    from torch_geometric.data import InMemoryDataset
-
-    class PackedGraphs(InMemoryDataset):
-        def __init__(self, path: Path):
-            super().__init__(root=None)
-            self.data, self.slices = torch_load_compat(
-                path, map_location="cpu", weights_only=False
-            )
-
-    shards = [PackedGraphs(path) for path in paths]
+    from .packed_graph_dataset import PackedGraphDataset
+    shards = [PackedGraphDataset(path) for path in paths]
     return ConcatDataset(shards), shards
 
 
@@ -455,22 +446,10 @@ def _make_training_state(initial_state_path: Path, variant: str = "reference"):
 
 
 def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bool):
-    import torch
-    import torch.nn.functional as functional
-
-    optimizer.zero_grad(set_to_none=True)
-    prediction = _forward(model, batch)
-    target = (batch.y.view(-1).float() - mean) / std
-    loss = functional.l1_loss(prediction, target)
-    if check_finite and not bool(torch.isfinite(loss)):
-        raise RuntimeError("Training loss became non-finite")
-    loss.backward()
-    gradient_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), GRADIENT_CLIP)
-    if check_finite and not bool(torch.isfinite(gradient_norm)):
-        raise RuntimeError("Gradient norm became non-finite")
-    optimizer.step()
-    ema.update(model)
-    return loss.detach()
+    from .family_training_core import normalized_gap_update
+    return normalized_gap_update(model, optimizer, batch, mean, std,
+        forward=_forward, clip_norm=GRADIENT_CLIP, check_finite=check_finite,
+        cast_target_float=True, ema=ema)
 
 
 def _evaluate(model, ema, graphs, mean, std, *, weights="ema", device="cuda",
@@ -873,28 +852,33 @@ def run_training(
         best = float(checkpoint["best_development_mae_eV"])
         best_epoch = int(checkpoint["best_epoch"])
 
-    for epoch in range(start_epoch, EPOCHS):
+    from .family_training_core import LoopPlan, run_training_loop
+    learning_rate, train_loss_sum, train_count, epoch_started = 0.0, None, 0, 0.0
+    def begin_pass(epoch, offset):
+        nonlocal learning_rate, train_loss_sum, train_count, epoch_started
+        if offset:
+            raise ValueError("GPTrans screen resume requires a complete epoch")
         learning_rate = scheduler.step(epoch)
         model.train()
         train_loss_sum = torch.zeros((), device="cuda")
         train_count = 0
         epoch_started = time.perf_counter()
-        for batch_index, batch in enumerate(_training_loader(train_graphs, epoch)):
-            if int(batch.num_graphs) != PHYSICAL_BATCH:
-                raise RuntimeError("Optimizer received a non-128 batch")
-            batch = batch.to("cuda", non_blocking=True)
-            global_step = epoch * BATCHES_PER_EPOCH + batch_index + 1
-            loss = _optimizer_step(
-                model,
-                optimizer,
-                ema,
-                batch,
-                mean,
-                std,
-                check_finite=global_step % FINITE_CHECK_EVERY_STEPS == 0,
-            )
-            train_loss_sum.add_(loss * int(batch.num_graphs))
-            train_count += int(batch.num_graphs)
+
+    def step_batch(batch, *, check_finite):
+        batch = batch.to("cuda", non_blocking=True)
+        return _optimizer_step(model, optimizer, ema, batch, mean, std,
+                               check_finite=check_finite)
+
+    def observe(result):
+        nonlocal train_count
+        train_loss_sum.add_(result.value * result.rows)
+        train_count += result.rows
+
+    def persist(progress):
+        nonlocal best, best_epoch
+        epoch = progress.pass_index - 1
+        if progress.next_batch:
+            raise RuntimeError("GPTrans screen cannot publish a partial-epoch result")
         if train_count != BATCHES_PER_EPOCH * PHYSICAL_BATCH:
             raise RuntimeError("Epoch sample exposure changed")
         development = _evaluate(model, ema, development_graphs, mean, std)
@@ -973,6 +957,13 @@ def run_training(
             temporary = chunk.with_suffix(".pt.tmp")
             shutil.copyfile(checkpoint_path, temporary)
             os.replace(temporary, chunk)
+
+    plan = LoopPlan(TRAIN_ROWS, PHYSICAL_BATCH, EPOCHS * BATCHES_PER_EPOCH,
+                    BATCHES_PER_EPOCH, FINITE_CHECK_EVERY_STEPS)
+    run_training_loop(model, plan,
+        lambda epoch, offset: _training_loader(train_graphs, epoch),
+        step_batch, persist, start_step=start_epoch * BATCHES_PER_EPOCH,
+        before_pass=begin_pass, observe_batch=observe)
 
     best_model_path = output / "best_model.pt"
     predictions_path = output / "development_predictions.pt"

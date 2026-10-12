@@ -35,7 +35,9 @@ def main(argv=None):
         run_reference=config["run_reference"], staged_root=args.launch.parent,
         prospective_sha256=config["prospective_sha256"][job["arm_id"]],
         target_identity=target_identity)
-    passed = (result.get("status") == "MECHANICALLY_VERIFIED" if args.phase == "train" else
+    paused_session = (args.phase == "train" and job.get("module") == "molgap.family_training_runner"
+                      and result.get("status") == "PAUSED")
+    passed = (result.get("status") == "MECHANICALLY_VERIFIED" or paused_session if args.phase == "train" else
               result.get("status") == "accepted" or result.get("accepted") is True)
     if not passed:
         blockers = result.get("blockers") or []

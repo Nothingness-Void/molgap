@@ -100,6 +100,31 @@ def capture_rng_state(*, loader_generator=None) -> dict:
     return state
 
 
+def validate_accelerator_request(requested: str, observed: str, *, hip_runtime: bool = False) -> None:
+    """Match resource metadata, never select a different execution algorithm."""
+    import re
+    if (type(requested) is not str or not requested.strip() or type(observed) is not str
+            or not observed.strip() or type(hip_runtime) is not bool):
+        raise ValueError("Explicit declared and observed accelerator names are required")
+    def compact(value):
+        return re.sub(r"[^A-Z0-9]", "", value.upper())
+    def model_name(value):
+        return re.sub(r"^(?:(?:NVIDIA|AMD|TESLA|GEFORCE|QUADRO|INSTINCT))+", "", compact(value)).removesuffix("GPU")
+    declared, actual = model_name(requested), model_name(observed)
+    # Vendor/suffix stripping must not turn two unspecified names into a match.
+    unspecified = {"", "GPU", "CUDA", "ACCELERATOR"}
+    if declared in unspecified or actual in unspecified:
+        matches = False
+    elif compact(requested) == "DCU":
+        matches = hip_runtime
+    elif declared == "A100":
+        matches = re.fullmatch(r"A100(?:(?:SXM[24]|PCIE|40GB|80GB))*", actual) is not None
+    else:
+        matches = declared == actual
+    if not matches:
+        raise ValueError("Observed accelerator differs from frozen request: " + requested + " / " + observed)
+
+
 def restore_rng_state(state: Mapping, *, loader_generator=None) -> None:
     import torch
 

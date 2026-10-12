@@ -35,6 +35,16 @@ class TrainingAdapter:
 
 
 TRAINING_ADAPTERS = MappingProxyType({
+    ("neural_atom_k1", "3"): TrainingAdapter(
+        ("neural_atom_k1", "3"), "molgap.family_training_runner", "k1-session-v1",
+        (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
+         ("k1_mean2_clean_second", "mean2_clean_second")), ("molgap.pcqm_wedge",),
+        target_identity_in_completion=True),
+    ("gptrans_t", "2"): TrainingAdapter(
+        ("gptrans_t", "2"), "molgap.family_training_runner", "gptrans-session-v1",
+        (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),
+         ("memory_value", "memory_value"), ("memory_message", "memory_message")),
+        ("molgap.pcqm_wedge",), target_identity_in_completion=True),
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
         (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
@@ -57,9 +67,10 @@ def training_adapter(arm: dict) -> TrainingAdapter:
 
 
 def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
-                        source_idx_sha256: str, target_sha256: str,
+                        source_idx_sha256: str | None = None, target_sha256: str | None = None,
                         seed: int | None = None, initialization_sha256: str | None = None,
-                        execution_torch_version: str | None = None) -> dict:
+                        execution_torch_version: str | None = None,
+                        configuration=None, train_role_identity=None, development_role_identity=None) -> dict:
     """Build owned constants before freezing the Spec; never read development rows."""
     adapter = TRAINING_ADAPTERS.get(family)
     if adapter is None:
@@ -67,6 +78,15 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
     mode = "reference" if addon is None else dict(adapter.addon_modes).get(addon)
     if mode is None:
         raise ValueError("No executable recipe for this addon")
+    if adapter.module == "molgap.family_training_runner":
+        if any(value is not None for value in (seed, initialization_sha256, execution_torch_version)):
+            raise ValueError("Shared recipe pins seed/initialization/runtime in configuration")
+        return import_module(adapter.module).build_screen_recipe(mode, configuration=configuration,
+            family=family, source_idx_sha256=source_idx_sha256, target_sha256=target_sha256,
+            train_role_identity=train_role_identity,
+            development_role_identity=development_role_identity)
+    if configuration is not None or train_role_identity is not None or development_role_identity is not None:
+        raise ValueError("Explicit shared configuration requires the shared family interface")
     options = {}
     if execution_torch_version is not None:
         if family != ("neural_atom_k1", "2"):
@@ -197,7 +217,7 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     runner = owner.run_screen_preflight if phase == "preflight" else owner.run_screen_arm
     options = {} if phase == "preflight" else {"preflight_dir": output}
     if staged_root.resolve() != Path(input_root).resolve():
-        if adapter.family != ("neural_atom_k1", "2"):
+        if adapter.family != ("neural_atom_k1", "2") and adapter.module != "molgap.family_training_runner":
             raise ValueError("Separate prospective/data roots are not supported by this family")
         options["prospective_root"] = staged_root
     if phase == "train" and adapter.target_identity_in_completion:

@@ -44,10 +44,12 @@ class LoadedDatasetCache:
         self.entries.clear()
 
 
-def development_cpu_view(batch):
+def development_cpu_view(batch, *, retain_random_walk_pe=False):
     """Do not spend the bounded dev cache on unused RWSE/geometry payloads."""
     result = copy(batch)
     retained = set(MODEL_FIELDS) | {'y', 'source_idx', 'row_index', 'ptr', 'num_nodes'}
+    if retain_random_walk_pe:
+        retained.add('random_walk_pe')
     for key in list(result.keys()):
         if key not in retained:
             del result[key]
@@ -80,7 +82,12 @@ class BoundForeachEMA:
     def load_state_dict(self, state):
         if state.keys() != self.state.keys():
             raise RuntimeError("EMA state identity changed")
-        self.state = {name: value.clone() for name, value in state.items()}
+        for name, value in state.items():
+            target = self.state[name]
+            if (not torch.is_tensor(value) or value.shape != target.shape or value.dtype != target.dtype):
+                raise RuntimeError("EMA state shape/dtype changed: " + name)
+        self.state = {name: value.detach().to(device=self.state[name].device).clone()
+                      for name, value in state.items()}
         self._binding = None
 
     def state_dict(self):

@@ -78,15 +78,17 @@ def _cpu_storage_bytes(batch):
 class PreparedDevelopmentCache:
     """Publish only an exhausted, row-validated pass; overflow streams normally."""
     def __init__(self, source, *, rows, batch_size, max_bytes, source_start=100000,
-                 retain_model_inputs=False):
+                 retain_model_inputs=False, retain_random_walk_pe=False):
         if (type(rows) is not int or rows < 1 or type(max_bytes) is not int or max_bytes < 1
                 or batch_size != 128 or type(source_start) is not int or source_start < 0
-                or type(retain_model_inputs) is not bool):
+                or type(retain_model_inputs) is not bool or type(retain_random_walk_pe) is not bool
+                or (retain_random_walk_pe and not retain_model_inputs)):
             raise ValueError("Invalid cache rows, budget or physical batch")
         self.source = source
         self.rows, self.batch_size, self.max_bytes = rows, batch_size, max_bytes
         self.source_start = source_start
         self.retain_model_inputs = retain_model_inputs
+        self.retain_random_walk_pe = retain_random_walk_pe
         self.batches = None
         self.busy = False
         self.disabled_reason = None
@@ -106,7 +108,7 @@ class PreparedDevelopmentCache:
             self.stats["cold_passes"] += 1
             for batch in self.source:
                 if self.retain_model_inputs:
-                    batch = development_cpu_view(batch)
+                    batch = development_cpu_view(batch, retain_random_walk_pe=self.retain_random_walk_pe)
                 count = min(self.batch_size, self.rows - cursor)
                 index = getattr(batch, "source_idx", getattr(batch, "row_index", None))
                 if (count <= 0 or int(batch.num_graphs) != count or index is None

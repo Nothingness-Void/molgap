@@ -193,11 +193,15 @@ def write_output_manifest(output_dir: Path, context: RunContext, *, adapter: str
     root = Path(output_dir).absolute()
     _safe_local(root)
     artifact_adapter(adapter, (context.family_name, context.family_version))
-    if set(artifacts) != ROLES:
+    profile = artifact_adapter(adapter, (context.family_name, context.family_version))
+    roles = ROLES
+    if profile.protocol == "family-session" and "predictions" not in artifacts:
+        roles = ROLES - {"predictions"}
+    if set(artifacts) != roles:
         raise ValueError("Output requires exactly predictions/selected_model/resume/trace/contract")
     entries = {role: {"path": name, "sha256": file_digest(_artifact_path(root, name))}
                for role, name in artifacts.items()}
-    if len({item["path"].casefold() for item in entries.values()}) != len(ROLES):
+    if len({item["path"].casefold() for item in entries.values()}) != len(roles):
         raise ValueError("Artifact roles must bind distinct files")
     return _publish(root / "output_manifest.json", {
         "format": OUTPUT_FORMAT, "context": context.to_dict(), "adapter": adapter,
@@ -615,6 +619,9 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict,
     from .training_reproducibility import assert_finite_state_dict
     root = Path(output_dir).absolute()
     _safe_local(root)
+    if (context.family_name, context.family_version) in {("neural_atom_k1", "3"), ("gptrans_t", "2")}:
+        from .family_training_outputs import inspect_session_output
+        return inspect_session_output(root, context=context, expected=expected, target_identity=target_identity)
     blockers, observed = [], {}
     try:
         if type(expected) is not dict or set(expected) != EXPECTED:

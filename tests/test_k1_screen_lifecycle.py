@@ -28,6 +28,7 @@ def lifecycle(tmp_path, monkeypatch):
         *args, **{**kwargs, "device": "cpu"}) if kwargs.get("device") == "cuda"
         else tensor(*args, **kwargs))
     monkeypatch.setattr(owner, "STEPS_PER_EPOCH", 2)
+    monkeypatch.setattr(owner, "BATCH_SIZE", 2)
     monkeypatch.setattr(owner, "ROWS_PER_EPOCH", 4)
     monkeypatch.setattr(owner, "SAMPLE_EXPOSURE", 160)
     monkeypatch.setattr(owner, "DEVELOPMENT_ROWS", 3)
@@ -51,7 +52,7 @@ def lifecycle(tmp_path, monkeypatch):
 
     def loader(graphs, epoch, seed):
         started_epochs.append(epoch)
-        return (None, None)
+        return (SimpleNamespace(num_graphs=2), SimpleNamespace(num_graphs=2))
 
     monkeypatch.setattr(owner, "_train_loader", loader)
 

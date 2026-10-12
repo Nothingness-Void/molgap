@@ -127,14 +127,7 @@ def find_cache(expected_sha256: str) -> tuple[Path, dict]:
 def load_roles(root: Path, manifest: dict):
     import torch
     from torch.utils.data import ConcatDataset
-    from torch_geometric.data import InMemoryDataset
-
-    class PackedGraphDataset(InMemoryDataset):
-        def __init__(self, path: Path):
-            super().__init__(root=None)
-            self.data, self.slices = torch_load_compat(
-                path, map_location="cpu", weights_only=False
-            )
+    from .packed_graph_dataset import PackedGraphDataset
 
     roles = {"train": [], "validation": []}
     fixed_aggregate = hashlib.sha256()
@@ -270,24 +263,37 @@ def train_gap_fp32(
     best = float("inf")
     best_epoch = -1
     trace = []
-    for epoch in range(EPOCHS):
+    from .family_training_core import LoopPlan, optimizer_update, run_training_loop
+    absolute, rows, started = 0.0, 0, 0.0
+    def begin_pass(epoch, offset):
+        nonlocal absolute, rows, started
+        if offset:
+            raise ValueError("Legacy K1 scale output does not support mid-epoch resume")
         model.train()
         absolute = 0.0
         rows = 0
         started = time.perf_counter()
-        for batch in train_loader:
-            batch = batch.to("cuda", non_blocking=True)
-            optimizer.zero_grad(set_to_none=True)
+
+    def step_batch(batch, *, check_finite):
+        batch = batch.to("cuda", non_blocking=True)
+        def loss_builder():
             prediction = forward_gap(model, batch, augmented=False)
             target = (batch.y.view(-1) - mean) / std
-            loss = functional.l1_loss(prediction, target)
-            loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-            optimizer.step()
-            absolute += float(
-                (prediction.detach().float() - target.float()).abs().sum()
-            )
-            rows += int(target.numel())
+            return functional.l1_loss(prediction, target), (
+                prediction.detach().float() - target.float()).abs().sum()
+        return optimizer_update(model, optimizer, loss_builder,
+                                clip_norm=1.0, check_finite=False)
+
+    def observe(processed):
+        nonlocal absolute, rows
+        absolute += float(processed.value[1])
+        rows += processed.rows
+
+    def persist(progress):
+        nonlocal best, best_epoch
+        epoch = progress.pass_index - 1
+        if progress.next_batch:
+            raise RuntimeError("Legacy K1 scale cannot publish partial-epoch output")
         validation_mae, target_eV, prediction_eV, source_idx = _evaluate_fp32(
             model, validation_loader, mean, std
         )
@@ -337,6 +343,11 @@ def train_gap_fp32(
             f"{' *' if improved else ''}",
             flush=True,
         )
+    steps_per_pass = (len(roles["train"]) + BATCH_SIZE - 1) // BATCH_SIZE
+    plan = LoopPlan(len(roles["train"]), BATCH_SIZE, EPOCHS * steps_per_pass,
+                    steps_per_pass, drop_last=False)
+    run_training_loop(model, plan, lambda epoch, offset: train_loader,
+        step_batch, persist, before_pass=begin_pass, observe_batch=observe)
     return {
         "initial_model_sha256": initial_sha,
         "parameter_count": sum(parameter.numel() for parameter in model.parameters()),
