@@ -203,6 +203,29 @@ def accept(root, records, package, *, receipt_ref, base_ref=BASE):
                 "training_peak_bytes":None, "training_peak_status":"measurement_missing",
                 "reason":"Released forty-pass worker records optimizer-preflight peaks, not training-stage peaks"},
             "runtime_certificate_id":preflight["runtime_certificate_id"]}
+        tuning = config["execution_study"].get("tuning")
+        if tuning is not None:
+            required = {"training_resources.json", "preflight_resources.json"}
+            if arm == ARMS[1]:
+                required.add("training_tuning_report.json")
+            _require(required <= set(completion["files"]), "Missing v3 execution measurements")
+            total_memory = preflight["optimizer_step_calibration"]["total_memory_bytes"]
+            allocated, reserved = (completion.get(key) for key in
+                ("peak_allocated_cuda_bytes", "peak_reserved_cuda_bytes"))
+            _require(type(allocated) is int and type(reserved) is int
+                and 0 < allocated <= reserved <= total_memory, "Invalid training-stage CUDA peaks")
+            results[arm]["memory"].update(training_peak_bytes=allocated,
+                training_reserved_peak_bytes=reserved, training_peak_status="measured",
+                reason="CUDA peak counters reset at training-stage entry, including loading and publication")
+            results[arm]["resources"] = load(folder / "training_resources.json")
+            if arm == ARMS[1]:
+                from .gptrans_execution_tuning import ExecutionTuning
+                report = load(folder / "training_tuning_report.json")
+                _require(report.get("format") == "molgap-gptrans-execution-tuning-v3"
+                    and report.get("tuning") == tuning
+                    and report.get("tuning_identity") == ExecutionTuning(**tuning).identity
+                    and report.get("phase_timing") == completion["phase_timing"], "Tuning report identity/timing")
+                results[arm]["execution_tuning_report"] = report
         payloads[arm] = payload
     paired = paired_saved_errors(payloads[ARMS[0]],payloads[ARMS[1]])
     speed = results[ARMS[0]]["stage_wall_seconds"] / results[ARMS[1]]["stage_wall_seconds"]
