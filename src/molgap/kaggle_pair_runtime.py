@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import math
 from pathlib import Path
 import subprocess
 import sys
@@ -20,9 +21,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     config = _json(launch_path)
     if maximum_wall_seconds is not None and (
         isinstance(maximum_wall_seconds, bool) or not isinstance(maximum_wall_seconds, (int, float))
-        or not 0 < maximum_wall_seconds <= 14400
+        or not math.isfinite(maximum_wall_seconds) or maximum_wall_seconds <= 0
     ):
-        raise ValueError("Allocation ceiling must be positive and at most four hours")
+        raise ValueError("Allocation ceiling must be finite positive seconds or null")
     spec = ExperimentSpec.from_json((package_dir / "experiment_spec.json").read_text(encoding="utf-8"))
     jobs = validate_execution_plan(spec, config["jobs"])
     declaration = spec.to_dict()

@@ -52,7 +52,7 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     """
     import torch
     from torch.utils.data import ConcatDataset
-    from .packed_graph_dataset import PackedGraphDataset
+    from .k1_screen_training import _PackedGraphDatasetFactory
 
     if type(selection) is not DatasetSelection:
         raise TypeError("Expected DatasetSelection")
@@ -61,9 +61,14 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     if sha256_file(path) != selection.manifest_sha256:
         raise ValueError("Dataset manifest SHA differs from the frozen selection")
     manifest = _json(path)
-    if (manifest.get("format") != "molgap-pcqm4mv2-fixed-subset-v1" or
+    legacy_mirror = manifest.get("format") == "molgap-pcqm4mv2-kaggle-fixed-subset-v1"
+    if (manifest.get("format") not in {"molgap-pcqm4mv2-fixed-subset-v1",
+                                      "molgap-pcqm4mv2-kaggle-fixed-subset-v1"} or
             manifest.get("status") != "complete"):
         raise ValueError("Expected the existing complete fixed-subset manifest")
+    if legacy_mirror and any(manifest.get(key) is not False for key in (
+            "official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")):
+        raise ValueError("Mirror protected-role declarations must be explicitly false")
     source = manifest.get("source", {})
     if source.get("external_data_used") is not False:
         raise ValueError("Fixed PCQM training must declare no external data")
@@ -74,7 +79,8 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     if (graph.get("feature_schema") != "ogb" or graph.get("node_feature_dim") != 9
             or graph.get("edge_feature_dim") != 3 or graph.get("rwse_dim") != 16):
         raise ValueError("Expected accepted OGB atom9/bond3/RWSE16 topology")
-    records = manifest.get("assets", {}).get("topology", [])
+    records = (manifest.get("geometry_shards", []) if legacy_mirror else
+               manifest.get("assets", {}).get("topology", []))
     if not isinstance(records, list) or not records:
         raise ValueError("Selected view has no topology shards")
     requested = ("train", "development") if selection.development else ("train",)
@@ -107,7 +113,8 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
             shard_path = _artifact_path(root, record["file"])
             if sha256_file(shard_path) != record["sha256"]:
                 raise ValueError("Topology shard SHA differs from its manifest")
-            shard = PackedGraphDataset(shard_path, mmap=True)
+            # Reuse the existing topology-only view; never build/use cached 3D.
+            shard = _PackedGraphDatasetFactory.load(shard_path, mmap=True)
             if len(shard) != count:
                 raise ValueError("Decoded graph count differs from manifest")
             indices = shard._data.source_idx.reshape(-1)

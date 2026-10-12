@@ -1089,7 +1089,8 @@ def test_pair_runtime_train_failure_drains_peer_and_freezes_per_worker_wall(
     assert {row["started"] for row in train_phase["workers"]} == {True}
 
 
-def test_pair_runtime_budget_terminates_workers_without_claiming_endpoint(tmp_path, monkeypatch):
+@pytest.mark.parametrize("budget", [1, 32400])
+def test_pair_runtime_budget_terminates_workers_without_claiming_endpoint(tmp_path, monkeypatch, budget):
     from molgap import kaggle_pair_runtime as pair_runtime
 
     spec = _candidate_pair_spec()
@@ -1102,7 +1103,7 @@ def test_pair_runtime_budget_terminates_workers_without_claiming_endpoint(tmp_pa
                         lambda *args, **kwargs: "Tesla T4\nTesla T4\n")
     clock = [0.0]
     monkeypatch.setattr(pair_runtime.time, "perf_counter", lambda: clock[0])
-    monkeypatch.setattr(pair_runtime.time, "sleep", lambda seconds: clock.__setitem__(0, clock[0] + seconds))
+    monkeypatch.setattr(pair_runtime.time, "sleep", lambda seconds: clock.__setitem__(0, clock[0] + budget / 2))
     processes = []
 
     class Process:
@@ -1129,12 +1130,23 @@ def test_pair_runtime_budget_terminates_workers_without_claiming_endpoint(tmp_pa
     monkeypatch.setattr(pair_runtime.subprocess, "Popen", spawn)
     with pytest.raises(TimeoutError, match="allocation ceiling"):
         pair_runtime.run_two_phase_pair(source_root=tmp_path, package_dir=package,
-            input_root=tmp_path, launch_path=launch, output=tmp_path / "output", maximum_wall_seconds=1)
+            input_root=tmp_path, launch_path=launch, output=tmp_path / "output", maximum_wall_seconds=budget)
     state = json.loads((tmp_path / "output/pair_state.json").read_text())
     assert state["status"] == "failed"
     assert state["stop_reason"] == "STOP_FOR_COST"
     assert all(process.terminated for process in processes if process.phase == "train")
     assert all(arm["terminal_status"] == "cancelled" for arm in state["arms"].values())
+
+
+@pytest.mark.parametrize("budget", [0, -1, True, "32400", float("inf"), float("nan")])
+def test_pair_runtime_rejects_invalid_budget_before_launch(tmp_path, monkeypatch, budget):
+    from molgap import kaggle_pair_runtime as pair_runtime
+    launch = tmp_path / "launch.json"
+    _write_json(launch, {})
+    monkeypatch.setattr(pair_runtime.subprocess, "Popen", lambda *a, **k: pytest.fail("no worker release"))
+    with pytest.raises(ValueError, match="finite positive"):
+        pair_runtime.run_two_phase_pair(source_root=tmp_path, package_dir=tmp_path,
+            input_root=tmp_path, launch_path=launch, output=tmp_path / "output", maximum_wall_seconds=budget)
 
 
 def test_check_workflow_binding_rejects_tampered_final_prospective_identity(tmp_path):

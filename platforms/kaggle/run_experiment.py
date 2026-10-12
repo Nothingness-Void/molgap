@@ -102,16 +102,25 @@ def _bootstrap(allocation_started, state):
                 raise RuntimeError("Frozen arm recipe absent")
             with stream:
                 limits.append(json.load(stream).get("allocation_wall_limit_seconds"))
+    if any(value is not None and (type(value) is not int or value <= 0) for value in limits):
+        raise ValueError("Frozen allocation ceiling must be positive integer seconds or null")
     if len(set(limits)) != 1:
         raise ValueError("Every arm must agree on the allocation ceiling")
-    limit = limits[0]
-    if limit is not None and (type(limit) is not int or not 120 <= limit <= 14400):
-        raise ValueError("Frozen allocation ceiling outside supported bounds")
+    limit = config.get("allocation_wall_limit_seconds", limits[0])
+    reserve = config.get("cleanup_reserve_seconds", 60)
+    if limit is not None and (type(limit) is not int or limit <= 0):
+        raise ValueError("Allocation ceiling must be positive integer seconds or null")
+    if type(reserve) is not int or reserve < 0:
+        raise ValueError("Cleanup reserve must be nonnegative integer seconds")
+    if limits[0] is not None and limit != limits[0]:
+        raise ValueError("Launch allocation ceiling conflicts with frozen arm recipes")
+    if limit is not None and limit <= reserve:
+        raise ValueError("Allocation ceiling must exceed cleanup reserve")
 
     def remaining():
         if limit is None:
             return None
-        seconds = limit - (time.perf_counter() - allocation_started) - 60
+        seconds = limit - (time.perf_counter() - allocation_started) - reserve
         if seconds <= 0:
             raise TimeoutError("Allocation budget exhausted during bootstrap")
         return seconds
