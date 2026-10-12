@@ -1,0 +1,76 @@
+{
+  "adapter": "k1-screen-v1",
+  "artifacts": {
+    "contract": {
+      "path": "training_contract.json",
+      "sha256": "649ffc006cf24ab0d9b57b4d0f4786753dde1c449ee75ec87244032d0db7aa5e"
+    },
+    "predictions": {
+      "path": "development_predictions.pt",
+      "sha256": "5a1d422c67118f8f7f80df6bb36abca918305827962582489b4c2e41e625052a"
+    },
+    "resume": {
+      "path": "last_checkpoint.pt",
+      "sha256": "8fe9228c71751e6d867b17b22a385ef34034128fabd6d06255cfc874a53f0c94"
+    },
+    "selected_model": {
+      "path": "selected_model.pt",
+      "sha256": "a0eea41ae5259a9dbefda4938051e1076de55eefcc45147cf90219ffab7dcc32"
+    },
+    "trace": {
+      "path": "canonical_trace.json",
+      "sha256": "72e4aa2173e8da30191d7ebaa42f5adbd72eb6e8f6be478ea1e1fcc377336bc3"
+    }
+  },
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "reference",
+    "arm_identity": "35417047711e77f5fb0b9e4658eb37b35a5555b46725085de5b349f1bace76de",
+    "experiment_id": "molgap-k1-initialized-layout-100k-s42-v2",
+    "family_name": "neural_atom_k1",
+    "family_version": "2",
+    "logical_run_id": "molgap-k1-initialized-layout-100k-s42-v2",
+    "package_identity": "7fb07ae2a26d364fcafea73309cbfe3ba20f1862d2392a318aeb1b30d9bd42ad",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "nothingnessvoid/molgap-k1-initialized-layout-100k-s42-v2",
+    "source_archive_sha256": "923743640e74447bea3ace18c3520f225c0b3ae112dbf5cb3ff7f32683394dd5",
+    "source_commit": "cd615aa4716a43f984de8223ab50b137d4b45eab",
+    "spec_identity": "2d77fa933ae9345f1591b71955f7c473faf8d67016ac94fdd917845757dfb1f7",
+    "training_recipe_sha256": "649ffc006cf24ab0d9b57b4d0f4786753dde1c449ee75ec87244032d0db7aa5e"
+  },
+  "costs": [
+    {
+      "hardware": "Tesla T4",
+      "metric": "wall_seconds",
+      "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+      "semantics": "process_wall",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 6277.314395697001
+    },
+    {
+      "hardware": "Tesla T4",
+      "metric": "device_seconds",
+      "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+      "semantics": "allocated_device",
+      "status": "measured",
+      "unit": "seconds",
+      "value": 6277.314395697001
+    }
+  ],
+  "format": "molgap-family-output-v1",
+  "progress": {
+    "epochs": 40,
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "runtime": {
+    "account": "nothingnessvoid",
+    "platform": "kaggle",
+    "precision": "fp32",
+    "runtime_certificate_id": "970bee49df72f389c1b0ebe9b6dee3bc3b626d2da6bf09607c5a142308389143",
+    "source_archive_sha256": "923743640e74447bea3ace18c3520f225c0b3ae112dbf5cb3ff7f32683394dd5",
+    "source_commit": "cd615aa4716a43f984de8223ab50b137d4b45eab"
+  }
+}

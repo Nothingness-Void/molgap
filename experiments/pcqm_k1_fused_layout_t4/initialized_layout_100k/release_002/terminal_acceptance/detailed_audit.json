@@ -1,0 +1,310 @@
+{
+  "task": "retained-output-only detailed inspection",
+  "no_new_training_inference_or_role_access": true,
+  "checks": {
+    "raw_metadata_28_hashes": true,
+    "frozen_source_matches": {
+      "src/molgap/k1_screen_training.py": true,
+      "src/molgap/training_reproducibility.py": true,
+      "src/molgap/k1_execution_layout.py": true,
+      "src/molgap/kaggle_pair_runtime.py": true
+    },
+    "shared_recipe_fields_equal": true,
+    "candidate_execution_policy": {
+      "adamw_foreach": null,
+      "adamw_fused": false,
+      "cpu_layout": true,
+      "fill_uninitialized_memory": false,
+      "loader": "original-epoch-loader",
+      "torch_version": "2.11.0"
+    },
+    "preflight": {
+      "reference": {
+        "status": "accepted",
+        "observed_torch": "2.11.0+cu128",
+        "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+        "resume_loss_delta": 0.0,
+        "selected_state_delta": 0.0,
+        "synchronized_step_overhead_fraction": 0.0
+      },
+      "initialized_layout": {
+        "status": "accepted",
+        "observed_torch": "2.11.0+cu128",
+        "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+        "resume_loss_delta": 0.0,
+        "selected_state_delta": 0.0,
+        "synchronized_step_overhead_fraction": -0.033407136279940075
+      }
+    },
+    "native_reference_step_fingerprints_equal": {
+      "steps": 2,
+      "gradient_tensor_count": 313,
+      "accepted": true
+    },
+    "predictions": {
+      "source_idx": {
+        "byte_equal": true,
+        "shape": [
+          50000
+        ],
+        "sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "exact_declared_range": true
+      },
+      "target_eV": {
+        "byte_equal": true,
+        "shape": [
+          50000
+        ],
+        "sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137"
+      },
+      "prediction_eV": {
+        "byte_equal": true,
+        "shape": [
+          50000
+        ],
+        "sha256": "4453a551ec58e65dd4bbcd09fa22fd83cce1ad300572f06e6953d53f9e517166"
+      }
+    },
+    "prediction_metrics": {
+      "fp32_mae_eV": 0.141294464468956,
+      "fp64_mae_eV": 0.1412944608205557,
+      "maximum_prediction_delta_eV": 0.0
+    },
+    "state": {
+      "selected_model.pt": {
+        "model": {
+          "equal": true,
+          "tensors": 367,
+          "elements": 3665747
+        },
+        "optimizer_step": {
+          "equal": true,
+          "tensors": 0,
+          "elements": 0
+        }
+      },
+      "last_checkpoint.pt": {
+        "model": {
+          "equal": true,
+          "tensors": 367,
+          "elements": 3665747
+        },
+        "optimizer": {
+          "equal": true,
+          "tensors": 939,
+          "elements": 7317947
+        },
+        "scheduler": {
+          "equal": true,
+          "tensors": 0,
+          "elements": 0
+        },
+        "rng_state": {
+          "equal": true,
+          "tensors": 2,
+          "elements": 5072
+        },
+        "cursor": {
+          "equal": true,
+          "tensors": 0,
+          "elements": 0
+        },
+        "optimizer_step": {
+          "equal": true,
+          "tensors": 0,
+          "elements": 0
+        },
+        "sample_presentations": {
+          "equal": true,
+          "tensors": 0,
+          "elements": 0
+        }
+      }
+    },
+    "optimizer_final": {
+      "groups": 1,
+      "learning_rates": [
+        1e-06
+      ],
+      "weight_decay": [
+        1e-05
+      ],
+      "foreach": [
+        null
+      ],
+      "fused": [
+        null
+      ],
+      "state_count": 313,
+      "minimum_step": 31240.0,
+      "maximum_step": 31240.0
+    },
+    "scheduler_final": {
+      "T_max": 40,
+      "eta_min": 1e-06,
+      "base_lrs": [
+        0.0004
+      ],
+      "last_epoch": 40,
+      "_step_count": 41,
+      "_is_initial": false,
+      "_get_lr_called_within_step": false,
+      "_last_lr": [
+        1e-06
+      ]
+    },
+    "cursor_final": {
+      "epoch": 40,
+      "next_batch": 0,
+      "sampler_order_sha256": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34"
+    },
+    "40_epoch_metrics_schedule_exposure_equal": true,
+    "all_per_step_training_fingerprints_available": false,
+    "trace_wall_time_semantics": "Per-epoch interval, not cumulative; native timing JSON separates train/dev/pipeline"
+  },
+  "post_hoc_timing_segments": [
+    {
+      "epochs": [
+        1,
+        10
+      ],
+      "seconds": {
+        "reference": {
+          "train_seconds": 1338.5036308939993,
+          "development_seconds": 279.9339606100002,
+          "epoch_pipeline_seconds": 1624.6947662630005
+        },
+        "initialized_layout": {
+          "train_seconds": 1214.5114101550007,
+          "development_seconds": 275.7421845439999,
+          "epoch_pipeline_seconds": 1496.5281376809999
+        }
+      },
+      "train_time_reduction_percent": 9.263495285117983
+    },
+    {
+      "epochs": [
+        11,
+        20
+      ],
+      "seconds": {
+        "reference": {
+          "train_seconds": 1326.8962243919996,
+          "development_seconds": 270.9117392240014,
+          "epoch_pipeline_seconds": 1603.5536899350027
+        },
+        "initialized_layout": {
+          "train_seconds": 1201.6593179969996,
+          "development_seconds": 268.14715808800065,
+          "epoch_pipeline_seconds": 1475.551978681
+        }
+      },
+      "train_time_reduction_percent": 9.438334671001503
+    },
+    {
+      "epochs": [
+        21,
+        30
+      ],
+      "seconds": {
+        "reference": {
+          "train_seconds": 1319.6158674340004,
+          "development_seconds": 271.7555361140003,
+          "epoch_pipeline_seconds": 1597.5532374960003
+        },
+        "initialized_layout": {
+          "train_seconds": 1200.7946333040009,
+          "development_seconds": 269.72553985299874,
+          "epoch_pipeline_seconds": 1476.4877865730004
+        }
+      },
+      "train_time_reduction_percent": 9.004228962557715
+    },
+    {
+      "epochs": [
+        31,
+        40
+      ],
+      "seconds": {
+        "reference": {
+          "train_seconds": 1201.918303806001,
+          "development_seconds": 243.51552089300094,
+          "epoch_pipeline_seconds": 1451.4131437500037
+        },
+        "initialized_layout": {
+          "train_seconds": 1190.680843975002,
+          "development_seconds": 265.7725692219974,
+          "epoch_pipeline_seconds": 1462.6191460720038
+        }
+      },
+      "train_time_reduction_percent": 0.934960370884963
+    },
+    {
+      "epochs": [
+        1,
+        30
+      ],
+      "seconds": {
+        "reference": {
+          "train_seconds": 3985.0157227199993,
+          "development_seconds": 822.6012359480019,
+          "epoch_pipeline_seconds": 4825.801693694004
+        },
+        "initialized_layout": {
+          "train_seconds": 3616.965361456001,
+          "development_seconds": 813.6148824849993,
+          "epoch_pipeline_seconds": 4448.567902935
+        }
+      },
+      "train_time_reduction_percent": 9.235857192874086
+    },
+    {
+      "epochs": [
+        38,
+        40
+      ],
+      "seconds": {
+        "reference": {
+          "train_seconds": 284.6426840389995,
+          "development_seconds": 60.62042177999865,
+          "epoch_pipeline_seconds": 346.75032351400114
+        },
+        "initialized_layout": {
+          "train_seconds": 354.71725379000054,
+          "development_seconds": 80.48149323699727,
+          "epoch_pipeline_seconds": 437.0076554560019
+        }
+      },
+      "train_time_reduction_percent": -24.618433453712086
+    }
+  ],
+  "post_hoc_timing_segments_are_not_frozen_gates": true,
+  "checkpoint_and_other_pipeline_overhead_seconds": {
+    "reference": 24.16405407700404,
+    "initialized_layout": 24.15339186900428
+  },
+  "approximate_relative_epoch_pipeline_ends_seconds": {
+    "reference": [
+      5777.368332185006,
+      5930.464513930006,
+      6045.1120762740065,
+      6160.950058943006,
+      6277.214837444008
+    ],
+    "initialized_layout": [
+      5327.341762178002,
+      5474.179393551002,
+      5619.3287053910035,
+      5766.034479058003,
+      5911.187049007004
+    ]
+  },
+  "timing_limitations": [
+    "No absolute per-epoch timestamps or utilization counters; cumulative epoch sums cannot establish exact wall overlap",
+    "No device crossover, GPU frequency/power trace or single-arm baseline",
+    "Both arms use shared trainer reference optimizations: selective H2D and deferred scalar collection; not unoptimized historic scripts",
+    "Reference last3 epochs speedup is consistent with peer exit/resource contention change but does not prove a CPU-only bottleneck",
+    "Full run speed gate remains failed; no post-hoc segment substitution"
+  ],
+  "rml_terminal_closure": "pending: no accepted terminal package/comparison-readiness binding published by this inspection"
+}

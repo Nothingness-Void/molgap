@@ -1,0 +1,103 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-initialized-layout-100k-s42-v2",
+  "kernel_id": 138206744,
+  "receipt_version": 1,
+  "scheduler": "COMPLETE",
+  "source_commit": "cd615aa4716a43f984de8223ab50b137d4b45eab",
+  "spec_identity": "2d77fa933ae9345f1591b71955f7c473faf8d67016ac94fdd917845757dfb1f7",
+  "package_identity": "7fb07ae2a26d364fcafea73309cbfe3ba20f1862d2392a318aeb1b30d9bd42ad",
+  "arms": {
+    "reference": {
+      "mechanical_status": "MECHANICALLY_VERIFIED",
+      "native_qualification": "accepted",
+      "development_mae_eV": 0.1412944608205557,
+      "selected_epoch": 40,
+      "progress": {
+        "epochs": 40,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720
+      },
+      "timings": {
+        "train_seconds": 5186.934026526,
+        "development_seconds": 1066.1167568410028,
+        "epoch_pipeline_seconds": 6277.214837444008
+      },
+      "final_dev_mae_eV": 0.141294464468956
+    },
+    "initialized_layout": {
+      "mechanical_status": "MECHANICALLY_VERIFIED",
+      "native_qualification": "accepted",
+      "development_mae_eV": 0.1412944608205557,
+      "selected_epoch": 40,
+      "progress": {
+        "epochs": 40,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720
+      },
+      "timings": {
+        "train_seconds": 4807.646205431003,
+        "development_seconds": 1079.3874517069967,
+        "epoch_pipeline_seconds": 5911.187049007004
+      },
+      "final_dev_mae_eV": 0.141294464468956
+    }
+  },
+  "savings_percent": {
+    "train_seconds": 7.312370258717715,
+    "development_seconds": -1.2447693726638454,
+    "epoch_pipeline_seconds": 5.831054025005211
+  },
+  "selected_prediction_equal": true,
+  "maximum_prediction_delta_eV": 0.0,
+  "paired_quality": {
+    "delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ],
+    "probability_better": 0.0,
+    "n_bootstrap": 10000,
+    "seed": 42
+  },
+  "state_equality": {
+    "selected_model.pt": {
+      "model": true,
+      "optimizer_step": true
+    },
+    "last_checkpoint.pt": {
+      "model": true,
+      "optimizer": true,
+      "scheduler": true,
+      "rng_state": true,
+      "cursor": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    }
+  },
+  "all_40_epoch_metrics_and_exposure_equal": true,
+  "speed_gate_passed": false,
+  "quality_gate_passed": true,
+  "nomination_passed": false,
+  "allocation_entry": {
+    "format": "molgap-kaggle-allocation-entry-v1",
+    "status": "complete",
+    "error": null,
+    "wall_start_utc": "2026-10-11T18:51:32.276191+00:00",
+    "observed_gpu_count": 2,
+    "gpu_count_source": "nvidia-smi",
+    "scope": "entry invocation through bootstrap completion, including setup, pip, extraction, preflight, training/evaluation and idle assigned GPU time; not device busy time",
+    "platform_release_scope": "not observed: queue, allocation before entry and platform release after entry are excluded",
+    "entire_platform_release_seconds": null,
+    "monotonic_seconds": 6593.025773687999,
+    "wall_end_utc": "2026-10-11T20:41:25.301982+00:00",
+    "allocated_device_seconds": 13186.051547375999
+  },
+  "rml_terminal_closure": "NOT_PERFORMED",
+  "platform_version_verified_by_output_api": false,
+  "limitations": [
+    "One assigned GPU per arm on shared host; no crossover or solo-allocation reference",
+    "Reused internal development, not independent holdout",
+    "Row bootstrap is not seed variance",
+    "Remote producer platform version is null; frozen source/package/Spec/recipe identities verified"
+  ]
+}

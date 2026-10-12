@@ -2,6 +2,11 @@
 
 ## Submission observation
 
+The [2026-10-12 result inspection](terminal_acceptance/decision.md) supersedes
+the dated queue observation below: both arms completed40epochs; numerical
+equality passes,7.31% TRAIN time reduction fails the frozen10% speed gate.
+Formal terminal RML closure remains pending; no adoption or retry is released.
+
 Desktop-owned branch `codex/exp/k1-fused-layout-t4-100k`, checkout
 `D:/w/k1-fused-t4`. One authorized Kaggle1 submission, no automatic retry,
 continuation, local monitor or server takeover.
