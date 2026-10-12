@@ -254,3 +254,31 @@ def backend(owner, optimized, timing_root=None):
             iterator = getattr(wrapper.loader, "_iterator", None)
             if iterator is not None:
                 iterator._shutdown_workers()
+
+
+def bind_model_layout(model):
+    """Attach the shared fast input assembly without changing model tensors."""
+    from .gptrans import OGBGPTransTiny
+    if not isinstance(model, OGBGPTransTiny):
+        raise ValueError("Prepared GPTrans layout requires the reviewed model interface")
+    if model._dense_inputs.__func__ is not OGBGPTransTiny._dense_inputs:
+        raise ValueError("Input-changing addons must supply an accelerated input adapter")
+    if model._local_edges is not OGBGPTransTiny._local_edges:
+        raise ValueError("Edge-changing addons must supply an accelerated input adapter")
+    model._dense_inputs = MethodType(dense_inputs, model)
+    model._local_edges = MethodType(cached_edges, model)
+    return model
+
+
+def prepared_forward(model, batch):
+    """Registered training forward; missing preparation cannot select a fallback."""
+    if not hasattr(batch, "execution_layout"):
+        raise ValueError("Accelerated GPTrans requires a CPU-prepared batch layout")
+    if hasattr(model, "_execution_layout"):
+        raise ValueError("Nested GPTrans forward is unsupported")
+    model._execution_layout = batch.execution_layout
+    try:
+        return model(batch.x, batch.edge_index, batch.edge_attr, batch.batch,
+                     getattr(batch, "random_walk_pe", None)).view(-1)
+    finally:
+        del model._execution_layout

@@ -826,3 +826,9 @@ def train_full(
     }
     atomic_json(output / "completion_manifest.json", {**result, "artifact_sha256": artifacts})
     return result
+
+
+
+def _architecture_source_sha256(path: Path) -> str:
+    """Canonical source digest shared by frozen full-run code owners."""
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()

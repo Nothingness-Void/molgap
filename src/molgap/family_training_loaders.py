@@ -1,0 +1,73 @@
+"""Persistent CPU input pools for the common trainer, not platform loaders."""
+from __future__ import annotations
+
+from .family_training_data import PassBatchSampler, TrainingData
+from .family_training_recipe import FamilyRecipe
+
+
+class FamilyLoaders:
+    """Own one immutable train view and an optional bounded development cache."""
+    def __init__(self, recipe: FamilyRecipe, data: TrainingData, tuning):
+        import torch
+        from torch_geometric.loader import DataLoader
+        from .gptrans_execution_backend import PreparedLoader, assert_static_dataset
+        from .gptrans_execution_tuning import ExecutionTuning, PreparedDevelopmentCache
+
+        if type(recipe) is not FamilyRecipe or type(data) is not TrainingData or type(tuning) is not ExecutionTuning:
+            raise TypeError("Expected typed recipe, accepted data and execution resources")
+        if (data.manifest_sha256 != recipe.dataset.manifest_sha256 or
+                data.train_rows != recipe.train_rows or data.development_rows != recipe.development_rows):
+            raise ValueError("Loaded data differs from the frozen recipe selection")
+        assert_static_dataset(data.train)
+        self.recipe, self.data, self.tuning = recipe, data, tuning
+        self.sampler = PassBatchSampler(data.train_rows, recipe.batch_size, recipe.seed,
+            algorithm=recipe.sampler, drop_last=recipe.drop_last)
+        self.generator = torch.Generator()
+        def options(workers):
+            return {"num_workers": workers, "persistent_workers": workers > 0,
+                "pin_memory": True, **({"prefetch_factor": 2} if workers else {})}
+        self.training = DataLoader(data.train, batch_sampler=self.sampler,
+            generator=self.generator, **options(tuning.training_workers))
+        self.development = None
+        self.development_cache = None
+        self.closed = False
+        if data.development is not None:
+            assert_static_dataset(data.development)
+            self.development = DataLoader(data.development, batch_size=recipe.batch_size,
+                shuffle=False, generator=torch.Generator().manual_seed(recipe.seed),
+                **options(tuning.development_workers))
+            source = PreparedLoader(self.development) if recipe.family == "gptrans_t" else self.development
+            self.development_cache = PreparedDevelopmentCache(source, rows=data.development_rows,
+                batch_size=recipe.batch_size, max_bytes=tuning.development_cache_bytes,
+                source_start=data.development_source_start, retain_model_inputs=True,
+                retain_random_walk_pe=recipe.family == "neural_atom_k1")
+
+    def train(self, pass_index, start_batch):
+        if self.closed:
+            raise RuntimeError("Training loader pool is closed")
+        # Use the common validator before mutating the retained sampler cursor.
+        validated = PassBatchSampler(self.data.train_rows, self.recipe.batch_size, self.recipe.seed,
+            algorithm=self.recipe.sampler, pass_index=pass_index, start_batch=start_batch,
+            drop_last=self.recipe.drop_last)
+        self.sampler.pass_index, self.sampler.start_batch = validated.pass_index, validated.start_batch
+        self.generator.manual_seed(self.recipe.seed + pass_index)
+        return self.training
+
+    def dev(self):
+        if self.closed or self.development_cache is None:
+            raise ValueError("No selected development role in this loader pool")
+        return self.development_cache
+
+    def close(self):
+        if self.closed:
+            return
+        self.closed = True
+        for loader in (self.training, self.development):
+            iterator = getattr(loader, "_iterator", None) if loader is not None else None
+            if iterator is not None:
+                shutdown = getattr(iterator, "_shutdown_workers", None)
+                if shutdown is not None:
+                    shutdown()
+                loader._iterator = None
+        if self.development_cache is not None:
+            self.development_cache.clear()

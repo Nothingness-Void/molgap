@@ -36,6 +36,7 @@ class FamilyContract:
     sampler: str
     transform: str
     architecture_base: str | None = None
+    optional_roles: tuple[str, ...] = ()
 
 
 FAMILIES = MappingProxyType({
@@ -49,6 +50,14 @@ FAMILIES = MappingProxyType({
         ("train",), "seed42-step-fixed500k-profiling-v1",
         "fixed-train-100k-mean-sample-std",
     ),
+    ("neural_atom_k1", "3"): FamilyContract(
+        "neural_atom_k1", "3", "molgap.family_training_runner", "shared-family-training",
+        "ogb-atom9-bond3-rwse16-v1", ("train",), "frozen-family-pass-order",
+        "frozen-train-mean-sample-std", "ogb_edge_state_structural_gps9", ("development",)),
+    ("gptrans_t", "2"): FamilyContract(
+        "gptrans_t", "2", "molgap.family_training_runner", "shared-family-training",
+        "ogb-atom9-bond3-shortest-path-cap20", ("train",), "frozen-family-pass-order",
+        "frozen-train-mean-sample-std", optional_roles=("development",)),
     ("edge_state_gps", "1"): FamilyContract(
         "edge_state_gps", "1", "molgap.edge_state_model_only_v1",
         "edge_state_model_only_v1", "ogb-atom9-bond3-rwse16-v1",
@@ -137,8 +146,11 @@ ADDONS = MappingProxyType({
         "neural_atom_k1", "k1-local-aggregation", "molgap.k1_joint_aggregation",
         tuple(AddonConfigField(name, value=value) for name, value in
               (("layer", 6), ("latent_channels", 64), ("kappa", 4),
-               ("seed", 42), ("degree_policy", "original-sum-above-four"))), ("2",), True,
+               ("seed", 42), ("degree_policy", "original-sum-above-four"))), ("2", "3"), True,
     ),
+    **{(name, "1"): AddonContract("neural_atom_k1", "k1-training-view",
+        "molgap.k1_screen_training", family_versions=("3",), single_addon=True)
+       for name in ("k1_two_pass_mean", "k1_mean2_clean_second")},
 })
 
 
@@ -247,11 +259,12 @@ def _arm(arm: dict) -> None:
     roles = []
     for role in data["roles"]:
         _object(role, "role membership_sha256 row_order_sha256 usage_sha256", "data.role")
-        _choice(role["role"], contract.roles, "data.role.role")
+        _choice(role["role"], (*contract.roles, *contract.optional_roles), "data.role.role")
         for field in ("membership_sha256", "row_order_sha256", "usage_sha256"):
             _digest(role[field], "data.role." + field)
         roles.append(role["role"])
-    if len(set(roles)) != len(roles) or set(roles) != set(contract.roles):
+    if (len(set(roles)) != len(roles) or not set(contract.roles) <= set(roles)
+            or not set(roles) <= set(contract.roles + contract.optional_roles)):
         raise ValueError("Data roles must match the recipe exactly, without duplicates")
 
     training = _object(arm["training"], "recipe overrides objective sampler transform", "training")
@@ -259,7 +272,7 @@ def _arm(arm: dict) -> None:
     # Frozen legacy recipes have no override allowance. A reviewed new recipe
     # version must define typed bounds before any override can become executable.
     _object(training["overrides"], "", "training.overrides")
-    if init["seed"] != 42:
+    if init["seed"] != 42 and (family["name"], family["version"]) not in {("neural_atom_k1", "3"), ("gptrans_t", "2")}:
         raise ValueError("Frozen recipe initialization requires seed 42")
     _reference(training["objective"], "training.objective", name="normalized-gap-l1")
     _reference(training["sampler"], "training.sampler", name=contract.sampler)
@@ -300,7 +313,7 @@ def validate_experiment_spec(payload: dict) -> dict:
     if len(ids) != len(set(ids)):
         raise ValueError("Duplicate arm_id")
     platform = _object(spec["platform"], "name accelerator device_count cpu_cores memory_gib atomic_checkpoints retrievable_chunks", "platform")
-    _choice(platform["name"], ("local", "kaggle", "scnet", "ims"), "platform.name")
+    _choice(platform["name"], ("local", "kaggle", "scnet", "ims", "colab"), "platform.name")
     _text(platform["accelerator"], "platform.accelerator")
     for field in ("device_count", "cpu_cores", "memory_gib"):
         _integer(platform[field], "platform." + field)

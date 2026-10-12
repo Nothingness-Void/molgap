@@ -157,7 +157,10 @@ class _NeuralAtomMixerFactory:
                 nn.init.zeros_(self.return_projection.weight)
 
             def compute_update(self, hidden, batch):
-                dense, valid = to_dense_batch(self.node_norm(hidden), batch)
+                layout = getattr(self, "_execution_dense_layout", None)
+                normalized = self.node_norm(hidden)
+                dense, valid = (to_dense_batch(normalized, batch) if layout is None
+                                else layout.pack(normalized, batch))
                 keys = self.node_key(dense)
                 values = self.node_value(dense)
                 seeds = self.slot_seed[: self.active_slots]
@@ -175,7 +178,8 @@ class _NeuralAtomMixerFactory:
                 slots = self.slot_norm1(slots + attended)
                 slots = self.slot_norm2(slots + self.slot_ffn(slots))
                 returned = torch.einsum("bkn,bkd->bnd", assignment, slots)
-                update = self.dropout(self.return_projection(returned[valid]))
+                packed = returned[valid] if layout is None else layout.unpack(returned)
+                update = self.dropout(self.return_projection(packed))
                 diagnostics = {
                     "assignment": assignment,
                     "valid": valid,
@@ -254,7 +258,8 @@ def make_encoder(mode: str):
                 h = block(h, edge_index, batch, edge_attr=edge_state)
                 if layer in MIXER_LAYERS:
                     h = self.neural_atom_mixers[str(layer)](h, batch)
-            return self._pool(h, batch)
+            count = getattr(self, "_execution_graph_count", None)
+            return self._pool(h, batch) if count is None else self._pool(h, batch, size=count)
 
     return NeuralAtomEdgeStateGPS()
 

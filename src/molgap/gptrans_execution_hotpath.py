@@ -45,10 +45,12 @@ class LoadedDatasetCache:
         self.entries.clear()
 
 
-def development_cpu_view(batch):
+def development_cpu_view(batch, *, retain_random_walk_pe=False):
     """Do not spend the bounded dev cache on unused RWSE/geometry payloads."""
     result = copy(batch)
     retained = set(MODEL_FIELDS) | {'y', 'source_idx', 'row_index', 'ptr', 'num_nodes'}
+    if retain_random_walk_pe:
+        retained.add('random_walk_pe')
     for key in list(result.keys()):
         if key not in retained:
             del result[key]
@@ -61,7 +63,7 @@ def development_cpu_view(batch):
 
 class BoundForeachEMA(ForeachExponentialMovingAverage):
     """Reuse tensor lists, retaining the v1 foreach equation and strict topology."""
-    def __init__(self, model, decay):
+    def __init__(self, model, decay=0.999):
         super().__init__(model, decay)
         self._binding = None
         # Reports retain this plain counter dict, never the EMA/model tensors.
@@ -76,7 +78,14 @@ class BoundForeachEMA(ForeachExponentialMovingAverage):
         return self.statistics['update_calls']
 
     def load_state_dict(self, state):
-        super().load_state_dict(state)
+        if state.keys() != self.state.keys():
+            raise RuntimeError("EMA state identity changed")
+        for name, value in state.items():
+            target = self.state[name]
+            if (not torch.is_tensor(value) or value.shape != target.shape or value.dtype != target.dtype):
+                raise RuntimeError("EMA state shape/dtype changed: " + name)
+        self.state = {name: value.detach().to(device=self.state[name].device).clone()
+                      for name, value in state.items()}
         self._binding = None
 
     def _bind(self, model):

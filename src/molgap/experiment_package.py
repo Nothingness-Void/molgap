@@ -73,6 +73,12 @@ def _name(value) -> str:
     # This exact reviewed source owner is not a retained artifact directory.
     if value == "src/molgap/experiment_family_artifacts.py":
         tokens.discard("artifacts")
+    if value == "src/molgap/packed_graph_dataset.py":
+        tokens.discard("dataset")
+    if value == "src/molgap/family_training_data.py":
+        tokens.discard("data")
+    if value == "src/molgap/family_training_outputs.py":
+        tokens.discard("outputs")
     if (set(lowered) & _BLOCKED_PARTS or tokens & _BLOCKED_PARTS
             or any(part == ".env" or part.startswith(".env.") for part in lowered)
             or path.suffix.lower() in _BLOCKED_SUFFIXES
@@ -105,6 +111,23 @@ def read_packaged_text(package_dir: Path, relative_path: str) -> str:
             raise ValueError("Missing packaged text source")
         with stream:
             return stream.read().decode("utf-8")
+def stage_source_inputs(package_dir: Path, destination: Path, initial_states: dict) -> Path:
+    """Common immutable worker inputs; no platform metadata or submission."""
+    from .experiment_launch import _safe_local, publish_immutable_bytes
+    from .experiment_spec import _identifier
+    package_dir, destination = Path(package_dir).absolute(), Path(destination).absolute()
+    verify_experiment_source_package(package_dir)
+    _safe_local(destination)
+    destination.mkdir(parents=True, exist_ok=True)
+    for name in sorted(SIDECARS):
+        target = "source_payload.bin" if name == "source.tar.gz" else name
+        publish_immutable_bytes(destination / target, (package_dir / name).read_bytes())
+    for arm_id, path in initial_states.items():
+        _identifier(arm_id, "arm_id")
+        path = Path(path).absolute()
+        _safe_local(path)
+        publish_immutable_bytes(destination / "initial_states" / (arm_id + ".pt"), path.read_bytes())
+    return destination
 
 
 def _no_links(path: Path) -> None:

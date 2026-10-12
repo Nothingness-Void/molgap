@@ -30,7 +30,7 @@ def main(argv=None):
         run_reference=config["run_reference"], staged_root=args.launch.parent,
         prospective_sha256=config["prospective_sha256"][job["arm_id"]],
         preflight_dir=args.preflight_output, resume_output=args.resume_output)
-    passed = (result.get("status") == "MECHANICALLY_VERIFIED" if args.phase == "train" else
+    passed = (result.get("status") in {"MECHANICALLY_VERIFIED", "PAUSED"} if args.phase == "train" else
               result.get("status") == "accepted" or result.get("accepted") is True)
     if not passed:
         raise RuntimeError("Owning family phase did not pass")

@@ -397,26 +397,40 @@ def _make_screen_model(state, mode):
     return model.to("cuda")
 
 
-def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
-    """Original V4 optimizer-inclusive step, with optional clean auxiliary loss."""
-    import torch
+def _optimizer_step(model, optimizer, batch, mean, std, mode="reference", *,
+                    clip_norm=1.0, check_finite=False):
+    """Family loss hook on the scale-independent optimizer core."""
     import torch.nn.functional as functional
-    optimizer.zero_grad(set_to_none=True)
-    if mode == "clean_fingerprint":
-        representation = model.encode(batch.x, batch.edge_index, batch.edge_attr,
-                                       batch.batch, batch.random_walk_pe)
-        prediction = model.head(representation).view(-1)
-    else:
-        prediction = _forward(model, batch)
-    target = (batch.y.view(-1) - mean) / std
-    loss = functional.l1_loss(prediction, target)
-    if mode == "clean_fingerprint":
-        loss = loss + 0.1 * functional.binary_cross_entropy_with_logits(
-            model.clean_fingerprint_head(representation), batch.chemical_fingerprint.float())
-    loss.backward()
-    torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-    optimizer.step()
-    return loss.detach(), (prediction.detach() - target).abs().sum(), int(target.numel())
+    from .family_training_core import optimizer_update
+
+    def loss_builder():
+        if mode == "clean_fingerprint":
+            representation = model.encode(batch.x, batch.edge_index, batch.edge_attr,
+                                           batch.batch, batch.random_walk_pe)
+            prediction = model.head(representation).view(-1)
+        else:
+            prediction = _forward(model, batch)
+        target = (batch.y.view(-1) - mean) / std
+        loss = functional.l1_loss(prediction, target)
+        absolute = (prediction.detach() - target).abs().sum()
+        if mode in ("mean2", "mean2_clean_second"):
+            from contextlib import nullcontext
+            second_view = nullcontext()
+            if mode == "mean2_clean_second":
+                from .k1_clean_second import clean_second_view
+                second_view = clean_second_view(model)
+            with second_view:
+                second = _forward(model, batch)
+            loss = 0.5 * (loss + functional.l1_loss(second, target))
+            absolute = 0.5 * (absolute + (second.detach() - target).abs().sum())
+        if mode == "clean_fingerprint":
+            loss = loss + 0.1 * functional.binary_cross_entropy_with_logits(
+                model.clean_fingerprint_head(representation), batch.chemical_fingerprint.float())
+        return loss, (absolute, int(target.numel()))
+
+    loss, (absolute, rows) = optimizer_update(model, optimizer, loss_builder,
+        clip_norm=clip_norm, check_finite=check_finite)
+    return loss, absolute, rows
 
 
 def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode):
@@ -1036,3 +1050,15 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         "source_archive_sha256": context.source_archive_sha256,
         "runtime_certificate_id": canonical_fingerprint(certificate)}, hardware=hardware,
         observed_costs=costs)
+
+
+def _model_batch_to_device(batch, device, *, training: bool, auxiliary: bool = False):
+    """Transfer only model/loss inputs; keep source IDs and boundaries on CPU."""
+    fields = ["x", "edge_index", "edge_attr", "batch", "random_walk_pe"]
+    if training:
+        fields.append("y")
+    if auxiliary:
+        if not training:
+            raise ValueError("Auxiliary inputs belong to training only")
+        fields.append("chemical_fingerprint")
+    return batch.to(device, *fields, non_blocking=True)

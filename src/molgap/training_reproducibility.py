@@ -1,9 +1,12 @@
 """Reproducibility and durable-checkpoint primitives for remote training."""
 from __future__ import annotations
 
+from contextlib import contextmanager
+
 import hashlib
 import importlib.metadata
 import json
+import math
 import os
 import platform
 import random
@@ -68,6 +71,31 @@ def capture_rng_state(*, loader_generator=None) -> dict:
     if loader_generator is not None:
         state["loader_generator"] = loader_generator.get_state()
     return state
+
+
+def validate_accelerator_request(requested: str, observed: str, *, hip_runtime: bool = False) -> None:
+    """Match resource metadata, never select a different execution algorithm."""
+    import re
+    if (type(requested) is not str or not requested.strip() or type(observed) is not str
+            or not observed.strip() or type(hip_runtime) is not bool):
+        raise ValueError("Explicit declared and observed accelerator names are required")
+    def compact(value):
+        return re.sub(r"[^A-Z0-9]", "", value.upper())
+    def model_name(value):
+        return re.sub(r"^(?:(?:NVIDIA|AMD|TESLA|GEFORCE|QUADRO|INSTINCT))+", "", compact(value)).removesuffix("GPU")
+    declared, actual = model_name(requested), model_name(observed)
+    # Vendor/suffix stripping must not turn two unspecified names into a match.
+    unspecified = {"", "GPU", "CUDA", "ACCELERATOR"}
+    if declared in unspecified or actual in unspecified:
+        matches = False
+    elif compact(requested) == "DCU":
+        matches = hip_runtime
+    elif declared == "A100":
+        matches = re.fullmatch(r"A100(?:(?:SXM[24]|PCIE|40GB|80GB))*", actual) is not None
+    else:
+        matches = declared == actual
+    if not matches:
+        raise ValueError("Observed accelerator differs from frozen request: " + requested + " / " + observed)
 
 
 def restore_rng_state(state: Mapping, *, loader_generator=None) -> None:
@@ -189,10 +217,12 @@ def atomic_torch_save(path: Path, value) -> None:
     os.replace(temporary, path)
 
 
-def atomic_json(path: Path, value: Mapping) -> None:
+def atomic_json(path: Path, value: Mapping | list) -> None:
+    if not isinstance(value, (Mapping, list)):
+        raise ValueError("Atomic JSON requires a mapping or list")
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.tmp")
-    temporary.write_text(json.dumps(dict(value), indent=2) + "\n", encoding="utf-8")
+    temporary.write_text(json.dumps(dict(value) if isinstance(value, Mapping) else value, indent=2) + "\n", encoding="utf-8")
     os.replace(temporary, path)
 
 
@@ -202,3 +232,59 @@ def sha256_file(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+@contextmanager
+def deterministic_memory_fill_context(*, enabled: bool):
+    """Scope the process-global safety fill; never disable deterministic algorithms.
+
+    Exclusive execution workers only. Turning the fill off requires separate
+    qualification that the executed graph never reads uninitialized storage;
+    this helper supplies neither that evidence nor training authorization.
+    """
+    import torch
+
+    if type(enabled) is not bool:
+        raise ValueError("Memory fill selection must be an exact bool")
+    if (not torch.are_deterministic_algorithms_enabled()
+            or torch.is_deterministic_algorithms_warn_only_enabled()):
+        raise ValueError("Fail-closed deterministic algorithms are required")
+    previous = torch.utils.deterministic.fill_uninitialized_memory
+    try:
+        torch.utils.deterministic.fill_uninitialized_memory = enabled
+        yield
+    finally:
+        torch.utils.deterministic.fill_uninitialized_memory = previous
+
+
+
+def sum_scalar_metrics(values) -> float:
+    """Transfer detached batch scalars once, preserving Python addition order.
+
+    Do not replace this with a tensor sum: that changes the retained metric's
+    reduction precision/order. Values have no connection to backward or RNG.
+    """
+    import torch
+
+    values = list(values)
+    if not values:
+        return 0.0
+    if isinstance(values[0], torch.Tensor):
+        first = values[0]
+        if any(not isinstance(v, torch.Tensor) or v.ndim != 0
+               or v.dtype != first.dtype or v.device != first.device
+               or not v.is_floating_point() for v in values):
+            raise ValueError("Expected matching floating-point scalar metrics")
+        values = torch.stack([v.detach() for v in values]).cpu().tolist()
+    elif any(isinstance(v, (bool, torch.Tensor)) or not isinstance(v, (int, float))
+             for v in values):
+        raise ValueError("Expected scalar metrics, not mixed tensor/host values")
+    total = 0.0
+    for value in values:
+        value = float(value)
+        if not math.isfinite(value):
+            raise ValueError("Nonfinite scalar metric")
+        total += value
+    if not math.isfinite(total):
+        raise ValueError("Nonfinite scalar metric total")
+    return total

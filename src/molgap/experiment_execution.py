@@ -33,6 +33,7 @@ class TrainingAdapter:
     serialization_modules: tuple[str, ...] = ()
     source_files: tuple[str, ...] = ()
     model_factory: str | None = None
+    target_identity_in_completion: bool = False
 
     @property
     def addon_modes(self) -> tuple[tuple[str, str], ...]:
@@ -75,6 +76,23 @@ def graph_training_adapter(family, *, model_factory, addons=(), source_files=(),
 
 
 TRAINING_ADAPTERS = MappingProxyType({
+    ("neural_atom_k1", "3"): TrainingAdapter(
+        ("neural_atom_k1", "3"), "molgap.family_training_runner", "k1-session-v1",
+        tuple(TrainingAddon(name, "1", mode) for name, mode in (
+            ("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
+            ("k1_mean2_clean_second", "mean2_clean_second"))), ("molgap.pcqm_wedge",),
+        ("src/molgap/family_training_runner.py", "src/molgap/family_training_kernel.py",
+         "src/molgap/k1_screen_training.py", "src/molgap/qm9_neural_atom.py",
+         "src/molgap/k1_execution_layout.py", "src/molgap/k1_clean_second.py"),
+        target_identity_in_completion=True),
+    ("gptrans_t", "2"): TrainingAdapter(
+        ("gptrans_t", "2"), "molgap.family_training_runner", "gptrans-session-v1",
+        tuple(TrainingAddon(name, "1", name) for name in
+              ("pair_prenorm", "centered_logits", "memory_value", "memory_message")),
+        ("molgap.pcqm_wedge",),
+        ("src/molgap/family_training_runner.py", "src/molgap/family_training_kernel.py",
+         "src/molgap/pcqm_gptrans_v4.py", "src/molgap/gptrans.py"),
+        target_identity_in_completion=True),
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
         (TrainingAddon("k1_joint_aggregation", "1", "ssma"),), ("molgap.pcqm_wedge",),
@@ -186,8 +204,9 @@ def training_adapter(arm: dict) -> TrainingAdapter:
 
 
 def build_family_recipe(family: tuple[str, str], *, addon: str | tuple[str, ...] | None = None,
-                        source_idx_sha256: str, target_sha256: str,
-                        addon_version: str = "1", recipe_config: dict | None = None) -> dict:
+                        source_idx_sha256: str | None = None, target_sha256: str | None = None,
+                        addon_version: str = "1", recipe_config: dict | None = None,
+                        configuration=None, train_role_identity=None, development_role_identity=None) -> dict:
     """Build owned constants before freezing the Spec; never read development rows."""
     adapter = TRAINING_ADAPTERS.get(family)
     if adapter is None:
@@ -200,6 +219,14 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | tuple[str, ...]
         mode = "composed"
     else:
         mode = "reference" if addon is None else adapter.addon(addon, addon_version).mode
+    if adapter.module == "molgap.family_training_runner":
+        if recipe_config is not None:
+            raise ValueError("Shared family configuration must use FamilyRecipe")
+        return import_module(adapter.module).build_screen_recipe(mode, configuration=configuration,
+            family=family, source_idx_sha256=source_idx_sha256, target_sha256=target_sha256,
+            train_role_identity=train_role_identity, development_role_identity=development_role_identity)
+    if configuration is not None or train_role_identity is not None or development_role_identity is not None:
+        raise ValueError("Explicit shared configuration is not supported by historical adapters")
     if adapter.model_factory is not None:
         return import_module(adapter.module).build_screen_recipe(mode, family=family,
             source_idx_sha256=source_idx_sha256, target_sha256=target_sha256,
@@ -293,7 +320,7 @@ def validate_staged_trajectory(spec, arm_id, input_root: Path, *, expected_sha25
 def execute_training_phase(*, spec, job, phase, source_root, package_dir,
                            expected_package_identity, input_root, output,
                            account, run_reference, staged_root=None, prospective_sha256=None,
-                           preflight_dir=None, resume_output=None):
+                           preflight_dir=None, resume_output=None, target_identity=None):
     """Static dispatch; each owning trainer retains its recipe/runtime gates."""
     from .experiment_family_workflow import RunContext, _artifact_path
     from .research_memory.trace import file_digest
@@ -323,6 +350,12 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     owner = import_module(adapter.module)
     runner = owner.run_screen_preflight if phase == "preflight" else owner.run_screen_arm
     options = {} if phase == "preflight" else {"preflight_dir": preflight_dir or output}
+    if adapter.module == "molgap.family_training_runner":
+        options["prospective_root"] = staged_root
+        if phase == "train":
+            options["target_identity"] = target_identity
+        if resume_output is not None:
+            raise ValueError("Shared sessions resume from their own output; external resume is unsupported")
     if phase == "preflight" and resume_output is not None:
         runner = getattr(owner, "run_screen_resume_preflight", None)
         if not callable(runner):

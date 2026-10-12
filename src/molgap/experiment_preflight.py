@@ -722,7 +722,17 @@ def _release_imports(request):
                 value = getattr(value, part)
         except Exception as exc:
             errors.append({"check": "pickle_symbol", "item": f"{module}.{symbol}", "message": str(exc)})
-    return {"errors": errors, "import_origins": _origins(root)}
+    initialization_checks = {}
+    for item in request.get("initializations", []):
+        try:
+            trainer = importlib.import_module("molgap.family_training_runner")
+            factory = importlib.import_module("molgap.family_training_kernel")
+            _, recipe = trainer.read_recipe(Path(item["recipe_path"]))
+            model, initialization = factory.load_family_model(recipe, Path(item["path"]))
+            initialization_checks[item["arm_id"]] = initialization
+        except Exception as exc:
+            errors.append({"check": "family_initialization", "item": item["arm_id"], "message": str(exc)})
+    return {"errors": errors, "import_origins": _origins(root), "initialization_checks": initialization_checks}
 
 
 def check_release_inputs(spec, package_dir, *, expected_package_identity,
@@ -733,7 +743,8 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
 
     Only caller-selected trusted training shards are inspected. Pickle opcodes
     are read, never executed. Selected modules are imported in the existing
-    package-only CPU bootstrap; no model is constructed or run.
+    package-only CPU bootstrap. New shared interfaces additionally construct a CPU
+    model to check initialization keys/shape/dtype; no forward pass is executed.
     """
     import ast
     import pickletools
@@ -765,6 +776,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
 
     modules = set(required_modules)
     pickle_globals = set()
+    family_initializations = []
     if not modules:
         errors.append({"check": "import", "item": "required_modules", "message": "Declare the family loader/trainer modules"})
     with tempfile.TemporaryDirectory(prefix="molgap-release-") as temporary:
@@ -794,6 +806,11 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                         expected_state_sha256=declaration["initialization"]["state_sha256"])
                     if input_root and not p.resolve().is_relative_to(Path(input_root).resolve()):
                         raise ValueError("Initialization is outside the staged input root")
+                    if (declaration["family"]["name"], declaration["family"]["version"]) in {
+                            ("neural_atom_k1", "3"), ("gptrans_t", "2")}:
+                        modules.update({"molgap.family_training_runner", "molgap.family_training_kernel"})
+                        family_initializations.append({"arm_id": a,
+                            "path": str(p), "recipe_path": str(_under(source, _relative(recipe_files[a])))})
                     return result
                 check("initialization", arm_id, initialization)
         for kind, supplied in (("recipe", recipe_files), ("initialization", initial_states)):
@@ -832,7 +849,8 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                 shutil.copyfile(Path(__file__), bootstrap)
                 request, response = workspace / "request.json", workspace / "response.json"
                 _atomic(request, {"mode": "release-imports", "source_root": str(source),
-                    "modules": sorted(modules), "pickle_globals": sorted(pickle_globals), "dependency_paths": sorted({
+                    "modules": sorted(modules), "pickle_globals": sorted(pickle_globals),
+                    "initializations": family_initializations, "dependency_paths": sorted({
                         sysconfig.get_path("purelib"), sysconfig.get_path("platlib")})})
                 env = {k: v for k, v in os.environ.items() if not k.upper().startswith("PYTHON")}
                 env.update(CUDA_VISIBLE_DEVICES="", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
@@ -841,6 +859,8 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                         cwd=workspace, env=env, stdout=log, stderr=log, timeout=60, check=True)
                 result = _load(response.read_bytes())
                 errors.extend(result["errors"])
+                for arm_id, report in result.get("initialization_checks", {}).items():
+                    checked[f"family_initialization:{arm_id}"] = report
                 return result["import_origins"]
             check("clean_import", "package", imports)
     if entry_script:

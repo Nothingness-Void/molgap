@@ -46,12 +46,8 @@ def validate_plan(spec, plan):
 def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
                  metadata, initial_states, jobs):
     staged = output / "source_dataset"
-    staged.mkdir()
-    for path in package.iterdir():
-        shutil.copyfile(path, staged / ("source_payload.bin" if path.name == "source.tar.gz" else path.name))
-    (staged / "initial_states").mkdir()
-    for arm_id, initial in initial_states.items():
-        shutil.copyfile(initial, staged / "initial_states" / (arm_id + ".pt"))
+    from .experiment_package import stage_source_inputs
+    stage_source_inputs(package, staged, initial_states)
     publish_immutable_bytes(staged / "dataset-metadata.json", canonical_json({
         "id": platform_plan["source_dataset"], "title": platform_plan["source_dataset"].split("/")[1],
         "licenses": [{"name": "CC0-1.0"}]}).encode())
