@@ -42,6 +42,18 @@ from the exact existing package/prospective identities and passed its final
 sealed-source release check. No new physical training attempt was created by
 this local reconciliation.
 
+Final `check --frozen --portable` found six more existing retained artifacts
+(four historical clean-second checkpoint files and two seed43 preflight logs)
+absent in this worktree. Their primary-desktop originals were copied and SHA
+checked without decoding. The final portable/frozen check passed. This validates
+committed planning/custody/index state, not this pending run's training replay.
+
+Shared budget/mirror implementation was selectively integrated into desktop
+commit73f367af and routed in9817d9ef, without this experiment's unfinished
+science or canonical trajectories. Both desktop and the owning experiment
+branch were pushed; the source executing on Kaggle remains the frozen4d4de9a7
+package, not whichever branch happens to be checked out later.
+
 Submission receipts are in `submission/`; canonical prospective records are in
 `rml/mean2/` and `rml/single_ema/`. Durable private Kaggle outputs will be under
 `/kaggle/working/experiment`, not `/kaggle/temp`. Source and configuration remain
