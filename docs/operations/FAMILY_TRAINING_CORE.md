@@ -27,7 +27,11 @@ layer may copy or alter the training algorithm to fit a platform or scale.
 relative manifest path. `load_training_data(root, selection)` resolves that
 selection under a caller-supplied local mount. The mount path is not scientific
 identity; the pinned manifest and its shard bytes are. It accepts the existing
-`molgap-pcqm4mv2-fixed-subset-v1` format over OGB atom9/bond3/RWSE16 topology.
+`molgap-pcqm4mv2-fixed-subset-v1` and the accepted legacy
+`molgap-pcqm4mv2-kaggle-fixed-subset-v1` formats over OGB atom9/bond3/RWSE16.
+The legacy mirror keeps its original manifest/shard identity, requires explicit
+false protected-role flags and reuses the existing topology-only view to strip
+cached geometry before batching. No new geometry is built or used by the model.
 100K, 500K and full differ in their manifest counts, not in the loading code.
 
 Only selected topology roles are opened. Development is optional and confined
@@ -124,6 +128,10 @@ It invokes the same `experiment_training_worker` preflight/train phases and
 are supported. No new submitter, polling or takeover is introduced. The older
 Kaggle-only `prepare-workflow` retains its strict development-comparison plan;
 it is not renamed into a supposedly universal submission command.
+
+Launch wall budget and cleanup reserve are configuration, not training policy.
+See [Kaggle budget fields](../../platforms/kaggle/README.md#runtime-budget-configuration);
+the shared launcher does not impose the old four-hour experiment ceiling.
 
 Native preflight consumes authorized training topology only. It retains two
 independent two-step endpoints, an actual serialized one-step resume origin and

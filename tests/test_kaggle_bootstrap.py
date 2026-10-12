@@ -87,7 +87,7 @@ def test_early_failure_keeps_unknown_gpu_cost_null(entry, monkeypatch, metadata)
     assert value["status"] == "failed"
 
 
-def frozen_launch(entry, limit):
+def frozen_launch(entry, limit, *, launch_overrides=None):
     entry.INPUT_ROOT.mkdir()
     archive = entry.INPUT_ROOT / "source_payload.bin"
     with tarfile.open(archive, "w:gz") as bundle:
@@ -101,6 +101,7 @@ def frozen_launch(entry, limit):
     config = {"jobs": [{"recipe": "recipe.json"}],
               "expected_source_archive_sha256": hashlib.sha256(archive.read_bytes()).hexdigest(),
               "expected_package_identity": "package", "spec_identity": "spec"}
+    config.update(launch_overrides or {})
     launch = entry.INPUT_ROOT / "experiment_launch.json"
     launch.write_text(json.dumps(config))
     entry.EXPECTED_LAUNCH_SHA256 = hashlib.sha256(launch.read_bytes()).hexdigest()
@@ -109,10 +110,11 @@ def frozen_launch(entry, limit):
         (entry.INPUT_ROOT / name).write_text("fixture")
 
 
-@pytest.mark.parametrize("limit", [120, 12600, 14400, None])
+@pytest.mark.parametrize("limit", [90, 120, 12600, 14400, 14401, 32400, 100000, None])
+@pytest.mark.parametrize("reserve", [0, 60])
 @pytest.mark.parametrize("phase_failure", [None, "pip", "runtime"])
-def test_bootstrap_reuses_shared_writer_and_preserves_budget(entry, monkeypatch, limit, phase_failure):
-    frozen_launch(entry, limit)
+def test_bootstrap_reuses_shared_writer_and_preserves_budget(entry, monkeypatch, limit, reserve, phase_failure):
+    frozen_launch(entry, limit, launch_overrides={"cleanup_reserve_seconds": reserve})
     calls = []
     clock = [100.0]
     monkeypatch.setattr(entry.time, "perf_counter", lambda: clock[0])
@@ -156,20 +158,48 @@ def test_bootstrap_reuses_shared_writer_and_preserves_budget(entry, monkeypatch,
             entry.main()
     else:
         entry.main()
-    assert calls[0] == ("pip", None if limit is None else limit - 60)
+    assert calls[0] == ("pip", None if limit is None else limit - reserve)
     if phase_failure != "pip":
-        assert calls[1] == ("runtime", None if limit is None else limit - 65)
+        assert calls[1] == ("runtime", None if limit is None else limit - reserve - 5)
     assert bool(shared_writes) == (phase_failure != "pip")
     assert report(entry)["monotonic_seconds"] == (5 if phase_failure == "pip" else 25)
 
 
-@pytest.mark.parametrize("limit", [119, 14401, True, 12600.0])
+@pytest.mark.parametrize("limit", [0, -1, 60, True, 12600.0, "32400"])
 def test_bootstrap_rejects_invalid_ceiling_without_pip(entry, monkeypatch, limit):
     frozen_launch(entry, limit)
     monkeypatch.setattr(entry.subprocess, "run", lambda *a, **k: pytest.fail("pip must not execute"))
-    with pytest.raises(ValueError, match="outside supported bounds"):
+    with pytest.raises(ValueError, match="ceiling"):
         entry.main()
     assert report(entry)["status"] == "failed"
+
+
+@pytest.mark.parametrize("changes", [
+    {"allocation_wall_limit_seconds": 0}, {"allocation_wall_limit_seconds": True},
+    {"allocation_wall_limit_seconds": 32400.0}, {"allocation_wall_limit_seconds": None},
+    {"allocation_wall_limit_seconds": 32400}, {"cleanup_reserve_seconds": -1},
+    {"cleanup_reserve_seconds": True}, {"cleanup_reserve_seconds": 14400},
+])
+def test_launch_rejects_invalid_or_conflicting_budget_before_pip(entry, monkeypatch, changes):
+    frozen_launch(entry, 14400, launch_overrides=changes)
+    monkeypatch.setattr(entry.subprocess, "run", lambda *a, **k: pytest.fail("pip must not execute"))
+    with pytest.raises(ValueError):
+        entry.main()
+
+
+def test_launch_config_can_supply_budget_without_recipe_limit(entry, monkeypatch):
+    frozen_launch(entry, None, launch_overrides={
+        "allocation_wall_limit_seconds": 32400, "cleanup_reserve_seconds": 180,
+    })
+    calls = []
+    monkeypatch.setattr(entry.time, "perf_counter", lambda: 100.0)
+    def stop_after_observing_budget(command, **kwargs):
+        calls.append(kwargs["timeout"])
+        raise RuntimeError("synthetic stop before installation")
+    monkeypatch.setattr(entry.subprocess, "run", stop_after_observing_budget)
+    with pytest.raises(RuntimeError, match="synthetic stop"):
+        entry.main()
+    assert calls == [32220]
 
 
 def test_atomic_fallback_cleans_up_failed_replace(entry, monkeypatch):

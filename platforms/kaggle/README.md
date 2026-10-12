@@ -51,6 +51,22 @@ verify its remote state, and do not create a local slot-trigger process.
 Retrieved outputs and acceptance evidence belong in
 `platforms/_records/kaggle/`.
 
+## Runtime Budget Configuration
+
+The frozen `experiment_launch.json` may set `allocation_wall_limit_seconds`
+(positive integer seconds, or null for no local watchdog) and
+`cleanup_reserve_seconds` (nonnegative integer seconds, default60 for legacy
+compatibility). For example, 32400 and180 declare nine hours including setup,
+qualification and both arms, with three minutes reserved for exit/publication.
+No four-hour ceiling is imposed by the launcher or pair runtime. The platform
+skill must check actual platform limits and the user's resource authorization.
+
+Old packages without these launch fields retain their matching per-arm recipe
+budget and60-second reserve. A launch field cannot override a conflicting frozen
+recipe budget. Missing/null local budget does not authorize unlimited compute.
+Training parameters remain in the frozen family recipe; the launcher never
+chooses batch size, optimizer, learning-rate schedule, EMA or training exposure.
+
 ## Paid-run release gate
 
 Before each `kernels push`, including a retry, the owning packager must fail

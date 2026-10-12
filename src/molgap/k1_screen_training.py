@@ -134,10 +134,10 @@ ROW_ORDER_FINGERPRINT = (
 
 class _PackedGraphDatasetFactory:
     @staticmethod
-    def load(path: Path):
+    def load(path: Path, *, mmap: bool = False):
         from .packed_graph_dataset import PackedGraphDataset
 
-        payload = PackedGraphDataset(path)
+        payload = PackedGraphDataset(path, mmap=mmap)
         for field in FORBIDDEN_MODEL_FIELDS:
             if field in payload._data:
                 del payload._data[field]

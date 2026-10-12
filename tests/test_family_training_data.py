@@ -59,6 +59,51 @@ def test_full_train_selection_never_reads_unselected_development(pinned_data):
     assert data.development is None and data.development_rows == 0
 
 
+@pytest.mark.parametrize("development", [False, True])
+def test_existing_kaggle_mirror_uses_same_topology_loader(pinned_data, development):
+    root, selection, manifest = pinned_data
+    manifest["format"] = "molgap-pcqm4mv2-kaggle-fixed-subset-v1"
+    manifest["geometry_shards"] = manifest.pop("assets")["topology"]
+    for key in ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"):
+        manifest[key] = False
+    for record in manifest["geometry_shards"]:
+        path = root / record["file"]
+        payload, slices = torch.load(path, weights_only=False)
+        payload.pos = torch.ones(payload.x.shape[0], 3)
+        slices["pos"] = slices["x"].clone()
+        torch.save((payload, slices), path)
+        record["sha256"] = sha256_file(path)
+    path = root / selection.manifest
+    path.write_text(json.dumps(manifest), encoding="utf-8")
+    if not development:
+        (root / "development.pt").unlink()
+    data = load_training_data(root, replace(selection, manifest_sha256=sha256_file(path),
+                                          development=development))
+    assert data.train_rows == 4
+    assert data.development_rows == (2 if development else 0)
+    assert data.target_mean_eV == 1.5
+    assert all("pos" not in graph for graph in data.train)
+    if development:
+        assert all("pos" not in graph for graph in data.development)
+
+
+@pytest.mark.parametrize("flag", ["official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"])
+@pytest.mark.parametrize("value", [True, None])
+def test_kaggle_mirror_missing_or_protected_flags_fail_before_pickle(pinned_data, monkeypatch, flag, value):
+    root, selection, manifest = pinned_data
+    manifest["format"] = "molgap-pcqm4mv2-kaggle-fixed-subset-v1"
+    manifest["geometry_shards"] = manifest.pop("assets")["topology"]
+    for key in ("official_validation_role_read", "test_dev_role_read", "test_challenge_role_read"):
+        manifest[key] = False
+    manifest[flag] = value
+    path = root / selection.manifest
+    path.write_text(json.dumps(manifest), encoding="utf-8")
+    monkeypatch.setattr("molgap.packed_graph_dataset.PackedGraphDataset",
+                        lambda *a, **k: pytest.fail("no protected/ambiguous pickle access"))
+    with pytest.raises(ValueError, match="protected-role"):
+        load_training_data(root, replace(selection, manifest_sha256=sha256_file(path)))
+
+
 @pytest.mark.parametrize("change", ["overlap", "protected", "missing", "reorder", "bad_features"])
 def test_bad_view_is_rejected_before_deserialization(pinned_data, monkeypatch, change):
     root, selection, manifest = pinned_data
