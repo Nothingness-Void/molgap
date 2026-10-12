@@ -117,7 +117,8 @@ def draft(initial, normalization_checkpoint):
         trajectory = {"schema": "molgap-trajectory-v1", "trajectory_id": tid, "record_mode": "prospective",
             "track": "B", "owner": "desktop", "family_id": "k1-mean2-single-ema-500k",
             "question": "Does single-forward EMA0.9999 improve500K cost/accuracy versus fresh mean2?",
-            "hypothesis": {"hypothesis_id": "H-" + tid, "supporting_evidence_ids": [],
+            "hypothesis": {"hypothesis_id": "H-" + tid, "supporting_evidence_ids": [
+                "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal"],
                 "observed_deficiency": "100K signal and execution-only savings do not establish500K recipe benefit.",
                 "alternative_explanations": ["EMA lag or BN mismatch", "Loss of second-view regularization", "Seed/runtime variation"],
                 "changed_mechanism": "Two-forward live mean2 versus one-forward stepwise EMA0.9999",
@@ -127,7 +128,8 @@ def draft(initial, normalization_checkpoint):
                 "expected_native_cost_ref": cost_id, "related_closed_family_ids": ["k1-clean-second-view", "k1-t4-cost-quality"]},
             "state_at_start": {"source_commit": commit, "source_config_identity": canonical_fingerprint(arm),
                 "contract_refs": [REL + "/protocol.md", REL + "/config.json", REL + "/evidence_review.md"],
-                "reference_ids": [], "parent_trajectory_ids": [], "prior_evidence_ids": [],
+                "reference_ids": [], "parent_trajectory_ids": [], "prior_evidence_ids": [
+                    "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal"],
                 "role_snapshot_refs": [REL + "/protocol.md"], "budget_snapshot_ref": REL + "/config.json"},
             "actions": [action], "result": {"evidence_ids": [], "evidence_refs": []},
             "decision": {"outcome": "ACTIVE", "decision_ref": REL + "/decision.md",
