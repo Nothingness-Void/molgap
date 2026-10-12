@@ -8,6 +8,7 @@ contracts own detailed schemas and evidence rules.
 
 | Operation | Reuse owner | Boundary / next pointer |
 |---|---|---|
+| Reuse server GPTrans execution v3 | [Execution entry](GPTRANS_EXECUTION.md), `gptrans_execution_tuning.py`: `ExecutionTuning` / `tuned_backend` | Compatible isolated local-bond owner only; scoped cache/transfer/EMA reuse. Legacy desktop V4 fails closed; no scientific/default/scale-up substitution. |
 | Select the adopted K1 execution policy | [K1 execution](K1_EXECUTION.md), `experiment_execution.py` recommendation constants | Reuse `k1_initialized_layout/1`; native AdamW, explicit runtime pin and mandatory preflight. Original reference/frozen recipes remain intact; no scale-up authority. |
 | Prepare or accept a registered multi-arm run | `experiment_workflow.py`, local [CLI](EXPERIMENT_CLI.md) | The [workflow](EXPERIMENT_WORKFLOW.md) owns the concise plan and lifecycle. |
 | Draft a fixed100K K1 pair | [k1_pair_preparation.py](../../src/molgap/k1_pair_preparation.py): `build_inputs` | Reuses fixed data/target bindings and family recipes; fresh questions need fresh IDs, protocol and explicit release. Drafts do not publish RML or authorize training. |

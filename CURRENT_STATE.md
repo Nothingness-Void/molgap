@@ -55,6 +55,10 @@ New compatible K1 training declarations use the user-selected
 Original references and scientific/compute gates stay unchanged; this is not a
 production-model promotion or a release for another training run.
 
+Server local-bond GPTrans v3 execution helpers are available through the
+[shared tuning entry](docs/operations/GPTRANS_EXECUTION.md). Legacy desktop
+GPTrans references remain unchanged; this is not a new model or training release.
+
 ## Active Work and Unresolved Acceptance
 
 The2026-10-09 [Kaggle reconciliation](docs/operations/KAGGLE_ACCEPTANCE_20261009.md)

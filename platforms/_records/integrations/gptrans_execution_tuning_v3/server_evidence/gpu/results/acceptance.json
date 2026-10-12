@@ -1,0 +1,350 @@
+{
+  "accepted": true,
+  "format": "molgap-execution40-acceptance-v1",
+  "model_inference_executed": false,
+  "training_executed": false,
+  "comparison_class": "PAIRED_ENDPOINT",
+  "experiment_purpose": "delivery_experiment",
+  "arms": {
+    "execution_original": {
+      "parameters": 5871201,
+      "stage_wall_seconds": 8366.348124723,
+      "best_epoch": 39,
+      "selected_ema_mae_eV": 0.14267474907815456,
+      "best_live_mae_eV": 0.14732122421264648,
+      "best_live_epoch": 38,
+      "final_live_mae_eV": 0.14787687361240387,
+      "final_ema_mae_eV": 0.1426747441291809,
+      "epoch_seconds": [
+        231.49045920700001,
+        213.422822214,
+        213.7285925419999,
+        216.3043033439999,
+        215.46470435900005,
+        210.14322608299994,
+        214.14993707300005,
+        213.68031973200004,
+        213.83658169299997,
+        214.87981611399982,
+        214.0921609330003,
+        210.72382822799955,
+        211.48148619600033,
+        212.91657188099998,
+        215.11218795900004,
+        216.22244164799986,
+        214.76050260400007,
+        211.10678750500028,
+        213.80706947199997,
+        214.8823682530001,
+        212.15195618899997,
+        213.09917011400012,
+        212.41965000299933,
+        210.785591545,
+        211.4099968870005,
+        212.68666227799986,
+        212.40393616099936,
+        211.90005779900002,
+        212.7170739080002,
+        209.58491103300003,
+        210.68410324600063,
+        212.79958519699994,
+        215.51471353499983,
+        213.73501513100018,
+        185.7188956279997,
+        173.3136652560006,
+        173.98963364200063,
+        174.18017656700067,
+        173.27532669599896,
+        174.73977537799874
+      ],
+      "phase_timing": {
+        "optimizer_call_seconds": 6340.301433201003,
+        "training_batches": 31240,
+        "evaluation_seconds": 1900.8381418509985,
+        "evaluation_passes": 80,
+        "checkpoint_publication_seconds": 10.29986628800134
+      },
+      "timing_summary": {
+        "first_epoch_seconds": 231.49045920700001,
+        "post_first_epoch_seconds": {
+          "count": 39,
+          "mean": 207.38014369297434,
+          "q25": 210.75470988649977,
+          "median": 212.7170739080002,
+          "q75": 213.96437131300013,
+          "min": 173.27532669599896,
+          "max": 216.3043033439999
+        },
+        "epoch_scope": "Native row timer excludes subsequent resume-checkpoint publication; not GPU-only time",
+        "complete_stage_presentations_per_second": 477.9528583305746,
+        "complete_stage_scope": "Includes loading, training, live/EMA evaluation and artifact publication; excludes preflight",
+        "synchronized_evaluation_seconds": 1900.8381418509985,
+        "evaluation_stage_fraction": 0.22720045992754254,
+        "resume_checkpoint_publication_seconds": 10.29986628800134,
+        "checkpoint_scope": "Wrapped native resume-checkpoint saves, not every output/chunk publication",
+        "optimizer_call_seconds": 6340.301433201003,
+        "optimizer_scope": "CPU enqueue duration, not synchronized GPU compute; do not subtract to infer a GPU bottleneck"
+      },
+      "memory": {
+        "optimizer_preflight": {
+          "peak_allocated_bytes": 1074344960,
+          "peak_reserved_bytes": 1109393408,
+          "total_memory_bytes": 15636037632
+        },
+        "training_peak_bytes": 1079213056,
+        "training_peak_status": "measured",
+        "reason": "CUDA peak counters reset at training-stage entry, including loading and publication",
+        "training_reserved_peak_bytes": 1109393408
+      },
+      "runtime_certificate_id": "c056b871a2bfcd8db454969200fee76ab27d7a9a966f8fb7103eb9cee2d7e6f7",
+      "resources": {
+        "torch_threads": 2,
+        "os_cpu_count": 4,
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "training_workers": 4,
+        "development_workers": 0,
+        "/sys/fs/cgroup/cpu.max": "400000 100000"
+      }
+    },
+    "execution_optimized": {
+      "parameters": 5871201,
+      "stage_wall_seconds": 7381.790575184,
+      "best_epoch": 39,
+      "selected_ema_mae_eV": 0.14199575872838496,
+      "best_live_mae_eV": 0.14752377569675446,
+      "best_live_epoch": 39,
+      "final_live_mae_eV": 0.14752377569675446,
+      "final_ema_mae_eV": 0.14199577271938324,
+      "epoch_seconds": [
+        198.90814663800006,
+        190.26520143899995,
+        186.94548347500006,
+        186.62493968800004,
+        183.99009571600004,
+        182.8363059889998,
+        181.88374240400003,
+        183.97765041599996,
+        186.4472127309998,
+        183.52459150100003,
+        182.61079027899996,
+        184.30417083400016,
+        181.726059996,
+        181.65617907099977,
+        182.29608039699997,
+        187.27255251399993,
+        183.58319968600017,
+        180.763070341,
+        180.00538456499999,
+        181.89966536599968,
+        180.5363168060003,
+        182.17042323199985,
+        185.8973675289999,
+        182.47418969999944,
+        181.09226404499987,
+        182.21903393699995,
+        180.28709827999955,
+        179.5239213220002,
+        182.71294778999982,
+        185.54723478399956,
+        183.24446284600072,
+        180.22400560200003,
+        181.21744436899917,
+        182.70717225499993,
+        181.0438416249999,
+        182.7712281460008,
+        183.77900348599997,
+        181.64754501099924,
+        181.53723749600067,
+        179.53074143699996
+      ],
+      "phase_timing": {
+        "optimizer_call_seconds": 5694.335524408017,
+        "training_batches": 31240,
+        "evaluation_seconds": 1561.7520400859999,
+        "evaluation_passes": 80,
+        "checkpoint_publication_seconds": 11.034090111000523
+      },
+      "timing_summary": {
+        "first_epoch_seconds": 198.90814663800006,
+        "post_first_epoch_seconds": {
+          "count": 39,
+          "mean": 182.8916886181025,
+          "q25": 181.37734093249992,
+          "median": 182.47418969999944,
+          "q75": 183.87832695099996,
+          "min": 179.5239213220002,
+          "max": 190.26520143899995
+        },
+        "epoch_scope": "Native row timer excludes subsequent resume-checkpoint publication; not GPU-only time",
+        "complete_stage_presentations_per_second": 541.7005480273094,
+        "complete_stage_scope": "Includes loading, training, live/EMA evaluation and artifact publication; excludes preflight",
+        "synchronized_evaluation_seconds": 1561.7520400859999,
+        "evaluation_stage_fraction": 0.21156818581880066,
+        "resume_checkpoint_publication_seconds": 11.034090111000523,
+        "checkpoint_scope": "Wrapped native resume-checkpoint saves, not every output/chunk publication",
+        "optimizer_call_seconds": 5694.335524408017,
+        "optimizer_scope": "CPU enqueue duration, not synchronized GPU compute; do not subtract to infer a GPU bottleneck"
+      },
+      "memory": {
+        "optimizer_preflight": {
+          "peak_allocated_bytes": 1072282112,
+          "peak_reserved_bytes": 1109393408,
+          "total_memory_bytes": 15636037632
+        },
+        "training_peak_bytes": 1102393344,
+        "training_peak_status": "measured",
+        "reason": "CUDA peak counters reset at training-stage entry, including loading and publication",
+        "training_reserved_peak_bytes": 1136656384
+      },
+      "runtime_certificate_id": "c1339859fa5a08e183802a6cfb05d0b7a065c5e6dad12f1cb18b7a99a2ff162d",
+      "resources": {
+        "torch_threads": 1,
+        "os_cpu_count": 4,
+        "affinity": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "training_workers": 1,
+        "development_workers": 0,
+        "/sys/fs/cgroup/cpu.max": "400000 100000"
+      },
+      "execution_tuning_report": {
+        "format": "molgap-gptrans-execution-tuning-v3",
+        "tuning": {
+          "cpu_threads": 1,
+          "training_workers": 1,
+          "development_workers": 0,
+          "independent_models": 1,
+          "total_cpu_budget": 2,
+          "development_cache_bytes": 268435456,
+          "cache_development": true,
+          "selective_transfers": true,
+          "cache_ema_plan": true,
+          "reuse_weight_backup": true,
+          "reuse_loaded_datasets": true
+        },
+        "tuning_identity": "b6edf3e83f1a686b3d2cefeab97629c5f7cec5b05590bc6da643c11b0115c987",
+        "previous_cpu_threads": 2,
+        "cpu_count_reported_by_os": 4,
+        "remote_qualified": false,
+        "cache_budget_scope": "retained tensor storage, not total process RSS",
+        "phase_timing": {
+          "optimizer_call_seconds": 5694.335524408017,
+          "training_batches": 31240,
+          "evaluation_seconds": 1561.7520400859999,
+          "evaluation_passes": 80,
+          "checkpoint_publication_seconds": 11.034090111000523
+        },
+        "development_caches": [
+          {
+            "cold_passes": 1,
+            "warm_passes": 79,
+            "cached_tensor_storage_bytes": 159776160,
+            "disabled_reason": null
+          }
+        ],
+        "weight_backup_allocations": 1,
+        "weight_backup_tensor_bytes": 23484804,
+        "ema_tensor_plans": [
+          {
+            "plan_builds": 1,
+            "update_calls": 31240
+          }
+        ],
+        "dataset_cache": {
+          "loads": 2,
+          "hits": 0
+        }
+      }
+    }
+  },
+  "paired_accuracy": {
+    "rows": 50000,
+    "reference_mae_eV": 0.14267474907815456,
+    "candidate_mae_eV": 0.14199575872838496,
+    "candidate_minus_reference_eV": -0.0006789903497695923,
+    "paired_row_bootstrap": {
+      "delta": -0.0006789903497695923,
+      "ci95": [
+        -0.0015226476892232896,
+        0.00017323128998279473
+      ],
+      "probability_better": 0.9452,
+      "n_bootstrap": 5000,
+      "seed": 20260912
+    },
+    "candidate_win_fraction": 0.50132,
+    "absolute_error_delta_quantiles_eV": [
+      -3.0128304958343506,
+      -0.09534716606140137,
+      -0.04278099536895752,
+      -0.0002262592315673828,
+      0.042020320892333984,
+      0.09324359893798828,
+      2.36074161529541
+    ],
+    "posthoc_reference_error_quintiles": [
+      {
+        "reference_error_quintile": 1,
+        "rows": 10000,
+        "reference_mae_eV": 0.015576379895210267,
+        "candidate_mae_eV": 0.05500747902393341,
+        "candidate_minus_reference_eV": 0.03943109912872315
+      },
+      {
+        "reference_error_quintile": 2,
+        "rows": 10000,
+        "reference_mae_eV": 0.049650146996974946,
+        "candidate_mae_eV": 0.06799066206216813,
+        "candidate_minus_reference_eV": 0.018340515065193175
+      },
+      {
+        "reference_error_quintile": 3,
+        "rows": 10000,
+        "reference_mae_eV": 0.0938672756433487,
+        "candidate_mae_eV": 0.09353366961479187,
+        "candidate_minus_reference_eV": -0.00033360602855682375
+      },
+      {
+        "reference_error_quintile": 4,
+        "rows": 10000,
+        "reference_mae_eV": 0.16345329623222352,
+        "candidate_mae_eV": 0.14686941664218903,
+        "candidate_minus_reference_eV": -0.016583879590034486
+      },
+      {
+        "reference_error_quintile": 5,
+        "rows": 10000,
+        "reference_mae_eV": 0.3908266466230154,
+        "candidate_mae_eV": 0.34657756629884245,
+        "candidate_minus_reference_eV": -0.044249080324172976
+      }
+    ],
+    "subgroup_caveat": "Post-hoc target-derived diagnostic, not deployable routing or causal attribution"
+  },
+  "complete_stage_speedup": 1.133376521524313,
+  "native_cost": {
+    "allocated_gpu_inventory": [
+      "GPU 0: Tesla T4 (UUID: GPU-f480d28c-8d03-a57b-b0fe-c6ac8f4ba611)",
+      "GPU 1: Tesla T4 (UUID: GPU-34a7f0c7-3bd6-d4de-02bd-c78e5ad38b0a)"
+    ],
+    "allocated_gpu_count": 2,
+    "used_gpu_count": 2,
+    "wall_seconds": 8421.937166265,
+    "allocated_device_hours": 4.6788539812583325,
+    "source_archive_sha256": "64d243d5edf7838898e31b69905b0871ae4dd7772093b959320e3463f05a3445"
+  },
+  "speed_gate_passed": true,
+  "selected_accuracy_gate_passed": true,
+  "paired_interval_gate_passed": true,
+  "delivery_gate_passed": true,
+  "protected_role_access": false,
+  "scientific_caveat": "Execution/accuracy qualification, not architecture or scale superiority"
+}

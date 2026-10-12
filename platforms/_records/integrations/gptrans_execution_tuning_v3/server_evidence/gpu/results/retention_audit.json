@@ -1,0 +1,103 @@
+{
+  "format": "molgap-execution40-retention-audit-v1",
+  "accepted": true,
+  "training_executed": false,
+  "model_inference_executed": false,
+  "checkpoint_resume_executed": false,
+  "arms": {
+    "execution_original": {
+      "chunks": [
+        {
+          "path": "platforms/_records/kaggle/training/gptrans_tuning40_v1/gptrans_tuning40/execution_original/training/checkpoint_epoch_09.pt",
+          "sha256": "1846e2f740a6102f3a5fa3499591427051bedf727a9567559de00142f267c4b1",
+          "epoch": 9,
+          "optimizer_steps": 7810,
+          "sample_presentations": 999680,
+          "scheduler_trace_rng_source_certificate_and_finite_fp32_passed": true
+        },
+        {
+          "path": "platforms/_records/kaggle/training/gptrans_tuning40_v1/gptrans_tuning40/execution_original/training/checkpoint_epoch_19.pt",
+          "sha256": "24f09acf03c54d85a197d5cd23ede363a82f9e38ea9df98549b4c456dcb3b5cb",
+          "epoch": 19,
+          "optimizer_steps": 15620,
+          "sample_presentations": 1999360,
+          "scheduler_trace_rng_source_certificate_and_finite_fp32_passed": true
+        },
+        {
+          "path": "platforms/_records/kaggle/training/gptrans_tuning40_v1/gptrans_tuning40/execution_original/training/checkpoint_epoch_29.pt",
+          "sha256": "0daf4d7d790f7dee59c22637b309d20f440a3f653cd303bc9bc3a05a75140750",
+          "epoch": 29,
+          "optimizer_steps": 23430,
+          "sample_presentations": 2999040,
+          "scheduler_trace_rng_source_certificate_and_finite_fp32_passed": true
+        },
+        {
+          "path": "platforms/_records/kaggle/training/gptrans_tuning40_v1/gptrans_tuning40/execution_original/training/checkpoint_epoch_39.pt",
+          "sha256": "3ca165028555fc7b90e00ba331767e7906c7c0b17dc5624d3c5f29e3a410ce60",
+          "epoch": 39,
+          "optimizer_steps": 31240,
+          "sample_presentations": 3998720,
+          "scheduler_trace_rng_source_certificate_and_finite_fp32_passed": true
+        }
+      ],
+      "last_matches_epoch39": true,
+      "best_epoch": 39,
+      "best_equals_final_ema": true,
+      "best_sha256": "3db38f4a3246921c21243597c2637ad94182d15919546649ecccd7ebdeaf8bd0"
+    },
+    "execution_optimized": {
+      "chunks": [
+        {
+          "path": "platforms/_records/kaggle/training/gptrans_tuning40_v1/gptrans_tuning40/execution_optimized/training/checkpoint_epoch_09.pt",
+          "sha256": "22476bdda4082a25c9aaab3ba899747ced372d943e17676e7a8f583b47e85a74",
+          "epoch": 9,
+          "optimizer_steps": 7810,
+          "sample_presentations": 999680,
+          "scheduler_trace_rng_source_certificate_and_finite_fp32_passed": true
+        },
+        {
+          "path": "platforms/_records/kaggle/training/gptrans_tuning40_v1/gptrans_tuning40/execution_optimized/training/checkpoint_epoch_19.pt",
+          "sha256": "96dfa073f2dbf52844560c4fc9fef2cccc7401b35b048fe18b5f7fd25707e825",
+          "epoch": 19,
+          "optimizer_steps": 15620,
+          "sample_presentations": 1999360,
+          "scheduler_trace_rng_source_certificate_and_finite_fp32_passed": true
+        },
+        {
+          "path": "platforms/_records/kaggle/training/gptrans_tuning40_v1/gptrans_tuning40/execution_optimized/training/checkpoint_epoch_29.pt",
+          "sha256": "4dde3342bbad8ea183e912e9a1e14c145c8ccbceeadc99d81639c05ef174d1f5",
+          "epoch": 29,
+          "optimizer_steps": 23430,
+          "sample_presentations": 2999040,
+          "scheduler_trace_rng_source_certificate_and_finite_fp32_passed": true
+        },
+        {
+          "path": "platforms/_records/kaggle/training/gptrans_tuning40_v1/gptrans_tuning40/execution_optimized/training/checkpoint_epoch_39.pt",
+          "sha256": "84cbd31fbbce0fa1de26e05dbce6d5caa20003a9dd843f3b79de147dbc32d671",
+          "epoch": 39,
+          "optimizer_steps": 31240,
+          "sample_presentations": 3998720,
+          "scheduler_trace_rng_source_certificate_and_finite_fp32_passed": true
+        }
+      ],
+      "last_matches_epoch39": true,
+      "best_epoch": 39,
+      "best_equals_final_ema": true,
+      "best_sha256": "5496d62a918100fbd86d0ed2e9796392b03df03f7b1ad7f591aaee10876412ee"
+    }
+  },
+  "prior_optimized_v1_equivalence": {
+    "scope": "retained selected predictions only; not an isolated cross-job speed comparison",
+    "prior_path": "platforms/_records/kaggle/training/gptrans_execution40_v3/gptrans_execution40/execution_optimized/training/development_predictions.pt",
+    "prior_sha256": "982976346f998668971f6522a5493e37d07ec602ae460ac4ff2e97894df6780e",
+    "tuned_path": "platforms/_records/kaggle/training/gptrans_tuning40_v1/gptrans_tuning40/execution_optimized/training/development_predictions.pt",
+    "tuned_sha256": "982976346f998668971f6522a5493e37d07ec602ae460ac4ff2e97894df6780e",
+    "rows": 50000,
+    "bitwise_equal": {
+      "source_idx": true,
+      "target_eV": true,
+      "prediction_eV": true
+    },
+    "maximum_prediction_delta_eV": 0.0
+  }
+}

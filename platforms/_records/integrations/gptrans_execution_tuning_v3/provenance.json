@@ -1,0 +1,77 @@
+{
+  "format": "molgap-reviewed-execution-integration-v1",
+  "source_branch": "molgap-server",
+  "source_commit": "bdc4d238f4c628e745b74cea58d5fa50c0542e98",
+  "desktop_base_commit": "bb91beb3da44c6ddbf7735fd5b4982eee0dff56c",
+  "purpose": "selective shared execution infrastructure integration; not a scientific experiment",
+  "retained_server_evidence": [
+    {
+      "source_path": "experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md",
+      "retained_path": "platforms/_records/integrations/gptrans_execution_tuning_v3/server_evidence/decision_terminal.md",
+      "sha256": "49825d863ea03fe2a6c6015dfa03b0ff35710b76609ea1c28fb8e1a9b1f50738",
+      "bytes": 5702
+    },
+    {
+      "source_path": "experiments/pcqm_gptrans_execution_tuning40/protocol.md",
+      "retained_path": "platforms/_records/integrations/gptrans_execution_tuning_v3/server_evidence/protocol.md",
+      "sha256": "6d60ec2d6f87ec49331c2fbf7d7e604a227842658a0cb0d0f217c496d2ecd7e7",
+      "bytes": 3497
+    },
+    {
+      "source_path": "experiments/pcqm_gptrans_execution_tuning40/gpu/results/acceptance.json",
+      "retained_path": "platforms/_records/integrations/gptrans_execution_tuning_v3/server_evidence/gpu/results/acceptance.json",
+      "sha256": "c226b79acfe23e4cfadae735c1b7928a75e4ec0a662f2efe01e623d61fe011b0",
+      "bytes": 12191
+    },
+    {
+      "source_path": "experiments/pcqm_gptrans_execution_tuning40/gpu/results/retention_audit.json",
+      "retained_path": "platforms/_records/integrations/gptrans_execution_tuning_v3/server_evidence/gpu/results/retention_audit.json",
+      "sha256": "401c8f1b89a3218ae887d5baa3394fbcee11f0496637f3bcd2a70169071cf5cd",
+      "bytes": 4954
+    },
+    {
+      "source_path": "experiments/pcqm_gptrans_execution_tuning40/gpu/rml_closure_status.json",
+      "retained_path": "platforms/_records/integrations/gptrans_execution_tuning_v3/server_evidence/gpu/rml_closure_status.json",
+      "sha256": "9e4f578caa6ebfac3fbe177a7a1721fe91f8558787055b710a9f5ed7ba3370f7",
+      "bytes": 1737
+    }
+  ],
+  "reviewed_server_sources": [
+    {
+      "path": "src/molgap/gptrans_execution_backend.py",
+      "server_sha256": "e05a9cb6ce79f46c577660c48d7a71f4af251589771f77e054fbcae34c9659f1"
+    },
+    {
+      "path": "src/molgap/gptrans_execution_hotpath.py",
+      "server_sha256": "9c6444e08c725f1de4cebff3c31fa9c532408caaa310003de72892fa42230d3a"
+    },
+    {
+      "path": "src/molgap/gptrans_execution_tuning.py",
+      "server_sha256": "965054ed1877d29e9c480351cbcdb580e24e6e582072e1c13704f6482639a597"
+    },
+    {
+      "path": "src/molgap/pcqm_gptrans_step_profile.py",
+      "server_sha256": "285eb0f8db1ba3f6135589eaa34376986b6d0c9fbafd48f8d06a1ee771f8942a"
+    },
+    {
+      "path": "src/molgap/pcqm_gptrans_v4.py",
+      "server_sha256": "87aade27ea0e6f72e7444c5ca85dd6f2219f126a3b842d4ce8778c590f9dbee0"
+    }
+  ],
+  "adaptations": [
+    "Move reviewed foreach EMA primitive out of the server-only profiling runner into the shared hotpath module",
+    "Add reviewed optional native EMA decay while retaining historical default .9999",
+    "Reject missing compatible trainer hooks before context mutation",
+    "Retain reusable CPU tests; omit experiment-specific submission and historical acceptance tests"
+  ],
+  "not_imported": [
+    "server branch state/roadmap",
+    "new research models and model factories",
+    "server submission or monitor logic",
+    "canonical server RML or generated indexes"
+  ],
+  "qualified_scope": "server delivery record only: T4x2, local-bond GPTrans, fixed100K/50K,40 epochs of60 horizon, FP32 BS128",
+  "new_native_execution_qualification": false,
+  "rml_replay_ready": false,
+  "rml_closure_status": "BLOCKED_NONCAUSAL_SAME_RUN_FINALIZATION"
+}

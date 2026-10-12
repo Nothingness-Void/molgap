@@ -6,6 +6,8 @@ authorization, a trainer loop, or platform submission.
 
 For new compatible K1 execution declarations, follow the selected
 [initialized-layout policy](K1_EXECUTION.md). Frozen references stay unchanged.
+For the reviewed server local-bond GPTrans execution layer, use the
+[v3 tuning entry](GPTRANS_EXECUTION.md); it does not replace legacy GPTrans dispatch.
 
 ## Owners
 
