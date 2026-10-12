@@ -9,6 +9,7 @@ Fully complies with MolGap RML & Research Protocol:
 """
 from __future__ import annotations
 
+import copy
 import json
 import math
 import sys
@@ -201,38 +202,39 @@ def main():
         calib_dur = time.perf_counter() - t_calib0
         print(f"Clean-BN recalibration finished in {calib_dur:.2f}s across {calib_report['bn_modules']} modules.")
 
+        # Evaluate Clean-BN model and accumulate full 50,000 predictions INSIDE calibration context
+        model.eval()
+        all_preds = []
+        all_targets = []
+        with torch.no_grad():
+            for b in dev_loader:
+                b = b.to(device)
+                pred = (_forward(model, b) * STD_EV + MEAN_EV).cpu()
+                all_preds.append(pred)
+                all_targets.append(b.y.view(-1).cpu())
+
+        pred_tensor = torch.cat(all_preds)
+        target_tensor = torch.cat(all_targets)
+        clean_bn_mae = float((pred_tensor - target_tensor).abs().mean().item())
+
+        # Save Clean-BN checkpoint and predictions while calibrated buffers are active
+        calibrated_state = copy.deepcopy(model.state_dict())
+        atomic_torch_save(ARTIFACTS_DIR / "selected_clean_bn_model.pt", {
+            "epoch": best_epoch,
+            "clean_bn_mae_eV": clean_bn_mae,
+            "raw_ema_mae_eV": best_ema_mae,
+            "state_dict": calibrated_state,
+            "calib_report": calib_report
+        })
+        atomic_torch_save(ARTIFACTS_DIR / "development_predictions.pt", {
+            "prediction_eV": pred_tensor,
+            "target_eV": target_tensor,
+            "mae_eV": clean_bn_mae,
+            "epoch": best_epoch
+        })
+
     for name, p in model.named_parameters():
         p.requires_grad = orig_requires_grad[name]
-
-    # Evaluate Clean-BN model and accumulate full 50,000 predictions
-    model.eval()
-    all_preds = []
-    all_targets = []
-    with torch.no_grad():
-        for b in dev_loader:
-            b = b.to(device)
-            pred = (_forward(model, b) * STD_EV + MEAN_EV).cpu()
-            all_preds.append(pred)
-            all_targets.append(b.y.view(-1).cpu())
-
-    pred_tensor = torch.cat(all_preds)
-    target_tensor = torch.cat(all_targets)
-    clean_bn_mae = float((pred_tensor - target_tensor).abs().mean().item())
-
-    # Save Clean-BN checkpoint and predictions
-    atomic_torch_save(ARTIFACTS_DIR / "selected_clean_bn_model.pt", {
-        "epoch": best_epoch,
-        "clean_bn_mae_eV": clean_bn_mae,
-        "raw_ema_mae_eV": best_ema_mae,
-        "state_dict": model.state_dict(),
-        "calib_report": calib_report
-    })
-    atomic_torch_save(ARTIFACTS_DIR / "development_predictions.pt", {
-        "prediction_eV": pred_tensor,
-        "target_eV": target_tensor,
-        "mae_eV": clean_bn_mae,
-        "epoch": best_epoch
-    })
 
     # 6. Scientific Analysis vs mean2 reference
     gain_eV = REF_MEAN2_MAE_EV - clean_bn_mae
