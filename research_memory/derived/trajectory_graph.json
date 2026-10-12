@@ -351,6 +351,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-mean2-single-ema-500k-20261013-mean2:A001",
+      "target": "experiments/pcqm_k1_mean2_single_ema_500k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-mean2-single-ema-500k-20261013-single_ema:A001",
+      "target": "experiments/pcqm_k1_mean2_single_ema_500k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-residual-reconciliation:A001",
       "target": "experiments/pcqm_k1_residual_reconciliation/analysis.json",
       "type": "action_produced_evidence"
@@ -1663,6 +1673,16 @@
     {
       "source": "pcqm-k1-bn-mechanism-a100-20261008",
       "target": "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "target": "TB-k1-mean2-single-ema-500k-20261013-mean2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "target": "TB-k1-mean2-single-ema-500k-20261013-single_ema",
       "type": "prior_evidence"
     },
     {
@@ -3059,6 +3079,14 @@
     },
     {
       "id": "TB-k1-local-speed-10ep-reference-20261011",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-mean2-single-ema-500k-20261013-mean2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-mean2-single-ema-500k-20261013-single_ema",
       "type": "trajectory"
     },
     {

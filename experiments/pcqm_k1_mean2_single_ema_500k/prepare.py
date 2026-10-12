@@ -170,16 +170,43 @@ def main():
     p.add_argument("--initial", type=Path, required=True)
     p.add_argument("--normalization-checkpoint", type=Path, required=True)
     p.add_argument("--stage", type=Path)
+    p.add_argument("--reconcile-stage", action="store_true")
     args = p.parse_args()
-    spec, plan = draft(args.initial, args.normalization_checkpoint)
+    if args.reconcile_stage:
+        if args.stage is None:
+            raise ValueError("Reconciliation requires the existing stage")
+        from molgap.experiment_package import verify_experiment_source_package
+        from molgap.experiment_prospective import validate_execution_identity
+        from molgap.research_memory.compiler import rebuild_research_memory
+        manifest = verify_experiment_source_package(args.stage / "package", repo_root=ROOT)
+        spec = ExperimentSpec.from_json((args.stage / "package/experiment_spec.json").read_text())
+        rebuilt = rebuild_research_memory(ROOT)
+        if not rebuilt:
+            raise ValueError("RML rebuild did not produce derived state")
+        jobs = []
+        for device, binding in enumerate(spec.to_dict()["prospective"]["arms"]):
+            trajectory = json.loads((ROOT / binding["output"] / "trajectory.json").read_text())
+            validate_execution_identity(spec, binding["arm_id"], trajectory, manifest["source_commit"])
+            if trajectory["state_at_start"]["source_config_identity"] != canonical_fingerprint(
+                    next(a for a in spec.to_dict()["arms"] if a["arm_id"] == binding["arm_id"])):
+                raise ValueError("Existing prospective arm identity changed")
+            jobs.append({"arm_id": binding["arm_id"], "device": device,
+                "recipe": REL + "/training_recipe_" + binding["arm_id"] + ".json",
+                "initial_state": "initial_states/" + binding["arm_id"] + ".pt",
+                "trajectory_id": binding["trajectory_id"]})
+        plan = {"arms": jobs}
+        result = {"jobs": jobs}
+    else:
+        spec, plan = draft(args.initial, args.normalization_checkpoint)
     if args.stage is None:
         print(json.dumps({"status": "DRAFT_ONLY", "spec_identity": spec.identity}))
         return
-    from molgap.experiment_workflow import prepare_family_training
-    result = prepare_family_training(spec, ROOT, plan, args.stage)
-    if result["status"] != "SOURCE_INPUTS_PREPARED":
-        print(json.dumps(result))
-        raise SystemExit(1)
+    if not args.reconcile_stage:
+        from molgap.experiment_workflow import prepare_family_training
+        result = prepare_family_training(spec, ROOT, plan, args.stage)
+        if result["status"] != "SOURCE_INPUTS_PREPARED":
+            print(json.dumps(result))
+            raise SystemExit(1)
     # Platform metadata over the shared prepared worker; no custom training loop.
     from molgap.kaggle_workflow import _metadata, freeze_inputs
     from molgap.experiment_launch import publish_immutable_bytes
