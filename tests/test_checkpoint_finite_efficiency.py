@@ -80,3 +80,18 @@ def test_heterogeneous_finite_state_and_bytes_remain_unchanged(tmp_path):
     torch.save(state, target)
     after.write_bytes(target.read_bytes())
     assert before.read_bytes() == after.read_bytes()
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="Native accelerator validation is separate")
+@pytest.mark.parametrize("branch", ["model", "optimizer", "ema", "cursor"])
+def test_native_gpu_nonfinite_still_reports_first_path(branch):
+    state = {branch: {"good": torch.ones(3, device="cuda"),
+        "bad": torch.tensor(float("nan"), device="cuda")}, "later_host": float("inf")}
+    with pytest.raises(ValueError, match="checkpoint." + branch + ".bad$"):
+        _finite_tree(state, "checkpoint")
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="Native accelerator validation is separate")
+def test_native_host_failure_before_gpu_failure_keeps_original_priority():
+    with pytest.raises(ValueError, match=r"checkpoint.host$"):
+        _finite_tree({"host": float("nan"), "gpu": torch.tensor(float("inf"), device="cuda")}, "checkpoint")
