@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| 1 | C-GPTRANS-BOND-CARRY-DESIGN | Review/integrate only the bounded sparse depth-memory hypothesis; no compute released. | [Design](experiments/pcqm_gptrans_bond_carry_100k/proposal.md): exact disabled-carry encoder equivalence, parent/gradient/runtime qualification and a valid full50K audit path before a prospective screen |
 | — | C-GPTRANS-TRIPLET-ROUTING | Closed without nomination: recovered product and bond-supported routing both accepted with complete Replay pairs, both worse than aggregate. | Preserve [interpretation](experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/interpretation.md); no retraining/extension/seed expansion. Deferred full50K audit needs matching loader/reference qualification, not a substituted10Kpanel |
 | — | C-GPTRANS-TRIPLET-FOLLOWUP | Closed partial run: branch-drop arm accepted and replay-admitted without nomination; product arm initialization failure is infrastructure-only. | Preserve the [partial terminal interpretation](experiments/pcqm_gptrans_triplet_followup_100k/gpu/results/interpretation.md); no automatic retry, deferred audit, scale or two-arm Replay claim |
 | — | C-GPTRANS-EXECUTION-TUNING | Closed: scoped v3 speed/accuracy delivery qualification passed; noncausal canonical RML finalization remains blocked. | Preserve [terminal decision](experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md); no automatic successor or causal Replay claim |

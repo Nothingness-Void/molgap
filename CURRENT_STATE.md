@@ -12,6 +12,10 @@ run/recipe/runtime-specific; historical entrypoints and job custody are unchange
 
 ## Server active screen
 
+No server training is active. The [post-routing research review](experiments/pcqm_v5_route_portfolio/bond_memory_review_2026-10-13.md)
+retains a design-only bond-message carry prototype; it has synthetic tests but
+no integrated encoder, prelaunch release, remote result or Replay claim.
+
 The [triplet routing dual100K](experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/interpretation.md)
 completed as Kaggle2 kernel138425374/version1. Both arms passed independent
 acceptance, strict comparison and actual complete Replay admission; neither
@@ -25,9 +29,10 @@ The authorized [triplet follow-up dual100K](experiments/pcqm_gptrans_triplet_fol
 ended partially complete as Kaggle2 kernel138367521/version1. Triplet-return
 dropout passed independent acceptance and actual per-arm Replay admission but
 was worse than the frozen aggregate; it is closed without nomination. The
-channelwise product arm failed initialization qualification before training;
-its scientific hypothesis remains unevaluated, not rejected. The experiment
-as a whole is not a two-arm Replay-ready result. Preserve both terminal records
+channelwise product arm failed initialization qualification before training.
+Its separate recovery/scientific result belongs to the triplet-routing record
+above; the failed physical attempt remains infrastructure-only. That partial
+experiment is not a two-arm Replay-ready result. Preserve both terminal records
 and full allocated cost. That attempt's binding is closed; its old authority
 releases no automatic retry, successor, deferred500K inference, extra seed or scale-up.
 
