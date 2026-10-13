@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "5dc035bcea2b7e1edd74ec457cb9da6a88832d3f1444eefa1c1baef4a60f9d6c",
+  "source_digest": "e0f2c9e42f5728df2749ae564ee92ea42b2cdff82c79b68d8a342147cbeac80e",
   "trajectories": [
     {
       "completeness_status": "partial",
@@ -56,49 +56,55 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/preparation_v1/decision.md",
       "family_id": "gptrans-author-input-preparation",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-gptrans-v5-audit-reference-100k"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_author_alignment/preparation_rml/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_author_alignment/preparation_rml/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-rml-reconciled-preparation-v1-20261001"
+      ],
       "track": "C",
       "trajectory_id": "TC-gptrans-author-input-preparation"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v1/decision.md",
       "family_id": "gptrans-author-input-preparation",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-gptrans-v5-audit-reference-100k"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-rml-reconciled-recovery-v1-20261001"
+      ],
       "track": "C",
       "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_gptrans_author_alignment/dual_arm_protocol.md",
+      "decision_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v2/decision.md",
       "family_id": "gptrans-author-input-preparation",
-      "outcome": "ACTIVE",
+      "outcome": "NO_TRAIN",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-gptrans-v5-audit-reference-100k"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-rml-reconciled-recovery-v2-20261001"
+      ],
       "track": "C",
       "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery-v2"
     },
@@ -122,6 +128,228 @@
     },
     {
       "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_bottleneck_audit/decision.md",
+      "family_id": "gptrans-frozen-bottleneck-diagnostic",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_bottleneck_audit/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-bottleneck-frozen-v1"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-bottleneck-frozen-v1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_ema_portability/results/environment_v1/decision.md",
+      "family_id": "runtime-qualification",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema-portability-frozen-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_ema_portability/environment_rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-ema-runtime-qualification-v1"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-ema-runtime-qualification-v1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_execution_tuning40/protocol.md",
+      "family_id": "gptrans-execution-tuning40",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_execution_tuning40/gpu/execution_optimized/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-execution-tuning40-optimized-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_execution_tuning40/protocol.md",
+      "family_id": "gptrans-execution-tuning40",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_execution_tuning40/gpu/execution_original/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-execution-tuning40-original-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_execution40/protocol.md",
+      "family_id": "gptrans-execution40",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_execution40/gpu/execution_optimized/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-execution40-optimized-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_execution40/protocol.md",
+      "family_id": "gptrans-execution40",
+      "outcome": "ACTIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_execution40/gpu/execution_original/rml_plan/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-execution40-original-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_bond_local_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-bond-local-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_bond_mean_readout_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-bond-mean-readout-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-bond-mean-readout-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_decay001_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-decay001-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_ema_portability/results/failure_v1/decision.md",
+      "family_id": "gptrans-ema-frozen-portability",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_ema_portability/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-ema-portability-infrastructure-v1"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_ema_portability/results/failure_v2/decision.md",
+      "family_id": "gptrans-ema-frozen-portability",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema-portability-frozen-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_ema_portability/attempt_v2/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-ema-portability-infrastructure-v2"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_ema_portability/results/failure_v3/decision.md",
+      "family_id": "gptrans-ema-frozen-portability",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema-portability-frozen-s42-v2"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_ema_portability/attempt_v3/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-ema-portability-infrastructure-v3"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v3"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md",
+      "family_id": "gptrans-ema-frozen-portability",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema-portability-frozen-s42-v3"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_ema_portability/attempt_v4/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-ema-portability-frozen-s42-v4"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-ema-portability-frozen-s42-v4"
+    },
+    {
+      "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/results/decision.md",
       "family_id": "gptrans-g1-degree_scale_ema999",
       "outcome": "POSITIVE_UNDER_CONTRACT",
@@ -137,6 +365,330 @@
       ],
       "track": "C",
       "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_ffn2_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-ffn2-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-ffn2-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/failure_results/decision.md",
+      "family_id": "gptrans-g1-degree_group_decay_ema999",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-group-decay-infrastructure-failure-100k-s42-v1"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-group-decay-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_group_decay_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-group-decay-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-group-decay-recovery-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_local_bond_return_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-local-bond-return-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-local-bond-return-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_local_connected_pair_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-local-connected-pair-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_bond_local_cap_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-bond-local-cap-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-local-control-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/results/decision.md",
+      "family_id": "gptrans-g1-scale_ema",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-scale-ema-equal-updates-500k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-local-transfer-equal-updates-500k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_local_triplet_aggregate_ema999",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_local_triplet_attention_ema999",
+      "outcome": "POSITIVE_UNDER_CONTRACT",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-bond-local-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-local-triplet-attention-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_local_triplet_bond_route_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-local-triplet-bond-route-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_local_triplet_drop_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-local-triplet-drop-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-drop-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/failure_results/decision.md",
+      "family_id": "gptrans-g1-degree_local_triplet_product_ema999",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-local-triplet-product-initialization-failure-100k-s42-v1"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-product-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_local_triplet_product_v2_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-local-triplet-product-v2-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_node_mean_readout_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-node-mean-readout-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-node-mean-readout-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_node352_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-node352-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-node352-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_pair_depth_scale_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-pair-depth-scale-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-pair-depth-scale-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_pair_transition_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-pair-transition-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-pair-transition-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_path_endpoints_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-path-endpoints-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-path-endpoints-100k-s42"
     },
     {
       "completeness_status": "complete",
@@ -157,6 +709,60 @@
       "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
     },
     {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/results/decision.md",
+      "family_id": "gptrans-g1-degree_path_bond_mean_ema999",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-degree-path-bond-mean-ema999-100k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/results/decision.md",
+      "family_id": "gptrans-g1-scale_ema",
+      "outcome": "INCONCLUSIVE",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema999-100k-s42"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_scale_qualification/results/decision.md",
+      "family_id": "gptrans-g1-scale-qualification",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-ema-portability-frozen-s42-v4"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_scale_qualification/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-g1-scale500k-qualification-s42"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-g1-scale500k-qualification-s42"
+    },
+    {
       "completeness_status": "partial",
       "decision_ref": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/decision_122484011.md",
       "family_id": "gptrans-runtime-profiling",
@@ -173,6 +779,22 @@
       ],
       "track": "C",
       "trajectory_id": "TC-gptrans-shortest-path-profile-v5"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_source_dependence/decision.md",
+      "family_id": "gptrans-source-dependence",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_source_dependence/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-source-dependence-s42-v1"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-source-dependence-s42-v1"
     },
     {
       "completeness_status": "partial",
@@ -207,6 +829,22 @@
       ],
       "track": "C",
       "trajectory_id": "TC-gptrans-t-v4-100k-reference-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_gptrans_triplet_portability/decision.md",
+      "family_id": "gptrans-triplet-portability",
+      "outcome": "NO_TRAIN",
+      "owner": "server",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_gptrans_triplet_portability/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-gptrans-triplet-portability-s42-v1"
+      ],
+      "track": "C",
+      "trajectory_id": "TC-gptrans-triplet-portability-s42-v1"
     },
     {
       "completeness_status": "complete",
@@ -264,9 +902,9 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_chem_local_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/decision.md",
       "family_id": "k1-chemistry-separated-local",
-      "outcome": "ACTIVE",
+      "outcome": "CLOSED",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-atom-pair-local-100k-s42",
@@ -274,8 +912,10 @@
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_chem_local_100k/audit/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_chem_local_100k/audit/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-rml-reconciled-conditional-audit-20261001"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-chem-local-post100k-audit-s42"
     },
@@ -660,33 +1300,37 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_motif_hierarchy_100k/gpu_protocol.md",
+      "decision_ref": "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v1/decision.md",
       "family_id": "k1-motif-hierarchy",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_motif_hierarchy_100k/gpu_rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_motif_hierarchy_100k/gpu_rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-rml-reconciled-motif-v1-20261001"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-motif-hierarchy-100k-s42"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_motif_hierarchy_100k/attempt_v2/protocol.md",
+      "decision_ref": "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v2/decision.md",
       "family_id": "k1-motif-hierarchy",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_motif_hierarchy_100k/attempt_v2/gpu_rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_motif_hierarchy_100k/attempt_v2/gpu_rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-rml-reconciled-motif-v2-20261001"
+      ],
       "track": "C",
       "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v2"
     },
@@ -1081,17 +1725,19 @@
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_metagin_2d_100k/protocol.md",
+      "decision_ref": "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/decision.md",
       "family_id": "metagin-2d-multihop",
-      "outcome": "ACTIVE",
+      "outcome": "INFRASTRUCTURE_ONLY",
       "owner": "server",
       "parent_trajectory_ids": [
         "TC-k1-v4-100k-reference-s42"
       ],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_metagin_2d_100k/rml_plan/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_metagin_2d_100k/rml_plan/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-rml-reconciled-metagin-v1-20261001"
+      ],
       "track": "C",
       "trajectory_id": "TC-metagin-2d-3hop-100k-s42"
     },

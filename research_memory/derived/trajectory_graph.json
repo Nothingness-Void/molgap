@@ -66,13 +66,183 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-gptrans-bottleneck-frozen-v1:A001",
+      "target": "experiments/pcqm_gptrans_bottleneck_audit/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-ema-runtime-qualification-v1:A001",
+      "target": "experiments/pcqm_gptrans_ema_portability/environment_protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-execution-tuning40-optimized-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_execution_tuning40/gpu/execution_optimized/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-execution-tuning40-original-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_execution_tuning40/gpu/execution_original/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-execution40-optimized-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_execution40/gpu/execution_optimized/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-execution40-original-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_execution40/gpu/execution_original/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-mean-readout-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-decay-clock-wd001-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v2:A001",
+      "target": "experiments/pcqm_gptrans_ema_portability/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v3:A001",
+      "target": "experiments/pcqm_gptrans_ema_portability/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v4:A001",
+      "target": "experiments/pcqm_gptrans_ema_portability/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42:A001",
+      "target": "experiments/pcqm_gptrans_ema_portability/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-gptrans-g1-ema999-100k-s42:A001",
       "target": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/contract.json",
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-gptrans-g1-ffn2-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-group-decay-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-group-decay-recovery-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-bond-return-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-connected-pair-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-control-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42:A001",
+      "target": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-attention-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-bond-route-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-drop-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-product-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-node-mean-readout-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-node352-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-pair-depth-scale-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-pair-transition-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-path-endpoints-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-gptrans-g1-path-mean-100k-s42:A001",
       "target": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42:A001",
+      "target": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42:A001",
+      "target": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/contract.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-g1-scale500k-qualification-s42:A001",
+      "target": "experiments/pcqm_gptrans_scale_qualification/contract.json",
       "type": "action_produced_evidence"
     },
     {
@@ -83,6 +253,11 @@
     {
       "source": "TC-gptrans-shortest-path-profile-v5:A001",
       "target": "experiments/pcqm_gptrans_shortest_path_profile_v5/results/v5_acceptance_122484011.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-source-dependence-s42-v1:A001",
+      "target": "experiments/pcqm_gptrans_source_dependence/contract.json",
       "type": "action_produced_evidence"
     },
     {
@@ -103,6 +278,11 @@
     {
       "source": "TC-gptrans-t-v4-100k-reference-s42:A001",
       "target": "experiments/pcqm_gptrans_t_100k_v4/decision.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-triplet-portability-s42-v1:A001",
+      "target": "experiments/pcqm_gptrans_triplet_portability/contract.json",
       "type": "action_produced_evidence"
     },
     {
@@ -731,6 +911,166 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-execution-tuning40-optimized-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-execution-tuning40-original-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-execution40-optimized-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-execution40-original-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-g1-local-bond-return-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-g1-local-connected-pair-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-g1-local-control-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-bond-local-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "target": "TC-gptrans-ema-runtime-qualification-v1",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "target": "TC-gptrans-g1-scale500k-qualification-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-local-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ffn2-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node352-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-transition-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-endpoints-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-ema999-100k-s42",
+      "target": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-drop-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "target": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TC-gptrans-shortest-path-profile-v5",
       "target": "TC-gptrans-step-profile-v5",
       "type": "parent_trajectory"
@@ -1017,6 +1357,26 @@
     },
     {
       "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
       "target": "TC-gptrans-g1-ema999-100k-s42",
       "type": "prior_evidence"
     },
@@ -1032,7 +1392,347 @@
     },
     {
       "source": "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-path-bond-mean-100k-s42",
+      "target": "TC-gptrans-g1-path-endpoints-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-author-path-bond-mean-100k-s42",
       "target": "TC-gptrans-g1-path-mean-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-g1-local-bond-return-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-g1-local-connected-pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-g1-local-control-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-ema-portability-infrastructure-v1",
+      "target": "TC-gptrans-ema-runtime-qualification-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-bottleneck-frozen-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-execution-tuning40-optimized-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-execution-tuning40-original-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-execution40-optimized-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-execution40-original-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-bond-return-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-connected-pair-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-control-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-transition-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-source-dependence-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-group-decay-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-group-decay-ema999-100k-s42",
+      "target": "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-group-decay-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-bond-return-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-bond-return-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-connected-pair-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-connected-pair-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-drop-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-source-dependence-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-attention-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-drop-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-attention-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-drop-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-drop-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-pair-depth-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-pair-depth-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-path-endpoints-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-path-endpoints-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-bottleneck-frozen-v1",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-local-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ffn2-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node352-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-transition-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-endpoints-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-ema-portability-frozen-s42-v4",
+      "target": "TC-gptrans-g1-scale500k-qualification-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-group-decay-infrastructure-failure-100k-s42-v1",
+      "target": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-group-decay-infrastructure-failure-100k-s42-v1",
+      "target": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "target": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-scale500k-qualification-s42",
+      "target": "TC-gptrans-g1-bond-local-100k-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-scale500k-qualification-s42",
+      "target": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
       "type": "prior_evidence"
     },
     {
@@ -1053,6 +1753,11 @@
     {
       "source": "pcqm-gptrans-t-v4-100k-reference-s42",
       "target": "TC-gptrans-v5-audit-reference-100k",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-triplet-portability-s42-v1",
+      "target": "TC-gptrans-source-dependence-s42-v1",
       "type": "prior_evidence"
     },
     {
@@ -1467,12 +2172,212 @@
     },
     {
       "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-ema-runtime-qualification-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-author-degree-scale-100k-s42",
       "target": "TC-gptrans-g1-ema999-100k-s42",
       "type": "reference_used"
     },
     {
       "source": "pcqm-gptrans-author-degree-scale-100k-s42",
       "target": "TC-gptrans-g1-path-mean-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-bottleneck-frozen-v1",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-bottleneck-frozen-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-bond-return-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-connected-pair-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-control-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-source-dependence-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-drop-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-source-dependence-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "target": "TC-gptrans-triplet-portability-s42-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-bottleneck-frozen-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-ema-runtime-qualification-v1",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-local-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-ffn2-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-node352-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-pair-transition-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-endpoints-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "target": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "target": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
       "type": "reference_used"
     },
     {
@@ -1483,6 +2388,11 @@
     {
       "source": "pcqm-gptrans-t-v4-100k-reference-s42",
       "target": "TC-gptrans-v5-audit-reference-100k",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-triplet-portability-s42-v1",
+      "target": "TC-gptrans-source-dependence-s42-v1",
       "type": "reference_used"
     },
     {
@@ -1767,11 +2677,131 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-bottleneck-frozen-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-ema-portability-infrastructure-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-ema-portability-infrastructure-v2",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-ema-portability-infrastructure-v3",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-ema-runtime-qualification-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-bond-local-cap-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-bond-mean-readout-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-decay001-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-ffn2-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-group-decay-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-bond-return-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-connected-pair-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-triplet-attention-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-triplet-bond-route-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-triplet-drop-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-local-triplet-product-v2-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-node-mean-readout-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-node352-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-pair-depth-scale-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-pair-transition-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-gptrans-g1-degree-path-bond-mean-100k-s42",
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-g1-degree-path-bond-mean-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-degree-path-endpoints-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-gptrans-g1-degree-scale-ema999-100k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-group-decay-infrastructure-failure-100k-s42-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-local-triplet-product-initialization-failure-100k-s42-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-g1-scale500k-qualification-s42",
       "type": "evidence"
     },
     {
@@ -1780,6 +2810,10 @@
     },
     {
       "id": "pcqm-gptrans-shortest-path-profile-122484011",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-source-dependence-s42-v1",
       "type": "evidence"
     },
     {
@@ -1792,6 +2826,10 @@
     },
     {
       "id": "pcqm-gptrans-t-v4-100k-reference-s42",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-triplet-portability-s42-v1",
       "type": "evidence"
     },
     {
@@ -1987,6 +3025,34 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-rml-reconciled-conditional-audit-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-metagin-v1-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-motif-v1-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-motif-v2-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-preparation-v1-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-recovery-v1-20261001",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-rml-reconciled-recovery-v2-20261001",
+      "type": "evidence"
+    },
+    {
       "id": "v5-legacy-evidence-migration-2026-09-17",
       "type": "evidence"
     },
@@ -2019,7 +3085,131 @@
       "type": "trajectory"
     },
     {
+      "id": "TC-gptrans-bottleneck-frozen-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-ema-runtime-qualification-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-execution-tuning40-optimized-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-execution-tuning40-original-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-execution40-optimized-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-execution40-original-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-bond-local-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ema-portability-frozen-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ema-portability-frozen-s42-v2",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ema-portability-frozen-s42-v3",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ema-portability-frozen-s42-v4",
+      "type": "trajectory"
+    },
+    {
       "id": "TC-gptrans-g1-ema999-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-ffn2-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-group-decay-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-bond-return-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-connected-pair-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-control-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-drop-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-product-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-node352-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-pair-transition-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-path-endpoints-100k-s42",
       "type": "trajectory"
     },
     {
@@ -2027,7 +3217,23 @@
       "type": "trajectory"
     },
     {
+      "id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-g1-scale500k-qualification-s42",
+      "type": "trajectory"
+    },
+    {
       "id": "TC-gptrans-shortest-path-profile-v5",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-source-dependence-s42-v1",
       "type": "trajectory"
     },
     {
@@ -2036,6 +3242,10 @@
     },
     {
       "id": "TC-gptrans-t-v4-100k-reference-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-triplet-portability-s42-v1",
       "type": "trajectory"
     },
     {

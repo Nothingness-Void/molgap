@@ -15,8 +15,127 @@
       "reasons": [
         "no_compatible_candidate_reference_trace_pair"
       ],
+      "run_id": "gptrans-g1-local-scale-s42:degree_bond_local_ema999",
+      "trajectory_id": "TC-gptrans-g1-bond-local-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-readout-dual-s42:degree_bond_mean_readout_ema999",
+      "trajectory_id": "TC-gptrans-g1-bond-mean-readout-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-decay-clock-s42:degree_decay001_ema999",
+      "trajectory_id": "TC-gptrans-g1-decay-clock-wd001-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
       "run_id": "gptrans-g1-path-ema-dual-s42:degree_scale_ema999",
       "trajectory_id": "TC-gptrans-g1-ema999-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-node-capacity-s42:degree_ffn2_ema999",
+      "trajectory_id": "TC-gptrans-g1-ffn2-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-pair-scale-dual-s42:degree_group_decay_ema999",
+      "trajectory_id": "TC-gptrans-g1-group-decay-recovery-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_bond_return_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-bond-return-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-local-relation-dual-s42:degree_local_connected_pair_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-connected-pair-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-local-control-s42:degree_bond_local_cap_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-control-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_aggregate_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-aggregate-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-triplet-communication-dual-s42:degree_local_triplet_attention_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-attention-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-triplet-followup-dual-s42:degree_local_triplet_drop_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-drop-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_product_v2_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-readout-dual-s42:degree_node_mean_readout_ema999",
+      "trajectory_id": "TC-gptrans-g1-node-mean-readout-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-node-capacity-s42:degree_node352_ema999",
+      "trajectory_id": "TC-gptrans-g1-node352-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-pair-scale-dual-s42:degree_pair_depth_scale_ema999",
+      "trajectory_id": "TC-gptrans-g1-pair-depth-scale-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-pair-transition-s42:degree_pair_transition_ema999",
+      "trajectory_id": "TC-gptrans-g1-pair-transition-100k-s42"
     },
     {
       "reasons": [
@@ -31,6 +150,13 @@
       ],
       "run_id": "gptrans-g1-path-ema-dual-s42:degree_path_bond_mean",
       "trajectory_id": "TC-gptrans-g1-path-mean-100k-s42"
+    },
+    {
+      "reasons": [
+        "no_compatible_candidate_reference_trace_pair"
+      ],
+      "run_id": "gptrans-g1-path-ema-combined-s42:degree_path_bond_mean_ema999",
+      "trajectory_id": "TC-gptrans-g1-path-mean-ema999-combination-100k-s42"
     },
     {
       "reasons": [
@@ -74,6 +200,17 @@
   "family_coverage": [],
   "format": "molgap-rml-screening-backtest-v1",
   "included_comparable_groups": [
+    {
+      "comparability_key": "{\"identity\":{\"dataset_identity\":\"ae8fcc3afdb48297016236834ba76b24bb11399b7a16987b5ea1d4698c80c6e5\",\"ema_semantics\":\"ema\",\"evaluation_role_identity\":\"internal_development\",\"lr_schedule_identity\":\"unspecified_in_contract\",\"optimizer_identity\":\"AdamW-foreach-false-lr0.001-weight-decay0.05\",\"precision_identity\":\"fp32-no-tf32\",\"row_split_identity\":\"87c1f83b5caf329d15b0eb688bcb89132d5fa4eb15cb667e0c6eebc1f19652f6\",\"scientific_contract\":\"pcqm4mv2-fixed500k-ema-equal-update-v1\",\"selection_role_identity\":\"best_development_metric\",\"target_transform_identity\":\"unspecified_in_contract\",\"terminal_endpoint_identity\":\"endpoint_46860\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-g1-scale-ema-equal-updates-500k-s42\"}",
+      "run_ids": [
+        "gptrans-g1-local-scale-s42:scale_ema",
+        "gptrans-local-transfer500k-s42:scale_ema"
+      ],
+      "trajectory_ids": [
+        "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+        "TC-gptrans-g1-scale-ema-equal-updates-500k-s42"
+      ]
+    },
     {
       "comparability_key": "{\"identity\":{\"dataset_identity\":\"pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d\",\"ema_semantics\":\"ema9999-each-step-selection\",\"evaluation_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"lr_schedule_identity\":\"a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f\",\"optimizer_identity\":\"6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452\",\"precision_identity\":\"fp32-no-tf32-deterministic-bs128-drop-last\",\"row_split_identity\":\"train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818\",\"scientific_contract\":\"gptrans-v5-observation-reference-fp32-bs128-60epochs\",\"selection_role_identity\":\"pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000\",\"target_transform_identity\":\"472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285\",\"terminal_endpoint_identity\":\"46860-optimizer-steps\",\"x_axis_semantics\":\"optimizer_steps\"},\"reference_id\":\"pcqm-gptrans-v5-audit-reference-s42\"}",
       "run_ids": [
@@ -152,6 +289,8 @@
   "included_trajectory_ids": [
     "TC-gptrans-author-degree-scale-100k-s42",
     "TC-gptrans-author-path-bond-mean-100k-s42",
+    "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+    "TC-gptrans-g1-scale-ema-equal-updates-500k-s42",
     "TC-gptrans-v5-audit-reference-100k",
     "TC-k1-atom-pair-local-100k-s42",
     "TC-k1-bond-type-local-100k-s42",
@@ -187,5 +326,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 38
+  "trace_count": 58
 }
