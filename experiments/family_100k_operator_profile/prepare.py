@@ -114,7 +114,7 @@ def draft():
         tid = "TB-family-100k-operator-profile-" + arm_id + "-s42"
         cost_id = "cost-" + tid + "-planned"
         action = {"action_id":"A001", "type":"paired_100k_training", "source_commit":commit,
-            "run_ids":[CONFIG["run_id"] + ":" + arm_id + ":downstream"], "attempt_ids":[CONFIG["run_id"] + "-v1"],
+            "run_ids":[CONFIG["run_id"] + ":" + arm_id + ":downstream"], "attempt_ids":[arm_id + "-v1"],
             "evidence_refs":[REL + "/config.json"], "cost_event_ids":[cost_id]}
         trajectory = {"schema":"molgap-trajectory-v1", "trajectory_id":tid,"record_mode":"prospective","track":"B","owner":"desktop",
             "family_id":"family-100k-operator-profile", "question":"Where does the selected shared family execution spend native T4 time?",
@@ -153,6 +153,10 @@ def draft():
             "required_artifacts":["v5_evidence","costs","roles","trace_manifest","terminal_artifact"]},"terminal_protocol":TERMINAL_PROTOCOL})
     plan = {"format":"molgap-family-training-preparation-v1","spec_identity":spec.identity,"arms":preparation,
         "source_files":[REL+"/config.json",REL+"/protocol.md",REL+"/evidence_review.md"]}
+    from molgap.experiment_prospective import validate_execution_identity
+    for binding in bindings:
+        planned = json.loads((ROOT/binding["plan_spec_ref"]).read_text())
+        validate_execution_identity(spec,binding["arm_id"],planned["trajectory"],commit)
     atomic_json(HERE/"experiment_spec.json",spec.to_dict())
     atomic_json(STORAGE/"preparation_plan.json",plan)
     print(json.dumps({"status":"DRAFT_ONLY","spec_identity":spec.identity,"source_commit":commit}))
