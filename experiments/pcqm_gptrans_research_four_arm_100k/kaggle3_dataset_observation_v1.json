@@ -1,0 +1,180 @@
+{
+  "timestamp": "2026-10-13T18:24:44.865505+00:00",
+  "account": "nvoid912",
+  "datasets": [
+    {
+      "ref": "nvoid912/molgap-gptrans-common-cycle-inputs-v1",
+      "expected_version": 1,
+      "files": {
+        "datasetFiles": [
+          {
+            "name": "chunks/cycle_000000_050000.pt",
+            "creationDate": "2026-10-13T18:23:24.860Z",
+            "totalBytes": 32457289
+          },
+          {
+            "name": "chunks/cycle_050000_100000.pt",
+            "creationDate": "2026-10-13T18:23:24.987Z",
+            "totalBytes": 32355657
+          },
+          {
+            "name": "chunks/cycle_100000_150000.pt",
+            "creationDate": "2026-10-13T18:23:25.118Z",
+            "totalBytes": 32893897
+          },
+          {
+            "name": "chunks/cycle_500000_550000.pt",
+            "creationDate": "2026-10-13T18:23:25.337Z",
+            "totalBytes": 34680777
+          },
+          {
+            "name": "manifest.json",
+            "creationDate": "2026-10-13T18:23:23.940Z",
+            "totalBytes": 2884
+          }
+        ]
+      },
+      "verified_downloads": {
+        "manifest.json": "1fd890bf91bc633c8323c17fe87d664f3106b26052f881e145d22b57f6606ac4"
+      }
+    },
+    {
+      "ref": "nvoid912/molgap-gptrans-research-slot1-source-v1",
+      "expected_version": 1,
+      "files": {
+        "datasetFiles": [
+          {
+            "name": "SOURCE_ARCHIVE_SHA256.txt",
+            "creationDate": "2026-10-13T18:23:34.503Z",
+            "totalBytes": 65
+          },
+          {
+            "name": "SOURCE_COMMIT.txt",
+            "creationDate": "2026-10-13T18:23:34.322Z",
+            "totalBytes": 41
+          },
+          {
+            "name": "SOURCE_FILES.json",
+            "creationDate": "2026-10-13T18:23:34.233Z",
+            "totalBytes": 18053
+          },
+          {
+            "name": "experiment_launch.json",
+            "creationDate": "2026-10-13T18:23:34.437Z",
+            "totalBytes": 1220
+          },
+          {
+            "name": "experiment_spec.json",
+            "creationDate": "2026-10-13T18:23:34.418Z",
+            "totalBytes": 5474
+          },
+          {
+            "name": "initial_states/cycle.pt",
+            "creationDate": "2026-10-13T18:23:36.039Z",
+            "totalBytes": 23662539
+          },
+          {
+            "name": "initial_states/reference.pt",
+            "creationDate": "2026-10-13T18:23:36.370Z",
+            "totalBytes": 23662274
+          },
+          {
+            "name": "package_manifest.json",
+            "creationDate": "2026-10-13T18:23:34.341Z",
+            "totalBytes": 5176
+          },
+          {
+            "name": "prospective/cycle/trajectory.json",
+            "creationDate": "2026-10-13T18:23:35.079Z",
+            "totalBytes": 50928
+          },
+          {
+            "name": "prospective/reference/trajectory.json",
+            "creationDate": "2026-10-13T18:23:35.052Z",
+            "totalBytes": 50960
+          },
+          {
+            "name": "source_payload.bin",
+            "creationDate": "2026-10-13T18:23:34.516Z",
+            "totalBytes": 300810
+          }
+        ]
+      },
+      "verified_downloads": {
+        "experiment_launch.json": "d8571fdf946ef510410cb24ad02381e8b631f478238edd363d880c79f60f0bde",
+        "source_payload.bin": "b0a8ddd43fad67ca189864638ff070a5f85194c9e328e1acfbff8f8085578e42",
+        "package_manifest.json": "3e7a2e8b67a022ade5a4720b5f87b89246897ed7df7f18e5edc25356c6efe7e2",
+        "experiment_spec.json": "246e3366cba4402bf5e5c6e3cf217fce2eeff85d42644225b2a3f73fc0248908"
+      }
+    },
+    {
+      "ref": "nvoid912/molgap-gptrans-research-slot2-source-v1",
+      "expected_version": 1,
+      "files": {
+        "datasetFiles": [
+          {
+            "name": "SOURCE_ARCHIVE_SHA256.txt",
+            "creationDate": "2026-10-13T18:23:32.909Z",
+            "totalBytes": 65
+          },
+          {
+            "name": "SOURCE_COMMIT.txt",
+            "creationDate": "2026-10-13T18:23:33.004Z",
+            "totalBytes": 41
+          },
+          {
+            "name": "SOURCE_FILES.json",
+            "creationDate": "2026-10-13T18:23:33.090Z",
+            "totalBytes": 18053
+          },
+          {
+            "name": "experiment_launch.json",
+            "creationDate": "2026-10-13T18:23:33.086Z",
+            "totalBytes": 1245
+          },
+          {
+            "name": "experiment_spec.json",
+            "creationDate": "2026-10-13T18:23:33.051Z",
+            "totalBytes": 5507
+          },
+          {
+            "name": "initial_states/carry.pt",
+            "creationDate": "2026-10-13T18:23:34.636Z",
+            "totalBytes": 23662219
+          },
+          {
+            "name": "initial_states/correspondence.pt",
+            "creationDate": "2026-10-13T18:23:34.923Z",
+            "totalBytes": 23703966
+          },
+          {
+            "name": "package_manifest.json",
+            "creationDate": "2026-10-13T18:23:33.002Z",
+            "totalBytes": 5181
+          },
+          {
+            "name": "prospective/carry/trajectory.json",
+            "creationDate": "2026-10-13T18:23:33.590Z",
+            "totalBytes": 51351
+          },
+          {
+            "name": "prospective/correspondence/trajectory.json",
+            "creationDate": "2026-10-13T18:23:33.555Z",
+            "totalBytes": 51423
+          },
+          {
+            "name": "source_payload.bin",
+            "creationDate": "2026-10-13T18:23:33.030Z",
+            "totalBytes": 300805
+          }
+        ]
+      },
+      "verified_downloads": {
+        "experiment_launch.json": "6e8b1093041dde1637c5d4478b737803daada5c2a22cb00321e42e0a2ef89c06",
+        "source_payload.bin": "7ae9594f7034381e5a2c8a4e46f949f8b803278ede5de0a7cc0f6e5842285071",
+        "package_manifest.json": "96d84018745db30026cb38157cbf7be8a2315f643ab4ab889221ba15d2d99f18",
+        "experiment_spec.json": "d50f5b1a5064f13e68c9f1999897a16433780d54d145d552d025279ae3d469bf"
+      }
+    }
+  ]
+}

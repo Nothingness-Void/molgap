@@ -1,0 +1,61 @@
+{
+  "format": "molgap-campaign-bootstrap-failure-v1",
+  "classification": "INFRASTRUCTURE_ONLY",
+  "cause": "Windows CRLF pins differ from LF-normalized source archive",
+  "no_worker_preflight_or_training_started": true,
+  "scientific_result": "NOT_EVALUATED",
+  "slots": [
+    {
+      "slot": 1,
+      "spec_identity": "246e3366cba4402bf5e5c6e3cf217fce2eeff85d42644225b2a3f73fc0248908",
+      "kernel": "nvoid912/molgap-gptrans-research-slot1-100k-v1",
+      "kernel_id": 138538171,
+      "version_number": 1,
+      "source_commit": "9c44423238ada6b45b2b5cb9620788c725bc3806",
+      "package_identity": "546e182c855b325d52c3bea4213ca0f4b33ff64c577f4cf6f0008ee700da02bc",
+      "bootstrap_allocation": {
+        "status": "failed",
+        "hardware": [
+          "Tesla T4",
+          "Tesla T4"
+        ],
+        "wall_seconds": 60.73570488600001,
+        "allocation_device_count": 2,
+        "allocated_device_seconds": 121.47140977200002,
+        "cost_status": "measured",
+        "overlap": "Same allocation as experiment/allocation_ledger.json; do not double count",
+        "provisioning_before_python_seconds": null,
+        "queue_seconds": null
+      },
+      "bootstrap_file": "platforms/_records/kaggle/research_campaign_slot1_kaggle3_v1/failed_output_v1/bootstrap_allocation.json",
+      "bootstrap_sha256": "c938ec5d453423fc77c7ed8dd47bebffe8ef883d3fdd7b31121d8c4fdf2cc5f4",
+      "remote_binding_ref": "experiments/pcqm_gptrans_research_four_arm_100k/slot1/remote_binding_kaggle3_v1.json"
+    },
+    {
+      "slot": 2,
+      "spec_identity": "d50f5b1a5064f13e68c9f1999897a16433780d54d145d552d025279ae3d469bf",
+      "kernel": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+      "kernel_id": 138538193,
+      "version_number": 1,
+      "source_commit": "9c44423238ada6b45b2b5cb9620788c725bc3806",
+      "package_identity": "f26ad702968d3bc44fee7fb5acad91e474f6cf64ca6fcfe829d27092167fde5e",
+      "bootstrap_allocation": {
+        "status": "failed",
+        "hardware": [
+          "Tesla T4",
+          "Tesla T4"
+        ],
+        "wall_seconds": 65.38413656900002,
+        "allocation_device_count": 2,
+        "allocated_device_seconds": 130.76827313800004,
+        "cost_status": "measured",
+        "overlap": "Same allocation as experiment/allocation_ledger.json; do not double count",
+        "provisioning_before_python_seconds": null,
+        "queue_seconds": null
+      },
+      "bootstrap_file": "platforms/_records/kaggle/research_campaign_slot2_kaggle3_v1/failed_output_v1/bootstrap_allocation.json",
+      "bootstrap_sha256": "84ac219e5e268695c572c5e53af985304ffab4ec59cdd513026e062817c6f840",
+      "remote_binding_ref": "experiments/pcqm_gptrans_research_four_arm_100k/slot2/remote_binding_kaggle3_v1.json"
+    }
+  ]
+}

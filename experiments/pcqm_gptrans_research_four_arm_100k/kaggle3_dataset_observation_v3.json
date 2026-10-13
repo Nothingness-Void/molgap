@@ -1,0 +1,145 @@
+{
+  "timestamp": "2026-10-13T19:18:41.487062+00:00",
+  "account": "nvoid912",
+  "datasets": [
+    {
+      "ref": "nvoid912/molgap-gptrans-research-slot1-source-v1",
+      "observed_version": 3,
+      "files": {
+        "datasetFiles": [
+          {
+            "name": "SOURCE_ARCHIVE_SHA256.txt",
+            "creationDate": "2026-10-13T19:14:36.076Z",
+            "totalBytes": 65
+          },
+          {
+            "name": "SOURCE_COMMIT.txt",
+            "creationDate": "2026-10-13T19:14:36.132Z",
+            "totalBytes": 41
+          },
+          {
+            "name": "SOURCE_FILES.json",
+            "creationDate": "2026-10-13T19:14:36.099Z",
+            "totalBytes": 18426
+          },
+          {
+            "name": "experiment_launch.json",
+            "creationDate": "2026-10-13T19:14:36.089Z",
+            "totalBytes": 1232
+          },
+          {
+            "name": "experiment_spec.json",
+            "creationDate": "2026-10-13T19:14:36.119Z",
+            "totalBytes": 5566
+          },
+          {
+            "name": "initial_states/cycle.pt",
+            "creationDate": "2026-10-13T19:14:38.735Z",
+            "totalBytes": 23662539
+          },
+          {
+            "name": "initial_states/reference.pt",
+            "creationDate": "2026-10-13T19:14:39.125Z",
+            "totalBytes": 23662274
+          },
+          {
+            "name": "package_manifest.json",
+            "creationDate": "2026-10-13T19:14:36.142Z",
+            "totalBytes": 5286
+          },
+          {
+            "name": "prospective/cycle/trajectory.json",
+            "creationDate": "2026-10-13T19:14:37.873Z",
+            "totalBytes": 52788
+          },
+          {
+            "name": "prospective/reference/trajectory.json",
+            "creationDate": "2026-10-13T19:14:37.924Z",
+            "totalBytes": 52828
+          },
+          {
+            "name": "source_payload.bin",
+            "creationDate": "2026-10-13T19:14:36.152Z",
+            "totalBytes": 302429
+          }
+        ]
+      },
+      "verified_downloads": {
+        "experiment_launch.json": "ebd4ad2520471cd5cfb9e896bc0d7093b9ec7ff9448dd9af8e4187b4e21ccd06",
+        "source_payload.bin": "079d435a784161aa0618eea4d64fcf65d3baf4eaa2b9a47e141cb188625d7b9d",
+        "package_manifest.json": "0c7134935f2590721e970d3e3444d82af088ae05d808df2ce45fbb4dae7ba010",
+        "experiment_spec.json": "5c56e08ff61ceee575b81b4f892e3012c579b002b9a66d37f764a91c60bd30d4"
+      }
+    },
+    {
+      "ref": "nvoid912/molgap-gptrans-research-slot2-source-v1",
+      "observed_version": 3,
+      "files": {
+        "datasetFiles": [
+          {
+            "name": "SOURCE_ARCHIVE_SHA256.txt",
+            "creationDate": "2026-10-13T19:14:34.739Z",
+            "totalBytes": 65
+          },
+          {
+            "name": "SOURCE_COMMIT.txt",
+            "creationDate": "2026-10-13T19:14:34.738Z",
+            "totalBytes": 41
+          },
+          {
+            "name": "SOURCE_FILES.json",
+            "creationDate": "2026-10-13T19:14:34.748Z",
+            "totalBytes": 18426
+          },
+          {
+            "name": "experiment_launch.json",
+            "creationDate": "2026-10-13T19:14:34.749Z",
+            "totalBytes": 1257
+          },
+          {
+            "name": "experiment_spec.json",
+            "creationDate": "2026-10-13T19:14:34.753Z",
+            "totalBytes": 5599
+          },
+          {
+            "name": "initial_states/carry.pt",
+            "creationDate": "2026-10-13T19:14:36.842Z",
+            "totalBytes": 23662219
+          },
+          {
+            "name": "initial_states/correspondence.pt",
+            "creationDate": "2026-10-13T19:14:36.854Z",
+            "totalBytes": 23703966
+          },
+          {
+            "name": "package_manifest.json",
+            "creationDate": "2026-10-13T19:14:34.755Z",
+            "totalBytes": 5291
+          },
+          {
+            "name": "prospective/carry/trajectory.json",
+            "creationDate": "2026-10-13T19:14:35.604Z",
+            "totalBytes": 53265
+          },
+          {
+            "name": "prospective/correspondence/trajectory.json",
+            "creationDate": "2026-10-13T19:14:35.605Z",
+            "totalBytes": 53355
+          },
+          {
+            "name": "source_payload.bin",
+            "creationDate": "2026-10-13T19:14:34.819Z",
+            "totalBytes": 302428
+          }
+        ]
+      },
+      "verified_downloads": {
+        "experiment_launch.json": "e45383a73b9768185ab4e569111d2bde9e89e173195ef08beadfe9a001c5b7e6",
+        "source_payload.bin": "ef49815e4fa0f185e4c0c366e513278ab538e0207e479dd3e13aa57c78a3e731",
+        "package_manifest.json": "ae1606e37614b3bc940b5c03b656ff2459e905879eb3c31ac00abbfa12e62066",
+        "experiment_spec.json": "de5e5a4e25a7a824174b5b77379681a2ca430a7ab502541160fe3c23f1f811d2"
+      }
+    }
+  ],
+  "fixed_data_and_cycle_dataset_unchanged": true
+}

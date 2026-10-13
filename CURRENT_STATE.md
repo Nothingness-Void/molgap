@@ -12,16 +12,29 @@ run/recipe/runtime-specific; historical entrypoints and job custody are unchange
 
 ## Server active screen
 
-No server training is active. The user-authorized [common-cycle preparation group](experiments/pcqm_gptrans_cycle_pair_100k/decision_prelaunch.md)
-has [accepted CPU inputs](experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md);
-its exact attempts are bound by [status](experiments/pcqm_gptrans_cycle_pair_100k/STATUS.md).
-GPU dual release is blocked by shared-contract reference/
-release/audit support; no candidate or baseline has started training. Earlier
-CPU failures are infrastructure-only, not failed architecture evidence.
+The user-authorized
+[four-arm campaign](experiments/pcqm_gptrans_research_four_arm_100k/protocol.md)
+was submitted once per slot on the human-selected Kaggle3 account `nvoid912`:
+aggregate reference/cycle kernel138538171/version3 and carry/correspondence
+kernel138538193/version3. Both exact version3 jobs were observed RUNNING with
+pulled source matching their frozen entries. Its [status](experiments/pcqm_gptrans_research_four_arm_100k/STATUS.md)
+binds the exact returned identities, frozen packages and observations. Both
+slots retain the60pass scientific horizon and ten-pass durable segments;
+submission is not native qualification or a scientific result. No GPU job was
+submitted to Kaggle2 for this campaign. The SDK's serialized6hour allowance
+lost a day component: native arithmetic showed30unused hours on Kaggle3,
+not6, and approximately17.05remaining on Kaggle2, not exhaustion. Versions1/2
+failed before formal training at transport/import gates; their RML records
+are INFRASTRUCTURE_ONLY, not architecture negatives. Version3 passed isolated
+worker-bootstrap imports and actual unpacked campaign checks before release.
+The unsubmitted local-only two-arm proposal is superseded. Its
+[accepted CPU inputs](experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md)
+are reused unchanged. CPU failures remain infrastructure-only, not route negatives.
 
 The [post-routing research review](experiments/pcqm_v5_route_portfolio/bond_memory_review_2026-10-13.md)
-retains a design-only bond-message carry prototype; it has synthetic tests but
-no integrated encoder, prelaunch release, remote result or Replay claim.
+retains the earlier stand-alone bond-message carry prototype. Its bounded
+aggregate-parent adaptation is integrated in the four-arm campaign above;
+there is no accepted native result or Replay claim yet.
 
 The [triplet routing dual100K](experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/interpretation.md)
 completed as Kaggle2 kernel138425374/version1. Both arms passed independent

@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "RUN_FOUR_ARM_CAMPAIGN",
+    "field": "explicit_four_arm_authority_and_accepted_inputs",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "one-user-authorized-two-slot-four-arm-campaign",
+    "authority_ref": "experiments/pcqm_gptrans_research_four_arm_100k/authority.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "gptrans-shared-aggregate100k-fourarm-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "full allocated T4x2 cost per slot including idle devices",
+      "no cross-hardware conversion"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "1fd890bf91bc633c8323c17fe87d664f3106b26052f881e145d22b57f6606ac4",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "gptrans-aggregate-four-arm",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "explicit_four_arm_authority_and_accepted_inputs"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

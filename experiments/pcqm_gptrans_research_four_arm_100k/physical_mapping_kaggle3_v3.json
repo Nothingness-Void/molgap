@@ -1,0 +1,127 @@
+{
+  "format": "molgap-explicit-campaign-physical-mapping-v1",
+  "arms": [
+    {
+      "arm_id": "reference",
+      "trajectory_id": "TC-gptrans-aggregate-reference-100k-s42-r2-r3",
+      "canonical_platform_reference": "nvoid912/molgap-gptrans-research-slot1-100k-v1",
+      "platform_version": "3",
+      "kernel_id": 138538171,
+      "receipt_ref": "experiments/pcqm_gptrans_research_four_arm_100k/slot1/launch_receipt_kaggle3_v3.json",
+      "original_requested_kaggle2_logical_run_id": "kaseichou/molgap-gptrans-research-slot1-100k-v1",
+      "retired_physical_versions": [
+        1,
+        2
+      ],
+      "context": {
+        "experiment_id": "gptrans-research-slot1",
+        "logical_run_id": "gptrans-research-slot1-100k-s42-v1",
+        "arm_id": "reference",
+        "arm_identity": "bc86dc11ca56fb29f67aa8e4f07933655da393725b926705309faec3849d903e",
+        "spec_identity": "5c56e08ff61ceee575b81b4f892e3012c579b002b9a66d37f764a91c60bd30d4",
+        "family_name": "gptrans_t",
+        "family_version": "2",
+        "source_commit": "7e1aac51a852a0b7602cc9f0f45aa83be9d12c5a",
+        "source_archive_sha256": "079d435a784161aa0618eea4d64fcf65d3baf4eaa2b9a47e141cb188625d7b9d",
+        "package_identity": "b27252278d2d3bc0c453e2a067a6a2683318b4219fa97639c2d44bcd1d14111c",
+        "training_recipe_sha256": "d3e819f9d0359928185fc20f4802ea31c0683ae056f13f5782245d2c2659ca96",
+        "platform": "kaggle",
+        "account": "nvoid912",
+        "run_reference": "nvoid912/molgap-gptrans-research-slot1-100k-v1",
+        "platform_version": "3"
+      }
+    },
+    {
+      "arm_id": "cycle",
+      "trajectory_id": "TC-gptrans-aggregate-cycle-100k-s42-r2-r3",
+      "canonical_platform_reference": "nvoid912/molgap-gptrans-research-slot1-100k-v1",
+      "platform_version": "3",
+      "kernel_id": 138538171,
+      "receipt_ref": "experiments/pcqm_gptrans_research_four_arm_100k/slot1/launch_receipt_kaggle3_v3.json",
+      "original_requested_kaggle2_logical_run_id": "kaseichou/molgap-gptrans-research-slot1-100k-v1",
+      "retired_physical_versions": [
+        1,
+        2
+      ],
+      "context": {
+        "experiment_id": "gptrans-research-slot1",
+        "logical_run_id": "gptrans-research-slot1-100k-s42-v1",
+        "arm_id": "cycle",
+        "arm_identity": "e51c141d2d1e3141f88ac9c1416240bc24531091f7e84894af9cf3c2ba10706e",
+        "spec_identity": "5c56e08ff61ceee575b81b4f892e3012c579b002b9a66d37f764a91c60bd30d4",
+        "family_name": "gptrans_t",
+        "family_version": "2",
+        "source_commit": "7e1aac51a852a0b7602cc9f0f45aa83be9d12c5a",
+        "source_archive_sha256": "079d435a784161aa0618eea4d64fcf65d3baf4eaa2b9a47e141cb188625d7b9d",
+        "package_identity": "b27252278d2d3bc0c453e2a067a6a2683318b4219fa97639c2d44bcd1d14111c",
+        "training_recipe_sha256": "2d59c88f6697a308b5605983940a4596609079bf15e0c8cdf028ca2908ea4ceb",
+        "platform": "kaggle",
+        "account": "nvoid912",
+        "run_reference": "nvoid912/molgap-gptrans-research-slot1-100k-v1",
+        "platform_version": "3"
+      }
+    },
+    {
+      "arm_id": "carry",
+      "trajectory_id": "TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "canonical_platform_reference": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+      "platform_version": "3",
+      "kernel_id": 138538193,
+      "receipt_ref": "experiments/pcqm_gptrans_research_four_arm_100k/slot2/launch_receipt_kaggle3_v3.json",
+      "original_requested_kaggle2_logical_run_id": "kaseichou/molgap-gptrans-research-slot2-100k-v1",
+      "retired_physical_versions": [
+        1,
+        2
+      ],
+      "context": {
+        "experiment_id": "gptrans-research-slot2",
+        "logical_run_id": "gptrans-research-slot2-100k-s42-v1",
+        "arm_id": "carry",
+        "arm_identity": "c82ba92ffae884d423af4d0059c9d25c552581130626476aca0b8250932ef808",
+        "spec_identity": "de5e5a4e25a7a824174b5b77379681a2ca430a7ab502541160fe3c23f1f811d2",
+        "family_name": "gptrans_t",
+        "family_version": "2",
+        "source_commit": "7e1aac51a852a0b7602cc9f0f45aa83be9d12c5a",
+        "source_archive_sha256": "ef49815e4fa0f185e4c0c366e513278ab538e0207e479dd3e13aa57c78a3e731",
+        "package_identity": "a39e4d78c5a07018d44b6c884e0b3509ebf0c57d73e4c2081db7124b38b2fcdb",
+        "training_recipe_sha256": "56b216be1a29285345fda3fb27d92450c00eecb5e6545986d63e47d090b414cf",
+        "platform": "kaggle",
+        "account": "nvoid912",
+        "run_reference": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+        "platform_version": "3"
+      }
+    },
+    {
+      "arm_id": "correspondence",
+      "trajectory_id": "TC-gptrans-aggregate-correspondence-100k-s42-r2-r3",
+      "canonical_platform_reference": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+      "platform_version": "3",
+      "kernel_id": 138538193,
+      "receipt_ref": "experiments/pcqm_gptrans_research_four_arm_100k/slot2/launch_receipt_kaggle3_v3.json",
+      "original_requested_kaggle2_logical_run_id": "kaseichou/molgap-gptrans-research-slot2-100k-v1",
+      "retired_physical_versions": [
+        1,
+        2
+      ],
+      "context": {
+        "experiment_id": "gptrans-research-slot2",
+        "logical_run_id": "gptrans-research-slot2-100k-s42-v1",
+        "arm_id": "correspondence",
+        "arm_identity": "347a8f146199a1bb72c35593386821ba202d6cae13073b3336142a887115c4b3",
+        "spec_identity": "de5e5a4e25a7a824174b5b77379681a2ca430a7ab502541160fe3c23f1f811d2",
+        "family_name": "gptrans_t",
+        "family_version": "2",
+        "source_commit": "7e1aac51a852a0b7602cc9f0f45aa83be9d12c5a",
+        "source_archive_sha256": "ef49815e4fa0f185e4c0c366e513278ab538e0207e479dd3e13aa57c78a3e731",
+        "package_identity": "a39e4d78c5a07018d44b6c884e0b3509ebf0c57d73e4c2081db7124b38b2fcdb",
+        "training_recipe_sha256": "130233087b03646de35ca8eb1cc15cf18b1923cdb8ce03148108069c37b466ef",
+        "platform": "kaggle",
+        "account": "nvoid912",
+        "run_reference": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+        "platform_version": "3"
+      }
+    }
+  ],
+  "scientific_arms_unchanged": true,
+  "native_qualification": "NOT_YET_ACCEPTED"
+}
