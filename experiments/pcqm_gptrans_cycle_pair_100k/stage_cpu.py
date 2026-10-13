@@ -36,7 +36,7 @@ def main():
             "supporting_evidence_ids": [CONTEXT], "alternative_explanations": ["Enumeration, source-row or indexing error"],
             "changed_mechanism": "CPU-only exact cycle enumeration from unchanged accepted topology",
             "cheapest_falsifier": "Independent NetworkX rederivation for every row without model execution",
-            "related_closed_family_ids": [], "expected_native_cost_ref": cost,
+            "related_closed_family_ids": ["gptrans-shortest-path-execution-profile"], "expected_native_cost_ref": cost,
             "decision_changed_if_positive": "permit separate GPU release checks, not promotion",
             "decision_changed_if_negative": "block training and retain partial evidence", "historical_unknowns": []},
         "state_at_start": {"source_commit": commit, "source_config_identity": canonical_fingerprint({
