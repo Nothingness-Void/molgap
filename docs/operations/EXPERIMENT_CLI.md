@@ -191,6 +191,11 @@ $incompleteDescriptor = 'D:\local-work\attempt-01\terminal_descriptor.json'
   package. Supply one `--recipe-file ARM=PACKAGED_PATH` per arm and one
   `--initial-state ARM=LOCAL_PATH` for every pinned initialization. Recipe hashes
   are checked against archive bytes, including the packager's LF normalization;
+  final shared-family releases with an entry script also require
+  `--dataset-manifest ARM=LOCAL_MANIFEST`. The manifest bytes must match the
+  frozen recipe. The package-only probe runs the packaged resolver against
+  flat and nested metadata mounts; it does not decode graph shards. The
+  accelerator submitter repeats these checks before POST.
   initialization checks inspect CPU tensor values, without model construction.
   Repeat `--required-module` for the loader/trainer imports. Optional trusted
   training `--pickle-input` files are scanned for package GLOBAL dependencies

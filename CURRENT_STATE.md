@@ -62,10 +62,12 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 K1 mean2 versus single-forward EMA500K is desktop-owned on
 `codex/exp/k1-mean2-single-ema-500k-20261013` (see [checkout map](BRANCHES.md#retained-checkout-map)).
-Kaggle1 API accepted kernelID138365645/version1; scheduler observation on
-2026-10-13 JST was QUEUED, not native training evidence. One T4x2 allocation,
-60-epoch targets and nine-hour total ceiling; no automatic continuation/monitor.
-Reconcile the exact owning run before acceptance or any successor.
+Kaggle1 kernelID138365645/version1 ended ERROR at input-manifest resolution,
+before either formal arm trained. The owner retains NO_TRAIN attempt evidence
+and the unresolved scientific question. The user authorized a corrected
+resubmission under the same60-epoch/nine-hour contract. Reviewed shared mount
+and release checks are integrated here; see [correction provenance](docs/operations/KAGGLE_INPUT_RESOLUTION_20261013.md).
+No automatic continuation/monitor or model adoption is released.
 
 The2026-10-09 [Kaggle reconciliation](docs/operations/KAGGLE_ACCEPTANCE_20261009.md)
 queried exact owner/version and retrieved retained outputs, without resuming,

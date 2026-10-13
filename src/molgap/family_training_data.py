@@ -43,6 +43,32 @@ class TrainingData:
     target_std_eV: float
 
 
+def resolve_training_manifest(root: Path, selection: DatasetSelection) -> Path:
+    """Resolve metadata by its frozen hash, independent of platform mount layout.
+
+    An existing declared path must match; a wrong manifest is never hidden by
+    discovery. Only missing locations permit a unique metadata match. Shards
+    remain unopened until the owning loader validates the selected roles.
+    """
+    if type(selection) is not DatasetSelection:
+        raise TypeError("Expected DatasetSelection")
+    root = Path(root).absolute()
+    declared = root / selection.manifest
+    if declared.exists():
+        path = _artifact_path(root, selection.manifest)
+        if sha256_file(path) != selection.manifest_sha256:
+            raise ValueError("Dataset manifest SHA differs from the frozen selection")
+        return path
+    candidates = []
+    for candidate in root.rglob(Path(selection.manifest).name):
+        path = _artifact_path(root, candidate.relative_to(root).as_posix())
+        if sha256_file(path) == selection.manifest_sha256:
+            candidates.append(path)
+    if len(candidates) != 1:
+        raise ValueError(f"Expected one pinned training manifest, found {len(candidates)}")
+    return candidates[0]
+
+
 def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     """Verify the selected view and shard bytes before trusted deserialization.
 
@@ -56,10 +82,9 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
 
     if type(selection) is not DatasetSelection:
         raise TypeError("Expected DatasetSelection")
-    root = Path(root).absolute()
-    path = _artifact_path(root, selection.manifest)
-    if sha256_file(path) != selection.manifest_sha256:
-        raise ValueError("Dataset manifest SHA differs from the frozen selection")
+    path = resolve_training_manifest(root, selection)
+    # Manifest file paths are relative to their dataset, not sibling mounts.
+    root = path.parent
     manifest = _json(path)
     legacy_mirror = manifest.get("format") == "molgap-pcqm4mv2-kaggle-fixed-subset-v1"
     if (manifest.get("format") not in {"molgap-pcqm4mv2-fixed-subset-v1",

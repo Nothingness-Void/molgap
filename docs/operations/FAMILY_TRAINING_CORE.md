@@ -1,5 +1,16 @@
 # Shared Family Training Core
 
+## Pinned input resolution
+
+`family_training_data.resolve_training_manifest` keeps dataset identity separate
+from the platform's mount location. An existing declared path must pass its
+frozen SHA; a missing path requires exactly one metadata file with that SHA.
+The loader resolves shard paths relative to the accepted manifest directory.
+Ambiguous, missing or changed identities fail before graph deserialization.
+Final shared-family release checks bind the manifest and exercise the packaged
+resolver on flat/nested mounts. Kaggle startup retains `input_resolution.json`
+and prints `INPUT_RESOLVED` before the native all-arm barrier.
+
 Scope: K1 and GPTrans-T. Platform skills own submission, remote allocation,
 reconciliation and retrieval. Data adapters own pinned graph views. Neither
 layer may copy or alter the training algorithm to fit a platform or scale.

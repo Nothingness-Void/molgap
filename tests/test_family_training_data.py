@@ -7,7 +7,12 @@ import pytest
 import torch
 from torch_geometric.data import Data, InMemoryDataset
 
-from molgap.family_training_data import DatasetSelection, PassBatchSampler, load_training_data
+from molgap.family_training_data import (
+    DatasetSelection,
+    PassBatchSampler,
+    load_training_data,
+    resolve_training_manifest,
+)
 from molgap.training_reproducibility import sha256_file
 
 
@@ -39,6 +44,21 @@ def pinned_data(tmp_path):
     return root, DatasetSelection(path.name, sha256_file(path), True), manifest
 
 
+def _mounted_dataset(root, tmp_path, relative):
+    mount = tmp_path / "mount"
+    destination = mount / relative
+    destination.parent.mkdir(parents=True)
+    shutil.copytree(root, destination)
+    return mount, destination
+
+
+def _assert_loaded_synthetic_rows(data):
+    assert data.train_rows == 4
+    assert data.development_rows == 2
+    assert data.target_mean_eV == 1.5
+    assert [int(row.source_idx) for row in data.train] == [0, 1, 2, 3]
+
+
 def test_mount_path_is_not_dataset_identity(pinned_data, tmp_path):
     root, selection, _ = pinned_data
     second = tmp_path / "platform-two"
@@ -50,6 +70,65 @@ def test_mount_path_is_not_dataset_identity(pinned_data, tmp_path):
     assert first.target_mean_eV == moved.target_mean_eV == 1.5
     assert first.target_std_eV == pytest.approx(torch.arange(4.).std().item())
     assert [int(row.source_idx) for row in moved.train] == [0, 1, 2, 3]
+
+
+@pytest.mark.parametrize("relative", ["slug", "datasets/owner/slug"])
+def test_mount_manifest_layout_loads_shards_relative_to_resolved_manifest(
+        pinned_data, tmp_path, relative):
+    root, selection, _ = pinned_data
+    mount, _ = _mounted_dataset(root, tmp_path, relative)
+    # The frozen declaration names the flat layout. The nested Kaggle layout
+    # must be resolved by manifest identity, with shards beside that manifest.
+    selection = replace(selection, manifest="slug/manifest.json")
+
+    data = load_training_data(mount, selection)
+
+    _assert_loaded_synthetic_rows(data)
+
+
+def test_nested_mount_does_not_touch_unselected_development(pinned_data, tmp_path):
+    root, selection, _ = pinned_data
+    mount, destination = _mounted_dataset(root, tmp_path, "datasets/owner/slug")
+    (destination / "development.pt").unlink()
+    selection = replace(selection, manifest="slug/manifest.json", development=False)
+
+    data = load_training_data(mount, selection)
+
+    assert data.train_rows == 4
+    assert data.development is None and data.development_rows == 0
+    assert [int(row.source_idx) for row in data.train] == [0, 1, 2, 3]
+
+
+def test_recursive_manifest_resolution_rejects_duplicate_matching_sha(pinned_data, tmp_path):
+    root, selection, _ = pinned_data
+    mount = tmp_path / "mount"
+    for owner in ("first", "second"):
+        shutil.copytree(root, mount / "datasets" / owner / "slug")
+    selection = replace(selection, manifest="slug/manifest.json")
+
+    with pytest.raises(ValueError):
+        resolve_training_manifest(mount, selection)
+
+
+def test_existing_expected_manifest_with_wrong_sha_does_not_fall_back(
+        pinned_data, tmp_path):
+    root, selection, _ = pinned_data
+    mount, expected_dir = _mounted_dataset(root, tmp_path, "slug")
+    shutil.copytree(root, mount / "datasets" / "owner" / "slug")
+    with (expected_dir / "manifest.json").open("a", encoding="utf-8") as handle:
+        handle.write(" ")
+    selection = replace(selection, manifest="slug/manifest.json")
+
+    with pytest.raises(ValueError):
+        resolve_training_manifest(mount, selection)
+
+
+def test_missing_recursive_manifest_is_rejected(pinned_data, tmp_path):
+    _, selection, _ = pinned_data
+    selection = replace(selection, manifest="slug/manifest.json")
+
+    with pytest.raises(ValueError):
+        resolve_training_manifest(tmp_path / "empty-mount", selection)
 
 
 def test_full_train_selection_never_reads_unselected_development(pinned_data):

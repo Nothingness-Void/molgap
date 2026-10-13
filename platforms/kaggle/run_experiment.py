@@ -154,6 +154,36 @@ def _bootstrap(allocation_started, state):
     manifest = verify_experiment_source_package(package)
     if manifest["package_identity"] != config["expected_package_identity"] or manifest["spec_identity"] != config["spec_identity"]:
         raise RuntimeError("Frozen launch/Spec/package binding mismatch")
+    resolution = {"format": "molgap-kaggle-input-resolution-v1",
+                  "spec_identity": config["spec_identity"], "arms": {}}
+    for job in config["jobs"]:
+        recipe_path = source / job["recipe"]
+        record = json.loads(recipe_path.read_text(encoding="utf-8"))
+        # Historical screen recipes keep their owning input adapters.
+        if record.get("format") != "molgap-family-training-recipe-v1":
+            continue
+        from molgap.family_training_runner import read_recipe
+        from molgap.family_training_data import resolve_training_manifest
+        from molgap.experiment_family_workflow import _artifact_path
+        _, recipe = read_recipe(recipe_path)
+        graph_manifest = resolve_training_manifest(mounted, recipe.dataset)
+        graph_metadata = json.loads(graph_manifest.read_text(encoding="utf-8"))
+        records = (graph_metadata.get("geometry_shards", []) if
+                   graph_metadata.get("format") == "molgap-pcqm4mv2-kaggle-fixed-subset-v1"
+                   else graph_metadata.get("assets", {}).get("topology", []))
+        roles = {"train", "development"} if recipe.dataset.development else {"train"}
+        selected = [row for row in records if row.get("role") in roles]
+        if not selected or {row.get("role") for row in selected} != roles:
+            raise RuntimeError("Mounted dataset is missing declared train/development metadata")
+        for row in selected:
+            _artifact_path(graph_manifest.parent, row["file"])
+        observed_path = graph_manifest.relative_to(mounted).as_posix()
+        resolution["arms"][job["arm_id"]] = {
+            "manifest": observed_path, "manifest_sha256": recipe.dataset.manifest_sha256,
+            "selected_shard_paths_present": len(selected), "shards_decoded": False}
+        print("INPUT_RESOLVED", job["arm_id"], observed_path, flush=True)
+    if resolution["arms"]:
+        atomic_json(OUTPUT_ROOT / "input_resolution.json", resolution)
     run_two_phase_pair(source_root=source, package_dir=package, input_root=mounted,
                        launch_path=launch, output=OUTPUT_ROOT,
                        maximum_wall_seconds=remaining())

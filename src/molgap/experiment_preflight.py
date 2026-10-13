@@ -724,6 +724,33 @@ def _release_imports(request):
                 value = getattr(value, part)
         except Exception as exc:
             errors.append({"check": "pickle_symbol", "item": f"{module}.{symbol}", "message": str(exc)})
+    dataset_checks = {}
+    for item in request.get("dataset_manifests", []):
+        try:
+            data = importlib.import_module("molgap.family_training_data")
+            record = json.loads(Path(item["recipe_path"]).read_bytes())
+            selection = data.DatasetSelection(**record["dataset"])
+            source_manifest = _regular(Path(item["path"]))
+            if _file_sha(source_manifest) != selection.manifest_sha256:
+                raise ValueError("Release dataset manifest differs from frozen recipe")
+            layouts = {"flat": Path(selection.manifest),
+                       "nested": Path("datasets/release-owner") / selection.manifest}
+            for name, relative in layouts.items():
+                with tempfile.TemporaryDirectory(dir=root.parent, prefix="dataset-mount-") as temporary:
+                    mounted = Path(temporary)
+                    target = mounted / relative
+                    target.parent.mkdir(parents=True)
+                    shutil.copyfile(source_manifest, target)
+                    resolved = data.resolve_training_manifest(mounted, selection)
+                    if resolved != target.resolve():
+                        raise ValueError("Packaged loader resolved a different dataset mount")
+            dataset_checks[item["arm_id"]] = {
+                "manifest_sha256": selection.manifest_sha256,
+                "declared_path": selection.manifest,
+                "layouts": list(layouts), "scope": "metadata_only_no_shard_decode"}
+        except Exception as exc:
+            errors.append({"check": "dataset_mount_resolution", "item": item["arm_id"],
+                           "message": str(exc)})
     initialization_checks, output_io_checks = {}, {}
     for item in request.get("initializations", []):
         try:
@@ -766,14 +793,14 @@ def _release_imports(request):
         except Exception as exc:
             errors.append({"check": "family_output_io", "item": item["arm_id"],
                            "message": str(exc)})
-    return {"errors": errors, "import_origins": _origins(root),
+    return {"errors": errors, "import_origins": _origins(root), "dataset_checks": dataset_checks,
             "initialization_checks": initialization_checks, "output_io_checks": output_io_checks}
 
 
 def check_release_inputs(spec, package_dir, *, expected_package_identity,
                          recipe_files, initial_states, required_modules,
                          pickle_inputs=(), entry_script=None, input_root=None,
-                         launch_config=None, kernel_metadata=None):
+                         launch_config=None, kernel_metadata=None, dataset_manifests=None):
     """Collect source/recipe/serialization/init defects before platform publication.
 
     Only caller-selected trusted training shards are inspected. Pickle opcodes
@@ -801,6 +828,9 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
     if launch_config is not None or kernel_metadata is not None:
         inputs.update(launch_config=str(Path(launch_config).absolute()) if launch_config else None,
                       kernel_metadata=str(Path(kernel_metadata).absolute()) if kernel_metadata else None)
+    if dataset_manifests is not None:
+        inputs["dataset_manifests"] = {arm: str(Path(path).absolute())
+                                      for arm, path in dataset_manifests.items()}
 
     def check(kind, item, operation):
         try:
@@ -810,6 +840,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
 
     modules = set(required_modules)
     family_initializations = []
+    dataset_bindings = []
     pickle_globals = set()
     if not modules:
         errors.append({"check": "import", "item": "required_modules", "message": "Declare the family loader/trainer modules"})
@@ -831,6 +862,25 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                     raise ValueError(f"Recipe SHA differs from packaged LF bytes: {observed}")
                 return observed
             check("recipe", arm_id, recipe)
+            def dataset_binding(a=arm_id):
+                if a not in recipe_files:
+                    return None  # The recipe check already records this defect.
+                recipe_path = _under(source, _relative(recipe_files[a]))
+                record = json.loads(_regular(recipe_path).read_bytes())
+                if record.get("format") != "molgap-family-training-recipe-v1":
+                    return None
+                supplied = (dataset_manifests or {}).get(a)
+                if supplied is None:
+                    if launch_config is not None or entry_script is not None:
+                        raise ValueError("Final family release requires a pinned dataset manifest binding")
+                    return None  # Platform-neutral source preparation is not a final release.
+                path = _regular(Path(supplied).absolute())
+                if _file_sha(path) != record["dataset"]["manifest_sha256"]:
+                    raise ValueError("Release dataset manifest differs from frozen recipe")
+                modules.add("molgap.family_training_data")
+                dataset_bindings.append({"arm_id": a, "path": str(path), "recipe_path": str(recipe_path)})
+                return _file_sha(path)
+            check("dataset_manifest", arm_id, dataset_binding)
             if arm["initialization"]["state_sha256"] is not None:
                 def initialization(a=arm_id, declaration=arm):
                     if a not in initial_states:
@@ -848,7 +898,8 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                             "recipe_path": str(_under(source, _relative(recipe_files[a])))})
                     return result
                 check("initialization", arm_id, initialization)
-        for kind, supplied in (("recipe", recipe_files), ("initialization", initial_states)):
+        for kind, supplied in (("recipe", recipe_files), ("initialization", initial_states),
+                               ("dataset_manifest", dataset_manifests or {})):
             for unknown in set(supplied) - set(arms):
                 errors.append({"check": kind, "item": unknown, "message": "Unknown arm"})
         for path in pickle_inputs:
@@ -885,7 +936,8 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                 request, response = workspace / "request.json", workspace / "response.json"
                 _atomic(request, {"mode": "release-imports", "source_root": str(source),
                     "modules": sorted(modules), "pickle_globals": sorted(pickle_globals),
-                    "initializations": family_initializations, "dependency_paths": sorted({
+                    "initializations": family_initializations, "dataset_manifests": dataset_bindings,
+                    "dependency_paths": sorted({
                         sysconfig.get_path("purelib"), sysconfig.get_path("platlib")})})
                 env = {k: v for k, v in os.environ.items() if not k.upper().startswith("PYTHON")}
                 env.update(CUDA_VISIBLE_DEVICES="", HIP_VISIBLE_DEVICES="", ROCR_VISIBLE_DEVICES="")
@@ -894,6 +946,8 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                         cwd=workspace, env=env, stdout=log, stderr=log, timeout=60, check=True)
                 result = _load(response.read_bytes())
                 errors.extend(result["errors"])
+                for arm_id, dataset_report in result.get("dataset_checks", {}).items():
+                    checked[f"dataset_mount_resolution:{arm_id}"] = dataset_report
                 for arm_id, state_report in result.get("initialization_checks", {}).items():
                     checked[f"family_initialization:{arm_id}"] = state_report
                 for arm_id, io_report in result.get("output_io_checks", {}).items():

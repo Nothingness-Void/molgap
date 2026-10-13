@@ -47,6 +47,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         report["maximum_wall_seconds"] = maximum_wall_seconds
     atomic_json(output / "pair_state.json", report)
     for phase in ("preflight", "train"):
+        print("PAIR_PHASE_START", phase, flush=True)
         workers = []
         worker_rows = {job["arm_id"]: {"arm_id": job["arm_id"], "device": job["device"],
             "started": False, "terminal_status": "not_started", "exit_reason": "not_started",
@@ -154,6 +155,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                     break
                 time.sleep(0.5)
             phase_record["status"] = "complete"
+            print("PAIR_PHASE_COMPLETE", phase, flush=True)
         except BaseException as exc:
             report["status"], phase_record["status"] = "failed", "failed"
             interrupted = isinstance(exc, KeyboardInterrupt)

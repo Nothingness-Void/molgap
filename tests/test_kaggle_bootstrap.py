@@ -87,18 +87,27 @@ def test_early_failure_keeps_unknown_gpu_cost_null(entry, monkeypatch, metadata)
     assert value["status"] == "failed"
 
 
-def frozen_launch(entry, limit, *, launch_overrides=None):
+def frozen_launch(entry, limit, *, launch_overrides=None, recipe_fields=None):
     entry.INPUT_ROOT.mkdir()
     archive = entry.INPUT_ROOT / "source_payload.bin"
+    recipe_record = {"allocation_wall_limit_seconds": limit}
+    recipe_record.update(recipe_fields or {})
     with tarfile.open(archive, "w:gz") as bundle:
         for name, data in {
-            "recipe.json": json.dumps({"allocation_wall_limit_seconds": limit}).encode(),
-            "src/molgap/experiment_preflight.py": b"def _unpack(package, source):\n    pass\n",
+            "recipe.json": json.dumps(recipe_record).encode(),
+            "src/molgap/experiment_preflight.py": (
+                b"def _unpack(package, source):\n"
+                b"    import tarfile\n"
+                b"    with tarfile.open(package / 'source.tar.gz', 'r:gz') as bundle:\n"
+                b"        stream = bundle.extractfile('recipe.json')\n"
+                b"        if stream is None:\n"
+                b"            raise RuntimeError('fixture recipe absent')\n"
+                b"        (source / 'recipe.json').write_bytes(stream.read())\n"),
         }.items():
             info = tarfile.TarInfo(name)
             info.size = len(data)
             bundle.addfile(info, io.BytesIO(data))
-    config = {"jobs": [{"recipe": "recipe.json"}],
+    config = {"jobs": [{"arm_id": "fixture_arm", "recipe": "recipe.json"}],
               "expected_source_archive_sha256": hashlib.sha256(archive.read_bytes()).hexdigest(),
               "expected_package_identity": "package", "spec_identity": "spec"}
     config.update(launch_overrides or {})
@@ -200,6 +209,71 @@ def test_launch_config_can_supply_budget_without_recipe_limit(entry, monkeypatch
     with pytest.raises(RuntimeError, match="synthetic stop"):
         entry.main()
     assert calls == [32220]
+
+
+def test_shared_recipe_resolution_records_nested_metadata_without_shard_decode(
+        entry, monkeypatch, capsys):
+    manifest_record = {"assets": {"topology": [
+        {"role": "train", "file": "train.pt"}]}}
+    manifest_bytes = json.dumps(manifest_record).encode()
+    dataset_sha = hashlib.sha256(manifest_bytes).hexdigest()
+    frozen_launch(entry, 600, recipe_fields={
+        "format": "molgap-family-training-recipe-v1",
+        "dataset": {"manifest": "slug/manifest.json", "manifest_sha256": dataset_sha,
+                    "development": False},
+    })
+    manifest = entry.INPUT_ROOT / "datasets" / "release-owner" / "slug" / "manifest.json"
+    manifest.parent.mkdir(parents=True)
+    manifest.write_bytes(manifest_bytes)
+    (manifest.parent / "train.pt").write_bytes(b"synthetic shard bytes")
+    monkeypatch.setattr(entry.time, "perf_counter", lambda: 100.0)
+    monkeypatch.setattr(entry.subprocess, "run", lambda *a, **k: None)
+
+    def atomic_json(path, value):
+        entry._atomic_entry_json(path, value)
+
+    def read_recipe(path):
+        record = json.loads(path.read_text(encoding="utf-8"))
+        recipe = types.SimpleNamespace(dataset=types.SimpleNamespace(**record["dataset"]))
+        return record, recipe
+
+    def resolve_training_manifest(root, selection):
+        assert root == entry.INPUT_ROOT
+        assert selection.manifest_sha256 == dataset_sha
+        return manifest
+
+    def artifact_path(root, relative):
+        path = root / relative
+        assert path.is_file()
+        return path
+
+    modules = {
+        "molgap": {},
+        "molgap.training_reproducibility": {"atomic_json": atomic_json},
+        "molgap.experiment_package": {"verify_experiment_source_package": lambda _: {
+            "package_identity": "package", "spec_identity": "spec"}},
+        "molgap.kaggle_pair_runtime": {"run_two_phase_pair": lambda **kwargs: None},
+        "molgap.family_training_runner": {"read_recipe": read_recipe},
+        "molgap.family_training_data": {"resolve_training_manifest": resolve_training_manifest},
+        "molgap.experiment_family_workflow": {"_artifact_path": artifact_path},
+    }
+    for name, attrs in modules.items():
+        module = types.ModuleType(name)
+        module.__dict__.update(attrs)
+        monkeypatch.setitem(sys.modules, name, module)
+    monkeypatch.setattr(sys, "path", list(sys.path))
+
+    entry.main()
+
+    value = json.loads((entry.OUTPUT_ROOT / "input_resolution.json").read_text())
+    assert value == {"format": "molgap-kaggle-input-resolution-v1", "spec_identity": "spec",
+                     "arms": {"fixture_arm": {
+                         "manifest": "datasets/release-owner/slug/manifest.json",
+                         "manifest_sha256": dataset_sha,
+                         "selected_shard_paths_present": 1,
+                         "shards_decoded": False,
+                     }}}
+    assert "INPUT_RESOLVED fixture_arm datasets/release-owner/slug/manifest.json" in capsys.readouterr().out
 
 
 def test_atomic_fallback_cleans_up_failed_replace(entry, monkeypatch):

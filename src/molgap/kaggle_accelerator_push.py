@@ -63,7 +63,8 @@ def _verify_release_report(path: Path, code_path: Path) -> dict:
         recipe_files=inputs["recipe_files"], initial_states=inputs["initial_states"],
         required_modules=inputs["required_modules"], pickle_inputs=inputs["pickle_inputs"],
         entry_script=inputs["entry_script"], input_root=inputs["input_root"],
-        launch_config=inputs.get("launch_config"), kernel_metadata=inputs.get("kernel_metadata"))
+        launch_config=inputs.get("launch_config"), kernel_metadata=inputs.get("kernel_metadata"),
+        dataset_manifests=inputs.get("dataset_manifests"))
     if observed != report or observed["errors"]:
         raise ValueError("Release inputs changed after verification")
     if report["checks"].get("entry_script:kernel") != sha256_file(code_path):

@@ -89,6 +89,7 @@ def _parser() -> argparse.ArgumentParser:
         elif name == "check-release":
             command.add_argument("--recipe-file", required=True, action="append", metavar="ARM=PACKAGED_PATH")
             command.add_argument("--initial-state", action="append", default=[], metavar="ARM=LOCAL_PATH")
+            command.add_argument("--dataset-manifest", action="append", default=[], metavar="ARM=LOCAL_MANIFEST")
             command.add_argument("--required-module", required=True, action="append")
             command.add_argument("--pickle-input", action="append", default=[], type=_local)
             command.add_argument("--entry-script", type=_local)
@@ -186,7 +187,8 @@ def _dispatch(args) -> tuple[dict, int]:
             expected_package_identity=args.expected_package_identity,
             recipe_files=bindings(args.recipe_file), initial_states=bindings(args.initial_state, True),
             required_modules=args.required_module, pickle_inputs=args.pickle_input,
-            entry_script=args.entry_script, input_root=args.input_root)
+            entry_script=args.entry_script, input_root=args.input_root,
+            dataset_manifests=bindings(args.dataset_manifest, True) if args.dataset_manifest else None)
         if args.output_report:
             _atomic(args.output_report, result)
         return result, 1 if result["errors"] else 0
