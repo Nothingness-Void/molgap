@@ -10,7 +10,7 @@ import subprocess
 from molgap.experiment_execution import build_family_recipe
 from molgap.experiment_family_workflow import tensor_digest
 from molgap.experiment_launch import canonical_json, publish_immutable_bytes
-from molgap.experiment_spec import ExperimentSpec, SCHEMA_VERSION_V2, TERMINAL_PROTOCOL
+from molgap.experiment_spec import ExperimentSpec, FAMILIES, SCHEMA_VERSION_V2, TERMINAL_PROTOCOL
 from molgap.family_training_data import DatasetSelection, load_training_data
 from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
 from molgap.family_training_runner import INTERFACES, family_arm_bindings
@@ -104,7 +104,7 @@ def draft():
         arm = {"arm_id":arm_id, "scientific_role":"candidate", "family":{"name":recipe.family,"version":INTERFACES[recipe.family][1]},
             "base":b["base"], "initialization":{"kind":"frozen_state","seed":recipe.seed,"state_sha256":recipe.initialization_sha256},
             "data":{"dataset":ref("pcqm4mv2",identity["manifest_sha256"]), "split":ref("fixed100k-next50k",canonical_fingerprint({"roles":roles})),
-                "roles":deepcopy(roles), "feature_schema":"ogb-atom9-bond3-rwse16-v1", "feature_sha256":identity["manifest_sha256"],
+                "roles":deepcopy(roles), "feature_schema":FAMILIES[INTERFACES[recipe.family]].feature_schema, "feature_sha256":identity["manifest_sha256"],
                 "target":"pcqm4mv2-gap-eV-direct"},
             "training":{"recipe":ref("shared-family-training",normalized_source_sha256(ROOT / recipe_ref)),
                 "overrides":{}, **{k:b[k] for k in ("objective","sampler","transform")}},
