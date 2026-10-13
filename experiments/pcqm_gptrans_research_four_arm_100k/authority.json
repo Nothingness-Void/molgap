@@ -1,0 +1,19 @@
+{
+  "user_authorized": true,
+  "user_reply": "Submit two slots, four arms total: one baseline and three candidates",
+  "scope": "two-slots-one-reference-three-candidates",
+  "seeds": [
+    42
+  ],
+  "maximum_allocated_t4_hours": 32,
+  "maximum_slot_wall_seconds": 28800,
+  "physical_segment_passes": 10,
+  "reference_status": "PLANNED_NOT_ACCEPTED",
+  "forbidden": [
+    "extra_seed",
+    "fifth_arm",
+    "500k_training",
+    "full_training",
+    "protected_roles"
+  ]
+}
