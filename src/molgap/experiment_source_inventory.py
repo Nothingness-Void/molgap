@@ -54,6 +54,7 @@ COMMON_SOURCE_FILES = (
     'src/molgap/k1_execution_layout.py',
     'src/molgap/packed_graph_dataset.py',
     'src/molgap/pcqm_fixed_records.py',
+    'src/molgap/pcqm_wedge.py',
     'src/molgap/kaggle_pair_runtime.py',
     'src/molgap/kaggle_python_environment.py',
     'src/molgap/kaggle_workflow.py',

@@ -24,6 +24,11 @@ def test_resource_profile_rejects_memory_time_and_invalid_exposure():
             resource_estimate(**{**args, **update})
 
 
+def test_shared_source_inventory_retains_fixed_pickle_dependency():
+    from molgap.experiment_source_inventory import COMMON_SOURCE_FILES
+    assert "src/molgap/pcqm_wedge.py" in COMMON_SOURCE_FILES
+
+
 def test_mount_resolution_is_hash_bound_unique_and_does_not_shadow_direct_path(tmp_path):
     directory = tmp_path / "actual-mount"
     directory.mkdir()
