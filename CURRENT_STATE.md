@@ -64,11 +64,21 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+Kaggle1 K1/GPTrans100K operator profiling was submitted on2026-10-14 JST:
+kernel138537758/version1, authoritative RUNNING at03:22 JST. One T4x2 Notebook
+requests K1 mean2/live40passes and retained GPTrans local-bond/EMA.99960passes,
+with short profile capture and native profiled/plain repeat-resume qualification.
+Startup log/output were empty; native progress/qualification are unobserved.
+The [owning handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-gptrans-profiler-100k/experiments/family_100k_operator_profile/REMOTE_HANDOFF.md)
+owns identities, seven-hour ceiling, prospective custody and acceptance tasks.
+No automatic monitor/retry or model adoption; reconcile the exact version on return.
+
 K1 mean2 versus single-forward EMA500K is desktop-owned on
 `codex/exp/k1-mean2-single-ema-500k-20261013` (see [checkout map](BRANCHES.md#retained-checkout-map)).
-Kaggle1 kernelID138365645/version2 is RUNNING after the user-authorized corrected
-resubmission under the same60-epoch/nine-hour contract. Source/dataset binding
-is verified; native qualification and formal training are not yet observed.
+Kaggle1 kernelID138365645/version2 was queried on2026-10-14 JST and reports ERROR
+after the user-authorized corrected resubmission under the same60-epoch/nine-hour
+contract. Source/dataset binding was verified; failure cause, native exposure
+and terminal artifacts still need owning reconciliation. No retry is released.
 Version1 ended ERROR before either arm trained and is independently finalized
 NO_TRAIN on the owner. Reviewed shared mount and release checks are integrated
 here; see [correction provenance](docs/operations/KAGGLE_INPUT_RESOLUTION_20261013.md)
