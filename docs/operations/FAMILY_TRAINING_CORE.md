@@ -70,6 +70,27 @@ Transported initialization must match base tensor keys, shape and dtype without
 silent conversion. Declared and observed accelerator classes must match before
 native qualification; resource matching never changes the training algorithm.
 
+New checkpoints acknowledge `cursor.optimizer_state_ids`: missing acknowledged
+AdamW moments fail before restore. Unconditional modes require full parameter
+coverage; SSMA may omit untouched conditional-residual moments, never base
+moments. Historical checkpoints without this field keep their frozen owner;
+do not synthesize metadata to migrate them to a new source package.
+
+Selected weights, predictions and pass traces are staged as a hash-bound bundle.
+`last_checkpoint.pt` is published last as the commit point. The owning exclusive
+writer validates the complete journal before accepting or rolling back interrupted
+publication; unknown/corrupt evidence fails closed. Transfer the whole interrupted
+output directory, including `session_pending/` and `session_commit.json`, not just
+the checkpoint. This is not a concurrent-reader or power-loss guarantee.
+
+Selected/resume tensor keys, shapes and dtypes must agree. Cost invocation markers
+bind closed cumulative wall time to the acknowledged checkpoint; an interrupted,
+stale or unbound prior interval stays unknown, not measured. Platform allocation
+costs remain separately owned. Only new partial-pass metric scalars are transferred
+to the private CPU prefix, with unchanged dtype and sequential reporting order.
+See the [server recovery review](SHARED_RECOVERY_SERVER_REVIEW.md) for provenance,
+server-specific transaction hooks, executed checks and speed-evidence limits.
+
 Development selection consumes only the explicitly selected internal role at a
 complete pass. Final-only selection never opens a development loader or creates
 a development score. An unfinished pass is not reported as a finished epoch.

@@ -10,6 +10,11 @@ desktop branch. Desktop acceptance is retained separately in
 [FAMILY_TRAINING_TEST_HANDOFF.md](FAMILY_TRAINING_TEST_HANDOFF.md).
 The [shared core](FAMILY_TRAINING_CORE.md) owns APIs and module responsibilities.
 
+The later reviewed reliability integration from desktop `a01cda9f` is recorded
+separately in [the server recovery review](SHARED_RECOVERY_SERVER_REVIEW.md).
+It preserves the server's bounded same-run pair, trace and transport hooks;
+desktop speed records do not qualify server/native performance.
+
 Eight training owners cover typed recipes, selected fixed data, persistent
 loaders, optimizer/loop, family kernels, resumable sessions, registered runners
 and mechanical outputs. New interfaces are `neural_atom_k1/3` and

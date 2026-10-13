@@ -82,9 +82,9 @@ Run from this implementation worktree:
 
 ```powershell
 $env:PYTHONPATH=(Join-Path (Get-Location) 'src')
-$env:CUDA_VISIBLE_DEVICES=''
-$env:HIP_VISIBLE_DEVICES=''
-$env:ROCR_VISIBLE_DEVICES=''
+$env:CUDA_VISIBLE_DEVICES='-1'
+$env:HIP_VISIBLE_DEVICES='-1'
+$env:ROCR_VISIBLE_DEVICES='-1'
 $python='D:/文档/molgap/.venv/Scripts/python.exe'
 & $python -m pytest -q tests/test_family_training_core.py tests/test_family_training_data.py tests/test_family_training_recipe.py tests/test_family_training_kernel.py tests/test_family_training_loaders.py tests/test_family_training_session.py tests/test_family_training_runner.py tests/test_family_full_lifecycle.py
 & $python -m pytest -q tests/test_k1_execution_reproducibility.py tests/test_k1_screen_lifecycle.py tests/test_k1_two_pass_mean.py tests/test_k1_accelerated_execution.py tests/test_gptrans_execution_hotpath.py tests/test_gptrans_execution_tuning.py tests/test_pcqm_gptrans_v4.py
@@ -98,6 +98,9 @@ owning test, not a silent skip. Historical full-source pin tests are known to
 target immutable old source; report separately and do not update old pins to
 obtain green checks. The ignored historical Colab `selected.pt` is absent here;
 do not fabricate it. Do not sum overlapping suite counts.
+For CPU-only acceptance use explicit `-1` visibility masks, not empty variables.
+The later [server recovery review](SHARED_RECOVERY_SERVER_REVIEW.md#verification)
+records the scoped reliability port and its synthetic-only verification.
 
 ## Required Cases
 
