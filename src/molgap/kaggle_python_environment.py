@@ -16,9 +16,16 @@ REQUIREMENTS = (
 )
 
 
-def prepare_python(directory: Path, *, deadline: float, source_root: Path) -> tuple[Path, dict]:
+def prepare_python(directory: Path, *, deadline: float, source_root: Path,
+                   profile="legacy-portability") -> tuple[Path, dict]:
     """Install wheels in a new environment; qualify imports, never run a model."""
     directory = directory.resolve()
+    if profile not in {"legacy-portability", "gptrans-shared"}:
+        raise ValueError("Unknown reviewed Kaggle Python profile")
+    shared = profile == "gptrans-shared"
+    requirements = tuple("torch==2.7.1+cu126" if r.startswith("torch==") else r for r in REQUIREMENTS) if shared else REQUIREMENTS
+    cuda_build = "12.6" if shared else "12.1"
+    torch_version = "2.7.1+cu126" if shared else "2.4.1+cu121"
     if directory.exists():
         raise ValueError("Never reuse an unqualified environment directory")
     directory.mkdir(parents=True)
@@ -40,7 +47,7 @@ def prepare_python(directory: Path, *, deadline: float, source_root: Path) -> tu
     run(uv + ["venv", "--python", PYTHON_VERSION, "--managed-python", str(directory / "venv")])
     executable = directory / "venv" / "bin" / "python"
     run(uv + ["pip", "install", "--python", str(executable), "--index-strategy", "unsafe-best-match",
-              "--extra-index-url", "https://download.pytorch.org/whl/cu121", *REQUIREMENTS])
+              "--extra-index-url", "https://download.pytorch.org/whl/" + ("cu126" if shared else "cu121"), *requirements])
     # An isolated process tests binary/import compatibility without CUDA allocation,
     # deserialization, model construction, graph access or inference.
     probe = """import sys,json,importlib.metadata as m
@@ -56,9 +63,13 @@ print(json.dumps(dict(python=sys.version,executable=sys.executable,
     cuda_build=torch.version.cuda,model_constructed=False,model_inference_executed=False,
     training_executed=False,graph_role_read=False)))
 """
+    if shared:
+        probe = probe.replace("import molgap.gptrans,molgap.pcqm_wedge,molgap.gptrans_portability",
+                              "import molgap.gptrans,molgap.pcqm_wedge,molgap.family_training_runner,molgap.gptrans_cycle_pair")
+        probe = probe.replace("2.4.1+cu121", torch_version).replace("'12.1'", repr(cuda_build))
     probe_environment = dict(os.environ, PYTHONPATH=str(source_root / "src"), CUDA_VISIBLE_DEVICES="")
     result = json.loads(run([str(executable), "-c", probe], capture=True, env=probe_environment).stdout)
     result.update(bootstrap_uv=UV_VERSION, requested_python=PYTHON_VERSION,
-                  requirements=list(REQUIREMENTS), system_python=sys.version,
+                  requirements=list(requirements), system_python=sys.version,
                   status="IMPORTS_QUALIFIED_NOT_GPU_CALIBRATED")
     return executable, result

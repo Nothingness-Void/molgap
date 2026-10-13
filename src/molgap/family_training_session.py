@@ -239,12 +239,18 @@ class FamilyTrainingSession:
         metric = sum_scalar_metrics(self.pending_absolute) / self.pending_rows
         self.pending_absolute, self.pending_rows = [], 0
         evaluation = None
+        live_evaluation = None
         if self.recipe.dataset.development:
             evaluation = self.kernel.evaluate(self.loaders)
+            if self.recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"} and self.recipe.ema_decay is not None:
+                live_evaluation = self.kernel.evaluate(self.loaders, weights="live")
             if self.best is None or evaluation["mae_eV"] < self.best:
                 self._select(progress, evaluation)
                 self.best = evaluation["mae_eV"]
-        self.pass_finished(progress, {"normalized_train_gap_mae": metric, "development": evaluation})
+        metrics = {"normalized_train_gap_mae": metric, "development": evaluation}
+        if live_evaluation is not None:
+            metrics["development_live"] = live_evaluation
+        self.pass_finished(progress, metrics)
 
     def _persist(self, progress):
         self.progress = progress

@@ -43,6 +43,22 @@ class TrainingData:
     target_std_eV: float
 
 
+def resolve_pinned_manifest(root, selection):
+    """Mount paths are provenance; resolve a unique immutable manifest by its pin."""
+    root = Path(root).absolute()
+    direct = root / selection.manifest
+    if direct.exists():
+        path = _artifact_path(root, selection.manifest)
+        if sha256_file(path) != selection.manifest_sha256:
+            raise ValueError("Dataset manifest SHA differs from the frozen selection")
+        return path
+    candidates = [p for p in root.rglob(Path(selection.manifest).name)
+                  if p.is_file() and sha256_file(p) == selection.manifest_sha256]
+    if len(candidates) != 1:
+        raise ValueError("Expected one uniquely mounted pinned manifest")
+    return _artifact_path(root, candidates[0].relative_to(root).as_posix())
+
+
 def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     """Verify the selected view and shard bytes before trusted deserialization.
 
@@ -58,7 +74,7 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     if type(selection) is not DatasetSelection:
         raise TypeError("Expected DatasetSelection")
     root = Path(root).absolute()
-    path = _artifact_path(root, selection.manifest)
+    path = resolve_pinned_manifest(root, selection)
     if sha256_file(path) != selection.manifest_sha256:
         raise ValueError("Dataset manifest SHA differs from the frozen selection")
     manifest = _json(path)
@@ -103,7 +119,7 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
                     record.get("source_idx_max") != cursor + count - 1 or
                     cursor + count > stop):
                 raise ValueError("Shard order/count differs from its selected role")
-            shard_path = _artifact_path(root, record["file"])
+            shard_path = _artifact_path(path.parent, record["file"])
             if sha256_file(shard_path) != record["sha256"]:
                 raise ValueError("Topology shard SHA differs from its manifest")
             shard = PackedGraphDataset(shard_path, mmap=True)

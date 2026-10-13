@@ -244,35 +244,41 @@ def validate_chunk(payload, record):
     return payload
 
 
-def attach_sidecar(root, selection, data):
+def wrap_sidecar_role(root, selection, dataset, *, source_manifest_sha256, start, rows):
     import torch
-    path = _confined(Path(root), selection.manifest)
+    from .family_training_data import resolve_pinned_manifest
+    path = resolve_pinned_manifest(root, selection)
     if sha256_file(path) != selection.manifest_sha256:
         raise ValueError("Cycle sidecar manifest changed")
     manifest = json.loads(path.read_bytes())
     if (manifest.get("format") != FORMAT or manifest.get("status") != "complete" or
             manifest.get("maximum_cycle") != MAX_CYCLE):
         raise ValueError("Unaccepted cycle sidecar")
+    selected, cursor = [], start
+    for record in manifest["chunks"]:
+        if not start <= record["source_start"] < start + rows:
+            continue
+        if (record["source_start"] != cursor or record["source_manifest_sha256"] != source_manifest_sha256 or
+                record["independently_rederived"] is not True):
+            raise ValueError("Cycle sidecar selection/order/source changed")
+        chunk = _confined(path.parent, record["file"])
+        if sha256_file(chunk) != record["sha256"]:
+            raise ValueError("Cycle chunk SHA changed")
+        payload = torch.load(chunk, map_location="cpu", weights_only=True, mmap=True)
+        validate_chunk(payload, record)
+        if not torch.equal(payload["source_idx"], torch.arange(cursor, record["source_stop"])):
+            raise ValueError("Cycle source rows changed")
+        selected.append((cursor, record["source_stop"], payload))
+        cursor = record["source_stop"]
+    if cursor != start + rows:
+        raise ValueError("Incomplete cycle sidecar role")
+    return CycleDataset(dataset, selected)
+
+
+def attach_sidecar(root, selection, data):
     def wrap(dataset, start, rows):
-        selected, cursor = [], start
-        for record in manifest["chunks"]:
-            if not start <= record["source_start"] < start + rows:
-                continue
-            if (record["source_start"] != cursor or record["source_manifest_sha256"] != data.manifest_sha256 or
-                    record["independently_rederived"] is not True):
-                raise ValueError("Cycle sidecar selection/order/source changed")
-            chunk = _confined(path.parent, record["file"])
-            if sha256_file(chunk) != record["sha256"]:
-                raise ValueError("Cycle chunk SHA changed")
-            payload = torch.load(chunk, map_location="cpu", weights_only=True, mmap=True)
-            validate_chunk(payload, record)
-            if not torch.equal(payload["source_idx"], torch.arange(cursor, record["source_stop"])):
-                raise ValueError("Cycle source rows changed")
-            selected.append((cursor, record["source_stop"], payload))
-            cursor = record["source_stop"]
-        if cursor != start + rows:
-            raise ValueError("Incomplete cycle sidecar role")
-        return CycleDataset(dataset, selected)
+        return wrap_sidecar_role(root, selection, dataset,
+            source_manifest_sha256=data.manifest_sha256, start=start, rows=rows)
     return replace(data, train=wrap(data.train, data.train_source_start, data.train_rows),
                    development=wrap(data.development, data.development_source_start, data.development_rows)
                    if data.development is not None else None)

@@ -91,9 +91,24 @@ def check_prospective(spec: ExperimentSpec, repo_root: Path) -> dict:
             "submission_authorized": False}
 
 
-def plan_prospective(spec: ExperimentSpec, repo_root: Path) -> tuple[dict, int]:
+def plan_prospective(spec: ExperimentSpec, repo_root: Path, *, execution_source_commit=None) -> tuple[dict, int]:
+    if execution_source_commit is not None:
+        import subprocess
+        observed = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo_root, text=True).strip()
+        if observed != execution_source_commit:
+            raise ValueError("Packaged execution commit differs from prospective planning HEAD")
     plans, bindings = _prospective_inputs(spec, repo_root)
 
+    if execution_source_commit is not None:
+        # Authored plan files predate their packaging commit. Bind executable
+        # provenance at the existing publication boundary, not by editing RML.
+        for item in plans:
+            trajectory = item["spec"]["trajectory"]
+            trajectory["state_at_start"]["source_commit"] = execution_source_commit
+            for action in trajectory.get("actions", []):
+                action["source_commit"] = execution_source_commit
+            if "decision_state" in item["spec"]:
+                item["spec"]["decision_state"]["source_commit"] = execution_source_commit
     try:
         result = plan_many(repo_root, plans)
     except PlanBatchError as exc:

@@ -357,8 +357,6 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
         options["prospective_root"] = staged_root
         if phase == "train":
             options["target_identity"] = target_identity
-        if resume_output is not None:
-            raise ValueError("Shared sessions resume from their own output; external resume is unsupported")
     if phase == "preflight" and resume_output is not None:
         runner = getattr(owner, "run_screen_resume_preflight", None)
         if not callable(runner):

@@ -191,7 +191,8 @@ class StageRecorder:
     optimizer resets from being silently combined into one curve.
     """
     def __init__(self, path: Path, context: RunContext, stage_id: str,
-                 metric_semantics: dict, *, trajectory_id: str | None = None):
+                 metric_semantics: dict, *, trajectory_id: str | None = None,
+                 device_time_semantics: str | None = None):
         _identifier(stage_id, "stage_id")
         _safe_local(Path(path).absolute())
         self.context = context
@@ -200,7 +201,7 @@ class StageRecorder:
         self.recorder = RMLTraceRecorder(path,
             trajectory_id=trajectory_id or context.experiment_id + "-" + context.arm_id,
             run_id=context.logical_run_id + ":" + context.arm_id + ":" + stage_id,
-            metric_semantics=metric_semantics)
+            metric_semantics=metric_semantics, device_time_semantics=device_time_semantics)
         # The companion is immutable and disallows reuse with another source/arm.
 
     def observe(self, *, optimizer_step: int, sample_presentations: int,
@@ -679,6 +680,9 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
     The owning contract still provides comparison_prelaunch and reference_bundle.
     A passing plan only checks availability and schemas, not trainer execution.
     """
+    if plan.get("format") == "molgap-family-same-run-acceptance-plan-v1":
+        from .family_pair_release import check_same_run_plan
+        return check_same_run_plan(spec, repo_root, plan)
     from .comparison_readiness import validate_comparison_prelaunch, validate_reference_bundle, reference_bundle_digest
     declaration = spec.to_dict()
     expected_arms = {a["arm_id"]: a for a in declaration["arms"]}

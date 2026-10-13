@@ -130,6 +130,29 @@ def _invoke(capsys, root, spec_path, expected_code):
     return json.loads(capsys.readouterr().out)
 
 
+def test_execution_commit_is_bound_only_at_publication(planning_case, monkeypatch):
+    import subprocess
+    root, _, spec = planning_case
+    originals = {b["plan_spec_ref"]: (root / b["plan_spec_ref"]).read_bytes()
+                 for b in spec.to_dict()["prospective"]["arms"]}
+    commit = "a" * 40
+    monkeypatch.setattr(subprocess, "check_output", lambda *args, **kw: commit + "\n")
+    captured = []
+    def publish(root, plans):
+        captured.extend(plans)
+        return {"status": "PLANNED", "batch": {"size": len(plans)}, "results": [
+            {"trajectory_id": p["spec"]["trajectory"]["trajectory_id"], "path": p["output"], "status": "PLANNED"}
+            for p in plans]}
+    monkeypatch.setattr(prospective, "plan_many", publish)
+    monkeypatch.setattr(prospective, "rebuild_research_memory", lambda *args: {})
+    assert prospective.plan_prospective(spec, root, execution_source_commit=commit)[1] == 0
+    assert all(p["spec"]["trajectory"]["state_at_start"]["source_commit"] == commit
+               and p["spec"]["decision_state"]["source_commit"] == commit for p in captured)
+    assert all((root / path).read_bytes() == raw for path, raw in originals.items())
+    with pytest.raises(ValueError, match="Packaged execution commit"):
+        prospective.plan_prospective(spec, root, execution_source_commit="b" * 40)
+
+
 @pytest.mark.parametrize("change", [
     "second_hash", "second_trajectory", "second_arm_identity", "existing_output",
 ])

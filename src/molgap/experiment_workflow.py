@@ -345,7 +345,7 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
             report.update(status="BLOCKED", stage="check_release", prospective_published=False)
             return report
         report["prospective_published"] = "inspect_plan_result"
-        prospective, code = plan_prospective(spec, repo_root)
+        prospective, code = plan_prospective(spec, repo_root, execution_source_commit=manifest["source_commit"])
         report["prospective_published"] = True if not code else "inspect_plan_result"
         record("prospective", prospective)
         if code:

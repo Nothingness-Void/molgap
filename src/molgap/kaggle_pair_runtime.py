@@ -32,6 +32,13 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         raise ValueError("Runtime launch differs from the verified source package")
     jobs = validate_execution_plan(spec, config["jobs"])
     declaration = spec.to_dict()
+    from .family_pair_release import bounded_cycle_pair, WALL_CEILING_SECONDS
+    bounded = bounded_cycle_pair(spec)
+    if bounded:
+        from .family_pair_release import check_same_run_plan
+        check_same_run_plan(spec, source_root,
+            _json(source_root / "experiments/pcqm_gptrans_cycle_pair_100k/gpu/acceptance_plan.json"),
+            initial_states={j["arm_id"]: Path(launch_path).parent / j["initial_state"] for j in jobs})
     if declaration["platform"]["name"] != "kaggle":
         raise ValueError("Kaggle runtime requires a Kaggle Spec")
     names = [n.strip() for n in subprocess.check_output(
@@ -75,6 +82,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     ledger = AllocationLedger(spec_identity=spec.identity, hardware=names,
         assignments={job["arm_id"]: job["device"] for job in jobs}, started=allocation_started,
         prior_segments=prior_segments)
+    prior_wall = sum(s.get("wall_seconds", 0) for s in ledger.prior_segments)
+    if bounded and ledger.snapshot("running")["prior_unobserved_intervals"]:
+        raise ValueError("Unknown prior allocation intervals require cost reconciliation before continuation")
     ledger.write(output, "running")
     atomic_json(output / "pair_state.json", report)
     def retain_execution():
@@ -84,6 +94,15 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
             source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"],
             arm_roots={j["arm_id"]: output / j["arm_id"] for j in jobs})
     for phase in ("preflight", "train"):
+        if bounded and phase == "train":
+            resources = [_json(output / job["arm_id"] / "resource_qualification.json") for job in jobs]
+            elapsed = prior_wall + time.perf_counter() - ledger.started
+            if elapsed + max(r["estimated_remaining_seconds"] for r in resources) >= WALL_CEILING_SECONDS - 120:
+                report["status"] = "failed"
+                report["exit_reason"] = "native_whole_allocation_budget_gate"
+                ledger.write(output, "failed", arm_roots=[output / j["arm_id"] for j in jobs])
+                retain_execution()
+                raise TimeoutError("Whole allocation budget blocks formal training")
         workers, phase_record = [], {"phase": phase, "workers": [], "status": "running"}
         ledger_updated = time.perf_counter()
         try:
@@ -126,6 +145,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                         item["finished"] = time.perf_counter()
                 return any(p.returncode is None for p, _, _ in workers)
             while poll_workers():
+                if bounded and prior_wall + time.perf_counter() - ledger.started >= WALL_CEILING_SECONDS - 60:
+                    report["exit_reason"] = "native_allocation_hard_budget"
+                    raise TimeoutError("Frozen8wall-hour allocation ceiling; stop and retain checkpoints")
                 if any(p.poll() not in (None, 0) for p, _, _ in workers):
                     raise RuntimeError(f"Arm failed during {phase}; retained logs identify the blocker")
                 if time.perf_counter() - ledger_updated >= 30:
@@ -153,6 +175,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 state["worker_wall_seconds"] += job.get("finished", time.perf_counter()) - job["started"]
                 state["terminal_status"] = ("complete" if phase == "train" else "preflight_complete") if p.returncode == 0 else "failed"
                 state["exit_reason"] = phase + "_worker_exit_" + str(p.returncode)
+                if phase == "train" and p.returncode == 0 and (output / job["arm_id"] / "pause_receipt.json").is_file():
+                    state["terminal_status"] = "interrupted"
+                    state["exit_reason"] = "durable_ten_pass_segment_complete_scientific_horizon_incomplete"
             if report["status"] == "failed":
                 for state in report["arms"].values():
                     if not state["training_started"] and state["terminal_status"] != "failed":
@@ -182,3 +207,25 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     ledger.write(output, "complete", arm_roots=[output / j["arm_id"] for j in jobs])
     retain_execution()
     return report
+
+
+def main():
+    import argparse
+    from .experiment_launch_config import validate_launch_config
+    from .experiment_package import verify_experiment_source_package
+    parser = argparse.ArgumentParser(allow_abbrev=False)
+    for field in ("source-root", "package-dir", "input-root", "launch", "output"):
+        parser.add_argument("--" + field, type=Path, required=True)
+    parser.add_argument("--allocation-started", type=float, required=True)
+    args = parser.parse_args()
+    manifest = verify_experiment_source_package(args.package_dir)
+    spec = ExperimentSpec.from_json((args.package_dir / "experiment_spec.json").read_text(encoding="utf-8"))
+    validate_launch_config(spec, args.launch, manifest=manifest, package_dir=args.package_dir,
+                          staged_root=args.launch.parent)
+    run_two_phase_pair(source_root=args.source_root, package_dir=args.package_dir,
+        input_root=args.input_root, launch_path=args.launch, output=args.output,
+        allocation_started=args.allocation_started, manifest=manifest)
+
+
+if __name__ == "__main__":
+    main()

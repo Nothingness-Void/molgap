@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+import time
 from pathlib import Path
 
 from .experiment_family_workflow import (
@@ -16,13 +17,18 @@ from .training_reproducibility import atomic_torch_save
 
 
 class SessionOutputs:
-    def __init__(self, root, context, *, contract, adapter, trajectory_id, train_role_identity):
+    def __init__(self, root, context, *, contract, adapter, trajectory_id, train_role_identity,
+                 resume_trajectory=None):
         from .family_training_runner import read_recipe
         self.root, self.context, self.adapter = Path(root).absolute(), context, adapter
+        self.resume_trajectory = resume_trajectory
+        self.bounded_pair = False
+        self.pending_pass = None
         _safe_local(self.root)
         if file_digest(contract) != context.training_recipe_sha256:
             raise ValueError("Session contract differs from the frozen Spec")
         record, self.recipe = read_recipe(contract)
+        self.bounded_pair = self.recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}
         self.expected = record["acceptance_requirements"]
         self.root.mkdir(parents=True, exist_ok=True)
         publish_immutable_bytes(self.root / "training_contract.json", Path(contract).read_bytes())
@@ -36,8 +42,16 @@ class SessionOutputs:
             semantics["ema_dev_metric" if weights == "ema" else "live_dev_metric"] = {
                 "metric": "MAE", "unit": "eV", "target": "Gap", "role_identity": record["development_role_identity"],
                 "weights": weights, "direction": "minimize"}
+            if self.recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"} and self.recipe.ema_decay is not None:
+                semantics["live_dev_metric"] = {**semantics["ema_dev_metric"], "weights": "live"}
+        if self.bounded_pair:
+            semantics["live_train_metric"]["unit"] = "eV"
         self.stage = StageRecorder(self.root / "canonical_trace.json", context, "downstream",
-            semantics, trajectory_id=trajectory_id)
+            semantics, trajectory_id=trajectory_id,
+            device_time_semantics="sum_over_devices" if self.bounded_pair else None)
+        rows = self.stage.recorder.record["observations"]
+        self.previous_cumulative = rows[-1]["cumulative_wall_time_seconds"] if rows and self.bounded_pair else 0.
+        self.segment_started = self.previous_observation = time.perf_counter()
 
     def selected(self, progress, weights, state, evaluation):
         _finite_tree(state, "selected.model")
@@ -56,11 +70,35 @@ class SessionOutputs:
             cursor=state["cursor"], optimizer_step=progress.optimizer_step,
             sample_presentations=progress.sample_presentations,
             scheduler_state=state["scheduler"], ema_state=state["ema"])
+        if self.pending_pass is not None:
+            acknowledged, fields = self.pending_pass
+            if acknowledged.optimizer_step != progress.optimizer_step:
+                raise ValueError("Pass metrics differ from acknowledged checkpoint")
+            observed = time.perf_counter()
+            duration = observed - self.previous_observation
+            cumulative = self.previous_cumulative + observed - self.segment_started
+            self.stage.observe(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
+                epoch_or_pass=progress.pass_index, **fields,
+                checkpoint_identity=file_digest(self.root / "last_checkpoint.pt"),
+                wall_time_seconds=duration, cumulative_wall_time_seconds=cumulative,
+                device_time_seconds=duration, cumulative_device_time_seconds=cumulative)
+            self.previous_observation, self.pending_pass = observed, None
+        if (self.resume_trajectory is not None and progress.next_batch == 0 and
+                progress.pass_index > 0 and progress.pass_index % 10 == 0 and progress.status != "complete"):
+            from .experiment_resume import create_resume_bundle
+            destination = self.root.parent / "checkpoint_chunks" / self.context.arm_id / f"pass_{progress.pass_index:02d}"
+            create_resume_bundle(self.root, self.context, self.resume_trajectory, destination)
 
     def pass_finished(self, progress, metrics):
         fields = {"live_train_metric": metrics["normalized_train_gap_mae"]}
         if metrics["development"] is not None:
             fields["ema_dev_metric" if self.recipe.selection.endswith("ema") else "live_dev_metric"] = metrics["development"]["mae_eV"]
+        if metrics.get("development_live") is not None:
+            fields["live_dev_metric"] = metrics["development_live"]["mae_eV"]
+        if self.bounded_pair:
+            fields["live_train_metric"] *= self.recipe.target_std_eV
+            self.pending_pass = (progress, fields)
+            return
         self.stage.observe(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
             epoch_or_pass=progress.pass_index, **fields)
 

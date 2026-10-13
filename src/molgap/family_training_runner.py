@@ -240,12 +240,18 @@ def run_screen_preflight(**options):
             "state_fingerprint": _state_fingerprint(state)})
     if len({proof["state_fingerprint"] for proof in proofs}) != 1:
         raise ValueError("Native optimizer/EMA/schedule/RNG repeat or serialized resume differs")
+    resource = None
+    if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
+        resource = _qualify_cycle_resources(recipe, data, tuning, Path(options["initial_state_path"]))
+        atomic_json(output / "resource_qualification.json", resource)
     atomic_json(output / "runtime_provenance.json", provenance)
     certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
         "provenance_sha256": canonical_fingerprint(provenance), "probe_recipe_identity": probe.identity,
         "proofs": proofs, "resume_origin": {"path": "resumed-first.pt",
             "sha256": normalized_file_sha(output / "resumed-first.pt")},
         "formal_training_exposure": 0, "scientific_acceptance": "NOT_EVALUATED"}
+    if resource is not None:
+        certificate["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
     atomic_json(output / "runtime_certificate.json", certificate)
     atomic_json(output / "preflight_costs.json", {"context": context.to_dict(), "costs": [
         {"metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - began,
@@ -255,6 +261,66 @@ def run_screen_preflight(**options):
             "semantics": "allocated_device", "hardware": provenance["accelerator"],
             "reason": "requires platform allocation accounting"}]})
     return certificate
+
+
+def _qualify_cycle_resources(recipe, data, tuning, initial):
+    """Disposable native profile and zero-start proof, never a third trained arm."""
+    import torch
+    from .family_training_kernel import FamilyKernel
+    from .family_training_loaders import FamilyLoaders
+    from .family_pair_release import resource_estimate
+    from .training_reproducibility import configure_fp32_determinism
+    from .gptrans_execution_backend import bind_model_layout, prepared_forward
+    probe = _probe_recipe(recipe)
+    configure_fp32_determinism(recipe.seed)
+    kernel = FamilyKernel(probe, initial, device="cuda")
+    loaders = FamilyLoaders(probe, data, tuning)
+    train_times, forward_times = [], []
+    try:
+        iterator = iter(loaders.train(0, 0))
+        batch = next(iterator)
+        zero_start = None
+        if recipe.mode == "degree_local_cycle_common_ema999":
+            from .gptrans_cycle_pair import construct, PARENT
+            from .v4_runtime import read_frozen_state_artifact
+            state, _ = read_frozen_state_artifact(initial, expected_state_sha256=recipe.initialization_sha256)
+            parent_state = {k: v for k, v in state.items() if k != "cycle_embedding.weight"}
+            parent = construct(PARENT, parent_state)
+            parent.load_state_dict(parent_state, strict=True)
+            bind_model_layout(parent)
+            parent.to("cuda").eval()
+            kernel.model.eval()
+            with torch.no_grad():
+                actual = kernel.forward(batch)
+                expected = prepared_forward(parent, kernel._gptrans_batch(batch, training=False))
+            if not torch.equal(actual, expected):
+                raise ValueError("Cycle zero-start encoder is not exactly the local parent on native inputs")
+            zero_start = {"accepted": True, "maximum_prediction_delta": 0., "rows": int(batch.num_graphs)}
+            del parent, state, parent_state, actual, expected
+        torch.cuda.empty_cache()
+        torch.cuda.reset_peak_memory_stats()
+        kernel.model.train()
+        kernel.step(batch, check_finite=True)
+        for index in range(20):
+            torch.cuda.synchronize()
+            began = time.perf_counter()
+            batch = next(iterator)
+            kernel.model.train()
+            kernel.step(batch, check_finite=True)
+            torch.cuda.synchronize()
+            train_times.append(time.perf_counter() - began)
+            began = time.perf_counter()
+            kernel.model.eval()
+            with torch.no_grad():
+                kernel.forward(batch)
+            torch.cuda.synchronize()
+            forward_times.append(time.perf_counter() - began)
+        return {**resource_estimate(train_step_seconds=max(train_times), forward_seconds=max(forward_times),
+            reserved_bytes=torch.cuda.max_memory_reserved(), total_bytes=torch.cuda.get_device_properties(0).total_memory),
+            "zero_start": zero_start, "formal_training_exposure": 0, "disposable_optimizer_updates": 21}
+    finally:
+        loaders.close()
+        kernel.close()
 
 
 def normalized_file_sha(path):
@@ -269,6 +335,80 @@ def _probe_recipe(recipe):
         optimizer_steps=2, checkpoint_every=1, selection="final-live")
 
 
+def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, sidecars,
+                           trajectory, context=None):
+    """Recheck the actual shared checkpoint/trace before portable transport."""
+    import torch
+    from .family_training_session import validate_session_resume
+    from .research_memory.trace import validate_canonical_trace
+    record, recipe = read_recipe(Path(bundle_root) / "files/training_contract.json")
+    validate_screen_recipe(spec, arm_id, record)
+    saved = torch.load(artifacts["checkpoint"], map_location="cpu", weights_only=True)
+    if context is not None:
+        _check_context(saved.pop("context"), RunContext(**context))
+    else:
+        saved.pop("context")
+    progress = validate_session_resume(recipe, saved)
+    if progress.status == "complete" or progress.optimizer_step >= recipe.optimizer_steps:
+        raise ValueError("Completed shared session cannot be resumed")
+    trace = validate_canonical_trace(_json(artifacts["trace"]))
+    observations = [r for r in trace["observations"] if r["event"] == "observation"]
+    if len(observations) != progress.pass_index or any(r["optimizer_step"] > progress.optimizer_step for r in observations):
+        raise ValueError("Resume trace/cursor mismatch")
+    if trace["trajectory_id"] != trajectory["trajectory_id"]:
+        raise ValueError("Resume trace/trajectory identity mismatch")
+    return {"status": "SHARED_RESUME_VERIFIED", "optimizer_steps": progress.optimizer_step,
+            "sample_presentations": progress.sample_presentations, "recipe_identity": recipe.identity}
+
+
+def run_screen_resume_preflight(*, resume_output, **options):
+    """Qualify initial repeat/resume plus two scratch next-steps from actual work."""
+    import torch
+    from .family_training_kernel import FamilyKernel
+    from .family_training_loaders import FamilyLoaders
+    from .family_training_session import FamilyTrainingSession, validate_session_resume
+    from .training_reproducibility import configure_fp32_determinism
+    result = run_screen_preflight(**options)
+    output = Path(options["output"])
+    bootstrap_options = {k: v for k, v in options.items() if k != "output"}
+    _, recipe, data, tuning, context, _, _ = _bootstrap(**bootstrap_options)
+    retained = torch.load(Path(resume_output) / "last_checkpoint.pt", map_location="cpu", weights_only=True)
+    _check_context(retained.pop("context"), context)
+    progress = validate_session_resume(recipe, retained)
+    if progress.status == "complete":
+        raise ValueError("Cannot resume a completed shared session")
+    if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
+        from .family_pair_release import resource_estimate
+        resource = _json(output / "resource_qualification.json")
+        qualified = resource_estimate(train_step_seconds=resource["maximum_observed_train_step_seconds"],
+            forward_seconds=resource["maximum_observed_forward_seconds"], reserved_bytes=resource["reserved_bytes"],
+            total_bytes=resource["total_bytes"], completed_passes=progress.pass_index)
+        atomic_json(output / "resource_qualification.json", {**resource, **qualified})
+        cert = _json(output / "runtime_certificate.json")
+        cert["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
+        atomic_json(output / "runtime_certificate.json", cert)
+    proofs = []
+    for label in ("actual-resume-a", "actual-resume-b"):
+        configure_fp32_determinism(recipe.seed)
+        kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda")
+        session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
+            checkpoint=lambda p, state: atomic_torch_save(output / (label + ".pt"), state),
+            selected=lambda *args: None, pass_finished=lambda *args: None)
+        session.load_state_dict(retained)
+        endpoint = session.run(should_pause=lambda: True)
+        observed = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
+        if endpoint.optimizer_step != progress.optimizer_step + 1:
+            raise ValueError("Actual resume proof did not advance exactly one scratch update")
+        proofs.append({"path": label + ".pt", "sha256": normalized_file_sha(output / (label + ".pt")),
+                       "state_fingerprint": _state_fingerprint(observed)})
+    if proofs[0]["state_fingerprint"] != proofs[1]["state_fingerprint"]:
+        raise ValueError("Actual resume next-step repeats differ")
+    atomic_json(output / "actual_resume_certificate.json", {"status": "accepted", "proofs": proofs,
+        "formal_training_exposure": 0, "resume_step": progress.optimizer_step,
+        "checkpoint_sha256": normalized_file_sha(Path(resume_output) / "last_checkpoint.pt")})
+    return result
+
+
 def _verify_preflight(directory, recipe, provenance):
     import torch
     from .family_training_session import validate_session_resume
@@ -277,6 +417,10 @@ def _verify_preflight(directory, recipe, provenance):
     certificate = _json(_artifact_path(root, "runtime_certificate.json"))
     if saved != provenance or certificate.get("provenance_sha256") != canonical_fingerprint(provenance):
         raise ValueError("Native preflight source/recipe/data/runtime/device identity differs")
+    if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
+        resource_path = root / "resource_qualification.json"
+        if certificate.get("resource_qualification_sha256") != normalized_file_sha(resource_path):
+            raise ValueError("Missing or changed native resource qualification")
     probe = _probe_recipe(recipe)
     if (certificate.get("format") != "molgap-runtime-certificate-v1" or
             certificate.get("probe_recipe_identity") != probe.identity or certificate.get("formal_training_exposure") != 0):
@@ -336,7 +480,10 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     record, recipe, data, tuning, context, provenance, _ = _bootstrap(**options)
     certificate = _verify_preflight(preflight_dir or output, recipe, provenance)
     outputs = SessionOutputs(root, context, contract=options["recipe_path"], adapter=PROFILES[recipe.family],
-        trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"])
+        trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"],
+        resume_trajectory=(_artifact_path(Path(options["prospective_root"]),
+            "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
+            if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"} else None))
     kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda")
     _loaded_source(options["package_dir"])
     session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
@@ -344,6 +491,11 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     had_checkpoint = (root / "last_checkpoint.pt").is_file()
     try:
         if had_checkpoint:
+            if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
+                actual = _json(_artifact_path(Path(preflight_dir or output), "actual_resume_certificate.json"))
+                if (actual.get("status") != "accepted" or actual.get("formal_training_exposure") != 0 or
+                        actual.get("checkpoint_sha256") != normalized_file_sha(root / "last_checkpoint.pt")):
+                    raise ValueError("Actual retained-state native resume qualification is missing or changed")
             session.load_state_dict(outputs.retained_state())
     except Exception:
         session.close()
@@ -352,7 +504,12 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     previous_signal = signal.getsignal(signal.SIGTERM)
     signal.signal(signal.SIGTERM, lambda *_: pause.__setitem__(0, True))
     try:
-        progress = session.run(should_pause=lambda: pause[0])
+        # A completed physical ten-pass segment makes work externally retrievable.
+        # The scientific horizon, scheduler and selected-state policy remain60.
+        bounded = recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}
+        stop_pass = min(60, (session.progress.pass_index // 10 + 1) * 10)
+        progress = session.run(should_pause=lambda: pause[0] or (
+            bounded and session.progress.pass_index >= stop_pass and session.progress.next_batch == 0))
     finally:
         signal.signal(signal.SIGTERM, previous_signal)
     cost_path = root / "allocation_costs.json"

@@ -79,6 +79,8 @@ def _name(value) -> str:
         tokens.discard("data")
     if value == "src/molgap/family_training_outputs.py":
         tokens.discard("outputs")
+    if value == "src/molgap/pcqm_fixed_records.py":
+        tokens.discard("records")
     if (set(lowered) & _BLOCKED_PARTS or tokens & _BLOCKED_PARTS
             or any(part == ".env" or part.startswith(".env.") for part in lowered)
             or path.suffix.lower() in _BLOCKED_SUFFIXES

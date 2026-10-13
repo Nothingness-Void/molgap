@@ -121,7 +121,7 @@ class FamilyKernel:
     def close(self):
         self.weight_view.clear()
 
-    def evaluate(self, loaders):
+    def evaluate(self, loaders, *, weights=None):
         """Only the explicitly selected internal-development view is consumed."""
         import math
         from types import SimpleNamespace
@@ -129,7 +129,9 @@ class FamilyKernel:
         data = loaders.data
         if self.recipe.identity != loaders.recipe.identity or data.development is None:
             raise ValueError("No matching selected development role")
-        weights = self.recipe.selection.rsplit("-", 1)[1]
+        weights = weights or self.recipe.selection.rsplit("-", 1)[1]
+        if weights not in {"live", "ema"} or (weights == "ema" and self.ema is None):
+            raise ValueError("Unavailable evaluation weights")
         with self.weight_view.use(self.model, self.ema, weights):
             # The existing buffered evaluator owns ordered prediction/target
             # accumulation. Keep CPU layout preparation before selective transfer.
