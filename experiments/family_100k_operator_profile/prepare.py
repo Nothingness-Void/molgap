@@ -103,7 +103,7 @@ def draft():
         module = "k1_screen_training.py" if device == 0 else "gptrans_bond_local.py"
         arm = {"arm_id":arm_id, "scientific_role":"candidate", "family":{"name":recipe.family,"version":INTERFACES[recipe.family][1]},
             "base":b["base"], "initialization":{"kind":"frozen_state","seed":recipe.seed,"state_sha256":recipe.initialization_sha256},
-            "data":{"dataset":ref("pcqm4mv2",identity["manifest_sha256"]), "split":ref("fixed100k-next50k",canonical_fingerprint(roles)),
+            "data":{"dataset":ref("pcqm4mv2",identity["manifest_sha256"]), "split":ref("fixed100k-next50k",canonical_fingerprint({"roles":roles})),
                 "roles":deepcopy(roles), "feature_schema":"ogb-atom9-bond3-rwse16-v1", "feature_sha256":identity["manifest_sha256"],
                 "target":"pcqm4mv2-gap-eV-direct"},
             "training":{"recipe":ref("shared-family-training",normalized_source_sha256(ROOT / recipe_ref)),
