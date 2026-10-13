@@ -99,3 +99,6 @@ research_memory/policies/family-checkpoint-efficiency.1.json -text
 src/molgap/training_reproducibility.py -text
 src/molgap/experiment_family_workflow.py -text
 src/molgap/checkpoint_diagnostic.py -text
+experiments/family_session_execution_speed/** -text whitespace=cr-at-eol
+research_memory/policies/family-session-speed.1.json -text
+src/molgap/family_execution_diagnostic.py -text
