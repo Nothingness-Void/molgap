@@ -15,6 +15,7 @@ from molgap.v4_bundle import build_v4_source_bundle
 BASE = "experiments/pcqm_gptrans_cycle_pair_100k"
 RUN = "kaseichou/molgap-gptrans-cycle-inputs-v1"
 TRAJECTORY = "TC-gptrans-cycle-input-preparation"
+CONTEXT = "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
 
 
 def main():
@@ -32,7 +33,7 @@ def main():
         "family_id": "gptrans-cycle-input-preparation", "question": "Are common-chordless-cycle inputs exact on the immutable PCQM roles?",
         "hypothesis": {"hypothesis_id": "H-" + TRAJECTORY,
             "observed_deficiency": "No accepted common-cycle sidecar exists for the authorized ring-pair screen",
-            "supporting_evidence_ids": [], "alternative_explanations": ["Enumeration, source-row or indexing error"],
+            "supporting_evidence_ids": [CONTEXT], "alternative_explanations": ["Enumeration, source-row or indexing error"],
             "changed_mechanism": "CPU-only exact cycle enumeration from unchanged accepted topology",
             "cheapest_falsifier": "Independent NetworkX rederivation for every row without model execution",
             "related_closed_family_ids": [], "expected_native_cost_ref": cost,
@@ -40,7 +41,7 @@ def main():
             "decision_changed_if_negative": "block training and retain partial evidence", "historical_unknowns": []},
         "state_at_start": {"source_commit": commit, "source_config_identity": canonical_fingerprint({
             "cap": 18, "roles": json.loads((root / roles).read_bytes())}), "contract_refs": [protocol],
-            "reference_ids": [], "parent_trajectory_ids": [], "prior_trajectory_ids": [], "prior_evidence_ids": [],
+            "reference_ids": [CONTEXT], "parent_trajectory_ids": [], "prior_trajectory_ids": [], "prior_evidence_ids": [CONTEXT],
             "role_snapshot_refs": [roles], "budget_snapshot_ref": budget},
         "actions": [{"action_id": "A001", "type": "cpu_input_preparation", "source_commit": commit,
             "run_ids": [RUN], "attempt_ids": ["v1"], "evidence_refs": [protocol], "cost_event_ids": [cost]}],
