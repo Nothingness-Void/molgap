@@ -1,0 +1,33 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-45c2a21bffab08028046267cb8313e854a8926ff3d9656740b327bcf5e12aa1e",
+  "finalized_at": "2026-10-13T08:21:57.876819+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/family_checkpoint_efficiency/acceptance.json": "8ea042e2195438bcd0e0f1b664124f7023e2f5204c460a0699595b02f1f377ae",
+    "experiments/family_checkpoint_efficiency/analysis.json": "1cbaf8f7c476a43782d47680140bc0b2451bff891e5c6028ab72e898584ee393",
+    "experiments/family_checkpoint_efficiency/attribution.md": "65165bb6276f1530592c0840e67abec0e14cbd60a85d13fda7e61b89c094546e",
+    "experiments/family_checkpoint_efficiency/config.json": "5793008fdb819c874a7fa23b38de8ff43a8ce8c9cbdaf3d4e4ed1ff7499556c7",
+    "experiments/family_checkpoint_efficiency/protocol.md": "340bce9c2734b1747224575473764eff3da0d96982a9d465dcb6e466eef02b93",
+    "experiments/family_checkpoint_efficiency/results/completion.json": "61a2558b67b877ce1eb9a8b099a846fe32821c0b291bb22e705a10b01c7205f3",
+    "experiments/family_checkpoint_efficiency/results/result.json": "7313c4ddc308ed31c656a349834bbf1ad74572a1857d5ccaf09a053efd0e55a0",
+    "experiments/family_checkpoint_efficiency/role_plan.json": "b69db68937382c1fc75b285656d406782c85f87e838a77f95ca7af19f3da8884",
+    "experiments/family_checkpoint_efficiency/terminal_decision.md": "eec199aad764031ba8511dc944d7e1fdbb3ebf17c1cf3e9c26dec5e0f30645bc"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-family-checkpoint-observed-20261013.json": "3bd72b791a3f1571566b0a6b31aa69fa0722673b8c42711cc3d002d40cf63ef7",
+    "prospective_snapshot.json": "91a197b33e8a2da165918b8ef35d5df21d67d003df92609e6e89d3d812140870",
+    "terminal_input.json": "e1765b07065fbb1eddc9d806e2bcc0c0e02ccfa890d194bb8c28d133c86dcaa0",
+    "trajectory.json": "88b84911ada2f395034979bb94edf67ae8b8cebdc78ecf3dc82e93ea7f8318b6",
+    "v5_evidence.json": "51aa0613780ad83caf8ccd846a627119e842f93184b0e13b0151bdc1701cc1c0"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/family_checkpoint_efficiency/rml/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "45c2a21bffab08028046267cb8313e854a8926ff3d9656740b327bcf5e12aa1e",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-family-checkpoint-efficiency-20261013"
+}

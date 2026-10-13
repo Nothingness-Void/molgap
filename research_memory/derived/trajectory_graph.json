@@ -36,6 +36,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-family-checkpoint-efficiency-20261013:A001",
+      "target": "experiments/family_checkpoint_efficiency/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-geometry-transfer-500k-context:A001",
       "target": "experiments/pcqm_geometry_transfer_500k/results/fusion_metrics.json",
       "type": "action_produced_evidence"
@@ -1596,6 +1601,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-input-pipeline-local-20261013",
+      "target": "TB-family-checkpoint-efficiency-20261013",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-500k-bn-calibration-20261007",
       "target": "TB-k1-bn-mechanism-a100-20261008",
       "type": "prior_evidence"
@@ -1678,6 +1688,11 @@
     {
       "source": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
       "target": "TB-pcqm-k1-single-true-ema-100k",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-colab-execution-profile-20261007",
+      "target": "TB-family-checkpoint-efficiency-20261013",
       "type": "prior_evidence"
     },
     {
@@ -2379,6 +2394,10 @@
   "format": "molgap-rml-trajectory-graph-v1",
   "nodes": [
     {
+      "id": "family-checkpoint-efficiency-20261013",
+      "type": "evidence"
+    },
+    {
       "id": "k1-saved-bn-rows-20261008-evidence",
       "type": "evidence"
     },
@@ -2800,6 +2819,10 @@
     },
     {
       "id": "TB-edgestate-rich-full-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-family-checkpoint-efficiency-20261013",
       "type": "trajectory"
     },
     {

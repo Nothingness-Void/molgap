@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "local-001",
+  "category": "audit",
+  "cost_event_id": "cost-family-checkpoint-observed-20261013",
+  "evidence_ref": "experiments/family_checkpoint_efficiency/acceptance.json",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.016341145833333334
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.012383403805556048
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.012384828388888613
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "family-checkpoint-efficiency-20261013",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-family-checkpoint-efficiency-20261013"
+}

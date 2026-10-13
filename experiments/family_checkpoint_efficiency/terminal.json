@@ -1,0 +1,160 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-family-checkpoint-efficiency-20261013",
+  "run_id": "family-checkpoint-efficiency-20261013",
+  "action_id": "A001",
+  "finalized_at": "2026-10-13T08:21:57.876819+00:00",
+  "acceptance_ref": "experiments/family_checkpoint_efficiency/acceptance.json",
+  "artifact_hashes": {
+    "experiments/family_checkpoint_efficiency/acceptance.json": "8ea042e2195438bcd0e0f1b664124f7023e2f5204c460a0699595b02f1f377ae",
+    "experiments/family_checkpoint_efficiency/analysis.json": "1cbaf8f7c476a43782d47680140bc0b2451bff891e5c6028ab72e898584ee393",
+    "experiments/family_checkpoint_efficiency/terminal_decision.md": "eec199aad764031ba8511dc944d7e1fdbb3ebf17c1cf3e9c26dec5e0f30645bc",
+    "experiments/family_checkpoint_efficiency/attribution.md": "65165bb6276f1530592c0840e67abec0e14cbd60a85d13fda7e61b89c094546e",
+    "experiments/family_checkpoint_efficiency/results/result.json": "7313c4ddc308ed31c656a349834bbf1ad74572a1857d5ccaf09a053efd0e55a0",
+    "experiments/family_checkpoint_efficiency/results/completion.json": "61a2558b67b877ce1eb9a8b099a846fe32821c0b291bb22e705a10b01c7205f3",
+    "experiments/family_checkpoint_efficiency/config.json": "5793008fdb819c874a7fa23b38de8ff43a8ce8c9cbdaf3d4e4ed1ff7499556c7",
+    "experiments/family_checkpoint_efficiency/protocol.md": "340bce9c2734b1747224575473764eff3da0d96982a9d465dcb6e466eef02b93",
+    "experiments/family_checkpoint_efficiency/role_plan.json": "b69db68937382c1fc75b285656d406782c85f87e838a77f95ca7af19f3da8884"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "family-checkpoint-efficiency-20261013",
+    "track": "B",
+    "scope": "synthetic_checkpoint_execution",
+    "legacy_contract": "family-checkpoint-efficiency-v1",
+    "outcome": {
+      "execution_status": "complete_synthetic_checkpoint_diagnostic",
+      "artifact_status": "local_hash_verified",
+      "comparison_status": "matched_state_bytes_execution_only",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "bounded_diagnostic_complete",
+      "full_handoff_status": "not_applicable"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/family_checkpoint_efficiency/protocol.md",
+        "experiments/family_checkpoint_efficiency/terminal_decision.md",
+        "experiments/family_checkpoint_efficiency/attribution.md",
+        "experiments/family_checkpoint_efficiency/acceptance.json"
+      ]
+    },
+    "role_use": {
+      "train": "untouched",
+      "development": "untouched",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "migration": {
+      "migrated_at": "2026-10-13",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Metadata acceptance of separately recorded synthetic checkpoint timing"
+    },
+    "observed_execution": {
+      "training_executed": false,
+      "inference_executed": false,
+      "execution_ref": "experiments/family_checkpoint_efficiency/results/result.json"
+    },
+    "artifacts": [
+      {
+        "name": "acceptance.json",
+        "locator": "experiments/family_checkpoint_efficiency/acceptance.json",
+        "sha256": "8ea042e2195438bcd0e0f1b664124f7023e2f5204c460a0699595b02f1f377ae",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "analysis.json",
+        "locator": "experiments/family_checkpoint_efficiency/analysis.json",
+        "sha256": "1cbaf8f7c476a43782d47680140bc0b2451bff891e5c6028ab72e898584ee393",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "terminal_decision.md",
+        "locator": "experiments/family_checkpoint_efficiency/terminal_decision.md",
+        "sha256": "eec199aad764031ba8511dc944d7e1fdbb3ebf17c1cf3e9c26dec5e0f30645bc",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "attribution.md",
+        "locator": "experiments/family_checkpoint_efficiency/attribution.md",
+        "sha256": "65165bb6276f1530592c0840e67abec0e14cbd60a85d13fda7e61b89c094546e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/result.json",
+        "locator": "experiments/family_checkpoint_efficiency/results/result.json",
+        "sha256": "7313c4ddc308ed31c656a349834bbf1ad74572a1857d5ccaf09a053efd0e55a0",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/completion.json",
+        "locator": "experiments/family_checkpoint_efficiency/results/completion.json",
+        "sha256": "61a2558b67b877ce1eb9a8b099a846fe32821c0b291bb22e705a10b01c7205f3",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "config.json",
+        "locator": "experiments/family_checkpoint_efficiency/config.json",
+        "sha256": "5793008fdb819c874a7fa23b38de8ff43a8ce8c9cbdaf3d4e4ed1ff7499556c7",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "protocol.md",
+        "locator": "experiments/family_checkpoint_efficiency/protocol.md",
+        "sha256": "340bce9c2734b1747224575473764eff3da0d96982a9d465dcb6e466eef02b93",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "role_plan.json",
+        "locator": "experiments/family_checkpoint_efficiency/role_plan.json",
+        "sha256": "b69db68937382c1fc75b285656d406782c85f87e838a77f95ca7af19f3da8884",
+        "availability": "locally_retained_hash_verified"
+      }
+    ]
+  },
+  "decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/family_checkpoint_efficiency/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately frozen native training/platform performance contract"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-family-checkpoint-observed-20261013",
+      "trajectory_id": "TB-family-checkpoint-efficiency-20261013",
+      "action_id": "A001",
+      "run_id": "family-checkpoint-efficiency-20261013",
+      "attempt_id": "local-001",
+      "platform": "local-windows",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "category": "audit",
+      "evidence_ref": "experiments/family_checkpoint_efficiency/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.012384828388888613,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": 0.012383403805556048,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.016341145833333334,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": []
+}

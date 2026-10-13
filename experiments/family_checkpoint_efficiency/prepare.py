@@ -15,6 +15,8 @@ RUN = "family-checkpoint-efficiency-20261013"
 def main():
     root = Path(__file__).resolve().parents[2]
     folder = root / REL
+    if (folder / "config.json").exists() or (folder / "rml").exists():
+        raise FileExistsError("Existing prospective config must not be overwritten")
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     paths = subprocess.check_output(["git", "ls-files", "src/molgap", REL], cwd=root, text=True).splitlines()
     config = {"source_commit": commit,

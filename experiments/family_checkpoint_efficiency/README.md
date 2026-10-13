@@ -4,6 +4,7 @@ Execution-only K1/GPTrans finite-validation optimization. No molecular inputs,
 training, inference, quality claim, sampling change or checkpoint-policy change.
 
 - [Protocol](protocol.md): scope and bounded diagnostic.
+- [Execution audit](audit.md): reused owners, fixed overhead and unsafe shortcuts.
 - [Prospective decision](decision.md): immutable planned state.
 - `prepare.py`: existing RML planner; freezes code/config before native timing.
 - `run.py`: thin wrapper over `molgap.checkpoint_diagnostic`.

@@ -1,0 +1,510 @@
+{
+  "cases": [
+    {
+      "original": {
+        "median_seconds": 0.03125759999966249,
+        "range_seconds": [
+          0.030440599999565165,
+          0.03173880000031204
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.030535200003214413,
+        "range_seconds": [
+          0.030297899997094646,
+          0.030877099998178892
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 0,
+      "operation": "validate",
+      "time_reduction_fraction": 0.023111179247794933
+    },
+    {
+      "original": {
+        "median_seconds": 0.03559829999721842,
+        "range_seconds": [
+          0.03541689999838127,
+          0.04102549999879557
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.0317533999987063,
+        "range_seconds": [
+          0.030634099999588216,
+          0.03743480000048294
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 512,
+      "operation": "validate",
+      "time_reduction_fraction": 0.10800796663920897
+    },
+    {
+      "original": {
+        "median_seconds": 0.11516350000238162,
+        "range_seconds": [
+          0.11447399999815389,
+          0.2028208999981871
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.11263750000216532,
+        "range_seconds": [
+          0.11142149999795947,
+          0.11760460000004969
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 512,
+      "operation": "validate_publish",
+      "time_reduction_fraction": 0.02193403291984053
+    },
+    {
+      "original": {
+        "median_seconds": 0.0452566999992996,
+        "range_seconds": [
+          0.0451710000015737,
+          0.04686260000016773
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.035049999998591375,
+        "range_seconds": [
+          0.033898199999384815,
+          0.03687270000227727
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 2048,
+      "operation": "validate",
+      "time_reduction_fraction": 0.22552903770858646
+    },
+    {
+      "original": {
+        "median_seconds": 0.059425800001918105,
+        "range_seconds": [
+          0.05865230000199517,
+          0.06258710000111023
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.03770250000161468,
+        "range_seconds": [
+          0.03745549999803188,
+          0.04022569999870029
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 3905,
+      "operation": "validate",
+      "time_reduction_fraction": 0.3655533455099007
+    },
+    {
+      "original": {
+        "median_seconds": 0.17654290000064066,
+        "range_seconds": [
+          0.1744935999995505,
+          0.1865888000029372
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.16387400000166963,
+        "range_seconds": [
+          0.1541722000001755,
+          0.25065339999855496
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 3905,
+      "operation": "validate_publish",
+      "time_reduction_fraction": 0.07176102804998141
+    },
+    {
+      "original": {
+        "median_seconds": 0.033919800000148825,
+        "range_seconds": [
+          0.03367430000071181,
+          0.03640090000044438
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.032746299999416806,
+        "range_seconds": [
+          0.0326221000032092,
+          0.03306929999962449
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 0,
+      "operation": "validate",
+      "time_reduction_fraction": 0.03459631249968664
+    },
+    {
+      "original": {
+        "median_seconds": 0.03740680000191787,
+        "range_seconds": [
+          0.03693589999966207,
+          0.037762200001452584
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.03438889999961248,
+        "range_seconds": [
+          0.033827400002337527,
+          0.04068909999841708
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 512,
+      "operation": "validate",
+      "time_reduction_fraction": 0.08067784472744699
+    },
+    {
+      "original": {
+        "median_seconds": 0.12825400000292575,
+        "range_seconds": [
+          0.1257973000028869,
+          0.22955390000061016
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.12278239999795915,
+        "range_seconds": [
+          0.1223338000017975,
+          0.12941050000154064
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 512,
+      "operation": "validate_publish",
+      "time_reduction_fraction": 0.042662217200569064
+    },
+    {
+      "original": {
+        "median_seconds": 0.04871139999886509,
+        "range_seconds": [
+          0.04774199999883422,
+          0.05088710000200081
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.03759229999923264,
+        "range_seconds": [
+          0.037176499998167856,
+          0.04059240000060527
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 2048,
+      "operation": "validate",
+      "time_reduction_fraction": 0.22826484149278226
+    },
+    {
+      "original": {
+        "median_seconds": 0.06137930000113556,
+        "range_seconds": [
+          0.061006100000668084,
+          0.06807519999711076
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.04211510000095586,
+        "range_seconds": [
+          0.04048820000025444,
+          0.047122600000875536
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 3905,
+      "operation": "validate",
+      "time_reduction_fraction": 0.31385499671425543
+    },
+    {
+      "original": {
+        "median_seconds": 0.18668850000176462,
+        "range_seconds": [
+          0.18579010000030394,
+          0.2754337999976997
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.1666083999989496,
+        "range_seconds": [
+          0.16542499999923166,
+          0.25679569999920204
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 3905,
+      "operation": "validate_publish",
+      "time_reduction_fraction": 0.10755938369329232
+    },
+    {
+      "original": {
+        "median_seconds": 0.10569279999981518,
+        "range_seconds": [
+          0.08439820000057807,
+          0.12460120000105235
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.06916909999927157,
+        "range_seconds": [
+          0.06709779999800958,
+          0.08292140000048676
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 0,
+      "operation": "validate",
+      "time_reduction_fraction": 0.3455646931541929
+    },
+    {
+      "original": {
+        "median_seconds": 0.11978190000081668,
+        "range_seconds": [
+          0.10204800000065006,
+          0.15047839999897406
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.0672528000031889,
+        "range_seconds": [
+          0.06488380000155303,
+          0.0758693999996467
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 512,
+      "operation": "validate",
+      "time_reduction_fraction": 0.4385395456013774
+    },
+    {
+      "original": {
+        "median_seconds": 0.2743534000001091,
+        "range_seconds": [
+          0.24643750000177533,
+          0.2855706000009377
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.2158588000020245,
+        "range_seconds": [
+          0.20476359999884153,
+          0.2573914999993576
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 512,
+      "operation": "validate_publish",
+      "time_reduction_fraction": 0.21320894874297647
+    },
+    {
+      "original": {
+        "median_seconds": 0.103502900001331,
+        "range_seconds": [
+          0.09884199999942211,
+          0.12620460000107414
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.06909189999714727,
+        "range_seconds": [
+          0.06816539999999804,
+          0.1606069999979809
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 2048,
+      "operation": "validate",
+      "time_reduction_fraction": 0.3324641145682027
+    },
+    {
+      "original": {
+        "median_seconds": 0.1233143999997992,
+        "range_seconds": [
+          0.11154750000059721,
+          0.1255659000016749
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.07488350000130595,
+        "range_seconds": [
+          0.07133969999995315,
+          0.09579500000108965
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 3905,
+      "operation": "validate",
+      "time_reduction_fraction": 0.3927432643598162
+    },
+    {
+      "original": {
+        "median_seconds": 0.30565980000028503,
+        "range_seconds": [
+          0.2837771000013163,
+          0.4458157000008214
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.2591845999995712,
+        "range_seconds": [
+          0.2477690999985498,
+          0.34885639999993145
+        ]
+      },
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 3905,
+      "operation": "validate_publish",
+      "time_reduction_fraction": 0.1520487810326071
+    },
+    {
+      "original": {
+        "median_seconds": 0.06879760000083479,
+        "range_seconds": [
+          0.06569979999767384,
+          0.08685209999748622
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.06126670000230661,
+        "range_seconds": [
+          0.05987770000137971,
+          0.06613850000212551
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 0,
+      "operation": "validate",
+      "time_reduction_fraction": 0.10946457432289503
+    },
+    {
+      "original": {
+        "median_seconds": 0.07107670000186772,
+        "range_seconds": [
+          0.07078910000200267,
+          0.07765650000146707
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.05968790000042645,
+        "range_seconds": [
+          0.05203369999799179,
+          0.07155439999769442
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 512,
+      "operation": "validate",
+      "time_reduction_fraction": 0.1602325375424295
+    },
+    {
+      "original": {
+        "median_seconds": 0.21209770000132266,
+        "range_seconds": [
+          0.2057602000022598,
+          0.30514319999929285
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.18938110000090091,
+        "range_seconds": [
+          0.18357059999834746,
+          0.19134520000079647
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 512,
+      "operation": "validate_publish",
+      "time_reduction_fraction": 0.10710441461779208
+    },
+    {
+      "original": {
+        "median_seconds": 0.08786219999819878,
+        "range_seconds": [
+          0.08074409999971977,
+          0.1012936000006448
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.05652620000182651,
+        "range_seconds": [
+          0.05467720000160625,
+          0.06369999999878928
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 2048,
+      "operation": "validate",
+      "time_reduction_fraction": 0.3566493895783929
+    },
+    {
+      "original": {
+        "median_seconds": 0.097845000000234,
+        "range_seconds": [
+          0.09342060000199126,
+          0.10138039999947068
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.06936090000090189,
+        "range_seconds": [
+          0.059384699998190627,
+          0.15302230000088457
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 3905,
+      "operation": "validate",
+      "time_reduction_fraction": 0.2911145178523581
+    },
+    {
+      "original": {
+        "median_seconds": 0.33830899999884423,
+        "range_seconds": [
+          0.2767059999969206,
+          0.4210313000003225
+        ]
+      },
+      "batched": {
+        "median_seconds": 0.2608808000004501,
+        "range_seconds": [
+          0.25068060000194237,
+          0.2844906999998784
+        ]
+      },
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 3905,
+      "operation": "validate_publish",
+      "time_reduction_fraction": 0.22886828313364005
+    }
+  ],
+  "training_speedup": "not_measured",
+  "quality": "not_evaluated"
+}

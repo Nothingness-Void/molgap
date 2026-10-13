@@ -1,0 +1,15 @@
+..................sssss................................................. [ 28%]
+........................................................................ [ 56%]
+........................................................................ [ 84%]
+.......................................                                  [100%]
+============================== warnings summary ===============================
+..\..\�ĵ�\molgap\.venv\lib\site-packages\torch_geometric\llm\utils\backend_utils.py:26
+  D:\�ĵ�\molgap\.venv\lib\site-packages\torch_geometric\llm\utils\backend_utils.py:26: DeprecationWarning: `torch_geometric.distributed` has been deprecated since 2.7.0 and will no longer be maintained. For distributed training, refer to our tutorials on distributed training at https://pytorch-geometric.readthedocs.io/en/latest/tutorial/distributed.html or cuGraph examples at https://github.com/rapidsai/cugraph-gnn/tree/main/python/cugraph-pyg/cugraph_pyg/examples
+    from torch_geometric.distributed import (
+
+tests/test_family_training_session.py: 56 warnings
+  D:\�ĵ�\molgap\.venv\lib\site-packages\torch\utils\data\dataloader.py:665: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+    warnings.warn(warn_msg)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+250 passed, 5 skipped, 57 warnings in 174.56s (0:02:54)

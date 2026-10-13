@@ -1,0 +1,658 @@
+{
+  "format": "molgap-checkpoint-diagnostic-v1",
+  "status": "COMPLETE",
+  "config_sha256": "5793008fdb819c874a7fa23b38de8ff43a8ce8c9cbdaf3d4e4ed1ff7499556c7",
+  "source_commit": "d63544db8bd354a0d402609b6c37a05a2156f05b",
+  "training_executed": false,
+  "inference_executed": false,
+  "molecular_roles_consumed": false,
+  "runtime": {
+    "torch": "2.7.1+cu128",
+    "cuda": "12.8",
+    "cpu_threads": 2,
+    "accelerator": "NVIDIA GeForce RTX 5060"
+  },
+  "cases": [
+    {
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 0,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.03173880000031204,
+        0.031633499998861225,
+        0.03125759999966249,
+        0.03105379999760771,
+        0.030440599999565165
+      ],
+      "batched_seconds": [
+        0.030877099998178892,
+        0.030535200003214413,
+        0.030355500002769986,
+        0.030297899997094646,
+        0.0307825000018056
+      ]
+    },
+    {
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 512,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.03559829999721842,
+        0.04102549999879557,
+        0.03567040000052657,
+        0.03543549999812967,
+        0.03541689999838127
+      ],
+      "batched_seconds": [
+        0.0317533999987063,
+        0.030634099999588216,
+        0.035601600000518374,
+        0.03743480000048294,
+        0.031650799999624724
+      ]
+    },
+    {
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 512,
+      "operation": "validate_publish",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.11513379999814788,
+        0.2028208999981871,
+        0.11917460000040592,
+        0.11516350000238162,
+        0.11447399999815389
+      ],
+      "batched_seconds": [
+        0.11142149999795947,
+        0.11263750000216532,
+        0.11218599999847356,
+        0.11760460000004969,
+        0.11707249999744818
+      ],
+      "identical_checkpoint_sha256": "e76e039b2bc6e5df3aa89ec8d4c0426f5f9de0b14c1afb7968759ef7b0ebb20c"
+    },
+    {
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 2048,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.0452566999992996,
+        0.0451710000015737,
+        0.046424099997238955,
+        0.04686260000016773,
+        0.045221399999718415
+      ],
+      "batched_seconds": [
+        0.035129799998685485,
+        0.033898199999384815,
+        0.034101599998393795,
+        0.035049999998591375,
+        0.03687270000227727
+      ]
+    },
+    {
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 3905,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.0598331999972288,
+        0.059425800001918105,
+        0.05865230000199517,
+        0.05910619999849587,
+        0.06258710000111023
+      ],
+      "batched_seconds": [
+        0.03745549999803188,
+        0.03770250000161468,
+        0.03886689999853843,
+        0.037459399998624576,
+        0.04022569999870029
+      ]
+    },
+    {
+      "family": "neural_atom_k1",
+      "device": "cpu",
+      "cursor_length": 3905,
+      "operation": "validate_publish",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.17654290000064066,
+        0.1744935999995505,
+        0.17736949999743956,
+        0.175159899998107,
+        0.1865888000029372
+      ],
+      "batched_seconds": [
+        0.16387400000166963,
+        0.25065339999855496,
+        0.1548064999988128,
+        0.24765609999667504,
+        0.1541722000001755
+      ],
+      "identical_checkpoint_sha256": "40813aeb5aba3ef8a3e5d440f8c1d1554102d221feca46f50022eb75ab36d035"
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 0,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.03367430000071181,
+        0.03640090000044438,
+        0.034028599999146536,
+        0.033919800000148825,
+        0.033895799999299925
+      ],
+      "batched_seconds": [
+        0.0326221000032092,
+        0.032746299999416806,
+        0.03266829999847687,
+        0.03301429999919492,
+        0.03306929999962449
+      ]
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 512,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.03693589999966207,
+        0.03741040000022622,
+        0.03740680000191787,
+        0.03709069999968051,
+        0.037762200001452584
+      ],
+      "batched_seconds": [
+        0.04068909999841708,
+        0.03438889999961248,
+        0.034210199999506585,
+        0.033827400002337527,
+        0.03453299999819137
+      ]
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 512,
+      "operation": "validate_publish",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.12668230000053882,
+        0.22955390000061016,
+        0.12825400000292575,
+        0.12877110000044922,
+        0.1257973000028869
+      ],
+      "batched_seconds": [
+        0.1223338000017975,
+        0.12278239999795915,
+        0.12253469999996014,
+        0.12941050000154064,
+        0.127010700001847
+      ],
+      "identical_checkpoint_sha256": "944621ac86f8b63aa94d5750b7a6c0e802746ddf0e2b14df9d090753067c4ed5"
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 2048,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.0500108000014734,
+        0.04826429999957327,
+        0.05088710000200081,
+        0.04871139999886509,
+        0.04774199999883422
+      ],
+      "batched_seconds": [
+        0.04059240000060527,
+        0.037176499998167856,
+        0.037749899998743786,
+        0.03759229999923264,
+        0.03721600000062608
+      ]
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 3905,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.061487899998610374,
+        0.06807519999711076,
+        0.06112899999789079,
+        0.061006100000668084,
+        0.06137930000113556
+      ],
+      "batched_seconds": [
+        0.04211510000095586,
+        0.0416826000000583,
+        0.047122600000875536,
+        0.04048820000025444,
+        0.04315839999981108
+      ]
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cpu",
+      "cursor_length": 3905,
+      "operation": "validate_publish",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.18579010000030394,
+        0.18668850000176462,
+        0.19159230000150274,
+        0.2754337999976997,
+        0.1865896999988763
+      ],
+      "batched_seconds": [
+        0.16837440000017523,
+        0.25679569999920204,
+        0.16639629999917815,
+        0.1666083999989496,
+        0.16542499999923166
+      ],
+      "identical_checkpoint_sha256": "2c33b78a6e9d96f0c589de752321420dbdb813393269d35c89d296764621b7c7"
+    },
+    {
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 0,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.08439820000057807,
+        0.10891429999901447,
+        0.10239050000018324,
+        0.12460120000105235,
+        0.10569279999981518
+      ],
+      "batched_seconds": [
+        0.06718700000055833,
+        0.06709779999800958,
+        0.0755353999993531,
+        0.08292140000048676,
+        0.06916909999927157
+      ]
+    },
+    {
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 512,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.12692230000175186,
+        0.15047839999897406,
+        0.10204800000065006,
+        0.11978190000081668,
+        0.10353780000150437
+      ],
+      "batched_seconds": [
+        0.0672528000031889,
+        0.0758693999996467,
+        0.06709679999767104,
+        0.07481519999782904,
+        0.06488380000155303
+      ]
+    },
+    {
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 512,
+      "operation": "validate_publish",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.2855706000009377,
+        0.26005799999984447,
+        0.24643750000177533,
+        0.2743534000001091,
+        0.28307659999700263
+      ],
+      "batched_seconds": [
+        0.2573914999993576,
+        0.2505563999984588,
+        0.20476359999884153,
+        0.2158588000020245,
+        0.20908970000164118
+      ],
+      "identical_checkpoint_sha256": "f5605586e3944d112e2267abc9469e4e0e1fe74c4a66942b7b981b3f4f84a7e4"
+    },
+    {
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 2048,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.103502900001331,
+        0.12620460000107414,
+        0.10671469999942929,
+        0.09884199999942211,
+        0.10231569999814383
+      ],
+      "batched_seconds": [
+        0.07492790000105742,
+        0.06909189999714727,
+        0.06856469999911496,
+        0.06816539999999804,
+        0.1606069999979809
+      ]
+    },
+    {
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 3905,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.11154750000059721,
+        0.1255659000016749,
+        0.1233143999997992,
+        0.12395960000139894,
+        0.11790499999915482
+      ],
+      "batched_seconds": [
+        0.09579500000108965,
+        0.0784421000025759,
+        0.07133969999995315,
+        0.0744873000003281,
+        0.07488350000130595
+      ]
+    },
+    {
+      "family": "neural_atom_k1",
+      "device": "cuda",
+      "cursor_length": 3905,
+      "operation": "validate_publish",
+      "schema": {
+        "model_tensors": 367,
+        "optimizer_tensors": 939,
+        "ema_tensors": 367,
+        "model_elements": 3665747
+      },
+      "original_seconds": [
+        0.30565980000028503,
+        0.4458157000008214,
+        0.29344980000314536,
+        0.31177329999991343,
+        0.2837771000013163
+      ],
+      "batched_seconds": [
+        0.2555294999983744,
+        0.263567800000601,
+        0.2477690999985498,
+        0.34885639999993145,
+        0.2591845999995712
+      ],
+      "identical_checkpoint_sha256": "7643d16c12a3e8526fc736b5120217a570a7c052485e45d2a604e5569f64abf0"
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 0,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.06739569999990636,
+        0.08685209999748622,
+        0.06569979999767384,
+        0.06879760000083479,
+        0.07872100000167848
+      ],
+      "batched_seconds": [
+        0.05987770000137971,
+        0.06338660000255913,
+        0.06095359999744687,
+        0.06613850000212551,
+        0.06126670000230661
+      ]
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 512,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.0727852999989409,
+        0.07765650000146707,
+        0.07078910000200267,
+        0.0710417000009329,
+        0.07107670000186772
+      ],
+      "batched_seconds": [
+        0.05512810000072932,
+        0.07153090000065276,
+        0.05968790000042645,
+        0.05203369999799179,
+        0.07155439999769442
+      ]
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 512,
+      "operation": "validate_publish",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.30514319999929285,
+        0.21209770000132266,
+        0.2167090000002645,
+        0.2057602000022598,
+        0.2063575000029232
+      ],
+      "batched_seconds": [
+        0.18938110000090091,
+        0.18648730000131764,
+        0.1895416999977897,
+        0.19134520000079647,
+        0.18357059999834746
+      ],
+      "identical_checkpoint_sha256": "df9a22ff0ee233ef9a6fe9352fd19af4a8184e1ed45ec95d965d8819c7b3646a"
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 2048,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.08786219999819878,
+        0.1012936000006448,
+        0.09576499999820953,
+        0.08074409999971977,
+        0.08111289999942528
+      ],
+      "batched_seconds": [
+        0.05652620000182651,
+        0.06369999999878928,
+        0.06176459999915096,
+        0.05534850000185543,
+        0.05467720000160625
+      ]
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 3905,
+      "operation": "validate",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.097845000000234,
+        0.09793649999846821,
+        0.10138039999947068,
+        0.09342060000199126,
+        0.09359089999998105
+      ],
+      "batched_seconds": [
+        0.06116130000009434,
+        0.15302230000088457,
+        0.09782519999862416,
+        0.06936090000090189,
+        0.059384699998190627
+      ]
+    },
+    {
+      "family": "gptrans_t",
+      "device": "cuda",
+      "cursor_length": 3905,
+      "operation": "validate_publish",
+      "schema": {
+        "model_tensors": 265,
+        "optimizer_tensors": 795,
+        "ema_tensors": 265,
+        "model_elements": 5246817
+      },
+      "original_seconds": [
+        0.32521360000100685,
+        0.3979953000016394,
+        0.33830899999884423,
+        0.4210313000003225,
+        0.2767059999969206
+      ],
+      "batched_seconds": [
+        0.2608808000004501,
+        0.25068060000194237,
+        0.2844906999998784,
+        0.26667970000198693,
+        0.2540378999983659
+      ],
+      "identical_checkpoint_sha256": "d731f8b1d1f7e9770970655f9358b62aa6772c7b29873d8748ecf0421d55f9d3"
+    }
+  ],
+  "checks": {
+    "checkpoint_tensors_unchanged": true,
+    "rng_unchanged": true,
+    "checkpoint_bytes_equal": true,
+    "no_molecular_role_access": true
+  },
+  "wall_seconds": 44.585382199999,
+  "process_cpu_seconds": 58.828125,
+  "gpu_phase_seconds": 44.58025370000178
+}

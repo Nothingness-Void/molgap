@@ -17,6 +17,9 @@ EID = "family-checkpoint-efficiency-20261013"
 def main():
     root = Path(__file__).resolve().parents[2]
     here = root / REL
+    if (here / "rml/rml_finalized/finalization.json").is_file():
+        print(json.dumps(finalize(root, f"{REL}/rml", f"{REL}/terminal.json")))
+        return
     read = lambda name: json.loads((here / name).read_text(encoding="utf-8"))
     result, config, trajectory = read("results/result.json"), read("config.json"), read("rml/trajectory.json")
     if (read("results/completion.json")["result_sha256"] != sha256_file(here / "results/result.json")
@@ -59,7 +62,7 @@ def main():
     cost = {"schema": "molgap-cost-event-v1", "cost_event_id": "cost-family-checkpoint-observed-20261013",
         "trajectory_id": TID, "action_id": "A001", "run_id": RUN, "attempt_id": "local-001",
         "platform": "local-windows", "hardware": config["accelerator"], "category": "audit",
-        "evidence_ref": f"{REL}/results/result.json", "measurement": {
+        "evidence_ref": f"{REL}/acceptance.json", "measurement": {
             "wall_hours": {"value": result["wall_seconds"] / 3600, "status": "measured"},
             "device_hours": {"value": result["gpu_phase_seconds"] / 3600, "status": "measured"},
             "cpu_hours": {"value": result["process_cpu_seconds"] / 3600, "status": "measured"},

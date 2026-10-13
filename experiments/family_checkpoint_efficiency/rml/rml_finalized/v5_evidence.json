@@ -1,0 +1,100 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_checkpoint_efficiency/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "8ea042e2195438bcd0e0f1b664124f7023e2f5204c460a0699595b02f1f377ae"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_checkpoint_efficiency/analysis.json",
+      "name": "analysis.json",
+      "sha256": "1cbaf8f7c476a43782d47680140bc0b2451bff891e5c6028ab72e898584ee393"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_checkpoint_efficiency/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "eec199aad764031ba8511dc944d7e1fdbb3ebf17c1cf3e9c26dec5e0f30645bc"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_checkpoint_efficiency/attribution.md",
+      "name": "attribution.md",
+      "sha256": "65165bb6276f1530592c0840e67abec0e14cbd60a85d13fda7e61b89c094546e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_checkpoint_efficiency/results/result.json",
+      "name": "results/result.json",
+      "sha256": "7313c4ddc308ed31c656a349834bbf1ad74572a1857d5ccaf09a053efd0e55a0"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_checkpoint_efficiency/results/completion.json",
+      "name": "results/completion.json",
+      "sha256": "61a2558b67b877ce1eb9a8b099a846fe32821c0b291bb22e705a10b01c7205f3"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_checkpoint_efficiency/config.json",
+      "name": "config.json",
+      "sha256": "5793008fdb819c874a7fa23b38de8ff43a8ce8c9cbdaf3d4e4ed1ff7499556c7"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_checkpoint_efficiency/protocol.md",
+      "name": "protocol.md",
+      "sha256": "340bce9c2734b1747224575473764eff3da0d96982a9d465dcb6e466eef02b93"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_checkpoint_efficiency/role_plan.json",
+      "name": "role_plan.json",
+      "sha256": "b69db68937382c1fc75b285656d406782c85f87e838a77f95ca7af19f3da8884"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/family_checkpoint_efficiency/protocol.md",
+      "experiments/family_checkpoint_efficiency/terminal_decision.md",
+      "experiments/family_checkpoint_efficiency/attribution.md",
+      "experiments/family_checkpoint_efficiency/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "family-checkpoint-efficiency-20261013",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "family-checkpoint-efficiency-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-13",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Metadata acceptance of separately recorded synthetic checkpoint timing"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/family_checkpoint_efficiency/results/result.json",
+    "inference_executed": false,
+    "training_executed": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "bounded_diagnostic_complete",
+    "comparison_status": "matched_state_bytes_execution_only",
+    "execution_status": "complete_synthetic_checkpoint_diagnostic",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "untouched"
+  },
+  "scope": "synthetic_checkpoint_execution",
+  "track": "B"
+}

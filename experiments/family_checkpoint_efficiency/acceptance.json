@@ -1,0 +1,70 @@
+{
+  "evidence_id": "family-checkpoint-efficiency-20261013",
+  "run_id": "family-checkpoint-efficiency-20261013",
+  "outcome": {
+    "execution_status": "complete_synthetic_checkpoint_diagnostic",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "matched_state_bytes_execution_only",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "bounded_diagnostic_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/family_checkpoint_efficiency/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately frozen native training/platform performance contract"
+    ]
+  },
+  "checks": {
+    "checkpoint_tensors_unchanged": true,
+    "rng_unchanged": true,
+    "checkpoint_bytes_equal": true,
+    "no_molecular_role_access": true
+  },
+  "roles": [],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-family-checkpoint-observed-20261013",
+      "trajectory_id": "TB-family-checkpoint-efficiency-20261013",
+      "action_id": "A001",
+      "run_id": "family-checkpoint-efficiency-20261013",
+      "attempt_id": "local-001",
+      "platform": "local-windows",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "category": "audit",
+      "evidence_ref": "experiments/family_checkpoint_efficiency/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.012384828388888613,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": 0.012383403805556048,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": 0.016341145833333334,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "role_use": {
+    "train": "untouched",
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "analysis_ref": "experiments/family_checkpoint_efficiency/analysis.json",
+  "execution_scope": "Synthetic checkpoint validation/atomic serialization only, no model work",
+  "cost_scope": "Worker/process CPU time excludes imports; GPU-phase wall includes setup/IO, not exclusive GPU busy time"
+}
