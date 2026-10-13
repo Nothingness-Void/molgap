@@ -108,6 +108,9 @@ def test_campaign_covers_two_slots_and_rejects_unauthorized_budget(tmp_path):
     plan = json.loads((root / BASE / "slot2/acceptance_plan.json").read_bytes())
     spec = ExperimentSpec.from_json((root / BASE / "slot2/scientific_spec.json").read_text())
     assert check_campaign(spec, root, plan)["reference_status"] == "PLANNED_NOT_ACCEPTED"
+    from molgap.experiment_source_inventory import registered_source_files
+    workflow = json.loads((root / BASE / "slot2/workflow_plan.json").read_bytes())
+    registered_source_files(spec, [*workflow["source_files"], *(a["recipe"] for a in workflow["arms"])])
     pins = [campaign["authority"], campaign["audit"], campaign["cpu_acceptance"], *campaign["slots"],
             *(item["contract"] for item in campaign["arms"].values()), plan["campaign"]]
     for pin in pins:

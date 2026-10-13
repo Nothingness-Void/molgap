@@ -178,7 +178,8 @@ def freeze(root):
         plan = {"format": FORMAT, "spec_identity": spec.identity, "campaign": pin(f"{BASE}/campaign.json")}
         atomic_json(destination / f"slot{number}/acceptance_plan.json", plan)
         source_files = [f"{BASE}/{p}" for p in ("authority.json", "audit_action.json", "role_plan.json", "budget.json", "target_manifest.json", "campaign.json")]
-        source_files += [entries[a]["contract"]["path"] for a in ARMS] + [p for _, p in specs]
+        # prepare_workflow already contributes the physical slot's recipes.
+        source_files += [entries[a]["contract"]["path"] for a in ARMS if a not in slot] + [p for _, p in specs]
         source_files += [f"{BASE}/slot{number}/acceptance_plan.json", "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json"]
         dataset = f"kaseichou/molgap-gptrans-research-slot{number}-source-v1"
         atomic_json(destination / f"slot{number}/workflow_plan.json", {"format": "molgap-experiment-workflow-v1",
