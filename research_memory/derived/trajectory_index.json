@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "2e345b7218827c912f251bf257ec43cf4fcdc8a7b9df38297426e97aea34658f",
+  "source_digest": "75ae2d7b140bba18234f1b13a1a3ca252ccb1b1c1c35f548232735b982487a8e",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -83,6 +83,34 @@
       ],
       "track": "B",
       "trajectory_id": "TB-edgestate-rich-full-v1"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/family_100k_operator_profile/decision.md",
+      "family_id": "family-100k-operator-profile",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/family_100k_operator_profile/rml/gptrans_local/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/family_100k_operator_profile/decision.md",
+      "family_id": "family-100k-operator-profile",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/family_100k_operator_profile/rml/k1_mean2/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
     },
     {
       "completeness_status": "complete",

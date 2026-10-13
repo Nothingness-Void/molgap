@@ -36,6 +36,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-family-100k-operator-profile-gptrans_local-s42:A001",
+      "target": "experiments/family_100k_operator_profile/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-family-100k-operator-profile-k1_mean2-s42:A001",
+      "target": "experiments/family_100k_operator_profile/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-family-checkpoint-efficiency-20261013:A001",
       "target": "experiments/family_checkpoint_efficiency/config.json",
       "type": "action_produced_evidence"
@@ -1407,6 +1417,11 @@
     },
     {
       "source": "pcqm-gptrans-t-100k-v4-reference",
+      "target": "TB-family-100k-operator-profile-gptrans_local-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-t-100k-v4-reference",
       "target": "TB-gptrans-100k-local-joint-control-20260925",
       "type": "prior_evidence"
     },
@@ -1698,6 +1713,11 @@
     {
       "source": "pcqm-k1-bn-mechanism-a100-20261008",
       "target": "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "target": "TB-family-100k-operator-profile-k1_mean2-s42",
       "type": "prior_evidence"
     },
     {
@@ -2838,6 +2858,14 @@
     },
     {
       "id": "TB-edgestate-rich-full-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-family-100k-operator-profile-gptrans_local-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-family-100k-operator-profile-k1_mean2-s42",
       "type": "trajectory"
     },
     {

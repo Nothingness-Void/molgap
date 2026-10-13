@@ -1,0 +1,132 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "family-100k-operator-profile",
+    "question": "Where does the selected shared family execution spend native T4 time?",
+    "hypothesis": {
+      "hypothesis_id": "H-TB-family-100k-operator-profile-gptrans_local-s42",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ],
+      "observed_deficiency": "Synthetic short-pass timings do not identify molecular operator bottlenecks.",
+      "alternative_explanations": [
+        "Concurrent CPU contention",
+        "Instrumentation overhead",
+        "Checkpoint and asynchronous dispatch waits"
+      ],
+      "changed_mechanism": "Observation only: shared phase/operator profiling with existing selected family recipe",
+      "cheapest_falsifier": "A short native capture during the user-authorized complete100K run",
+      "decision_changed_if_positive": "Target the measured largest operator in a separately controlled equivalence/speed test",
+      "decision_changed_if_negative": "Preserve missing/partial attribution; no speculative optimization or retry",
+      "expected_native_cost_ref": "cost-TB-family-100k-operator-profile-gptrans_local-s42-planned",
+      "related_closed_family_ids": [
+        "family-session-speed"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "faf5b6d13d94fa28a1d3e867bc17e453ca44da1e",
+      "source_config_identity": "9f53a577c5745bb78bf5fee61e601d6667c51d96717ac87b72d1b118f9af7cef",
+      "contract_refs": [
+        "experiments/family_100k_operator_profile/protocol.md",
+        "experiments/family_100k_operator_profile/config.json",
+        "experiments/family_100k_operator_profile/evidence_review.md"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-t-100k-v4-reference"
+      ],
+      "role_snapshot_refs": [
+        "experiments/family_100k_operator_profile/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/family_100k_operator_profile/config.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "paired_100k_training",
+        "source_commit": "faf5b6d13d94fa28a1d3e867bc17e453ca44da1e",
+        "run_ids": [
+          "family-100k-operator-profile-s42:gptrans_local:downstream"
+        ],
+        "attempt_ids": [
+          "gptrans_local-v1"
+        ],
+        "evidence_refs": [
+          "experiments/family_100k_operator_profile/config.json"
+        ],
+        "cost_event_ids": [
+          "cost-TB-family-100k-operator-profile-gptrans_local-s42-planned"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/family_100k_operator_profile/decision.md",
+      "next_allowed_actions": [
+        "A001"
+      ],
+      "reopen_conditions": []
+    }
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-family-100k-operator-profile-gptrans_local-s42-planned",
+      "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42",
+      "action_id": "A001",
+      "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
+      "attempt_id": "gptrans_local-v1",
+      "platform": "kaggle",
+      "hardware": "Tesla T4",
+      "category": "training",
+      "evidence_ref": "experiments/family_100k_operator_profile/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 7.0,
+          "status": "estimated"
+        },
+        "device_hours": {
+          "value": 7.0,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [
+      "pcqm-gptrans-t-100k-v4-reference"
+    ],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PROFILE_TRAINING",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_PROFILE_TRAINING",
+    "policy_id": "family-100k-operator-profile-s42",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/family_100k_operator_profile/config.json",
+    "role_snapshot_refs": [
+      "experiments/family_100k_operator_profile/role_plan.json"
+    ],
+    "source_commit": "faf5b6d13d94fa28a1d3e867bc17e453ca44da1e",
+    "state_timestamp": "2026-10-13T18:14:51.616816+00:00"
+  }
+}
