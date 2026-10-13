@@ -12,13 +12,14 @@ run/recipe/runtime-specific; historical entrypoints and job custody are unchange
 
 ## Server active screen
 
-The authorized [triplet routing dual100K](experiments/pcqm_gptrans_triplet_routing_100k/protocol.md)
-was submitted on Kaggle2 as kernel138425374/version1, observed RUNNING.
-Its [receipt and existing-B binding](experiments/pcqm_gptrans_triplet_routing_100k/gpu/monitor_binding.json)
-own exact identity and custody. Both optimizer-inclusive preflights are required
-before formal training; their remote completion was not yet observed. No result
-or Replay admission is claimed before independent terminal acceptance. The
-previous partial run remains closed; its complete drop arm is not repeated.
+The [triplet routing dual100K](experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/interpretation.md)
+completed as Kaggle2 kernel138425374/version1. Both arms passed independent
+acceptance, strict comparison and actual complete Replay admission; neither
+beat the frozen aggregate or earned nomination. Preserve exact failed-route
+evidence without extending training or adding seeds. Its event/binding are
+closed and existing Luna B heartbeat paused. The deferred full50K audit has an
+[unresolved loader/reference qualification gap](experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/post100k_audit_disposition.json);
+it is not executed and makes no transfer claim. No successor or scale-up is released.
 
 The authorized [triplet follow-up dual100K](experiments/pcqm_gptrans_triplet_followup_100k/gpu/results/interpretation.md)
 ended partially complete as Kaggle2 kernel138367521/version1. Triplet-return

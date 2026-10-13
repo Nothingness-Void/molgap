@@ -1,0 +1,35 @@
+{
+  "format": "molgap-deferred-audit-disposition-v1",
+  "status": "NOT_RELEASED_QUALIFICATION_INCOMPLETE",
+  "frozen_action_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/post100k_audit_action.json",
+  "training_acceptance_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/acceptance.json",
+  "training_acceptance_invalidated": false,
+  "training_replay_invalidated": false,
+  "required_role": "fixed500k-internal-development-500000-550000-all50000-canonical-order",
+  "blockers": [
+    {
+      "code": "EXACT_FULL50K_REFERENCE_PAYLOAD_NOT_QUALIFIED",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_portability/contract.json",
+      "observed": "The retained aggregate portability contract declares portability_rows=10000, not the full50000 required by the prospective action. Its score/payload must not be substituted."
+    },
+    {
+      "code": "NEW_VARIANT_FULL_ROLE_LOADER_NOT_QUALIFIED",
+      "evidence_ref": "src/molgap/gptrans_triplet_portability.py",
+      "observed": "The retained frozen loader is bound to degree_local_triplet_aggregate_ema999, epoch38 and its exact old checkpoint; it does not qualify either new variant or a full-role action."
+    },
+    {
+      "code": "LABEL_AFTER_PREDICTION_PERSISTENCE_NOT_QUALIFIED",
+      "evidence_ref": "src/molgap/gptrans_portability.py",
+      "observed": "The old _infer reads batch.y and saves joint target/prediction chunks. It is not qualification for this action's stricter prediction-persistence-before-scoring role boundary."
+    }
+  ],
+  "resolution": "Keep action deferred. Qualify a matching full-role adapter, accepted exact reference and separate linked NO_TRAIN plans before any release; do not relax role order, substitute a10Kpanel or retrain100K.",
+  "audit_job_submitted": false,
+  "optimizer_steps": 0,
+  "later_role_accessed": false,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false,
+  "scientific_transfer_claim": "NOT_EVALUATED"
+}
