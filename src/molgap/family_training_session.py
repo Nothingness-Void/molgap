@@ -85,7 +85,7 @@ def validate_session_resume(recipe, state):
         raise ValueError("Incomplete family resume state")
     cursor, plan, step = state["cursor"], recipe.loop_plan, state["optimizer_step"]
     keys = {"recipe_identity", "pass_index", "next_batch", "status", "pending_absolute",
-            "pending_rows", "best_development_mae_eV", "selected_step"}
+            "pending_rows", "best_development_mae_eV", "selected_step", "optimizer_state_ids"}
     if (type(cursor) is not dict or set(cursor) != keys or cursor["recipe_identity"] != recipe.identity
             or type(step) is not int or not 1 <= step <= plan.optimizer_steps):
         raise ValueError("Resume identity or step differs from the frozen recipe")
@@ -105,6 +105,8 @@ def validate_session_resume(recipe, state):
             not isinstance(value, torch.Tensor) or value.ndim != 0 or not value.is_floating_point()
             or not bool(torch.isfinite(value)) or bool(value < 0) for value in values)):
         raise ValueError("Resume partial-pass metrics are incomplete")
+    if values and any(value.dtype != values[0].dtype for value in values):
+        raise ValueError("Resume partial-pass metric dtype changed")
     best, selected = cursor["best_development_mae_eV"], cursor["selected_step"]
     if best is not None and (type(best) not in (float, int) or not math.isfinite(best) or best < 0):
         raise ValueError("Invalid retained development metric")
@@ -129,6 +131,15 @@ def validate_session_resume(recipe, state):
     if not isinstance(optimizer.get("state"), dict) or not optimizer.get("param_groups"):
         raise ValueError("Incomplete optimizer resume state")
     validate_optimizer_schedule(recipe, optimizer, state["scheduler"], step=step, pass_index=pass_index, offset=offset)
+    initialized = cursor["optimizer_state_ids"]
+    if (type(initialized) is not list or any(type(index) is not int for index in initialized)
+            or any(type(index) is not int for index in optimizer["state"])
+            or initialized != sorted(optimizer["state"])):
+        raise ValueError("Resume lost acknowledged optimizer moments")
+    # SSMA can legitimately skip its conditional residual on an edgeless batch.
+    # Other registered modes update every parameter; do not permit lazy reset.
+    if recipe.mode != "ssma" and set(initialized) != set(optimizer["param_groups"][0].get("params", [])):
+        raise ValueError("Resume is missing required optimizer moments")
     if any(not isinstance(value, torch.Tensor) for value in state["model"].values()):
         raise ValueError("Invalid resume model tensors")
     if state["ema"] is not None and (not isinstance(state["ema"], dict) or
@@ -156,25 +167,43 @@ class FamilyTrainingSession:
         self.checkpoint, self.selected, self.pass_finished = checkpoint, selected, pass_finished
         self.progress = LoopProgress(0, 0, 0, 0, "running")
         self.pending_absolute, self.pending_rows = [], 0
+        self._metric_host, self._metric_dtype = [], None
         self.best, self.selected_step = None, None
         self.closed = False
 
-    def _cursor(self):
+    def _flush_metrics(self):
         import torch
-        # Scalar metrics are synchronized only at persistence/reporting boundaries.
-        values = list(torch.stack(self.pending_absolute).detach().cpu().unbind()) if self.pending_absolute else []
+        if self.pending_absolute:
+            first = self.pending_absolute[0]
+            if any(value.ndim != 0 or value.dtype != first.dtype or value.device != first.device
+                    or not value.is_floating_point() for value in self.pending_absolute):
+                raise ValueError("Expected matching floating-point batch metrics")
+            if self._metric_dtype is not None and self._metric_dtype != first.dtype:
+                raise ValueError("Partial-pass metric dtype changed")
+            self._metric_dtype = first.dtype
+            # Only new scalars cross to CPU. Python floats preserve each FP32/64
+            # value exactly; reporting still adds them in original batch order.
+            self._metric_host.extend(torch.stack(self.pending_absolute).detach().cpu().tolist())
+            self.pending_absolute = []
+
+    def _cursor(self, optimizer_state):
+        import torch
+        self._flush_metrics()
+        values = list(torch.tensor(self._metric_host, dtype=self._metric_dtype).unbind()) if self._metric_host else []
         return {"recipe_identity": self.recipe.identity, "pass_index": self.progress.pass_index,
             "next_batch": self.progress.next_batch, "status": self.progress.status,
             "pending_absolute": values, "pending_rows": self.pending_rows,
-            "best_development_mae_eV": self.best, "selected_step": self.selected_step}
+            "best_development_mae_eV": self.best, "selected_step": self.selected_step,
+            "optimizer_state_ids": sorted(optimizer_state["state"])}
 
     def state_dict(self):
         from .experiment_family_workflow import _finite_tree, tensor_safe_rng_state
         from .training_reproducibility import capture_rng_state
-        state = {"model": self.kernel.model.state_dict(), "optimizer": self.kernel.optimizer.state_dict(),
+        optimizer_state = self.kernel.optimizer.state_dict()
+        state = {"model": self.kernel.model.state_dict(), "optimizer": optimizer_state,
             "scheduler": self.schedule.state_dict(),
             "ema": self.kernel.ema.state_dict() if self.kernel.ema is not None else None,
-            "rng_state": tensor_safe_rng_state(capture_rng_state()), "cursor": self._cursor(),
+            "rng_state": tensor_safe_rng_state(capture_rng_state()), "cursor": self._cursor(optimizer_state),
             "optimizer_step": self.progress.optimizer_step,
             "sample_presentations": self.progress.sample_presentations}
         _finite_tree(state, "family.checkpoint")
@@ -201,8 +230,12 @@ class FamilyTrainingSession:
             keys = set(expected) - {"lr", "initial_lr"}
             if any(observed.get(key) != expected[key] for key in keys):
                 raise ValueError("Resume optimizer defaults or parameter ordering changed")
+        names = {id(value): name for name, value in self.kernel.model.named_parameters()}
         for parameter_id, parameter in enumerate(self.kernel.optimizer.param_groups[0]["params"]):
             moments = state["optimizer"]["state"].get(parameter_id)
+            if (moments is None and parameter.requires_grad and
+                    not (self.recipe.mode == "ssma" and names[id(parameter)].startswith("k1_joint_aggregation."))):
+                raise ValueError("Resume lost required parameter moments")
             if moments is not None and any(moments[key].shape != parameter.shape or moments[key].dtype != parameter.dtype
                     for key in ("exp_avg", "exp_avg_sq")):
                 raise ValueError("Resume optimizer moments do not match the live parameter schema")
@@ -221,7 +254,10 @@ class FamilyTrainingSession:
         except Exception:
             install(previous)
             raise
-        self.pending_absolute = [value.detach().clone().to(self.kernel.device) for value in cursor["pending_absolute"]]
+        self.pending_absolute = []
+        values = cursor["pending_absolute"]
+        self._metric_host = torch.stack(values).detach().cpu().tolist() if values else []
+        self._metric_dtype = values[0].dtype if values else None
         self.pending_rows = cursor["pending_rows"]
         self.best, self.selected_step = cursor["best_development_mae_eV"], cursor["selected_step"]
         self.progress = progress
@@ -236,8 +272,10 @@ class FamilyTrainingSession:
         from .training_reproducibility import sum_scalar_metrics
         self.progress = progress
         self.schedule.after_pass(pass_index, progress)
-        metric = sum_scalar_metrics(self.pending_absolute) / self.pending_rows
+        self._flush_metrics()
+        metric = sum_scalar_metrics(self._metric_host) / self.pending_rows
         self.pending_absolute, self.pending_rows = [], 0
+        self._metric_host, self._metric_dtype = [], None
         evaluation = None
         if self.recipe.dataset.development:
             evaluation = self.kernel.evaluate(self.loaders)

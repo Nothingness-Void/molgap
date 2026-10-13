@@ -85,6 +85,27 @@ Transported initialization must match base tensor keys, shape and dtype without
 silent conversion. Declared and observed accelerator classes must match before
 native qualification; resource matching never changes the training algorithm.
 
+New session checkpoints acknowledge `cursor.optimizer_state_ids`. Missing
+acknowledged moments fail before restore; unconditional modes require complete
+parameter coverage. SSMA may have untouched conditional-residual parameters,
+but missing base moments remain invalid. Historical payloads lacking this field
+must use their frozen source, never gain invented participation metadata.
+
+`SessionOutputs` stages selected weights/predictions and the next trace until
+checkpoint publication. A hash-bound `session_commit.json` records retained
+previous files; publishing `last_checkpoint.pt` is the commit point. The next
+owning invocation validates all bindings before rolling back an interrupted
+bundle or accepting a committed one. Unknown/corrupt backups fail closed; no
+blind trace truncation. Ordinary mid-pass saves keep the single atomic-write
+path. One exclusive producer owns the output directory; it is not a live-reader
+transaction API, platform backup or power-loss certification.
+
+Development-selected weights must match resume tensor keys, shapes and dtypes,
+not only finite values and a file SHA. The runner starts a cost invocation marker
+after metadata admission, before input/GPU work. A missing checkpoint binding or
+unfinished prior invocation makes cumulative wall cost unknown; it is never
+relabelled measured. Queue/device allocation costs remain platform-owned.
+
 Development selection consumes only the explicitly selected internal role at a
 complete pass. Final-only selection never opens a development loader or creates
 a development score. An unfinished pass is not reported as a finished epoch.
@@ -99,10 +120,28 @@ predictions or development metrics to make that inspector pass.
 The nested session/output checker reuses it: accelerator flags cross to CPU once
 per device and CPU scalars are checked in same-dtype groups. Every tensor and
 host float still participates; no cached success or skipped optimizer/EMA guard.
-State format, update math, metric addition order and checkpoint policy are
-unchanged. New packages freeze the shared code; old jobs keep their source pins.
+That checker alone did not change state format, update math, metric addition
+order or checkpoint policy. New packages freeze shared code; old jobs keep source
+pins. The later participation field above is an explicit checkpoint extension,
+not a silent conversion of historical artifacts.
 The [synthetic checkpoint diagnostic](../../experiments/family_checkpoint_efficiency/README.md)
 owns measurements and their limits, not native training/quality qualification.
+
+## Execution Cost Boundaries
+
+Partial-pass metrics keep an immutable private CPU float prefix after each
+persistence boundary; only newly observed scalars cross devices. Snapshots build
+fresh CPU tensors, while epoch reporting adds original scalar values in Python
+batch order. This does not cache validation success, alter loss or narrow dtype.
+The prepared GPTrans backend omits the unused final reachability expansion;
+bounded integer distance codes and all used operations remain unchanged.
+K1's private index/mask copies use non-blocking transport on the owning stream;
+the synthetic RTX5060 test preserves output, gradient, optimizer and RNG exactly.
+
+The [code-level repair and speed audit](FAMILY_RECOVERY_SPEED_AUDIT.md) owns tests,
+operation counts and remaining candidates. These changes are not a measured epoch
+speed/MAE claim or native T4/A100/DCU qualification. Sampler changes, model algebra
+reordering, async writes and topology-cache changes require separate validation.
 
 ## Migration Status
 
