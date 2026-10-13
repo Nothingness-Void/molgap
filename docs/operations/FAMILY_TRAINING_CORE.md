@@ -27,6 +27,7 @@ layer may copy or alter the training algorithm to fit a platform or scale.
 | `family_training_session.py` | One schedule/train/development/selection/resume lifecycle, using the shared outer loop and caller-owned atomic artifact/trace hooks. |
 | `family_training_runner.py` | Registered contract/source/role bindings, native repeat/resume qualification and the single worker entry. |
 | `family_training_outputs.py` | Existing atomic checkpoint/trace translation and shared CPU inspection for development-selected or final-only endpoints. |
+| `family_execution_profile.py` | [Optional session profiler](FAMILY_EXECUTION_PROFILE.md): phase and operator observation; no alternate training implementation. |
 | `packed_graph_dataset.py` | Spawn-pickleable packed PyG payload owner, optionally memory mapped. |
 | Existing K1/GPTrans trainer | Family loss/addon, frozen schedule, selection and artifact hooks during migration. |
 | [Family outputs](EXPERIMENT_FAMILY_WORKFLOW.md) | Existing checkpoint, trace, artifact inspection and V5/RML closure. |
