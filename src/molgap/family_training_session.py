@@ -280,7 +280,8 @@ class FamilyTrainingSession:
         live_evaluation = None
         if self.recipe.dataset.development:
             evaluation = self.kernel.evaluate(self.loaders)
-            if self.recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"} and self.recipe.ema_decay is not None:
+            from .family_training_recipe import BOUNDED_MODES
+            if self.recipe.mode in BOUNDED_MODES and self.recipe.ema_decay is not None:
                 live_evaluation = self.kernel.evaluate(self.loaders, weights="live")
             if self.best is None or evaluation["mae_eV"] < self.best:
                 self._select(progress, evaluation)

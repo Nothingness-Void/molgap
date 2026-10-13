@@ -19,8 +19,11 @@ ADAMW_EPSILON = 1e-8
 MODES = {
     "neural_atom_k1": ("reference", "ssma", "mean2", "mean2_clean_second"),
     "gptrans_t": ("reference", "pair_prenorm", "centered_logits", "memory_value", "memory_message",
-                  "degree_bond_local_ema999", "degree_local_cycle_common_ema999"),
+                  "degree_bond_local_ema999", "degree_local_cycle_common_ema999",
+                  "degree_aggregate_shared_ema999", "degree_aggregate_cycle_ema999",
+                  "degree_aggregate_carry_ema999", "degree_aggregate_correspondence_ema999"),
 }
+BOUNDED_MODES = frozenset(MODES["gptrans_t"][5:])
 
 
 def _integer(value, name, minimum=1):
@@ -121,7 +124,7 @@ class FamilyRecipe:
         _digest(self.initialization_sha256, "initialization_sha256")
         if type(self.dataset) is not DatasetSelection or type(self.schedule) is not ScheduleSpec:
             raise TypeError("Typed dataset and schedule are required")
-        cycle = self.mode == "degree_local_cycle_common_ema999"
+        cycle = self.mode in {"degree_local_cycle_common_ema999", "degree_aggregate_cycle_ema999"}
         if cycle != (self.input_sidecar is not None):
             raise ValueError("Only the common-cycle mode requires a pinned input sidecar")
         if self.input_sidecar is not None and (type(self.input_sidecar) is not DatasetSelection or

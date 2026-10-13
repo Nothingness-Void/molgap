@@ -14,12 +14,14 @@ from .family_pair_release import bounded_cycle_pair, WALL_CEILING_SECONDS
 from .training_reproducibility import atomic_json, sha256_file
 
 
-def accept_pair(spec, *, package_dir, receipt_path, output_root, contracts, destination):
+def accept_pair(spec, *, package_dir, receipt_path, output_root, contracts, destination,
+                accepted_reference=None):
     """Accept B first, then compare A to B's verified saved predictions."""
     import torch
     from .k1_terminal_analysis import paired_saved_errors
     from .research_memory.trace import validate_canonical_trace
-    if not bounded_cycle_pair(spec):
+    campaign = spec.to_dict()["experiment_id"] in {"gptrans-research-slot1", "gptrans-research-slot2"}
+    if not bounded_cycle_pair(spec) and not campaign:
         raise ValueError("Unsupported same-run training pair")
     package = verify_experiment_source_package(Path(package_dir))
     root = Path(output_root).absolute()
@@ -33,9 +35,33 @@ def accept_pair(spec, *, package_dir, receipt_path, output_root, contracts, dest
             wall > WALL_CEILING_SECONDS or device > 16 * 3600 or
             any(s["status"] != "complete" for s in segments)):
         raise ValueError("Incomplete, uncertain or over-budget whole allocation cost")
-    pair = spec.to_dict()["prospective"]["same_run_replay"]
-    order = [pair["reference_arm_id"], *pair["candidate_arm_ids"]]
+    if campaign:
+        order = [a["arm_id"] for a in spec.to_dict()["arms"]]
+        reference_id = "reference"
+        if order not in (["reference", "cycle"], ["carry", "correspondence"]):
+            raise ValueError("Campaign physical arm coverage changed")
+    else:
+        pair = spec.to_dict()["prospective"]["same_run_replay"]
+        order = [pair["reference_arm_id"], *pair["candidate_arm_ids"]]
+        reference_id = order[0]
     reports, payloads = {}, {}
+    prior_device_seconds = 0
+    if campaign and order[0] != reference_id:
+        if accepted_reference is None:
+            raise ValueError("Slot2 comparison waits for independently accepted slot1 reference")
+        previous = _json(Path(accepted_reference))
+        if (previous.get("accepted") is not True or previous.get("acceptance_order") != ["reference", "cycle"]
+                or previous.get("source_commit") != package["source_commit"]):
+            raise ValueError("Missing/mismatching actual accepted campaign reference")
+        reference = previous["arms"][reference_id]
+        for pointer in (reference["checkpoint"], reference["predictions"]):
+            if sha256_file(Path(pointer["path"])) != pointer["sha256"]:
+                raise ValueError("Actual accepted campaign reference changed")
+        prior_device_seconds = previous["full_allocation"]["allocated_device_seconds"]
+        if prior_device_seconds + device > 32 * 3600:
+            raise ValueError("Whole campaign exceeded32allocatedT4hours")
+        reports[reference_id] = reference
+        payloads[reference_id] = torch.load(reference["predictions"]["path"], map_location="cpu", weights_only=True)
     for arm_id in order:
         context = RunContext.from_launch(spec, Path(receipt_path), Path(package_dir),
             expected_package_identity=package["package_identity"], arm_id=arm_id)
@@ -55,7 +81,7 @@ def accept_pair(spec, *, package_dir, receipt_path, output_root, contracts, dest
             raise ValueError("Native runtime identity differs from frozen arm")
         _verify_preflight(native, recipe, provenance)
         resource = _json(native / "resource_qualification.json")
-        if recipe.mode == "degree_local_cycle_common_ema999" and resource.get("zero_start", {}).get("accepted") is not True:
+        if (recipe.mode == "degree_local_cycle_common_ema999" or campaign) and resource.get("zero_start", {}).get("accepted") is not True:
             raise ValueError("Missing actual native zero-start equivalence")
         trace = validate_canonical_trace(_json(arm / "canonical_trace.json"))
         observations = [r for r in trace["observations"] if r["event"] == "observation"]
@@ -68,7 +94,7 @@ def accept_pair(spec, *, package_dir, receipt_path, output_root, contracts, dest
         artifacts = report["observed"]["artifacts"]
         payloads[arm_id] = torch.load(_artifact_path(arm, artifacts["predictions"]["path"]),
                                     map_location="cpu", weights_only=True)
-        reports[arm_id] = {"accepted": True, "role": "reference" if arm_id == order[0] else "candidate",
+        reports[arm_id] = {"accepted": True, "role": "reference" if arm_id == reference_id else "candidate",
             "recipe_identity": recipe.identity, "context": context.to_dict(),
             "checkpoint": {"path": str(_artifact_path(arm, artifacts["selected_model"]["path"])),
                 "sha256": artifacts["selected_model"]["sha256"]},
@@ -77,14 +103,19 @@ def accept_pair(spec, *, package_dir, receipt_path, output_root, contracts, dest
             "trace_sha256": artifacts["trace"]["sha256"], "inspection": report}
         # B becomes an accepted saved-output reference only here, never at release.
         atomic_json(Path(destination) / (arm_id + "_acceptance.json"), reports[arm_id])
-    analysis = paired_saved_errors(payloads[order[0]], payloads[order[1]])
+    analyses = {a: paired_saved_errors(payloads[reference_id], payloads[a]) for a in order if a != reference_id}
+    analysis = next(iter(analyses.values()))
     result = {"format": "molgap-family-pair-acceptance-v1", "accepted": True,
         "spec_identity": spec.identity, "package_identity": package["package_identity"],
         "source_commit": package["source_commit"], "source_archive_sha256": package["archive_sha256"],
         "acceptance_order": order, "arms": reports, "paired_analysis": analysis,
+        "candidate_analyses": analyses,
+        "candidate_material_gates": {name: -value["candidate_minus_reference_eV"] > .001 and
+            value["paired_row_bootstrap"]["ci95"][1] < 0 for name, value in analyses.items()},
         "material_gate_eV": .001, "material_gate_passed": (
             -analysis["candidate_minus_reference_eV"] > .001 and analysis["paired_row_bootstrap"]["ci95"][1] < 0),
         "full_allocation": {"wall_seconds": wall, "allocated_device_seconds": device},
+        "campaign_allocated_device_seconds": prior_device_seconds + device,
         "rml_finalization": "NOT_EXECUTED_USE_EXISTING_TERMINAL_WORKFLOW",
         "training_executed": False, "model_inference_executed": False,
         "caveat": "Paired single-seed internal-development evidence, not seed stability, scale or protected-test superiority"}
@@ -102,7 +133,9 @@ def bind_deferred_audit(*, acceptance_path, recipe_path, arm_id, maximum_wall_se
     _, recipe = read_recipe(Path(recipe_path))
     if arm["recipe_identity"] != recipe.identity:
         raise ValueError("Audit recipe differs from accepted training")
-    remaining = (16 * 3600 - accepted["full_allocation"]["allocated_device_seconds"]) / 2
+    campaign = accepted.get("campaign_allocated_device_seconds") is not None
+    spent = accepted["campaign_allocated_device_seconds"] if campaign else accepted["full_allocation"]["allocated_device_seconds"]
+    remaining = ((32 if campaign else 16) * 3600 - spent) / 2
     limit = min(maximum_wall_seconds, remaining)
     if limit <= 120:
         raise ValueError("No whole-allocation budget remains for the deferred audit")
@@ -113,7 +146,7 @@ def bind_deferred_audit(*, acceptance_path, recipe_path, arm_id, maximum_wall_se
     from .gptrans_cycle_release import BASE
     # The sidecar is the same accepted CPU asset, including the separately
     # predeclared500Kdevelopment role. The baseline never consumes these features.
-    root = Path(recipe_path).resolve().parents[4]
+    root = Path(recipe_path).resolve().parents[3 if recipe.mode.startswith("degree_aggregate_") else 4]
     cache = _json(root / BASE / "cpu/acceptance.json")
     if recipe.dataset.manifest_sha256 != FIXED_100K_SHA or cache.get("accepted") is not True:
         raise ValueError("Deferred audit input identity changed")

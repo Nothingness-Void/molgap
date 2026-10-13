@@ -115,7 +115,8 @@ class SessionOutputs:
         if file_digest(contract) != context.training_recipe_sha256:
             raise ValueError("Session contract differs from the frozen Spec")
         record, self.recipe = read_recipe(contract)
-        self.bounded_pair = self.recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}
+        from .family_training_recipe import BOUNDED_MODES
+        self.bounded_pair = self.recipe.mode in BOUNDED_MODES
         self.expected = record["acceptance_requirements"]
         self.root.mkdir(parents=True, exist_ok=True)
         if train_role_identity != record["train_role_identity"]:
@@ -139,7 +140,7 @@ class SessionOutputs:
             semantics["ema_dev_metric" if weights == "ema" else "live_dev_metric"] = {
                 "metric": "MAE", "unit": "eV", "target": "Gap", "role_identity": record["development_role_identity"],
                 "weights": weights, "direction": "minimize"}
-            if self.recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"} and self.recipe.ema_decay is not None:
+            if self.bounded_pair and self.recipe.ema_decay is not None:
                 semantics["live_dev_metric"] = {**semantics["ema_dev_metric"], "weights": "live"}
         if self.bounded_pair:
             semantics["live_train_metric"]["unit"] = "eV"

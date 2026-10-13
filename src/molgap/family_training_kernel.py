@@ -36,7 +36,10 @@ def load_family_model(recipe, initial_state):
     else:
         from .pcqm_gptrans_v4 import _make_model
         from .gptrans_execution_backend import bind_model_layout
-        if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
+        if recipe.mode.startswith("degree_aggregate_"):
+            from .gptrans_research_campaign import construct
+            model = construct(recipe.mode, state)
+        elif recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
             from .gptrans_cycle_pair import construct
             model = construct(recipe.mode, state)
         else:
@@ -79,6 +82,9 @@ class FamilyKernel:
         from .gptrans_execution_hotpath import MODEL_FIELDS
         # Borrow immutable CPU data through a fresh PyG storage wrapper.
         prepared = copy(batch) if hasattr(batch, "execution_layout") else prepare_layout(copy(batch))
+        if training and self.recipe.mode == "degree_aggregate_correspondence_ema999":
+            from .gptrans_research_campaign import correspondence_layout
+            prepared.execution_layout = correspondence_layout(dict(prepared.execution_layout))
         fields = (*MODEL_FIELDS, "y") if training else MODEL_FIELDS
         return prepared.to(self.device, *fields, non_blocking=True)
 
@@ -99,10 +105,25 @@ class FamilyKernel:
             from .family_training_core import normalized_gap_update
             from .gptrans_execution_backend import prepared_forward
             batch = self._gptrans_batch(cpu_batch, training=True)
-            loss = normalized_gap_update(self.model, self.optimizer, batch, mean, std,
-                forward=prepared_forward, clip_norm=self.recipe.gradient_clip,
-                check_finite=check_finite, cast_target_float=True)
-            absolute, rows = loss * int(batch.num_graphs), int(batch.num_graphs)
+            if self.recipe.mode == "degree_aggregate_correspondence_ema999":
+                from .family_training_core import optimizer_update
+                from .gptrans_research_campaign import AUX_WEIGHT
+                def objective():
+                    prediction = prepared_forward(self.model, batch).reshape(-1)
+                    gap = (prediction - (batch.y.reshape(-1).float() - mean) / std).abs()
+                    auxiliary = self.model._correspondence_loss
+                    if auxiliary is None:
+                        raise RuntimeError("Missing clean atom/bond correspondence loss")
+                    self.model._auxiliary_metric = auxiliary.detach()
+                    return gap.mean() + AUX_WEIGHT * auxiliary, (gap.detach().sum(), int(batch.num_graphs))
+                loss, (absolute, rows) = optimizer_update(self.model, self.optimizer, objective,
+                    clip_norm=self.recipe.gradient_clip, check_finite=check_finite)
+                self.model._correspondence_loss = None
+            else:
+                loss = normalized_gap_update(self.model, self.optimizer, batch, mean, std,
+                    forward=prepared_forward, clip_norm=self.recipe.gradient_clip,
+                    check_finite=check_finite, cast_target_float=True)
+                absolute, rows = loss * int(batch.num_graphs), int(batch.num_graphs)
         if self.ema is not None:
             self.ema.update(self.model)
         return loss, absolute, rows

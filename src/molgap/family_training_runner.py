@@ -13,7 +13,7 @@ import sys
 import time
 
 from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _digest, _json, _text, tensor_digest
-from .family_training_recipe import FamilyRecipe
+from .family_training_recipe import FamilyRecipe, BOUNDED_MODES
 from .screen_policy import canonical_fingerprint
 from .training_reproducibility import atomic_json, atomic_torch_save
 from .v4_runtime import normalized_source_sha256, state_dict_sha256
@@ -34,8 +34,10 @@ def family_arm_bindings(recipe):
         "transform": {"name": "frozen-train-mean-sample-std", "version": "1", "sha256": canonical_fingerprint({
             "manifest_sha256": recipe.dataset.manifest_sha256, "mean_eV": recipe.target_mean_eV, "std_eV": recipe.target_std_eV})},
         "objective": {"name": "normalized-gap-l1", "version": "1", "sha256": canonical_fingerprint({
-            "mode": "local-cycle-shared-v1" if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}
-            else recipe.mode, "family": recipe.family, "gradient_clip": recipe.gradient_clip})}}
+            "mode": "aggregate-correspondence-0.01-tau0.2-bonds8" if recipe.mode == "degree_aggregate_correspondence_ema999"
+            else "aggregate-shared-gap-v1" if recipe.mode.startswith("degree_aggregate_")
+            else "local-cycle-shared-v1" if recipe.mode in BOUNDED_MODES else recipe.mode,
+            "family": recipe.family, "gradient_clip": recipe.gradient_clip})}}
 
 
 def _requirements(recipe, source_idx_sha256, target_sha256):
@@ -105,7 +107,8 @@ def validate_screen_recipe(spec, arm_id, record):
     modules = {"ssma": "k1_joint_aggregation.py", "mean2": "k1_screen_training.py",
         "mean2_clean_second": "k1_screen_training.py", "pair_prenorm": "gptrans_variants.py",
         "centered_logits": "gptrans_variants.py", "memory_value": "gptrans_memory.py", "memory_message": "gptrans_memory.py",
-        "degree_bond_local_ema999": "gptrans_capacity.py", "degree_local_cycle_common_ema999": "gptrans_cycle_pair.py"}
+        "degree_bond_local_ema999": "gptrans_capacity.py", "degree_local_cycle_common_ema999": "gptrans_cycle_pair.py",
+        **{name: "gptrans_research_campaign.py" for name in BOUNDED_MODES if name.startswith("degree_aggregate_")}}
     if recipe.mode != "reference" and arm["addons"][0]["source_sha256"] != normalized_source_sha256(Path(__file__).with_name(modules[recipe.mode])):
         raise ValueError("Addon source hash differs from executed module")
     if record.get("acceptance_requirements") != _requirements(recipe,
@@ -249,7 +252,7 @@ def run_screen_preflight(**options):
     if len({proof["state_fingerprint"] for proof in proofs}) != 1:
         raise ValueError("Native optimizer/EMA/schedule/RNG repeat or serialized resume differs")
     resource = None
-    if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
+    if recipe.mode in BOUNDED_MODES:
         resource = _qualify_cycle_resources(recipe, data, tuning, Path(options["initial_state_path"]))
         atomic_json(output / "resource_qualification.json", resource)
     atomic_json(output / "runtime_provenance.json", provenance)
@@ -288,11 +291,15 @@ def _qualify_cycle_resources(recipe, data, tuning, initial):
         iterator = iter(loaders.train(0, 0))
         batch = next(iterator)
         zero_start = None
-        if recipe.mode == "degree_local_cycle_common_ema999":
+        if recipe.mode == "degree_local_cycle_common_ema999" or recipe.mode.startswith("degree_aggregate_"):
             from .gptrans_cycle_pair import construct, PARENT
             from .v4_runtime import read_frozen_state_artifact
             state, _ = read_frozen_state_artifact(initial, expected_state_sha256=recipe.initialization_sha256)
-            parent_state = {k: v for k, v in state.items() if k != "cycle_embedding.weight"}
+            if recipe.mode.startswith("degree_aggregate_"):
+                from .gptrans_research_campaign import construct, BASE as PARENT, inherited_state
+                parent_state = inherited_state(state)
+            else:
+                parent_state = {k: v for k, v in state.items() if k != "cycle_embedding.weight"}
             parent = construct(PARENT, parent_state)
             parent.load_state_dict(parent_state, strict=True)
             bind_model_layout(parent)
@@ -323,9 +330,13 @@ def _qualify_cycle_resources(recipe, data, tuning, initial):
                 kernel.forward(batch)
             torch.cuda.synchronize()
             forward_times.append(time.perf_counter() - began)
+        connected = None
+        if recipe.mode.startswith("degree_aggregate_"):
+            from .gptrans_research_campaign import native_gradients
+            connected = native_gradients(kernel.model)
         return {**resource_estimate(train_step_seconds=max(train_times), forward_seconds=max(forward_times),
             reserved_bytes=torch.cuda.max_memory_reserved(), total_bytes=torch.cuda.get_device_properties(0).total_memory),
-            "zero_start": zero_start, "formal_training_exposure": 0, "disposable_optimizer_updates": 21}
+            "zero_start": zero_start, "connected": connected, "formal_training_exposure": 0, "disposable_optimizer_updates": 21}
     finally:
         loaders.close()
         kernel.close()
@@ -385,7 +396,7 @@ def run_screen_resume_preflight(*, resume_output, **options):
     progress = validate_session_resume(recipe, retained)
     if progress.status == "complete":
         raise ValueError("Cannot resume a completed shared session")
-    if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
+    if recipe.mode in BOUNDED_MODES:
         from .family_pair_release import resource_estimate
         resource = _json(output / "resource_qualification.json")
         qualified = resource_estimate(train_step_seconds=resource["maximum_observed_train_step_seconds"],
@@ -425,7 +436,7 @@ def _verify_preflight(directory, recipe, provenance):
     certificate = _json(_artifact_path(root, "runtime_certificate.json"))
     if saved != provenance or certificate.get("provenance_sha256") != canonical_fingerprint(provenance):
         raise ValueError("Native preflight source/recipe/data/runtime/device identity differs")
-    if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
+    if recipe.mode in BOUNDED_MODES:
         resource_path = root / "resource_qualification.json"
         if certificate.get("resource_qualification_sha256") != normalized_file_sha(resource_path):
             raise ValueError("Missing or changed native resource qualification")
@@ -532,7 +543,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"],
         resume_trajectory=(_artifact_path(Path(options["prospective_root"]),
             "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
-            if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"} else None))
+            if recipe.mode in BOUNDED_MODES else None))
     had_checkpoint = (root / "last_checkpoint.pt").is_file()
     interval = _json(_artifact_path(root, "invocation_cost_state.json"))
     _check_context(interval["context"], context)
@@ -543,7 +554,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         checkpoint=outputs.checkpoint, selected=outputs.selected, pass_finished=outputs.pass_finished)
     try:
         if had_checkpoint:
-            if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
+            if recipe.mode in BOUNDED_MODES:
                 actual = _json(_artifact_path(Path(preflight_dir or output), "actual_resume_certificate.json"))
                 if (actual.get("status") != "accepted" or actual.get("formal_training_exposure") != 0 or
                         actual.get("checkpoint_sha256") != normalized_file_sha(root / "last_checkpoint.pt")):
@@ -558,7 +569,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     try:
         # A completed physical ten-pass segment makes work externally retrievable.
         # The scientific horizon, scheduler and selected-state policy remain60.
-        bounded = recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}
+        bounded = recipe.mode in BOUNDED_MODES
         stop_pass = min(60, (session.progress.pass_index // 10 + 1) * 10)
         progress = session.run(should_pause=lambda: pause[0] or (
             bounded and session.progress.pass_index >= stop_pass and session.progress.next_batch == 0))

@@ -94,6 +94,8 @@ def run_bound_arm(*, binding, input_root, output, device="cuda"):
     """Execute one accepted frozen arm; the platform/controller owns allocation."""
     import torch
     from .gptrans_cycle_pair import construct, MODES, CYCLE
+    if binding.get("mode", "").startswith("degree_aggregate_"):
+        from .gptrans_research_campaign import construct, MODES, CYCLE
     from .gptrans_execution_backend import bind_model_layout
     began = time.perf_counter()
     output = Path(output)

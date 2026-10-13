@@ -56,7 +56,8 @@ def _workload(allocation_started):
     arms = declaration["arms"]
     shared_cycle_pair = (len(arms) == 2 and all(a["family"] == {"name": "gptrans_t", "version": "2"}
         and len(a["addons"]) == 1 for a in arms) and
-        {a["addons"][0]["name"] for a in arms} == {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"})
+        ({a["addons"][0]["name"] for a in arms} == {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}
+         or all(a["addons"][0]["name"].startswith("degree_aggregate_") for a in arms)))
     if shared_cycle_pair:
         # Read the stdlib-only owner from the already hash-verified source archive.
         import runpy

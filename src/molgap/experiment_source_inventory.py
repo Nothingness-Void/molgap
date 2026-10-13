@@ -32,6 +32,7 @@ COMMON_SOURCE_FILES = (
     'src/molgap/family_training_core.py',
     'src/molgap/family_pair_release.py',
     'src/molgap/family_pair_acceptance.py',
+    'src/molgap/gptrans_campaign_release.py',
     'src/molgap/family_cycle_audit.py',
     'src/molgap/family_training_data.py',
     'src/molgap/family_training_kernel.py',

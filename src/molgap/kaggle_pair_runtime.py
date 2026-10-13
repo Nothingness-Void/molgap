@@ -34,11 +34,19 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     declaration = spec.to_dict()
     from .family_pair_release import bounded_cycle_pair, WALL_CEILING_SECONDS
     bounded = bounded_cycle_pair(spec)
+    campaign = (len(declaration["arms"]) == 2 and all(a["family"] == {"name": "gptrans_t", "version": "2"}
+        and len(a["addons"]) == 1 and a["addons"][0]["name"].startswith("degree_aggregate_") for a in declaration["arms"]))
+    if campaign:
+        from .gptrans_campaign_release import check_campaign, BASE
+        number = 1 if declaration["experiment_id"] == "gptrans-research-slot1" else 2
+        check_campaign(spec, source_root, _json(source_root / BASE / f"slot{number}/acceptance_plan.json"),
+            initial_states={j["arm_id"]: Path(launch_path).parent / j["initial_state"] for j in jobs})
     if bounded:
         from .family_pair_release import check_same_run_plan
         check_same_run_plan(spec, source_root,
             _json(source_root / "experiments/pcqm_gptrans_cycle_pair_100k/gpu/acceptance_plan.json"),
             initial_states={j["arm_id"]: Path(launch_path).parent / j["initial_state"] for j in jobs})
+    bounded = bounded or campaign
     if declaration["platform"]["name"] != "kaggle":
         raise ValueError("Kaggle runtime requires a Kaggle Spec")
     names = [n.strip() for n in subprocess.check_output(

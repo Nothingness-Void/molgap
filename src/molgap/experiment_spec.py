@@ -106,6 +106,10 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    **{(name, "1"): AddonContract("gptrans_t", "aggregate-research", "molgap.gptrans_research_campaign",
+        family_versions=("2",), single_addon=True) for name in (
+        "degree_aggregate_shared_ema999", "degree_aggregate_cycle_ema999",
+        "degree_aggregate_carry_ema999", "degree_aggregate_correspondence_ema999")},
     ("degree_local_cycle_common_ema999", "1"): AddonContract(
         "gptrans_t", "cycle-pair-input", "molgap.gptrans_cycle_pair", family_versions=("2",), single_addon=True),
     **{(name, "1"): AddonContract("gptrans_t", "triplet-routing", "molgap.gptrans_triplet_routing", single_addon=True)
