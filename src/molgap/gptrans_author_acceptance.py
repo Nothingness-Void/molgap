@@ -21,6 +21,7 @@ DIAGNOSTIC_TRACE_MODES = frozenset({
     "degree_local_bond_return_ema999",
     "degree_local_triplet_aggregate_ema999", "degree_local_triplet_attention_ema999",
     "degree_local_triplet_drop_ema999", "degree_local_triplet_product_ema999",
+    "degree_local_triplet_product_v2_ema999", "degree_local_triplet_bond_route_ema999",
 })
 
 
@@ -123,6 +124,18 @@ def accept_training_outputs(repo_root: Path, records: Path, package: Path, *,
             require(record["variant_source_sha256"] == variant_sha and record["manifest_sha256"] == config["dataset_manifest_sha256"], "Variant/data identity")
             require(record["initial_state_artifact_sha256"] == arm["initial_file_sha256"], "Initial file binding")
         require(preflight["accepted"] is True and preflight["parameters"] == expected_parameters, "Preflight")
+        if mode in {"degree_local_triplet_product_v2_ema999", "degree_local_triplet_bond_route_ema999"}:
+            qualification = load(folder / "initial_qualification.json")
+            checks = qualification.get("qualification_checks", {})
+            require(qualification.get("accepted") is True
+                    and qualification["initial_file_sha256"] == arm["initial_file_sha256"]
+                    and qualification["state_sha256"] == arm["initial_tensor_sha256"]
+                    and set(checks) == {"format", "variant", "architecture", "full_tensor_pin", "layout_pin", "parent_tensor_pin", "parameter_inventory", "finite"}
+                    and all(x is True for x in checks.values()), "Named frozen initialization qualification")
+            phases = load(records / config["output_subdirectory"] / "preflight_phase.json")
+            require(config.get("all_arms_preflight_barrier") is True
+                    and {r["variant"] for r in phases["outcomes"]} == set(config["arms"])
+                    and all(r["complete"] is True for r in phases["outcomes"]), "Both-arm preflight barrier")
         if "expected_parameters" in arm:
             with tarfile.open(package / "source.tar.gz", "r:gz") as archive:
                 module_file = Path(capacity_module(mode).__file__).name

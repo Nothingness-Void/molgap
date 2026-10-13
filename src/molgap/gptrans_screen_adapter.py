@@ -34,7 +34,8 @@ def gptrans_screen_arguments(
                                 "degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999", "degree_pair_transition_ema999", "degree_bond_local_cap_ema999",
                                 "degree_local_connected_pair_ema999", "degree_local_bond_return_ema999",
                                 "degree_local_triplet_aggregate_ema999", "degree_local_triplet_attention_ema999",
-                                "degree_local_triplet_drop_ema999", "degree_local_triplet_product_ema999"}:
+                                "degree_local_triplet_drop_ema999", "degree_local_triplet_product_ema999",
+                                "degree_local_triplet_product_v2_ema999", "degree_local_triplet_bond_route_ema999"}:
         raise ValueError("This variant has no qualified per-arm V5 trace wiring")
     arm = next(item for item in declaration["arms"] if item["arm_id"] == arm_id)
     if arm["training"]["overrides"]:

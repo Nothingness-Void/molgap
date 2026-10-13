@@ -64,7 +64,8 @@ def _resolve(spec: ExperimentSpec, arm_id: str):
                              ("degree_pair_transition_ema999", "1"), ("degree_bond_local_cap_ema999", "1"),
                              ("degree_local_connected_pair_ema999", "1"), ("degree_local_bond_return_ema999", "1"),
                              ("degree_local_triplet_aggregate_ema999", "1"), ("degree_local_triplet_attention_ema999", "1"),
-                             ("degree_local_triplet_drop_ema999", "1"), ("degree_local_triplet_product_ema999", "1")):
+                             ("degree_local_triplet_drop_ema999", "1"), ("degree_local_triplet_product_ema999", "1"),
+                             ("degree_local_triplet_product_v2_ema999", "1"), ("degree_local_triplet_bond_route_ema999", "1")):
             raise ValueError("Unsupported GPTrans addon/version")
         if ADDONS[addon_key].family != key[0]:
             raise ValueError("Incompatible GPTrans addon family")

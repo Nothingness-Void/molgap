@@ -28,6 +28,7 @@ MODES += ("degree_bond_local_cap_ema999",)
 MODES += ("degree_local_connected_pair_ema999", "degree_local_bond_return_ema999")
 MODES += ("degree_local_triplet_aggregate_ema999", "degree_local_triplet_attention_ema999")
 MODES += ("degree_local_triplet_drop_ema999", "degree_local_triplet_product_ema999")
+MODES += ("degree_local_triplet_product_v2_ema999", "degree_local_triplet_bond_route_ema999")
 MODES += ("execution_original", "execution_optimized")
 
 
@@ -126,6 +127,16 @@ def author_child(stage: str, variant: str, context: dict, root: Path):
     if arguments["training"]["trajectory_id"] != arm["trajectory_id"]:
         raise ValueError("Executable arm and prospective trajectory disagree")
     if stage == "preflight":
+        from .pcqm_gptrans_v4 import TRIPLET_ROUTING_MODES, capacity_module
+        if variant in TRIPLET_ROUTING_MODES:
+            try:
+                facts = capacity_module(variant).read_initial_facts(variant, initial)
+                atomic_json(root / "initial_qualification.json", {"accepted": True, **facts,
+                    "initial_file_sha256": sha256_file(initial), "torch_version": torch.__version__})
+            except Exception as error:
+                atomic_json(root / "initial_qualification.json", {"accepted": False,
+                    "error": str(error), "initial_file_sha256": sha256_file(initial), "torch_version": torch.__version__})
+                raise
         result = run_preflight(output=root / "preflight", **arguments["preflight"])
         # Reserve wall time for live/EMA evaluation and artifact publication.
         if result["optimizer_step_calibration"]["estimated_training_hours"] > config["training_estimate_cap_hours"]:
@@ -183,7 +194,7 @@ def run_author_screen(upload_root: Path, source_root: Path, output: Path, archiv
         "official_validation_role_read": False, "test_dev_role_read": False, "test_challenge_role_read": False})
     outcomes = []
     try:
-        phases = (("preflight",), ("training",)) if config.get("execution_study") else (None,)
+        phases = (("preflight",), ("training",)) if config.get("execution_study") or config.get("all_arms_preflight_barrier") is True else (None,)
         for phase in phases:
             outcomes = []
             with concurrent.futures.ThreadPoolExecutor(max_workers=len(modes)) as executor:

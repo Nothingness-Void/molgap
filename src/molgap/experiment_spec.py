@@ -106,6 +106,8 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    **{(name, "1"): AddonContract("gptrans_t", "triplet-routing", "molgap.gptrans_triplet_routing", single_addon=True)
+       for name in ("degree_local_triplet_product_v2_ema999", "degree_local_triplet_bond_route_ema999")},
     **{(name, "1"): AddonContract("gptrans_t", "triplet-followup", "molgap.gptrans_triplet_followup", single_addon=True)
        for name in ("degree_local_triplet_drop_ema999", "degree_local_triplet_product_ema999")},
     **{(name, "1"): AddonContract("gptrans_t", "triplet-communication", "molgap.gptrans_triplet_communication", single_addon=True)
