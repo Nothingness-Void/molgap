@@ -1,0 +1,382 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/single_ema/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_mean2_single_ema_500k/config.json": "064b9ee178eeb11aadacc0893613f414200c8bb2c55c968439f275f713ecadb6",
+    "experiments/pcqm_k1_mean2_single_ema_500k/decision.md": "03dacd77f1e151600086d141236d4766fc6c6b55e3f469c30f9d309c413de82a",
+    "experiments/pcqm_k1_mean2_single_ema_500k/experiment_spec.json": "1d212fa45cd6da779187408615329ab4b72f59d75fd88285fb9e9a3a4c24d6f2",
+    "experiments/pcqm_k1_mean2_single_ema_500k/protocol.md": "9915ebd15ca8eb48f179c1d76a92235b35c42d879f3e777176d7d6fa92e461d5",
+    "experiments/pcqm_k1_mean2_single_ema_500k/submission/kernel_push_response.json": "6af332a855468fd21ca4838c9848ba73dff9c1063a6f1cba9156bd2eb3d60664",
+    "experiments/pcqm_k1_mean2_single_ema_500k/submission/scheduler_observation.json": "3ce7e44a5bba84aebae85b6bc6796ae71f3ca3a4f94262b4c98a240675572a37",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/acceptance.md": "50dca75cbf60f4a064bc64930bf078ca355b424729d7c99c38436718c1c9ba68",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/attribution.md": "54d69b804347d4b05eed010fa73ff715879237ab2997a585c3249bbd61f80471",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/experiment/allocation_entry_observation.json": "e380f490a810f1824b1ad511458b7f0d19b70c7f2aed948f20d39bf205511774",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/experiment/pair_state.json": "94656bbad0808dbfe80b456d3fd5039ec61ecab8502b9a9daf798357907ff51d",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/experiment/single_ema/preflight.log": "1220783db1bdda1550e328a28088a3f4b0628163bfb2cfa9785743d9a3f88eb9",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/graph_dataset_file_inventory.json": "11b8901527f9ea01386be860468ffd9906243c145bdd33f05179812a520fe29a",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/input_layout_audit.md": "84d3d5cddfe0d733b47aff61ef37875ac268f3400231d6586f3ef0ab1ac47750",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/launch_response.json": "d251a2839ab3a8eaa3e840f296641ac74a8fd285061495f2fe028861e59e7460",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/output_inventory.json": "ced73c362f9caa8130f5f5622b9b082729d59c8535c717b6c9b877bf616b5029",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/receipt/2310122b3a50b3c5c3dea35a4c94eb673f716132ed57d16ddc46bce981748a38.json": "76fd21fade0f0f83d95a17fc11a13978207e05e2db4b4672be1ebadd3c1aaedb",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/remote_metadata.json": "ef1d646b7f9102a39283ead00877c50e7f8255e828be999e340e06008aff9c06",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/retrieval_manifest.json": "b95a7eeec4345f765faa7af02a46bc5c9edcb37b8758792db449ce0e65ee872f",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/scheduler_snapshot.json": "b499f7ec1dae2540f20d451cc409c68ef801e9a4dbd9ad8a0eab24bce3c14dc0",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/single_ema/acceptance.json": "9444e01fe077d21dce15f3ea6ca10d9e1cbb73699c983b16ba9cd8bd744a3791",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/single_ema/rml_support/observed_cost_roles.json": "3931195f74de3da535eec79b9d74ccdd21b877bce700ec42ec397ef0ea230d9b",
+    "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/source_verification.json": "eece9072e99b21ff3c3ec8287b07f8f33f3a650b711b63e50a2994c8d183f730",
+    "platforms/_records/local/staging/k1-mean2-single-ema-500k-20261013/release_002/package/SOURCE_ARCHIVE_SHA256.txt": "f61dd86c271b442f0a6fa0e5bc43857372009dc9cd86debd3819bda96858c135",
+    "platforms/_records/local/staging/k1-mean2-single-ema-500k-20261013/release_002/package/SOURCE_COMMIT.txt": "4a68e9e032e7a42906fc51702dfd4da974b062592514b5a5c309fbbf5d036df6",
+    "platforms/_records/local/staging/k1-mean2-single-ema-500k-20261013/release_002/package/package_manifest.json": "ba1f5e3f4963303bd9d98673bbc4eddf3cbe4e982e087a4ecc02308050c6de41"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "molgap-k1-mean2-single-ema-500k-20261013-v1",
+      "category": "infrastructure_failure",
+      "cost_event_id": "cost-k1-mean2-single-ema-500k-20261013-single_ema-planned",
+      "evidence_ref": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/single_ema/rml_support/observed_cost_roles.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "molgap-k1-mean2-single-ema-500k-20261013:single_ema:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-mean2-single-ema-500k-20261013-single_ema"
+    },
+    {
+      "action_id": "A001",
+      "attempt_id": "molgap-k1-mean2-single-ema-500k-20261013-v1",
+      "category": "infrastructure_failure",
+      "cost_event_id": "cost-k1-mean2-single-ema-500k-20261013-single_ema-platform-release-unobserved",
+      "evidence_ref": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/single_ema/rml_support/observed_cost_roles.json",
+      "hardware": "Tesla T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "molgap-k1-mean2-single-ema-500k-20261013:single_ema:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-k1-mean2-single-ema-500k-20261013-single_ema"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_mean2_single_ema_500k/decision.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Explicit user authorization for a corrected mount-resolution attempt; this physical attempt supplies no scientific endpoint."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/protocol.md",
+        "name": "protocol.md",
+        "sha256": "9915ebd15ca8eb48f179c1d76a92235b35c42d879f3e777176d7d6fa92e461d5"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/experiment_spec.json",
+        "name": "experiment_spec.json",
+        "sha256": "1d212fa45cd6da779187408615329ab4b72f59d75fd88285fb9e9a3a4c24d6f2"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/config.json",
+        "name": "config.json",
+        "sha256": "064b9ee178eeb11aadacc0893613f414200c8bb2c55c968439f275f713ecadb6"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/decision.md",
+        "name": "decision.md",
+        "sha256": "03dacd77f1e151600086d141236d4766fc6c6b55e3f469c30f9d309c413de82a"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/acceptance.md",
+        "name": "acceptance.md",
+        "sha256": "50dca75cbf60f4a064bc64930bf078ca355b424729d7c99c38436718c1c9ba68"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/attribution.md",
+        "name": "attribution.md",
+        "sha256": "54d69b804347d4b05eed010fa73ff715879237ab2997a585c3249bbd61f80471"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/input_layout_audit.md",
+        "name": "input_layout_audit.md",
+        "sha256": "84d3d5cddfe0d733b47aff61ef37875ac268f3400231d6586f3ef0ab1ac47750"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/source_verification.json",
+        "name": "source_verification.json",
+        "sha256": "eece9072e99b21ff3c3ec8287b07f8f33f3a650b711b63e50a2994c8d183f730"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/graph_dataset_file_inventory.json",
+        "name": "graph_dataset_file_inventory.json",
+        "sha256": "11b8901527f9ea01386be860468ffd9906243c145bdd33f05179812a520fe29a"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/retrieval_manifest.json",
+        "name": "retrieval_manifest.json",
+        "sha256": "b95a7eeec4345f765faa7af02a46bc5c9edcb37b8758792db449ce0e65ee872f"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/output_inventory.json",
+        "name": "output_inventory.json",
+        "sha256": "ced73c362f9caa8130f5f5622b9b082729d59c8535c717b6c9b877bf616b5029"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/remote_metadata.json",
+        "name": "remote_metadata.json",
+        "sha256": "ef1d646b7f9102a39283ead00877c50e7f8255e828be999e340e06008aff9c06"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/scheduler_snapshot.json",
+        "name": "scheduler_snapshot.json",
+        "sha256": "b499f7ec1dae2540f20d451cc409c68ef801e9a4dbd9ad8a0eab24bce3c14dc0"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/submission/kernel_push_response.json",
+        "name": "kernel_push_response.json",
+        "sha256": "6af332a855468fd21ca4838c9848ba73dff9c1063a6f1cba9156bd2eb3d60664"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/submission/scheduler_observation.json",
+        "name": "scheduler_observation.json",
+        "sha256": "3ce7e44a5bba84aebae85b6bc6796ae71f3ca3a4f94262b4c98a240675572a37"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/launch_response.json",
+        "name": "launch_response.json",
+        "sha256": "d251a2839ab3a8eaa3e840f296641ac74a8fd285061495f2fe028861e59e7460"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/receipt/2310122b3a50b3c5c3dea35a4c94eb673f716132ed57d16ddc46bce981748a38.json",
+        "name": "2310122b3a50b3c5c3dea35a4c94eb673f716132ed57d16ddc46bce981748a38.json",
+        "sha256": "76fd21fade0f0f83d95a17fc11a13978207e05e2db4b4672be1ebadd3c1aaedb"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/experiment/pair_state.json",
+        "name": "pair_state.json",
+        "sha256": "94656bbad0808dbfe80b456d3fd5039ec61ecab8502b9a9daf798357907ff51d"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/experiment/allocation_entry_observation.json",
+        "name": "allocation_entry_observation.json",
+        "sha256": "e380f490a810f1824b1ad511458b7f0d19b70c7f2aed948f20d39bf205511774"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/local/staging/k1-mean2-single-ema-500k-20261013/release_002/package/package_manifest.json",
+        "name": "package_manifest.json",
+        "sha256": "ba1f5e3f4963303bd9d98673bbc4eddf3cbe4e982e087a4ecc02308050c6de41"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/local/staging/k1-mean2-single-ema-500k-20261013/release_002/package/SOURCE_COMMIT.txt",
+        "name": "SOURCE_COMMIT.txt",
+        "sha256": "4a68e9e032e7a42906fc51702dfd4da974b062592514b5a5c309fbbf5d036df6"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/local/staging/k1-mean2-single-ema-500k-20261013/release_002/package/SOURCE_ARCHIVE_SHA256.txt",
+        "name": "SOURCE_ARCHIVE_SHA256.txt",
+        "sha256": "f61dd86c271b442f0a6fa0e5bc43857372009dc9cd86debd3819bda96858c135"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/experiment/single_ema/preflight.log",
+        "name": "preflight.log",
+        "sha256": "1220783db1bdda1550e328a28088a3f4b0628163bfb2cfa9785743d9a3f88eb9"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/single_ema/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "9444e01fe077d21dce15f3ea6ca10d9e1cbb73699c983b16ba9cd8bd744a3791"
+      },
+      {
+        "artifact_type": "metadata",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/single_ema/rml_support/observed_cost_roles.json",
+        "name": "observed_cost_roles.json",
+        "sha256": "3931195f74de3da535eec79b9d74ccdd21b877bce700ec42ec397ef0ea230d9b"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_mean2_single_ema_500k/protocol.md",
+        "experiments/pcqm_k1_mean2_single_ema_500k/decision.md",
+        "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/acceptance.md",
+        "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/attribution.md",
+        "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/input_layout_audit.md",
+        "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/single_ema/acceptance.json",
+        "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/source_verification.json",
+        "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/graph_dataset_file_inventory.json",
+        "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/retrieval_manifest.json",
+        "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/output_inventory.json",
+        "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/remote_metadata.json",
+        "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/scheduler_snapshot.json",
+        "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/single_ema/rml_support/observed_cost_roles.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "cost_semantics": {
+      "entry_scope": "entry invocation through bootstrap completion, including setup, pip, extraction, preflight, training/evaluation and idle assigned GPU time; not device busy time",
+      "hardware_identifier": "Tesla T4",
+      "per_arm_preflight_worker_wall_seconds": 11.504354333000038,
+      "platform_release_scope": "not observed: queue, allocation before entry and platform release after entry are excluded",
+      "shared_entry_allocated_T4_seconds": 438.57115532200004,
+      "shared_entry_event_counted_once_on_arm": "mean2",
+      "shared_entry_gpu_count": 2,
+      "shared_entry_wall_seconds": 219.28557766100002,
+      "single_arm_allocation_scope": "The shared T4x2 entry event is counted once on mean2; no zero or duplicated cost is assigned to single_ema.",
+      "worker_scope": "Nested preflight subprocess window from pair_state; do not add to the shared entry allocation."
+    },
+    "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-single-ema-no-train",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-k1-mean2-single-ema-500k-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-13T03:17:05.343526+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Retained v1 source/package pins, failed preflight logs, scheduler/output metadata and entry allocation; no training or role use."
+    },
+    "observed_execution": {
+      "execution_state_ref": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/experiment/pair_state.json",
+      "failure": "preflight_worker_exit_1: Missing artifact pcqm4mv2-ogb-fixed-500k-scnet-v1/manifest.json",
+      "formal_progress": {
+        "epoch": 0,
+        "optimizer_steps": 0,
+        "sample_presentations": 0
+      },
+      "formal_training_executed": false,
+      "kernel_id": 138365645,
+      "package_identity": "9731ab24ae3b4867cb334ab55ade7a1a72afaf7dd22dcb0670d175702ee2a5de",
+      "platform_run_reference": "nothingnessvoid/molgap-k1-mean2-single-ema-500k-20261013",
+      "platform_version": "1",
+      "preflight_log_ref": "experiments/pcqm_k1_mean2_single_ema_500k/terminal_acceptance/experiment/single_ema/preflight.log",
+      "source_commit": "4d4de9a706525d9d3136956e8a62c93e33587fd0",
+      "source_package_sha256": "e55e46fb43f7d3898502928f71728df6f67629badaaad36cc9807e525982f566",
+      "training_started": false
+    },
+    "outcome": {
+      "artifact_status": "diagnostics_only_no_training_artifacts",
+      "budget_decision": "entry_allocation_observed_below_contract_ceiling",
+      "comparison_status": "not_comparable_no_trained_endpoints",
+      "execution_status": "failed_preflight_before_formal_training",
+      "full_handoff_status": "not_ready",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "insufficient_evidence"
+    },
+    "qualification_exclusions": [
+      "formal_training_not_started",
+      "native_preflight_not_qualified",
+      "trained_reference_unavailable",
+      "aligned_predictions_unavailable",
+      "selected_checkpoint_unavailable",
+      "resume_checkpoint_unavailable",
+      "training_trace_unavailable",
+      "entire_platform_allocation_cost_unknown"
+    ],
+    "question_status": "unresolved",
+    "retry_authorized": false,
+    "role_semantics": {
+      "basis": "Both preflight logs fail resolving the frozen manifest path before graph/label loading; dataset membership and file listing do not establish role access.",
+      "development": "untouched",
+      "formal_training_started": false,
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "untouched"
+    },
+    "role_use": {
+      "development": "untouched",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "untouched"
+    },
+    "scope": "desktop_k1_mean2_single_ema_500k_failed_preflight_terminal",
+    "track": "B"
+  },
+  "finalized_at": "2026-10-13T03:17:05.343526+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "roles": [],
+  "run_id": "molgap-k1-mean2-single-ema-500k-20261013:single_ema:downstream",
+  "trajectory_id": "TB-k1-mean2-single-ema-500k-20261013-single_ema"
+}

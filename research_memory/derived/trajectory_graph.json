@@ -351,7 +351,27 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-mean2-single-ema-500k-20261013-mean2-retry2:A001",
+      "target": "experiments/pcqm_k1_mean2_single_ema_500k/attempt_002/authorization.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-mean2-single-ema-500k-20261013-mean2-retry2:A001",
+      "target": "experiments/pcqm_k1_mean2_single_ema_500k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-mean2-single-ema-500k-20261013-mean2:A001",
+      "target": "experiments/pcqm_k1_mean2_single_ema_500k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2:A001",
+      "target": "experiments/pcqm_k1_mean2_single_ema_500k/attempt_002/authorization.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2:A001",
       "target": "experiments/pcqm_k1_mean2_single_ema_500k/config.json",
       "type": "action_produced_evidence"
     },
@@ -963,6 +983,16 @@
     {
       "source": "TB-k1-gptrans-full-fusion-r3",
       "target": "TB-k1-full-convergence-20260919",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-mean2-single-ema-500k-20261013-mean2",
+      "target": "TB-k1-mean2-single-ema-500k-20261013-mean2-retry2",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-k1-mean2-single-ema-500k-20261013-single_ema",
+      "target": "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2",
       "type": "parent_trajectory"
     },
     {
@@ -1682,7 +1712,17 @@
     },
     {
       "source": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "target": "TB-k1-mean2-single-ema-500k-20261013-mean2-retry2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
       "target": "TB-k1-mean2-single-ema-500k-20261013-single_ema",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal",
+      "target": "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2",
       "type": "prior_evidence"
     },
     {
@@ -2690,6 +2730,14 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-mean2-single-ema-500k-20261013-mean2-no-train",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-k1-mean2-single-ema-500k-20261013-single-ema-no-train",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-pair-value-decoupled-100k-s42",
       "type": "evidence"
     },
@@ -3086,7 +3134,15 @@
       "type": "trajectory"
     },
     {
+      "id": "TB-k1-mean2-single-ema-500k-20261013-mean2-retry2",
+      "type": "trajectory"
+    },
+    {
       "id": "TB-k1-mean2-single-ema-500k-20261013-single_ema",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2",
       "type": "trajectory"
     },
     {

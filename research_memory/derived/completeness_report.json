@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 113,
+    "trajectories_total": 115,
     "with_complete_native_measurement": 23,
-    "with_cost_event": 102,
-    "with_incomplete_native_measurement": 79,
+    "with_cost_event": 104,
+    "with_incomplete_native_measurement": 81,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 82,
+      "count": 84,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -69,7 +69,9 @@
         "TB-k1-gptrans-full-fusion-r3",
         "TB-k1-late-weight-average-20261008",
         "TB-k1-mean2-single-ema-500k-20261013-mean2",
+        "TB-k1-mean2-single-ema-500k-20261013-mean2-retry2",
         "TB-k1-mean2-single-ema-500k-20261013-single_ema",
+        "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2",
         "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
         "TB-k1-reference-kaggle3-100k-s42-v1",
         "TB-k1-reference-kaggle3-100k-s42-v2",
@@ -131,7 +133,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 79,
+      "count": 81,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -188,7 +190,9 @@
         "TB-k1-local-speed-10ep-fused_layout-20261011",
         "TB-k1-local-speed-10ep-reference-20261011",
         "TB-k1-mean2-single-ema-500k-20261013-mean2",
+        "TB-k1-mean2-single-ema-500k-20261013-mean2-retry2",
         "TB-k1-mean2-single-ema-500k-20261013-single_ema",
+        "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2",
         "TB-k1-reference-accuracy-kaggle3-100k-s42-v1",
         "TB-k1-reference-kaggle3-100k-s42-v1",
         "TB-k1-reference-kaggle3-100k-s42-v2",
@@ -235,7 +239,7 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 39,
+      "count": 41,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
@@ -262,7 +266,9 @@
         "TB-gptrans-t-500k-bridge",
         "TB-k1-gptrans-full-fusion-r3",
         "TB-k1-mean2-single-ema-500k-20261013-mean2",
+        "TB-k1-mean2-single-ema-500k-20261013-mean2-retry2",
         "TB-k1-mean2-single-ema-500k-20261013-single_ema",
+        "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2",
         "TB-k1-reference-kaggle3-100k-s42-v1",
         "TB-k1-saved-trace-pair-20261008",
         "TB-k1-saved-trace-pair-20261008-attempt002",
@@ -292,8 +298,8 @@
         "TB-gptrans-input-init-k1pair-candidate-100k-s42-r2",
         "TB-gptrans-input-init-k1pair-reference-100k-s42",
         "TB-gptrans-input-init-k1pair-reference-100k-s42-r2",
-        "TB-k1-mean2-single-ema-500k-20261013-mean2",
-        "TB-k1-mean2-single-ema-500k-20261013-single_ema",
+        "TB-k1-mean2-single-ema-500k-20261013-mean2-retry2",
+        "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence"
       ],

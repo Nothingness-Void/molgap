@@ -168,8 +168,24 @@ def draft(initial, normalization_checkpoint):
 def draft_retry(initial):
     """A new physical attempt over unchanged arm recipes and existing planner."""
     retry = HERE / "attempt_002"
-    if (HERE / "rml/attempt_002").exists() or (retry / "experiment_spec.json").exists():
+    if (HERE / "rml/attempt_002").exists():
         raise ValueError("Retry inputs already exist; reconcile their exact stage")
+    if (retry / "experiment_spec.json").exists():
+        spec = ExperimentSpec(json.loads((retry / "experiment_spec.json").read_text(encoding="utf-8")))
+        commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+        for binding in spec.to_dict()["prospective"]["arms"]:
+            path = ROOT / binding["plan_spec_ref"]
+            if sha256_file(path) != binding["plan_spec_sha256"]:
+                raise ValueError("Existing retry draft differs from its frozen Spec")
+            from molgap.experiment_prospective import validate_execution_identity
+            validate_execution_identity(spec, binding["arm_id"],
+                json.loads(path.read_text(encoding="utf-8"))["trajectory"], commit)
+        return spec, {"format": "molgap-family-training-preparation-v1", "spec_identity": spec.identity,
+            "source_files": [REL + "/config.json"], "arms": [
+                {"arm_id": arm["arm_id"], "device": device,
+                 "recipe": REL + "/training_recipe_" + arm["arm_id"] + ".json",
+                 "initial_state": str(initial.resolve())}
+                for device, arm in enumerate(spec.to_dict()["arms"])]}
     declaration = json.loads((HERE / "experiment_spec.json").read_text(encoding="utf-8"))
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     logical = declaration["logical_run_id"] + "-retry2"

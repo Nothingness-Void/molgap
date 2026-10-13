@@ -59,6 +59,15 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+Desktop mean2 versus single-forward EMA500K is RUNNING on Kaggle1
+`nothingnessvoid/molgap-k1-mean2-single-ema-500k-20261013`, kernel138365645/version2.
+The corrected physical attempt has verified source/dataset binding; native
+qualification and formal exposure remain pending. [Version1 failure](experiments/pcqm_k1_mean2_single_ema_500k/decision.md)
+is finalized NO_TRAIN / scientific INCONCLUSIVE, with0 formal exposure.
+See [version2 authorization and source receipt](experiments/pcqm_k1_mean2_single_ema_500k/attempt_002/authorization.md)
+and [live handoff](experiments/pcqm_k1_mean2_single_ema_500k/REMOTE_HANDOFF.md).
+No automatic continuation, model adoption or further successor is released.
+
 The2026-10-09 [Kaggle reconciliation](docs/operations/KAGGLE_ACCEPTANCE_20261009.md)
 queried exact owner/version and retrieved retained outputs, without resuming,
 submitting or adopting jobs. Reconcile exact owner/job/

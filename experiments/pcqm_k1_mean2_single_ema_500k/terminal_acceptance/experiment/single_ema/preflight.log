@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 52, in <module>
+    main()
+    ~~~~^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_training_worker.py", line 31, in main
+    result = execute_training_phase(spec=spec, job=job, phase=args.phase,
+        source_root=args.source_root, package_dir=args.package_dir,
+    ...<3 lines>...
+        prospective_sha256=config["prospective_sha256"][job["arm_id"]],
+        target_identity=target_identity)
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_execution.py", line 225, in execute_training_phase
+    result = runner(spec=spec, package_dir=package_dir,
+        expected_package_identity=expected_package_identity, arm_id=job["arm_id"],
+        mode=adapter.mode(arm), recipe_path=recipe, initial_state_path=initial,
+        input_root=input_root, output=output, account=account,
+        run_reference=run_reference, trajectory_id=job["trajectory_id"], **options)
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/family_training_runner.py", line 210, in run_screen_preflight
+    record, recipe, data, tuning, context, provenance, _ = _bootstrap(training_only=True, **options)
+                                                           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/family_training_runner.py", line 159, in _bootstrap
+    data = load_training_data(Path(input_root), selection)
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/family_training_data.py", line 60, in load_training_data
+    path = _artifact_path(root, selection.manifest)
+  File "/kaggle/temp/molgap-workflow/source/src/molgap/experiment_family_workflow.py", line 58, in _artifact_path
+    raise ValueError(f"Missing artifact: {value}")
+ValueError: Missing artifact: pcqm4mv2-ogb-fixed-500k-scnet-v1/manifest.json

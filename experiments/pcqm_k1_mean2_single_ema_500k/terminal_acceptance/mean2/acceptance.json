@@ -1,0 +1,46 @@
+{
+  "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-mean2-no-train",
+  "run_id": "molgap-k1-mean2-single-ema-500k-20261013:mean2:downstream",
+  "outcome": {
+    "execution_status": "failed_preflight_before_formal_training",
+    "artifact_status": "diagnostics_only_no_training_artifacts",
+    "comparison_status": "not_comparable_no_trained_endpoints",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "insufficient_evidence",
+    "budget_decision": "entry_allocation_observed_below_contract_ceiling",
+    "full_handoff_status": "not_ready"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_k1_mean2_single_ema_500k/decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Explicit user authorization for a corrected mount-resolution attempt; this physical attempt supplies no scientific endpoint."
+    ]
+  },
+  "role_use": {
+    "train": "untouched",
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "formal_progress": {
+    "epoch": 0,
+    "optimizer_steps": 0,
+    "sample_presentations": 0
+  },
+  "infrastructure_failure": "Frozen manifest path not found before graph/label loading and GPU model construction",
+  "question_status": "unresolved",
+  "retry_authorized": false,
+  "qualification_exclusions": [
+    "formal_training_not_started",
+    "native_preflight_not_qualified",
+    "trained_reference_unavailable",
+    "aligned_predictions_unavailable",
+    "selected_checkpoint_unavailable",
+    "resume_checkpoint_unavailable",
+    "training_trace_unavailable",
+    "entire_platform_allocation_cost_unknown"
+  ]
+}

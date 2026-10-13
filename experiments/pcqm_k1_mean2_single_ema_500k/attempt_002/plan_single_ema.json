@@ -1,0 +1,135 @@
+{
+  "trajectory": {
+    "schema": "molgap-trajectory-v1",
+    "trajectory_id": "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2",
+    "record_mode": "prospective",
+    "track": "B",
+    "owner": "desktop",
+    "family_id": "k1-mean2-single-ema-500k",
+    "question": "Does single-forward EMA0.9999 improve500K cost/accuracy versus fresh mean2?",
+    "hypothesis": {
+      "hypothesis_id": "H-TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2",
+      "supporting_evidence_ids": [
+        "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal"
+      ],
+      "observed_deficiency": "100K signal and execution-only savings do not establish500K recipe benefit.",
+      "alternative_explanations": [
+        "EMA lag or BN mismatch",
+        "Loss of second-view regularization",
+        "Seed/runtime variation"
+      ],
+      "changed_mechanism": "Two-forward live mean2 versus one-forward stepwise EMA0.9999",
+      "cheapest_falsifier": "One same-allocation500K pair under nine wall-hours",
+      "decision_changed_if_positive": "Nominate a separate reviewed cost/accuracy decision, never automatically adopt",
+      "decision_changed_if_negative": "Retain negative or partial ambiguity, no automatic continuation",
+      "expected_native_cost_ref": "cost-k1-mean2-single-ema-500k-20261013-single_ema-planned-retry2",
+      "related_closed_family_ids": [
+        "k1-clean-second-view",
+        "k1-t4-cost-quality"
+      ]
+    },
+    "state_at_start": {
+      "source_commit": "b7c137b23cec8483dba118de3ff2ddfd4a02dab2",
+      "source_config_identity": "02e066cd7550ecc57aa9d041badb0da1e32746eb0567d9e42a65dee205817214",
+      "contract_refs": [
+        "experiments/pcqm_k1_mean2_single_ema_500k/protocol.md",
+        "experiments/pcqm_k1_mean2_single_ema_500k/config.json",
+        "experiments/pcqm_k1_mean2_single_ema_500k/evidence_review.md",
+        "experiments/pcqm_k1_mean2_single_ema_500k/attempt_002/authorization.md"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [
+        "TB-k1-mean2-single-ema-500k-20261013-single_ema"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-k1-clean-second-100k-s42-v1-mean2-terminal"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_mean2_single_ema_500k/protocol.md"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_mean2_single_ema_500k/config.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "paired_500k_training",
+        "run_ids": [
+          "molgap-k1-mean2-single-ema-500k-20261013-retry2:single_ema:downstream"
+        ],
+        "attempt_ids": [
+          "molgap-k1-mean2-single-ema-500k-20261013-retry2-v2"
+        ],
+        "source_commit": "b7c137b23cec8483dba118de3ff2ddfd4a02dab2",
+        "evidence_refs": [
+          "experiments/pcqm_k1_mean2_single_ema_500k/config.json",
+          "experiments/pcqm_k1_mean2_single_ema_500k/attempt_002/authorization.md"
+        ],
+        "cost_event_ids": [
+          "cost-k1-mean2-single-ema-500k-20261013-single_ema-planned-retry2"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "outcome": "ACTIVE",
+      "decision_ref": "experiments/pcqm_k1_mean2_single_ema_500k/attempt_002/decision.md",
+      "next_allowed_actions": [
+        "A001"
+      ],
+      "reopen_conditions": []
+    }
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-k1-mean2-single-ema-500k-20261013-single_ema-planned-retry2",
+      "trajectory_id": "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2",
+      "action_id": "A001",
+      "run_id": "molgap-k1-mean2-single-ema-500k-20261013-retry2:single_ema:downstream",
+      "attempt_id": "molgap-k1-mean2-single-ema-500k-20261013-retry2-v2",
+      "platform": "kaggle",
+      "hardware": "Tesla T4",
+      "category": "training",
+      "evidence_ref": "experiments/pcqm_k1_mean2_single_ema_500k/protocol.md",
+      "measurement": {
+        "wall_hours": {
+          "value": 9.0,
+          "status": "estimated"
+        },
+        "device_hours": {
+          "value": 9.0,
+          "status": "estimated"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        }
+      }
+    }
+  ],
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_PAIRED_500K",
+      "NO_TRAIN"
+    ],
+    "chosen_action": "RUN_PAIRED_500K",
+    "policy_id": "molgap-k1-mean2-single-ema-500k-20261013",
+    "policy_version": "1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_mean2_single_ema_500k/config.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_mean2_single_ema_500k/protocol.md"
+    ],
+    "source_commit": "b7c137b23cec8483dba118de3ff2ddfd4a02dab2",
+    "state_timestamp": "2026-10-13T03:15:41.805943+00:00"
+  }
+}

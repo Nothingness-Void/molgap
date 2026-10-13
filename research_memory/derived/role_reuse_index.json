@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 476,
+  "ambiguous_historical_role_record_count": 486,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -2669,6 +2669,76 @@
       "state": "training_membership"
     },
     {
+      "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-mean2-no-train",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-mean2-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-mean2-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-mean2-no-train",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-mean2-no-train",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-single-ema-no-train",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-single-ema-no-train",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-single-ema-no-train",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-single-ema-no-train",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-k1-mean2-single-ema-500k-20261013-single-ema-no-train",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
       "evidence_id": "pcqm-k1-pair-value-decoupled-100k-s42",
       "role_identity": null,
       "role_name": "internal_development",
@@ -3342,6 +3412,7 @@
     "internal_development",
     "official_train_prefix_0_100000",
     "official_validation",
+    "train",
     "train_prefix"
   ],
   "identities": {
@@ -5540,6 +5611,8 @@
       "pcqm-k1-late-weight-average-20261008",
       "pcqm-k1-local-speed-10ep-fused_layout-20261011",
       "pcqm-k1-local-speed-10ep-reference-20261011",
+      "pcqm-k1-mean2-single-ema-500k-20261013-mean2-no-train",
+      "pcqm-k1-mean2-single-ema-500k-20261013-single-ema-no-train",
       "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",
@@ -5641,6 +5714,8 @@
       "pcqm-k1-late-weight-average-20261008",
       "pcqm-k1-local-speed-10ep-fused_layout-20261011",
       "pcqm-k1-local-speed-10ep-reference-20261011",
+      "pcqm-k1-mean2-single-ema-500k-20261013-mean2-no-train",
+      "pcqm-k1-mean2-single-ema-500k-20261013-single-ema-no-train",
       "pcqm-k1-pair-value-decoupled-100k-s42",
       "pcqm-k1-reference-accuracy-kaggle3-100k-s42-v1-terminal",
       "pcqm-k1-reference-kaggle3-runtime-no-train-s42-v1",

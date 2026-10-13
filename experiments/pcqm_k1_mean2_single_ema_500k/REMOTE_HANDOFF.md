@@ -4,7 +4,34 @@ Owner branch: `codex/exp/k1-mean2-single-ema-500k-20261013`.
 Owner worktree: `D:/w/k1-mean2-single-ema-500k-20261013`.
 [Protocol](protocol.md) and [config](config.json) own parameters and boundaries.
 
+## Corrected version2
+
+The user explicitly authorized correction and resubmission. Same Kaggle1 ref
+below, kernel138365645/version2: authoritative scheduler RUNNING. Exact remote
+entry bytes and the source/graph dataset membership are verified in
+[version2 receipts](attempt_002/submission/source_verification.json).
+Initial startup log was empty; native qualification and actual training were
+not yet observed. No model acceptance follows from RUNNING.
+
+Executable source `b7c137b23cec8483dba118de3ff2ddfd4a02dab2`,
+Spec `a5c527d38864b91730153347b7e49d889e7a87c46b3f07c03cee92b9f9699734`,
+package `708e59178a6c0d2bdd6ba87f31b2451f957a8cd54fa382132119fda6e6d0bd42`,
+archive `00b2308a7debdcd44fd24abaecb267867b40c7142d3cc5d0e2ff91468ffd0147`.
+Fresh private source dataset `nothingnessvoid/molgap-k1-mean2-single-ema-500k-20261013-src-v2`
+has11 verified file paths/sizes; source archive and launch bytes passed server
+roundtrip. The fixed graph dataset, both scientific recipes and initial tensors
+are unchanged. Separate prospective records are under `rml/attempt_002/`.
+The shared corrections were selectively integrated into desktop f35ae89f,
+without adopting this experiment or moving its custody.
+
 ## Submission observation
+
+Terminal reconciliation on2026-10-13 JST supersedes the queue observation:
+kernel138365645/version1 is ERROR. Both preflight workers fail resolving the
+frozen graph manifest path; neither starts formal training (0epoch/step/sample).
+See [attempt decision](decision.md), [acceptance](terminal_acceptance/acceptance.md)
+and [attribution](terminal_acceptance/attribution.md). No retry is authorized by
+this closure; preserve the owner for the unresolved scientific question.
 
 - Actual ref: `nothingnessvoid/molgap-k1-mean2-single-ema-500k-20261013`.
 - KernelID138365645, version1; script/session version ID unknown.
@@ -61,10 +88,8 @@ in the private input dataset. Latest observation is not scientific acceptance.
 
 ## Next authorized action
 
-No continuous monitor or local slot trigger. On return, query only the actual
-ref above and reconcile the same version/run, source, hardware and durable
-outputs before any decision. Retrieve/inspect with existing family-output
-owners. Checkpoint/source/role/cost/trace acceptance and V5 comparison are still
-pending. If the budget stops either arm, compare only common exposure and retain
-STOP_FOR_COST/INCONCLUSIVE, not a complete60-epoch endpoint. Do not consume
-official validation/test or promote/launch another job from this receipt.
+Version2 consumes the explicit retry authorization. Reconcile that exact run,
+version, frozen identities and durable outputs on return. No continuous monitor,
+automatic successor, official-role access or adoption is authorized. Version1
+remains NO_TRAIN; do not treat its failure as model evidence or repeat its RML
+finalization. Apply the original partial/completed outcome rules to version2.

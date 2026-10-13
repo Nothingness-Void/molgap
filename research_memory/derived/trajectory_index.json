@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "911dd15504b442af5f56022e9471029cd020542df4165b990963038b9a4b2cad",
+  "source_digest": "e63bca7f2a08a04530b05ba06788ba10e08ee0b3ef6baae09dbc57f6f7b62613",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1369,29 +1369,65 @@
       "completeness_status": "complete",
       "decision_ref": "experiments/pcqm_k1_mean2_single_ema_500k/decision.md",
       "family_id": "k1-mean2-single-ema-500k",
-      "outcome": "ACTIVE",
+      "outcome": "NO_TRAIN",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_mean2_single_ema_500k/rml/mean2/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_mean2_single_ema_500k/rml/mean2/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-mean2-single-ema-500k-20261013-mean2-no-train"
+      ],
       "track": "B",
       "trajectory_id": "TB-k1-mean2-single-ema-500k-20261013-mean2"
     },
     {
       "completeness_status": "complete",
-      "decision_ref": "experiments/pcqm_k1_mean2_single_ema_500k/decision.md",
+      "decision_ref": "experiments/pcqm_k1_mean2_single_ema_500k/attempt_002/decision.md",
       "family_id": "k1-mean2-single-ema-500k",
       "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-k1-mean2-single-ema-500k-20261013-mean2"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_mean2_single_ema_500k/rml/attempt_002/mean2/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-k1-mean2-single-ema-500k-20261013-mean2-retry2"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_mean2_single_ema_500k/decision.md",
+      "family_id": "k1-mean2-single-ema-500k",
+      "outcome": "NO_TRAIN",
       "owner": "desktop",
       "parent_trajectory_ids": [],
       "ready_package_ids": [],
       "record_mode": "prospective",
-      "record_path": "experiments/pcqm_k1_mean2_single_ema_500k/rml/single_ema/trajectory.json",
-      "result_evidence_ids": [],
+      "record_path": "experiments/pcqm_k1_mean2_single_ema_500k/rml/single_ema/rml_finalized/trajectory.json",
+      "result_evidence_ids": [
+        "pcqm-k1-mean2-single-ema-500k-20261013-single-ema-no-train"
+      ],
       "track": "B",
       "trajectory_id": "TB-k1-mean2-single-ema-500k-20261013-single_ema"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_mean2_single_ema_500k/attempt_002/decision.md",
+      "family_id": "k1-mean2-single-ema-500k",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [
+        "TB-k1-mean2-single-ema-500k-20261013-single_ema"
+      ],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_mean2_single_ema_500k/rml/attempt_002/single_ema/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-k1-mean2-single-ema-500k-20261013-single_ema-retry2"
     },
     {
       "completeness_status": "complete",
