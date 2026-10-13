@@ -114,7 +114,8 @@ def build_sidecar(selections, output, *, source_commit, source_archive_sha256,
         permitted = ("train", "development") if expected_sha == FIXED_100K_SHA else ("development",)
         if tuple(roles) != permitted:
             raise ValueError("Cycle preparation role scope changed")
-        records = manifest["assets"]["topology"]
+        from .pcqm_fixed_records import graph_records
+        records = graph_records(manifest, expected_sha)
         for role in roles:
             declaration = manifest["roles"][role]
             cursor = declaration["source_idx_start"]
