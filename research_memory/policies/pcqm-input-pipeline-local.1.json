@@ -1,0 +1,17 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "pcqm-input-pipeline-local",
+  "version": "1",
+  "status": "candidate",
+  "policy_type": "research_action",
+  "approval": {"approved_at": null, "approved_by": null, "authority_ref": null},
+  "created_from_source_digest": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "comparability_selector": {"scientific_contract": "pcqm-input-pipeline-local-v1"},
+  "required_observable_fields": ["user_requested_scope_reviewed"],
+  "action_rule": {"field": "user_requested_scope_reviewed", "operator": "eq", "threshold": 1, "action": "RUN_DIAGNOSTIC"},
+  "borderline_action": "NO_TRAIN",
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "observation_point": null,
+  "cost_model": {"kind": "measured_only", "assumptions": []}
+}

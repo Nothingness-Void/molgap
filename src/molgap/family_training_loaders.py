@@ -5,6 +5,14 @@ from .family_training_data import PassBatchSampler, TrainingData
 from .family_training_recipe import FamilyRecipe
 
 
+def training_loader_options(workers):
+    """Share the existing CPU worker policy with bounded input diagnostics."""
+    if type(workers) is not int or workers < 0:
+        raise ValueError("Nonnegative integer worker count required")
+    return {"num_workers": workers, "persistent_workers": workers > 0,
+            "pin_memory": True, **({"prefetch_factor": 2} if workers else {})}
+
+
 class FamilyLoaders:
     """Own one immutable train view and an optional bounded development cache."""
     def __init__(self, recipe: FamilyRecipe, data: TrainingData, tuning):
@@ -23,11 +31,8 @@ class FamilyLoaders:
         self.sampler = PassBatchSampler(data.train_rows, recipe.batch_size, recipe.seed,
             algorithm=recipe.sampler, drop_last=recipe.drop_last)
         self.generator = torch.Generator()
-        def options(workers):
-            return {"num_workers": workers, "persistent_workers": workers > 0,
-                "pin_memory": True, **({"prefetch_factor": 2} if workers else {})}
         self.training = DataLoader(data.train, batch_sampler=self.sampler,
-            generator=self.generator, **options(tuning.training_workers))
+            generator=self.generator, **training_loader_options(tuning.training_workers))
         self.development = None
         self.development_cache = None
         self.closed = False
@@ -35,7 +40,7 @@ class FamilyLoaders:
             assert_static_dataset(data.development)
             self.development = DataLoader(data.development, batch_size=recipe.batch_size,
                 shuffle=False, generator=torch.Generator().manual_seed(recipe.seed),
-                **options(tuning.development_workers))
+                **training_loader_options(tuning.development_workers))
             source = PreparedLoader(self.development) if recipe.family == "gptrans_t" else self.development
             self.development_cache = PreparedDevelopmentCache(source, rows=data.development_rows,
                 batch_size=recipe.batch_size, max_bytes=tuning.development_cache_bytes,
