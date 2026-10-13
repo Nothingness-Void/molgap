@@ -35,11 +35,15 @@ User-directed K1 focus remains cost and500K enhancement, not a full-data rerun:
 2. [Clean-fit diagnostic](experiments/pcqm_k1_clean_fit_generalization_500k/INDEX.md)
    is accepted NO_TRAIN. Native T4 profiling is accepted/finalized on its mapped
    owner; no T4 epoch-speed extrapolation or single-pass quality equivalence.
-3. [Single-forward True EMA 100K](experiments/pcqm_k1_single_true_ema_100k/decision.md)
-   is complete and positive: single-forward achieves 0.139370 eV on live model
-   and 0.143099 eV with Clean-BN recalibrated EMA, beating the mean2 reference
-   (0.140257 eV) by +0.887 meV while reducing per-step compute time by >55%.
-   Single-forward non-inferiority is validated at 100K; next step is 500K scale-up.
+3. [Local single-forward/EMA100K retained result](experiments/pcqm_k1_single_true_ema_100k/result.json)
+   reports live0.139370eV, raw EMA0.156533eV and clean-BN EMA0.143099eV.
+   The live point is0.887meV better than the historical mean2 point, but the
+   protocol's clean-EMA endpoint is2.842meV worse. Same-hardware cost/quality
+   qualification and formal V5/RML terminal closure are not established;
+   its canonical trajectory remains ACTIVE. Do not treat the handwritten
+   positive decision as verified EMA benefit or single-forward non-inferiority.
+   [Desktop curve review](docs/operations/DESKTOP_RML_CURVE_REVIEW_20261013.md)
+   owns this discrepancy and the evidence-dependent route assessment.
 
 Read the [complete K1 audit](experiments/pcqm_k1_complete_local_audit/analysis_zh.md)
 and [historical matrix](experiments/pcqm_k1_complete_local_audit/historical_evidence.md)
@@ -85,7 +89,7 @@ Branch-local evidence stays on the [retained checkout map](BRANCHES.md#retained-
 | Native T4 cost /100K quality | Kaggle3 ID137853937/version1 COMPLETE40/40 (2026-10-10); mechanical/native qualification pass, single fails quality gate. Full allocation timing and frozen prospective identities block complete RML closure; no adoption/retry/500K/full. | [Owner status](D:/w/k1-t4-cost-quality/experiments/pcqm_k1_t4_cost_quality/STATUS.md), [decision](D:/w/k1-t4-cost-quality/experiments/pcqm_k1_t4_cost_quality/terminal_acceptance/decision.md), [RML blockers](D:/w/k1-t4-cost-quality/experiments/pcqm_k1_t4_cost_quality/terminal_acceptance/RML_BLOCKERS.md) |
 | Standalone K1 EMA100K | Version2 ERROR, empty outputs/log[]; cause, native cost and scientific endpoint unresolved, no further retry released. | [EMA handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-ema-100k-night-20261006/experiments/pcqm_k1_weight_ema/REMOTE_HANDOFF.md) |
 | Gaussian spectral100K | COMPLETE40/40, mechanical/native preflight verified; fresh-pair material gate fails. Scientific terminal packages and strict reference/RML closure pending; no scale-up. | [Spectral handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/k1-spectral-100k-night-20261006/experiments/pcqm_k1_spectral_100k/REMOTE_HANDOFF.md) |
-| Single-forward True EMA 100K | COMPLETE 40/40 (local RTX 5060, 22.1 min net training). Live MAE 0.139370 eV beats mean2 reference (0.140257 eV) by +0.887 meV; Clean-BN recalibrated EMA reaches 0.143099 eV. Provenance, trace, cost, and decision indexed in RML; ready for 500K scale-up protocol. | [Decision](experiments/pcqm_k1_single_true_ema_100k/decision.md), [Protocol](experiments/pcqm_k1_single_true_ema_100k/protocol.md) |
+| Local single-forward/EMA100K | Retained40-row training result; live is numerically favorable, clean-EMA misses the frozen primary point tolerance. Cost comparison crosses RTX5060/T4; formal terminal evidence/observed role-cost records and strict reference qualification remain absent. This does not validate non-inferiority or release another job. | [Protocol](experiments/pcqm_k1_single_true_ema_100k/protocol.md), [Result](experiments/pcqm_k1_single_true_ema_100k/result.json), [Review](docs/operations/DESKTOP_RML_CURVE_REVIEW_20261013.md) |
 
 No observation releases adoption, scale-up, heartbeat or server takeover.
 TPU request metadata did not establish actual TPU execution; allocation/runtime

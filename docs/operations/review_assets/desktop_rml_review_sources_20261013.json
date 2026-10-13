@@ -1,0 +1,110 @@
+{
+  "checks": [
+    "research_memory check --frozen --portable passed before navigation changes",
+    "All four displayed canonical500K curves have60 observations and exactly matched optimizer/sample axes",
+    "Plot visually inspected"
+  ],
+  "figure": {
+    "path": "docs/operations/review_assets/desktop_rml_curves_20261013.png",
+    "sha256": "980698f803e4ec18d4d42510386072e0a7e1a18e3e577fbeb68f12f701a5e0c8"
+  },
+  "format": "molgap-desktop-metadata-review-v1",
+  "method": "Existing canonical metadata and curve arithmetic. No model, inference, role or optimizer execution. This is not a V5/RML scientific acceptance package.",
+  "owner_scope": "Only mapped desktop custody plus explicitly historical metadata; no server live jobs queried",
+  "review_date_jst": "2026-10-13",
+  "runtime_observation": {
+    "account": "nothingnessvoid",
+    "console_empty": true,
+    "kernel_id": 138365645,
+    "native_training_confirmed": false,
+    "state": "RUNNING",
+    "version": 2
+  },
+  "snapshot_summary": {
+    "active_records": [
+      {
+        "owner": "desktop",
+        "record_path": "experiments/pcqm_k1_single_true_ema_100k/trajectory.json",
+        "trajectory_id": "TB-pcqm-k1-single-true-ema-100k"
+      }
+    ],
+    "comparable_group_count": 3,
+    "desktop_trajectories": 106,
+    "frozen_portable_check": "passed",
+    "head": "b2b35d958836afdd9d806dfd22320df0c33ed16d",
+    "outcomes": {
+      "ACTIVE": 1,
+      "CLOSED": 12,
+      "INCONCLUSIVE": 19,
+      "INFRASTRUCTURE_ONLY": 7,
+      "NEGATIVE_UNDER_CONTRACT": 24,
+      "NO_TRAIN": 41,
+      "POSITIVE_UNDER_CONTRACT": 8
+    },
+    "replay_capabilities": {
+      "complete": 7,
+      "historical_partial": 3
+    },
+    "replay_source_digest": "5910e0ebbfe1977c308fd74920240d66d26f1e773911fefaf925c2e4a53f610b",
+    "trajectories": 112
+  },
+  "source_head": "b2b35d958836afdd9d806dfd22320df0c33ed16d",
+  "sources": [
+    {
+      "path": "experiments/pcqm_k1_single_true_ema_100k/trace.jsonl",
+      "sha256": "d339c9f98cb15abcc8e1386ea542c45ea97884d569940073e0ae8b4d949fa165"
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_mean2/rml_finalized/trace.json",
+      "sha256": "82b8a9942222a4277ddf90f8e026b66af77def29a1bdd03b1ee4327ffe149bcc"
+    },
+    {
+      "path": "experiments/pcqm_k1_consistency_ablation_500k/kaggle1_v1/k1_pretrained_consistency/rml_finalized/trace.json",
+      "sha256": "8d68701b15e10b6e09c33e64229adcf133850be994c85f8e7cbae4a1ce57d7e5"
+    },
+    {
+      "path": "experiments/pcqm_500k_v4_evidence/results/canonical_trace.json",
+      "sha256": "6d613216ec56098d3800ed43d4606ed68c31fd9698254545ab3f3069a90e2068"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_noisy_pair_norm_500k/results/canonical_trace.json",
+      "sha256": "044457ceec7b2a06266654ee0fb0a20a73ffcc37134c4fa895a7feb6c4b0f855"
+    },
+    {
+      "path": "research_memory/derived/trajectory_index.json",
+      "sha256": "d459564ef0d062c0c3943d0badb11a313da7fb808e321d85f6e65400caa710de"
+    },
+    {
+      "path": "research_memory/derived/replay_pool.json",
+      "sha256": "bdbb8ca7b75fc143effc68f9342b85a72fde2cfa281539cd1a8f8b42c9e5b219"
+    },
+    {
+      "path": "research_memory/derived/completeness_report.json",
+      "sha256": "cefa023f8f338ae08e7dd136dbd3f96fd78def238566808ea41192ff147be725"
+    },
+    {
+      "path": "experiments/pcqm_k1_single_true_ema_100k/result.json",
+      "sha256": "a83c38b293e72077dfbb1fe1a7650b29b8209d25c137c6ac7074c3033cd704ed"
+    },
+    {
+      "path": "experiments/pcqm_k1_single_true_ema_100k/protocol.md",
+      "sha256": "a2199b5d922b87c0d8c137a349509da3a5cc1369ae3733bd072b41133329cb20"
+    },
+    {
+      "path": "experiments/pcqm_k1_single_true_ema_100k/decision.md",
+      "sha256": "6a59a6f021819742758bcf8c917d628db3623d5b0c8704fc297627d62d9379c5"
+    },
+    {
+      "path": "experiments/pcqm_k1_single_true_ema_100k/trajectory.json",
+      "sha256": "928ea16a99a6a97b15d61db4b9efc8dbd768e6221844eb57890fa6d9bd861748"
+    },
+    {
+      "path": "experiments/pcqm_k1_clean_fit_generalization_500k/terminal_decision.md",
+      "sha256": "b4ba23316e8b4b04a188e698f90d73d3414285b52847cefcb2b4e5c0483600dd"
+    },
+    {
+      "path": "experiments/pcqm_scale_transfer_reassessment/analysis.json",
+      "sha256": "7c6abcf47e349189b90ee296090afedda532ebca0544547142435a817b48ade2"
+    }
+  ]
+}
