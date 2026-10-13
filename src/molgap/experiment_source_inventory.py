@@ -50,6 +50,7 @@ COMMON_SOURCE_FILES = (
     'src/molgap/k1_screen_training.py',
     'src/molgap/k1_execution_layout.py',
     'src/molgap/packed_graph_dataset.py',
+    'src/molgap/pcqm_fixed_records.py',
     'src/molgap/kaggle_pair_runtime.py',
     'src/molgap/kaggle_workflow.py',
     'src/molgap/research_memory/__init__.py',

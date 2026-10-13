@@ -34,7 +34,8 @@ def family_arm_bindings(recipe):
         "transform": {"name": "frozen-train-mean-sample-std", "version": "1", "sha256": canonical_fingerprint({
             "manifest_sha256": recipe.dataset.manifest_sha256, "mean_eV": recipe.target_mean_eV, "std_eV": recipe.target_std_eV})},
         "objective": {"name": "normalized-gap-l1", "version": "1", "sha256": canonical_fingerprint({
-            "mode": recipe.mode, "family": recipe.family, "gradient_clip": recipe.gradient_clip})}}
+            "mode": "local-cycle-shared-v1" if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}
+            else recipe.mode, "family": recipe.family, "gradient_clip": recipe.gradient_clip})}}
 
 
 def _requirements(recipe, source_idx_sha256, target_sha256):
@@ -103,7 +104,8 @@ def validate_screen_recipe(spec, arm_id, record):
         raise ValueError("Contract role usage identity differs from Spec")
     modules = {"ssma": "k1_joint_aggregation.py", "mean2": "k1_screen_training.py",
         "mean2_clean_second": "k1_screen_training.py", "pair_prenorm": "gptrans_variants.py",
-        "centered_logits": "gptrans_variants.py", "memory_value": "gptrans_memory.py", "memory_message": "gptrans_memory.py"}
+        "centered_logits": "gptrans_variants.py", "memory_value": "gptrans_memory.py", "memory_message": "gptrans_memory.py",
+        "degree_bond_local_ema999": "gptrans_capacity.py", "degree_local_cycle_common_ema999": "gptrans_cycle_pair.py"}
     if recipe.mode != "reference" and arm["addons"][0]["source_sha256"] != normalized_source_sha256(Path(__file__).with_name(modules[recipe.mode])):
         raise ValueError("Addon source hash differs from executed module")
     if record.get("acceptance_requirements") != _requirements(recipe,
@@ -157,6 +159,9 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
     # Data acceptance remains CPU work and precedes construction of a GPU model.
     selection = replace(recipe.dataset, development=False) if training_only else recipe.dataset
     data = load_training_data(Path(input_root), selection)
+    if recipe.input_sidecar is not None:
+        from .gptrans_cycle_inputs import attach_sidecar
+        data = attach_sidecar(Path(input_root), recipe.input_sidecar, data)
     arm = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
     for role in arm["data"]["roles"]:
         if training_only and role["role"] != "train":
@@ -209,8 +214,7 @@ def run_screen_preflight(**options):
     output = Path(options.pop("output")).absolute()
     record, recipe, data, tuning, context, provenance, _ = _bootstrap(training_only=True, **options)
     # Preflight consumes training topology only, never development selection.
-    probe = replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
-        optimizer_steps=2, checkpoint_every=1, selection="final-live")
+    probe = _probe_recipe(recipe)
     data = replace(data, development=None, development_rows=0, development_source_start=None)
     output.mkdir(parents=True, exist_ok=True)
     proofs = []
@@ -259,6 +263,12 @@ def normalized_file_sha(path):
     return sha256_file(Path(path))
 
 
+def _probe_recipe(recipe):
+    return replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
+        input_sidecar=replace(recipe.input_sidecar, development=False) if recipe.input_sidecar is not None else None,
+        optimizer_steps=2, checkpoint_every=1, selection="final-live")
+
+
 def _verify_preflight(directory, recipe, provenance):
     import torch
     from .family_training_session import validate_session_resume
@@ -267,8 +277,7 @@ def _verify_preflight(directory, recipe, provenance):
     certificate = _json(_artifact_path(root, "runtime_certificate.json"))
     if saved != provenance or certificate.get("provenance_sha256") != canonical_fingerprint(provenance):
         raise ValueError("Native preflight source/recipe/data/runtime/device identity differs")
-    probe = replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
-        optimizer_steps=2, checkpoint_every=1, selection="final-live")
+    probe = _probe_recipe(recipe)
     if (certificate.get("format") != "molgap-runtime-certificate-v1" or
             certificate.get("probe_recipe_identity") != probe.identity or certificate.get("formal_training_exposure") != 0):
         raise ValueError("Preflight probe identity differs")

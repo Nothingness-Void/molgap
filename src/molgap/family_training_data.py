@@ -47,8 +47,9 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     """Verify the selected view and shard bytes before trusted deserialization.
 
     This reads only selected official-train/internal-development shards. It
-    never traverses geometry or official-validation/test assets, even if those
-    assets are present in the fixed dataset store. Data preparation remains CPU.
+    never selects coordinates or official-validation/test roles. Accepted legacy
+    packed files incidentally deserialize coordinates; model transfer excludes
+    them. Data preparation remains CPU.
     """
     import torch
     from torch.utils.data import ConcatDataset
@@ -61,9 +62,8 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     if sha256_file(path) != selection.manifest_sha256:
         raise ValueError("Dataset manifest SHA differs from the frozen selection")
     manifest = _json(path)
-    if (manifest.get("format") != "molgap-pcqm4mv2-fixed-subset-v1" or
-            manifest.get("status") != "complete"):
-        raise ValueError("Expected the existing complete fixed-subset manifest")
+    from .pcqm_fixed_records import graph_records
+    records = graph_records(manifest, selection.manifest_sha256)
     source = manifest.get("source", {})
     if source.get("external_data_used") is not False:
         raise ValueError("Fixed PCQM training must declare no external data")
@@ -74,7 +74,6 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     if (graph.get("feature_schema") != "ogb" or graph.get("node_feature_dim") != 9
             or graph.get("edge_feature_dim") != 3 or graph.get("rwse_dim") != 16):
         raise ValueError("Expected accepted OGB atom9/bond3/RWSE16 topology")
-    records = manifest.get("assets", {}).get("topology", [])
     if not isinstance(records, list) or not records:
         raise ValueError("Selected view has no topology shards")
     requested = ("train", "development") if selection.development else ("train",)

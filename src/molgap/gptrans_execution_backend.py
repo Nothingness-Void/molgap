@@ -33,6 +33,9 @@ def prepare_layout(batch):
         "flat_index": membership * maximum + local,
         "edges": (graph, local[batch.edge_index[0]], local[batch.edge_index[1]]),
     }
+    if hasattr(batch, "cycle_pair_index") or hasattr(batch, "cycle_pair_category"):
+        from .gptrans_cycle_pair import cycle_categories
+        batch.execution_layout["cycle_categories"] = cycle_categories(batch, batch.execution_layout)
     return batch
 
 

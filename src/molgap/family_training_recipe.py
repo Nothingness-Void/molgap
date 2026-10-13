@@ -18,7 +18,8 @@ ADAMW_BETAS = (.9, .999)
 ADAMW_EPSILON = 1e-8
 MODES = {
     "neural_atom_k1": ("reference", "ssma", "mean2", "mean2_clean_second"),
-    "gptrans_t": ("reference", "pair_prenorm", "centered_logits", "memory_value", "memory_message"),
+    "gptrans_t": ("reference", "pair_prenorm", "centered_logits", "memory_value", "memory_message",
+                  "degree_bond_local_ema999", "degree_local_cycle_common_ema999"),
 }
 
 
@@ -108,6 +109,7 @@ class FamilyRecipe:
     finite_check_every: int = 50
     drop_last: bool = True
     torch_version: str = "2.11.0"
+    input_sidecar: DatasetSelection | None = None
 
     def __post_init__(self):
         from .experiment_spec import _digest
@@ -119,6 +121,12 @@ class FamilyRecipe:
         _digest(self.initialization_sha256, "initialization_sha256")
         if type(self.dataset) is not DatasetSelection or type(self.schedule) is not ScheduleSpec:
             raise TypeError("Typed dataset and schedule are required")
+        cycle = self.mode == "degree_local_cycle_common_ema999"
+        if cycle != (self.input_sidecar is not None):
+            raise ValueError("Only the common-cycle mode requires a pinned input sidecar")
+        if self.input_sidecar is not None and (type(self.input_sidecar) is not DatasetSelection or
+                self.input_sidecar.development != self.dataset.development):
+            raise ValueError("Sidecar roles differ from selected fixed-data roles")
         for key in ("train_rows", "optimizer_steps", "checkpoint_every", "finite_check_every", "batch_size"):
             _integer(getattr(self, key), key)
         _integer(self.development_rows, "development_rows", 0)
@@ -171,7 +179,10 @@ class FamilyRecipe:
             "torch_version": self.torch_version}
 
     def to_dict(self):
-        return {"format": RECIPE_FORMAT, **asdict(self), "execution_policy": self.execution_policy}
+        values = asdict(self)
+        if self.input_sidecar is None:
+            values.pop("input_sidecar")
+        return {"format": RECIPE_FORMAT, **values, "execution_policy": self.execution_policy}
 
     @property
     def identity(self):
@@ -180,14 +191,18 @@ class FamilyRecipe:
     @classmethod
     def from_dict(cls, record):
         expected = {field.name for field in fields(cls)} | {"format", "execution_policy"}
+        if type(record) is dict and "input_sidecar" not in record:
+            expected.remove("input_sidecar")
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
             raise ValueError("Missing or unknown shared training recipe fields")
-        values = {field.name: record[field.name] for field in fields(cls)}
+        values = {field.name: record[field.name] for field in fields(cls) if field.name in record}
         if type(values["dataset"]) is not dict or type(values["schedule"]) is not dict:
             raise ValueError("Expected dataset/schedule objects")
         try:
             values["dataset"] = DatasetSelection(**values["dataset"])
             values["schedule"] = ScheduleSpec(**values["schedule"])
+            if "input_sidecar" in values:
+                values["input_sidecar"] = DatasetSelection(**values["input_sidecar"])
         except TypeError as exc:
             raise ValueError("Unknown dataset/schedule fields") from exc
         recipe = cls(**values)

@@ -36,7 +36,11 @@ def load_family_model(recipe, initial_state):
     else:
         from .pcqm_gptrans_v4 import _make_model
         from .gptrans_execution_backend import bind_model_layout
-        model = _make_model(variant=recipe.mode)
+        if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
+            from .gptrans_cycle_pair import construct
+            model = construct(recipe.mode, state)
+        else:
+            model = _make_model(variant=recipe.mode)
         exact_load(model)
         bind_model_layout(model)
     return model, initialization

@@ -88,10 +88,13 @@ TRAINING_ADAPTERS = MappingProxyType({
     ("gptrans_t", "2"): TrainingAdapter(
         ("gptrans_t", "2"), "molgap.family_training_runner", "gptrans-session-v1",
         tuple(TrainingAddon(name, "1", name) for name in
-              ("pair_prenorm", "centered_logits", "memory_value", "memory_message")),
+              ("pair_prenorm", "centered_logits", "memory_value", "memory_message",
+               "degree_bond_local_ema999", "degree_local_cycle_common_ema999")),
         ("molgap.pcqm_wedge",),
         ("src/molgap/family_training_runner.py", "src/molgap/family_training_kernel.py",
-         "src/molgap/pcqm_gptrans_v4.py", "src/molgap/gptrans.py"),
+         "src/molgap/pcqm_gptrans_v4.py", "src/molgap/gptrans.py",
+         "src/molgap/gptrans_capacity.py", "src/molgap/gptrans_cycle_pair.py",
+         "src/molgap/gptrans_cycle_inputs.py", "src/molgap/pcqm_fixed_records.py"),
         target_identity_in_completion=True),
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
