@@ -62,11 +62,13 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 K1 mean2 versus single-forward EMA500K is desktop-owned on
 `codex/exp/k1-mean2-single-ema-500k-20261013` (see [checkout map](BRANCHES.md#retained-checkout-map)).
-Kaggle1 kernelID138365645/version1 ended ERROR at input-manifest resolution,
-before either formal arm trained. The owner retains NO_TRAIN attempt evidence
-and the unresolved scientific question. The user authorized a corrected
-resubmission under the same60-epoch/nine-hour contract. Reviewed shared mount
-and release checks are integrated here; see [correction provenance](docs/operations/KAGGLE_INPUT_RESOLUTION_20261013.md).
+Kaggle1 kernelID138365645/version2 is RUNNING after the user-authorized corrected
+resubmission under the same60-epoch/nine-hour contract. Source/dataset binding
+is verified; native qualification and formal training are not yet observed.
+Version1 ended ERROR before either arm trained and is independently finalized
+NO_TRAIN on the owner. Reviewed shared mount and release checks are integrated
+here; see [correction provenance](docs/operations/KAGGLE_INPUT_RESOLUTION_20261013.md)
+and the owning [handoff](D:/w/k1-mean2-single-ema-500k-20261013/experiments/pcqm_k1_mean2_single_ema_500k/REMOTE_HANDOFF.md).
 No automatic continuation/monitor or model adoption is released.
 
 The2026-10-09 [Kaggle reconciliation](docs/operations/KAGGLE_ACCEPTANCE_20261009.md)
