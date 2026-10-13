@@ -1,0 +1,94 @@
+{
+  "format": "molgap-retained-metadata-terminal-acceptance-v1",
+  "evidence_id": "pcqm-rml-reconciled-recovery-v1-20261001",
+  "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery",
+  "run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+  "action_id": "A001",
+  "recorded_at": "2026-09-30T17:58:55Z",
+  "acceptance_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed.",
+  "outcome": {
+    "execution_status": "infrastructure_failed",
+    "artifact_status": "retained_failure_metadata",
+    "comparison_status": "not_evaluated",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "cost_measurement_missing",
+    "full_handoff_status": "not_authorized"
+  },
+  "trajectory_decision": {
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "decision_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v1/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "logical_to_physical_binding": {
+    "logical_run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+    "physical_run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery:v1",
+    "kernel_id": 136535008,
+    "source_receipt_refs": [
+      "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v1.json",
+      "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_record.md"
+    ],
+    "binding_note": "Physical attempt/version is established by the retained receipt/failure records; logical prospective run ID is preserved."
+  },
+  "source_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan/trajectory.json": "52ec482d0bdd83ddc87b7e317286c0cd935e4db04d0258d4004b0d61210d1e22",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v1.json": "294ea7bd9cdd48edb35585ba4eadd8545eac2d9e2a882a70c1005e2a23c4af00",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_record.md": "c21c03f9e1b3aed193a9ca0167369ad66821bd36c2c2c943bbc3a0431f9f37eb"
+  },
+  "findings": [
+    "The failed preparation-kernel output mount was rejected. The retained authoritative reconciliation confirmed physical version 1 ERROR. Native execution cost was not available.",
+    "No accuracy, training-replay readiness, promotion or new compute authorization is asserted.",
+    "Internal graph/label access is not converted to formal observed role events without source row-identity records; unknown remains unknown."
+  ],
+  "cost_semantics": {
+    "wall_hours": "Native worker wall seconds divided by 3600 when available.",
+    "device_hours": "Missing: actual accelerator allocation time was not established.",
+    "cpu_hours": "CPU accounting semantics are not inferred from allocated core count or process-CPU seconds; left missing.",
+    "queue_hours": "Not measured; never inferred from file timestamps."
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-author-input-preparation-verification-recovery",
+      "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+      "attempt_id": "recovery-v1",
+      "platform": "kaggle2",
+      "hardware": "CPU-only",
+      "category": "infrastructure_failure",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v1/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "official_validation": "not_applicable",
+    "test_dev": "not_applicable",
+    "test_challenge": "not_applicable",
+    "train": "unknown",
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown"
+  }
+}

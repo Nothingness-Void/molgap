@@ -1,0 +1,93 @@
+{
+  "format": "molgap-retained-metadata-terminal-acceptance-v1",
+  "evidence_id": "pcqm-rml-reconciled-motif-v2-20261001",
+  "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v2",
+  "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v2",
+  "action_id": "A001",
+  "recorded_at": "2026-09-30T17:58:55Z",
+  "acceptance_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed.",
+  "outcome": {
+    "execution_status": "infrastructure_failed",
+    "artifact_status": "retained_failure_metadata",
+    "comparison_status": "not_evaluated",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "retained_native_or_estimated_wall_cost_partial",
+    "full_handoff_status": "not_authorized"
+  },
+  "trajectory_decision": {
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "decision_ref": "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v2/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "logical_to_physical_binding": {
+    "logical_run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v2",
+    "physical_run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v2",
+    "kernel_id": 136356323,
+    "source_receipt_refs": [
+      "experiments/pcqm_motif_hierarchy_100k/attempt_v2/submission_receipt.json"
+    ],
+    "binding_note": "Physical attempt/version is established by the retained receipt/failure records; logical prospective run ID is preserved."
+  },
+  "source_hashes": {
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v2/gpu_rml_plan/trajectory.json": "a82a91c9eb5be1a9f5a6966ce3855f88d33f791f0aa9e4b59562f3c44b41f56b",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v2/failure.json": "b43a0d9a2c35060afb7bacd5414d91cbb2772d58cdda1a193325f633ddfe0223",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v2/submission_receipt.json": "0eb2b1d9f841d7216075ea307b85c50a27caebaa7a862294ff3f5ddcec7d2ae9"
+  },
+  "findings": [
+    "Physical version 2 ERROR at the single-device runtime gate, with zero scientific epochs. The retained wall duration is approximate; accelerator identity and full allocation cost remain unknown.",
+    "No accuracy, training-replay readiness, promotion or new compute authorization is asserted.",
+    "Internal graph/label access is not converted to formal observed role events without source row-identity records; unknown remains unknown."
+  ],
+  "cost_semantics": {
+    "wall_hours": "Approximate retained log duration; not a native monotonic measurement.",
+    "device_hours": "Missing: actual accelerator allocation time was not established.",
+    "cpu_hours": "CPU accounting semantics are not inferred from allocated core count or process-CPU seconds; left missing.",
+    "queue_hours": "Not measured; never inferred from file timestamps."
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-k1-motif-hierarchy-100k-s42-v2",
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v2",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v2",
+      "attempt_id": "v2",
+      "platform": "kaggle2",
+      "hardware": "unknown",
+      "category": "infrastructure_failure",
+      "evidence_ref": "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v2/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 0.05138888888888889
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "official_validation": "not_applicable",
+    "test_dev": "not_applicable",
+    "test_challenge": "not_applicable",
+    "train": "unknown",
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown"
+  }
+}

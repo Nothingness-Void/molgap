@@ -1,0 +1,70 @@
+{
+  "format": "molgap-rml-publication-scope-review-v1",
+  "base_head": "aaae983887f88887f93e59ce7f4cc768a53ae70c",
+  "newly_indexed_trajectories_from_already_tracked_sources": 36,
+  "newly_indexed_record_paths_all_tracked": true,
+  "reviewed_historical_terminal_overlays": 7,
+  "terminal_outcomes": {
+    "INFRASTRUCTURE_ONLY": 5,
+    "NO_TRAIN": 1,
+    "CLOSED": 1
+  },
+  "changed_historical_trajectories": [
+    {
+      "trajectory_id": "TC-gptrans-author-input-preparation",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "record_path": "experiments/pcqm_gptrans_author_alignment/preparation_rml/rml_finalized/trajectory.json",
+      "record_sha256": "6fc85b471d9a1f0fe3599c896c180c8599440d0ed7aad4ba5dd25d2969fb5a74"
+    },
+    {
+      "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "record_path": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan/rml_finalized/trajectory.json",
+      "record_sha256": "63c3dcf75f528fe5ff300024ce9f4ccbd5d1a7bf046a89dc188358c1138cd89b"
+    },
+    {
+      "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "outcome": "NO_TRAIN",
+      "record_path": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/rml_finalized/trajectory.json",
+      "record_sha256": "3f0ad5daade0b5c108201a11c6c58f9ac856b486c85e783c6cb2b5c1aafd3a65"
+    },
+    {
+      "trajectory_id": "TC-k1-chem-local-post100k-audit-s42",
+      "outcome": "CLOSED",
+      "record_path": "experiments/pcqm_k1_chem_local_100k/audit/rml_plan/rml_finalized/trajectory.json",
+      "record_sha256": "68031dffe49bdfa492f52a0279c5e9e5c6159d97b75baa87debd91d82d86dccc"
+    },
+    {
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "record_path": "experiments/pcqm_motif_hierarchy_100k/gpu_rml_plan/rml_finalized/trajectory.json",
+      "record_sha256": "5b62ad2dfdbac42aad4d98ca890346450785e7b3caf785e2f9a9bc1d20bcda9a"
+    },
+    {
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v2",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "record_path": "experiments/pcqm_motif_hierarchy_100k/attempt_v2/gpu_rml_plan/rml_finalized/trajectory.json",
+      "record_sha256": "540bb9beb59874c382f838ae86a29b402455bcd33a1f6e1d5964d96b781d959b"
+    },
+    {
+      "trajectory_id": "TC-metagin-2d-3hop-100k-s42",
+      "outcome": "INFRASTRUCTURE_ONLY",
+      "record_path": "experiments/pcqm_metagin_2d_100k/rml_plan/rml_finalized/trajectory.json",
+      "record_sha256": "5c7b7ce59a8a615b1020849f0e7902a647f0cc56bd506cd6e47948a575c6b7a1"
+    }
+  ],
+  "removed_trajectories": [],
+  "derived_source_digest": "e0f2c9e42f5728df2749ae564ee92ea42b2cdff82c79b68d8a342147cbeac80e",
+  "scope_resolution": "The broader derived delta indexes36experiment records already committed on server; it does not adopt pending local-transfer proposals. Seven additional terminal overlays were separately receipt/hash verified.",
+  "excluded": [
+    "tests/test_research_memory.py",
+    "untracked platforms/_records trees",
+    "pending local-transfer proposals and their README edit",
+    "pending portfolio synthesis and its README edits"
+  ],
+  "new_training": false,
+  "new_inference": false,
+  "protected_role_access": false,
+  "scientific_contract_changes": false,
+  "portable_or_cross_machine_check": "not performed"
+}

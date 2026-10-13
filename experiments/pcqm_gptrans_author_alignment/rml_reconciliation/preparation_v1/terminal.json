@@ -1,0 +1,135 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TC-gptrans-author-input-preparation",
+  "run_id": "kaseichou/molgap-gptrans-author-inputs-preparation-v1",
+  "action_id": "A001",
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "acceptance_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/preparation_v1/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/preparation_rml/trajectory.json": "324b36d05b9483c2ef74871df68eb3f13ebbd542eaab92dddd1064f876b5649c",
+    "experiments/pcqm_gptrans_author_alignment/results/preparation_failure_v1.md": "267c52b85f50bd81841fc5457d0974fb25c1382f5029d873173f38ea8ec7c776",
+    "experiments/pcqm_gptrans_author_alignment/preparation_submission.json": "8cc78b803ba42e856a03c8822113f5151482b721390482d402d90bf7082adb33",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/failure.json": "3514817757c1b461e90a391ba4109581ac82bf6e9ed761f9bc4f814bbc13a4b4",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/native_cost.json": "de86dc64f9f2ea702f7e233f553ca63946ba1fb4152cb1b47019678ab562480b",
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/preparation_v1/decision.md": "d62f7df76d3822abde05d1fe2e790dbf66a090b61174877eb05e9f19dd4472f7",
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/preparation_v1/acceptance.json": "6d557e2bb26e0e81ee44c8adc628550365a5b827d9aa37d0ccbe45c0f86dd606"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-rml-reconciled-preparation-v1-20261001",
+    "track": "C",
+    "scope": "retained_infrastructure_attempt_closure",
+    "legacy_contract": "none-preserved-v5-prospective-plan",
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_author_alignment/preparation_rml/trajectory.json",
+        "experiments/pcqm_gptrans_author_alignment/results/preparation_failure_v1.md",
+        "experiments/pcqm_gptrans_author_alignment/preparation_submission.json",
+        "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/failure.json",
+        "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/native_cost.json",
+        "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/preparation_v1/decision.md"
+      ]
+    },
+    "outcome": {
+      "execution_status": "infrastructure_failed",
+      "artifact_status": "retained_failure_metadata",
+      "comparison_status": "not_evaluated",
+      "scientific_status": "not_evaluated",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "retained_native_or_estimated_wall_cost_partial",
+      "full_handoff_status": "not_authorized"
+    },
+    "role_use": {
+      "official_validation": "not_applicable",
+      "test_dev": "not_applicable",
+      "test_challenge": "not_applicable",
+      "train": "unknown",
+      "internal_development_100000_150000": "unknown",
+      "internal_development_500000_550000": "unknown"
+    },
+    "artifacts": [
+      {
+        "name": "retained_source_0",
+        "locator": "experiments/pcqm_gptrans_author_alignment/results/preparation_failure_v1.md",
+        "availability": "repository_retained_metadata",
+        "sha256": "267c52b85f50bd81841fc5457d0974fb25c1382f5029d873173f38ea8ec7c776"
+      },
+      {
+        "name": "retained_source_1",
+        "locator": "experiments/pcqm_gptrans_author_alignment/preparation_submission.json",
+        "availability": "repository_retained_metadata",
+        "sha256": "8cc78b803ba42e856a03c8822113f5151482b721390482d402d90bf7082adb33"
+      },
+      {
+        "name": "retained_source_2",
+        "locator": "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/failure.json",
+        "availability": "ignored_local_retained_metadata",
+        "sha256": "3514817757c1b461e90a391ba4109581ac82bf6e9ed761f9bc4f814bbc13a4b4"
+      },
+      {
+        "name": "retained_source_3",
+        "locator": "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/native_cost.json",
+        "availability": "ignored_local_retained_metadata",
+        "sha256": "de86dc64f9f2ea702f7e233f553ca63946ba1fb4152cb1b47019678ab562480b"
+      }
+    ],
+    "migration": {
+      "migrated_at": "2026-09-30T17:58:55Z",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed."
+    }
+  },
+  "decision": {
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "decision_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/preparation_v1/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-author-input-preparation",
+      "trajectory_id": "TC-gptrans-author-input-preparation",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-gptrans-author-inputs-preparation-v1",
+      "attempt_id": "v1",
+      "platform": "kaggle2",
+      "hardware": "CPU-only",
+      "category": "infrastructure_failure",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/preparation_v1/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.12063771194416667
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "official_validation": "not_applicable",
+    "test_dev": "not_applicable",
+    "test_challenge": "not_applicable",
+    "train": "unknown",
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown"
+  }
+}

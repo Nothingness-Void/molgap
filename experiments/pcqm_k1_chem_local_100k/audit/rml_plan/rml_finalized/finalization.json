@@ -1,0 +1,30 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-1fda03d5513e6c6bbd20871f7bcdb8cfc91b1192f739e5d65b122bf2d7f9c2a2",
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_k1_chem_local_100k/STATUS.md": "f939fee6e16741ffeb2572880a90d5fe3a052fafe784a3b3ba419ae57cfd875f",
+    "experiments/pcqm_k1_chem_local_100k/audit/rml_plan/trajectory.json": "965ddefe29d861c63ffdf845f7e2624630cb6595345303be8610ed9d81932835",
+    "experiments/pcqm_k1_chem_local_100k/decision.md": "5503b197ce1280c871f4f611ebb217711c599cdb3bb4b14eb7de540f4ae1fbc7",
+    "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/acceptance.json": "e0fe1f83a66e641a2bfe9554f0b0765b91aebe7ed1f5c723d894b44d07a461a4",
+    "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/decision.md": "263c7fb35546b6fb7e830dbc6aad8b946fc875cc8cfab5f44bc662de36f37694"
+  },
+  "outcome": "CLOSED",
+  "published_hashes": {
+    "costs/cost-TC-k1-chem-local-post100k-audit-s42.json": "a330108def5bc40e7bf1bb1cbf01eaf75481bc6172d0bf39350c3c6d56413a32",
+    "prospective_snapshot.json": "965ddefe29d861c63ffdf845f7e2624630cb6595345303be8610ed9d81932835",
+    "terminal_input.json": "b02eacbe01bf08bf17c796f141cb3720452d022e909425eee08178dcbc88807f",
+    "trajectory.json": "68031dffe49bdfa492f52a0279c5e9e5c6159d97b75baa87debd91d82d86dccc",
+    "v5_evidence.json": "e2c1f4eddf934376b770d824636f7c1b00526d42e7d9606e0489332266e1c2fb"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-chem-local-post100k-audit-s42.json": "experiments/pcqm_k1_chem_local_100k/audit/rml_plan/costs/cost-TC-k1-chem-local-post100k-audit-s42.json",
+    "trajectory.json": "experiments/pcqm_k1_chem_local_100k/audit/rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "1fda03d5513e6c6bbd20871f7bcdb8cfc91b1192f739e5d65b122bf2d7f9c2a2",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-k1-chem-local-post100k-audit-s42"
+}

@@ -1,0 +1,135 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+  "run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+  "action_id": "A001",
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "acceptance_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v2/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/trajectory.json": "1bd407079a8451682c4d8bf6ecf86ba03c4edd414a7c76e9db794d0f70b61fe0",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/acceptance_v2.json": "f5ea2f25cbafd77d2b705492ebac253d6ab8d619ad1fff6436a35a165fa6b336",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v2.json": "d1550a04d8ea6bf0e56b3b5a5aed2445dfd15e2a1810d00fce6a371e0068705c",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/native_cost.json": "97b3dde2aafc22441e0b57a0dbb3556f5793d57bc1fd3b962bdcccc8349c53d9",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/startup.json": "e03326887726063056d879600d7698917977a5f0e1e5d7da6c3f52e4a89490e1",
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v2/decision.md": "76936fa82e3e2fa47dbb0b08f9f14545035c1e1d0bec3311312d15acf66394ea",
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v2/acceptance.json": "2edc05f647bffe30b17e2e89ea0b43ba644d39f2c3296915947ff12c84c64276"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-rml-reconciled-recovery-v2-20261001",
+    "track": "C",
+    "scope": "accepted_cpu_input_preparation_context_only",
+    "legacy_contract": "none-preserved-v5-prospective-plan",
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/trajectory.json",
+        "experiments/pcqm_gptrans_author_alignment/verification_recovery/acceptance_v2.json",
+        "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v2.json",
+        "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/native_cost.json",
+        "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/startup.json",
+        "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v2/decision.md"
+      ]
+    },
+    "outcome": {
+      "execution_status": "complete",
+      "artifact_status": "accepted_cpu_input_metadata",
+      "comparison_status": "context_only",
+      "scientific_status": "input_preparation_accepted_no_accuracy_claim",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "retained_native_or_estimated_wall_cost_partial",
+      "full_handoff_status": "not_authorized"
+    },
+    "role_use": {
+      "official_validation": "not_applicable",
+      "test_dev": "not_applicable",
+      "test_challenge": "not_applicable",
+      "train": "unknown",
+      "internal_development_100000_150000": "unknown",
+      "internal_development_500000_550000": "unknown"
+    },
+    "artifacts": [
+      {
+        "name": "retained_source_0",
+        "locator": "experiments/pcqm_gptrans_author_alignment/verification_recovery/acceptance_v2.json",
+        "availability": "repository_retained_metadata",
+        "sha256": "f5ea2f25cbafd77d2b705492ebac253d6ab8d619ad1fff6436a35a165fa6b336"
+      },
+      {
+        "name": "retained_source_1",
+        "locator": "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v2.json",
+        "availability": "repository_retained_metadata",
+        "sha256": "d1550a04d8ea6bf0e56b3b5a5aed2445dfd15e2a1810d00fce6a371e0068705c"
+      },
+      {
+        "name": "retained_source_2",
+        "locator": "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/native_cost.json",
+        "availability": "ignored_local_retained_metadata",
+        "sha256": "97b3dde2aafc22441e0b57a0dbb3556f5793d57bc1fd3b962bdcccc8349c53d9"
+      },
+      {
+        "name": "retained_source_3",
+        "locator": "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/startup.json",
+        "availability": "ignored_local_retained_metadata",
+        "sha256": "e03326887726063056d879600d7698917977a5f0e1e5d7da6c3f52e4a89490e1"
+      }
+    ],
+    "migration": {
+      "migrated_at": "2026-09-30T17:58:55Z",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed."
+    }
+  },
+  "decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v2/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+      "attempt_id": "recovery-v2",
+      "platform": "kaggle2",
+      "hardware": "CPU-only",
+      "category": "cache_build",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v2/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.20540670997722224
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "official_validation": "not_applicable",
+    "test_dev": "not_applicable",
+    "test_challenge": "not_applicable",
+    "train": "unknown",
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown"
+  }
+}

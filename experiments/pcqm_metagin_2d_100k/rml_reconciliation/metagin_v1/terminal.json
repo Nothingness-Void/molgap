@@ -1,0 +1,127 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TC-metagin-2d-3hop-100k-s42",
+  "run_id": "kaseichou/molgap-metagin-2d-s42:v1",
+  "action_id": "A001",
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "acceptance_ref": "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_metagin_2d_100k/rml_plan/trajectory.json": "126563bde6f289e6bffad329d36e6cb61b7a9affba94214c25241bd4246d3434",
+    "experiments/pcqm_metagin_2d_100k/results/v1_preflight_failure.md": "03f2f13b46bcea9048bff331fd9618b136afc14cf514942b600fc9a4c47acaa4",
+    "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/failure.json": "b0eac623f32295fba53de68306e5d33cdea38cbdea1ea403402321a524fa01c8",
+    "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/native_cost.json": "c2bd663480873ee1cd7809312780e1291a6ff675591411869afc2793249390cc",
+    "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/decision.md": "9cb14744979335e4bea77f93c8a7cefdc4964c66a74da4b3c34380937fe89aac",
+    "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/acceptance.json": "45af76c2aa9a37a430a211a07c312ea634ce4af21a5d913de083b9edcc1307e8"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-rml-reconciled-metagin-v1-20261001",
+    "track": "C",
+    "scope": "retained_infrastructure_attempt_closure",
+    "legacy_contract": "none-preserved-v5-prospective-plan",
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_metagin_2d_100k/rml_plan/trajectory.json",
+        "experiments/pcqm_metagin_2d_100k/results/v1_preflight_failure.md",
+        "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/failure.json",
+        "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/native_cost.json",
+        "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/decision.md"
+      ]
+    },
+    "outcome": {
+      "execution_status": "infrastructure_failed",
+      "artifact_status": "retained_failure_metadata",
+      "comparison_status": "not_evaluated",
+      "scientific_status": "not_evaluated",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "retained_native_or_estimated_wall_cost_partial",
+      "full_handoff_status": "not_authorized"
+    },
+    "role_use": {
+      "official_validation": "not_applicable",
+      "test_dev": "not_applicable",
+      "test_challenge": "not_applicable",
+      "train": "unknown",
+      "internal_development_100000_150000": "unknown",
+      "internal_development_500000_550000": "unknown"
+    },
+    "artifacts": [
+      {
+        "name": "retained_source_0",
+        "locator": "experiments/pcqm_metagin_2d_100k/results/v1_preflight_failure.md",
+        "availability": "repository_retained_metadata",
+        "sha256": "03f2f13b46bcea9048bff331fd9618b136afc14cf514942b600fc9a4c47acaa4"
+      },
+      {
+        "name": "retained_source_1",
+        "locator": "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/failure.json",
+        "availability": "ignored_local_retained_metadata",
+        "sha256": "b0eac623f32295fba53de68306e5d33cdea38cbdea1ea403402321a524fa01c8"
+      },
+      {
+        "name": "retained_source_2",
+        "locator": "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/native_cost.json",
+        "availability": "ignored_local_retained_metadata",
+        "sha256": "c2bd663480873ee1cd7809312780e1291a6ff675591411869afc2793249390cc"
+      }
+    ],
+    "migration": {
+      "migrated_at": "2026-09-30T17:58:55Z",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed."
+    }
+  },
+  "decision": {
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "decision_ref": "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-metagin-2d-3hop-100k-s42-training",
+      "trajectory_id": "TC-metagin-2d-3hop-100k-s42",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-metagin-2d-s42:v1",
+      "attempt_id": "v1",
+      "platform": "kaggle2",
+      "hardware": "Tesla_T4_x2",
+      "category": "infrastructure_failure",
+      "evidence_ref": "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measured",
+          "value": 0.1607305638022222
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.08036528171888888
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "official_validation": "not_applicable",
+    "test_dev": "not_applicable",
+    "test_challenge": "not_applicable",
+    "train": "unknown",
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown"
+  }
+}

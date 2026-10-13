@@ -1,0 +1,119 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TC-k1-chem-local-post100k-audit-s42",
+  "run_id": "kaseichou/molgap-k1-chem-local-audit-s42:v1",
+  "action_id": "A001",
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "acceptance_ref": "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_chem_local_100k/audit/rml_plan/trajectory.json": "965ddefe29d861c63ffdf845f7e2624630cb6595345303be8610ed9d81932835",
+    "experiments/pcqm_k1_chem_local_100k/decision.md": "5503b197ce1280c871f4f611ebb217711c599cdb3bb4b14eb7de540f4ae1fbc7",
+    "experiments/pcqm_k1_chem_local_100k/STATUS.md": "f939fee6e16741ffeb2572880a90d5fe3a052fafe784a3b3ba419ae57cfd875f",
+    "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/decision.md": "263c7fb35546b6fb7e830dbc6aad8b946fc875cc8cfab5f44bc662de36f37694",
+    "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/acceptance.json": "e0fe1f83a66e641a2bfe9554f0b0765b91aebe7ed1f5c723d894b44d07a461a4"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-rml-reconciled-conditional-audit-20261001",
+    "track": "C",
+    "scope": "unreleased_conditional_action_closure",
+    "legacy_contract": "none-preserved-v5-prospective-plan",
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_chem_local_100k/audit/rml_plan/trajectory.json",
+        "experiments/pcqm_k1_chem_local_100k/decision.md",
+        "experiments/pcqm_k1_chem_local_100k/STATUS.md",
+        "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/decision.md"
+      ]
+    },
+    "outcome": {
+      "execution_status": "not_launched",
+      "artifact_status": "decision_retained_no_worker_outputs",
+      "comparison_status": "not_evaluated",
+      "scientific_status": "not_evaluated",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "compute_not_released",
+      "full_handoff_status": "not_authorized"
+    },
+    "role_use": {
+      "official_validation": "not_applicable",
+      "test_dev": "not_applicable",
+      "test_challenge": "not_applicable",
+      "train": "not_applicable",
+      "internal_development_100000_150000": "not_applicable",
+      "internal_development_500000_550000": "not_applicable"
+    },
+    "artifacts": [
+      {
+        "name": "retained_source_0",
+        "locator": "experiments/pcqm_k1_chem_local_100k/decision.md",
+        "availability": "repository_retained_metadata",
+        "sha256": "5503b197ce1280c871f4f611ebb217711c599cdb3bb4b14eb7de540f4ae1fbc7"
+      },
+      {
+        "name": "retained_source_1",
+        "locator": "experiments/pcqm_k1_chem_local_100k/STATUS.md",
+        "availability": "repository_retained_metadata",
+        "sha256": "f939fee6e16741ffeb2572880a90d5fe3a052fafe784a3b3ba419ae57cfd875f"
+      }
+    ],
+    "migration": {
+      "migrated_at": "2026-09-30T17:58:55Z",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed."
+    }
+  },
+  "decision": {
+    "outcome": "CLOSED",
+    "decision_ref": "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-k1-chem-local-post100k-audit-s42",
+      "trajectory_id": "TC-k1-chem-local-post100k-audit-s42",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-k1-chem-local-audit-s42:v1",
+      "attempt_id": "v1",
+      "platform": "kaggle2",
+      "hardware": "not_allocated",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "official_validation": "not_applicable",
+    "test_dev": "not_applicable",
+    "test_challenge": "not_applicable",
+    "train": "not_applicable",
+    "internal_development_100000_150000": "not_applicable",
+    "internal_development_500000_550000": "not_applicable"
+  }
+}

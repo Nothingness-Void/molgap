@@ -1,0 +1,91 @@
+{
+  "format": "molgap-retained-metadata-terminal-acceptance-v1",
+  "evidence_id": "pcqm-rml-reconciled-conditional-audit-20261001",
+  "trajectory_id": "TC-k1-chem-local-post100k-audit-s42",
+  "run_id": "kaseichou/molgap-k1-chem-local-audit-s42:v1",
+  "action_id": "A001",
+  "recorded_at": "2026-09-30T17:58:55Z",
+  "acceptance_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed.",
+  "outcome": {
+    "execution_status": "not_launched",
+    "artifact_status": "decision_retained_no_worker_outputs",
+    "comparison_status": "not_evaluated",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "compute_not_released",
+    "full_handoff_status": "not_authorized"
+  },
+  "trajectory_decision": {
+    "outcome": "CLOSED",
+    "decision_ref": "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "logical_to_physical_binding": {
+    "logical_run_id": "kaseichou/molgap-k1-chem-local-audit-s42:v1",
+    "physical_run_id": null,
+    "kernel_id": null,
+    "source_receipt_refs": [],
+    "binding_note": "No physical job exists: the prospective conditional action was not released."
+  },
+  "source_hashes": {
+    "experiments/pcqm_k1_chem_local_100k/audit/rml_plan/trajectory.json": "965ddefe29d861c63ffdf845f7e2624630cb6595345303be8610ed9d81932835",
+    "experiments/pcqm_k1_chem_local_100k/decision.md": "5503b197ce1280c871f4f611ebb217711c599cdb3bb4b14eb7de540f4ae1fbc7",
+    "experiments/pcqm_k1_chem_local_100k/STATUS.md": "f939fee6e16741ffeb2572880a90d5fe3a052fafe784a3b3ba419ae57cfd875f"
+  },
+  "findings": [
+    "Both chemistry-local candidates failed the nomination gate. The conditional fixed500K audit was not released or launched. Its frozen run ID was a prospective logical ID, not an observed physical job.",
+    "No accuracy, training-replay readiness, promotion or new compute authorization is asserted.",
+    "Internal graph/label access is not converted to formal observed role events without source row-identity records; unknown remains unknown."
+  ],
+  "cost_semantics": {
+    "wall_hours": "Native worker wall seconds divided by 3600 when available.",
+    "device_hours": "Not applicable: no physical job was released.",
+    "cpu_hours": "CPU accounting semantics are not inferred from allocated core count or process-CPU seconds; left missing.",
+    "queue_hours": "Not measured; never inferred from file timestamps."
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-k1-chem-local-post100k-audit-s42",
+      "trajectory_id": "TC-k1-chem-local-post100k-audit-s42",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-k1-chem-local-audit-s42:v1",
+      "attempt_id": "v1",
+      "platform": "kaggle2",
+      "hardware": "not_allocated",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "not_applicable",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "official_validation": "not_applicable",
+    "test_dev": "not_applicable",
+    "test_challenge": "not_applicable",
+    "train": "not_applicable",
+    "internal_development_100000_150000": "not_applicable",
+    "internal_development_500000_550000": "not_applicable"
+  }
+}

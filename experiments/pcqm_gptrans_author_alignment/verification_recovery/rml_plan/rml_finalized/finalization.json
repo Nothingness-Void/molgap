@@ -1,0 +1,30 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-1937a44fe46c3c38acbee324308b14d2f7dd546aa03883d018ec18be3dd0e0e1",
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v1/acceptance.json": "567fb248c625860fc04e0a7d5ce46bbe96b0fc261b0ffd435df6a3615c01e93e",
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v1/decision.md": "a248a589e9f94ee3530960956658f18cd4b4c1506911ee2c074e8a7660e5c5f1",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan/trajectory.json": "52ec482d0bdd83ddc87b7e317286c0cd935e4db04d0258d4004b0d61210d1e22",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_record.md": "c21c03f9e1b3aed193a9ca0167369ad66821bd36c2c2c943bbc3a0431f9f37eb",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v1.json": "294ea7bd9cdd48edb35585ba4eadd8545eac2d9e2a882a70c1005e2a23c4af00"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-gptrans-author-input-preparation-verification-recovery.json": "2f518860fc03b81c1a191681c760e1f8ba91dace20d144ab64ce329e5a890fc6",
+    "prospective_snapshot.json": "52ec482d0bdd83ddc87b7e317286c0cd935e4db04d0258d4004b0d61210d1e22",
+    "terminal_input.json": "c090de6c3df86446c817b594bb979ae48fa1dbd5b522f1407ed99cc666dbdfc9",
+    "trajectory.json": "63c3dcf75f528fe5ff300024ce9f4ccbd5d1a7bf046a89dc188358c1138cd89b",
+    "v5_evidence.json": "0e4c6bee5220d248886c550ff62e3314078b63241f639372a32fd560b0aeb68d"
+  },
+  "replacements": {
+    "costs/cost-TC-gptrans-author-input-preparation-verification-recovery.json": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan/costs/cost-TC-gptrans-author-input-preparation-verification-recovery.json",
+    "trajectory.json": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "1937a44fe46c3c38acbee324308b14d2f7dd546aa03883d018ec18be3dd0e0e1",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery"
+}

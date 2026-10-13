@@ -1,0 +1,68 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained_metadata",
+      "locator": "experiments/pcqm_gptrans_author_alignment/results/preparation_failure_v1.md",
+      "name": "retained_source_0",
+      "sha256": "267c52b85f50bd81841fc5457d0974fb25c1382f5029d873173f38ea8ec7c776"
+    },
+    {
+      "availability": "repository_retained_metadata",
+      "locator": "experiments/pcqm_gptrans_author_alignment/preparation_submission.json",
+      "name": "retained_source_1",
+      "sha256": "8cc78b803ba42e856a03c8822113f5151482b721390482d402d90bf7082adb33"
+    },
+    {
+      "availability": "ignored_local_retained_metadata",
+      "locator": "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/failure.json",
+      "name": "retained_source_2",
+      "sha256": "3514817757c1b461e90a391ba4109581ac82bf6e9ed761f9bc4f814bbc13a4b4"
+    },
+    {
+      "availability": "ignored_local_retained_metadata",
+      "locator": "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/native_cost.json",
+      "name": "retained_source_3",
+      "sha256": "de86dc64f9f2ea702f7e233f553ca63946ba1fb4152cb1b47019678ab562480b"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_author_alignment/preparation_rml/trajectory.json",
+      "experiments/pcqm_gptrans_author_alignment/results/preparation_failure_v1.md",
+      "experiments/pcqm_gptrans_author_alignment/preparation_submission.json",
+      "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/failure.json",
+      "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/native_cost.json",
+      "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/preparation_v1/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-rml-reconciled-preparation-v1-20261001",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-preserved-v5-prospective-plan",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-30T17:58:55Z",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed."
+  },
+  "outcome": {
+    "artifact_status": "retained_failure_metadata",
+    "budget_decision": "retained_native_or_estimated_wall_cost_partial",
+    "comparison_status": "not_evaluated",
+    "execution_status": "infrastructure_failed",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown",
+    "official_validation": "not_applicable",
+    "test_challenge": "not_applicable",
+    "test_dev": "not_applicable",
+    "train": "unknown"
+  },
+  "scope": "retained_infrastructure_attempt_closure",
+  "track": "C"
+}

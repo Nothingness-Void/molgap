@@ -1,0 +1,32 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-8ce975cbdd7488b391bf784e074a3d91cce0d1bcdde076807c83cddbb4d34a2d",
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v2/acceptance.json": "2edc05f647bffe30b17e2e89ea0b43ba644d39f2c3296915947ff12c84c64276",
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v2/decision.md": "76936fa82e3e2fa47dbb0b08f9f14545035c1e1d0bec3311312d15acf66394ea",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/acceptance_v2.json": "f5ea2f25cbafd77d2b705492ebac253d6ab8d619ad1fff6436a35a165fa6b336",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/trajectory.json": "1bd407079a8451682c4d8bf6ecf86ba03c4edd414a7c76e9db794d0f70b61fe0",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v2.json": "d1550a04d8ea6bf0e56b3b5a5aed2445dfd15e2a1810d00fce6a371e0068705c",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/native_cost.json": "97b3dde2aafc22441e0b57a0dbb3556f5793d57bc1fd3b962bdcccc8349c53d9",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/startup.json": "e03326887726063056d879600d7698917977a5f0e1e5d7da6c3f52e4a89490e1"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TC-gptrans-author-input-preparation-verification-recovery-v2.json": "81228220bf989450b068dadf5e2d38f8db5dad1b8a2e7cd362fc149eaff30d47",
+    "prospective_snapshot.json": "1bd407079a8451682c4d8bf6ecf86ba03c4edd414a7c76e9db794d0f70b61fe0",
+    "terminal_input.json": "05b6135066a57ec4ec37bbbc6b608d8567ac3b3ae5591b6b9c9c8a53b59aaba4",
+    "trajectory.json": "3f0ad5daade0b5c108201a11c6c58f9ac856b486c85e783c6cb2b5c1aafd3a65",
+    "v5_evidence.json": "77c7f0ad2d7cf4295f641b7a237e6463b54c23181a32042edd6bd0e413916bd1"
+  },
+  "replacements": {
+    "costs/cost-TC-gptrans-author-input-preparation-verification-recovery-v2.json": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/costs/cost-TC-gptrans-author-input-preparation-verification-recovery-v2.json",
+    "trajectory.json": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "8ce975cbdd7488b391bf784e074a3d91cce0d1bcdde076807c83cddbb4d34a2d",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery-v2"
+}

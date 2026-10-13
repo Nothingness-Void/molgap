@@ -1,0 +1,54 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained_metadata",
+      "locator": "experiments/pcqm_k1_chem_local_100k/decision.md",
+      "name": "retained_source_0",
+      "sha256": "5503b197ce1280c871f4f611ebb217711c599cdb3bb4b14eb7de540f4ae1fbc7"
+    },
+    {
+      "availability": "repository_retained_metadata",
+      "locator": "experiments/pcqm_k1_chem_local_100k/STATUS.md",
+      "name": "retained_source_1",
+      "sha256": "f939fee6e16741ffeb2572880a90d5fe3a052fafe784a3b3ba419ae57cfd875f"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_k1_chem_local_100k/audit/rml_plan/trajectory.json",
+      "experiments/pcqm_k1_chem_local_100k/decision.md",
+      "experiments/pcqm_k1_chem_local_100k/STATUS.md",
+      "experiments/pcqm_k1_chem_local_100k/rml_reconciliation/conditional_audit/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-rml-reconciled-conditional-audit-20261001",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-preserved-v5-prospective-plan",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-30T17:58:55Z",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed."
+  },
+  "outcome": {
+    "artifact_status": "decision_retained_no_worker_outputs",
+    "budget_decision": "compute_not_released",
+    "comparison_status": "not_evaluated",
+    "execution_status": "not_launched",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "not_applicable",
+    "internal_development_500000_550000": "not_applicable",
+    "official_validation": "not_applicable",
+    "test_challenge": "not_applicable",
+    "test_dev": "not_applicable",
+    "train": "not_applicable"
+  },
+  "scope": "unreleased_conditional_action_closure",
+  "track": "C"
+}

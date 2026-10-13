@@ -1,0 +1,61 @@
+{
+  "artifacts": [
+    {
+      "availability": "repository_retained_metadata",
+      "locator": "experiments/pcqm_metagin_2d_100k/results/v1_preflight_failure.md",
+      "name": "retained_source_0",
+      "sha256": "03f2f13b46bcea9048bff331fd9618b136afc14cf514942b600fc9a4c47acaa4"
+    },
+    {
+      "availability": "ignored_local_retained_metadata",
+      "locator": "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/failure.json",
+      "name": "retained_source_1",
+      "sha256": "b0eac623f32295fba53de68306e5d33cdea38cbdea1ea403402321a524fa01c8"
+    },
+    {
+      "availability": "ignored_local_retained_metadata",
+      "locator": "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/native_cost.json",
+      "name": "retained_source_2",
+      "sha256": "c2bd663480873ee1cd7809312780e1291a6ff675591411869afc2793249390cc"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_metagin_2d_100k/rml_plan/trajectory.json",
+      "experiments/pcqm_metagin_2d_100k/results/v1_preflight_failure.md",
+      "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/failure.json",
+      "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/native_cost.json",
+      "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/decision.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-rml-reconciled-metagin-v1-20261001",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-preserved-v5-prospective-plan",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-09-30T17:58:55Z",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed."
+  },
+  "outcome": {
+    "artifact_status": "retained_failure_metadata",
+    "budget_decision": "retained_native_or_estimated_wall_cost_partial",
+    "comparison_status": "not_evaluated",
+    "execution_status": "infrastructure_failed",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown",
+    "official_validation": "not_applicable",
+    "test_challenge": "not_applicable",
+    "test_dev": "not_applicable",
+    "train": "unknown"
+  },
+  "scope": "retained_infrastructure_attempt_closure",
+  "track": "C"
+}

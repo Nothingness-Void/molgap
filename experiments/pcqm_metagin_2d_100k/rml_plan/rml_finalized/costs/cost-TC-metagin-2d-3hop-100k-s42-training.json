@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "infrastructure_failure",
+  "cost_event_id": "cost-TC-metagin-2d-3hop-100k-s42-training",
+  "evidence_ref": "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/acceptance.json",
+  "hardware": "Tesla_T4_x2",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.1607305638022222
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.08036528171888888
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-metagin-2d-s42:v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-metagin-2d-3hop-100k-s42"
+}

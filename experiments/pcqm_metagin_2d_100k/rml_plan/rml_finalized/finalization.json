@@ -1,0 +1,31 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-8c9197d4d554b2a10b46c108a22e9e07fd9cab86e62aa8da9e58704d78007067",
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_metagin_2d_100k/results/v1_preflight_failure.md": "03f2f13b46bcea9048bff331fd9618b136afc14cf514942b600fc9a4c47acaa4",
+    "experiments/pcqm_metagin_2d_100k/rml_plan/trajectory.json": "126563bde6f289e6bffad329d36e6cb61b7a9affba94214c25241bd4246d3434",
+    "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/acceptance.json": "45af76c2aa9a37a430a211a07c312ea634ce4af21a5d913de083b9edcc1307e8",
+    "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/decision.md": "9cb14744979335e4bea77f93c8a7cefdc4964c66a74da4b3c34380937fe89aac",
+    "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/failure.json": "b0eac623f32295fba53de68306e5d33cdea38cbdea1ea403402321a524fa01c8",
+    "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/native_cost.json": "c2bd663480873ee1cd7809312780e1291a6ff675591411869afc2793249390cc"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-metagin-2d-3hop-100k-s42-training.json": "1f0cc308c3754438dcb298fa54802d7608504667fb5b77706e56bef5d32d6212",
+    "prospective_snapshot.json": "126563bde6f289e6bffad329d36e6cb61b7a9affba94214c25241bd4246d3434",
+    "terminal_input.json": "cf40ed3c6a702278586271e459bdc2c8a0638102ed65ca370bc7a0733b25caaa",
+    "trajectory.json": "5c7b7ce59a8a615b1020849f0e7902a647f0cc56bd506cd6e47948a575c6b7a1",
+    "v5_evidence.json": "79ca62a973c76c9533eeb3ab28ea7c58139ec28cd2134b3bdc46f1e2e7c7fb54"
+  },
+  "replacements": {
+    "costs/cost-TC-metagin-2d-3hop-100k-s42-training.json": "experiments/pcqm_metagin_2d_100k/rml_plan/costs/cost-TC-metagin-2d-3hop-100k-s42-training.json",
+    "trajectory.json": "experiments/pcqm_metagin_2d_100k/rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "8c9197d4d554b2a10b46c108a22e9e07fd9cab86e62aa8da9e58704d78007067",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-metagin-2d-3hop-100k-s42"
+}

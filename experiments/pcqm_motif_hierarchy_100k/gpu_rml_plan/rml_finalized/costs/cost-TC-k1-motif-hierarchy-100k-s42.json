@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "infrastructure_failure",
+  "cost_event_id": "cost-TC-k1-motif-hierarchy-100k-s42",
+  "evidence_ref": "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v1/acceptance.json",
+  "hardware": "unknown",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.04848888888888889
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-k1-motif-hierarchy-100k-s42"
+}

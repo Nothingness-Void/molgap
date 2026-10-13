@@ -1,0 +1,30 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-ddf444c4ac992a64265166b38ce1d20d239c2f399a01018d26c3337f36da4507",
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v1_failure.json": "b4ba2b9abac3bb4ae771f4e25766a20d1cf06bdd7e5dc9ba401408abaa08b340",
+    "experiments/pcqm_motif_hierarchy_100k/gpu_rml_plan/trajectory.json": "af3f66f105b44895f9c3634f8937060da1c235a983524207957c7c8c18ffb6b5",
+    "experiments/pcqm_motif_hierarchy_100k/gpu_submission_receipt.json": "dfa37e898251b8271d46a92e0ea783010d81600601676ace4e51b8f2cd91c37c",
+    "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v1/acceptance.json": "864ba4afebc73e8d021bb70a3936837b3d257c2ecfe53dc31459bf4c33009dd7",
+    "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v1/decision.md": "1c6f369381b74c83a0df583c7c81b704d042966cb66e273e9c5c74fc89159410"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-k1-motif-hierarchy-100k-s42.json": "4cf704ea7c1511a2417549f8bbe58275643a4c83cfa15c071c06da3a146c925f",
+    "prospective_snapshot.json": "af3f66f105b44895f9c3634f8937060da1c235a983524207957c7c8c18ffb6b5",
+    "terminal_input.json": "cea20b2399fcb6765930e815c3d72281c581a8cae6da20c88e611dc4f468338d",
+    "trajectory.json": "5b62ad2dfdbac42aad4d98ca890346450785e7b3caf785e2f9a9bc1d20bcda9a",
+    "v5_evidence.json": "ed082d4b79dde5b68bdcd7766d04e52b8f7eb2b9a189a60a9214517271ac6f47"
+  },
+  "replacements": {
+    "costs/cost-TC-k1-motif-hierarchy-100k-s42.json": "experiments/pcqm_motif_hierarchy_100k/gpu_rml_plan/costs/cost-TC-k1-motif-hierarchy-100k-s42.json",
+    "trajectory.json": "experiments/pcqm_motif_hierarchy_100k/gpu_rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "ddf444c4ac992a64265166b38ce1d20d239c2f399a01018d26c3337f36da4507",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-k1-motif-hierarchy-100k-s42"
+}

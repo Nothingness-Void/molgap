@@ -4,6 +4,13 @@ RML is the deterministic, committed index over MolGap research evidence. It
 does not replace experiment decisions, acceptance records, V5 evidence,
 `CURRENT_STATE.md`, or authoritative remote scheduler state.
 
+The dated [local reconciliation](operational_reconciliation_2026-10-01.md)
+records closure of stale prospective ACTIVE plans. Separate arm trajectories
+must not be counted as separate physical job groups.
+
+The [2026-10-13 publication-scope review](publication_scope_2026-10-13.json)
+distinguishes reviewed historical overlays from already committed experiment sources.
+
 Canonical inputs remain beside their owning experiment:
 
 - `trajectory.json`

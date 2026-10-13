@@ -1,0 +1,32 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-2d59e3d50e38c94e41708ddf64a5acf2e6b4c7d3dc3ec46474b586bcc13bb2fc",
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/preparation_rml/trajectory.json": "324b36d05b9483c2ef74871df68eb3f13ebbd542eaab92dddd1064f876b5649c",
+    "experiments/pcqm_gptrans_author_alignment/preparation_submission.json": "8cc78b803ba42e856a03c8822113f5151482b721390482d402d90bf7082adb33",
+    "experiments/pcqm_gptrans_author_alignment/results/preparation_failure_v1.md": "267c52b85f50bd81841fc5457d0974fb25c1382f5029d873173f38ea8ec7c776",
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/preparation_v1/acceptance.json": "6d557e2bb26e0e81ee44c8adc628550365a5b827d9aa37d0ccbe45c0f86dd606",
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/preparation_v1/decision.md": "d62f7df76d3822abde05d1fe2e790dbf66a090b61174877eb05e9f19dd4472f7",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/failure.json": "3514817757c1b461e90a391ba4109581ac82bf6e9ed761f9bc4f814bbc13a4b4",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_preparation_v1/gptrans_author_inputs/native_cost.json": "de86dc64f9f2ea702f7e233f553ca63946ba1fb4152cb1b47019678ab562480b"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-gptrans-author-input-preparation.json": "983bc57ac3b7d32da7bd3b30eaec517170aec07088995b65346165058f28150f",
+    "prospective_snapshot.json": "324b36d05b9483c2ef74871df68eb3f13ebbd542eaab92dddd1064f876b5649c",
+    "terminal_input.json": "5e35f53a5ad11ced2d2aaa2e4c245297bbff21ac9c633914e180b69958b4bd4d",
+    "trajectory.json": "6fc85b471d9a1f0fe3599c896c180c8599440d0ed7aad4ba5dd25d2969fb5a74",
+    "v5_evidence.json": "2c46604754db504ea1ce15ec50f8e7ae2f9365f1573b1d7f4e8b583101f2e1aa"
+  },
+  "replacements": {
+    "costs/cost-TC-gptrans-author-input-preparation.json": "experiments/pcqm_gptrans_author_alignment/preparation_rml/costs/cost-TC-gptrans-author-input-preparation.json",
+    "trajectory.json": "experiments/pcqm_gptrans_author_alignment/preparation_rml/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "2d59e3d50e38c94e41708ddf64a5acf2e6b4c7d3dc3ec46474b586bcc13bb2fc",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-gptrans-author-input-preparation"
+}

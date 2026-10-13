@@ -1,0 +1,119 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v1/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v1/acceptance.json": "567fb248c625860fc04e0a7d5ce46bbe96b0fc261b0ffd435df6a3615c01e93e",
+    "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v1/decision.md": "a248a589e9f94ee3530960956658f18cd4b4c1506911ee2c074e8a7660e5c5f1",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan/trajectory.json": "52ec482d0bdd83ddc87b7e317286c0cd935e4db04d0258d4004b0d61210d1e22",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_record.md": "c21c03f9e1b3aed193a9ca0167369ad66821bd36c2c2c943bbc3a0431f9f37eb",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v1.json": "294ea7bd9cdd48edb35585ba4eadd8545eac2d9e2a882a70c1005e2a23c4af00"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "recovery-v1",
+      "category": "infrastructure_failure",
+      "cost_event_id": "cost-TC-gptrans-author-input-preparation-verification-recovery",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v1/acceptance.json",
+      "hardware": "CPU-only",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v1/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained_metadata",
+        "locator": "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v1.json",
+        "name": "retained_source_0",
+        "sha256": "294ea7bd9cdd48edb35585ba4eadd8545eac2d9e2a882a70c1005e2a23c4af00"
+      },
+      {
+        "availability": "repository_retained_metadata",
+        "locator": "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_record.md",
+        "name": "retained_source_1",
+        "sha256": "c21c03f9e1b3aed193a9ca0167369ad66821bd36c2c2c943bbc3a0431f9f37eb"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan/trajectory.json",
+        "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v1.json",
+        "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_record.md",
+        "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v1/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-rml-reconciled-recovery-v1-20261001",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-preserved-v5-prospective-plan",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-30T17:58:55Z",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed."
+    },
+    "outcome": {
+      "artifact_status": "retained_failure_metadata",
+      "budget_decision": "cost_measurement_missing",
+      "comparison_status": "not_evaluated",
+      "execution_status": "infrastructure_failed",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "not_evaluated",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "unknown",
+      "internal_development_500000_550000": "unknown",
+      "official_validation": "not_applicable",
+      "test_challenge": "not_applicable",
+      "test_dev": "not_applicable",
+      "train": "unknown"
+    },
+    "scope": "retained_infrastructure_attempt_closure",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown",
+    "official_validation": "not_applicable",
+    "test_challenge": "not_applicable",
+    "test_dev": "not_applicable",
+    "train": "unknown"
+  },
+  "roles": [],
+  "run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+  "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery"
+}

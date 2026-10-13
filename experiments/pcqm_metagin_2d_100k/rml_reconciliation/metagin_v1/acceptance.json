@@ -1,0 +1,92 @@
+{
+  "format": "molgap-retained-metadata-terminal-acceptance-v1",
+  "evidence_id": "pcqm-rml-reconciled-metagin-v1-20261001",
+  "trajectory_id": "TC-metagin-2d-3hop-100k-s42",
+  "run_id": "kaseichou/molgap-metagin-2d-s42:v1",
+  "action_id": "A001",
+  "recorded_at": "2026-09-30T17:58:55Z",
+  "acceptance_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed.",
+  "outcome": {
+    "execution_status": "infrastructure_failed",
+    "artifact_status": "retained_failure_metadata",
+    "comparison_status": "not_evaluated",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "retained_native_or_estimated_wall_cost_partial",
+    "full_handoff_status": "not_authorized"
+  },
+  "trajectory_decision": {
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "decision_ref": "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "logical_to_physical_binding": {
+    "logical_run_id": "kaseichou/molgap-metagin-2d-s42:v1",
+    "physical_run_id": "kaseichou/molgap-metagin-2d-s42:v1",
+    "kernel_id": 136263563,
+    "source_receipt_refs": [],
+    "binding_note": "Physical attempt/version is established by the retained receipt/failure records; logical prospective run ID is preserved."
+  },
+  "source_hashes": {
+    "experiments/pcqm_metagin_2d_100k/rml_plan/trajectory.json": "126563bde6f289e6bffad329d36e6cb61b7a9affba94214c25241bd4246d3434",
+    "experiments/pcqm_metagin_2d_100k/results/v1_preflight_failure.md": "03f2f13b46bcea9048bff331fd9618b136afc14cf514942b600fc9a4c47acaa4",
+    "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/failure.json": "b0eac623f32295fba53de68306e5d33cdea38cbdea1ea403402321a524fa01c8",
+    "platforms/_records/kaggle/training/metagin_2d_s42_v1/molgap-metagin-2d-s42/native_cost.json": "c2bd663480873ee1cd7809312780e1291a6ff675591411869afc2793249390cc"
+  },
+  "findings": [
+    "The runtime throughput extrapolation gate stopped physical version 1 before epoch 0. Native allocation was Tesla T4 x2, one used; recorded full allocation time is 578.6300296879999 device-seconds. Optimizer calibration is not a scientific training endpoint.",
+    "No accuracy, training-replay readiness, promotion or new compute authorization is asserted.",
+    "Internal graph/label access is not converted to formal observed role events without source row-identity records; unknown remains unknown."
+  ],
+  "cost_semantics": {
+    "wall_hours": "Native worker wall seconds divided by 3600 when available.",
+    "device_hours": "Native summed allocation device-seconds divided by 3600, including idle devices.",
+    "cpu_hours": "CPU accounting semantics are not inferred from allocated core count or process-CPU seconds; left missing.",
+    "queue_hours": "Not measured; never inferred from file timestamps."
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-metagin-2d-3hop-100k-s42-training",
+      "trajectory_id": "TC-metagin-2d-3hop-100k-s42",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-metagin-2d-s42:v1",
+      "attempt_id": "v1",
+      "platform": "kaggle2",
+      "hardware": "Tesla_T4_x2",
+      "category": "infrastructure_failure",
+      "evidence_ref": "experiments/pcqm_metagin_2d_100k/rml_reconciliation/metagin_v1/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measured",
+          "value": 0.1607305638022222
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.08036528171888888
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "official_validation": "not_applicable",
+    "test_dev": "not_applicable",
+    "test_challenge": "not_applicable",
+    "train": "unknown",
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown"
+  }
+}

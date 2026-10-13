@@ -1,0 +1,95 @@
+{
+  "format": "molgap-retained-metadata-terminal-acceptance-v1",
+  "evidence_id": "pcqm-rml-reconciled-recovery-v2-20261001",
+  "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+  "run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+  "action_id": "A001",
+  "recorded_at": "2026-09-30T17:58:55Z",
+  "acceptance_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed.",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "accepted_cpu_input_metadata",
+    "comparison_status": "context_only",
+    "scientific_status": "input_preparation_accepted_no_accuracy_claim",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "retained_native_or_estimated_wall_cost_partial",
+    "full_handoff_status": "not_authorized"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v2/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "logical_to_physical_binding": {
+    "logical_run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+    "physical_run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery:v2",
+    "kernel_id": 136535008,
+    "source_receipt_refs": [
+      "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v2.json"
+    ],
+    "binding_note": "Physical attempt/version is established by the retained receipt/failure records; logical prospective run ID is preserved."
+  },
+  "source_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/trajectory.json": "1bd407079a8451682c4d8bf6ecf86ba03c4edd414a7c76e9db794d0f70b61fe0",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/acceptance_v2.json": "f5ea2f25cbafd77d2b705492ebac253d6ab8d619ad1fff6436a35a165fa6b336",
+    "experiments/pcqm_gptrans_author_alignment/verification_recovery/submission_v2.json": "d1550a04d8ea6bf0e56b3b5a5aed2445dfd15e2a1810d00fce6a371e0068705c",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/native_cost.json": "97b3dde2aafc22441e0b57a0dbb3556f5793d57bc1fd3b962bdcccc8349c53d9",
+    "platforms/_records/kaggle/training/gptrans_author_inputs_verification_recovery_v2/gptrans_author_inputs/startup.json": "e03326887726063056d879600d7698917977a5f0e1e5d7da6c3f52e4a89490e1"
+  },
+  "findings": [
+    "Independent CPU acceptance established 150,000 rows / 150 chunks, full source rederivation and the exact two-table degree transform. This was accepted input preparation, not model training or an accuracy comparison.",
+    "No accuracy, training-replay readiness, promotion or new compute authorization is asserted.",
+    "Internal graph/label access is not converted to formal observed role events without source row-identity records; unknown remains unknown."
+  ],
+  "cost_semantics": {
+    "wall_hours": "Native worker wall seconds divided by 3600 when available.",
+    "device_hours": "Not applicable: CPU-only worker allocated zero GPUs.",
+    "cpu_hours": "CPU accounting semantics are not inferred from allocated core count or process-CPU seconds; left missing.",
+    "queue_hours": "Not measured; never inferred from file timestamps."
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "trajectory_id": "TC-gptrans-author-input-preparation-verification-recovery-v2",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-gptrans-author-inputs-verification-recovery",
+      "attempt_id": "recovery-v2",
+      "platform": "kaggle2",
+      "hardware": "CPU-only",
+      "category": "cache_build",
+      "evidence_ref": "experiments/pcqm_gptrans_author_alignment/rml_reconciliation/recovery_v2/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.20540670997722224
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "official_validation": "not_applicable",
+    "test_dev": "not_applicable",
+    "test_challenge": "not_applicable",
+    "train": "unknown",
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown"
+  }
+}

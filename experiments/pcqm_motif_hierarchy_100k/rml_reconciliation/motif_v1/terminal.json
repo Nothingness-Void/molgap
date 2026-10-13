@@ -1,0 +1,119 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TC-k1-motif-hierarchy-100k-s42",
+  "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v1",
+  "action_id": "A001",
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "acceptance_ref": "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v1/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_motif_hierarchy_100k/gpu_rml_plan/trajectory.json": "af3f66f105b44895f9c3634f8937060da1c235a983524207957c7c8c18ffb6b5",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v1_failure.json": "b4ba2b9abac3bb4ae771f4e25766a20d1cf06bdd7e5dc9ba401408abaa08b340",
+    "experiments/pcqm_motif_hierarchy_100k/gpu_submission_receipt.json": "dfa37e898251b8271d46a92e0ea783010d81600601676ace4e51b8f2cd91c37c",
+    "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v1/decision.md": "1c6f369381b74c83a0df583c7c81b704d042966cb66e273e9c5c74fc89159410",
+    "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v1/acceptance.json": "864ba4afebc73e8d021bb70a3936837b3d257c2ecfe53dc31459bf4c33009dd7"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-rml-reconciled-motif-v1-20261001",
+    "track": "C",
+    "scope": "retained_infrastructure_attempt_closure",
+    "legacy_contract": "none-preserved-v5-prospective-plan",
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_motif_hierarchy_100k/gpu_rml_plan/trajectory.json",
+        "experiments/pcqm_motif_hierarchy_100k/attempt_v1_failure.json",
+        "experiments/pcqm_motif_hierarchy_100k/gpu_submission_receipt.json",
+        "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v1/decision.md"
+      ]
+    },
+    "outcome": {
+      "execution_status": "infrastructure_failed",
+      "artifact_status": "retained_failure_metadata",
+      "comparison_status": "not_evaluated",
+      "scientific_status": "not_evaluated",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "retained_native_or_estimated_wall_cost_partial",
+      "full_handoff_status": "not_authorized"
+    },
+    "role_use": {
+      "official_validation": "not_applicable",
+      "test_dev": "not_applicable",
+      "test_challenge": "not_applicable",
+      "train": "unknown",
+      "internal_development_100000_150000": "unknown",
+      "internal_development_500000_550000": "unknown"
+    },
+    "artifacts": [
+      {
+        "name": "retained_source_0",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v1_failure.json",
+        "availability": "repository_retained_metadata",
+        "sha256": "b4ba2b9abac3bb4ae771f4e25766a20d1cf06bdd7e5dc9ba401408abaa08b340"
+      },
+      {
+        "name": "retained_source_1",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/gpu_submission_receipt.json",
+        "availability": "repository_retained_metadata",
+        "sha256": "dfa37e898251b8271d46a92e0ea783010d81600601676ace4e51b8f2cd91c37c"
+      }
+    ],
+    "migration": {
+      "migrated_at": "2026-09-30T17:58:55Z",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed."
+    }
+  },
+  "decision": {
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "decision_ref": "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v1/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-k1-motif-hierarchy-100k-s42",
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v1",
+      "attempt_id": "v1",
+      "platform": "kaggle2",
+      "hardware": "unknown",
+      "category": "infrastructure_failure",
+      "evidence_ref": "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v1/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 0.04848888888888889
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "official_validation": "not_applicable",
+    "test_dev": "not_applicable",
+    "test_challenge": "not_applicable",
+    "train": "unknown",
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown"
+  }
+}

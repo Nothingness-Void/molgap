@@ -1,0 +1,119 @@
+{
+  "acceptance_ref": "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v2/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v2/failure.json": "b43a0d9a2c35060afb7bacd5414d91cbb2772d58cdda1a193325f633ddfe0223",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v2/gpu_rml_plan/trajectory.json": "a82a91c9eb5be1a9f5a6966ce3855f88d33f791f0aa9e4b59562f3c44b41f56b",
+    "experiments/pcqm_motif_hierarchy_100k/attempt_v2/submission_receipt.json": "0eb2b1d9f841d7216075ea307b85c50a27caebaa7a862294ff3f5ddcec7d2ae9",
+    "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v2/acceptance.json": "c18349cde4e96c3f713a57c399bb4f80322ea45a1acc4a0f05469fc3335b23ef",
+    "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v2/decision.md": "d877a5ca421ff04916a5159278ce93b7cde432c95ef1eda8f3fe4f3184d88464"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v2",
+      "category": "infrastructure_failure",
+      "cost_event_id": "cost-TC-k1-motif-hierarchy-100k-s42-v2",
+      "evidence_ref": "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v2/acceptance.json",
+      "hardware": "unknown",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 0.05138888888888889
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v2",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v2"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v2/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reopen_conditions": [
+      "Separate explicit authorization and a new physical attempt/plan; no automatic retry or successor."
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "repository_retained_metadata",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v2/failure.json",
+        "name": "retained_source_0",
+        "sha256": "b43a0d9a2c35060afb7bacd5414d91cbb2772d58cdda1a193325f633ddfe0223"
+      },
+      {
+        "availability": "repository_retained_metadata",
+        "locator": "experiments/pcqm_motif_hierarchy_100k/attempt_v2/submission_receipt.json",
+        "name": "retained_source_1",
+        "sha256": "0eb2b1d9f841d7216075ea307b85c50a27caebaa7a862294ff3f5ddcec7d2ae9"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_motif_hierarchy_100k/attempt_v2/gpu_rml_plan/trajectory.json",
+        "experiments/pcqm_motif_hierarchy_100k/attempt_v2/failure.json",
+        "experiments/pcqm_motif_hierarchy_100k/attempt_v2/submission_receipt.json",
+        "experiments/pcqm_motif_hierarchy_100k/rml_reconciliation/motif_v2/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-rml-reconciled-motif-v2-20261001",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-preserved-v5-prospective-plan",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-09-30T17:58:55Z",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Local retained-metadata bookkeeping review only; no predictions recomputed and no model executed."
+    },
+    "outcome": {
+      "artifact_status": "retained_failure_metadata",
+      "budget_decision": "retained_native_or_estimated_wall_cost_partial",
+      "comparison_status": "not_evaluated",
+      "execution_status": "infrastructure_failed",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "not_evaluated",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "unknown",
+      "internal_development_500000_550000": "unknown",
+      "official_validation": "not_applicable",
+      "test_challenge": "not_applicable",
+      "test_dev": "not_applicable",
+      "train": "unknown"
+    },
+    "scope": "retained_infrastructure_attempt_closure",
+    "track": "C"
+  },
+  "finalized_at": "2026-09-30T17:58:55Z",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "unknown",
+    "internal_development_500000_550000": "unknown",
+    "official_validation": "not_applicable",
+    "test_challenge": "not_applicable",
+    "test_dev": "not_applicable",
+    "train": "unknown"
+  },
+  "roles": [],
+  "run_id": "kaseichou/molgap-k1-motif-hierarchy-s42:v2",
+  "trajectory_id": "TC-k1-motif-hierarchy-100k-s42-v2"
+}
