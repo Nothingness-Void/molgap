@@ -43,7 +43,8 @@ TRAINING_ADAPTERS = MappingProxyType({
     ("gptrans_t", "2"): TrainingAdapter(
         ("gptrans_t", "2"), "molgap.family_training_runner", "gptrans-session-v1",
         (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),
-         ("memory_value", "memory_value"), ("memory_message", "memory_message")),
+         ("memory_value", "memory_value"), ("memory_message", "memory_message"),
+         ("gptrans_degree_bond_local", "degree_bond_local_ema999")),
         ("molgap.pcqm_wedge",), target_identity_in_completion=True),
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",

@@ -38,8 +38,14 @@ profiler. The context temporarily wraps existing callables, including PyTorch
 backward/clipping and family transport, and restores them on success or error.
 It does not copy the training loop, model, optimizer or persistence algorithm.
 An output directory must be fresh. When packaging a diagnostic, include
-`src/molgap/family_execution_profile.py` as an explicit source extra using the
-existing package builder; it is deliberately not a default training dependency.
+`src/molgap/family_execution_profile.py` through the existing package builder;
+the reviewed shared inventory includes it without importing it in ordinary training.
+The shared recipe accepts an optional `profiling` object with these configuration
+fields. It is bound by the complete recipe SHA, outside optimizer/schedule math.
+The shared native barrier enables it on one two-step repeat and requires exact
+optimizer/EMA/RNG equality to the plain repeat/resume, real CUDA events and bound
+report/trace bytes before formal training. Each profiled invocation retains a
+fresh output directory and context-bound receipt for safe resume custody.
 
 ## Outputs and interpretation
 

@@ -40,6 +40,17 @@ class ProfileConfig:
                 len(set(self.module_paths)) != len(self.module_paths)):
             raise ValueError("Expected unique, nonempty module paths")
 
+    @classmethod
+    def from_dict(cls, value):
+        if type(value) is not dict or set(value) - set(cls.__dataclass_fields__):
+            raise ValueError("Unknown profiler configuration fields")
+        value = dict(value)
+        if "module_paths" in value:
+            if type(value["module_paths"]) is not list:
+                raise ValueError("JSON module_paths must be a list")
+            value["module_paths"] = tuple(value["module_paths"])
+        return cls(**value)
+
 
 class _ObservedBatches:
     def __init__(self, source, owner):
