@@ -1,0 +1,69 @@
+{
+  "kernel": "kaseichou/molgap-gptrans-triplet-routing-dual-s42",
+  "version": 1,
+  "files": [
+    {
+      "path": "gptrans_triplet_routing/startup.json",
+      "sha256": "e94e60d7a1df01bc197f12200d0b4e0b36712d7647d17130eed204954635c505"
+    },
+    {
+      "path": "gptrans_triplet_routing/job_summary.json",
+      "sha256": "5bf96efa5135c5b74298a75ff044a8fa07965c07dd86aaf9b8fd958008a30a35"
+    },
+    {
+      "path": "gptrans_triplet_routing/native_cost.json",
+      "sha256": "a49f642e1be89f2e7aa1b33c608a2770246cfe88582fb8f5dde2db0fc49b67e1"
+    },
+    {
+      "path": "gptrans_triplet_routing/preflight_phase.json",
+      "sha256": "f8d2881d8e33e75d43b54125ef6e5012c35b89fc3533e68438c51005b11e6bb9"
+    },
+    {
+      "path": "gptrans_triplet_routing/degree_local_triplet_product_v2_ema999/initial_qualification.json",
+      "sha256": "35574a3330ec5ea494c0e45735bd2e4067dfc4f28c5bcc5a25113f88a801efaf"
+    },
+    {
+      "path": "gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/initial_qualification.json",
+      "sha256": "f2b5547c8ffa8e8b5f2648c179fdea9dd77d335264ddba5e4415473ef24a59c3"
+    },
+    {
+      "path": "gptrans_triplet_routing/training_phase.json",
+      "sha256": "cff17e9f400dc0d162fdce3230f712a343068ee46904df6ca521c957773c9869"
+    },
+    {
+      "path": "gptrans_triplet_routing/degree_local_triplet_product_v2_ema999/arm_binding.json",
+      "sha256": "5ca757ec00a414b15112f8229f9c1acd72644d1e4e1b0dcef2230bd782ced514"
+    },
+    {
+      "path": "gptrans_triplet_routing/degree_local_triplet_product_v2_ema999/preflight/preflight.json",
+      "sha256": "1449831114494bb79d6b5ac83cc5d98109ee40d949d3472cef39b895daf4afe3"
+    },
+    {
+      "path": "gptrans_triplet_routing/degree_local_triplet_product_v2_ema999/training/completion_manifest.json",
+      "sha256": "e41f733b3e9743969ef4839ed598613c610f734886bb706c18a5e893a00e246e"
+    },
+    {
+      "path": "gptrans_triplet_routing/degree_local_triplet_product_v2_ema999/training/frozen_reference.json",
+      "sha256": "3a96652a7aed569abc4c2e60dffc17ec9c3ad2eb63c61a782b8b3e225c69f5fb"
+    },
+    {
+      "path": "gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/arm_binding.json",
+      "sha256": "6f60895e03421bb74d2034ec416dfe96cbaa823ca5efc9858fc362a51aaaf7e9"
+    },
+    {
+      "path": "gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/preflight/preflight.json",
+      "sha256": "1907486dbb1a1b02cd40fd49fb942730e3e7f1f456ebddcd77cd7ca387f589c1"
+    },
+    {
+      "path": "gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/completion_manifest.json",
+      "sha256": "e2fd82e154ce67826863b5878bfacaf0e04a7891b700a99e20acd0bf0d8da995"
+    },
+    {
+      "path": "gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/frozen_reference.json",
+      "sha256": "a27ece1c68bce6da978d1349d7677bf8bf6b614879e9a99ce642da06cd44f501"
+    }
+  ],
+  "transport": "version_specific_exact_file",
+  "scientific_acceptance": false,
+  "unselected_outputs_downloaded": false
+}

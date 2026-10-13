@@ -1,0 +1,409 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/observed_metadata.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026",
+    "experiments/pcqm_gptrans_triplet_communication_100k/gpu/screen_config.json": "65d75329e76fb9ac40dc7206e5e8b299289b5967a9d3a9f5936ee20f4275c0ac",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/comparison_readiness_prelaunch.json": "bb55d3a2e462cb1799818d612b1aa7f8f7f1a7b5e3fa94de61267201f6177be8",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/contract.json": "6c7836d9c2a48cba53cafc7f179c480bb70e8eef2948bd78f494de9f3d14cf13",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/candidate_trace_manifest.json": "509728fa8488d2634ac6a3cc488fdd242f4e8972c26e325446acde477cf10e62",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/comparison_readiness.json": "7789a660c518067bd26cab6fcb91af6a056735e89c996c29a7ddb3a541bcfaaf",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/cost_records.json": "7dfee410d511be988d3c7aca94fd771d3aadf2620a613dfed6cfe7bec76be2c8",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/decision.md": "be36411667e0b7a43c243b01a6766007c11297430da8cb10e09e1e9dc3dc101e",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/observed_metadata.json": "3694f96fb0cf01391e982ef90d4b00fac367a8179f50a81f16f9683848141bae",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/paired_analysis.json": "ab5c70e5d6ddc81af6cdbc9634bb658e0d7bc0c7ed48bc69a9816db7ba2c1604",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/prediction_manifest.json": "6b0dd69e86e8909310ab0cd2c1109e9d2b7f8e7c36a2d81326f7b1ec296b7476",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/role_history.json": "db05f46ea0bce57b5ab2484ac650087ea4f4eb24f42334b491ab7f958b127c86",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/runtime_certificate.json": "4fc06952263a32dd47d00ae09af7726631d80eaa51c2bef5d7519881b8f0f7d6",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/rml_plan/trajectory.json": "994a64be0f3a719b0856ff59105aec3351b5c8d11da15ab97f0e5ecdfef97a96",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/acceptance.json": "19d9fe077168e0d991a274fdf45ad985c28eb2c4553939159ebbb5679e8f5a3a",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/screen_config.json": "637fb239b0286af34480d2a79e9d97eefb15d159d8ee8a839849f92480fc60ca",
+    "experiments/pcqm_gptrans_triplet_routing_100k/gpu/submission_v1.json": "c7893ac299745fefcfec5ea20a0fd63c6547e7e8327aeca13130ecdc80160f07",
+    "experiments/pcqm_gptrans_triplet_routing_100k/protocol.md": "6596c3f3231aa86e7646259efa947bb3e9cc06ac36f10d02f768ac7c116c7ae6",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+    "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948",
+    "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/best_model.pt": "0744cbe5cee42a497fb74473c3d312ee523ffbe311d0951c53592153c1f7d8e7",
+    "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/canonical_trace.json": "0706625b8df19a9b7e1fb08b0cb1a26e5439c67032b6f33afed7b03e797cdd84",
+    "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/completion_manifest.json": "e2fd82e154ce67826863b5878bfacaf0e04a7891b700a99e20acd0bf0d8da995",
+    "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/development_predictions.pt": "3eb51d7c558d380608a3f83babae15c9f7097d93cf3f2ca915c7541686b3444a",
+    "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/last_checkpoint.pt": "ca8d18cbd4880178af52271a01e1258228312836aef9cfab31467c5b47af67f9",
+    "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/trace.json": "b68c29371d70e85dd42d8c150fc3487442becebe0701bf4c5f376a21c1483276",
+    "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/native_cost.json": "a49f642e1be89f2e7aa1b33c608a2770246cfe88582fb8f5dde2db0fc49b67e1"
+  },
+  "comparison_readiness_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/comparison_readiness.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-g1-local-triplet-bond-route-100k-s42-observed-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/observed_metadata.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 4.302807702566667
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 4.302807702566667
+        }
+      },
+      "platform": "kaggle2-t4-gptrans-triplet-routing",
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/decision.md",
+    "final": true,
+    "next_allowed_actions": [
+      "CLOSE"
+    ],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "explicit scale/combination compute authorization"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_author_alignment/recovered_reference/target_transform.json",
+        "name": "target_transform.json",
+        "sha256": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/candidate_trace_manifest.json",
+        "name": "candidate_trace_manifest.json",
+        "sha256": "509728fa8488d2634ac6a3cc488fdd242f4e8972c26e325446acde477cf10e62"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/comparison_readiness.json",
+        "name": "comparison_readiness.json",
+        "sha256": "7789a660c518067bd26cab6fcb91af6a056735e89c996c29a7ddb3a541bcfaaf"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/cost_records.json",
+        "name": "cost_records.json",
+        "sha256": "7dfee410d511be988d3c7aca94fd771d3aadf2620a613dfed6cfe7bec76be2c8"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/decision.md",
+        "name": "decision.md",
+        "sha256": "be36411667e0b7a43c243b01a6766007c11297430da8cb10e09e1e9dc3dc101e"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/observed_metadata.json",
+        "name": "observed_metadata.json",
+        "sha256": "3694f96fb0cf01391e982ef90d4b00fac367a8179f50a81f16f9683848141bae"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/paired_analysis.json",
+        "name": "paired_analysis.json",
+        "sha256": "ab5c70e5d6ddc81af6cdbc9634bb658e0d7bc0c7ed48bc69a9816db7ba2c1604"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/prediction_manifest.json",
+        "name": "prediction_manifest.json",
+        "sha256": "6b0dd69e86e8909310ab0cd2c1109e9d2b7f8e7c36a2d81326f7b1ec296b7476"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/role_history.json",
+        "name": "role_history.json",
+        "sha256": "db05f46ea0bce57b5ab2484ac650087ea4f4eb24f42334b491ab7f958b127c86"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/runtime_certificate.json",
+        "name": "runtime_certificate.json",
+        "sha256": "4fc06952263a32dd47d00ae09af7726631d80eaa51c2bef5d7519881b8f0f7d6"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/acceptance.json",
+        "name": "acceptance.json",
+        "sha256": "19d9fe077168e0d991a274fdf45ad985c28eb2c4553939159ebbb5679e8f5a3a"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/screen_config.json",
+        "name": "screen_config.json",
+        "sha256": "637fb239b0286af34480d2a79e9d97eefb15d159d8ee8a839849f92480fc60ca"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/row_manifest.json",
+        "name": "row_manifest.json",
+        "sha256": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/target_manifest.json",
+        "name": "target_manifest.json",
+        "sha256": "6f5e12ed1f4a41aece1c2b869021ab6a8d332cdf9cbf31104d3d5cb21d02c948"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/best_model.pt",
+        "name": "best_model.pt",
+        "sha256": "0744cbe5cee42a497fb74473c3d312ee523ffbe311d0951c53592153c1f7d8e7"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/canonical_trace.json",
+        "name": "canonical_trace.json",
+        "sha256": "0706625b8df19a9b7e1fb08b0cb1a26e5439c67032b6f33afed7b03e797cdd84"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/completion_manifest.json",
+        "name": "completion_manifest.json",
+        "sha256": "e2fd82e154ce67826863b5878bfacaf0e04a7891b700a99e20acd0bf0d8da995"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/last_checkpoint.pt",
+        "name": "last_checkpoint.pt",
+        "sha256": "ca8d18cbd4880178af52271a01e1258228312836aef9cfab31467c5b47af67f9"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/native_cost.json",
+        "name": "native_cost.json",
+        "sha256": "a49f642e1be89f2e7aa1b33c608a2770246cfe88582fb8f5dde2db0fc49b67e1"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/development_predictions.pt",
+        "name": "development_predictions.pt",
+        "sha256": "3eb51d7c558d380608a3f83babae15c9f7097d93cf3f2ca915c7541686b3444a"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/contract.json",
+        "name": "contract.json",
+        "sha256": "6c7836d9c2a48cba53cafc7f179c480bb70e8eef2948bd78f494de9f3d14cf13"
+      },
+      {
+        "availability": "local_verified",
+        "locator": "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/trace.json",
+        "name": "trace.json",
+        "purpose": "analysis_diagnostics",
+        "sha256": "b68c29371d70e85dd42d8c150fc3487442becebe0701bf4c5f376a21c1483276"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_triplet_routing_100k/protocol.md",
+        "experiments/pcqm_gptrans_triplet_communication_100k/gpu/screen_config.json",
+        "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/rml_plan/trajectory.json",
+        "experiments/pcqm_gptrans_triplet_routing_100k/gpu/submission_v1.json",
+        "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/comparison_readiness_prelaunch.json",
+        "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/decision.md"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-g1-degree-local-triplet-bond-route-ema999-100k-s42",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-prospective-v5",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-13T07:49:22.542035+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "verified native artifacts and saved prediction tensors"
+    },
+    "outcome": {
+      "artifact_status": "accepted",
+      "budget_decision": "stop_under_contract",
+      "comparison_status": "strict_causal",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "internal_development": "consumed",
+      "internal_train": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched"
+    },
+    "scope": "single_mechanism_screen_100k",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-13T07:49:22.542035+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development": "consumed",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_train-training_membership",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_train-labels_read",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_train-metric_computed",
+      "role_name": "internal_train",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_development-prediction_input",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_development-labels_read",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/observed_metadata.json",
+      "role_event_id": "role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_development-selection_used",
+      "role_name": "internal_development",
+      "row_manifest_hash": "15c8cfbc1bb3376ccf5c80e89f08007c08efb4c6017afee9ea9e12b22bc7b269",
+      "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+    }
+  ],
+  "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": true,
+      "exclusion_reasons": []
+    },
+    "comparability_identity": {
+      "architecture_identity": "dd19002ceb821c98828c3544ddbe535e87e6a3d0a6090c10b48e94e49bce3811",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "ema999-each-step-selection",
+      "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "lr_schedule_identity": "a4d40c75b727150bff6f1a581713dc306ac2491d175f5b54c04e3f5060cb415f",
+      "matched_architecture_required": false,
+      "optimizer_identity": "6122a1c768b0314d3ad4e69d40de3490279285b54aaa506b3e1041fe57847452",
+      "precision_identity": "fp32-no-tf32-deterministic-bs128-drop-last",
+      "row_split_identity": "train-0-100000-development-100000-150000@71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818",
+      "scientific_contract": "gptrans-v5-observation-reference-fp32-bs128-60epochs",
+      "selection_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+      "target_transform_identity": "472f746908b0f692e720a0b21faf3b8f5d48f90c9551dad11e2dd1db691a2285",
+      "terminal_endpoint_identity": "46860-optimizer-steps",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/contract.json",
+    "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "internal_development_ema_gap_mae_eV",
+    "model_identity": "dd19002ceb821c98828c3544ddbe535e87e6a3d0a6090c10b48e94e49bce3811",
+    "presentation_semantics_ref": "experiments/pcqm_gptrans_v5_audit_reference/contract.json",
+    "reference_id": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+    "run_id": "gptrans-triplet-routing-dual-s42:degree_local_triplet_bond_route_ema999",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_ema_over_60_epochs",
+    "terminal_evidence_ref": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/terminal_evidence.json",
+    "trace_artifact_ref": "platforms/_records/kaggle/training/gptrans_triplet_routing_v1/gptrans_triplet_routing/degree_local_triplet_bond_route_ema999/training/canonical_trace.json",
+    "trace_artifact_sha256": "0706625b8df19a9b7e1fb08b0cb1a26e5439c67032b6f33afed7b03e797cdd84",
+    "trace_fields": {
+      "checkpoint_identity": true,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+    "weight_semantics": "ema",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42"
+}

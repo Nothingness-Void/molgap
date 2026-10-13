@@ -1,0 +1,154 @@
+{
+  "format": "molgap-triplet-routing-terminal-validation-v1",
+  "status": "PASS",
+  "validated_at_utc": "2026-10-13T07:54:00.3895243Z",
+  "scope": {
+    "experiment": "pcqm_gptrans_triplet_routing_100k",
+    "mechanical_only": true,
+    "remote_accessed": false,
+    "local_training_executed": false,
+    "local_inference_executed": false,
+    "protected_role_accessed": false,
+    "portable_or_cross_machine_check": "not_run_by_request"
+  },
+  "rml": {
+    "validate": {
+      "command": ".venv\\Scripts\\python.exe -m molgap.research_memory validate",
+      "exit_code": 0,
+      "result": {
+        "evidence": 97,
+        "trajectories": 100,
+        "costs": 148,
+        "roles": 424,
+        "traces": 58,
+        "ready": 0,
+        "comparison_prelaunch": 62,
+        "comparison_readiness": 45,
+        "reference_bundles": 17,
+        "target_transform_assets": 3
+      }
+    },
+    "check_frozen": {
+      "command": ".venv\\Scripts\\python.exe -m molgap.research_memory check --frozen",
+      "exit_code": 0,
+      "stdout": "RML derived outputs are frozen and current"
+    }
+  },
+  "synthetic_test": {
+    "command": ".venv\\Scripts\\python.exe -m pytest -q --noconftest tests/test_gptrans_triplet_routing.py",
+    "path": "tests/test_gptrans_triplet_routing.py",
+    "sha256": "7307a880849cc2b114982adba1235484a9f603614657895549a9b08893bb96b1",
+    "exit_code": 0,
+    "result": "7 passed in 5.91s"
+  },
+  "acceptance": {
+    "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/acceptance.json",
+    "sha256": "19d9fe077168e0d991a274fdf45ad985c28eb2c4553939159ebbb5679e8f5a3a",
+    "accepted": true,
+    "all_arms_complete": true,
+    "physical_run_id": "kaseichou/molgap-gptrans-triplet-routing-dual-s42:v1",
+    "source_commit": "c63b9aa8b7270c9f36686127755e3efc5eda1a74",
+    "local_training_executed": false,
+    "model_inference_executed": false
+  },
+  "comparison_readiness": [
+    {
+      "mode": "degree_local_triplet_product_v2_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/results/comparison_readiness.json",
+      "sha256": "0c6a0022c77e6e6f2764a48c2bc89632d381ca86f5595ef025961a271805fe3a",
+      "comparison_class": "STRICT_CAUSAL",
+      "strict_ready": true,
+      "strict_status": "READY",
+      "row_alignment_status": "aligned",
+      "runtime_certificate_status": "accepted",
+      "trace_status": "complete",
+      "role_status": "complete",
+      "reference_id": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "reference_bundle_id": "reference-gptrans-triplet-followup-100k-s42-v1",
+      "candidate_id": "pcqm-gptrans-g1-degree-local-triplet-product-v2-ema999-100k-s42"
+    },
+    {
+      "mode": "degree_local_triplet_bond_route_ema999",
+      "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/comparison_readiness.json",
+      "sha256": "7789a660c518067bd26cab6fcb91af6a056735e89c996c29a7ddb3a541bcfaaf",
+      "comparison_class": "STRICT_CAUSAL",
+      "strict_ready": true,
+      "strict_status": "READY",
+      "row_alignment_status": "aligned",
+      "runtime_certificate_status": "accepted",
+      "trace_status": "complete",
+      "role_status": "complete",
+      "reference_id": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "reference_bundle_id": "reference-gptrans-triplet-followup-100k-s42-v1",
+      "candidate_id": "pcqm-gptrans-g1-degree-local-triplet-bond-route-ema999-100k-s42"
+    }
+  ],
+  "replay_pool_actual": {
+    "path": "research_memory/derived/replay_pool.json",
+    "sha256": "fb8c2e8dcfbb06fb5144cfe3816a584f32804f7ccf675b1bd8daea6b8ab20b2c",
+    "checked_against_actual_derived_file": true,
+    "reference": {
+      "reference_id": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+      "reference_bundle_id": "reference-gptrans-triplet-followup-100k-s42-v1",
+      "bundle_path": "experiments/pcqm_gptrans_triplet_followup_100k/reference/reference_bundle.json",
+      "bundle_sha256": "1513bc62fcb84be55dff9cc913cc0f0ec97ab8b5b513d2d53be7453f24bde608",
+      "acceptance_path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/acceptance.json",
+      "acceptance_sha256": "f445214da43655bcc69ac2948328e6dc2829f193ee9f1322df57f512f000c23a",
+      "accepted": true,
+      "aggregate_arm": "degree_local_triplet_aggregate_ema999",
+      "aggregate_prediction_sha256": "33bd306ed2b5dc1a7ecd9bba417d75290d2e54cb5a57286f023c13100e584b26"
+    },
+    "entries": [
+      {
+        "trajectory_id": "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+        "matching_entries": 1,
+        "candidate_complete_entries": 1,
+        "comparison_role": "candidate",
+        "capability": "complete",
+        "reference_id": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+        "terminal_evidence_sha256": "e7bb6c5cb621631aa066066f621efa92117cf89399f5c63407d4da6178d092af",
+        "trace_sha256": "5cca5cb15bb7093cc139f7ab3ec2339f105cdd90d9c68d13598b6aa79a68eddd"
+      },
+      {
+        "trajectory_id": "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+        "matching_entries": 1,
+        "candidate_complete_entries": 1,
+        "comparison_role": "candidate",
+        "capability": "complete",
+        "reference_id": "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42",
+        "terminal_evidence_sha256": "6d2228cff76528905a223624c3a8b3d741a12181fc140b57fe54782b43dc4458",
+        "trace_sha256": "0706625b8df19a9b7e1fb08b0cb1a26e5439c67032b6f33afed7b03e797cdd84"
+      }
+    ],
+    "exactly_one_candidate_complete_per_trajectory": true
+  },
+  "closure_receipts": [
+    {
+      "mode": "degree_local_triplet_product_v2_ema999",
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/results/closure.json",
+      "sha256": "f613e9a343d1d00daf818d65268a4460b4a94a1b58e00207565159a95e69366f",
+      "finalization_status": "FINALIZED",
+      "validation_status": "VALID",
+      "pipeline_status": "COMPLETE",
+      "outcome": "INCONCLUSIVE",
+      "finalization_id": "finalize-3e28e4a4aaa26a6163467d1270a97e9d435f0390b41cf9ac4c7cd2cb2718e213"
+    },
+    {
+      "mode": "degree_local_triplet_bond_route_ema999",
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/results/closure.json",
+      "sha256": "898401c27a106c6c14d16f710c8d0014072edbcc41f984ff7937ffac3658d666",
+      "finalization_status": "FINALIZED",
+      "validation_status": "VALID",
+      "pipeline_status": "COMPLETE",
+      "outcome": "INCONCLUSIVE",
+      "finalization_id": "finalize-a595f484bbf574e7593ba6395f82568e8dd034a56da7828c34fdb223a88949e5"
+    }
+  ],
+  "notes": [
+    "Replay admission was checked from the actual derived replay_pool.json, not closure return data alone.",
+    "The --portable, HEAD, and cross-machine migration checks were intentionally not run."
+  ],
+  "blockers": []
+}
