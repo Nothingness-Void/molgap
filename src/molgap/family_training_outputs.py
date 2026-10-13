@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import math
+import os
 import time
+from copy import deepcopy
 from pathlib import Path
 
 from .experiment_family_workflow import (
@@ -11,9 +13,94 @@ from .experiment_family_workflow import (
     write_resume_state,
 )
 from .experiment_launch import _safe_local, publish_immutable_bytes
-from .research_memory.trace import file_digest, validate_canonical_trace
+from .research_memory.trace import atomic_write, file_digest, json_bytes, sync_directory, validate_canonical_trace
 from .family_training_session import validate_session_resume
 from .training_reproducibility import atomic_torch_save
+
+
+_COMMIT_FILES = {"selected_model.pt", "development_predictions.pt", "canonical_trace.json", "last_checkpoint.pt"}
+
+
+def _recover_commit(root, context):
+    """Recover only a hash-bound producer transaction, never truncate evidence."""
+    companion = root / "canonical_trace.json.context.json"
+    journal = root / "session_commit.json"
+    contract = root / "training_contract.json"
+    for path in (companion, journal, contract, root / "session_pending"):
+        _safe_local(path.absolute())
+    if contract.exists() and file_digest(_artifact_path(root, contract.name)) != context.training_recipe_sha256:
+        raise ValueError("Retained session contract differs from context")
+    if companion.exists():
+        _check_context(_json(_artifact_path(root, companion.name)).get("context"), context)
+    if journal.exists() and not journal.is_file():
+        raise ValueError("Session commit journal is not a file")
+    if not journal.exists():
+        if not companion.exists() and any(
+                (root / name).exists() or (root / "session_pending" / name).exists()
+                or (root / "session_pending" / (name + ".previous")).exists() for name in _COMMIT_FILES):
+            raise ValueError("Pending session artifact identity is unavailable; preserve for reconciliation")
+        return
+    record = _json(_artifact_path(root, journal.name))
+    if set(record) != {"format", "context", "entries"} or record["format"] != "molgap-session-commit-v1":
+        raise ValueError("Invalid session commit journal")
+    _check_context(record["context"], context)
+    entries = record["entries"]
+    if (type(entries) is not list or not entries or any(type(entry) is not dict for entry in entries)
+            or entries[-1].get("name") != "last_checkpoint.pt"
+            or len({entry.get("name") for entry in entries}) != len(entries)):
+        raise ValueError("Invalid session commit ordering")
+    for entry in entries:
+        if type(entry) is not dict or set(entry) != {"name", "previous_sha256", "next_sha256"} or entry["name"] not in _COMMIT_FILES:
+            raise ValueError("Invalid session commit artifact")
+        _digest(entry["next_sha256"], "next_sha256")
+        if entry["previous_sha256"] is not None:
+            _digest(entry["previous_sha256"], "previous_sha256")
+        for path in (root / entry["name"], root / "session_pending" / entry["name"],
+                     root / "session_pending" / (entry["name"] + ".previous")):
+            _safe_local(path.absolute())
+            if path.exists() and not path.is_file():
+                raise ValueError("Session commit artifact is not a file")
+    # Publication of the last checkpoint is the commit point. If absent/old,
+    # restore the preceding selected/trace/checkpoint bundle using retained bytes.
+    observed_hashes = {entry["name"]: file_digest(root / entry["name"])
+        if (root / entry["name"]).is_file() else None for entry in entries}
+    committed = observed_hashes["last_checkpoint.pt"] == entries[-1]["next_sha256"]
+    for entry in entries:
+        visible = root / entry["name"]
+        backup = root / "session_pending" / (entry["name"] + ".previous")
+        observed = observed_hashes[entry["name"]]
+        if committed:
+            if observed != entry["next_sha256"]:
+                raise ValueError("Committed session bundle is incomplete; manual reconciliation required")
+        elif entry["previous_sha256"] is None:
+            if observed not in (None, entry["next_sha256"]):
+                raise ValueError("Unbound session artifact during rollback")
+        elif observed != entry["previous_sha256"]:
+            if observed not in (None, entry["next_sha256"]) or not backup.is_file() or file_digest(backup) != entry["previous_sha256"]:
+                raise ValueError("Previous session bundle is unavailable; manual reconciliation required")
+    # Validate the whole transaction before making any recovery edit.
+    if not committed:
+        for entry in entries:
+            visible = root / entry["name"]
+            backup = root / "session_pending" / (entry["name"] + ".previous")
+            if entry["previous_sha256"] is None:
+                visible.unlink(missing_ok=True)
+            elif observed_hashes[entry["name"]] != entry["previous_sha256"]:
+                os.replace(backup, visible)
+        sync_directory(root)
+    journal.unlink()
+    sync_directory(root)
+    for entry in entries:
+        for suffix in ("", ".previous"):
+            (root / "session_pending" / (entry["name"] + suffix)).unlink(missing_ok=True)
+
+
+def _assert_model_schema(selected, resume):
+    import torch
+    if (not isinstance(selected, dict) or selected.keys() != resume.keys() or any(
+            not isinstance(value, torch.Tensor) or value.shape != resume[key].shape or value.dtype != resume[key].dtype
+            for key, value in selected.items())):
+        raise ValueError("Selected model tensor schema differs from resume")
 
 
 class SessionOutputs:
@@ -31,12 +118,22 @@ class SessionOutputs:
         self.bounded_pair = self.recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}
         self.expected = record["acceptance_requirements"]
         self.root.mkdir(parents=True, exist_ok=True)
+        if train_role_identity != record["train_role_identity"]:
+            raise ValueError("Training metric role differs from frozen contract")
+        _recover_commit(self.root, self.context)
         publish_immutable_bytes(self.root / "training_contract.json", Path(contract).read_bytes())
+        self.pending = self.root / "session_pending"
+        _safe_local(self.pending.absolute())
+        self.pending.mkdir(exist_ok=True)
+        # Discard only identified producer scratch that preceded journal publication.
+        for name in _COMMIT_FILES:
+            for suffix in ("", ".previous"):
+                path = self.pending / (name + suffix)
+                _safe_local(path.absolute())
+                path.unlink(missing_ok=True)
         semantics = {"live_train_metric": {"metric": "MAE", "unit": "normalized-Gap",
             "target": "Gap", "role_identity": train_role_identity, "weights": "live", "direction": "minimize"},
             "live_dev_metric": None, "ema_dev_metric": None}
-        if train_role_identity != record["train_role_identity"]:
-            raise ValueError("Training metric role differs from frozen contract")
         if self.recipe.dataset.development:
             weights = self.recipe.selection.rsplit("-", 1)[1]
             semantics["ema_dev_metric" if weights == "ema" else "live_dev_metric"] = {
@@ -55,33 +152,60 @@ class SessionOutputs:
 
     def selected(self, progress, weights, state, evaluation):
         _finite_tree(state, "selected.model")
-        atomic_torch_save(self.root / "selected_model.pt", {"context": self.context.to_dict(),
+        atomic_torch_save(self.pending / "selected_model.pt", {"context": self.context.to_dict(),
             "model": state, "optimizer_step": progress.optimizer_step,
             "epoch_or_pass": progress.optimizer_step / self.recipe.loop_plan.steps_per_pass,
             "weights": weights, "selection": self.recipe.selection,
             "development_mae_eV": evaluation["mae_eV"] if evaluation is not None else None})
         if evaluation is not None:
-            atomic_torch_save(self.root / "development_predictions.pt", {"context": self.context.to_dict(),
+            atomic_torch_save(self.pending / "development_predictions.pt", {"context": self.context.to_dict(),
                 **{key: evaluation[key].detach().cpu() for key in ("source_idx", "target_eV", "prediction_eV")}})
 
     def checkpoint(self, progress, state):
-        write_resume_state(self.root / "last_checkpoint.pt", self.context, adapter=self.adapter,
+        if self.pending_pass is not None and self.pending_pass[0].optimizer_step != progress.optimizer_step:
+            raise ValueError("Pass metrics differ from acknowledged checkpoint")
+        changed = [name for name in ("selected_model.pt", "development_predictions.pt", "canonical_trace.json")
+                   if (self.pending / name).is_file()]
+        destination = self.pending if changed or self.pending_pass is not None else self.root
+        write_resume_state(destination / "last_checkpoint.pt", self.context, adapter=self.adapter,
             model_state=state["model"], optimizer_state=state["optimizer"], rng_state=state["rng_state"],
             cursor=state["cursor"], optimizer_step=progress.optimizer_step,
             sample_presentations=progress.sample_presentations,
             scheduler_state=state["scheduler"], ema_state=state["ema"])
+        observed = None
         if self.pending_pass is not None:
-            acknowledged, fields = self.pending_pass
-            if acknowledged.optimizer_step != progress.optimizer_step:
-                raise ValueError("Pass metrics differ from acknowledged checkpoint")
+            _, fields = self.pending_pass
             observed = time.perf_counter()
             duration = observed - self.previous_observation
             cumulative = self.previous_cumulative + observed - self.segment_started
-            self.stage.observe(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
+            # Bind the staged trace to the next checkpoint before publishing either.
+            recorder = deepcopy(self.stage.recorder)
+            recorder.path = self.pending / "canonical_trace.json"
+            recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
                 epoch_or_pass=progress.pass_index, **fields,
-                checkpoint_identity=file_digest(self.root / "last_checkpoint.pt"),
+                checkpoint_identity=file_digest(destination / "last_checkpoint.pt"),
                 wall_time_seconds=duration, cumulative_wall_time_seconds=cumulative,
                 device_time_seconds=duration, cumulative_device_time_seconds=cumulative)
+            if "canonical_trace.json" not in changed:
+                changed.append("canonical_trace.json")
+        if changed:
+            names = [*changed, "last_checkpoint.pt"]
+            for name in names:
+                _safe_local((self.root / name).absolute())
+            entries = [{"name": name, "previous_sha256": file_digest(self.root / name) if (self.root / name).is_file() else None,
+                        "next_sha256": file_digest(self.pending / name)} for name in names]
+            atomic_write(self.root / "session_commit.json", json_bytes({"format": "molgap-session-commit-v1",
+                "context": self.context.to_dict(), "entries": entries}))
+            # Keep the preceding generation until checkpoint-last publication commits.
+            for name in names:
+                if (self.root / name).is_file():
+                    os.replace(self.root / name, self.pending / (name + ".previous"))
+                os.replace(self.pending / name, self.root / name)
+            sync_directory(self.root)
+            _recover_commit(self.root, self.context)
+            if "canonical_trace.json" in changed:
+                self.stage.recorder.record = validate_canonical_trace(_json(self.root / "canonical_trace.json"))
+        if observed is not None:
             self.previous_observation, self.pending_pass = observed, None
         if (self.resume_trajectory is not None and progress.next_batch == 0 and
                 progress.pass_index > 0 and progress.pass_index % 10 == 0 and progress.status != "complete"):
@@ -99,7 +223,9 @@ class SessionOutputs:
             fields["live_train_metric"] *= self.recipe.target_std_eV
             self.pending_pass = (progress, fields)
             return
-        self.stage.observe(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
+        recorder = deepcopy(self.stage.recorder)
+        recorder.path = self.pending / "canonical_trace.json"
+        recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
             epoch_or_pass=progress.pass_index, **fields)
 
     def retained_state(self):
@@ -216,6 +342,7 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
                 selected.get("weights") != recipe.selection.rsplit("-", 1)[1] or
                 selected.get("epoch_or_pass") != selected["optimizer_step"] / recipe.loop_plan.steps_per_pass):
             raise ValueError("Selected checkpoint identity/policy mismatch")
+        _assert_model_schema(selected["model"], state["model"])
         if recipe.dataset.development:
             observed.update(_inspect_predictions(paths["predictions"], context=context, expected=expected,
                 target_identity=target_identity))

@@ -1,4 +1,4 @@
-"""Opt-in CPU-derived dense layout for K1; no model or checkpoint parameters."""
+"""Shared CPU-derived dense layout for K1; no model or checkpoint parameters."""
 from __future__ import annotations
 
 from contextlib import contextmanager
@@ -46,7 +46,10 @@ def layout_from_cpu_batch(batch, device):
     flat = torch.arange(nodes) - ptr[:-1][membership] + membership * maximum
     valid = torch.zeros(graphs * maximum, dtype=torch.bool)
     valid[flat] = True
-    return DenseLayout(batch, flat.to(device), valid.view(graphs, maximum).to(device),
+    # The owning forward uses the same stream and these private CPU tensors are
+    # never mutated. Avoid a host barrier after each layout-only H2D copy.
+    return DenseLayout(batch, flat.to(device, non_blocking=True),
+                       valid.view(graphs, maximum).to(device, non_blocking=True),
                        nodes, graphs, maximum)
 
 

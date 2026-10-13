@@ -137,7 +137,7 @@ def _loaded_source(package_dir):
 
 def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, recipe_path,
                initial_state_path, input_root, account, run_reference, trajectory_id, prospective_root=None,
-               training_only=False):
+               training_only=False, cost_root=None):
     import torch
     from .experiment_execution import validate_staged_trajectory
     from .family_training_data import load_training_data
@@ -155,6 +155,14 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
     trajectory = validate_staged_trajectory(spec, arm_id, Path(prospective_root or input_root))
     if trajectory["trajectory_id"] != trajectory_id or trajectory["state_at_start"]["source_commit"] != context.source_commit:
         raise ValueError("Prospective trajectory/source mismatch")
+    if cost_root is not None:
+        from .family_training_outputs import _recover_commit
+        from .experiment_launch import _safe_local
+        root = Path(cost_root).absolute()
+        _safe_local(root)
+        root.mkdir(parents=True, exist_ok=True)
+        _recover_commit(root, context)
+        _begin_cost_interval(root, context, had_checkpoint=(root / "last_checkpoint.pt").is_file())
     initial = inspect_frozen_state_artifact(Path(initial_state_path), expected_state_sha256=recipe.initialization_sha256)
     # Data acceptance remains CPU work and precedes construction of a GPU model.
     selection = replace(recipe.dataset, development=False) if training_only else recipe.dataset
@@ -457,6 +465,47 @@ def _verify_preflight(directory, recipe, provenance):
     return certificate
 
 
+def _begin_cost_interval(root, context, *, had_checkpoint):
+    """An unfinished invocation or unbound ledger makes cumulative cost unknown."""
+    path, marker = root / "allocation_costs.json", root / "invocation_cost_state.json"
+    prior = 0. if not had_checkpoint else None
+    if path.is_file():
+        record = _json(_artifact_path(root, path.name))
+        _check_context(record.get("context"), context)
+        value = record.get("wall_seconds")
+        if value is not None and (type(value) not in (int, float) or not math.isfinite(value) or value < 0):
+            raise ValueError("Invalid retained native cost ledger")
+        bound = record.get("checkpoint_sha256")
+        if had_checkpoint and bound == normalized_file_sha(_artifact_path(root, "last_checkpoint.pt")):
+            prior = value
+        elif not had_checkpoint:
+            raise ValueError("Retained cost ledger has no corresponding checkpoint")
+    if marker.is_file():
+        interval = _json(_artifact_path(root, marker.name))
+        _check_context(interval.get("context"), context)
+        if interval.get("status") not in {"running", "closed"}:
+            raise ValueError("Invalid native cost invocation marker")
+        if interval["status"] == "running":
+            prior = None
+    atomic_json(marker, {"context": context.to_dict(), "status": "running", "prior_wall_seconds": prior})
+    return prior
+
+
+def _finish_cost_interval(root, context, prior, elapsed):
+    if type(elapsed) not in (int, float) or not math.isfinite(elapsed) or elapsed < 0:
+        raise ValueError("Invalid invocation elapsed cost")
+    if prior is not None and (type(prior) not in (int, float) or not math.isfinite(prior) or prior < 0):
+        raise ValueError("Invalid prior invocation cost")
+    total = prior + elapsed if prior is not None else None
+    if total is not None and not math.isfinite(total):
+        raise ValueError("Cumulative invocation cost overflow")
+    atomic_json(root / "allocation_costs.json", {"context": context.to_dict(), "wall_seconds": total,
+        "current_invocation_seconds": elapsed, "checkpoint_sha256": normalized_file_sha(_artifact_path(root, "last_checkpoint.pt"))})
+    atomic_json(root / "invocation_cost_state.json", {"context": context.to_dict(), "status": "closed",
+        "prior_wall_seconds": prior, "current_invocation_seconds": elapsed})
+    return total
+
+
 def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **options):
     """Same callable for every scale/platform; same-budget resume only."""
     import torch
@@ -477,18 +526,21 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         if normalized_source_sha256(Path(options["recipe_path"])) != context.training_recipe_sha256:
             raise ValueError("Recipe bytes differ from Spec")
         return inspect_output(root, context=context, expected=record["acceptance_requirements"], target_identity=target_identity)
-    record, recipe, data, tuning, context, provenance, _ = _bootstrap(**options)
+    record, recipe, data, tuning, context, provenance, _ = _bootstrap(cost_root=root, **options)
     certificate = _verify_preflight(preflight_dir or output, recipe, provenance)
     outputs = SessionOutputs(root, context, contract=options["recipe_path"], adapter=PROFILES[recipe.family],
         trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"],
         resume_trajectory=(_artifact_path(Path(options["prospective_root"]),
             "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
             if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"} else None))
+    had_checkpoint = (root / "last_checkpoint.pt").is_file()
+    interval = _json(_artifact_path(root, "invocation_cost_state.json"))
+    _check_context(interval["context"], context)
+    prior_cost = interval["prior_wall_seconds"]
     kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda")
     _loaded_source(options["package_dir"])
     session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
         checkpoint=outputs.checkpoint, selected=outputs.selected, pass_finished=outputs.pass_finished)
-    had_checkpoint = (root / "last_checkpoint.pt").is_file()
     try:
         if had_checkpoint:
             if recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
@@ -512,16 +564,8 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
             bounded and session.progress.pass_index >= stop_pass and session.progress.next_batch == 0))
     finally:
         signal.signal(signal.SIGTERM, previous_signal)
-    cost_path = root / "allocation_costs.json"
-    previous = _json(cost_path) if cost_path.is_file() else {"context": context.to_dict(),
-        "wall_seconds": None if had_checkpoint else 0.}
-    _check_context(previous["context"], context)
-    if previous["wall_seconds"] is not None and (type(previous["wall_seconds"]) not in (int, float)
-            or not math.isfinite(previous["wall_seconds"]) or previous["wall_seconds"] < 0):
-        raise ValueError("Invalid retained native cost ledger")
     elapsed = time.perf_counter() - began
-    total = previous["wall_seconds"] + elapsed if previous["wall_seconds"] is not None else None
-    atomic_json(cost_path, {"context": context.to_dict(), "wall_seconds": total, "current_invocation_seconds": elapsed})
+    total = _finish_cost_interval(root, context, prior_cost, elapsed)
     if progress.status != "complete":
         atomic_json(root / "pause_receipt.json", {"context": context.to_dict(), "status": "PAUSED",
             "optimizer_steps": progress.optimizer_step, "sample_presentations": progress.sample_presentations,

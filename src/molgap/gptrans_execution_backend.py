@@ -71,6 +71,21 @@ def cached_edges(model, edge_index, batch, node_count):
     return model._execution_layout["edges"]
 
 
+def prepared_shortest_path(model, adjacency, pair_mask):
+    """Exact existing bounded reachability, without an unused final expansion."""
+    size, maximum = adjacency.shape[:2]
+    unreachable = model.shortest_path_cap + 1
+    distance = torch.full((size, maximum, maximum), unreachable, dtype=torch.long, device=adjacency.device)
+    diagonal = torch.eye(maximum, dtype=torch.bool, device=adjacency.device)
+    distance.masked_fill_(diagonal.unsqueeze(0) & pair_mask, 0)
+    frontier, adjacency_float = adjacency, adjacency.float()
+    for step in range(1, model.shortest_path_cap + 1):
+        distance.masked_fill_(frontier & (distance == unreachable) & pair_mask, step)
+        if step < model.shortest_path_cap:
+            frontier = torch.bmm(frontier.float(), adjacency_float) > 0
+    return distance
+
+
 class EpochBatches:
     def __init__(self, owner, length):
         self.owner, self.length, self.epoch = owner, length, 0
@@ -268,8 +283,11 @@ def bind_model_layout(model):
         raise ValueError("Input-changing addons must supply an accelerated input adapter")
     if model._local_edges is not OGBGPTransTiny._local_edges:
         raise ValueError("Edge-changing addons must supply an accelerated input adapter")
+    if model._shortest_path.__func__ is not OGBGPTransTiny._shortest_path:
+        raise ValueError("Distance-changing addons must supply an accelerated input adapter")
     model._dense_inputs = MethodType(dense_inputs, model)
     model._local_edges = MethodType(cached_edges, model)
+    model._shortest_path = MethodType(prepared_shortest_path, model)
     return model
 
 
