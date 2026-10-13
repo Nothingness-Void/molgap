@@ -96,7 +96,8 @@ def test_candidate_disabled_forward_matches_parent_and_batch_memory_resets(monke
 def test_campaign_covers_two_slots_and_rejects_unauthorized_budget(tmp_path):
     from molgap.gptrans_campaign_release import BASE, check_campaign
     from molgap.experiment_spec import ExperimentSpec
-    from molgap.training_reproducibility import atomic_json, sha256_file
+    from molgap.training_reproducibility import atomic_json
+    from molgap.v4_runtime import normalized_source_sha256
     root = Path(__file__).resolve().parents[1]
     campaign_path = root / BASE / "campaign.json"
     if not campaign_path.exists():
@@ -116,13 +117,16 @@ def test_campaign_covers_two_slots_and_rejects_unauthorized_budget(tmp_path):
     for pin in pins:
         path = tmp_path / pin["path"]
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes((root / pin["path"]).read_bytes())
+        path.write_bytes((root / pin["path"]).read_bytes().replace(b"\r\n", b"\n"))
+    # Run the actual authority/recipe/parent validator on transported LF bytes,
+    # not only on the original Windows checkout. No molecular forward occurs.
+    assert check_campaign(spec, tmp_path, plan, initial_states=states)["reference_status"] == "PLANNED_NOT_ACCEPTED"
     authority = tmp_path / campaign["authority"]["path"]
     value = json.loads(authority.read_bytes())
     value["maximum_allocated_t4_hours"] = 64
     atomic_json(authority, value)
-    campaign["authority"]["sha256"] = sha256_file(authority)
+    campaign["authority"]["sha256"] = normalized_source_sha256(authority)
     atomic_json(tmp_path / BASE / "campaign.json", campaign)
-    plan["campaign"]["sha256"] = sha256_file(tmp_path / BASE / "campaign.json")
+    plan["campaign"]["sha256"] = normalized_source_sha256(tmp_path / BASE / "campaign.json")
     with pytest.raises(ValueError, match="authority"):
         check_campaign(spec, tmp_path, plan, initial_states=states)

@@ -28,7 +28,7 @@ def check_campaign(spec, root, plan, *, initial_states=None):
         raise ValueError("Four-arm release plan mismatch")
     def load(pin):
         path = _artifact_path(root, pin["path"])
-        if sha256_file(path) != pin["sha256"]:
+        if normalized_source_sha256(path) != pin["sha256"]:
             raise ValueError("Campaign input bytes changed")
         return _json(path)
     campaign = load(plan["campaign"])
@@ -50,7 +50,7 @@ def check_campaign(spec, root, plan, *, initial_states=None):
     recipes = {}
     for arm_id, declaration in campaign["arms"].items():
         _, recipe = read_recipe(_artifact_path(root, declaration["contract"]["path"]))
-        if sha256_file(root / declaration["contract"]["path"]) != declaration["contract"]["sha256"] or recipe.mode != ARMS[arm_id]:
+        if normalized_source_sha256(root / declaration["contract"]["path"]) != declaration["contract"]["sha256"] or recipe.mode != ARMS[arm_id]:
             raise ValueError("Campaign recipe mode/pin changed")
         recipes[arm_id] = recipe
     ref = recipes["reference"]
@@ -86,7 +86,11 @@ def freeze(root):
         raise ValueError("Campaign already frozen; reconcile instead of duplicating")
     old = root / "experiments/pcqm_gptrans_cycle_pair_100k/gpu"
     load = lambda path: json.loads(Path(path).read_bytes())
-    pin = lambda path: {"path": str(path), "sha256": sha256_file(root / path)}
+    # Text pins must match the LF transport used by the shared source packager.
+    # Initialization artifacts retain their exact binary hash.
+    pin = lambda path: {"path": str(path), "sha256": (
+        sha256_file(root / path) if Path(path).suffix == ".pt"
+        else normalized_source_sha256(root / path))}
     original = load(old / "experiment_spec.json")
     target = load(old / "target_manifest.json")
     template = load(old / "local_reference/plan_input.json")

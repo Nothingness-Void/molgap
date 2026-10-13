@@ -188,17 +188,17 @@
     "arms": [
       {
         "arm_id": "reference",
-        "output": "experiments/pcqm_gptrans_research_four_arm_100k/reference/rml_plan",
-        "plan_spec_ref": "experiments/pcqm_gptrans_research_four_arm_100k/reference/plan_input.json",
-        "plan_spec_sha256": "41871733967f1383fd3b6ca59878a32d14adeebbc54de41c494ff37ee5cbdd0e",
-        "trajectory_id": "TC-gptrans-aggregate-reference-100k-s42"
+        "output": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/reference/rml_plan",
+        "plan_spec_ref": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/reference/plan_input.json",
+        "plan_spec_sha256": "8a938ad5823eba4aa10bd6c9ca02d8d16e330540f348ef5b019d1aaf66deb6d3",
+        "trajectory_id": "TC-gptrans-aggregate-reference-100k-s42-r2"
       },
       {
         "arm_id": "cycle",
-        "output": "experiments/pcqm_gptrans_research_four_arm_100k/cycle/rml_plan",
-        "plan_spec_ref": "experiments/pcqm_gptrans_research_four_arm_100k/cycle/plan_input.json",
-        "plan_spec_sha256": "b762a275462ad901232bf4ad50fb72c66caf483d0bb4d75a6fccb1dfd0405aca",
-        "trajectory_id": "TC-gptrans-aggregate-cycle-100k-s42"
+        "output": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/cycle/rml_plan",
+        "plan_spec_ref": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/cycle/plan_input.json",
+        "plan_spec_sha256": "e7f278057c31e6b80b33909e32a18afecd89fcf64cae740abc35166ca02ea5cc",
+        "trajectory_id": "TC-gptrans-aggregate-cycle-100k-s42-r2"
       }
     ]
   },

@@ -56,6 +56,12 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         raise RuntimeError("Observed hardware differs from the declared T4 allocation")
     output.mkdir(parents=True, exist_ok=True)
     prior_segments = []
+    if campaign:
+        # A bootstrap-only restart has no checkpoint to restore, but its two
+        # allocated devices still consume the unchanged campaign budget.
+        retired = source_root / BASE / f"infrastructure_costs/slot{number}.json"
+        if retired.is_file():
+            prior_segments.append(_json(retired))
     if "resume" in config:
         from .experiment_family_workflow import RunContext
         from .experiment_resume import validate_resume_bundle, restore_resume_bundle

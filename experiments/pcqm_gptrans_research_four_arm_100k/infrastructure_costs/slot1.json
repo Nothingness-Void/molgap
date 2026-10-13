@@ -1,0 +1,38 @@
+{
+  "format": "molgap-allocation-ledger-v1",
+  "spec_identity": "0c01d6875c8140bb15c003084e58aaa94b7ca53f4d5a3dcdb2cd4209ab7351f2",
+  "status": "failed",
+  "wall_seconds": 60.73570488600001,
+  "allocated_device_seconds": 121.47140977200002,
+  "allocation_device_count": 2,
+  "devices": [
+    {
+      "device": 0,
+      "hardware": "Tesla T4",
+      "arm_id": null,
+      "allocated_seconds": 60.73570488600001
+    },
+    {
+      "device": 1,
+      "hardware": "Tesla T4",
+      "arm_id": null,
+      "allocated_seconds": 60.73570488600001
+    }
+  ],
+  "prior_segments": [],
+  "scope": "Imported completed v1 bootstrap allocation charged to repaired campaign; no model worker started",
+  "original_spec_identity": "246e3366cba4402bf5e5c6e3cf217fce2eeff85d42644225b2a3f73fc0248908",
+  "original_kernel": "nvoid912/molgap-gptrans-research-slot1-100k-v1",
+  "original_version_number": 1,
+  "original_source_commit": "9c44423238ada6b45b2b5cb9620788c725bc3806",
+  "original_package_identity": "546e182c855b325d52c3bea4213ca0f4b33ff64c577f4cf6f0008ee700da02bc",
+  "original_bootstrap_sha256": "c938ec5d453423fc77c7ed8dd47bebffe8ef883d3fdd7b31121d8c4fdf2cc5f4",
+  "provisioning_before_python_seconds": {
+    "value": null,
+    "status": "measurement_missing"
+  },
+  "queue_seconds": {
+    "value": null,
+    "status": "measurement_missing"
+  }
+}

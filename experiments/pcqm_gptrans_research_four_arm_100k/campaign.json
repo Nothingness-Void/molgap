@@ -2,17 +2,17 @@
   "format": "molgap-four-arm-campaign-plan-v1",
   "authority": {
     "path": "experiments/pcqm_gptrans_research_four_arm_100k/authority.json",
-    "sha256": "2fa473eb06d465611e15515a504db75fbc9aae6ba4ca445888ea614efe095948"
+    "sha256": "fb9d7497b840d62da12aa69325aac65e7f4d3fbfcede28b8f418005c235c9912"
   },
   "audit": {
     "path": "experiments/pcqm_gptrans_research_four_arm_100k/audit_action.json",
-    "sha256": "296e30cf70cb605e672a5766d7abc33cc0cc07b32ae22fa1aee17bc703569dcc"
+    "sha256": "27de8515c3486290a7c00ca5c17cfa8d4a962dd1589d131e0bb8893a2b3833ba"
   },
   "arms": {
     "reference": {
       "contract": {
         "path": "experiments/pcqm_gptrans_research_four_arm_100k/reference/contract.json",
-        "sha256": "a46afe911bd2ff404089677203ec5fd89da8a3dfaaabcd3ec37cde5e2c4d05e6"
+        "sha256": "d3e819f9d0359928185fc20f4802ea31c0683ae056f13f5782245d2c2659ca96"
       },
       "initial_state": {
         "path": "platforms/_records/kaggle/initializations/degree_aggregate_shared_ema999_initial.pt",
@@ -25,7 +25,7 @@
     "cycle": {
       "contract": {
         "path": "experiments/pcqm_gptrans_research_four_arm_100k/cycle/contract.json",
-        "sha256": "636492d4f4d96163219bcc979c474e46e538554a13d702fc25ac0db47b71f631"
+        "sha256": "2d59c88f6697a308b5605983940a4596609079bf15e0c8cdf028ca2908ea4ceb"
       },
       "initial_state": {
         "path": "platforms/_records/kaggle/initializations/degree_aggregate_cycle_ema999_initial.pt",
@@ -38,7 +38,7 @@
     "carry": {
       "contract": {
         "path": "experiments/pcqm_gptrans_research_four_arm_100k/carry/contract.json",
-        "sha256": "a999ca36a541aeb9dffb4aa18e8563d40af44ea311abd980f6f2b061312e2d98"
+        "sha256": "56b216be1a29285345fda3fb27d92450c00eecb5e6545986d63e47d090b414cf"
       },
       "initial_state": {
         "path": "platforms/_records/kaggle/initializations/degree_aggregate_carry_ema999_initial.pt",
@@ -51,7 +51,7 @@
     "correspondence": {
       "contract": {
         "path": "experiments/pcqm_gptrans_research_four_arm_100k/correspondence/contract.json",
-        "sha256": "74b985adba75d88769cf8c25c7bb4b027bec41ec3e27c2711c378d0fa805c7e7"
+        "sha256": "130233087b03646de35ca8eb1cc15cf18b1923cdb8ce03148108069c37b466ef"
       },
       "initial_state": {
         "path": "platforms/_records/kaggle/initializations/degree_aggregate_correspondence_ema999_initial.pt",
@@ -65,16 +65,16 @@
   "slots": [
     {
       "path": "experiments/pcqm_gptrans_research_four_arm_100k/slot1/scientific_spec.json",
-      "sha256": "38be96dabe187c62b330e04fbd62b08ffb8d69cc6c4a7397d3828c452dd8cf3d"
+      "sha256": "95e6f311baf963be39457a96cc7c857da7952dfbed100e9283057108e187d5e3"
     },
     {
       "path": "experiments/pcqm_gptrans_research_four_arm_100k/slot2/scientific_spec.json",
-      "sha256": "95838f0272da233f829c214fd510bc86d6b5b9b25d018dc00df98cfd402504a8"
+      "sha256": "3b1a5b5b3df235e27a3192ee1e3e96db5840eb892b5f11762180c21c620ebb04"
     }
   ],
   "cpu_acceptance": {
     "path": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json",
-    "sha256": "1945d2eefd865a55e0d630b23ec1a97f59f4abb6bf6289d060e8cce014d3fa8b"
+    "sha256": "19f001247727a304bb9deda8be056a41d339663b07295043a2868bb1004a8782"
   },
   "reference_status": "PLANNED_NOT_ACCEPTED",
   "terminal_order": [
