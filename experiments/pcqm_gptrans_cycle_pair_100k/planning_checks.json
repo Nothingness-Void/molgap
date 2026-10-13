@@ -27,6 +27,14 @@
     "authority": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json"
   },
   "rml_validation": {"status": "passed", "evidence": 100, "trajectories": 103},
+  "rml_frozen_check": "passed",
+  "rml_portable_check": {
+    "status": "blocked",
+    "reason": "Authority pointers include retained platform records absent from Git HEAD, including this CPU group's native metadata and four large cache chunks, alongside historical records",
+    "large_payloads_not_added_to_git": true,
+    "immutable_terminal_records_not_rewritten": true,
+    "portable_or_replay_training_claim": false
+  },
   "user_test_research_memory_sha256": "e623abd9b0a410d6c49ccf1d04e2e1ba5bb23237db4dea2a2c8c874f4b9465f1",
   "scientific_acceptance": "NOT_EVALUATED",
   "replay_readiness": "NOT_EVALUATED"

@@ -66,6 +66,12 @@ count and edges. The encoder transfers no coordinate tensor.
 5. The shared preparation call supplies `execution_source_commit` to
    `plan_prospective`, whose checked-in signature does not accept it. Repair and
    test source/commit binding before invoking that release path.
+6. Ordinary RML validation and frozen-derived checks passed after CPU closure.
+   The stricter portable check did not: terminal authority pointers include
+   ignored native records and large cache chunks absent from Git HEAD, alongside
+   pre-existing historical gaps. Do not commit large caches or rewrite finalized
+   evidence merely to clear this check. Resolve compact publication/binding
+   applicability explicitly before claiming cross-machine closure.
 
 These gaps were recorded rather than hidden by using a historical native
 trainer or relaxing acceptance. The user was asked whether to complete

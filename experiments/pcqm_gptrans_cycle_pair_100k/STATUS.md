@@ -39,3 +39,9 @@ finish same-run reference/candidate release support without a third arm, or to
 establish the new shared reference first. Neither option launches by default.
 No additional CPU retry, seed, candidate,500Ktraining or protected role is
 released by this status file.
+
+RML validation and ordinary frozen-derived checks passed. The stricter portable
+check remains blocked: native evidence/cache authority pointers name ignored
+platform records absent from Git HEAD, including this group and historical
+records. Large cache chunks were not committed and immutable terminal receipts
+were not rewritten. Local CPU acceptance is not a portable training Replay claim.
