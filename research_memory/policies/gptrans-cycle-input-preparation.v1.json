@@ -1,0 +1,17 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "gptrans-cycle-input-preparation",
+  "version": "v1",
+  "policy_type": "research_action",
+  "status": "candidate",
+  "comparability_selector": {"scientific_contract": "gptrans-cycle-inputs-fixed-pcqm-v1"},
+  "required_observable_fields": ["user_authorized_dual_arm"],
+  "created_from_source_digest": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "approval": {"activation": "one-user-authorized-cycle-preparation", "authority_ref": "experiments/pcqm_gptrans_cycle_pair_100k/protocol.md"},
+  "cost_model": {"kind": "measured_only", "assumptions": ["CPU only", "no cross-hardware conversion"]},
+  "observation_point": null,
+  "early_stop_rule": null,
+  "promotion_rule": null,
+  "action_rule": {"field": "user_authorized_dual_arm", "operator": "eq", "threshold": true, "action": "PREPARE_CYCLE_INPUTS"},
+  "borderline_action": "DEFER"
+}
