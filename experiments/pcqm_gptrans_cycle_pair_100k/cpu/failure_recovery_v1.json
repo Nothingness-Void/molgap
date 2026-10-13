@@ -1,0 +1,17 @@
+{
+  "status": "INFRASTRUCTURE_ONLY",
+  "kernel": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v1",
+  "kernel_id": 138515033,
+  "version": 1,
+  "failure": "ModuleNotFoundError: molgap.pcqm_wedge while loading first accepted shard",
+  "processed_rows": 0,
+  "training_executed": false,
+  "gpu_device_hours": 0,
+  "wall_seconds": 40.433668686999965,
+  "process_cpu_seconds": 15.913366384,
+  "allocated_cpu_hours": null,
+  "allocated_cpu_hours_status": "measurement_missing",
+  "raw_evidence": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v1/observation",
+  "scientific_verdict": "NOT_EVALUATED",
+  "repair": "Package the existing WedgeData serialization owner and test isolated synthetic deserialization before publication"
+}
