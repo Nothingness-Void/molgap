@@ -1,0 +1,18 @@
+{
+  "mode": "NO_TRAIN",
+  "roles": {"100k": [100000, 150000], "500k": [500000, 550000]},
+  "batch_size": 128,
+  "precision": "fp32",
+  "tf32": false,
+  "run_only_after_training_acceptance": true,
+  "entrypoint": "molgap.family_cycle_audit:run_bound_arm",
+  "accepted_checkpoint_binding": "Freeze exact reference/candidate checkpoint, original predictions, source and target-transform hashes only after independent training acceptance",
+  "reproduction": {"max_absolute_prediction_error_eV": 0.000001, "relative_tolerance": 0},
+  "500k_role_opens_only_after_100k_reproduction": true,
+  "label_policy": "Incidental trusted packed deserialization is recorded; explicit scoring follows complete prediction retention",
+  "target_transform": {"mean_eV": 5.338300266634226, "std_eV": 1.2750902063230574},
+  "no_optimizer_backward_selection": true,
+  "allocation_wall_ceiling_seconds": 1800,
+  "combined_training_and_audit_allocated_t4_hours_ceiling": 16,
+  "release_policy": "One idempotently bound separate action, only within remaining native budget; no blind retry or automatic500Ktraining"
+}

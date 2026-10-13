@@ -1,0 +1,70 @@
+{
+  "format": "molgap-family-same-run-acceptance-plan-v1",
+  "spec_identity": "eb32805ebb831b75ac9d37e6d9606f7f87a1df40d6f8a18b969a4d15b699b042",
+  "authority": {
+    "path": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/authority.json",
+    "sha256": "f672c55e5e0c275093c2f8ec62beff32b3ebfca40b1203bd8b145c11419490a1"
+  },
+  "arms": [
+    {
+      "arm_id": "local_reference",
+      "adapter": "gptrans-session-v1",
+      "contract": {
+        "path": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/local_reference/contract.json",
+        "sha256": "2c1cdf6147ddd281e66db34d8cbc0b8195aeda704d9a9a5dd9ef63efbd177bd8"
+      },
+      "expected": {
+        "optimizer_steps": 46860,
+        "sample_presentations": 5998080,
+        "completed_passes": 60,
+        "next_batch": 0,
+        "development_rows": 50000,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e",
+        "precision": "fp32"
+      },
+      "target_manifest": {
+        "path": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/target_manifest.json",
+        "sha256": "75c9c4f49670feeff11db274093e0f4d93362f1ee8d88f8d83c59e92ce168c09"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/initializations/degree_bond_local_ema999_initial.pt",
+        "sha256": "d471d9f94ff2c10436261b7f70f3e2d9111978f1ac8aadfabea2da32a5fe9a1d"
+      }
+    },
+    {
+      "arm_id": "cycle_common",
+      "adapter": "gptrans-session-v1",
+      "contract": {
+        "path": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/cycle_common/contract.json",
+        "sha256": "9eae8553a1040640d5221a2e5ddd43a7e59a74a25dedcb8bafd12284da21c075"
+      },
+      "expected": {
+        "optimizer_steps": 46860,
+        "sample_presentations": 5998080,
+        "completed_passes": 60,
+        "next_batch": 0,
+        "development_rows": 50000,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e",
+        "precision": "fp32"
+      },
+      "target_manifest": {
+        "path": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/target_manifest.json",
+        "sha256": "75c9c4f49670feeff11db274093e0f4d93362f1ee8d88f8d83c59e92ce168c09"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/initializations/degree_local_cycle_common_ema999_initial.pt",
+        "sha256": "72a80ff1089399b9a90244adccc2567b82aeb4e36ea2e82b4cb6ad0da370b32f"
+      }
+    }
+  ],
+  "audit": {
+    "path": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/audit_action.json",
+    "sha256": "df727e7fc3ab4abf3df7fc38f7ca687e31d55debef3cf7fc2c98569e9724cf71"
+  },
+  "cache_acceptance": {
+    "path": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json",
+    "sha256": "1945d2eefd865a55e0d630b23ec1a97f59f4abb6bf6289d060e8cce014d3fa8b"
+  }
+}

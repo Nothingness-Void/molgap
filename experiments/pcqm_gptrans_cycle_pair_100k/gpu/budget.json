@@ -1,0 +1,12 @@
+{
+  "format": "molgap-budget-snapshot-v1",
+  "allocation": "T4x2; one independent model per visible device",
+  "estimated_wall_hours": [3, 6],
+  "wall_hours_ceiling": 8,
+  "allocated_t4_hours_ceiling": 16,
+  "preflight": "Both optimizer-inclusive repeat/resume proofs,21disposable profiling updates per arm, candidate exact zero-start proof,85percent maximum reserved memory",
+  "runtime": "Native maximum observed batch times,35percent margin, both live and EMA development passes, bootstrap included in whole-allocation gate",
+  "durability": "Atomic per-pass full state; immutable independent recovery bundle every10passes",
+  "failure_disposition": "Infrastructure or cost stop remains distinct from scientific outcome; no seed/batch/precision change",
+  "deferred_audit": "Separate action after training acceptance, at most30wall minutes and only inside remaining combined16allocatedT4hours"
+}

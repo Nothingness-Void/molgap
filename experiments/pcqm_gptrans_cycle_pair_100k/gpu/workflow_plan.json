@@ -1,0 +1,40 @@
+{
+  "format": "molgap-experiment-workflow-v1",
+  "spec_identity": "eb32805ebb831b75ac9d37e6d9606f7f87a1df40d6f8a18b969a4d15b699b042",
+  "source_files": [
+    "experiments/pcqm_gptrans_cycle_pair_100k/gpu/authority.json",
+    "experiments/pcqm_gptrans_cycle_pair_100k/gpu/audit_action.json",
+    "experiments/pcqm_gptrans_cycle_pair_100k/gpu/target_manifest.json",
+    "experiments/pcqm_gptrans_cycle_pair_100k/gpu/role_plan.json",
+    "experiments/pcqm_gptrans_cycle_pair_100k/gpu/budget.json",
+    "experiments/pcqm_gptrans_cycle_pair_100k/gpu/acceptance_plan.json",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json"
+  ],
+  "arms": [
+    {
+      "arm_id": "local_reference",
+      "device": 0,
+      "recipe": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/local_reference/contract.json",
+      "initial_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\initializations\\degree_bond_local_ema999_initial.pt"
+    },
+    {
+      "arm_id": "cycle_common",
+      "device": 1,
+      "recipe": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/cycle_common/contract.json",
+      "initial_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\initializations\\degree_local_cycle_common_ema999_initial.pt"
+    }
+  ],
+  "acceptance_plan": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/acceptance_plan.json",
+  "kaggle": {
+    "account": "kaseichou",
+    "kernel": "kaseichou/molgap-gptrans-cycle-dual-100k-v1",
+    "title": "MolGap GPTrans Cycle Dual 100K V1",
+    "source_dataset": "kaseichou/molgap-gptrans-cycle-dual-source-v1",
+    "accelerator": "NvidiaTeslaT4",
+    "datasets": [
+      "kaseichou/molgap-gptrans-cycle-dual-source-v1",
+      "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+      "kaseichou/molgap-gptrans-common-cycle-inputs-v1"
+    ]
+  }
+}

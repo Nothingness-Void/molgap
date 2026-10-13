@@ -1,0 +1,14 @@
+{
+  "scope": "one-new-contract-reference-and-one-candidate",
+  "user_authorized": true,
+  "user_reply": "Complete same-run reference-plus-candidate release and acceptance support, then submit; no third arm",
+  "extra_arms": 0,
+  "seeds": [42],
+  "wall_ceiling_seconds": 28800,
+  "allocated_t4_hours_ceiling": 16,
+  "reference_reason": "Shared foreachAdamW and bound-foreachEMA define a new executable contract; the historical native reference is contextual only",
+  "future_reference_status": "PLANNED_NOT_ACCEPTED",
+  "terminal_order": "Independently accept the reference first; only then qualify the candidate against its actual frozen outputs",
+  "forbidden": ["extra_seed", "third_arm", "500k_training", "full_training", "protected_roles", "automatic_promotion"],
+  "contract": "gptrans-shared-local-cycle100k-v1"
+}

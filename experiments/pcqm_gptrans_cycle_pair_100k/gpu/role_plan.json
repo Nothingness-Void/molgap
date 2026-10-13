@@ -1,0 +1,11 @@
+{
+  "train": {"membership": [0, 100000], "usage": ["optimizer", "target_transform", "native_scratch_preflight"]},
+  "development": {"membership": [100000, 150000], "usage": ["live_and_ema_metrics", "ema_checkpoint_selection"]},
+  "later_internal_development": {"membership": [500000, 550000], "usage": "deferred_full50k_NO_TRAIN_audit_after_training_acceptance"},
+  "official_validation": "forbidden",
+  "test_dev": "forbidden",
+  "test_challenge": "forbidden",
+  "500k_training": "forbidden",
+  "geometry_features": "forbidden",
+  "incidental_packed_coordinates_and_labels": "deserialization provenance only"
+}

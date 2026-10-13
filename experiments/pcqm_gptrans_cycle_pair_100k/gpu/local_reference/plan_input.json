@@ -1,0 +1,140 @@
+{
+  "trajectory": {
+    "trajectory_id": "TC-gptrans-shared-local-reference-100k-s42",
+    "record_mode": "prospective",
+    "owner": "server",
+    "track": "C",
+    "family_id": "gptrans-shared-cycle-pair",
+    "question": "Does zero-start common-cycle pair encoding improve the same-contract local-bond reference?",
+    "hypothesis": {
+      "hypothesis_id": "H-TC-gptrans-shared-local-reference-100k-s42",
+      "observed_deficiency": "Shared-contract reference absent; ring pair relation is not explicit in the local-bond core",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
+      ],
+      "alternative_explanations": [
+        "Redundant topology",
+        "Extra fitting freedom",
+        "New execution contract changes historical background"
+      ],
+      "changed_mechanism": "unchanged shared-contract reference",
+      "cheapest_falsifier": "one matched seed42 fixed100K pair",
+      "related_closed_family_ids": [
+        "gptrans-local-relation-flow",
+        "gptrans-triplet-routing"
+      ],
+      "expected_native_cost_ref": "cost-TC-gptrans-shared-local-reference-100k-s42",
+      "decision_changed_if_positive": "nominate only after actual reference and candidate acceptance",
+      "decision_changed_if_negative": "close exact encoding without a grid or extra seed",
+      "historical_unknowns": []
+    },
+    "state_at_start": {
+      "source_commit": "5062d90aa2a8a3a6f1fadb2bc08addef30fbf5e3",
+      "source_config_identity": "77df7039ce9b18daf7b926690324edc8968c98574b0a07e25c12b1974c9907c5",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_cycle_pair_100k/gpu/local_reference/contract.json",
+        "experiments/pcqm_gptrans_cycle_pair_100k/gpu/authority.json",
+        "experiments/pcqm_gptrans_cycle_pair_100k/gpu/audit_action.json"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
+      ],
+      "parent_trajectory_ids": [],
+      "prior_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_cycle_pair_100k/gpu/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/budget.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "shared_pair_training",
+        "source_commit": "5062d90aa2a8a3a6f1fadb2bc08addef30fbf5e3",
+        "run_ids": [
+          "kaseichou/molgap-gptrans-cycle-dual-100k-v1"
+        ],
+        "attempt_ids": [
+          "v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_cycle_pair_100k/gpu/local_reference/contract.json"
+        ],
+        "cost_event_ids": [
+          "cost-TC-gptrans-shared-local-reference-100k-s42"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_cycle_pair_100k/protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one same-run reference/candidate screen after all-arm preflight"
+      ],
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [
+      "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
+    ],
+    "available_actions": [
+      "RUN_SHARED_CYCLE_PAIR",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_SHARED_CYCLE_PAIR",
+    "policy_id": "gptrans-shared-cycle-pair",
+    "policy_version": "v1",
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/budget.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_cycle_pair_100k/gpu/role_plan.json"
+    ],
+    "state_timestamp": "2026-10-13T16:50:57.643280+00:00",
+    "source_commit": "5062d90aa2a8a3a6f1fadb2bc08addef30fbf5e3"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-shared-local-reference-100k-s42",
+      "trajectory_id": "TC-gptrans-shared-local-reference-100k-s42",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-gptrans-cycle-dual-100k-v1",
+      "attempt_id": "v1",
+      "category": "training",
+      "platform": "kaggle2",
+      "hardware": "Tesla_T4x2_shared_allocation",
+      "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/gpu/budget.json",
+      "measurement": {
+        "device_hours": {
+          "status": "estimated",
+          "value": 8
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 4
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}
