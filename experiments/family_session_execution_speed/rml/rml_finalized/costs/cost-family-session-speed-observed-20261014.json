@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "local-001",
+  "category": "audit",
+  "cost_event_id": "cost-family-session-speed-observed-20261014",
+  "evidence_ref": "experiments/family_session_execution_speed/acceptance.json",
+  "hardware": "RTX5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.09684895833333333
+    },
+    "device_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.0895015169722218
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "family-session-speed-20261014",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-family-session-speed-20261014"
+}

@@ -1,0 +1,175 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-family-session-speed-20261014",
+  "run_id": "family-session-speed-20261014",
+  "action_id": "A001",
+  "finalized_at": "2026-10-13T16:45:56.133680+00:00",
+  "acceptance_ref": "experiments/family_session_execution_speed/acceptance.json",
+  "artifact_hashes": {
+    "experiments/family_session_execution_speed/acceptance.json": "bce71b62c768ada15c915f3074947403a2df25d77f6c3f99e0fabbce7919c322",
+    "experiments/family_session_execution_speed/analysis.json": "484f621592f3b99674af7826b59ac972fda8f347ebc74e763a5d9be12d4cde10",
+    "experiments/family_session_execution_speed/terminal_decision.md": "9c810830e65cfbaaea74b487b79ca82c867712d0fbb11b89322f1bcdbf4b45ff",
+    "experiments/family_session_execution_speed/attribution.md": "9b0b579afdec7d4ced79d4e1757aeca4df7a7abd8e400dfbe6b0801149b10608",
+    "experiments/family_session_execution_speed/config.json": "541d8be9358c9b385f96828b1bf0201c534ba8203ab264e79bcaeb889fdcc16d",
+    "experiments/family_session_execution_speed/protocol.md": "97ecabe2200da18fbdbd89ce59c76f6fa956601a3bc64d45878874a5e4a1c218",
+    "experiments/family_session_execution_speed/role_plan.json": "b3c98b70d7e09d6372ac7c2b07c092324fc27e6effffbb41bf202e1a770e469e",
+    "experiments/family_session_execution_speed/results/result.json": "ad68731eb6eaeb4c25103b8234aa9fb089d72b97f7a9f1102b061cb109c7f12e",
+    "experiments/family_session_execution_speed/results/completion.json": "a0c7b5b4c5e1e1f0051682b71e32d88a153433f52feb5d93fd7bb9d774cfdb94",
+    "experiments/family_session_execution_speed/source_snapshots/reference.zip": "9addb0f15b67a80d2e77fd678ffb2262e782d8526935570778d2f3cc6fa02cee",
+    "experiments/family_session_execution_speed/source_snapshots/candidate.zip": "448ae731751270a27565bc821e5c38755463d5cfcb00f15ccb93321136c169fd"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "family-session-speed-20261014",
+    "track": "B",
+    "scope": "synthetic_session_execution",
+    "legacy_contract": "synthetic-shared-session-speed-v1",
+    "outcome": {
+      "execution_status": "complete_synthetic_session_diagnostic",
+      "artifact_status": "local_hash_verified",
+      "comparison_status": "exact_mathematical_endpoints_execution_only",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "bounded_diagnostic_complete",
+      "full_handoff_status": "not_applicable"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/family_session_execution_speed/protocol.md",
+        "experiments/family_session_execution_speed/terminal_decision.md",
+        "experiments/family_session_execution_speed/attribution.md",
+        "experiments/family_session_execution_speed/acceptance.json"
+      ]
+    },
+    "role_use": {
+      "train": "untouched",
+      "development": "untouched",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "migration": {
+      "migrated_at": "2026-10-13T16:45:56.133680+00:00",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Synthetic scratch session/optimizer diagnostic; not formal training"
+    },
+    "observed_execution": {
+      "training_executed": false,
+      "inference_executed": false,
+      "scratch_optimizer_updates": true,
+      "execution_ref": "experiments/family_session_execution_speed/results/result.json"
+    },
+    "artifacts": [
+      {
+        "name": "acceptance.json",
+        "locator": "experiments/family_session_execution_speed/acceptance.json",
+        "sha256": "bce71b62c768ada15c915f3074947403a2df25d77f6c3f99e0fabbce7919c322",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "analysis.json",
+        "locator": "experiments/family_session_execution_speed/analysis.json",
+        "sha256": "484f621592f3b99674af7826b59ac972fda8f347ebc74e763a5d9be12d4cde10",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "terminal_decision.md",
+        "locator": "experiments/family_session_execution_speed/terminal_decision.md",
+        "sha256": "9c810830e65cfbaaea74b487b79ca82c867712d0fbb11b89322f1bcdbf4b45ff",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "attribution.md",
+        "locator": "experiments/family_session_execution_speed/attribution.md",
+        "sha256": "9b0b579afdec7d4ced79d4e1757aeca4df7a7abd8e400dfbe6b0801149b10608",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "config.json",
+        "locator": "experiments/family_session_execution_speed/config.json",
+        "sha256": "541d8be9358c9b385f96828b1bf0201c534ba8203ab264e79bcaeb889fdcc16d",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "protocol.md",
+        "locator": "experiments/family_session_execution_speed/protocol.md",
+        "sha256": "97ecabe2200da18fbdbd89ce59c76f6fa956601a3bc64d45878874a5e4a1c218",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "role_plan.json",
+        "locator": "experiments/family_session_execution_speed/role_plan.json",
+        "sha256": "b3c98b70d7e09d6372ac7c2b07c092324fc27e6effffbb41bf202e1a770e469e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/result.json",
+        "locator": "experiments/family_session_execution_speed/results/result.json",
+        "sha256": "ad68731eb6eaeb4c25103b8234aa9fb089d72b97f7a9f1102b061cb109c7f12e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/completion.json",
+        "locator": "experiments/family_session_execution_speed/results/completion.json",
+        "sha256": "a0c7b5b4c5e1e1f0051682b71e32d88a153433f52feb5d93fd7bb9d774cfdb94",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "source_snapshots/reference.zip",
+        "locator": "experiments/family_session_execution_speed/source_snapshots/reference.zip",
+        "sha256": "9addb0f15b67a80d2e77fd678ffb2262e782d8526935570778d2f3cc6fa02cee",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "source_snapshots/candidate.zip",
+        "locator": "experiments/family_session_execution_speed/source_snapshots/candidate.zip",
+        "sha256": "448ae731751270a27565bc821e5c38755463d5cfcb00f15ccb93321136c169fd",
+        "availability": "locally_retained_hash_verified"
+      }
+    ]
+  },
+  "decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/family_session_execution_speed/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately authorized representative data/runtime/platform test"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-family-session-speed-observed-20261014",
+      "trajectory_id": "TB-family-session-speed-20261014",
+      "action_id": "A001",
+      "run_id": "family-session-speed-20261014",
+      "attempt_id": "local-001",
+      "platform": "local-windows",
+      "hardware": "RTX5060",
+      "category": "audit",
+      "evidence_ref": "experiments/family_session_execution_speed/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.0895015169722218,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "cpu_hours": {
+          "value": 0.09684895833333333,
+          "status": "measured"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": []
+}

@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 487,
+  "ambiguous_historical_role_record_count": 492,
   "coarse_historical_role_records": [
     {
       "evidence_id": "family-checkpoint-efficiency-20261013",
@@ -31,6 +31,41 @@
     },
     {
       "evidence_id": "family-checkpoint-efficiency-20261013",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-session-speed-20261014",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-session-speed-20261014",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-session-speed-20261014",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-session-speed-20261014",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "family-session-speed-20261014",
       "role_identity": null,
       "role_name": "train",
       "semantics": "coarse_historical",
@@ -5566,6 +5601,7 @@
   "protected_roles_reported_untouched": {
     "test_challenge": [
       "family-checkpoint-efficiency-20261013",
+      "family-session-speed-20261014",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",
@@ -5669,6 +5705,7 @@
     ],
     "test_dev": [
       "family-checkpoint-efficiency-20261013",
+      "family-session-speed-20261014",
       "k1-saved-bn-rows-20261008-evidence",
       "k1-saved-trace-pair-20261008-attempt002-evidence",
       "k1-saved-trace-pair-20261008-evidence",

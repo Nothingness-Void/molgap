@@ -1,8 +1,8 @@
 # Shared-Session Execution Speed
 
 One bounded synthetic execution question, not a model candidate or training
-release. Read [protocol](protocol.md), frozen prospective [decision](decision.md)
-and eventual `terminal_decision.md` before interpreting timings.
+release. Read the [terminal decision](terminal_decision.md), [attribution](attribution.md),
+[protocol](protocol.md) and frozen prospective [decision](decision.md).
 
 `prepare.py` freezes actual historical/current Git source snapshots and uses the
 RML planner. `run.py` delegates to the shared diagnostic, which calls the existing

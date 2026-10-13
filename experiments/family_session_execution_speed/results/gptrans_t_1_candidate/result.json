@@ -1,0 +1,37 @@
+{
+  "family": "gptrans_t",
+  "implementation": "candidate",
+  "repeat": 1,
+  "source_commit": "e5d914eef6c4cd10d393587e232588d47ec9d77d",
+  "source_archive_sha256": "448ae731751270a27565bc821e5c38755463d5cfcb00f15ccb93321136c169fd",
+  "initialization_sha256": "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6",
+  "config_sha256": "541d8be9358c9b385f96828b1bf0201c534ba8203ab264e79bcaeb889fdcc16d",
+  "runtime": {
+    "torch": "2.7.1+cu128",
+    "cuda": "12.8",
+    "accelerator": "NVIDIA GeForce RTX 5060",
+    "cpu_threads": 2,
+    "pid": 22420
+  },
+  "steps": 64,
+  "samples": 8192,
+  "scratch_optimizer_updates": true,
+  "formal_training_executed": false,
+  "molecular_roles_consumed": false,
+  "compute": {
+    "seconds": 4.4709629000062705,
+    "molecules_per_second": 1832.267496558406,
+    "peak_allocated_bytes": 1194702848,
+    "endpoint_sha256": "a5e1789eea3fb09d66e63e2aaca2f67e1813f8a18ce20ad5cebf04f426f7a266"
+  },
+  "mechanical_inspection": "MECHANICALLY_VERIFIED",
+  "session": {
+    "seconds": 6.0870148000030895,
+    "molecules_per_second": 1345.8156862039898,
+    "peak_allocated_bytes": 1236702720,
+    "endpoint_sha256": "a5e1789eea3fb09d66e63e2aaca2f67e1813f8a18ce20ad5cebf04f426f7a266"
+  },
+  "status": "COMPLETE",
+  "worker_wall_seconds": 21.373221500005457,
+  "process_cpu_seconds": 27.703125
+}

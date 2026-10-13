@@ -1,7 +1,7 @@
 {
   "cross_hardware_total": null,
-  "estimated_event_count": 60,
-  "event_count": 232,
+  "estimated_event_count": 61,
+  "event_count": 234,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1-clean-bn-attempt1",
@@ -11,8 +11,8 @@
     "cost-s43-mean2-shared-entry-allocation",
     "cost-s43-single-platform-release-unobserved"
   ],
-  "measurement_missing_event_count": 200,
-  "not_applicable_event_count": 83,
+  "measurement_missing_event_count": 202,
+  "not_applicable_event_count": 85,
   "retry_event_ids": [],
   "totals_by_category": {
     "acceptance": {
@@ -401,6 +401,54 @@
         },
         "not_applicable_records": 0,
         "unknown_records": 1
+      },
+      "RTX5060:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.09684895833333333
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "RTX5060:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "RTX5060:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "RTX5060:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0895015169722218
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
       },
       "Z100SM DCU:cpu_hours": {
         "estimated": {
@@ -5371,6 +5419,56 @@
         "unknown_records": 23
       }
     },
+    "RTX5060": {
+      "cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.09684895833333333
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0895015169722218
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
     "Tesla T4": {
       "cpu_hours": {
         "estimated": {
@@ -7410,6 +7508,56 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.012384828388888613
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TB-family-session-speed-20261014": {
+      "RTX5060:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.09684895833333333
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "RTX5060:device_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "RTX5060:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 2,
+        "unknown_records": 0
+      },
+      "RTX5060:wall_hours": {
+        "estimated": {
+          "known_records": 1,
+          "known_total": 0.16666666666666666
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0895015169722218
         },
         "not_applicable_records": 0,
         "unknown_records": 0

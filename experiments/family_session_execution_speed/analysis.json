@@ -1,0 +1,54 @@
+{
+  "paired_summaries": [
+    {
+      "family": "neural_atom_k1",
+      "mode": "compute",
+      "reference_median_seconds": 3.8003724000009242,
+      "candidate_median_seconds": 3.830403399995703,
+      "paired_time_reduction_median": -0.01873319941232965,
+      "paired_time_reduction_range": [
+        -0.03499709660092121,
+        -0.0036656402396468835
+      ],
+      "exact_endpoint_equal": true
+    },
+    {
+      "family": "neural_atom_k1",
+      "mode": "session",
+      "reference_median_seconds": 5.088301600000705,
+      "candidate_median_seconds": 5.504948300003889,
+      "paired_time_reduction_median": -0.06925886197461795,
+      "paired_time_reduction_range": [
+        -0.08188325550575204,
+        0.08436846372853546
+      ],
+      "exact_endpoint_equal": true
+    },
+    {
+      "family": "gptrans_t",
+      "mode": "compute",
+      "reference_median_seconds": 4.502583699999377,
+      "candidate_median_seconds": 4.484187900001416,
+      "paired_time_reduction_median": 0.004085609779550303,
+      "paired_time_reduction_range": [
+        -0.008344200317557338,
+        0.04492118365936193
+      ],
+      "exact_endpoint_equal": true
+    },
+    {
+      "family": "gptrans_t",
+      "mode": "session",
+      "reference_median_seconds": 5.617540899998858,
+      "candidate_median_seconds": 6.0936624000023585,
+      "paired_time_reduction_median": -0.0920958810792849,
+      "paired_time_reduction_range": [
+        -0.11273185389697549,
+        -0.05102384616615696
+      ],
+      "exact_endpoint_equal": true
+    }
+  ],
+  "quality": "not_evaluated",
+  "full_epoch_speed": "not_measured"
+}

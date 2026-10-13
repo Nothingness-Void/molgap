@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 114,
+    "trajectories_total": 115,
     "with_complete_native_measurement": 24,
-    "with_cost_event": 103,
-    "with_incomplete_native_measurement": 79,
+    "with_cost_event": 104,
+    "with_incomplete_native_measurement": 80,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 83,
+      "count": 84,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -23,6 +23,7 @@
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
+        "TB-family-session-speed-20261014",
         "TB-geometry-transfer-500k-context",
         "TB-gptrans-100k-local-joint-control-20260925",
         "TB-gptrans-100k-local-reference-control-20260925",
@@ -132,12 +133,13 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 79,
+      "count": 80,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
+        "TB-family-session-speed-20261014",
         "TB-gptrans-100k-local-joint-control-20260925",
         "TB-gptrans-100k-local-reference-control-20260925",
         "TB-gptrans-100k-transfer-control-local-20260925",
@@ -236,11 +238,12 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 39,
+      "count": 40,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
+        "TB-family-session-speed-20261014",
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
         "TB-gptrans-100k-transfer-control-local-20260925",

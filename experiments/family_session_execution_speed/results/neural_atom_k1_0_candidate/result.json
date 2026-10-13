@@ -1,0 +1,37 @@
+{
+  "family": "neural_atom_k1",
+  "implementation": "candidate",
+  "repeat": 0,
+  "source_commit": "e5d914eef6c4cd10d393587e232588d47ec9d77d",
+  "source_archive_sha256": "448ae731751270a27565bc821e5c38755463d5cfcb00f15ccb93321136c169fd",
+  "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "config_sha256": "541d8be9358c9b385f96828b1bf0201c534ba8203ab264e79bcaeb889fdcc16d",
+  "runtime": {
+    "torch": "2.7.1+cu128",
+    "cuda": "12.8",
+    "accelerator": "NVIDIA GeForce RTX 5060",
+    "cpu_threads": 2,
+    "pid": 53648
+  },
+  "steps": 64,
+  "samples": 8192,
+  "scratch_optimizer_updates": true,
+  "formal_training_executed": false,
+  "molecular_roles_consumed": false,
+  "compute": {
+    "seconds": 3.933374400003231,
+    "molecules_per_second": 2082.6901197082257,
+    "peak_allocated_bytes": 638617088,
+    "endpoint_sha256": "affd9d66479db790303392f613bfdbfb23f83cd8e1c8dc5eba36520279483bd9"
+  },
+  "mechanical_inspection": "MECHANICALLY_VERIFIED",
+  "session": {
+    "seconds": 5.727143500000238,
+    "molecules_per_second": 1430.3814807503354,
+    "peak_allocated_bytes": 661669888,
+    "endpoint_sha256": "affd9d66479db790303392f613bfdbfb23f83cd8e1c8dc5eba36520279483bd9"
+  },
+  "status": "COMPLETE",
+  "worker_wall_seconds": 26.982442100001208,
+  "process_cpu_seconds": 34.453125
+}

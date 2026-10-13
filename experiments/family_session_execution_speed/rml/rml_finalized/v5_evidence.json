@@ -1,0 +1,113 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_session_execution_speed/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "bce71b62c768ada15c915f3074947403a2df25d77f6c3f99e0fabbce7919c322"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_session_execution_speed/analysis.json",
+      "name": "analysis.json",
+      "sha256": "484f621592f3b99674af7826b59ac972fda8f347ebc74e763a5d9be12d4cde10"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_session_execution_speed/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "9c810830e65cfbaaea74b487b79ca82c867712d0fbb11b89322f1bcdbf4b45ff"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_session_execution_speed/attribution.md",
+      "name": "attribution.md",
+      "sha256": "9b0b579afdec7d4ced79d4e1757aeca4df7a7abd8e400dfbe6b0801149b10608"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_session_execution_speed/config.json",
+      "name": "config.json",
+      "sha256": "541d8be9358c9b385f96828b1bf0201c534ba8203ab264e79bcaeb889fdcc16d"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_session_execution_speed/protocol.md",
+      "name": "protocol.md",
+      "sha256": "97ecabe2200da18fbdbd89ce59c76f6fa956601a3bc64d45878874a5e4a1c218"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_session_execution_speed/role_plan.json",
+      "name": "role_plan.json",
+      "sha256": "b3c98b70d7e09d6372ac7c2b07c092324fc27e6effffbb41bf202e1a770e469e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_session_execution_speed/results/result.json",
+      "name": "results/result.json",
+      "sha256": "ad68731eb6eaeb4c25103b8234aa9fb089d72b97f7a9f1102b061cb109c7f12e"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_session_execution_speed/results/completion.json",
+      "name": "results/completion.json",
+      "sha256": "a0c7b5b4c5e1e1f0051682b71e32d88a153433f52feb5d93fd7bb9d774cfdb94"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_session_execution_speed/source_snapshots/reference.zip",
+      "name": "source_snapshots/reference.zip",
+      "sha256": "9addb0f15b67a80d2e77fd678ffb2262e782d8526935570778d2f3cc6fa02cee"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/family_session_execution_speed/source_snapshots/candidate.zip",
+      "name": "source_snapshots/candidate.zip",
+      "sha256": "448ae731751270a27565bc821e5c38755463d5cfcb00f15ccb93321136c169fd"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/family_session_execution_speed/protocol.md",
+      "experiments/family_session_execution_speed/terminal_decision.md",
+      "experiments/family_session_execution_speed/attribution.md",
+      "experiments/family_session_execution_speed/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "family-session-speed-20261014",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "synthetic-shared-session-speed-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-13T16:45:56.133680+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Synthetic scratch session/optimizer diagnostic; not formal training"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/family_session_execution_speed/results/result.json",
+    "inference_executed": false,
+    "scratch_optimizer_updates": true,
+    "training_executed": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "bounded_diagnostic_complete",
+    "comparison_status": "exact_mathematical_endpoints_execution_only",
+    "execution_status": "complete_synthetic_session_diagnostic",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "untouched"
+  },
+  "scope": "synthetic_session_execution",
+  "track": "B"
+}

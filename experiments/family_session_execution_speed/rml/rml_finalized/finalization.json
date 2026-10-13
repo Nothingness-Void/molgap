@@ -1,0 +1,35 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-67e4f57a126f3d188ce1b18177267b3022c44c3d40e8d0e5567b5e3c37889109",
+  "finalized_at": "2026-10-13T16:45:56.133680+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/family_session_execution_speed/acceptance.json": "bce71b62c768ada15c915f3074947403a2df25d77f6c3f99e0fabbce7919c322",
+    "experiments/family_session_execution_speed/analysis.json": "484f621592f3b99674af7826b59ac972fda8f347ebc74e763a5d9be12d4cde10",
+    "experiments/family_session_execution_speed/attribution.md": "9b0b579afdec7d4ced79d4e1757aeca4df7a7abd8e400dfbe6b0801149b10608",
+    "experiments/family_session_execution_speed/config.json": "541d8be9358c9b385f96828b1bf0201c534ba8203ab264e79bcaeb889fdcc16d",
+    "experiments/family_session_execution_speed/protocol.md": "97ecabe2200da18fbdbd89ce59c76f6fa956601a3bc64d45878874a5e4a1c218",
+    "experiments/family_session_execution_speed/results/completion.json": "a0c7b5b4c5e1e1f0051682b71e32d88a153433f52feb5d93fd7bb9d774cfdb94",
+    "experiments/family_session_execution_speed/results/result.json": "ad68731eb6eaeb4c25103b8234aa9fb089d72b97f7a9f1102b061cb109c7f12e",
+    "experiments/family_session_execution_speed/role_plan.json": "b3c98b70d7e09d6372ac7c2b07c092324fc27e6effffbb41bf202e1a770e469e",
+    "experiments/family_session_execution_speed/source_snapshots/candidate.zip": "448ae731751270a27565bc821e5c38755463d5cfcb00f15ccb93321136c169fd",
+    "experiments/family_session_execution_speed/source_snapshots/reference.zip": "9addb0f15b67a80d2e77fd678ffb2262e782d8526935570778d2f3cc6fa02cee",
+    "experiments/family_session_execution_speed/terminal_decision.md": "9c810830e65cfbaaea74b487b79ca82c867712d0fbb11b89322f1bcdbf4b45ff"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-family-session-speed-observed-20261014.json": "a5f73c3d4bec339ba95d3bfd014517ef878df79bd3ad5a39cdf1fa2785cd73e0",
+    "prospective_snapshot.json": "49a14ee948531efdbf913592a8f8e9ea8ddac75ac8cd85164df2c7d5e9520c84",
+    "terminal_input.json": "9d851cb5b76f84361172f784e6db3bd7d4d34e3cc6feb03a66d4d11822c9f4a8",
+    "trajectory.json": "034a36f965a2313ac933a16251d7dbdf69fbcda38cc20ad1ae1876af2b9915bd",
+    "v5_evidence.json": "6d65c237a5e005f15e596aa173f48db902d8896511a19fe86a70a9da92b827d1"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/family_session_execution_speed/rml/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "67e4f57a126f3d188ce1b18177267b3022c44c3d40e8d0e5567b5e3c37889109",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-family-session-speed-20261014"
+}
