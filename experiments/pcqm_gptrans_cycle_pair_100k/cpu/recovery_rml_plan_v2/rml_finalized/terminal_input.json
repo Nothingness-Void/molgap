@@ -1,0 +1,196 @@
+{
+  "acceptance_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json": "1945d2eefd865a55e0d630b23ec1a97f59f4abb6bf6289d060e8cce014d3fa8b",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json": "c01024f8c03e5d5c8dd2eaf8825952c537614169a5d8b71acc344b149fbb6899",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md": "15a9fa78b111e2e5d2ad1232c6b40876e2f47d83c8ce9d4bf1e1fa5d70a42e0c",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan_v2/trajectory.json": "a91f615be2a8df827423b5516b045bbd79764dd5f17a01cae1c9513f7b070d63",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_000000_050000.pt": "cfb15a51a7da9c9a57a1924b188b4e378e8055a963e8615eced61ee72dc52eef",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_050000_100000.pt": "0be88499fa91aff6c0cbf39c502908ebae8ec3a8d3dc4d489b56ed5fa564d0ed",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_100000_150000.pt": "0dc336ea47c4d5cce3663d0602c4944ace81789ca98a9c18ea3b1020343ab836",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_500000_550000.pt": "dca2b09173b5fc67b532b71e498c9e0549aac4481e78badbdb7a65fdcccdc622",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/cost.json": "9b2bac279d618ebd623b7cbfaf3db7d2c64aed33c41074e183f5a6511bbce969",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/manifest.json": "1fd890bf91bc633c8323c17fe87d664f3106b26052f881e145d22b57f6606ac4"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "v1",
+      "category": "cache_build",
+      "cost_event_id": "cost-TC-gptrans-cycle-input-preparation-recovery-v2",
+      "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+      "hardware": "CPU-only",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.0727290621647222
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md",
+    "next_allowed_actions": [],
+    "outcome": "NO_TRAIN",
+    "reopen_conditions": [
+      "Separately validated shared-contract GPU release after user decision"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "retained_metadata",
+        "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/manifest.json",
+        "name": "manifest.json",
+        "sha256": "1fd890bf91bc633c8323c17fe87d664f3106b26052f881e145d22b57f6606ac4"
+      },
+      {
+        "availability": "retained_metadata",
+        "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/cost.json",
+        "name": "cost.json",
+        "sha256": "9b2bac279d618ebd623b7cbfaf3db7d2c64aed33c41074e183f5a6511bbce969"
+      },
+      {
+        "availability": "retained_local_payload",
+        "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_000000_050000.pt",
+        "name": "cycle_000000_050000.pt",
+        "sha256": "cfb15a51a7da9c9a57a1924b188b4e378e8055a963e8615eced61ee72dc52eef"
+      },
+      {
+        "availability": "retained_local_payload",
+        "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_050000_100000.pt",
+        "name": "cycle_050000_100000.pt",
+        "sha256": "0be88499fa91aff6c0cbf39c502908ebae8ec3a8d3dc4d489b56ed5fa564d0ed"
+      },
+      {
+        "availability": "retained_local_payload",
+        "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_100000_150000.pt",
+        "name": "cycle_100000_150000.pt",
+        "sha256": "0dc336ea47c4d5cce3663d0602c4944ace81789ca98a9c18ea3b1020343ab836"
+      },
+      {
+        "availability": "retained_local_payload",
+        "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_500000_550000.pt",
+        "name": "cycle_500000_550000.pt",
+        "sha256": "dca2b09173b5fc67b532b71e498c9e0549aac4481e78badbdb7a65fdcccdc622"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan_v2/trajectory.json",
+        "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json",
+        "experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md",
+        "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+        "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/manifest.json",
+        "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/cost.json",
+        "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_000000_050000.pt",
+        "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_050000_100000.pt",
+        "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_100000_150000.pt",
+        "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_500000_550000.pt"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "none-v5-prospective",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-13T15:36:09.701191+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Accepted frozen-source cycle cache only; no model quality or replay-training claim"
+    },
+    "outcome": {
+      "artifact_status": "cycle_inputs_independently_accepted",
+      "budget_decision": "cpu_budget_passed_zero_gpu",
+      "comparison_status": "not_evaluated",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "not_evaluated",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "internal_development_100000_150000": "labels_read",
+      "internal_development_500000_550000": "labels_read",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "labels_read"
+    },
+    "scope": "accepted_cpu_common_cycle_inputs",
+    "track": "C"
+  },
+  "finalized_at": "2026-10-13T15:36:09.701191+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "internal_development_100000_150000": "labels_read",
+    "internal_development_500000_550000": "labels_read",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "labels_read"
+  },
+  "roles": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "accepted-fixed-pcqm@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+      "role_event_id": "role-TC-gptrans-cycle-input-preparation-recovery-v2-train-incidental-deserialization",
+      "role_name": "train",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "semantics": "incidental trusted packed-file deserialization; labels never inspected, scored or used to select cycles",
+      "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "accepted-fixed-pcqm@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+      "role_event_id": "role-TC-gptrans-cycle-input-preparation-recovery-v2-internal_development_100000_150000-incidental-deserialization",
+      "role_name": "internal_development_100000_150000",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "semantics": "incidental trusted packed-file deserialization; labels never inspected, scored or used to select cycles",
+      "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "accepted-fixed-pcqm@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+      "role_event_id": "role-TC-gptrans-cycle-input-preparation-recovery-v2-internal_development_500000_550000-incidental-deserialization",
+      "role_name": "internal_development_500000_550000",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "semantics": "incidental trusted packed-file deserialization; labels never inspected, scored or used to select cycles",
+      "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2"
+    }
+  ],
+  "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+  "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2"
+}

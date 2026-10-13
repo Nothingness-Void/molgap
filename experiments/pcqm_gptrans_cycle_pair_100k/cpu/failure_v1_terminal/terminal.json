@@ -1,0 +1,123 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TC-gptrans-cycle-input-preparation",
+  "run_id": "kaseichou/molgap-gptrans-cycle-inputs-v1",
+  "action_id": "A001",
+  "finalized_at": "2026-10-13T15:24:51.813412+00:00",
+  "acceptance_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_v1_terminal/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/rml_plan/trajectory.json": "00f9ae1a30064ac4f63185eda46f08ae69bf0bd5d9767ac2e2365a603a6d9b7d",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/submission.json": "35f311b2e5e7f2d6a18683241e753da3641b1ef46c29854fa97f0c513c554eb9",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_v1.json": "688a3e7384d70039c02d8dc300d8258d7ebeaf3de7c890781eaef1320da14e7b",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_v1.md": "8ce0e2b35c29ae15142f4ab001a67b518b8c169c679630bcf4a7c9a645a551e6",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_v1_terminal/acceptance.json": "b9acb54daf57a107baae11fb077223d2146a61a0da140013d0ae6d129b4260bf",
+    "platforms/_records/kaggle/cycle_pair_cpu_v1/output/cycle_inputs/cost.json": "5d21365d4a7d031ea28449bc616cb1fda7e5706cc028e68a1ef2ed85276a8a28",
+    "platforms/_records/kaggle/cycle_pair_cpu_v1/output/molgap-gptrans-cycle-inputs-v1.log": "5446bc6c8a9b3a5f2a62a295785c7fb494e7c0cb0446d5cba5cbefd3146f69bc"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-gptrans-cycle-input-preparation-infrastructure",
+    "track": "C",
+    "scope": "cpu_input_preparation_failure",
+    "legacy_contract": "none-v5-prospective",
+    "outcome": {
+      "execution_status": "failed_before_first_graph_completed",
+      "artifact_status": "failure_metadata_verified",
+      "comparison_status": "not_evaluated",
+      "scientific_status": "not_evaluated",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "measured_cpu_wall_retained_no_gpu",
+      "full_handoff_status": "not_authorized"
+    },
+    "role_use": {
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched",
+      "train": "unknown",
+      "internal_development_100000_150000": "untouched",
+      "internal_development_500000_550000": "untouched"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_gptrans_cycle_pair_100k/cpu/rml_plan/trajectory.json",
+        "experiments/pcqm_gptrans_cycle_pair_100k/cpu/submission.json",
+        "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_v1.json",
+        "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_v1.md",
+        "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_v1_terminal/acceptance.json",
+        "platforms/_records/kaggle/cycle_pair_cpu_v1/output/cycle_inputs/cost.json",
+        "platforms/_records/kaggle/cycle_pair_cpu_v1/output/molgap-gptrans-cycle-inputs-v1.log"
+      ]
+    },
+    "artifacts": [
+      {
+        "name": "cost.json",
+        "locator": "platforms/_records/kaggle/cycle_pair_cpu_v1/output/cycle_inputs/cost.json",
+        "sha256": "5d21365d4a7d031ea28449bc616cb1fda7e5706cc028e68a1ef2ed85276a8a28",
+        "availability": "retained_metadata"
+      },
+      {
+        "name": "molgap-gptrans-cycle-inputs-v1.log",
+        "locator": "platforms/_records/kaggle/cycle_pair_cpu_v1/output/molgap-gptrans-cycle-inputs-v1.log",
+        "sha256": "5446bc6c8a9b3a5f2a62a295785c7fb494e7c0cb0446d5cba5cbefd3146f69bc",
+        "availability": "retained_metadata"
+      }
+    ],
+    "migration": {
+      "migrated_at": "2026-10-13T15:24:51.813412+00:00",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Exact CPU receipt, source commit, retained traceback and native cost; no completed graph or scientific score"
+    }
+  },
+  "decision": {
+    "decision_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_v1.md",
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately prospective tested infrastructure recovery"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-cycle-input-preparation",
+      "trajectory_id": "TC-gptrans-cycle-input-preparation",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-gptrans-cycle-inputs-v1",
+      "attempt_id": "v1",
+      "category": "infrastructure_failure",
+      "platform": "kaggle2",
+      "hardware": "CPU-only",
+      "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_v1_terminal/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.010288708242222225
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [],
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "train": "unknown",
+    "internal_development_100000_150000": "untouched",
+    "internal_development_500000_550000": "untouched"
+  }
+}

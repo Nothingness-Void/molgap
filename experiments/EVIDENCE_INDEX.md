@@ -1,5 +1,9 @@
 # Experiment evidence index
 
+The2026-10-14 [common-cycle dual preparation](pcqm_gptrans_cycle_pair_100k/decision_prelaunch.md)
+records synthetic checks, bounded CPU infrastructure attempts and unresolved
+shared-contract reference/release gates; no GPU result or architecture gain.
+
 This conditional-read table preserves the question, verdict, and authority map
 from [`experiments/README.md`](README.md). Each experiment directory remains the
 owner of its decision and machine evidence. The index is intentionally separate

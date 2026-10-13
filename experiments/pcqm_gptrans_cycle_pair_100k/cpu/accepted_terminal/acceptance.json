@@ -1,0 +1,109 @@
+{
+  "evidence_id": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+  "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "cycle_inputs_independently_accepted",
+    "comparison_status": "not_evaluated",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "cpu_budget_passed_zero_gpu",
+    "full_handoff_status": "not_authorized"
+  },
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md",
+    "outcome": "NO_TRAIN",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately validated shared-contract GPU release after user decision"
+    ]
+  },
+  "role_use": {
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched",
+    "train": "labels_read",
+    "internal_development_100000_150000": "labels_read",
+    "internal_development_500000_550000": "labels_read"
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TC-gptrans-cycle-input-preparation-recovery-v2-train-incidental-deserialization",
+      "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+      "dataset_identity": "accepted-fixed-pcqm@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "train",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+      "semantics": "incidental trusted packed-file deserialization; labels never inspected, scored or used to select cycles"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TC-gptrans-cycle-input-preparation-recovery-v2-internal_development_100000_150000-incidental-deserialization",
+      "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+      "dataset_identity": "accepted-fixed-pcqm@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "role_name": "internal_development_100000_150000",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+      "semantics": "incidental trusted packed-file deserialization; labels never inspected, scored or used to select cycles"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TC-gptrans-cycle-input-preparation-recovery-v2-internal_development_500000_550000-incidental-deserialization",
+      "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+      "dataset_identity": "accepted-fixed-pcqm@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "role_name": "internal_development_500000_550000",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+      "semantics": "incidental trusted packed-file deserialization; labels never inspected, scored or used to select cycles"
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-cycle-input-preparation-recovery-v2",
+      "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2",
+      "action_id": "A001",
+      "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+      "attempt_id": "v1",
+      "category": "cache_build",
+      "platform": "kaggle2",
+      "hardware": "CPU-only",
+      "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+      "measurement": {
+        "device_hours": {
+          "status": "not_applicable",
+          "value": null
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 0.0727290621647222
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "sidecar_acceptance_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json",
+  "training_executed": false,
+  "inference_executed": false,
+  "label_scoring_executed": false
+}

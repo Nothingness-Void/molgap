@@ -12,7 +12,14 @@ run/recipe/runtime-specific; historical entrypoints and job custody are unchange
 
 ## Server active screen
 
-No server training is active. The [post-routing research review](experiments/pcqm_v5_route_portfolio/bond_memory_review_2026-10-13.md)
+No server training is active. The user-authorized [common-cycle preparation group](experiments/pcqm_gptrans_cycle_pair_100k/decision_prelaunch.md)
+has [accepted CPU inputs](experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md);
+its exact attempts are bound by [status](experiments/pcqm_gptrans_cycle_pair_100k/STATUS.md).
+GPU dual release is blocked by shared-contract reference/
+release/audit support; no candidate or baseline has started training. Earlier
+CPU failures are infrastructure-only, not failed architecture evidence.
+
+The [post-routing research review](experiments/pcqm_v5_route_portfolio/bond_memory_review_2026-10-13.md)
 retains a design-only bond-message carry prototype; it has synthetic tests but
 no integrated encoder, prelaunch release, remote result or Replay claim.
 

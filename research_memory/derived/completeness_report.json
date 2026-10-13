@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 100,
+    "trajectories_total": 103,
     "with_complete_native_measurement": 6,
-    "with_cost_event": 100,
-    "with_incomplete_native_measurement": 94,
+    "with_cost_event": 103,
+    "with_incomplete_native_measurement": 97,
     "without_cost_event": 0
   },
   "counts_by_severity": {
@@ -15,13 +15,16 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 43,
+      "count": 46,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-author-input-preparation",
         "TC-gptrans-author-input-preparation-verification-recovery",
         "TC-gptrans-author-input-preparation-verification-recovery-v2",
         "TC-gptrans-bottleneck-frozen-v1",
+        "TC-gptrans-cycle-input-preparation",
+        "TC-gptrans-cycle-input-preparation-recovery",
+        "TC-gptrans-cycle-input-preparation-recovery-v2",
         "TC-gptrans-ema-runtime-qualification-v1",
         "TC-gptrans-execution-tuning40-optimized-100k-s42",
         "TC-gptrans-execution-tuning40-original-100k-s42",
@@ -87,7 +90,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 94,
+      "count": 97,
       "items": [
         "TB-gptrans-pair-prenorm-500k-s42",
         "TC-gptrans-author-degree-scale-100k-s42",
@@ -96,6 +99,9 @@
         "TC-gptrans-author-input-preparation-verification-recovery-v2",
         "TC-gptrans-author-path-bond-mean-100k-s42",
         "TC-gptrans-bottleneck-frozen-v1",
+        "TC-gptrans-cycle-input-preparation",
+        "TC-gptrans-cycle-input-preparation-recovery",
+        "TC-gptrans-cycle-input-preparation-recovery-v2",
         "TC-gptrans-ema-runtime-qualification-v1",
         "TC-gptrans-execution-tuning40-optimized-100k-s42",
         "TC-gptrans-execution-tuning40-original-100k-s42",
@@ -188,11 +194,13 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 23,
+      "count": 25,
       "items": [
         "TC-gptrans-author-input-preparation",
         "TC-gptrans-author-input-preparation-verification-recovery",
         "TC-gptrans-author-input-preparation-verification-recovery-v2",
+        "TC-gptrans-cycle-input-preparation",
+        "TC-gptrans-cycle-input-preparation-recovery",
         "TC-gptrans-ema-runtime-qualification-v1",
         "TC-gptrans-execution-tuning40-optimized-100k-s42",
         "TC-gptrans-execution-tuning40-original-100k-s42",

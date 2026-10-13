@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "v1",
+  "category": "infrastructure_failure",
+  "cost_event_id": "cost-TC-gptrans-cycle-input-preparation-recovery",
+  "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_recovery_v1_terminal/acceptance.json",
+  "hardware": "CPU-only",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.011231574635277769
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v1",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery"
+}

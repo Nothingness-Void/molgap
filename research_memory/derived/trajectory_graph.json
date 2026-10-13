@@ -71,6 +71,21 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TC-gptrans-cycle-input-preparation-recovery-v2:A001",
+      "target": "experiments/pcqm_gptrans_cycle_pair_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-cycle-input-preparation-recovery:A001",
+      "target": "experiments/pcqm_gptrans_cycle_pair_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TC-gptrans-cycle-input-preparation:A001",
+      "target": "experiments/pcqm_gptrans_cycle_pair_100k/protocol.md",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TC-gptrans-ema-runtime-qualification-v1:A001",
       "target": "experiments/pcqm_gptrans_ema_portability/environment_protocol.md",
       "type": "action_produced_evidence"
@@ -1442,6 +1457,21 @@
     },
     {
       "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation-recovery",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation-recovery-v2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
       "target": "TC-gptrans-execution-tuning40-optimized-100k-s42",
       "type": "prior_evidence"
     },
@@ -2217,6 +2247,21 @@
     },
     {
       "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation-recovery",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
+      "target": "TC-gptrans-cycle-input-preparation-recovery-v2",
+      "type": "reference_used"
+    },
+    {
+      "source": "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42",
       "target": "TC-gptrans-g1-local-bond-return-100k-s42",
       "type": "reference_used"
     },
@@ -2681,6 +2726,18 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-cycle-input-preparation-infrastructure",
+      "type": "evidence"
+    },
+    {
+      "id": "pcqm-gptrans-cycle-input-preparation-recovery-infrastructure",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-gptrans-ema-portability-infrastructure-v1",
       "type": "evidence"
     },
@@ -3086,6 +3143,18 @@
     },
     {
       "id": "TC-gptrans-bottleneck-frozen-v1",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-cycle-input-preparation",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-cycle-input-preparation-recovery",
+      "type": "trajectory"
+    },
+    {
+      "id": "TC-gptrans-cycle-input-preparation-recovery-v2",
       "type": "trajectory"
     },
     {

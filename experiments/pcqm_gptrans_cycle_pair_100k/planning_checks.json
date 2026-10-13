@@ -1,0 +1,33 @@
+{
+  "format": "molgap-cycle-pair-planning-checks-v1",
+  "recorded_date": "2026-10-14",
+  "status": "SYNTHETIC_TESTED_GPU_NOT_RELEASED",
+  "checks": [
+    {"tests": ["test_pcqm_fixed_records.py", "test_gptrans_cycle_pair.py", "test_gptrans_cycle_inputs.py", "test_family_training_recipe.py", "test_family_training_data.py"], "passed": 69},
+    {"tests": ["test_family_training_runner.py", "test_family_training_kernel.py", "test_family_training_loaders.py", "test_experiment_spec.py"], "passed": 163},
+    {"tests": ["test_cycle_cpu_source.py"], "passed": 1, "actual_staged_cpu_archive": "cdf04aa64870f9b963e6cc5fac14d5e1fa10b11b5c90ea64e393c5a389eb7f7c"}
+  ],
+  "real_local_molecular_forward_executed": false,
+  "real_local_graph_payload_loaded": false,
+  "gpu_training_submitted": false,
+  "repository_layout": {
+    "passed": 21,
+    "failed": 5,
+    "failure_scope": ["pre-existing bond-carry directory lacks README", "CURRENT_STATE already exceeded120lines; this task added6lines", "pre-existing experiment scripts infer roots by parent depth", "pre-existing source-dependence run lacks main guard"],
+    "unrelated_failures_not_repaired": true
+  },
+  "cpu_cache": {
+    "accepted": true,
+    "rows": 200000,
+    "chunks": 4,
+    "ordered_cycle_pairs": 7504482,
+    "manifest_sha256": "1fd890bf91bc633c8323c17fe87d664f3106b26052f881e145d22b57f6606ac4",
+    "wall_seconds_all_attempts": 339.2976421519999,
+    "gpu_device_hours": 0,
+    "authority": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json"
+  },
+  "rml_validation": {"status": "passed", "evidence": 100, "trajectories": 103},
+  "user_test_research_memory_sha256": "e623abd9b0a410d6c49ccf1d04e2e1ba5bb23237db4dea2a2c8c874f4b9465f1",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED"
+}

@@ -1,0 +1,14 @@
+{
+  "access_kind": "labels_read",
+  "action_id": "A001",
+  "dataset_identity": "accepted-fixed-pcqm@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "evidence_ref": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+  "role_event_id": "role-TC-gptrans-cycle-input-preparation-recovery-v2-internal_development_100000_150000-incidental-deserialization",
+  "role_name": "internal_development_100000_150000",
+  "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "run_id": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+  "schema": "molgap-role-event-v1",
+  "selection_used": false,
+  "semantics": "incidental trusted packed-file deserialization; labels never inspected, scored or used to select cycles",
+  "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2"
+}

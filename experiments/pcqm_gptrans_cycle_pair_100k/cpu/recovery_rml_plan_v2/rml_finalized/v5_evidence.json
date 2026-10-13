@@ -1,0 +1,84 @@
+{
+  "artifacts": [
+    {
+      "availability": "retained_metadata",
+      "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/manifest.json",
+      "name": "manifest.json",
+      "sha256": "1fd890bf91bc633c8323c17fe87d664f3106b26052f881e145d22b57f6606ac4"
+    },
+    {
+      "availability": "retained_metadata",
+      "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/cost.json",
+      "name": "cost.json",
+      "sha256": "9b2bac279d618ebd623b7cbfaf3db7d2c64aed33c41074e183f5a6511bbce969"
+    },
+    {
+      "availability": "retained_local_payload",
+      "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_000000_050000.pt",
+      "name": "cycle_000000_050000.pt",
+      "sha256": "cfb15a51a7da9c9a57a1924b188b4e378e8055a963e8615eced61ee72dc52eef"
+    },
+    {
+      "availability": "retained_local_payload",
+      "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_050000_100000.pt",
+      "name": "cycle_050000_100000.pt",
+      "sha256": "0be88499fa91aff6c0cbf39c502908ebae8ec3a8d3dc4d489b56ed5fa564d0ed"
+    },
+    {
+      "availability": "retained_local_payload",
+      "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_100000_150000.pt",
+      "name": "cycle_100000_150000.pt",
+      "sha256": "0dc336ea47c4d5cce3663d0602c4944ace81789ca98a9c18ea3b1020343ab836"
+    },
+    {
+      "availability": "retained_local_payload",
+      "locator": "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_500000_550000.pt",
+      "name": "cycle_500000_550000.pt",
+      "sha256": "dca2b09173b5fc67b532b71e498c9e0549aac4481e78badbdb7a65fdcccdc622"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan_v2/trajectory.json",
+      "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json",
+      "experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md",
+      "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json",
+      "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/manifest.json",
+      "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/cost.json",
+      "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_000000_050000.pt",
+      "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_050000_100000.pt",
+      "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_100000_150000.pt",
+      "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_500000_550000.pt"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-v5-prospective",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-13T15:36:09.701191+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Accepted frozen-source cycle cache only; no model quality or replay-training claim"
+  },
+  "outcome": {
+    "artifact_status": "cycle_inputs_independently_accepted",
+    "budget_decision": "cpu_budget_passed_zero_gpu",
+    "comparison_status": "not_evaluated",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "not_evaluated",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development_100000_150000": "labels_read",
+    "internal_development_500000_550000": "labels_read",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "labels_read"
+  },
+  "scope": "accepted_cpu_common_cycle_inputs",
+  "track": "C"
+}

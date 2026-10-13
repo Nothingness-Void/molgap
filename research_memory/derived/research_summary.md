@@ -1,16 +1,16 @@
 # MolGap Research Memory Summary
 
 ## Evidence
-- Validated V5 evidence: 97
+- Validated V5 evidence: 100
 - Evidence without trajectory: 2
 
 ## Trajectories
 - ACTIVE: 4
 - CLOSED: 4
 - INCONCLUSIVE: 19
-- INFRASTRUCTURE_ONLY: 23
+- INFRASTRUCTURE_ONLY: 25
 - NEGATIVE_UNDER_CONTRACT: 14
-- NO_TRAIN: 15
+- NO_TRAIN: 16
 - POSITIVE_BELOW_GATE: 13
 - POSITIVE_UNDER_CONTRACT: 7
 - STOP_FOR_COST: 1
@@ -21,15 +21,15 @@
 - Missing references: 0
 
 ## Roles
-- Explicit role events: 424
-- Coarse historical role records: 473
+- Explicit role events: 427
+- Coarse historical role records: 491
 - Repeatedly selected role identities: 4
 
 ## Cost
-- CPU-only cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
-- CPU-only device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=3
-- CPU-only queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=4, not_applicable=0
-- CPU-only wall_hours: measured=0.343403 (3 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
+- CPU-only cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=7, not_applicable=0
+- CPU-only device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=6
+- CPU-only queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=7, not_applicable=0
+- CPU-only wall_hours: measured=0.437653 (6 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Hygon_DCU_Device_66a1 cpu_hours: measured=0.042466 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Hygon_DCU_Device_66a1 device_hours: measured=0.104167 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Hygon_DCU_Device_66a1 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -118,8 +118,8 @@
 - unknown device_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=0
 - unknown queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=5, not_applicable=0
 - unknown wall_hours: measured=unknown (0 measured records), estimated=0.099878 (2 estimated records), measurement_missing=3, not_applicable=0
-- Measurement-missing cost events: 145
-- Cost-event coverage: 100/100 trajectories; incomplete native measurement=94
+- Measurement-missing cost events: 148
+- Cost-event coverage: 103/103 trajectories; incomplete native measurement=97
 
 ## Screening Backtest
 - Status: available
@@ -127,9 +127,9 @@
 - Excluded traces: 26
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 43
+- [INFO] trace_unavailable_for_backtest: 46
 - [WARN] historical_partial_record: 15
-- [WARN] incomplete_native_cost_measurement: 94
-- [WARN] missing_explicit_role_identity: 23
+- [WARN] incomplete_native_cost_measurement: 97
+- [WARN] missing_explicit_role_identity: 25
 - [WARN] trajectory_without_v5_evidence: 5
 - [WARN] v5_evidence_without_trajectory: 2

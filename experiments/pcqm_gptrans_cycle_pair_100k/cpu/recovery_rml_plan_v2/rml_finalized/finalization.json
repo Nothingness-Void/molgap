@@ -1,0 +1,38 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-eac07a951012dfd2e158d2cf2a357732b164f320bcb076b3b7ab1b2ef572ecb0",
+  "finalized_at": "2026-10-13T15:36:09.701191+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json": "1945d2eefd865a55e0d630b23ec1a97f59f4abb6bf6289d060e8cce014d3fa8b",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/accepted_terminal/acceptance.json": "c01024f8c03e5d5c8dd2eaf8825952c537614169a5d8b71acc344b149fbb6899",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md": "15a9fa78b111e2e5d2ad1232c6b40876e2f47d83c8ce9d4bf1e1fa5d70a42e0c",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan_v2/trajectory.json": "a91f615be2a8df827423b5516b045bbd79764dd5f17a01cae1c9513f7b070d63",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_000000_050000.pt": "cfb15a51a7da9c9a57a1924b188b4e378e8055a963e8615eced61ee72dc52eef",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_050000_100000.pt": "0be88499fa91aff6c0cbf39c502908ebae8ec3a8d3dc4d489b56ed5fa564d0ed",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_100000_150000.pt": "0dc336ea47c4d5cce3663d0602c4944ace81789ca98a9c18ea3b1020343ab836",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/chunks/cycle_500000_550000.pt": "dca2b09173b5fc67b532b71e498c9e0549aac4481e78badbdb7a65fdcccdc622",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/cost.json": "9b2bac279d618ebd623b7cbfaf3db7d2c64aed33c41074e183f5a6511bbce969",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v2/output/cycle_inputs/manifest.json": "1fd890bf91bc633c8323c17fe87d664f3106b26052f881e145d22b57f6606ac4"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-TC-gptrans-cycle-input-preparation-recovery-v2.json": "c447d8c96d2c64efd5140366480cad0a159a669e6ac33c786b86f5fe0a5691af",
+    "prospective_snapshot.json": "a91f615be2a8df827423b5516b045bbd79764dd5f17a01cae1c9513f7b070d63",
+    "roles/role-TC-gptrans-cycle-input-preparation-recovery-v2-internal_development_100000_150000-incidental-deserialization.json": "cf6862e061c27592b23c7cda7aff6f059c4d6a5dd24dba86313a5728f737ea2e",
+    "roles/role-TC-gptrans-cycle-input-preparation-recovery-v2-internal_development_500000_550000-incidental-deserialization.json": "de29cc8a15ea6110cd14225074ee5f397e34810ee2a32590be5a5431b446ceb7",
+    "roles/role-TC-gptrans-cycle-input-preparation-recovery-v2-train-incidental-deserialization.json": "930073e2c60568887d27d786c3e80d67932eabdbfa002a65f9eefb1caaff85c0",
+    "terminal_input.json": "5b63ab59dc6b4731385b374d911f7220e97d45c349f8f9d580b97f2bb4f49690",
+    "trajectory.json": "915c641972ff7d0df65a593104d4c3cead58745209ca535ce99b26221cea15f2",
+    "v5_evidence.json": "30569d4fdc7b192900134411b23b3e9500587a630d0c8df1b878b3c9b8b3ef2b"
+  },
+  "replacements": {
+    "costs/cost-TC-gptrans-cycle-input-preparation-recovery-v2.json": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan_v2/costs/cost-TC-gptrans-cycle-input-preparation-recovery-v2.json",
+    "trajectory.json": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan_v2/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "eac07a951012dfd2e158d2cf2a357732b164f320bcb076b3b7ab1b2ef572ecb0",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2"
+}

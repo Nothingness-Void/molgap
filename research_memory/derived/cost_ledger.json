@@ -1,11 +1,13 @@
 {
   "cross_hardware_total": null,
   "estimated_event_count": 41,
-  "event_count": 148,
+  "event_count": 151,
   "format": "molgap-rml-cost-ledger-v1",
   "infrastructure_event_ids": [
     "cost-TC-gptrans-author-input-preparation",
     "cost-TC-gptrans-author-input-preparation-verification-recovery",
+    "cost-TC-gptrans-cycle-input-preparation",
+    "cost-TC-gptrans-cycle-input-preparation-recovery",
     "cost-TC-gptrans-g1-ema-portability-frozen-s42",
     "cost-TC-gptrans-g1-ema-portability-frozen-s42-v2",
     "cost-TC-gptrans-g1-ema-portability-frozen-s42-v3",
@@ -21,8 +23,8 @@
     "cost-TC-k1-pair-token-node-return-100k-s42-infra-v1",
     "cost-TC-metagin-2d-3hop-100k-s42-training"
   ],
-  "measurement_missing_event_count": 145,
-  "not_applicable_event_count": 8,
+  "measurement_missing_event_count": 148,
+  "not_applicable_event_count": 11,
   "retry_event_ids": [],
   "totals_by_category": {
     "audit": {
@@ -326,7 +328,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "CPU-only:device_hours": {
         "estimated": {
@@ -337,7 +339,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 1,
+        "not_applicable_records": 2,
         "unknown_records": 0
       },
       "CPU-only:queue_hours": {
@@ -350,7 +352,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 1
+        "unknown_records": 2
       },
       "CPU-only:wall_hours": {
         "estimated": {
@@ -358,8 +360,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.20540670997722224
+          "known_records": 2,
+          "known_total": 0.27813577214194446
         },
         "not_applicable_records": 0,
         "unknown_records": 0
@@ -570,7 +572,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 4
       },
       "CPU-only:device_hours": {
         "estimated": {
@@ -581,7 +583,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 1,
+        "not_applicable_records": 3,
         "unknown_records": 1
       },
       "CPU-only:queue_hours": {
@@ -594,7 +596,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 2
+        "unknown_records": 4
       },
       "CPU-only:wall_hours": {
         "estimated": {
@@ -602,8 +604,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 1,
-          "known_total": 0.12063771194416667
+          "known_records": 3,
+          "known_total": 0.14215799482166666
         },
         "not_applicable_records": 0,
         "unknown_records": 1
@@ -1732,7 +1734,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 4
+        "unknown_records": 7
       },
       "device_hours": {
         "estimated": {
@@ -1743,7 +1745,7 @@
           "known_records": 0,
           "known_total": null
         },
-        "not_applicable_records": 3,
+        "not_applicable_records": 6,
         "unknown_records": 1
       },
       "queue_hours": {
@@ -1756,7 +1758,7 @@
           "known_total": null
         },
         "not_applicable_records": 0,
-        "unknown_records": 4
+        "unknown_records": 7
       },
       "wall_hours": {
         "estimated": {
@@ -1764,8 +1766,8 @@
           "known_total": null
         },
         "measured": {
-          "known_records": 3,
-          "known_total": 0.34340332772687077
+          "known_records": 6,
+          "known_total": 0.4376526727690929
         },
         "not_applicable_records": 0,
         "unknown_records": 1
@@ -3364,6 +3366,156 @@
         "measured": {
           "known_records": 1,
           "known_total": 0.0325136444
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TC-gptrans-cycle-input-preparation": {
+      "CPU-only:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "CPU-only:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU-only:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "CPU-only:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.010288708242222225
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TC-gptrans-cycle-input-preparation-recovery": {
+      "CPU-only:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "CPU-only:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU-only:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "CPU-only:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.011231574635277769
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 0
+      }
+    },
+    "TC-gptrans-cycle-input-preparation-recovery-v2": {
+      "CPU-only:cpu_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "CPU-only:device_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 1,
+        "unknown_records": 0
+      },
+      "CPU-only:queue_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "not_applicable_records": 0,
+        "unknown_records": 1
+      },
+      "CPU-only:wall_hours": {
+        "estimated": {
+          "known_records": 0,
+          "known_total": null
+        },
+        "measured": {
+          "known_records": 1,
+          "known_total": 0.0727290621647222
         },
         "not_applicable_records": 0,
         "unknown_records": 0

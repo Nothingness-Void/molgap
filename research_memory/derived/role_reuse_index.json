@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 473,
+  "ambiguous_historical_role_record_count": 491,
   "coarse_historical_role_records": [
     {
       "evidence_id": "pcqm-gptrans-author-degree-scale-100k-s42",
@@ -105,6 +105,132 @@
       "role_name": "test_dev",
       "semantics": "coarse_historical",
       "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-infrastructure",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-infrastructure",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-infrastructure",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-infrastructure",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-infrastructure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-infrastructure",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "unknown"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-recovery-infrastructure",
+      "role_identity": null,
+      "role_name": "internal_development_100000_150000",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-recovery-infrastructure",
+      "role_identity": null,
+      "role_name": "internal_development_500000_550000",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-recovery-infrastructure",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-recovery-infrastructure",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-recovery-infrastructure",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-gptrans-cycle-input-preparation-recovery-infrastructure",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "unknown"
     },
     {
       "evidence_id": "pcqm-gptrans-ema-portability-infrastructure-v1",
@@ -3313,7 +3439,7 @@
       "state": "not_applicable"
     }
   ],
-  "explicit_role_event_count": 424,
+  "explicit_role_event_count": 427,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "internal_development",
@@ -3388,6 +3514,33 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TC-k1-pair-token-frozen-cross-scale-20260924"
+      }
+    ],
+    "accepted-fixed-pcqm@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:internal_development_100000_150000": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-cycle-input-preparation-recovery-v2-internal_development_100000_150000-incidental-deserialization",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2"
+      }
+    ],
+    "accepted-fixed-pcqm@1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:train": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-cycle-input-preparation-recovery-v2-train-incidental-deserialization",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2"
+      }
+    ],
+    "accepted-fixed-pcqm@630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500000_550000": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-TC-gptrans-cycle-input-preparation-recovery-v2-internal_development_500000_550000-incidental-deserialization",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery-v2"
       }
     ],
     "ogb-train-500k-scnet-v1:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development_500k_550k": [
@@ -6355,6 +6508,9 @@
       "pcqm-gptrans-author-degree-scale-100k-s42",
       "pcqm-gptrans-author-path-bond-mean-100k-s42",
       "pcqm-gptrans-bottleneck-frozen-v1",
+      "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "pcqm-gptrans-cycle-input-preparation-infrastructure",
+      "pcqm-gptrans-cycle-input-preparation-recovery-infrastructure",
       "pcqm-gptrans-ema-portability-infrastructure-v1",
       "pcqm-gptrans-ema-portability-infrastructure-v2",
       "pcqm-gptrans-ema-portability-infrastructure-v3",
@@ -6443,6 +6599,9 @@
       "pcqm-gptrans-author-degree-scale-100k-s42",
       "pcqm-gptrans-author-path-bond-mean-100k-s42",
       "pcqm-gptrans-bottleneck-frozen-v1",
+      "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "pcqm-gptrans-cycle-input-preparation-infrastructure",
+      "pcqm-gptrans-cycle-input-preparation-recovery-infrastructure",
       "pcqm-gptrans-ema-portability-infrastructure-v1",
       "pcqm-gptrans-ema-portability-infrastructure-v2",
       "pcqm-gptrans-ema-portability-infrastructure-v3",
@@ -6531,6 +6690,9 @@
       "pcqm-gptrans-author-degree-scale-100k-s42",
       "pcqm-gptrans-author-path-bond-mean-100k-s42",
       "pcqm-gptrans-bottleneck-frozen-v1",
+      "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+      "pcqm-gptrans-cycle-input-preparation-infrastructure",
+      "pcqm-gptrans-cycle-input-preparation-recovery-infrastructure",
       "pcqm-gptrans-ema-portability-infrastructure-v1",
       "pcqm-gptrans-ema-portability-infrastructure-v2",
       "pcqm-gptrans-ema-portability-infrastructure-v3",

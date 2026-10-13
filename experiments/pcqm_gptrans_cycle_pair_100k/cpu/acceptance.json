@@ -1,0 +1,32 @@
+{
+  "format": "molgap-cycle-sidecar-acceptance-v1",
+  "accepted": true,
+  "kernel": "kaseichou/molgap-gptrans-cycle-inputs-recovery-v2",
+  "kernel_id": 138515918,
+  "version": 1,
+  "source_commit": "8d03421c3d15138b06cca21970da45da481b9d7c",
+  "archive_sha256": "cdf04aa64870f9b963e6cc5fac14d5e1fa10b11b5c90ea64e393c5a389eb7f7c",
+  "manifest_sha256": "1fd890bf91bc633c8323c17fe87d664f3106b26052f881e145d22b57f6606ac4",
+  "rows": 200000,
+  "pairs": 7504482,
+  "chunks": 4,
+  "checks": [
+    "source_pull_normalized_equal",
+    "exact_fixed_manifests",
+    "source_shard_pins",
+    "complete_ordered_role_coverage",
+    "saved_chunk_sha256",
+    "decoded_tensor_schema_bounds_symmetry",
+    "frozen_remote_two_algorithm_every_row_rederivation",
+    "no_model_or_geometry_feature_use",
+    "native_budget"
+  ],
+  "independent_rederivation_scope": "two algorithms executed by frozen CPU source; local acceptance checks saved bytes, not a third graph rederivation",
+  "wall_seconds_this_attempt": 261.82462379299994,
+  "wall_seconds_all_attempts": 339.2976421519999,
+  "gpu_device_hours": 0,
+  "allocated_cpu_hours": null,
+  "allocated_cpu_hours_status": "measurement_missing",
+  "scientific_gain": "NOT_EVALUATED",
+  "gpu_training_released": false
+}

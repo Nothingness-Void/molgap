@@ -1,0 +1,32 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-094fcabceedb56e7b5e6b6618b10f581f0e6e463a7874d558f4806948e2cb9d4",
+  "finalized_at": "2026-10-13T15:26:17.800404+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_recovery_v1.json": "0ceb0d1e55549f21eae12031c2ee8c1eb097f6e9b152c2c6e2f23f22f809e6f6",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_recovery_v1.md": "5d8c1646ac2550f697fb133f3807dbed045e7b5d8976b804d49f00825b00a57b",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/failure_recovery_v1_terminal/acceptance.json": "ef6f064103e33f1dd787eb8472a831bcd75701641f6c299ce2c18835a13d2e95",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan/trajectory.json": "a5f2c279bf17ef618ebad6247ce863b4caeb87c69a02358f4bf65c9a8071b393",
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_submission.json": "a49fca929cb88fb04a85aea349437e0bb1cc4f5f5a4fb72cd563821602b0f29a",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v1/observation/cycle_inputs/cost.json": "acf94bfacf31a58ba1adc7e29049f0fe6ed3e0420dd50218f19e9360c397f6fe",
+    "platforms/_records/kaggle/cycle_pair_cpu_recovery_v1/observation/molgap-gptrans-cycle-inputs-recovery-v1.log": "14644b6cb7cf35b70c20d8b2f65454c088b016c8f097950b83a674235c413e9c"
+  },
+  "outcome": "INFRASTRUCTURE_ONLY",
+  "published_hashes": {
+    "costs/cost-TC-gptrans-cycle-input-preparation-recovery.json": "f6577c5bc29ea9318bc124d144d23b057cf506b62a899fad6d39a1c14d2ba816",
+    "prospective_snapshot.json": "a5f2c279bf17ef618ebad6247ce863b4caeb87c69a02358f4bf65c9a8071b393",
+    "terminal_input.json": "b7b85b56481ffadab6fba06bf0e290928f29e37907c9c9e17e4914bbac7de9ff",
+    "trajectory.json": "61d94c89844c35b8030154fe7df7526e8fa568af3cf0a48d631535ff7b4e267e",
+    "v5_evidence.json": "65d35b0df6ffb6f25e485d17419d27b018fa7e2d0d63c2be161f71d0e7d8f547"
+  },
+  "replacements": {
+    "costs/cost-TC-gptrans-cycle-input-preparation-recovery.json": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan/costs/cost-TC-gptrans-cycle-input-preparation-recovery.json",
+    "trajectory.json": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan/trajectory.json"
+  },
+  "role_status": "unavailable",
+  "source_artifact_digest": "094fcabceedb56e7b5e6b6618b10f581f0e6e463a7874d558f4806948e2cb9d4",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-gptrans-cycle-input-preparation-recovery"
+}
