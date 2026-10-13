@@ -1,0 +1,40 @@
+{
+  "dataset": "kaseichou/molgap-gptrans-triplet-routing-source",
+  "public": false,
+  "input_files": {
+    "dataset-metadata.json": "eba848f0618e665428c7f6c7631285a6dec5d17e59b3016e78ae2c918bd1d371",
+    "degree_local_triplet_bond_route_ema999_initial.pt": "e32cddb085beb66301b9a610c27595a07ed13d8709ada15b40dc21b0f5303ed6",
+    "degree_local_triplet_product_v2_ema999_initial.pt": "b1bc814dc4e8cb30ef8f5fbf349c92b696b861fc793e186a645acd0efa82daba",
+    "experiment_spec.json": "5ee4cf06395dcbb65e0868f77adb60ed19cb11e3e92f4e7126db4882da23af1f",
+    "package_manifest.json": "e66d9c358607bb8a70f82331b7912c0525e2ac5e89f987ce1d192851292bd6e9",
+    "post100k_audit_action.json": "8485489301e0bcea939d250a8cdcce7ee35e9d1b8ba17b21ba958544b263b821",
+    "SOURCE_ARCHIVE_SHA256.txt": "e1f8e6ad6dfd70111b3c644e10c8bb77ac92e622d5fca8e1d4139472fe67b468",
+    "SOURCE_COMMIT.txt": "1c5a0febeed459659d11b88d7eba29d8bd5e06b5dd9ea6e3ec48acd70f0348b7",
+    "SOURCE_FILES.json": "89a7d443db55a1b3122c2fa4b1ab6fb0d8385c028b765b51768749f6e1a9dc3b",
+    "source_payload.bin": "5d8c446c9283d6de10d1cbeeb70a577f1eaf7570cff28b0a76b0251a2b0f7876",
+    "target_transform.json": "0bbe2b4378afe85fe4fab0a197e0f4b4ec42c5bfb24d58e17576656e42d4a026"
+  },
+  "source_archive_sha256": "5d8c446c9283d6de10d1cbeeb70a577f1eaf7570cff28b0a76b0251a2b0f7876",
+  "timestamp_utc": "2026-10-13T03:06:15.816926+00:00",
+  "submission_status": "CREATE_RETURNED",
+  "returned_url": "https://www.kaggle.com/datasets/kaseichou/molgap-gptrans-triplet-routing-source",
+  "response_status": "Ok",
+  "response_error": "",
+  "reconciliation_required": false,
+  "error": "403 Client Error: Forbidden for url: https://api.kaggle.com/v1/datasets.DatasetApiService/GetDatasetStatus",
+  "remote_files": [
+    "SOURCE_ARCHIVE_SHA256.txt",
+    "SOURCE_COMMIT.txt",
+    "SOURCE_FILES.json",
+    "degree_local_triplet_bond_route_ema999_initial.pt",
+    "degree_local_triplet_product_v2_ema999_initial.pt",
+    "experiment_spec.json",
+    "package_manifest.json",
+    "post100k_audit_action.json",
+    "source_payload.bin",
+    "target_transform.json"
+  ],
+  "missing_files": [],
+  "listing_reconciled": true,
+  "status_observation": "ready"
+}

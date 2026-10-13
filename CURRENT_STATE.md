@@ -13,11 +13,12 @@ run/recipe/runtime-specific; historical entrypoints and job custody are unchange
 ## Server active screen
 
 The authorized [triplet routing dual100K](experiments/pcqm_gptrans_triplet_routing_100k/protocol.md)
-is in local release preparation: exact frozen-product recovery and a distinct
-bond-supported aggregation arm, with both optimizer-inclusive preflights
-required before either formal training stream. No result or Replay admission
-is claimed before independent terminal acceptance. The previous partial run
-remains closed; its complete drop arm is not repeated.
+was submitted on Kaggle2 as kernel138425374/version1, observed RUNNING.
+Its [receipt and existing-B binding](experiments/pcqm_gptrans_triplet_routing_100k/gpu/monitor_binding.json)
+own exact identity and custody. Both optimizer-inclusive preflights are required
+before formal training; their remote completion was not yet observed. No result
+or Replay admission is claimed before independent terminal acceptance. The
+previous partial run remains closed; its complete drop arm is not repeated.
 
 The authorized [triplet follow-up dual100K](experiments/pcqm_gptrans_triplet_followup_100k/gpu/results/interpretation.md)
 ended partially complete as Kaggle2 kernel138367521/version1. Triplet-return
@@ -26,8 +27,8 @@ was worse than the frozen aggregate; it is closed without nomination. The
 channelwise product arm failed initialization qualification before training;
 its scientific hypothesis remains unevaluated, not rejected. The experiment
 as a whole is not a two-arm Replay-ready result. Preserve both terminal records
-and full allocated cost. The existing monitor is paused; no automatic retry,
-successor, deferred500K inference, extra seed or scale-up is released.
+and full allocated cost. That attempt's binding is closed; its old authority
+releases no automatic retry, successor, deferred500K inference, extra seed or scale-up.
 
 The [original/v3-tuned execution40 dual](experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md)
 is accepted and closed: Kaggle2 kernel138254522/version1 passed its scoped
