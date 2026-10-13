@@ -56,12 +56,10 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         raise RuntimeError("Observed hardware differs from the declared T4 allocation")
     output.mkdir(parents=True, exist_ok=True)
     prior_segments = []
+    retired_cost = {"wall_seconds": 0.0, "allocated_device_seconds": 0.0}
     if campaign:
-        # A bootstrap-only restart has no checkpoint to restore, but its two
-        # allocated devices still consume the unchanged campaign budget.
-        retired = source_root / BASE / f"infrastructure_costs/slot{number}.json"
-        if retired.is_file():
-            prior_segments.append(_json(retired))
+        from .gptrans_campaign_release import retired_bootstrap_cost
+        retired_cost = retired_bootstrap_cost(source_root, number)
     if "resume" in config:
         from .experiment_family_workflow import RunContext
         from .experiment_resume import validate_resume_bundle, restore_resume_bundle
@@ -96,7 +94,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     ledger = AllocationLedger(spec_identity=spec.identity, hardware=names,
         assignments={job["arm_id"]: job["device"] for job in jobs}, started=allocation_started,
         prior_segments=prior_segments)
-    prior_wall = sum(s.get("wall_seconds", 0) for s in ledger.prior_segments)
+    prior_wall = retired_cost["wall_seconds"] + sum(s.get("wall_seconds", 0) for s in ledger.prior_segments)
     if bounded and ledger.snapshot("running")["prior_unobserved_intervals"]:
         raise ValueError("Unknown prior allocation intervals require cost reconciliation before continuation")
     ledger.write(output, "running")

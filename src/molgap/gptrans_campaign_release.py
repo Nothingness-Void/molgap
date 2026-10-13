@@ -20,6 +20,35 @@ SLOTS = (("reference", "cycle"), ("carry", "correspondence"))
 ARMS = dict(zip(("reference", "cycle", "carry", "correspondence"), MODES))
 
 
+def retired_bootstrap_cost(root, slot, *, source_text=None):
+    """Retain measured old Spec costs without forging a new-Spec native ledger."""
+    import math
+    if source_text is None:
+        path = Path(root) / BASE / f"infrastructure_costs/slot{slot}.json"
+        if not path.exists():
+            return {"wall_seconds": 0.0, "allocated_device_seconds": 0.0}
+        source_text = path.read_bytes()
+    value = json.loads(source_text)
+    if value.get("format") != "molgap-campaign-retired-bootstrap-cost-v1":
+        raise ValueError("Unsupported retired bootstrap cost record")
+    wall = device = 0.0
+    seen = set()
+    for item in value["attempts"]:
+        identity = (item["kernel"], item["version_number"])
+        native = item["bootstrap_allocation"]
+        seconds = native["wall_seconds"]
+        if (identity in seen or native["status"] != "failed" or native["cost_status"] != "measured"
+                or native["allocation_device_count"] != 2 or len(native["hardware"]) != 2
+                or any("T4" not in name for name in native["hardware"])
+                or not math.isfinite(seconds) or seconds < 0
+                or not math.isclose(native["allocated_device_seconds"], 2 * seconds)):
+            raise ValueError("Unknown or duplicated retired allocation interval")
+        seen.add(identity)
+        wall += seconds
+        device += native["allocated_device_seconds"]
+    return {"wall_seconds": wall, "allocated_device_seconds": device}
+
+
 def check_campaign(spec, root, plan, *, initial_states=None):
     """Prospective authority/input checks only; future reference remains pending."""
     root = Path(root).resolve()

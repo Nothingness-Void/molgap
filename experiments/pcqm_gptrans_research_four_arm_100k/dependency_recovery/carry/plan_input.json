@@ -1,0 +1,143 @@
+{
+  "trajectory": {
+    "trajectory_id": "TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+    "record_mode": "prospective",
+    "owner": "server",
+    "track": "C",
+    "family_id": "gptrans-aggregate-research-campaign",
+    "question": "Does carry improve the matched shared aggregate reference?",
+    "hypothesis": {
+      "hypothesis_id": "H-TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "observed_deficiency": "Shared-contract reference absent; ring pair relation is not explicit in the local-bond core",
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42"
+      ],
+      "alternative_explanations": [
+        "Redundant information",
+        "Optimization interference",
+        "Single-seed development reuse"
+      ],
+      "changed_mechanism": "carry",
+      "cheapest_falsifier": "one shared-contract seed42 fixed100K screen",
+      "related_closed_family_ids": [
+        "gptrans-local-relation-flow",
+        "gptrans-triplet-routing"
+      ],
+      "expected_native_cost_ref": "cost-TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "decision_changed_if_positive": "nominate only after actual reference and candidate acceptance",
+      "decision_changed_if_negative": "close exact encoding without a grid or extra seed",
+      "historical_unknowns": []
+    },
+    "state_at_start": {
+      "source_commit": "67b69abd6976ef9a0fc5eaf0039ed05ec821bcfd",
+      "source_config_identity": "c82ba92ffae884d423af4d0059c9d25c552581130626476aca0b8250932ef808",
+      "contract_refs": [
+        "experiments/pcqm_gptrans_research_four_arm_100k/carry/contract.json",
+        "experiments/pcqm_gptrans_research_four_arm_100k/authority.json",
+        "experiments/pcqm_gptrans_research_four_arm_100k/audit_action.json"
+      ],
+      "reference_ids": [
+        "pcqm-gptrans-g1-degree-local-triplet-aggregate-ema999-100k-s42"
+      ],
+      "parent_trajectory_ids": [
+        "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+        "TC-gptrans-aggregate-carry-100k-s42",
+        "TC-gptrans-aggregate-carry-100k-s42-r2"
+      ],
+      "prior_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-common-cycle-inputs-accepted-v1",
+        "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_gptrans_research_four_arm_100k/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_gptrans_research_four_arm_100k/budget.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "shared_pair_training",
+        "source_commit": "67b69abd6976ef9a0fc5eaf0039ed05ec821bcfd",
+        "run_ids": [
+          "nvoid912/molgap-gptrans-research-slot2-100k-v1"
+        ],
+        "attempt_ids": [
+          "v3"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_gptrans_research_four_arm_100k/carry/contract.json"
+        ],
+        "cost_event_ids": [
+          "cost-TC-gptrans-aggregate-carry-100k-s42-r2-r3"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_gptrans_research_four_arm_100k/protocol.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one four-arm authorized campaign; reference first acceptance"
+      ],
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [
+      "pcqm-gptrans-g1-degree-bond-local-ema999-100k-s42"
+    ],
+    "available_actions": [
+      "RUN_FOUR_ARM_CAMPAIGN",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_FOUR_ARM_CAMPAIGN",
+    "policy_id": "gptrans-aggregate-four-arm",
+    "policy_version": "v1",
+    "budget_snapshot_ref": "experiments/pcqm_gptrans_research_four_arm_100k/budget.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_gptrans_research_four_arm_100k/role_plan.json"
+    ],
+    "state_timestamp": "2026-10-13T19:04:27.730201+00:00",
+    "source_commit": "67b69abd6976ef9a0fc5eaf0039ed05ec821bcfd"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "trajectory_id": "TC-gptrans-aggregate-carry-100k-s42-r2-r3",
+      "action_id": "A001",
+      "run_id": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+      "attempt_id": "v3",
+      "category": "training",
+      "platform": "kaggle3",
+      "hardware": "Tesla_T4x2_shared_allocation",
+      "evidence_ref": "experiments/pcqm_gptrans_research_four_arm_100k/budget.json",
+      "measurement": {
+        "device_hours": {
+          "status": "estimated",
+          "value": 8
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 4
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}

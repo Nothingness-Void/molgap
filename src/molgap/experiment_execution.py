@@ -287,8 +287,13 @@ def validate_execution_plan(spec: ExperimentSpec, jobs: list[dict]) -> list[dict
         if job["trajectory_id"] != bindings[job["arm_id"]]["trajectory_id"]:
             raise ValueError("Execution/prospective trajectory mismatch")
         adapter = training_adapter(arm)
+        required_modules = [adapter.module, *adapter.serialization_modules]
+        if adapter.module == "molgap.family_training_runner":
+            # _bootstrap imports this dependency inside the function, so an
+            # import of the runner alone does not exercise the worker boundary.
+            required_modules.append("molgap.gptrans_execution_tuning")
         result.append({**job, "mode": adapter.mode(arm), "module": adapter.module,
-                       "required_modules": [adapter.module, *adapter.serialization_modules]})
+                       "required_modules": required_modules})
         seen.add(job["arm_id"])
         devices.add(device)
     return result

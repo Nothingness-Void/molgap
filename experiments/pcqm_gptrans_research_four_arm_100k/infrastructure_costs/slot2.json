@@ -1,38 +1,57 @@
 {
-  "format": "molgap-allocation-ledger-v1",
-  "spec_identity": "6fbe6100308a51177769618d674bb7d9cf7962e8b67433e74654e9f322696c90",
-  "status": "failed",
-  "wall_seconds": 65.38413656900002,
-  "allocated_device_seconds": 130.76827313800004,
-  "allocation_device_count": 2,
-  "devices": [
+  "format": "molgap-campaign-retired-bootstrap-cost-v1",
+  "attempts": [
     {
-      "device": 0,
-      "hardware": "Tesla T4",
-      "arm_id": null,
-      "allocated_seconds": 65.38413656900002
+      "slot": 2,
+      "spec_identity": "d50f5b1a5064f13e68c9f1999897a16433780d54d145d552d025279ae3d469bf",
+      "kernel": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+      "kernel_id": 138538193,
+      "version_number": 1,
+      "source_commit": "9c44423238ada6b45b2b5cb9620788c725bc3806",
+      "package_identity": "f26ad702968d3bc44fee7fb5acad91e474f6cf64ca6fcfe829d27092167fde5e",
+      "bootstrap_allocation": {
+        "status": "failed",
+        "hardware": [
+          "Tesla T4",
+          "Tesla T4"
+        ],
+        "wall_seconds": 65.38413656900002,
+        "allocation_device_count": 2,
+        "allocated_device_seconds": 130.76827313800004,
+        "cost_status": "measured",
+        "overlap": "Same allocation as experiment/allocation_ledger.json; do not double count",
+        "provisioning_before_python_seconds": null,
+        "queue_seconds": null
+      },
+      "bootstrap_file": "platforms/_records/kaggle/research_campaign_slot2_kaggle3_v1/failed_output_v1/bootstrap_allocation.json",
+      "bootstrap_sha256": "84ac219e5e268695c572c5e53af985304ffab4ec59cdd513026e062817c6f840",
+      "remote_binding_ref": "experiments/pcqm_gptrans_research_four_arm_100k/slot2/remote_binding_kaggle3_v1.json"
     },
     {
-      "device": 1,
-      "hardware": "Tesla T4",
-      "arm_id": null,
-      "allocated_seconds": 65.38413656900002
+      "slot": 2,
+      "spec_identity": "6fbe6100308a51177769618d674bb7d9cf7962e8b67433e74654e9f322696c90",
+      "kernel": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+      "kernel_id": 138538193,
+      "version_number": 2,
+      "source_commit": "939aabec5da8c0909cdba767861648df728f71f8",
+      "package_identity": "248044fc1aac5dc0b368fd8da3906fa5980c6147848268036b0307ac55eb2cd6",
+      "bootstrap_allocation": {
+        "status": "failed",
+        "hardware": [
+          "Tesla T4",
+          "Tesla T4"
+        ],
+        "wall_seconds": 70.23906410699999,
+        "allocation_device_count": 2,
+        "allocated_device_seconds": 140.47812821399998,
+        "cost_status": "measured",
+        "overlap": "Same allocation as experiment/allocation_ledger.json; do not double count",
+        "provisioning_before_python_seconds": null,
+        "queue_seconds": null
+      },
+      "bootstrap_file": "platforms/_records/kaggle/research_campaign_slot2_kaggle3_v2/failed_output_v2/bootstrap_allocation.json",
+      "bootstrap_sha256": "60cfd86fb463f5bb0ce16b389ee2758c03c45270b5d4437c005827c993549c37",
+      "remote_binding_ref": "experiments/pcqm_gptrans_research_four_arm_100k/slot2/remote_binding_kaggle3_v2.json"
     }
-  ],
-  "prior_segments": [],
-  "scope": "Imported completed v1 bootstrap allocation charged to repaired campaign; no model worker started",
-  "original_spec_identity": "d50f5b1a5064f13e68c9f1999897a16433780d54d145d552d025279ae3d469bf",
-  "original_kernel": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
-  "original_version_number": 1,
-  "original_source_commit": "9c44423238ada6b45b2b5cb9620788c725bc3806",
-  "original_package_identity": "f26ad702968d3bc44fee7fb5acad91e474f6cf64ca6fcfe829d27092167fde5e",
-  "original_bootstrap_sha256": "84ac219e5e268695c572c5e53af985304ffab4ec59cdd513026e062817c6f840",
-  "provisioning_before_python_seconds": {
-    "value": null,
-    "status": "measurement_missing"
-  },
-  "queue_seconds": {
-    "value": null,
-    "status": "measurement_missing"
-  }
+  ]
 }

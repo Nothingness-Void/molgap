@@ -31,6 +31,15 @@ def accept_pair(spec, *, package_dir, receipt_path, output_root, contracts, dest
     segments = [ledger, *ledger["prior_segments"]]
     wall = sum(s["wall_seconds"] for s in segments)
     device = sum(s["allocated_device_seconds"] for s in segments)
+    retired_cost = {"wall_seconds": 0.0, "allocated_device_seconds": 0.0}
+    if campaign:
+        from .gptrans_campaign_release import BASE, retired_bootstrap_cost
+        from .experiment_package import read_packaged_text
+        number = 1 if spec.to_dict()["experiment_id"] == "gptrans-research-slot1" else 2
+        retired_cost = retired_bootstrap_cost(None, number, source_text=read_packaged_text(
+            Path(package_dir), f"{BASE}/infrastructure_costs/slot{number}.json"))
+        wall += retired_cost["wall_seconds"]
+        device += retired_cost["allocated_device_seconds"]
     if (ledger["status"] != "complete" or ledger["prior_unobserved_intervals"] or
             wall > WALL_CEILING_SECONDS or device > 16 * 3600 or
             any(s["status"] != "complete" for s in segments)):
@@ -115,6 +124,7 @@ def accept_pair(spec, *, package_dir, receipt_path, output_root, contracts, dest
         "material_gate_eV": .001, "material_gate_passed": (
             -analysis["candidate_minus_reference_eV"] > .001 and analysis["paired_row_bootstrap"]["ci95"][1] < 0),
         "full_allocation": {"wall_seconds": wall, "allocated_device_seconds": device},
+        "retired_bootstrap_cost": retired_cost,
         "campaign_allocated_device_seconds": prior_device_seconds + device,
         "rml_finalization": "NOT_EXECUTED_USE_EXISTING_TERMINAL_WORKFLOW",
         "training_executed": False, "model_inference_executed": False,

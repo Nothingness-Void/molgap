@@ -46,6 +46,7 @@ COMMON_SOURCE_FILES = (
     'src/molgap/gptrans_execution_backend.py',
     'src/molgap/gptrans_execution_hotpath.py',
     'src/molgap/gptrans_execution_tuning.py',
+    'src/molgap/foreach_ema.py',
     'src/molgap/gptrans_memory.py',
     'src/molgap/gptrans_screen_workflow.py',
     'src/molgap/gptrans_variants.py',

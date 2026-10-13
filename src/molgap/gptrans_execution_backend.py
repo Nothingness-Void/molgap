@@ -213,7 +213,7 @@ def backend(owner, optimized, timing_root=None):
             # A backend experiment, not an unqualified replacement for a frozen reference.
             for group in optimizer.param_groups:
                 group["foreach"] = True
-            from .pcqm_gptrans_step_profile import ForeachExponentialMovingAverage
+            from .foreach_ema import ForeachExponentialMovingAverage
             fast = ForeachExponentialMovingAverage(model, decay=ema.decay)
             fast.load_state_dict(ema.state_dict())
             ema = fast

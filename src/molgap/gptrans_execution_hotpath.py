@@ -6,7 +6,7 @@ import weakref
 
 import torch
 
-from .pcqm_gptrans_step_profile import ForeachExponentialMovingAverage
+from .foreach_ema import ForeachExponentialMovingAverage
 
 MODEL_FIELDS = ('x', 'edge_index', 'edge_attr', 'batch', 'execution_layout')
 

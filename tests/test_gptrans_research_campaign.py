@@ -130,3 +130,45 @@ def test_campaign_covers_two_slots_and_rejects_unauthorized_budget(tmp_path):
     plan["campaign"]["sha256"] = normalized_source_sha256(tmp_path / BASE / "campaign.json")
     with pytest.raises(ValueError, match="authority"):
         check_campaign(spec, tmp_path, plan, initial_states=states)
+
+
+def test_bootstrap_cost_reserve_preserves_old_identity_and_rejects_duplicate():
+    from molgap.gptrans_campaign_release import retired_bootstrap_cost
+    native = {"status": "failed", "cost_status": "measured", "hardware": ["Tesla T4"] * 2,
+              "allocation_device_count": 2, "wall_seconds": 60., "allocated_device_seconds": 120.}
+    attempt = {"kernel": "owner/slot", "version_number": 1, "spec_identity": "old-spec",
+               "bootstrap_allocation": native}
+    reserve = {"format": "molgap-campaign-retired-bootstrap-cost-v1", "attempts": [attempt]}
+    assert retired_bootstrap_cost(None, 1, source_text=json.dumps(reserve)) == {
+        "wall_seconds": 60., "allocated_device_seconds": 120.}
+    reserve["attempts"].append(attempt)
+    with pytest.raises(ValueError, match="duplicated"):
+        retired_bootstrap_cost(None, 1, source_text=json.dumps(reserve))
+
+
+def test_release_inventory_covers_worker_bootstrap_dependency_closure():
+    import ast
+    from molgap.experiment_source_inventory import SHARED_SOURCE_FILES
+    root = Path(__file__).resolve().parents[1]
+    pending = ["molgap.gptrans_execution_tuning"]
+    seen = set()
+    while pending:
+        module = pending.pop()
+        paths = [root / "src" / (module.replace(".", "/") + ".py"),
+                 root / "src" / module.replace(".", "/") / "__init__.py"]
+        path = next((p for p in paths if p.is_file()), None)
+        if path is None or path in seen:
+            continue
+        seen.add(path)
+        assert path.relative_to(root).as_posix() in SHARED_SOURCE_FILES
+        parts = module.split(".") + (["__init__"] if path.name == "__init__.py" else [])
+        for node in ast.parse(path.read_text(encoding="utf-8")).body:
+            if isinstance(node, ast.Import):
+                pending.extend(a.name for a in node.names if a.name.startswith("molgap."))
+            elif isinstance(node, ast.ImportFrom):
+                prefix = ".".join(parts[:-node.level]) if node.level else ""
+                target = prefix + (("." + node.module) if prefix and node.module else (node.module or ""))
+                if target == "molgap" or target.startswith("molgap."):
+                    pending.append(target)
+                    if node.module is None:
+                        pending.extend(target + "." + a.name for a in node.names if a.name != "*")

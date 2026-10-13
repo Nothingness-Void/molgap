@@ -1,0 +1,46 @@
+{
+  "format": "molgap-experiment-workflow-v1",
+  "spec_identity": "de5e5a4e25a7a824174b5b77379681a2ca430a7ab502541160fe3c23f1f811d2",
+  "source_files": [
+    "experiments/pcqm_gptrans_cycle_pair_100k/cpu/acceptance.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/audit_action.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/authority.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/budget.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/campaign.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/cycle/contract.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/infrastructure_costs/slot2.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/reference/contract.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/role_plan.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/slot1/scientific_spec.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/slot2/acceptance_plan.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/slot2/scientific_spec.json",
+    "experiments/pcqm_gptrans_research_four_arm_100k/target_manifest.json"
+  ],
+  "acceptance_plan": "experiments/pcqm_gptrans_research_four_arm_100k/slot2/acceptance_plan.json",
+  "arms": [
+    {
+      "arm_id": "carry",
+      "device": 0,
+      "recipe": "experiments/pcqm_gptrans_research_four_arm_100k/carry/contract.json",
+      "initial_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\initializations\\degree_aggregate_carry_ema999_initial.pt"
+    },
+    {
+      "arm_id": "correspondence",
+      "device": 1,
+      "recipe": "experiments/pcqm_gptrans_research_four_arm_100k/correspondence/contract.json",
+      "initial_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\initializations\\degree_aggregate_correspondence_ema999_initial.pt"
+    }
+  ],
+  "kaggle": {
+    "account": "nvoid912",
+    "kernel": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+    "title": "MolGap GPTrans Research Slot2 100K V1",
+    "source_dataset": "nvoid912/molgap-gptrans-research-slot2-source-v1",
+    "accelerator": "NvidiaTeslaT4",
+    "datasets": [
+      "nvoid912/molgap-gptrans-research-slot2-source-v1",
+      "nvoid912/pcqm4mv2-ogb-fixed-100k-v1",
+      "nvoid912/molgap-gptrans-common-cycle-inputs-v1"
+    ]
+  }
+}

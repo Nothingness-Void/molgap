@@ -188,17 +188,17 @@
     "arms": [
       {
         "arm_id": "carry",
-        "output": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/carry/rml_plan",
-        "plan_spec_ref": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/carry/plan_input.json",
-        "plan_spec_sha256": "baacfa06d6f02a1a900e8e1bf8a017351e403f43dae722c2149d99c5843d6b89",
-        "trajectory_id": "TC-gptrans-aggregate-carry-100k-s42-r2"
+        "output": "experiments/pcqm_gptrans_research_four_arm_100k/dependency_recovery/carry/rml_plan",
+        "plan_spec_ref": "experiments/pcqm_gptrans_research_four_arm_100k/dependency_recovery/carry/plan_input.json",
+        "plan_spec_sha256": "67183041b31b66ab56a214f5c327f7bdc5c65625337f765d6b6b4a93ab585cf0",
+        "trajectory_id": "TC-gptrans-aggregate-carry-100k-s42-r2-r3"
       },
       {
         "arm_id": "correspondence",
-        "output": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/correspondence/rml_plan",
-        "plan_spec_ref": "experiments/pcqm_gptrans_research_four_arm_100k/recovery/correspondence/plan_input.json",
-        "plan_spec_sha256": "17e0d3f2f69952ebb172715b6dab69a474b57f3c0ebed9fafc7fb84dda909e68",
-        "trajectory_id": "TC-gptrans-aggregate-correspondence-100k-s42-r2"
+        "output": "experiments/pcqm_gptrans_research_four_arm_100k/dependency_recovery/correspondence/rml_plan",
+        "plan_spec_ref": "experiments/pcqm_gptrans_research_four_arm_100k/dependency_recovery/correspondence/plan_input.json",
+        "plan_spec_sha256": "0bf42a0226828e0656a13586fa3524c4c98e21e26103587c6e148e212d4a5872",
+        "trajectory_id": "TC-gptrans-aggregate-correspondence-100k-s42-r2-r3"
       }
     ]
   },
