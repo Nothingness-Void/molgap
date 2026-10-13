@@ -1,0 +1,122 @@
+{
+  "evidence_id": "pcqm-input-pipeline-local-20261013",
+  "run_id": "input-pipeline-local-20261013",
+  "outcome": {
+    "execution_status": "complete_execution_diagnostic",
+    "artifact_status": "local_hash_verified",
+    "comparison_status": "matched_membership_scratch_execution",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated",
+    "budget_decision": "bounded_local_diagnostic_complete",
+    "full_handoff_status": "not_applicable"
+  },
+  "trajectory_decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_input_pipeline/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately authorized paired quality test or native platform profile"
+    ]
+  },
+  "checks": {
+    "completed_result_sha": true,
+    "prospective_config": true,
+    "case_count": true,
+    "matched_cpu_membership": true,
+    "matched_gpu_exposure": true,
+    "finite_timing": true,
+    "no_protected_roles": true
+  },
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-input-pipeline-train_decoded-labels_read-20261013",
+      "trajectory_id": "TB-input-pipeline-local-20261013",
+      "action_id": "A001",
+      "run_id": "input-pipeline-local-20261013",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "train_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_input_pipeline/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-input-pipeline-train_probe-labels_read-20261013",
+      "trajectory_id": "TB-input-pipeline-local-20261013",
+      "action_id": "A001",
+      "run_id": "input-pipeline-local-20261013",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "00532f29d0a4656151894e1801497451b9aa9a66d17bad7b03bdbbaa7cd8a250",
+      "role_name": "train_probe",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_input_pipeline/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-input-pipeline-train_probe-prediction_input-20261013",
+      "trajectory_id": "TB-input-pipeline-local-20261013",
+      "action_id": "A001",
+      "run_id": "input-pipeline-local-20261013",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "00532f29d0a4656151894e1801497451b9aa9a66d17bad7b03bdbbaa7cd8a250",
+      "role_name": "train_probe",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_input_pipeline/acceptance.json"
+    }
+  ],
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-input-pipeline-worker-20261013",
+      "trajectory_id": "TB-input-pipeline-local-20261013",
+      "action_id": "A001",
+      "run_id": "input-pipeline-local-20261013",
+      "attempt_id": "local-001",
+      "platform": "local-windows",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "category": "audit",
+      "evidence_ref": "experiments/pcqm_input_pipeline/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.10906068588888906,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": 0.0730613055833333,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "role_use": {
+    "train_decoded": "labels_read",
+    "train_probe": "prediction_input",
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "analysis_ref": "experiments/pcqm_input_pipeline/analysis.json",
+  "limitations": [
+    "No cold disk-cache claim: SHA verification reads the shard bytes",
+    "First versus repeated traversal includes PyG lazy graph cache effects",
+    "GPU measures a fixed train subset, not a full100K GPU epoch",
+    "CUDA event span includes transfer/update and host submission gaps, not exclusive kernel time",
+    "Batch regrouping changes BN/gradients; no precision or MAE equivalence",
+    "GPS9 is matched192/9 EdgeState scratch profiling, not production timing"
+  ],
+  "cost_scope": "Worker wall excludes Python imports; GPU phase wall includes setup/cleanup, not exclusive busy time. Parent CPU is retained in result; child CPU and combined native CPU hours unknown.",
+  "execution_scope": "Discarded scratch updates only, no scientific training endpoint, development MAE or retained predictor"
+}

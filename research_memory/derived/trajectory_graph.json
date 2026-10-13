@@ -216,6 +216,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-input-pipeline-local-20261013:A001",
+      "target": "experiments/pcqm_input_pipeline/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-500k-bn-calibration-20261007:A001",
       "target": "experiments/pcqm_k1_500k_bn_calibration/inputs.json",
       "type": "action_produced_evidence"
@@ -1677,6 +1682,11 @@
     },
     {
       "source": "pcqm-k1-colab-execution-profile-20261007",
+      "target": "TB-input-pipeline-local-20261013",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-colab-execution-profile-20261007",
       "target": "TB-k1-bn-mechanism-a100-20261008",
       "type": "prior_evidence"
     },
@@ -2585,6 +2595,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-input-pipeline-local-20261013",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-500k-bn-calibration-20261007",
       "type": "evidence"
     },
@@ -2990,6 +3004,10 @@
     },
     {
       "id": "TB-gptrans-t-500k-bridge",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-input-pipeline-local-20261013",
       "type": "trajectory"
     },
     {

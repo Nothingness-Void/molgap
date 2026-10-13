@@ -1,0 +1,101 @@
+{
+  "artifacts": [
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_input_pipeline/acceptance.json",
+      "name": "acceptance.json",
+      "sha256": "b216983b1644d02651fa1ddea90ad63eb1256e4ddee444a038bcc6eeb92b3fcc"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_input_pipeline/analysis.json",
+      "name": "analysis.json",
+      "sha256": "7a73006c1066497029b01efd27ecf56c917154de329c267007598018c29d965b"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_input_pipeline/terminal_decision.md",
+      "name": "terminal_decision.md",
+      "sha256": "6a8b7dc516421c1c78ec2cb0c53a9ca2ce350ef9fd09a477f19724323c8c240c"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_input_pipeline/attribution.md",
+      "name": "attribution.md",
+      "sha256": "de57df909e135a8e4b565f880ab459e4160bb0b2dde9c24102083b33388ec0d3"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_input_pipeline/results/result.json",
+      "name": "results/result.json",
+      "sha256": "82e5c89f0fc9a4553934070c6cb9849d32f2a6999e1f2a3b1cd745d436163a78"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_input_pipeline/results/completion.json",
+      "name": "results/completion.json",
+      "sha256": "31449aa7c8665bf677fbd3dc024070aab9660c54aa80ac93ce30c61d47be3748"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_input_pipeline/config.json",
+      "name": "config.json",
+      "sha256": "feca39ea30c1e244940c18a344ebfea8078e691a0d49babe24ec8104d10e8f39"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_input_pipeline/protocol.md",
+      "name": "protocol.md",
+      "sha256": "0d2f15e6643f7a6ef599f974a03038554daab2c2d2f46dace646d6f9879c3205"
+    },
+    {
+      "availability": "locally_retained_hash_verified",
+      "locator": "experiments/pcqm_input_pipeline/role_plan.json",
+      "name": "role_plan.json",
+      "sha256": "3756ee19a368e962350b57861a91a087de8bb61bc0c615a9665b3625cd89f7b6"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_input_pipeline/protocol.md",
+      "experiments/pcqm_input_pipeline/terminal_decision.md",
+      "experiments/pcqm_input_pipeline/attribution.md",
+      "experiments/pcqm_input_pipeline/acceptance.json"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-input-pipeline-local-20261013",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "pcqm-input-pipeline-local-v1",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-13",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "Accept separately executed prospective scratch profiling, no model execution in finalizer"
+  },
+  "observed_execution": {
+    "execution_ref": "experiments/pcqm_input_pipeline/results/result.json",
+    "inference_executed": true,
+    "training_executed": false
+  },
+  "outcome": {
+    "artifact_status": "local_hash_verified",
+    "budget_decision": "bounded_local_diagnostic_complete",
+    "comparison_status": "matched_membership_scratch_execution",
+    "execution_status": "complete_execution_diagnostic",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NO_TRAIN",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "development": "untouched",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train_decoded": "labels_read",
+    "train_probe": "prediction_input"
+  },
+  "scope": "desktop_input_pipeline_execution_diagnostic",
+  "track": "B"
+}

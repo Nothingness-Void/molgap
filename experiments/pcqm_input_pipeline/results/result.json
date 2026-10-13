@@ -1,0 +1,659 @@
+{
+  "format": "molgap-input-pipeline-diagnostic-v1",
+  "status": "COMPLETE",
+  "source_commit": "d43767e9932abc09ad6ba55bb22c019d1286ccc8",
+  "config_sha256": "feca39ea30c1e244940c18a344ebfea8078e691a0d49babe24ec8104d10e8f39",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "train_rows": 100000,
+  "development_rows_consumed": 0,
+  "protected_roles_consumed": false,
+  "quality_evaluated": false,
+  "training_replay_ready": false,
+  "startup_data_seconds": 4.57395219999853,
+  "node_count_sha256": "c3c66365906dcfe2f5be1db699e9a1449c48a8c86601e8e95bd478acaf694883",
+  "cpu": [
+    {
+      "batches": 781,
+      "samples": 99968,
+      "actual_nodes": 1393425,
+      "padded_node_slots": 1791232,
+      "node_padding_fraction": 0.2220856929755609,
+      "dense_attention_pair_slots": 32102912,
+      "attention_padding_proxy_fraction": 0.3765649982157382,
+      "mean_max_nodes": 17.91805377720871,
+      "largest_batch_max_nodes": 18,
+      "strategy": "global",
+      "workers": 0,
+      "order_sha256": "05d61b415c37325fcd3367164a596579255a559ee3981bf9f0555e572366d33e",
+      "membership_sha256": "5352e92bc5a1ef8c8f421690231a1353ca78c0340132ed595edc556037c88f78",
+      "traversals": [
+        {
+          "repeat": 0,
+          "epoch_seconds": 10.974226199999976,
+          "first_batch_seconds": 0.1569471999991947,
+          "molecules_per_second": 9109.343855150373,
+          "samples": 99968
+        },
+        {
+          "repeat": 1,
+          "epoch_seconds": 2.7829624000005424,
+          "first_batch_seconds": 0.02429670000128681,
+          "molecules_per_second": 35921.43393672172,
+          "samples": 99968
+        }
+      ]
+    },
+    {
+      "batches": 781,
+      "samples": 99968,
+      "actual_nodes": 1393425,
+      "padded_node_slots": 1786624,
+      "node_padding_fraction": 0.22007932278979792,
+      "dense_attention_pair_slots": 31941632,
+      "attention_padding_proxy_fraction": 0.37341714412087645,
+      "mean_max_nodes": 17.871959026888604,
+      "largest_batch_max_nodes": 18,
+      "strategy": "block",
+      "workers": 0,
+      "order_sha256": "f7d9044747adac39d7600b4237c193953e7d9382d2a447f8177d66bedabb6032",
+      "membership_sha256": "5352e92bc5a1ef8c8f421690231a1353ca78c0340132ed595edc556037c88f78",
+      "traversals": [
+        {
+          "repeat": 0,
+          "epoch_seconds": 10.641041799999584,
+          "first_batch_seconds": 0.05828839999958291,
+          "molecules_per_second": 9394.56886636832,
+          "samples": 99968
+        },
+        {
+          "repeat": 1,
+          "epoch_seconds": 2.768275200000062,
+          "first_batch_seconds": 0.043878500000573695,
+          "molecules_per_second": 36112.01660875254,
+          "samples": 99968
+        }
+      ]
+    },
+    {
+      "batches": 781,
+      "samples": 99968,
+      "actual_nodes": 1393425,
+      "padded_node_slots": 1423232,
+      "node_padding_fraction": 0.02094317721917438,
+      "dense_attention_pair_slots": 20794496,
+      "attention_padding_proxy_fraction": 0.03752997908677369,
+      "mean_max_nodes": 14.236875800256081,
+      "largest_batch_max_nodes": 18,
+      "strategy": "bucket",
+      "workers": 0,
+      "order_sha256": "684e96bfe5b1bfd8473ed19db79be05c3092fec85739c0ceb648f2d1900e7e87",
+      "membership_sha256": "5352e92bc5a1ef8c8f421690231a1353ca78c0340132ed595edc556037c88f78",
+      "traversals": [
+        {
+          "repeat": 0,
+          "epoch_seconds": 10.853569900000366,
+          "first_batch_seconds": 0.03690390000156185,
+          "molecules_per_second": 9210.610050062573,
+          "samples": 99968
+        },
+        {
+          "repeat": 1,
+          "epoch_seconds": 2.9218835000010586,
+          "first_batch_seconds": 0.03117759999986447,
+          "molecules_per_second": 34213.54752849105,
+          "samples": 99968
+        }
+      ]
+    },
+    {
+      "batches": 781,
+      "samples": 99968,
+      "actual_nodes": 1393425,
+      "padded_node_slots": 1791232,
+      "node_padding_fraction": 0.2220856929755609,
+      "dense_attention_pair_slots": 32102912,
+      "attention_padding_proxy_fraction": 0.3765649982157382,
+      "mean_max_nodes": 17.91805377720871,
+      "largest_batch_max_nodes": 18,
+      "strategy": "global",
+      "workers": 1,
+      "order_sha256": "05d61b415c37325fcd3367164a596579255a559ee3981bf9f0555e572366d33e",
+      "membership_sha256": "5352e92bc5a1ef8c8f421690231a1353ca78c0340132ed595edc556037c88f78",
+      "traversals": [
+        {
+          "repeat": 0,
+          "epoch_seconds": 19.93390189999991,
+          "first_batch_seconds": 7.767642999999225,
+          "molecules_per_second": 5014.97401268943,
+          "samples": 99968
+        },
+        {
+          "repeat": 1,
+          "epoch_seconds": 3.889727200001289,
+          "first_batch_seconds": 0.02795470000091882,
+          "molecules_per_second": 25700.516992545614,
+          "samples": 99968
+        }
+      ]
+    },
+    {
+      "batches": 781,
+      "samples": 99968,
+      "actual_nodes": 1393425,
+      "padded_node_slots": 1786624,
+      "node_padding_fraction": 0.22007932278979792,
+      "dense_attention_pair_slots": 31941632,
+      "attention_padding_proxy_fraction": 0.37341714412087645,
+      "mean_max_nodes": 17.871959026888604,
+      "largest_batch_max_nodes": 18,
+      "strategy": "block",
+      "workers": 1,
+      "order_sha256": "f7d9044747adac39d7600b4237c193953e7d9382d2a447f8177d66bedabb6032",
+      "membership_sha256": "5352e92bc5a1ef8c8f421690231a1353ca78c0340132ed595edc556037c88f78",
+      "traversals": [
+        {
+          "repeat": 0,
+          "epoch_seconds": 19.634422900000573,
+          "first_batch_seconds": 7.567264900000737,
+          "molecules_per_second": 5091.466171893297,
+          "samples": 99968
+        },
+        {
+          "repeat": 1,
+          "epoch_seconds": 3.8968093000003137,
+          "first_batch_seconds": 0.0495031000009476,
+          "molecules_per_second": 25653.808617217157,
+          "samples": 99968
+        }
+      ]
+    },
+    {
+      "batches": 781,
+      "samples": 99968,
+      "actual_nodes": 1393425,
+      "padded_node_slots": 1423232,
+      "node_padding_fraction": 0.02094317721917438,
+      "dense_attention_pair_slots": 20794496,
+      "attention_padding_proxy_fraction": 0.03752997908677369,
+      "mean_max_nodes": 14.236875800256081,
+      "largest_batch_max_nodes": 18,
+      "strategy": "bucket",
+      "workers": 1,
+      "order_sha256": "684e96bfe5b1bfd8473ed19db79be05c3092fec85739c0ceb648f2d1900e7e87",
+      "membership_sha256": "5352e92bc5a1ef8c8f421690231a1353ca78c0340132ed595edc556037c88f78",
+      "traversals": [
+        {
+          "repeat": 0,
+          "epoch_seconds": 19.6250641000006,
+          "first_batch_seconds": 7.56522490000134,
+          "molecules_per_second": 5093.89419013398,
+          "samples": 99968
+        },
+        {
+          "repeat": 1,
+          "epoch_seconds": 3.8638104000001476,
+          "first_batch_seconds": 0.03614190000007511,
+          "molecules_per_second": 25872.905150831466,
+          "samples": 99968
+        }
+      ]
+    }
+  ],
+  "gpu": [
+    {
+      "family": "k1",
+      "strategy": "block",
+      "repeat": 0,
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 3.3655636999992566,
+      "molecules_per_second": 2434.064760088127,
+      "loader_wait_mean_ms": 1.2180296874362284,
+      "cuda_step_span_mean_ms": 51.3138484954834,
+      "peak_allocated_bytes": 572655104,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 145920,
+        "node_padding_fraction": 0.216234923245614,
+        "dense_attention_pair_slots": 2600448,
+        "attention_padding_proxy_fraction": 0.3675708954764717,
+        "mean_max_nodes": 17.8125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "k1",
+      "strategy": "global",
+      "repeat": 0,
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 3.4367719999991095,
+      "molecules_per_second": 2383.632082664233,
+      "loader_wait_mean_ms": 0.7134562501391883,
+      "cuda_step_span_mean_ms": 52.95086342096329,
+      "peak_allocated_bytes": 565214208,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 147072,
+        "node_padding_fraction": 0.2223740752828547,
+        "dense_attention_pair_slots": 2640768,
+        "attention_padding_proxy_fraction": 0.3772270036595414,
+        "mean_max_nodes": 17.953125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "k1",
+      "strategy": "bucket",
+      "repeat": 0,
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 3.7091004000012617,
+      "molecules_per_second": 2208.6217995062125,
+      "loader_wait_mean_ms": 0.9088546876512282,
+      "cuda_step_span_mean_ms": 57.00726169347763,
+      "peak_allocated_bytes": 679045120,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 117376,
+        "node_padding_fraction": 0.025635564340239947,
+        "dense_attention_pair_slots": 1724288,
+        "attention_padding_proxy_fraction": 0.04621559739440284,
+        "mean_max_nodes": 14.328125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "k1",
+      "strategy": "bucket",
+      "repeat": 1,
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 3.462404300000344,
+      "molecules_per_second": 2365.9859710777237,
+      "loader_wait_mean_ms": 1.0517624999124564,
+      "cuda_step_span_mean_ms": 53.012383341789246,
+      "peak_allocated_bytes": 679045120,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 117376,
+        "node_padding_fraction": 0.025635564340239947,
+        "dense_attention_pair_slots": 1724288,
+        "attention_padding_proxy_fraction": 0.04621559739440284,
+        "mean_max_nodes": 14.328125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "k1",
+      "strategy": "block",
+      "repeat": 1,
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 3.238484999999855,
+      "molecules_per_second": 2529.577873604592,
+      "loader_wait_mean_ms": 0.619045312447497,
+      "cuda_step_span_mean_ms": 49.94746792316437,
+      "peak_allocated_bytes": 572655104,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 145920,
+        "node_padding_fraction": 0.216234923245614,
+        "dense_attention_pair_slots": 2600448,
+        "attention_padding_proxy_fraction": 0.3675708954764717,
+        "mean_max_nodes": 17.8125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "k1",
+      "strategy": "global",
+      "repeat": 1,
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 3.288880699999936,
+      "molecules_per_second": 2490.817012608624,
+      "loader_wait_mean_ms": 0.6009703125471333,
+      "cuda_step_span_mean_ms": 50.76430654525757,
+      "peak_allocated_bytes": 565214208,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 147072,
+        "node_padding_fraction": 0.2223740752828547,
+        "dense_attention_pair_slots": 2640768,
+        "attention_padding_proxy_fraction": 0.3772270036595414,
+        "mean_max_nodes": 17.953125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "k1",
+      "strategy": "bucket",
+      "repeat": 2,
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 3.264999400000306,
+      "molecules_per_second": 2509.0356831303648,
+      "loader_wait_mean_ms": 0.7708062500171309,
+      "cuda_step_span_mean_ms": 50.20952409505844,
+      "peak_allocated_bytes": 679045120,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 117376,
+        "node_padding_fraction": 0.025635564340239947,
+        "dense_attention_pair_slots": 1724288,
+        "attention_padding_proxy_fraction": 0.04621559739440284,
+        "mean_max_nodes": 14.328125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "k1",
+      "strategy": "global",
+      "repeat": 2,
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 3.5121228999996674,
+      "molecules_per_second": 2332.49240793959,
+      "loader_wait_mean_ms": 1.5732062499012045,
+      "cuda_step_span_mean_ms": 53.258011877536774,
+      "peak_allocated_bytes": 565214208,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 147072,
+        "node_padding_fraction": 0.2223740752828547,
+        "dense_attention_pair_slots": 2640768,
+        "attention_padding_proxy_fraction": 0.3772270036595414,
+        "mean_max_nodes": 17.953125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "k1",
+      "strategy": "block",
+      "repeat": 2,
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 3.449723300000187,
+      "molecules_per_second": 2374.6832100996494,
+      "loader_wait_mean_ms": 1.1067218750611119,
+      "cuda_step_span_mean_ms": 52.77019363641739,
+      "peak_allocated_bytes": 572655104,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 145920,
+        "node_padding_fraction": 0.216234923245614,
+        "dense_attention_pair_slots": 2600448,
+        "attention_padding_proxy_fraction": 0.3675708954764717,
+        "mean_max_nodes": 17.8125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "gps9",
+      "strategy": "block",
+      "repeat": 0,
+      "initialization_sha256": "1a716f90761cd1541403f6d59ca3ae62de811743a9b66be26da598db7e6f8995",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 5.633184099999198,
+      "molecules_per_second": 1454.2397078769654,
+      "loader_wait_mean_ms": 0.5226796875206219,
+      "cuda_step_span_mean_ms": 87.44708025455475,
+      "peak_allocated_bytes": 676320256,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 145920,
+        "node_padding_fraction": 0.216234923245614,
+        "dense_attention_pair_slots": 2600448,
+        "attention_padding_proxy_fraction": 0.3675708954764717,
+        "mean_max_nodes": 17.8125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "gps9",
+      "strategy": "global",
+      "repeat": 0,
+      "initialization_sha256": "1a716f90761cd1541403f6d59ca3ae62de811743a9b66be26da598db7e6f8995",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 5.2106390000008105,
+      "molecules_per_second": 1572.1680200832807,
+      "loader_wait_mean_ms": 0.9182531250075954,
+      "cuda_step_span_mean_ms": 80.45142185688019,
+      "peak_allocated_bytes": 672357376,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 147072,
+        "node_padding_fraction": 0.2223740752828547,
+        "dense_attention_pair_slots": 2640768,
+        "attention_padding_proxy_fraction": 0.3772270036595414,
+        "mean_max_nodes": 17.953125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "gps9",
+      "strategy": "bucket",
+      "repeat": 0,
+      "initialization_sha256": "1a716f90761cd1541403f6d59ca3ae62de811743a9b66be26da598db7e6f8995",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 5.954551999999239,
+      "molecules_per_second": 1375.7542129115752,
+      "loader_wait_mean_ms": 1.0499718752328135,
+      "cuda_step_span_mean_ms": 91.94211399555206,
+      "peak_allocated_bytes": 789065216,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 117376,
+        "node_padding_fraction": 0.025635564340239947,
+        "dense_attention_pair_slots": 1724288,
+        "attention_padding_proxy_fraction": 0.04621559739440284,
+        "mean_max_nodes": 14.328125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "gps9",
+      "strategy": "bucket",
+      "repeat": 1,
+      "initialization_sha256": "1a716f90761cd1541403f6d59ca3ae62de811743a9b66be26da598db7e6f8995",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 5.621776099998897,
+      "molecules_per_second": 1457.1907266106894,
+      "loader_wait_mean_ms": 1.201529687563152,
+      "cuda_step_span_mean_ms": 86.59292232990265,
+      "peak_allocated_bytes": 789065216,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 117376,
+        "node_padding_fraction": 0.025635564340239947,
+        "dense_attention_pair_slots": 1724288,
+        "attention_padding_proxy_fraction": 0.04621559739440284,
+        "mean_max_nodes": 14.328125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "gps9",
+      "strategy": "block",
+      "repeat": 1,
+      "initialization_sha256": "1a716f90761cd1541403f6d59ca3ae62de811743a9b66be26da598db7e6f8995",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 5.728116199999931,
+      "molecules_per_second": 1430.1385855266167,
+      "loader_wait_mean_ms": 0.6040796876618515,
+      "cuda_step_span_mean_ms": 88.84903013706207,
+      "peak_allocated_bytes": 676320256,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 145920,
+        "node_padding_fraction": 0.216234923245614,
+        "dense_attention_pair_slots": 2600448,
+        "attention_padding_proxy_fraction": 0.3675708954764717,
+        "mean_max_nodes": 17.8125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "gps9",
+      "strategy": "global",
+      "repeat": 1,
+      "initialization_sha256": "1a716f90761cd1541403f6d59ca3ae62de811743a9b66be26da598db7e6f8995",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 5.485169800000222,
+      "molecules_per_second": 1493.4815691575618,
+      "loader_wait_mean_ms": 1.1270437500456865,
+      "cuda_step_span_mean_ms": 84.54219460487366,
+      "peak_allocated_bytes": 672357376,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 147072,
+        "node_padding_fraction": 0.2223740752828547,
+        "dense_attention_pair_slots": 2640768,
+        "attention_padding_proxy_fraction": 0.3772270036595414,
+        "mean_max_nodes": 17.953125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "gps9",
+      "strategy": "bucket",
+      "repeat": 2,
+      "initialization_sha256": "1a716f90761cd1541403f6d59ca3ae62de811743a9b66be26da598db7e6f8995",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 5.37399539999933,
+      "molecules_per_second": 1524.3779330367533,
+      "loader_wait_mean_ms": 1.063807812641926,
+      "cuda_step_span_mean_ms": 82.85763084888458,
+      "peak_allocated_bytes": 789065216,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 117376,
+        "node_padding_fraction": 0.025635564340239947,
+        "dense_attention_pair_slots": 1724288,
+        "attention_padding_proxy_fraction": 0.04621559739440284,
+        "mean_max_nodes": 14.328125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "gps9",
+      "strategy": "global",
+      "repeat": 2,
+      "initialization_sha256": "1a716f90761cd1541403f6d59ca3ae62de811743a9b66be26da598db7e6f8995",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 5.895352999999886,
+      "molecules_per_second": 1389.5690385291869,
+      "loader_wait_mean_ms": 0.4415406249620446,
+      "cuda_step_span_mean_ms": 91.62550055980682,
+      "peak_allocated_bytes": 672357376,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 147072,
+        "node_padding_fraction": 0.2223740752828547,
+        "dense_attention_pair_slots": 2640768,
+        "attention_padding_proxy_fraction": 0.3772270036595414,
+        "mean_max_nodes": 17.953125,
+        "largest_batch_max_nodes": 18
+      }
+    },
+    {
+      "family": "gps9",
+      "strategy": "block",
+      "repeat": 2,
+      "initialization_sha256": "1a716f90761cd1541403f6d59ca3ae62de811743a9b66be26da598db7e6f8995",
+      "steps": 64,
+      "samples": 8192,
+      "pipeline_seconds": 5.475303499999427,
+      "molecules_per_second": 1496.1727692356885,
+      "loader_wait_mean_ms": 0.4848578125233871,
+      "cuda_step_span_mean_ms": 85.03572869300842,
+      "peak_allocated_bytes": 676320256,
+      "padding": {
+        "batches": 64,
+        "samples": 8192,
+        "actual_nodes": 114367,
+        "padded_node_slots": 145920,
+        "node_padding_fraction": 0.216234923245614,
+        "dense_attention_pair_slots": 2600448,
+        "attention_padding_proxy_fraction": 0.3675708954764717,
+        "mean_max_nodes": 17.8125,
+        "largest_batch_max_nodes": 18
+      }
+    }
+  ],
+  "runtime": {
+    "torch": "2.7.1+cu128",
+    "cuda": "12.8",
+    "cpu_threads": 2,
+    "gpu": "NVIDIA GeForce RTX 5060"
+  },
+  "limits": [
+    "No cold disk-cache claim: SHA verification reads the shard bytes",
+    "First versus repeated traversal includes PyG lazy graph cache effects",
+    "GPU measures a fixed train subset, not a full100K GPU epoch",
+    "CUDA event span includes transfer/update and host submission gaps, not exclusive kernel time",
+    "Batch regrouping changes BN/gradients; no precision or MAE equivalence",
+    "GPS9 is matched192/9 EdgeState scratch profiling, not production timing"
+  ],
+  "gpu_source_idx_sha256": "00532f29d0a4656151894e1801497451b9aa9a66d17bad7b03bdbbaa7cd8a250",
+  "gpu_rows": 8192,
+  "gpu_allocation_worker_seconds": 263.0207000999999,
+  "cost": {
+    "worker_wall_seconds": 392.6184692000006,
+    "parent_cpu_seconds": 219.359375,
+    "cpu_child_seconds": null,
+    "gpu_busy_seconds": null
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "ambiguous_historical_role_record_count": 476,
+  "ambiguous_historical_role_record_count": 482,
   "coarse_historical_role_records": [
     {
       "evidence_id": "k1-saved-bn-rows-20261008-evidence",
@@ -1710,6 +1710,48 @@
       "state": "untouched"
     },
     {
+      "evidence_id": "pcqm-input-pipeline-local-20261013",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-input-pipeline-local-20261013",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-input-pipeline-local-20261013",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-input-pipeline-local-20261013",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "pcqm-input-pipeline-local-20261013",
+      "role_identity": null,
+      "role_name": "train_decoded",
+      "semantics": "coarse_historical",
+      "state": "labels_read"
+    },
+    {
+      "evidence_id": "pcqm-input-pipeline-local-20261013",
+      "role_identity": null,
+      "role_name": "train_probe",
+      "semantics": "coarse_historical",
+      "state": "prediction_input"
+    },
+    {
       "evidence_id": "pcqm-k1-500k-bn-calibration-20261007",
       "role_identity": null,
       "role_name": "internal_development",
@@ -3334,7 +3376,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 286,
+  "explicit_role_event_count": 289,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -3345,6 +3387,22 @@
     "train_prefix"
   ],
   "identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:00532f29d0a4656151894e1801497451b9aa9a66d17bad7b03bdbbaa7cd8a250:train_probe": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-input-pipeline-train_probe-labels_read-20261013",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-input-pipeline-local-20261013"
+      },
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-input-pipeline-train_probe-prediction_input-20261013",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-input-pipeline-local-20261013"
+      }
+    ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000": [
       {
         "access_kind": "labels_read",
@@ -3617,6 +3675,15 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train_decoded": [
+      {
+        "access_kind": "labels_read",
+        "role_event_id": "role-input-pipeline-train_decoded-labels_read-20261013",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-input-pipeline-local-20261013"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34:pcqm4mv2-ogb-fixed-100k-v1:training-0-100000": [
@@ -5515,6 +5582,7 @@
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-input-pipeline-local-20261013",
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "pcqm-k1-bn-mechanism-a100-20261008",
@@ -5616,6 +5684,7 @@
       "pcqm-gptrans-reference-k1pair-100k-s42",
       "pcqm-gptrans-t-100k-v4-reference",
       "pcqm-gptrans-t-500k-bridge",
+      "pcqm-input-pipeline-local-20261013",
       "pcqm-k1-500k-bn-calibration-20261007",
       "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "pcqm-k1-bn-mechanism-a100-20261008",

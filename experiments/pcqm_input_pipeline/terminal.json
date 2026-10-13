@@ -1,0 +1,201 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-input-pipeline-local-20261013",
+  "run_id": "input-pipeline-local-20261013",
+  "action_id": "A001",
+  "finalized_at": "2026-10-13T06:48:37.951895+00:00",
+  "acceptance_ref": "experiments/pcqm_input_pipeline/acceptance.json",
+  "artifact_hashes": {
+    "experiments/pcqm_input_pipeline/acceptance.json": "b216983b1644d02651fa1ddea90ad63eb1256e4ddee444a038bcc6eeb92b3fcc",
+    "experiments/pcqm_input_pipeline/analysis.json": "7a73006c1066497029b01efd27ecf56c917154de329c267007598018c29d965b",
+    "experiments/pcqm_input_pipeline/terminal_decision.md": "6a8b7dc516421c1c78ec2cb0c53a9ca2ce350ef9fd09a477f19724323c8c240c",
+    "experiments/pcqm_input_pipeline/attribution.md": "de57df909e135a8e4b565f880ab459e4160bb0b2dde9c24102083b33388ec0d3",
+    "experiments/pcqm_input_pipeline/results/result.json": "82e5c89f0fc9a4553934070c6cb9849d32f2a6999e1f2a3b1cd745d436163a78",
+    "experiments/pcqm_input_pipeline/results/completion.json": "31449aa7c8665bf677fbd3dc024070aab9660c54aa80ac93ce30c61d47be3748",
+    "experiments/pcqm_input_pipeline/config.json": "feca39ea30c1e244940c18a344ebfea8078e691a0d49babe24ec8104d10e8f39",
+    "experiments/pcqm_input_pipeline/protocol.md": "0d2f15e6643f7a6ef599f974a03038554daab2c2d2f46dace646d6f9879c3205",
+    "experiments/pcqm_input_pipeline/role_plan.json": "3756ee19a368e962350b57861a91a087de8bb61bc0c615a9665b3625cd89f7b6"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "pcqm-input-pipeline-local-20261013",
+    "track": "B",
+    "scope": "desktop_input_pipeline_execution_diagnostic",
+    "legacy_contract": "pcqm-input-pipeline-local-v1",
+    "outcome": {
+      "execution_status": "complete_execution_diagnostic",
+      "artifact_status": "local_hash_verified",
+      "comparison_status": "matched_membership_scratch_execution",
+      "scientific_status": "NO_TRAIN",
+      "transfer_status": "not_evaluated",
+      "budget_decision": "bounded_local_diagnostic_complete",
+      "full_handoff_status": "not_applicable"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_input_pipeline/protocol.md",
+        "experiments/pcqm_input_pipeline/terminal_decision.md",
+        "experiments/pcqm_input_pipeline/attribution.md",
+        "experiments/pcqm_input_pipeline/acceptance.json"
+      ]
+    },
+    "role_use": {
+      "train_decoded": "labels_read",
+      "train_probe": "prediction_input",
+      "development": "untouched",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "migration": {
+      "migrated_at": "2026-10-13",
+      "training_executed": false,
+      "inference_executed": false,
+      "scientific_reinterpretation": false,
+      "verification_scope": "Accept separately executed prospective scratch profiling, no model execution in finalizer"
+    },
+    "observed_execution": {
+      "training_executed": false,
+      "inference_executed": true,
+      "execution_ref": "experiments/pcqm_input_pipeline/results/result.json"
+    },
+    "artifacts": [
+      {
+        "name": "acceptance.json",
+        "locator": "experiments/pcqm_input_pipeline/acceptance.json",
+        "sha256": "b216983b1644d02651fa1ddea90ad63eb1256e4ddee444a038bcc6eeb92b3fcc",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "analysis.json",
+        "locator": "experiments/pcqm_input_pipeline/analysis.json",
+        "sha256": "7a73006c1066497029b01efd27ecf56c917154de329c267007598018c29d965b",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "terminal_decision.md",
+        "locator": "experiments/pcqm_input_pipeline/terminal_decision.md",
+        "sha256": "6a8b7dc516421c1c78ec2cb0c53a9ca2ce350ef9fd09a477f19724323c8c240c",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "attribution.md",
+        "locator": "experiments/pcqm_input_pipeline/attribution.md",
+        "sha256": "de57df909e135a8e4b565f880ab459e4160bb0b2dde9c24102083b33388ec0d3",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/result.json",
+        "locator": "experiments/pcqm_input_pipeline/results/result.json",
+        "sha256": "82e5c89f0fc9a4553934070c6cb9849d32f2a6999e1f2a3b1cd745d436163a78",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "results/completion.json",
+        "locator": "experiments/pcqm_input_pipeline/results/completion.json",
+        "sha256": "31449aa7c8665bf677fbd3dc024070aab9660c54aa80ac93ce30c61d47be3748",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "config.json",
+        "locator": "experiments/pcqm_input_pipeline/config.json",
+        "sha256": "feca39ea30c1e244940c18a344ebfea8078e691a0d49babe24ec8104d10e8f39",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "protocol.md",
+        "locator": "experiments/pcqm_input_pipeline/protocol.md",
+        "sha256": "0d2f15e6643f7a6ef599f974a03038554daab2c2d2f46dace646d6f9879c3205",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "role_plan.json",
+        "locator": "experiments/pcqm_input_pipeline/role_plan.json",
+        "sha256": "3756ee19a368e962350b57861a91a087de8bb61bc0c615a9665b3625cd89f7b6",
+        "availability": "locally_retained_hash_verified"
+      }
+    ]
+  },
+  "decision": {
+    "outcome": "NO_TRAIN",
+    "decision_ref": "experiments/pcqm_input_pipeline/terminal_decision.md",
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separately authorized paired quality test or native platform profile"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-input-pipeline-worker-20261013",
+      "trajectory_id": "TB-input-pipeline-local-20261013",
+      "action_id": "A001",
+      "run_id": "input-pipeline-local-20261013",
+      "attempt_id": "local-001",
+      "platform": "local-windows",
+      "hardware": "NVIDIA GeForce RTX 5060",
+      "category": "audit",
+      "evidence_ref": "experiments/pcqm_input_pipeline/acceptance.json",
+      "measurement": {
+        "wall_hours": {
+          "value": 0.10906068588888906,
+          "status": "measured"
+        },
+        "device_hours": {
+          "value": 0.0730613055833333,
+          "status": "measured"
+        },
+        "cpu_hours": {
+          "value": null,
+          "status": "measurement_missing"
+        },
+        "queue_hours": {
+          "value": null,
+          "status": "not_applicable"
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-input-pipeline-train_decoded-labels_read-20261013",
+      "trajectory_id": "TB-input-pipeline-local-20261013",
+      "action_id": "A001",
+      "run_id": "input-pipeline-local-20261013",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role_name": "train_decoded",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_input_pipeline/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-input-pipeline-train_probe-labels_read-20261013",
+      "trajectory_id": "TB-input-pipeline-local-20261013",
+      "action_id": "A001",
+      "run_id": "input-pipeline-local-20261013",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "00532f29d0a4656151894e1801497451b9aa9a66d17bad7b03bdbbaa7cd8a250",
+      "role_name": "train_probe",
+      "access_kind": "labels_read",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_input_pipeline/acceptance.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-input-pipeline-train_probe-prediction_input-20261013",
+      "trajectory_id": "TB-input-pipeline-local-20261013",
+      "action_id": "A001",
+      "run_id": "input-pipeline-local-20261013",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "row_manifest_hash": "00532f29d0a4656151894e1801497451b9aa9a66d17bad7b03bdbbaa7cd8a250",
+      "role_name": "train_probe",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_input_pipeline/acceptance.json"
+    }
+  ]
+}

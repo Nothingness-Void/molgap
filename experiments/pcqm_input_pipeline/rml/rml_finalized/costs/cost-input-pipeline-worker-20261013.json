@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "local-001",
+  "category": "audit",
+  "cost_event_id": "cost-input-pipeline-worker-20261013",
+  "evidence_ref": "experiments/pcqm_input_pipeline/acceptance.json",
+  "hardware": "NVIDIA GeForce RTX 5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 0.0730613055833333
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.10906068588888906
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "input-pipeline-local-20261013",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-input-pipeline-local-20261013"
+}

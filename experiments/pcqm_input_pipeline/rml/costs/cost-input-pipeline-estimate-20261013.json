@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "local-001",
+  "category": "audit",
+  "cost_event_id": "cost-input-pipeline-estimate-20261013",
+  "evidence_ref": "experiments/pcqm_input_pipeline/protocol.md",
+  "hardware": "CPU and optional RTX5060",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0.16666666666666666
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.3333333333333333
+    }
+  },
+  "platform": "local",
+  "run_id": "input-pipeline-local-20261013",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-input-pipeline-local-20261013"
+}

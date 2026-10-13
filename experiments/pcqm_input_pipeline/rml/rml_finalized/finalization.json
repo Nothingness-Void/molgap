@@ -1,0 +1,36 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-06352101bd04b22692d3c3eab65997f84c4508d61cabd599f33ebaa4f06278f2",
+  "finalized_at": "2026-10-13T06:48:37.951895+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/pcqm_input_pipeline/acceptance.json": "b216983b1644d02651fa1ddea90ad63eb1256e4ddee444a038bcc6eeb92b3fcc",
+    "experiments/pcqm_input_pipeline/analysis.json": "7a73006c1066497029b01efd27ecf56c917154de329c267007598018c29d965b",
+    "experiments/pcqm_input_pipeline/attribution.md": "de57df909e135a8e4b565f880ab459e4160bb0b2dde9c24102083b33388ec0d3",
+    "experiments/pcqm_input_pipeline/config.json": "feca39ea30c1e244940c18a344ebfea8078e691a0d49babe24ec8104d10e8f39",
+    "experiments/pcqm_input_pipeline/protocol.md": "0d2f15e6643f7a6ef599f974a03038554daab2c2d2f46dace646d6f9879c3205",
+    "experiments/pcqm_input_pipeline/results/completion.json": "31449aa7c8665bf677fbd3dc024070aab9660c54aa80ac93ce30c61d47be3748",
+    "experiments/pcqm_input_pipeline/results/result.json": "82e5c89f0fc9a4553934070c6cb9849d32f2a6999e1f2a3b1cd745d436163a78",
+    "experiments/pcqm_input_pipeline/role_plan.json": "3756ee19a368e962350b57861a91a087de8bb61bc0c615a9665b3625cd89f7b6",
+    "experiments/pcqm_input_pipeline/terminal_decision.md": "6a8b7dc516421c1c78ec2cb0c53a9ca2ce350ef9fd09a477f19724323c8c240c"
+  },
+  "outcome": "NO_TRAIN",
+  "published_hashes": {
+    "costs/cost-input-pipeline-worker-20261013.json": "0c4821446260f72d11e669e931730b2a57d9285bf5c60f90d7fbfa1383899dff",
+    "prospective_snapshot.json": "e7bf6a285932bdbcbaf2746ee57631f877882b06443020da46a6f22490950118",
+    "roles/role-input-pipeline-train_decoded-labels_read-20261013.json": "ba6a4569dca370ad2f9236e5c25b658d45c787f8f2964c444077af4b91d4b194",
+    "roles/role-input-pipeline-train_probe-labels_read-20261013.json": "c33ca37aa14bd3d3b1bdfe5286037cf9a583af7ff82c59378052be18f1d45fa3",
+    "roles/role-input-pipeline-train_probe-prediction_input-20261013.json": "bdc7aa7c95e9c70e3d0b294e0383b9f0f85eeb12a8ad3d363a573cfba345c5bf",
+    "terminal_input.json": "7797f809c391005145b9b6cef97e24c4cabd3c46928565640d5aea8fe9ebd95e",
+    "trajectory.json": "7e2530c9f0a885813930882a7a026ba7a3bf92a36e9b01a38ea90aa67c99d490",
+    "v5_evidence.json": "a9becc92121d3ed303a7249626772a621c61a058c0e089479e0e7178da9e6651"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/pcqm_input_pipeline/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "06352101bd04b22692d3c3eab65997f84c4508d61cabd599f33ebaa4f06278f2",
+  "trace_status": "unavailable",
+  "trajectory_id": "TB-input-pipeline-local-20261013"
+}
