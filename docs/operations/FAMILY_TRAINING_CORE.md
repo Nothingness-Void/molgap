@@ -93,6 +93,17 @@ checkpoint/trace/selected-output owners. In particular, the legacy screen output
 profile cannot represent a full final-only endpoint; do not manufacture empty
 predictions or development metrics to make that inspector pass.
 
+## Checkpoint Checks
+
+`training_reproducibility.nonfinite_tensor_keys` owns tensor finite checking.
+The nested session/output checker reuses it: accelerator flags cross to CPU once
+per device and CPU scalars are checked in same-dtype groups. Every tensor and
+host float still participates; no cached success or skipped optimizer/EMA guard.
+State format, update math, metric addition order and checkpoint policy are
+unchanged. New packages freeze the shared code; old jobs keep their source pins.
+The [synthetic checkpoint diagnostic](../../experiments/family_checkpoint_efficiency/README.md)
+owns measurements and their limits, not native training/quality qualification.
+
 ## Migration Status
 
 The K1 screen, K1 scale/full and GPTrans screen/full now delegate optimizer

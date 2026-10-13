@@ -280,17 +280,31 @@ def _validate_rng_state(state):
 
 def _finite_tree(value, label):
     import torch
-    if isinstance(value, torch.Tensor):
-        if not torch.isfinite(value).all():
-            raise ValueError("Nonfinite checkpoint state: " + label)
-    elif isinstance(value, dict):
-        for key, child in value.items():
-            _finite_tree(child, label + "." + str(key))
-    elif isinstance(value, (list, tuple)):
-        for child in value:
-            _finite_tree(child, label)
-    elif isinstance(value, float) and not math.isfinite(value):
-        raise ValueError("Nonfinite checkpoint state: " + label)
+    from .training_reproducibility import nonfinite_tensor_keys
+
+    tensors, paths, host_failure = {}, [], []
+
+    def visit(child, path):
+        if host_failure:
+            return
+        if isinstance(child, torch.Tensor):
+            # Ordinals keep distinct tensors even when their display paths collide.
+            tensors[len(paths)] = child
+            paths.append(path)
+        elif isinstance(child, dict):
+            for key, item in child.items():
+                visit(item, path + "." + str(key))
+        elif isinstance(child, (list, tuple)):
+            for item in child:
+                visit(item, path)
+        elif isinstance(child, float) and not math.isfinite(child):
+            host_failure.append(path)
+
+    visit(value, label)
+    failures = nonfinite_tensor_keys(tensors)
+    if failures or host_failure:
+        path = paths[failures[0]] if failures else host_failure[0]
+        raise ValueError("Nonfinite checkpoint state: " + path)
 
 
 def _development_role(contract: dict) -> str:

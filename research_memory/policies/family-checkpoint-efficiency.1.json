@@ -1,0 +1,17 @@
+{
+  "schema": "molgap-policy-v1",
+  "policy_id": "family-checkpoint-efficiency",
+  "version": "1",
+  "status": "candidate",
+  "policy_type": "research_action",
+  "approval": {"approved_at": null, "approved_by": null, "authority_ref": null},
+  "created_from_source_digest": "7b79931763a419d9b781362e924fe8ff5377f710e6060584711842b72cc91715",
+  "comparability_selector": {"scientific_contract": "family-checkpoint-efficiency-v1"},
+  "required_observable_fields": ["user_requested_scope_reviewed"],
+  "action_rule": {"field": "user_requested_scope_reviewed", "operator": "eq", "threshold": 1, "action": "RUN_DIAGNOSTIC"},
+  "borderline_action": "NO_TRAIN",
+  "promotion_rule": null,
+  "early_stop_rule": null,
+  "observation_point": null,
+  "cost_model": {"kind": "measured_only", "assumptions": []}
+}

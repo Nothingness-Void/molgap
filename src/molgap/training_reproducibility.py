@@ -192,12 +192,17 @@ def build_runtime_manifest(determinism: Mapping) -> dict:
     return payload
 
 
-def assert_finite_state_dict(state_dict: Mapping, *, label: str) -> None:
+def nonfinite_tensor_keys(state_dict: Mapping) -> list:
+    """Check every tensor, collecting accelerator flags with one copy per device."""
     import torch
 
-    failures, device_flags = [], {}
+    failures, device_flags, cpu_scalars = [], {}, {}
     for name, value in state_dict.items():
         if not torch.is_tensor(value):
+            continue
+        if (type(value) is torch.Tensor and value.device.type == "cpu"
+                and value.ndim == 0 and value.layout == torch.strided and not value.is_quantized):
+            cpu_scalars.setdefault(value.dtype, []).append((name, value.detach()))
             continue
         finite = torch.isfinite(value).all()
         if value.device.type == "cpu":
@@ -205,14 +210,23 @@ def assert_finite_state_dict(state_dict: Mapping, *, label: str) -> None:
                 failures.append(name)
         else:
             device_flags.setdefault(value.device, []).append((name, finite))
+    # Partial-pass metrics and AdamW counters need no individual scalar kernels.
+    # Group by dtype so checking cannot introduce a narrowing conversion.
+    for values in cpu_scalars.values():
+        observed = torch.isfinite(torch.stack([value for _, value in values])).tolist()
+        failures.extend(name for (name, _), finite in zip(values, observed) if not finite)
     # Keep each exact per-tensor check, but avoid a host/device barrier per key.
     for flags in device_flags.values():
         observed = torch.stack([flag for _, flag in flags]).cpu().tolist()
         failures.extend(name for (name, _), finite in zip(flags, observed) if not finite)
+    failed = set(failures)
+    return [name for name in state_dict if name in failed]
+
+
+def assert_finite_state_dict(state_dict: Mapping, *, label: str) -> None:
+    failures = nonfinite_tensor_keys(state_dict)
     if failures:
-        failed = set(failures)
-        ordered = [name for name in state_dict if name in failed]
-        raise RuntimeError(f"{label} contains non-finite tensors: {ordered[:8]}")
+        raise RuntimeError(f"{label} contains non-finite tensors: {failures[:8]}")
 
 
 def atomic_torch_save(path: Path, value) -> None:
