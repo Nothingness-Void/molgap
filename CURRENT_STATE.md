@@ -12,6 +12,13 @@ run/recipe/runtime-specific; historical entrypoints and job custody are unchange
 
 ## Server active screen
 
+The authorized [triplet routing dual100K](experiments/pcqm_gptrans_triplet_routing_100k/protocol.md)
+is in local release preparation: exact frozen-product recovery and a distinct
+bond-supported aggregation arm, with both optimizer-inclusive preflights
+required before either formal training stream. No result or Replay admission
+is claimed before independent terminal acceptance. The previous partial run
+remains closed; its complete drop arm is not repeated.
+
 The authorized [triplet follow-up dual100K](experiments/pcqm_gptrans_triplet_followup_100k/gpu/results/interpretation.md)
 ended partially complete as Kaggle2 kernel138367521/version1. Triplet-return
 dropout passed independent acceptance and actual per-arm Replay admission but

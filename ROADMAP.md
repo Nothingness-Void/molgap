@@ -13,6 +13,7 @@ target-domain transfer, and desktop alone owns full training and submission.
 
 | Priority | ID | Task | Exit condition |
 |---|---|---|---|
+| 1 | C-GPTRANS-TRIPLET-ROUTING | Authorized product initialization recovery plus bond-supported aggregation; one Kaggle2 T4 dual. | [Frozen protocol](experiments/pcqm_gptrans_triplet_routing_100k/protocol.md), both-arm preflight barrier, independent per-arm acceptance and actual Replay admission; no automatic scale or seed expansion |
 | — | C-GPTRANS-TRIPLET-FOLLOWUP | Closed partial run: branch-drop arm accepted and replay-admitted without nomination; product arm initialization failure is infrastructure-only. | Preserve the [partial terminal interpretation](experiments/pcqm_gptrans_triplet_followup_100k/gpu/results/interpretation.md); no automatic retry, deferred audit, scale or two-arm Replay claim |
 | — | C-GPTRANS-EXECUTION-TUNING | Closed: scoped v3 speed/accuracy delivery qualification passed; noncausal canonical RML finalization remains blocked. | Preserve [terminal decision](experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md); no automatic successor or causal Replay claim |
 | — | C-GPTRANS-EXECUTION40 | Closed: scoped delivery qualification passed; canonical RML closure remains blocked by missing prospective reference binding. | Preserve [terminal decision](experiments/pcqm_gptrans_execution40/decision_terminal.md); no automatic successor, replay claim or architecture promotion |
