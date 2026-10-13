@@ -15,6 +15,25 @@ from test_experiment_package import git
 from test_experiment_spec import payload
 
 
+DATASET_PACKAGE_MODULES = (
+    "family_training_data.py",
+    "experiment_family_workflow.py",
+    "experiment_family_artifacts.py",
+    "experiment_launch.py",
+    "experiment_spec.py",
+    "experiment_package.py",
+    "screen_policy.py",
+    "v4_bundle.py",
+    "training_reproducibility.py",
+    "v4_runtime.py",
+    "evidence_pointers.py",
+    "research_memory/__init__.py",
+    "research_memory/paths.py",
+    "research_memory/trace.py",
+    "research_memory/schemas.py",
+)
+
+
 @pytest.fixture
 def release(tmp_path, payload, request):
     loader_mode = getattr(request, "param", "generic")
@@ -31,7 +50,7 @@ def release(tmp_path, payload, request):
     (module / "child.py").write_bytes(b"VALUE = 1\n")
     (root / "recipe.json").write_bytes(b'{"epochs":10}\r\n')
     allowlist = ["src/molgap/__init__.py", "src/molgap/loader.py", "src/molgap/child.py", "recipe.json"]
-    if loader_mode != "generic":
+    if loader_mode not in {"generic", "dataset_binding", "broken_dataset_resolver"}:
         owner = Path(__file__).resolve().parents[1] / "src/molgap"
         for name in ("k1_screen_training.py", "v4_runtime.py", "screen_policy.py", "training_reproducibility.py"):
             source = (owner / name).read_bytes()
@@ -65,6 +84,36 @@ def release(tmp_path, payload, request):
         candidate["training"]["transform"]["name"] = contract.transform
         candidate["data"]["roles"] = [dict(candidate["data"]["roles"][0], role=role)
                                       for role in contract.roles]
+    dataset_manifests = None
+    if loader_mode in {"dataset_binding", "broken_dataset_resolver"}:
+        owner = Path(__file__).resolve().parents[1] / "src/molgap"
+        for name in DATASET_PACKAGE_MODULES:
+            source = (b"" if name == "research_memory/__init__.py" else
+                      (owner / name).read_bytes())
+            if name == "family_training_data.py" and loader_mode == "broken_dataset_resolver":
+                source += (b"\ndef resolve_training_manifest(root, selection):\n"
+                           b"    raise ValueError('packaged broken dataset resolver')\n")
+            destination = module / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(source)
+            allowlist.append("src/molgap/" + name)
+        dataset_manifest = tmp_path / "dataset" / "slug" / "manifest.json"
+        dataset_manifest.parent.mkdir(parents=True)
+        dataset_manifest.write_text('{"fixture":"metadata only"}', encoding="utf-8")
+        dataset_sha = hashlib.sha256(dataset_manifest.read_bytes()).hexdigest()
+        recipe_record = {
+            "format": "molgap-family-training-recipe-v1",
+            "dataset": {
+                "manifest": "slug/manifest.json",
+                "manifest_sha256": dataset_sha,
+                "development": False,
+            },
+        }
+        (root / "recipe.json").write_text(
+            json.dumps(recipe_record, sort_keys=True, separators=(",", ":")),
+            encoding="utf-8",
+        )
+        dataset_manifests = {arm["arm_id"]: dataset_manifest for arm in payload["arms"]}
     git(root, "add", ".")
     git(root, "-c", "commit.gpgsign=false", "commit", "-m", "fixture")
     states = {}
@@ -81,9 +130,12 @@ def release(tmp_path, payload, request):
     package = tmp_path / "package"
     manifest = build_experiment_source_package(spec, root,
         allowlist, package)
-    return spec, package, {"expected_package_identity": manifest["package_identity"],
+    options = {"expected_package_identity": manifest["package_identity"],
         "recipe_files": {a["arm_id"]: "recipe.json" for a in payload["arms"]},
         "initial_states": states, "required_modules": ["molgap.loader"]}
+    if dataset_manifests is not None:
+        options["dataset_manifests"] = dataset_manifests
+    return spec, package, options
 
 
 @pytest.mark.parametrize("release", ["broken"], indirect=True)
@@ -138,6 +190,60 @@ def test_lf_recipe_and_isolated_imports_pass(release):
     assert report["errors"] == []
     assert report["checks"]["clean_import:package"]["molgap.child"] == "src/molgap/child.py"
     assert report["checks"]["initialization:gptrans_t"]["device"] == "cpu"
+
+
+@pytest.mark.parametrize("release", ["dataset_binding"], indirect=True)
+def test_shared_family_release_requires_dataset_manifest_binding(release, tmp_path):
+    spec, package, options = release
+    launch_config = tmp_path / "launch.json"
+    launch_config.write_text("{}", encoding="utf-8")
+
+    missing = dict(options)
+    missing.pop("dataset_manifests")
+    missing_report = check_release_inputs(
+        spec, package, **missing, launch_config=launch_config)
+    assert any(error["check"] == "dataset_manifest" and
+               "requires a pinned dataset manifest" in error["message"]
+               for error in missing_report["errors"])
+
+    wrong_manifest = tmp_path / "wrong-manifest.json"
+    wrong_manifest.write_text('{"fixture":"wrong identity"}', encoding="utf-8")
+    wrong = dict(options)
+    wrong["dataset_manifests"] = {
+        arm_id: wrong_manifest for arm_id in options["dataset_manifests"]}
+    wrong_report = check_release_inputs(
+        spec, package, **wrong, launch_config=launch_config)
+    assert any(error["check"] == "dataset_manifest" and
+               "differs from frozen recipe" in error["message"]
+               for error in wrong_report["errors"])
+
+
+@pytest.mark.parametrize("release", ["dataset_binding"], indirect=True)
+def test_package_only_dataset_probe_checks_flat_and_nested_without_decoding(release):
+    spec, package, options = release
+    report = check_release_inputs(spec, package, **options)
+
+    assert report["status"] == "LOCAL_RELEASE_INPUTS_VERIFIED"
+    expected_sha = hashlib.sha256(
+        next(iter(options["dataset_manifests"].values())).read_bytes()).hexdigest()
+    for arm_id in options["dataset_manifests"]:
+        assert report["checks"]["dataset_mount_resolution:" + arm_id] == {
+            "manifest_sha256": expected_sha,
+            "declared_path": "slug/manifest.json",
+            "layouts": ["flat", "nested"],
+            "scope": "metadata_only_no_shard_decode",
+        }
+
+
+@pytest.mark.parametrize("release", ["broken_dataset_resolver"], indirect=True)
+def test_release_rejects_broken_packaged_dataset_resolver(release):
+    spec, package, options = release
+    report = check_release_inputs(spec, package, **options)
+
+    assert report["status"] == "RELEASE_INPUTS_FAILED"
+    assert any(error["check"] == "dataset_mount_resolution" and
+               error["message"] == "packaged broken dataset resolver"
+               for error in report["errors"])
 
 
 def test_multiple_release_defects_are_collected(release, tmp_path):

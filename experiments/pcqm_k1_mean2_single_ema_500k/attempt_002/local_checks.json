@@ -1,0 +1,27 @@
+{
+  "tester": "gpt-6-luna",
+  "reasoning": "max",
+  "python": "D:/\u6587\u6863/molgap/.venv/Scripts/python.exe",
+  "source_path": "owning worktree/src",
+  "gpu_hidden": true,
+  "suites": [
+    "tests/test_family_training_data.py",
+    "tests/test_release_inputs.py",
+    "tests/test_kaggle_bootstrap.py",
+    "tests/test_experiment_cli.py"
+  ],
+  "first_run": {
+    "passed": 187,
+    "failed": 5,
+    "seconds": 73.9
+  },
+  "targeted_repair_rerun": {
+    "passed": 5,
+    "failed": 0,
+    "seconds": 17.94
+  },
+  "unique_cases_verified": 192,
+  "warning": "torch_geometric.distributed deprecation",
+  "remaining_native_qualification": "pending_remote",
+  "implementation_compatibility_fix": "Recipe JSON continues accepting ordinary UTF8 formatting; hashes still pin exact normalized package bytes."
+}

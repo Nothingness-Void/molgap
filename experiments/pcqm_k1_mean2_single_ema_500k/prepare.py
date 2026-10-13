@@ -165,14 +165,69 @@ def draft(initial, normalization_checkpoint):
         "arms": preparation}
 
 
+def draft_retry(initial):
+    """A new physical attempt over unchanged arm recipes and existing planner."""
+    retry = HERE / "attempt_002"
+    if (HERE / "rml/attempt_002").exists() or (retry / "experiment_spec.json").exists():
+        raise ValueError("Retry inputs already exist; reconcile their exact stage")
+    declaration = json.loads((HERE / "experiment_spec.json").read_text(encoding="utf-8"))
+    commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    logical = declaration["logical_run_id"] + "-retry2"
+    declaration["logical_run_id"] = logical
+    bindings, preparation = [], []
+    for device, binding in enumerate(declaration["prospective"]["arms"]):
+        arm_id = binding["arm_id"]
+        plan = json.loads((ROOT / binding["plan_spec_ref"]).read_text(encoding="utf-8"))
+        trajectory = plan["trajectory"]
+        old_tid = trajectory["trajectory_id"]
+        tid = old_tid + "-retry2"
+        run = logical + ":" + arm_id + ":downstream"
+        cost_id = plan["costs"][0]["cost_event_id"] + "-retry2"
+        trajectory["trajectory_id"] = tid
+        trajectory["hypothesis"]["hypothesis_id"] = "H-" + tid
+        trajectory["hypothesis"]["expected_native_cost_ref"] = cost_id
+        state = trajectory["state_at_start"]
+        state.update(source_commit=commit, parent_trajectory_ids=[old_tid])
+        state["contract_refs"].append(REL + "/attempt_002/authorization.md")
+        action = trajectory["actions"][0]
+        action.update(source_commit=commit, run_ids=[run], attempt_ids=[logical + "-v2"],
+                      cost_event_ids=[cost_id])
+        action["evidence_refs"].append(REL + "/attempt_002/authorization.md")
+        trajectory["decision"]["decision_ref"] = REL + "/attempt_002/decision.md"
+        plan["costs"][0].update(cost_event_id=cost_id, trajectory_id=tid, run_id=run,
+                                attempt_id=logical + "-v2")
+        plan["decision_state"].update(source_commit=commit,
+            state_timestamp=datetime.now(timezone.utc).isoformat())
+        path = retry / ("plan_" + arm_id + ".json")
+        write_json(path, plan)
+        bindings.append({"arm_id": arm_id, "trajectory_id": tid,
+            "plan_spec_ref": path.relative_to(ROOT).as_posix(),
+            "plan_spec_sha256": sha256_file(path), "output": REL + "/rml/attempt_002/" + arm_id})
+        preparation.append({"arm_id": arm_id, "device": device,
+            "recipe": REL + "/training_recipe_" + arm_id + ".json", "initial_state": str(initial.resolve())})
+    declaration["prospective"]["arms"] = bindings
+    spec = ExperimentSpec(declaration)
+    write_json(retry / "experiment_spec.json", declaration)
+    return spec, {"format": "molgap-family-training-preparation-v1", "spec_identity": spec.identity,
+        "source_files": [REL + "/config.json"], "arms": preparation}
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--initial", type=Path, required=True)
-    p.add_argument("--normalization-checkpoint", type=Path, required=True)
+    p.add_argument("--normalization-checkpoint", type=Path)
     p.add_argument("--stage", type=Path)
     p.add_argument("--reconcile-stage", action="store_true")
+    p.add_argument("--retry", action="store_true")
+    p.add_argument("--dataset-manifest", type=Path)
     args = p.parse_args()
-    if args.reconcile_stage:
+    if not args.retry and not args.reconcile_stage and args.normalization_checkpoint is None:
+        raise ValueError("A new scientific draft requires its normalization source")
+    if args.retry and args.reconcile_stage:
+        raise ValueError("Select a fresh retry or reconcile an existing stage")
+    if args.retry:
+        spec, plan = draft_retry(args.initial)
+    elif args.reconcile_stage:
         if args.stage is None:
             raise ValueError("Reconciliation requires the existing stage")
         from molgap.experiment_package import verify_experiment_source_package
@@ -212,6 +267,8 @@ def main():
     from molgap.experiment_launch import publish_immutable_bytes
     from molgap.experiment_preflight import check_release_inputs
     c = json.loads((HERE / "config.json").read_text())
+    if args.retry:
+        c["source_dataset"] += "-v2"
     source = args.stage / "inputs"
     kernel = args.stage / "kernel"
     kernel.mkdir()
@@ -237,7 +294,9 @@ def main():
         initial_states={a["arm_id"]: source / "initial_states" / (a["arm_id"] + ".pt") for a in plan["arms"]},
         required_modules=["molgap.family_training_runner", "molgap.experiment_training_worker", "molgap.pcqm_wedge"],
         input_root=source, entry_script=kernel / "run.py", launch_config=stage["launch_path"],
-        kernel_metadata=kernel / "kernel-metadata.json")
+        kernel_metadata=kernel / "kernel-metadata.json",
+        dataset_manifests={a["arm_id"]: args.dataset_manifest for a in plan["arms"]}
+                          if args.dataset_manifest else None)
     write_json(args.stage / "release_report.json", release)
     print(json.dumps({"status": release["status"], "errors": release["errors"], "stage": str(args.stage)}))
     if release["errors"]:

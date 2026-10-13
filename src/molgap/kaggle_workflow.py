@@ -109,8 +109,7 @@ def freeze_inputs(stage, trajectories):
     config["prospective_sha256"] = {}
     for arm_id, trajectory in trajectories.items():
         destination = stage["input_root"] / "prospective" / arm_id
-        destination.mkdir(parents=True)
-        shutil.copyfile(trajectory, destination / "trajectory.json")
+        publish_immutable_bytes(destination / "trajectory.json", trajectory.read_bytes())
         config["prospective_sha256"][arm_id] = hashlib.sha256(trajectory.read_bytes()).hexdigest()
     publish_immutable_bytes(stage["launch_path"], canonical_json(config).encode())
     entry_text = stage["entry_text"].replace("EXPECTED_LAUNCH_SHA256 = None",
