@@ -82,15 +82,27 @@ model recommendations are unchanged. No retry, continuation or successor is rele
 
 K1 mean2 versus single-forward EMA500K is desktop-owned on
 `codex/exp/k1-mean2-single-ema-500k-20261013` (see [checkout map](BRANCHES.md#retained-checkout-map)).
-Kaggle1 kernelID138365645/version2 was queried on2026-10-14 JST and reports ERROR
-after the user-authorized corrected resubmission under the same60-epoch/nine-hour
-contract. Source/dataset binding was verified; failure cause, native exposure
-and terminal artifacts still need owning reconciliation. No retry is released.
+Kaggle1 kernelID138365645/version2 was reconciled on2026-10-15 JST: scheduler
+ERROR is the frozen nine-hour STOP_FOR_COST after29/53 complete trace passes,
+not a startup failure. Exact source/mount and pause-counter metadata are retained
+in the [owner observation](D:/w/k1-mean2-single-ema-500k-20261013/experiments/pcqm_k1_mean2_single_ema_500k/attempt_002/reconciliation_20261015/observation.md).
+Full native/artifact/terminal RML acceptance remains pending; unequal partial
+exposure is not a complete reference. No continuation or retry is released.
 Version1 ended ERROR before either arm trained and is independently finalized
 NO_TRAIN on the owner. Reviewed shared mount and release checks are integrated
 here; see [correction provenance](docs/operations/KAGGLE_INPUT_RESOLUTION_20261013.md)
 and the owning [handoff](D:/w/k1-mean2-single-ema-500k-20261013/experiments/pcqm_k1_mean2_single_ema_500k/REMOTE_HANDOFF.md).
 No automatic continuation/monitor or model adoption is released.
+
+User-authorized Clean K1/degree-bond-local GPTrans500K candidates were submitted
+to Kaggle1 kernel138717853/version1 on2026-10-15 JST. Exact source/private mounts
+and launch receipt are verified; both native preflights passed and both formal
+optimizer cursors advanced128→256→384. The [owning handoff](D:/w/k1-clean-ema-gptrans-local-500k/experiments/pcqm_clean_k1_gptrans_local_500k/REMOTE_HANDOFF.md)
+binds source4097e696, independent per-arm prospective RML and the11h55m budget.
+No baseline is retrained. Implementation/submission/acceptance stay on the
+dedicated branch in [BRANCHES](BRANCHES.md); no model adoption, new monitor,
+server handoff or full release. Desktop shutdown after verified startup is
+user-authorized; reconcile this exact run when desktop returns.
 
 The2026-10-09 [Kaggle reconciliation](docs/operations/KAGGLE_ACCEPTANCE_20261009.md)
 queried exact owner/version and retrieved retained outputs, without resuming,
