@@ -1,0 +1,25 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-100k-profiler-s42",
+  "kernel_version": 1,
+  "arms": {
+    "k1_mean2": {
+      "evidence_id": "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
+      "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42",
+      "initial_file_sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "recipe_sha256": "22b2bff65cb026c3531b7a015c11b53cc6acc129c4a44796c2edeefc0208b3c0",
+      "output_manifest_ref": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/output_manifest.json",
+      "output_manifest_sha256": "c3a51fee2e675b9f6741850676ed8c615261f6ee4ba06d74c27be83ea9da2284",
+      "source_commit": "faf5b6d13d94fa28a1d3e867bc17e453ca44da1e"
+    },
+    "gptrans_local": {
+      "evidence_id": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
+      "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42",
+      "initial_file_sha256": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+      "recipe_sha256": "7f4af84e0144faa215e0d3e4b3b9338e5c69e0720404b83d3bc42a1dc2ed72ef",
+      "output_manifest_ref": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/gptrans_local/output_manifest.json",
+      "output_manifest_sha256": "4c61c6a7fcacb43b6dcca021dc1a45a661c64518fcfff16446dc6aa8f270a70b",
+      "source_commit": "faf5b6d13d94fa28a1d3e867bc17e453ca44da1e"
+    }
+  },
+  "strict_reference": false
+}

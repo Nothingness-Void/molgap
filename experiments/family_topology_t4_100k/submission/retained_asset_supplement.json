@@ -1,0 +1,26 @@
+{
+  "scope": "opaque historical artifact custody for owner-worktree portability",
+  "authority_ref": "experiments/pcqm_gine_expert/v5_evidence.json",
+  "source_root": "D:/文档/molgap",
+  "target_root": "D:/w/family-topology-t4-100k",
+  "model_loading": false,
+  "prediction_analysis": false,
+  "scientific_reinterpretation": false,
+  "files": [
+    {
+      "path": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_gine_best.pt",
+      "bytes": 10116905,
+      "sha256": "9b971c1c9f770b80966af38107b30da21143c75b5567879a941173afb2d5955e"
+    },
+    {
+      "path": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_gine_last.pt",
+      "bytes": 30240739,
+      "sha256": "6cc657143bb7a2396df781934ffe021c3ee9cd6b0fafa4b09af0df711431cc44"
+    },
+    {
+      "path": "experiments/pcqm_gine_expert/results/local_scaleup_1m_v7_frozen_bn/pcqm_official_valid_5k_predictions.csv",
+      "bytes": 225060,
+      "sha256": "a16abc67eb01c2b787303e5aa5d628ba0ad03f01c9c847fef17d522371357f88"
+    }
+  ]
+}

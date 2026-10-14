@@ -1,0 +1,207 @@
+{
+  "arms": [
+    {
+      "addon_semantics": "ordered",
+      "addons": [
+        {
+          "config": {},
+          "name": "k1_two_pass_mean",
+          "source_sha256": "e933f656860b82dabcb05abad36ce3feb3455c37d20ce884a25f0173884b4f0b",
+          "version": "1"
+        }
+      ],
+      "arm_id": "k1_mean2",
+      "base": {
+        "name": "neural_atom_k1",
+        "sha256": "cf9647890715641bd393adbe9872ed34128d0203f0dc8b385dca86049d34c2a0",
+        "version": "1"
+      },
+      "data": {
+        "dataset": {
+          "name": "pcqm4mv2",
+          "sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+          "version": "1"
+        },
+        "feature_schema": "ogb-atom9-bond3-rwse16-v1",
+        "feature_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "roles": [
+          {
+            "membership_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+            "role": "train",
+            "row_order_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+            "usage_sha256": "1055370f70f8a5b4ee4548fcc12f3f27a053e3ae07f8932c009205ee61f12d00"
+          },
+          {
+            "membership_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+            "role": "development",
+            "row_order_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+            "usage_sha256": "b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef"
+          }
+        ],
+        "split": {
+          "name": "fixed100k-next50k",
+          "sha256": "3e2a11fa94a8b2083a06d0153a6c233f9315aac0dfa1a65d25f804c48ecfeadb",
+          "version": "1"
+        },
+        "target": "pcqm4mv2-gap-eV-direct"
+      },
+      "family": {
+        "name": "neural_atom_k1",
+        "version": "3"
+      },
+      "initialization": {
+        "kind": "frozen_state",
+        "seed": 42,
+        "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
+      },
+      "scientific_role": "candidate",
+      "training": {
+        "objective": {
+          "name": "normalized-gap-l1",
+          "sha256": "e60736946463ecb720f7d56ddecdf9fb1f54eb24636b3ba193bb8a5209a936a8",
+          "version": "1"
+        },
+        "overrides": {},
+        "recipe": {
+          "name": "shared-family-training",
+          "sha256": "a6a92d38785030b43ae9eb23bb4e448b266daa24f6da2bc1d9b862ad3cdd1c5c",
+          "version": "1"
+        },
+        "sampler": {
+          "name": "frozen-family-pass-order",
+          "sha256": "f5abfab079389a89fbcaa7cd81344b4918623815c8a2ca6bec5805a25934893b",
+          "version": "1"
+        },
+        "transform": {
+          "name": "frozen-train-mean-sample-std",
+          "sha256": "b3950836b7fded7445e3b7425f5059570ef028e639c0c9e0c36cfa347a2cb04e",
+          "version": "1"
+        }
+      }
+    },
+    {
+      "addon_semantics": "ordered",
+      "addons": [
+        {
+          "config": {},
+          "name": "gptrans_degree_bond_local",
+          "source_sha256": "1d0a7b32bfc8c65ae920c8b4c569f9813d08a4bd63889e8c65e41921fd78eef3",
+          "version": "1"
+        }
+      ],
+      "arm_id": "gptrans_local",
+      "base": {
+        "name": "gptrans_t",
+        "sha256": "a0b161055f2ab148f092e9fa50eb322595849bc13587dddf67e667cc71f2f5bb",
+        "version": "1"
+      },
+      "data": {
+        "dataset": {
+          "name": "pcqm4mv2",
+          "sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+          "version": "1"
+        },
+        "feature_schema": "ogb-atom9-bond3-shortest-path-cap20",
+        "feature_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+        "roles": [
+          {
+            "membership_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+            "role": "train",
+            "row_order_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+            "usage_sha256": "1055370f70f8a5b4ee4548fcc12f3f27a053e3ae07f8932c009205ee61f12d00"
+          },
+          {
+            "membership_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+            "role": "development",
+            "row_order_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+            "usage_sha256": "b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef"
+          }
+        ],
+        "split": {
+          "name": "fixed100k-next50k",
+          "sha256": "3e2a11fa94a8b2083a06d0153a6c233f9315aac0dfa1a65d25f804c48ecfeadb",
+          "version": "1"
+        },
+        "target": "pcqm4mv2-gap-eV-direct"
+      },
+      "family": {
+        "name": "gptrans_t",
+        "version": "2"
+      },
+      "initialization": {
+        "kind": "frozen_state",
+        "seed": 42,
+        "state_sha256": "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b"
+      },
+      "scientific_role": "candidate",
+      "training": {
+        "objective": {
+          "name": "normalized-gap-l1",
+          "sha256": "69f5e97752e51a8d4f0ae8ff4fcd278f7e093c8810e8fbe785f8382c62f2bc35",
+          "version": "1"
+        },
+        "overrides": {},
+        "recipe": {
+          "name": "shared-family-training",
+          "sha256": "2d3c454e0f9b229249540181895abfdb786daef9cb17829a31bd2eb1562ac2fd",
+          "version": "1"
+        },
+        "sampler": {
+          "name": "frozen-family-pass-order",
+          "sha256": "b43abeea0003f0d12d06bb4050f4fec0633abd52f70d0dfe97da8c09ecc4b555",
+          "version": "1"
+        },
+        "transform": {
+          "name": "frozen-train-mean-sample-std",
+          "sha256": "75e8af62809b26d8459dcfe854c009602548c93bd1854036d8cb9b4276af146b",
+          "version": "1"
+        }
+      }
+    }
+  ],
+  "evidence": {
+    "policy": {
+      "name": "molgap-v5",
+      "sha256": "2cbd6e627d8f44c9bb119c54394c6b79413a5a0354056a63bc940b3e3ee13a87",
+      "version": "1"
+    },
+    "required_artifacts": [
+      "v5_evidence",
+      "costs",
+      "roles",
+      "trace_manifest",
+      "terminal_artifact"
+    ]
+  },
+  "experiment_id": "family-topology-t4-100k-s42",
+  "logical_run_id": "family-topology-t4-100k-s42",
+  "platform": {
+    "accelerator": "NvidiaTeslaT4",
+    "atomic_checkpoints": true,
+    "cpu_cores": 4,
+    "device_count": 2,
+    "memory_gib": 30,
+    "name": "kaggle",
+    "retrievable_chunks": true
+  },
+  "prospective": {
+    "arms": [
+      {
+        "arm_id": "k1_mean2",
+        "output": "experiments/family_topology_t4_100k/rml/k1_mean2",
+        "plan_spec_ref": "experiments/family_topology_t4_100k/plan_k1_mean2.json",
+        "plan_spec_sha256": "e865f872f7fb20dd91cc81f17f9012195f2f3e28c506747e5fb107f48ff01d26",
+        "trajectory_id": "TB-family-topology-t4-100k-k1_mean2-s42"
+      },
+      {
+        "arm_id": "gptrans_local",
+        "output": "experiments/family_topology_t4_100k/rml/gptrans_local",
+        "plan_spec_ref": "experiments/family_topology_t4_100k/plan_gptrans_local.json",
+        "plan_spec_sha256": "31cc1ab002ca8881db64272069e3485ad3a567d4b3cac27d3ceaf6af03611550",
+        "trajectory_id": "TB-family-topology-t4-100k-gptrans_local-s42"
+      }
+    ]
+  },
+  "schema_version": "molgap-experiment-spec-v2",
+  "terminal_protocol": "molgap-experiment-terminal-descriptor-v1"
+}

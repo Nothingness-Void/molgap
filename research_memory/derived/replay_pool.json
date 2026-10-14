@@ -10825,6 +10825,24 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "family-topology-t4-100k-s42:gptrans_local:downstream",
+      "trajectory_id": "TB-family-topology-t4-100k-gptrans_local-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "family-topology-t4-100k-s42:k1_mean2:downstream",
+      "trajectory_id": "TB-family-topology-t4-100k-k1_mean2-s42"
+    },
+    {
+      "reasons": [
         "CONTEXT_ONLY",
         "canonical_trace_marked_ineligible",
         "epoch_axis_not_cross_scale_comparable",
@@ -11034,5 +11052,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "2279055e30eb04f5b2b7fcfbe1e0ab39e6db7dc8e81f55f83f15b1cf36ec4154"
+  "source_digest": "e118b4f458d3a2f16841cdb21bb6a72ca267952510e7b8df387c2fe6b43633f1"
 }

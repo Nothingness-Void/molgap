@@ -1,0 +1,33 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-topology-100k-s42",
+  "kernel_id": 138619974,
+  "metadata": {
+    "author": "Nothingness Void",
+    "currentVersionNumber": 1,
+    "datasetDataSources": [
+      "nothingnessvoid/molgap-k1-gptrans-topology-100k-s42-src",
+      "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "dockerImage": "gcr.io/kaggle-private-byod/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+    "enableGpu": true,
+    "enableInternet": true,
+    "enableTpu": false,
+    "id": 138619974,
+    "isPrivate": true,
+    "kernelType": "script",
+    "language": "python",
+    "lastRunTime": "2026-10-11T06:15:30.532Z",
+    "machineShape": "NvidiaTeslaT4",
+    "ref": "nothingnessvoid/molgap-k1-gptrans-topology-100k-s42",
+    "slug": "molgap-k1-gptrans-topology-100k-s42",
+    "title": "MolGap K1 GPTrans Topology 100K S42"
+  },
+  "observed_at": "2026-10-14T06:15:32.123105+00:00",
+  "output_paths": [],
+  "source_matches": true,
+  "source_sha256": "68e5c2b54569d07c8855295628bb1cc1662a2b4081accf58a8bfb3839e059103",
+  "status": {
+    "status": "RUNNING"
+  },
+  "version": 1
+}

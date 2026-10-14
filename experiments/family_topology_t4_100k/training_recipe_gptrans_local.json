@@ -1,0 +1,74 @@
+{
+  "format": "molgap-family-training-recipe-v1",
+  "family": "gptrans_t",
+  "mode": "degree_bond_local_ema999",
+  "seed": 42,
+  "initialization_sha256": "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b",
+  "dataset": {
+    "manifest": "pcqm4mv2-ogb-fixed-100k-v1/manifest.json",
+    "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "development": true
+  },
+  "train_rows": 100000,
+  "development_rows": 50000,
+  "optimizer_steps": 46860,
+  "learning_rate": 0.001,
+  "weight_decay": 0.05,
+  "schedule": {
+    "kind": "warmup_cosine_epoch",
+    "total_units": 60,
+    "minimum_lr": 1e-06,
+    "warmup_units": 4,
+    "reference_epochs": 60
+  },
+  "selection": "best-development-ema",
+  "sampler": "torch-pass-randperm",
+  "checkpoint_every": 128,
+  "target_mean_eV": 5.338300266634226,
+  "target_std_eV": 1.2750902063230574,
+  "ema_decay": 0.999,
+  "batch_size": 128,
+  "gradient_clip": 1.0,
+  "finite_check_every": 50,
+  "drop_last": true,
+  "torch_version": "2.11.0",
+  "execution_policy": {
+    "name": "shared-family-accelerated",
+    "family": "gptrans_t",
+    "cpu_layout": true,
+    "precision": "fp32",
+    "tf32": false,
+    "optimizer": "foreach-adamw",
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "ema": "bound-foreach",
+    "torch_version": "2.11.0"
+  },
+  "acceptance_requirements": {
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080,
+    "completed_passes": 60,
+    "next_batch": 0,
+    "development_rows": 50000,
+    "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+    "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e",
+    "precision": "fp32"
+  },
+  "train_role_identity": "1055370f70f8a5b4ee4548fcc12f3f27a053e3ae07f8932c009205ee61f12d00",
+  "development_role_identity": "b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+  "profiling": {
+    "warmup_steps": 120,
+    "active_steps": 16,
+    "record_shapes": false,
+    "profile_memory": false,
+    "with_stack": false,
+    "row_limit": 50,
+    "module_paths": [
+      "blocks.0",
+      "blocks.11"
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "arm_id": "k1_mean2",
+  "blockers": [],
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "k1_mean2",
+    "arm_identity": "bdc0198dcf2fda92b9c266391c591b71aafa3dba44386e0f7b28e4a45b999cd4",
+    "experiment_id": "family-topology-t4-100k-s42",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "family-topology-t4-100k-s42",
+    "package_identity": "ed6bb15dc3ac8a668e299b50ee5fc8898dc638b4301de7b6193b56bc2d563e5b",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nothingnessvoid/molgap-k1-gptrans-topology-100k-s42",
+    "source_archive_sha256": "570250c77ec37e72e2ba7dfaf0e5454686f79ac1074c516084bbd9591dbafddb",
+    "source_commit": "35ddecdc0ccf7e9ca664588cc836bd2ecb7ec6f3",
+    "spec_identity": "9db73758d7f12974219bcf8d5eafd25789a7f2a675660eeddb53b87c5a6068bc",
+    "training_recipe_sha256": "a6a92d38785030b43ae9eb23bb4e448b266daa24f6da2bc1d9b862ad3cdd1c5c"
+  },
+  "execution_scope": "CPU-only retained-artifact inspection; no model construction or inference",
+  "format": "molgap-independent-mechanical-acceptance-v1",
+  "observed": {
+    "artifact_roles": [
+      "contract",
+      "predictions",
+      "resume",
+      "selected_model",
+      "trace"
+    ],
+    "producer_platform_version": null,
+    "progress": {
+      "completed_passes": 40,
+      "next_batch": 0,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720,
+      "status": "complete"
+    },
+    "selected_optimizer_step": 28897,
+    "selected_weights": "live"
+  },
+  "replay_readiness": "NOT_EVALUATED",
+  "runtime_qualification": "NOT_EVALUATED",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "status": "MECHANICALLY_VERIFIED",
+  "target_digest_contract": "standard tensor_digest; target_identity=None",
+  "validator": "molgap.family_training_outputs.inspect_session_output"
+}
