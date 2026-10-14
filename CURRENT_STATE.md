@@ -71,13 +71,14 @@ owns endpoints, roles, costs and retained artifacts. Shared topology reuse is
 implemented; [verification](experiments/family_100k_operator_profile/terminal_acceptance/topology_verification.md)
 preserves the first-run native anomaly and qualification limits.
 
-The user-authorized new-source T4 comparison stays on
-`codex/exp/family-topology-t4-100k`; [owning submission/comparison handoff](https://github.com/Nothingness-Void/molgap/blob/codex/exp/family-topology-t4-100k/experiments/family_topology_t4_100k/REMOTE_HANDOFF.md)
-binds the unchanged full100K recipes, initial states and profiler window.
-Kaggle1 kernelID138619974/version1 reports RUNNING at2026-10-14T06:15:32Z;
-raw API source matches the frozen entry. Startup outputs were empty: native
-qualification, exposure and measured improvement remain unobserved. No monitor,
-retry, continuation or model adoption is released.
+The user-authorized new-source T4 comparison is COMPLETE and integrated by
+diagnostic non-promotion routing. Kaggle1 kernelID138619974/version1, source,
+full40/60-pass outputs and native proofs are verified; [decision and measured comparison](experiments/family_topology_t4_100k/terminal_acceptance/decision.md)
+own faster observed wall and bitwise-equal saved predictions/curves.
+[RML custody](experiments/family_topology_t4_100k/terminal_acceptance/closure.md)
+retains strict-reference/replay exclusions; the single cross-job difference
+is not a code-only causal speed estimate. Shared topology reuse remains adopted;
+model recommendations are unchanged. No retry, continuation or successor is released.
 
 K1 mean2 versus single-forward EMA500K is desktop-owned on
 `codex/exp/k1-mean2-single-ema-500k-20261013` (see [checkout map](BRANCHES.md#retained-checkout-map)).
