@@ -70,15 +70,16 @@ def _name(value) -> str:
         raise ValueError(f"Unsafe source path: {value}")
     lowered = [part.lower() for part in path.parts]
     tokens = {token for part in lowered for token in re.split(r"[._-]+", part)}
-    # This exact reviewed source owner is not a retained artifact directory.
-    if value == "src/molgap/experiment_family_artifacts.py":
-        tokens.discard("artifacts")
-    if value == "src/molgap/packed_graph_dataset.py":
-        tokens.discard("dataset")
-    if value == "src/molgap/family_training_data.py":
-        tokens.discard("data")
-    if value == "src/molgap/family_training_outputs.py":
-        tokens.discard("outputs")
+    # A Python module under the reviewed package is source, even when its
+    # responsibility is data/checkpoint IO. Directories and credential names
+    # retain their existing confinement; artifact payload suffixes stay blocked.
+    if (value.startswith("src/molgap/") and path.suffix == ".py"
+            and path.name == path.name.lower()):
+        io_tokens = {"data", "dataset", "datasets", "checkpoint", "checkpoints",
+                     "records", "output", "outputs", "result", "results", "artifacts"}
+        directory_tokens = {token for part in lowered[:-1] for token in re.split(r"[._-]+", part)}
+        filename_tokens = set(re.split(r"[._-]+", lowered[-1])) - io_tokens
+        tokens = directory_tokens | filename_tokens
     if (set(lowered) & _BLOCKED_PARTS or tokens & _BLOCKED_PARTS
             or any(part == ".env" or part.startswith(".env.") for part in lowered)
             or path.suffix.lower() in _BLOCKED_SUFFIXES

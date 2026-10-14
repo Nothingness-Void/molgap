@@ -557,6 +557,7 @@ def build_default_trace_manifest(
     has_samples = any(o.get("sample_presentations") is not None for o in observations)
     has_ema = any(o.get("ema_dev_metric") is not None for o in observations)
     has_live_dev = any(o.get("live_dev_metric") is not None for o in observations)
+    has_checkpoint = any(o.get("checkpoint_identity") is not None for o in observations)
 
     max_steps = max(
         (o.get("optimizer_step") for o in observations if o.get("optimizer_step") is not None),
@@ -622,7 +623,7 @@ def build_default_trace_manifest(
             "live_train_metric": True,
             "live_dev_metric": bool(has_live_dev),
             "ema_dev_metric": bool(has_ema),
-            "checkpoint_identity": False,
+            "checkpoint_identity": has_checkpoint,
         },
     }
 

@@ -107,16 +107,18 @@ class FamilyKernel:
             self.ema.update(self.model)
         return loss, absolute, rows
 
-    def forward(self, cpu_batch):
+    def forward(self, cpu_batch, *, model=None):
+        """One owning forward for Live/Raw views or an independent Clean model."""
+        model = self.model if model is None else model
         if self.recipe.family == "neural_atom_k1":
             from .k1_execution_layout import cpu_layout_context
             from .k1_screen_training import _model_batch_to_device, _forward
             borrowed = copy(cpu_batch)
-            with cpu_layout_context(self.model, borrowed, self.device):
+            with cpu_layout_context(model, borrowed, self.device):
                 batch = _model_batch_to_device(borrowed, self.device, training=False)
-                return _forward(self.model, batch)
+                return _forward(model, batch)
         from .gptrans_execution_backend import prepared_forward
-        return prepared_forward(self.model, self._gptrans_batch(cpu_batch, training=False))
+        return prepared_forward(model, self._gptrans_batch(cpu_batch, training=False))
 
     def close(self):
         self.weight_view.clear()

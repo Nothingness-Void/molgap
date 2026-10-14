@@ -49,6 +49,17 @@ from molgap.research_memory.validate import validate_repository_records
 REPO_ROOT_PATH = Path(REPO_ROOT).resolve()
 
 
+@pytest.mark.parametrize("checkpoint", [None, "sha256:" + "a" * 64])
+def test_default_manifest_retains_observed_checkpoint_without_enabling_replay(tmp_path, checkpoint):
+    trajectory = {"trajectory_id": "synthetic-checkpoint", "state_at_start": {}}
+    terminal = {"run_id": "synthetic-checkpoint:run"}
+    trace = {"observations": [{"checkpoint_identity": checkpoint}]}
+    manifest = build_default_trace_manifest(tmp_path, trajectory, terminal, trace)
+    assert manifest["trace_fields"]["checkpoint_identity"] is (checkpoint is not None)
+    assert manifest["backtest_eligibility"]["eligible"] is False
+    assert "closure_synthesized_manifest_not_prelaunch_calibrated" in manifest["backtest_eligibility"]["exclusion_reasons"]
+
+
 def sha256_bytes(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
 

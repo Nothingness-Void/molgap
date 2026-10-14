@@ -4,7 +4,7 @@ Explicit tracked paths; update once when an adapter gains a dependency.
 This is not runtime dependency discovery. Extra addon paths remain explicit.
 """
 
-SHARED_SOURCE_FILES = (
+COMMON_SOURCE_FILES = (
     'platforms/kaggle/run_experiment.py',
     'src/molgap/__init__.py',
     'src/molgap/comparison_readiness.py',
@@ -18,6 +18,7 @@ SHARED_SOURCE_FILES = (
     'src/molgap/experiment_preflight.py',
     'src/molgap/experiment_prospective.py',
     'src/molgap/experiment_source_inventory.py',
+    'src/molgap/source_dependencies.py',
     'src/molgap/experiment_spec.py',
     'src/molgap/experiment_terminal.py',
     'src/molgap/experiment_training_worker.py',
@@ -80,3 +81,61 @@ SHARED_SOURCE_FILES = (
     'src/molgap/v4_runtime.py',
     'src/molgap/v5_common.py',
 )
+
+# The retained shared-session implementation needs these family owners. A new
+# generic graph family has its own reviewed model/input owner and must not
+# inherit a legacy model/trainer merely because both use the lifecycle.
+_FAMILY_SOURCE_FILES = frozenset(path for path in COMMON_SOURCE_FILES if path.startswith((
+    "src/molgap/family_", "src/molgap/gptrans_", "src/molgap/k1_")) or path in {
+    "src/molgap/gps.py", "src/molgap/gptrans.py", "src/molgap/pcqm_gptrans_v4.py",
+    "src/molgap/pcqm_gap_architecture.py", "src/molgap/qm9_gape.py",
+    "src/molgap/qm9_local_hierarchy.py", "src/molgap/qm9_neural_atom.py",
+})
+
+
+def registered_source_files(spec, extras=(), *, repo_root=None, auto_dependencies=False):
+    """Select reviewed roots, optionally following static import dependencies."""
+    from .experiment_execution import training_adapter, validate_training_registry
+    from .experiment_package import _allowlist
+    from .experiment_spec import ADDONS
+    validate_training_registry()
+    arms = spec.to_dict()["arms"]
+    adapters = [training_adapter(arm) for arm in arms]
+    names = set(COMMON_SOURCE_FILES)
+    if all(adapter.model_factory is not None for adapter in adapters):
+        names.difference_update(_FAMILY_SOURCE_FILES)
+    names.update(_allowlist(extras) if extras else ())
+    for arm, adapter in zip(arms, adapters):
+        names.update(adapter.source_files)
+        names.update("src/" + module.replace(".", "/") + ".py"
+                     for module in adapter.serialization_modules)
+        for addon in arm["addons"]:
+            execution = adapter.addon(addon["name"], addon["version"])
+            declaration = ADDONS[(addon["name"], addon["version"])]
+            names.add("src/" + declaration.source_module.replace(".", "/") + ".py")
+            names.update(execution.extra_source_files)
+    selected = _allowlist(sorted(names))
+    if auto_dependencies:
+        if repo_root is None:
+            raise ValueError("Automatic dependency discovery requires the selected repository root")
+        from .source_dependencies import discover_source_dependencies
+        return list(discover_source_dependencies(repo_root, selected).source_files)
+    return selected
+
+
+def _all_registered_sources():
+    from .experiment_execution import TRAINING_ADAPTERS
+    from .experiment_spec import ADDONS
+    names = set(COMMON_SOURCE_FILES)
+    for adapter in TRAINING_ADAPTERS.values():
+        names.update(adapter.source_files)
+        names.update("src/" + module.replace(".", "/") + ".py"
+                     for module in adapter.serialization_modules)
+        for addon in adapter.addons:
+            names.add("src/" + ADDONS[(addon.name, addon.version)].source_module.replace(".", "/") + ".py")
+            names.update(addon.extra_source_files)
+    return tuple(sorted(names))
+
+
+# Retain the full reviewed inventory for compatibility and inventory tests.
+SHARED_SOURCE_FILES = _all_registered_sources()

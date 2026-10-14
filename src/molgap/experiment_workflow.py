@@ -39,7 +39,7 @@ def prepare_family_training(spec, repo_root, plan, output):
     Those owning gates remain prerequisites for an authorized job submission.
     """
     from .experiment_package import stage_source_inputs
-    from .experiment_source_inventory import SHARED_SOURCE_FILES
+    from .experiment_source_inventory import registered_source_files
     from .experiment_launch import publish_immutable_bytes
     from .research_memory.trace import file_digest
     from .family_training_runner import INTERFACES
@@ -69,7 +69,7 @@ def prepare_family_training(spec, repo_root, plan, output):
             "initial_state": "initial_states/" + arm_id + ".pt", "trajectory_id": bindings[arm_id]["trajectory_id"]})
     validated = validate_execution_plan(spec, jobs)
     check_family_recipes(spec, repo_root, recipes)
-    source_files = _allowlist(sorted(set(SHARED_SOURCE_FILES) | set(plan["source_files"]) | set(recipes.values())))
+    source_files = _allowlist(sorted(set(registered_source_files(spec, plan["source_files"])) | set(recipes.values())))
     output.mkdir(parents=True)
     package = output / "package"
     manifest = build_experiment_source_package(spec, repo_root, source_files, package)
@@ -141,8 +141,8 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         return {"status": "BLOCKED", "stage": "acceptance_plan", "acceptance": acceptance,
                 "prospective_published": False, "submitted": False}
     # The inventory is maintained with adapters, not assembled by each caller.
-    from .experiment_source_inventory import SHARED_SOURCE_FILES
-    source_files = _allowlist(sorted(set(SHARED_SOURCE_FILES) | set(plan["source_files"]) | set(recipes.values())))
+    from .experiment_source_inventory import registered_source_files
+    source_files = _allowlist(sorted(set(registered_source_files(spec, plan["source_files"])) | set(recipes.values())))
     output.mkdir(parents=True)
     report = {"format": "molgap-workflow-preparation-v1", "status": "PREPARING",
               "spec_identity": spec.identity, "submitted": False, "stages": []}

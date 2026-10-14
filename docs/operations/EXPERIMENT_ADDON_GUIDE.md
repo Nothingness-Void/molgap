@@ -4,6 +4,10 @@ Use the [modular workflow](EXPERIMENT_WORKFLOW.md) for the registered prepare,
 platform handoff and acceptance path. This page is the short reuse map; linked
 contracts own detailed schemas and evidence rules.
 
+Small registered model deltas start at the
+[four-layer runtime](MODULAR_EXPERIMENT_RUNTIME.md): attach/seal hooks, explicit
+state, one-batch sandbox, then source closure. Do not copy a trainer or launcher.
+
 ## Pick the Operation
 
 | Operation | Reuse owner | Boundary / next pointer |

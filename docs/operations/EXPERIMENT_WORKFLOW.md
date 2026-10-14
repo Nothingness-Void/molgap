@@ -5,6 +5,11 @@ registered local-to-Kaggle comparison path. It
 owns preparation and acceptance orchestration. It does not own scientific
 authorization, a trainer loop, or platform submission.
 
+For model slots, Live/Raw/Clean state, CPU sandbox and AST source closure, use
+the [four-layer runtime](MODULAR_EXPERIMENT_RUNTIME.md). Its optional extension
+interfaces reuse this workflow; they do not replace the accelerated family
+session, native qualification or platform skills.
+
 Both registered families use accelerated execution by default, including
 `addon=None`. No original/optimized switch or execution addon is needed:
 [K1](K1_EXECUTION.md), [GPTrans](GPTRANS_EXECUTION.md).

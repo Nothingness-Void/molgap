@@ -12,6 +12,7 @@ import sys
 from collections.abc import Mapping
 from contextlib import contextmanager
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 
@@ -295,3 +296,123 @@ def sha256_file(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+def validate_rng_state(state: Mapping, *, cuda_devices: int = 1,
+                       label: str = "RNG state") -> None:
+    """Validate the portable RNG schema before a checkpoint is resumed.
+
+    The trainer owners share this structural gate while retaining their own
+    optimizer, cursor, scientific-contract, and certificate rules.  The
+    accepted representation is :func:`capture_rng_state` without a loader generator:
+    NumPy still carries its native array and torch/CUDA states are CPU uint8
+    tensors.  No RNG state is mutated by this check.
+    """
+    import torch
+
+    if type(cuda_devices) is not int or cuda_devices < 0:
+        raise ValueError(f"{label}: invalid CUDA device count")
+    if not isinstance(state, Mapping) or set(state) != {"python", "numpy", "torch", "cuda"}:
+        raise ValueError(f"{label}: RNG keys schema changed")
+    python = state["python"]
+    numpy_state = state["numpy"]
+    if (type(python) is not tuple or len(python) != 3
+            or not isinstance(python[1], tuple)):
+        raise ValueError(f"{label}: Python RNG schema changed")
+    if (type(numpy_state) is not tuple or len(numpy_state) != 5
+            or not isinstance(numpy_state[1], np.ndarray)
+            or numpy_state[1].dtype.hasobject or numpy_state[1].ndim != 1
+            or not numpy_state[1].size
+            or numpy_state[1].dtype.kind not in "iu"):
+        raise ValueError(f"{label}: NumPy RNG schema changed")
+    values = numpy_state[1]
+    if not bool(np.all((values >= 0) & (values < 2 ** 32))):
+        raise ValueError(f"{label}: NumPy RNG values changed")
+    torch_state = state["torch"]
+    if (not torch.is_tensor(torch_state) or torch_state.device.type != "cpu"
+            or torch_state.dtype != torch.uint8 or torch_state.ndim != 1
+            or not torch_state.numel()):
+        raise ValueError(f"{label}: Torch RNG schema changed")
+    cuda_state = state["cuda"]
+    if type(cuda_state) is not list or len(cuda_state) != cuda_devices:
+        raise ValueError(f"{label}: CUDA RNG schema changed")
+    if any(not torch.is_tensor(item) or item.device.type != "cpu"
+           or item.dtype != torch.uint8 or item.ndim != 1 or not item.numel()
+           for item in cuda_state):
+        raise ValueError(f"{label}: CUDA RNG schema changed")
+
+
+
+def _safe_torch_tree(value: Any, label: str = "checkpoint") -> None:
+    """Reject objects outside the weights-only CPU inspection domain."""
+    import numpy as np
+    import torch
+
+    safe_scalars = (str, int, float, bool, bytes, type(None), np.generic, np.dtype)
+    if torch.is_tensor(value):
+        if value.device.type != "cpu":
+            raise ValueError(f"{label} contains a non-CPU tensor")
+        if value.is_floating_point() and not bool(torch.isfinite(value).all()):
+            raise ValueError(f"{label} contains a non-finite tensor")
+        return
+    if isinstance(value, Mapping):
+        for key, item in value.items():
+            if not isinstance(key, (str, int, float, bool, type(None))):
+                raise ValueError(f"{label} contains an unsafe mapping key")
+            _safe_torch_tree(item, label + "." + str(key))
+        return
+    if isinstance(value, (list, tuple)):
+        for item in value:
+            _safe_torch_tree(item, label)
+        return
+    if isinstance(value, np.ndarray):
+        if value.dtype.hasobject:
+            raise ValueError(f"{label} contains an object NumPy array")
+        if np.issubdtype(value.dtype, np.floating) and not bool(np.isfinite(value).all()):
+            raise ValueError(f"{label} contains a non-finite NumPy array")
+        return
+    if isinstance(value, safe_scalars):
+        if isinstance(value, (float, np.floating)) and not bool(np.isfinite(value)):
+            raise ValueError(f"{label} contains a non-finite scalar")
+        return
+    raise ValueError(f"{label} contains an unsupported object: {type(value).__name__}")
+
+
+def safe_cpu_torch_load(path: Path) -> dict:
+    """Load a trusted checkpoint with weights-only semantics and known NumPy RNG types."""
+    import numpy as np
+    import torch
+
+    from .v4_runtime import torch_load_compat
+
+    safe = []
+    try:
+        from numpy._core.multiarray import _reconstruct
+    except ImportError:  # pragma: no cover - old NumPy spelling
+        from numpy.core.multiarray import _reconstruct
+    safe.extend([_reconstruct, np.ndarray, np.dtype])
+    # GPTrans stores a NumPy uint32 RNG array.  NumPy 2 exposes concrete dtype
+    # classes that PyTorch's weights-only unpickler requires explicitly.
+    dtype_module = getattr(np, "dtypes", None)
+    if dtype_module is not None:
+        for name in dir(dtype_module):
+            candidate = getattr(dtype_module, name, None)
+            if isinstance(candidate, type) and name.endswith("DType"):
+                safe.append(candidate)
+    try:
+        context = torch.serialization.safe_globals(safe)
+    except AttributeError:  # pragma: no cover - PyTorch before 2.6
+        context = None
+    try:
+        if context is None:
+            for item in safe:
+                torch.serialization.add_safe_globals([item])
+            payload = torch_load_compat(path, map_location="cpu", weights_only=True)
+        else:
+            with context:
+                payload = torch_load_compat(path, map_location="cpu", weights_only=True)
+    except Exception as exc:
+        raise ValueError("Resume checkpoint is not a safe CPU tensor artifact") from exc
+    if not isinstance(payload, Mapping):
+        raise ValueError("Resume checkpoint must contain a mapping")
+    _safe_torch_tree(payload)
+    return dict(payload)

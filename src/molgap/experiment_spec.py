@@ -75,19 +75,35 @@ FAMILIES = MappingProxyType({
 
 
 @dataclass(frozen=True)
+class AddonConfigField:
+    name: str
+    kind: str = "literal"
+    value: object = None
+    minimum: int | None = None
+    maximum: int | None = None
+    excluded: tuple[int, ...] = ()
+
+
+@dataclass(frozen=True)
 class AddonContract:
     family: str
     exclusive_group: str
     source_module: str
+    config_fields: tuple[AddonConfigField, ...] = ()
+    family_versions: tuple[str, ...] = ()
+    single_addon: bool = False
 
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
     ("gptrans_degree_bond_local", "1"): AddonContract(
         "gptrans_t", "local-bond-architecture", "molgap.gptrans_bond_local",
+        family_versions=("2",), single_addon=True,
     ),
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
+        (AddonConfigField("num_layers", "integer", minimum=EDGE_STATE_MIN_LAYERS,
+                          maximum=EDGE_STATE_MAX_LAYERS, excluded=(EDGE_STATE_BASE_LAYERS,)),),
     ),
     ("neural_atom_k1", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.qm9_neural_atom",
@@ -105,21 +121,51 @@ ADDONS = MappingProxyType({
     ),
     ("k1_joint_aggregation", "1"): AddonContract(
         "neural_atom_k1", "k1-local-aggregation", "molgap.k1_joint_aggregation",
+        (AddonConfigField("layer", value=6), AddonConfigField("latent_channels", value=64),
+         AddonConfigField("kappa", value=4), AddonConfigField("seed", "initialization_seed", value=42),
+         AddonConfigField("degree_policy", value="original-sum-above-four")),
+        ("2", "3"), True,
     ),
     ("k1_two_pass_mean", "1"): AddonContract(
         "neural_atom_k1", "k1-training-objective", "molgap.k1_screen_training",
+        family_versions=("2", "3"), single_addon=True,
     ),
     ("k1_mean2_clean_second", "1"): AddonContract(
         "neural_atom_k1", "k1-training-objective", "molgap.k1_screen_training",
+        family_versions=("2", "3"), single_addon=True,
     ),
     # Historical declaration compatibility only; live training dispatch retires these.
     ("k1_fused_layout", "1"): AddonContract(
         "neural_atom_k1", "k1-execution", "molgap.k1_screen_training",
+        family_versions=("2",), single_addon=True,
     ),
     ("k1_initialized_layout", "1"): AddonContract(
         "neural_atom_k1", "k1-execution", "molgap.k1_screen_training",
+        family_versions=("2",), single_addon=True,
     ),
 })
+
+
+def validate_addon_config(contract: AddonContract, config: dict, *, name="addon",
+                          family_version: str | None = None, initialization_seed: int = 42) -> None:
+    """Validate reviewed configuration fields without addon-specific dispatch."""
+    _object(config, " ".join(field.name for field in contract.config_fields), "addon.config")
+    for field in contract.config_fields:
+        value = config[field.name]
+        if field.kind == "literal":
+            if type(value) is not type(field.value) or value != field.value:
+                raise ValueError("Addon configuration differs from the bounded frozen configuration")
+        elif field.kind == "initialization_seed":
+            _integer(initialization_seed, "initialization.seed", 0)
+            expected = initialization_seed if family_version == "3" else field.value
+            if type(value) is not int or value != expected:
+                raise ValueError("Addon seed differs from its frozen family initialization")
+        elif field.kind == "integer":
+            _integer(value, "addon.config." + field.name, field.minimum or 0)
+            if (field.maximum is not None and value > field.maximum) or value in field.excluded:
+                raise ValueError(f"{name} requires {field.name} in [{field.minimum}, {field.maximum}] except {field.excluded}")
+        else:
+            raise ValueError("Unsupported reviewed addon configuration field kind")
 
 
 def _object(value, fields: str, path: str) -> dict:
@@ -247,33 +293,11 @@ def _arm(arm: dict) -> None:
         if extension.family != contract.name or extension.exclusive_group in groups:
             raise ValueError("Incompatible addon combination/family")
         groups.add(extension.exclusive_group)
-        if addon["name"] == "edge_state_depth":
-            config = _object(addon["config"], "num_layers", "addon.config")
-            _integer(config["num_layers"], "addon.config.num_layers")
-            if (not EDGE_STATE_MIN_LAYERS <= config["num_layers"] <= EDGE_STATE_MAX_LAYERS
-                    or config["num_layers"] == EDGE_STATE_BASE_LAYERS):
-                raise ValueError(
-                    f"edge_state_depth requires num_layers in "
-                    f"[{EDGE_STATE_MIN_LAYERS}, {EDGE_STATE_MAX_LAYERS}] "
-                    f"except {EDGE_STATE_BASE_LAYERS}"
-                )
-        elif addon["name"] == "gptrans_degree_bond_local":
-            if family["version"] != "2" or len(arm["addons"]) != 1 or addon["config"] != {}:
-                raise ValueError("Local-bond adapter requires the shared GPTrans interface and one frozen addon")
-        elif addon["name"] == "k1_joint_aggregation":
-            if family["version"] not in {"2", "3"} or len(arm["addons"]) != 1:
-                raise ValueError("K1 screen extension requires family/version 2 and one extension")
-            if addon["config"] != {"layer": 6, "latent_channels": 64, "kappa": 4,
-                                    "seed": init["seed"] if shared_family else 42,
-                                    "degree_policy": "original-sum-above-four"}:
-                raise ValueError("K1 extension differs from the bounded frozen configuration")
-        elif addon["name"] in {"k1_two_pass_mean", "k1_mean2_clean_second", "k1_fused_layout",
-                               "k1_initialized_layout"}:
-            versions = {"2", "3"} if addon["name"] in {"k1_two_pass_mean", "k1_mean2_clean_second"} else {"2"}
-            if family["version"] not in versions or len(arm["addons"]) != 1 or addon["config"] != {}:
-                raise ValueError("K1 screen addon requires family v2 and no additional change")
-        else:
-            _object(addon["config"], "", "addon.config")
+        if ((extension.family_versions and family["version"] not in extension.family_versions)
+                or (extension.single_addon and len(arm["addons"]) != 1)):
+            raise ValueError("Addon requires its registered family/version and one extension")
+        validate_addon_config(extension, addon["config"], name=addon["name"],
+                              family_version=family["version"], initialization_seed=init["seed"])
         _digest(addon["source_sha256"], "addon.source_sha256")
 
 

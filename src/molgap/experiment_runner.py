@@ -118,7 +118,15 @@ def _devices(device_ids, count: int) -> list[str]:
 
 
 def _adapter(arm: dict):
-    token = _FAMILIES[(arm["family"]["name"], arm["family"]["version"])]
+    key = (arm["family"]["name"], arm["family"]["version"])
+    if key not in _FAMILIES:
+        from .experiment_execution import training_adapter
+        registered = training_adapter(arm)
+        if registered.model_factory is None:
+            raise ValueError("Unsupported runner family/version")
+        from .shared_model_adapter import graph_metadata, build_graph_model
+        return graph_metadata, build_graph_model
+    token = _FAMILIES[key]
     if token == "gptrans":
         from .gptrans_adapter import gptrans_metadata, build_gptrans_model
         return gptrans_metadata, build_gptrans_model
@@ -302,7 +310,13 @@ def run_experiment(
     for arm in arms:
         _safe_name(arm["arm_id"])
         if (arm["family"]["name"], arm["family"]["version"]) not in _FAMILIES:
-            raise ValueError("Unsupported runner family/version")
+            from .experiment_execution import training_adapter
+            try:
+                registered = training_adapter(arm)
+            except ValueError as exc:
+                raise ValueError("Unsupported runner family/version") from exc
+            if registered.model_factory is None:
+                raise ValueError("Unsupported runner family/version")
     if len({arm["arm_id"].casefold() for arm in arms}) != len(arms):
         raise ValueError("Case-colliding arm IDs are unsafe")
     root = _output(output_root)

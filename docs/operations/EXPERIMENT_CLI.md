@@ -1,5 +1,9 @@
 # Unified Local Experiment CLI
 
+`sandbox`, `source-dependencies` and optional `--auto-dependencies` packaging
+are documented in the [four-layer runtime](MODULAR_EXPERIMENT_RUNTIME.md).
+They provide local diagnostics/source preparation, not submission authority.
+
 Cross-scale K1/GPTrans `prepare-family-training` staging is described in
 [Shared Family Training Core](FAMILY_TRAINING_CORE.md). It prepares source and
 inputs, not submission/full admission/scientific acceptance. See

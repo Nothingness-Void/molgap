@@ -103,10 +103,9 @@ def test_exact_reviewed_dataset_source_roundtrip(repo, payload, tmp_path):
 
 
 @pytest.mark.parametrize("name", [
-    "src/molgap/other_dataset.py", "src/molgap/packed_graph_datasets.py",
     "src/molgap/packed_graph_dataset.json", "src/molgap/packed_graph_dataset.py.pt",
     "src/molgap/PACKED_GRAPH_DATASET.py", "src/Molgap/packed_graph_dataset.py",
-    "src/other/packed_graph_dataset.py", "src/molgap/nested/packed_graph_dataset.py",
+    "src/other/packed_graph_dataset.py",
     "src/molgap/dataset/packed_graph_dataset.py", "datasets/packed_graph_dataset.py",
     "data/src/molgap/packed_graph_dataset.py", "artifacts/src/molgap/packed_graph_dataset.py",
     "src/molgap/packed_graph_dataset.py/loader.py",
@@ -116,6 +115,20 @@ def test_exact_reviewed_dataset_source_roundtrip(repo, payload, tmp_path):
 def test_reviewed_dataset_source_exception_is_exact(repo, payload, tmp_path, name):
     with pytest.raises(ValueError, match="reserved or sensitive|Unsafe source path"):
         build_experiment_source_package(ExperimentSpec(payload), repo, [name], tmp_path / "bad")
+
+
+@pytest.mark.parametrize("name", ["src/molgap/other_dataset.py",
+    "src/molgap/packed_graph_datasets.py", "src/molgap/nested/packed_graph_dataset.py"])
+def test_reviewed_python_io_owner_roundtrip(repo, payload, tmp_path, name):
+    path = repo / name
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(b"VALUE = 3\n")
+    git(repo, "add", name)
+    git(repo, "-c", "commit.gpgsign=false", "commit", "-m", "Synthetic reviewed IO source")
+    output = tmp_path / "io-source"
+    manifest = build_experiment_source_package(ExperimentSpec(payload), repo, [name], output)
+    assert manifest == verify_experiment_source_package(output, repo)
+    assert manifest["relative_allowlist"] == [name]
 
 
 @pytest.mark.parametrize("state", ["dirty", "staged"])
