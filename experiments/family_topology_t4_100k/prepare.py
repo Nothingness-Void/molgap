@@ -41,6 +41,7 @@ def draft(initial_root):
         module = "k1_screen_training.py" if name == "k1_mean2" else "gptrans_bond_local.py"
         arm["addons"][0]["source_sha256"] = normalized_source_sha256(ROOT / "src/molgap" / module)
         evidence = json.loads((BASE / "rml" / name / "rml_finalized/v5_evidence.json").read_bytes())
+        parent = json.loads((BASE / "rml" / name / "rml_finalized/trajectory.json").read_bytes())["trajectory_id"]
         prior = evidence["evidence_id"]
         tid = "TB-family-topology-t4-100k-" + name + "-s42"
         cost_id = "cost-" + tid + "-planned"
@@ -59,7 +60,7 @@ def draft(initial_root):
             related_closed_family_ids=["family-100k-operator-profile"])
         trajectory["state_at_start"].update(source_commit=commit, source_config_identity=canonical_fingerprint(arm),
             contract_refs=[REL + "/protocol.md", REL + "/config.json", REL + "/evidence_review.md"],
-            parent_trajectory_ids=[evidence["trajectory_id"]], prior_evidence_ids=[prior], reference_ids=[],
+            parent_trajectory_ids=[parent], prior_evidence_ids=[prior], reference_ids=[],
             role_snapshot_refs=[REL + "/role_plan.json"], budget_snapshot_ref=REL + "/config.json")
         action = trajectory["actions"][0]
         action.update(source_commit=commit, run_ids=[CONFIG["run_id"] + ":" + name + ":downstream"],
@@ -68,7 +69,7 @@ def draft(initial_root):
         cost = plan["costs"][0]
         cost.update(cost_event_id=cost_id, trajectory_id=tid, run_id=action["run_ids"][0],
             attempt_id=action["attempt_ids"][0], evidence_ref=REL + "/protocol.md")
-        plan["decision_state"].update(known_trajectory_ids=[evidence["trajectory_id"]], known_evidence_ids=[prior],
+        plan["decision_state"].update(known_trajectory_ids=[parent], known_evidence_ids=[prior],
             policy_id=CONFIG["run_id"], source_commit=commit, state_timestamp=datetime.now(timezone.utc).isoformat(),
             role_snapshot_refs=[REL + "/role_plan.json"], budget_snapshot_ref=REL + "/config.json")
         plan_ref = REL + "/plan_" + name + ".json"
@@ -79,7 +80,7 @@ def draft(initial_root):
         inspect_frozen_state_artifact(initial, expected_state_sha256=recipe.initialization_sha256)
         preparation.append({"arm_id": name, "device": device, "recipe": recipe_ref, "initial_state": str(initial)})
         manifest = BASE / "terminal_acceptance/outputs/experiment" / name / "output_manifest.json"
-        baseline[name] = {"evidence_id": prior, "trajectory_id": evidence["trajectory_id"],
+        baseline[name] = {"evidence_id": prior, "trajectory_id": parent,
             "initial_file_sha256": sha256_file(initial), "recipe_sha256": sha256_file(ROOT / recipe_ref),
             "output_manifest_ref": manifest.relative_to(ROOT).as_posix(),
             "output_manifest_sha256": sha256_file(manifest),
