@@ -1,4 +1,7 @@
 """Synthetic checks only; no cache/checkpoint inference or local training."""
+import json
+from pathlib import Path
+
 import pytest
 import torch
 
@@ -104,10 +107,33 @@ def test_identity_forward_and_final_gap_gradient_connection():
         assert (diag[1] <= CAP + 1e-6).all()
 
 
-def test_native_dispatch_and_closed_old_identity_unchanged():
+def test_native_dispatch_and_closed_old_identity_unchanged(tmp_path):
     from molgap.experiment_spec import ADDONS
     from molgap.gptrans_author_screen import validate_arm_allocation
-    from molgap.gptrans_capacity import architecture_identity as old_identity
+    from molgap.gptrans_capacity import architecture_identity as current_identity
+    from molgap.v4_runtime import normalized_source_sha256
+    from frozen_source_fixture import stage_frozen_sources, run_frozen_source
     assert ADDONS[(MODE, "1")].source_module == "molgap.gptrans_local_control"
     assert validate_arm_allocation({"arms": {MODE: {}}, "single_arm_reason": "one bounded hypothesis"}) == (MODE,)
-    assert old_identity(BASE_MODE) == "a79ec716d8ce41d744d9ea05d2f160d54ffac1acc24c3ba1ac276afe800897b3"
+    repo = Path(__file__).resolve().parents[1]
+    bundle = json.loads((repo / "experiments/pcqm_gptrans_local_control_100k/reference/reference_bundle.json").read_bytes())
+    acceptance = json.loads((repo / bundle["acceptance_ref"]).read_bytes())
+    assert acceptance["source_archive_sha256"] == bundle["source_commit_or_archive"]
+    # Closed identities belong to their accepted execution source. Legitimate
+    # execution-only changes must not rewrite history or masquerade as old pins.
+    snapshot = stage_frozen_sources(repo, acceptance["source_commit"], tmp_path / "frozen")
+    result = run_frozen_source(snapshot, """
+import json, sys
+from molgap.gptrans_capacity import architecture_identity
+print(json.dumps({"architecture_identity": architecture_identity(sys.argv[2])}))
+""", BASE_MODE)
+    assert result.returncode == 0, result.stderr
+    historical = json.loads(result.stdout)["architecture_identity"]
+    assert historical == bundle["architecture_config_identity"]
+    changed = any(normalized_source_sha256(repo / "src/molgap" / name) !=
+                  normalized_source_sha256(snapshot / "src/molgap" / name)
+                  for name in ("gptrans_capacity.py", "gptrans.py"))
+    if changed:
+        assert current_identity(BASE_MODE) != historical
+    else:
+        assert current_identity(BASE_MODE) == historical

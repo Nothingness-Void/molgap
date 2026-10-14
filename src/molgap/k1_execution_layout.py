@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass(frozen=True)
@@ -13,6 +13,11 @@ class DenseLayout:
     nodes: int
     graphs: int
     max_nodes: int
+    key_padding_mask: object = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self):
+        # Every mixer and both mean2 forwards share this immutable batch mask.
+        object.__setattr__(self, "key_padding_mask", ~self.valid.unsqueeze(1))
 
     def pack(self, hidden, membership):
         if (membership is not self.source_batch.batch or hidden.shape[0] != self.nodes

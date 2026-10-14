@@ -3,7 +3,7 @@ from pathlib import Path
 import torch
 from torch import nn
 
-from .gptrans_capacity import BondLocalGPTrans, construct as construct_local
+from .gptrans_capacity import BondLocalGPTrans, _bond_local_blocks, construct as construct_local
 from .screen_policy import canonical_fingerprint
 from .v4_runtime import normalized_source_sha256, state_dict_sha256, read_frozen_state_artifact
 from .training_reproducibility import atomic_torch_save, sha256_file
@@ -46,8 +46,7 @@ class CommonCycleGPTrans(BondLocalGPTrans):
         pair = pair + self.cycle_embedding(layout["cycle_categories"]).permute(0, 3, 1, 2)
         graph, source, target = self._local_edges(edge_index, batch, len(x))
         edges = (graph, source + 1, target + 1)
-        for block in self.blocks:
-            node, pair = block(node, pair, padding, edges)
+        node, pair = _bond_local_blocks(self.blocks, node, pair, padding, edges)
         return self.readout(torch.cat((node[:, 0], pair[:, :, 0, 0]), -1))
 
 

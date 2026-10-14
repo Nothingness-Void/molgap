@@ -36,6 +36,10 @@ def architecture_identity(mode):
         "capacity_module": normalized_source_sha256(Path(__file__))})
 
 
+def _flat_bond_targets(graph, target, node_count):
+    return graph * node_count + target
+
+
 class BondLocalBlock(nn.Module):
     """Unnormalized true-bond sum before GPA, with an identity initial bypass.
 
@@ -51,14 +55,15 @@ MLP and no new coordinate, path or feature cache.
         nn.init.zeros_(self.output.weight)
         nn.init.zeros_(self.output.bias)
 
-    def forward(self, node, pair, padding, edges):
+    def forward(self, node, pair, padding, edges, *, flat_target=None):
         graph, source, target = edges
         clean = self.norm(node)
         message = self.output(self.message(torch.cat((clean[graph, source], clean[graph, target],
                             pair[graph, :, source, target]), -1)))
         # Strict deterministic mode selects Torch's deterministic CUDA reduction;
         # the owning preflight verifies two optimizer-inclusive repeats before use.
-        flat_target = graph * node.shape[1] + target
+        if flat_target is None:
+            flat_target = _flat_bond_targets(graph, target, node.shape[1])
         update = node.new_zeros(node.shape[0] * node.shape[1], node.shape[-1])
         update = torch.index_add(update, 0, flat_target, message)
         update = update.view_as(node)
@@ -70,9 +75,24 @@ class BondLocalGPTrans(OGBGPTransTiny):
         node, pair, padding = self._dense_inputs(x, edge_index, edge_attr, batch)
         graph, source, target = self._local_edges(edge_index, batch, len(x))
         edges = (graph, source + 1, target + 1)
-        for block in self.blocks:
-            node, pair = block(node, pair, padding, edges)
+        node, pair = _bond_local_blocks(self.blocks, node, pair, padding, edges)
         return self.readout(torch.cat((node[:, 0], pair[:, :, 0, 0]), -1))
+
+
+def _bond_local_blocks(blocks, node, pair, padding, edges):
+    """Reuse targets within one forward, rebuilding after a legacy width change."""
+    flat_target, width = None, None
+    for block in blocks:
+        # Existing derived/wrapped blocks own their forward ABI. Only the
+        # unchanged local block consumes this per-forward topology cache.
+        if getattr(block.forward, "__func__", None) is BondLocalBlock.forward:
+            if width != node.shape[1]:
+                width = node.shape[1]
+                flat_target = _flat_bond_targets(edges[0], edges[2], width)
+            node, pair = block(node, pair, padding, edges, flat_target=flat_target)
+        else:
+            node, pair = block(node, pair, padding, edges)
+    return node, pair
 
 
 def construct(mode, base_state=None):

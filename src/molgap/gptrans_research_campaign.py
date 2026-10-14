@@ -8,7 +8,7 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 
-from .gptrans_capacity import BondLocalGPTrans
+from .gptrans_capacity import BondLocalGPTrans, _bond_local_blocks
 from .gptrans_triplet_communication import construct as aggregate_factory, MODES as TRIPLETS
 from .gptrans_local_relation import INSERTIONS
 from .bond_message_carry import BondMessageCarry
@@ -82,8 +82,7 @@ class CampaignGPTrans(BondLocalGPTrans):
                 pair = pair + self.cycle_embedding(layout["cycle_categories"]).permute(0, 3, 1, 2)
             graph, source, target = self._local_edges(edge_index, batch, len(x))
             edges = graph, source + 1, target + 1
-            for block in self.blocks:
-                node, pair = block(node, pair, padding, edges)
+            node, pair = _bond_local_blocks(self.blocks, node, pair, padding, edges)
             if self._campaign_mode == AUX and self.training:
                 g, s, t = layout["correspondence_edges"]
                 atom = self.atom_projection((node[g, s] + node[g, t]) * .5)

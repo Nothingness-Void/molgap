@@ -9,6 +9,7 @@ import pytest
 from molgap import gptrans_research_campaign as research
 from molgap.gptrans_capacity import BondLocalBlock
 from molgap.gptrans_local_relation import INSERTIONS
+from frozen_source_fixture import stage_frozen_sources, run_frozen_source
 
 
 def test_bounded_topology_layout_does_not_read_labels():
@@ -108,7 +109,14 @@ def test_campaign_covers_two_slots_and_rejects_unauthorized_budget(tmp_path):
         pytest.skip("Ignored local initial tensors absent")
     plan = json.loads((root / BASE / "slot2/acceptance_plan.json").read_bytes())
     spec = ExperimentSpec.from_json((root / BASE / "slot2/scientific_spec.json").read_text())
-    assert check_campaign(spec, root, plan)["reference_status"] == "PLANNED_NOT_ACCEPTED"
+    # A historical Spec must not acquire a new model implementation just because
+    # its arithmetic is equivalent. This checkout may legitimately have moved on.
+    if any(arm["addons"][0]["source_sha256"] != normalized_source_sha256(Path(research.__file__))
+           for arm in spec.to_dict()["arms"]):
+        with pytest.raises(ValueError, match="Addon source hash differs"):
+            check_campaign(spec, root, plan)
+    else:
+        assert check_campaign(spec, root, plan)["reference_status"] == "PLANNED_NOT_ACCEPTED"
     from molgap.experiment_source_inventory import registered_source_files
     workflow = json.loads((root / BASE / "slot2/workflow_plan.json").read_bytes())
     registered_source_files(spec, [*workflow["source_files"], *(a["recipe"] for a in workflow["arms"])])
@@ -118,9 +126,27 @@ def test_campaign_covers_two_slots_and_rejects_unauthorized_budget(tmp_path):
         path = tmp_path / pin["path"]
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes((root / pin["path"]).read_bytes().replace(b"\r\n", b"\n"))
+    receipt = json.loads((root / BASE / "slot2/launch_receipt_kaggle3_v3.json").read_bytes())
+    assert receipt["binding"]["spec_identity"] == spec.identity
+    commit = receipt["binding"]["source_commit"]
+    stage_frozen_sources(root, commit, tmp_path)
+    script = """import json
+import molgap.gptrans_campaign_release as owner
+assert Path(owner.__file__).resolve().is_relative_to(snapshot.resolve())
+from molgap.experiment_spec import ExperimentSpec
+spec = ExperimentSpec.from_json(Path(sys.argv[2]).read_text())
+plan = json.loads(sys.argv[3])
+states = {name: Path(path) for name, path in json.loads(sys.argv[4]).items()}
+print(json.dumps(owner.check_campaign(spec, snapshot, plan, initial_states=states)))
+"""
+    def frozen_check():
+        return run_frozen_source(tmp_path, script, root / BASE / "slot2/scientific_spec.json",
+            json.dumps(plan), json.dumps({name: str(path) for name, path in states.items()}))
     # Run the actual authority/recipe/parent validator on transported LF bytes,
-    # not only on the original Windows checkout. No molecular forward occurs.
-    assert check_campaign(spec, tmp_path, plan, initial_states=states)["reference_status"] == "PLANNED_NOT_ACCEPTED"
+    # using the source bound by its real receipt, without a molecular forward.
+    result = frozen_check()
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout)["reference_status"] == "PLANNED_NOT_ACCEPTED"
     authority = tmp_path / campaign["authority"]["path"]
     value = json.loads(authority.read_bytes())
     value["maximum_allocated_t4_hours"] = 64
@@ -128,8 +154,8 @@ def test_campaign_covers_two_slots_and_rejects_unauthorized_budget(tmp_path):
     campaign["authority"]["sha256"] = normalized_source_sha256(authority)
     atomic_json(tmp_path / BASE / "campaign.json", campaign)
     plan["campaign"]["sha256"] = normalized_source_sha256(tmp_path / BASE / "campaign.json")
-    with pytest.raises(ValueError, match="authority"):
-        check_campaign(spec, tmp_path, plan, initial_states=states)
+    result = frozen_check()
+    assert result.returncode != 0 and "authority" in result.stderr
 
 
 def test_bootstrap_cost_reserve_preserves_old_identity_and_rejects_duplicate():

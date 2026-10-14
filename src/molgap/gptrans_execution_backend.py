@@ -79,9 +79,12 @@ def prepared_shortest_path(model, adjacency, pair_mask):
     diagonal = torch.eye(maximum, dtype=torch.bool, device=adjacency.device)
     distance.masked_fill_(diagonal.unsqueeze(0) & pair_mask, 0)
     frontier, adjacency_float = adjacency, adjacency.float()
-    for step in range(1, model.shortest_path_cap + 1):
+    # A reachable shortest path is simple, even for directed graphs/cycles.
+    # The sentinel remains tied to the frozen cap, including masked padding.
+    last_step = min(model.shortest_path_cap, maximum - 1)
+    for step in range(1, last_step + 1):
         distance.masked_fill_(frontier & (distance == unreachable) & pair_mask, step)
-        if step < model.shortest_path_cap:
+        if step < last_step:
             frontier = torch.bmm(frontier.float(), adjacency_float) > 0
     return distance
 

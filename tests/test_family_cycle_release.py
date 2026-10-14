@@ -9,6 +9,7 @@ import time
 import pytest
 import torch
 
+from frozen_source_fixture import stage_frozen_sources, run_frozen_source
 from molgap.family_pair_release import resource_estimate, check_same_run_plan
 from molgap.family_training_data import DatasetSelection, resolve_pinned_manifest
 from molgap.training_reproducibility import atomic_json, sha256_file
@@ -127,7 +128,36 @@ def frozen_local_pair(tmp_path):
 
 def test_same_run_plan_never_labels_future_reference_accepted(frozen_local_pair):
     spec, root, plan, initials = frozen_local_pair
-    result = check_same_run_plan(spec, root, plan, initial_states=initials)
+    from molgap.v4_runtime import normalized_source_sha256
+    repo = Path(__file__).resolve().parents[1]
+    base = Path("experiments/pcqm_gptrans_cycle_pair_100k/gpu")
+    modules = {"degree_bond_local_ema999": "gptrans_capacity.py",
+               "degree_local_cycle_common_ema999": "gptrans_cycle_pair.py"}
+    if any(arm["addons"][0]["source_sha256"] != normalized_source_sha256(
+            repo / "src/molgap" / modules[arm["addons"][0]["name"]])
+           for arm in spec.to_dict()["arms"]):
+        with pytest.raises(ValueError, match="Addon source hash differs"):
+            check_same_run_plan(spec, root, plan, initial_states=initials)
+    else:
+        assert check_same_run_plan(spec, root, plan, initial_states=initials)["reference_status"] == "PLANNED_NOT_ACCEPTED"
+    reference = spec.to_dict()["prospective"]["same_run_replay"]["reference_arm_id"]
+    trajectory = json.loads((repo / base / reference / "rml_plan/trajectory.json").read_bytes())
+    # Preserve historical pins and validate against their recorded source,
+    # rather than substituting the updated arithmetic-equivalent implementation.
+    stage_frozen_sources(repo, trajectory["state_at_start"]["source_commit"], root)
+    script = """import json
+import molgap.family_pair_release as owner
+assert Path(owner.__file__).resolve().is_relative_to(snapshot)
+from molgap.experiment_spec import ExperimentSpec
+spec = ExperimentSpec.from_json(Path(sys.argv[2]).read_text())
+plan = json.loads(sys.argv[3])
+initials = {name: Path(path) for name, path in json.loads(sys.argv[4]).items()}
+print(json.dumps(owner.check_same_run_plan(spec, snapshot, plan, initial_states=initials)))
+"""
+    checked = run_frozen_source(root, script, repo / base / "experiment_spec.json",
+        json.dumps(plan), json.dumps({name: str(path) for name, path in initials.items()}))
+    assert checked.returncode == 0, checked.stderr
+    result = json.loads(checked.stdout)
     assert result["reference_status"] == "PLANNED_NOT_ACCEPTED"
     assert result["scientific_acceptance"] == "NOT_EVALUATED"
 

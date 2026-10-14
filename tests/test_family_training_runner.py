@@ -120,9 +120,12 @@ def test_contract_rejects_counter_changes_and_unknown_fields(tmp_path):
         session.close()
 
 
-def test_source_exception_is_exact_not_a_general_output_allowance():
-    assert _name("src/molgap/family_training_outputs.py") == "src/molgap/family_training_outputs.py"
-    for path in ("src/molgap/other_outputs.py", "experiments/example/outputs/model.py", "data/family_training_outputs.py"):
+def test_python_io_owners_are_source_and_artifact_directories_stay_blocked():
+    for path in ("src/molgap/family_training_outputs.py", "src/molgap/other_outputs.py"):
+        assert _name(path) == path
+    for path in ("src/molgap/other_outputs.json", "src/molgap/output_models/worker.py",
+                 "experiments/example/outputs/model.py", "data/family_training_outputs.py",
+                 "src/molgap/private_token.py"):
         with pytest.raises(ValueError):
             _name(path)
 

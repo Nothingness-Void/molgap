@@ -12,7 +12,7 @@ from test_family_training_session import events, make_session
 
 @pytest.mark.parametrize("cap", [1, 2, 20])
 @pytest.mark.parametrize("maximum", [1, 7, 18])
-def test_shortest_path_keeps_exact_integer_codes_and_removes_one_unused_bmm(monkeypatch, cap, maximum):
+def test_shortest_path_keeps_exact_integer_codes_with_simple_path_bound(monkeypatch, cap, maximum):
     generator = torch.Generator().manual_seed(42)
     adjacency = torch.rand(3, maximum, maximum, generator=generator) > .8
     mask = torch.ones_like(adjacency)
@@ -33,7 +33,7 @@ def test_shortest_path_keeps_exact_integer_codes_and_removes_one_unused_bmm(monk
     calls.clear()
     rng = torch.get_rng_state().clone()
     actual = prepared_shortest_path(model, adjacency, mask)
-    assert len(calls) == cap - 1
+    assert len(calls) == max(0, min(cap, maximum - 1) - 1)
     assert torch.equal(expected, actual) and torch.equal(rng, torch.get_rng_state())
 
 
