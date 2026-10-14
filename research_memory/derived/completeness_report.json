@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 117,
+    "trajectories_total": 119,
     "with_complete_native_measurement": 24,
-    "with_cost_event": 106,
-    "with_incomplete_native_measurement": 82,
+    "with_cost_event": 108,
+    "with_incomplete_native_measurement": 84,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,7 +15,7 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 84,
+      "count": 86,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -24,6 +24,8 @@
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
         "TB-family-session-speed-20261014",
+        "TB-family-topology-t4-100k-gptrans_local-s42",
+        "TB-family-topology-t4-100k-k1_mean2-s42",
         "TB-geometry-transfer-500k-context",
         "TB-gptrans-100k-local-joint-control-20260925",
         "TB-gptrans-100k-local-reference-control-20260925",
@@ -133,7 +135,7 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 82,
+      "count": 84,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
@@ -142,6 +144,8 @@
         "TB-family-100k-operator-profile-gptrans_local-s42",
         "TB-family-100k-operator-profile-k1_mean2-s42",
         "TB-family-session-speed-20261014",
+        "TB-family-topology-t4-100k-gptrans_local-s42",
+        "TB-family-topology-t4-100k-k1_mean2-s42",
         "TB-gptrans-100k-local-joint-control-20260925",
         "TB-gptrans-100k-local-reference-control-20260925",
         "TB-gptrans-100k-transfer-control-local-20260925",
@@ -240,12 +244,14 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 40,
+      "count": 42,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
         "TB-family-session-speed-20261014",
+        "TB-family-topology-t4-100k-gptrans_local-s42",
+        "TB-family-topology-t4-100k-k1_mean2-s42",
         "TB-geometry-transfer-500k-context",
         "TB-gine-1m-gap-specialist-v7",
         "TB-gptrans-100k-transfer-control-local-20260925",
@@ -287,8 +293,10 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 12,
+      "count": 14,
       "items": [
+        "TB-family-topology-t4-100k-gptrans_local-s42",
+        "TB-family-topology-t4-100k-k1_mean2-s42",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",

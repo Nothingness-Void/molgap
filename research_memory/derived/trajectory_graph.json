@@ -56,6 +56,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-family-topology-t4-100k-gptrans_local-s42:A001",
+      "target": "experiments/family_topology_t4_100k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-family-topology-t4-100k-k1_mean2-s42:A001",
+      "target": "experiments/family_topology_t4_100k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-geometry-transfer-500k-context:A001",
       "target": "experiments/pcqm_geometry_transfer_500k/results/fusion_metrics.json",
       "type": "action_produced_evidence"
@@ -631,6 +641,16 @@
       "type": "parent_trajectory"
     },
     {
+      "source": "TB-family-100k-operator-profile-gptrans_local-s42",
+      "target": "TB-family-topology-t4-100k-gptrans_local-s42",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-family-100k-operator-profile-k1_mean2-s42",
+      "target": "TB-family-topology-t4-100k-k1_mean2-s42",
+      "type": "parent_trajectory"
+    },
+    {
       "source": "TB-geometry-transfer-500k-context",
       "target": "TB-gptrans-geometry-distance-100k-s42",
       "type": "parent_trajectory"
@@ -1139,6 +1159,16 @@
       "source": "TC-gptrans-flow-ablation-100k-s42",
       "target": "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
       "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
+      "target": "TB-family-topology-t4-100k-gptrans_local-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
+      "target": "TB-family-topology-t4-100k-k1_mean2-s42",
+      "type": "prior_evidence"
     },
     {
       "source": "family-checkpoint-efficiency-20261013",
@@ -2882,6 +2912,14 @@
     },
     {
       "id": "TB-family-session-speed-20261014",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-family-topology-t4-100k-gptrans_local-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-family-topology-t4-100k-k1_mean2-s42",
       "type": "trajectory"
     },
     {

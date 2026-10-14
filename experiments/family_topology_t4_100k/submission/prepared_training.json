@@ -1,0 +1,30 @@
+{
+  "status": "SOURCE_INPUTS_PREPARED",
+  "spec_identity": "9db73758d7f12974219bcf8d5eafd25789a7f2a675660eeddb53b87c5a6068bc",
+  "expected_package_identity": "ed6bb15dc3ac8a668e299b50ee5fc8898dc638b4301de7b6193b56bc2d563e5b",
+  "jobs": [
+    {
+      "arm_id": "k1_mean2",
+      "device": 0,
+      "recipe": "experiments/family_topology_t4_100k/training_recipe_k1_mean2.json",
+      "initial_state": "initial_states/k1_mean2.pt",
+      "trajectory_id": "TB-family-topology-t4-100k-k1_mean2-s42"
+    },
+    {
+      "arm_id": "gptrans_local",
+      "device": 1,
+      "recipe": "experiments/family_topology_t4_100k/training_recipe_gptrans_local.json",
+      "initial_state": "initial_states/gptrans_local.pt",
+      "trajectory_id": "TB-family-topology-t4-100k-gptrans_local-s42"
+    }
+  ],
+  "prospective_sha256": {
+    "k1_mean2": "64ce88e06b93e7317a0acd6417c3295e6cf78338e3fd4e74adc340288702bfa0",
+    "gptrans_local": "4a7f5c87e19dd3c74f57e6530d63e62bff6f69cb3bd27bb14237a78027d46507"
+  },
+  "platform": "kaggle",
+  "submitted": false,
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED",
+  "recovery": "existing prospective reused without mutation; mandatory release gates re-executed"
+}

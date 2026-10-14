@@ -1,0 +1,62 @@
+{
+  "dataset": "nothingnessvoid/molgap-k1-gptrans-topology-100k-s42-src",
+  "files": [
+    {
+      "bytes": 1292,
+      "path": "experiment_launch.json",
+      "sha256": "5266e7abd8a8f39a41de41eb9cc2e5ba544ef7e9437aad2815156c12a0cb106b"
+    },
+    {
+      "bytes": 5413,
+      "path": "experiment_spec.json",
+      "sha256": "9db73758d7f12974219bcf8d5eafd25789a7f2a675660eeddb53b87c5a6068bc"
+    },
+    {
+      "bytes": 23606979,
+      "path": "initial_states/gptrans_local.pt",
+      "sha256": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320"
+    },
+    {
+      "bytes": 14779763,
+      "path": "initial_states/k1_mean2.pt",
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242"
+    },
+    {
+      "bytes": 3899,
+      "path": "package_manifest.json",
+      "sha256": "31d4b31ab20217078b8b1f66de962360eeeb1472d16442c29084b5461c44a3d1"
+    },
+    {
+      "bytes": 52866,
+      "path": "prospective/gptrans_local/trajectory.json",
+      "sha256": "4a7f5c87e19dd3c74f57e6530d63e62bff6f69cb3bd27bb14237a78027d46507"
+    },
+    {
+      "bytes": 52821,
+      "path": "prospective/k1_mean2/trajectory.json",
+      "sha256": "64ce88e06b93e7317a0acd6417c3295e6cf78338e3fd4e74adc340288702bfa0"
+    },
+    {
+      "bytes": 65,
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "c171feedbc132cfb20d106675d787faac11fa9c4296629cde54ea27f8589b2e9"
+    },
+    {
+      "bytes": 41,
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "c3c3e1495650998585d2bffd30452e64250939a585fd7e9cb2c10a6996d71123"
+    },
+    {
+      "bytes": 13603,
+      "path": "SOURCE_FILES.json",
+      "sha256": "97500d286fe2849f712dd3d609e20dd04084e77194dbcdb06dd6cd71bea1caff"
+    },
+    {
+      "bytes": 259786,
+      "path": "source_payload.bin",
+      "sha256": "570250c77ec37e72e2ba7dfaf0e5454686f79ac1074c516084bbd9591dbafddb"
+    }
+  ],
+  "sdk_output_name": "opaque response basename; byte SHA verified per requested path",
+  "status": "HASH_VERIFIED"
+}

@@ -1,0 +1,17 @@
+{
+  "cpu_review": {
+    "cuda_available": false,
+    "failed": 0,
+    "passed": 88,
+    "skipped": 1,
+    "suite": "test_family_profile_release.py test_experiment_package.py"
+  },
+  "dataset_roundtrip": "11 expected files and SHA values matched; SDK uses opaque download basename",
+  "failed_local_stage": "release001: published records then rebuild failed on absent ignored historical asset",
+  "prospective_rewritten": false,
+  "recovery": "opaque retained-asset copy; existing records validated with execution identity and staged-trajectory validators; existing Kaggle stage/freeze and release owners used on the same release002 package",
+  "remote_training_before_recovery": false,
+  "second_local_stage": "release002: fresh-only planner rejected already published records",
+  "source_commit": "35ddecdc0ccf7e9ca664588cc836bd2ecb7ec6f3",
+  "source_rewritten": false
+}
