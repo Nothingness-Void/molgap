@@ -327,4 +327,3 @@ def test_scratch_native_calibration_preserves_shared_session_state_and_rng():
         assert_tree_equal(capture_rng_state(), rng_before)
     finally:
         session.close()
-
