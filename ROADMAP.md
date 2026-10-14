@@ -18,6 +18,7 @@ from this checkout; [CURRENT_STATE](CURRENT_STATE.md) owns observations/blockers
 
 | Priority | Task | Exit condition / owner |
 |---|---|---|
+| Closed diagnostic | K1/GPTrans100K operator profile and topology reuse | [Terminal custody](experiments/family_100k_operator_profile/terminal_acceptance/closure.md) is finalized; no matched strict reference or native throughput gain. Further execution measurement needs separately bounded scope; no automatic training. |
 | Terminal custody pending | K1 execution pair closure | [Selected execution/evidence](docs/operations/K1_EXECUTION.md): preserve failed speed gates, finalize actual per-arm V5/RML custody without invented role/cost observations. No new training release; owner retained until routing. |
 | Closed diagnostic | Paired partial-stage curves and BN/late per-row attribution | Accepted saved-artifact NO_TRAIN; [trace interpretation](experiments/pcqm_k1_consistency_stage_analysis/attempt_002/analysis_zh.md) and [BN interpretation](experiments/pcqm_k1_bn_row_attribution/analysis_zh.md). Follow the terminal consistency disposition below; no new training or stopping policy. |
 | Closed diagnostic | Complete K1 local module/state audit and sparse endpoint average | Accepted NO_TRAIN; use [consolidated route](experiments/pcqm_k1_complete_local_audit/analysis_zh.md#10-下一步一条主线两个问题分开验收) and its explicit remaining discriminators. No model adoption, new remote job or full release; follow terminal consistency disposition before conditional training-state/cost work. |
