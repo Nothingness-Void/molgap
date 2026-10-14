@@ -1,0 +1,17 @@
+{
+  "format": "molgap-kaggle-allocation-entry-v1",
+  "status": "failed",
+  "error": {
+    "type": "TimeoutError",
+    "message": "Frozen allocation ceiling exhausted; retain complete-epoch resume state"
+  },
+  "wall_start_utc": "2026-10-13T03:30:11.926567+00:00",
+  "observed_gpu_count": 2,
+  "gpu_count_source": "nvidia-smi",
+  "scope": "entry invocation through bootstrap completion, including setup, pip, extraction, preflight, training/evaluation and idle assigned GPU time; not device busy time",
+  "platform_release_scope": "not observed: queue, allocation before entry and platform release after entry are excluded",
+  "entire_platform_release_seconds": null,
+  "monotonic_seconds": 32223.405126179,
+  "wall_end_utc": "2026-10-13T12:27:15.331705+00:00",
+  "allocated_device_seconds": 64446.810252358
+}

@@ -1,0 +1,81 @@
+{
+  "format": "molgap-kaggle-two-phase-pair-v2",
+  "spec_identity": "a5c527d38864b91730153347b7e49d889e7a87c46b3f07c03cee92b9f9699734",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "phases": [
+    {
+      "phase": "preflight",
+      "workers": [
+        {
+          "arm_id": "mean2",
+          "device": 0,
+          "started": true,
+          "terminal_status": "preflight_complete",
+          "exit_reason": "preflight_worker_exit_0",
+          "returncode": 0,
+          "worker_wall_seconds": 68.527902633
+        },
+        {
+          "arm_id": "single_ema",
+          "device": 1,
+          "started": true,
+          "terminal_status": "preflight_complete",
+          "exit_reason": "preflight_worker_exit_0",
+          "returncode": 0,
+          "worker_wall_seconds": 68.52710882299999
+        }
+      ],
+      "status": "complete"
+    },
+    {
+      "phase": "train",
+      "workers": [
+        {
+          "arm_id": "mean2",
+          "device": 0,
+          "started": true,
+          "terminal_status": "complete",
+          "exit_reason": "train_worker_exit_0",
+          "returncode": 0,
+          "worker_wall_seconds": 31912.201414466002
+        },
+        {
+          "arm_id": "single_ema",
+          "device": 1,
+          "started": true,
+          "terminal_status": "complete",
+          "exit_reason": "train_worker_exit_0",
+          "returncode": 0,
+          "worker_wall_seconds": 31912.515560656
+        }
+      ],
+      "status": "failed"
+    }
+  ],
+  "status": "failed",
+  "arms": {
+    "mean2": {
+      "device": 0,
+      "training_started": true,
+      "started": true,
+      "terminal_status": "complete",
+      "exit_reason": "train_worker_exit_0",
+      "worker_wall_seconds": 31980.729317099
+    },
+    "single_ema": {
+      "device": 1,
+      "training_started": true,
+      "started": true,
+      "terminal_status": "complete",
+      "exit_reason": "train_worker_exit_0",
+      "worker_wall_seconds": 31981.042669479
+    }
+  },
+  "maximum_wall_seconds": 31977.687915784,
+  "pair_process_wall_seconds": 31981.048698594997,
+  "scope": "orchestration window excluding bootstrap and queue; not per-arm native device cost",
+  "stop_reason": "STOP_FOR_COST"
+}
