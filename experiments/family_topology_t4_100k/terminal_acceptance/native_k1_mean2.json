@@ -1,0 +1,54 @@
+{
+  "arm_id": "k1_mean2",
+  "blockers": [],
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "k1_mean2",
+    "arm_identity": "bdc0198dcf2fda92b9c266391c591b71aafa3dba44386e0f7b28e4a45b999cd4",
+    "experiment_id": "family-topology-t4-100k-s42",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "family-topology-t4-100k-s42",
+    "package_identity": "ed6bb15dc3ac8a668e299b50ee5fc8898dc638b4301de7b6193b56bc2d563e5b",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nothingnessvoid/molgap-k1-gptrans-topology-100k-s42",
+    "source_archive_sha256": "570250c77ec37e72e2ba7dfaf0e5454686f79ac1074c516084bbd9591dbafddb",
+    "source_commit": "35ddecdc0ccf7e9ca664588cc836bd2ecb7ec6f3",
+    "spec_identity": "9db73758d7f12974219bcf8d5eafd25789a7f2a675660eeddb53b87c5a6068bc",
+    "training_recipe_sha256": "a6a92d38785030b43ae9eb23bb4e448b266daa24f6da2bc1d9b862ad3cdd1c5c"
+  },
+  "execution_scope": "CPU-only weights_only tensor inspection; no GPU execution, model construction or inference",
+  "formal_training_exposure": 0,
+  "format": "molgap-independent-native-preflight-acceptance-v1",
+  "native_profile_proof": {
+    "report": "profile_qualification/profile.json",
+    "sha256": "b978f256425c3940038a74a79a8ddcdaee7baa1099968c3cf3c2c94e63488214"
+  },
+  "probe_recipe_identity": "fff148fe9e45c3cd3c01846d8020b6214aca9f18b824a6787ae3b421940d69c3",
+  "profiling_required": true,
+  "repeat_resume_proofs": [
+    {
+      "path": "repeat-a.pt",
+      "sha256": "e0def2a6806b0509466ba286f727cdd46ff943ce497312bba2e930b13e2344c0",
+      "state_fingerprint": "f9e97601645a3a84ec1207459a8e276356f46cfb31e06a75e120cd472519d10c"
+    },
+    {
+      "path": "repeat-b.pt",
+      "sha256": "339ebf879e644bcf23302dcd643efabbb79286d518630bc421e1c448e7a5168a",
+      "state_fingerprint": "f9e97601645a3a84ec1207459a8e276356f46cfb31e06a75e120cd472519d10c"
+    },
+    {
+      "path": "resumed.pt",
+      "sha256": "29cf39e7ffdcf21c1625490e95c46603be58fe6dc8d5d8a7a801acda3a44eda9",
+      "state_fingerprint": "f9e97601645a3a84ec1207459a8e276356f46cfb31e06a75e120cd472519d10c"
+    }
+  ],
+  "resume_origin": {
+    "path": "resumed-first.pt",
+    "sha256": "cef42193c10d878a972a78ce90c57477ff22899c04aaee0769b05e785617b932"
+  },
+  "scientific_acceptance": "NOT_EVALUATED",
+  "status": "NATIVE_PREFLIGHT_VERIFIED",
+  "validator": "molgap.family_training_runner._verify_preflight"
+}

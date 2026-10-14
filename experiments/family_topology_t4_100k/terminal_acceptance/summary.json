@@ -1,0 +1,411 @@
+{
+  "allocation_entry": {
+    "allocated_device_seconds": 20266.630322488,
+    "entire_platform_release_seconds": null,
+    "error": null,
+    "format": "molgap-kaggle-allocation-entry-v1",
+    "gpu_count_source": "nvidia-smi",
+    "monotonic_seconds": 10133.315161244,
+    "observed_gpu_count": 2,
+    "platform_release_scope": "not observed: queue, allocation before entry and platform release after entry are excluded",
+    "scope": "entry invocation through bootstrap completion, including setup, pip, extraction, preflight, training/evaluation and idle assigned GPU time; not device busy time",
+    "status": "complete",
+    "wall_end_utc": "2026-10-14T09:04:13.582026+00:00",
+    "wall_start_utc": "2026-10-14T06:15:20.266848+00:00"
+  },
+  "arms": {
+    "gptrans_local": {
+      "capture_config_equal": true,
+      "capture_wall_reduction_percent": 11.3090993811917,
+      "capture_wall_seconds": 4.759495164999976,
+      "development_rows": 50000,
+      "effective_end_to_end_presentations_per_second_new": 608.694665177678,
+      "effective_end_to_end_presentations_per_second_old": 513.1687900437813,
+      "effective_end_to_end_rate_increase_percent": 18.614903514640236,
+      "initialization_equal": true,
+      "mae_eV": 0.14286130827367305,
+      "max_abs_prediction_difference_eV": 0.0,
+      "metric_semantics_equal": true,
+      "old_capture_wall_seconds": 5.366384975000074,
+      "old_mae_eV": 0.14286130827367305,
+      "old_worker_entry_wall_seconds": 11688.317988879,
+      "operator_changes": {
+        "aten::bmm": {
+          "new": {
+            "calls": 1407,
+            "input_shapes": "",
+            "name": "aten::bmm",
+            "self_cpu_us": 151494.5159999992,
+            "self_device_us": 80209.04700000075
+          },
+          "old": {
+            "calls": 1456,
+            "input_shapes": "",
+            "name": "aten::bmm",
+            "self_cpu_us": 175837.91900000942,
+            "self_device_us": 95295.02499998912
+          }
+        },
+        "aten::fill_": {
+          "new": {
+            "calls": 40164,
+            "input_shapes": "",
+            "name": "aten::fill_",
+            "self_cpu_us": 206859.5759999786,
+            "self_device_us": 125330.83800001888
+          },
+          "old": {
+            "calls": 40213,
+            "input_shapes": "",
+            "name": "aten::fill_",
+            "self_cpu_us": 237165.45700011772,
+            "self_device_us": 132208.26400002645
+          }
+        },
+        "aten::mm": {
+          "new": {
+            "calls": 2944,
+            "input_shapes": "",
+            "name": "aten::mm",
+            "self_cpu_us": 287257.1430000052,
+            "self_device_us": 164163.3890000029
+          },
+          "old": {
+            "calls": 2944,
+            "input_shapes": "",
+            "name": "aten::mm",
+            "self_cpu_us": 314994.212999988,
+            "self_device_us": 192731.70699999624
+          }
+        },
+        "aten::mul": {
+          "new": {
+            "calls": 7191,
+            "input_shapes": "",
+            "name": "aten::mul",
+            "self_cpu_us": 110716.45299999333,
+            "self_device_us": 105038.52499998991
+          },
+          "old": {
+            "calls": 7369,
+            "input_shapes": "",
+            "name": "aten::mul",
+            "self_cpu_us": 126058.99700001079,
+            "self_device_us": 107807.49800000028
+          }
+        },
+        "cudaLaunchKernel": {
+          "new": {
+            "calls": 90286,
+            "input_shapes": "",
+            "name": "cudaLaunchKernel",
+            "self_cpu_us": 770855.7979999069,
+            "self_device_us": 0.0
+          },
+          "old": {
+            "calls": 91030,
+            "input_shapes": "",
+            "name": "cudaLaunchKernel",
+            "self_cpu_us": 860037.212000021,
+            "self_device_us": 0.0
+          }
+        }
+      },
+      "phase_changes": {
+        "backward": {
+          "new": {
+            "calls": 16,
+            "host_self_seconds": 1.787313844999744,
+            "host_total_seconds": 1.787313844999744,
+            "name": "backward"
+          },
+          "old": {
+            "calls": 16,
+            "host_self_seconds": 2.0445932680003125,
+            "host_total_seconds": 2.0445932680003125,
+            "name": "backward"
+          }
+        },
+        "checkpoint_publish": {
+          "new": {
+            "calls": 1,
+            "host_self_seconds": 0.4478938699999162,
+            "host_total_seconds": 0.4478938699999162,
+            "name": "checkpoint_publish"
+          },
+          "old": {
+            "calls": 1,
+            "host_self_seconds": 0.47436736099996324,
+            "host_total_seconds": 0.47436736099996324,
+            "name": "checkpoint_publish"
+          }
+        },
+        "checkpoint_state": {
+          "new": {
+            "calls": 1,
+            "host_self_seconds": 0.30628004399989095,
+            "host_total_seconds": 0.30750289099989914,
+            "name": "checkpoint_state"
+          },
+          "old": {
+            "calls": 1,
+            "host_self_seconds": 0.30655961700006173,
+            "host_total_seconds": 0.3075536890000876,
+            "name": "checkpoint_state"
+          }
+        },
+        "forward": {
+          "new": {
+            "calls": 16,
+            "host_self_seconds": 1.3411887730001126,
+            "host_total_seconds": 1.6955997850002404,
+            "name": "forward"
+          },
+          "old": {
+            "calls": 16,
+            "host_self_seconds": 1.494615579999504,
+            "host_total_seconds": 1.8840477699999383,
+            "name": "forward"
+          }
+        },
+        "loader_wait": {
+          "new": {
+            "calls": 16,
+            "host_self_seconds": 0.00373697999975775,
+            "host_total_seconds": 0.00373697999975775,
+            "name": "loader_wait"
+          },
+          "old": {
+            "calls": 16,
+            "host_self_seconds": 0.0044117519996689225,
+            "host_total_seconds": 0.0044117519996689225,
+            "name": "loader_wait"
+          }
+        }
+      },
+      "predictions_bitwise_equal": true,
+      "profile_receipt_sha256": "a629dc04832c11865019dcc82e4e7d7e52035ee74944ec6c13a17d4228683fa1",
+      "profile_runtime_equal": true,
+      "progress": {
+        "completed_passes": 60,
+        "next_batch": 0,
+        "optimizer_steps": 46860,
+        "sample_presentations": 5998080,
+        "status": "complete"
+      },
+      "runtime_fingerprint_equal": true,
+      "saved_minutes": 30.57189065405,
+      "selection_pass": 52,
+      "selection_step": 40612,
+      "source_idx_equal": true,
+      "target_equal": true,
+      "trace_observations_equal": true,
+      "training_contract_bytes_equal": true,
+      "wall_reduction_percent": 15.693562076153999,
+      "weights": "ema",
+      "worker_entry_wall_seconds": 9854.004549636
+    },
+    "k1_mean2": {
+      "capture_config_equal": true,
+      "capture_wall_reduction_percent": 6.605365462165369,
+      "capture_wall_seconds": 5.732366640999999,
+      "development_rows": 50000,
+      "effective_end_to_end_presentations_per_second_new": 436.875398716664,
+      "effective_end_to_end_presentations_per_second_old": 371.5079060344083,
+      "effective_end_to_end_rate_increase_percent": 17.595182126810904,
+      "initialization_equal": true,
+      "mae_eV": 0.1402572855657339,
+      "max_abs_prediction_difference_eV": 0.0,
+      "metric_semantics_equal": true,
+      "old_capture_wall_seconds": 6.137790109000093,
+      "old_mae_eV": 0.1402572855657339,
+      "old_worker_entry_wall_seconds": 10763.485608378,
+      "operator_changes": {
+        "aten::bmm": {
+          "new": {
+            "calls": 576,
+            "input_shapes": "",
+            "name": "aten::bmm",
+            "self_cpu_us": 53561.506000012254,
+            "self_device_us": 4081.1719999972847
+          },
+          "old": {
+            "calls": 576,
+            "input_shapes": "",
+            "name": "aten::bmm",
+            "self_cpu_us": 59346.31300001435,
+            "self_device_us": 4062.9960000037536
+          }
+        },
+        "aten::fill_": {
+          "new": {
+            "calls": 9496,
+            "input_shapes": "",
+            "name": "aten::fill_",
+            "self_cpu_us": 42620.37300005778,
+            "self_device_us": 18039.681000026398
+          },
+          "old": {
+            "calls": 9496,
+            "input_shapes": "",
+            "name": "aten::fill_",
+            "self_cpu_us": 47425.34300005672,
+            "self_device_us": 18195.334999996958
+          }
+        },
+        "aten::mm": {
+          "new": {
+            "calls": 8832,
+            "input_shapes": "",
+            "name": "aten::mm",
+            "self_cpu_us": 777102.9239999835,
+            "self_device_us": 534331.4950000134
+          },
+          "old": {
+            "calls": 8832,
+            "input_shapes": "",
+            "name": "aten::mm",
+            "self_cpu_us": 848764.9389999585,
+            "self_device_us": 535103.3930000077
+          }
+        },
+        "aten::mul": {
+          "new": {
+            "calls": 5726,
+            "input_shapes": "",
+            "name": "aten::mul",
+            "self_cpu_us": 76287.22900001117,
+            "self_device_us": 62632.35899999217
+          },
+          "old": {
+            "calls": 5725,
+            "input_shapes": "",
+            "name": "aten::mul",
+            "self_cpu_us": 85213.78100000523,
+            "self_device_us": 62745.170999981056
+          }
+        },
+        "cudaLaunchKernel": {
+          "new": {
+            "calls": 89812,
+            "input_shapes": "",
+            "name": "cudaLaunchKernel",
+            "self_cpu_us": 758062.1629999366,
+            "self_device_us": 0.0
+          },
+          "old": {
+            "calls": 89892,
+            "input_shapes": "",
+            "name": "cudaLaunchKernel",
+            "self_cpu_us": 826887.7459999211,
+            "self_device_us": 0.0
+          }
+        }
+      },
+      "phase_changes": {
+        "backward": {
+          "new": {
+            "calls": 16,
+            "host_self_seconds": 2.723581053000089,
+            "host_total_seconds": 2.723581053000089,
+            "name": "backward"
+          },
+          "old": {
+            "calls": 16,
+            "host_self_seconds": 3.047910019000142,
+            "host_total_seconds": 3.047910019000142,
+            "name": "backward"
+          }
+        },
+        "checkpoint_publish": {
+          "new": {
+            "calls": 1,
+            "host_self_seconds": 0.2200933479999776,
+            "host_total_seconds": 0.2200933479999776,
+            "name": "checkpoint_publish"
+          },
+          "old": {
+            "calls": 1,
+            "host_self_seconds": 0.24839804800001275,
+            "host_total_seconds": 0.24839804800001275,
+            "name": "checkpoint_publish"
+          }
+        },
+        "checkpoint_state": {
+          "new": {
+            "calls": 1,
+            "host_self_seconds": 0.16807552900002065,
+            "host_total_seconds": 0.1688891930000409,
+            "name": "checkpoint_state"
+          },
+          "old": {
+            "calls": 1,
+            "host_self_seconds": 0.18832255700010592,
+            "host_total_seconds": 0.18941823600005137,
+            "name": "checkpoint_state"
+          }
+        },
+        "forward": {
+          "new": {
+            "calls": 32,
+            "host_self_seconds": 1.998562730000117,
+            "host_total_seconds": 2.2416816280003786,
+            "name": "forward"
+          },
+          "old": {
+            "calls": 32,
+            "host_self_seconds": 1.991969444999313,
+            "host_total_seconds": 2.3024270089999845,
+            "name": "forward"
+          }
+        },
+        "loader_wait": {
+          "new": {
+            "calls": 16,
+            "host_self_seconds": 0.002410818999805997,
+            "host_total_seconds": 0.002410818999805997,
+            "name": "loader_wait"
+          },
+          "old": {
+            "calls": 16,
+            "host_self_seconds": 0.0063937380001561905,
+            "host_total_seconds": 0.0063937380001561905,
+            "name": "loader_wait"
+          }
+        }
+      },
+      "predictions_bitwise_equal": true,
+      "profile_receipt_sha256": "285242fc93273f5ee2188e98de5d23d4f5d673d6e2c2dc8b5130079b2873799c",
+      "profile_runtime_equal": true,
+      "progress": {
+        "completed_passes": 40,
+        "next_batch": 0,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720,
+        "status": "complete"
+      },
+      "runtime_fingerprint_equal": true,
+      "saved_minutes": 26.84144681404999,
+      "selection_pass": 37,
+      "selection_step": 28897,
+      "source_idx_equal": true,
+      "target_equal": true,
+      "trace_observations_equal": true,
+      "training_contract_bytes_equal": true,
+      "wall_reduction_percent": 14.962502552049129,
+      "weights": "live",
+      "worker_entry_wall_seconds": 9152.998799535
+    }
+  },
+  "baseline_ref": "experiments/family_topology_t4_100k/baseline_binding.json",
+  "comparison_kind": "matched-recipe cross-job execution delivery; not STRICT_CAUSAL architecture evidence",
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-topology-100k-s42",
+  "kernel_version": 1,
+  "limitations": [
+    "Single old/new physical job; cannot isolate host contention or estimate training stochasticity.",
+    "16-update profiler window includes checkpoint128 and excludes evaluation.",
+    "Host phases are not exclusive device costs; never sum nested operator and kernel rankings.",
+    "Allocation entry excludes queue and platform allocation before/after entry; not billing or GPU busy time.",
+    "Mechanical/native acceptance is owned by separate per-arm inspection records."
+  ]
+}

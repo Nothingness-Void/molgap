@@ -1,0 +1,48 @@
+{
+  "arm_id": "gptrans_local",
+  "blockers": [],
+  "context": {
+    "account": "nothingnessvoid",
+    "arm_id": "gptrans_local",
+    "arm_identity": "261e7a09faf8d726a460ad7b14c68bf7dae0686d0e0c80d942068ea7b5f14cbd",
+    "experiment_id": "family-topology-t4-100k-s42",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "logical_run_id": "family-topology-t4-100k-s42",
+    "package_identity": "ed6bb15dc3ac8a668e299b50ee5fc8898dc638b4301de7b6193b56bc2d563e5b",
+    "platform": "kaggle",
+    "platform_version": "1",
+    "run_reference": "nothingnessvoid/molgap-k1-gptrans-topology-100k-s42",
+    "source_archive_sha256": "570250c77ec37e72e2ba7dfaf0e5454686f79ac1074c516084bbd9591dbafddb",
+    "source_commit": "35ddecdc0ccf7e9ca664588cc836bd2ecb7ec6f3",
+    "spec_identity": "9db73758d7f12974219bcf8d5eafd25789a7f2a675660eeddb53b87c5a6068bc",
+    "training_recipe_sha256": "2d3c454e0f9b229249540181895abfdb786daef9cb17829a31bd2eb1562ac2fd"
+  },
+  "execution_scope": "CPU-only retained-artifact inspection; no model construction or inference",
+  "format": "molgap-independent-mechanical-acceptance-v1",
+  "observed": {
+    "artifact_roles": [
+      "contract",
+      "predictions",
+      "resume",
+      "selected_model",
+      "trace"
+    ],
+    "producer_platform_version": null,
+    "progress": {
+      "completed_passes": 60,
+      "next_batch": 0,
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080,
+      "status": "complete"
+    },
+    "selected_optimizer_step": 40612,
+    "selected_weights": "ema"
+  },
+  "replay_readiness": "NOT_EVALUATED",
+  "runtime_qualification": "NOT_EVALUATED",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "status": "MECHANICALLY_VERIFIED",
+  "target_digest_contract": "standard tensor_digest; target_identity=None",
+  "validator": "molgap.family_training_outputs.inspect_session_output"
+}

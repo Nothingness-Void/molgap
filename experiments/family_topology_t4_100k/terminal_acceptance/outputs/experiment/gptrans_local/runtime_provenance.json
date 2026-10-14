@@ -1,0 +1,30 @@
+{
+  "context": {
+    "experiment_id": "family-topology-t4-100k-s42",
+    "logical_run_id": "family-topology-t4-100k-s42",
+    "arm_id": "gptrans_local",
+    "arm_identity": "261e7a09faf8d726a460ad7b14c68bf7dae0686d0e0c80d942068ea7b5f14cbd",
+    "spec_identity": "9db73758d7f12974219bcf8d5eafd25789a7f2a675660eeddb53b87c5a6068bc",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "source_commit": "35ddecdc0ccf7e9ca664588cc836bd2ecb7ec6f3",
+    "source_archive_sha256": "570250c77ec37e72e2ba7dfaf0e5454686f79ac1074c516084bbd9591dbafddb",
+    "package_identity": "ed6bb15dc3ac8a668e299b50ee5fc8898dc638b4301de7b6193b56bc2d563e5b",
+    "training_recipe_sha256": "2d3c454e0f9b229249540181895abfdb786daef9cb17829a31bd2eb1562ac2fd",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-k1-gptrans-topology-100k-s42",
+    "platform_version": null
+  },
+  "recipe_identity": "851827a2499a998f6b3144f1adf3f305d5534ae1f561c680ccb67cc2a057db49",
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "initialization": {
+    "file_sha256": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+    "state_sha256": "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b",
+    "tensor_count": 337,
+    "device": "cpu"
+  },
+  "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+  "tuning_identity": "fc9c14aa43b7d985606a492f916a7949cd3f6ece23040f19221a1ceb27e3655c",
+  "accelerator": "Tesla T4"
+}

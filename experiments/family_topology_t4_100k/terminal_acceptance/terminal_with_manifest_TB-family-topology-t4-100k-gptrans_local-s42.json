@@ -1,0 +1,604 @@
+{
+  "acceptance_ref": "experiments/family_topology_t4_100k/terminal_acceptance/acceptance_gptrans_local.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/family_topology_t4_100k/baseline_binding.json": "e9fd5b2c70ee4571cad3a9921d15d3cb4668d1ea26fe4c504cb5475b4fba3669",
+    "experiments/family_topology_t4_100k/config.json": "dd6d8638da14576a8ffda0c5a02752974e3d2e08dd792bcffc41067648969066",
+    "experiments/family_topology_t4_100k/protocol.md": "f95549aaaa527fd9f3fa71c4095aa2884c08cd563edc3d8bba146144717efb4e",
+    "experiments/family_topology_t4_100k/role_plan.json": "511190d16e90a256cdd9bf5a3b9fa64172165665d3accf6a1365ddd51f0c42e4",
+    "experiments/family_topology_t4_100k/submission/dataset_create_response.json": "130d2f9b355bd523aa28cd2034b69f45f57a8c6c80b509fe93e0f8ebdd2becfb",
+    "experiments/family_topology_t4_100k/submission/dataset_listing.json": "267d1221bdc6598fbbfe863bb5a2ad1420c31e26985afe24c1200460f2807d69",
+    "experiments/family_topology_t4_100k/submission/dataset_roundtrip.json": "f10efc87daef9757ca97216f2dd037c07bfa09eeb18e390904368cd85166b317",
+    "experiments/family_topology_t4_100k/submission/initial_prospective_report.json": "1f720a90876095d1cd0f46e083593e6accd498626fd11a847cf5a5f3f37c8c72",
+    "experiments/family_topology_t4_100k/submission/kernel_push_response.json": "36f0db762a1f94f523db85a179bdf68d3e9c2b5946feb7179fee8322c42fdc54",
+    "experiments/family_topology_t4_100k/submission/preparation_reconciliation.json": "a966386a676fb574472d53f5430fd242bff1c868e03e707b7fa11a3838d83e6b",
+    "experiments/family_topology_t4_100k/submission/prepared_training.json": "3974b8adb702d1c9bc3b1f4107844cbf9ecbf6de719d4f4bb1ddbf02b855b93d",
+    "experiments/family_topology_t4_100k/submission/receipts/38996104dccf38014fae8d43b1472f8946dc1f767083d8b0425d6081666173ac.json": "9976bae077cf840d931cbbb636f7af755afd93ea0210d7a4fedf868ffd9886b0",
+    "experiments/family_topology_t4_100k/submission/release_report.json": "d376f1decbe94e3f9d8c505dedbb1de99b640c556ce3d35034c2337f55600743",
+    "experiments/family_topology_t4_100k/submission/retained_asset_supplement.json": "9641a97c700fadef6db7d0cb604dfe722c4abcf31aaff7239e65d0f4fa99c317",
+    "experiments/family_topology_t4_100k/submission/scheduler_source_observation.json": "14193f667a5c67f10aab0667090bac1519b26581f5b00bb5db757dd4af01e7fa",
+    "experiments/family_topology_t4_100k/submission/startup_log.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "experiments/family_topology_t4_100k/terminal_acceptance/acceptance_gptrans_local.json": "38294c1dd657d34bf8c6443a004c56af7cbf585482f88360befa0b51b30739c7",
+    "experiments/family_topology_t4_100k/terminal_acceptance/attribution.md": "b8a2328cac37b12313fa4a2f080b229be29d1ab747fa70187e2dfd7ad2067be9",
+    "experiments/family_topology_t4_100k/terminal_acceptance/decision.md": "bc2d9657df8b4ec1b70db9974f2a20959567f8b03a70a6f6a65ec9cbfbb6c674",
+    "experiments/family_topology_t4_100k/terminal_acceptance/independent_review.md": "6a2d0c350015edf5b537cfcaaa75ede731893b14f0f09646894d92ddea26d769",
+    "experiments/family_topology_t4_100k/terminal_acceptance/mechanical_gptrans_local.json": "4b1c8c585badeac3b7a708bda856aa9e8dd2d082a0ee95c9522d3849c1e6136d",
+    "experiments/family_topology_t4_100k/terminal_acceptance/metadata_retention.json": "ed69a249876039bdea970cd439042311b80a94960ded725bdda12d635a88c1bd",
+    "experiments/family_topology_t4_100k/terminal_acceptance/native_gptrans_local.json": "bc13bfd2c473b9a51d05272ffbbb355ab85ee3b3297dadb96bc3a8fc3fde76fb",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/allocation_entry_observation.json": "ac876cd14da9ce91e6bcfc7d74d76cd1e87f9f97f1b1d199dd68cf9f50d8954b",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/allocation_costs.json": "314fd1749ed023ea1834df224774bce7681cf2f37c8cdedaa218dd1235102aa9",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/canonical_trace.json": "735a865cdc28849ed16e4cb483f7b92feba9c23407828d0915dbda6f3d527927",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/canonical_trace.json.context.json": "48e67438feb6c0ee08d4485f950bb7fae646f2114fae0bc8d0f098072fcff48c",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/development_predictions.pt": "3b133f279f7e3312e22897e7ae9c8094278ab79be76c5785fcfb34012127c684",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/execution_profile_receipt.json": "a629dc04832c11865019dcc82e4e7d7e52035ee74944ec6c13a17d4228683fa1",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/invocation_cost_state.json": "b1d7520de5da1fc53a2fd7845a710c1b398103c676953a344d73862f6d178a86",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/last_checkpoint.pt": "cfe86590908e9adeaac4a76e1736bc221f3f3770013734ad30627ec08f1d6b39",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/output_manifest.json": "b60e4ea5f308ecf1654d19eeae0e59ed93456bc7a0d8410741f2c89e35c44698",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/preflight.log": "2b15d15d31459f7cbc75b35d6c1f46fe299c03d8db2be98063e523465ec9d929",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/preflight_costs.json": "444d2a6ce20d46f85ed314838edafd61faca4e97b244da22fc9c27a81d64384c",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profile_qualification/profile.json": "d9926585eda6bcae635c666030ff03539f54e27aa02a00b13a42df099c1e2084",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profile_qualification/trace.json": "7376ed7b7e8033e5e866099325bd9893ff21c6471d0cd4f2439bd36868abcdcf",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profiles/step_0_1791958805700273927/profile.json": "2687bde9f62b138c6390230c06be0152ff9260d4bb3ec93ecd5dd6be7be48e27",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profiles/step_0_1791958805700273927/trace.json": "638ffb8e3d27d00fe8f1939ac006b60f3726dc344731f38f7d8c7e92de82f961",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/repeat-a.pt": "e341b62889e6a59904b5c51fd0849cd5e37303d51dbca91cd2f76c8a43ebf984",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/repeat-b.pt": "eaca49db2b03c9bcdbb2376e84097ff3a768b9f0899446a89af63d60e386e21c",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/resumed-first.pt": "e66b9e06167109399852b482d72d0624e464ade3849453e6dbcdbea7c2982310",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/resumed.pt": "e06023c76cb1a89203fb9dbdbf8743f1d78dfab38089d56df7daab25cb8e5c97",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/runtime_certificate.json": "f0c65522a420cb2942cbfcb1824878d0d934d1574f9946e1f5ed58ababdf0f3c",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/runtime_provenance.json": "b6dec736a698da7313be54f08ee35225df421b63b08a5596a00d05c1558780fb",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/selected_model.pt": "14963515509cefaf6d7c74eeca0cffb814b027126777ac2a0fc2a435c8b539df",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/train.log": "2b15d15d31459f7cbc75b35d6c1f46fe299c03d8db2be98063e523465ec9d929",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/training_contract.json": "2d3c454e0f9b229249540181895abfdb786daef9cb17829a31bd2eb1562ac2fd",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/input_resolution.json": "b97d1eb79067179a10fc74c2ab65fb8809af32b4cf767de3cc63996ad2108dec",
+    "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/pair_state.json": "8deb1cb58118f0c2468cf7db8ed7fbb328239dd8c92d510b7d59f00e394397c8",
+    "experiments/family_topology_t4_100k/terminal_acceptance/remote_log.json": "db3f704d25ed8b0818d8f4cf304b7422aff8a3171775eb0bb969a32328fc2832",
+    "experiments/family_topology_t4_100k/terminal_acceptance/remote_observation.json": "5e6196b55d465b0586c40a9eff4823037cc605a1c2d6d331d3108d7723196db9",
+    "experiments/family_topology_t4_100k/terminal_acceptance/retention_gptrans_local.json": "b525296ed37e2fd3052228ddeb43edfce3ec4c596e1a472f9bee25b5ef96460b",
+    "experiments/family_topology_t4_100k/terminal_acceptance/summary.json": "892768eabdad2bbdb3ae086ceafb38b58d7414f7ffaf6a37395d17d92217d617",
+    "experiments/family_topology_t4_100k/terminal_acceptance/transport_retention.json": "c6e8a7bf964a396c693baf1703417e474fbd7e7cc2e72cd997e251d8c83b1104",
+    "experiments/family_topology_t4_100k/training_recipe_gptrans_local.json": "7f4af84e0144faa215e0d3e4b3b9338e5c69e0720404b83d3bc42a1dc2ed72ef"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "gptrans_local-v1",
+      "category": "other",
+      "cost_event_id": "cost-TB-family-topology-t4-100k-gptrans_local-s42-entry-allocation",
+      "evidence_ref": "experiments/family_topology_t4_100k/terminal_acceptance/acceptance_gptrans_local.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 2.814809767012222
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.73722348601
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "family-topology-t4-100k-s42:gptrans_local:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-family-topology-t4-100k-gptrans_local-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/family_topology_t4_100k/terminal_acceptance/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "Separately authorized repeated profiler-off same-runtime old/new execution control; no automatic retry"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/protocol.md",
+        "name": "experiments/family_topology_t4_100k/protocol.md",
+        "sha256": "f95549aaaa527fd9f3fa71c4095aa2884c08cd563edc3d8bba146144717efb4e"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/config.json",
+        "name": "experiments/family_topology_t4_100k/config.json",
+        "sha256": "dd6d8638da14576a8ffda0c5a02752974e3d2e08dd792bcffc41067648969066"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/role_plan.json",
+        "name": "experiments/family_topology_t4_100k/role_plan.json",
+        "sha256": "511190d16e90a256cdd9bf5a3b9fa64172165665d3accf6a1365ddd51f0c42e4"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/training_recipe_gptrans_local.json",
+        "name": "experiments/family_topology_t4_100k/training_recipe_gptrans_local.json",
+        "sha256": "7f4af84e0144faa215e0d3e4b3b9338e5c69e0720404b83d3bc42a1dc2ed72ef"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/baseline_binding.json",
+        "name": "experiments/family_topology_t4_100k/baseline_binding.json",
+        "sha256": "e9fd5b2c70ee4571cad3a9921d15d3cb4668d1ea26fe4c504cb5475b4fba3669"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/decision.md",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/decision.md",
+        "sha256": "bc2d9657df8b4ec1b70db9974f2a20959567f8b03a70a6f6a65ec9cbfbb6c674"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/attribution.md",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/attribution.md",
+        "sha256": "b8a2328cac37b12313fa4a2f080b229be29d1ab747fa70187e2dfd7ad2067be9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/independent_review.md",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/independent_review.md",
+        "sha256": "6a2d0c350015edf5b537cfcaaa75ede731893b14f0f09646894d92ddea26d769"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/summary.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/summary.json",
+        "sha256": "892768eabdad2bbdb3ae086ceafb38b58d7414f7ffaf6a37395d17d92217d617"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/remote_observation.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/remote_observation.json",
+        "sha256": "5e6196b55d465b0586c40a9eff4823037cc605a1c2d6d331d3108d7723196db9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/remote_log.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/remote_log.json",
+        "sha256": "db3f704d25ed8b0818d8f4cf304b7422aff8a3171775eb0bb969a32328fc2832"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/metadata_retention.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/metadata_retention.json",
+        "sha256": "ed69a249876039bdea970cd439042311b80a94960ded725bdda12d635a88c1bd"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/transport_retention.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/transport_retention.json",
+        "sha256": "c6e8a7bf964a396c693baf1703417e474fbd7e7cc2e72cd997e251d8c83b1104"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/mechanical_gptrans_local.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/mechanical_gptrans_local.json",
+        "sha256": "4b1c8c585badeac3b7a708bda856aa9e8dd2d082a0ee95c9522d3849c1e6136d"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/native_gptrans_local.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/native_gptrans_local.json",
+        "sha256": "bc13bfd2c473b9a51d05272ffbbb355ab85ee3b3297dadb96bc3a8fc3fde76fb"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/retention_gptrans_local.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/retention_gptrans_local.json",
+        "sha256": "b525296ed37e2fd3052228ddeb43edfce3ec4c596e1a472f9bee25b5ef96460b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/acceptance_gptrans_local.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/acceptance_gptrans_local.json",
+        "sha256": "38294c1dd657d34bf8c6443a004c56af7cbf585482f88360befa0b51b30739c7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/allocation_entry_observation.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/allocation_entry_observation.json",
+        "sha256": "ac876cd14da9ce91e6bcfc7d74d76cd1e87f9f97f1b1d199dd68cf9f50d8954b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/pair_state.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/pair_state.json",
+        "sha256": "8deb1cb58118f0c2468cf7db8ed7fbb328239dd8c92d510b7d59f00e394397c8"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/input_resolution.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/input_resolution.json",
+        "sha256": "b97d1eb79067179a10fc74c2ab65fb8809af32b4cf767de3cc63996ad2108dec"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/allocation_costs.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/allocation_costs.json",
+        "sha256": "314fd1749ed023ea1834df224774bce7681cf2f37c8cdedaa218dd1235102aa9"
+      },
+      {
+        "artifact_type": "training_trace",
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/canonical_trace.json",
+        "name": "training_trace",
+        "sha256": "735a865cdc28849ed16e4cb483f7b92feba9c23407828d0915dbda6f3d527927"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/canonical_trace.json.context.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/canonical_trace.json.context.json",
+        "sha256": "48e67438feb6c0ee08d4485f950bb7fae646f2114fae0bc8d0f098072fcff48c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/development_predictions.pt",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/development_predictions.pt",
+        "sha256": "3b133f279f7e3312e22897e7ae9c8094278ab79be76c5785fcfb34012127c684"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/execution_profile_receipt.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/execution_profile_receipt.json",
+        "sha256": "a629dc04832c11865019dcc82e4e7d7e52035ee74944ec6c13a17d4228683fa1"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/invocation_cost_state.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/invocation_cost_state.json",
+        "sha256": "b1d7520de5da1fc53a2fd7845a710c1b398103c676953a344d73862f6d178a86"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/last_checkpoint.pt",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/last_checkpoint.pt",
+        "sha256": "cfe86590908e9adeaac4a76e1736bc221f3f3770013734ad30627ec08f1d6b39"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/output_manifest.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/output_manifest.json",
+        "sha256": "b60e4ea5f308ecf1654d19eeae0e59ed93456bc7a0d8410741f2c89e35c44698"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/preflight.log",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/preflight.log",
+        "sha256": "2b15d15d31459f7cbc75b35d6c1f46fe299c03d8db2be98063e523465ec9d929"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/preflight_costs.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/preflight_costs.json",
+        "sha256": "444d2a6ce20d46f85ed314838edafd61faca4e97b244da22fc9c27a81d64384c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profile_qualification/profile.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profile_qualification/profile.json",
+        "sha256": "d9926585eda6bcae635c666030ff03539f54e27aa02a00b13a42df099c1e2084"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profile_qualification/trace.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profile_qualification/trace.json",
+        "sha256": "7376ed7b7e8033e5e866099325bd9893ff21c6471d0cd4f2439bd36868abcdcf"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profiles/step_0_1791958805700273927/profile.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profiles/step_0_1791958805700273927/profile.json",
+        "sha256": "2687bde9f62b138c6390230c06be0152ff9260d4bb3ec93ecd5dd6be7be48e27"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profiles/step_0_1791958805700273927/trace.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/profiles/step_0_1791958805700273927/trace.json",
+        "sha256": "638ffb8e3d27d00fe8f1939ac006b60f3726dc344731f38f7d8c7e92de82f961"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/repeat-a.pt",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/repeat-a.pt",
+        "sha256": "e341b62889e6a59904b5c51fd0849cd5e37303d51dbca91cd2f76c8a43ebf984"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/repeat-b.pt",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/repeat-b.pt",
+        "sha256": "eaca49db2b03c9bcdbb2376e84097ff3a768b9f0899446a89af63d60e386e21c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/resumed-first.pt",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/resumed-first.pt",
+        "sha256": "e66b9e06167109399852b482d72d0624e464ade3849453e6dbcdbea7c2982310"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/resumed.pt",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/resumed.pt",
+        "sha256": "e06023c76cb1a89203fb9dbdbf8743f1d78dfab38089d56df7daab25cb8e5c97"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/runtime_certificate.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/runtime_certificate.json",
+        "sha256": "f0c65522a420cb2942cbfcb1824878d0d934d1574f9946e1f5ed58ababdf0f3c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/runtime_provenance.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/runtime_provenance.json",
+        "sha256": "b6dec736a698da7313be54f08ee35225df421b63b08a5596a00d05c1558780fb"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/selected_model.pt",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/selected_model.pt",
+        "sha256": "14963515509cefaf6d7c74eeca0cffb814b027126777ac2a0fc2a435c8b539df"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/train.log",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/train.log",
+        "sha256": "2b15d15d31459f7cbc75b35d6c1f46fe299c03d8db2be98063e523465ec9d929"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/training_contract.json",
+        "name": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/training_contract.json",
+        "sha256": "2d3c454e0f9b229249540181895abfdb786daef9cb17829a31bd2eb1562ac2fd"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/dataset_create_response.json",
+        "name": "experiments/family_topology_t4_100k/submission/dataset_create_response.json",
+        "sha256": "130d2f9b355bd523aa28cd2034b69f45f57a8c6c80b509fe93e0f8ebdd2becfb"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/dataset_listing.json",
+        "name": "experiments/family_topology_t4_100k/submission/dataset_listing.json",
+        "sha256": "267d1221bdc6598fbbfe863bb5a2ad1420c31e26985afe24c1200460f2807d69"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/dataset_roundtrip.json",
+        "name": "experiments/family_topology_t4_100k/submission/dataset_roundtrip.json",
+        "sha256": "f10efc87daef9757ca97216f2dd037c07bfa09eeb18e390904368cd85166b317"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/initial_prospective_report.json",
+        "name": "experiments/family_topology_t4_100k/submission/initial_prospective_report.json",
+        "sha256": "1f720a90876095d1cd0f46e083593e6accd498626fd11a847cf5a5f3f37c8c72"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/kernel_push_response.json",
+        "name": "experiments/family_topology_t4_100k/submission/kernel_push_response.json",
+        "sha256": "36f0db762a1f94f523db85a179bdf68d3e9c2b5946feb7179fee8322c42fdc54"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/preparation_reconciliation.json",
+        "name": "experiments/family_topology_t4_100k/submission/preparation_reconciliation.json",
+        "sha256": "a966386a676fb574472d53f5430fd242bff1c868e03e707b7fa11a3838d83e6b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/prepared_training.json",
+        "name": "experiments/family_topology_t4_100k/submission/prepared_training.json",
+        "sha256": "3974b8adb702d1c9bc3b1f4107844cbf9ecbf6de719d4f4bb1ddbf02b855b93d"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/receipts/38996104dccf38014fae8d43b1472f8946dc1f767083d8b0425d6081666173ac.json",
+        "name": "experiments/family_topology_t4_100k/submission/receipts/38996104dccf38014fae8d43b1472f8946dc1f767083d8b0425d6081666173ac.json",
+        "sha256": "9976bae077cf840d931cbbb636f7af755afd93ea0210d7a4fedf868ffd9886b0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/release_report.json",
+        "name": "experiments/family_topology_t4_100k/submission/release_report.json",
+        "sha256": "d376f1decbe94e3f9d8c505dedbb1de99b640c556ce3d35034c2337f55600743"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/retained_asset_supplement.json",
+        "name": "experiments/family_topology_t4_100k/submission/retained_asset_supplement.json",
+        "sha256": "9641a97c700fadef6db7d0cb604dfe722c4abcf31aaff7239e65d0f4fa99c317"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/scheduler_source_observation.json",
+        "name": "experiments/family_topology_t4_100k/submission/scheduler_source_observation.json",
+        "sha256": "14193f667a5c67f10aab0667090bac1519b26581f5b00bb5db757dd4af01e7fa"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_topology_t4_100k/submission/startup_log.json",
+        "name": "experiments/family_topology_t4_100k/submission/startup_log.json",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/family_topology_t4_100k/terminal_acceptance/decision.md",
+        "experiments/family_topology_t4_100k/terminal_acceptance/attribution.md",
+        "experiments/family_topology_t4_100k/terminal_acceptance/independent_review.md",
+        "experiments/family_topology_t4_100k/protocol.md",
+        "experiments/family_topology_t4_100k/terminal_acceptance/acceptance_gptrans_local.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
+    "execution_comparison_ref": "experiments/family_topology_t4_100k/terminal_acceptance/summary.json",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "family-topology-t4-100k-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-14T10:37:24.148291+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Terminal translation of already completed source-verified outputs and independent CPU artifact/native inspection; no model execution during closure."
+    },
+    "observed_execution": {
+      "completed_passes": 60,
+      "execution_ref": "experiments/family_topology_t4_100k/terminal_acceptance/outputs/experiment/gptrans_local/output_manifest.json",
+      "inference_executed": false,
+      "internal_development_gap_mae_eV": 0.14286130827367305,
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080,
+      "selected_pass": 52,
+      "selected_weights": "ema",
+      "training_executed": true
+    },
+    "outcome": {
+      "artifact_status": "durable_local_verified",
+      "budget_decision": "closed",
+      "comparison_status": "context_only",
+      "execution_status": "complete",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "development": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "consumed"
+    },
+    "scope": "100k",
+    "scope_note": "Matched recipe cross-job execution delivery; observed faster wall and exact saved prediction/trace equality. No strict same-physical-job control, architecture promotion, repeat-job variance, replay-ready pair or READY.",
+    "source_identity": {
+      "kernel": "nothingnessvoid/molgap-k1-gptrans-topology-100k-s42",
+      "package_identity": "ed6bb15dc3ac8a668e299b50ee5fc8898dc638b4301de7b6193b56bc2d563e5b",
+      "platform": "kaggle",
+      "producer_platform_version": null,
+      "source_archive_sha256": "570250c77ec37e72e2ba7dfaf0e5454686f79ac1074c516084bbd9591dbafddb",
+      "source_commit": "35ddecdc0ccf7e9ca664588cc836bd2ecb7ec6f3",
+      "spec_identity": "9db73758d7f12974219bcf8d5eafd25789a7f2a675660eeddb53b87c5a6068bc",
+      "version": 1
+    },
+    "track": "B"
+  },
+  "finalized_at": "2026-10-14T10:37:24.148291+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_topology_t4_100k/terminal_acceptance/acceptance_gptrans_local.json",
+      "role_event_id": "role-TB-family-topology-t4-100k-gptrans_local-s42-train",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "family-topology-t4-100k-s42:gptrans_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-family-topology-t4-100k-gptrans_local-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_topology_t4_100k/terminal_acceptance/acceptance_gptrans_local.json",
+      "role_event_id": "role-TB-family-topology-t4-100k-gptrans_local-s42-development-metric",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "family-topology-t4-100k-s42:gptrans_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-family-topology-t4-100k-gptrans_local-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_topology_t4_100k/terminal_acceptance/acceptance_gptrans_local.json",
+      "role_event_id": "role-TB-family-topology-t4-100k-gptrans_local-s42-development-selection",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "family-topology-t4-100k-s42:gptrans_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-family-topology-t4-100k-gptrans_local-s42"
+    }
+  ],
+  "run_id": "family-topology-t4-100k-s42:gptrans_local:downstream",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "unspecified_in_contract",
+      "dataset_identity": "unspecified_in_contract",
+      "ema_semantics": "ema",
+      "evaluation_role_identity": "internal_development",
+      "lr_schedule_identity": "unspecified_in_contract",
+      "matched_architecture_required": false,
+      "optimizer_identity": "unspecified_in_contract",
+      "precision_identity": "unspecified_in_contract",
+      "row_split_identity": "unspecified_in_contract",
+      "scientific_contract": "experiments/family_topology_t4_100k/protocol.md",
+      "selection_role_identity": "best_development_metric",
+      "target_transform_identity": "unspecified_in_contract",
+      "terminal_endpoint_identity": "endpoint_46860",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/family_topology_t4_100k/protocol.md",
+    "evaluation_role_identity": "internal_development",
+    "exposure": {
+      "optimizer_steps": 46860,
+      "sample_presentations": 5998080
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "unspecified_in_contract",
+    "presentation_semantics_ref": "experiments/family_topology_t4_100k/protocol.md",
+    "reference_id": null,
+    "run_id": "family-topology-t4-100k-s42:gptrans_local:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_development_metric",
+    "terminal_evidence_ref": "pending",
+    "trace_artifact_ref": "pending",
+    "trace_fields": {
+      "checkpoint_identity": false,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": false,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TB-family-topology-t4-100k-gptrans_local-s42",
+    "weight_semantics": "ema_and_live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TB-family-topology-t4-100k-gptrans_local-s42"
+}

@@ -20,6 +20,24 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "family-topology-t4-100k-s42:gptrans_local:downstream",
+      "trajectory_id": "TB-family-topology-t4-100k-gptrans_local-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "family-topology-t4-100k-s42:k1_mean2:downstream",
+      "trajectory_id": "TB-family-topology-t4-100k-k1_mean2-s42"
+    },
+    {
+      "reasons": [
         "CONTEXT_ONLY",
         "canonical_trace_marked_ineligible",
         "epoch_axis_not_cross_scale_comparable",
@@ -295,5 +313,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 33
+  "trace_count": 35
 }

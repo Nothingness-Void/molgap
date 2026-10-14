@@ -1,5 +1,11 @@
 # T4 Execution Comparison Handoff - 2026-10-14
 
+Terminal reconciliation: [decision](terminal_acceptance/decision.md),
+[attribution](terminal_acceptance/attribution.md) and
+[RML custody](terminal_acceptance/closure.md) own the completed version1 result.
+Submission-time observations below are dated history, not a live queue view.
+No successor, continuation or model promotion is released.
+
 Owner: `codex/exp/family-topology-t4-100k`, `D:/w/family-topology-t4-100k`.
 Use this owner until acceptance and a reviewed terminal routing decision.
 The [protocol](protocol.md) owns authorization, unchanged recipes, profiling
