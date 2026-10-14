@@ -28,7 +28,8 @@ supported; the registered model always supplies the shared indices.
 previous-expression oracles. It checks outputs, gradients, optimizer state,
 RNG, empty edges, directed/disconnected reachability, parameter hash and exact
 eliminated-operation counts. Existing session/resume/package tests remain
-applicable; independent acceptance owns their actual execution results.
+applicable; [independent verification](topology_verification.md) owns actual
+results and the preserved first-run native anomaly.
 
 No new native GPU throughput measurement or native qualification is supplied
 by these tests. The large forward/backward workload remains; these targeted

@@ -104,8 +104,10 @@ set to `-1` and the desktop venv. The profiler, session and core suites passed
 `add_note` compatibility guard; that guard was inspected rather than retested.
 An additional injected-checkpoint-failure check confirmed optimizer wrapper
 restoration. Kineto emitted a nonfatal GPU-discovery message with devices
-hidden; no native GPU workload ran. Native event capture, actual molecular
-hotspots and throughput gains remain unmeasured.
+hidden; no native GPU workload ran during that CPU acceptance. The later
+[Kaggle two-family acceptance](../../experiments/family_100k_operator_profile/terminal_acceptance/decision.md)
+retains actual T4 operator capture and complete endpoints. Profiling-off
+throughput gains remain unmeasured; the two family recipes are not a strict pair.
 
 ```powershell
 $env:PYTHONPATH = (Join-Path (Get-Location) 'src')
