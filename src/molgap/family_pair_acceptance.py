@@ -9,13 +9,88 @@ import math
 from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _json, inspect_output
 from .experiment_package import verify_experiment_source_package
 from .experiment_retention import validate_execution_retention
+from .experiment_allocation import _prior_segments
 from .family_training_runner import read_recipe, validate_screen_recipe, _verify_preflight
 from .family_pair_release import bounded_cycle_pair, WALL_CEILING_SECONDS
 from .training_reproducibility import atomic_json, sha256_file
 
 
+def _validate_campaign_reference(previous, *, package_dir, package, reference_package_dir):
+    """Bind slot2's retained comparator to the frozen slot1 arm and budget."""
+    import json
+    import hashlib
+    from .experiment_family_workflow import _digest
+    from .experiment_package import read_packaged_text
+    from .experiment_spec import ExperimentSpec
+    from .gptrans_campaign_release import BASE
+    from .screen_policy import canonical_fingerprint
+
+    campaign = json.loads(read_packaged_text(Path(package_dir), BASE + "/campaign.json"))
+    first_pin = campaign["slots"][0]
+    first_text = read_packaged_text(Path(package_dir), first_pin["path"])
+    if hashlib.sha256(first_text.encode()).hexdigest() != first_pin["sha256"]:
+        raise ValueError("Frozen slot1 Spec source pin changed")
+    first = ExperimentSpec(json.loads(first_text))
+    frozen = campaign["arms"]["reference"]
+    from .family_training_recipe import FamilyRecipe
+    from .family_training_runner import METADATA
+    contract_text = read_packaged_text(Path(package_dir), frozen["contract"]["path"])
+    if hashlib.sha256(contract_text.encode()).hexdigest() != frozen["contract"]["sha256"]:
+        raise ValueError("Frozen campaign reference recipe source pin changed")
+    record = json.loads(contract_text)
+    recipe = FamilyRecipe.from_dict({k: v for k, v in record.items() if k not in METADATA})
+    if reference_package_dir is None:
+        raise ValueError("Slot2 requires the independently accepted slot1 source package")
+    original = verify_experiment_source_package(Path(reference_package_dir))
+    if (read_packaged_text(Path(reference_package_dir), first_pin["path"]) != first_text
+            or read_packaged_text(Path(reference_package_dir), frozen["contract"]["path"]) != contract_text):
+        raise ValueError("Original reference package differs from frozen slot1 Spec/recipe")
+    if (previous.get("format") != "molgap-family-pair-acceptance-v1" or previous.get("accepted") is not True
+            or previous.get("acceptance_order") != ["reference", "cycle"]
+            or previous.get("spec_identity") != first.identity
+            or previous.get("source_commit") != package["source_commit"]
+            or original["spec_identity"] != first.identity
+            or any(previous.get(key) != original[pack_key] for key, pack_key in (
+                ("source_commit", "source_commit"), ("source_archive_sha256", "archive_sha256"),
+                ("package_identity", "package_identity")))):
+        raise ValueError("Missing/mismatching actual accepted campaign reference")
+    for key in ("source_archive_sha256", "package_identity"):
+        _digest(previous.get(key), "accepted_reference." + key)
+    reference = previous.get("arms", {}).get("reference", {})
+    context = reference.get("context", {})
+    validated_context = RunContext(**context)
+    arm = first.to_dict()["arms"][0]
+    if (reference.get("accepted") is not True or reference.get("role") != "reference"
+            or reference.get("recipe_identity") != recipe.identity
+            or context.get("spec_identity") != first.identity or context.get("arm_id") != "reference"
+            or context.get("arm_identity") != canonical_fingerprint(arm)
+            or context.get("training_recipe_sha256") != frozen["contract"]["sha256"]
+            or validated_context.experiment_id != first.to_dict()["experiment_id"]
+            or validated_context.logical_run_id != first.to_dict()["logical_run_id"]
+            or validated_context.platform != first.to_dict()["platform"]["name"]
+            or validated_context.platform_version is None
+            or (validated_context.family_name, validated_context.family_version) != (
+                arm["family"]["name"], arm["family"]["version"])
+            or any(context.get(k) != previous[k] for k in ("source_commit", "source_archive_sha256", "package_identity"))):
+        raise ValueError("Accepted reference is not the exact frozen campaign baseline")
+    inspection = reference.get("inspection", {})
+    progress = inspection.get("observed", {}).get("progress", {})
+    if (inspection.get("status") != "MECHANICALLY_VERIFIED" or progress.get("status") != "complete"
+            or progress.get("optimizer_steps") != recipe.optimizer_steps
+            or progress.get("sample_presentations") != record["acceptance_requirements"]["sample_presentations"]
+            or progress.get("completed_passes") != 60 or progress.get("next_batch") != 0):
+        raise ValueError("Accepted reference lacks the complete frozen scientific endpoint")
+    full = previous.get("full_allocation", {})
+    wall, device = full.get("wall_seconds"), full.get("allocated_device_seconds")
+    if (any(type(v) not in (int, float) or not math.isfinite(v) or v < 0 for v in (wall, device))
+            or wall > WALL_CEILING_SECONDS or device > 16 * 3600
+            or not math.isclose(device, 2 * wall, rel_tol=1e-9, abs_tol=1e-6)):
+        raise ValueError("Accepted reference full allocated T4 cost is invalid")
+    return reference, device
+
+
 def accept_pair(spec, *, package_dir, receipt_path, output_root, contracts, destination,
-                accepted_reference=None):
+                accepted_reference=None, reference_package_dir=None):
     """Accept B first, then compare A to B's verified saved predictions."""
     import torch
     from .k1_terminal_analysis import paired_saved_errors
@@ -28,7 +103,7 @@ def accept_pair(spec, *, package_dir, receipt_path, output_root, contracts, dest
     retained = validate_execution_retention(root, spec, package_identity=package["package_identity"],
         source_commit=package["source_commit"], source_archive_sha256=package["archive_sha256"])
     ledger = retained["ledgers"]["root"]
-    segments = [ledger, *ledger["prior_segments"]]
+    segments = _prior_segments([ledger], spec.identity)
     wall = sum(s["wall_seconds"] for s in segments)
     device = sum(s["allocated_device_seconds"] for s in segments)
     retired_cost = {"wall_seconds": 0.0, "allocated_device_seconds": 0.0}
@@ -59,14 +134,11 @@ def accept_pair(spec, *, package_dir, receipt_path, output_root, contracts, dest
         if accepted_reference is None:
             raise ValueError("Slot2 comparison waits for independently accepted slot1 reference")
         previous = _json(Path(accepted_reference))
-        if (previous.get("accepted") is not True or previous.get("acceptance_order") != ["reference", "cycle"]
-                or previous.get("source_commit") != package["source_commit"]):
-            raise ValueError("Missing/mismatching actual accepted campaign reference")
-        reference = previous["arms"][reference_id]
+        reference, prior_device_seconds = _validate_campaign_reference(previous,
+            package_dir=package_dir, package=package, reference_package_dir=reference_package_dir)
         for pointer in (reference["checkpoint"], reference["predictions"]):
             if sha256_file(Path(pointer["path"])) != pointer["sha256"]:
                 raise ValueError("Actual accepted campaign reference changed")
-        prior_device_seconds = previous["full_allocation"]["allocated_device_seconds"]
         if prior_device_seconds + device > 32 * 3600:
             raise ValueError("Whole campaign exceeded32allocatedT4hours")
         reports[reference_id] = reference
