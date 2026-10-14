@@ -157,7 +157,11 @@ The generic screen has a bounded local-CPU/Kaggle-T4 execution policy, not an
 IMS/DCU/full-data trainer. Cross-scale K1/GPTrans continue through the existing
 family sessions and their owning platform skills.
 
-Clean state is available to addon implementers but is not automatically merged
-into session checkpointing or endpoint selection. Attach/seal hooks before
+An explicit K1 `FamilyRecipe.clean_bn` now binds the existing calibration owner
+to per-pass Clean-EMA selection and atomic owner-state checkpoint/resume. The
+policy requires a fixed training prefix, input/role/order pins and native scratch
+qualification; recipes without it retain their original identity and behavior.
+Selected EMA tensors include calibrated BN buffers and their retained binding.
+Attach/seal hooks before
 building the optimizer; prove the hooks are reached on the selected accelerated
 path. Dynamic dependency reports still require review and isolated imports.

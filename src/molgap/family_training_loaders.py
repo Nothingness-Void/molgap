@@ -76,3 +76,19 @@ class FamilyLoaders:
                 loader._iterator = None
         if self.development_cache is not None:
             self.development_cache.clear()
+
+    def calibration(self, policy):
+        """Independent fixed training prefix; never changes the training sampler."""
+        import torch
+        from torch_geometric.loader import DataLoader
+        from .family_training_state import CalibrationPolicy, source_order_sha256
+        if (self.closed or type(policy) is not CalibrationPolicy
+                or policy.input_identity != self.data.manifest_sha256):
+            raise ValueError("Calibration input/policy differs from admitted training data")
+        rows = policy.batches * policy.batch_size
+        indices = torch.arange(self.data.train_source_start, self.data.train_source_start + rows)
+        if rows > self.data.train_rows or source_order_sha256(indices) != policy.source_order_sha256:
+            raise ValueError("Calibration is not the declared exact training prefix")
+        return DataLoader(torch.utils.data.Subset(self.data.train, range(rows)),
+            batch_size=policy.batch_size, shuffle=False, num_workers=0,
+            generator=torch.Generator().manual_seed(self.recipe.seed), pin_memory=True)

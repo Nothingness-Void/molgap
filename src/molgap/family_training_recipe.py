@@ -108,6 +108,7 @@ class FamilyRecipe:
     finite_check_every: int = 50
     drop_last: bool = True
     torch_version: str = "2.11.0"
+    clean_bn: object | None = None
 
     def __post_init__(self):
         from .experiment_spec import _digest
@@ -142,6 +143,14 @@ class FamilyRecipe:
             raise ValueError("Unsupported EMA decay")
         if self.selection.endswith("ema") and self.ema_decay is None:
             raise ValueError("EMA weight selection requires EMA state")
+        if self.clean_bn is not None:
+            from .family_training_state import CalibrationPolicy
+            if (type(self.clean_bn) is not CalibrationPolicy or self.family != "neural_atom_k1"
+                    or self.selection != "best-development-ema" or self.ema_decay is None
+                    or self.clean_bn.input_identity != self.dataset.manifest_sha256
+                    or self.clean_bn.batch_size != self.batch_size
+                    or self.clean_bn.batches * self.batch_size > self.train_rows):
+                raise ValueError("Clean-BN requires a pinned K1 training-prefix/EMA selection policy")
         if self.sampler not in {"python-epoch-shuffle", "torch-pass-randperm"}:
             raise ValueError("Unsupported sampler policy")
         if type(self.drop_last) is not bool:
@@ -171,7 +180,12 @@ class FamilyRecipe:
             "torch_version": self.torch_version}
 
     def to_dict(self):
-        return {"format": RECIPE_FORMAT, **asdict(self), "execution_policy": self.execution_policy}
+        record = {"format": RECIPE_FORMAT, **asdict(self), "execution_policy": self.execution_policy}
+        if self.clean_bn is None:
+            record.pop("clean_bn")
+        else:
+            record["clean_bn"] = self.clean_bn.to_dict()
+        return record
 
     @property
     def identity(self):
@@ -180,9 +194,14 @@ class FamilyRecipe:
     @classmethod
     def from_dict(cls, record):
         expected = {field.name for field in fields(cls)} | {"format", "execution_policy"}
+        if "clean_bn" not in record:
+            expected.remove("clean_bn")
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
             raise ValueError("Missing or unknown shared training recipe fields")
-        values = {field.name: record[field.name] for field in fields(cls)}
+        values = {field.name: record[field.name] for field in fields(cls) if field.name in record}
+        if "clean_bn" in values:
+            from .family_training_state import CalibrationPolicy
+            values["clean_bn"] = CalibrationPolicy.from_dict(values["clean_bn"])
         if type(values["dataset"]) is not dict or type(values["schedule"]) is not dict:
             raise ValueError("Expected dataset/schedule objects")
         try:

@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 import math
+from .screen_policy import canonical_fingerprint
 
 from .family_training_core import LoopProgress, run_training_loop
 from .family_training_kernel import ContractSchedule, FamilyKernel
@@ -81,6 +82,8 @@ def validate_session_resume(recipe, state):
     from .experiment_family_workflow import _finite_tree, _validate_rng_state
     required = {"model", "optimizer", "scheduler", "ema", "rng_state", "cursor",
                 "optimizer_step", "sample_presentations"}
+    if recipe.clean_bn is not None:
+        required.add("owner_state")
     if type(state) is not dict or set(state) != required:
         raise ValueError("Incomplete family resume state")
     cursor, plan, step = state["cursor"], recipe.loop_plan, state["optimizer_step"]
@@ -147,6 +150,26 @@ def validate_session_resume(recipe, state):
                 not isinstance(value, torch.Tensor) or value.shape != state["model"][key].shape
                 or value.dtype != state["model"][key].dtype for key, value in state["ema"].items())):
         raise ValueError("Resume EMA tensor schema differs from model")
+    if recipe.clean_bn is not None:
+        from .family_training_state import STATE_FORMAT, CalibrationPolicy, _state_identity
+        owner = state["owner_state"]
+        if (type(owner) is not dict or set(owner) != {"format", "live", "raw_ema", "raw_revision", "clean"}
+                or owner["format"] != STATE_FORMAT or owner["raw_revision"] != step
+                or _state_identity(owner["live"]) != _state_identity(state["model"])
+                or _state_identity(owner["raw_ema"]) != _state_identity(state["ema"])):
+            raise ValueError("Clean state differs from acknowledged Live/Raw exposure")
+        clean = owner["clean"]
+        if pass_index and clean is None:
+            raise ValueError("Completed pass lost its calibrated state")
+        if clean is not None:
+            record = clean["calibration"]
+            if (CalibrationPolicy.from_dict(record["policy"]).identity != recipe.clean_bn.identity
+                    or record["policy_identity"] != recipe.clean_bn.identity
+                    or record["clean_state_identity"] != _state_identity(clean["model"])
+                    or record["identity"] != canonical_fingerprint({key: value for key, value in record.items() if key != "identity"})
+                    or record["raw_revision"] != pass_index * plan.steps_per_pass
+                    or clean["stale"] != bool(offset)):
+                raise ValueError("Clean calibration identity/cursor differs from the recipe")
     _finite_tree(state, "family.resume")
     _validate_rng_state(state["rng_state"])
     return LoopProgress(step, state["sample_presentations"], pass_index, offset, cursor["status"])
@@ -206,6 +229,8 @@ class FamilyTrainingSession:
             "rng_state": tensor_safe_rng_state(capture_rng_state()), "cursor": self._cursor(optimizer_state),
             "optimizer_step": self.progress.optimizer_step,
             "sample_presentations": self.progress.sample_presentations}
+        if self.recipe.clean_bn is not None:
+            state["owner_state"] = self.kernel.training_state.state_dict()
         _finite_tree(state, "family.checkpoint")
         return state
 
@@ -248,6 +273,8 @@ class FamilyTrainingSession:
             self.schedule.load_state_dict(value["scheduler"])
             if self.kernel.ema is not None:
                 self.kernel.ema.load_state_dict(value["ema"])
+            if self.recipe.clean_bn is not None:
+                self.kernel.training_state.load_state_dict(value["owner_state"])
             restore_rng_state(value["rng_state"])
         try:
             install(state)
@@ -264,6 +291,12 @@ class FamilyTrainingSession:
 
     def _select(self, progress, evaluation=None):
         weights = self.recipe.selection.rsplit("-", 1)[1]
+        if self.recipe.clean_bn is not None:
+            if self.kernel.training_state.clean_status != "ready":
+                raise ValueError("Selection requires the current calibrated EMA")
+            self.selected(progress, weights, self.kernel.training_state.clean_model.state_dict(), evaluation)
+            self.selected_step = progress.optimizer_step
+            return
         with self.kernel.weight_view.use(self.kernel.model, self.kernel.ema, weights):
             self.selected(progress, weights, self.kernel.model.state_dict(), evaluation)
         self.selected_step = progress.optimizer_step

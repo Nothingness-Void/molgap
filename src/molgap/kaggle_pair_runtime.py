@@ -129,7 +129,19 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 state["exit_reason"] = "worker_running"
                 row.update(started=True, terminal_status="running", exit_reason="worker_running")
                 atomic_json(output / "pair_state.json", report)
+            last_progress = {}
             while True:
+                if phase == "train":
+                    import json
+                    for job in jobs:
+                        path = output / job["arm_id"] / "training_progress.json"
+                        if not path.is_file():
+                            continue
+                        progress = json.loads(path.read_text(encoding="utf-8"))
+                        step = progress["optimizer_steps"]
+                        if step != last_progress.get(job["arm_id"]):
+                            print("TRAIN_PROGRESS", json.dumps(progress, sort_keys=True), flush=True)
+                            last_progress[job["arm_id"]] = step
                 if deadline is not None and time.perf_counter() >= deadline:
                     report["stop_reason"] = "STOP_FOR_COST"
                     raise TimeoutError("Frozen allocation ceiling exhausted; retain complete-epoch resume state")

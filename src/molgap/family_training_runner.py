@@ -86,6 +86,8 @@ def read_recipe(path):
     if requirements != expected:
         raise ValueError("Acceptance counters differ from the executable recipe")
     _text(record["train_role_identity"], "train_role_identity")
+    if recipe.clean_bn is not None and recipe.clean_bn.training_role_identity != record["train_role_identity"]:
+        raise ValueError("Clean-BN role identity differs from the frozen training role")
     if recipe.dataset.development:
         _text(record["development_role_identity"], "development_role_identity")
     elif record["development_role_identity"] is not None:
@@ -228,11 +230,12 @@ def run_screen_preflight(**options):
     record, recipe, data, tuning, context, provenance, _ = _bootstrap(training_only=True, **options)
     # Preflight consumes training topology only, never development selection.
     probe = replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
-        optimizer_steps=2, checkpoint_every=1, selection="final-live")
+        optimizer_steps=2, checkpoint_every=1, selection="final-live", clean_bn=None)
     data = replace(data, development=None, development_rows=0, development_source_start=None)
     output.mkdir(parents=True, exist_ok=True)
     proofs = []
     profile_proof = None
+    clean_proofs = []
     for label in ("repeat-a", "repeat-b", "resumed"):
         configure_fp32_determinism(recipe.seed)
         kernel = FamilyKernel(probe, Path(options["initial_state_path"]), device="cuda")
@@ -263,9 +266,29 @@ def run_screen_preflight(**options):
         state = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
         proofs.append({"path": label + ".pt", "sha256": normalized_file_sha(output / (label + ".pt")),
             "state_fingerprint": _state_fingerprint(state)})
+        if recipe.clean_bn is not None:
+            from .family_training_state import FamilyTrainingState
+            from .family_training_kernel import load_family_model
+            owner = FamilyTrainingState(kernel.model, kernel.ema,
+                clean_factory=lambda: load_family_model(probe, Path(options["initial_state_path"]))[0])
+            pool = FamilyLoaders(probe, data, tuning)
+            try:
+                calibrated = owner.calibrate(recipe.clean_bn, pool.calibration(recipe.clean_bn),
+                    forward=lambda model, batch: kernel.forward(batch, model=model).reshape(-1),
+                    source_indices=lambda batch: batch.source_idx.reshape(-1))
+            finally:
+                pool.close()
+            if _state_fingerprint(session.state_dict()) != proofs[-1]["state_fingerprint"]:
+                raise ValueError("Native Clean-BN changed training/optimizer/EMA/RNG state")
+            clean_proofs.append(calibrated)
     if len({proof["state_fingerprint"] for proof in proofs}) != 1:
         raise ValueError("Native optimizer/EMA/schedule/RNG repeat or serialized resume differs")
     atomic_json(output / "runtime_provenance.json", provenance)
+    if clean_proofs:
+        if len({proof["identity"] for proof in clean_proofs}) != 1:
+            raise ValueError("Native Clean-BN repeats/serialized-resume state differ")
+        atomic_json(output / "clean_bn_qualification.json", {"policy": recipe.clean_bn.to_dict(),
+            "proofs": clean_proofs, "formal_training_exposure": 0})
     certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
         "provenance_sha256": canonical_fingerprint(provenance), "probe_recipe_identity": probe.identity,
         "proofs": proofs, "resume_origin": {"path": "resumed-first.pt",
@@ -273,6 +296,9 @@ def run_screen_preflight(**options):
         "formal_training_exposure": 0, "scientific_acceptance": "NOT_EVALUATED"}
     if profile_proof is not None:
         certificate["profile_proof"] = profile_proof
+    if clean_proofs:
+        certificate["clean_bn_proof"] = {"path": "clean_bn_qualification.json",
+            "sha256": normalized_file_sha(output / "clean_bn_qualification.json")}
     atomic_json(output / "runtime_certificate.json", certificate)
     atomic_json(output / "preflight_costs.json", {"context": context.to_dict(), "costs": [
         {"metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - began,
@@ -317,7 +343,7 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
     if saved != provenance or certificate.get("provenance_sha256") != canonical_fingerprint(provenance):
         raise ValueError("Native preflight source/recipe/data/runtime/device identity differs")
     probe = replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
-        optimizer_steps=2, checkpoint_every=1, selection="final-live")
+        optimizer_steps=2, checkpoint_every=1, selection="final-live", clean_bn=None)
     if (certificate.get("format") != "molgap-runtime-certificate-v1" or
             certificate.get("probe_recipe_identity") != probe.identity or certificate.get("formal_training_exposure") != 0):
         raise ValueError("Preflight probe identity differs")
@@ -351,6 +377,17 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
     if len(set(fingerprints)) != 1:
         raise ValueError("Native repeat/resume proof differs")
     _verify_profile_proof(root, probe, certificate.get("profile_proof"), required=profiling_required)
+    if recipe.clean_bn is not None:
+        proof = certificate.get("clean_bn_proof")
+        if type(proof) is not dict or set(proof) != {"path", "sha256"} or proof["path"] != "clean_bn_qualification.json":
+            raise ValueError("Missing native Clean-BN qualification")
+        path = _artifact_path(root, proof["path"])
+        observed = _json(path)
+        if (normalized_file_sha(path) != proof["sha256"] or observed["policy"] != recipe.clean_bn.to_dict()
+                or observed["formal_training_exposure"] != 0 or len(observed["proofs"]) != 3
+                or len({item["identity"] for item in observed["proofs"]}) != 1
+                or any(item["policy_identity"] != recipe.clean_bn.identity for item in observed["proofs"])):
+            raise ValueError("Native Clean-BN identity/repeat proof differs from frozen policy")
     return certificate
 
 

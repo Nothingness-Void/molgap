@@ -76,7 +76,9 @@ def _name(value) -> str:
     if (value.startswith("src/molgap/") and path.suffix == ".py"
             and path.name == path.name.lower()):
         io_tokens = {"data", "dataset", "datasets", "checkpoint", "checkpoints",
-                     "records", "output", "outputs", "result", "results", "artifacts"}
+                     "records", "result", "results", "artifacts"}
+        if value == "src/molgap/family_training_outputs.py":
+            io_tokens.add("outputs")
         directory_tokens = {token for part in lowered[:-1] for token in re.split(r"[._-]+", part)}
         filename_tokens = set(re.split(r"[._-]+", lowered[-1])) - io_tokens
         tokens = directory_tokens | filename_tokens

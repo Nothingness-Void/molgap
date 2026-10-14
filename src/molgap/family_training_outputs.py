@@ -139,11 +139,15 @@ class SessionOutputs:
 
     def selected(self, progress, weights, state, evaluation):
         _finite_tree(state, "selected.model")
-        atomic_torch_save(self.pending / "selected_model.pt", {"context": self.context.to_dict(),
+        payload = {"context": self.context.to_dict(),
             "model": state, "optimizer_step": progress.optimizer_step,
             "epoch_or_pass": progress.optimizer_step / self.recipe.loop_plan.steps_per_pass,
             "weights": weights, "selection": self.recipe.selection,
-            "development_mae_eV": evaluation["mae_eV"] if evaluation is not None else None})
+            "development_mae_eV": evaluation["mae_eV"] if evaluation is not None else None}
+        if self.recipe.clean_bn is not None:
+            payload["calibration"] = deepcopy(evaluation["calibration"])
+            payload["owner_state"] = evaluation["owner_state"]
+        atomic_torch_save(self.pending / "selected_model.pt", payload)
         if evaluation is not None:
             atomic_torch_save(self.pending / "development_predictions.pt", {"context": self.context.to_dict(),
                 **{key: evaluation[key].detach().cpu() for key in ("source_idx", "target_eV", "prediction_eV")}})
@@ -156,7 +160,11 @@ class SessionOutputs:
             model_state=state["model"], optimizer_state=state["optimizer"], rng_state=state["rng_state"],
             cursor=state["cursor"], optimizer_step=progress.optimizer_step,
             sample_presentations=progress.sample_presentations,
-            scheduler_state=state["scheduler"], ema_state=state["ema"])
+            scheduler_state=state["scheduler"], ema_state=state["ema"], owner_state=state.get("owner_state"))
+        from .training_reproducibility import atomic_json
+        atomic_json(self.root / "training_progress.json", {"arm_id": self.context.arm_id,
+            "optimizer_steps": progress.optimizer_step, "sample_presentations": progress.sample_presentations,
+            "completed_passes": progress.pass_index, "next_batch": progress.next_batch})
         if not changed:
             return
         names = [*changed, "last_checkpoint.pt"]
@@ -303,6 +311,14 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
                 selected.get("epoch_or_pass") != selected["optimizer_step"] / recipe.loop_plan.steps_per_pass):
             raise ValueError("Selected checkpoint identity/policy mismatch")
         _assert_model_schema(selected["model"], state["model"])
+        if recipe.clean_bn is not None:
+            from .family_training_state import CalibrationPolicy
+            calibration = selected.get("calibration")
+            if (not isinstance(calibration, dict)
+                    or CalibrationPolicy.from_dict(calibration["policy"]).identity != recipe.clean_bn.identity
+                    or calibration["raw_revision"] != selected["optimizer_step"]
+                    or calibration["clean_state_identity"] != state_dict_sha256(selected["model"])):
+                raise ValueError("Selected Clean-EMA state lost its calibration binding")
         if recipe.dataset.development:
             observed.update(_inspect_predictions(paths["predictions"], context=context, expected=expected,
                 target_identity=target_identity))

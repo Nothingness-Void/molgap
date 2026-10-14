@@ -73,6 +73,11 @@ class FamilyKernel:
         from .gptrans_execution_hotpath import BoundForeachEMA, ReusedWeightView
         self.ema = BoundForeachEMA(self.model, recipe.ema_decay) if recipe.ema_decay is not None else None
         self.weight_view = ReusedWeightView()
+        self.training_state = None
+        if recipe.clean_bn is not None:
+            from .family_training_state import FamilyTrainingState
+            self.training_state = FamilyTrainingState(self.model, self.ema,
+                clean_factory=lambda: load_family_model(recipe, initial_state)[0])
 
     def _gptrans_batch(self, batch, *, training):
         from .gptrans_execution_backend import prepare_layout
@@ -104,7 +109,10 @@ class FamilyKernel:
                 check_finite=check_finite, cast_target_float=True)
             absolute, rows = loss * int(batch.num_graphs), int(batch.num_graphs)
         if self.ema is not None:
-            self.ema.update(self.model)
+            if self.training_state is None:
+                self.ema.update(self.model)
+            else:
+                self.training_state.update_raw_ema()
         return loss, absolute, rows
 
     def forward(self, cpu_batch, *, model=None):
@@ -132,6 +140,20 @@ class FamilyKernel:
         if self.recipe.identity != loaders.recipe.identity or data.development is None:
             raise ValueError("No matching selected development role")
         weights = self.recipe.selection.rsplit("-", 1)[1]
+        if self.recipe.clean_bn is not None:
+            result = self.training_state.calibrate_and_evaluate(
+                self.recipe.clean_bn, loaders.calibration(self.recipe.clean_bn),
+                forward=lambda model, batch: self.forward(batch, model=model).reshape(-1),
+                source_indices=lambda batch: batch.source_idx.reshape(-1),
+                evaluator=lambda model: buffered_evaluate(SimpleNamespace(DEVELOPMENT_ROWS=data.development_rows),
+                    lambda target, batch: self.forward(batch, model=target), lambda graphs: loaders.dev(),
+                    model, data.development, self.recipe.target_mean_eV, self.recipe.target_std_eV,
+                    device="cpu", source_idx_start=data.development_source_start))
+            result["calibration"] = self.training_state.calibration
+            result["owner_state"] = self.training_state.state_dict()
+            if not math.isfinite(result["mae_eV"]):
+                raise RuntimeError("Clean-EMA development predictions became nonfinite")
+            return result
         with self.weight_view.use(self.model, self.ema, weights):
             # The existing buffered evaluator owns ordered prediction/target
             # accumulation. Keep CPU layout preparation before selective transfer.

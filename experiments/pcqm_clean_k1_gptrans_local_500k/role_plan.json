@@ -1,0 +1,37 @@
+{
+  "calibration": {
+    "batch_size": 128,
+    "batches": 128,
+    "estimator": "cumulative-batch",
+    "format": "molgap-clean-bn-policy-v1",
+    "input_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "role": "train",
+    "source_order_sha256": "08063881d584e95e1734c94e92def2197295bb9d20f96d44852ce6fe37aa3687",
+    "training_role_identity": "053c93557980ef8e49507cafff4a7044ab7b450c6754d99cee766beade5cbb88"
+  },
+  "development_range": [
+    500000,
+    550000
+  ],
+  "development_selection_used": true,
+  "official_validation_consumed": false,
+  "roles": [
+    {
+      "membership_sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "role": "train",
+      "row_order_sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "usage_sha256": "053c93557980ef8e49507cafff4a7044ab7b450c6754d99cee766beade5cbb88"
+    },
+    {
+      "membership_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role": "development",
+      "row_order_sha256": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "usage_sha256": "7782618e81d044e1af4f53c72bc7cabef8e873116bbdd11db6414832a9f39f37"
+    }
+  ],
+  "test_consumed": false,
+  "train_range": [
+    0,
+    500000
+  ]
+}

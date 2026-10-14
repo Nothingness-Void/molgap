@@ -71,6 +71,16 @@ replay. Historical runners retain their own frozen RNG behavior.
 
 ## Session Boundary
 
+Optional K1 `clean_bn=CalibrationPolicy(...)` selects EMA after a fixed feature-only
+training-prefix calibration at each complete pass. It preserves Live/Raw state
+and RNG, pins input/role/order/batches, and includes FamilyTrainingState in the
+existing checkpoint `owner_state`. The selected tensor payload retains its
+calibration record. `ema_dev_metric` means this contract's calibrated EMA state;
+the frozen recipe distinguishes it from raw EMA. Native preflight verifies
+repeated calibration without altering scratch optimizer/EMA/RNG. LayerNorm-only
+GPTrans and implicit policy upgrades are rejected. Existing recipes omit the
+optional field and keep their previous identity.
+
 `FamilyTrainingSession(kernel, loaders, checkpoint=..., selected=...,
 pass_finished=...)` consumes matching typed recipe/data bindings. Callbacks are
 trusted static adapter hooks, not imports selected by JSON. `run(should_pause=...)`
