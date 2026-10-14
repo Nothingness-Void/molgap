@@ -46,6 +46,7 @@ ownership index, not execution authority or a copy of scientific contracts.
 | `categorical_gps.py` | Desktop categorical and radical-context GPS encoders | Extending categorical features without modifying frozen K1 GPS source |
 | `pair_gps_2d.py` | Persistent-pair GPS candidates, including the bounded R2 repair | Changing PairGPS node/pair exchange or shortest-path/triplet updates |
 | `gptrans.py` | Compact GPTrans-T node/all-pairs propagation core | Changing GPTrans node-to-node/node-to-pair/pair-to-node behavior |
+| `gptrans_bond_local.py` | Registered true-bond residual component on the GPTrans core | Changing local messages; the [shared session](docs/operations/FAMILY_TRAINING_CORE.md#addons-and-closure) still owns execution |
 | `pcqm_gptrans_v4.py` | V4-certified fixed-100K GPTrans reference runtime | Changing GPTrans baseline data, optimizer, determinism, recovery, or evidence contracts |
 | `structural_encoding.py` | Resumable random-walk positional-encoding caches | Changing RWSE construction or cache contracts |
 | `schnet.py` | `SchNetWrapper` and 3D encoding | Changing the PyG SchNet encoder |

@@ -41,7 +41,7 @@ the static training registry, its mode, and its output profile.
 | Family/version | Reference mode | Registered addon mode(s) | Output profile |
 |---|---|---|---|
 | `neural_atom_k1/3` | `reference` | Same reviewed K1 modes below; [shared session](FAMILY_TRAINING_CORE.md#public-entry) | `k1-session-v1` |
-| `gptrans_t/2` | `reference` | Same reviewed GPTrans modes below; [shared session](FAMILY_TRAINING_CORE.md#public-entry) | `gptrans-session-v1` |
+| `gptrans_t/2` | `reference` | Same reviewed GPTrans modes below plus degree/local-bond; [registered addons](FAMILY_TRAINING_CORE.md#addons-and-closure) | `gptrans-session-v1` |
 | `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma`; `k1_two_pass_mean/1` → `mean2`; `k1_mean2_clean_second/1` → `mean2_clean_second` | `k1-screen-v1` |
 | `gptrans_t/1` | `reference` | `pair_prenorm/1`, `centered_logits/1`, `memory_value/1`, `memory_message/1` | `gptrans-v1` |
 

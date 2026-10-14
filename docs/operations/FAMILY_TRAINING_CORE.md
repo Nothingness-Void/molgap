@@ -28,6 +28,7 @@ layer may copy or alter the training algorithm to fit a platform or scale.
 | `family_training_runner.py` | Registered contract/source/role bindings, native repeat/resume qualification and the single worker entry. |
 | `family_training_outputs.py` | Existing atomic checkpoint/trace translation and shared CPU inspection for development-selected or final-only endpoints. |
 | `family_execution_profile.py` | [Optional session profiler](FAMILY_EXECUTION_PROFILE.md): phase and operator observation; no alternate training implementation. |
+| `gptrans_bond_local.py` | Registered degree-scaled true-bond component; no trainer or platform code. |
 | `packed_graph_dataset.py` | Spawn-pickleable packed PyG payload owner, optionally memory mapped. |
 | Existing K1/GPTrans trainer | Family loss/addon, frozen schedule, selection and artifact hooks during migration. |
 | [Family outputs](EXPERIMENT_FAMILY_WORKFLOW.md) | Existing checkpoint, trace, artifact inspection and V5/RML closure. |
@@ -219,6 +220,13 @@ loading. Missing earlier cost accounting stays unknown; platform allocation
 seconds are not invented from process wall time.
 
 ## Addons And Closure
+
+`gptrans_t/2` additionally supports `gptrans_degree_bond_local/1` through
+`degree_bond_local_ema999`. It retains the reviewed256-node/32-pair/12-layer
+shape,64-channel bond residual and EMA.999 contract; it shares the same session,
+native preflight and output owners, not a separate runner. The
+[operator experiment](../../experiments/family_100k_operator_profile/README.md)
+owns retained execution evidence, not a model promotion.
 
 A new addon adds a small model/loss hook and static mode/Spec/execution/source
 registration, not a trainer, optimizer, loader or platform script. JSON cannot
