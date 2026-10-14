@@ -167,7 +167,9 @@ class _NeuralAtomMixerFactory:
                 queries = self.slot_query(seeds)
                 logits = torch.einsum("kd,bnd->bkn", queries, keys)
                 logits = logits / math.sqrt(self.latent_channels)
-                logits = logits.masked_fill(~valid.unsqueeze(1), float("-inf"))
+                padding = (~valid.unsqueeze(1) if layout is None
+                           else layout.key_padding_mask)
+                logits = logits.masked_fill(padding, float("-inf"))
                 assignment = torch.softmax(logits, dim=-1)
                 slots = seeds.unsqueeze(0) + torch.einsum(
                     "bkn,bnd->bkd", assignment, values

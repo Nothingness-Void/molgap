@@ -1,0 +1,74 @@
+{
+  "dataset": "nothingnessvoid/molgap-k1-gptrans-100k-profiler-s42-src",
+  "status": "verified",
+  "files": {
+    "SOURCE_ARCHIVE_SHA256.txt": 65,
+    "SOURCE_COMMIT.txt": 41,
+    "SOURCE_FILES.json": 13628,
+    "experiment_launch.json": 1312,
+    "experiment_spec.json": 5453,
+    "initial_states/gptrans_local.pt": 23606979,
+    "initial_states/k1_mean2.pt": 14779763,
+    "package_manifest.json": 3934,
+    "prospective/gptrans_local/trajectory.json": 51864,
+    "prospective/k1_mean2/trajectory.json": 51864,
+    "source_payload.bin": 259785
+  },
+  "roundtrip": [
+    {
+      "file": "experiment_launch.json",
+      "sha256": "baf2edb6fafc43e1336918a1562883d3af0533a5fdf79f76599f19cd73d353b1",
+      "bytes": 1312
+    },
+    {
+      "file": "experiment_spec.json",
+      "sha256": "cd2ec654371e0b08e539ec1e1022bc1e7381da15299ec195da348589c97b1252",
+      "bytes": 5453
+    },
+    {
+      "file": "package_manifest.json",
+      "sha256": "25ff179bcaaeba85b6b489b1c3fed33563e2df80d06811313ab487e6f895f3a1",
+      "bytes": 3934
+    },
+    {
+      "file": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "da803be046ce2a3d781361b8e88e4fd0505a5563717b052facedb6b1ae04b8f6",
+      "bytes": 65
+    },
+    {
+      "file": "SOURCE_COMMIT.txt",
+      "sha256": "abef2172537ab0de2935c8692b45d3d92d8287e02337d0cab9e4d70c224d42d5",
+      "bytes": 41
+    },
+    {
+      "file": "SOURCE_FILES.json",
+      "sha256": "0d62ede11729731596ddcce70af8b6111bacc0b905f96a8d74e24e8d4fa19343",
+      "bytes": 13628
+    },
+    {
+      "file": "source_payload.bin",
+      "sha256": "0c6d43312114d08d7b44a3f5322db747a6aa86de568697192367f63e34ac1dbc",
+      "bytes": 259785
+    },
+    {
+      "file": "initial_states/gptrans_local.pt",
+      "sha256": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+      "bytes": 23606979
+    },
+    {
+      "file": "initial_states/k1_mean2.pt",
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "bytes": 14779763
+    },
+    {
+      "file": "prospective/gptrans_local/trajectory.json",
+      "sha256": "fd40835732820348d1adadac87cda9176692e2070ab155bf93d3f5e009e328b2",
+      "bytes": 51864
+    },
+    {
+      "file": "prospective/k1_mean2/trajectory.json",
+      "sha256": "43307d63d6aaf1cde4055253834347d06c14c082672891a76df015a1a671ed67",
+      "bytes": 51864
+    }
+  ]
+}

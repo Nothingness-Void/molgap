@@ -1,0 +1,22 @@
+{
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "train_rows": 100000,
+  "development_rows": 50000,
+  "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+  "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e",
+  "initializations": {
+    "k1_mean2": {
+      "file": "platforms/_records/kaggle/staging/family_100k_operator_profile/k1_mean2.pt",
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
+    },
+    "gptrans_local": {
+      "file": "platforms/_records/kaggle/staging/family_100k_operator_profile/gptrans_local.pt",
+      "sha256": "27590c1a928cafa8b633998e2291916b8f171d345ed5cb3b0234f0e9a37c3320",
+      "state_sha256": "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b"
+    }
+  },
+  "train_mean_double_observation": 5.338300266634226,
+  "train_std_double_observation": 1.275090206323082,
+  "normalization_authority": "config retains accepted K1 asset and retained GPTrans double-reduction asset"
+}

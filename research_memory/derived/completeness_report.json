@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 115,
+    "trajectories_total": 117,
     "with_complete_native_measurement": 24,
-    "with_cost_event": 104,
-    "with_incomplete_native_measurement": 80,
+    "with_cost_event": 106,
+    "with_incomplete_native_measurement": 82,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -133,12 +133,14 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 80,
+      "count": 82,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
+        "TB-family-100k-operator-profile-gptrans_local-s42",
+        "TB-family-100k-operator-profile-k1_mean2-s42",
         "TB-family-session-speed-20261014",
         "TB-gptrans-100k-local-joint-control-20260925",
         "TB-gptrans-100k-local-reference-control-20260925",

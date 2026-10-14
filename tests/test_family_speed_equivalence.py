@@ -1,5 +1,6 @@
 """Exact, bounded CPU regressions for operation removal, not speed claims."""
 from copy import deepcopy
+import os
 
 import pytest
 import torch
@@ -12,7 +13,7 @@ from test_family_training_session import events, make_session
 
 @pytest.mark.parametrize("cap", [1, 2, 20])
 @pytest.mark.parametrize("maximum", [1, 7, 18])
-def test_shortest_path_keeps_exact_integer_codes_and_removes_one_unused_bmm(monkeypatch, cap, maximum):
+def test_shortest_path_keeps_exact_codes_and_skips_impossible_expansions(monkeypatch, cap, maximum):
     generator = torch.Generator().manual_seed(42)
     adjacency = torch.rand(3, maximum, maximum, generator=generator) > .8
     mask = torch.ones_like(adjacency)
@@ -33,7 +34,7 @@ def test_shortest_path_keeps_exact_integer_codes_and_removes_one_unused_bmm(monk
     calls.clear()
     rng = torch.get_rng_state().clone()
     actual = prepared_shortest_path(model, adjacency, mask)
-    assert len(calls) == cap - 1
+    assert len(calls) == max(0, min(cap, maximum - 1) - 1)
     assert torch.equal(expected, actual) and torch.equal(rng, torch.get_rng_state())
 
 
@@ -79,7 +80,8 @@ def test_layout_private_transfers_do_not_request_blocking_copies(monkeypatch):
     assert torch.equal(layout.valid, torch.tensor([[True, True, False], [True, True, True]]))
 
 
-@pytest.mark.skipif(not torch.cuda.is_available(), reason="Separate short native unit qualification")
+@pytest.mark.skipif(os.environ.get("MOLGAP_NATIVE_UNIT_TESTS") != "1" or not torch.cuda.is_available(),
+                   reason="Separate explicitly enabled native unit qualification")
 def test_native_layout_transport_keeps_output_gradient_optimizer_and_rng(monkeypatch):
     from copy import copy
     from torch_geometric.data import Batch, Data
@@ -87,6 +89,7 @@ def test_native_layout_transport_keeps_output_gradient_optimizer_and_rng(monkeyp
     from molgap.k1_screen_training import _model_batch_to_device, _optimizer_step
     from molgap.qm9_neural_atom import make_encoder
     from molgap.training_reproducibility import configure_fp32_determinism, deterministic_memory_fill_context
+    from molgap.v4_runtime import state_dict_sha256
     from test_family_training_session import assert_equal
     native_layout = owner.layout_from_cpu_batch
     batch = Batch.from_data_list([Data(x=torch.zeros(n, 9, dtype=torch.long),
@@ -104,13 +107,16 @@ def test_native_layout_transport_keeps_output_gradient_optimizer_and_rng(monkeyp
         model = make_encoder("neural_atom_k1").to("cuda")
         optimizer = torch.optim.AdamW(model.parameters(), lr=4e-4, weight_decay=1e-5)
         model.train()
+        inputs = {"initial_model_sha256": state_dict_sha256(model.state_dict()),
+                  "starting_cpu_rng": torch.get_rng_state().clone(),
+                  "starting_gpu_rng": torch.cuda.get_rng_state().clone()}
         with monkeypatch.context() as scoped:
             scoped.setattr(owner, "layout_from_cpu_batch", layout_fn)
             cpu = copy(batch)
             with deterministic_memory_fill_context(enabled=False), owner.cpu_layout_context(model, cpu, "cuda"):
                 device_batch = _model_batch_to_device(cpu, "cuda", training=True)
                 loss, absolute, rows = _optimizer_step(model, optimizer, device_batch, 0., 1., check_finite=True)
-        snapshots.append({"loss": loss.cpu(), "absolute": absolute.cpu(), "rows": rows,
+        snapshots.append({**inputs, "loss": loss.cpu(), "absolute": absolute.cpu(), "rows": rows,
             "model": {key: value.detach().cpu().clone() for key, value in model.state_dict().items()},
             "gradient": {key: value.grad.detach().cpu().clone() for key, value in model.named_parameters() if value.grad is not None},
             "optimizer": deepcopy(optimizer.state_dict()), "cpu_rng": torch.get_rng_state().clone(),

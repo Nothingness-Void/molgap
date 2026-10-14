@@ -22,6 +22,15 @@ from .v4_runtime import normalized_source_sha256, state_dict_sha256
 INTERFACES = {"neural_atom_k1": ("neural_atom_k1", "3"), "gptrans_t": ("gptrans_t", "2")}
 PROFILES = {"neural_atom_k1": "k1-session-v1", "gptrans_t": "gptrans-session-v1"}
 METADATA = {"acceptance_requirements", "train_role_identity", "development_role_identity"}
+OPTIONAL_METADATA = {"profiling"}
+
+
+def _recipe_configuration(record):
+    if "profiling" in record:
+        from .family_execution_profile import ProfileConfig
+        ProfileConfig.from_dict(record["profiling"])
+    return FamilyRecipe.from_dict({key: value for key, value in record.items()
+        if key not in METADATA | OPTIONAL_METADATA})
 
 
 def family_arm_bindings(recipe):
@@ -69,7 +78,7 @@ def read_recipe(path):
     record = _json(Path(path))
     if not METADATA <= set(record):
         raise ValueError("Shared contract lacks frozen acceptance/role bindings")
-    recipe = FamilyRecipe.from_dict({key: value for key, value in record.items() if key not in METADATA})
+    recipe = _recipe_configuration(record)
     requirements = record["acceptance_requirements"]
     if type(requirements) is not dict:
         raise ValueError("Invalid shared acceptance requirements")
@@ -87,7 +96,7 @@ def read_recipe(path):
 def validate_screen_recipe(spec, arm_id, record):
     from .experiment_execution import training_adapter
     arm = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
-    recipe = FamilyRecipe.from_dict({key: value for key, value in record.items() if key not in METADATA})
+    recipe = _recipe_configuration(record)
     adapter = training_adapter(arm)
     if (adapter.family != INTERFACES.get(recipe.family) or adapter.mode(arm) != recipe.mode or
             arm["initialization"] != {"kind": "frozen_state", "seed": recipe.seed, "state_sha256": recipe.initialization_sha256} or
@@ -103,7 +112,8 @@ def validate_screen_recipe(spec, arm_id, record):
         raise ValueError("Contract role usage identity differs from Spec")
     modules = {"ssma": "k1_joint_aggregation.py", "mean2": "k1_screen_training.py",
         "mean2_clean_second": "k1_screen_training.py", "pair_prenorm": "gptrans_variants.py",
-        "centered_logits": "gptrans_variants.py", "memory_value": "gptrans_memory.py", "memory_message": "gptrans_memory.py"}
+        "centered_logits": "gptrans_variants.py", "memory_value": "gptrans_memory.py", "memory_message": "gptrans_memory.py",
+        "degree_bond_local_ema999": "gptrans_bond_local.py"}
     if recipe.mode != "reference" and arm["addons"][0]["source_sha256"] != normalized_source_sha256(Path(__file__).with_name(modules[recipe.mode])):
         raise ValueError("Addon source hash differs from executed module")
     if record.get("acceptance_requirements") != _requirements(recipe,
@@ -222,6 +232,7 @@ def run_screen_preflight(**options):
     data = replace(data, development=None, development_rows=0, development_source_start=None)
     output.mkdir(parents=True, exist_ok=True)
     proofs = []
+    profile_proof = None
     for label in ("repeat-a", "repeat-b", "resumed"):
         configure_fp32_determinism(recipe.seed)
         kernel = FamilyKernel(probe, Path(options["initial_state_path"]), device="cuda")
@@ -238,7 +249,17 @@ def run_screen_preflight(**options):
             session = FamilyTrainingSession(kernel, FamilyLoaders(probe, data, tuning),
                 checkpoint=checkpoint, selected=lambda *args: None, pass_finished=lambda *args: None)
             session.load_state_dict(retained)
-        session.run()
+        if label == "repeat-a" and "profiling" in record:
+            from .family_execution_profile import FamilyExecutionProfiler, ProfileConfig
+            profile_config = replace(ProfileConfig.from_dict(record["profiling"]), warmup_steps=0, active_steps=2)
+            with FamilyExecutionProfiler(session, output / "profile_qualification", profile_config) as observed:
+                session.run()
+            if observed.report["status"] != "COMPLETE" or not observed.report["device_events_observed"]:
+                raise ValueError("Native profiler did not capture the requested CUDA events")
+            profile_proof = {"report": "profile_qualification/profile.json",
+                "sha256": normalized_file_sha(output / "profile_qualification/profile.json")}
+        else:
+            session.run()
         state = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
         proofs.append({"path": label + ".pt", "sha256": normalized_file_sha(output / (label + ".pt")),
             "state_fingerprint": _state_fingerprint(state)})
@@ -250,6 +271,8 @@ def run_screen_preflight(**options):
         "proofs": proofs, "resume_origin": {"path": "resumed-first.pt",
             "sha256": normalized_file_sha(output / "resumed-first.pt")},
         "formal_training_exposure": 0, "scientific_acceptance": "NOT_EVALUATED"}
+    if profile_proof is not None:
+        certificate["profile_proof"] = profile_proof
     atomic_json(output / "runtime_certificate.json", certificate)
     atomic_json(output / "preflight_costs.json", {"context": context.to_dict(), "costs": [
         {"metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - began,
@@ -267,7 +290,25 @@ def normalized_file_sha(path):
     return sha256_file(Path(path))
 
 
-def _verify_preflight(directory, recipe, provenance):
+def _verify_profile_proof(root, probe, profile_proof, *, required):
+    if required and profile_proof is None:
+        raise ValueError("Native profiling proof is required by the frozen recipe")
+    if profile_proof is None:
+        return
+    if (type(profile_proof) is not dict or set(profile_proof) != {"report", "sha256"}
+            or profile_proof["report"] != "profile_qualification/profile.json"):
+        raise ValueError("Malformed native profiling proof")
+    profile_path = _artifact_path(root, profile_proof["report"])
+    if normalized_file_sha(profile_path) != profile_proof["sha256"]:
+        raise ValueError("Native profiler report changed")
+    report = _json(profile_path)
+    if (report.get("status") != "COMPLETE" or report.get("device_events_observed") is not True
+            or report.get("captured_updates") != 2 or report.get("recipe_identity") != probe.identity
+            or normalized_file_sha(_artifact_path(root, "profile_qualification/trace.json")) != report.get("trace_sha256")):
+        raise ValueError("Native profiler event/recipe/trace evidence differs")
+
+
+def _verify_preflight(directory, recipe, provenance, *, profiling_required=False):
     import torch
     from .family_training_session import validate_session_resume
     root = Path(directory).absolute()
@@ -309,6 +350,7 @@ def _verify_preflight(directory, recipe, provenance):
         fingerprints.append(fingerprint)
     if len(set(fingerprints)) != 1:
         raise ValueError("Native repeat/resume proof differs")
+    _verify_profile_proof(root, probe, certificate.get("profile_proof"), required=profiling_required)
     return certificate
 
 
@@ -374,7 +416,8 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
             raise ValueError("Recipe bytes differ from Spec")
         return inspect_output(root, context=context, expected=record["acceptance_requirements"], target_identity=target_identity)
     record, recipe, data, tuning, context, provenance, _ = _bootstrap(cost_root=root, **options)
-    certificate = _verify_preflight(preflight_dir or output, recipe, provenance)
+    certificate = _verify_preflight(preflight_dir or output, recipe, provenance,
+        profiling_required="profiling" in record)
     outputs = SessionOutputs(root, context, contract=options["recipe_path"], adapter=PROFILES[recipe.family],
         trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"])
     had_checkpoint = (root / "last_checkpoint.pt").is_file()
@@ -395,7 +438,17 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     previous_signal = signal.getsignal(signal.SIGTERM)
     signal.signal(signal.SIGTERM, lambda *_: pause.__setitem__(0, True))
     try:
-        progress = session.run(should_pause=lambda: pause[0])
+        if "profiling" in record:
+            from .family_execution_profile import FamilyExecutionProfiler, ProfileConfig
+            profile_root = root / "profiles" / f"step_{session.progress.optimizer_step}_{time.time_ns()}"
+            with FamilyExecutionProfiler(session, profile_root, ProfileConfig.from_dict(record["profiling"])) as observed:
+                progress = session.run(should_pause=lambda: pause[0])
+            atomic_json(root / "execution_profile_receipt.json", {"context": context.to_dict(),
+                "report_path": (profile_root / "profile.json").relative_to(root).as_posix(),
+                "report_sha256": normalized_file_sha(profile_root / "profile.json"),
+                "trace_sha256": observed.report["trace_sha256"], "capture_status": observed.report["status"]})
+        else:
+            progress = session.run(should_pause=lambda: pause[0])
     finally:
         signal.signal(signal.SIGTERM, previous_signal)
     elapsed = time.perf_counter() - began

@@ -1,0 +1,573 @@
+{
+  "acceptance_ref": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_k1_mean2.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/family_100k_operator_profile/config.json": "6f57f2082ca3fdecf239ac16fa6bffbf68fc827fee572f6a5d23091f3db924c7",
+    "experiments/family_100k_operator_profile/protocol.md": "239d55d798e7c35ef621819545734858bb429b6c7ece863b70f8dd191c78cd14",
+    "experiments/family_100k_operator_profile/role_plan.json": "511190d16e90a256cdd9bf5a3b9fa64172165665d3accf6a1365ddd51f0c42e4",
+    "experiments/family_100k_operator_profile/submission/dataset_roundtrip.json": "95fd05d1ab068bc1985e8c7fdd71ef09b13b3078710482bb8238d70b980aabcd",
+    "experiments/family_100k_operator_profile/submission/kernel_push_response.json": "219bc221c511b0f1c195b72636cea28cd08639556ed22f6f2ec4af524281ad59",
+    "experiments/family_100k_operator_profile/submission/prospective_report.json": "c65debcdd4d5a888ebb7932ed4f0354685c31451e42683cdd6a5cdd4b0fbb2fb",
+    "experiments/family_100k_operator_profile/submission/receipts/f9c914474947504a2042b5283ee5a7be2806f60fb7ba763c81fdd85c440c9494.json": "27352df0505af749956282b1c5f055ff2165bdb030ff45a983afa0b21506990c",
+    "experiments/family_100k_operator_profile/submission/release_report.json": "725eea79894935b1ba99298ff9edcedc6f7dc3e0c6a1803cb49df40926ce86a7",
+    "experiments/family_100k_operator_profile/submission/source_verification.json": "b1bc2fe304cd3d01d409278995c9349ca6f79127fcf253369e867ba31eb3174e",
+    "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_k1_mean2.json": "c1890ac2bd8416039dfac14fafcf0dbbe25af8415b0bba02adc81ac213a3f5b4",
+    "experiments/family_100k_operator_profile/terminal_acceptance/attribution.md": "64afb172fa5229b6b8aacc94d6605b8258e11975c985d70bae56bd9db52d3fa1",
+    "experiments/family_100k_operator_profile/terminal_acceptance/decision.md": "344d2d857b8a997c7722196f82d31708960a4c22fda657a4dfc58f2b8a2e0d68",
+    "experiments/family_100k_operator_profile/terminal_acceptance/independent_review.md": "bb5be7d943cd176e7307e34f16bfdca046fa904c32fd2ff05b53137e076a74d7",
+    "experiments/family_100k_operator_profile/terminal_acceptance/mechanical_k1_mean2.json": "cb7c01d60f4427544a8d0553f186c1d51739d232ba96ac83f1fcff6b520be3bb",
+    "experiments/family_100k_operator_profile/terminal_acceptance/metadata_retention.json": "ed2295540beee27ab656f800eba7776936830a641f8819084371f40cfd4832d9",
+    "experiments/family_100k_operator_profile/terminal_acceptance/native_k1_mean2.json": "3ce07d48cb49e997f35f8aeba03001aca7b5f74771edefabb54a51f341a15c0b",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/allocation_entry_observation.json": "a4b3098a1a9401adc5bbe2325080ac6782fa613bba9cc2c4b86203f21bbbb148",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/input_resolution.json": "edac32fef707bffb50a03f8e202c5727867925104fe1dc75f67ef7c465de42d1",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/allocation_costs.json": "1fa53d3b61fdd1edae9918f9d1e95c6a06ec4e3f4df7d9a6615d9ed383b7936c",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/canonical_trace.json": "88f2ea3a3a53140608fe7bb05c893bbeb910cb5e96b3ef8df6a8d55679ac6130",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/canonical_trace.json.context.json": "cbdea48fb3395cfe8096437718936ffb8c585d51d17a6c8ca8b35296f6328dd4",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/development_predictions.pt": "4a74d6f0b45f4dd06aef7e44b25aa67ecb0bc0006f899d287257656d3a36494e",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/execution_profile_receipt.json": "945cecdbe3211171b7568f33b668fd2b6a5c384e6c4495311c80ccb3aa21b340",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/invocation_cost_state.json": "a04823f2a6535f5c39a42513be4e2ffc7e68789530c426f1084117b33e8c51da",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/last_checkpoint.pt": "a91428e1d50bf7bc9258b2fbadedd2cbf81d370057b496535201bb82e413cc4b",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/output_manifest.json": "c3a51fee2e675b9f6741850676ed8c615261f6ee4ba06d74c27be83ea9da2284",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/preflight.log": "2b15d15d31459f7cbc75b35d6c1f46fe299c03d8db2be98063e523465ec9d929",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/preflight_costs.json": "9a8a9d6f6c6343567d59cb607b05a142afc55b275591172b26d94bb0d32f4827",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profile_qualification/profile.json": "7bcb40e34a28192f845a8cdd1195952ce8855ac9f8c493854d5b2c401175fb67",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profile_qualification/trace.json": "3ded359ef06fbd1fd4e9984a51582af4321419be8a792fc8b2c5fb65efa6beb0",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profiles/step_0_1791916029396263158/profile.json": "dd62edebc03eb271c613ae82cd262fe88e575492fcbc5b34bdf7c1e5d0c7292a",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profiles/step_0_1791916029396263158/trace.json": "2cb49c67826dfb1d3d7b879de20762a482d066c2453f2890bc6ab4e5756a34af",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/repeat-a.pt": "e0def2a6806b0509466ba286f727cdd46ff943ce497312bba2e930b13e2344c0",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/repeat-b.pt": "339ebf879e644bcf23302dcd643efabbb79286d518630bc421e1c448e7a5168a",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/resumed-first.pt": "cef42193c10d878a972a78ce90c57477ff22899c04aaee0769b05e785617b932",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/resumed.pt": "29cf39e7ffdcf21c1625490e95c46603be58fe6dc8d5d8a7a801acda3a44eda9",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/runtime_certificate.json": "c9bdbbe6a53d494379739cde7ff5578bb63bae60e07b86e69937f4c9a5f3ef69",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/runtime_provenance.json": "c6fce124718d7c81bfc3f295e142de1b4c50ccb1faa5a9339b5a79a54dc812c0",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/selected_model.pt": "75cac8f227504ee11ec00f2cd035444d4ab9e678c282e4811dc4b6bc3d9b3f89",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/train.log": "2b15d15d31459f7cbc75b35d6c1f46fe299c03d8db2be98063e523465ec9d929",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/training_contract.json": "a6a92d38785030b43ae9eb23bb4e448b266daa24f6da2bc1d9b862ad3cdd1c5c",
+    "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/pair_state.json": "ecac6dcf669b2a24c3acd8bfa802899dba45f6a776e1af12cec2450864dd0ed3",
+    "experiments/family_100k_operator_profile/terminal_acceptance/remote_log.json": "3ff70b87bfbd264eb594398667660f688e069f747b65c03f6f1e06ae175c050d",
+    "experiments/family_100k_operator_profile/terminal_acceptance/remote_observation.json": "585dfcd1efd67297431586e913ea59322d306d1da499185e7037a81d7a9785b2",
+    "experiments/family_100k_operator_profile/terminal_acceptance/retention_k1_mean2.json": "1c0392364bbd9c834164dcb69cbe951a5e4e69730c16d804310ffc02ccdf2438",
+    "experiments/family_100k_operator_profile/terminal_acceptance/summary.json": "95af86e2537c79d4b4ee160bc536220fe2469af04aa8de21fc617f5a86ad8699",
+    "experiments/family_100k_operator_profile/training_recipe_k1_mean2.json": "22b2bff65cb026c3531b7a015c11b53cc6acc129c4a44796c2edeefc0208b3c0"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "k1_mean2-v1",
+      "category": "other",
+      "cost_event_id": "cost-TB-family-100k-operator-profile-k1_mean2-s42-entry-allocation",
+      "evidence_ref": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_k1_mean2.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.341182146693889
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 2.989857113438333
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "family-100k-operator-profile-s42:k1_mean2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/family_100k_operator_profile/terminal_acceptance/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "Separately authorized profiler-off same-source equivalence and throughput test"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/protocol.md",
+        "name": "experiments/family_100k_operator_profile/protocol.md",
+        "sha256": "239d55d798e7c35ef621819545734858bb429b6c7ece863b70f8dd191c78cd14"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/config.json",
+        "name": "experiments/family_100k_operator_profile/config.json",
+        "sha256": "6f57f2082ca3fdecf239ac16fa6bffbf68fc827fee572f6a5d23091f3db924c7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/role_plan.json",
+        "name": "experiments/family_100k_operator_profile/role_plan.json",
+        "sha256": "511190d16e90a256cdd9bf5a3b9fa64172165665d3accf6a1365ddd51f0c42e4"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/training_recipe_k1_mean2.json",
+        "name": "experiments/family_100k_operator_profile/training_recipe_k1_mean2.json",
+        "sha256": "22b2bff65cb026c3531b7a015c11b53cc6acc129c4a44796c2edeefc0208b3c0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/decision.md",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/decision.md",
+        "sha256": "344d2d857b8a997c7722196f82d31708960a4c22fda657a4dfc58f2b8a2e0d68"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/attribution.md",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/attribution.md",
+        "sha256": "64afb172fa5229b6b8aacc94d6605b8258e11975c985d70bae56bd9db52d3fa1"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/independent_review.md",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/independent_review.md",
+        "sha256": "bb5be7d943cd176e7307e34f16bfdca046fa904c32fd2ff05b53137e076a74d7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/summary.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/summary.json",
+        "sha256": "95af86e2537c79d4b4ee160bc536220fe2469af04aa8de21fc617f5a86ad8699"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/metadata_retention.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/metadata_retention.json",
+        "sha256": "ed2295540beee27ab656f800eba7776936830a641f8819084371f40cfd4832d9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/remote_observation.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/remote_observation.json",
+        "sha256": "585dfcd1efd67297431586e913ea59322d306d1da499185e7037a81d7a9785b2"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/remote_log.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/remote_log.json",
+        "sha256": "3ff70b87bfbd264eb594398667660f688e069f747b65c03f6f1e06ae175c050d"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/mechanical_k1_mean2.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/mechanical_k1_mean2.json",
+        "sha256": "cb7c01d60f4427544a8d0553f186c1d51739d232ba96ac83f1fcff6b520be3bb"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/native_k1_mean2.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/native_k1_mean2.json",
+        "sha256": "3ce07d48cb49e997f35f8aeba03001aca7b5f74771edefabb54a51f341a15c0b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/retention_k1_mean2.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/retention_k1_mean2.json",
+        "sha256": "1c0392364bbd9c834164dcb69cbe951a5e4e69730c16d804310ffc02ccdf2438"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_k1_mean2.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_k1_mean2.json",
+        "sha256": "c1890ac2bd8416039dfac14fafcf0dbbe25af8415b0bba02adc81ac213a3f5b4"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/allocation_entry_observation.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/allocation_entry_observation.json",
+        "sha256": "a4b3098a1a9401adc5bbe2325080ac6782fa613bba9cc2c4b86203f21bbbb148"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/input_resolution.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/input_resolution.json",
+        "sha256": "edac32fef707bffb50a03f8e202c5727867925104fe1dc75f67ef7c465de42d1"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/pair_state.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/pair_state.json",
+        "sha256": "ecac6dcf669b2a24c3acd8bfa802899dba45f6a776e1af12cec2450864dd0ed3"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/submission/source_verification.json",
+        "name": "experiments/family_100k_operator_profile/submission/source_verification.json",
+        "sha256": "b1bc2fe304cd3d01d409278995c9349ca6f79127fcf253369e867ba31eb3174e"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/submission/release_report.json",
+        "name": "experiments/family_100k_operator_profile/submission/release_report.json",
+        "sha256": "725eea79894935b1ba99298ff9edcedc6f7dc3e0c6a1803cb49df40926ce86a7"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/submission/prospective_report.json",
+        "name": "experiments/family_100k_operator_profile/submission/prospective_report.json",
+        "sha256": "c65debcdd4d5a888ebb7932ed4f0354685c31451e42683cdd6a5cdd4b0fbb2fb"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/submission/kernel_push_response.json",
+        "name": "experiments/family_100k_operator_profile/submission/kernel_push_response.json",
+        "sha256": "219bc221c511b0f1c195b72636cea28cd08639556ed22f6f2ec4af524281ad59"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/submission/dataset_roundtrip.json",
+        "name": "experiments/family_100k_operator_profile/submission/dataset_roundtrip.json",
+        "sha256": "95fd05d1ab068bc1985e8c7fdd71ef09b13b3078710482bb8238d70b980aabcd"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/submission/receipts/f9c914474947504a2042b5283ee5a7be2806f60fb7ba763c81fdd85c440c9494.json",
+        "name": "experiments/family_100k_operator_profile/submission/receipts/f9c914474947504a2042b5283ee5a7be2806f60fb7ba763c81fdd85c440c9494.json",
+        "sha256": "27352df0505af749956282b1c5f055ff2165bdb030ff45a983afa0b21506990c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/allocation_costs.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/allocation_costs.json",
+        "sha256": "1fa53d3b61fdd1edae9918f9d1e95c6a06ec4e3f4df7d9a6615d9ed383b7936c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/canonical_trace.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/canonical_trace.json",
+        "sha256": "88f2ea3a3a53140608fe7bb05c893bbeb910cb5e96b3ef8df6a8d55679ac6130"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/canonical_trace.json.context.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/canonical_trace.json.context.json",
+        "sha256": "cbdea48fb3395cfe8096437718936ffb8c585d51d17a6c8ca8b35296f6328dd4"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/development_predictions.pt",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/development_predictions.pt",
+        "sha256": "4a74d6f0b45f4dd06aef7e44b25aa67ecb0bc0006f899d287257656d3a36494e"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/execution_profile_receipt.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/execution_profile_receipt.json",
+        "sha256": "945cecdbe3211171b7568f33b668fd2b6a5c384e6c4495311c80ccb3aa21b340"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/invocation_cost_state.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/invocation_cost_state.json",
+        "sha256": "a04823f2a6535f5c39a42513be4e2ffc7e68789530c426f1084117b33e8c51da"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/last_checkpoint.pt",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/last_checkpoint.pt",
+        "sha256": "a91428e1d50bf7bc9258b2fbadedd2cbf81d370057b496535201bb82e413cc4b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/output_manifest.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/output_manifest.json",
+        "sha256": "c3a51fee2e675b9f6741850676ed8c615261f6ee4ba06d74c27be83ea9da2284"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/preflight.log",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/preflight.log",
+        "sha256": "2b15d15d31459f7cbc75b35d6c1f46fe299c03d8db2be98063e523465ec9d929"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/preflight_costs.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/preflight_costs.json",
+        "sha256": "9a8a9d6f6c6343567d59cb607b05a142afc55b275591172b26d94bb0d32f4827"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profile_qualification/profile.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profile_qualification/profile.json",
+        "sha256": "7bcb40e34a28192f845a8cdd1195952ce8855ac9f8c493854d5b2c401175fb67"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profile_qualification/trace.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profile_qualification/trace.json",
+        "sha256": "3ded359ef06fbd1fd4e9984a51582af4321419be8a792fc8b2c5fb65efa6beb0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profiles/step_0_1791916029396263158/profile.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profiles/step_0_1791916029396263158/profile.json",
+        "sha256": "dd62edebc03eb271c613ae82cd262fe88e575492fcbc5b34bdf7c1e5d0c7292a"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profiles/step_0_1791916029396263158/trace.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/profiles/step_0_1791916029396263158/trace.json",
+        "sha256": "2cb49c67826dfb1d3d7b879de20762a482d066c2453f2890bc6ab4e5756a34af"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/repeat-a.pt",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/repeat-a.pt",
+        "sha256": "e0def2a6806b0509466ba286f727cdd46ff943ce497312bba2e930b13e2344c0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/repeat-b.pt",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/repeat-b.pt",
+        "sha256": "339ebf879e644bcf23302dcd643efabbb79286d518630bc421e1c448e7a5168a"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/resumed-first.pt",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/resumed-first.pt",
+        "sha256": "cef42193c10d878a972a78ce90c57477ff22899c04aaee0769b05e785617b932"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/resumed.pt",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/resumed.pt",
+        "sha256": "29cf39e7ffdcf21c1625490e95c46603be58fe6dc8d5d8a7a801acda3a44eda9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/runtime_certificate.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/runtime_certificate.json",
+        "sha256": "c9bdbbe6a53d494379739cde7ff5578bb63bae60e07b86e69937f4c9a5f3ef69"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/runtime_provenance.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/runtime_provenance.json",
+        "sha256": "c6fce124718d7c81bfc3f295e142de1b4c50ccb1faa5a9339b5a79a54dc812c0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/selected_model.pt",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/selected_model.pt",
+        "sha256": "75cac8f227504ee11ec00f2cd035444d4ab9e678c282e4811dc4b6bc3d9b3f89"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/train.log",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/train.log",
+        "sha256": "2b15d15d31459f7cbc75b35d6c1f46fe299c03d8db2be98063e523465ec9d929"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/training_contract.json",
+        "name": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/training_contract.json",
+        "sha256": "a6a92d38785030b43ae9eb23bb4e448b266daa24f6da2bc1d9b862ad3cdd1c5c"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/family_100k_operator_profile/terminal_acceptance/decision.md",
+        "experiments/family_100k_operator_profile/terminal_acceptance/attribution.md",
+        "experiments/family_100k_operator_profile/terminal_acceptance/independent_review.md",
+        "experiments/family_100k_operator_profile/protocol.md",
+        "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_k1_mean2.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "family-100k-operator-profile-v1",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-14T13:42:51+09:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Terminal RML translation and CPU validation of already accepted retained outputs; no model execution during closure."
+    },
+    "observed_execution": {
+      "completed_passes": 40,
+      "execution_ref": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/k1_mean2/output_manifest.json",
+      "inference_executed": false,
+      "internal_development_gap_mae_eV": 0.1402572855657339,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720,
+      "selected_pass": 37.0,
+      "selected_weights": "live",
+      "training_executed": true
+    },
+    "outcome": {
+      "artifact_status": "durable_local_verified",
+      "budget_decision": "closed",
+      "comparison_status": "context_only",
+      "execution_status": "complete",
+      "full_handoff_status": "not_applicable",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "not_evaluated"
+    },
+    "profile_observation": {
+      "backward_host_seconds": 3.047910019000142,
+      "capture_includes_checkpoint": true,
+      "capture_steps": 16,
+      "capture_wall_seconds": 6.137790109000093,
+      "checkpoint_publish_host_seconds": 0.24839804800001275,
+      "checkpoint_state_host_seconds": 0.18941823600005137,
+      "cuda_launch_count": 89892,
+      "cuda_launch_cpu_seconds": 0.8268877459999211,
+      "forward_backward_host_wall_fraction": 0.8717041366655253,
+      "forward_host_seconds": 2.3024270089999845,
+      "loader_wait_host_seconds": 0.0063937380001561905,
+      "loader_wait_host_wall_fraction": 0.0010417003329554705,
+      "mae_eV": 0.1402572855657339,
+      "mechanical_status": "MECHANICALLY_VERIFIED",
+      "profile_receipt_sha256": "945cecdbe3211171b7568f33b668fd2b6a5c384e6c4495311c80ccb3aa21b340",
+      "progress": {
+        "completed_passes": 40,
+        "next_batch": 0,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720,
+        "status": "complete"
+      },
+      "selection_pass": 37.0,
+      "selection_step": 28897,
+      "weights": "live",
+      "worker_entry_wall_seconds": 10763.485608378
+    },
+    "role_use": {
+      "development": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "consumed"
+    },
+    "scope": "100k",
+    "scope_note": "Two independent family contracts; descriptive internal-development endpoints and bounded 16-update profiler window only. Not a cross-family causal comparison, speedup estimate, replay-ready pair, or READY evidence.",
+    "source_identity": {
+      "kernel": "nothingnessvoid/molgap-k1-gptrans-100k-profiler-s42",
+      "package_identity": "b1c931d1f87af5f601b2fb2c9faebaf17c729175937af2be1b73b9876df4be11",
+      "platform": "kaggle",
+      "producer_platform_version": null,
+      "source_archive_sha256": "0c6d43312114d08d7b44a3f5322db747a6aa86de568697192367f63e34ac1dbc",
+      "source_commit": "faf5b6d13d94fa28a1d3e867bc17e453ca44da1e",
+      "spec_identity": "cd2ec654371e0b08e539ec1e1022bc1e7381da15299ec195da348589c97b1252",
+      "version": 1
+    },
+    "track": "B"
+  },
+  "finalized_at": "2026-10-14T13:42:51+09:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_k1_mean2.json",
+      "role_event_id": "role-TB-family-100k-operator-profile-k1_mean2-s42-train",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "family-100k-operator-profile-s42:k1_mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_k1_mean2.json",
+      "role_event_id": "role-TB-family-100k-operator-profile-k1_mean2-s42-development-metric",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "family-100k-operator-profile-s42:k1_mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_k1_mean2.json",
+      "role_event_id": "role-TB-family-100k-operator-profile-k1_mean2-s42-development-selection",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "family-100k-operator-profile-s42:k1_mean2:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+    }
+  ],
+  "run_id": "family-100k-operator-profile-s42:k1_mean2:downstream",
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "missing_frozen_reference"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "neural_atom_k1/v3",
+      "dataset_identity": "dataset_manifest_sha256:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "none",
+      "evaluation_role_identity": "internal_development:b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+      "lr_schedule_identity": "family_recipe_sha256:22b2bff65cb026c3531b7a015c11b53cc6acc129c4a44796c2edeefc0208b3c0",
+      "matched_architecture_required": false,
+      "optimizer_identity": "family_recipe_sha256:22b2bff65cb026c3531b7a015c11b53cc6acc129c4a44796c2edeefc0208b3c0",
+      "precision_identity": "fp32",
+      "row_split_identity": "train:1055370f70f8a5b4ee4548fcc12f3f27a053e3ae07f8932c009205ee61f12d00;development:b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+      "scientific_contract": "family_recipe_sha256:22b2bff65cb026c3531b7a015c11b53cc6acc129c4a44796c2edeefc0208b3c0",
+      "selection_role_identity": "best_internal_development_metric",
+      "target_transform_identity": "training_contract_sha256:a6a92d38785030b43ae9eb23bb4e448b266daa24f6da2bc1d9b862ad3cdd1c5c",
+      "terminal_endpoint_identity": "optimizer_steps:31240;sample_presentations:3998720",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/family_100k_operator_profile/protocol.md",
+    "evaluation_role_identity": "internal_development:b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "Gap MAE in eV",
+    "model_identity": "neural_atom_k1/v3",
+    "presentation_semantics_ref": "experiments/family_100k_operator_profile/protocol.md",
+    "reference_id": null,
+    "run_id": "family-100k-operator-profile-s42:k1_mean2:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best_internal_development_metric",
+    "terminal_evidence_ref": "pending",
+    "trace_artifact_ref": "pending",
+    "trace_fields": {
+      "checkpoint_identity": false,
+      "ema_dev_metric": false,
+      "epoch_or_pass": true,
+      "learning_rate": true,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+}

@@ -1,6 +1,76 @@
 {
-  "ambiguous_historical_role_record_count": 492,
+  "ambiguous_historical_role_record_count": 502,
   "coarse_historical_role_records": [
+    {
+      "evidence_id": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
     {
       "evidence_id": "family-checkpoint-efficiency-20261013",
       "role_identity": null,
@@ -3446,7 +3516,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 289,
+  "explicit_role_event_count": 295,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -3472,6 +3542,36 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-input-pipeline-local-20261013"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-development-metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-development-selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-family-100k-operator-profile-k1_mean2-s42-development-metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-family-100k-operator-profile-k1_mean2-s42-development-selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:pcqm4mv2-ogb-fixed-100k-v1:internal-development-100000-150000": [
@@ -3746,6 +3846,22 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-family-100k-operator-profile-k1_mean2-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train_decoded": [
@@ -5600,6 +5716,8 @@
   },
   "protected_roles_reported_untouched": {
     "test_challenge": [
+      "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
+      "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "family-checkpoint-efficiency-20261013",
       "family-session-speed-20261014",
       "k1-saved-bn-rows-20261008-evidence",
@@ -5704,6 +5822,8 @@
       "pcqm-xian-determinism-audit-20260915"
     ],
     "test_dev": [
+      "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
+      "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "family-checkpoint-efficiency-20261013",
       "family-session-speed-20261014",
       "k1-saved-bn-rows-20261008-evidence",
@@ -5809,6 +5929,36 @@
     ]
   },
   "repeatedly_selected_role_identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-development-metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-development-selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-family-100k-operator-profile-k1_mean2-s42-development-metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-family-100k-operator-profile-k1_mean2-s42-development-selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+      }
+    ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:internal_development": [
       {
         "access_kind": "metric_computed",
@@ -7071,6 +7221,36 @@
     ]
   },
   "reused_role_identities": {
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4:development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-development-metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-development-selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-family-100k-operator-profile-k1_mean2-s42-development-metric",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-family-100k-operator-profile-k1_mean2-s42-development-selection",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+      }
+    ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:71d240a0a0d93054e9b47b9195d43914d3e6eadb66a4efc5346990db8c610818:internal_development": [
       {
         "access_kind": "metric_computed",
@@ -7313,6 +7493,22 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      }
+    ],
+    "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-family-100k-operator-profile-k1_mean2-s42-train",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
       }
     ],
     "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d:fa3d4f91a2ac1a8694e271adc6dab26cd2d47bc592d254262b0fa855db566a8d:official_train_prefix": [

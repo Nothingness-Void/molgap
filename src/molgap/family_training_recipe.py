@@ -18,7 +18,7 @@ ADAMW_BETAS = (.9, .999)
 ADAMW_EPSILON = 1e-8
 MODES = {
     "neural_atom_k1": ("reference", "ssma", "mean2", "mean2_clean_second"),
-    "gptrans_t": ("reference", "pair_prenorm", "centered_logits", "memory_value", "memory_message"),
+    "gptrans_t": ("reference", "pair_prenorm", "centered_logits", "memory_value", "memory_message", "degree_bond_local_ema999"),
 }
 
 

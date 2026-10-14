@@ -1,0 +1,132 @@
+{
+  "cost_attribution": {
+    "allocation_entry_ref": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/allocation_entry_observation.json",
+    "method": "Two observed T4 devices were assigned one per arm for the full measured entry interval. Each trajectory records one device times that interval; arm events sum once to the pair allocation. This is allocated device time, not busy time or billing.",
+    "pair_allocated_device_hours": 6.682364293387778,
+    "per_arm_allocated_device_hours": 3.341182146693889,
+    "per_arm_allocation_cost_ref": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/gptrans_local/allocation_costs.json",
+    "per_arm_wall_seconds": 11688.317988879,
+    "pre_entry_and_post_entry_allocation": "unknown",
+    "queue_status": "unknown"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "gptrans_local-v1",
+      "category": "other",
+      "cost_event_id": "cost-TB-family-100k-operator-profile-gptrans_local-s42-entry-allocation",
+      "evidence_ref": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_gptrans_local.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 3.341182146693889
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 3.246754996910833
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+    }
+  ],
+  "evidence_id": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
+  "format": "molgap-terminal-acceptance-metadata-v1",
+  "observed_execution": {
+    "completed_passes": 60,
+    "execution_ref": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/gptrans_local/output_manifest.json",
+    "inference_executed": false,
+    "internal_development_gap_mae_eV": 0.14286130827367305,
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080,
+    "selected_pass": 52.0,
+    "selected_weights": "ema",
+    "training_executed": true
+  },
+  "outcome": {
+    "artifact_status": "durable_local_verified",
+    "budget_decision": "closed",
+    "comparison_status": "context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated"
+  },
+  "role_observation_basis": {
+    "canonical_trace_ref": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/gptrans_local/canonical_trace.json",
+    "development_role_identity": "b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+    "role_plan_ref": "experiments/family_100k_operator_profile/role_plan.json",
+    "scope": "Observed train membership and internal-development metrics/selection only; no official-role events are asserted.",
+    "train_role_identity": "1055370f70f8a5b4ee4548fcc12f3f27a053e3ae07f8932c009205ee61f12d00",
+    "training_contract_ref": "experiments/family_100k_operator_profile/terminal_acceptance/outputs/experiment/gptrans_local/training_contract.json"
+  },
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_gptrans_local.json",
+      "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-train",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_gptrans_local.json",
+      "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-development-metric",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_gptrans_local.json",
+      "role_event_id": "role-TB-family-100k-operator-profile-gptrans_local-s42-development-selection",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+    }
+  ],
+  "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/family_100k_operator_profile/terminal_acceptance/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "Separately authorized profiler-off same-source equivalence and throughput test"
+    ]
+  }
+}

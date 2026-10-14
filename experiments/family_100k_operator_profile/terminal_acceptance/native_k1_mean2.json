@@ -1,0 +1,58 @@
+{
+  "arm_id": "k1_mean2",
+  "execution": "CPU tensor-only inspection; no training/inference",
+  "method": "family_training_runner._verify_preflight",
+  "provenance": {
+    "accelerator": "Tesla T4",
+    "context": {
+      "account": "nothingnessvoid",
+      "arm_id": "k1_mean2",
+      "arm_identity": "1e5858a5c9fc5c9f8bbd31132732f1f5e5e49cdbf629e9d3a50966ad251d3e9f",
+      "experiment_id": "family-100k-operator-profile-s42",
+      "family_name": "neural_atom_k1",
+      "family_version": "3",
+      "logical_run_id": "family-100k-operator-profile-s42",
+      "package_identity": "b1c931d1f87af5f601b2fb2c9faebaf17c729175937af2be1b73b9876df4be11",
+      "platform": "kaggle",
+      "platform_version": null,
+      "run_reference": "nothingnessvoid/molgap-k1-gptrans-100k-profiler-s42",
+      "source_archive_sha256": "0c6d43312114d08d7b44a3f5322db747a6aa86de568697192367f63e34ac1dbc",
+      "source_commit": "faf5b6d13d94fa28a1d3e867bc17e453ca44da1e",
+      "spec_identity": "cd2ec654371e0b08e539ec1e1022bc1e7381da15299ec195da348589c97b1252",
+      "training_recipe_sha256": "a6a92d38785030b43ae9eb23bb4e448b266daa24f6da2bc1d9b862ad3cdd1c5c"
+    },
+    "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "initialization": {
+      "device": "cpu",
+      "file_sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "tensor_count": 367
+    },
+    "recipe_identity": "40386838f14becd4cf42a8794004f37689916d2f4201852c021aeecb2b5f5021",
+    "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+    "tuning_identity": "fc9c14aa43b7d985606a492f916a7949cd3f6ece23040f19221a1ceb27e3655c"
+  },
+  "retained": [
+    {
+      "bytes": 44351593,
+      "path": "repeat-a.pt",
+      "sha256": "e0def2a6806b0509466ba286f727cdd46ff943ce497312bba2e930b13e2344c0"
+    },
+    {
+      "bytes": 44351593,
+      "path": "repeat-b.pt",
+      "sha256": "339ebf879e644bcf23302dcd643efabbb79286d518630bc421e1c448e7a5168a"
+    },
+    {
+      "bytes": 44350278,
+      "path": "resumed.pt",
+      "sha256": "29cf39e7ffdcf21c1625490e95c46603be58fe6dc8d5d8a7a801acda3a44eda9"
+    },
+    {
+      "bytes": 44343256,
+      "path": "resumed-first.pt",
+      "sha256": "cef42193c10d878a972a78ce90c57477ff22899c04aaee0769b05e785617b932"
+    }
+  ],
+  "status": "NATIVE_PROOF_VERIFIED"
+}

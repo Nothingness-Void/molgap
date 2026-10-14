@@ -1,0 +1,54 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "missing_frozen_reference"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "neural_atom_k1/v3",
+    "dataset_identity": "dataset_manifest_sha256:1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "internal_development:b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+    "lr_schedule_identity": "family_recipe_sha256:22b2bff65cb026c3531b7a015c11b53cc6acc129c4a44796c2edeefc0208b3c0",
+    "matched_architecture_required": false,
+    "optimizer_identity": "family_recipe_sha256:22b2bff65cb026c3531b7a015c11b53cc6acc129c4a44796c2edeefc0208b3c0",
+    "precision_identity": "fp32",
+    "row_split_identity": "train:1055370f70f8a5b4ee4548fcc12f3f27a053e3ae07f8932c009205ee61f12d00;development:b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+    "scientific_contract": "family_recipe_sha256:22b2bff65cb026c3531b7a015c11b53cc6acc129c4a44796c2edeefc0208b3c0",
+    "selection_role_identity": "best_internal_development_metric",
+    "target_transform_identity": "training_contract_sha256:a6a92d38785030b43ae9eb23bb4e448b266daa24f6da2bc1d9b862ad3cdd1c5c",
+    "terminal_endpoint_identity": "optimizer_steps:31240;sample_presentations:3998720",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/family_100k_operator_profile/protocol.md",
+  "evaluation_role_identity": "internal_development:b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "neural_atom_k1/v3",
+  "presentation_semantics_ref": "experiments/family_100k_operator_profile/protocol.md",
+  "reference_id": null,
+  "run_id": "family-100k-operator-profile-s42:k1_mean2:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_internal_development_metric",
+  "terminal_evidence_ref": "experiments/family_100k_operator_profile/rml/k1_mean2/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/family_100k_operator_profile/rml/k1_mean2/rml_finalized/trace.json",
+  "trace_artifact_sha256": "88f2ea3a3a53140608fe7bb05c893bbeb910cb5e96b3ef8df6a8d55679ac6130",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": true,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

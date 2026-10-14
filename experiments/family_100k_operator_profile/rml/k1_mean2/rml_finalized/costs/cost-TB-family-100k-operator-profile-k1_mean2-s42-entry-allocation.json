@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "k1_mean2-v1",
+  "category": "other",
+  "cost_event_id": "cost-TB-family-100k-operator-profile-k1_mean2-s42-entry-allocation",
+  "evidence_ref": "experiments/family_100k_operator_profile/terminal_acceptance/acceptance_k1_mean2.json",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 3.341182146693889
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 2.989857113438333
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "family-100k-operator-profile-s42:k1_mean2:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+}

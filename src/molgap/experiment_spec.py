@@ -83,6 +83,9 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    ("gptrans_degree_bond_local", "1"): AddonContract(
+        "gptrans_t", "local-bond-architecture", "molgap.gptrans_bond_local",
+    ),
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
     ),
@@ -254,6 +257,9 @@ def _arm(arm: dict) -> None:
                     f"[{EDGE_STATE_MIN_LAYERS}, {EDGE_STATE_MAX_LAYERS}] "
                     f"except {EDGE_STATE_BASE_LAYERS}"
                 )
+        elif addon["name"] == "gptrans_degree_bond_local":
+            if family["version"] != "2" or len(arm["addons"]) != 1 or addon["config"] != {}:
+                raise ValueError("Local-bond adapter requires the shared GPTrans interface and one frozen addon")
         elif addon["name"] == "k1_joint_aggregation":
             if family["version"] not in {"2", "3"} or len(arm["addons"]) != 1:
                 raise ValueError("K1 screen extension requires family/version 2 and one extension")

@@ -115,6 +115,15 @@ checkpoint/trace/selected-output owners. In particular, the legacy screen output
 profile cannot represent a full final-only endpoint; do not manufacture empty
 predictions or development metrics to make that inspector pass.
 
+## Topology Reuse
+
+The live shared owners reuse K1's private padding mask across mixers/mean2
+forwards and GPTrans local-bond target indices across propagation blocks.
+Prepared reachability stops at the exact simple-path bound, retaining the
+original cap-based sentinel. These are execution tensors, not new model state.
+The [dated change and verification boundary](../../experiments/family_100k_operator_profile/terminal_acceptance/execution_optimization.md)
+owns the evidence; no native speedup or old-checkpoint migration is implied.
+
 ## Checkpoint Checks
 
 `training_reproducibility.nonfinite_tensor_keys` owns tensor finite checking.

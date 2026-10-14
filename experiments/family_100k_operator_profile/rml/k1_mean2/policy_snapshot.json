@@ -1,0 +1,33 @@
+{
+  "action_rule": {
+    "action": "RUN_PROFILE_TRAINING",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "family-100k-operator-profile-s42"
+  },
+  "cost_model": {
+    "assumptions": [],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "239d55d798e7c35ef621819545734858bb429b6c7ece863b70f8dd191c78cd14",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "family-100k-operator-profile-s42",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

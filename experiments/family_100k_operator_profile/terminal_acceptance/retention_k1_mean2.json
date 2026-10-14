@@ -1,0 +1,40 @@
+{
+  "files": [
+    {
+      "path": "training_contract.json",
+      "sha256": "a6a92d38785030b43ae9eb23bb4e448b266daa24f6da2bc1d9b862ad3cdd1c5c",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "development_predictions.pt",
+      "sha256": "4a74d6f0b45f4dd06aef7e44b25aa67ecb0bc0006f899d287257656d3a36494e",
+      "state": "RETAINED"
+    },
+    {
+      "path": "last_checkpoint.pt",
+      "sha256": "a91428e1d50bf7bc9258b2fbadedd2cbf81d370057b496535201bb82e413cc4b",
+      "state": "RETAINED"
+    },
+    {
+      "path": "selected_model.pt",
+      "sha256": "75cac8f227504ee11ec00f2cd035444d4ab9e678c282e4811dc4b6bc3d9b3f89",
+      "state": "RETAINED"
+    },
+    {
+      "path": "canonical_trace.json",
+      "sha256": "88f2ea3a3a53140608fe7bb05c893bbeb910cb5e96b3ef8df6a8d55679ac6130",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "output_manifest.json",
+      "sha256": "c3a51fee2e675b9f6741850676ed8c615261f6ee4ba06d74c27be83ea9da2284",
+      "state": "ALREADY_RETAINED"
+    }
+  ],
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-100k-profiler-s42",
+  "manifest_sha256": "c3a51fee2e675b9f6741850676ed8c615261f6ee4ba06d74c27be83ea9da2284",
+  "platform_version_verified_by_output_api": false,
+  "producer_version": null,
+  "receipt_version": null,
+  "unselected_outputs_downloaded": false
+}

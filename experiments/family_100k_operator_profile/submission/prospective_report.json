@@ -1,0 +1,40 @@
+{
+  "batch": {
+    "policy_sha256": "dda89ff8d521f0e49ae61d58a2556564fb9c8a3db0a87b63a368d4f8e336a7a1",
+    "size": 2,
+    "source_commit": "faf5b6d13d94fa28a1d3e867bc17e453ca44da1e",
+    "source_hashes_sha256": "2a6c08a84d166714c20095272245c82fdce22dda1697571614745ec7b8beaeb8"
+  },
+  "completed_records": [
+    {
+      "path": "experiments/family_100k_operator_profile/rml/k1_mean2",
+      "status": "PLANNED",
+      "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+    },
+    {
+      "path": "experiments/family_100k_operator_profile/rml/gptrans_local",
+      "status": "PLANNED",
+      "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+    }
+  ],
+  "ready_for_desktop": false,
+  "rml_derived_files": [
+    "completeness_report.json",
+    "cost_ledger.json",
+    "policy_backtest.json",
+    "ready_for_desktop_index.json",
+    "reference_reuse_index.json",
+    "replay_pool.json",
+    "research_summary.json",
+    "research_summary.md",
+    "role_reuse_index.json",
+    "screening_backtest.json",
+    "trajectory_graph.json",
+    "trajectory_index.json"
+  ],
+  "rml_rebuilt": true,
+  "scope": "prospective_planning_only",
+  "status": "PROSPECTIVE_PLANNED_AND_RML_REBUILT",
+  "submission_authorized": false,
+  "training_authorized": false
+}
