@@ -1,0 +1,206 @@
+{
+  "client_review_date": "2026-10-15",
+  "client_timezone": "Asia/Tokyo",
+  "status": "DURABLE_PASS10_PREFIXES_VERIFIED",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED",
+  "scientific_horizon_passes": 60,
+  "completed_passes_per_arm": 10,
+  "slots": {
+    "1": {
+      "kernel": "nvoid912/molgap-gptrans-research-slot1-100k-v1",
+      "kernel_id": 138538171,
+      "exact_download_version": 3,
+      "remote_status": {
+        "status": "COMPLETE"
+      },
+      "segment_status": "MECHANICALLY_VERIFIED",
+      "source_commit": "7e1aac51a852a0b7602cc9f0f45aa83be9d12c5a",
+      "inspection": {
+        "remote_observation.json": {
+          "path": "platforms/_records/kaggle/research_campaign_slot1_kaggle3_v3/acceptance_v3/remote_observation.json",
+          "sha256": "cfdf08ba82f72bbb6b71a65f85e82fc51bc5efde6ff0448e22a4485b208c5d67"
+        },
+        "segment_acceptance.json": {
+          "path": "platforms/_records/kaggle/research_campaign_slot1_kaggle3_v3/acceptance_v3/segment_acceptance.json",
+          "sha256": "44bb1d4a929c36d66c96527fcda524db9e0c103da80b898b2b946718c2971b92"
+        },
+        "payload_retrieval.json": {
+          "path": "platforms/_records/kaggle/research_campaign_slot1_kaggle3_v3/acceptance_v3/payload_retrieval.json",
+          "sha256": "2bcc1948c09d9142a768ea01236861ad34a8d468f6d50dbae453a9ebf09ee210"
+        },
+        "local_resume_verification.json": {
+          "path": "platforms/_records/kaggle/research_campaign_slot1_kaggle3_v3/acceptance_v3/local_resume_verification.json",
+          "sha256": "429ec8a852ed8a3daf99f7b885414149eea3f07bcf600cd36d36474bda5063a9"
+        }
+      },
+      "full_observed_allocation": {
+        "wall_seconds": 2476.656111542,
+        "allocated_device_seconds": 4953.312223084,
+        "allocated_T4_hours": 1.3759200619677778
+      },
+      "cost_overlap": "Bootstrap envelope counted once; runtime ledger not added again",
+      "bootstrap_tail_device_seconds": 1.4233355019996452,
+      "retired_bootstrap_device_seconds": 263.62378359599995,
+      "unmeasured": {
+        "provisioning_before_python_seconds": null,
+        "queue_seconds": null
+      }
+    },
+    "2": {
+      "kernel": "nvoid912/molgap-gptrans-research-slot2-100k-v1",
+      "kernel_id": 138538193,
+      "exact_download_version": 3,
+      "remote_status": {
+        "status": "COMPLETE"
+      },
+      "segment_status": "MECHANICALLY_VERIFIED",
+      "source_commit": "7e1aac51a852a0b7602cc9f0f45aa83be9d12c5a",
+      "inspection": {
+        "remote_observation.json": {
+          "path": "platforms/_records/kaggle/research_campaign_slot2_kaggle3_v3/acceptance_v3/remote_observation.json",
+          "sha256": "7b43096717fda0e3a020fa3328b7319a8095dadab7384e197211d70e5659a84f"
+        },
+        "segment_acceptance.json": {
+          "path": "platforms/_records/kaggle/research_campaign_slot2_kaggle3_v3/acceptance_v3/segment_acceptance.json",
+          "sha256": "732480aa387e12361cfe974d4cbea5b1d4d524aa23b9fc4c11a467eca0cd0f0d"
+        },
+        "payload_retrieval.json": {
+          "path": "platforms/_records/kaggle/research_campaign_slot2_kaggle3_v3/acceptance_v3/payload_retrieval.json",
+          "sha256": "e68f9dde353b9eb5cd8f6c0e1c9dfd16777ef1800e4d3b36f7fc250bf8a77ef1"
+        },
+        "local_resume_verification.json": {
+          "path": "platforms/_records/kaggle/research_campaign_slot2_kaggle3_v3/acceptance_v3/local_resume_verification.json",
+          "sha256": "26fb287237d6d74018d60b9a2da5255c9cb956c3341b79b2a045f19c8876abe2"
+        }
+      },
+      "full_observed_allocation": {
+        "wall_seconds": 2494.4972476270004,
+        "allocated_device_seconds": 4988.994495254001,
+        "allocated_T4_hours": 1.3858318042372224
+      },
+      "cost_overlap": "Bootstrap envelope counted once; runtime ledger not added again",
+      "bootstrap_tail_device_seconds": 1.3747152840005583,
+      "retired_bootstrap_device_seconds": 271.246401352,
+      "unmeasured": {
+        "provisioning_before_python_seconds": null,
+        "queue_seconds": null
+      }
+    }
+  },
+  "arms": {
+    "reference": {
+      "progress": {
+        "optimizer_steps": 7810,
+        "sample_presentations": 999680,
+        "completed_passes": 10,
+        "next_batch": 0,
+        "status": "paused"
+      },
+      "development_mae_eV": 0.17426058851659298,
+      "metric_scope": "Best EMA internal-development MAE within passes1-10; not final comparison",
+      "development_rows": 50000,
+      "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e",
+      "checkpoint_sha256": "98e9bc4c989aeb2aa170f93a5d8f329bd39657fef0ca0bc086f1b1ca99672eaf",
+      "prediction_sha256": "e356ba830e9637d0ee28713d3af9d976bcda113530275463ec617b21d06eb3f6",
+      "trace_sha256": "999d7adfb4e0556bc1fca272428535859979aaaeaf877619c41d0cddd7c62753",
+      "native_repeat_resume_payloads": "RECHECKED_SAVED_TENSORS",
+      "zero_start_rows": 128,
+      "memory_headroom_fraction": 0.9094669868852872,
+      "mechanism_gradient_norms": {},
+      "local_portable_resume_status": "RESUME_VERIFIED",
+      "local_resume_manifest": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot1_kaggle3_v3\\acceptance_v3\\local_resume\\reference\\resume_bundle.json",
+      "actual_next_segment_native_resume": "NOT_EXECUTED"
+    },
+    "cycle": {
+      "progress": {
+        "optimizer_steps": 7810,
+        "sample_presentations": 999680,
+        "completed_passes": 10,
+        "next_batch": 0,
+        "status": "paused"
+      },
+      "development_mae_eV": 0.17449452835023402,
+      "metric_scope": "Best EMA internal-development MAE within passes1-10; not final comparison",
+      "development_rows": 50000,
+      "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e",
+      "checkpoint_sha256": "c87920d3b4dd8da617e179f29719b9c43708e395d741e2e992f7585dcb9742d1",
+      "prediction_sha256": "3a9210a42cf3cb2ec0a19ac78227800bbf6ff53953766d2b2c436569174593c5",
+      "trace_sha256": "c5a339389e1274d5038caffefb7c0cacf6354d923aec59fa1595d9a439d1cc73",
+      "native_repeat_resume_payloads": "RECHECKED_SAVED_TENSORS",
+      "zero_start_rows": 128,
+      "memory_headroom_fraction": 0.9108082167092089,
+      "mechanism_gradient_norms": {
+        "cycle_embedding.weight": 0.0012187433894723654
+      },
+      "local_portable_resume_status": "RESUME_VERIFIED",
+      "local_resume_manifest": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot1_kaggle3_v3\\acceptance_v3\\local_resume\\cycle\\resume_bundle.json",
+      "actual_next_segment_native_resume": "NOT_EXECUTED"
+    },
+    "carry": {
+      "progress": {
+        "optimizer_steps": 7810,
+        "sample_presentations": 999680,
+        "completed_passes": 10,
+        "next_batch": 0,
+        "status": "paused"
+      },
+      "development_mae_eV": 0.17402802132070064,
+      "metric_scope": "Best EMA internal-development MAE within passes1-10; not final comparison",
+      "development_rows": 50000,
+      "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e",
+      "checkpoint_sha256": "796c9008ad37de824f5c6679f1c28d90e0134c37033bfd8127902462a6bc0dd9",
+      "prediction_sha256": "349c4d6210154514ebb3166d645f8c5853f9479e07a21430654bdd3e5f51c22a",
+      "trace_sha256": "b0e2c22f21e41eaf0a10dded6aa1d7a6fc85e84773c833c01dc8ca87a1fda558",
+      "native_repeat_resume_payloads": "RECHECKED_SAVED_TENSORS",
+      "zero_start_rows": 128,
+      "memory_headroom_fraction": 0.9091987409205028,
+      "mechanism_gradient_norms": {
+        "bond_carry.logits": 0.00208328221924603
+      },
+      "local_portable_resume_status": "RESUME_VERIFIED",
+      "local_resume_manifest": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\local_resume\\carry\\resume_bundle.json",
+      "actual_next_segment_native_resume": "NOT_EXECUTED"
+    },
+    "correspondence": {
+      "progress": {
+        "optimizer_steps": 7810,
+        "sample_presentations": 999680,
+        "completed_passes": 10,
+        "next_batch": 0,
+        "status": "paused"
+      },
+      "development_mae_eV": 0.17289389541566372,
+      "metric_scope": "Best EMA internal-development MAE within passes1-10; not final comparison",
+      "development_rows": 50000,
+      "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e",
+      "checkpoint_sha256": "bb04e6b12592a1ec301f3f2ada7020f8aa5b4df8ed7f3633bf3d15cf1bbcfb9d",
+      "prediction_sha256": "d5d8789a058836080481ef801376cfd9f10ce19ca81def5e78d9ecd84761d9f4",
+      "trace_sha256": "cb03818223d121c3ea45c74529cbdf7227f409d1c2c22008fa4ca90ad61a8193",
+      "native_repeat_resume_payloads": "RECHECKED_SAVED_TENSORS",
+      "zero_start_rows": 128,
+      "memory_headroom_fraction": 0.9093328639028949,
+      "mechanism_gradient_norms": {
+        "atom_projection.weight": 0.005847856868058443,
+        "atom_projection.bias": 4.187275771982968e-05,
+        "bond_projection.weight": 0.0024087089113891125,
+        "bond_projection.bias": 7.168475713115185e-05
+      },
+      "local_portable_resume_status": "RESUME_VERIFIED",
+      "local_resume_manifest": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\research_campaign_slot2_kaggle3_v3\\acceptance_v3\\local_resume\\correspondence\\resume_bundle.json",
+      "actual_next_segment_native_resume": "NOT_EXECUTED"
+    }
+  },
+  "training_executed_locally": false,
+  "model_inference_executed_locally": false,
+  "new_remote_submissions": 0,
+  "private_resume_publications": 0,
+  "reference_status": "PLANNED_NOT_SCIENTIFICALLY_ACCEPTED",
+  "campaign_full_observed_allocated_T4_hours": 2.761751866205,
+  "campaign_remaining_ceiling_T4_hours": 29.238248133795,
+  "remaining_budget_is_not_account_quota": true
+}

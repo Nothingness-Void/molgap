@@ -10,3 +10,7 @@ preflight, checkpoint transport and allocation owners were reused.
 `gptrans_campaign_release.freeze` authored the four typed recipes and two
 physical Specs. `gptrans_research_campaign` contains only model/objective
 deltas. There is no new trainer, platform submitter, account or dataset.
+
+The first durable segment was independently reviewed in the
+[2026-10-15 acceptance decision](results/decision_pass10_accepted_2026-10-15.md).
+It was incomplete scientific work, not a final reference/candidate verdict.

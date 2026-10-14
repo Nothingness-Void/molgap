@@ -12,11 +12,12 @@ was submitted once per slot on the human-selected Kaggle3 account `nvoid912`:
 aggregate reference/cycle kernel138538171/version3 and carry/correspondence
 kernel138538193/version3, against frozen source
 `7e1aac51a852a0b7602cc9f0f45aa83be9d12c5a`. Both exact version3 jobs were
-last observed RUNNING with pulled source matching their frozen entries.
+observed COMPLETE; all four chains are paused after their accepted first
+[durable segment](experiments/pcqm_gptrans_research_four_arm_100k/results/decision_pass10_accepted_2026-10-15.md).
 The [status](experiments/pcqm_gptrans_research_four_arm_100k/STATUS.md) owns exact
 receipts, packages, resource observations, retired attempts and custody.
 Both slots retain the 60-pass scientific horizon and ten-pass durable segments;
-submission is not native qualification or a scientific result. No campaign
+accepted prefix/native evidence is not a completed scientific result. No campaign
 GPU job was submitted to Kaggle2. The unsubmitted local-only two-arm proposal
 is superseded; its [accepted CPU inputs](experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md)
 are reused unchanged. Infrastructure failures are not route negatives.
@@ -24,7 +25,7 @@ are reused unchanged. Infrastructure failures are not route negatives.
 The [post-routing research review](experiments/pcqm_v5_route_portfolio/bond_memory_review_2026-10-13.md)
 retains the earlier stand-alone bond-message carry prototype. Its bounded
 aggregate-parent adaptation is integrated in the four-arm campaign above;
-there is no accepted native result or Replay claim yet.
+there is no completed scientific result or Replay claim yet.
 
 Closed architecture, diagnostic and execution studies route through the
 [history index](docs/operations/CURRENT_STATE_HISTORY_INDEX.md#closed-gptrans-study-authorities).
@@ -39,6 +40,8 @@ history and eligibility. See [`research_memory/README.md`](research_memory/READM
 The [reviewed desktop training core](docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md)
 is integrated for new K1/GPTrans declarations. Native qualification remains
 run/recipe/runtime-specific; historical entrypoints and job custody are unchanged.
+The [reviewed batch-topology reuse](docs/operations/TOPOLOGY_REUSE_SERVER_REVIEW.md)
+removes repeated mask/index/reachability work; new packages retain native gates.
 Use the [four-module runtime guide](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md)
 for substrate/addon composition, retained weight views, local one-batch checks
 and automatic source-dependency handoff.
