@@ -1,0 +1,62 @@
+{
+  "run_id": "family-topology-t4-100k-s42",
+  "account": "nothingnessvoid",
+  "title": "MolGap K1 GPTrans Topology 100K S42",
+  "source_dataset": "nothingnessvoid/molgap-k1-gptrans-topology-100k-s42-src",
+  "dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "accelerator": "NvidiaTeslaT4",
+  "device_count": 2,
+  "cpu_cores": 4,
+  "memory_gib": 30,
+  "allocation_wall_limit_seconds": 25200,
+  "cleanup_reserve_seconds": 180,
+  "train_rows": 100000,
+  "development_rows": 50000,
+  "seed": 42,
+  "torch_version": "2.11.0",
+  "profiling": {
+    "warmup_steps": 120,
+    "active_steps": 16,
+    "record_shapes": false,
+    "profile_memory": false,
+    "with_stack": false,
+    "row_limit": 50
+  },
+  "arms": {
+    "k1_mean2": {
+      "family": "neural_atom_k1",
+      "mode": "mean2",
+      "addon": "k1_two_pass_mean",
+      "epochs": 40,
+      "learning_rate": 0.0004,
+      "weight_decay": 1e-05,
+      "schedule": "cosine_epoch",
+      "warmup_units": 0,
+      "selection": "best-development-live",
+      "ema_decay": null,
+      "sampler": "python-epoch-shuffle",
+      "target_mean_eV": 5.3383002281188965,
+      "target_std_eV": 1.275090217590332,
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
+    },
+    "gptrans_local": {
+      "family": "gptrans_t",
+      "mode": "degree_bond_local_ema999",
+      "addon": "gptrans_degree_bond_local",
+      "epochs": 60,
+      "learning_rate": 0.001,
+      "weight_decay": 0.05,
+      "schedule": "warmup_cosine_epoch",
+      "warmup_units": 4,
+      "selection": "best-development-ema",
+      "ema_decay": 0.999,
+      "sampler": "torch-pass-randperm",
+      "target_mean_eV": 5.338300266634226,
+      "target_std_eV": 1.2750902063230574,
+      "initialization_sha256": "a65034dae2d01d82eb0074eba8f2ee697d93ca259188ae45a4213e9041d1ed1b"
+    }
+  },
+  "baseline_kernel": "nothingnessvoid/molgap-k1-gptrans-100k-profiler-s42",
+  "baseline_version": 1
+}
