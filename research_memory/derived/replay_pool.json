@@ -10809,6 +10809,22 @@
   "exclusions": [
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_frozen_reference"
+      ],
+      "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
+      "trajectory_id": "TB-family-100k-operator-profile-gptrans_local-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "missing_frozen_reference"
+      ],
+      "run_id": "family-100k-operator-profile-s42:k1_mean2:downstream",
+      "trajectory_id": "TB-family-100k-operator-profile-k1_mean2-s42"
+    },
+    {
+      "reasons": [
         "CONTEXT_ONLY",
         "canonical_trace_marked_ineligible",
         "epoch_axis_not_cross_scale_comparable",
@@ -11018,5 +11034,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "5910e0ebbfe1977c308fd74920240d66d26f1e773911fefaf925c2e4a53f610b"
+  "source_digest": "2279055e30eb04f5b2b7fcfbe1e0ab39e6db7dc8e81f55f83f15b1cf36ec4154"
 }

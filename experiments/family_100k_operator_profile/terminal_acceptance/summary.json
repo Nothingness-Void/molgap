@@ -1,0 +1,86 @@
+{
+  "allocation_entry": {
+    "allocated_device_seconds": 24056.511456196,
+    "entire_platform_release_seconds": null,
+    "error": null,
+    "format": "molgap-kaggle-allocation-entry-v1",
+    "gpu_count_source": "nvidia-smi",
+    "monotonic_seconds": 12028.255728098,
+    "observed_gpu_count": 2,
+    "platform_release_scope": "not observed: queue, allocation before entry and platform release after entry are excluded",
+    "scope": "entry invocation through bootstrap completion, including setup, pip, extraction, preflight, training/evaluation and idle assigned GPU time; not device busy time",
+    "status": "complete",
+    "wall_end_utc": "2026-10-13T21:41:52.178545+00:00",
+    "wall_start_utc": "2026-10-13T18:21:23.922789+00:00"
+  },
+  "arms": {
+    "gptrans_local": {
+      "backward_host_seconds": 2.0445932680003125,
+      "capture_includes_checkpoint": true,
+      "capture_steps": 16,
+      "capture_wall_seconds": 5.366384975000074,
+      "checkpoint_publish_host_seconds": 0.47436736099996324,
+      "checkpoint_state_host_seconds": 0.3075536890000876,
+      "cuda_launch_count": 91030,
+      "cuda_launch_cpu_seconds": 0.860037212000021,
+      "forward_backward_host_wall_fraction": 0.73208334033102,
+      "forward_host_seconds": 1.8840477699999383,
+      "loader_wait_host_seconds": 0.0044117519996689225,
+      "loader_wait_host_wall_fraction": 0.0008221087417733876,
+      "mae_eV": 0.14286130827367305,
+      "mechanical_status": "MECHANICALLY_VERIFIED",
+      "profile_receipt_sha256": "874063a1d34932a8fc70ececac3745bf6d745eb4c2db3acda5a12cd93864b3e7",
+      "progress": {
+        "completed_passes": 60,
+        "next_batch": 0,
+        "optimizer_steps": 46860,
+        "sample_presentations": 5998080,
+        "status": "complete"
+      },
+      "selection_pass": 52.0,
+      "selection_step": 40612,
+      "weights": "ema",
+      "worker_entry_wall_seconds": 11688.317988879
+    },
+    "k1_mean2": {
+      "backward_host_seconds": 3.047910019000142,
+      "capture_includes_checkpoint": true,
+      "capture_steps": 16,
+      "capture_wall_seconds": 6.137790109000093,
+      "checkpoint_publish_host_seconds": 0.24839804800001275,
+      "checkpoint_state_host_seconds": 0.18941823600005137,
+      "cuda_launch_count": 89892,
+      "cuda_launch_cpu_seconds": 0.8268877459999211,
+      "forward_backward_host_wall_fraction": 0.8717041366655253,
+      "forward_host_seconds": 2.3024270089999845,
+      "loader_wait_host_seconds": 0.0063937380001561905,
+      "loader_wait_host_wall_fraction": 0.0010417003329554705,
+      "mae_eV": 0.1402572855657339,
+      "mechanical_status": "MECHANICALLY_VERIFIED",
+      "profile_receipt_sha256": "945cecdbe3211171b7568f33b668fd2b6a5c384e6c4495311c80ccb3aa21b340",
+      "progress": {
+        "completed_passes": 40,
+        "next_batch": 0,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720,
+        "status": "complete"
+      },
+      "selection_pass": 37.0,
+      "selection_step": 28897,
+      "weights": "live",
+      "worker_entry_wall_seconds": 10763.485608378
+    }
+  },
+  "kernel": "nothingnessvoid/molgap-k1-gptrans-100k-profiler-s42",
+  "kernel_version": 1,
+  "limitations": [
+    "profiled 16-step early window, includes one checkpoint, no evaluation capture",
+    "host phase totals are not exclusive device costs or whole-run fractions",
+    "operator and CUDA-kernel entries can overlap; never sum both",
+    "no profiler-off same-source control; no measured acceleration claim",
+    "no strict frozen same-contract reference; not replay-ready comparison",
+    "GPU busy time and queue/platform-release overhead unknown",
+    "terminal RML finalization not performed in this result inspection"
+  ],
+  "scope": "descriptive internal development/operator diagnostic; not strict cross-family comparison"
+}

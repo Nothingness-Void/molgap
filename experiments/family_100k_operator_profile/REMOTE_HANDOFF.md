@@ -1,5 +1,12 @@
 # Kaggle1 operator profile handoff - 2026-10-14 JST
 
+Reconciliation: the [terminal decision](terminal_acceptance/decision.md) owns
+the completed version1 endpoints, local mechanical/native inspections and
+profiling attribution. The submission-time observations below remain dated
+history. [Terminal RML custody](terminal_acceptance/closure.md) is finalized;
+Git routing and new execution qualification remain separate work;
+no new training, retry or model promotion is authorized.
+
 Owner: `codex/exp/k1-gptrans-profiler-100k`, `D:/w/k1-gptrans-profiler`.
 The user authorized fixed100K complete contracts plus profiling and shutdown
 after verified submission. One physical Notebook, independent T4 per arm.

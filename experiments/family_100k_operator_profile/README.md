@@ -14,3 +14,11 @@ Reconcile the exact returned kernel/version and durable outputs in `submission/`
 before choosing another action. The training decision stays pending until
 native qualification, artifacts, traces, roles/cost and profiling are accepted.
 Source/profile identity does not release promotion or protected roles.
+
+The completed run's endpoints, mechanical/native checks and interpretation are
+in the [dated terminal decision](terminal_acceptance/decision.md), with
+[operator attribution](terminal_acceptance/attribution.md). RML/Git closure is
+separate; the original prospective and submission records remain unchanged.
+The [terminal custody record](terminal_acceptance/closure.md) owns the two
+finalized, unpaired RML traces; [topology reuse](terminal_acceptance/execution_optimization.md)
+owns subsequent shared-code changes and their separate qualification boundary.
