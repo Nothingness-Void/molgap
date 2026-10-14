@@ -1,0 +1,71 @@
+{
+  "browser_later_observations": [
+    {
+      "arm_id": "k1_clean_ema",
+      "complete_passes": 0,
+      "optimizer_steps": [
+        128,
+        256,
+        384
+      ],
+      "sample_presentations": 49152
+    },
+    {
+      "arm_id": "gptrans_local",
+      "complete_passes": 0,
+      "optimizer_steps": [
+        128,
+        256,
+        384
+      ],
+      "sample_presentations": 49152
+    }
+  ],
+  "formal_training_started": true,
+  "kernel_id": 138717853,
+  "logs_session_id": 358428026,
+  "native_all_arm_barrier_passed": true,
+  "observed_at_utc": "2026-10-14T18:34:49.367282+00:00",
+  "replay_readiness": "NOT_EVALUATED",
+  "runtime": "GPU T4 x2",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "startup_verified": true,
+  "stream_observations": [
+    {
+      "data": "INPUT_RESOLVED k1_clean_ema datasets/nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/manifest.json\n",
+      "stream_name": "stdout",
+      "time": 215.797473458
+    },
+    {
+      "data": "INPUT_RESOLVED gptrans_local datasets/nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1/manifest.json\n",
+      "stream_name": "stdout",
+      "time": 215.807291395
+    },
+    {
+      "data": "PAIR_PHASE_START preflight\n",
+      "stream_name": "stdout",
+      "time": 215.845505102
+    },
+    {
+      "data": "PAIR_PHASE_COMPLETE preflight\n",
+      "stream_name": "stdout",
+      "time": 307.877020341
+    },
+    {
+      "data": "PAIR_PHASE_START train\n",
+      "stream_name": "stdout",
+      "time": 307.877400822
+    },
+    {
+      "data": "TRAIN_PROGRESS {\"arm_id\": \"k1_clean_ema\", \"completed_passes\": 0, \"next_batch\": 128, \"optimizer_steps\": 128, \"sample_presentations\": 16384}\n",
+      "stream_name": "stdout",
+      "time": 351.911555878
+    },
+    {
+      "data": "TRAIN_PROGRESS {\"arm_id\": \"gptrans_local\", \"completed_passes\": 0, \"next_batch\": 128, \"optimizer_steps\": 128, \"sample_presentations\": 16384}\n",
+      "stream_name": "stdout",
+      "time": 356.417446585
+    }
+  ],
+  "version": 1
+}

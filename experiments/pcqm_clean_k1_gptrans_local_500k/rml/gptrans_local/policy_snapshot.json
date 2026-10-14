@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "RUN_PAIRED_500K",
+    "field": "user_requested_scope_reviewed",
+    "operator": "eq",
+    "threshold": 1
+  },
+  "approval": {
+    "approved_at": null,
+    "approved_by": null,
+    "authority_ref": null
+  },
+  "borderline_action": "NO_TRAIN",
+  "comparability_selector": {
+    "scientific_contract": "molgap-k1-clean-ema-gptrans-local-500k"
+  },
+  "cost_model": {
+    "assumptions": [
+      "11h55m wall and23.8333 assigned T4-device hours are ceilings, not observations."
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "ad6596379e7f6f26925bba76c3d715f8c93cdd0726daf986bd950d947cf6b656",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "molgap-k1-clean-ema-gptrans-local-500k",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_requested_scope_reviewed"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "1"
+}

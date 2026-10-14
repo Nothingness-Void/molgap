@@ -1,10 +1,10 @@
 {
   "broken_required_pointers": [],
   "cost_completeness": {
-    "trajectories_total": 119,
+    "trajectories_total": 121,
     "with_complete_native_measurement": 24,
-    "with_cost_event": 108,
-    "with_incomplete_native_measurement": 84,
+    "with_cost_event": 110,
+    "with_incomplete_native_measurement": 86,
     "without_cost_event": 11
   },
   "counts_by_severity": {
@@ -15,11 +15,13 @@
   "issues": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 84,
+      "count": 86,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
         "TB-chemical-aux-fixed-train-cache-20260930",
+        "TB-clean-k1-gptrans-local-500k-gptrans_local-s42",
+        "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
@@ -133,10 +135,12 @@
     },
     {
       "code": "incomplete_native_cost_measurement",
-      "count": 84,
+      "count": 86,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
         "TB-chemical-aux-component-cache-retry2-20260930",
+        "TB-clean-k1-gptrans-local-500k-gptrans_local-s42",
+        "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
         "TB-distance-angle-triangle-500k-20260911",
         "TB-edgestate-rich-full-v1",
         "TB-family-100k-operator-profile-gptrans_local-s42",
@@ -242,9 +246,11 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 40,
+      "count": 42,
       "items": [
         "T-gptrans-chemical-aux-feasibility",
+        "TB-clean-k1-gptrans-local-500k-gptrans_local-s42",
+        "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
         "TB-edgestate-rich-full-v1",
         "TB-family-checkpoint-efficiency-20261013",
         "TB-family-session-speed-20261014",
@@ -289,8 +295,10 @@
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 12,
+      "count": 14,
       "items": [
+        "TB-clean-k1-gptrans-local-500k-gptrans_local-s42",
+        "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
         "TB-gptrans-100k-transfer-control-local-20260925",
         "TB-gptrans-centered-logits-100k-s42",
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",

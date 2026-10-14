@@ -1,2 +1,5 @@
 *.json -text
 *.jsonl -text
+submission/** -text
+submission/live_log_snapshot.txt -diff
+submission/startup_stream.txt -diff

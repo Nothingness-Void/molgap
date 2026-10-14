@@ -1,0 +1,25 @@
+{
+  "arms": [
+    {
+      "arm_id": "k1_clean_ema",
+      "device": 0,
+      "initial_state": "platforms\\_records\\kaggle\\staging\\family_100k_operator_profile\\k1_mean2.pt",
+      "recipe": "experiments/pcqm_clean_k1_gptrans_local_500k/training_recipe_k1_clean_ema.json"
+    },
+    {
+      "arm_id": "gptrans_local",
+      "device": 1,
+      "initial_state": "platforms\\_records\\kaggle\\staging\\family_100k_operator_profile\\gptrans_local.pt",
+      "recipe": "experiments/pcqm_clean_k1_gptrans_local_500k/training_recipe_gptrans_local.json"
+    }
+  ],
+  "format": "molgap-family-training-preparation-v1",
+  "source_files": [
+    "experiments/pcqm_clean_k1_gptrans_local_500k/config.json",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/protocol.md",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/evidence_review.md",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/role_plan.json",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/normalization_source.json"
+  ],
+  "spec_identity": "364ad6c554cb671a2c4d165e7a0ba0184c4ded71281f755b5369d1ee9aac0c6d"
+}

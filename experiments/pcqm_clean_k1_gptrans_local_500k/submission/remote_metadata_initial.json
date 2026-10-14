@@ -1,0 +1,26 @@
+{
+  "author": "Nothingness Void",
+  "categoryIds": [],
+  "competitionDataSources": [],
+  "currentVersionNumber": 1,
+  "datasetDataSources": [
+    "nothingnessvoid/molgap-k1-clean-ema-gptrans-local-500k-src",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1"
+  ],
+  "dockerImage": "gcr.io/kaggle-private-byod/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+  "enableGpu": true,
+  "enableInternet": true,
+  "enableTpu": false,
+  "id": 138717853,
+  "isPrivate": true,
+  "kernelDataSources": [],
+  "kernelType": "script",
+  "language": "python",
+  "lastRunTime": "2026-10-11T18:31:07.400Z",
+  "machineShape": "NvidiaTeslaT4",
+  "modelDataSources": [],
+  "ref": "nothingnessvoid/molgap-k1-clean-ema-gptrans-local-500k",
+  "slug": "molgap-k1-clean-ema-gptrans-local-500k",
+  "title": "MolGap K1 Clean EMA GPTrans Local 500K",
+  "totalVotes": 0
+}

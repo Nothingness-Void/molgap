@@ -1,6 +1,16 @@
 {
   "edges": [
     {
+      "source": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42:A001",
+      "target": "experiments/pcqm_clean_k1_gptrans_local_500k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42:A001",
+      "target": "experiments/pcqm_clean_k1_gptrans_local_500k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-distance-angle-triangle-500k-20260911:A000",
       "target": "experiments/pcqm_distance_angle_500k/results/scheduler_20260923.json",
       "type": "action_produced_evidence"
@@ -1171,6 +1181,11 @@
       "type": "prior_evidence"
     },
     {
+      "source": "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
+      "target": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42",
+      "type": "prior_evidence"
+    },
+    {
       "source": "family-checkpoint-efficiency-20261013",
       "target": "TB-family-session-speed-20261014",
       "type": "prior_evidence"
@@ -1723,6 +1738,11 @@
     {
       "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "target": "TB-k1-late-weight-average-20261008",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
       "type": "prior_evidence"
     },
     {
@@ -2896,6 +2916,14 @@
     },
     {
       "id": "TB-chemical-aux-fixed-train-cache-20260930",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
       "type": "trajectory"
     },
     {
