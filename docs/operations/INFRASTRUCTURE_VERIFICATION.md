@@ -21,6 +21,10 @@ input loading, optimizer/schedule, selection, trace/checkpoint persistence,
 recovery transport, output inspection, and terminal closure remain shared.
 The exact model, addon, recipe, and source interfaces are in the
 [graph extension contract](GRAPH_SCREEN_EXTENSION.md).
+The [four-layer runtime guide](MODULAR_EXPERIMENT_RUNTIME.md) owns standard
+K1/GPTrans addon slots, native Live/Raw/Clean actions, the memory sandbox and
+AST source closure. New hooks compose before optimizer construction; retained
+scientific recipes are not rewritten to enable a new hook or calibration policy.
 
 Changing targets, geometry, data identity, precision, optimizer, selection, or
 platform requires the owning contract/adapter and its qualification gates.
@@ -30,13 +34,16 @@ comparison and seed budgets.
 
 ## Local evidence
 
-The 2026-10-03 infrastructure audit included an initial broad regression of
-**1,041 passed, 9 skipped**. The final family/workflow/runner/recovery regression
-passed **214 tests, 1 skipped**. The actual published-source isolation check
-also passed. Their authoritative assertions live in the focused tests below.
-The final graph-owner gate suite passed 17 tests; documentation/layout passed
-35. Active navigation covered 737 documents, 2,708 pointers, and 18 anchors
-with zero issues, and all entrypoint budgets passed.
+The 2026-10-14 audit exercised substrate composition, addon ownership/gradients,
+native Clean-BN persistence and stale-state rejection, source closure/immutable
+publication, shared training, recovery and incomplete campaign acceptance.
+The final focused regression passed **472 tests, 1 skipped**.
+Documentation/layout coverage passed all 35 checks, including the repaired
+entrypoint/CLI guards. Active navigation and entrypoint budgets had zero issues.
+Source tests publish a discovered closure and execute its function-local addon
+dependencies in an isolated Python process, including package startup and
+Python's package-over-module resolution. Unresolved dynamic/wildcard imports
+remain explicit review obligations.
 
 The new-family lifecycle fixture uses a small previously unregistered model,
 a simple addon, and synthetic immutable PCQM topology/role assets. It performs
@@ -50,6 +57,10 @@ must match exactly. Fixtures do not submit jobs or reopen completed experiments.
 CPU fixtures establish local executable behavior. Actual accepted-data scale,
 GPU/runtime calibration, remote resource allocation, scientific acceptance,
 and production promotion retain their separate owning gates.
+Both actual family sandbox CLI commands passed finite forward, backward and
+exact tensor/evaluation roundtrip checks. Cold process times were 6.92 seconds
+(K1) and 6.72 seconds (GPTrans); warm API times were about 0.35–0.37 seconds.
+These two-graph CPU checks do not certify BS128 VRAM or permanent gradient flow.
 
 ## Repeatable checks
 
@@ -58,6 +69,7 @@ Run from the repository root using its virtual environment:
 ```powershell
 $python = '.\.venv\Scripts\python.exe'
 & $python -m pytest -q --noconftest tests/test_shared_family_registration.py tests/test_graph_screen_training.py tests/test_shared_graph_lifecycle.py
+& $python -m pytest -q --noconftest tests/test_model_substrate.py tests/test_family_training_state.py tests/test_fast_sandbox.py tests/test_source_dependencies.py tests/test_modular_experiment_cli.py tests/test_modular_training_integration.py tests/test_gptrans_campaign_segments.py tests/test_family_pair_acceptance.py
 & $python -m pytest -q tests/test_documentation_check.py tests/test_repository_layout.py
 & $python -m molgap.documentation_check --repo-root . --check-entrypoint-budgets
 & $python -m molgap.research_memory --repo-root . validate

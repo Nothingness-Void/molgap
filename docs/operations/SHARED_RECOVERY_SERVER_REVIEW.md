@@ -100,4 +100,4 @@ compute direction varied; journal protection added session boundary work.
 That RTX5060/Torch2.7.1 diagnostic did not qualify T4/A100/DCU, Torch2.11, real
 500K epochs, MAE or allocation billing. No such result was adopted as a server
 qualification or used to relax durability. Its numerical records remain owned
-by `experiments/family_session_execution_speed/` on desktop.
+by the [desktop diagnostic records](https://github.com/Nothingness-Void/molgap/tree/2340fbe5cecae7650ddbd3f06130ae67f3b2ea3f/experiments/family_session_execution_speed).

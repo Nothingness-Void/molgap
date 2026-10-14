@@ -3,9 +3,9 @@
 This is the conditional-read history behind [`CURRENT_STATE.md`](../../CURRENT_STATE.md).
 It keeps dated outcomes and authority pointers out of the live control document.
 The linked experiment decision is authoritative for methods, metrics, artifacts,
-and scientific interpretation; this index is only a navigation layer. Moved from
-the live document on 2026-10-03 without changing scientific conclusions, job
-bindings, prospective bytes, or RML records.
+and scientific interpretation; this index is only a navigation layer. Moving
+navigation here does not change scientific conclusions, job bindings,
+prospective bytes, or RML records.
 
 ## Frozen Track B candidates and desktop handoff
 
@@ -51,6 +51,32 @@ bindings, prospective bytes, or RML records.
 | GPTrans execution profiles | Cached shortest paths and broader step profiling did not establish a strictly equivalent material optimization. | [shortest path](../../experiments/pcqm_gptrans_shortest_path_profile_v5/results/decision_122484011.md), [step profile](../../experiments/pcqm_gptrans_step_profile_v5/results/decision_122499114.md) |
 | Historical V4/RML migration | K1-v4 is retained as a hash-bound `historical_partial` reference; sidecars preserve evidence without rewriting historical decisions. | [`v5_legacy_evidence_migration`](../../experiments/v5_legacy_evidence_migration/decision.md), [reference bundle](../../experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/reference_bundle.json) |
 | Earlier architecture/archive routes | GraphState derivatives and closed QM9/PCQM variants remain archive-only; the archive indexes are the route map. | [PCQM archive](../../experiments/_closed/pcqm_server_archive_index.md), [QM9 archive](../../experiments/_closed/qm9_top20_archive_index.md), [failure attribution](../../experiments/pcqm_gap_architecture/results/architecture_failure_attribution_2026-09-08/decision.md) |
+
+## Closed GPTrans study authorities
+
+These are conditional-read routes removed from the live control document.
+The owning decisions retain outcomes, causal limits, qualification, Replay,
+cost and custody evidence; this table does not duplicate their conclusions.
+
+| Question | Owning authority |
+|---|---|
+| Triplet routing and product recovery | [interpretation](../../experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/interpretation.md); [deferred audit disposition](../../experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/post100k_audit_disposition.json) |
+| Triplet follow-up and partial physical attempt | [interpretation](../../experiments/pcqm_gptrans_triplet_followup_100k/gpu/results/interpretation.md) |
+| Original/v3-tuned execution40 | [terminal decision](../../experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md) |
+| Original/optimized execution40 | [terminal decision](../../experiments/pcqm_gptrans_execution40/decision_terminal.md); [execution audit](../../experiments/pcqm_gptrans_execution40/deep_execution_audit.md); [v1 diagnosis](../../experiments/pcqm_gptrans_execution40/gpu/failure_v1.md); [v2 diagnosis](../../experiments/pcqm_gptrans_execution40/gpu/failure_v2.md) |
+| Frozen source dependence | [terminal decision](../../experiments/pcqm_gptrans_source_dependence/decision_terminal.md) |
+| Frozen triplet portability | [terminal decision](../../experiments/pcqm_gptrans_triplet_portability/decision_terminal.md) |
+| Triplet communication | [interpretation](../../experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/interpretation.md) |
+| Local relation flow | [interpretation](../../experiments/pcqm_gptrans_local_relation_100k/gpu/results/interpretation.md) |
+| Local-stream 500K bridge | [interpretation](../../experiments/pcqm_gptrans_local_transfer_500k/gpu/results/interpretation.md) |
+| Local-update control | [interpretation](../../experiments/pcqm_gptrans_local_control_100k/gpu/results/interpretation.md) |
+| Frozen bottleneck audit | [terminal decision](../../experiments/pcqm_gptrans_bottleneck_audit/decision_terminal.md) |
+| Independent pair transition | [interpretation](../../experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md) |
+| Frozen G1 EMA portability | [v4 decision](../../experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md) |
+| Fixed-500K execution qualification | [interpretation](../../experiments/pcqm_gptrans_scale_qualification/results/interpretation.md) |
+| G1 decay coefficient | [interpretation](../../experiments/pcqm_gptrans_decay_clock_100k/gpu/results/interpretation.md) |
+| Node capacity | [interpretation](../../experiments/pcqm_gptrans_capacity_nodes_100k/gpu/results/interpretation.md); [closed custody binding](../../experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json) |
+| Relation capacity and 500K synthesis | [interpretation](../../experiments/pcqm_gptrans_capacity_relations_100k/gpu/results/interpretation.md) |
 
 ## Contract and operational history
 

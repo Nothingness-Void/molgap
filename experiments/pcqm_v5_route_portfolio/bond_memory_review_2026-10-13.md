@@ -33,7 +33,7 @@ It must not inherit that old panel's acceptance or substitute its score.
 
 ## A useful correction to the old directed-memory story
 
-The archive decision `experiments/top20_architecture_qm9/directed_edge_state_r10_decision.md`
+The [archive decision](https://github.com/Nothingness-Void/molgap/blob/071fb6b96411721c3bf5fe450d6543b151b28f97/experiments/top20_architecture_qm9/directed_edge_state_r10_decision.md)
 was read directly through `git show archive:<path>`; no branch checkout or
 archived experiment execution occurred. R10 failed its joint average gate,
 while its Gap component moved slightly favorably. The

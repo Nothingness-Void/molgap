@@ -4,175 +4,44 @@
 > [conditional history index](docs/operations/CURRENT_STATE_HISTORY_INDEX.md)
 > and the linked experiment decisions; task order lives in `ROADMAP.md`.
 
-## Shared infrastructure
-
-The [reviewed desktop training core](docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md)
-is integrated for new K1/GPTrans declarations. Native qualification remains
-run/recipe/runtime-specific; historical entrypoints and job custody are unchanged.
-
 ## Server active screen
 
 The user-authorized
 [four-arm campaign](experiments/pcqm_gptrans_research_four_arm_100k/protocol.md)
 was submitted once per slot on the human-selected Kaggle3 account `nvoid912`:
 aggregate reference/cycle kernel138538171/version3 and carry/correspondence
-kernel138538193/version3. Both exact version3 jobs were observed RUNNING with
-pulled source matching their frozen entries. Its [status](experiments/pcqm_gptrans_research_four_arm_100k/STATUS.md)
-binds the exact returned identities, frozen packages and observations. Both
-slots retain the60pass scientific horizon and ten-pass durable segments;
-submission is not native qualification or a scientific result. No GPU job was
-submitted to Kaggle2 for this campaign. The SDK's serialized6hour allowance
-lost a day component: native arithmetic showed30unused hours on Kaggle3,
-not6, and approximately17.05remaining on Kaggle2, not exhaustion. Versions1/2
-failed before formal training at transport/import gates; their RML records
-are INFRASTRUCTURE_ONLY, not architecture negatives. Version3 passed isolated
-worker-bootstrap imports and actual unpacked campaign checks before release.
-The unsubmitted local-only two-arm proposal is superseded. Its
-[accepted CPU inputs](experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md)
-are reused unchanged. CPU failures remain infrastructure-only, not route negatives.
+kernel138538193/version3, against frozen source
+`7e1aac51a852a0b7602cc9f0f45aa83be9d12c5a`. Both exact version3 jobs were
+last observed RUNNING with pulled source matching their frozen entries.
+The [status](experiments/pcqm_gptrans_research_four_arm_100k/STATUS.md) owns exact
+receipts, packages, resource observations, retired attempts and custody.
+Both slots retain the 60-pass scientific horizon and ten-pass durable segments;
+submission is not native qualification or a scientific result. No campaign
+GPU job was submitted to Kaggle2. The unsubmitted local-only two-arm proposal
+is superseded; its [accepted CPU inputs](experiments/pcqm_gptrans_cycle_pair_100k/cpu/decision_accepted.md)
+are reused unchanged. Infrastructure failures are not route negatives.
 
 The [post-routing research review](experiments/pcqm_v5_route_portfolio/bond_memory_review_2026-10-13.md)
 retains the earlier stand-alone bond-message carry prototype. Its bounded
 aggregate-parent adaptation is integrated in the four-arm campaign above;
 there is no accepted native result or Replay claim yet.
 
-The [triplet routing dual100K](experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/interpretation.md)
-completed as Kaggle2 kernel138425374/version1. Both arms passed independent
-acceptance, strict comparison and actual complete Replay admission; neither
-beat the frozen aggregate or earned nomination. Preserve exact failed-route
-evidence without extending training or adding seeds. Its event/binding are
-closed and existing Luna B heartbeat paused. The deferred full50K audit has an
-[unresolved loader/reference qualification gap](experiments/pcqm_gptrans_triplet_routing_100k/gpu/results/post100k_audit_disposition.json);
-it is not executed and makes no transfer claim. No successor or scale-up is released.
-
-The authorized [triplet follow-up dual100K](experiments/pcqm_gptrans_triplet_followup_100k/gpu/results/interpretation.md)
-ended partially complete as Kaggle2 kernel138367521/version1. Triplet-return
-dropout passed independent acceptance and actual per-arm Replay admission but
-was worse than the frozen aggregate; it is closed without nomination. The
-channelwise product arm failed initialization qualification before training.
-Its separate recovery/scientific result belongs to the triplet-routing record
-above; the failed physical attempt remains infrastructure-only. That partial
-experiment is not a two-arm Replay-ready result. Preserve both terminal records
-and full allocated cost. That attempt's binding is closed; its old authority
-releases no automatic retry, successor, deferred500K inference, extra seed or scale-up.
-
-The [original/v3-tuned execution40 dual](experiments/pcqm_gptrans_execution_tuning40/decision_terminal.md)
-is accepted and closed: Kaggle2 kernel138254522/version1 passed its scoped
-speed/accuracy delivery gates. Its event/binding are closed and existing Luna B
-heartbeat paused. The opt-in v3 execution layer is remotely qualified only for
-this allocation/workload, not architecture promotion or a training Replay-Ready
-pair. The noncausal canonical-finalization limitation is retained; no successor
-is authorized.
-
-The authorized [original/optimized execution40 assay](experiments/pcqm_gptrans_execution40/protocol.md)
-completed as Kaggle2 kernel138147173/version3 and passed independent saved-output
-delivery acceptance. Preserve the [terminal decision](experiments/pcqm_gptrans_execution40/decision_terminal.md):
-this is a scoped execution qualification, not architecture promotion or
-standalone speed equivalence. Canonical RML closure is explicitly blocked by
-the original missing reference binding; no Replay-ready claim is made.
-Versions1/2 failed before formal training at transport/dependency gates; their
-[v1 diagnosis](experiments/pcqm_gptrans_execution40/gpu/failure_v1.md),
-[v2 diagnosis](experiments/pcqm_gptrans_execution40/gpu/failure_v2.md) and costs
-are retained. Its corrected [receipt](experiments/pcqm_gptrans_execution40/gpu/submission_v3.json) and
-[existing-B binding](experiments/pcqm_gptrans_execution40/gpu/monitor_binding.json)
-own physical identity and custody; the terminal event is closed and the existing
-heartbeat was paused at that closure. That old run has no successor authority.
-It compares the
-unchanged local-bond model under two declared execution backends, not a new
-architecture or scale-up. Its requested forty-pass scope retains the original
-sixty-pass learning-rate horizon; it was not relabeled as sixty-pass completion.
-
-The requested [execution tuning layer](experiments/pcqm_gptrans_execution40/deep_execution_audit.md)
-is opt-in and has passed the scoped remote dual qualification routed above.
-This does not authorize changes to historical scientific references or other runs.
-
-The authorized [source-dependence assay](experiments/pcqm_gptrans_source_dependence/protocol.md)
-is accepted and closed NO_TRAIN / CONTEXT_ONLY. Its cohort observations did not
-establish broad source collapse or gate starvation; retain the
-[terminal interpretation](experiments/pcqm_gptrans_source_dependence/decision_terminal.md).
-The applicable diagnostic RML record is finalized, not a training Replay pair.
-Its existing Luna B event/binding are closed and heartbeat paused. No successor
-training, scale-up or extra seed is released.
-
-The authorized [triplet frozen-cohort diagnostic](experiments/pcqm_gptrans_triplet_portability/protocol.md)
-is accepted and closed NO_TRAIN / PAIRED_ENDPOINT. Its later-cohort point gain
-was positive but uncertain and did not pass the predeclared consideration gate;
-retain the [interpretation](experiments/pcqm_gptrans_triplet_portability/decision_terminal.md).
-Existing Luna B's event/binding are closed and heartbeat paused. This diagnostic
-is not a training Replay pair and releases no500K training, extra seed or successor.
-
-The authorized [triplet communication dual100K](experiments/pcqm_gptrans_triplet_communication_100k/protocol.md)
-is closed after independent saved-output acceptance. Both arms passed their
-frozen100K nomination gate and have actual complete STRICT_CAUSAL Replay pairs.
-Aggregation is retained as the lower-cost transfer-study priority; attention
-did not establish an accuracy advantage. Preserve the
-[terminal interpretation](experiments/pcqm_gptrans_triplet_communication_100k/gpu/results/interpretation.md).
-The event/binding are closed and the existing Luna heartbeat is paused.
-No server training remains active under this authorization; no automatic
-successor, scale-up or extra seed is released.
-
-The authorized [local relation-flow dual100K](experiments/pcqm_gptrans_local_relation_100k/protocol.md)
-is closed after independent acceptance: connected pair processing was positive
-below the frozen nomination gate; same-block bond return was worse. Both arms
-have actual complete STRICT_CAUSAL Replay pairs. The native INCONCLUSIVE labels
-remain unscored policy truth; see the [terminal interpretation](experiments/pcqm_gptrans_local_relation_100k/gpu/results/interpretation.md).
-Its event/binding are closed; Luna B is reassigned to the triplet screen. No baseline
-retraining, successor, extra seed or automatic scale is released. No server
-training remains active under that earlier authorization.
-
-The [two-arm500K local-stream bridge](experiments/pcqm_gptrans_local_transfer_500k/gpu/results/interpretation.md)
-is accepted with a positive equal-update architecture result and an actual
-complete STRICT_CAUSAL Replay pair. Its benefit survived the500K endpoint;
-complete convergence and full-scale ranking remain unresolved. The retained
-control was reused without baseline retraining. That campaign's event/binding
-is closed; its monitor has been reassigned to the new100K dual. No automatic successor,
-full training or extra seed is released. Protocol-bound NO_TRAIN probes need
-their own accepted-parent hashes and prospective records before execution.
-
-The [local-update control screen](experiments/pcqm_gptrans_local_control_100k/gpu/results/interpretation.md)
-is closed with a complete STRICT_CAUSAL Replay pair and a worse selected endpoint.
-Its event and binding are closed and heartbeat paused; this result releases
-no cap grid, extra seed,500K/full or successor.
-
-The [frozen GPTrans bottleneck diagnostic](experiments/pcqm_gptrans_bottleneck_audit/decision_terminal.md)
-is closed NO_TRAIN / PAIRED_ENDPOINT, not a training Replay pair. Local-bond
-benefit survived the later cohort; local branches were connected and the final
-Pair Transition branch was not. The control screen did not establish amplitude
-suppression as a fix; retain the diagnostic's causal limits.
-
-The Kaggle2 [independent pair-transition100K screen](experiments/pcqm_gptrans_pair_transition_100k/gpu/results/interpretation.md)
-is closed with a complete STRICT_CAUSAL Replay pair, without promotion. Its
-disconnected final real-pair branch limits interpretation; no corrected run or
-successor is released. User-reported Kaggle1 dual500K remains outside server custody.
-
-The authorized T4x2 [final atom/bond readout dual](experiments/pcqm_gptrans_readout_100k/gpu/submission_record.md)
-is closed with two complete STRICT_CAUSAL Replay pairs and no promotion;
-preserve its [decision](experiments/pcqm_gptrans_readout_100k/gpu/results/decision.md).
-The server-owned frozen G1 EMA audit v4 is accepted and RML-finalized as
-NO_TRAIN / PAIRED_ENDPOINT: corrected EMA passed frozen-weight portability,
-not 500K optimization or full-scale qualification. Preserve its
-[decision](experiments/pcqm_gptrans_ema_portability/attempt_v4/decision.md).
-The [fixed500K execution qualification](experiments/pcqm_gptrans_scale_qualification/results/interpretation.md)
-is accepted and RML-finalized as NO_TRAIN / CONTEXT_ONLY, not a training Replay pair.
-The [isolated G1 decay-coefficient falsifier](experiments/pcqm_gptrans_decay_clock_100k/gpu/results/interpretation.md)
-is accepted and RML-finalized with a complete Replay pair; the intervention
-failed its promotion gate and the coefficient route is closed.
-The [node capacity pair](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/results/interpretation.md)
-is closed with two complete STRICT_CAUSAL Replay pairs and no promotion.
-The accepted [local/500K synthesis](experiments/pcqm_gptrans_capacity_relations_100k/gpu/results/interpretation.md)
-retains a below-gate complete local Replay pair and a noncausal500K EMA
-PAIRED_ENDPOINT, not full-scale qualification. All earlier studies are closed;
-the [closed monitor binding](experiments/pcqm_gptrans_capacity_nodes_100k/gpu/monitor_binding.json)
-retains custody history. Earlier training bindings are closed; the closed
-campaigns release no automatic successor.
-The path + corrected-EMA combination is closed with a strict/complete Replay
-pair but no supported additive gain; preserve its
-[decision](experiments/pcqm_gptrans_path_ema_combination_100k/gpu/results/decision.md).
+Closed architecture, diagnostic and execution studies route through the
+[history index](docs/operations/CURRENT_STATE_HISTORY_INDEX.md#closed-gptrans-study-authorities).
+Their own terminal decisions retain qualification, Replay, cost and custody
+limits; those earlier authorizations release no automatic successor.
 
 CPU attempts/preparation are RML-closed; stale-plan reconciliation preserved
 history and eligibility. See [`research_memory/README.md`](research_memory/README.md).
 
 ## Shared experiment infrastructure
+
+The [reviewed desktop training core](docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md)
+is integrated for new K1/GPTrans declarations. Native qualification remains
+run/recipe/runtime-specific; historical entrypoints and job custody are unchanged.
+Use the [four-module runtime guide](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md)
+for substrate/addon composition, retained weight views, local one-batch checks
+and automatic source-dependency handoff.
 
 The shared local CLI, typed Spec/addon registry, source packaging, prospective
 planning, strict launch binding, family output inspection, portable recovery,
@@ -207,8 +76,8 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 
 ## Live boundaries and next actions
 
-- Preserve the four-study terminal interpretation and independent qualifications.
-  Retain the positive500K bridge without inferring full-scale qualification.
+- Preserve terminal interpretations and independent qualifications through the
+  history index. The accepted 500K bridge does not establish full-scale qualification.
   Any successor training, full run, extra seed or protected-role access needs
   separate authority.
 - Use one immutable baseline per matching scientific contract. Track B predicts
@@ -221,7 +90,8 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
   close a route; unchanged-contract infrastructure failures may retry.
 - Molecular-research-server access is governed by
   [`platforms/REMOTE_HANDOFF.md`](platforms/REMOTE_HANDOFF.md). The server does
-  not adopt, monitor, or resume desktop-owned jobs.
+  not adopt, monitor, or resume desktop-owned jobs, including the user-reported
+  Kaggle1 dual500K outside server custody.
 
 ## Pointers
 

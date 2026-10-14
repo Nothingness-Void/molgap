@@ -83,8 +83,8 @@ training comparison remained below its own gate; original Replay exclusions
 were not repaired by a later positive audit.
 
 Read-only authorities at desktop commit `342692b0`:
-`experiments/pcqm_k1_consistency_residual_screen/analysis_zh.md` and
-`experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md`.
+[residual analysis](https://github.com/Nothingness-Void/molgap/blob/342692b0ad848cd1f402fd7d2f1174690601a240/experiments/pcqm_k1_consistency_residual_screen/analysis_zh.md) and
+[fusion-transfer decision](https://github.com/Nothingness-Void/molgap/blob/342692b0ad848cd1f402fd7d2f1174690601a240/experiments/pcqm_k1_consistency_fusion_transfer/terminal_decision.md).
 These were contextual evidence here, not enrollment into server RML or live
 control transfer. Teacher-based compression was not admitted under the user's
 present no-teacher boundary, despite that desktop report proposing it.
@@ -118,8 +118,8 @@ See the [older synthesis](evidence_synthesis_2026-10-01.md),
 [relation audit](../pcqm_k1_relation_resolution_100k/audit/decision.md),
 [linear exchange](../pcqm_k1_linear_attention_100k/decision.md), and
 [joint atom reconstruction](../pcqm_k1_joint_atom_reconstruction_100k/decision.md).
-The accepted desktop scale postmortem was also inspected at
-`origin/molgap-desktop:experiments/pcqm_scale_transfer_reassessment/decision.md`.
+The accepted [desktop scale postmortem](https://github.com/Nothingness-Void/molgap/blob/342692b0ad848cd1f402fd7d2f1174690601a240/experiments/pcqm_scale_transfer_reassessment/decision.md)
+was also inspected at that source commit.
 
 ## 3. Papers: actionable mechanisms and important limits
 
