@@ -29,6 +29,9 @@ Primary records:
   all11 paths/sizes/SHA values in the private source dataset.
 - [Preparation reconciliation](submission/preparation_reconciliation.json)
   preserves local failed-stage history and reuse of unchanged prospective records.
+- [Historical asset supplement](submission/retained_asset_supplement.json)
+  records three additional exact-hash GINE files required by whole-repository
+  portable validation. This is opaque custody, not new model/role execution.
 
 Actual uploaded root is
 `platforms/_records/kaggle/staging/family_topology_t4_100k/release002/source_dataset/`,
