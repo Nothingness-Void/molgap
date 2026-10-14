@@ -4,7 +4,15 @@ import json
 from pathlib import Path
 import sys
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
+# The pinned fresh environment has no editable MolGap installation.
+source_root = next((parent for parent in Path(__file__).resolve().parents
+                    if (parent / "src/molgap/constants.py").is_file()), None)
+if source_root is None:
+    raise RuntimeError("Profile source package lacks the MolGap constants marker")
+sys.path.insert(0, str(source_root / "src"))
+from molgap.constants import REPO_ROOT
+if REPO_ROOT != source_root:
+    raise RuntimeError("Profile entrypoint resolved another MolGap source package")
 from molgap.experiment_package import verify_experiment_source_package
 from molgap.gptrans_scale_profile import profile
 

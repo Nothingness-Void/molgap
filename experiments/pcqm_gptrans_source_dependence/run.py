@@ -56,5 +56,5 @@ def main():
             tasks=("sources",),cap_seconds=1800,allocation_started=started,started_unix=unix)
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main()

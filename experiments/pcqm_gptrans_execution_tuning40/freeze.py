@@ -1,13 +1,13 @@
 """Compose existing execution-assay declarations; no training or submission."""
 import json
-from pathlib import Path
 
+from molgap.constants import REPO_ROOT
 from molgap.gptrans_execution_prepare import freeze
 from molgap.gptrans_execution_tuning import ExecutionTuning
 from molgap.training_reproducibility import atomic_json
 
 if __name__ == "__main__":
-    root = Path(__file__).resolve().parents[2]
+    root = REPO_ROOT
     base = "experiments/pcqm_gptrans_execution_tuning40"
     metadata = json.loads((root / "experiments/pcqm_gptrans_execution40/gpu/kernel-metadata.json").read_text())
     metadata.update(id="kaseichou/molgap-gptrans-tuning40-dual-s42", title="MolGap GPTrans Tuning40 Dual S42",
