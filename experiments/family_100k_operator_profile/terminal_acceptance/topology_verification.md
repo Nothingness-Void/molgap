@@ -28,6 +28,11 @@ include exact outputs, gradients, optimizer state and RNG against previous-
 expression CPU oracles, nonzero local paths, empty edges, distance codes and
 unchanged5871201-parameter initialization identity.
 
+At committed source `a6b7f2cc`, independent CPU package/release regression also
+ran `tests/test_family_profile_release.py` and `tests/test_experiment_package.py`:
+88passed,1skipped,0failed. The only skip was symlink creation unavailable on
+this Windows host; CUDA was unavailable and native opt-in unset.
+
 The previous BMM-count assertion was updated to the proved simple-path bound;
 the original exact distance/RNG assertions remain. K1's test oracle now clears
 old gradients between branches rather than accumulating the control's gradients.
