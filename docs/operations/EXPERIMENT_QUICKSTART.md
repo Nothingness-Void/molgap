@@ -3,6 +3,8 @@
 This is the shortest route for a new agent. It selects an existing owner,
 freezes one scientific contract, and reuses package, launch, recovery,
 acceptance, and RML plumbing. It does not authorize compute or submit a job.
+For standard substrate slots, Live/Raw/Clean state actions, the one-batch
+sandbox and automatic source closure, use the [four-module interface](MODULAR_EXPERIMENT_RUNTIME.md).
 
 ## 1. Route the question
 

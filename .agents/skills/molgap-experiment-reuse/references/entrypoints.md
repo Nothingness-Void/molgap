@@ -7,6 +7,8 @@ Verify APIs against the checkout; missing capabilities remain unsupported.
 For a new family or addon, start with the [experiment quickstart](../../../../docs/operations/EXPERIMENT_QUICKSTART.md),
 then use this file to select the smallest existing callable. Read only the
 relevant detailed contract after the owner is selected.
+For standard runtime slots, explicit Clean-EMA actions and one-batch source-free
+checks, use the [four-module interface](../../../../docs/operations/MODULAR_EXPERIMENT_RUNTIME.md).
 
 ## Common experiment plumbing
 

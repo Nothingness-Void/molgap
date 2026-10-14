@@ -120,11 +120,15 @@ def _addon_hook(adapter, arm: dict, addon: dict):
     return function
 
 
-def apply_reviewed_addons(adapter, arm: dict, model):
+def apply_reviewed_addons(adapter, arm: dict, model, *, addon_observer=None):
     """Apply ordered, bounded addon deltas from the reviewed registry."""
+    if addon_observer is not None and not callable(addon_observer):
+        raise TypeError("addon_observer must be callable")
     model = _torch_module(model)
     for addon in arm.get("addons", ()):
         function = _addon_hook(adapter, arm, addon)
+        before_parameters = tuple(model.parameters()) if addon_observer is not None else None
+        before = {id(parameter) for parameter in before_parameters} if before_parameters is not None else None
         result = function(model, deepcopy(addon["config"]))
         if result is not None:
             model = _torch_module(result)
@@ -132,19 +136,29 @@ def apply_reviewed_addons(adapter, arm: dict, model):
             # In-place hooks are allowed, but they cannot bypass the same
             # dtype/device ABI gate as hooks returning a replacement module.
             model = _torch_module(model)
+        if addon_observer is not None:
+            # Parameter objects survive wrapper/prefix changes. Observers map
+            # them to final names after all hooks, instead of guessing names.
+            owned = tuple(parameter for parameter in model.parameters() if id(parameter) not in before)
+            addon_observer(deepcopy(addon), owned)
     return model
 
 
-def build_model(adapter, arm: dict, *, initial_state_path: Path | None = None):
+def build_model(adapter, arm: dict, *, initial_state_path: Path | None = None, addon_observer=None):
     """Build one model and optionally load the Spec-bound initial state."""
     _validate_factory_contract(arm, adapter.model_factory)
     validate_factory_source(adapter, arm)
     factory = resolve_model_factory(adapter)
     model = _torch_module(factory(deepcopy(arm)))
-    model = apply_reviewed_addons(adapter, arm, model)
+    model = (apply_reviewed_addons(adapter, arm, model) if addon_observer is None else
+             apply_reviewed_addons(adapter, arm, model, addon_observer=addon_observer))
     if initial_state_path is not None:
         load_initial_state(model, Path(initial_state_path),
                            expected_state_sha256=arm["initialization"]["state_sha256"])
+    substrate = getattr(model, "_molgap_substrate", None)
+    if substrate is not None:
+        # Composition finishes before the optimizer sees any parameters.
+        substrate.seal()
     return model
 
 
@@ -169,7 +183,7 @@ def graph_metadata(spec, arm_id: str) -> GraphModelMetadata:
     )
 
 
-def build_graph_model(spec, arm_id: str):
+def build_graph_model(spec, arm_id: str, *, addon_observer=None):
     """Construct a generic model for adapter diagnostics.
 
     This intentionally does not load a frozen initialization file.  Training
@@ -185,7 +199,8 @@ def build_graph_model(spec, arm_id: str):
     if adapter.model_factory is None or adapter.module != "molgap.graph_screen_training":
         raise ValueError("Arm is not registered for shared graph training")
     _validate_factory_contract(arm, adapter.model_factory)
-    return build_model(adapter, arm)
+    return (build_model(adapter, arm) if addon_observer is None else
+            build_model(adapter, arm, addon_observer=addon_observer))
 
 
 def load_initial_state(model, path: Path, *, expected_state_sha256: str) -> dict:

@@ -89,24 +89,39 @@ COMMON_SOURCE_FILES = (
     'src/molgap/v5_common.py',
 )
 
+# The retained shared-session implementation needs these family owners. A new
+# generic graph family has its own reviewed model/input owner and must not
+# inherit a legacy model/trainer merely because both use the lifecycle.
+_FAMILY_SOURCE_FILES = frozenset(path for path in COMMON_SOURCE_FILES if path.startswith((
+    "src/molgap/family_", "src/molgap/gptrans_", "src/molgap/k1_")) or path == "src/molgap/gps.py")
 
-def registered_source_files(spec, extras=()):
-    """Select reviewed common, family and addon paths; never scan a checkout."""
+
+def registered_source_files(spec, extras=(), *, repo_root=None, auto_dependencies=False):
+    """Select reviewed roots, optionally following static import dependencies."""
     from .experiment_execution import training_adapter, validate_training_registry
     from .experiment_package import _allowlist
     from .experiment_spec import ADDONS
     validate_training_registry()
+    arms = spec.to_dict()["arms"]
+    adapters = [training_adapter(arm) for arm in arms]
     names = set(COMMON_SOURCE_FILES)
+    if all(adapter.model_factory is not None for adapter in adapters):
+        names.difference_update(_FAMILY_SOURCE_FILES)
     names.update(_allowlist(extras) if extras else ())
-    for arm in spec.to_dict()["arms"]:
-        adapter = training_adapter(arm)
+    for arm, adapter in zip(arms, adapters):
         names.update(adapter.source_files)
         for addon in arm["addons"]:
             execution = adapter.addon(addon["name"], addon["version"])
             declaration = ADDONS[(addon["name"], addon["version"])]
             names.add("src/" + declaration.source_module.replace(".", "/") + ".py")
             names.update(execution.extra_source_files)
-    return _allowlist(sorted(names))
+    selected = _allowlist(sorted(names))
+    if auto_dependencies:
+        if repo_root is None:
+            raise ValueError("Automatic dependency discovery requires the selected repository root")
+        from .source_dependencies import discover_source_dependencies
+        return list(discover_source_dependencies(repo_root, selected).source_files)
+    return selected
 
 
 def _all_registered_sources():

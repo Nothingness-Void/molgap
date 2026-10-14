@@ -18,6 +18,10 @@ Run from the selected checkout using its configured project environment:
 The module is the unified local entry point for identity, planning, packaging,
 preflight, preparation, inspection, receipts, recovery, and terminal translation.
 Existing scripts remain available as family/platform-specific thin entry points.
+`sandbox` and `source-dependencies` are local gates documented by the
+[four-module interface](MODULAR_EXPERIMENT_RUNTIME.md). `package` accepts either
+`--allowlist` or `--auto-dependencies`; `prepare-family-training` also accepts
+`--auto-dependencies`. Neither flag submits or replaces isolated release checks.
 For new family/platform work, start with the [quickstart](EXPERIMENT_QUICKSTART.md)
 and [addon guide](EXPERIMENT_ADDON_GUIDE.md); this CLI remains shared local
 plumbing, not a trainer or submitter.

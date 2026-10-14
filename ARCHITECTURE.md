@@ -26,6 +26,10 @@ and job status belong in `CURRENT_STATE.md`; Track A/B/C ownership belongs in
 | Scientific evidence or RML closure | Family acceptance and `research_memory/` | [experiment evidence contract](experiments/README.md#evidence-contract) |
 | Public inference or registry | `inference.py`, `__init__.py`, and `constants.py` | [production/README.md](production/README.md) |
 | Documentation pointers or entry size | `documentation_check.py` | [verification commands](docs/operations/INFRASTRUCTURE_VERIFICATION.md) |
+| Standard substrate slots / addon parameters | `model_substrate.py` and existing Spec/execution registries | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md) |
+| Native Live/Raw/Clean weight actions | `family_training_state.py`; shared kernel owns forward/update | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#2-calibrate-and-retain-clean-ema) |
+| One-batch local model gate | `fast_sandbox.py` | [sandbox](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#3-check-one-batch-locally) |
+| Automatic source closure | `source_dependencies.py`; existing packager/skills own release | [dependency handoff](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#4-discover-package-and-hand-off) |
 
 ## Registered family lifecycle
 

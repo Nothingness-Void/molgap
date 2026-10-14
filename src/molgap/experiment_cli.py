@@ -50,10 +50,10 @@ def _parser() -> argparse.ArgumentParser:
                  "launch-receipt", "terminal", "plan-prospective", "check-release",
                  "check-acceptance", "inspect-output", "accept-terminal",
                  "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal", "prepare-release", "check-preparation",
-                 "workflow-info", "build-resume", "prepare-resume"):
+                 "workflow-info", "build-resume", "prepare-resume", "source-dependencies"):
         command = commands.add_parser(name)
         command.add_argument("--spec", required=True, type=_local)
-        if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal", "prepare-workflow", "prepare-family-training", "accept-workflow", "prepare-release", "check-preparation", "build-terminal", "build-resume", "prepare-resume"}:
+        if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal", "prepare-workflow", "prepare-family-training", "accept-workflow", "prepare-release", "check-preparation", "build-terminal", "build-resume", "prepare-resume", "source-dependencies"}:
             command.add_argument("--repo-root", required=True, type=_local)
         if name in {"package", "preflight", "run-diagnostic", "prepare-workflow", "prepare-family-training", "prepare-release", "build-resume", "prepare-resume"}:
             command.add_argument("--output", required=True, type=_local)
@@ -79,6 +79,8 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--output", required=True, type=_local)
         elif name in {"prepare-workflow", "prepare-family-training"}:
             command.add_argument("--plan", required=True, type=_local)
+            if name == "prepare-family-training":
+                command.add_argument("--auto-dependencies", action="store_true")
         elif name == "accept-workflow":
             command.add_argument("--receipt", required=True, type=_local)
             command.add_argument("--outputs", required=True, type=_local)
@@ -98,7 +100,12 @@ def _parser() -> argparse.ArgumentParser:
                 command.add_argument("--outputs", required=True, type=_local)
                 command.add_argument("--execute", action="store_true")
         elif name == "package":
-            command.add_argument("--allowlist", required=True, nargs="+", action="extend")
+            source = command.add_mutually_exclusive_group(required=True)
+            source.add_argument("--allowlist", nargs="+", action="extend")
+            source.add_argument("--auto-dependencies", action="store_true")
+        elif name == "source-dependencies":
+            command.add_argument("--extra-source", action="append", default=[])
+            command.add_argument("--strict-dynamic", action="store_true")
         elif name == "check-release":
             command.add_argument("--recipe-file", required=True, action="append", metavar="ARM=PACKAGED_PATH")
             command.add_argument("--initial-state", action="append", default=[], metavar="ARM=LOCAL_PATH")
@@ -120,10 +127,30 @@ def _parser() -> argparse.ArgumentParser:
         elif name == "terminal":
             command.add_argument("--descriptor", required=True, type=_local)
             command.add_argument("--execute", action="store_true")
+    sandbox = commands.add_parser("sandbox")
+    selected = sandbox.add_mutually_exclusive_group(required=True)
+    selected.add_argument("--spec", type=_local)
+    selected.add_argument("--family", choices=("neural_atom_k1", "gptrans_t"))
+    sandbox.add_argument("--arm")
     return parser
 
 
 def _dispatch(args) -> tuple[dict, int]:
+    if args.command == "sandbox":
+        from .fast_sandbox import run_arm_sandbox, run_family_sandbox
+        if args.spec is not None:
+            if not args.arm:
+                raise ValueError("A Spec sandbox requires one explicit --arm")
+            raw = _read(args.spec)
+            spec = ExperimentSpec.from_json(raw)
+            if raw != spec.to_json():
+                raise ValueError("Expected canonical ExperimentSpec JSON bytes (no newline)")
+            result = run_arm_sandbox(spec, args.arm)
+        else:
+            if args.arm is not None:
+                raise ValueError("--arm is only used with a Spec")
+            result = run_family_sandbox(args.family)
+        return result, 0 if result["status"] == "PASSED" else 1
     raw = _read(args.spec)
     spec = ExperimentSpec.from_json(raw)
     if raw != spec.to_json():
@@ -133,6 +160,12 @@ def _dispatch(args) -> tuple[dict, int]:
     if args.command == "workflow-info":
         from .experiment_execution import workflow_capabilities
         return workflow_capabilities(spec), 0
+    if args.command == "source-dependencies":
+        from .source_dependencies import registered_dependencies
+        closure = registered_dependencies(spec, args.repo_root, args.extra_source,
+                                          require_static=args.strict_dynamic)
+        return {"spec_identity": spec.identity, **closure.to_dict(),
+                "submitted": False, "execution_qualification": "NOT_EVALUATED"}, 0
     if args.command in {"build-resume", "prepare-resume"}:
         from .experiment_workflow_resume import build_workflow_resume, prepare_resumed_workflow
         from .experiment_family_workflow import _json
@@ -146,7 +179,12 @@ def _dispatch(args) -> tuple[dict, int]:
     if args.command == "prepare-family-training":
         from .experiment_workflow import prepare_family_training
         from .experiment_family_workflow import _json
-        result = prepare_family_training(spec, args.repo_root, _json(args.plan), args.output)
+        plan = _json(args.plan)
+        if args.auto_dependencies:
+            from .experiment_source_inventory import registered_source_files
+            plan["source_files"] = registered_source_files(spec, plan.get("source_files", ()),
+                repo_root=args.repo_root, auto_dependencies=True)
+        result = prepare_family_training(spec, args.repo_root, plan, args.output)
         return result, 0 if result["status"] == "SOURCE_INPUTS_PREPARED" else 1
     if args.command == "build-terminal":
         from .experiment_family_workflow import (RunContext, _json, build_incomplete_terminal_descriptor,
@@ -202,7 +240,11 @@ def _dispatch(args) -> tuple[dict, int]:
     if args.command == "check-preparation":
         return check_experiment_preparation(spec, args.repo_root, _read(args.workflow)), 0
     if args.command == "package":
-        return build_experiment_source_package(spec, args.repo_root, args.allowlist, args.output), 0
+        files = args.allowlist
+        if args.auto_dependencies:
+            from .experiment_source_inventory import registered_source_files
+            files = registered_source_files(spec, repo_root=args.repo_root, auto_dependencies=True)
+        return build_experiment_source_package(spec, args.repo_root, files, args.output), 0
     if args.command == "check-release":
         def bindings(values, local=False):
             result = {}
