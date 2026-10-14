@@ -59,3 +59,11 @@ GPU/DCU, real molecular caches/checkpoints, protected roles, remote submission,
 native cost/speed, scientific comparison and promotion were not exercised.
 Synthetic CPU success does not release compute. Clean EMA remains an opt-in
 component requiring its own calibration, selection and checkpoint contract.
+
+## Post-integration check
+
+At desktop code commit `eb43ba485c743f850ba95e11517a88d8bdd63eee`, independent
+`python -m molgap.research_memory check --frozen --portable` exited 0: derived
+outputs were frozen/current and the portable evidence/runtime/artifact closure
+passed. No rebuild or canonical/derived write was needed. The four pre-existing
+user untracked groups were retained, not included in the integration.
