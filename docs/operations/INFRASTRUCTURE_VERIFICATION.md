@@ -44,6 +44,8 @@ Source tests publish a discovered closure and execute its function-local addon
 dependencies in an isolated Python process, including package startup and
 Python's package-over-module resolution. Unresolved dynamic/wildcard imports
 remain explicit review obligations.
+The subsequent [topology port review](TOPOLOGY_REUSE_SERVER_REVIEW.md) owns
+the expanded operation-equivalence and frozen-source compatibility results.
 
 The new-family lifecycle fixture uses a small previously unregistered model,
 a simple addon, and synthetic immutable PCQM topology/role assets. It performs

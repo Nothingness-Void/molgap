@@ -176,6 +176,11 @@ to satisfy the legacy development-comparison terminal adapter.
 
 ## Verification
 
+Batch-topology reuse and the selective desktop port are documented in the
+[server review](TOPOLOGY_REUSE_SERVER_REVIEW.md). K1 shares a private padding
+mask across mixers; prepared GPTrans reuses local destinations and bounds
+reachability without altering learned tensors or the loss/update sequence.
+
 Tests use temporary synthetic CPU graphs and elementary models only:
 `test_family_training_core.py` checks optimizer/gradient/RNG equivalence, step
 ordering, exact stop boundaries and cleanup. `test_family_training_data.py`
