@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "RUN_K1_EXECUTION_DIAGNOSTIC",
+    "field": "authorized_execution_diagnostic",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "one-user-authorized-original-shared-K1-execution-diagnostic",
+    "authority_ref": "experiments/k1_infrastructure_t4_100k/authority.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "k1-original-shared-execution100k-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "full observed T4x2 allocation including idle tail",
+      "no cross-hardware conversion"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "14e31112932c3a7081a287be9e9d882d73c5c9c8f04e169c5271aa80e6a680e6",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "k1-infrastructure-execution",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "authorized_execution_diagnostic"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

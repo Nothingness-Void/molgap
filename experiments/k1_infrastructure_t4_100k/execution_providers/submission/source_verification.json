@@ -1,0 +1,18 @@
+{
+  "kernel": "nvoid912/molgap-k1-infrastructure-dual-100k-v2",
+  "kernel_id": 138799517,
+  "version": 1,
+  "observed_at": "2026-10-15T06:13:38.372199+00:00",
+  "private": true,
+  "enable_gpu": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "nvoid912/molgap-k1-infrastructure-source-v2",
+    "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "expected_entry_sha256": "f7178167af1e43390c80469b8aa623c45e2473b05b784688ac2c7a3f967202a8",
+  "api_entry_sha256": "f7178167af1e43390c80469b8aa623c45e2473b05b784688ac2c7a3f967202a8",
+  "entry_bytes_equal": true,
+  "retrieval": "API latest slug; returned identity and version checked explicitly",
+  "sdk_file_note": "Windows kernels_pull text-mode CRLF differs from the exact API UTF-8 bytes"
+}
