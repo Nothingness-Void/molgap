@@ -22,7 +22,9 @@ def api_for_credentials(path: Path):
             return client
 
     api = ExplicitAccountApi()
-    api._load_config({"username": owner, "key": key})
+    # SDK config loading reads global files/environment and accepts no mapping.
+    # Keep an instance-local mapping so neither account nor OAuth can leak in.
+    api.config_values = {"username": owner, "key": key}
     return api
 
 
