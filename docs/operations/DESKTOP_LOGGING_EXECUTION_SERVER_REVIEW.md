@@ -67,7 +67,7 @@ formal training, molecular inference or native accelerator measurement.
 
 Independent Luna invocation: **229 passed, 0 skipped**, 46.22s, covering existing
 core/session/runner/recipe/loaders/recovery/commit/cycle-release/profiler suites.
-`tests/test_modular_experiment_runtime.py` does not exist; it was explicitly
+The requested `test_modular_experiment_runtime.py` does not exist; it was explicitly
 omitted, not called a passing test or substituted native qualification.
 
 Parent-scoped verification:

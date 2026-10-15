@@ -446,7 +446,10 @@ def _validate_request(*, spec, package_dir, expected_package_identity, arm_id, m
     return context, recipe
 
 
-def _owner_kwargs(context, *, package_dir, mode, recipe, initial_state_path, input_root, output):
+def _owner_kwargs(context, *, package_dir, mode, recipe, initial_state_path, input_root, output,
+                  target="training", preflight_path=None):
+    if target not in {"preflight", "training"}:
+        raise ValueError("Unknown GPTrans owner call target")
     root = Path(input_root)
     # Mounted source and graph datasets may be siblings. Inspect metadata only,
     # and let the owner verify all graph bytes after an unambiguous match.
@@ -462,12 +465,41 @@ def _owner_kwargs(context, *, package_dir, mode, recipe, initial_state_path, inp
     _safe_local(Path(output).absolute())
     Path(output).mkdir(parents=True, exist_ok=True)
     publish_immutable_bytes(Path(output).absolute() / "workflow_context.json", json_bytes(context.to_dict()))
-    return dict(dataset_root=manifest.parent, manifest_path=manifest,
+    kwargs = dict(dataset_root=manifest.parent, manifest_path=manifest,
         source_archive=Path(package_dir) / "source.tar.gz",
         source_archive_sha256=context.source_archive_sha256, source_commit=context.source_commit,
         output=Path(output), platform_id=recipe.get("runtime_platform_id", context.platform),
-        initial_state_path=Path(initial_state_path), variant=mode,
-        runtime_calibration_fingerprint=recipe.get("runtime_calibration_fingerprint"))
+        initial_state_path=Path(initial_state_path), variant=mode)
+    # Runtime calibration is an optional preflight input.  The retained V4
+    # training entry point never accepts it; bind both calls explicitly so a
+    # future owner ABI cannot turn a stale adapter key into a late TypeError.
+    import inspect
+    owner_call = owner.run_preflight if target == "preflight" else owner.run_training
+    signature = inspect.signature(owner_call)
+    calibration = recipe.get("runtime_calibration_fingerprint")
+    accepts_kwargs = any(parameter.kind is inspect.Parameter.VAR_KEYWORD
+                         for parameter in signature.parameters.values())
+    if target == "preflight":
+        if calibration is not None and not (
+                "runtime_calibration_fingerprint" in signature.parameters or accepts_kwargs):
+            raise TypeError("GPTrans preflight owner does not accept runtime calibration")
+        if calibration is not None:
+            kwargs["runtime_calibration_fingerprint"] = calibration
+    elif preflight_path is None:
+        raise TypeError("GPTrans training owner kwargs require preflight_path")
+    else:
+        kwargs["preflight_path"] = Path(preflight_path)
+        # Chunking is a native-owner execution option.  Pass it only for the
+        # formal training call; the default False remains implicit for older
+        # recipes and non-chunked owners.
+        execution_only_chunking = recipe.get("execution_only_chunking")
+        if execution_only_chunking is not None:
+            if type(execution_only_chunking) is not bool:
+                raise TypeError("GPTrans execution_only_chunking must be boolean")
+            if execution_only_chunking:
+                kwargs["execution_only_chunking"] = True
+    signature.bind(**kwargs)
+    return kwargs
 
 
 def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: str,
@@ -478,8 +510,34 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         expected_package_identity=expected_package_identity, arm_id=arm_id, mode=mode,
         recipe_path=recipe_path, initial_state_path=initial_state_path, input_root=input_root,
         account=account, run_reference=run_reference, trajectory_id=trajectory_id)
-    return owner.run_preflight(**_owner_kwargs(context, package_dir=package_dir, mode=mode,
-        recipe=recipe, initial_state_path=initial_state_path, input_root=input_root, output=output))
+    owner_kwargs = _owner_kwargs(context, package_dir=package_dir, mode=mode,
+        recipe=recipe, initial_state_path=initial_state_path, input_root=input_root, output=output,
+        target="preflight")
+    result = owner.run_preflight(**owner_kwargs)
+    if recipe.get("profiling") is not None:
+        from .gptrans_legacy_execution_profile import qualify_profile_state
+        from .training_reproducibility import atomic_json
+        assets = owner.validate_fixed_assets(owner_kwargs["dataset_root"],
+            owner_kwargs["manifest_path"], verify_content=True)
+        train_graphs, train_shards = owner._load_datasets(assets.train_paths)
+        profile_proof, state_proof = qualify_profile_state(
+            owner=owner, recipe=recipe, train_graphs=train_graphs, train_shards=train_shards,
+            initial_state_path=initial_state_path, output=Path(output))
+        certificate = _read(Path(output) / "runtime_certificate.json")
+        certificate["profile_proof"] = profile_proof
+        certificate["profile_state_proof"] = state_proof
+        # The V4 owner binds every later checkpoint to the canonical runtime
+        # certificate identity.  Adding profile evidence therefore requires a
+        # fresh embedded certificate identity; leaving the old ID would make
+        # the owner reject the otherwise valid preflight at training start.
+        from .screen_policy import canonical_fingerprint
+        result = {**result, "profile_proof": profile_proof,
+                  "profile_state_proof": state_proof,
+                  "runtime_certificate": certificate,
+                  "runtime_certificate_id": canonical_fingerprint(certificate)}
+        atomic_json(Path(output) / "runtime_certificate.json", certificate)
+        atomic_json(Path(output) / "preflight.json", result)
+    return result
 
 
 def _normalize(output: Path, context: RunContext, recipe_path: Path, trajectory_id: str,
@@ -579,9 +637,21 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         raise ValueError("GPTrans preflight context differs from training arm")
     started = time.perf_counter()
     resumed = (Path(output) / "last_checkpoint.pt").exists()
-    completion = owner.run_training(preflight_path=preflight / "preflight.json",
-        **_owner_kwargs(context, package_dir=package_dir, mode=mode, recipe=recipe,
-            initial_state_path=initial_state_path, input_root=input_root, output=output))
+    owner_kwargs = _owner_kwargs(context, package_dir=package_dir, mode=mode, recipe=recipe,
+        initial_state_path=initial_state_path, input_root=input_root, output=output,
+        target="training", preflight_path=preflight / "preflight.json")
+    def invoke():
+        if "preflight_path" in owner_kwargs:
+            return owner.run_training(**owner_kwargs)
+        # Keep the narrow test seam and reviewed downstream adapters
+        # compatible while the real owner ABI is bound above.
+        return owner.run_training(preflight_path=preflight / "preflight.json", **owner_kwargs)
+    if recipe.get("profiling") is not None:
+        from .gptrans_legacy_execution_profile import run_profiled_legacy
+        completion = run_profiled_legacy(owner=owner, recipe=recipe, root=Path(output),
+            preflight=preflight, context=context, runner=invoke)
+    else:
+        completion = invoke()
     seconds = time.perf_counter() - started
     certificate = _read(preflight / "runtime_certificate.json")
     hardware = certificate["accelerator"]

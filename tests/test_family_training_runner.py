@@ -2,6 +2,7 @@
 from copy import deepcopy
 from dataclasses import replace
 import json
+from types import SimpleNamespace
 
 import pytest
 import torch
@@ -11,7 +12,9 @@ from molgap.experiment_family_workflow import RunContext, inspect_output, tensor
 from molgap.experiment_package import _name
 from molgap.experiment_spec import ExperimentSpec
 from molgap.family_training_outputs import SessionOutputs
-from molgap.family_training_runner import INTERFACES, PROFILES, family_arm_bindings, read_recipe
+from molgap.family_training_runner import (
+    INTERFACES, PROFILES, _assert_target_statistics, family_arm_bindings, read_recipe,
+)
 from molgap.training_reproducibility import sha256_file, validate_accelerator_request
 from test_family_training_session import events, make_session
 from test_experiment_spec import payload
@@ -116,6 +119,35 @@ def test_contract_rejects_counter_changes_and_unknown_fields(tmp_path):
             path.write_text(json.dumps(record), encoding="utf-8")
             with pytest.raises(ValueError):
                 read_recipe(path)
+    finally:
+        session.close()
+
+
+@pytest.mark.parametrize("family,expected", [
+    ("neural_atom_k1", (5.3383002281188965, 1.275090217590332)),
+    ("gptrans_t", (5.338300266634226, 1.2750902063230574)),
+])
+def test_target_statistics_match_recipe_in_native_precision(family, expected):
+    session = make_session(family, development=False, schedule_kind="cosine_step", events=events())
+    try:
+        recipe = replace(session.recipe, target_mean_eV=expected[0], target_std_eV=expected[1])
+        data = SimpleNamespace(target_mean_eV=5.338300266634226,
+                               target_std_eV=1.2750902063230574)
+        _assert_target_statistics(recipe, data)
+    finally:
+        session.close()
+
+
+@pytest.mark.parametrize("family", ["neural_atom_k1", "gptrans_t"])
+def test_target_statistics_drift_is_rejected(family):
+    session = make_session(family, development=False, schedule_kind="cosine_step", events=events())
+    try:
+        recipe = replace(session.recipe, target_mean_eV=5.338300266634226,
+                         target_std_eV=1.2750902063230574)
+        data = SimpleNamespace(target_mean_eV=5.338300266634226 + 1e-4,
+                               target_std_eV=1.2750902063230574)
+        with pytest.raises(ValueError, match="target statistics"):
+            _assert_target_statistics(recipe, data)
     finally:
         session.close()
 

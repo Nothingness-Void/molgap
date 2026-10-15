@@ -50,6 +50,8 @@ COMMON_SOURCE_FILES = (
     'src/molgap/foreach_ema.py',
     'src/molgap/gptrans_memory.py',
     'src/molgap/gptrans_screen_workflow.py',
+    'src/molgap/gptrans_legacy_execution_profile.py',
+    'src/molgap/gptrans_infrastructure_comparison.py',
     'src/molgap/gptrans_variants.py',
     'src/molgap/k1_joint_aggregation.py',
     'src/molgap/k1_clean_second.py',

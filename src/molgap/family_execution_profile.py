@@ -17,6 +17,30 @@ _OWNER = threading.Lock()
 _MISSING = object()
 
 
+def profile_artifact_refs(root):
+    """Pin only known observer/proof outputs for selective platform retrieval."""
+    from .experiment_launch import _safe_local
+    from .training_reproducibility import sha256_file
+
+    root = Path(root).absolute()
+    _safe_local(root)
+    names = ("execution_profile_receipt.json", "runtime_certificate.json",
+             "preflight.json", "runtime_manifest.json", "runtime_provenance.json",
+             "repeat-a.pt", "repeat-b.pt", "resumed.pt", "resumed-first.pt",
+             "fill-enabled.pt")
+    paths = [root / name for name in names if (root / name).is_file()]
+    for directory in ("profiles", "profile_qualification"):
+        folder = root / directory
+        _safe_local(folder)
+        if folder.exists():
+            for path in folder.rglob("*"):
+                _safe_local(path)
+                if path.is_file() and path.suffix in {".json", ".pt", ".txt"}:
+                    paths.append(path)
+    return [{"path": path.relative_to(root).as_posix(), "sha256": sha256_file(path)}
+            for path in sorted(set(paths))]
+
+
 @dataclass(frozen=True)
 class ProfileConfig:
     warmup_steps: int = 2

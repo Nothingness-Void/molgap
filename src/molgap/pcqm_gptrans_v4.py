@@ -840,11 +840,12 @@ def run_preflight(
     return result
 
 
-def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference", v5_audit: bool = False, family_output_binding: dict | None = None) -> dict:
+def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema, trace, best, best_epoch, target_stats, runtime_certificate_id, source_archive_sha256, variant: str = "reference", v5_audit: bool = False, execution_only_chunking: bool = False, family_output_binding: dict | None = None) -> dict:
     payload = {
             "format": CHECKPOINT_FORMAT,
             "variant": variant,
             **({"v5_audit": True} if v5_audit else {}),
+            **({"execution_only_chunking": True} if execution_only_chunking else {}),
             "epoch": epoch,
             "model": model.state_dict(),
             "optimizer": optimizer.state_dict(),
@@ -864,6 +865,22 @@ def _save_checkpoint(path: Path, *, epoch: int, model, optimizer, scheduler, ema
         payload["family_output_binding"] = family_output_binding
     atomic_torch_save(path, payload)
     return payload
+
+
+def _publish_checkpoint_chunk(output: Path, checkpoint_path: Path, epoch: int) -> Path:
+    """Publish one independently retrievable checkpoint with an atomic rename."""
+    import os
+    import shutil
+
+    chunk = Path(output) / f"checkpoint_epoch_{epoch:02d}.pt"
+    temporary = chunk.with_suffix(".pt.tmp")
+    try:
+        shutil.copyfile(checkpoint_path, temporary)
+        os.replace(temporary, chunk)
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise
+    return chunk
 
 
 def _v5_audit_recorder(path: Path, *, trajectory_id="TC-gptrans-v5-audit-reference-100k", run_id="gptrans-t-v5-audit-reference-s42"):
@@ -923,6 +940,7 @@ def run_training(
     initial_state_path: Path,
     variant: str = "reference",
     v5_audit: bool = False,
+    execution_only_chunking: bool = False,
     max_epochs_this_job: int | None = None,
     path_sidecar_root: Path | None = None,
     trajectory_id: str | None = None,
@@ -931,6 +949,10 @@ def run_training(
     family_outputs=None,
 ) -> dict:
     author_arm = variant in AUTHOR_MODES
+    if type(execution_only_chunking) is not bool:
+        raise TypeError("execution_only_chunking must be a boolean")
+    if execution_only_chunking and v5_audit:
+        raise ValueError("Execution-only checkpoint chunking cannot enable V5 audit")
     if family_outputs is not None:
         from .experiment_training_hooks import TrainingOutputHooks
         if type(family_outputs) is not TrainingOutputHooks or not v5_audit:
@@ -1020,6 +1042,8 @@ def run_training(
             raise RuntimeError("Checkpoint architecture variant changed")
         if bool(checkpoint.get("v5_audit", False)) != v5_audit:
             raise RuntimeError("Checkpoint V5 audit mode changed")
+        if bool(checkpoint.get("execution_only_chunking", False)) != execution_only_chunking:
+            raise RuntimeError("Checkpoint chunk durability mode changed")
         if checkpoint.get("scientific_fields") != _scientific_fields(variant):
             raise RuntimeError("Checkpoint scientific contract changed")
         if checkpoint.get("ema_decay", EMA_DECAY) != _ema_decay(variant):
@@ -1218,6 +1242,7 @@ def run_training(
             source_archive_sha256=source_archive_sha256,
             variant=variant,
             v5_audit=v5_audit,
+            execution_only_chunking=execution_only_chunking,
             family_output_binding=family_outputs.binding if family_outputs is not None else None,
         )
         if family_outputs is not None:
@@ -1244,13 +1269,8 @@ def run_training(
         )
         if v5_audit:
             _v5_append_checkpoint_observation(audit_recorder, row, checkpoint_path)
-        if (variant != "reference" or v5_audit) and (epoch + 1) % 10 == 0:
-            import os
-            import shutil
-            chunk = output / f"checkpoint_epoch_{epoch:02d}.pt"
-            temporary = chunk.with_suffix(".pt.tmp")
-            shutil.copyfile(checkpoint_path, temporary)
-            os.replace(temporary, chunk)
+        if (variant != "reference" or v5_audit or execution_only_chunking) and (epoch + 1) % 10 == 0:
+            _publish_checkpoint_chunk(output, checkpoint_path, epoch)
             if family_outputs is not None:
                 family_outputs.archive_prefix(epoch=epoch)
 

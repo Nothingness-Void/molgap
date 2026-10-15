@@ -155,6 +155,23 @@ def _loaded_source(package_dir):
     return root
 
 
+def _assert_target_statistics(recipe, data):
+    """Require the selected fixed-train labels to match the frozen transform."""
+    observed = (float(data.target_mean_eV), float(data.target_std_eV))
+    if recipe.family == "neural_atom_k1":
+        # The accepted historical K1 transform is frozen as FP32 constants;
+        # shared data loading intentionally computes its observation in FP64.
+        import torch
+        observed = tuple(float(torch.tensor(value, dtype=torch.float32).item())
+                         for value in observed)
+    expected = (float(recipe.target_mean_eV), float(recipe.target_std_eV))
+    if observed != expected:
+        raise ValueError(
+            "Decoded train target statistics differ from frozen recipe: "
+            f"observed={observed!r}, expected={expected!r}"
+        )
+
+
 def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, recipe_path,
                initial_state_path, input_root, account, run_reference, trajectory_id, prospective_root=None,
                training_only=False, cost_root=None):
@@ -201,6 +218,7 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
             raise ValueError("Decoded role membership/order differs from Spec")
     if data.train_rows != recipe.train_rows or (not training_only and data.development_rows != recipe.development_rows):
         raise ValueError("Decoded view counts differ from recipe")
+    _assert_target_statistics(recipe, data)
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise ValueError("Native training requires one isolated observed accelerator per worker")
     validate_accelerator_request(spec.to_dict()["platform"]["accelerator"], torch.cuda.get_device_name(0),
@@ -700,11 +718,12 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     certificate = _verify_preflight(preflight_dir or output, recipe, provenance,
         profiling_required="profiling" in record)
     from .k1_infrastructure_comparison import is_comparison
+    from .gptrans_infrastructure_comparison import is_comparison as is_gptrans_comparison
     outputs = SessionOutputs(root, context, contract=options["recipe_path"], adapter=PROFILES[recipe.family],
         trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"],
         resume_trajectory=(_artifact_path(Path(options["prospective_root"]),
             "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
-            if recipe.mode in BOUNDED_MODES or is_comparison(options["spec"]) else None))
+            if recipe.mode in BOUNDED_MODES or is_comparison(options["spec"]) or is_gptrans_comparison(options["spec"]) else None))
     had_checkpoint = (root / "last_checkpoint.pt").is_file()
     interval = _json(_artifact_path(root, "invocation_cost_state.json"))
     _check_context(interval["context"], context)

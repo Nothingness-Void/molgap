@@ -39,6 +39,12 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         from .k1_infrastructure_comparison import check_plan, comparison_base
         check_plan(spec, source_root, _json(source_root / comparison_base(spec) / "acceptance_plan.json"),
             initial_states={j["arm_id"]: Path(launch_path).parent / j["initial_state"] for j in jobs})
+    from .gptrans_infrastructure_comparison import is_comparison as is_gptrans_comparison
+    if is_gptrans_comparison(spec):
+        from .gptrans_infrastructure_comparison import check_plan, BASE
+        check_plan(spec, source_root, _json(source_root / BASE / "acceptance_plan.json"),
+            initial_states={j["arm_id"]: Path(launch_path).parent / j["initial_state"] for j in jobs})
+        execution_comparison = True
     from .family_pair_release import bounded_cycle_pair, WALL_CEILING_SECONDS
     bounded = bounded_cycle_pair(spec)
     campaign = (len(declaration["arms"]) == 2 and all(a["family"] == {"name": "gptrans_t", "version": "2"}
@@ -108,6 +114,11 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     atomic_json(output / "pair_state.json", report)
     def retain_execution():
         from .experiment_retention import seal_execution_retention
+        if execution_comparison:
+            from .family_execution_profile import profile_artifact_refs
+            report["profile_artifacts"] = {
+                job["arm_id"]: profile_artifact_refs(output / job["arm_id"])
+                for job in jobs}
         atomic_json(output / "execution_report.json", report)
         seal_execution_retention(output, spec, package_identity=manifest["package_identity"],
             source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"],

@@ -113,6 +113,16 @@ no new execution authority. See [reuse map](EXPERIMENT_ADDON_GUIDE.md).
 
 ## Verification and provenance
 
+Execution comparisons pin known profile receipts, traces and native proof files
+in `execution_report.json:profile_artifacts`, which the execution retention
+manifest hashes. Retrieve that exact-version report first, then its selected
+files with `kaggle_output_retrieval.retrieve_pinned_exact_files`; the scientific
+family manifest alone does not retain profiler outputs.
+
+The retained GPTrans V4 loop uses `gptrans_legacy_execution_profile.py` through
+its registered adapter; [the paired protocol](../../experiments/gptrans_infrastructure_t4_100k/protocol.md)
+binds native profiled/plain state proof and a matched original/shared capture.
+
 The reviewed [shared execution refinement](GPTRANS_EXECUTION_REFINEMENT.md)
 keeps `checkpoint_state`, `checkpoint_publish` and `finite_validation` visible
 on the synchronous snapshot-builder route. Validation moved into publication;

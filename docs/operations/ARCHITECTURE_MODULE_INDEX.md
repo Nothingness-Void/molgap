@@ -88,6 +88,7 @@ move reusable behavior into experiment result directories.
 | `experiment_allocation.py`, `experiment_retention.py` | Physical allocation observation and compact execution retention | Changing allocation ledgers or execution manifests |
 | `experiment_terminal.py` | Terminal descriptor translation and explicit closure delegation | Changing terminal binding or translation |
 | `k1_execution_analysis.py`, `k1_execution_terminal.py` | Saved-output K1 execution comparison and excluded diagnostic closure | Comparing retained timings/predictions or translating them into existing RML closure |
+| `gptrans_infrastructure_comparison.py`, `gptrans_legacy_execution_profile.py` | Original/shared GPTrans reference release checks and observation of the retained V4 loop | [GPTrans execution diagnostic](../../experiments/gptrans_infrastructure_t4_100k/README.md) declaration and native profiler admission |
 | `k1_execution_backend.py`, `k1_execution_aggregation.py`, `k1_execution_qualification.py` | Batch-local execution providers and source-bound native shadow proof | [K1 execution provider](K1_EXECUTION_BACKENDS.md) implementation and native equivalence admission |
 | `training_reproducibility.py` | FP32 determinism, runtime manifests, RNG structure, finite-state, and atomic artifacts | Changing reusable execution provenance |
 | `screen_policy.py`, `comparison_readiness.py`, `v5_common.py` | Screen comparability, V5 comparison classes, identity, and evidence-envelope validation | Changing scientific comparison gates |

@@ -174,3 +174,19 @@ def test_layer_hooks_preserve_native_cache_dispatch_and_cleanup(tmp_path, monkey
 def test_invalid_profile_dimensions(kwargs):
     with pytest.raises(ValueError):
         ProfileConfig(**kwargs)
+def test_profile_retention_pins_trace_and_native_proof_without_environment_files(tmp_path):
+    from molgap.family_execution_profile import profile_artifact_refs
+    from molgap.training_reproducibility import sha256_file
+
+    selected = ["execution_profile_receipt.json", "runtime_certificate.json",
+                "profiles/step_0/profile.json", "profiles/step_0/trace.json",
+                "profile_qualification/plain-state.pt", "repeat-a.pt"]
+    for name in selected + ["environment/site.py", "last_checkpoint.pt", "unrelated.json"]:
+        path = tmp_path / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(name.encode())
+    records = profile_artifact_refs(tmp_path)
+    assert {item["path"] for item in records} == set(selected)
+    assert all(item["sha256"] == sha256_file(tmp_path / item["path"]) for item in records)
+    (tmp_path / "profiles/step_0/trace.json").write_bytes(b"changed")
+    assert profile_artifact_refs(tmp_path) != records

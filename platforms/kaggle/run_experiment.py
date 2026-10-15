@@ -59,7 +59,8 @@ def _workload(allocation_started):
         ({a["addons"][0]["name"] for a in arms} == {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}
          or all(a["addons"][0]["name"].startswith("degree_aggregate_") for a in arms)))
     k1_comparison = declaration["experiment_id"] == "k1-infrastructure-t4-100k"
-    if shared_cycle_pair or k1_comparison:
+    gptrans_comparison = declaration["experiment_id"] == "gptrans-infrastructure-t4-100k"
+    if shared_cycle_pair or k1_comparison or gptrans_comparison:
         # Read the stdlib-only owner from the already hash-verified source archive.
         import runpy
         prepare = runpy.run_path(str(source / "src/molgap/kaggle_python_environment.py"))["prepare_python"]
