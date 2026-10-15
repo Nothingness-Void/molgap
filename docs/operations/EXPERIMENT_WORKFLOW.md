@@ -31,6 +31,10 @@ Desktop/server-neutral declaration, identity and SDK/transport mechanisms use
 [Common API](../../src/molgap/common/README.md); experiment profiles and authority
 remain outside it. Reuse these APIs rather than porting a machine-specific builder.
 
+Remaining cross-owner training convergence is specified in the
+[server implementation handoff](SHARED_TRAINING_CORE_SERVER_HANDOFF.md), not yet
+an implemented or natively qualified capability.
+
 
 Before fresh legacy multi-arm preparation, use `check-workflow` to aggregate
 recipe/profiler and prospective-policy gaps without staging or RML writes.
