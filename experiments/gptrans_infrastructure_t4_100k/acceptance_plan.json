@@ -1,0 +1,51 @@
+{
+  "arms": [
+    {
+      "arm_id": "original",
+      "contract": {
+        "path": "experiments/gptrans_infrastructure_t4_100k/original/contract.json",
+        "sha256": "9e428cdd761dcc04a5db493ae8a1be827bb6439f0efc80f7a448efca6a61a5a0"
+      },
+      "expected": {
+        "development_rows": 50000,
+        "epochs": 60,
+        "optimizer_steps": 46860,
+        "precision": "fp32",
+        "sample_presentations": 5998080,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/packages/gptrans_t_v4_source_814d104/initial_state.pt",
+        "sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+      }
+    },
+    {
+      "arm_id": "optimized",
+      "contract": {
+        "path": "experiments/gptrans_infrastructure_t4_100k/optimized/contract.json",
+        "sha256": "8c3555ec4ae9e1535805b2a1f6ad3996400f85583adb6a5d9fef0398c344d55c"
+      },
+      "expected": {
+        "completed_passes": 60,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 46860,
+        "precision": "fp32",
+        "sample_presentations": 5998080,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/packages/gptrans_t_v4_source_814d104/initial_state.pt",
+        "sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+      }
+    }
+  ],
+  "authority": {
+    "path": "experiments/gptrans_infrastructure_t4_100k/authority.json",
+    "sha256": "4b56942c041fc0bea461125c497012a9c4b49c9dfa82afcf504b170b1254e937"
+  },
+  "format": "molgap-gptrans-infrastructure-comparison-plan-v1",
+  "spec_identity": "f532dc44196c4aa5c103698af1e2246c65a911e783c3e9f9bb70c0fc26e08769"
+}
