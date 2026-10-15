@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "k1_clean_ema-v1",
+  "category": "other",
+  "cost_event_id": "cost-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-observed-entry-allocation",
+  "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 11.557301905154167
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 10.401814060320278
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
+}

@@ -11,6 +11,48 @@
       "comparison_status": "context_only",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,
+      "reference_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42-terminal-20261015",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "500k",
+      "source_envelope": "experiments/pcqm_clean_k1_gptrans_local_500k/rml/gptrans_local/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_qualified",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-terminal-20261015",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "500k",
+      "source_envelope": "experiments/pcqm_clean_k1_gptrans_local_500k/rml/k1_clean_ema/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_qualified",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
       "reference_id": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
       "role_use": {
         "development": "consumed",

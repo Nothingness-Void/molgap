@@ -1,0 +1,66 @@
+{
+  "policy": {
+    "format": "molgap-clean-bn-policy-v1",
+    "input_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+    "training_role_identity": "053c93557980ef8e49507cafff4a7044ab7b450c6754d99cee766beade5cbb88",
+    "source_order_sha256": "08063881d584e95e1734c94e92def2197295bb9d20f96d44852ce6fe37aa3687",
+    "batches": 128,
+    "batch_size": 128,
+    "role": "train",
+    "estimator": "cumulative-batch"
+  },
+  "proofs": [
+    {
+      "policy": {
+        "format": "molgap-clean-bn-policy-v1",
+        "input_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+        "training_role_identity": "053c93557980ef8e49507cafff4a7044ab7b450c6754d99cee766beade5cbb88",
+        "source_order_sha256": "08063881d584e95e1734c94e92def2197295bb9d20f96d44852ce6fe37aa3687",
+        "batches": 128,
+        "batch_size": 128,
+        "role": "train",
+        "estimator": "cumulative-batch"
+      },
+      "policy_identity": "56b2f3ff63faee9bc206bcbcd638b17453035e8490e5969683193c8aeb89bff8",
+      "raw_revision": 0,
+      "raw_state_identity": "12772daed3932951939be3e899ec1fe680133fdb511b1d0a3d19a57fe690b8a3",
+      "clean_state_identity": "cc1586cd5d213c93dbecb433b60cbb7894cfcbdf4ed61ed1901a45290cf569e6",
+      "identity": "478cf63aa17965438df1d8368afb4d39edc5400c434ca2bc072fc8ff29f2ed63"
+    },
+    {
+      "policy": {
+        "format": "molgap-clean-bn-policy-v1",
+        "input_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+        "training_role_identity": "053c93557980ef8e49507cafff4a7044ab7b450c6754d99cee766beade5cbb88",
+        "source_order_sha256": "08063881d584e95e1734c94e92def2197295bb9d20f96d44852ce6fe37aa3687",
+        "batches": 128,
+        "batch_size": 128,
+        "role": "train",
+        "estimator": "cumulative-batch"
+      },
+      "policy_identity": "56b2f3ff63faee9bc206bcbcd638b17453035e8490e5969683193c8aeb89bff8",
+      "raw_revision": 0,
+      "raw_state_identity": "12772daed3932951939be3e899ec1fe680133fdb511b1d0a3d19a57fe690b8a3",
+      "clean_state_identity": "cc1586cd5d213c93dbecb433b60cbb7894cfcbdf4ed61ed1901a45290cf569e6",
+      "identity": "478cf63aa17965438df1d8368afb4d39edc5400c434ca2bc072fc8ff29f2ed63"
+    },
+    {
+      "policy": {
+        "format": "molgap-clean-bn-policy-v1",
+        "input_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+        "training_role_identity": "053c93557980ef8e49507cafff4a7044ab7b450c6754d99cee766beade5cbb88",
+        "source_order_sha256": "08063881d584e95e1734c94e92def2197295bb9d20f96d44852ce6fe37aa3687",
+        "batches": 128,
+        "batch_size": 128,
+        "role": "train",
+        "estimator": "cumulative-batch"
+      },
+      "policy_identity": "56b2f3ff63faee9bc206bcbcd638b17453035e8490e5969683193c8aeb89bff8",
+      "raw_revision": 0,
+      "raw_state_identity": "12772daed3932951939be3e899ec1fe680133fdb511b1d0a3d19a57fe690b8a3",
+      "clean_state_identity": "cc1586cd5d213c93dbecb433b60cbb7894cfcbdf4ed61ed1901a45290cf569e6",
+      "identity": "478cf63aa17965438df1d8368afb4d39edc5400c434ca2bc072fc8ff29f2ed63"
+    }
+  ],
+  "formal_training_exposure": 0
+}

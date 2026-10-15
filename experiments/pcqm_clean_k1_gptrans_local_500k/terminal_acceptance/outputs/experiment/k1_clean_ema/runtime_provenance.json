@@ -1,0 +1,30 @@
+{
+  "context": {
+    "experiment_id": "molgap-k1-clean-ema-gptrans-local-500k",
+    "logical_run_id": "molgap-k1-clean-ema-gptrans-local-500k",
+    "arm_id": "k1_clean_ema",
+    "arm_identity": "f8dda8fbf4e47181ea17c30b03710a6a43a32d16484ac4ea26eebdc94a787c6b",
+    "spec_identity": "364ad6c554cb671a2c4d165e7a0ba0184c4ded71281f755b5369d1ee9aac0c6d",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "4097e696493a6e87132314c46e332f087b41a196",
+    "source_archive_sha256": "a84f0242ac0c527515c8c99ce00d561dc56a913d6c3fd8cd3fb5e337423cfd1c",
+    "package_identity": "1977c388915925217e2bce86f63142fc7b54c74d28ee2a33cabd0107baac71e5",
+    "training_recipe_sha256": "1d367eba26189d6a80a87b39a556c60de90a4d040911285aa1fb7d4123c82740",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-k1-clean-ema-gptrans-local-500k",
+    "platform_version": null
+  },
+  "recipe_identity": "f3c31053b2b91d4a56e2355ece1dd8bc6f48156fcdd6aa368094fe2d69abff0b",
+  "dataset_manifest_sha256": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+  "initialization": {
+    "file_sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+    "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+    "tensor_count": 367,
+    "device": "cpu"
+  },
+  "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+  "tuning_identity": "fc9c14aa43b7d985606a492f916a7949cd3f6ece23040f19221a1ceb27e3655c",
+  "accelerator": "Tesla T4"
+}

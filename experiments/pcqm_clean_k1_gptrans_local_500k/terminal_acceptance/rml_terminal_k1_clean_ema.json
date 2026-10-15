@@ -1,0 +1,580 @@
+{
+  "format": "molgap-rml-terminal-package-v1",
+  "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+  "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+  "action_id": "A001",
+  "finalized_at": "2026-10-15T06:03:44.020724+00:00",
+  "acceptance_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json",
+  "artifact_hashes": {
+    "experiments/pcqm_clean_k1_gptrans_local_500k/config.json": "edf6a930087fb893d187d80ebbf12688f4f9fb981023d9e7b48c02a61d3ca59c",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/evidence_review.md": "b349c2cec7f8e80fc318b54896b9e9dec825bf54cf1b4fcf6770b6aa371c1ef6",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/experiment_spec.json": "609dd4c883f0d721e2132817f5d88d085974a0f862a43b0f4fb82f823753c69e",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/plan_k1_clean_ema.json": "26a4d4bc1666f671e503beb01e62157a2db71c364a54a46c9106ef0460c4b1f9",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/protocol.md": "a48b8267a06b5fb20b71719a9f5510251dd2dd33eacfc017dbf338aa5c4aa3fc",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/role_plan.json": "eda46984c2e64dbd5e30a6efa52091dad0359e6701364655ea9e462c4cec6d8f",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/SOURCE_ARCHIVE_SHA256.txt": "0e04153d6866361d5ad51e64cac982f32e4aa287d57c9caee4559a3cd5c55b51",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/SOURCE_COMMIT.txt": "5a8a5db8b15cf564cbd936e06a24a2d2c5be7e9e5d005293d3b664a51d979598",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/SOURCE_FILES.json": "d8319b38b7224fe7d1943c44384216dbd3030c06d83a0c24852ace44e75adf39",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/dataset_create_response.json": "c81e01b0d5d38816678a0c227656f0f1c295b3836ea746503112c41921623baa",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/kernel_push_response.json": "0e6fccd66f97bfeae6a8d8a6dce1a8e78d01d6f7a5a7a7e081735564952978d8",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/package_manifest.json": "7d6e6fd66fe4d343c051ffad2b7ad3366470f352c862c9d7b4e3a7563de3bc8e",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/platform_response.json": "91b08b9496be7f43fb07799b51130c0d6c3c9696445ff6da234f484aa5364135",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/prepared_training.json": "c6b013e01da5ce130e185159ad370d633f9f3f9c2b09f3166e8c274379f8ea95",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/prospective_report.json": "c2e59a4112f8c900c8012636159f198869dddb7fd69f0eba1f62e3568ab9349f",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/receipts/submitted/b9f744ebf3b4d51fa27f7dd3b54f461f5215a731ebf81c7f570d12786fc3bf6f.json": "4394ee536427e264da4e20ebc5376437a981341e11d399ccec40510433124ae1",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/release_report.json": "7a3ca15ec8eaccdfcd99803c255b15006a66032e5ac11ff0a75075edc5660985",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/scheduler_initial.json": "45a9d91bdfc71d5333d85233a965e8d7ab500dbbd67277a3f2a32d6ad445c52f",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/submission/startup_verified.json": "f09b7c51c0d0b7065f566a5f2cfe9897d888f38df23af208c8c10052ab7352e5",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json": "3ab18d14fc1900ea1f5ad550f955112da56a5606ebda10cf4f7e9ba97068c5b4",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/analysis.json": "43050420a118ae8fd38679963cd749eaa205e56bbf8e295e4bbec18f5831f5e1",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/attribution.md": "3fe03719c693ef72cd20aca6b1982bf29908b2c554970ecebdca9ac9731c362b",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/clean_state_verification.json": "c7fd1e675bb69c9c38c8dd502cded897c94ecd35a7c3644c0d1597a428294147",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/decision.md": "c0dbcf1a3fc125893508ae058c9a628b9bf07abdbba488d505658168c45db565",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/independent_review.md": "5b536a7b424569896938e9aaace06dbfe2a98e6104ad355c1325cbe18f516cd4",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/mechanical_k1_clean_ema.json": "2bc1980b972a22c12267c0fef42d91cd6812c25231bcf822d3e53d68917cb424",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/metadata_retention.json": "4b7a6ba7d1697c97f9afa93e2b8b60bce338aa316a02b9ea1f665446d01e18c8",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/native_k1_clean_ema.json": "69895a5d5de4632960d48b54c36f90eba341581f7c88508551487a357aeab24f",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/native_retention_k1_clean_ema.json": "c9194d3a16b9bb0b8f7a1c4ff489b425b255d6390b5c63dee62b9907072b54b8",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/allocation_entry_observation.json": "7ff578138bc96ae2a3eaa37c5fdd552eb5b1fc7c97133770798c51e9935409b8",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/input_resolution.json": "380cc8454c61aaceac344b1b7d71217baa9796001aaad9ac2c619a26aee3952a",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/allocation_costs.json": "5943e1e9bde78c63686acb6019a9da9e57d16e1ff6f059da7ad999906cbdb71d",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/canonical_trace.json": "ed4691d93a10ce9dab705fed6a503c4c3337b7e5a5edd386baa4d50c00b1ba3a",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/canonical_trace.json.context.json": "848ce63c43ea86b2f1e173bed55f2153bf791ba42893e9753107ab7cdcf1fcaa",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/clean_bn_qualification.json": "0b0029a657a6c0048b6b48d4f59636c92718481b5200bb020eac0ac529a9befd",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/development_predictions.pt": "bbb347a807192ab40a063f30c69e87a07656e3cca216c5bbff55aece748769b8",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/invocation_cost_state.json": "fa348f4d1df88f4e1ff757ec68763e7d6dca97d59a58c76fef2b9d9eba5f55e8",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/last_checkpoint.pt": "e66c38978f5e928b6e6d075b431991865acf128ec56cfc7ead562e87a85c7f75",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/output_manifest.json": "43f56661e0862987ba1e257d5d19a2f45f7c259fdc5f610b52e65c3607f7e5d1",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/preflight.log": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/preflight_costs.json": "91e1209981cd5f1c67fe402e6f7ef77002ea25b4d3e84050723d65d7f46e5bc9",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/repeat-a.pt": "93601bceb7c4a961ce287e13b8ddb6524bf59064088d1b77c665495af82053ae",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/repeat-b.pt": "d07533e44f228095142604d38fd41471d4d126cadc4c70986cde81ea8be660e9",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/resumed-first.pt": "d4eba6d4f811bb15cd16f37912970626024b0cc54ef9b75c42959c0296df1faf",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/resumed.pt": "3e34c0cd7ff66f555d93d4d56f1a35263291a72c78e2027c0e6608cc236fd597",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/runtime_certificate.json": "f0f42dc70ca951065e0346ffc6283dcd38bd033ecd8bebe0b6c9c01199bf7fe4",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/runtime_provenance.json": "c049819522f8fe8d1fe61f163a2ce5cd2f4abeb34a5fdccd495e5c593bb6958a",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/selected_model.pt": "452c839340f0eeccf9bccf91370923910980140b52081e9eb30e64d3188ae31d",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/train.log": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/training_contract.json": "1d367eba26189d6a80a87b39a556c60de90a4d040911285aa1fb7d4123c82740",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/training_progress.json": "0cd1adc9ced952a6fecc5c6fc168be05c91273e14a5f5956ba944b8557fe24da",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/pair_state.json": "cb991b75b2caa2b36fa8a3f36a4f258431d4c8b954bfbf91b19b63c20543dd8c",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/remote_log.json": "f1b01788d17fcce3f4bfcb259efeeb9438f5f98c0c7404c81d66549dafbd36f3",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/remote_observation.json": "d8731b28aad98231a4f6b293beb9506b9e308aa39033b72933dc0df1eca2d036",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/retention_k1_clean_ema.json": "06b7cd5bdc8b6be35b690e9845c8ac94b89c06aadedb3a51cab188f4248a1697",
+    "experiments/pcqm_clean_k1_gptrans_local_500k/training_recipe_k1_clean_ema.json": "1d367eba26189d6a80a87b39a556c60de90a4d040911285aa1fb7d4123c82740"
+  },
+  "evidence": {
+    "format": "molgap-v5-evidence-envelope-v1",
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-terminal-20261015",
+    "track": "B",
+    "scope": "500k",
+    "legacy_contract": "pcqm_clean_k1_gptrans_local_500k-v1",
+    "scope_note": "500K candidate evaluation; missing strict 500K frozen reference.",
+    "outcome": {
+      "execution_status": "complete",
+      "artifact_status": "durable_local_verified",
+      "comparison_status": "context_only",
+      "scientific_status": "INCONCLUSIVE",
+      "transfer_status": "not_qualified",
+      "budget_decision": "closed",
+      "full_handoff_status": "not_released"
+    },
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/decision.md",
+        "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/attribution.md",
+        "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/independent_review.md",
+        "experiments/pcqm_clean_k1_gptrans_local_500k/protocol.md",
+        "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json"
+      ]
+    },
+    "role_use": {
+      "train": "consumed",
+      "development": "consumed",
+      "official_validation": "untouched",
+      "test_dev": "untouched",
+      "test_challenge": "untouched"
+    },
+    "observed_execution": {
+      "training_executed": true,
+      "inference_executed_during_acceptance": false,
+      "execution_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/output_manifest.json",
+      "completed_passes": 60,
+      "next_batch": 0,
+      "optimizer_steps": 234360,
+      "sample_presentations": 29998080,
+      "status": "complete",
+      "selected_pass": 32.0,
+      "selected_optimizer_step": 124992,
+      "selected_weights": "clean_ema",
+      "internal_development_gap_mae_eV": 0.10904947516918183,
+      "native_proofs": "verified"
+    },
+    "source_identity": {
+      "account": "nothingnessvoid",
+      "arm_id": "k1_clean_ema",
+      "arm_identity": "f8dda8fbf4e47181ea17c30b03710a6a43a32d16484ac4ea26eebdc94a787c6b",
+      "experiment_id": "molgap-k1-clean-ema-gptrans-local-500k",
+      "family_name": "neural_atom_k1",
+      "family_version": "3",
+      "logical_run_id": "molgap-k1-clean-ema-gptrans-local-500k",
+      "package_identity": "1977c388915925217e2bce86f63142fc7b54c74d28ee2a33cabd0107baac71e5",
+      "platform": "kaggle",
+      "platform_version": null,
+      "run_reference": "nothingnessvoid/molgap-k1-clean-ema-gptrans-local-500k",
+      "source_archive_sha256": "a84f0242ac0c527515c8c99ce00d561dc56a913d6c3fd8cd3fb5e337423cfd1c",
+      "source_commit": "4097e696493a6e87132314c46e332f087b41a196",
+      "spec_identity": "364ad6c554cb671a2c4d165e7a0ba0184c4ded71281f755b5369d1ee9aac0c6d",
+      "training_recipe_sha256": "1d367eba26189d6a80a87b39a556c60de90a4d040911285aa1fb7d4123c82740"
+    },
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-15T06:03:44.020724+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Terminal translation of already completed source-verified outputs and independent CPU artifact/native inspection; no model execution during closure."
+    },
+    "artifacts": [
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/config.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/config.json",
+        "sha256": "edf6a930087fb893d187d80ebbf12688f4f9fb981023d9e7b48c02a61d3ca59c",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/evidence_review.md",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/evidence_review.md",
+        "sha256": "b349c2cec7f8e80fc318b54896b9e9dec825bf54cf1b4fcf6770b6aa371c1ef6",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/experiment_spec.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/experiment_spec.json",
+        "sha256": "609dd4c883f0d721e2132817f5d88d085974a0f862a43b0f4fb82f823753c69e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/plan_k1_clean_ema.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/plan_k1_clean_ema.json",
+        "sha256": "26a4d4bc1666f671e503beb01e62157a2db71c364a54a46c9106ef0460c4b1f9",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/protocol.md",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/protocol.md",
+        "sha256": "a48b8267a06b5fb20b71719a9f5510251dd2dd33eacfc017dbf338aa5c4aa3fc",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/role_plan.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/role_plan.json",
+        "sha256": "eda46984c2e64dbd5e30a6efa52091dad0359e6701364655ea9e462c4cec6d8f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/SOURCE_ARCHIVE_SHA256.txt",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/SOURCE_ARCHIVE_SHA256.txt",
+        "sha256": "0e04153d6866361d5ad51e64cac982f32e4aa287d57c9caee4559a3cd5c55b51",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/SOURCE_COMMIT.txt",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/SOURCE_COMMIT.txt",
+        "sha256": "5a8a5db8b15cf564cbd936e06a24a2d2c5be7e9e5d005293d3b664a51d979598",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/SOURCE_FILES.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/SOURCE_FILES.json",
+        "sha256": "d8319b38b7224fe7d1943c44384216dbd3030c06d83a0c24852ace44e75adf39",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/dataset_create_response.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/dataset_create_response.json",
+        "sha256": "c81e01b0d5d38816678a0c227656f0f1c295b3836ea746503112c41921623baa",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/kernel_push_response.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/kernel_push_response.json",
+        "sha256": "0e6fccd66f97bfeae6a8d8a6dce1a8e78d01d6f7a5a7a7e081735564952978d8",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/package_manifest.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/package_manifest.json",
+        "sha256": "7d6e6fd66fe4d343c051ffad2b7ad3366470f352c862c9d7b4e3a7563de3bc8e",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/platform_response.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/platform_response.json",
+        "sha256": "91b08b9496be7f43fb07799b51130c0d6c3c9696445ff6da234f484aa5364135",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/prepared_training.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/prepared_training.json",
+        "sha256": "c6b013e01da5ce130e185159ad370d633f9f3f9c2b09f3166e8c274379f8ea95",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/prospective_report.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/prospective_report.json",
+        "sha256": "c2e59a4112f8c900c8012636159f198869dddb7fd69f0eba1f62e3568ab9349f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/receipts/submitted/b9f744ebf3b4d51fa27f7dd3b54f461f5215a731ebf81c7f570d12786fc3bf6f.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/receipts/submitted/b9f744ebf3b4d51fa27f7dd3b54f461f5215a731ebf81c7f570d12786fc3bf6f.json",
+        "sha256": "4394ee536427e264da4e20ebc5376437a981341e11d399ccec40510433124ae1",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/release_report.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/release_report.json",
+        "sha256": "7a3ca15ec8eaccdfcd99803c255b15006a66032e5ac11ff0a75075edc5660985",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/scheduler_initial.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/scheduler_initial.json",
+        "sha256": "45a9d91bdfc71d5333d85233a965e8d7ab500dbbd67277a3f2a32d6ad445c52f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/startup_verified.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/submission/startup_verified.json",
+        "sha256": "f09b7c51c0d0b7065f566a5f2cfe9897d888f38df23af208c8c10052ab7352e5",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json",
+        "sha256": "3ab18d14fc1900ea1f5ad550f955112da56a5606ebda10cf4f7e9ba97068c5b4",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/analysis.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/analysis.json",
+        "sha256": "43050420a118ae8fd38679963cd749eaa205e56bbf8e295e4bbec18f5831f5e1",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/attribution.md",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/attribution.md",
+        "sha256": "3fe03719c693ef72cd20aca6b1982bf29908b2c554970ecebdca9ac9731c362b",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/clean_state_verification.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/clean_state_verification.json",
+        "sha256": "c7fd1e675bb69c9c38c8dd502cded897c94ecd35a7c3644c0d1597a428294147",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/decision.md",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/decision.md",
+        "sha256": "c0dbcf1a3fc125893508ae058c9a628b9bf07abdbba488d505658168c45db565",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/independent_review.md",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/independent_review.md",
+        "sha256": "5b536a7b424569896938e9aaace06dbfe2a98e6104ad355c1325cbe18f516cd4",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/mechanical_k1_clean_ema.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/mechanical_k1_clean_ema.json",
+        "sha256": "2bc1980b972a22c12267c0fef42d91cd6812c25231bcf822d3e53d68917cb424",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/metadata_retention.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/metadata_retention.json",
+        "sha256": "4b7a6ba7d1697c97f9afa93e2b8b60bce338aa316a02b9ea1f665446d01e18c8",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/native_k1_clean_ema.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/native_k1_clean_ema.json",
+        "sha256": "69895a5d5de4632960d48b54c36f90eba341581f7c88508551487a357aeab24f",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/native_retention_k1_clean_ema.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/native_retention_k1_clean_ema.json",
+        "sha256": "c9194d3a16b9bb0b8f7a1c4ff489b425b255d6390b5c63dee62b9907072b54b8",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/allocation_entry_observation.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/allocation_entry_observation.json",
+        "sha256": "7ff578138bc96ae2a3eaa37c5fdd552eb5b1fc7c97133770798c51e9935409b8",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/input_resolution.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/input_resolution.json",
+        "sha256": "380cc8454c61aaceac344b1b7d71217baa9796001aaad9ac2c619a26aee3952a",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/allocation_costs.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/allocation_costs.json",
+        "sha256": "5943e1e9bde78c63686acb6019a9da9e57d16e1ff6f059da7ad999906cbdb71d",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "training_trace",
+        "artifact_type": "training_trace",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/canonical_trace.json",
+        "sha256": "ed4691d93a10ce9dab705fed6a503c4c3337b7e5a5edd386baa4d50c00b1ba3a",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/canonical_trace.json.context.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/canonical_trace.json.context.json",
+        "sha256": "848ce63c43ea86b2f1e173bed55f2153bf791ba42893e9753107ab7cdcf1fcaa",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/clean_bn_qualification.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/clean_bn_qualification.json",
+        "sha256": "0b0029a657a6c0048b6b48d4f59636c92718481b5200bb020eac0ac529a9befd",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/development_predictions.pt",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/development_predictions.pt",
+        "sha256": "bbb347a807192ab40a063f30c69e87a07656e3cca216c5bbff55aece748769b8",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/invocation_cost_state.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/invocation_cost_state.json",
+        "sha256": "fa348f4d1df88f4e1ff757ec68763e7d6dca97d59a58c76fef2b9d9eba5f55e8",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/last_checkpoint.pt",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/last_checkpoint.pt",
+        "sha256": "e66c38978f5e928b6e6d075b431991865acf128ec56cfc7ead562e87a85c7f75",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/output_manifest.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/output_manifest.json",
+        "sha256": "43f56661e0862987ba1e257d5d19a2f45f7c259fdc5f610b52e65c3607f7e5d1",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/preflight.log",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/preflight.log",
+        "sha256": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/preflight_costs.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/preflight_costs.json",
+        "sha256": "91e1209981cd5f1c67fe402e6f7ef77002ea25b4d3e84050723d65d7f46e5bc9",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/repeat-a.pt",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/repeat-a.pt",
+        "sha256": "93601bceb7c4a961ce287e13b8ddb6524bf59064088d1b77c665495af82053ae",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/repeat-b.pt",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/repeat-b.pt",
+        "sha256": "d07533e44f228095142604d38fd41471d4d126cadc4c70986cde81ea8be660e9",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/resumed-first.pt",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/resumed-first.pt",
+        "sha256": "d4eba6d4f811bb15cd16f37912970626024b0cc54ef9b75c42959c0296df1faf",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/resumed.pt",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/resumed.pt",
+        "sha256": "3e34c0cd7ff66f555d93d4d56f1a35263291a72c78e2027c0e6608cc236fd597",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/runtime_certificate.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/runtime_certificate.json",
+        "sha256": "f0f42dc70ca951065e0346ffc6283dcd38bd033ecd8bebe0b6c9c01199bf7fe4",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/runtime_provenance.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/runtime_provenance.json",
+        "sha256": "c049819522f8fe8d1fe61f163a2ce5cd2f4abeb34a5fdccd495e5c593bb6958a",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/selected_model.pt",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/selected_model.pt",
+        "sha256": "452c839340f0eeccf9bccf91370923910980140b52081e9eb30e64d3188ae31d",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/train.log",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/train.log",
+        "sha256": "f02826305e7bf14485cb9c5100982b4973aaa27671e320a8b45354bf73893a8c",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/training_contract.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/training_contract.json",
+        "sha256": "1d367eba26189d6a80a87b39a556c60de90a4d040911285aa1fb7d4123c82740",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/training_progress.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/training_progress.json",
+        "sha256": "0cd1adc9ced952a6fecc5c6fc168be05c91273e14a5f5956ba944b8557fe24da",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/pair_state.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/pair_state.json",
+        "sha256": "cb991b75b2caa2b36fa8a3f36a4f258431d4c8b954bfbf91b19b63c20543dd8c",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/remote_log.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/remote_log.json",
+        "sha256": "f1b01788d17fcce3f4bfcb259efeeb9438f5f98c0c7404c81d66549dafbd36f3",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/remote_observation.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/remote_observation.json",
+        "sha256": "d8731b28aad98231a4f6b293beb9506b9e308aa39033b72933dc0df1eca2d036",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/retention_k1_clean_ema.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/retention_k1_clean_ema.json",
+        "sha256": "06b7cd5bdc8b6be35b690e9845c8ac94b89c06aadedb3a51cab188f4248a1697",
+        "availability": "locally_retained_hash_verified"
+      },
+      {
+        "name": "experiments/pcqm_clean_k1_gptrans_local_500k/training_recipe_k1_clean_ema.json",
+        "locator": "experiments/pcqm_clean_k1_gptrans_local_500k/training_recipe_k1_clean_ema.json",
+        "sha256": "1d367eba26189d6a80a87b39a556c60de90a4d040911285aa1fb7d4123c82740",
+        "availability": "locally_retained_hash_verified"
+      }
+    ]
+  },
+  "decision": {
+    "outcome": "INCONCLUSIVE",
+    "decision_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate authorization and prospective qualified retained reference comparison, or scoped same-checkpoint Live/Raw/Clean attribution; no automatic retry/full release"
+    ]
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-observed-entry-allocation",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+      "action_id": "A001",
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "attempt_id": "k1_clean_ema-v1",
+      "platform": "kaggle",
+      "hardware": "Tesla_T4",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measured",
+          "value": 11.557301905154167
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 10.401814060320278
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-train-training-membership",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+      "action_id": "A001",
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "role_name": "train",
+      "access_kind": "training_membership",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-development-metric-computed",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+      "action_id": "A001",
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-development-selection-used",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+      "action_id": "A001",
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-train-feature-calibration",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+      "action_id": "A001",
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "08063881d584e95e1734c94e92def2197295bb9d20f96d44852ce6fe37aa3687",
+      "role_name": "train",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json"
+    }
+  ],
+  "role_use": {
+    "train": "consumed",
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  }
+}

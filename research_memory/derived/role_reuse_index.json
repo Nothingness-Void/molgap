@@ -1,6 +1,76 @@
 {
-  "ambiguous_historical_role_record_count": 512,
+  "ambiguous_historical_role_record_count": 522,
   "coarse_historical_role_records": [
+    {
+      "evidence_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42-terminal-20261015",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42-terminal-20261015",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42-terminal-20261015",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42-terminal-20261015",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42-terminal-20261015",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-terminal-20261015",
+      "role_identity": null,
+      "role_name": "development",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
+    {
+      "evidence_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-terminal-20261015",
+      "role_identity": null,
+      "role_name": "official_validation",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-terminal-20261015",
+      "role_identity": null,
+      "role_name": "test_challenge",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-terminal-20261015",
+      "role_identity": null,
+      "role_name": "test_dev",
+      "semantics": "coarse_historical",
+      "state": "untouched"
+    },
+    {
+      "evidence_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-terminal-20261015",
+      "role_identity": null,
+      "role_name": "train",
+      "semantics": "coarse_historical",
+      "state": "consumed"
+    },
     {
       "evidence_id": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
       "role_identity": null,
@@ -3586,7 +3656,7 @@
       "state": "untouched"
     }
   ],
-  "explicit_role_event_count": 301,
+  "explicit_role_event_count": 308,
   "format": "molgap-rml-role-reuse-index-v1",
   "full_training_membership_conflicts": [
     "development",
@@ -4066,6 +4136,45 @@
         "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
       }
     ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:08063881d584e95e1734c94e92def2197295bb9d20f96d44852ce6fe37aa3687:train": [
+      {
+        "access_kind": "prediction_input",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-train-feature-calibration",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-gptrans_local-s42-development-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-gptrans_local-s42-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-development-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
+      }
+    ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development": [
       {
         "access_kind": "labels_read",
@@ -4168,6 +4277,22 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-gptrans_local-s42-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
       }
     ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:eb500009154d3b1e61d01bec79e8d0a36345bbd847442ae472b9a0525a55f157:internal_development": [
@@ -5828,6 +5953,8 @@
   },
   "protected_roles_reported_untouched": {
     "test_challenge": [
+      "TB-clean-k1-gptrans-local-500k-gptrans_local-s42-terminal-20261015",
+      "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-terminal-20261015",
       "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
       "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
@@ -5936,6 +6063,8 @@
       "pcqm-xian-determinism-audit-20260915"
     ],
     "test_dev": [
+      "TB-clean-k1-gptrans-local-500k-gptrans_local-s42-terminal-20261015",
+      "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-terminal-20261015",
       "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
       "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "TB-family-topology-t4-100k-gptrans_local-s42-terminal-20261014",
@@ -6329,6 +6458,36 @@
         "selection_used": true,
         "semantics": "explicit",
         "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-gptrans_local-s42-development-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-gptrans_local-s42-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-development-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
       }
     ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:internal_development": [
@@ -7769,6 +7928,36 @@
         "trajectory_id": "TB-gptrans-local-bias-rwse16-local-edge-100k-s42-a2"
       }
     ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2:development": [
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-gptrans_local-s42-development-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-gptrans_local-s42-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42"
+      },
+      {
+        "access_kind": "metric_computed",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-development-metric-computed",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
+      },
+      {
+        "access_kind": "selection_used",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-development-selection-used",
+        "selection_used": true,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
+      }
+    ],
     "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:internal_development": [
       {
         "access_kind": "metric_computed",
@@ -7841,6 +8030,22 @@
         "selection_used": false,
         "semantics": "explicit",
         "trajectory_id": "TB-k1-consistency-ablation-500k-k1_pretrained_mean2-s42-v1"
+      }
+    ],
+    "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751:be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad:train": [
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-gptrans_local-s42-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42"
+      },
+      {
+        "access_kind": "training_membership",
+        "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-train-training-membership",
+        "selection_used": false,
+        "semantics": "explicit",
+        "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
       }
     ],
     "PCQM4Mv2 OGB fixed 500K/50K cache:676a506c808402bc16a4437cc02286168239a8dd5de4451e992131eddb4f1b20:fixed50k_development": [

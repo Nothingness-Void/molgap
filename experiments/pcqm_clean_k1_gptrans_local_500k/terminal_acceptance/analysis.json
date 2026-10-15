@@ -1,0 +1,167 @@
+{
+  "scope": "predeclared fixed50:50 descriptive saved-prediction blend; selection-used internal50K, no fitted weights, no model execution, not promotion or training stochasticity",
+  "rows": 50000,
+  "k1_mae_eV": 0.10904947516918183,
+  "gptrans_mae_eV": 0.10195137561321259,
+  "fixed_half_blend_mae_eV": 0.10040692968130112,
+  "blend_minus_gptrans": {
+    "delta": -0.0015444459319114685,
+    "ci95": [
+      -0.0019188732305169104,
+      -0.0011864886772036554
+    ],
+    "probability_better": 1.0,
+    "n_bootstrap": 2000,
+    "seed": 42
+  },
+  "k1_minus_gptrans": {
+    "delta": 0.007098099555969239,
+    "ci95": [
+      0.006440733896255493,
+      0.007753091408610344
+    ],
+    "probability_better": 0.0,
+    "n_bootstrap": 2000,
+    "seed": 42
+  },
+  "signed_residual_correlation": 0.8470766512624736,
+  "k1_row_win_fraction": 0.45472,
+  "k1_mean_signed_error_eV": 0.006432849092483521,
+  "gptrans_mean_signed_error_eV": 0.005797509913444519,
+  "mean_squared_errors": {
+    "k1": 0.026984388934239507,
+    "gptrans": 0.02489678058848049
+  },
+  "curve_summary": {
+    "k1_clean_ema": [
+      {
+        "pass": 1,
+        "step": 3906,
+        "samples": 499968,
+        "train_live_mae_eV": 0.2841504310806888,
+        "development_selected_mae_eV": 0.466496080160141
+      },
+      {
+        "pass": 10,
+        "step": 39060,
+        "samples": 4999680,
+        "train_live_mae_eV": 0.13259139711187604,
+        "development_selected_mae_eV": 0.11824308335781097
+      },
+      {
+        "pass": 20,
+        "step": 78120,
+        "samples": 9999360,
+        "train_live_mae_eV": 0.1115175067997799,
+        "development_selected_mae_eV": 0.11040248721837997
+      },
+      {
+        "pass": 30,
+        "step": 117180,
+        "samples": 14999040,
+        "train_live_mae_eV": 0.09755868970860065,
+        "development_selected_mae_eV": 0.10923422873020172
+      },
+      {
+        "pass": 32,
+        "step": 124992,
+        "samples": 15998976,
+        "train_live_mae_eV": 0.09508282605209509,
+        "development_selected_mae_eV": 0.1090494692325592
+      },
+      {
+        "pass": 40,
+        "step": 156240,
+        "samples": 19998720,
+        "train_live_mae_eV": 0.08632907437163487,
+        "development_selected_mae_eV": 0.10939847677946091
+      },
+      {
+        "pass": 45,
+        "step": 175770,
+        "samples": 22498560,
+        "train_live_mae_eV": 0.08214153512067962,
+        "development_selected_mae_eV": 0.10963919758796692
+      },
+      {
+        "pass": 50,
+        "step": 195300,
+        "samples": 24998400,
+        "train_live_mae_eV": 0.07885906451669963,
+        "development_selected_mae_eV": 0.10986928641796112
+      },
+      {
+        "pass": 60,
+        "step": 234360,
+        "samples": 29998080,
+        "train_live_mae_eV": 0.07639685916677509,
+        "development_selected_mae_eV": 0.11008544266223907
+      }
+    ],
+    "gptrans_local": [
+      {
+        "pass": 1,
+        "step": 3906,
+        "samples": 499968,
+        "train_live_mae_eV": 0.28924102863473644,
+        "development_selected_mae_eV": 0.1975279450416565
+      },
+      {
+        "pass": 10,
+        "step": 39060,
+        "samples": 4999680,
+        "train_live_mae_eV": 0.1406766751266922,
+        "development_selected_mae_eV": 0.11471913754940033
+      },
+      {
+        "pass": 20,
+        "step": 78120,
+        "samples": 9999360,
+        "train_live_mae_eV": 0.12585047424552942,
+        "development_selected_mae_eV": 0.10804017633199692
+      },
+      {
+        "pass": 30,
+        "step": 117180,
+        "samples": 14999040,
+        "train_live_mae_eV": 0.11342697556621009,
+        "development_selected_mae_eV": 0.10534869879484177
+      },
+      {
+        "pass": 32,
+        "step": 124992,
+        "samples": 15998976,
+        "train_live_mae_eV": 0.11088252660340048,
+        "development_selected_mae_eV": 0.10511349886655807
+      },
+      {
+        "pass": 40,
+        "step": 156240,
+        "samples": 19998720,
+        "train_live_mae_eV": 0.09809180527761936,
+        "development_selected_mae_eV": 0.1032254695892334
+      },
+      {
+        "pass": 45,
+        "step": 175770,
+        "samples": 22498560,
+        "train_live_mae_eV": 0.08948348311944855,
+        "development_selected_mae_eV": 0.10195136815309525
+      },
+      {
+        "pass": 50,
+        "step": 195300,
+        "samples": 24998400,
+        "train_live_mae_eV": 0.08107815669997169,
+        "development_selected_mae_eV": 0.10238316655158997
+      },
+      {
+        "pass": 60,
+        "step": 234360,
+        "samples": 29998080,
+        "train_live_mae_eV": 0.0730291622716632,
+        "development_selected_mae_eV": 0.1024019792675972
+      }
+    ]
+  }
+}

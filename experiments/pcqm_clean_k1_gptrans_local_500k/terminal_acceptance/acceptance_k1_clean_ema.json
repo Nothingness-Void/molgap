@@ -1,0 +1,173 @@
+{
+  "format": "molgap-terminal-acceptance-metadata-v1",
+  "evidence_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-terminal-20261015",
+  "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+  "finalized_at": "2026-10-15T06:03:44.020724+00:00",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "durable_local_verified",
+    "comparison_status": "context_only",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_qualified",
+    "budget_decision": "closed",
+    "full_handoff_status": "not_released"
+  },
+  "trajectory_decision": {
+    "outcome": "INCONCLUSIVE",
+    "decision_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "reopen_conditions": [
+      "Separate authorization and prospective qualified retained reference comparison, or scoped same-checkpoint Live/Raw/Clean attribution; no automatic retry/full release"
+    ]
+  },
+  "observed_execution": {
+    "training_executed": true,
+    "inference_executed_during_acceptance": false,
+    "execution_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/output_manifest.json",
+    "completed_passes": 60,
+    "next_batch": 0,
+    "optimizer_steps": 234360,
+    "sample_presentations": 29998080,
+    "status": "complete",
+    "selected_pass": 32.0,
+    "selected_optimizer_step": 124992,
+    "selected_weights": "clean_ema",
+    "internal_development_gap_mae_eV": 0.10904947516918183,
+    "native_proofs": "verified"
+  },
+  "source_identity": {
+    "account": "nothingnessvoid",
+    "arm_id": "k1_clean_ema",
+    "arm_identity": "f8dda8fbf4e47181ea17c30b03710a6a43a32d16484ac4ea26eebdc94a787c6b",
+    "experiment_id": "molgap-k1-clean-ema-gptrans-local-500k",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "logical_run_id": "molgap-k1-clean-ema-gptrans-local-500k",
+    "package_identity": "1977c388915925217e2bce86f63142fc7b54c74d28ee2a33cabd0107baac71e5",
+    "platform": "kaggle",
+    "platform_version": null,
+    "run_reference": "nothingnessvoid/molgap-k1-clean-ema-gptrans-local-500k",
+    "source_archive_sha256": "a84f0242ac0c527515c8c99ce00d561dc56a913d6c3fd8cd3fb5e337423cfd1c",
+    "source_commit": "4097e696493a6e87132314c46e332f087b41a196",
+    "spec_identity": "364ad6c554cb671a2c4d165e7a0ba0184c4ded71281f755b5369d1ee9aac0c6d",
+    "training_recipe_sha256": "1d367eba26189d6a80a87b39a556c60de90a4d040911285aa1fb7d4123c82740"
+  },
+  "role_use": {
+    "train": "consumed",
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-observed-entry-allocation",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+      "action_id": "A001",
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "attempt_id": "k1_clean_ema-v1",
+      "platform": "kaggle",
+      "hardware": "Tesla_T4",
+      "category": "other",
+      "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json",
+      "measurement": {
+        "device_hours": {
+          "status": "measured",
+          "value": 11.557301905154167
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 10.401814060320278
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ],
+  "roles": [
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-train-training-membership",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+      "action_id": "A001",
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "role_name": "train",
+      "access_kind": "training_membership",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-development-metric-computed",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+      "action_id": "A001",
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "metric_computed",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-development-selection-used",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+      "action_id": "A001",
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "4299750a50b2a3bd4f03f47f946e7ef15598aaffa13bbbdb416d433a001f37b2",
+      "role_name": "development",
+      "access_kind": "selection_used",
+      "selection_used": true,
+      "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json"
+    },
+    {
+      "schema": "molgap-role-event-v1",
+      "role_event_id": "role-TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-train-feature-calibration",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+      "action_id": "A001",
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "dataset_identity": "630d30046d6cdc1f91fb169cd1eb4720bd5b352dc1ebeb641a11ead1ebae9751",
+      "row_manifest_hash": "08063881d584e95e1734c94e92def2197295bb9d20f96d44852ce6fe37aa3687",
+      "role_name": "train",
+      "access_kind": "prediction_input",
+      "selection_used": false,
+      "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/acceptance_k1_clean_ema.json"
+    }
+  ],
+  "cost_attribution": {
+    "allocation_entry_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/allocation_entry_observation.json",
+    "pair_allocated_device_hours": 23.114603810308335,
+    "per_arm_assigned_device_hours": 11.557301905154167,
+    "per_arm_process_wall_seconds": 37446.530617153,
+    "method": "One observed physical T4 assigned to each arm over measured entry window, including setup and idle. Sum one such window per arm equals pair allocation once. This is observed assigned-time accounting, not busy time or billing. Producer device_seconds remains missing.",
+    "queue_and_pre_post_entry_allocation": "unknown"
+  },
+  "role_observation_basis": {
+    "contract_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/training_contract.json",
+    "trace_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/outputs/experiment/k1_clean_ema/canonical_trace.json",
+    "train_role_identity": "053c93557980ef8e49507cafff4a7044ab7b450c6754d99cee766beade5cbb88",
+    "development_role_identity": "7782618e81d044e1af4f53c72bc7cabef8e873116bbdd11db6414832a9f39f37",
+    "calibration_features": 983040,
+    "development_metric_and_selection_count": 60,
+    "official_roles_touched": false
+  },
+  "comparison_exclusions": [
+    "missing_frozen_reference",
+    "missing_reference_bundle",
+    "missing_comparison_prelaunch"
+  ],
+  "mechanical_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/mechanical_k1_clean_ema.json",
+  "native_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/terminal_acceptance/native_k1_clean_ema.json"
+}

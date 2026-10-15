@@ -1,0 +1,79 @@
+{
+  "status": "MECHANICALLY_VERIFIED",
+  "blockers": [],
+  "context": {
+    "experiment_id": "molgap-k1-clean-ema-gptrans-local-500k",
+    "logical_run_id": "molgap-k1-clean-ema-gptrans-local-500k",
+    "arm_id": "gptrans_local",
+    "arm_identity": "51186cd237cc2d39f2f5e56ad0bfe852d67e29956376d50c316e5d05985d08b6",
+    "spec_identity": "364ad6c554cb671a2c4d165e7a0ba0184c4ded71281f755b5369d1ee9aac0c6d",
+    "family_name": "gptrans_t",
+    "family_version": "2",
+    "source_commit": "4097e696493a6e87132314c46e332f087b41a196",
+    "source_archive_sha256": "a84f0242ac0c527515c8c99ce00d561dc56a913d6c3fd8cd3fb5e337423cfd1c",
+    "package_identity": "1977c388915925217e2bce86f63142fc7b54c74d28ee2a33cabd0107baac71e5",
+    "training_recipe_sha256": "6a6d020332a59a2887a1d1eaeb950b82f928aaa7270cd0c5cdf5401cea3d091d",
+    "platform": "kaggle",
+    "account": "nothingnessvoid",
+    "run_reference": "nothingnessvoid/molgap-k1-clean-ema-gptrans-local-500k",
+    "platform_version": "1"
+  },
+  "observed": {
+    "development_mae_eV": 0.10195137561321259,
+    "progress": {
+      "optimizer_steps": 234360,
+      "sample_presentations": 29998080,
+      "completed_passes": 60,
+      "next_batch": 0,
+      "status": "complete"
+    },
+    "artifacts": {
+      "contract": {
+        "path": "training_contract.json",
+        "sha256": "6a6d020332a59a2887a1d1eaeb950b82f928aaa7270cd0c5cdf5401cea3d091d"
+      },
+      "predictions": {
+        "path": "development_predictions.pt",
+        "sha256": "e8cf179f9caeb143831cf440d17e1421f99c001cdb891823555d920c6cd686db"
+      },
+      "resume": {
+        "path": "last_checkpoint.pt",
+        "sha256": "68e2a23ca15021aacd94b34c1ae4faacf6ea3e492cd6f23eed4a5811a863e5ec"
+      },
+      "selected_model": {
+        "path": "selected_model.pt",
+        "sha256": "849798546de1c3c632764cc6ca5d673c2164da62510e7d18e54c7f60a838fa19"
+      },
+      "trace": {
+        "path": "canonical_trace.json",
+        "sha256": "9c9152c9df9b2d2729257899c91f97a3b6fe0dfa0dc8707c31de2ce1ca42bb28"
+      }
+    },
+    "costs": [
+      {
+        "hardware": "Tesla T4",
+        "metric": "wall_seconds",
+        "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+        "semantics": "process_wall",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 41293.208429991
+      },
+      {
+        "hardware": "Tesla T4",
+        "metric": "device_seconds",
+        "reason": "requires platform allocation accounting",
+        "semantics": "allocated_device",
+        "status": "missing",
+        "unit": "seconds",
+        "value": null
+      }
+    ],
+    "selected_optimizer_step": 175770,
+    "selected_weights": "ema",
+    "producer_platform_version": null
+  },
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED",
+  "runtime_qualification": "NOT_EVALUATED"
+}

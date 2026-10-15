@@ -10810,6 +10810,24 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:gptrans_local:downstream",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "missing_frozen_reference"
       ],
       "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
@@ -11052,5 +11070,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "e118b4f458d3a2f16841cdb21bb6a72ca267952510e7b8df387c2fe6b43633f1"
+  "source_digest": "1aea09f4949c7fb9e179faf85443c7f17e79dc560b6687ab26274091b1916fcc"
 }

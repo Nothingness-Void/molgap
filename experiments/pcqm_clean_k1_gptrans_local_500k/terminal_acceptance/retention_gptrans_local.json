@@ -1,0 +1,40 @@
+{
+  "kernel": "nothingnessvoid/molgap-k1-clean-ema-gptrans-local-500k",
+  "receipt_version": "1",
+  "producer_version": null,
+  "files": [
+    {
+      "path": "training_contract.json",
+      "sha256": "6a6d020332a59a2887a1d1eaeb950b82f928aaa7270cd0c5cdf5401cea3d091d",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "development_predictions.pt",
+      "sha256": "e8cf179f9caeb143831cf440d17e1421f99c001cdb891823555d920c6cd686db",
+      "state": "RETAINED"
+    },
+    {
+      "path": "last_checkpoint.pt",
+      "sha256": "68e2a23ca15021aacd94b34c1ae4faacf6ea3e492cd6f23eed4a5811a863e5ec",
+      "state": "RETAINED"
+    },
+    {
+      "path": "selected_model.pt",
+      "sha256": "849798546de1c3c632764cc6ca5d673c2164da62510e7d18e54c7f60a838fa19",
+      "state": "RETAINED"
+    },
+    {
+      "path": "canonical_trace.json",
+      "sha256": "9c9152c9df9b2d2729257899c91f97a3b6fe0dfa0dc8707c31de2ce1ca42bb28",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "output_manifest.json",
+      "sha256": "dd6fc01e3ea6dd6fa63ae784c176820d795454c3ac06522d033f3ea3a1ead991",
+      "state": "ALREADY_RETAINED"
+    }
+  ],
+  "manifest_sha256": "dd6fc01e3ea6dd6fa63ae784c176820d795454c3ac06522d033f3ea3a1ead991",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": false
+}

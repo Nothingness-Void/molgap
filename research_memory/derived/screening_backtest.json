@@ -5,6 +5,24 @@
     {
       "reasons": [
         "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:gptrans_local:downstream",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-gptrans_local-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated",
+        "missing_frozen_reference"
+      ],
+      "run_id": "molgap-k1-clean-ema-gptrans-local-500k:k1_clean_ema:downstream",
+      "trajectory_id": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
         "missing_frozen_reference"
       ],
       "run_id": "family-100k-operator-profile-s42:gptrans_local:downstream",
@@ -313,5 +331,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 35
+  "trace_count": 37
 }
