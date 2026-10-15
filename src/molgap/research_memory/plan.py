@@ -218,8 +218,16 @@ def _publish_plan(repo_root: str | Path, prepared: dict) -> dict[str, Any]:
 
 
 def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
-         *, _snapshot: _PlanningSnapshot | None = None) -> dict[str, Any]:
-    return _publish_plan(repo_root, _prepare_plan(repo_root, spec, output, _snapshot=_snapshot))
+         *, _snapshot: _PlanningSnapshot | None = None, validate_only: bool = False) -> dict[str, Any]:
+    prepared = _prepare_plan(repo_root, spec, output, _snapshot=_snapshot)
+    if validate_only:
+        root = Path(repo_root).resolve()
+        for pointer, digest in prepared["source_hashes"].items():
+            if file_digest(resolve_repo_pointer(root, pointer)) != digest:
+                raise ValueError("decision source changed during planning validation")
+        return {"trajectory_id": prepared["trajectory_id"], "status": "VALIDATED",
+                "path": prepared["destination"].relative_to(root).as_posix()}
+    return _publish_plan(repo_root, prepared)
 
 
 def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
@@ -338,8 +346,14 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
     )
     # Deep schema/evidence/action/cost checks for every arm precede all writes.
     # Partial publication now means an actual publish failure, not a bad plan.
-    validated = [_prepare_plan(root, spec, output, _snapshot=snapshot)
-                 for spec, output, _ in prepared]
+    validated = []
+    for index, (spec, output, _) in enumerate(prepared):
+        try:
+            validated.append(_prepare_plan(root, spec, output, _snapshot=snapshot))
+        except Exception as exc:
+            if validate_only:
+                raise PlanBatchError(index, len(prepared), [], exc) from exc
+            raise
     results = []
     for index, item in enumerate(validated):
         try:

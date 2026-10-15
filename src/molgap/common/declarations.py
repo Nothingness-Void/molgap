@@ -4,7 +4,7 @@ from pathlib import Path, PureWindowsPath
 import math
 import re
 
-from ..screen_policy import canonical_fingerprint
+from .wire import canonical_fingerprint
 
 
 def safe_comparison_base(value, *, base, require_under_base=True):
