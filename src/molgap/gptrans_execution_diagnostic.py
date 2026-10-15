@@ -342,7 +342,7 @@ def tensor_deltas(left, right):
     return result
 
 
-def summarize_probes(output, diagnostic):
+def summarize_probes(output, diagnostic, *, publish=True):
     import torch
     from .research_memory.trace import atomic_write, json_bytes
     from .training_reproducibility import sha256_file
@@ -401,6 +401,8 @@ def summarize_probes(output, diagnostic):
                     if not r["stages"][key]["equal"]), None)})
         summary["factor_comparisons"] = comparisons
         summary["scope"] = "ten disposable updates; later differences may propagate from earlier changed state; not a long-run MAE attribution"
+    if not publish:
+        return summary
     path = Path(output) / "diagnostic_summary.json"
     atomic_write(path, json_bytes(summary))
     return {"path": path.name, "sha256": sha256_file(path)}

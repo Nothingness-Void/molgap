@@ -89,3 +89,32 @@ def test_timing_summary_keeps_all_repeats_and_profile_separate(tmp_path):
     assert len(summary["paired_timings"]) == 3
     assert summary["median_paired_speedup"] == 1.25
     assert summary["paired_timings"][1]["physical_devices"] == {"original": "1", "optimized": "0"}
+    saved = (tmp_path / result["path"]).read_bytes()
+    assert summarize_probes(tmp_path, configuration("timing"), publish=False) == summary
+    assert (tmp_path / result["path"]).read_bytes() == saved
+
+
+@pytest.mark.parametrize("damage", [None, "ema", "missing_slot", "wrong_step", "rng"])
+def test_saved_probe_state_checks_complete_optimizer_ema_and_rng(damage):
+    from molgap.gptrans_execution_probe_acceptance import inspect_variant_state
+    from molgap.experiment_family_workflow import tensor_safe_rng_state
+    from molgap.training_reproducibility import capture_rng_state
+    rng = tensor_safe_rng_state(capture_rng_state())
+    rng["cuda"] = [torch.get_rng_state()]
+    state = {"model": {"weight": torch.ones(2)}, "ema": {"weight": torch.ones(2)},
+        "optimizer": {"param_groups": [{"params": [0]}], "state": {
+            0: {"step": torch.tensor(10.), "exp_avg": torch.zeros(2), "exp_avg_sq": torch.zeros(2)}}},
+        "scheduler": {"epoch": 0}, "rng_state": rng}
+    if damage == "ema":
+        state["ema"]["weight"][0] = float("nan")
+    elif damage == "missing_slot":
+        state["optimizer"]["state"].clear()
+    elif damage == "wrong_step":
+        state["optimizer"]["state"][0]["step"] = torch.tensor(9.)
+    elif damage == "rng":
+        state["rng_state"]["cuda"] = []
+    if damage:
+        with pytest.raises(ValueError):
+            inspect_variant_state(state, 10)
+    else:
+        inspect_variant_state(state, 10)
