@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "authority_ref": "experiments/gptrans_infrastructure_t4_100k/followup/timing/authority.json",
+    "authority_sha256": "d895436a320acdd1d9cc1319412efd91204a3c691a9fa4ad36a0910ba044c77d",
+    "dataset": "nvoid912/molgap-gptrans-execution-repeat-v1-source",
+    "kernel": "nvoid912/molgap-gptrans-execution-repeat-v1",
+    "monitor_paths": [
+      "experiments/gptrans_infrastructure_t4_100k/followup/STATUS.md"
+    ],
+    "package_identity": "b38aa68f1ba7c0877587f198ece8303dc9ccca1faa4022b9e34e09318bf94025"
+  },
+  "kernel_response": {
+    "accelerator": "NvidiaTeslaT4",
+    "identity_conflicts": [],
+    "invalid_competition_sources": [],
+    "invalid_dataset_sources": [],
+    "invalid_kernel_sources": [],
+    "invalid_model_sources": [],
+    "kernel": "nvoid912/molgap-gptrans-execution-repeat-v1",
+    "kernel_id": 138868818,
+    "platform_response": {
+      "invalidCompetitionSources": [],
+      "invalidDatasetSources": [],
+      "invalidKernelSources": [],
+      "invalidModelSources": [],
+      "kernelId": 138868818,
+      "ref": "/code/nvoid912/molgap-gptrans-execution-repeat-v1",
+      "url": "https://www.kaggle.com/code/nvoid912/molgap-gptrans-execution-repeat-v1",
+      "versionNumber": 1
+    },
+    "reconciliation_required": false,
+    "release_binding": {
+      "package_identity": "b38aa68f1ba7c0877587f198ece8303dc9ccca1faa4022b9e34e09318bf94025",
+      "source_archive_sha256": "4d4dc2c2b20e873542450bcbde3d6cc3a29f8cd129689dd066f1b42eaf3cf99f",
+      "source_commit": "91b515f8110f3d60ff8705c2e3fe4388e346834d",
+      "spec_identity": "caf5bb20a20b1ae6e259e102910e820bc7189ee3746458cb7094668b6e07713f"
+    },
+    "requested_kernel": "nvoid912/molgap-gptrans-execution-repeat-v1",
+    "script_version_id": null,
+    "status": "submitted",
+    "url": "https://www.kaggle.com/code/nvoid912/molgap-gptrans-execution-repeat-v1",
+    "version_number": 1
+  },
+  "observed_at": "2026-10-15T14:30:33.517840+00:00",
+  "phase": "BOUND",
+  "timings": {
+    "KERNEL_ACCEPTED": 10.875543899950571,
+    "KERNEL_SUBMITTING": 11.902951900032349,
+    "NEW": 24.539686599979177,
+    "SOURCE_PENDING": 32.55628010001965,
+    "SOURCE_PUBLISHED": 1.5793378999223933,
+    "SOURCE_SUBMITTING": 23.442234000074677
+  }
+}

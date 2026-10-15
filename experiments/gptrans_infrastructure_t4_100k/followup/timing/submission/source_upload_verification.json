@@ -1,0 +1,62 @@
+{
+  "dataset": "nvoid912/molgap-gptrans-execution-repeat-v1-source",
+  "files": [
+    {
+      "bytes": 65,
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "13d0127e723421c6274a179fc1063c7250a0c45568a8d32f73b63db5262f3b16"
+    },
+    {
+      "bytes": 41,
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "dea9e1025777bb42c42ffbda2f5a302253d6a83970b3d9e3ca93add32b12aeb2"
+    },
+    {
+      "bytes": 24784,
+      "path": "SOURCE_FILES.json",
+      "sha256": "219e4246ad7342faa3bb50871c46a84f6e6c97cd1610b8fed1e4788e1f000f5f"
+    },
+    {
+      "bytes": 1223,
+      "path": "experiment_launch.json",
+      "sha256": "8f83f98c2563996538d99848bd705270c00bcb6b55632c60ba71cec215f2953e"
+    },
+    {
+      "bytes": 5272,
+      "path": "experiment_spec.json",
+      "sha256": "caf5bb20a20b1ae6e259e102910e820bc7189ee3746458cb7094668b6e07713f"
+    },
+    {
+      "bytes": 21081351,
+      "path": "initial_states/optimized.pt",
+      "sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+    },
+    {
+      "bytes": 21081351,
+      "path": "initial_states/original.pt",
+      "sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+    },
+    {
+      "bytes": 6620,
+      "path": "package_manifest.json",
+      "sha256": "057bc69dab22f73b55d331dde37b72de2df5c13b32747099fa5551d0af3a767b"
+    },
+    {
+      "bytes": 56867,
+      "path": "prospective/optimized/trajectory.json",
+      "sha256": "4fad96a38829fac7b9af3475963aec35d02a1b166f4f482f127436ec71097ea6"
+    },
+    {
+      "bytes": 56855,
+      "path": "prospective/original/trajectory.json",
+      "sha256": "86576e90591b6ab9f83407fedc4b9c80f45a442fcd32a2cec64a8fa76407470f"
+    },
+    {
+      "bytes": 457815,
+      "path": "source_payload.bin",
+      "sha256": "4d4dc2c2b20e873542450bcbde3d6cc3a29f8cd129689dd066f1b42eaf3cf99f"
+    }
+  ],
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "version": 1
+}

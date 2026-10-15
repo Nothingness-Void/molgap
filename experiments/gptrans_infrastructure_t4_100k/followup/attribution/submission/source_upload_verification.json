@@ -1,0 +1,62 @@
+{
+  "dataset": "nvoid912/molgap-gptrans-drift-attribution-v1-source",
+  "files": [
+    {
+      "bytes": 65,
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "e82a7d3531890087f20bfee317d4e65f659c61895c37fba6573c9d816e84bb61"
+    },
+    {
+      "bytes": 41,
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "dea9e1025777bb42c42ffbda2f5a302253d6a83970b3d9e3ca93add32b12aeb2"
+    },
+    {
+      "bytes": 24824,
+      "path": "SOURCE_FILES.json",
+      "sha256": "2df227123d9d19b1480046a1d95fc0d80ff2c4ba02867b429e80dadf01b9d31d"
+    },
+    {
+      "bytes": 1235,
+      "path": "experiment_launch.json",
+      "sha256": "726e719718e61689ae7a77257f44bc5078eb151c802f50c077d4fd30787461fa"
+    },
+    {
+      "bytes": 5292,
+      "path": "experiment_spec.json",
+      "sha256": "fa41678e8de7e44e4fe5fcf08eeb635e23f8e177fe92156bad57e30913551625"
+    },
+    {
+      "bytes": 21081351,
+      "path": "initial_states/optimized.pt",
+      "sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+    },
+    {
+      "bytes": 21081351,
+      "path": "initial_states/original.pt",
+      "sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+    },
+    {
+      "bytes": 6660,
+      "path": "package_manifest.json",
+      "sha256": "2abf3007f4c6c1d6510110e25ff34219dc84ede40e3c5479a940ee493f97d5eb"
+    },
+    {
+      "bytes": 56474,
+      "path": "prospective/optimized/trajectory.json",
+      "sha256": "92fa83dd7ca0218f67930b41f528a8c2e7d5865c978b01db14e649880668dbe5"
+    },
+    {
+      "bytes": 56462,
+      "path": "prospective/original/trajectory.json",
+      "sha256": "5d7fea87a7f06f1f9cd4c6a77dbb5cb600bd689a98831b0e8779ba89f8f2b8d6"
+    },
+    {
+      "bytes": 457808,
+      "path": "source_payload.bin",
+      "sha256": "c7248e299050ea7a49d74a6eb056a801fe5dec4b445642b0cbe6b885d721733e"
+    }
+  ],
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "version": 1
+}
