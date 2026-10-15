@@ -1,0 +1,292 @@
+{
+  "format": "molgap-cross-scale-infra-cpu-acceptance-v1",
+  "status": "INFRA_CPU_ACCEPTED",
+  "scope": "Non-executing comparison/analysis layer only; not whole-project green, scientific or native acceptance",
+  "reviewed_date": "2026-10-16",
+  "timezone": "Asia/Tokyo",
+  "branch": "molgap-server",
+  "base_commit": "63481324aceb807a3f74a08ba2c62bd3e0dcf9ab",
+  "desktop_review_ref": "ea0c400c34551afe428fda58de97e368f61dfbcf",
+  "authorization": "CPU synthetic infrastructure only; human selected server checkout and explicit Desktop transplant",
+  "attachment_sha256": "83a16e73295f7ac2b9b1997b8441ad0d607e5b32cc9eb9ed6700cbaedf745e17",
+  "runtime": {
+    "python": "C:/Users/Adminn/Documents/molgap/.venv/Scripts/python.exe",
+    "torch": "2.7.1+cpu",
+    "CUDA_VISIBLE_DEVICES": "-1",
+    "HIP_VISIBLE_DEVICES": "-1",
+    "ROCR_VISIBLE_DEVICES": "-1",
+    "cuda_available": false
+  },
+  "fixed_metadata": {
+    "status": "ROLE_BLOCKED",
+    "training_shards_nested_bytewise": true,
+    "development_identities_equal": false,
+    "small_development_overlaps_large_train": true,
+    "source_index_tensor_sha256": null,
+    "target_tensor_sha256": null,
+    "graph_tensors_opened": false,
+    "role_authorized": false
+  },
+  "fixed_metadata_pins": {
+    "platforms/_records/ims/pcqm_fixed_datasets_v1/ogb-train-100k.manifest.json": "abc0c3d39a5f18d62a0a0b44912b01927f4b4f670567da44e20f53af0dc76db1",
+    "platforms/_records/ims/pcqm_fixed_datasets_v1/ogb-train-500k-scnet-v1.manifest.json": "b476f23d0e22f4b8b64f4c4384d8ecdd92765c9898dedeaf3690a7db651683c9"
+  },
+  "implementation_normalized_sha256": {
+    "src/molgap/cross_scale_plan.py": "426b744bfaaca37c57d0c7ce5037871da04155b844d5d4673c14c6eb33f39922",
+    "src/molgap/cross_scale_inputs.py": "b6c8c2c6671cbbfd1cbcffaf38c029759deefaaf1d9bfe02549a2c956922b6f0",
+    "src/molgap/cross_scale_checkpoint.py": "33f406cb11076799c8e5d970208d10470aace66c36a6879d14ed66f2e34ccddb",
+    "src/molgap/cross_scale_analysis.py": "49ac2b2d6f3f72f13a825cf7ea509559df6341add290a1f8f97e5647ba994f90",
+    "src/molgap/cross_scale_backtest.py": "3c68f42132a24b19d8345affb5d2529753bcbcbd40a067415cf623f2d2c03802",
+    "src/molgap/model_fidelity.py": "ec008a555dfd76ec653ab79fae1ed2a12e358ec4cb74fd7f25dc5dfa3dc051f3"
+  },
+  "real_comparison_admission": "ROLE_BLOCKED",
+  "project_regression": "BASELINE_FAILURES_REPRODUCED",
+  "native_qualification": "NOT_EXECUTED",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay": "NOT_EVALUATED",
+  "model_fidelity": "NO_MODEL_IMPLEMENTATION",
+  "test_runs": [
+    {
+      "id": "existing_core_baseline",
+      "passed": 264,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 68.26
+    },
+    {
+      "id": "expanded_mixed_regression",
+      "paths": [
+        "tests/test_cross_scale_plan.py",
+        "tests/test_cross_scale_analysis.py",
+        "tests/test_cross_scale_backtest.py",
+        "tests/test_cross_scale_integration.py",
+        "tests/test_shared_training_compatibility.py",
+        "tests/test_family_training_core.py",
+        "tests/test_family_training_data.py",
+        "tests/test_family_training_recipe.py",
+        "tests/test_family_training_kernel.py",
+        "tests/test_family_training_loaders.py",
+        "tests/test_family_training_session.py",
+        "tests/test_family_training_runner.py",
+        "tests/test_family_full_lifecycle.py",
+        "tests/test_family_training_state.py",
+        "tests/test_family_execution_profile.py",
+        "tests/test_family_profile_release.py",
+        "tests/test_family_recovery_guards.py",
+        "tests/test_family_server_recovery.py",
+        "tests/test_training_logging.py",
+        "tests/test_experiment_spec.py",
+        "tests/test_experiment_registration.py",
+        "tests/test_experiment_package.py",
+        "tests/test_experiment_preflight.py",
+        "tests/test_experiment_workflow.py",
+        "tests/test_experiment_workflow_resume.py",
+        "tests/test_experiment_family_workflow.py",
+        "tests/test_experiment_launch.py",
+        "tests/test_experiment_prospective.py",
+        "tests/test_experiment_terminal.py",
+        "tests/test_experiment_cli.py",
+        "tests/test_comparison_readiness.py",
+        "tests/test_experiment_allocation.py",
+        "tests/test_common_contract.py",
+        "tests/test_experiment_retention.py",
+        "tests/test_experiment_training_hooks.py",
+        "tests/test_family_commit_safety.py",
+        "tests/test_shared_family_registration.py"
+      ],
+      "passed": 1379,
+      "failed": 2,
+      "skipped": 8,
+      "seconds": 426.93,
+      "new_tests_at_collection": 95,
+      "note": "Overlaps baseline and final suite; not an additive test total. Final new source was revalidated separately."
+    },
+    {
+      "id": "final_new_layer",
+      "paths": [
+        "tests/test_cross_scale_plan.py",
+        "tests/test_cross_scale_analysis.py",
+        "tests/test_cross_scale_backtest.py",
+        "tests/test_cross_scale_integration.py"
+      ],
+      "passed": 102,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 14.43
+    },
+    {
+      "id": "repository_layout_documentation_reuse_first_run",
+      "passed": 38,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 115.81,
+      "note": "New documentation referenced two Desktop-only paths locally. Fixed to source-commit permalinks; no code/test weakening. All 26 layout cases passed."
+    },
+    {
+      "id": "documentation_and_reuse_after_link_fix",
+      "paths": [
+        "tests/test_documentation_check.py",
+        "tests/test_experiment_reuse_skill.py"
+      ],
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 2.46,
+      "note": "Overlaps prior run; not an additive test total"
+    },
+    {
+      "id": "skip_reasons_independently_reconfirmed",
+      "passed": 0,
+      "failed": 0,
+      "skipped": 8,
+      "seconds": 2.13
+    },
+    {
+      "id": "documentation_entrypoint_budgets",
+      "status": "PASS"
+    },
+    {
+      "id": "staged_diff_check",
+      "status": "PASS"
+    },
+    {
+      "id": "compileall",
+      "command": ".venv/Scripts/python.exe -m compileall -q src/molgap tests",
+      "status": "PASS"
+    },
+    {
+      "id": "rml_validate_and_frozen",
+      "status": "PASS",
+      "rebuild": false,
+      "evidence": 110,
+      "trajectories": 127,
+      "costs": 193,
+      "roles": 481,
+      "traces": 64,
+      "ready": 0
+    }
+  ],
+  "required_cases": [
+    {
+      "case": 1,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 2,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 3,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 4,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 5,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 6,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 7,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 8,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 9,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 10,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 11,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 12,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 13,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 14,
+      "status": "PASS",
+      "scope": "CPU synthetic or pinned source-only JSON"
+    },
+    {
+      "case": 15,
+      "status": "FAIL",
+      "scope": "Two unchanged baseline failures; independently reproduced from base Git export; no new regression observed"
+    }
+  ],
+  "baseline_findings": [
+    {
+      "test": "tests/test_experiment_registration.py::test_single_family_package_excludes_unselected_trainers_and_addons",
+      "base_reproduced": true,
+      "reason": "Existing GPTrans source dependency closure includes k1_screen_training.py; old exclusion assertion fails",
+      "modified": false
+    },
+    {
+      "test": "tests/test_experiment_cli.py::test_no_remote_or_dynamic_dispatch_in_cli",
+      "base_reproduced": true,
+      "reason": "Existing command-set assertion omits check-workflow",
+      "modified": false
+    }
+  ],
+  "expected_skips": {
+    "symlink_permission": 6,
+    "unauthorized_real_preflight": 2
+  },
+  "automatic_training_action": false,
+  "quality_stop_on_100k_score": false,
+  "stqs_or_futility_activated": false,
+  "prohibited_actions": {
+    "new_model_implementation": "NOT_EXECUTED",
+    "real_molecular_tensor_loading": "NOT_EXECUTED",
+    "cache_rebuild": "NOT_EXECUTED",
+    "protected_role_access": "NOT_EXECUTED",
+    "gpu_allocation": "NOT_EXECUTED",
+    "remote_job_operations": "NOT_EXECUTED",
+    "prospective_publication": "NOT_EXECUTED",
+    "rml_rebuild_or_write": "NOT_EXECUTED",
+    "model_ranking_or_promotion": "NOT_EXECUTED"
+  },
+  "preservation": {
+    "user_test": "tests/test_research_memory.py",
+    "sha256": "e623abd9b0a410d6c49ccf1d04e2e1ba5bb23237db4dea2a2c8c874f4b9465f1",
+    "old_training_owners_unchanged": true,
+    "old_v4_v5_decisions_unchanged": true
+  },
+  "remaining": [
+    "Explicit common development role authority and disjoint membership proof",
+    "Native/real-checkpoint/Clean-BN qualification remains separate",
+    "No model, new cache or draft compiler delivered",
+    "Resolve the two pre-existing owning packaging/CLI regression findings",
+    "Desktop application and scoped revalidation not performed",
+    "No calibrated independent automatic quality policy or native cost-saving evidence"
+  ]
+}
