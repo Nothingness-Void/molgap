@@ -1,0 +1,21 @@
+{
+  "user_authorized": true,
+  "scope": "execution-diagnostic-only",
+  "arms": [
+    "original",
+    "optimized"
+  ],
+  "seeds": [
+    42
+  ],
+  "wall_ceiling_seconds": 25200,
+  "allocated_t4_hours_ceiling": 14,
+  "official_validation_allowed": false,
+  "optimized_execution": {
+    "aggregation": "cached_scatter",
+    "pooling": "cached_scatter",
+    "projection": "edge",
+    "evaluation_memory_fill": false
+  },
+  "source": "User explicitly requested another dual100K submission, with profiler, comparing original K1 and the latest optimized K1 after deep repair. This is separate authority for one new matched execution diagnostic; earlier completed results remain frozen."
+}

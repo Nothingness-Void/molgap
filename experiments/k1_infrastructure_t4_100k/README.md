@@ -15,3 +15,6 @@ retrieval and both existing family inspectors remain authoritative.
 
 [Deep profiler attribution and code opportunities](results/profiler_deep_analysis.md)
 separate measured hot paths from unmeasured implementation candidates.
+
+The separately authorized [cached-provider round](execution_providers/README.md)
+owns its new declarations, submission and results.
