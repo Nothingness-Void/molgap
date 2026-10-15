@@ -37,8 +37,10 @@ Layer ranges use temporary pre/post hooks, preserving each layer's `forward`
 identity and native cache dispatch. Hooks are removed on success or error.
 
 Use one dedicated worker process, with no concurrent model execution or nested
-profiler. The context temporarily wraps existing callables, including PyTorch
-backward/clipping and family transport, and restores them on success or error.
+profiler. Instance hooks, `UpdateObserver` and context-local finite-validation
+observation retain pre/post-clipping, optimizer, EMA and checkpoint ranges without
+replacing global PyTorch backward/clipping functions. Cleanup restores instance
+bindings and observation contexts on success or error.
 It does not copy the training loop, model, optimizer or persistence algorithm.
 An output directory must be fresh. When packaging a diagnostic, include
 `src/molgap/family_execution_profile.py` through the existing package builder;

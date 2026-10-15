@@ -25,6 +25,35 @@ use [K1 execution providers](K1_EXECUTION_BACKENDS.md).
 | [Family outputs](EXPERIMENT_FAMILY_WORKFLOW.md) | Existing checkpoint, trace, artifact inspection and V5/RML closure. |
 | [Platform routing](../../platforms/README.md) | Skills/adapters; no model or optimizer implementation. |
 
+## Shared composition and explicit policy
+
+The [minimal examples](FAMILY_TRAINING_EXAMPLES.md) reuse the accelerated factory,
+sandbox and neutral packager for both families. `TrainingAddon.apply_hook`
+attaches ordered substrate slots before optimizer construction. `mode="composed"`
+and the exact declarations travel in `FamilyRecipe.addons`; mixed slot/frozen-mode
+compositions fail closed. All owned trainable parameters must reach the optimizer.
+`family_model_ops.py` owns leaf construction/input/loss helpers; the kernel no
+longer imports old training scripts for those operations.
+
+`FamilyModePolicy` is resolved only through a static `TrainingAddon.policy_hook`.
+Optional input sidecars, auxiliary objectives, extra development states, resource
+qualification, metric units and segmentation belong to that explicit policy.
+`gptrans_training_policy.py` preserves server research modes outside the common
+loop. No branch, hostname or dataset size selects a policy. The
+[mechanism inventory](SHARED_TRAINING_CORE_FILES.json) and
+`tests/test_shared_training_compatibility.py` enforce the same reviewed common
+source snapshot after each owner's selective integration; registry/policy bindings
+remain explicit owner adapters.
+
+`selection` may explicitly choose `best-development-clean-ema` or
+`final-clean-ema` with a matching `CalibrationPolicy` in `clean_bn`. Calibration
+uses a separate ordered train-only loader, preserves training RNG, and changes a
+dedicated Clean model in place. The session checkpoints its BN buffers, calibration
+identity and EMA revision in `cursor.weight_state`, without duplicating Live/Raw
+weights. Further EMA updates make Clean stale. Absence stays explicit; no policy
+means no calibration or extra evaluation. A composition without tracked BN fails
+before optimizer construction, including the baseline GPTrans-T.
+
 ## Data Boundary
 
 `DatasetSelection(manifest, manifest_sha256, development)` uses a confined,

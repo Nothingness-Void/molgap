@@ -1,5 +1,8 @@
 # Reviewed shared training integration
 
+The later Common API/lifecycle consolidation is recorded in the
+[2026-10-16 return report](SHARED_TRAINING_CORE_SERVER_RETURN.md).
+
 ## Provenance and scope
 
 The server review used desktop tip

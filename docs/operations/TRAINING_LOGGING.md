@@ -122,3 +122,5 @@ The retained source-package confinement regressions pass.
 
 The [server review](DESKTOP_LOGGING_EXECUTION_SERVER_REVIEW.md) owns local
 verification and retained server-specific role, trace and continuation limits.
+
+`clean_ema` is the logging label for the session API state `clean-ema`.

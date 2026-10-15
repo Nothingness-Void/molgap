@@ -17,6 +17,10 @@ Execution diagnostics reuse the [shared-session profiler](FAMILY_EXECUTION_PROFI
 Training telemetry reuses [standard logging](TRAINING_LOGGING.md), configured by
 `build_family_recipe(..., logging=...)`, not an experiment-specific printer/timer.
 
+For the two accelerated backbones, use the [family examples](FAMILY_TRAINING_EXAMPLES.md).
+The [Common API](../../src/molgap/common/README.md) owns reusable declaration,
+identity, SDK and pinned transport mechanisms; its runtime exports alias the owners.
+
 ## Shared Core
 
 Reuse these modules instead of copying their logic into an experiment script:

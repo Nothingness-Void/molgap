@@ -108,4 +108,4 @@ is the new-agent route; this file only maps code ownership.
 
 New K1/GPTrans training interfaces use the [shared core](docs/operations/FAMILY_TRAINING_CORE.md).
 Server integration scope and compatibility are recorded in
-[the integration record](docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md).
+[the consolidation report](docs/operations/SHARED_TRAINING_CORE_SERVER_RETURN.md).

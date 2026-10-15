@@ -45,7 +45,7 @@ accepted an execution benefit with identical tensors/predictions; incremental ga
 The [GPTrans diagnostic](experiments/gptrans_infrastructure_t4_100k/results/decision_2026-10-15.md) accepted execution gains with drift; both arms are RML-closed.
 The [authorized short follow-up](experiments/gptrans_infrastructure_t4_100k/followup/STATUS.md) owns two Kaggle3 diagnostic slots.
 
-The [reviewed desktop training core](docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md)
+The [reviewed shared training core](docs/operations/SHARED_TRAINING_CORE_SERVER_RETURN.md)
 is integrated for new K1/GPTrans declarations. Native qualification remains
 run/recipe/runtime-specific; historical entrypoints and job custody are unchanged.
 The [reviewed batch-topology reuse](docs/operations/TOPOLOGY_REUSE_SERVER_REVIEW.md)
