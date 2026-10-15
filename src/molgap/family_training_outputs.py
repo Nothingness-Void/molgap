@@ -155,6 +155,12 @@ class SessionOutputs:
             atomic_torch_save(self.pending / "development_predictions.pt", {"context": self.context.to_dict(),
                 **{key: evaluation[key].detach().cpu() for key in ("source_idx", "target_eV", "prediction_eV")}})
 
+    def checkpoint_from_builder(self, progress, state_builder):
+        """Consume a trusted synchronous producer; the writer validates all state."""
+        if not callable(state_builder):
+            raise TypeError("Checkpoint state builder must be callable")
+        self.checkpoint(progress, state_builder())
+
     def checkpoint(self, progress, state):
         changed = [name for name in ("selected_model.pt", "development_predictions.pt", "canonical_trace.json")
                    if (self.pending / name).is_file()]

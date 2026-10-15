@@ -73,7 +73,7 @@ replay. Historical runners retain their own frozen RNG behavior.
 ## Session Boundary
 
 `FamilyTrainingSession(kernel, loaders, checkpoint=..., selected=...,
-pass_finished=..., batch_finished=None)` consumes matching typed recipe/data bindings. Callbacks are
+pass_finished=..., batch_finished=None, checkpoint_builder=None)` consumes matching typed recipe/data bindings. Callbacks are
 trusted static adapter hooks, not imports selected by JSON. `run(should_pause=...)`
 uses exact optimizer steps, not a scale-specific epoch loop. Mid-pass checkpoints
 retain model/optimizer/schedule/EMA/RNG, recipe identity, exact sample/cursor and
@@ -81,6 +81,10 @@ partial-pass metric order. A different budget/recipe is not a resume. Publicatio
 must complete before a pause or endpoint is acknowledged; failure propagates and
 worker/cache cleanup runs. `load_state_dict` validates identity/exposure and
 rolls back state if restoration fails.
+The registered runner wires the complete-state checkpoint sink and selection
+inside the existing evaluation weight view; the
+[refinement owner](GPTRANS_EXECUTION_REFINEMENT.md) owns these controls and the
+additional GPTrans native safety-fill proof. Do not copy this wiring into an addon.
 Resume validation also checks frozen AdamW defaults, parameter/moment schema and
 the exact schedule axis/configuration. LR validation permits native cosine's
 double-precision recurrence roundoff only; it does not change stored LR.

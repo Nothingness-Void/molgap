@@ -225,7 +225,7 @@ def _state_fingerprint(value):
 
 
 def run_screen_preflight(**options):
-    """Three scratch executions: repeat and actual serialized mid-step resume."""
+    """Scratch repeat/resume plus a GPTrans safety-fill reference; never dev."""
     import torch
     from .family_training_kernel import FamilyKernel
     from .family_training_loaders import FamilyLoaders
@@ -241,12 +241,32 @@ def run_screen_preflight(**options):
     output.mkdir(parents=True, exist_ok=True)
     proofs = []
     profile_proof = None
-    for label in ("repeat-a", "repeat-b", "resumed"):
+    memory_fill_proof = None
+    labels = ("repeat-a", "repeat-b", "resumed")
+    if recipe.family == "gptrans_t":
+        labels += ("fill-enabled",)
+    for label in labels:
         configure_fp32_determinism(recipe.seed)
         kernel = FamilyKernel(probe, Path(options["initial_state_path"]), device="cuda")
+        kernel._qualification_memory_fill = label == "fill-enabled"
+        observations = []
+        def observe_execution(boundary):
+            observations.append({"boundary": boundary,
+                "memory_fill_enabled": torch.utils.deterministic.fill_uninitialized_memory,
+                "deterministic_algorithms_enabled": torch.are_deterministic_algorithms_enabled(),
+                "warn_only": torch.is_deterministic_algorithms_warn_only_enabled()})
+        if label == "fill-enabled":
+            kernel._qualification_execution_observer = observe_execution
         _loaded_source(options["package_dir"])
         def checkpoint(progress, state):
-            atomic_torch_save(output / (label + ".pt"), state)
+            payload = state
+            if label == "fill-enabled":
+                payload = {"format": "molgap-gptrans-memory-fill-reference-v1",
+                    "context": context.to_dict(), "recipe_identity": probe.identity,
+                    "runtime_fingerprint": provenance["runtime_fingerprint"],
+                    "execution_role": "fill-enabled-reference", "observations": list(observations),
+                    "state": state}
+            atomic_torch_save(output / (label + ".pt"), payload)
         session = FamilyTrainingSession(kernel, FamilyLoaders(probe, data, tuning),
             checkpoint=checkpoint, selected=lambda *args: None, pass_finished=lambda *args: None)
         if label == "resumed":
@@ -268,11 +288,18 @@ def run_screen_preflight(**options):
                 "sha256": normalized_file_sha(output / "profile_qualification/profile.json")}
         else:
             session.run()
-        state = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
-        proofs.append({"path": label + ".pt", "sha256": normalized_file_sha(output / (label + ".pt")),
-            "state_fingerprint": _state_fingerprint(state)})
+        retained = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
+        state = retained["state"] if label == "fill-enabled" else retained
+        proof = {"path": label + ".pt", "sha256": normalized_file_sha(output / (label + ".pt")),
+            "state_fingerprint": _state_fingerprint(state)}
+        if label == "fill-enabled":
+            memory_fill_proof = proof
+        else:
+            proofs.append(proof)
     if len({proof["state_fingerprint"] for proof in proofs}) != 1:
         raise ValueError("Native optimizer/EMA/schedule/RNG repeat or serialized resume differs")
+    if memory_fill_proof is not None:
+        _verify_memory_fill_proof(output, probe, memory_fill_proof, proofs[0]["state_fingerprint"], provenance)
     atomic_json(output / "runtime_provenance.json", provenance)
     certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
         "provenance_sha256": canonical_fingerprint(provenance), "probe_recipe_identity": probe.identity,
@@ -281,6 +308,8 @@ def run_screen_preflight(**options):
         "formal_training_exposure": 0, "scientific_acceptance": "NOT_EVALUATED"}
     if profile_proof is not None:
         certificate["profile_proof"] = profile_proof
+    if memory_fill_proof is not None:
+        certificate["memory_fill_proof"] = memory_fill_proof
     atomic_json(output / "runtime_certificate.json", certificate)
     atomic_json(output / "preflight_costs.json", {"context": context.to_dict(), "costs": [
         {"metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - began,
@@ -314,6 +343,43 @@ def _verify_profile_proof(root, probe, profile_proof, *, required):
             or report.get("captured_updates") != 2 or report.get("recipe_identity") != probe.identity
             or normalized_file_sha(_artifact_path(root, "profile_qualification/trace.json")) != report.get("trace_sha256")):
         raise ValueError("Native profiler event/recipe/trace evidence differs")
+
+
+def _verify_memory_fill_proof(root, probe, proof, expected_fingerprint, provenance):
+    """An observed reference artifact, not a summary boolean, gates fill removal."""
+    import torch
+    from .family_training_session import validate_session_resume
+    if (type(proof) is not dict or set(proof) != {"path", "sha256", "state_fingerprint"}
+            or proof["path"] != "fill-enabled.pt"):
+        raise ValueError("Missing native safety-fill reference proof")
+    path = _artifact_path(Path(root).absolute(), proof["path"])
+    if normalized_file_sha(path) != proof["sha256"]:
+        raise ValueError("Native safety-fill artifact hash mismatch")
+    retained = torch.load(path, map_location="cpu", weights_only=True)
+    if (type(retained) is not dict or set(retained) != {"format", "context", "recipe_identity",
+            "runtime_fingerprint", "execution_role", "observations", "state"}
+            or retained["format"] != "molgap-gptrans-memory-fill-reference-v1"
+            or retained["context"] != provenance["context"]
+            or retained["recipe_identity"] != probe.identity
+            or retained["runtime_fingerprint"] != provenance["runtime_fingerprint"]
+            or retained["execution_role"] != "fill-enabled-reference"):
+        raise ValueError("Native safety-fill producer identity differs")
+    observations = retained["observations"]
+    boundaries = ["before_update", "after_update"] * probe.optimizer_steps
+    if (type(observations) is not list or len(observations) != len(boundaries) or any(
+            type(item) is not dict or set(item) != {"boundary", "memory_fill_enabled",
+                "deterministic_algorithms_enabled", "warn_only"}
+            or item["boundary"] != boundary or item["memory_fill_enabled"] is not True
+            or item["deterministic_algorithms_enabled"] is not True or item["warn_only"] is not False
+            for item, boundary in zip(observations, boundaries))):
+        raise ValueError("Native safety-fill execution observations are incomplete")
+    state = retained["state"]
+    progress = validate_session_resume(probe, state)
+    if progress.status != "complete" or len(state["rng_state"]["cuda"]) != 1:
+        raise ValueError("Safety-fill reference is not a complete isolated-GPU proof")
+    fingerprint = _state_fingerprint(state)
+    if fingerprint != proof["state_fingerprint"] or fingerprint != expected_fingerprint:
+        raise ValueError("Native safety-fill reference differs from accelerated execution")
 
 
 def _verify_preflight(directory, recipe, provenance, *, profiling_required=False):
@@ -358,6 +424,8 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
         fingerprints.append(fingerprint)
     if len(set(fingerprints)) != 1:
         raise ValueError("Native repeat/resume proof differs")
+    if recipe.family == "gptrans_t":
+        _verify_memory_fill_proof(root, probe, certificate.get("memory_fill_proof"), fingerprints[0], provenance)
     _verify_profile_proof(root, probe, certificate.get("profile_proof"), required=profiling_required)
     return certificate
 
@@ -436,7 +504,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     _loaded_source(options["package_dir"])
     session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
         checkpoint=outputs.checkpoint, selected=outputs.selected, pass_finished=outputs.pass_finished,
-        batch_finished=outputs.batch_finished)
+        batch_finished=outputs.batch_finished, checkpoint_builder=outputs.checkpoint_from_builder)
     try:
         if had_checkpoint:
             session.load_state_dict(outputs.retained_state())

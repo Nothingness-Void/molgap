@@ -407,9 +407,9 @@ def test_logging_matches_training_state_rng_and_evaluation_count(tmp_path, famil
     baseline_calls = [0]
     baseline_evaluate = baseline.kernel.evaluate
 
-    def count_baseline(loaders):
+    def count_baseline(loaders, **kwargs):
         baseline_calls[0] += 1
-        return baseline_evaluate(loaders)
+        return baseline_evaluate(loaders, **kwargs)
 
     baseline.kernel.evaluate = count_baseline
     try:
@@ -423,9 +423,9 @@ def test_logging_matches_training_state_rng_and_evaluation_count(tmp_path, famil
     observed_calls = [0]
     observed_evaluate = observed.kernel.evaluate
 
-    def count_observed(loaders):
+    def count_observed(loaders, **kwargs):
         observed_calls[0] += 1
-        return observed_evaluate(loaders)
+        return observed_evaluate(loaders, **kwargs)
 
     observed.kernel.evaluate = count_observed
     try:

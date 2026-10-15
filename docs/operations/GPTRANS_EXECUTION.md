@@ -1,6 +1,11 @@
 # GPTrans Default Execution
 
-The registered `gptrans_t/1` workflow automatically uses accelerated execution
+New cross-scale declarations use `gptrans_t/2` through the
+[shared family session](FAMILY_TRAINING_CORE.md). Its additional execution
+controls and verification limits are owned by the
+[shared refinement record](GPTRANS_EXECUTION_REFINEMENT.md).
+
+The legacy registered `gptrans_t/1` workflow automatically uses accelerated execution
 for both native preflight and training. Do not wrap entrypoints in
 `tuned_backend`, copy a trainer or choose an execution addon.
 

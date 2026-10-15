@@ -168,8 +168,11 @@ def worker(config_path, source_root, implementation, family, repeat, output):
                     "local/" + config["experiment_id"] + "/" + str(os.getpid()), None)
                 outputs = SessionOutputs(output / "session", context, contract=contract, adapter=PROFILES[family],
                     trajectory_id=config["trajectory_id"], train_role_identity=record["train_role_identity"])
+                # Frozen comparison roots may predate the complete-state sink.
+                hooks = {"checkpoint_builder": outputs.checkpoint_from_builder} if hasattr(
+                    outputs, "checkpoint_from_builder") else {}
                 session = FamilyTrainingSession(kernel, loaders, checkpoint=outputs.checkpoint,
-                    selected=outputs.selected, pass_finished=outputs.pass_finished)
+                    selected=outputs.selected, pass_finished=outputs.pass_finished, **hooks)
                 schedule = session.schedule
                 torch.cuda.synchronize()
                 torch.cuda.reset_peak_memory_stats()

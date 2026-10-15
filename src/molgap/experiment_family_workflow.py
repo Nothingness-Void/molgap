@@ -232,7 +232,7 @@ def write_resume_state(path: Path, context: RunContext, *, adapter: str, model_s
                        scheduler_state: dict | None = None, ema_state: dict | None = None,
                        owner_state: dict | None = None) -> Path:
     """Atomic output translation; resume loading stays with the owning trainer."""
-    from .training_reproducibility import atomic_torch_save, assert_finite_state_dict
+    from .training_reproducibility import atomic_torch_save
     _safe_local(Path(path).absolute())
     profile = artifact_adapter(adapter, (context.family_name, context.family_version))
     _positive(optimizer_step, "optimizer_step")
@@ -250,9 +250,7 @@ def write_resume_state(path: Path, context: RunContext, *, adapter: str, model_s
         state["owner_state"] = owner_state
     if any(not isinstance(state.get(key), dict) or not state[key] for key in profile.resume_keys):
         raise ValueError("Incomplete checkpoint/resume state")
-    assert_finite_state_dict(model_state, label="resume.model")
-    if ema_state is not None:
-        assert_finite_state_dict(ema_state, label="resume.ema")
+    _finite_tree(state, "resume")
     atomic_torch_save(Path(path), state)
     return Path(path)
 

@@ -67,6 +67,10 @@ class FamilyKernel:
         if str(torch.__version__).split("+", 1)[0] != recipe.torch_version:
             raise ValueError("Installed Torch differs from the frozen execution pin")
         self.recipe, self.device = recipe, torch.device(device)
+        # The owning native preflight also runs GPTrans with this safety fill on.
+        # Only that isolated qualification reference overrides the live default.
+        self._qualification_memory_fill = False
+        self._qualification_execution_observer = None
         self.model, self.initialization = load_family_model(recipe, initial_state)
         self.model.to(self.device)
         self.optimizer = make_family_optimizer(recipe, self.model.parameters())
@@ -98,11 +102,17 @@ class FamilyKernel:
         else:
             from .family_training_core import normalized_gap_update
             from .gptrans_execution_backend import prepared_forward
-            batch = self._gptrans_batch(cpu_batch, training=True)
-            loss = normalized_gap_update(self.model, self.optimizer, batch, mean, std,
-                forward=prepared_forward, clip_norm=self.recipe.gradient_clip,
-                check_finite=check_finite, cast_target_float=True)
-            absolute, rows = loss * int(batch.num_graphs), int(batch.num_graphs)
+            from .training_reproducibility import deterministic_memory_fill_context
+            with deterministic_memory_fill_context(enabled=self._qualification_memory_fill):
+                if self._qualification_execution_observer is not None:
+                    self._qualification_execution_observer("before_update")
+                batch = self._gptrans_batch(cpu_batch, training=True)
+                loss = normalized_gap_update(self.model, self.optimizer, batch, mean, std,
+                    forward=prepared_forward, clip_norm=self.recipe.gradient_clip,
+                    check_finite=check_finite, cast_target_float=True)
+                absolute, rows = loss * int(batch.num_graphs), int(batch.num_graphs)
+                if self._qualification_execution_observer is not None:
+                    self._qualification_execution_observer("after_update")
         if self.ema is not None:
             self.ema.update(self.model)
         return loss, absolute, rows
@@ -123,7 +133,7 @@ class FamilyKernel:
     def close(self):
         self.weight_view.clear()
 
-    def evaluate(self, loaders):
+    def evaluate(self, loaders, *, on_evaluation=None):
         """Only the explicitly selected internal-development view is consumed."""
         import math
         from types import SimpleNamespace
@@ -131,6 +141,8 @@ class FamilyKernel:
         data = loaders.data
         if self.recipe.identity != loaders.recipe.identity or data.development is None:
             raise ValueError("No matching selected development role")
+        if on_evaluation is not None and not callable(on_evaluation):
+            raise TypeError("Evaluation observer must be a trusted callable")
         weights = self.recipe.selection.rsplit("-", 1)[1]
         with self.weight_view.use(self.model, self.ema, weights):
             # The existing buffered evaluator owns ordered prediction/target
@@ -139,8 +151,12 @@ class FamilyKernel:
                 lambda model, batch: self.forward(batch), lambda graphs: loaders.dev(),
                 self.model, data.development, self.recipe.target_mean_eV, self.recipe.target_std_eV,
                 device="cpu", source_idx_start=data.development_source_start)
-        if not math.isfinite(result["mae_eV"]):
-            raise RuntimeError("Development predictions became nonfinite")
+            if not math.isfinite(result["mae_eV"]):
+                raise RuntimeError("Development predictions became nonfinite")
+            # Selection borrows the already installed evaluation weights. It must
+            # finish synchronously before the owning view restores live tensors.
+            if on_evaluation is not None:
+                on_evaluation(result)
         return result
 
 
