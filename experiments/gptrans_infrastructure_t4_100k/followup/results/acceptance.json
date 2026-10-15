@@ -1,0 +1,603 @@
+{
+  "replay_readiness": "NOT_APPLICABLE_EXECUTION_DIAGNOSTIC",
+  "scientific_outcome": "INCONCLUSIVE",
+  "slots": {
+    "attribution": {
+      "allocated_t4_hours": 0.152750479035,
+      "checked_artifact_count": 79,
+      "endpoint_fingerprints": {
+        "optimized": {
+          "diagnostic-0/foreach_ema": "5f5dfa8b444aae9416676a0bea1f190741b0efd697aa48eba376c8f45a3faabd",
+          "diagnostic-0/optimized": "5f5dfa8b444aae9416676a0bea1f190741b0efd697aa48eba376c8f45a3faabd"
+        },
+        "original": {
+          "diagnostic-0/foreach_optimizer": "5f5dfa8b444aae9416676a0bea1f190741b0efd697aa48eba376c8f45a3faabd",
+          "diagnostic-0/native": "b6816b809ad4c4d557bbc2e19ef2157b676580266b6601548209e7da070b4308",
+          "diagnostic-0/prepared": "dce3edb06a5ca005a5c4589ae96baf3ed16c4b4215be512f8b6b9f6bf5bcfc6c"
+        }
+      },
+      "factor_comparisons": [
+        {
+          "changed_factor": "prepared",
+          "first_divergence": {
+            "stage": "loss",
+            "step": 4
+          },
+          "original_factor": "native",
+          "stages": {
+            "clipped_gradients": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "ema": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "loss": {
+              "all_ten_steps_equal": false,
+              "maximum_absolute_delta": 1.1920928955078125e-07
+            },
+            "model": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "optimizer_moments": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "prediction": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "raw_gradients": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "rng_before": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "rng_state": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            }
+          }
+        },
+        {
+          "changed_factor": "foreach_optimizer",
+          "first_divergence": {
+            "stage": "model",
+            "step": 1
+          },
+          "original_factor": "prepared",
+          "stages": {
+            "clipped_gradients": {
+              "all_ten_steps_equal": false,
+              "maximum_absolute_delta": 5.960464477539063e-08
+            },
+            "ema": {
+              "all_ten_steps_equal": false,
+              "maximum_absolute_delta": 7.450580596923828e-09
+            },
+            "loss": {
+              "all_ten_steps_equal": false,
+              "maximum_absolute_delta": 1.1920928955078125e-07
+            },
+            "model": {
+              "all_ten_steps_equal": false,
+              "maximum_absolute_delta": 1.1920928955078125e-07
+            },
+            "optimizer_moments": {
+              "all_ten_steps_equal": false,
+              "maximum_absolute_delta": 1.1175870895385742e-08
+            },
+            "prediction": {
+              "all_ten_steps_equal": false,
+              "maximum_absolute_delta": 4.76837158203125e-07
+            },
+            "raw_gradients": {
+              "all_ten_steps_equal": false,
+              "maximum_absolute_delta": 2.384185791015625e-07
+            },
+            "rng_before": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "rng_state": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            }
+          }
+        },
+        {
+          "changed_factor": "foreach_ema",
+          "first_divergence": null,
+          "original_factor": "foreach_optimizer",
+          "stages": {
+            "clipped_gradients": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "ema": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "loss": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "model": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "optimizer_moments": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "prediction": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "raw_gradients": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "rng_before": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "rng_state": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            }
+          }
+        },
+        {
+          "changed_factor": "optimized",
+          "first_divergence": null,
+          "original_factor": "foreach_ema",
+          "stages": {
+            "clipped_gradients": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "ema": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "loss": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "model": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "optimizer_moments": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "prediction": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "raw_gradients": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "rng_before": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            },
+            "rng_state": {
+              "all_ten_steps_equal": true,
+              "maximum_absolute_delta": 0.0
+            }
+          }
+        }
+      ],
+      "kernel": "nvoid912/molgap-gptrans-drift-attribution-v1",
+      "kernel_id": 138868822,
+      "native_preflight": {
+        "optimized": "ACCEPTED",
+        "original": "ACCEPTED"
+      },
+      "package_identity": "4cc5a632baa2186db499478b7d6cf07104f6e49461edd2bd42fddea3a33056e9",
+      "scheduler": {
+        "kernel": "nvoid912/molgap-gptrans-drift-attribution-v1",
+        "message": "",
+        "observed_at": "2026-10-15T17:32:46.148462+00:00",
+        "status": "COMPLETE",
+        "version": 1
+      },
+      "selected_witness_excerpt": {
+        "first_optimizer_update": {
+          "largest_model_differences": [
+            {
+              "different_elements": 1,
+              "foreach_value": 0.26580867171287537,
+              "leaf": "blocks.2.attention.attention_to_pair.weight",
+              "maximum_absolute_delta": 2.9802322387695312e-08,
+              "prepared_value": 0.265808641910553,
+              "worst_flat_index": 35
+            },
+            {
+              "different_elements": 9,
+              "foreach_value": -0.1443093866109848,
+              "leaf": "blocks.0.attention.pair_to_node.weight",
+              "maximum_absolute_delta": 1.4901161193847656e-08,
+              "prepared_value": -0.1443093717098236,
+              "worst_flat_index": 826
+            },
+            {
+              "different_elements": 13,
+              "foreach_value": -0.17294685542583466,
+              "leaf": "blocks.2.attention.pair_to_node.weight",
+              "maximum_absolute_delta": 1.4901161193847656e-08,
+              "prepared_value": -0.17294684052467346,
+              "worst_flat_index": 6621
+            },
+            {
+              "different_elements": 13,
+              "foreach_value": -0.12668351829051971,
+              "leaf": "blocks.8.attention.pair_to_node.weight",
+              "maximum_absolute_delta": 1.4901161193847656e-08,
+              "prepared_value": -0.12668350338935852,
+              "worst_flat_index": 1131
+            },
+            {
+              "different_elements": 23,
+              "foreach_value": 0.1703876256942749,
+              "leaf": "blocks.10.attention.pair_to_node.weight",
+              "maximum_absolute_delta": 1.4901161193847656e-08,
+              "prepared_value": 0.1703876107931137,
+              "worst_flat_index": 2796
+            },
+            {
+              "different_elements": 7,
+              "foreach_value": -0.11859714984893799,
+              "leaf": "atom_encoder.atom_embedding_list.0.weight",
+              "maximum_absolute_delta": 7.450580596923828e-09,
+              "prepared_value": -0.11859714239835739,
+              "worst_flat_index": 3625
+            },
+            {
+              "different_elements": 10,
+              "foreach_value": -0.09828666597604752,
+              "leaf": "blocks.1.attention.pair_to_node.weight",
+              "maximum_absolute_delta": 7.450580596923828e-09,
+              "prepared_value": -0.09828665852546692,
+              "worst_flat_index": 3285
+            },
+            {
+              "different_elements": 242,
+              "foreach_value": -0.06253473460674286,
+              "leaf": "blocks.2.ffn.0.weight",
+              "maximum_absolute_delta": 7.450580596923828e-09,
+              "prepared_value": -0.06253474205732346,
+              "worst_flat_index": 62950
+            },
+            {
+              "different_elements": 213,
+              "foreach_value": 0.06256666779518127,
+              "leaf": "blocks.3.attention.output.weight",
+              "maximum_absolute_delta": 7.450580596923828e-09,
+              "prepared_value": 0.06256667524576187,
+              "worst_flat_index": 40844
+            },
+            {
+              "different_elements": 11,
+              "foreach_value": -0.10972007364034653,
+              "leaf": "blocks.4.attention.pair_to_node.weight",
+              "maximum_absolute_delta": 7.450580596923828e-09,
+              "prepared_value": -0.10972006618976593,
+              "worst_flat_index": 1726
+            }
+          ],
+          "stages": {
+            "clipped_gradients": {
+              "equal": true,
+              "maximum_absolute_delta": 0.0,
+              "tensor_count": 265,
+              "worst_leaf": null
+            },
+            "gradient_norm": {
+              "equal": true,
+              "maximum_absolute_delta": 0.0,
+              "tensor_count": 1,
+              "worst_leaf": null
+            },
+            "loss": {
+              "equal": true,
+              "maximum_absolute_delta": 0.0,
+              "tensor_count": 1,
+              "worst_leaf": null
+            },
+            "prediction": {
+              "equal": true,
+              "maximum_absolute_delta": 0.0,
+              "tensor_count": 1,
+              "worst_leaf": null
+            },
+            "raw_gradients": {
+              "equal": true,
+              "maximum_absolute_delta": 0.0,
+              "tensor_count": 265,
+              "worst_leaf": null
+            },
+            "scheduler": {
+              "equal": true,
+              "maximum_absolute_delta": 0.0,
+              "tensor_count": 0,
+              "worst_leaf": null
+            }
+          }
+        },
+        "prepared_step4": {
+          "gradient_norm": {
+            "equal": true,
+            "maximum_absolute_delta": 0.0,
+            "tensor_count": 1,
+            "worst_leaf": null
+          },
+          "loss_delta": {
+            "equal": false,
+            "maximum_absolute_delta": 1.1920928955078125e-07,
+            "tensor_count": 1,
+            "worst_leaf": "state"
+          },
+          "native_loss": 0.8537745475769043,
+          "prepared_loss": 0.8537746667861938,
+          "scheduler": {
+            "equal": true,
+            "maximum_absolute_delta": 0.0,
+            "tensor_count": 0,
+            "worst_leaf": null
+          }
+        },
+        "source_witnesses": {
+          "foreach_optimizer-step-01.pt": "23ded085f14dd5f9914f5d9294c8511e5e332f5c04f255ebd62b9d4613e9e93b",
+          "prepared-step-01.pt": "c67fe0d4daa2784cfe663f324d11db05d8b1ed65f40660ba3e00ac02a90894d8"
+        }
+      },
+      "source_archive_sha256": "c7248e299050ea7a49d74a6eb056a801fe5dec4b445642b0cbe6b885d721733e",
+      "source_verification": {
+        "dataset_sources": [
+          "nvoid912/molgap-gptrans-drift-attribution-v1-source",
+          "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+        ],
+        "entry_bytes_equal": true,
+        "entry_sha256": "76bd4b131488a60ffe60b6f3a11e59d7bea8c5adf25b2a6dc6eb5d7482e73161",
+        "kernel": "nvoid912/molgap-gptrans-drift-attribution-v1",
+        "kernel_id": 138868822,
+        "machine_shape": "NvidiaTeslaT4",
+        "observed_at": "2026-10-15T17:34:43.357484+00:00",
+        "private": true,
+        "version": 1
+      },
+      "spec_identity": "fa41678e8de7e44e4fe5fcf08eeb635e23f8e177fe92156bad57e30913551625",
+      "status": "SHORT_PROBE_VERIFIED",
+      "version": 1
+    },
+    "timing": {
+      "allocated_t4_hours": 0.3057584043811111,
+      "checked_artifact_count": 51,
+      "endpoint_fingerprints": {
+        "optimized": {
+          "diagnostic-0/optimized": "3c313fabfb2b1bc8087f50f4c0b05e3d11a90999c347b5807c19dad0de607b61",
+          "diagnostic-1/optimized": "3c313fabfb2b1bc8087f50f4c0b05e3d11a90999c347b5807c19dad0de607b61",
+          "diagnostic-2/optimized": "3c313fabfb2b1bc8087f50f4c0b05e3d11a90999c347b5807c19dad0de607b61",
+          "diagnostic-profile/optimized": "ec55f2e80919d3cc2ddf9817c2fc9d480ebfb8f90d8d13c4e968bb91f784a597"
+        },
+        "original": {
+          "diagnostic-0/native": "dbf482e2b9afc84a62263e9608ff1465138ad390996ee90a9416dae82975b6f4",
+          "diagnostic-1/native": "dbf482e2b9afc84a62263e9608ff1465138ad390996ee90a9416dae82975b6f4",
+          "diagnostic-2/native": "dbf482e2b9afc84a62263e9608ff1465138ad390996ee90a9416dae82975b6f4",
+          "diagnostic-profile/native": "2d6d22083b435df67915ca532ff4e0730b289711cefdd4c6d4fa6a11ef17fd14"
+        }
+      },
+      "kernel": "nvoid912/molgap-gptrans-execution-repeat-v1",
+      "kernel_id": 138868818,
+      "median_paired_speedup": 1.2552648456723972,
+      "native_preflight": {
+        "optimized": "ACCEPTED",
+        "original": "ACCEPTED"
+      },
+      "package_identity": "b38aa68f1ba7c0877587f198ece8303dc9ccca1faa4022b9e34e09318bf94025",
+      "paired_timings": [
+        {
+          "optimized_seconds": 70.558612864,
+          "original_seconds": 88.01426256899998,
+          "phase": "diagnostic-0",
+          "physical_devices": {
+            "optimized": "1",
+            "original": "0"
+          },
+          "speedup_factor": 1.247392189223523,
+          "wall_reduction_percent": 19.832751187701415
+        },
+        {
+          "optimized_seconds": 69.38290190700002,
+          "original_seconds": 87.75417239500007,
+          "phase": "diagnostic-1",
+          "physical_devices": {
+            "optimized": "0",
+            "original": "1"
+          },
+          "speedup_factor": 1.2647809472227707,
+          "wall_reduction_percent": 20.934925356377452
+        },
+        {
+          "optimized_seconds": 70.62867511000002,
+          "original_seconds": 88.65769296200006,
+          "phase": "diagnostic-2",
+          "physical_devices": {
+            "optimized": "1",
+            "original": "0"
+          },
+          "speedup_factor": 1.2552648456723972,
+          "wall_reduction_percent": 20.335536883107856
+        }
+      ],
+      "profile": {
+        "optimized": {
+          "capture_updates": 16,
+          "capture_wall_seconds": 3.483091142000035,
+          "cuda_runtime_calls": {
+            "cudaDeviceGetAttribute": 256,
+            "cudaDeviceSynchronize": 2,
+            "cudaEventQuery": 80,
+            "cudaEventRecord": 80,
+            "cudaLaunchKernel": 31089,
+            "cudaMemcpyAsync": 1136,
+            "cudaMemsetAsync": 2792,
+            "cudaOccupancyMaxActiveBlocksPerMultiprocessor": 1204,
+            "cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags": 192,
+            "cudaPeekAtLastError": 2096,
+            "cudaPointerGetAttributes": 240,
+            "cudaStreamIsCapturing": 2288,
+            "cudaStreamSynchronize": 16
+          },
+          "device_activity_union_us": 1101354.1662597656,
+          "optimizer": {
+            "calls": 16,
+            "inclusive_duration_us": 175771.00400000007
+          },
+          "selected_aten_dispatch_calls": {
+            "aten::_local_scalar_dense": 8560,
+            "aten::addmm": 800,
+            "aten::bmm": 1407,
+            "aten::copy_": 3631,
+            "aten::fill_": 656,
+            "aten::mm": 2176
+          },
+          "top_device_kernels": [
+            {
+              "calls": 768,
+              "duration_us": 81548.98200000008,
+              "fraction_of_kernel_duration_sum": 0.07625234889036035,
+              "name": "volta_sgemm_128x64_nt"
+            },
+            {
+              "calls": 2576,
+              "duration_us": 75950.99200000003,
+              "fraction_of_kernel_duration_sum": 0.07101795017567435,
+              "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>)"
+            },
+            {
+              "calls": 2048,
+              "duration_us": 65932.19700000017,
+              "fraction_of_kernel_duration_sum": 0.06164987919471488,
+              "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1})"
+            },
+            {
+              "calls": 1984,
+              "duration_us": 62731.79700000005,
+              "fraction_of_kernel_duration_sum": 0.0586573462236875,
+              "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})"
+            },
+            {
+              "calls": 768,
+              "duration_us": 54640.10600000004,
+              "fraction_of_kernel_duration_sum": 0.051091213206294485,
+              "name": "volta_sgemm_128x128_tn"
+            }
+          ]
+        },
+        "original": {
+          "capture_updates": 16,
+          "capture_wall_seconds": 4.403246341000113,
+          "cuda_runtime_calls": {
+            "cudaDeviceGetAttribute": 304,
+            "cudaDeviceSynchronize": 2,
+            "cudaEventQuery": 240,
+            "cudaEventRecord": 240,
+            "cudaLaunchKernel": 92360,
+            "cudaMemcpyAsync": 1392,
+            "cudaMemsetAsync": 2792,
+            "cudaOccupancyMaxActiveBlocksPerMultiprocessor": 1204,
+            "cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags": 224,
+            "cudaPeekAtLastError": 2480,
+            "cudaPointerGetAttributes": 240,
+            "cudaStreamIsCapturing": 2288,
+            "cudaStreamSynchronize": 192
+          },
+          "device_activity_union_us": 1302598.5952148438,
+          "optimizer": {
+            "calls": 16,
+            "inclusive_duration_us": 832287.0999999999
+          },
+          "selected_aten_dispatch_calls": {
+            "aten::_local_scalar_dense": 4336,
+            "aten::addmm": 800,
+            "aten::bmm": 1472,
+            "aten::copy_": 8160,
+            "aten::fill_": 23024,
+            "aten::mm": 2176
+          },
+          "top_device_kernels": [
+            {
+              "calls": 6816,
+              "duration_us": 87118.35699999935,
+              "fraction_of_kernel_duration_sum": 0.06865562803729415,
+              "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>)"
+            },
+            {
+              "calls": 768,
+              "duration_us": 85772.65100000014,
+              "fraction_of_kernel_duration_sum": 0.06759511342516136,
+              "name": "volta_sgemm_128x64_nt"
+            },
+            {
+              "calls": 13712,
+              "duration_us": 79128.71299999852,
+              "fraction_of_kernel_duration_sum": 0.06235920503870086,
+              "name": "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<float>, std::array<char*, 1ul> >(int, at::native::FillFunctor<float>, std::array<char*, 1ul>)"
+            },
+            {
+              "calls": 2048,
+              "duration_us": 66969.39099999999,
+              "fraction_of_kernel_duration_sum": 0.05277677124214071,
+              "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1})"
+            },
+            {
+              "calls": 2000,
+              "duration_us": 65311.09199999987,
+              "fraction_of_kernel_duration_sum": 0.0514699105156623,
+              "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})"
+            }
+          ]
+        }
+      },
+      "scheduler": {
+        "kernel": "nvoid912/molgap-gptrans-execution-repeat-v1",
+        "message": "",
+        "observed_at": "2026-10-15T17:32:46.614195+00:00",
+        "status": "COMPLETE",
+        "version": 1
+      },
+      "source_archive_sha256": "4d4dc2c2b20e873542450bcbde3d6cc3a29f8cd129689dd066f1b42eaf3cf99f",
+      "source_verification": {
+        "dataset_sources": [
+          "nvoid912/molgap-gptrans-execution-repeat-v1-source",
+          "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+        ],
+        "entry_bytes_equal": true,
+        "entry_sha256": "96a1d22c49810a36bd95057972af2e08ec749ed9c106cd2e57dbe645986a142d",
+        "kernel": "nvoid912/molgap-gptrans-execution-repeat-v1",
+        "kernel_id": 138868818,
+        "machine_shape": "NvidiaTeslaT4",
+        "observed_at": "2026-10-15T17:34:42.811978+00:00",
+        "private": true,
+        "version": 1
+      },
+      "spec_identity": "caf5bb20a20b1ae6e259e102910e820bc7189ee3746458cb7094668b6e07713f",
+      "status": "SHORT_PROBE_VERIFIED",
+      "version": 1
+    }
+  },
+  "source_commit": "91b515f8110f3d60ff8705c2e3fe4388e346834d",
+  "status": "ACCEPTED_EXECUTION_DIAGNOSTICS",
+  "storage_policy": "Small sealed metadata, raw profiling traces and compact tensor excerpts only; disposable full tensors released after independent audit. Exact remote file hashes remain retrievable on demand.",
+  "total_allocated_t4_hours": 0.4585088834161111
+}

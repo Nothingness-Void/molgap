@@ -43,7 +43,7 @@ predictions. Scientific promotion/Replay remain excluded.
 The [cached-provider round](experiments/k1_infrastructure_t4_100k/execution_providers/results/decision_2026-10-15.md)
 accepted an execution benefit with identical tensors/predictions; incremental gain over the earlier shared version remains unestablished.
 The [GPTrans diagnostic](experiments/gptrans_infrastructure_t4_100k/results/decision_2026-10-15.md) accepted execution gains with drift; both arms are RML-closed.
-The [authorized short follow-up](experiments/gptrans_infrastructure_t4_100k/followup/STATUS.md) owns two Kaggle3 diagnostic slots.
+The [accepted short follow-up](experiments/gptrans_infrastructure_t4_100k/followup/results/decision_2026-10-16.md) closed both slots with repeatable execution gains and optimizer attribution, without scientific promotion or Replay.
 
 The [reviewed shared training core](docs/operations/SHARED_TRAINING_CORE_SERVER_RETURN.md)
 is integrated for new K1/GPTrans declarations. Native qualification remains

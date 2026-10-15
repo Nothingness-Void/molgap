@@ -1,0 +1,49 @@
+{
+  "cost_status": "observed_records",
+  "finalization_id": "finalize-34c836b8eec9414858280fa24db0cdbf7b441494f08f145e586d34afbbb87f27",
+  "finalized_at": "2026-10-15T17:50:06.375729+00:00",
+  "finalizer_version": "1",
+  "format": "molgap-rml-finalization-v1",
+  "input_artifact_hashes": {
+    "experiments/gptrans_infrastructure_t4_100k/followup/protocol.md": "4ba58048fa071df0016d117fbe861ec132e7d2f06f4cede554ced56045810d6f",
+    "experiments/gptrans_infrastructure_t4_100k/followup/results/acceptance.json": "f928a5eda8ea3b7d386890623b7605f975f842a7a48d678d9b109adaab0a78e0",
+    "experiments/gptrans_infrastructure_t4_100k/followup/results/decision_2026-10-16.md": "982ab504863743115ea669b3206886dcb9fb7381ec9dce6445ca2184fd343e10",
+    "experiments/gptrans_infrastructure_t4_100k/followup/results/timing/optimized/observed_metadata.json": "94a69a5269f48a9467ebfb33dff6832d55a470dbcfca9e9676bbc7076f154ae6",
+    "experiments/gptrans_infrastructure_t4_100k/followup/timing/authority.json": "f8a5a64dc52db6f2283bcd27ae3d197367d8dd6adf44e9b26e1d5543e5051db4",
+    "experiments/gptrans_infrastructure_t4_100k/followup/timing/optimized/contract.json": "4adec69612423d1ea893cc7922fdbf66c9c142e171dd24859be00364a4fa040e",
+    "experiments/gptrans_infrastructure_t4_100k/followup/timing/optimized/rml/trajectory.json": "4fad96a38829fac7b9af3475963aec35d02a1b166f4f482f127436ec71097ea6",
+    "experiments/gptrans_infrastructure_t4_100k/followup/timing/protocol.md": "a20f6d8a37602bec74a4c69e91da15a83739674a0b480c10a91849d2d6a4215b",
+    "experiments/gptrans_infrastructure_t4_100k/followup/timing/role_plan.json": "0bc2d847b7d53d2d698aab27627d65d902bc497879787b41b8742ff50b148410",
+    "experiments/gptrans_infrastructure_t4_100k/followup/timing/submission/launch_receipt.json": "ee4f52451dd9d9e133163f7742ba4a17b707e05bec30a4caed67badc7a0c0381",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/inspection.json": "a7071483c15a2d3729a26a2ea6a7c04ca1cc6729d9ec10aeddbb048c66bc75f4",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/bootstrap_allocation.json": "9903156a4fc78d707a2b934f9c60c2e73f8330bf757d167aaafc5c8d625e7262",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/allocation_ledger.json": "4d33fd2800fe27b4b024290b8c77994ab201af5d224a82f474a8f836cd718535",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/diagnostic_summary.json": "92244ce648a9a36481994a7d74aea59758e1317d92ed0ecd9d7fb2dd4169a14f",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/execution_report.json": "8b78d67f10762a0fccbfc5147c446f324a487707faa1dfe41d31253cdb4adad5",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/execution_retention.json": "535093ff19d2ab585ba0f53bfd50b37e763030245a893a8271cce209b06c56d2",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/optimized/diagnostic-0/output_manifest.json": "79e9c40ec394fb121e21049290dc7d15c4a93a41c703adaf9a738557e4cee76e",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/optimized/diagnostic-1/output_manifest.json": "af3fe9e7ba4e71d1e6ccbbbbae14528be9de7d46bec149b55f89c9a055c55585",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/optimized/diagnostic-2/output_manifest.json": "4ecafe82eb5c6d4838dcf7e5dd66d3019be5418974c6db810307c77a9930d054",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/optimized/diagnostic-profile/output_manifest.json": "773929531b67fd6e96e76339567e4fb7af45df5bd04d03375d46fa21aa16ae4f",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/optimized/runtime_certificate.json": "102abdbb2d08018cbcf1f6512b4f75f7e56e72ee81d2bd41b78f05f2ae0525b2",
+    "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/optimized/runtime_provenance.json": "ec6cc14ba37e2b1c4601536ea0c7510bed8e34cb1211cb64b000df946cb438c2"
+  },
+  "outcome": "INCONCLUSIVE",
+  "published_hashes": {
+    "costs/cost-TC-gptrans-infrastructure-optimized-100k-s42-v3-observed-v1.json": "6fb3a2c747189e525b51810a942b90a9b0f529ef7d0167cc1ba152209801b8ec",
+    "prospective_snapshot.json": "4fad96a38829fac7b9af3475963aec35d02a1b166f4f482f127436ec71097ea6",
+    "roles/role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-labels_read.json": "99d0be5eb15c2c6a1e370950cea875912a1c7e0f032c39bc65826196a9bb48dc",
+    "roles/role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-metric_computed.json": "fcfe940654d3d26ffb8f780653663ee3ea48d67466b814368afb512f71c64ad5",
+    "roles/role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-training_membership.json": "7e0eafe67a6f75409ec2970c2dbfc43107dcd04a48d29be5e15169cf47501f00",
+    "terminal_input.json": "aa3c33c4e0b8425caaba8621135e0bec3d31a44ec634b1c24562792c8ca0a23b",
+    "trajectory.json": "29f4224c8d4667b2dd59396fdd15db58f326c8e864e088c5963896bf1cbf6f76",
+    "v5_evidence.json": "c16e2a26632b1ce27fc542cb599fca922269f1a96a0bf88836bb09fd227ce401"
+  },
+  "replacements": {
+    "trajectory.json": "experiments/gptrans_infrastructure_t4_100k/followup/timing/optimized/rml/trajectory.json"
+  },
+  "role_status": "observed_records",
+  "source_artifact_digest": "34c836b8eec9414858280fa24db0cdbf7b441494f08f145e586d34afbbb87f27",
+  "trace_status": "unavailable",
+  "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v3"
+}

@@ -1,0 +1,122 @@
+{
+  "artifacts": [
+    {
+      "availability": "local_verified",
+      "locator": "experiments/gptrans_infrastructure_t4_100k/followup/results/attribution/optimized/observed_metadata.json",
+      "name": "observed_metadata.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "39b1d765696b92736c649662857f931ac039339f2dc45c4e156e9fd4a8f6d737"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "experiments/gptrans_infrastructure_t4_100k/followup/results/acceptance.json",
+      "name": "acceptance.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "f928a5eda8ea3b7d386890623b7605f975f842a7a48d678d9b109adaab0a78e0"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/attribution/acceptance/inspection.json",
+      "name": "inspection.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "ec2d59224bc3fb4c4f440e0d0f0859e3c11af200bdf6139d47b874ed00d33280"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/attribution/acceptance/raw/bootstrap_allocation.json",
+      "name": "bootstrap_allocation.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "5a555fbc345fa2d028a13cc56f4e5d34ec67eb157f069a97ca4652e2dc766dd1"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/attribution/acceptance/raw/experiment/execution_report.json",
+      "name": "execution_report.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "51af96b3779095ff73f13ce52f38027e991a4a309fefcc443e6b2dbd694eea98"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/attribution/acceptance/raw/experiment/execution_retention.json",
+      "name": "execution_retention.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "dc8a889bff04f4d9133712f07fe66288fafa15a16b312d13fb191d3720c0660b"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/attribution/acceptance/raw/experiment/allocation_ledger.json",
+      "name": "allocation_ledger.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "dbcb6527bb546bd083559747ac4fbe793cdeabf260d6fe5d895fa4cf26fc5204"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/attribution/acceptance/raw/experiment/diagnostic_summary.json",
+      "name": "diagnostic_summary.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "b551f734976d8e62faf518f503fdd2a6d9f406a4b19f509f516e3472926d2b38"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/attribution/acceptance/raw/experiment/optimized/runtime_certificate.json",
+      "name": "runtime_certificate.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "169e64dc41dd015884c63e535e65058f63f23d80534a058ab8081bdef12cc061"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/attribution/acceptance/raw/experiment/optimized/diagnostic-0/output_manifest.json",
+      "name": "output_manifest.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "bdc33be5a81b4323d65dc021d90aacda13420fd2eebd0dc71bd408391898b5b3"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/attribution/acceptance/raw/experiment/optimized/runtime_provenance.json",
+      "name": "runtime_provenance.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "49c0a7552e8b1c12e711edf560f7d8b695bc3f6551bfd5fb9343b9a8a53e0c60"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/gptrans_infrastructure_t4_100k/followup/protocol.md",
+      "experiments/gptrans_infrastructure_t4_100k/followup/attribution/protocol.md",
+      "experiments/gptrans_infrastructure_t4_100k/followup/attribution/authority.json",
+      "experiments/gptrans_infrastructure_t4_100k/followup/attribution/role_plan.json",
+      "experiments/gptrans_infrastructure_t4_100k/followup/attribution/optimized/rml/trajectory.json",
+      "experiments/gptrans_infrastructure_t4_100k/followup/attribution/optimized/contract.json",
+      "experiments/gptrans_infrastructure_t4_100k/followup/attribution/submission/launch_receipt.json",
+      "experiments/gptrans_infrastructure_t4_100k/followup/results/decision_2026-10-16.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-infrastructure-optimized-100k-s42-v2",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-15T17:50:06.375729+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "source/native gates, all sealed witnesses and independent CPU summaries; short execution diagnostic only"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "untouched",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "short_execution_diagnostic_100k",
+  "track": "C"
+}

@@ -1,8 +1,10 @@
 # Short probe status
 
-Both user-authorized private Kaggle3 slots were submitted once; both exact
-version1 jobs were observed RUNNING at14:34UTC on2026-10-15. [Protocol](protocol.md) owns scope. Native preflight,
-diagnostic completion and terminal acceptance remain pending.
+Both exact private Kaggle3 version1 jobs completed and passed terminal acceptance.
+The [accepted decision](results/decision_2026-10-16.md) and
+[compact evidence](results/acceptance.json) own results, cost and retention.
+All four prospective arms were closed context-only/INCONCLUSIVE, without Replay
+or an automatic successor. [Protocol](protocol.md) owns scope.
 
 | Slot | Frozen scope | Platform identity |
 |---|---|---|
@@ -16,7 +18,7 @@ package and archive hashes. Each sibling submission directory retains the
 actual platform response, launch receipt, API source/mount verification,
 source-file round-trip hashes, scheduler observation and operation journal.
 The [attribution startup](attribution/submission/startup_status.json) and
-[timing startup](timing/submission/startup_status.json) retain the later RUNNING observation.
+[timing startup](timing/submission/startup_status.json) retain historical RUNNING observations.
 No retry, extra seed or full training was submitted.
 
 The first local calls stopped before any POST because missing private targets

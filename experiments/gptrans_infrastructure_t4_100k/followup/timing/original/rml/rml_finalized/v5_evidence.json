@@ -1,0 +1,143 @@
+{
+  "artifacts": [
+    {
+      "availability": "local_verified",
+      "locator": "experiments/gptrans_infrastructure_t4_100k/followup/results/timing/original/observed_metadata.json",
+      "name": "observed_metadata.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "59782a091aa4f550622f6302fc4bb446886ae68986187191268239b4ed132a67"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "experiments/gptrans_infrastructure_t4_100k/followup/results/acceptance.json",
+      "name": "acceptance.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "f928a5eda8ea3b7d386890623b7605f975f842a7a48d678d9b109adaab0a78e0"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/inspection.json",
+      "name": "inspection.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "a7071483c15a2d3729a26a2ea6a7c04ca1cc6729d9ec10aeddbb048c66bc75f4"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/bootstrap_allocation.json",
+      "name": "bootstrap_allocation.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "9903156a4fc78d707a2b934f9c60c2e73f8330bf757d167aaafc5c8d625e7262"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/execution_report.json",
+      "name": "execution_report.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "8b78d67f10762a0fccbfc5147c446f324a487707faa1dfe41d31253cdb4adad5"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/execution_retention.json",
+      "name": "execution_retention.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "535093ff19d2ab585ba0f53bfd50b37e763030245a893a8271cce209b06c56d2"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/allocation_ledger.json",
+      "name": "allocation_ledger.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "4d33fd2800fe27b4b024290b8c77994ab201af5d224a82f474a8f836cd718535"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/diagnostic_summary.json",
+      "name": "diagnostic_summary.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "92244ce648a9a36481994a7d74aea59758e1317d92ed0ecd9d7fb2dd4169a14f"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/original/runtime_certificate.json",
+      "name": "runtime_certificate.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "4791c13997f507fb5639e73a1901bc9051288ab61533b1c51108939798a09edc"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/original/diagnostic-0/output_manifest.json",
+      "name": "output_manifest.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "c92e204609433283dc2d786798d11ea1aa1bb0a38c11472f8ba3c6b09fe65ddc"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/original/diagnostic-1/output_manifest.json",
+      "name": "output_manifest.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "4f2e5acabdb76950fa0c1f2ac59e8bd07304959be2091f5509ee4d1aa669c78d"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/original/diagnostic-2/output_manifest.json",
+      "name": "output_manifest.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "e1d96c351a242adf0695c36294a715bb2246c5d3c0b9a0739b74442c4ee31191"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/original/diagnostic-profile/output_manifest.json",
+      "name": "output_manifest.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "bd0d0335e61dfffd563bfbdedf31058217bf18405851a41e3a1d4e515dfec3db"
+    },
+    {
+      "availability": "local_verified",
+      "locator": "platforms/_records/kaggle/gptrans_execution_followup/timing/acceptance/raw/experiment/original/preflight.json",
+      "name": "preflight.json",
+      "purpose": "analysis_diagnostics",
+      "sha256": "7a0223f7aef98a4b5f1c4e1679e199e64644c3ef89488d66e19726e5ab0f30d8"
+    }
+  ],
+  "authority": {
+    "pointers": [
+      "experiments/gptrans_infrastructure_t4_100k/followup/protocol.md",
+      "experiments/gptrans_infrastructure_t4_100k/followup/timing/protocol.md",
+      "experiments/gptrans_infrastructure_t4_100k/followup/timing/authority.json",
+      "experiments/gptrans_infrastructure_t4_100k/followup/timing/role_plan.json",
+      "experiments/gptrans_infrastructure_t4_100k/followup/timing/original/rml/trajectory.json",
+      "experiments/gptrans_infrastructure_t4_100k/followup/timing/original/contract.json",
+      "experiments/gptrans_infrastructure_t4_100k/followup/timing/submission/launch_receipt.json",
+      "experiments/gptrans_infrastructure_t4_100k/followup/results/decision_2026-10-16.md"
+    ]
+  },
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-gptrans-infrastructure-original-100k-s42-v3",
+  "format": "molgap-v5-evidence-envelope-v1",
+  "legacy_contract": "none-prospective-v5",
+  "migration": {
+    "inference_executed": false,
+    "migrated_at": "2026-10-15T17:50:06.375729+00:00",
+    "scientific_reinterpretation": false,
+    "training_executed": false,
+    "verification_scope": "source/native gates, all sealed witnesses and independent CPU summaries; short execution diagnostic only"
+  },
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "untouched",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "scope": "short_execution_diagnostic_100k",
+  "track": "C"
+}
