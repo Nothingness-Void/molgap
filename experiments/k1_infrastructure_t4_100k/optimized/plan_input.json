@@ -1,15 +1,86 @@
 {
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "optimized-v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-infrastructure-optimized-100k-s42-planned",
+      "evidence_ref": "experiments/k1_infrastructure_t4_100k/authority.json",
+      "hardware": "Tesla_T4x2_shared_allocation",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "estimated",
+          "value": 7
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 3.5
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "k1-infrastructure-t4-100k-s42-v1:optimized:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+    }
+  ],
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_K1_EXECUTION_DIAGNOSTIC",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/k1_infrastructure_t4_100k/authority.json",
+    "chosen_action": "RUN_K1_EXECUTION_DIAGNOSTIC",
+    "known_evidence_ids": [],
+    "known_trajectory_ids": [],
+    "policy_id": "k1-infrastructure-execution",
+    "policy_version": "v1",
+    "role_snapshot_refs": [
+      "experiments/k1_infrastructure_t4_100k/role_plan.json"
+    ],
+    "source_commit": "b2fc17a25536195bc2220de1c795af886089488b",
+    "state_timestamp": "2026-10-15T00:59:18.496302+00:00"
+  },
   "trajectory": {
-    "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42",
-    "record_mode": "prospective",
-    "owner": "server",
-    "track": "C",
+    "actions": [
+      {
+        "action_id": "A001",
+        "attempt_ids": [
+          "optimized-v1"
+        ],
+        "cost_event_ids": [
+          "cost-TC-k1-infrastructure-optimized-100k-s42-planned"
+        ],
+        "evidence_refs": [
+          "experiments/k1_infrastructure_t4_100k/optimized/contract.json"
+        ],
+        "run_ids": [
+          "k1-infrastructure-t4-100k-s42-v1:optimized:downstream"
+        ],
+        "source_commit": "b2fc17a25536195bc2220de1c795af886089488b",
+        "type": "execution_diagnostic"
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/k1_infrastructure_t4_100k/decision.md",
+      "next_allowed_actions": [
+        "one authorized execution diagnostic"
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    },
     "family_id": "k1-infrastructure-execution",
-    "question": "How much does modular K1 infrastructure change T4 execution cost?",
     "hypothesis": {
-      "hypothesis_id": "H-TC-k1-infrastructure-optimized-100k-s42",
-      "observed_deficiency": "Desktop cross-job speed observations lack a same-allocation original/shared comparison",
-      "supporting_evidence_ids": [],
       "alternative_explanations": [
         "CPU contention",
         "Device variability",
@@ -17,111 +88,40 @@
       ],
       "changed_mechanism": "shared modular optimized execution",
       "cheapest_falsifier": "one matched seed42 T4x2 execution diagnostic with actual operator capture",
-      "related_closed_family_ids": [],
-      "expected_native_cost_ref": "cost-TC-k1-infrastructure-optimized-100k-s42-planned",
-      "decision_changed_if_positive": "retain measured execution benefit without architecture promotion",
       "decision_changed_if_negative": "record no gain/regression without a retry or extra seed",
-      "historical_unknowns": []
+      "decision_changed_if_positive": "retain measured execution benefit without architecture promotion",
+      "expected_native_cost_ref": "cost-TC-k1-infrastructure-optimized-100k-s42-planned",
+      "historical_unknowns": [],
+      "hypothesis_id": "H-TC-k1-infrastructure-optimized-100k-s42",
+      "observed_deficiency": "Desktop cross-job speed observations lack a same-allocation original/shared comparison",
+      "related_closed_family_ids": [],
+      "supporting_evidence_ids": []
+    },
+    "owner": "server",
+    "question": "How much does modular K1 infrastructure change T4 execution cost?",
+    "record_mode": "prospective",
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
     },
     "state_at_start": {
-      "source_commit": "ed6bf8ab5f86f1c94afe5750403145f84a3c21bd",
-      "source_config_identity": "2ef2ae9f4531b1ff9b74acab02a5290cd01a723dfae41287671c92e995a5abea",
+      "budget_snapshot_ref": "experiments/k1_infrastructure_t4_100k/authority.json",
       "contract_refs": [
         "experiments/k1_infrastructure_t4_100k/optimized/contract.json",
         "experiments/k1_infrastructure_t4_100k/protocol.md",
         "experiments/k1_infrastructure_t4_100k/authority.json"
       ],
-      "reference_ids": [],
       "parent_trajectory_ids": [],
-      "prior_trajectory_ids": [],
       "prior_evidence_ids": [],
+      "prior_trajectory_ids": [],
+      "reference_ids": [],
       "role_snapshot_refs": [
         "experiments/k1_infrastructure_t4_100k/role_plan.json"
       ],
-      "budget_snapshot_ref": "experiments/k1_infrastructure_t4_100k/authority.json"
+      "source_commit": "b2fc17a25536195bc2220de1c795af886089488b",
+      "source_config_identity": "da8ccd989108b0fd59e780f1f60295b705819c6c778e4d77693885ce615c858b"
     },
-    "actions": [
-      {
-        "action_id": "A001",
-        "type": "execution_diagnostic",
-        "source_commit": "ed6bf8ab5f86f1c94afe5750403145f84a3c21bd",
-        "run_ids": [
-          "k1-infrastructure-t4-100k-s42-v1:optimized:downstream"
-        ],
-        "attempt_ids": [
-          "optimized-v1"
-        ],
-        "evidence_refs": [
-          "experiments/k1_infrastructure_t4_100k/optimized/contract.json"
-        ],
-        "cost_event_ids": [
-          "cost-TC-k1-infrastructure-optimized-100k-s42-planned"
-        ]
-      }
-    ],
-    "result": {
-      "evidence_ids": [],
-      "evidence_refs": []
-    },
-    "decision": {
-      "decision_ref": "experiments/k1_infrastructure_t4_100k/decision.md",
-      "outcome": "ACTIVE",
-      "next_allowed_actions": [
-        "one authorized execution diagnostic"
-      ],
-      "reopen_conditions": [
-        "terminal evidence"
-      ]
-    }
-  },
-  "decision_state": {
-    "known_trajectory_ids": [],
-    "known_evidence_ids": [],
-    "active_reference_ids": [],
-    "available_actions": [
-      "RUN_K1_EXECUTION_DIAGNOSTIC",
-      "DEFER"
-    ],
-    "chosen_action": "RUN_K1_EXECUTION_DIAGNOSTIC",
-    "policy_id": "k1-infrastructure-execution",
-    "policy_version": "v1",
-    "budget_snapshot_ref": "experiments/k1_infrastructure_t4_100k/authority.json",
-    "role_snapshot_refs": [
-      "experiments/k1_infrastructure_t4_100k/role_plan.json"
-    ],
-    "state_timestamp": "2026-10-15T00:52:44.441159+00:00",
-    "source_commit": "ed6bf8ab5f86f1c94afe5750403145f84a3c21bd"
-  },
-  "costs": [
-    {
-      "schema": "molgap-cost-event-v1",
-      "cost_event_id": "cost-TC-k1-infrastructure-optimized-100k-s42-planned",
-      "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42",
-      "action_id": "A001",
-      "run_id": "k1-infrastructure-t4-100k-s42-v1:optimized:downstream",
-      "attempt_id": "optimized-v1",
-      "category": "training",
-      "platform": "kaggle3",
-      "hardware": "Tesla_T4x2_shared_allocation",
-      "evidence_ref": "experiments/k1_infrastructure_t4_100k/authority.json",
-      "measurement": {
-        "device_hours": {
-          "status": "estimated",
-          "value": 7
-        },
-        "wall_hours": {
-          "status": "estimated",
-          "value": 3.5
-        },
-        "cpu_hours": {
-          "status": "measurement_missing",
-          "value": null
-        },
-        "queue_hours": {
-          "status": "measurement_missing",
-          "value": null
-        }
-      }
-    }
-  ]
+    "track": "C",
+    "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42"
+  }
 }

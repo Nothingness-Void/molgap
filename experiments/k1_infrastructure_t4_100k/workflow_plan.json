@@ -1,6 +1,31 @@
 {
+  "acceptance_plan": "experiments/k1_infrastructure_t4_100k/acceptance_plan.json",
+  "arms": [
+    {
+      "arm_id": "original",
+      "device": 0,
+      "initial_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\initializations\\k1_reference_s42.pt",
+      "recipe": "experiments/k1_infrastructure_t4_100k/original/contract.json"
+    },
+    {
+      "arm_id": "optimized",
+      "device": 1,
+      "initial_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\initializations\\k1_reference_s42.pt",
+      "recipe": "experiments/k1_infrastructure_t4_100k/optimized/contract.json"
+    }
+  ],
   "format": "molgap-experiment-workflow-v1",
-  "spec_identity": "e4f890be05a3dda371f0d943d52b52ae74f337e30794fcbb4ee73aa6ca4cb8c4",
+  "kaggle": {
+    "accelerator": "NvidiaTeslaT4",
+    "account": "nvoid912",
+    "datasets": [
+      "nvoid912/molgap-k1-infrastructure-source-v1",
+      "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+    ],
+    "kernel": "nvoid912/molgap-k1-infrastructure-dual-100k-v1",
+    "source_dataset": "nvoid912/molgap-k1-infrastructure-source-v1",
+    "title": "MolGap K1 Infrastructure Dual 100K V1"
+  },
   "source_files": [
     "platforms/kaggle/run_experiment.py",
     "src/molgap/__init__.py",
@@ -131,30 +156,5 @@
     "experiments/k1_infrastructure_t4_100k/protocol.md",
     "experiments/k1_infrastructure_t4_100k/acceptance_plan.json"
   ],
-  "arms": [
-    {
-      "arm_id": "original",
-      "device": 0,
-      "recipe": "experiments/k1_infrastructure_t4_100k/original/contract.json",
-      "initial_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\initializations\\k1_reference_s42.pt"
-    },
-    {
-      "arm_id": "optimized",
-      "device": 1,
-      "recipe": "experiments/k1_infrastructure_t4_100k/optimized/contract.json",
-      "initial_state": "C:\\Users\\Adminn\\Documents\\molgap\\platforms\\_records\\kaggle\\initializations\\k1_reference_s42.pt"
-    }
-  ],
-  "acceptance_plan": "experiments/k1_infrastructure_t4_100k/acceptance_plan.json",
-  "kaggle": {
-    "account": "nvoid912",
-    "kernel": "nvoid912/molgap-k1-infrastructure-dual-100k-v1",
-    "title": "MolGap K1 Infrastructure Dual 100K V1",
-    "source_dataset": "nvoid912/molgap-k1-infrastructure-source-v1",
-    "accelerator": "NvidiaTeslaT4",
-    "datasets": [
-      "nvoid912/molgap-k1-infrastructure-source-v1",
-      "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
-    ]
-  }
+  "spec_identity": "04cb324e08abaacd50a9c8c539c2376248fe8eaacc3b38bdcabbde1e23e8bc6d"
 }

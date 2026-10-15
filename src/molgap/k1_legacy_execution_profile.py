@@ -27,10 +27,12 @@ class LegacyK1ExecutionProfiler(_ExecutionCapture):
 
     def _install(self):
         import torch
+        from torch_geometric.data import Data
         from .experiment_family_workflow import FamilyOutputSession
         for obj, name, label in (
                 (self.owner, "_forward", "forward"),
                 (self.owner, "_evaluate", "development"),
+                (Data, "to", "transfer"),
                 (torch.autograd, "backward", "backward"),
                 (torch.nn.utils, "clip_grad_norm_", "gradient_clip"),
                 (FamilyOutputSession, "checkpoint", "checkpoint_publish"),

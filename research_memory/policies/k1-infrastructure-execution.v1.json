@@ -1,35 +1,35 @@
 {
-  "schema": "molgap-policy-v1",
-  "policy_id": "k1-infrastructure-execution",
-  "version": "v1",
-  "policy_type": "research_action",
-  "status": "candidate",
-  "comparability_selector": {
-    "scientific_contract": "k1-original-shared-execution100k-v1"
+  "action_rule": {
+    "action": "RUN_K1_EXECUTION_DIAGNOSTIC",
+    "field": "authorized_execution_diagnostic",
+    "operator": "eq",
+    "threshold": true
   },
-  "required_observable_fields": [
-    "authorized_execution_diagnostic"
-  ],
-  "created_from_source_digest": "68446fc5eb7318c94d895f1ea13d97d1b6c753d50289a6b7e66cf21005efd50b",
   "approval": {
     "activation": "one-user-authorized-original-shared-K1-execution-diagnostic",
     "authority_ref": "experiments/k1_infrastructure_t4_100k/authority.json"
   },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "k1-original-shared-execution100k-v1"
+  },
   "cost_model": {
-    "kind": "measured_only",
     "assumptions": [
       "full observed T4x2 allocation including idle tail",
       "no cross-hardware conversion"
-    ]
+    ],
+    "kind": "measured_only"
   },
-  "observation_point": null,
+  "created_from_source_digest": "14e31112932c3a7081a287be9e9d882d73c5c9c8f04e169c5271aa80e6a680e6",
   "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "k1-infrastructure-execution",
+  "policy_type": "research_action",
   "promotion_rule": null,
-  "action_rule": {
-    "field": "authorized_execution_diagnostic",
-    "operator": "eq",
-    "threshold": true,
-    "action": "RUN_K1_EXECUTION_DIAGNOSTIC"
-  },
-  "borderline_action": "DEFER"
+  "required_observable_fields": [
+    "authorized_execution_diagnostic"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
 }

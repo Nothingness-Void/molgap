@@ -22,10 +22,13 @@ def freeze_comparison(root, *, account="nvoid912"):
     from .k1_screen_training import (build_screen_recipe as legacy_recipe, INITIAL_STATE_SHA256,
         FIXED_MANIFEST_SHA256, ROW_ORDER_FINGERPRINT, _screen_metric_semantics)
     from .qm9_neural_atom import make_encoder
-    from .training_reproducibility import atomic_json, atomic_torch_save
+    from .training_reproducibility import atomic_torch_save
+    from .research_memory.trace import atomic_write, json_bytes
     from .screen_policy import canonical_fingerprint
     from .v4_runtime import state_dict_sha256, normalized_source_sha256
     root = Path(root).resolve()
+    def atomic_json(path, value):
+        atomic_write(path, json_bytes(value))
     here = root / BASE
     if (here / "experiment_spec.json").exists():
         raise ValueError("Comparison already frozen; reconcile before another attempt")
