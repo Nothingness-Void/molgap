@@ -13,6 +13,8 @@ Before adding plumbing, use the repository's
 It routes to existing components and records only the missing behavior; the
 contracts below remain authoritative. It does not add a second execution core.
 
+Execution diagnostics reuse the [shared-session profiler](FAMILY_EXECUTION_PROFILE.md).
+
 ## Shared Core
 
 Reuse these modules instead of copying their logic into an experiment script:

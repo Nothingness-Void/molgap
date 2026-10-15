@@ -4,6 +4,8 @@ Scope: K1 and GPTrans-T. Platform skills own submission, remote allocation,
 reconciliation and retrieval. Data adapters own pinned graph views. Neither
 layer may copy or alter the training algorithm to fit a platform or scale.
 
+For opt-in operator and layer observations, use the [session profiler](FAMILY_EXECUTION_PROFILE.md).
+
 ## Code Owners
 
 | Owner | Responsibility |
