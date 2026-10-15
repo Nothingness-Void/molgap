@@ -27,6 +27,11 @@ workflow is not a universal platform submitter.
 
 ## Owners
 
+Desktop/server-neutral declaration, identity and SDK/transport mechanisms use
+[Common API](../../src/molgap/common/README.md); experiment profiles and authority
+remain outside it. Reuse these APIs rather than porting a machine-specific builder.
+
+
 Before fresh legacy multi-arm preparation, use `check-workflow` to aggregate
 recipe/profiler and prospective-policy gaps without staging or RML writes.
 The [prepared Kaggle submission adapter](KAGGLE_WORKFLOW_SUBMISSION.md) then

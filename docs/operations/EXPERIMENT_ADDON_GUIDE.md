@@ -12,13 +12,14 @@ state, one-batch sandbox, then source closure. Do not copy a trainer or launcher
 
 | Operation | Reuse owner | Boundary / next pointer |
 |---|---|---|
+| Desktop/server common mechanisms | [Common API](../../src/molgap/common/README.md) | Explicit question/config facts; reuse declaration, identity, SDK and pinned retention owners. No machine-specific controller dependency. |
 | Shared K1/GPTrans execution and data | [Core, recipe, data, kernel, loader and session owners](FAMILY_TRAINING_CORE.md) | Reuse the common loop and family hooks; the migration status distinguishes implementation primitives from a released cross-scale workflow. |
 | Configure training logs | [Standard training logging](TRAINING_LOGGING.md), `build_family_recipe(..., logging=...)` | Shared sessions automatically emit fixed metric/state fields; choose epoch/seconds/batches in the contract, without a custom printer or timer. |
 | GPTrans accelerated training | [Default execution](GPTRANS_EXECUTION.md), `pcqm_gptrans_v4.py` native entrypoints | Automatic for registered preflight/training; new identity and native gates remain mandatory. No manual backend wrapping. |
 | K1 accelerated training | [Default execution](K1_EXECUTION.md), `experiment_execution.py`: `build_family_recipe` | Automatic base, including no-addon baseline. Scientific addons reuse it; execution-only addons are retired. |
 | Prepare or accept a registered multi-arm run | `experiment_workflow.py`, local [CLI](EXPERIMENT_CLI.md) | The [workflow](EXPERIMENT_WORKFLOW.md) owns the concise plan and lifecycle. |
 | Check a fresh workflow before staging | `experiment_cli check-workflow`, `experiment_workflow.check_workflow_readiness` | Read-only recipe/profiler and prospective RML-policy validation, not publication or execution authority. |
-| Build execution-comparison declarations | `execution_comparison.py`: `ExecutionQuestion`, `execution_proposal`, `freeze_comparison_declarations` | Reuse Spec/RML envelopes; supply explicit owner/track/platform, family recipes and authorization. No frozen research question is copied. |
+| Build execution-comparison declarations | [Common declarations API](../../src/molgap/common/README.md), existing Spec/RML owners | New questions supply an explicit profile. `execution_comparison.py` retains historical T4 compatibility and its owning acceptance-envelope writer; do not copy its frozen defaults. |
 | Draft a fixed100K K1 pair | [k1_pair_preparation.py](../../src/molgap/k1_pair_preparation.py): `build_inputs` | Reuses fixed data/target bindings and family recipes; fresh questions need fresh IDs, protocol and explicit release. Drafts do not publish RML or authorize training. |
 | Historical K1 speed diagnostic | [Accepted10ep record](../../experiments/pcqm_k1_fused_layout_speed/README.md) | Retired live runner; replay only with its frozen source package. New experiments use registered default trainers. |
 | Locate shared-session hotspots | [Session profiler](FAMILY_EXECUTION_PROFILE.md): `FamilyExecutionProfiler` | Optional phase ranges and CPU/device operator trace around an admitted existing session; capture budget is separate from the owning run budget. |

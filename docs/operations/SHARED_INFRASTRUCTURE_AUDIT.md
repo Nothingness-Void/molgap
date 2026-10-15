@@ -5,6 +5,10 @@ contract, training release, historical-result reacceptance or live branch index.
 
 ## Scope and disposition
 
+Subsequent mechanism extraction is documented by the
+[Common API](../../src/molgap/common/README.md). This dated audit remains the
+pre-extraction snapshot; schema/policy convergence is not implied by that API.
+
 - Desktop: `1b8401b4ebd4c53cc97ea6c76433caaa90b58ad0`.
 - Server: `d52cda1d9effe982fc855a941658b0792a75e436`.
 - The desktop commit selectively integrates server `d3508cf2` with desktop

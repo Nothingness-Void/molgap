@@ -22,6 +22,10 @@ from .experiment_launch import (_safe_local, build_launch_receipt, canonical_jso
                                 reconcile_platform_response)
 from .experiment_package import read_packaged_text, verify_experiment_source_package
 from .experiment_spec import ExperimentSpec
+from .common.kaggle import (
+    dataset_status as _dataset_status, dataset_details as _dataset_details,
+    kernel_source as _kernel_source,
+)
 from .kaggle_accelerator_push import _verify_release_report, push_kernel_with_accelerator
 from .research_memory.trace import atomic_write
 from .training_reproducibility import atomic_json, sha256_file
@@ -39,51 +43,10 @@ def _credentials(path):
 
 
 def connect_kaggle(credentials):
-    """Authenticate the installed SDK without exposing or persisting the key."""
+    """Authenticate the exact requested account without global SDK login state."""
     from .kaggle_credentials import api_for_credentials
     _credentials(credentials)
     return api_for_credentials(credentials)
-
-
-def _not_found(error):
-    return (getattr(error, "status", None) == 404 or getattr(error, "status_code", None) == 404
-            or getattr(getattr(error, "response", None), "status_code", None) == 404)
-
-
-def _dataset_status(api, ref):
-    try:
-        value = api.dataset_status(ref)
-    except Exception as error:
-        if _not_found(error):
-            return None
-        raise RuntimeError("Dataset status is unknown; no publication retry") from None
-    if type(value) is not str or not value:
-        raise ValueError("Malformed dataset status; no publication retry")
-    return {"status": value.lower()}
-
-
-def _dataset_details(api, ref):
-    from kagglesdk.datasets.types.dataset_api_service import ApiGetDatasetRequest
-    request = ApiGetDatasetRequest()
-    request.owner_slug, request.dataset_slug = ref.split("/")
-    with api.build_kaggle_client() as client:
-        details = client.datasets.dataset_api_client.get_dataset(request)
-    if details.ref != ref or details.is_private is not True:
-        raise ValueError("Remote source dataset identity/private binding differs")
-    return details
-
-
-def _kernel_source(api, ref):
-    from kagglesdk.kernels.types.kernels_api_service import ApiGetKernelRequest
-    request = ApiGetKernelRequest()
-    request.user_name, request.kernel_slug = ref.split("/")
-    try:
-        with api.build_kaggle_client() as client:
-            return client.kernels.kernels_api_client.get_kernel(request)
-    except Exception as error:
-        if _not_found(error):
-            return None
-        raise RuntimeError("Kernel identity is unknown; no submission retry") from None
 
 
 def _quota(http, budget):

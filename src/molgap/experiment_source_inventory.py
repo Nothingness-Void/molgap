@@ -5,6 +5,9 @@ This is not runtime dependency discovery. Extra addon paths remain explicit.
 """
 
 COMMON_SOURCE_FILES = (
+    'src/molgap/common/__init__.py',
+    'src/molgap/common/declarations.py',
+    'src/molgap/common/identity.py',
     'platforms/kaggle/run_experiment.py',
     'src/molgap/__init__.py',
     'src/molgap/comparison_readiness.py',
