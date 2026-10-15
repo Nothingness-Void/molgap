@@ -305,3 +305,23 @@ def test_changed_monitor_binding_cannot_reset_a_journal(release, monkeypatch):
     with pytest.raises(ValueError, match="inputs or authority changed"):
         release.run()
     assert release.api.created == 1 and release.api.pushed == 0
+def test_private_forbidden_requires_complete_authenticated_owned_absence():
+    from types import SimpleNamespace
+    from molgap.kaggle_submission import _owned_absence
+    error = SimpleNamespace(response=SimpleNamespace(status_code=403))
+    class API:
+        CONFIG_NAME_USER = "user"
+        def get_config_value(self, name):
+            return "owner"
+        def kernels_list(self, **kwargs):
+            assert kwargs["mine"] and kwargs["user"] == "owner"
+            return [SimpleNamespace(ref="owner/existing")]
+        def dataset_list(self, **kwargs):
+            assert kwargs["mine"] and "user" not in kwargs
+            return []
+    api = API()
+    assert _owned_absence(api, "owner/missing", "kernel", error)
+    assert _owned_absence(api, "owner/missing", "dataset", error)
+    assert not _owned_absence(api, "owner/existing", "kernel", error)
+    assert not _owned_absence(api, "different/missing", "kernel", error)
+    assert not _owned_absence(api, "owner/missing", "kernel", SimpleNamespace(response=SimpleNamespace(status_code=500)))
