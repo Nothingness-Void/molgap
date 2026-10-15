@@ -34,7 +34,8 @@ class SyntheticKernel(FamilyKernel):
             absolute = (self.forward(batch) - (batch.y.view(-1) - mean) / std).abs()
             return absolute.mean(), (absolute.detach().sum(), batch.num_graphs)
         loss, (absolute, rows) = optimizer_update(self.model, self.optimizer, loss_builder,
-            clip_norm=self.recipe.gradient_clip, check_finite=check_finite, ema=self.ema)
+            clip_norm=self.recipe.gradient_clip, check_finite=check_finite, ema=self.ema,
+            observer=getattr(self, "update_observer", None))
         return loss, absolute, rows
 
 

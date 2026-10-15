@@ -9,6 +9,7 @@ from copy import copy
 from pathlib import Path
 
 from .family_training_recipe import ADAMW_BETAS, ADAMW_EPSILON, FamilyRecipe
+from .family_training_policy import mode_policy
 
 
 def load_family_model(recipe, initial_state):
@@ -34,18 +35,27 @@ def load_family_model(recipe, initial_state):
             from .k1_joint_aggregation import attach_k1_joint_aggregation
             attach_k1_joint_aggregation(model, mode="ssma", layer=6, seed=recipe.seed)
     else:
-        from .pcqm_gptrans_v4 import _make_model
+        from .family_model_ops import make_gptrans_backbone
         from .gptrans_execution_backend import bind_model_layout
-        if recipe.mode.startswith("degree_aggregate_"):
-            from .gptrans_research_campaign import construct
-            model = construct(recipe.mode, state)
-        elif recipe.mode in {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}:
-            from .gptrans_cycle_pair import construct
-            model = construct(recipe.mode, state)
-        else:
-            model = _make_model(variant=recipe.mode)
+        construct = mode_policy(recipe.family, recipe.mode).construct
+        model = (construct(recipe, state) if construct is not None else
+                 make_gptrans_backbone(variant="reference" if recipe.mode == "composed" else recipe.mode))
         exact_load(model)
         bind_model_layout(model)
+    if recipe.addons:
+        from .experiment_execution import TRAINING_ADAPTERS
+        from .shared_model_adapter import apply_reviewed_addons
+        interface = (recipe.family, "3" if recipe.family == "neural_atom_k1" else "2")
+        model = apply_reviewed_addons(TRAINING_ADAPTERS[interface],
+            {"addons": list(recipe.addons)}, model)
+        substrate = getattr(model, "_molgap_substrate", None)
+        if substrate is None or not substrate.bindings:
+            raise ValueError("Accelerated addons must attach to the reviewed substrate slots")
+        substrate.seal()
+    if recipe.clean_bn is not None:
+        from torch.nn.modules.batchnorm import _BatchNorm
+        if not any(isinstance(module, _BatchNorm) and module.track_running_stats for module in model.modules()):
+            raise ValueError("Clean-BN requires a reviewed model with tracked BatchNorm buffers")
     return model, initialization
 
 
@@ -70,6 +80,8 @@ class FamilyKernel:
         if str(torch.__version__).split("+", 1)[0] != recipe.torch_version:
             raise ValueError("Installed Torch differs from the frozen execution pin")
         self.recipe, self.device = recipe, torch.device(device)
+        self.initial_state = Path(initial_state)
+        self.update_observer = None
         # Only the native reference enables safety fill for the qualification run.
         self._qualification_memory_fill = False
         self._qualification_execution_observer = None
@@ -77,37 +89,73 @@ class FamilyKernel:
         self.model.to(self.device)
         self.optimizer = make_family_optimizer(recipe, self.model.parameters())
         self._clip_parameters = tuple(self.model.parameters())
+        expected = [id(p) for p in self.model.parameters() if p.requires_grad]
+        actual = [id(p) for g in self.optimizer.param_groups for p in g["params"] if p.requires_grad]
+        if len(set(actual)) != len(actual) or set(actual) != set(expected):
+            raise ValueError("Optimizer does not own every trainable backbone/addon parameter exactly once")
         from .gptrans_execution_hotpath import BoundForeachEMA, ReusedWeightView
         self.ema = BoundForeachEMA(self.model, recipe.ema_decay) if recipe.ema_decay is not None else None
         self.weight_view = ReusedWeightView()
+
+    @property
+    def training_state(self):
+        from .family_training_state import FamilyTrainingState
+        if getattr(self, "_training_state", None) is None:
+            self._training_state = FamilyTrainingState(self.model, self.ema,
+                clean_factory=self.make_clean_model, weight_view=self.weight_view)
+        if self._training_state.live_model is not self.model or self._training_state.raw_ema is not self.ema:
+            raise ValueError("Live/EMA owner changed after state binding")
+        return self._training_state
+
+    def make_clean_model(self):
+        return load_family_model(self.recipe, self.initial_state)[0]
+
+    @property
+    def evaluation_model(self):
+        if getattr(self, "_evaluation_model", None) is None:
+            if self.weight_view.busy:
+                return self.model
+            raise RuntimeError("No active evaluation state")
+        return self._evaluation_model
+
+    def calibrate(self, loaders):
+        policy = self.recipe.clean_bn
+        if policy is None:
+            raise ValueError("Clean calibration was not declared")
+        return self.training_state.calibrate(policy, loaders.calibration(policy),
+            forward=lambda model, batch: self.forward(batch, model=model),
+            source_indices=lambda batch: batch.source_idx.reshape(-1))
 
     def _gptrans_batch(self, batch, *, training):
         from .gptrans_execution_backend import prepare_layout
         from .gptrans_execution_hotpath import MODEL_FIELDS
         # Borrow immutable CPU data through a fresh PyG storage wrapper.
         prepared = copy(batch) if hasattr(batch, "execution_layout") else prepare_layout(copy(batch))
-        if training and self.recipe.mode == "degree_aggregate_correspondence_ema999":
-            from .gptrans_research_campaign import correspondence_layout
-            prepared.execution_layout = correspondence_layout(dict(prepared.execution_layout))
+        prepare = mode_policy(self.recipe.family, self.recipe.mode).prepare_batch
+        if prepare is not None:
+            prepared = prepare(prepared, training=training)
         fields = (*MODEL_FIELDS, "y") if training else MODEL_FIELDS
         return prepared.to(self.device, *fields, non_blocking=True)
 
-    def step(self, cpu_batch, *, check_finite):
+    def step(self, cpu_batch, *, check_finite, observer=None):
+        observer = observer if observer is not None else getattr(self, "update_observer", None)
         mean, std = self.recipe.target_mean_eV, self.recipe.target_std_eV
         if self.recipe.family == "neural_atom_k1":
             from .k1_execution_layout import cpu_layout_context
             from .k1_execution_backend import execution_context
-            from .k1_screen_training import _model_batch_to_device, _optimizer_step
+            from .family_model_ops import k1_batch_to_device, k1_optimizer_step
+            from .family_training_core import observed_context, update_scope
             from .training_reproducibility import deterministic_memory_fill_context
             borrowed = copy(cpu_batch)
-            with deterministic_memory_fill_context(enabled=False), cpu_layout_context(
-                    self.model, borrowed, self.device), execution_context(
-                    self.model, borrowed, self.device, self.recipe.k1_execution):
-                batch = _model_batch_to_device(borrowed, self.device, training=True)
-                loss, absolute, rows = _optimizer_step(self.model, self.optimizer,
+            with deterministic_memory_fill_context(enabled=False), observed_context(cpu_layout_context(
+                    self.model, borrowed, self.device), observer, "layout"), observed_context(execution_context(
+                    self.model, borrowed, self.device, self.recipe.k1_execution), observer, "execution_provider"):
+                with update_scope(observer, "transfer"):
+                    batch = k1_batch_to_device(borrowed, self.device, training=True)
+                loss, absolute, rows = k1_optimizer_step(self.model, self.optimizer,
                     batch, mean, std, self.recipe.mode,
                     clip_norm=self.recipe.gradient_clip, check_finite=check_finite,
-                    clip_parameters=self._clip_parameters)
+                    clip_parameters=self._clip_parameters, observer=observer)
         else:
             from .family_training_core import normalized_gap_update
             from .gptrans_execution_backend import prepared_forward
@@ -116,31 +164,28 @@ class FamilyKernel:
                 if self._qualification_execution_observer is not None:
                     self._qualification_execution_observer("before_update")
                 batch = self._gptrans_batch(cpu_batch, training=True)
-                if self.recipe.mode == "degree_aggregate_correspondence_ema999":
+                objective = mode_policy(self.recipe.family, self.recipe.mode).objective
+                if objective is not None:
                     from .family_training_core import optimizer_update
-                    from .gptrans_research_campaign import AUX_WEIGHT
-                    def objective():
-                        prediction = prepared_forward(self.model, batch).reshape(-1)
-                        gap = (prediction - (batch.y.reshape(-1).float() - mean) / std).abs()
-                        auxiliary = self.model._correspondence_loss
-                        if auxiliary is None:
-                            raise RuntimeError("Missing clean atom/bond correspondence loss")
-                        self.model._auxiliary_metric = auxiliary.detach()
-                        return gap.mean() + AUX_WEIGHT * auxiliary, (gap.detach().sum(), int(batch.num_graphs))
-                    loss, (absolute, rows) = optimizer_update(self.model, self.optimizer, objective,
+                    loss, (absolute, rows) = optimizer_update(self.model, self.optimizer,
+                        lambda: objective(self.model, batch, prepared_forward, self.recipe),
                         clip_norm=self.recipe.gradient_clip, check_finite=check_finite,
-                        clip_parameters=self._clip_parameters)
-                    self.model._correspondence_loss = None
+                        clip_parameters=self._clip_parameters, observer=observer)
                 else:
                     loss = normalized_gap_update(self.model, self.optimizer, batch, mean, std,
                         forward=prepared_forward, clip_norm=self.recipe.gradient_clip,
                         check_finite=check_finite, cast_target_float=True,
-                        clip_parameters=self._clip_parameters)
+                        clip_parameters=self._clip_parameters, observer=observer)
                     absolute, rows = loss * int(batch.num_graphs), int(batch.num_graphs)
+                after_update = mode_policy(self.recipe.family, self.recipe.mode).after_update
+                if after_update is not None:
+                    after_update(self.model)
                 if self._qualification_execution_observer is not None:
                     self._qualification_execution_observer("after_update")
         if self.ema is not None:
-            self.ema.update(self.model)
+            from .family_training_core import update_scope
+            with update_scope(observer, "ema"):
+                self.training_state.update_raw_ema()
         return loss, absolute, rows
 
     def forward(self, cpu_batch, *, model=None):
@@ -151,15 +196,15 @@ class FamilyKernel:
             from .k1_execution_layout import cpu_layout_context
             from .k1_execution_backend import execution_context
             from .training_reproducibility import deterministic_memory_fill_context
-            from .k1_screen_training import _model_batch_to_device, _forward
+            from .family_model_ops import k1_batch_to_device, k1_forward
             borrowed = copy(cpu_batch)
             config = getattr(self.recipe, "k1_execution", None)
             fill = (nullcontext() if config is None else
                 deterministic_memory_fill_context(enabled=config.evaluation_memory_fill))
             with fill, cpu_layout_context(model, borrowed, self.device), execution_context(
                     model, borrowed, self.device, config):
-                batch = _model_batch_to_device(borrowed, self.device, training=False)
-                return _forward(model, batch)
+                batch = k1_batch_to_device(borrowed, self.device, training=False)
+                return k1_forward(model, batch)
         from .gptrans_execution_backend import prepared_forward
         return prepared_forward(model, self._gptrans_batch(cpu_batch, training=False))
 
@@ -168,30 +213,29 @@ class FamilyKernel:
 
     def evaluate(self, loaders, *, weights=None, on_evaluation=None):
         """Only the explicitly selected internal-development view is consumed."""
-        import math
-        from types import SimpleNamespace
-        from .gptrans_execution_backend import buffered_evaluate
+        from .family_training_core import evaluate_development
         data = loaders.data
         if self.recipe.identity != loaders.recipe.identity or data.development is None:
             raise ValueError("No matching selected development role")
         if on_evaluation is not None and not callable(on_evaluation):
             raise TypeError("Evaluation observer must be a trusted callable")
-        weights = weights or self.recipe.selection.rsplit("-", 1)[1]
-        if weights not in {"live", "ema"} or (weights == "ema" and self.ema is None):
+        weights = weights or self.recipe.selection_weights
+        if weights not in {"live", "ema", "clean-ema"} or (weights != "live" and self.ema is None):
             raise ValueError("Unavailable evaluation weights")
-        with self.weight_view.use(self.model, self.ema, weights):
-            # The existing buffered evaluator owns ordered prediction/target
-            # accumulation. Keep CPU layout preparation before selective transfer.
-            result = buffered_evaluate(SimpleNamespace(DEVELOPMENT_ROWS=data.development_rows),
-                lambda model, batch: self.forward(batch), lambda graphs: loaders.dev(),
-                self.model, None, data.development, self.recipe.target_mean_eV, self.recipe.target_std_eV,
-                weights="live", device="cpu", source_idx_start=data.development_source_start)
-            if not math.isfinite(result["mae_eV"]):
-                raise RuntimeError("Development predictions became nonfinite")
-            # Selection consumes the installed view before live tensors restore.
-            if on_evaluation is not None:
-                on_evaluation(result)
-        return result
+        def evaluate(model):
+            self._evaluation_model = model
+            try:
+                result = evaluate_development(model, loaders.dev(),
+                    forward=lambda model, batch: self.forward(batch) if model is self.model else self.forward(batch, model=model),
+                    rows=data.development_rows, source_start=data.development_source_start,
+                    mean=self.recipe.target_mean_eV, std=self.recipe.target_std_eV)
+                if on_evaluation is not None:
+                    on_evaluation(result)
+                return result
+            finally:
+                self._evaluation_model = None
+        return self.training_state.evaluate("raw-ema" if weights == "ema" else weights, evaluate,
+            calibration_policy=self.recipe.clean_bn if weights == "clean-ema" else None)
 
 
 class ContractSchedule:

@@ -305,17 +305,8 @@ def _make_model(initial_state_path: Path | None = None, variant: str = "referenc
     else:
         from .gptrans_variants import apply_variant
 
-    model = OGBGPTransTiny(
-        node_channels=256,
-        pair_channels=32,
-        num_layers=12,
-        num_heads=8,
-        shortest_path_cap=20,
-        dropout=0.1,
-        drop_path=0.1,
-        layer_scale=1.0,
-        n_targets=1,
-    )
+    from .family_model_ops import make_gptrans_backbone
+    model = make_gptrans_backbone()
     if variant in AUTHOR_MODES:
         if initial_state_path is None:
             raise RuntimeError("Author input arms require a frozen initialization")
@@ -490,7 +481,7 @@ def _make_training_state(initial_state_path: Path, variant: str = "reference"):
     return model, optimizer, scheduler, ema
 
 
-def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bool):
+def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bool, observer=None):
     import torch
     import torch.nn.functional as functional
 
@@ -500,8 +491,15 @@ def _optimizer_step(model, optimizer, ema, batch, mean, std, *, check_finite: bo
     loss = functional.l1_loss(prediction, target)
     if check_finite and not bool(torch.isfinite(loss)):
         raise RuntimeError("Training loss became non-finite")
-    loss.backward()
-    gradient_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), GRADIENT_CLIP)
+    from .family_training_core import update_scope
+    with update_scope(observer, "backward"):
+        loss.backward()
+    if observer is not None and observer.after_backward is not None:
+        observer.after_backward(model)
+    with update_scope(observer, "gradient_clip"):
+        gradient_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), GRADIENT_CLIP)
+    if observer is not None and observer.after_clip is not None:
+        observer.after_clip(model, gradient_norm)
     if hasattr(model, "_group_diagnostics"):
         model._group_diagnostics[0].add_(gradient_norm.detach())
         model._group_diagnostics[1].add_((gradient_norm.detach() > GRADIENT_CLIP).to(gradient_norm.dtype))

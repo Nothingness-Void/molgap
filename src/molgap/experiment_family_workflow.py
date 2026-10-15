@@ -316,6 +316,12 @@ def _validate_rng_state(state):
 
 
 def _finite_tree(value, label):
+    from .training_reproducibility import finite_validation_observation
+    with finite_validation_observation():
+        return _finite_tree_impl(value, label)
+
+
+def _finite_tree_impl(value, label):
     import torch
     from .training_reproducibility import _batch_finite_tensor_failures
 

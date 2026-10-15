@@ -156,6 +156,7 @@ class BatchResult:
 def train_batches(
     model, batches: Iterable, plan: BatchPlan, step: Callable,
     *, before_step: Callable | None = None, after_step: Callable | None = None,
+    before_fetch: Callable | None = None,
 ):
     """Execute one stream; the caller owns sampling, schedule and persistence.
 
@@ -173,6 +174,8 @@ def train_batches(
     current = plan.start_step
     try:
         while plan.stop_step is None or current < plan.stop_step:
+            if before_fetch is not None:
+                before_fetch(current + 1)
             try:
                 batch = next(iterator)
             except StopIteration:
@@ -195,9 +198,46 @@ def train_batches(
             close()
 
 
+@dataclass(frozen=True)
+class UpdateObserver:
+    """Trusted worker-local observation; never selected by configuration imports."""
+    after_backward: Callable | None = None
+    after_clip: Callable | None = None
+    scope: Callable | None = None
+
+    def __post_init__(self):
+        if any(value is not None and not callable(value) for value in
+               (self.after_backward, self.after_clip, self.scope)):
+            raise TypeError("Update observation hooks must be trusted callables")
+
+
+def update_scope(observer, name):
+    from contextlib import nullcontext
+    if observer is not None and type(observer) is not UpdateObserver:
+        raise TypeError("Expected UpdateObserver")
+    return observer.scope(name) if observer is not None and observer.scope is not None else nullcontext()
+
+
+class _ObservedContext:
+    def __init__(self, context, observer, label):
+        self.context, self.observer, self.label = context, observer, label
+
+    def __enter__(self):
+        with update_scope(self.observer, self.label + "_enter"):
+            return self.context.__enter__()
+
+    def __exit__(self, *exception):
+        with update_scope(self.observer, self.label + "_exit"):
+            return self.context.__exit__(*exception)
+
+
+def observed_context(context, observer, label):
+    return context if observer is None else _ObservedContext(context, observer, label)
+
+
 def optimizer_update(
     model, optimizer, loss_builder: Callable, *, clip_norm: float,
-    check_finite: bool, ema=None, label: str = "Training", clip_parameters=None,
+    check_finite: bool, ema=None, label: str = "Training", clip_parameters=None, observer=None,
 ):
     """Shared zero-grad/backward/clip/update order; loss stays family-owned.
 
@@ -211,25 +251,34 @@ def optimizer_update(
     if (type(clip_norm) not in (int, float) or not math.isfinite(clip_norm)
             or clip_norm <= 0 or type(check_finite) is not bool):
         raise ValueError("Invalid gradient clipping or finite-check policy")
-    optimizer.zero_grad(set_to_none=True)
+    with update_scope(observer, "zero_grad"):
+        optimizer.zero_grad(set_to_none=True)
     loss, metrics = loss_builder()
     if check_finite and not bool(torch.isfinite(loss)):
         raise RuntimeError(label + " loss became non-finite")
-    loss.backward()
-    gradient_norm = torch.nn.utils.clip_grad_norm_(
-        model.parameters() if clip_parameters is None else clip_parameters, clip_norm)
+    with update_scope(observer, "backward"):
+        loss.backward()
+    if observer is not None and observer.after_backward is not None:
+        observer.after_backward(model)
+    with update_scope(observer, "gradient_clip"):
+        gradient_norm = torch.nn.utils.clip_grad_norm_(
+            model.parameters() if clip_parameters is None else clip_parameters, clip_norm)
+    if observer is not None and observer.after_clip is not None:
+        observer.after_clip(model, gradient_norm)
     if check_finite and not bool(torch.isfinite(gradient_norm)):
         raise RuntimeError(label + " gradient became non-finite")
-    optimizer.step()
+    with update_scope(observer, "optimizer"):
+        optimizer.step()
     if ema is not None:
-        ema.update(model)
+        with update_scope(observer, "ema"):
+            ema.update(model)
     return loss.detach(), metrics
 
 
 def normalized_gap_update(
     model, optimizer, batch, mean, std, *, forward: Callable,
     clip_norm: float, check_finite: bool, cast_target_float: bool,
-    ema=None, label: str = "Training", clip_parameters=None,
+    ema=None, label: str = "Training", clip_parameters=None, observer=None,
 ):
     """Single-forward Gap L1 kernel shared by both families and all scales."""
     import torch.nn.functional as functional
@@ -243,4 +292,25 @@ def normalized_gap_update(
         return functional.l1_loss(prediction, target), None
 
     return optimizer_update(model, optimizer, loss_builder, clip_norm=clip_norm,
-        check_finite=check_finite, ema=ema, label=label, clip_parameters=clip_parameters)[0]
+        check_finite=check_finite, ema=ema, label=label, clip_parameters=clip_parameters, observer=observer)[0]
+
+
+def evaluate_development(model, batches, *, forward, rows, source_start, mean, std):
+    """One ordered FP32/eV evaluator; the state owner installs the selected view."""
+    import torch
+    predictions, targets, sources = [], [], []
+    with torch.no_grad():
+        for batch in batches:
+            targets.append(batch.y.reshape(-1).float().cpu())
+            index = getattr(batch, "source_idx", getattr(batch, "row_index", None))
+            if index is None:
+                raise ValueError("Development source identity is missing")
+            sources.append(index.reshape(-1).long().cpu())
+            predictions.append(forward(model, batch).reshape(-1) * std + mean)
+    prediction, target, source = torch.cat(predictions).cpu(), torch.cat(targets), torch.cat(sources)
+    if (prediction.shape != target.shape or prediction.numel() != rows or
+            not torch.equal(source, torch.arange(source_start, source_start + rows)) or
+            not bool(torch.isfinite(prediction).all()) or not bool(torch.isfinite(target).all())):
+        raise ValueError("Development count/order/finite predictions differ")
+    return {"mae_eV": float((prediction - target).abs().mean()), "prediction_eV": prediction,
+            "target_eV": target, "source_idx": source}

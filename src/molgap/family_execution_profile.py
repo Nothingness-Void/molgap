@@ -107,25 +107,12 @@ class _ObservedBatches:
                 close()
 
 
-class _ObservedContext:
-    def __init__(self, context, owner, label):
-        self.context, self.owner, self.label = context, owner, label
-
-    def __enter__(self):
-        with self.owner.phase(self.label + "_enter"):
-            return self.context.__enter__()
-
-    def __exit__(self, *exception):
-        with self.owner.phase(self.label + "_exit"):
-            return self.context.__exit__(*exception)
-
-
 class _ExecutionCapture:
     """Temporarily observe a session; the ordinary trainer has no added hooks.
 
-    Use in a dedicated, single-training-thread worker. A few module functions
-    (backward, clipping and family transport) are temporarily wrapped, so this
-    context must not overlap another model execution in the same process.
+    Use in a dedicated, single-training-thread worker. Instance hooks and the
+    update observer retain the existing ABI without replacing global backward,
+    clipping or transport functions.
     Warmup uses the existing run's updates; profiling never adds an update.
     Ending the capture does not stop the run or alter its checkpoint cadence.
     """
@@ -225,10 +212,6 @@ class _ExecutionCapture:
         session, kernel = self.session, self.session.kernel
         for obj, name, label in (
             (kernel.model, "forward", "forward"),
-            (torch.autograd, "backward", "backward"),
-            (torch.nn.utils, "clip_grad_norm_", "gradient_clip"),
-            (kernel.optimizer, "zero_grad", "zero_grad"),
-            (kernel.optimizer, "step", "optimizer"),
             (kernel, "evaluate", "development"),
             (session, "_flush_metrics", "metric_sync"),
             (session, "selected", "selected_publish"),
@@ -244,21 +227,16 @@ class _ExecutionCapture:
         else:
             self._wrap(session, "_checkpoint_state", "checkpoint_state")
             self._wrap(session, "checkpoint_builder", "checkpoint_publish")
-        from . import experiment_family_workflow
-        self._wrap(experiment_family_workflow, "_finite_tree", "finite_validation")
-        if kernel.ema is not None:
-            self._wrap(kernel.ema, "update", "ema")
+        from .family_training_core import UpdateObserver
+        if getattr(kernel, "update_observer", None) is not None:
+            raise ValueError("Profiler requires an unobserved update owner")
+        self._replace(kernel, "update_observer", UpdateObserver(scope=self.phase))
+        from .training_reproducibility import observe_finite_validation
+        self._cleanup.enter_context(observe_finite_validation(self.phase))
         if kernel.recipe.family == "gptrans_t":
             self._wrap(kernel, "_gptrans_batch", "layout_and_transfer")
             if hasattr(kernel.model, "_shortest_path"):
                 self._wrap(kernel.model, "_shortest_path", "shortest_path")
-        else:
-            from . import k1_execution_layout, k1_screen_training
-            self._wrap(k1_screen_training, "_model_batch_to_device", "transfer")
-            original_context = k1_execution_layout.cpu_layout_context
-            def layout(*args, **kwargs):
-                return _ObservedContext(original_context(*args, **kwargs), self, "layout")
-            self._replace(k1_execution_layout, "cpu_layout_context", layout)
         for path in self.config.module_paths:
             self._observe_module(kernel.model.get_submodule(path), "module/" + path)
         original_step, original_loader = kernel.step, session.loaders.train

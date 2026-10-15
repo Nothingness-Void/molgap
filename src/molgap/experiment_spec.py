@@ -106,6 +106,12 @@ class AddonContract:
 
 # Each family's replacement group is exclusive; stacking is not supported.
 ADDONS = MappingProxyType({
+    **{(prefix + "_" + suffix + "_scale", "1"): AddonContract(family,
+        "slot-" + suffix, "molgap.substrate_scale_addon",
+        tuple(AddonConfigField(key, value=value) for key, value in (
+            ("family", family), ("slot", slot), ("name", suffix + "_scale"))), (version,))
+       for family, prefix, version in (("neural_atom_k1", "k1", "3"), ("gptrans_t", "gptrans", "2"))
+       for suffix, slot in (("node", "pre_message"), ("aggregate", "post_aggregation"), ("readout", "pre_readout"))},
     **{(name, "1"): AddonContract("gptrans_t", "aggregate-research", "molgap.gptrans_research_campaign",
         family_versions=("2",), single_addon=True) for name in (
         "degree_aggregate_shared_ema999", "degree_aggregate_cycle_ema999",

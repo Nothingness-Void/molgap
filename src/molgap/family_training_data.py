@@ -45,6 +45,8 @@ class TrainingData:
 
 def resolve_pinned_manifest(root, selection):
     """Mount paths are provenance; resolve a unique immutable manifest by its pin."""
+    if type(selection) is not DatasetSelection:
+        raise TypeError("Expected DatasetSelection")
     root = Path(root).absolute()
     direct = root / selection.manifest
     if direct.exists():
@@ -52,11 +54,18 @@ def resolve_pinned_manifest(root, selection):
         if sha256_file(path) != selection.manifest_sha256:
             raise ValueError("Dataset manifest SHA differs from the frozen selection")
         return path
-    candidates = [p for p in root.rglob(Path(selection.manifest).name)
-                  if p.is_file() and sha256_file(p) == selection.manifest_sha256]
+    candidates = []
+    for candidate in root.rglob(Path(selection.manifest).name):
+        path = _artifact_path(root, candidate.relative_to(root).as_posix())
+        if sha256_file(path) == selection.manifest_sha256:
+            candidates.append(path)
     if len(candidates) != 1:
         raise ValueError("Expected one uniquely mounted pinned manifest")
     return _artifact_path(root, candidates[0].relative_to(root).as_posix())
+
+
+# Desktop public spelling; both callers use the same confined resolver.
+resolve_training_manifest = resolve_pinned_manifest
 
 
 def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:

@@ -13,7 +13,8 @@ import sys
 import time
 
 from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _digest, _json, _text, tensor_digest
-from .family_training_recipe import FamilyRecipe, BOUNDED_MODES
+from .family_training_recipe import FamilyRecipe
+from .family_training_policy import mode_policy
 from .screen_policy import canonical_fingerprint
 from .training_reproducibility import atomic_json, atomic_torch_save
 from .v4_runtime import normalized_source_sha256, state_dict_sha256
@@ -48,9 +49,7 @@ def family_arm_bindings(recipe):
         "transform": {"name": "frozen-train-mean-sample-std", "version": "1", "sha256": canonical_fingerprint({
             "manifest_sha256": recipe.dataset.manifest_sha256, "mean_eV": recipe.target_mean_eV, "std_eV": recipe.target_std_eV})},
         "objective": {"name": "normalized-gap-l1", "version": "1", "sha256": canonical_fingerprint({
-            "mode": "aggregate-correspondence-0.01-tau0.2-bonds8" if recipe.mode == "degree_aggregate_correspondence_ema999"
-            else "aggregate-shared-gap-v1" if recipe.mode.startswith("degree_aggregate_")
-            else "local-cycle-shared-v1" if recipe.mode in BOUNDED_MODES else recipe.mode,
+            "mode": mode_policy(recipe.family, recipe.mode).objective_name or recipe.mode,
             "family": recipe.family, "gradient_clip": recipe.gradient_clip})}}
 
 
@@ -76,6 +75,8 @@ def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
     if type(configuration) is not FamilyRecipe or family != INTERFACES.get(configuration.family) or mode != configuration.mode:
         raise ValueError("Explicit matching shared family configuration is required")
     _text(train_role_identity, "train_role_identity")
+    if configuration.clean_bn is not None and configuration.clean_bn.training_role_identity != train_role_identity:
+        raise ValueError("Calibration training role differs from the frozen recipe")
     if configuration.dataset.development:
         _text(development_role_identity, "development_role_identity")
     elif development_role_identity is not None:
@@ -101,6 +102,8 @@ def read_recipe(path):
         _text(record["development_role_identity"], "development_role_identity")
     elif record["development_role_identity"] is not None:
         raise ValueError("Final-only recipe contains a development role")
+    if recipe.clean_bn is not None and recipe.clean_bn.training_role_identity != record["train_role_identity"]:
+        raise ValueError("Calibration training role differs from contract")
     return record, recipe
 
 
@@ -121,13 +124,18 @@ def validate_screen_recipe(spec, arm_id, record):
         raise ValueError("Selected roles differ from the executable recipe")
     if any(record.get(role + "_role_identity") != value["usage_sha256"] for role, value in roles.items()):
         raise ValueError("Contract role usage identity differs from Spec")
-    modules = {"ssma": "k1_joint_aggregation.py", "mean2": "k1_screen_training.py",
-        "mean2_clean_second": "k1_screen_training.py", "pair_prenorm": "gptrans_variants.py",
-        "centered_logits": "gptrans_variants.py", "memory_value": "gptrans_memory.py", "memory_message": "gptrans_memory.py",
-        "degree_bond_local_ema999": "gptrans_capacity.py", "degree_local_cycle_common_ema999": "gptrans_cycle_pair.py",
-        **{name: "gptrans_research_campaign.py" for name in BOUNDED_MODES if name.startswith("degree_aggregate_")}}
-    if recipe.mode != "reference" and arm["addons"][0]["source_sha256"] != normalized_source_sha256(Path(__file__).with_name(modules[recipe.mode])):
-        raise ValueError("Addon source hash differs from executed module")
+    if recipe.mode == "composed":
+        from .shared_model_adapter import _addon_hook
+        if list(recipe.addons) != arm["addons"]:
+            raise ValueError("Recipe addon order/configuration differs from Spec")
+        for addon in recipe.addons:
+            _addon_hook(adapter, arm, addon)
+    elif recipe.mode != "reference":
+        from .experiment_spec import ADDONS
+        addon = arm["addons"][0]
+        module = ADDONS[(addon["name"], addon["version"])].source_module
+        if addon["source_sha256"] != normalized_source_sha256(Path(__file__).parent / (module.split(".")[-1] + ".py")):
+            raise ValueError("Addon source hash differs from executed module")
     if record.get("acceptance_requirements") != _requirements(recipe,
             record.get("acceptance_requirements", {}).get("source_idx_sha256"),
             record.get("acceptance_requirements", {}).get("target_sha256")):
@@ -205,8 +213,7 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
     selection = replace(recipe.dataset, development=False) if training_only else recipe.dataset
     data = load_training_data(Path(input_root), selection)
     if recipe.input_sidecar is not None:
-        from .gptrans_cycle_inputs import attach_sidecar
-        data = attach_sidecar(Path(input_root), recipe.input_sidecar, data)
+        data = mode_policy(recipe.family, recipe.mode).attach_inputs(Path(input_root), recipe.input_sidecar, data)
     arm = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
     for role in arm["data"]["roles"]:
         if training_only and role["role"] != "train":
@@ -359,8 +366,8 @@ def run_screen_preflight(**options):
             source_idx_path=output / "execution-evaluation-source-idx.pt")
         _verify_execution_proof(output, probe, execution_proof, required=True)
     resource = None
-    if recipe.mode in BOUNDED_MODES:
-        resource = _qualify_cycle_resources(recipe, data, tuning, Path(options["initial_state_path"]))
+    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
+        resource = mode_policy(recipe.family, recipe.mode).qualify_resources(recipe, data, tuning, Path(options["initial_state_path"]))
         atomic_json(output / "resource_qualification.json", resource)
     atomic_json(output / "runtime_provenance.json", provenance)
     certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
@@ -387,74 +394,6 @@ def run_screen_preflight(**options):
     return certificate
 
 
-def _qualify_cycle_resources(recipe, data, tuning, initial):
-    """Disposable native profile and zero-start proof, never a third trained arm."""
-    import torch
-    from .family_training_kernel import FamilyKernel
-    from .family_training_loaders import FamilyLoaders
-    from .family_pair_release import resource_estimate
-    from .training_reproducibility import configure_fp32_determinism
-    from .gptrans_execution_backend import bind_model_layout, prepared_forward
-    probe = _probe_recipe(recipe)
-    configure_fp32_determinism(recipe.seed)
-    kernel = FamilyKernel(probe, initial, device="cuda")
-    loaders = FamilyLoaders(probe, data, tuning)
-    train_times, forward_times = [], []
-    try:
-        iterator = iter(loaders.train(0, 0))
-        batch = next(iterator)
-        zero_start = None
-        if recipe.mode == "degree_local_cycle_common_ema999" or recipe.mode.startswith("degree_aggregate_"):
-            from .gptrans_cycle_pair import construct, PARENT
-            from .v4_runtime import read_frozen_state_artifact
-            state, _ = read_frozen_state_artifact(initial, expected_state_sha256=recipe.initialization_sha256)
-            if recipe.mode.startswith("degree_aggregate_"):
-                from .gptrans_research_campaign import construct, BASE as PARENT, inherited_state
-                parent_state = inherited_state(state)
-            else:
-                parent_state = {k: v for k, v in state.items() if k != "cycle_embedding.weight"}
-            parent = construct(PARENT, parent_state)
-            parent.load_state_dict(parent_state, strict=True)
-            bind_model_layout(parent)
-            parent.to("cuda").eval()
-            kernel.model.eval()
-            with torch.no_grad():
-                actual = kernel.forward(batch)
-                expected = prepared_forward(parent, kernel._gptrans_batch(batch, training=False))
-            if not torch.equal(actual, expected):
-                raise ValueError("Cycle zero-start encoder is not exactly the local parent on native inputs")
-            zero_start = {"accepted": True, "maximum_prediction_delta": 0., "rows": int(batch.num_graphs)}
-            del parent, state, parent_state, actual, expected
-        torch.cuda.empty_cache()
-        torch.cuda.reset_peak_memory_stats()
-        kernel.model.train()
-        kernel.step(batch, check_finite=True)
-        for index in range(20):
-            torch.cuda.synchronize()
-            began = time.perf_counter()
-            batch = next(iterator)
-            kernel.model.train()
-            kernel.step(batch, check_finite=True)
-            torch.cuda.synchronize()
-            train_times.append(time.perf_counter() - began)
-            began = time.perf_counter()
-            kernel.model.eval()
-            with torch.no_grad():
-                kernel.forward(batch)
-            torch.cuda.synchronize()
-            forward_times.append(time.perf_counter() - began)
-        connected = None
-        if recipe.mode.startswith("degree_aggregate_"):
-            from .gptrans_research_campaign import native_gradients
-            connected = native_gradients(kernel.model)
-        return {**resource_estimate(train_step_seconds=max(train_times), forward_seconds=max(forward_times),
-            reserved_bytes=torch.cuda.max_memory_reserved(), total_bytes=torch.cuda.get_device_properties(0).total_memory),
-            "zero_start": zero_start, "connected": connected, "formal_training_exposure": 0, "disposable_optimizer_updates": 21}
-    finally:
-        loaders.close()
-        kernel.close()
-
-
 def normalized_file_sha(path):
     # Artifact bytes are exact; only source text uses normalized line endings.
     from .training_reproducibility import sha256_file
@@ -464,7 +403,8 @@ def normalized_file_sha(path):
 def _probe_recipe(recipe):
     return replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
         input_sidecar=replace(recipe.input_sidecar, development=False) if recipe.input_sidecar is not None else None,
-        optimizer_steps=2, checkpoint_every=1, selection="final-live")
+        optimizer_steps=2, checkpoint_every=1,
+        selection="final-clean-ema" if recipe.clean_bn is not None else "final-live")
 
 
 def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, sidecars,
@@ -509,13 +449,10 @@ def run_screen_resume_preflight(*, resume_output, **options):
     progress = validate_session_resume(recipe, retained)
     if progress.status == "complete":
         raise ValueError("Cannot resume a completed shared session")
-    if recipe.mode in BOUNDED_MODES:
-        from .family_pair_release import resource_estimate
+    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
         resource = _json(output / "resource_qualification.json")
-        qualified = resource_estimate(train_step_seconds=resource["maximum_observed_train_step_seconds"],
-            forward_seconds=resource["maximum_observed_forward_seconds"], reserved_bytes=resource["reserved_bytes"],
-            total_bytes=resource["total_bytes"], completed_passes=progress.pass_index)
-        atomic_json(output / "resource_qualification.json", {**resource, **qualified})
+        qualified = mode_policy(recipe.family, recipe.mode).refresh_resources(resource, progress.pass_index)
+        atomic_json(output / "resource_qualification.json", qualified)
         cert = _json(output / "runtime_certificate.json")
         cert["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
         atomic_json(output / "runtime_certificate.json", cert)
@@ -607,7 +544,7 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
         raise ValueError("Native preflight source/recipe/data/runtime/device identity differs")
     if certificate.get("status") != "accepted":
         raise ValueError("Native preflight certificate is not accepted")
-    if recipe.mode in BOUNDED_MODES:
+    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
         resource_path = root / "resource_qualification.json"
         if certificate.get("resource_qualification_sha256") != normalized_file_sha(resource_path):
             raise ValueError("Missing or changed native resource qualification")
@@ -723,7 +660,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"],
         resume_trajectory=(_artifact_path(Path(options["prospective_root"]),
             "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
-            if recipe.mode in BOUNDED_MODES or is_comparison(options["spec"]) or is_gptrans_comparison(options["spec"]) else None))
+            if mode_policy(recipe.family, recipe.mode).segment_passes is not None or is_comparison(options["spec"]) or is_gptrans_comparison(options["spec"]) else None))
     had_checkpoint = (root / "last_checkpoint.pt").is_file()
     interval = _json(_artifact_path(root, "invocation_cost_state.json"))
     _check_context(interval["context"], context)
@@ -735,7 +672,7 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         batch_finished=outputs.batch_finished, checkpoint_builder=outputs.checkpoint_from_builder)
     try:
         if had_checkpoint:
-            if recipe.mode in BOUNDED_MODES:
+            if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
                 actual = _json(_artifact_path(Path(preflight_dir or output), "actual_resume_certificate.json"))
                 if (actual.get("status") != "accepted" or actual.get("formal_training_exposure") != 0 or
                         actual.get("checkpoint_sha256") != normalized_file_sha(root / "last_checkpoint.pt")):
@@ -751,8 +688,9 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     try:
         # A completed physical ten-pass segment makes work externally retrievable.
         # The scientific horizon, scheduler and selected-state policy remain60.
-        bounded = recipe.mode in BOUNDED_MODES
-        stop_pass = min(60, (session.progress.pass_index // 10 + 1) * 10)
+        segment = mode_policy(recipe.family, recipe.mode).segment_passes
+        bounded = segment is not None
+        stop_pass = ((session.progress.pass_index // segment + 1) * segment) if bounded else None
         should_pause = lambda: pause[0] or (
             bounded and session.progress.pass_index >= stop_pass and session.progress.next_batch == 0)
         if "profiling" in record:

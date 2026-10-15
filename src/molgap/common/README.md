@@ -45,7 +45,9 @@ No owner, account, seed, hardware, dataset or budget is inferred from the host.
 
 `runtime` exposes the existing `ModelSubstrate`, `bind_substrate`, slot payloads,
 `CalibrationPolicy`, `FamilyTrainingState`, `build_graph_model`,
-`run_sandbox`, `run_arm_sandbox`, `discover_source_dependencies` and
+`run_sandbox`, `run_arm_sandbox`, `run_family_sandbox`, `FamilyRecipe`,
+`ScheduleSpec`, `FamilyKernel`, `FamilyTrainingSession`, `UpdateObserver`,
+`discover_source_dependencies` and
 `registered_dependencies`. Original module paths/classes stay intact for
 checkpoint compatibility. Use the [four-layer runtime](../../../docs/operations/MODULAR_EXPERIMENT_RUNTIME.md)
 for call contracts. Training still uses the existing
@@ -79,3 +81,11 @@ The common suite checks pure declarations for both owners and several platforms,
 legacy forwarding, provenance rejection, SDK call shape, no-global-auth behavior,
 pinned no-clobber downloads and actual static package closure. It uses synthetic
 CPU/files and fake APIs only, not native runtime or scientific qualification.
+
+The [reviewed mechanism inventory](../../../docs/operations/SHARED_TRAINING_CORE_FILES.json)
+and `tests/test_shared_training_compatibility.py` pin the same normalized source
+snapshot for both owners. The [family examples](../../../docs/operations/FAMILY_TRAINING_EXAMPLES.md)
+show composition through sandbox, neutral packaging and platform handoff.
+Private-resource 403 remains unknown until a complete authenticated bounded owner
+listing proves absence. Dataset status and version/private metadata use separate
+SDK operations; this boundary accepts the installed optional-format signature.

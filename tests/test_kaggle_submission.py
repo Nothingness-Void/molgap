@@ -98,10 +98,10 @@ def release(tmp_path, monkeypatch):
         def get_config_value(self, _name):
             return "owner"
 
-        def dataset_status(self, ref, format):
+        def dataset_status(self, ref, /):
             if not self.dataset:
                 raise Missing()
-            return json.dumps({"status": "ready" if self.ready else "processing", "current_version_number": 1})
+            return "ready" if self.ready else "processing"
 
         def dataset_create_new(self, path, **kwargs):
             assert kwargs == dict(public=False, quiet=True, convert_to_csv=False, dir_mode="zip")
@@ -118,6 +118,7 @@ def release(tmp_path, monkeypatch):
             return NS(status="RUNNING", failure_message="")
 
     api = Api()
+    monkeypatch.setattr(owner, "_dataset_details", lambda api, ref: NS(current_version_number=1))
     monkeypatch.setattr(owner, "_kernel_source", lambda _api, _ref: api.remote)
     def accepted():
         api.remote = NS(metadata=NS(id=77, current_version_number=1, is_private=True,

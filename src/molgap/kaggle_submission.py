@@ -22,6 +22,9 @@ from .experiment_launch import (_safe_local, build_launch_receipt, canonical_jso
                                 reconcile_platform_response)
 from .experiment_package import read_packaged_text, verify_experiment_source_package
 from .experiment_spec import ExperimentSpec
+from .common.kaggle import (dataset_status as _dataset_status,
+    dataset_details as _dataset_details, kernel_source as _kernel_source,
+    owned_absence as _owned_absence)
 from .kaggle_accelerator_push import _verify_release_report, push_kernel_with_accelerator
 from .research_memory.trace import atomic_write
 from .training_reproducibility import atomic_json, sha256_file
@@ -39,73 +42,10 @@ def _credentials(path):
 
 
 def connect_kaggle(credentials):
-    """Authenticate the installed SDK without exposing or persisting the key."""
-    values = _credentials(credentials)
-    previous = {name: os.environ.get(name) for name in ("KAGGLE_USERNAME", "KAGGLE_KEY")}
-    try:
-        os.environ.update(KAGGLE_USERNAME=values["username"], KAGGLE_KEY=values["key"])
-        from kaggle.api.kaggle_api_extended import KaggleApi
-        api = KaggleApi()
-        api.authenticate()
-    finally:
-        for name, value in previous.items():
-            if value is None:
-                os.environ.pop(name, None)
-            else:
-                os.environ[name] = value
-    return api
-
-
-def _not_found(error):
-    return (getattr(error, "status", None) == 404 or getattr(error, "status_code", None) == 404
-            or getattr(getattr(error, "response", None), "status_code", None) == 404)
-
-
-def _owned_absence(api, ref, kind, error):
-    """A private 403 is absence only after a complete authenticated owner listing."""
-    status = getattr(getattr(error, "response", None), "status_code", None)
-    owner = api.get_config_value(api.CONFIG_NAME_USER)
-    if status != 403 or ref.split("/")[0] != owner:
-        return False
-    seen = set()
-    for page in range(1, 51):
-        rows = (api.kernels_list(mine=True, user=owner, page=page, page_size=20)
-                if kind == "kernel" else api.dataset_list(mine=True, page=page))
-        if not isinstance(rows, list):
-            raise RuntimeError("Owned listing is unknown; absence is unverified")
-        for row in rows:
-            identity = str(row.ref)
-            if identity.split("/")[0].lower() != owner.lower() or identity in seen:
-                raise RuntimeError("Owned listing scope/pagination differs")
-            if identity.lower() == ref.lower():
-                return False
-            seen.add(identity)
-        if len(rows) < 20:
-            return True
-    raise RuntimeError("Owned listing exceeded its bounded absence check")
-
-
-def _dataset_status(api, ref):
-    try:
-        value = api.dataset_status(ref, format="json")
-    except Exception as error:
-        if _not_found(error) or _owned_absence(api, ref, "dataset", error):
-            return None
-        raise RuntimeError("Dataset status is unknown; no publication retry") from None
-    return json.loads(value) if type(value) is str else value
-
-
-def _kernel_source(api, ref):
-    from kagglesdk.kernels.types.kernels_api_service import ApiGetKernelRequest
-    request = ApiGetKernelRequest()
-    request.user_name, request.kernel_slug = ref.split("/")
-    try:
-        with api.build_kaggle_client() as client:
-            return client.kernels.kernels_api_client.get_kernel(request)
-    except Exception as error:
-        if _not_found(error) or _owned_absence(api, ref, "kernel", error):
-            return None
-        raise RuntimeError("Kernel identity is unknown; no submission retry") from None
+    """Authenticate the exact requested account without global SDK login state."""
+    from .common.kaggle import api_for_credentials
+    _credentials(credentials)
+    return api_for_credentials(credentials)
 
 
 def _quota(http, budget):
@@ -148,8 +88,9 @@ def _roundtrip_source(api, http, staged, remote, ref):
         if path.is_file() and path.name != "dataset-metadata.json":
             expected[path.relative_to(staged).as_posix()] = path
     status = _dataset_status(api, ref)
+    details = _dataset_details(api, ref)
     if (not isinstance(status, dict) or status.get("status") != "ready"
-            or type(status.get("current_version_number")) is not int or status["current_version_number"] != 1):
+            or type(details.current_version_number) is not int or details.current_version_number != 1):
         raise ValueError("Source dataset must be ready at immutable version1")
     listing = api.dataset_list_files(ref, page_size=100)
     files = listing.files

@@ -83,7 +83,7 @@ def validate_canonical_trace(record: dict[str, Any]) -> dict[str, Any]:
             for field in ("metric", "unit", "target", "role_identity", "weights", "direction")
         ):
             raise ValueError(f"incomplete metric semantics: {name}")
-        if definition["weights"] != ("ema" if name.startswith("ema_") else "live"):
+        if definition["weights"] not in ({"ema", "clean-ema"} if name.startswith("ema_") else {"live"}):
             raise ValueError("live/EMA weight semantics mismatch")
         if definition["direction"] not in {"minimize", "maximize"}:
             raise ValueError("invalid metric direction")

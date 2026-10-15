@@ -12,19 +12,18 @@ from .family_training_core import LoopPlan
 from .family_training_data import DatasetSelection
 from .screen_policy import canonical_fingerprint
 from .k1_execution_backend import K1ExecutionConfig
+from .family_training_state import CalibrationPolicy
 
 
 RECIPE_FORMAT = "molgap-family-training-recipe-v1"
 ADAMW_BETAS = (.9, .999)
 ADAMW_EPSILON = 1e-8
-MODES = {
-    "neural_atom_k1": ("reference", "ssma", "mean2", "mean2_clean_second"),
-    "gptrans_t": ("reference", "pair_prenorm", "centered_logits", "memory_value", "memory_message",
-                  "degree_bond_local_ema999", "degree_local_cycle_common_ema999",
-                  "degree_aggregate_shared_ema999", "degree_aggregate_cycle_ema999",
-                  "degree_aggregate_carry_ema999", "degree_aggregate_correspondence_ema999"),
-}
-BOUNDED_MODES = frozenset(MODES["gptrans_t"][5:])
+from .experiment_execution import TRAINING_ADAPTERS
+from .family_training_policy import mode_policy
+
+MODES = {family: tuple(dict.fromkeys(("reference", *(entry.mode for entry in
+    TRAINING_ADAPTERS[(family, version)].addons))))
+    for family, version in (("neural_atom_k1", "3"), ("gptrans_t", "2"))}
 
 
 def _integer(value, name, minimum=1):
@@ -115,11 +114,18 @@ class FamilyRecipe:
     torch_version: str = "2.11.0"
     input_sidecar: DatasetSelection | None = None
     k1_execution: K1ExecutionConfig | None = None
+    addons: tuple[dict, ...] = ()
+    clean_bn: CalibrationPolicy | None = None
 
     def __post_init__(self):
         from .experiment_spec import _digest
         if self.family not in MODES or self.mode not in MODES[self.family]:
             raise ValueError("Unknown executable family/addon mode")
+        if type(self.addons) is not tuple or (self.mode == "composed") != bool(self.addons):
+            raise ValueError("Ordered slot addons require the explicit composed mode")
+        if self.addons:
+            from .shared_model_adapter import validate_family_addons
+            validate_family_addons(self.family, self.addons)
         if self.k1_execution is not None and (self.family != "neural_atom_k1" or
                 type(self.k1_execution) is not K1ExecutionConfig):
             raise ValueError("K1 execution options require the typed K1 family")
@@ -129,7 +135,7 @@ class FamilyRecipe:
         _digest(self.initialization_sha256, "initialization_sha256")
         if type(self.dataset) is not DatasetSelection or type(self.schedule) is not ScheduleSpec:
             raise TypeError("Typed dataset and schedule are required")
-        cycle = self.mode in {"degree_local_cycle_common_ema999", "degree_aggregate_cycle_ema999"}
+        cycle = mode_policy(self.family, self.mode).input_sidecar_required
         if cycle != (self.input_sidecar is not None):
             raise ValueError("Only the common-cycle mode requires a pinned input sidecar")
         if self.input_sidecar is not None and (type(self.input_sidecar) is not DatasetSelection or
@@ -148,7 +154,8 @@ class FamilyRecipe:
             raise ValueError("Frozen train-only target standard deviation must be positive")
         if self.learning_rate <= 0 or self.gradient_clip <= 0 or self.schedule.minimum_lr > self.learning_rate:
             raise ValueError("Invalid learning-rate or gradient-clipping bounds")
-        if self.selection not in {"best-development-live", "best-development-ema", "final-live", "final-ema"}:
+        if self.selection not in {"best-development-live", "best-development-ema", "final-live", "final-ema",
+                                  "best-development-clean-ema", "final-clean-ema"}:
             raise ValueError("Unsupported selection policy")
         if self.dataset.development != self.selection.startswith("best-development"):
             raise ValueError("Dataset role selection differs from the weight-selection policy")
@@ -158,6 +165,13 @@ class FamilyRecipe:
             raise ValueError("Unsupported EMA decay")
         if self.selection.endswith("ema") and self.ema_decay is None:
             raise ValueError("EMA weight selection requires EMA state")
+        if (self.clean_bn is not None) != self.selection.endswith("clean-ema"):
+            raise ValueError("Clean selection requires an explicit calibration policy")
+        if self.clean_bn is not None and (type(self.clean_bn) is not CalibrationPolicy or
+                self.clean_bn.input_identity != self.dataset.manifest_sha256 or
+                self.clean_bn.batch_size != self.batch_size or
+                self.clean_bn.batches * self.batch_size > self.train_rows):
+            raise ValueError("Calibration differs from selected training data/batch boundary")
         if self.sampler not in {"python-epoch-shuffle", "torch-pass-randperm"}:
             raise ValueError("Unsupported sampler policy")
         if type(self.drop_last) is not bool:
@@ -170,6 +184,10 @@ class FamilyRecipe:
         maximum_steps = self.schedule.total_units * (plan.steps_per_pass if self.schedule.epoch_based else 1)
         if self.optimizer_steps > maximum_steps:
             raise ValueError("Optimizer budget exceeds the frozen schedule")
+
+    @property
+    def selection_weights(self):
+        return "clean-ema" if self.selection.endswith("clean-ema") else self.selection.rsplit("-", 1)[1]
 
     @property
     def loop_plan(self):
@@ -195,6 +213,14 @@ class FamilyRecipe:
             values.pop("input_sidecar")
         if self.k1_execution is None:
             values.pop("k1_execution")
+        if not self.addons:
+            values.pop("addons")
+        else:
+            values["addons"] = list(values["addons"])
+        if self.clean_bn is None:
+            values.pop("clean_bn")
+        else:
+            values["clean_bn"] = self.clean_bn.to_dict()
         return {"format": RECIPE_FORMAT, **values, "execution_policy": self.execution_policy}
 
     @property
@@ -208,6 +234,9 @@ class FamilyRecipe:
             expected.remove("input_sidecar")
         if type(record) is dict and "k1_execution" not in record:
             expected.remove("k1_execution")
+        for name in ("addons", "clean_bn"):
+            if type(record) is dict and name not in record:
+                expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
             raise ValueError("Missing or unknown shared training recipe fields")
         values = {field.name: record[field.name] for field in fields(cls) if field.name in record}
@@ -220,6 +249,12 @@ class FamilyRecipe:
                 values["input_sidecar"] = DatasetSelection(**values["input_sidecar"])
             if "k1_execution" in values:
                 values["k1_execution"] = K1ExecutionConfig.from_dict(values["k1_execution"])
+            if "addons" in values:
+                if type(values["addons"]) is not list:
+                    raise ValueError("Ordered addons must be a list")
+                values["addons"] = tuple(values["addons"])
+            if "clean_bn" in values:
+                values["clean_bn"] = CalibrationPolicy.from_dict(values["clean_bn"])
         except TypeError as exc:
             raise ValueError("Unknown dataset/schedule fields") from exc
         recipe = cls(**values)

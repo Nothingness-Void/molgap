@@ -144,6 +144,28 @@ def apply_reviewed_addons(adapter, arm: dict, model, *, addon_observer=None):
     return model
 
 
+def validate_family_addons(family, addons):
+    """Reuse static Spec/execution registrations for accelerated slot composition."""
+    from .experiment_execution import TRAINING_ADAPTERS
+    from .experiment_spec import ADDONS, _digest, validate_addon_config
+    interface = (family, "3" if family == "neural_atom_k1" else "2")
+    adapter = TRAINING_ADAPTERS[interface]
+    names, groups = set(), set()
+    for addon in addons:
+        if type(addon) is not dict or set(addon) != {"name", "version", "config", "source_sha256"}:
+            raise ValueError("Invalid reviewed slot declaration")
+        entry = adapter.addon(addon["name"], addon["version"])
+        contract = ADDONS[(addon["name"], addon["version"])]
+        if (entry.apply_hook is None or addon["name"] in names or
+                contract.exclusive_group in groups or contract.single_addon):
+            raise ValueError("Unsupported ordered slot composition")
+        validate_addon_config(contract, addon["config"], name=addon["name"])
+        _digest(addon["source_sha256"], "addon source")
+        names.add(addon["name"])
+        groups.add(contract.exclusive_group)
+    return adapter
+
+
 def build_model(adapter, arm: dict, *, initial_state_path: Path | None = None, addon_observer=None):
     """Build one model and optionally load the Spec-bound initial state."""
     _validate_factory_contract(arm, adapter.model_factory)

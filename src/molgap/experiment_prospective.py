@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import stat
 
+from .common.identity import validate_execution_identity
 from .experiment_launch import _safe_local
 from .experiment_spec import ExperimentSpec, SCHEMA_VERSION_V2, _canonical, _unique_object
 from .research_memory.compiler import rebuild_research_memory

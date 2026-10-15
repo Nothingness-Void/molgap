@@ -31,11 +31,37 @@ def is_not_found(error):
             or getattr(getattr(error, "response", None), "status_code", None) == 404)
 
 
+def owned_absence(api, ref, kind, error):
+    """A private 403 is absence only after a complete authenticated owner listing."""
+    status = getattr(getattr(error, "response", None), "status_code", None)
+    if status != 403:
+        return False
+    owner = api.get_config_value(api.CONFIG_NAME_USER)
+    if status != 403 or ref.split("/")[0] != owner:
+        return False
+    seen = set()
+    for page in range(1, 51):
+        rows = (api.kernels_list(mine=True, user=owner, page=page, page_size=20)
+                if kind == "kernel" else api.dataset_list(mine=True, page=page))
+        if not isinstance(rows, list):
+            raise RuntimeError("Owned listing is unknown; absence is unverified")
+        for row in rows:
+            identity = str(row.ref)
+            if identity.split("/")[0].lower() != owner.lower() or identity in seen:
+                raise RuntimeError("Owned listing scope/pagination differs")
+            if identity.lower() == ref.lower():
+                return False
+            seen.add(identity)
+        if len(rows) < 20:
+            return True
+    raise RuntimeError("Owned listing exceeded its bounded absence check")
+
+
 def dataset_status(api, ref):
     try:
         value = api.dataset_status(ref)
     except Exception as error:
-        if is_not_found(error):
+        if is_not_found(error) or owned_absence(api, ref, "dataset", error):
             return None
         raise RuntimeError("Dataset status is unknown; no publication retry") from None
     if type(value) is not str or not value:
@@ -62,6 +88,6 @@ def kernel_source(api, ref):
         with api.build_kaggle_client() as client:
             return client.kernels.kernels_api_client.get_kernel(request)
     except Exception as error:
-        if is_not_found(error):
+        if is_not_found(error) or owned_absence(api, ref, "kernel", error):
             return None
         raise RuntimeError("Kernel identity is unknown; no submission retry") from None

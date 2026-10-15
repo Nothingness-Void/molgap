@@ -1,7 +1,7 @@
 """Reproducibility and durable-checkpoint primitives for remote training."""
 from __future__ import annotations
 
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 
 import hashlib
 import importlib.metadata
@@ -26,6 +26,24 @@ MODEL_BUNDLE_FORMAT = "molgap-self-contained-model-v1"
 _FINITE_VALIDATION_CACHE: ContextVar[dict | None] = ContextVar(
     "molgap_finite_validation_cache", default=None
 )
+_FINITE_VALIDATION_OBSERVER = ContextVar("molgap_finite_validation_observer", default=None)
+
+
+@contextmanager
+def observe_finite_validation(scope):
+    """Worker-context observation without replacing module/global validators."""
+    if not callable(scope):
+        raise TypeError("Validation observation requires a trusted scope")
+    token = _FINITE_VALIDATION_OBSERVER.set(scope)
+    try:
+        yield
+    finally:
+        _FINITE_VALIDATION_OBSERVER.reset(token)
+
+
+def finite_validation_observation():
+    scope = _FINITE_VALIDATION_OBSERVER.get()
+    return scope("finite_validation") if scope is not None else nullcontext()
 
 
 @contextmanager

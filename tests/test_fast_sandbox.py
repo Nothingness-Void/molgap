@@ -207,12 +207,20 @@ def test_baseline_presets_reuse_factory_and_owning_forward(monkeypatch, family):
             calls.append(mode)
             return TinySlotGraph()
         monkeypatch.setattr(owner, "make_encoder", factory)
+        from contextlib import nullcontext
+        from molgap import k1_execution_layout
+        monkeypatch.setattr(k1_execution_layout, "cpu_layout_context", lambda *args: nullcontext())
     else:
-        from molgap import pcqm_gptrans_v4 as owner
+        from molgap import family_model_ops as owner
         def factory(*, variant):
             calls.append(variant)
             return TinySlotGraph()
-        monkeypatch.setattr(owner, "_make_model", factory)
+        monkeypatch.setattr(owner, "make_gptrans_backbone", factory)
+        from molgap import gptrans_execution_backend as backend
+        monkeypatch.setattr(backend, "bind_model_layout", lambda model: None)
+        monkeypatch.setattr(backend, "prepare_layout", lambda batch: batch)
+        monkeypatch.setattr(backend, "prepared_forward", lambda model, batch: model(batch.x,
+            batch.edge_index, batch.edge_attr, batch.batch, batch.random_walk_pe))
     result = run_family_sandbox(family)
     assert result["status"] == "PASSED", result
     assert calls == (["neural_atom_k1"] * 2 if family == "neural_atom_k1" else ["reference"] * 2)
@@ -309,6 +317,22 @@ def test_shared_graph_build_seals_only_after_complete_composition(monkeypatch):
     assert result is owner.model and owner.sealed
     with pytest.raises(RuntimeError, match="sealed"):
         owner.detach("first")
+
+
+@pytest.mark.parametrize("family,prefix", [("neural_atom_k1", "k1"), ("gptrans_t", "gptrans")])
+def test_registered_slots_use_accelerated_sandbox_and_roundtrip(family, prefix):
+    from pathlib import Path
+    from molgap.experiment_execution import build_addon_declaration
+    from molgap.k1_execution_backend import K1ExecutionConfig
+    interface = (family, "3" if prefix == "k1" else "2")
+    addons = tuple(build_addon_declaration(interface, prefix + "_" + slot + "_scale",
+        repo_root=Path(__file__).resolve().parents[1]) for slot in ("node", "aggregate", "readout"))
+    report = run_family_sandbox(family, addons=addons,
+        k1_execution=K1ExecutionConfig() if prefix == "k1" else None)
+    assert report["status"] == "PASSED", report
+    assert report["checks"]["state_dict_roundtrip"]["eval_predictions_exact"]
+    assert set(report["addons"]) == {"node_scale", "aggregate_scale", "readout_scale"}
+    assert all(item["status"] == "PASSED" for item in report["addons"].values())
 
 
 @pytest.mark.parametrize("options,error", [

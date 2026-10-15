@@ -5,6 +5,12 @@ This is not runtime dependency discovery. Extra addon paths remain explicit.
 """
 
 COMMON_SOURCE_FILES = (
+    "src/molgap/family_training_policy.py",
+    "src/molgap/family_model_ops.py",
+    "src/molgap/substrate_scale_addon.py",
+    "src/molgap/common/__init__.py",
+    "src/molgap/common/declarations.py",
+    "src/molgap/common/identity.py",
     'platforms/kaggle/run_experiment.py',
     'src/molgap/__init__.py',
     'src/molgap/comparison_readiness.py',
@@ -128,6 +134,8 @@ def registered_source_files(spec, extras=(), *, repo_root=None, auto_dependencie
             declaration = ADDONS[(addon["name"], addon["version"])]
             names.add("src/" + declaration.source_module.replace(".", "/") + ".py")
             names.update(execution.extra_source_files)
+            if execution.policy_hook is not None:
+                names.add("src/" + execution.policy_hook.split(":")[0].replace(".", "/") + ".py")
     selected = _allowlist(sorted(names))
     if auto_dependencies:
         if repo_root is None:
@@ -146,6 +154,8 @@ def _all_registered_sources():
         for addon in adapter.addons:
             names.add("src/" + ADDONS[(addon.name, addon.version)].source_module.replace(".", "/") + ".py")
             names.update(addon.extra_source_files)
+            if addon.policy_hook is not None:
+                names.add("src/" + addon.policy_hook.split(":")[0].replace(".", "/") + ".py")
     return tuple(sorted(names))
 
 

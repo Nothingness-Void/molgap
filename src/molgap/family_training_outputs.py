@@ -115,8 +115,9 @@ class SessionOutputs:
         if file_digest(contract) != context.training_recipe_sha256:
             raise ValueError("Session contract differs from the frozen Spec")
         record, self.recipe = read_recipe(contract)
-        from .family_training_recipe import BOUNDED_MODES
-        self.bounded_pair = self.recipe.mode in BOUNDED_MODES
+        from .family_training_policy import mode_policy
+        self.policy = mode_policy(self.recipe.family, self.recipe.mode)
+        self.bounded_pair = self.policy.process_timing
         self.expected = record["acceptance_requirements"]
         self.root.mkdir(parents=True, exist_ok=True)
         if train_role_identity != record["train_role_identity"]:
@@ -136,14 +137,13 @@ class SessionOutputs:
             "target": "Gap", "role_identity": train_role_identity, "weights": "live", "direction": "minimize"},
             "live_dev_metric": None, "ema_dev_metric": None}
         if self.recipe.dataset.development:
-            weights = self.recipe.selection.rsplit("-", 1)[1]
-            semantics["ema_dev_metric" if weights == "ema" else "live_dev_metric"] = {
+            weights = self.recipe.selection_weights
+            semantics["ema_dev_metric" if weights in {"ema", "clean-ema"} else "live_dev_metric"] = {
                 "metric": "MAE", "unit": "eV", "target": "Gap", "role_identity": record["development_role_identity"],
                 "weights": weights, "direction": "minimize"}
-            if self.bounded_pair and self.recipe.ema_decay is not None:
+            if "live" in self.policy.extra_development_weights and self.recipe.ema_decay is not None:
                 semantics["live_dev_metric"] = {**semantics["ema_dev_metric"], "weights": "live"}
-        if self.bounded_pair:
-            semantics["live_train_metric"]["unit"] = "eV"
+        semantics["live_train_metric"]["unit"] = self.policy.train_metric_unit
         self.stage = StageRecorder(self.root / "canonical_trace.json", context, "downstream",
             semantics, trajectory_id=trajectory_id,
             device_time_semantics="sum_over_devices" if self.bounded_pair else None)
@@ -223,7 +223,7 @@ class SessionOutputs:
         if observed is not None:
             self.previous_observation, self.pending_pass = observed, None
         if (self.resume_trajectory is not None and progress.next_batch == 0 and
-                progress.pass_index > 0 and progress.pass_index % 10 == 0 and progress.status != "complete"):
+                progress.pass_index > 0 and progress.pass_index % self.policy.chunk_passes == 0 and progress.status != "complete"):
             from .experiment_resume import create_resume_bundle
             destination = self.root.parent / "checkpoint_chunks" / self.context.arm_id / f"pass_{progress.pass_index:02d}"
             create_resume_bundle(self.root, self.context, self.resume_trajectory, destination)
@@ -236,8 +236,9 @@ class SessionOutputs:
             fields["ema_dev_metric" if self.recipe.selection.endswith("ema") else "live_dev_metric"] = metrics["development"]["mae_eV"]
         if metrics.get("development_live") is not None:
             fields["live_dev_metric"] = metrics["development_live"]["mae_eV"]
-        if self.bounded_pair:
+        if self.policy.train_metric_unit == "eV":
             fields["live_train_metric"] *= self.recipe.target_std_eV
+        if self.bounded_pair:
             self.pending_pass = (progress, fields)
             return
         recorder = deepcopy(self.stage.recorder)
@@ -356,7 +357,7 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
                 any(not isinstance(value, torch.Tensor) for value in selected["model"].values()) or
                 selected.get("optimizer_step") != state["cursor"]["selected_step"] or
                 selected.get("selection") != recipe.selection or
-                selected.get("weights") != recipe.selection.rsplit("-", 1)[1] or
+                selected.get("weights") != recipe.selection_weights or
                 selected.get("epoch_or_pass") != selected["optimizer_step"] / recipe.loop_plan.steps_per_pass):
             raise ValueError("Selected checkpoint identity/policy mismatch")
         _assert_model_schema(selected["model"], state["model"])
@@ -364,7 +365,7 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
             observed.update(_inspect_predictions(paths["predictions"], context=context, expected=expected,
                 target_identity=target_identity))
             weights = selected["weights"]
-            key = "ema_dev_metric" if weights == "ema" else "live_dev_metric"
+            key = "ema_dev_metric" if weights in {"ema", "clean-ema"} else "live_dev_metric"
             definition = {"metric": "MAE", "unit": "eV", "target": "Gap",
                 "role_identity": contract["development_role_identity"], "weights": weights, "direction": "minimize"}
             if trace["metric_semantics"][key] != definition:
@@ -381,7 +382,8 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
                     trace["metric_semantics"][key] is not None or any(row[key] is not None for row in rows)
                     for key in ("live_dev_metric", "ema_dev_metric"))):
                 raise ValueError("Final-only output fabricated development evidence")
-            final = state["ema"] if selected["weights"] == "ema" else state["model"]
+            final = (state["cursor"]["weight_state"]["clean"]["model"] if selected["weights"] == "clean-ema"
+                     else state["ema"] if selected["weights"] == "ema" else state["model"])
             if state_dict_sha256(selected["model"]) != state_dict_sha256(final):
                 raise ValueError("Final selected weights differ from the resume endpoint")
         observed.update(progress=actual, artifacts=artifacts, costs=manifest["costs"],

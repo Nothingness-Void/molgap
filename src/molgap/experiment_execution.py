@@ -15,6 +15,44 @@ from .experiment_spec import ADDONS, FAMILIES, ExperimentSpec, SCHEMA_VERSION_V2
 
 
 @dataclass(frozen=True)
+class ExecutionPhase:
+    """Reviewed neutral worker descriptor; platform owns spawning and timeouts."""
+    name: str
+    worker: str = "molgap.experiment_training_worker"
+    swap_devices: bool = False
+    separate_output: bool = False
+    preflight_binding: bool = False
+
+    def __post_init__(self):
+        if (type(self.name) is not str or re.fullmatch(r"[a-z][a-z0-9-]*", self.name) is None or
+                type(self.worker) is not str or re.fullmatch(r"molgap(?:\.[A-Za-z_][A-Za-z0-9_]*)+", self.worker) is None or
+                any(type(value) is not bool for value in (self.swap_devices, self.separate_output, self.preflight_binding))):
+            raise ValueError("Invalid reviewed execution phase descriptor")
+
+    def device(self, declared):
+        return 1 - declared if self.swap_devices else declared
+
+
+@dataclass(frozen=True)
+class ExecutionExtension:
+    phases: tuple[ExecutionPhase, ...] = (ExecutionPhase("preflight"), ExecutionPhase("train"))
+    configuration: dict | None = None
+    wall_ceiling_seconds: int | None = None
+    artifacts: object = None
+    finalize: object = None
+
+    def __post_init__(self):
+        if (type(self.phases) is not tuple or not self.phases or any(type(phase) is not ExecutionPhase for phase in self.phases) or
+                self.phases[0].name != "preflight" or len({phase.name for phase in self.phases}) != len(self.phases) or
+                any(hook is not None and not callable(hook) for hook in (self.artifacts, self.finalize)) or
+                (self.wall_ceiling_seconds is not None and
+                 (type(self.wall_ceiling_seconds) is not int or self.wall_ceiling_seconds < 1))):
+            raise ValueError("Invalid bounded execution extension")
+
+
+
+
+@dataclass(frozen=True)
 class TrainingAddon:
     """Reviewed execution delta; declaration and source identity stay with Spec."""
     name: str
@@ -22,6 +60,7 @@ class TrainingAddon:
     mode: str
     extra_source_files: tuple[str, ...] = ()
     apply_hook: str | None = None
+    policy_hook: str | None = None
 
 
 @dataclass(frozen=True)
@@ -50,6 +89,12 @@ class TrainingAdapter:
         addons = arm["addons"]
         if not addons:
             return "reference"
+        if self.module == "molgap.family_training_runner":
+            entries = [self.addon(a["name"], a["version"]) for a in addons]
+            if any(entry.apply_hook is not None for entry in entries):
+                if not all(entry.apply_hook is not None for entry in entries):
+                    raise ValueError("Slot composition cannot mix frozen mode dispatch")
+                return "composed"
         if self.model_factory is not None:
             modes = [self.addon(a["name"], a["version"]).mode for a in addons]
             return modes[0] if len(modes) == 1 else "composed"
@@ -79,7 +124,8 @@ def graph_training_adapter(family, *, model_factory, addons=(), source_files=(),
 TRAINING_ADAPTERS = MappingProxyType({
     ("neural_atom_k1", "3"): TrainingAdapter(
         ("neural_atom_k1", "3"), "molgap.family_training_runner", "k1-session-v1",
-        tuple(TrainingAddon(name, "1", mode) for name, mode in (
+        tuple(TrainingAddon(name, "1", "composed", apply_hook="molgap.substrate_scale_addon:apply_addon")
+              for name in ("k1_node_scale", "k1_aggregate_scale", "k1_readout_scale")) + tuple(TrainingAddon(name, "1", mode) for name, mode in (
             ("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
             ("k1_mean2_clean_second", "mean2_clean_second"))), ("molgap.pcqm_wedge",),
         ("src/molgap/family_training_runner.py", "src/molgap/family_training_kernel.py",
@@ -88,7 +134,9 @@ TRAINING_ADAPTERS = MappingProxyType({
         target_identity_in_completion=True, profile_adapter="molgap.family_execution_profile"),
     ("gptrans_t", "2"): TrainingAdapter(
         ("gptrans_t", "2"), "molgap.family_training_runner", "gptrans-session-v1",
-        tuple(TrainingAddon(name, "1", name) for name in
+        tuple(TrainingAddon(name, "1", "composed", apply_hook="molgap.substrate_scale_addon:apply_addon")
+              for name in ("gptrans_node_scale", "gptrans_aggregate_scale", "gptrans_readout_scale")) + tuple(TrainingAddon(name, "1", name,
+              policy_hook="molgap.gptrans_training_policy:policy" if name.startswith("degree_") else None) for name in
               ("pair_prenorm", "centered_logits", "memory_value", "memory_message",
                "degree_bond_local_ema999", "degree_local_cycle_common_ema999",
                "degree_aggregate_shared_ema999", "degree_aggregate_cycle_ema999",
@@ -154,12 +202,17 @@ def validate_training_registry() -> None:
                 raise ValueError("Executable addon differs from its declared family version")
             if type(addon.mode) is not str or not addon.mode:
                 raise ValueError("Executable addon requires an explicit owning mode")
-            if adapter.model_factory is not None:
+            if addon.policy_hook is not None and (adapter.module != "molgap.family_training_runner" or
+                    not addon.policy_hook.endswith(":policy")):
+                raise ValueError("Policy hooks require the reviewed family session")
+            if addon.policy_hook is not None:
+                _hook_source(addon.policy_hook)
+            if adapter.model_factory is not None or addon.apply_hook is not None:
                 if (addon.apply_hook is None or not addon.apply_hook.endswith(":apply_addon")
                         or _hook_source(addon.apply_hook) != "src/" + contract.source_module.replace(".", "/") + ".py"):
                     raise ValueError("Shared graph addon requires its reviewed model-delta hook")
-            elif addon.apply_hook is not None:
-                raise ValueError("Owning trainer addons must retain their own mode dispatch")
+                if adapter.model_factory is None and adapter.module != "molgap.family_training_runner":
+                    raise ValueError("Slot addons require the accelerated family session")
 
 
 def build_addon_declaration(family, addon, *, repo_root, config=None, version="1") -> dict:
@@ -226,7 +279,7 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | tuple[str, ...]
     if logging is not None and adapter.module != "molgap.family_training_runner":
         raise ValueError("Configurable training logging requires the shared family session")
     if isinstance(addon, tuple):
-        if adapter.model_factory is None or len(addon) < 2 or len(set(addon)) != len(addon):
+        if (adapter.model_factory is None and adapter.module != "molgap.family_training_runner") or len(addon) < 2 or len(set(addon)) != len(addon):
             raise ValueError("Composed addons require distinct reviewed shared-model hooks")
         for name in addon:
             adapter.addon(name, addon_version)
@@ -234,6 +287,10 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | tuple[str, ...]
     else:
         mode = "reference" if addon is None else adapter.addon(addon, addon_version).mode
     if adapter.module == "molgap.family_training_runner":
+        names = addon if isinstance(addon, tuple) else (() if addon is None else (addon,))
+        if configuration is None or tuple(a["name"] for a in configuration.addons) != (
+                names if mode == "composed" else ()):
+            raise ValueError("Recipe ordered slot addons differ from the selected declarations")
         if recipe_config is not None:
             raise ValueError("Shared family configuration must use FamilyRecipe")
         return import_module(adapter.module).build_screen_recipe(mode, configuration=configuration,
