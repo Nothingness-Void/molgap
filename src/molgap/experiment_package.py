@@ -76,9 +76,10 @@ def _name(value) -> str:
     if (value.startswith("src/molgap/") and path.suffix == ".py"
             and path.name == path.name.lower()):
         io_tokens = {"data", "dataset", "datasets", "checkpoint", "checkpoints",
-                     "records", "result", "results", "artifacts"}
-        if value == "src/molgap/family_training_outputs.py":
-            io_tokens.add("outputs")
+                     "records", "output", "outputs", "result", "results", "artifacts"}
+        # A reviewed pair-token module is model source, not an auth token file.
+        if value == "src/molgap/k1_pair_token.py":
+            io_tokens.add("token")
         directory_tokens = {token for part in lowered[:-1] for token in re.split(r"[._-]+", part)}
         filename_tokens = set(re.split(r"[._-]+", lowered[-1])) - io_tokens
         tokens = directory_tokens | filename_tokens

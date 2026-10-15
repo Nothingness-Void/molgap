@@ -17,6 +17,8 @@ role, submission, promotion or full-admission authority.
 | `kaggle` | `api_for_credentials`, `dataset_status`, `dataset_details`, `kernel_source` | Explicit-account SDK compatibility. Status is not metadata or proof of native execution. |
 | `transport` | `download_pinned_files` | Exact allowlist, SHA256, atomic no-clobber retention; no bulk fallback or scientific acceptance. |
 | `runtime` | Existing substrate, state, sandbox, graph-model and dependency APIs | Object aliases, not replacement types, loops or registries. |
+| `spec` | Strict Spec parser and contract types with explicit catalogs | Existing `experiment_spec` imports remain compatible; `experiment_catalog` owns reviewed registrations, not host inference. |
+| `wire`, `paths`, `io` | Stable fingerprints, portable paths and atomic no-clobber publication | Existing owners forward to these leaf mechanisms; no role, release or acceptance authority. |
 
 Import the submodule required, not all runtime dependencies at startup:
 
@@ -79,3 +81,10 @@ The common suite checks pure declarations for both owners and several platforms,
 legacy forwarding, provenance rejection, SDK call shape, no-global-auth behavior,
 pinned no-clobber downloads and actual static package closure. It uses synthetic
 CPU/files and fake APIs only, not native runtime or scientific qualification.
+
+`tests/test_common_contract.py` checks the extracted parser/IO boundaries,
+immutable Spec compatibility, static inventory plus isolated imports, explicit
+planning ownership, retained metric units and unchanged default optimizer update.
+Catalogs intentionally differ by reviewed capabilities. Shared parsing does not
+make an unregistered family/addon executable or authorize a previously forbidden
+role. Full training-lifecycle convergence remains a separate implementation task.

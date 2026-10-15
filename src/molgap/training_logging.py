@@ -51,7 +51,8 @@ class TrainingLogPolicy:
 class TrainingLogger:
     """One schema for every arm, frequency and platform using the shared session."""
 
-    def __init__(self, root, context, recipe, policy, *, observations=(), clock=None, emit=None):
+    def __init__(self, root, context, recipe, policy, *, observations=(), clock=None, emit=None,
+                 observation_train_unit="normalized-Gap"):
         if type(policy) is not TrainingLogPolicy:
             raise TypeError("Expected TrainingLogPolicy")
         self.root, self.context, self.recipe, self.policy = Path(root), context, recipe, policy
@@ -64,20 +65,22 @@ class TrainingLogger:
         self.pending_pass = None
         self.metric_pass = self.best_pass = None
         self.train_mae = self.dev_mae = self.best_mae = None
+        if observation_train_unit not in {"normalized-Gap", "eV"}:
+            raise ValueError("Unsupported retained training metric unit")
         for row in observations:
             if row.get("event") != "observation":
                 continue
             train = row.get("live_train_metric")
             dev = row.get("ema_dev_metric" if recipe.selection.endswith("ema") else "live_dev_metric")
             if train is not None:
-                self._metrics(row["epoch_or_pass"], train, dev)
+                self._metrics(row["epoch_or_pass"], train, dev, train_unit=observation_train_unit)
 
-    def _metrics(self, pass_index, train, development):
+    def _metrics(self, pass_index, train, development, *, train_unit="normalized-Gap"):
         values = (train,) if development is None else (train, development)
         if any(type(v) not in (int, float) or not math.isfinite(v) or v < 0 for v in values):
             raise ValueError("Training telemetry requires finite nonnegative MAE")
         self.metric_pass = pass_index
-        self.train_mae = train * self.recipe.target_std_eV
+        self.train_mae = train if train_unit == "eV" else train * self.recipe.target_std_eV
         self.dev_mae = development
         if development is not None and (self.best_mae is None or development < self.best_mae):
             self.best_mae, self.best_pass = development, pass_index
