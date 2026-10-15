@@ -128,6 +128,11 @@ consequences of preparation or mechanical inspection.
 
 ## Public Entry
 
+Shared recipes configure [standard training logs](TRAINING_LOGGING.md) through
+`build_family_recipe(..., logging=...)`: epoch summaries by default, or explicit
+seconds/batches cadence. Reuse the standard fields/worker relay; logging neither
+adds development evaluations nor changes canonical evidence/checkpoint cadence.
+
 Build `FamilyRecipe`, then use `experiment_execution.build_family_recipe` with
 `configuration=recipe`, the applicable interface tuple, exact train/optional
 development usage digests and development row/target hashes. Final-only selection

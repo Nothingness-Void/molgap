@@ -32,6 +32,10 @@ for the operation needed. A direct call to the same library is equivalent.
 
 ## Training / construction
 
+Shared K1/GPTrans telemetry uses [standard training logs](../../../../docs/operations/TRAINING_LOGGING.md).
+Configure `build_family_recipe(..., logging=...)`; reuse epoch/seconds/batches
+cadence, fixed fields and worker relay instead of writing a new printer/timer.
+
 For new K1/GPTrans training declarations, start with the
 [shared core](../../../../docs/operations/FAMILY_TRAINING_CORE.md):
 `FamilyRecipe` -> `build_family_recipe(configuration=...)` ->

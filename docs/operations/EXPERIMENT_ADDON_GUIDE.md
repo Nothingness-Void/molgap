@@ -14,6 +14,8 @@ It routes to existing components and records only the missing behavior; the
 contracts below remain authoritative. It does not add a second execution core.
 
 Execution diagnostics reuse the [shared-session profiler](FAMILY_EXECUTION_PROFILE.md).
+Training telemetry reuses [standard logging](TRAINING_LOGGING.md), configured by
+`build_family_recipe(..., logging=...)`, not an experiment-specific printer/timer.
 
 ## Shared Core
 

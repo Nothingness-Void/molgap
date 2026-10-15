@@ -113,6 +113,11 @@ no new execution authority. See [reuse map](EXPERIMENT_ADDON_GUIDE.md).
 
 ## Verification and provenance
 
+The reviewed [shared execution refinement](GPTRANS_EXECUTION_REFINEMENT.md)
+keeps `checkpoint_state`, `checkpoint_publish` and `finite_validation` visible
+on the synchronous snapshot-builder route. Validation moved into publication;
+compare whole transactions/non-overlapping host-self phases, not a renamed phase.
+
 The observer and optional recipe/native-proof integration were ported from
 desktop commits `b76e71b1` and `8e4860c1`. Local layer observation preserves
 the cache ABI used by the [reviewed topology implementation](TOPOLOGY_REUSE_SERVER_REVIEW.md).

@@ -10,6 +10,10 @@ desktop branch. Desktop acceptance is retained separately in
 [FAMILY_TRAINING_TEST_HANDOFF.md](FAMILY_TRAINING_TEST_HANDOFF.md).
 The [shared core](FAMILY_TRAINING_CORE.md) owns APIs and module responsibilities.
 
+The reviewed [logging/execution update](DESKTOP_LOGGING_EXECUTION_SERVER_REVIEW.md)
+ports desktop `853ac0ed` / `48c3bdde` while retaining server-specific bounded
+campaign modes, frozen jobs, profiling and source/role/continuation gates.
+
 The later reviewed reliability integration from desktop `a01cda9f` is recorded
 separately in [the server recovery review](SHARED_RECOVERY_SERVER_REVIEW.md).
 It preserves the server's bounded same-run pair, trace and transport hooks;
