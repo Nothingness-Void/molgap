@@ -48,6 +48,14 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
         expected_roles = {"train_decoded": {"labels_read": list(range(500000))},
                           "train_descriptive": {"prediction_input": train, "metric_computed": train},
                           "internal_development": {a:dev for a in ("labels_read", "prediction_input", "metric_computed", "selection_used")}}
+    elif result["format"] == "molgap-k1-session-state-diagnostic-v1":
+        if inputs["train_decoded_source_bounds"] != [0, 500000]:
+            raise ValueError("Session diagnostic training bounds differ")
+        calibration = sorted({i for rows in inputs["calibration_source_idx"].values() for i in rows})
+        expected_roles = {"train_decoded": {"labels_read": list(range(500000))},
+                          "train_feature_calibration": {"prediction_input": calibration},
+                          "train_descriptive": {a: train for a in ("prediction_input", "metric_computed")},
+                          "internal_development": {a: dev for a in ("labels_read", "prediction_input", "metric_computed")}}
     elif result["format"] == "molgap-k1-component-diagnostic-v1":
         sample = result["sample_source_idx"]
         sample_dev, sample_train = [i for i in sample if i >= 500000], [i for i in sample if i < 500000]
@@ -120,7 +128,8 @@ def close_local_diagnostic(repo: Path, experiment: Path, *, evidence_id: str,
             roles.append(dict(schema="molgap-role-event-v1", role_event_id=f"role-{short}-{role}-{access}",
                               trajectory_id=tid, action_id=action["action_id"], run_id=run,
                               dataset_identity="pcqm4mv2-ogb-fixed-500k-scnet-v1", row_manifest_hash=digest,
-                              role_name=role, access_kind=access, selection_used=role.startswith("internal_development"),
+                              role_name=role, access_kind=access, selection_used=(role.startswith("internal_development")
+                                  and result["format"] != "molgap-k1-session-state-diagnostic-v1"),
                               evidence_ref=f"{rel}/acceptance.json"))
     acceptance = dict(format="molgap-local-frozen-diagnostic-acceptance-v1", evidence_id=evidence_id,
                       run_id=run, outcome=outcome, trajectory_decision=decision, role_use=role_use,

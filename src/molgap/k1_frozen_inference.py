@@ -10,6 +10,62 @@ from .k1_screen_training import FORBIDDEN_MODEL_FIELDS, _forward
 from .qm9_neural_atom import make_encoder
 
 
+def read_session_k1_states(path: Path, *, expected_sha256: str,
+                           expected_context: dict, recipe_path: Path,
+                           expected_step: int, checkpoint_kind: str):
+    """Bind saved Live/Raw/Clean views without constructing a training session.
+
+    FamilyTrainingState owns restoration of the returned state. This translator
+    checks outer identity, exposure and selected/resume bindings, not promotion.
+    """
+    import torch
+    from .family_training_runner import read_recipe
+    from .family_training_state import _state_identity
+    from .training_reproducibility import sha256_file
+
+    if checkpoint_kind not in {"selected", "final"}:
+        raise ValueError("Unknown shared-session K1 checkpoint kind")
+    if sha256_file(path) != expected_sha256:
+        raise ValueError("Session checkpoint bytes differ")
+    if sha256_file(recipe_path) != expected_context.get("training_recipe_sha256"):
+        raise ValueError("Session recipe bytes differ")
+    _, recipe = read_recipe(recipe_path)
+    if (expected_context.get("family_name") != "neural_atom_k1" or
+            expected_context.get("family_version") != "3" or
+            recipe.family != "neural_atom_k1" or recipe.mode != "reference" or
+            recipe.clean_bn is None or recipe.ema_decay is None or
+            type(expected_step) is not int or expected_step <= 0 or
+            expected_step % recipe.loop_plan.steps_per_pass):
+        raise ValueError("Expected a complete-pass Clean K1 session")
+    saved = torch.load(path, map_location="cpu", weights_only=True)
+    if saved.get("context") != expected_context or saved.get("optimizer_step") != expected_step:
+        raise ValueError("Session checkpoint context/step differs")
+    state = saved.get("owner_state")
+    if (not isinstance(state, dict) or state.get("raw_revision") != expected_step or
+            not isinstance(state.get("clean"), dict) or state["clean"].get("stale") is not False):
+        raise ValueError("Session Clean state is absent, stale or differently stepped")
+    clean = state["clean"]
+    calibration = clean.get("calibration", {})
+    if (calibration.get("raw_revision") != expected_step or
+            calibration.get("policy_identity") != recipe.clean_bn.identity or
+            calibration.get("raw_state_identity") != _state_identity(state["raw_ema"]) or
+            calibration.get("clean_state_identity") != _state_identity(clean["model"])):
+        raise ValueError("Session calibration identity differs")
+    if checkpoint_kind == "selected":
+        if (saved.get("weights") != "ema" or saved.get("selection") != recipe.selection or
+                saved.get("epoch_or_pass") != expected_step / recipe.loop_plan.steps_per_pass or
+                saved.get("calibration") != calibration or
+                _state_identity(saved["model"]) != _state_identity(clean["model"])):
+            raise ValueError("Selected Clean payload differs from its same-step state")
+    elif (expected_step != recipe.optimizer_steps or
+            saved.get("sample_presentations") != expected_step * recipe.batch_size or
+            saved.get("cursor", {}).get("status") != "complete" or
+            _state_identity(saved["model"]) != _state_identity(state["live"]) or
+            _state_identity(saved["ema"]) != _state_identity(state["raw_ema"])):
+        raise ValueError("Final session exposure or Live/Raw binding differs")
+    return state, recipe
+
+
 def load_native500k_k1(path: Path, *, expected_sha256: str,
                       expected_source_sha256: str, expected_epoch: int,
                       checkpoint_kind: str,
