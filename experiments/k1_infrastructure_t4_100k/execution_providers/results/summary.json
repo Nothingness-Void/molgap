@@ -1,0 +1,886 @@
+{
+  "format": "molgap-k1-execution-summary-v1",
+  "status": "EXECUTION_COMPARISON_VERIFIED",
+  "kernel": "nvoid912/molgap-k1-infrastructure-dual-100k-v2",
+  "kernel_id": 138799517,
+  "version": 1,
+  "source_commit": "bb899e7e2f18f1786f78d71e76d0a4ec11393428",
+  "spec_identity": "09cd4d91c34bb9dfea0e181d52e4290ed37a71a37544a48339bcd98069cef17f",
+  "comparison_base": "experiments/k1_infrastructure_t4_100k/execution_providers",
+  "logical_run_id": "k1-infrastructure-t4-100k-s42-v2",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_APPLICABLE_EXECUTION_DIAGNOSTIC",
+  "parent_timed_train_workers": {
+    "speedup_factor": 1.1277811030017952,
+    "wall_reduction_percent": 11.330310701401416
+  },
+  "numerical_comparison": {
+    "maximum_prediction_delta_eV": 0.0,
+    "mean_prediction_delta_eV": 0.0,
+    "optimized_mae_eV_float64": 0.1421622129434347,
+    "optimized_minus_original_mae_eV": 0.0,
+    "original_mae_eV_float64": 0.1421622129434347,
+    "prediction_values_equal": true,
+    "rows": 50000
+  },
+  "selected_model_tensors_equal": true,
+  "last_model_tensors_equal": true,
+  "state_comparison": {
+    "selected": {
+      "tensor_keys_equal": true,
+      "original_tensor_count": 367,
+      "optimized_tensor_count": 367,
+      "all_tensors_equal": true,
+      "original_state_sha256": "b9af166c26713683f4118ca4f9df42b4f09bf43320f831914b7aae1651252356",
+      "optimized_state_sha256": "b9af166c26713683f4118ca4f9df42b4f09bf43320f831914b7aae1651252356"
+    },
+    "last": {
+      "tensor_keys_equal": true,
+      "original_tensor_count": 367,
+      "optimized_tensor_count": 367,
+      "all_tensors_equal": true,
+      "original_state_sha256": "b9af166c26713683f4118ca4f9df42b4f09bf43320f831914b7aae1651252356",
+      "optimized_state_sha256": "b9af166c26713683f4118ca4f9df42b4f09bf43320f831914b7aae1651252356"
+    }
+  },
+  "capture_off_spans": {
+    "aggregate": {
+      "speedup_factor": 1.063837575318832,
+      "wall_reduction_percent": 6.000688150134188
+    },
+    "median_paired_speedup_factor": 1.091849962355458,
+    "optimized_graphs_per_second": 758.8844883990934,
+    "original_graphs_per_second": 713.3461968305224,
+    "scope": "matched passes after Kineto capture; passive observer wrappers remain; validation/publication excluded"
+  },
+  "arms": {
+    "original": {
+      "selected_pass": 40,
+      "progress": {
+        "epochs": 40,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720
+      },
+      "mechanical_inspection": {
+        "blockers": [],
+        "context": {
+          "account": "nvoid912",
+          "arm_id": "original",
+          "arm_identity": "01f5144d4cc17f4a01dfde87cc69d983adc55aaa41f50a8ebd59f44be5153879",
+          "experiment_id": "k1-infrastructure-t4-100k",
+          "family_name": "neural_atom_k1",
+          "family_version": "2",
+          "logical_run_id": "k1-infrastructure-t4-100k-s42-v2",
+          "package_identity": "1eeabc5261698ae3454ef482fb5874bed366af33557afd9f724e86d944931715",
+          "platform": "kaggle",
+          "platform_version": "1",
+          "run_reference": "nvoid912/molgap-k1-infrastructure-dual-100k-v2",
+          "source_archive_sha256": "cdd070e7c8e01ba4c59fe4ddf97142782a9230c44e66af25002e40a92944e561",
+          "source_commit": "bb899e7e2f18f1786f78d71e76d0a4ec11393428",
+          "spec_identity": "09cd4d91c34bb9dfea0e181d52e4290ed37a71a37544a48339bcd98069cef17f",
+          "training_recipe_sha256": "2b4f47bb758ac0ae794490dfba3c49544b7d11ee13481e7ae3642a287cfe4756"
+        },
+        "observed": {
+          "artifacts": {
+            "contract": {
+              "path": "training_contract.json",
+              "sha256": "2b4f47bb758ac0ae794490dfba3c49544b7d11ee13481e7ae3642a287cfe4756"
+            },
+            "predictions": {
+              "path": "development_predictions.pt",
+              "sha256": "a22ee7d79bde1900a71379f766b29eca06dee08fae6970f575499c58a47d0df7"
+            },
+            "resume": {
+              "path": "last_checkpoint.pt",
+              "sha256": "0a99c8e161fdb9a88742ff55da15ea71aa384ef4d636b71cbb879326967a8bef"
+            },
+            "selected_model": {
+              "path": "selected_model.pt",
+              "sha256": "dffd8a12be4840912282100d9a71f397aeb6a7c64fc949645c06703b67bd3401"
+            },
+            "trace": {
+              "path": "canonical_trace.json",
+              "sha256": "e663e82e3c428cdc1d7855a04b4b18c39aeeb6a7b156d62668ecc0f03718a53c"
+            }
+          },
+          "costs": [
+            {
+              "hardware": "Tesla T4",
+              "metric": "wall_seconds",
+              "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+              "semantics": "process_wall",
+              "status": "measured",
+              "unit": "seconds",
+              "value": 6758.274509909
+            },
+            {
+              "hardware": "Tesla T4",
+              "metric": "device_seconds",
+              "scope": "training_invocation_lower_bound_includes_dev_checkpoint_excludes_bootstrap_queue",
+              "semantics": "allocated_device",
+              "status": "measured",
+              "unit": "seconds",
+              "value": 6758.274509909
+            }
+          ],
+          "development_mae_eV": 0.1421622129434347,
+          "producer_platform_version": null,
+          "progress": {
+            "epochs": 40,
+            "optimizer_steps": 31240,
+            "sample_presentations": 3998720
+          },
+          "selected_epoch": 40,
+          "selected_optimizer_step": 31240,
+          "selected_weights": "live"
+        },
+        "replay_readiness": "NOT_EVALUATED",
+        "runtime_qualification": "NOT_EVALUATED",
+        "scientific_acceptance": "NOT_EVALUATED",
+        "status": "MECHANICALLY_VERIFIED"
+      },
+      "native_certificate_sha256": "b300d6bb227603e629d00535680cd549d18526beb1abaac607880446c744590c",
+      "preflight_worker_wall_seconds": 29.011448518999998,
+      "train_worker_wall_seconds": 6789.5956919949995,
+      "profile_report_sha256": "71cb542532e2f30e9949c910544e50f2c58ab08244d25d129bf6fb972eb84cb4",
+      "capture": {
+        "capture_start_optimizer_step": 120,
+        "capture_wall_seconds": 3.693953032999957,
+        "captured_updates": 16,
+        "observed_updates": 31240,
+        "device_events_observed": true,
+        "context_peak_allocated_bytes": 576582656,
+        "context_peak_reserved_bytes": 618659840,
+        "runtime": {
+          "cpu_threads": 2,
+          "cuda": "12.6",
+          "device": "cuda",
+          "device_name": "Tesla T4",
+          "hip": null,
+          "torch": "2.7.1+cu126"
+        },
+        "phases_by_host_self_time": [
+          {
+            "calls": 16,
+            "host_self_seconds": 1.6753578200001016,
+            "host_total_seconds": 1.6753578200001016,
+            "name": "backward"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 1.5905007800000135,
+            "host_total_seconds": 1.5905007800000135,
+            "name": "forward"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.20263830900000812,
+            "host_total_seconds": 0.20263830900000812,
+            "name": "optimizer"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.15309470299990835,
+            "host_total_seconds": 0.15309470299990835,
+            "name": "gradient_clip"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.02242138300005081,
+            "host_total_seconds": 0.02242138300005081,
+            "name": "transfer"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.020212979999939762,
+            "host_total_seconds": 3.656042688999946,
+            "name": "train_update"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.014238096999974914,
+            "host_total_seconds": 0.014238096999974914,
+            "name": "zero_grad"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.006127965000075619,
+            "host_total_seconds": 0.006127965000075619,
+            "name": "loader_wait"
+          }
+        ]
+      },
+      "training_spans": {
+        "count": 39,
+        "total_seconds": 5465.441628935003,
+        "median_seconds": 143.75023263699995,
+        "minimum_seconds": 112.2344161029996,
+        "maximum_seconds": 148.6581952439999
+      },
+      "trace_observations": {
+        "aten_dispatch_calls": {
+          "aten::_assert_async": 1504,
+          "aten::_batch_norm_impl_index": 288,
+          "aten::_efficient_attention_backward": 48,
+          "aten::_efficient_attention_forward": 48,
+          "aten::_foreach_add_": 32,
+          "aten::_foreach_addcdiv_": 16,
+          "aten::_foreach_addcmul_": 16,
+          "aten::_foreach_div_": 16,
+          "aten::_foreach_lerp_": 16,
+          "aten::_foreach_mul_": 48,
+          "aten::_foreach_norm": 16,
+          "aten::_foreach_sqrt": 16,
+          "aten::_index_put_impl_": 1088,
+          "aten::_local_scalar_dense": 10144,
+          "aten::_reshape_alias": 96,
+          "aten::_scaled_dot_product_efficient_attention": 48,
+          "aten::_scaled_dot_product_efficient_attention_backward": 48,
+          "aten::_softmax": 48,
+          "aten::_softmax_backward_data": 48,
+          "aten::_to_copy": 432,
+          "aten::_unsafe_view": 144,
+          "aten::abs": 64,
+          "aten::add": 1616,
+          "aten::add_": 7296,
+          "aten::addmm": 1280,
+          "aten::alias": 48,
+          "aten::arange": 2688,
+          "aten::as_strided": 24832,
+          "aten::batch_norm": 288,
+          "aten::bitwise_not": 48,
+          "aten::bmm": 288,
+          "aten::broadcast_tensors": 16,
+          "aten::cat": 448,
+          "aten::clamp": 32,
+          "aten::clone": 432,
+          "aten::contiguous": 288,
+          "aten::copy_": 1424,
+          "aten::cumsum": 48,
+          "aten::detach": 5040,
+          "aten::detach_": 16,
+          "aten::div": 176,
+          "aten::div_": 2176,
+          "aten::divide_": 1088,
+          "aten::dropout": 688,
+          "aten::einsum": 144,
+          "aten::embedding": 192,
+          "aten::embedding_backward": 192,
+          "aten::embedding_dense_backward": 192,
+          "aten::empty": 18160,
+          "aten::empty_like": 5360,
+          "aten::empty_strided": 7408,
+          "aten::expand": 400,
+          "aten::expand_as": 272,
+          "aten::fill_": 34624,
+          "aten::flatten": 480,
+          "aten::gather": 160,
+          "aten::ge": 752,
+          "aten::index": 432,
+          "aten::index_add_": 432,
+          "aten::index_put_": 752,
+          "aten::index_select": 624,
+          "aten::index_select_backward": 432,
+          "aten::item": 10144,
+          "aten::l1_loss": 16,
+          "aten::layer_norm": 432,
+          "aten::lift_fresh": 112,
+          "aten::linalg_vector_norm": 16,
+          "aten::linear": 1904,
+          "aten::lt": 752,
+          "aten::masked_fill": 96,
+          "aten::masked_fill_": 96,
+          "aten::matmul": 624,
+          "aten::max": 864,
+          "aten::mean": 32,
+          "aten::min": 752,
+          "aten::mm": 4416,
+          "aten::mul": 4048,
+          "aten::narrow": 960,
+          "aten::native_batch_norm": 288,
+          "aten::native_batch_norm_backward": 288,
+          "aten::native_dropout": 688,
+          "aten::native_dropout_backward": 688,
+          "aten::native_layer_norm": 432,
+          "aten::native_layer_norm_backward": 432,
+          "aten::new_empty": 1104,
+          "aten::new_ones": 64,
+          "aten::new_zeros": 992,
+          "aten::nonzero": 96,
+          "aten::ones_like": 16,
+          "aten::permute": 1248,
+          "aten::reciprocal": 16,
+          "aten::remainder": 2272,
+          "aten::repeat": 48,
+          "aten::reshape": 3408,
+          "aten::resize_": 2096,
+          "aten::result_type": 30048,
+          "aten::scalar_tensor": 96,
+          "aten::scaled_dot_product_attention": 48,
+          "aten::scatter_add_": 224,
+          "aten::select": 1248,
+          "aten::select_backward": 144,
+          "aten::set_": 2288,
+          "aten::sgn": 16,
+          "aten::sigmoid": 144,
+          "aten::sigmoid_backward": 144,
+          "aten::silu": 384,
+          "aten::silu_backward": 384,
+          "aten::slice": 1248,
+          "aten::slice_backward": 48,
+          "aten::softmax": 48,
+          "aten::squeeze": 480,
+          "aten::stack": 16,
+          "aten::sub": 96,
+          "aten::sum": 1808,
+          "aten::t": 9600,
+          "aten::to": 7312,
+          "aten::transpose": 10992,
+          "aten::unbind": 144,
+          "aten::unflatten": 48,
+          "aten::unfold": 96,
+          "aten::unsqueeze": 6016,
+          "aten::view": 7392,
+          "aten::zero_": 1776,
+          "aten::zeros": 736
+        },
+        "device_activity_events": 79343,
+        "device_activity_union_us": 1087033.7790527344,
+        "scope": "single-worker capture only; overlapping GPU intervals merged; not allocation cost or whole-run utilization"
+      },
+      "full_trace_runtime_calls": {
+        "cudaLaunchKernel": 71360,
+        "cudaStreamSynchronize": 480,
+        "cudaDeviceSynchronize": 2,
+        "aten::fill_": 34624,
+        "aten::arange": 2688,
+        "aten::_index_put_impl_": 1088,
+        "aten::copy_": 1424,
+        "aten::scatter_add_": 224,
+        "aten::index_select": 624,
+        "aten::mm": 4416,
+        "aten::addmm": 1280,
+        "aten::item": 10144
+      }
+    },
+    "optimized": {
+      "selected_pass": 40.0,
+      "progress": {
+        "completed_passes": 40,
+        "next_batch": 0,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720,
+        "status": "complete"
+      },
+      "mechanical_inspection": {
+        "blockers": [],
+        "context": {
+          "account": "nvoid912",
+          "arm_id": "optimized",
+          "arm_identity": "e3f6b25603c3fbc239fbaf296bb8a1493dfc36118e6f31d837b46f2e81106ae3",
+          "experiment_id": "k1-infrastructure-t4-100k",
+          "family_name": "neural_atom_k1",
+          "family_version": "3",
+          "logical_run_id": "k1-infrastructure-t4-100k-s42-v2",
+          "package_identity": "1eeabc5261698ae3454ef482fb5874bed366af33557afd9f724e86d944931715",
+          "platform": "kaggle",
+          "platform_version": "1",
+          "run_reference": "nvoid912/molgap-k1-infrastructure-dual-100k-v2",
+          "source_archive_sha256": "cdd070e7c8e01ba4c59fe4ddf97142782a9230c44e66af25002e40a92944e561",
+          "source_commit": "bb899e7e2f18f1786f78d71e76d0a4ec11393428",
+          "spec_identity": "09cd4d91c34bb9dfea0e181d52e4290ed37a71a37544a48339bcd98069cef17f",
+          "training_recipe_sha256": "aeea624581e183b7d51135169e8f3fb726a8fe18abed90a0291eb79215914a0c"
+        },
+        "observed": {
+          "artifacts": {
+            "contract": {
+              "path": "training_contract.json",
+              "sha256": "aeea624581e183b7d51135169e8f3fb726a8fe18abed90a0291eb79215914a0c"
+            },
+            "predictions": {
+              "path": "development_predictions.pt",
+              "sha256": "fee4daf510369371e8719c8203f770688f09ebe5d84564279bc05620b9b812c5"
+            },
+            "resume": {
+              "path": "last_checkpoint.pt",
+              "sha256": "4898bd179193e8b1a205e7c5d512be604033b63f650ef82b1203b0d8d30ada1b"
+            },
+            "selected_model": {
+              "path": "selected_model.pt",
+              "sha256": "d6d235f265996139432a936200b6bee3765a2a695c2eb7b791e280e28498a837"
+            },
+            "trace": {
+              "path": "canonical_trace.json",
+              "sha256": "a3d6bcafa10935b32de5d51f5145788ab61723417065c715e8e43e4e60b9c1d3"
+            }
+          },
+          "costs": [
+            {
+              "hardware": "Tesla T4",
+              "metric": "wall_seconds",
+              "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+              "semantics": "process_wall",
+              "status": "measured",
+              "unit": "seconds",
+              "value": 6012.819845315001
+            },
+            {
+              "hardware": "Tesla T4",
+              "metric": "device_seconds",
+              "reason": "requires platform allocation accounting",
+              "semantics": "allocated_device",
+              "status": "missing",
+              "unit": "seconds",
+              "value": null
+            }
+          ],
+          "development_mae_eV": 0.1421622129434347,
+          "producer_platform_version": null,
+          "progress": {
+            "completed_passes": 40,
+            "next_batch": 0,
+            "optimizer_steps": 31240,
+            "sample_presentations": 3998720,
+            "status": "complete"
+          },
+          "selected_optimizer_step": 31240,
+          "selected_weights": "live"
+        },
+        "replay_readiness": "NOT_EVALUATED",
+        "runtime_qualification": "NOT_EVALUATED",
+        "scientific_acceptance": "NOT_EVALUATED",
+        "status": "MECHANICALLY_VERIFIED"
+      },
+      "native_certificate_sha256": "ac11aca97481f7bbbbdc60ce386105fff834b5d5168252545d01124e448c623a",
+      "preflight_worker_wall_seconds": 44.516431136999984,
+      "train_worker_wall_seconds": 6020.3134047230005,
+      "profile_report_sha256": "43732d74060837593fa690c3d51b14076bc9c92d2c54447365b1a939c8184f9f",
+      "capture": {
+        "capture_start_optimizer_step": 120,
+        "capture_wall_seconds": 3.6313066140000387,
+        "captured_updates": 16,
+        "observed_updates": 31240,
+        "device_events_observed": true,
+        "context_peak_allocated_bytes": 565743616,
+        "context_peak_reserved_bytes": 610271232,
+        "runtime": {
+          "cpu_threads": 1,
+          "cuda": "12.6",
+          "device": "cuda",
+          "device_name": "Tesla T4",
+          "hip": null,
+          "torch": "2.7.1+cu126"
+        },
+        "phases_by_host_self_time": [
+          {
+            "calls": 16,
+            "host_self_seconds": 1.9113186879999944,
+            "host_total_seconds": 1.9113186879999944,
+            "name": "backward"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 1.3158741660001283,
+            "host_total_seconds": 1.3158741660001283,
+            "name": "forward"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.1989348160000759,
+            "host_total_seconds": 0.1989348160000759,
+            "name": "optimizer"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.09770888600002081,
+            "host_total_seconds": 0.09770888600002081,
+            "name": "gradient_clip"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.044898881999870355,
+            "host_total_seconds": 3.612753434000126,
+            "name": "train_update"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.019223232000001644,
+            "host_total_seconds": 0.019223232000001644,
+            "name": "layout_enter"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.015674330000081227,
+            "host_total_seconds": 0.015674330000081227,
+            "name": "zero_grad"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.007438472000046659,
+            "host_total_seconds": 0.007438472000046659,
+            "name": "transfer"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.0030504419998464982,
+            "host_total_seconds": 0.0030504419998464982,
+            "name": "loader_wait"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.001681961999906889,
+            "host_total_seconds": 0.001681961999906889,
+            "name": "layout_exit"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.0014595959999610386,
+            "host_total_seconds": 0.0014595959999610386,
+            "name": "schedule_before"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.0007611229999611169,
+            "host_total_seconds": 0.0007611229999611169,
+            "name": "schedule_after"
+          }
+        ]
+      },
+      "training_spans": {
+        "count": 39,
+        "total_seconds": 5137.477520754999,
+        "median_seconds": 131.70510195499992,
+        "minimum_seconds": 128.38375549600005,
+        "maximum_seconds": 135.91916273700008
+      },
+      "trace_observations": {
+        "aten_dispatch_calls": {
+          "aten::_assert_async": 1376,
+          "aten::_batch_norm_impl_index": 288,
+          "aten::_efficient_attention_backward": 48,
+          "aten::_efficient_attention_forward": 48,
+          "aten::_foreach_add_": 32,
+          "aten::_foreach_addcdiv_": 16,
+          "aten::_foreach_addcmul_": 16,
+          "aten::_foreach_div_": 16,
+          "aten::_foreach_lerp_": 16,
+          "aten::_foreach_mul_": 48,
+          "aten::_foreach_norm": 16,
+          "aten::_foreach_sqrt": 16,
+          "aten::_index_put_impl_": 992,
+          "aten::_local_scalar_dense": 10176,
+          "aten::_reshape_alias": 96,
+          "aten::_scaled_dot_product_efficient_attention": 48,
+          "aten::_scaled_dot_product_efficient_attention_backward": 48,
+          "aten::_softmax": 48,
+          "aten::_softmax_backward_data": 48,
+          "aten::_to_copy": 176,
+          "aten::_unsafe_view": 144,
+          "aten::abs": 64,
+          "aten::add": 1632,
+          "aten::add_": 7232,
+          "aten::addmm": 1280,
+          "aten::all": 32,
+          "aten::any": 64,
+          "aten::arange": 2176,
+          "aten::as_strided": 22496,
+          "aten::batch_norm": 288,
+          "aten::bitwise_not": 16,
+          "aten::bmm": 288,
+          "aten::broadcast_tensors": 16,
+          "aten::cat": 448,
+          "aten::clamp": 16,
+          "aten::clamp_min": 16,
+          "aten::clone": 416,
+          "aten::contiguous": 240,
+          "aten::copy_": 816,
+          "aten::cumsum": 16,
+          "aten::detach": 5040,
+          "aten::detach_": 16,
+          "aten::div": 176,
+          "aten::div_": 1952,
+          "aten::divide_": 976,
+          "aten::dropout": 688,
+          "aten::einsum": 144,
+          "aten::embedding": 192,
+          "aten::embedding_backward": 192,
+          "aten::embedding_dense_backward": 192,
+          "aten::empty": 14992,
+          "aten::empty_like": 5104,
+          "aten::empty_strided": 7184,
+          "aten::equal": 16,
+          "aten::expand": 48,
+          "aten::expand_as": 16,
+          "aten::fill_": 1792,
+          "aten::flatten": 16,
+          "aten::ge": 736,
+          "aten::gt": 16,
+          "aten::index": 352,
+          "aten::index_add_": 480,
+          "aten::index_put_": 704,
+          "aten::index_select": 848,
+          "aten::index_select_backward": 480,
+          "aten::is_nonzero": 80,
+          "aten::is_same_size": 16,
+          "aten::item": 10176,
+          "aten::l1_loss": 16,
+          "aten::layer_norm": 432,
+          "aten::lift_fresh": 32,
+          "aten::linalg_vector_norm": 16,
+          "aten::linear": 1904,
+          "aten::lt": 720,
+          "aten::masked_fill": 96,
+          "aten::masked_fill_": 96,
+          "aten::matmul": 624,
+          "aten::max": 704,
+          "aten::mean": 32,
+          "aten::min": 688,
+          "aten::mm": 4416,
+          "aten::mul": 3664,
+          "aten::narrow": 864,
+          "aten::native_batch_norm": 288,
+          "aten::native_batch_norm_backward": 288,
+          "aten::native_dropout": 688,
+          "aten::native_dropout_backward": 688,
+          "aten::native_layer_norm": 432,
+          "aten::native_layer_norm_backward": 432,
+          "aten::new_empty": 976,
+          "aten::new_zeros": 976,
+          "aten::ones_like": 16,
+          "aten::permute": 1248,
+          "aten::reciprocal": 16,
+          "aten::remainder": 1952,
+          "aten::repeat_interleave": 32,
+          "aten::reshape": 3952,
+          "aten::resize_": 1952,
+          "aten::result_type": 30048,
+          "aten::scalar_tensor": 96,
+          "aten::scaled_dot_product_attention": 48,
+          "aten::select": 1120,
+          "aten::select_backward": 144,
+          "aten::sgn": 16,
+          "aten::sigmoid": 144,
+          "aten::sigmoid_backward": 144,
+          "aten::silu": 384,
+          "aten::silu_backward": 384,
+          "aten::slice": 1232,
+          "aten::slice_backward": 48,
+          "aten::softmax": 48,
+          "aten::squeeze": 480,
+          "aten::stack": 16,
+          "aten::sub": 96,
+          "aten::sum": 1648,
+          "aten::t": 9504,
+          "aten::to": 6912,
+          "aten::transpose": 10896,
+          "aten::unbind": 144,
+          "aten::unflatten": 48,
+          "aten::unsqueeze": 5536,
+          "aten::view": 7216,
+          "aten::zero_": 1680,
+          "aten::zeros": 704
+        },
+        "device_activity_events": 45711,
+        "device_activity_union_us": 981566.0258789062,
+        "scope": "single-worker capture only; overlapping GPU intervals merged; not allocation cost or whole-run utilization"
+      },
+      "full_trace_runtime_calls": {
+        "cudaLaunchKernel": 38208,
+        "cudaStreamSynchronize": 0,
+        "cudaDeviceSynchronize": 2,
+        "aten::fill_": 1792,
+        "aten::arange": 2176,
+        "aten::_index_put_impl_": 992,
+        "aten::copy_": 816,
+        "aten::scatter_add_": 0,
+        "aten::index_select": 848,
+        "aten::mm": 4416,
+        "aten::addmm": 1280,
+        "aten::item": 10176
+      }
+    }
+  },
+  "operator_comparison": {
+    "cudaLaunchKernel": {
+      "original": {
+        "calls": 71360,
+        "self_cpu_us": 599290.101000027,
+        "self_device_us": 0.0
+      },
+      "optimized": {
+        "calls": 38208,
+        "self_cpu_us": 439366.5119999728,
+        "self_device_us": 0
+      }
+    },
+    "cudaStreamSynchronize": {
+      "original": {
+        "calls": 480,
+        "self_cpu_us": 29491.37500000058,
+        "self_device_us": 0
+      },
+      "optimized": {
+        "calls": 0,
+        "self_cpu_us": null,
+        "self_device_us": null
+      }
+    },
+    "cudaDeviceSynchronize": {
+      "original": {
+        "calls": 2,
+        "self_cpu_us": null,
+        "self_device_us": null
+      },
+      "optimized": {
+        "calls": 2,
+        "self_cpu_us": null,
+        "self_device_us": null
+      }
+    },
+    "aten::fill_": {
+      "original": {
+        "calls": 34624,
+        "self_cpu_us": 191831.43599994574,
+        "self_device_us": 83526.67799998529
+      },
+      "optimized": {
+        "calls": 1792,
+        "self_cpu_us": 16158.485999998311,
+        "self_device_us": 4989.756000006548
+      }
+    },
+    "aten::arange": {
+      "original": {
+        "calls": 2688,
+        "self_cpu_us": 16446.856000006715,
+        "self_device_us": 5552.323000002689
+      },
+      "optimized": {
+        "calls": 2176,
+        "self_cpu_us": 17273.564000018097,
+        "self_device_us": 5237.717999998684
+      }
+    },
+    "aten::_index_put_impl_": {
+      "original": {
+        "calls": 1088,
+        "self_cpu_us": 70263.15699999272,
+        "self_device_us": 306627.2219999837
+      },
+      "optimized": {
+        "calls": 992,
+        "self_cpu_us": 74201.44099999094,
+        "self_device_us": 316055.004
+      }
+    },
+    "aten::copy_": {
+      "original": {
+        "calls": 1424,
+        "self_cpu_us": 14677.185999997298,
+        "self_device_us": 33006.95300000279
+      },
+      "optimized": {
+        "calls": 816,
+        "self_cpu_us": 12069.459999996743,
+        "self_device_us": 2209.431000003661
+      }
+    },
+    "aten::scatter_add_": {
+      "original": {
+        "calls": 224,
+        "self_cpu_us": 13336.329999983041,
+        "self_device_us": 0.0
+      },
+      "optimized": {
+        "calls": 0,
+        "self_cpu_us": null,
+        "self_device_us": null
+      }
+    },
+    "aten::index_select": {
+      "original": {
+        "calls": 624,
+        "self_cpu_us": 12795.233000007034,
+        "self_device_us": 14689.08600000391
+      },
+      "optimized": {
+        "calls": 848,
+        "self_cpu_us": 19966.929999992353,
+        "self_device_us": 22185.150000002723
+      }
+    },
+    "aten::mm": {
+      "original": {
+        "calls": 4416,
+        "self_cpu_us": 498997.12800000503,
+        "self_device_us": 197849.43000001452
+      },
+      "optimized": {
+        "calls": 4416,
+        "self_cpu_us": 634652.0240000088,
+        "self_device_us": 206824.66700000406
+      }
+    },
+    "aten::addmm": {
+      "original": {
+        "calls": 1280,
+        "self_cpu_us": 218213.51400000468,
+        "self_device_us": 89366.63700000364
+      },
+      "optimized": {
+        "calls": 1280,
+        "self_cpu_us": 261618.81999999075,
+        "self_device_us": 92754.94399999769
+      }
+    },
+    "aten::item": {
+      "original": {
+        "calls": 10144,
+        "self_cpu_us": 10202.927000009222,
+        "self_device_us": 0.0
+      },
+      "optimized": {
+        "calls": 10176,
+        "self_cpu_us": 13772.963000004933,
+        "self_device_us": 0
+      }
+    }
+  },
+  "limitations": [
+    "One seed and one device assignment; correlated pass timings are not independent replicates.",
+    "Worker wall includes loading, evaluation, persistence and inspection; internal trainer cost windows differ.",
+    "Capture-off spans retain passive wrappers; they are not a pristine profiler-free control.",
+    "Host/self-device operator timings and the capture activity union do not measure allocation billing.",
+    "Train-update range boundaries differ between legacy and shared owners; compare matching subphases and trace operators.",
+    "Legacy CPU RNG ownership and metric reduction precision differ; saved aligned endpoints determine observed drift.",
+    "Earlier optimized implementation ran in a different allocation; incremental speedup and fastest-version status are not established.",
+    "Allocation includes both T4s until the slower arm finishes; queue and pre-Python provisioning remain unobserved."
+  ],
+  "allocation": {
+    "status": "complete",
+    "hardware": [
+      "Tesla T4",
+      "Tesla T4"
+    ],
+    "wall_seconds": 6897.057929589,
+    "allocation_device_count": 2,
+    "allocated_device_seconds": 13794.115859178,
+    "cost_status": "measured",
+    "overlap": "Same allocation as experiment/allocation_ledger.json; do not double count",
+    "provisioning_before_python_seconds": null,
+    "queue_seconds": null,
+    "allocated_device_hours": 3.8316988497716666,
+    "pair_process_wall_seconds": 6834.11742974,
+    "outside_pair_observation_seconds": 62.940499848999934,
+    "idle_tail_seconds": null,
+    "idle_tail_reason": "No independently retained absolute worker start/end timestamps; do not infer billing from worker duration differences."
+  },
+  "retention": {
+    "manifest_sha256": "6945dc23128b3a0259846f248ccc7666cce94d8990ef188ec0822087b83cdef2",
+    "analysis_ref": "platforms/_records/kaggle/k1_infrastructure_v1/provider_round_v2/result_check/analysis.json",
+    "analysis_sha256": "c95d3ff6a13fea0c5b8c982e9d6328f2e982e84b7495eb81a008d873c7ac280b",
+    "retained_file_count": 45,
+    "exact_version_retrieval": true,
+    "local_model_inference_executed": false
+  }
+}

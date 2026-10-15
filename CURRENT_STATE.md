@@ -40,8 +40,8 @@ history and eligibility. See [`research_memory/README.md`](research_memory/READM
 The completed [K1 execution diagnostic](experiments/k1_infrastructure_t4_100k/results/decision_2026-10-15.md)
 accepted a shared100K execution benefit with identical selected tensors and
 predictions. Scientific promotion/Replay remain excluded.
-The separately authorized [provider round](experiments/k1_infrastructure_t4_100k/execution_providers/STATUS.md)
-compares original K1 and cached execution at fixed100K; exact job state and native gates live there.
+The [cached-provider round](experiments/k1_infrastructure_t4_100k/execution_providers/results/decision_2026-10-15.md)
+accepted an execution benefit with identical tensors/predictions; incremental gain over the earlier shared version remains unestablished.
 The authorized [GPTrans comparison](experiments/gptrans_infrastructure_t4_100k/STATUS.md)
 binds original/shared reference100K with profiler; exact state and native gates live there.
 

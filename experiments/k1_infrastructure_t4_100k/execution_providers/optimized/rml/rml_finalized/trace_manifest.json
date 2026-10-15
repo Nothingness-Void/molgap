@@ -1,0 +1,55 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "standalone execution diagnostic; self ID anchors storage only",
+      "no frozen scientific reference or causal/replay qualification"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "molgap-family-training-recipe-v1",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_31240",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/contract.json",
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "Gap development MAE eV; training unit declared by canonical trace",
+  "model_identity": "neural-atom-k1-reference-192",
+  "presentation_semantics_ref": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/contract.json",
+  "reference_id": "pcqm-k1-infrastructure-optimized-100k-s42-v2",
+  "run_id": "k1-infrastructure-t4-100k-s42-v2:optimized:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best-development-live",
+  "terminal_evidence_ref": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/rml/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/rml/rml_finalized/trace.json",
+  "trace_artifact_sha256": "a3d6bcafa10935b32de5d51f5145788ab61723417065c715e8e43e4e60b9c1d3",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": false,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TC-k1-infrastructure-optimized-100k-s42-v2",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

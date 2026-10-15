@@ -68,6 +68,9 @@ experiments/pcqm_gptrans_input_ema_100k/** -text
 experiments/pcqm_gptrans_input_ema_100k/**/*.json whitespace=cr-at-eol
 # Prospective combination evidence binds retained bytes, not checkout EOLs.
 experiments/k1_infrastructure_t4_100k/** text eol=lf
+# This accepted round binds the retained Windows JSON bytes exactly.
+experiments/k1_infrastructure_t4_100k/execution_providers/results/summary.json -text whitespace=cr-at-eol
+experiments/k1_infrastructure_t4_100k/execution_providers/results/terminal_scheduler_observation.json -text whitespace=cr-at-eol
 research_memory/policies/k1-infrastructure-execution.v1.json text eol=lf
 experiments/pcqm_gptrans_path_ema_combination_100k/** -text
 experiments/pcqm_gptrans_path_ema_combination_100k/**/*.json whitespace=cr-at-eol
