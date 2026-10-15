@@ -1,7 +1,7 @@
 # Short probe status
 
-Both user-authorized private Kaggle3 slots were submitted once and observed
-QUEUED on2026-10-15. [Protocol](protocol.md) owns scope. Native preflight,
+Both user-authorized private Kaggle3 slots were submitted once; both exact
+version1 jobs were observed RUNNING at14:34UTC on2026-10-15. [Protocol](protocol.md) owns scope. Native preflight,
 diagnostic completion and terminal acceptance remain pending.
 
 | Slot | Frozen scope | Platform identity |
@@ -15,6 +15,8 @@ The [attribution binding](attribution/submission/release_binding.json) and
 package and archive hashes. Each sibling submission directory retains the
 actual platform response, launch receipt, API source/mount verification,
 source-file round-trip hashes, scheduler observation and operation journal.
+The [attribution startup](attribution/submission/startup_status.json) and
+[timing startup](timing/submission/startup_status.json) retain the later RUNNING observation.
 No retry, extra seed or full training was submitted.
 
 The first local calls stopped before any POST because missing private targets
