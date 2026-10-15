@@ -6,6 +6,7 @@ import weakref
 
 import torch
 
+from .foreach_ema import ForeachExponentialMovingAverage
 
 MODEL_FIELDS = ('x', 'edge_index', 'edge_attr', 'batch', 'execution_layout')
 
@@ -60,13 +61,10 @@ def development_cpu_view(batch, *, retain_random_walk_pe=False):
     return result
 
 
-class BoundForeachEMA:
-    """One cached tensor-list EMA implementation for all live training callers."""
-    def __init__(self, model, decay=0.9999):
-        if decay not in (0.9999, 0.999):
-            raise ValueError("EMA decay must be a reviewed frozen value")
-        self.decay = decay
-        self.state = {name: value.detach().clone() for name, value in model.state_dict().items()}
+class BoundForeachEMA(ForeachExponentialMovingAverage):
+    """Reuse tensor lists, retaining the v1 foreach equation and strict topology."""
+    def __init__(self, model, decay=0.999):
+        super().__init__(model, decay)
         self._binding = None
         # Reports retain this plain counter dict, never the EMA/model tensors.
         self.statistics = dict(plan_builds=0, update_calls=0)
@@ -89,9 +87,6 @@ class BoundForeachEMA:
         self.state = {name: value.detach().to(device=self.state[name].device).clone()
                       for name, value in state.items()}
         self._binding = None
-
-    def state_dict(self):
-        return self.state
 
     def _bind(self, model):
         raw = model.state_dict(keep_vars=True)
@@ -152,7 +147,7 @@ class BoundForeachEMA:
 
 
 class BatchTransferView:
-    """Transfer only fields consumed by registered GPTrans model/step owners."""
+    """Transfer only fields consumed by the qualified local-bond model/step."""
     def __init__(self, batch, *, training):
         self.batch_data = batch
         self.training = training
@@ -174,10 +169,6 @@ class TransferLoader:
     @property
     def loader(self):
         return self.source.loader
-
-    @property
-    def generator(self):
-        return self.loader.generator
 
     def __len__(self):
         return len(self.source)

@@ -6,7 +6,6 @@ from .family_training_recipe import FamilyRecipe
 
 
 def training_loader_options(workers):
-    """Share the existing CPU worker policy with bounded input diagnostics."""
     if type(workers) is not int or workers < 0:
         raise ValueError("Nonnegative integer worker count required")
     return {"num_workers": workers, "persistent_workers": workers > 0,
@@ -62,6 +61,15 @@ class FamilyLoaders:
         if self.closed or self.development_cache is None:
             raise ValueError("No selected development role in this loader pool")
         return self.development_cache
+
+    def calibration(self, policy):
+        """Independent ordered train-only stream; never advances training RNG/cursor."""
+        import torch
+        from torch_geometric.loader import DataLoader
+        if self.closed or policy != self.recipe.clean_bn:
+            raise ValueError("Calibration requires the frozen selected training policy")
+        return DataLoader(self.data.train, batch_size=policy.batch_size, shuffle=False,
+            drop_last=True, num_workers=0, generator=torch.Generator().manual_seed(self.recipe.seed))
 
     def close(self):
         if self.closed:

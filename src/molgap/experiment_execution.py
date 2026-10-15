@@ -22,6 +22,7 @@ class TrainingAddon:
     mode: str
     extra_source_files: tuple[str, ...] = ()
     apply_hook: str | None = None
+    policy_hook: str | None = None
 
 
 @dataclass(frozen=True)
@@ -59,6 +60,12 @@ class TrainingAdapter:
         addons = arm["addons"]
         if not addons:
             return "reference"
+        if self.module == "molgap.family_training_runner":
+            entries = [self.addon(a["name"], a["version"]) for a in addons]
+            if any(entry.apply_hook is not None for entry in entries):
+                if not all(entry.apply_hook is not None for entry in entries):
+                    raise ValueError("Slot composition cannot mix frozen mode dispatch")
+                return "composed"
         if self.model_factory is not None:
             modes = [self.addon(a["name"], a["version"]).mode for a in addons]
             return modes[0] if len(modes) == 1 else "composed"
@@ -88,14 +95,19 @@ def graph_training_adapter(family, *, model_factory, addons=(), source_files=(),
 TRAINING_ADAPTERS = MappingProxyType({
     ("neural_atom_k1", "3"): TrainingAdapter(
         ("neural_atom_k1", "3"), "molgap.family_training_runner", "k1-session-v1",
+        tuple(TrainingAddon(name, "1", "composed", apply_hook="molgap.substrate_scale_addon:apply_addon")
+              for name in ("k1_node_scale", "k1_aggregate_scale", "k1_readout_scale")) +
         (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
          ("k1_mean2_clean_second", "mean2_clean_second")), ("molgap.pcqm_wedge",),
         target_identity_in_completion=True, profile_adapter="molgap.family_execution_profile"),
     ("gptrans_t", "2"): TrainingAdapter(
         ("gptrans_t", "2"), "molgap.family_training_runner", "gptrans-session-v1",
+        tuple(TrainingAddon(name, "1", "composed", apply_hook="molgap.substrate_scale_addon:apply_addon")
+              for name in ("gptrans_node_scale", "gptrans_aggregate_scale", "gptrans_readout_scale")) +
         (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),
          ("memory_value", "memory_value"), ("memory_message", "memory_message"),
-         ("gptrans_degree_bond_local", "degree_bond_local_ema999")),
+         TrainingAddon("gptrans_degree_bond_local", "1", "degree_bond_local_ema999",
+                       policy_hook="molgap.gptrans_bond_local:policy")),
         ("molgap.pcqm_wedge",), target_identity_in_completion=True,
         profile_adapter="molgap.family_execution_profile"),
     ("neural_atom_k1", "2"): TrainingAdapter(
@@ -146,12 +158,16 @@ def validate_training_registry() -> None:
                 raise ValueError("Executable addon differs from its declared family version")
             if type(addon.mode) is not str or not addon.mode:
                 raise ValueError("Executable addon requires an explicit owning mode")
-            if adapter.model_factory is not None:
+            if addon.policy_hook is not None:
+                if adapter.module != "molgap.family_training_runner" or not addon.policy_hook.endswith(":policy"):
+                    raise ValueError("Policy hooks require the reviewed family session")
+                _hook_source(addon.policy_hook)
+            if adapter.model_factory is not None or addon.apply_hook is not None:
                 if (addon.apply_hook is None or not addon.apply_hook.endswith(":apply_addon")
                         or _hook_source(addon.apply_hook) != "src/" + contract.source_module.replace(".", "/") + ".py"):
                     raise ValueError("Shared graph addon requires its reviewed model-delta hook")
-            elif addon.apply_hook is not None:
-                raise ValueError("Owning trainer addons must retain their own mode dispatch")
+                if adapter.model_factory is None and adapter.module != "molgap.family_training_runner":
+                    raise ValueError("Slot addons require the accelerated family session")
 
 
 def build_addon_declaration(family, addon, *, repo_root, config=None, version="1",
@@ -231,7 +247,8 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | tuple[str, ...]
     if logging is not None and adapter.module != "molgap.family_training_runner":
         raise ValueError("Configurable training logging requires the shared family session")
     if isinstance(addon, tuple):
-        if adapter.model_factory is None or len(addon) < 2 or len(set(addon)) != len(addon):
+        if ((adapter.model_factory is None and adapter.module != "molgap.family_training_runner")
+                or len(addon) < 2 or len(set(addon)) != len(addon)):
             raise ValueError("Composed addons require distinct reviewed shared-model hooks")
         for name in addon:
             adapter.addon(name, addon_version)
@@ -250,6 +267,12 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | tuple[str, ...]
     if adapter.module == "molgap.family_training_runner":
         if any(value is not None for value in (seed, initialization_sha256, execution_torch_version)):
             raise ValueError("Shared recipe pins seed/initialization/runtime in configuration")
+        names = addon if isinstance(addon, tuple) else (() if addon is None else (addon,))
+        if configuration is None or tuple(a["name"] for a in configuration.addons) != (
+                names if mode == "composed" else ()):
+            raise ValueError("Recipe ordered slot addons differ from the selected declarations")
+        if mode == "composed" and any(adapter.addon(name, addon_version).apply_hook is None for name in names):
+            raise ValueError("Slot composition requires reviewed model-delta hooks")
         return import_module(adapter.module).build_screen_recipe(mode, configuration=configuration,
             family=family, source_idx_sha256=source_idx_sha256, target_sha256=target_sha256,
             train_role_identity=train_role_identity,
@@ -324,8 +347,11 @@ def validate_execution_plan(spec: ExperimentSpec, jobs: list[dict]) -> list[dict
         if job["trajectory_id"] != bindings[job["arm_id"]]["trajectory_id"]:
             raise ValueError("Execution/prospective trajectory mismatch")
         adapter = training_adapter(arm)
+        required_modules = [adapter.module, *adapter.serialization_modules]
+        if adapter.module == "molgap.family_training_runner":
+            required_modules.append("molgap.gptrans_execution_tuning")
         result.append({**job, "mode": adapter.mode(arm), "module": adapter.module,
-                       "required_modules": [adapter.module, *adapter.serialization_modules]})
+                       "required_modules": required_modules})
         seen.add(job["arm_id"])
         devices.add(device)
     return result

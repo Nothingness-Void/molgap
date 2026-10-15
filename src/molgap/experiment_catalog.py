@@ -42,8 +42,19 @@ FAMILIES = MappingProxyType({
 })
 
 
-# Each family's replacement group is exclusive; stacking is not supported.
+# Replacement groups are exclusive; independent registered slots may compose.
 ADDONS = MappingProxyType({
+    **{
+        (prefix + "_" + suffix + "_scale", "1"): AddonContract(
+            family, "slot-" + suffix, "molgap.substrate_scale_addon",
+            tuple(AddonConfigField(key, value=value) for key, value in (
+                ("family", family), ("slot", slot), ("name", suffix + "_scale"))),
+            (version,),
+        )
+        for family, prefix, version in (("neural_atom_k1", "k1", "3"), ("gptrans_t", "gptrans", "2"))
+        for suffix, slot in (("node", "pre_message"), ("aggregate", "post_aggregation"),
+                             ("readout", "pre_readout"))
+    },
     ("gptrans_degree_bond_local", "1"): AddonContract(
         "gptrans_t", "local-bond-architecture", "molgap.gptrans_bond_local",
         family_versions=("2",), single_addon=True,

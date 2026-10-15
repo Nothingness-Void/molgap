@@ -14,6 +14,7 @@ import time
 
 from .experiment_family_workflow import RunContext, _artifact_path, _check_context, _digest, _json, _text, tensor_digest
 from .family_training_recipe import FamilyRecipe
+from .family_training_policy import mode_policy
 from .screen_policy import canonical_fingerprint
 from .training_reproducibility import atomic_json, atomic_torch_save
 from .v4_runtime import normalized_source_sha256, state_dict_sha256
@@ -48,7 +49,8 @@ def family_arm_bindings(recipe):
         "transform": {"name": "frozen-train-mean-sample-std", "version": "1", "sha256": canonical_fingerprint({
             "manifest_sha256": recipe.dataset.manifest_sha256, "mean_eV": recipe.target_mean_eV, "std_eV": recipe.target_std_eV})},
         "objective": {"name": "normalized-gap-l1", "version": "1", "sha256": canonical_fingerprint({
-            "mode": recipe.mode, "family": recipe.family, "gradient_clip": recipe.gradient_clip})}}
+            "mode": mode_policy(recipe.family, recipe.mode).objective_name or recipe.mode,
+            "family": recipe.family, "gradient_clip": recipe.gradient_clip})}}
 
 
 def _requirements(recipe, source_idx_sha256, target_sha256):
@@ -73,6 +75,8 @@ def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
     if type(configuration) is not FamilyRecipe or family != INTERFACES.get(configuration.family) or mode != configuration.mode:
         raise ValueError("Explicit matching shared family configuration is required")
     _text(train_role_identity, "train_role_identity")
+    if configuration.clean_bn is not None and configuration.clean_bn.training_role_identity != train_role_identity:
+        raise ValueError("Calibration training role differs from the frozen recipe")
     if configuration.dataset.development:
         _text(development_role_identity, "development_role_identity")
     elif development_role_identity is not None:
@@ -98,6 +102,8 @@ def read_recipe(path):
         _text(record["development_role_identity"], "development_role_identity")
     elif record["development_role_identity"] is not None:
         raise ValueError("Final-only recipe contains a development role")
+    if recipe.clean_bn is not None and recipe.clean_bn.training_role_identity != record["train_role_identity"]:
+        raise ValueError("Calibration training role differs from contract")
     return record, recipe
 
 
@@ -118,12 +124,18 @@ def validate_screen_recipe(spec, arm_id, record):
         raise ValueError("Selected roles differ from the executable recipe")
     if any(record.get(role + "_role_identity") != value["usage_sha256"] for role, value in roles.items()):
         raise ValueError("Contract role usage identity differs from Spec")
-    modules = {"ssma": "k1_joint_aggregation.py", "mean2": "k1_screen_training.py",
-        "mean2_clean_second": "k1_screen_training.py", "pair_prenorm": "gptrans_variants.py",
-        "centered_logits": "gptrans_variants.py", "memory_value": "gptrans_memory.py", "memory_message": "gptrans_memory.py",
-        "degree_bond_local_ema999": "gptrans_bond_local.py"}
-    if recipe.mode != "reference" and arm["addons"][0]["source_sha256"] != normalized_source_sha256(Path(__file__).with_name(modules[recipe.mode])):
-        raise ValueError("Addon source hash differs from executed module")
+    if recipe.mode == "composed":
+        from .shared_model_adapter import _addon_hook
+        if list(recipe.addons) != arm["addons"]:
+            raise ValueError("Recipe addon order/configuration differs from Spec")
+        for addon in recipe.addons:
+            _addon_hook(adapter, arm, addon)
+    elif recipe.mode != "reference":
+        from .experiment_spec import ADDONS
+        addon = arm["addons"][0]
+        module = ADDONS[(addon["name"], addon["version"])].source_module
+        if addon["source_sha256"] != normalized_source_sha256(Path(__file__).parent / (module.split(".")[-1] + ".py")):
+            raise ValueError("Addon source hash differs from executed module")
     if record.get("acceptance_requirements") != _requirements(recipe,
             record.get("acceptance_requirements", {}).get("source_idx_sha256"),
             record.get("acceptance_requirements", {}).get("target_sha256")):
@@ -151,6 +163,23 @@ def _loaded_source(package_dir):
     return root
 
 
+def _assert_target_statistics(recipe, data):
+    """Require the selected fixed-train labels to match the frozen transform."""
+    observed = (float(data.target_mean_eV), float(data.target_std_eV))
+    if recipe.family == "neural_atom_k1":
+        # The accepted historical K1 transform is frozen as FP32 constants;
+        # shared data loading intentionally computes its observation in FP64.
+        import torch
+        observed = tuple(float(torch.tensor(value, dtype=torch.float32).item())
+                         for value in observed)
+    expected = (float(recipe.target_mean_eV), float(recipe.target_std_eV))
+    if observed != expected:
+        raise ValueError(
+            "Decoded train target statistics differ from frozen recipe: "
+            f"observed={observed!r}, expected={expected!r}"
+        )
+
+
 def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, recipe_path,
                initial_state_path, input_root, account, run_reference, trajectory_id, prospective_root=None,
                training_only=False, cost_root=None):
@@ -173,8 +202,8 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
         raise ValueError("Prospective trajectory/source mismatch")
     if cost_root is not None:
         from .family_training_outputs import _recover_commit
-        root = Path(cost_root).absolute()
         from .experiment_launch import _safe_local
+        root = Path(cost_root).absolute()
         _safe_local(root)
         root.mkdir(parents=True, exist_ok=True)
         _recover_commit(root, context)
@@ -183,6 +212,8 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
     # Data acceptance remains CPU work and precedes construction of a GPU model.
     selection = replace(recipe.dataset, development=False) if training_only else recipe.dataset
     data = load_training_data(Path(input_root), selection)
+    if recipe.input_sidecar is not None:
+        data = mode_policy(recipe.family, recipe.mode).attach_inputs(Path(input_root), recipe.input_sidecar, data)
     arm = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
     for role in arm["data"]["roles"]:
         if training_only and role["role"] != "train":
@@ -194,6 +225,7 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
             raise ValueError("Decoded role membership/order differs from Spec")
     if data.train_rows != recipe.train_rows or (not training_only and data.development_rows != recipe.development_rows):
         raise ValueError("Decoded view counts differ from recipe")
+    _assert_target_statistics(recipe, data)
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise ValueError("Native training requires one isolated observed accelerator per worker")
     validate_accelerator_request(spec.to_dict()["platform"]["accelerator"], torch.cuda.get_device_name(0),
@@ -227,6 +259,10 @@ def _state_fingerprint(value):
 def run_screen_preflight(**options):
     """Scratch repeat/resume plus a GPTrans safety-fill reference; never dev."""
     import torch
+    from .k1_execution_qualification import (
+        _execution_state_fingerprint, _run_execution_evaluation,
+        _native_probe, _run_execution_shadow, _verify_execution_proof,
+        _write_execution_proof)
     from .family_training_kernel import FamilyKernel
     from .family_training_loaders import FamilyLoaders
     from .family_training_session import FamilyTrainingSession
@@ -235,8 +271,7 @@ def run_screen_preflight(**options):
     output = Path(options.pop("output")).absolute()
     record, recipe, data, tuning, context, provenance, _ = _bootstrap(training_only=True, **options)
     # Preflight consumes training topology only, never development selection.
-    probe = replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
-        optimizer_steps=2, checkpoint_every=1, selection="final-live")
+    probe = _probe_recipe(recipe)
     data = replace(data, development=None, development_rows=0, development_source_start=None)
     output.mkdir(parents=True, exist_ok=True)
     proofs = []
@@ -300,6 +335,40 @@ def run_screen_preflight(**options):
         raise ValueError("Native optimizer/EMA/schedule/RNG repeat or serialized resume differs")
     if memory_fill_proof is not None:
         _verify_memory_fill_proof(output, probe, memory_fill_proof, proofs[0]["state_fingerprint"], provenance)
+    execution_proof = None
+    if recipe.k1_execution is not None:
+        # Keep the candidate recipe identity in the candidate state, but run a
+        # shadow with the historical backend under the same data/init/RNG.  The
+        # comparison removes only the recipe identity inside the cursor.
+        native_probe = _native_probe(recipe)
+        native_state, native_path = _run_execution_shadow(
+            recipe=native_probe, data=data, tuning=tuning, options=options, output=output)
+        candidate_path = output / "repeat-b.pt"
+        candidate_state = torch.load(candidate_path, map_location="cpu", weights_only=True)
+        if _execution_state_fingerprint(candidate_state) != _execution_state_fingerprint(native_state):
+            raise ValueError("K1 execution candidate/native optimizer state differs")
+        candidate_eval, candidate_source = _run_execution_evaluation(
+            recipe=probe, data=data, tuning=tuning, options=options,
+            retained_state=candidate_state)
+        native_eval, native_source = _run_execution_evaluation(
+            recipe=native_probe, data=data, tuning=tuning, options=options,
+            retained_state=native_state)
+        if not torch.equal(candidate_source, native_source):
+            raise ValueError("K1 execution evaluation fixtures differ")
+        execution_proof = _write_execution_proof(
+            output=output, probe=probe, candidate_state=candidate_state,
+            candidate_path=candidate_path, native_state=native_state,
+            native_path=native_path, candidate_eval=candidate_eval,
+            candidate_eval_path=output / "execution-candidate-evaluation.pt",
+            native_eval=native_eval,
+            native_eval_path=output / "execution-native-evaluation.pt",
+            source_idx=candidate_source,
+            source_idx_path=output / "execution-evaluation-source-idx.pt")
+        _verify_execution_proof(output, probe, execution_proof, required=True)
+    resource = None
+    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
+        resource = mode_policy(recipe.family, recipe.mode).qualify_resources(recipe, data, tuning, Path(options["initial_state_path"]))
+        atomic_json(output / "resource_qualification.json", resource)
     atomic_json(output / "runtime_provenance.json", provenance)
     certificate = {"format": "molgap-runtime-certificate-v1", "status": "accepted",
         "provenance_sha256": canonical_fingerprint(provenance), "probe_recipe_identity": probe.identity,
@@ -310,6 +379,10 @@ def run_screen_preflight(**options):
         certificate["profile_proof"] = profile_proof
     if memory_fill_proof is not None:
         certificate["memory_fill_proof"] = memory_fill_proof
+    if execution_proof is not None:
+        certificate["execution_proof"] = execution_proof
+    if resource is not None:
+        certificate["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
     atomic_json(output / "runtime_certificate.json", certificate)
     atomic_json(output / "preflight_costs.json", {"context": context.to_dict(), "costs": [
         {"metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - began,
@@ -325,6 +398,84 @@ def normalized_file_sha(path):
     # Artifact bytes are exact; only source text uses normalized line endings.
     from .training_reproducibility import sha256_file
     return sha256_file(Path(path))
+
+
+def _probe_recipe(recipe):
+    return replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
+        input_sidecar=replace(recipe.input_sidecar, development=False) if recipe.input_sidecar is not None else None,
+        optimizer_steps=2, checkpoint_every=1,
+        selection="final-clean-ema" if recipe.clean_bn is not None else "final-live")
+
+
+def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, sidecars,
+                           trajectory, context=None):
+    """Recheck the actual shared checkpoint/trace before portable transport."""
+    import torch
+    from .family_training_session import validate_session_resume
+    from .research_memory.trace import validate_canonical_trace
+    record, recipe = read_recipe(Path(bundle_root) / "files/training_contract.json")
+    validate_screen_recipe(spec, arm_id, record)
+    saved = torch.load(artifacts["checkpoint"], map_location="cpu", weights_only=True)
+    if context is not None:
+        _check_context(saved.pop("context"), RunContext(**context))
+    else:
+        saved.pop("context")
+    progress = validate_session_resume(recipe, saved)
+    if progress.status == "complete" or progress.optimizer_step >= recipe.optimizer_steps:
+        raise ValueError("Completed shared session cannot be resumed")
+    trace = validate_canonical_trace(_json(artifacts["trace"]))
+    observations = [r for r in trace["observations"] if r["event"] == "observation"]
+    if len(observations) != progress.pass_index or any(r["optimizer_step"] > progress.optimizer_step for r in observations):
+        raise ValueError("Resume trace/cursor mismatch")
+    if trace["trajectory_id"] != trajectory["trajectory_id"]:
+        raise ValueError("Resume trace/trajectory identity mismatch")
+    return {"status": "SHARED_RESUME_VERIFIED", "optimizer_steps": progress.optimizer_step,
+            "sample_presentations": progress.sample_presentations, "recipe_identity": recipe.identity}
+
+
+def run_screen_resume_preflight(*, resume_output, **options):
+    """Qualify initial repeat/resume plus two scratch next-steps from actual work."""
+    import torch
+    from .family_training_kernel import FamilyKernel
+    from .family_training_loaders import FamilyLoaders
+    from .family_training_session import FamilyTrainingSession, validate_session_resume
+    from .training_reproducibility import configure_fp32_determinism
+    result = run_screen_preflight(**options)
+    output = Path(options["output"])
+    bootstrap_options = {k: v for k, v in options.items() if k != "output"}
+    _, recipe, data, tuning, context, _, _ = _bootstrap(**bootstrap_options)
+    retained = torch.load(Path(resume_output) / "last_checkpoint.pt", map_location="cpu", weights_only=True)
+    _check_context(retained.pop("context"), context)
+    progress = validate_session_resume(recipe, retained)
+    if progress.status == "complete":
+        raise ValueError("Cannot resume a completed shared session")
+    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
+        resource = _json(output / "resource_qualification.json")
+        qualified = mode_policy(recipe.family, recipe.mode).refresh_resources(resource, progress.pass_index)
+        atomic_json(output / "resource_qualification.json", qualified)
+        cert = _json(output / "runtime_certificate.json")
+        cert["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
+        atomic_json(output / "runtime_certificate.json", cert)
+    proofs = []
+    for label in ("actual-resume-a", "actual-resume-b"):
+        configure_fp32_determinism(recipe.seed)
+        kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda")
+        session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
+            checkpoint=lambda p, state: atomic_torch_save(output / (label + ".pt"), state),
+            selected=lambda *args: None, pass_finished=lambda *args: None)
+        session.load_state_dict(retained)
+        endpoint = session.run(should_pause=lambda: True)
+        observed = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
+        if endpoint.optimizer_step != progress.optimizer_step + 1:
+            raise ValueError("Actual resume proof did not advance exactly one scratch update")
+        proofs.append({"path": label + ".pt", "sha256": normalized_file_sha(output / (label + ".pt")),
+                       "state_fingerprint": _state_fingerprint(observed)})
+    if proofs[0]["state_fingerprint"] != proofs[1]["state_fingerprint"]:
+        raise ValueError("Actual resume next-step repeats differ")
+    atomic_json(output / "actual_resume_certificate.json", {"status": "accepted", "proofs": proofs,
+        "formal_training_exposure": 0, "resume_step": progress.optimizer_step,
+        "checkpoint_sha256": normalized_file_sha(Path(resume_output) / "last_checkpoint.pt")})
+    return result
 
 
 def _verify_profile_proof(root, probe, profile_proof, *, required):
@@ -385,13 +536,19 @@ def _verify_memory_fill_proof(root, probe, proof, expected_fingerprint, provenan
 def _verify_preflight(directory, recipe, provenance, *, profiling_required=False):
     import torch
     from .family_training_session import validate_session_resume
+    from .k1_execution_qualification import _verify_execution_proof
     root = Path(directory).absolute()
     saved = _json(_artifact_path(root, "runtime_provenance.json"))
     certificate = _json(_artifact_path(root, "runtime_certificate.json"))
     if saved != provenance or certificate.get("provenance_sha256") != canonical_fingerprint(provenance):
         raise ValueError("Native preflight source/recipe/data/runtime/device identity differs")
-    probe = replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
-        optimizer_steps=2, checkpoint_every=1, selection="final-live")
+    if certificate.get("status") != "accepted":
+        raise ValueError("Native preflight certificate is not accepted")
+    if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
+        resource_path = root / "resource_qualification.json"
+        if certificate.get("resource_qualification_sha256") != normalized_file_sha(resource_path):
+            raise ValueError("Missing or changed native resource qualification")
+    probe = _probe_recipe(recipe)
     if (certificate.get("format") != "molgap-runtime-certificate-v1" or
             certificate.get("probe_recipe_identity") != probe.identity or certificate.get("formal_training_exposure") != 0):
         raise ValueError("Preflight probe identity differs")
@@ -426,6 +583,9 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
         raise ValueError("Native repeat/resume proof differs")
     if recipe.family == "gptrans_t":
         _verify_memory_fill_proof(root, probe, certificate.get("memory_fill_proof"), fingerprints[0], provenance)
+    _verify_execution_proof(root, probe, certificate.get("execution_proof"),
+        required=recipe.k1_execution is not None,
+        expected_candidate_sha256=proofs[1]["sha256"] if proofs else None)
     _verify_profile_proof(root, probe, certificate.get("profile_proof"), required=profiling_required)
     return certificate
 
@@ -494,8 +654,13 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     record, recipe, data, tuning, context, provenance, _ = _bootstrap(cost_root=root, **options)
     certificate = _verify_preflight(preflight_dir or output, recipe, provenance,
         profiling_required="profiling" in record)
+    from .k1_infrastructure_comparison import is_comparison
+    from .gptrans_infrastructure_comparison import is_comparison as is_gptrans_comparison
     outputs = SessionOutputs(root, context, contract=options["recipe_path"], adapter=PROFILES[recipe.family],
-        trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"])
+        trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"],
+        resume_trajectory=(_artifact_path(Path(options["prospective_root"]),
+            "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
+            if mode_policy(recipe.family, recipe.mode).segment_passes is not None or is_comparison(options["spec"]) or is_gptrans_comparison(options["spec"]) else None))
     had_checkpoint = (root / "last_checkpoint.pt").is_file()
     interval = _json(_artifact_path(root, "invocation_cost_state.json"))
     _check_context(interval["context"], context)
@@ -507,6 +672,11 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         batch_finished=outputs.batch_finished, checkpoint_builder=outputs.checkpoint_from_builder)
     try:
         if had_checkpoint:
+            if mode_policy(recipe.family, recipe.mode).qualify_resources is not None:
+                actual = _json(_artifact_path(Path(preflight_dir or output), "actual_resume_certificate.json"))
+                if (actual.get("status") != "accepted" or actual.get("formal_training_exposure") != 0 or
+                        actual.get("checkpoint_sha256") != normalized_file_sha(root / "last_checkpoint.pt")):
+                    raise ValueError("Actual retained-state native resume qualification is missing or changed")
             session.load_state_dict(outputs.retained_state())
         outputs.logger.start(session.progress)
     except Exception:
@@ -516,17 +686,24 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     previous_signal = signal.getsignal(signal.SIGTERM)
     signal.signal(signal.SIGTERM, lambda *_: pause.__setitem__(0, True))
     try:
+        # A completed physical ten-pass segment makes work externally retrievable.
+        # The scientific horizon, scheduler and selected-state policy remain60.
+        segment = mode_policy(recipe.family, recipe.mode).segment_passes
+        bounded = segment is not None
+        stop_pass = ((session.progress.pass_index // segment + 1) * segment) if bounded else None
+        should_pause = lambda: pause[0] or (
+            bounded and session.progress.pass_index >= stop_pass and session.progress.next_batch == 0)
         if "profiling" in record:
             from .family_execution_profile import FamilyExecutionProfiler, ProfileConfig
             profile_root = root / "profiles" / f"step_{session.progress.optimizer_step}_{time.time_ns()}"
             with FamilyExecutionProfiler(session, profile_root, ProfileConfig.from_dict(record["profiling"])) as observed:
-                progress = session.run(should_pause=lambda: pause[0])
+                progress = session.run(should_pause=should_pause)
             atomic_json(root / "execution_profile_receipt.json", {"context": context.to_dict(),
                 "report_path": (profile_root / "profile.json").relative_to(root).as_posix(),
                 "report_sha256": normalized_file_sha(profile_root / "profile.json"),
                 "trace_sha256": observed.report["trace_sha256"], "capture_status": observed.report["status"]})
         else:
-            progress = session.run(should_pause=lambda: pause[0])
+            progress = session.run(should_pause=should_pause)
     finally:
         signal.signal(signal.SIGTERM, previous_signal)
     elapsed = time.perf_counter() - began

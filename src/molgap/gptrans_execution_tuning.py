@@ -1,21 +1,19 @@
-"""Default accelerated GPTrans run scope; no job launch or runtime authority.
+"""Opt-in resource/cache tuning layered over the qualified v1 backend.
+
+This module does not change the v1 source, launch jobs, or qualify a runtime.
 Cached tensors are borrowed read-only on CPU; PyG device transfer uses a fresh
 storage wrapper, so .to() cannot move the retained cache to the accelerator.
 """
 from contextlib import contextmanager
 from copy import copy
 from dataclasses import asdict, dataclass
-from functools import wraps
 import os
-from pathlib import Path
-import sys
 import time
 
 import torch
 
 from .gptrans_execution_backend import (
     EpochBatches, PreparedLoader, assert_static_dataset, backend, buffered_evaluate,
-    bind_model_layout, prepared_forward,
 )
 from .screen_policy import canonical_fingerprint
 from .gptrans_execution_hotpath import (
@@ -31,6 +29,11 @@ class ExecutionTuning:
     independent_models: int = 2
     total_cpu_budget: int = 4
     development_cache_bytes: int = 256 * 1024 * 1024
+    cache_development: bool = True
+    selective_transfers: bool = True
+    cache_ema_plan: bool = True
+    reuse_weight_backup: bool = True
+    reuse_loaded_datasets: bool = True
 
     def __post_init__(self):
         for name in ("cpu_threads", "independent_models", "total_cpu_budget", "development_cache_bytes"):
@@ -39,6 +42,10 @@ class ExecutionTuning:
         for name in ("training_workers", "development_workers"):
             if type(getattr(self, name)) is not int or getattr(self, name) < 0:
                 raise ValueError("Nonnegative worker count required: " + name)
+        for name in ('cache_development', 'selective_transfers', 'cache_ema_plan',
+                     'reuse_weight_backup', 'reuse_loaded_datasets'):
+            if type(getattr(self, name)) is not bool:
+                raise ValueError(name + " must be boolean")
         # Workers are single-threaded by PyTorch; both persistent pools can live
         # concurrently. This is a declared process budget, not CPU utilization.
         demand = self.independent_models * (
@@ -140,45 +147,28 @@ class PreparedDevelopmentCache:
         self.stats["cached_tensor_storage_bytes"] = 0
 
 
-def validate_execution_owner(owner):
-    """Reject incompatible trainer APIs before mutating an isolated worker."""
-    names = ("_make_model", "_training_loader", "_development_loader", "_forward",
-             "_make_training_state", "_optimizer_step", "_evaluate", "_save_checkpoint",
-             "_scientific_fields", "_load_datasets", "_weight_decay",
-             "DeterministicEpochBatchSampler")
-    missing = [name for name in names if not callable(getattr(owner, name, None))]
-    if missing:
-        raise ValueError("Compatible accelerated trainer hooks required: " + ", ".join(missing))
-
-
 @contextmanager
-def tuned_backend(owner, tuning: ExecutionTuning = ExecutionTuning(), *, timing_root=None):
-    """The single execution path used by native preflight and training."""
+def tuned_backend(owner, tuning: ExecutionTuning, *, timing_root=None):
+    """Keep native training/evaluation ownership and expose explicit v3 identity."""
     from torch_geometric.loader import DataLoader
-    if not isinstance(tuning, ExecutionTuning) or getattr(owner, "PHYSICAL_BATCH", None) != 128:
+    if not isinstance(tuning, ExecutionTuning) or owner.PHYSICAL_BATCH != 128:
         raise ValueError("Explicit tuning and frozen BS128 required")
-    validate_execution_owner(owner)
-    if getattr(owner, "_accelerated_execution_active", False):
-        raise ValueError("Nested accelerated execution is forbidden")
-    owner._accelerated_execution_active = True
     previous_threads = torch.get_num_threads()
     previous_env = {key: os.environ.get(key) for key in tuning.environment()}
     loaders, caches, ema_statistics = {}, {}, []
     weight_view = ReusedWeightView()
-    dataset_cache = LoadedDatasetCache(owner._load_datasets)
-    report = {"format": "molgap-gptrans-accelerated-execution-v1", "tuning": asdict(tuning),
+    dataset_cache = LoadedDatasetCache(owner._load_datasets) if tuning.reuse_loaded_datasets else None
+    report = {"format": "molgap-gptrans-execution-tuning-v3", "tuning": asdict(tuning),
               "tuning_identity": tuning.identity, "previous_cpu_threads": previous_threads,
               "cpu_count_reported_by_os": os.cpu_count(), "remote_qualified": False,
               "cache_budget_scope": "retained tensor storage, not total process RSS"}
     try:
         torch.set_num_threads(tuning.cpu_threads)
         os.environ.update(tuning.environment())
-        with backend(owner, timing_root) as timing:
+        with backend(owner, True, timing_root) as timing:
             names = ("_training_loader", "_development_loader", "_evaluate", "_scientific_fields",
-                     "_make_training_state", "_load_datasets", "_make_model", "_forward")
+                     "_make_training_state", "_load_datasets")
             saved = {name: getattr(owner, name) for name in names}
-            def make_model(*args, **kwargs):
-                return bind_model_layout(saved["_make_model"](*args, **kwargs))
             def make_loader(graphs, workers, **kwargs):
                 options = dict(num_workers=workers, persistent_workers=workers > 0, pin_memory=True)
                 if workers:
@@ -195,7 +185,7 @@ def tuned_backend(owner, tuning: ExecutionTuning = ExecutionTuning(), *, timing_
                 _, loader, sampler, generator = loaders[key]
                 sampler.epoch = epoch
                 generator.manual_seed(owner.SEED + epoch)
-                return TransferLoader(loader, training=True)
+                return TransferLoader(loader, training=True) if tuning.selective_transfers else loader
             def development_loader(graphs):
                 # Preserve v1's main CPU RNG draw, even on warm cache hits.
                 torch.empty((), dtype=torch.int64).random_()
@@ -205,22 +195,26 @@ def tuned_backend(owner, tuning: ExecutionTuning = ExecutionTuning(), *, timing_
                     loader = make_loader(graphs, tuning.development_workers,
                         batch_size=128, shuffle=False, generator=torch.Generator().manual_seed(314159))
                     loaders[key] = (graphs, loader)
-                    caches[key] = PreparedDevelopmentCache(loader, rows=owner.DEVELOPMENT_ROWS,
-                        batch_size=128, max_bytes=tuning.development_cache_bytes,
-                        retain_model_inputs=True)
-                return caches[key]
+                    if tuning.cache_development:
+                        caches[key] = PreparedDevelopmentCache(loader, rows=owner.DEVELOPMENT_ROWS,
+                            batch_size=128, max_bytes=tuning.development_cache_bytes,
+                            retain_model_inputs=tuning.selective_transfers)
+                return caches.get(key, loaders[key][1])
             def evaluation_inputs(graphs):
                 source = development_loader(graphs)
-                return TransferLoader(source, training=False)
+                return TransferLoader(source, training=False) if tuning.selective_transfers else source
             def evaluate(model, ema, graphs, mean, std, **kwargs):
                 torch.cuda.synchronize()
                 began = time.perf_counter()
                 try:
+                    if not tuning.reuse_weight_backup:
+                        return buffered_evaluate(owner, owner._forward, evaluation_inputs,
+                            model, ema, graphs, mean, std, **kwargs)
                     options = dict(kwargs)
                     weights = options.pop('weights', 'ema')
                     with weight_view.use(model, ema, weights):
                         return buffered_evaluate(owner, owner._forward, evaluation_inputs,
-                            model, graphs, mean, std, **options)
+                            model, ema, graphs, mean, std, weights='live', **options)
                 finally:
                     torch.cuda.synchronize()
                     timing["evaluation_seconds"] += time.perf_counter() - began
@@ -232,31 +226,33 @@ def tuned_backend(owner, tuning: ExecutionTuning = ExecutionTuning(), *, timing_
                     report['weight_backup_tensor_bytes'] = weight_view.retained_tensor_bytes
             def training_state(*args, **kwargs):
                 model, optimizer, scheduler, ema = saved['_make_training_state'](*args, **kwargs)
-                if not isinstance(ema, BoundForeachEMA) or any(
-                        group.get("foreach") is not True for group in optimizer.param_groups):
-                    raise ValueError("Native trainer must construct cached EMA and foreach AdamW")
-                ema_statistics.append(ema.statistics)
+                if tuning.cache_ema_plan:
+                    bound = BoundForeachEMA(model, ema.decay)
+                    bound.load_state_dict(ema.state_dict())
+                    ema = bound
+                    ema_statistics.append(bound.statistics)
                 return model, optimizer, scheduler, ema
             def scientific_fields(*args, **kwargs):
                 fields = saved["_scientific_fields"](*args, **kwargs)
-                fields["execution_policy"] = execution_policy(tuning)
+                fields["execution_backend"] = "optimized-tuning-v3:" + tuning.identity
                 return fields
             for name, fn in zip(names, (training_loader, development_loader, evaluate,
                                        scientific_fields, training_state,
-                                       dataset_cache, make_model, prepared_forward)):
+                                       dataset_cache if dataset_cache is not None else saved['_load_datasets'])):
                 setattr(owner, name, fn)
             report["phase_timing"] = timing
             try:
                 yield report
             finally:
                 report['ema_tensor_plans'] = [dict(stats) for stats in ema_statistics]
-                report['dataset_cache'] = dict(dataset_cache.statistics)
+                report['dataset_cache'] = dict(dataset_cache.statistics) if dataset_cache is not None else None
                 for name, value in saved.items():
                     setattr(owner, name, value)
     finally:
         try:
             weight_view.clear()
-            dataset_cache.clear()
+            if dataset_cache is not None:
+                dataset_cache.clear()
             for cache in caches.values():
                 cache.clear()
             for item in loaders.values():
@@ -272,27 +268,3 @@ def tuned_backend(owner, tuning: ExecutionTuning = ExecutionTuning(), *, timing_
                         os.environ.pop(key, None)
                     else:
                         os.environ[key] = value
-                del owner._accelerated_execution_active
-
-
-def execution_policy(tuning=ExecutionTuning()):
-    return {"name": "gptrans-accelerated", "version": "1", "tuning": asdict(tuning),
-            "tuning_identity": tuning.identity, "adamw_foreach": True, "adamw_fused": False,
-            "ema": "bound-tensor-plan", "cpu_layout": True, "selective_transfer": True}
-
-
-def accelerated_run(function):
-    """Static native entrypoint wrapper; callers cannot select a slow backend."""
-    @wraps(function)
-    def run(*args, **kwargs):
-        owner = sys.modules[function.__module__]
-        output = Path(kwargs["output"])
-        report = None
-        try:
-            with tuned_backend(owner, timing_root=output / "phase_timing") as report:
-                return function(*args, **kwargs)
-        finally:
-            if report is not None:
-                from .training_reproducibility import atomic_json
-                atomic_json(output / "execution_report.json", report)
-    return run

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import math
 import os
+import time
 from copy import deepcopy
 from pathlib import Path
 
@@ -103,13 +104,20 @@ def _assert_model_schema(selected, resume):
 
 
 class SessionOutputs:
-    def __init__(self, root, context, *, contract, adapter, trajectory_id, train_role_identity):
+    def __init__(self, root, context, *, contract, adapter, trajectory_id, train_role_identity,
+                 resume_trajectory=None):
         from .family_training_runner import read_recipe
         self.root, self.context, self.adapter = Path(root).absolute(), context, adapter
+        self.resume_trajectory = resume_trajectory
+        self.bounded_pair = False
+        self.pending_pass = None
         _safe_local(self.root)
         if file_digest(contract) != context.training_recipe_sha256:
             raise ValueError("Session contract differs from the frozen Spec")
         record, self.recipe = read_recipe(contract)
+        from .family_training_policy import mode_policy
+        self.policy = mode_policy(self.recipe.family, self.recipe.mode)
+        self.bounded_pair = self.policy.process_timing
         self.expected = record["acceptance_requirements"]
         self.root.mkdir(parents=True, exist_ok=True)
         if train_role_identity != record["train_role_identity"]:
@@ -119,8 +127,7 @@ class SessionOutputs:
         self.pending = self.root / "session_pending"
         _safe_local(self.pending.absolute())
         self.pending.mkdir(exist_ok=True)
-        # Orphans before journal publication were never acknowledged. Only known
-        # producer scratch names are disposable; unknown files stay untouched.
+        # Discard only identified producer scratch that preceded journal publication.
         for name in _COMMIT_FILES:
             for suffix in ("", ".previous"):
                 path = self.pending / (name + suffix)
@@ -130,16 +137,24 @@ class SessionOutputs:
             "target": "Gap", "role_identity": train_role_identity, "weights": "live", "direction": "minimize"},
             "live_dev_metric": None, "ema_dev_metric": None}
         if self.recipe.dataset.development:
-            weights = self.recipe.selection.rsplit("-", 1)[1]
-            semantics["ema_dev_metric" if weights == "ema" else "live_dev_metric"] = {
+            weights = self.recipe.selection_weights
+            semantics["ema_dev_metric" if weights in {"ema", "clean-ema"} else "live_dev_metric"] = {
                 "metric": "MAE", "unit": "eV", "target": "Gap", "role_identity": record["development_role_identity"],
                 "weights": weights, "direction": "minimize"}
+            if "live" in self.policy.extra_development_weights and self.recipe.ema_decay is not None:
+                semantics["live_dev_metric"] = {**semantics["ema_dev_metric"], "weights": "live"}
+        semantics["live_train_metric"]["unit"] = self.policy.train_metric_unit
         self.stage = StageRecorder(self.root / "canonical_trace.json", context, "downstream",
-            semantics, trajectory_id=trajectory_id)
+            semantics, trajectory_id=trajectory_id,
+            device_time_semantics="sum_over_devices" if self.bounded_pair else None)
         from .training_logging import TrainingLogger, TrainingLogPolicy
         self.logger = TrainingLogger(self.root, context, self.recipe,
             TrainingLogPolicy.from_dict(record.get("logging")),
-            observations=self.stage.recorder.record["observations"])
+            observations=self.stage.recorder.record["observations"],
+            observation_train_unit=semantics["live_train_metric"]["unit"])
+        rows = self.stage.recorder.record["observations"]
+        self.previous_cumulative = rows[-1]["cumulative_wall_time_seconds"] if rows and self.bounded_pair else 0.
+        self.segment_started = self.previous_observation = time.perf_counter()
 
     def batch_finished(self, progress, *, learning_rates):
         self.logger.progress(progress, learning_rates=learning_rates)
@@ -162,47 +177,74 @@ class SessionOutputs:
         self.checkpoint(progress, state_builder())
 
     def checkpoint(self, progress, state):
+        if self.pending_pass is not None and self.pending_pass[0].optimizer_step != progress.optimizer_step:
+            raise ValueError("Pass metrics differ from acknowledged checkpoint")
         changed = [name for name in ("selected_model.pt", "development_predictions.pt", "canonical_trace.json")
                    if (self.pending / name).is_file()]
-        destination = self.pending if changed else self.root
+        destination = self.pending if changed or self.pending_pass is not None else self.root
         write_resume_state(destination / "last_checkpoint.pt", self.context, adapter=self.adapter,
             model_state=state["model"], optimizer_state=state["optimizer"], rng_state=state["rng_state"],
             cursor=state["cursor"], optimizer_step=progress.optimizer_step,
             sample_presentations=progress.sample_presentations,
             scheduler_state=state["scheduler"], ema_state=state["ema"])
-        if not changed:
-            self.logger.checkpoint_finished(progress)
-            return
-        names = [*changed, "last_checkpoint.pt"]
-        for name in names:
-            _safe_local((self.root / name).absolute())
-        entries = [{"name": name, "previous_sha256": file_digest(self.root / name) if (self.root / name).is_file() else None,
-                    "next_sha256": file_digest(self.pending / name)} for name in names]
-        atomic_write(self.root / "session_commit.json", json_bytes({"format": "molgap-session-commit-v1",
-            "context": self.context.to_dict(), "entries": entries}))
-        # Rename backups instead of copying large checkpoint tensors. Ordinary
-        # mid-pass saves take the original single atomic-write path above.
-        for name in names:
-            if (self.root / name).is_file():
-                os.replace(self.root / name, self.pending / (name + ".previous"))
-            os.replace(self.pending / name, self.root / name)
-        sync_directory(self.root)
-        _recover_commit(self.root, self.context)
-        if "canonical_trace.json" in changed:
-            self.stage.recorder.record = validate_canonical_trace(_json(self.root / "canonical_trace.json"))
+        observed = None
+        if self.pending_pass is not None:
+            _, fields = self.pending_pass
+            observed = time.perf_counter()
+            duration = observed - self.previous_observation
+            cumulative = self.previous_cumulative + observed - self.segment_started
+            # Bind the staged trace to the next checkpoint before publishing either.
+            recorder = deepcopy(self.stage.recorder)
+            recorder.path = self.pending / "canonical_trace.json"
+            recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
+                epoch_or_pass=progress.pass_index, **fields,
+                checkpoint_identity=file_digest(destination / "last_checkpoint.pt"),
+                wall_time_seconds=duration, cumulative_wall_time_seconds=cumulative,
+                device_time_seconds=duration, cumulative_device_time_seconds=cumulative)
+            if "canonical_trace.json" not in changed:
+                changed.append("canonical_trace.json")
+        if changed:
+            names = [*changed, "last_checkpoint.pt"]
+            for name in names:
+                _safe_local((self.root / name).absolute())
+            entries = [{"name": name, "previous_sha256": file_digest(self.root / name) if (self.root / name).is_file() else None,
+                        "next_sha256": file_digest(self.pending / name)} for name in names]
+            atomic_write(self.root / "session_commit.json", json_bytes({"format": "molgap-session-commit-v1",
+                "context": self.context.to_dict(), "entries": entries}))
+            # Keep the preceding generation until checkpoint-last publication commits.
+            for name in names:
+                if (self.root / name).is_file():
+                    os.replace(self.root / name, self.pending / (name + ".previous"))
+                os.replace(self.pending / name, self.root / name)
+            sync_directory(self.root)
+            _recover_commit(self.root, self.context)
+            if "canonical_trace.json" in changed:
+                self.stage.recorder.record = validate_canonical_trace(_json(self.root / "canonical_trace.json"))
+        if observed is not None:
+            self.previous_observation, self.pending_pass = observed, None
+        if (self.resume_trajectory is not None and progress.next_batch == 0 and
+                progress.pass_index > 0 and progress.pass_index % self.policy.chunk_passes == 0 and progress.status != "complete"):
+            from .experiment_resume import create_resume_bundle
+            destination = self.root.parent / "checkpoint_chunks" / self.context.arm_id / f"pass_{progress.pass_index:02d}"
+            create_resume_bundle(self.root, self.context, self.resume_trajectory, destination)
         self.logger.checkpoint_finished(progress)
 
     def pass_finished(self, progress, metrics):
+        self.logger.pass_finished(progress, metrics)
         fields = {"live_train_metric": metrics["normalized_train_gap_mae"]}
         if metrics["development"] is not None:
             fields["ema_dev_metric" if self.recipe.selection.endswith("ema") else "live_dev_metric"] = metrics["development"]["mae_eV"]
-        # Reuse the canonical recorder on a private destination. The public trace
-        # cannot run ahead of acknowledged checkpoint publication.
+        if metrics.get("development_live") is not None:
+            fields["live_dev_metric"] = metrics["development_live"]["mae_eV"]
+        if self.policy.train_metric_unit == "eV":
+            fields["live_train_metric"] *= self.recipe.target_std_eV
+        if self.bounded_pair:
+            self.pending_pass = (progress, fields)
+            return
         recorder = deepcopy(self.stage.recorder)
         recorder.path = self.pending / "canonical_trace.json"
         recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
             epoch_or_pass=progress.pass_index, **fields)
-        self.logger.pass_finished(progress, metrics)
 
     def retained_state(self):
         import torch
@@ -315,7 +357,7 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
                 any(not isinstance(value, torch.Tensor) for value in selected["model"].values()) or
                 selected.get("optimizer_step") != state["cursor"]["selected_step"] or
                 selected.get("selection") != recipe.selection or
-                selected.get("weights") != recipe.selection.rsplit("-", 1)[1] or
+                selected.get("weights") != recipe.selection_weights or
                 selected.get("epoch_or_pass") != selected["optimizer_step"] / recipe.loop_plan.steps_per_pass):
             raise ValueError("Selected checkpoint identity/policy mismatch")
         _assert_model_schema(selected["model"], state["model"])
@@ -323,7 +365,7 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
             observed.update(_inspect_predictions(paths["predictions"], context=context, expected=expected,
                 target_identity=target_identity))
             weights = selected["weights"]
-            key = "ema_dev_metric" if weights == "ema" else "live_dev_metric"
+            key = "ema_dev_metric" if weights in {"ema", "clean-ema"} else "live_dev_metric"
             definition = {"metric": "MAE", "unit": "eV", "target": "Gap",
                 "role_identity": contract["development_role_identity"], "weights": weights, "direction": "minimize"}
             if trace["metric_semantics"][key] != definition:
@@ -340,7 +382,8 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
                     trace["metric_semantics"][key] is not None or any(row[key] is not None for row in rows)
                     for key in ("live_dev_metric", "ema_dev_metric"))):
                 raise ValueError("Final-only output fabricated development evidence")
-            final = state["ema"] if selected["weights"] == "ema" else state["model"]
+            final = (state["cursor"]["weight_state"]["clean"]["model"] if selected["weights"] == "clean-ema"
+                     else state["ema"] if selected["weights"] == "ema" else state["model"])
             if state_dict_sha256(selected["model"]) != state_dict_sha256(final):
                 raise ValueError("Final selected weights differ from the resume endpoint")
         observed.update(progress=actual, artifacts=artifacts, costs=manifest["costs"],

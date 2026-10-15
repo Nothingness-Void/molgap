@@ -68,3 +68,15 @@ def make_bond_local_model():
     if sum(p.numel() for p in model.parameters()) != 5_871_201:
         raise ValueError("Retained local-bond parameter count differs")
     return model
+
+
+def construct_family_model(recipe, state):
+    """Keep the retained architecture; the shared kernel loads frozen tensors."""
+    return make_bond_local_model()
+
+
+def policy(mode):
+    from .family_training_policy import FamilyModePolicy
+    if mode != "degree_bond_local_ema999":
+        raise ValueError("Unknown retained local-bond mode")
+    return FamilyModePolicy(construct=construct_family_model)

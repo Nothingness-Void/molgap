@@ -245,26 +245,40 @@ def run_sandbox(factory, *, forward=None, batch=None, addon_parameters=None, see
     return report
 
 
-def run_family_sandbox(family: str, *, seed=42, threads=1):
-    """Random-initialized retained baseline factory/forward, never frozen weights."""
-    if family == "neural_atom_k1":
-        def factory():
-            from .qm9_neural_atom import make_encoder
-            return make_encoder("neural_atom_k1")
-        def forward(model, batch):
-            from .k1_screen_training import _forward
-            return _forward(model, batch)
-    elif family == "gptrans_t":
-        def factory():
-            from .pcqm_gptrans_v4 import _make_model
-            return _make_model(variant="reference")
-        def forward(model, batch):
-            from .pcqm_gptrans_v4 import _forward
-            return _forward(model, batch)
-    else:
+def run_family_sandbox(family: str, *, addons=(), k1_execution=None, seed=42, threads=1):
+    """Random baseline plus reviewed slots through the accelerated CPU forwards."""
+    from copy import copy
+    from .family_model_ops import make_gptrans_backbone, k1_forward
+    from .shared_model_adapter import apply_reviewed_addons, validate_family_addons
+    if family not in {"neural_atom_k1", "gptrans_t"}:
         raise ValueError("No reviewed baseline sandbox forward for family")
+    if k1_execution is not None and family != "neural_atom_k1":
+        raise ValueError("K1 execution options require the K1 substrate")
+    adapter = validate_family_addons(family, addons)
+    def factory():
+        if family == "neural_atom_k1":
+            from .qm9_neural_atom import make_encoder
+            model = make_encoder("neural_atom_k1")
+        else:
+            from .gptrans_execution_backend import bind_model_layout
+            model = make_gptrans_backbone(variant="reference")
+            bind_model_layout(model)
+        model = apply_reviewed_addons(adapter, {"addons": list(addons)}, model)
+        if hasattr(model, "_molgap_substrate"):
+            model._molgap_substrate.seal()
+        return model
+    def forward(model, batch):
+        if family == "neural_atom_k1":
+            from .k1_execution_layout import cpu_layout_context
+            from .k1_execution_backend import execution_context
+            borrowed = copy(batch)
+            with cpu_layout_context(model, borrowed, "cpu"), execution_context(model, borrowed, "cpu", k1_execution):
+                return k1_forward(model, borrowed)
+        from .gptrans_execution_backend import prepare_layout, prepared_forward
+        return prepared_forward(model, prepare_layout(copy(batch)))
     result = run_sandbox(factory, forward=forward, seed=seed, threads=threads)
-    result.update(family=family, model_identity="random baseline constructor", frozen_initialization_loaded=False)
+    result.update(family=family, model_identity="random baseline with reviewed slots",
+                  frozen_initialization_loaded=False)
     return result
 
 
@@ -280,6 +294,10 @@ def run_arm_sandbox(spec, arm_id: str, *, addon_parameters=None, seed=42, thread
     if arm is None:
         raise ValueError("Unknown sandbox arm")
     adapter = training_adapter(arm)
+    if adapter.module == "molgap.family_training_runner":
+        result = run_family_sandbox(arm["family"]["name"], addons=tuple(arm["addons"]), seed=seed, threads=threads)
+        result.update(spec_identity=spec.identity, arm_id=arm_id)
+        return result
     if adapter.model_factory is None or adapter.module != "molgap.graph_screen_training":
         raise ValueError("Arm has no bound generic sandbox forward; use a reviewed factory/forward or baseline preset")
     owned = {}

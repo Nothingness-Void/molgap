@@ -158,7 +158,8 @@ class StageRecorder:
     optimizer resets from being silently combined into one curve.
     """
     def __init__(self, path: Path, context: RunContext, stage_id: str,
-                 metric_semantics: dict, *, trajectory_id: str | None = None):
+                 metric_semantics: dict, *, trajectory_id: str | None = None,
+                 device_time_semantics: str | None = None):
         _identifier(stage_id, "stage_id")
         _safe_local(Path(path).absolute())
         self.context = context
@@ -167,7 +168,7 @@ class StageRecorder:
         self.recorder = RMLTraceRecorder(path,
             trajectory_id=trajectory_id or context.experiment_id + "-" + context.arm_id,
             run_id=context.logical_run_id + ":" + context.arm_id + ":" + stage_id,
-            metric_semantics=metric_semantics)
+            metric_semantics=metric_semantics, device_time_semantics=device_time_semantics)
         # The companion is immutable and disallows reuse with another source/arm.
 
     def observe(self, *, optimizer_step: int, sample_presentations: int,
@@ -282,6 +283,12 @@ def _validate_rng_state(state):
 
 
 def _finite_tree(value, label):
+    from .training_reproducibility import finite_validation_observation
+    with finite_validation_observation():
+        return _finite_tree_impl(value, label)
+
+
+def _finite_tree_impl(value, label):
     import torch
     from .training_reproducibility import nonfinite_tensor_keys
 

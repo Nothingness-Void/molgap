@@ -86,6 +86,8 @@ def validate_session_resume(recipe, state):
     cursor, plan, step = state["cursor"], recipe.loop_plan, state["optimizer_step"]
     keys = {"recipe_identity", "pass_index", "next_batch", "status", "pending_absolute",
             "pending_rows", "best_development_mae_eV", "selected_step", "optimizer_state_ids"}
+    if recipe.clean_bn is not None:
+        keys.add("weight_state")
     if (type(cursor) is not dict or set(cursor) != keys or cursor["recipe_identity"] != recipe.identity
             or type(step) is not int or not 1 <= step <= plan.optimizer_steps):
         raise ValueError("Resume identity or step differs from the frozen recipe")
@@ -149,6 +151,16 @@ def validate_session_resume(recipe, state):
         raise ValueError("Resume EMA tensor schema differs from model")
     _finite_tree(state, "family.resume")
     _validate_rng_state(state["rng_state"])
+    if recipe.clean_bn is not None:
+        from .family_training_state import validate_training_state
+        component = cursor["weight_state"]
+        if (type(component) is not dict or set(component) != {"format", "raw_revision", "clean"}
+                or component["raw_revision"] != step):
+            raise ValueError("Calibration revision differs from EMA update exposure")
+        validate_training_state({**component, "live": dict(state["model"]), "raw_ema": state["ema"]},
+            state["model"], raw_available=True, calibration_policy=recipe.clean_bn, allow_missing_clean=True)
+        if step == plan.optimizer_steps and (component["clean"] is None or component["clean"]["stale"]):
+            raise ValueError("Clean endpoint lacks fresh calibrated state")
     return LoopProgress(step, state["sample_presentations"], pass_index, offset, cursor["status"])
 
 
@@ -169,8 +181,7 @@ class FamilyTrainingSession:
             raise TypeError("Batch reporting must be callable")
         if checkpoint_builder is not None and not callable(checkpoint_builder):
             raise TypeError("Checkpoint builder sink must be a trusted callable")
-        self.batch_finished = batch_finished
-        self.checkpoint_builder = checkpoint_builder
+        self.batch_finished, self.checkpoint_builder = batch_finished, checkpoint_builder
         self.progress = LoopProgress(0, 0, 0, 0, "running")
         self.pending_absolute, self.pending_rows = [], 0
         self._metric_host, self._metric_dtype = [], None
@@ -196,11 +207,14 @@ class FamilyTrainingSession:
         import torch
         self._flush_metrics()
         values = list(torch.tensor(self._metric_host, dtype=self._metric_dtype).unbind()) if self._metric_host else []
-        return {"recipe_identity": self.recipe.identity, "pass_index": self.progress.pass_index,
+        cursor = {"recipe_identity": self.recipe.identity, "pass_index": self.progress.pass_index,
             "next_batch": self.progress.next_batch, "status": self.progress.status,
             "pending_absolute": values, "pending_rows": self.pending_rows,
             "best_development_mae_eV": self.best, "selected_step": self.selected_step,
             "optimizer_state_ids": sorted(optimizer_state["state"])}
+        if self.recipe.clean_bn is not None:
+            cursor["weight_state"] = self.kernel.training_state.calibration_state_dict()
+        return cursor
 
     def _checkpoint_state(self):
         from .experiment_family_workflow import tensor_safe_rng_state
@@ -254,7 +268,13 @@ class FamilyTrainingSession:
         _validate_rng_state(state["rng_state"])
         previous = deepcopy(self.state_dict())
         def install(value):
-            self.kernel.model.load_state_dict(value["model"], strict=True)
+            if self.recipe.clean_bn is not None:
+                component = value["cursor"]["weight_state"]
+                self.kernel.training_state.load_state_dict({**component, "live": dict(value["model"]),
+                    "raw_ema": value["ema"]},
+                    calibration_policy=self.recipe.clean_bn if component["clean"] is not None else None)
+            else:
+                self.kernel.model.load_state_dict(value["model"], strict=True)
             self.kernel.optimizer.load_state_dict(value["optimizer"])
             self.schedule.load_state_dict(value["scheduler"])
             if self.kernel.ema is not None:
@@ -274,9 +294,12 @@ class FamilyTrainingSession:
         self.progress = progress
 
     def _select(self, progress, evaluation=None):
-        weights = self.recipe.selection.rsplit("-", 1)[1]
-        with self.kernel.weight_view.use(self.kernel.model, self.kernel.ema, weights):
-            self.selected(progress, weights, self.kernel.model.state_dict(), evaluation)
+        weights = self.recipe.selection_weights
+        if weights == "clean-ema":
+            self.kernel.calibrate(self.loaders)
+        self.kernel.training_state.evaluate("raw-ema" if weights == "ema" else weights,
+            lambda model: self.selected(progress, weights, model.state_dict(), evaluation),
+            calibration_policy=self.recipe.clean_bn if weights == "clean-ema" else None)
         self.selected_step = progress.optimizer_step
 
     def _finish_pass(self, pass_index, progress):
@@ -288,33 +311,48 @@ class FamilyTrainingSession:
         self.pending_absolute, self.pending_rows = [], 0
         self._metric_host, self._metric_dtype = [], None
         evaluation = None
+        live_evaluation = None
         if self.recipe.dataset.development:
+            if self.recipe.selection_weights == "clean-ema":
+                self.kernel.calibrate(self.loaders)
             observed = []
             def select_evaluation(result):
-                if observed or not self.kernel.weight_view.busy:
+                if observed:
                     raise RuntimeError("Evaluation observer requires one active weight view")
                 observed.append(result)
                 if self.best is None or result["mae_eV"] < self.best:
-                    weights = self.recipe.selection.rsplit("-", 1)[1]
-                    self.selected(progress, weights, self.kernel.model.state_dict(), result)
+                    weights = self.recipe.selection_weights
+                    self.selected(progress, weights, self.kernel.evaluation_model.state_dict(), result)
                     self.selected_step = progress.optimizer_step
                     self.best = result["mae_eV"]
             evaluation = self.kernel.evaluate(self.loaders, on_evaluation=select_evaluation)
             if len(observed) != 1 or observed[0] is not evaluation:
                 raise RuntimeError("Evaluation adapter did not retain its observed result")
-        self.pass_finished(progress, {"normalized_train_gap_mae": metric, "development": evaluation})
+            from .family_training_policy import mode_policy
+            policy = mode_policy(self.recipe.family, self.recipe.mode)
+            for weights in policy.extra_development_weights:
+                if weights != self.recipe.selection_weights:
+                    if weights != "live":
+                        raise ValueError("No reporting field for this extra development state")
+                    live_evaluation = self.kernel.evaluate(self.loaders, weights=weights)
+        metrics = {"normalized_train_gap_mae": metric, "development": evaluation}
+        if live_evaluation is not None:
+            metrics["development_live"] = live_evaluation
+        self.pass_finished(progress, metrics)
 
     def _persist(self, progress):
+        from .training_reproducibility import finite_validation_scope
         self.progress = progress
         try:
-            if progress.status == "complete" and not self.recipe.dataset.development:
-                self._select(progress)
-            if self.checkpoint_builder is None:
-                self.checkpoint(progress, self.state_dict())
-            else:
-                # The registered sink validates the complete payload before any
-                # publication. Generic callbacks still receive validated state.
-                self.checkpoint_builder(progress, self._checkpoint_state)
+            with finite_validation_scope():
+                if progress.status == "complete" and not self.recipe.dataset.development:
+                    self._select(progress)
+                if self.checkpoint_builder is None:
+                    self.checkpoint(progress, self.state_dict())
+                else:
+                    # Registered publication validates the full snapshot once;
+                    # generic callbacks still receive independently checked state.
+                    self.checkpoint_builder(progress, self._checkpoint_state)
         except Exception:
             self.progress = LoopProgress(progress.optimizer_step, progress.sample_presentations,
                 progress.pass_index, progress.next_batch, "persistence_failed")

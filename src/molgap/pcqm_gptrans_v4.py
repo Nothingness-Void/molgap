@@ -252,23 +252,13 @@ def _target_stats(shards) -> tuple[float, float]:
 def _make_model(initial_state_path: Path | None = None, variant: str = "reference"):
     import torch
 
-    from .gptrans import OGBGPTransTiny
     if variant in ("memory_value", "memory_message"):
         from .gptrans_memory import apply_memory_variant as apply_variant
     else:
         from .gptrans_variants import apply_variant
 
-    model = OGBGPTransTiny(
-        node_channels=256,
-        pair_channels=32,
-        num_layers=12,
-        num_heads=8,
-        shortest_path_cap=20,
-        dropout=0.1,
-        drop_path=0.1,
-        layer_scale=1.0,
-        n_targets=1,
-    )
+    from .family_model_ops import make_gptrans_backbone
+    model = make_gptrans_backbone()
     if initial_state_path is None:
         return apply_variant(model, variant)
     load_frozen_initial_state(

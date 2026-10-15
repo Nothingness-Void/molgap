@@ -92,6 +92,44 @@ def _state_identity(state):
     return state_dict_sha256(state)
 
 
+def validate_training_state(state, live, *, raw_available, calibration_policy=None, allow_missing_clean=False):
+    """Pure checkpoint-component validation shared by sessions and state restore."""
+    expected = {"format", "live", "raw_ema", "raw_revision", "clean"}
+    if (type(state) is not dict or set(state) != expected or state["format"] != STATE_FORMAT or
+            type(state["raw_revision"]) is not int or state["raw_revision"] < 0 or
+            (state["raw_ema"] is None) != (not raw_available)):
+        raise ValueError("Training state schema/policy changed")
+    _validate_state(state["live"], live, "Saved Live")
+    if state["raw_ema"] is not None:
+        _validate_state(state["raw_ema"], live, "Saved Raw EMA")
+    clean = state["clean"]
+    if clean is not None:
+        if (type(clean) is not dict or set(clean) != {"model", "calibration", "stale"} or
+                type(clean["stale"]) is not bool or state["raw_ema"] is None):
+            raise ValueError("Saved Clean EMA schema changed")
+        _validate_state(clean["model"], live, "Saved Clean EMA")
+        record = clean["calibration"]
+        keys = {"policy", "policy_identity", "raw_revision", "raw_state_identity", "clean_state_identity", "identity"}
+        if type(record) is not dict or set(record) != keys:
+            raise ValueError("Saved calibration record changed")
+        policy = CalibrationPolicy.from_dict(record["policy"])
+        if (record["policy_identity"] != policy.identity or
+                type(record["raw_revision"]) is not int or not 0 <= record["raw_revision"] <= state["raw_revision"] or
+                record["clean_state_identity"] != _state_identity(clean["model"]) or
+                record["identity"] != canonical_fingerprint({key: value for key, value in record.items() if key != "identity"})):
+            raise ValueError("Saved calibration identity changed")
+        _digest(record["raw_state_identity"], "raw_state_identity")
+        stale = (record["raw_revision"] != state["raw_revision"] or
+                 record["raw_state_identity"] != _state_identity(state["raw_ema"]))
+        if stale != clean["stale"]:
+            raise ValueError("Saved calibration staleness changed")
+        if calibration_policy is not None and (
+                type(calibration_policy) is not CalibrationPolicy or calibration_policy.identity != policy.identity):
+            raise ValueError("Saved calibration differs from requested policy")
+    elif calibration_policy is not None and not allow_missing_clean:
+        raise ValueError("Saved checkpoint has no requested Clean EMA")
+
+
 class FamilyTrainingState:
     """Exclusive-worker state owner; JSON cannot select factory or forward hooks.
 
@@ -297,8 +335,8 @@ class FamilyTrainingState:
         self.calibrate(policy, batches, forward=forward, source_indices=source_indices)
         return self.evaluate("clean-ema", evaluator, calibration_policy=policy)
 
-    def state_dict(self):
-        """An embedding checkpoint component, independent of optimizer/cursor IO."""
+    def calibration_state_dict(self):
+        """Session metadata; Live/Raw tensors already live in its resume envelope."""
         from copy import deepcopy
         clean = None
         if self.clean_model is not None:
@@ -308,49 +346,21 @@ class FamilyTrainingState:
                 raise ValueError("Clean EMA tensors changed before checkpoint")
             clean = {"model": _copy_state(self.clean_model.state_dict(), cpu=True),
                      "calibration": deepcopy(self.calibration), "stale": self.clean_status != "ready"}
-        return {"format": STATE_FORMAT, "live": _copy_state(self.live_model.state_dict(), cpu=True),
-                "raw_ema": _copy_state(self._raw_state(), cpu=True) if self.raw_ema is not None else None,
-                "raw_revision": self.raw_revision, "clean": clean}
+        return {"format": STATE_FORMAT, "raw_revision": self.raw_revision, "clean": clean}
+
+    def state_dict(self):
+        return {**self.calibration_state_dict(),
+                "live": _copy_state(self.live_model.state_dict(), cpu=True),
+                "raw_ema": _copy_state(self._raw_state(), cpu=True) if self.raw_ema is not None else None}
 
     def load_state_dict(self, state, *, calibration_policy=None):
         """Validate first; restore Live/Raw/Clean atomically on loading failure."""
         from copy import deepcopy
         from .training_reproducibility import capture_rng_state, restore_rng_state
-        expected = {"format", "live", "raw_ema", "raw_revision", "clean"}
-        if (type(state) is not dict or set(state) != expected or state["format"] != STATE_FORMAT or
-                type(state["raw_revision"]) is not int or state["raw_revision"] < 0 or
-                (state["raw_ema"] is None) != (self.raw_ema is None)):
-            raise ValueError("Training state schema/policy changed")
         live = dict(self.live_model.state_dict())
-        _validate_state(state["live"], live, "Saved Live")
-        if state["raw_ema"] is not None:
-            _validate_state(state["raw_ema"], live, "Saved Raw EMA")
+        validate_training_state(state, live, raw_available=self.raw_ema is not None,
+                                calibration_policy=calibration_policy)
         clean = state["clean"]
-        if clean is not None:
-            if (type(clean) is not dict or set(clean) != {"model", "calibration", "stale"} or
-                    type(clean["stale"]) is not bool or state["raw_ema"] is None):
-                raise ValueError("Saved Clean EMA schema changed")
-            _validate_state(clean["model"], live, "Saved Clean EMA")
-            record = clean["calibration"]
-            keys = {"policy", "policy_identity", "raw_revision", "raw_state_identity", "clean_state_identity", "identity"}
-            if type(record) is not dict or set(record) != keys:
-                raise ValueError("Saved calibration record changed")
-            policy = CalibrationPolicy.from_dict(record["policy"])
-            if (record["policy_identity"] != policy.identity or
-                    type(record["raw_revision"]) is not int or not 0 <= record["raw_revision"] <= state["raw_revision"] or
-                    record["clean_state_identity"] != _state_identity(clean["model"]) or
-                    record["identity"] != canonical_fingerprint({key: value for key, value in record.items() if key != "identity"})):
-                raise ValueError("Saved calibration identity changed")
-            _digest(record["raw_state_identity"], "raw_state_identity")
-            stale = (record["raw_revision"] != state["raw_revision"] or
-                     record["raw_state_identity"] != _state_identity(state["raw_ema"]))
-            if stale != clean["stale"]:
-                raise ValueError("Saved calibration staleness changed")
-            if calibration_policy is not None and (
-                    type(calibration_policy) is not CalibrationPolicy or calibration_policy.identity != policy.identity):
-                raise ValueError("Saved calibration differs from requested policy")
-        elif calibration_policy is not None:
-            raise ValueError("Saved checkpoint has no requested Clean EMA")
         rng = capture_rng_state()
         previous_live = _copy_state(live)
         previous_raw = _copy_state(self._raw_state()) if self.raw_ema is not None else None

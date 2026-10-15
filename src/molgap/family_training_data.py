@@ -43,18 +43,13 @@ class TrainingData:
     target_std_eV: float
 
 
-def resolve_training_manifest(root: Path, selection: DatasetSelection) -> Path:
-    """Resolve metadata by its frozen hash, independent of platform mount layout.
-
-    An existing declared path must match; a wrong manifest is never hidden by
-    discovery. Only missing locations permit a unique metadata match. Shards
-    remain unopened until the owning loader validates the selected roles.
-    """
+def resolve_pinned_manifest(root, selection):
+    """Mount paths are provenance; resolve a unique immutable manifest by its pin."""
     if type(selection) is not DatasetSelection:
         raise TypeError("Expected DatasetSelection")
     root = Path(root).absolute()
-    declared = root / selection.manifest
-    if declared.exists():
+    direct = root / selection.manifest
+    if direct.exists():
         path = _artifact_path(root, selection.manifest)
         if sha256_file(path) != selection.manifest_sha256:
             raise ValueError("Dataset manifest SHA differs from the frozen selection")
@@ -65,35 +60,35 @@ def resolve_training_manifest(root: Path, selection: DatasetSelection) -> Path:
         if sha256_file(path) == selection.manifest_sha256:
             candidates.append(path)
     if len(candidates) != 1:
-        raise ValueError(f"Expected one pinned training manifest, found {len(candidates)}")
-    return candidates[0]
+        raise ValueError("Expected one uniquely mounted pinned manifest")
+    return _artifact_path(root, candidates[0].relative_to(root).as_posix())
+
+
+# Desktop public spelling; both callers use the same confined resolver.
+resolve_training_manifest = resolve_pinned_manifest
 
 
 def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     """Verify the selected view and shard bytes before trusted deserialization.
 
     This reads only selected official-train/internal-development shards. It
-    never traverses geometry or official-validation/test assets, even if those
-    assets are present in the fixed dataset store. Data preparation remains CPU.
+    never selects coordinates or official-validation/test roles. Accepted legacy
+    packed files incidentally deserialize coordinates; model transfer excludes
+    them. Data preparation remains CPU.
     """
     import torch
     from torch.utils.data import ConcatDataset
-    from .k1_screen_training import _PackedGraphDatasetFactory
+    from .packed_graph_dataset import PackedGraphDataset
 
     if type(selection) is not DatasetSelection:
         raise TypeError("Expected DatasetSelection")
-    path = resolve_training_manifest(root, selection)
-    # Manifest file paths are relative to their dataset, not sibling mounts.
-    root = path.parent
+    root = Path(root).absolute()
+    path = resolve_pinned_manifest(root, selection)
+    if sha256_file(path) != selection.manifest_sha256:
+        raise ValueError("Dataset manifest SHA differs from the frozen selection")
     manifest = _json(path)
-    legacy_mirror = manifest.get("format") == "molgap-pcqm4mv2-kaggle-fixed-subset-v1"
-    if (manifest.get("format") not in {"molgap-pcqm4mv2-fixed-subset-v1",
-                                      "molgap-pcqm4mv2-kaggle-fixed-subset-v1"} or
-            manifest.get("status") != "complete"):
-        raise ValueError("Expected the existing complete fixed-subset manifest")
-    if legacy_mirror and any(manifest.get(key) is not False for key in (
-            "official_validation_role_read", "test_dev_role_read", "test_challenge_role_read")):
-        raise ValueError("Mirror protected-role declarations must be explicitly false")
+    from .pcqm_fixed_records import graph_records
+    records = graph_records(manifest, selection.manifest_sha256)
     source = manifest.get("source", {})
     if source.get("external_data_used") is not False:
         raise ValueError("Fixed PCQM training must declare no external data")
@@ -104,8 +99,6 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     if (graph.get("feature_schema") != "ogb" or graph.get("node_feature_dim") != 9
             or graph.get("edge_feature_dim") != 3 or graph.get("rwse_dim") != 16):
         raise ValueError("Expected accepted OGB atom9/bond3/RWSE16 topology")
-    records = (manifest.get("geometry_shards", []) if legacy_mirror else
-               manifest.get("assets", {}).get("topology", []))
     if not isinstance(records, list) or not records:
         raise ValueError("Selected view has no topology shards")
     requested = ("train", "development") if selection.development else ("train",)
@@ -135,11 +128,10 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
                     record.get("source_idx_max") != cursor + count - 1 or
                     cursor + count > stop):
                 raise ValueError("Shard order/count differs from its selected role")
-            shard_path = _artifact_path(root, record["file"])
+            shard_path = _artifact_path(path.parent, record["file"])
             if sha256_file(shard_path) != record["sha256"]:
                 raise ValueError("Topology shard SHA differs from its manifest")
-            # Reuse the existing topology-only view; never build/use cached 3D.
-            shard = _PackedGraphDatasetFactory.load(shard_path, mmap=True)
+            shard = PackedGraphDataset(shard_path, mmap=True)
             if len(shard) != count:
                 raise ValueError("Decoded graph count differs from manifest")
             indices = shard._data.source_idx.reshape(-1)

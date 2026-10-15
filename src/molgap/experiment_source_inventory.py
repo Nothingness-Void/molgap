@@ -33,14 +33,21 @@ COMMON_SOURCE_FILES = (
     'src/molgap/experiment_training_worker.py',
     'src/molgap/experiment_workflow.py',
     'src/molgap/family_training_core.py',
+    'src/molgap/family_model_ops.py',
     'src/molgap/family_execution_profile.py',
     'src/molgap/family_training_data.py',
     'src/molgap/family_training_kernel.py',
     'src/molgap/family_training_loaders.py',
     'src/molgap/family_training_outputs.py',
+    'src/molgap/family_training_policy.py',
     'src/molgap/family_training_recipe.py',
     'src/molgap/family_training_runner.py',
     'src/molgap/family_training_session.py',
+    'src/molgap/family_training_state.py',
+    'src/molgap/foreach_ema.py',
+    'src/molgap/model_substrate.py',
+    'src/molgap/shared_model_adapter.py',
+    'src/molgap/substrate_scale_addon.py',
     'src/molgap/gps.py',
     'src/molgap/gptrans.py',
     'src/molgap/gptrans_bond_local.py',
@@ -54,11 +61,15 @@ COMMON_SOURCE_FILES = (
     'src/molgap/k1_clean_second.py',
     'src/molgap/k1_screen_training.py',
     'src/molgap/k1_execution_layout.py',
+    'src/molgap/k1_execution_aggregation.py',
+    'src/molgap/k1_execution_backend.py',
+    'src/molgap/k1_execution_qualification.py',
     'src/molgap/packed_graph_dataset.py',
     'src/molgap/kaggle_pair_runtime.py',
     'src/molgap/kaggle_workflow.py',
     'src/molgap/pcqm_gap_architecture.py',
     'src/molgap/pcqm_gptrans_v4.py',
+    'src/molgap/pcqm_fixed_records.py',
     'src/molgap/pcqm_wedge.py',
     'src/molgap/qm9_gape.py',
     'src/molgap/qm9_local_hierarchy.py',
@@ -124,6 +135,9 @@ def registered_source_files(spec, extras=(), *, repo_root=None, auto_dependencie
             declaration = ADDONS[(addon["name"], addon["version"])]
             names.add("src/" + declaration.source_module.replace(".", "/") + ".py")
             names.update(execution.extra_source_files)
+            if execution.policy_hook is not None:
+                from .experiment_execution import _hook_source
+                names.add(_hook_source(execution.policy_hook))
     selected = _allowlist(sorted(names))
     if auto_dependencies:
         if repo_root is None:
@@ -144,6 +158,9 @@ def _all_registered_sources():
         for addon in adapter.addons:
             names.add("src/" + ADDONS[(addon.name, addon.version)].source_module.replace(".", "/") + ".py")
             names.update(addon.extra_source_files)
+            if addon.policy_hook is not None:
+                from .experiment_execution import _hook_source
+                names.add(_hook_source(addon.policy_hook))
     return tuple(sorted(names))
 
 

@@ -141,3 +141,55 @@ def test_native_cosine_state_resume_matches_uninterrupted(kind):
     optimizer.load_state_dict(saved_optimizer)
     advance(2)
     assert optimizer.param_groups[0]["lr"] == expected
+
+
+@pytest.mark.parametrize("family,prefix,cached", [("neural_atom_k1", "k1", False),
+    ("neural_atom_k1", "k1", True), ("gptrans_t", "gptrans", False)])
+def test_ordered_registered_addons_reach_accelerated_forward_and_optimizer(initial_states, family, prefix, cached):
+    from pathlib import Path
+    from molgap.experiment_execution import build_addon_declaration
+    from molgap.model_substrate import SlotBinding, SlotName
+    from molgap.substrate_scale_addon import SlotScale
+    from molgap.k1_execution_backend import K1ExecutionConfig
+    path, digest = initial_states[family]
+    interface = (family, "3" if prefix == "k1" else "2")
+    addons = tuple(build_addon_declaration(interface, prefix + "_" + slot + "_scale",
+        repo_root=Path(__file__).resolve().parents[1]) for slot in ("node", "aggregate", "readout"))
+    recipe = FamilyRecipe(family, "composed", 42, digest,
+        DatasetSelection("synthetic.json", "2" * 64, False), 128, 0, 1,
+        .001, .01, ScheduleSpec("cosine_step", 1), "final-live", "torch-pass-randperm", 1,
+        target_mean_eV=0., target_std_eV=1., addons=addons,
+        k1_execution=K1ExecutionConfig() if cached else None,
+        torch_version=str(torch.__version__).split("+", 1)[0])
+    assert FamilyRecipe.from_dict(recipe.to_dict()) == recipe
+    threads = torch.get_num_threads()
+    deterministic = torch.are_deterministic_algorithms_enabled()
+    warn_only = torch.is_deterministic_algorithms_warn_only_enabled()
+    fill = torch.utils.deterministic.fill_uninitialized_memory
+    try:
+        torch.set_num_threads(1)
+        torch.use_deterministic_algorithms(True, warn_only=False)
+        with torch.random.fork_rng(devices=[]):
+            kernel = FamilyKernel(recipe, path, device="cpu")
+            owner = kernel.model._molgap_substrate
+            assert owner.sealed
+            expected_order = ["node_scale", "aggregate_scale", "readout_scale"]
+            assert [entry.name for entry in owner.bindings] == expected_order
+            calls = []
+            for name, module in kernel.model._molgap_addons.items():
+                module.register_forward_hook(lambda module, args, output, name=name: calls.append(name))
+            loss, _, _ = kernel.step(synthetic_batch(), check_finite=True)
+            assert torch.isfinite(loss) and calls == expected_order
+            optimized = {id(p) for group in kernel.optimizer.param_groups for p in group["params"]}
+            for name, parameter in owner.named_addon_parameters():
+                assert id(parameter) in optimized
+                assert parameter.grad is not None and torch.isfinite(parameter.grad).all()
+                assert torch.count_nonzero(parameter.grad), name
+                assert parameter in kernel.optimizer.state
+            with pytest.raises(RuntimeError, match="sealed"):
+                owner.attach("late", SlotScale("embedding"), SlotBinding(family, SlotName.PRE_READOUT))
+            kernel.close()
+    finally:
+        torch.set_num_threads(threads)
+        torch.use_deterministic_algorithms(deterministic, warn_only=warn_only)
+        torch.utils.deterministic.fill_uninitialized_memory = fill
