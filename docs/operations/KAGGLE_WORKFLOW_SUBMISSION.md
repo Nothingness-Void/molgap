@@ -123,3 +123,6 @@ The primary desktop baseline passed `research_memory check --frozen --portable`.
 The isolated checkout lacks ignored retained checkpoints, so its RML check
 cannot substitute for the primary artifact-custody check. No canonical/derived
 RML, production registry or scientific result was changed.
+
+The [two-branch drift audit](SHARED_INFRASTRUCTURE_AUDIT.md) distinguishes the
+remaining generic-interface divergence from valid profile/platform differences.
