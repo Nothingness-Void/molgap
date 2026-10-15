@@ -1,0 +1,55 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "frozen prior anchors storage only; no scientific comparison acceptance",
+      "no causal/replay qualification"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "unspecified_in_contract",
+    "dataset_identity": "unspecified_in_contract",
+    "ema_semantics": "ema",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "unspecified_in_contract",
+    "matched_architecture_required": false,
+    "optimizer_identity": "unspecified_in_contract",
+    "precision_identity": "unspecified_in_contract",
+    "row_split_identity": "unspecified_in_contract",
+    "scientific_contract": "molgap-family-training-recipe-v1",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "unspecified_in_contract",
+    "terminal_endpoint_identity": "endpoint_46860",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "candidate",
+  "contract_ref": "experiments/gptrans_infrastructure_t4_100k/optimized/contract.json",
+  "evaluation_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+  "exposure": {
+    "optimizer_steps": 46860,
+    "sample_presentations": 5998080
+  },
+  "metric_semantics": "Gap development MAE eV; training unit declared by canonical trace",
+  "model_identity": "gptrans-t-reference",
+  "presentation_semantics_ref": "experiments/gptrans_infrastructure_t4_100k/optimized/contract.json",
+  "reference_id": "pcqm-gptrans-t-v4-100k-reference-s42",
+  "run_id": "gptrans-infrastructure-t4-100k-s42-v1:optimized:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best-development-ema",
+  "terminal_evidence_ref": "experiments/gptrans_infrastructure_t4_100k/optimized/rml/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/gptrans_infrastructure_t4_100k/optimized/rml/rml_finalized/trace.json",
+  "trace_artifact_sha256": "17e90ad5be2d04a969a8368e63d027c46a6ed26b0cff5102b6054947b62cfefd",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": true,
+    "epoch_or_pass": true,
+    "learning_rate": false,
+    "live_dev_metric": false,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42",
+  "weight_semantics": "ema_and_live",
+  "x_axis": "optimizer_steps"
+}

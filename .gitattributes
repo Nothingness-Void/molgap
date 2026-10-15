@@ -86,3 +86,7 @@ experiments/pcqm_gptrans_decay_clock_100k/** -text whitespace=cr-at-eol
 
 # Pair-transition evidence binds exact prospective, remote and terminal bytes.
 experiments/pcqm_gptrans_pair_transition_100k/** -text whitespace=cr-at-eol
+
+# GPTrans terminal receipts bind these exact LF evidence bytes.
+experiments/gptrans_infrastructure_t4_100k/results/** text eol=lf
+experiments/gptrans_infrastructure_t4_100k/*/rml/rml_finalized/** text eol=lf

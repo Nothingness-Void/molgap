@@ -39,8 +39,10 @@ The same tiny-graph equality cases optionally run on CUDA with
 `MOLGAP_EXECUTION_TEST_DEVICE=cuda`; this requires separately available/authorized
 local hardware and does not use real molecules or qualify a remote platform.
 
-Dataset-level throughput and a new complete molecular old/new comparison have
-not been measured. Do not reuse the earlier T4 15.7%
+At that review, dataset-level throughput and a new complete molecular old/new
+comparison had not been measured. The subsequent
+[fixed100K terminal diagnostic](../../experiments/gptrans_infrastructure_t4_100k/results/decision_2026-10-15.md)
+owns its measured speed and numerical drift. Do not reuse the earlier T4 15.7%
 observation as the measured effect of this source. The prior accepted comparison
 remains at [its upstream owner](https://github.com/Nothingness-Void/molgap/blob/48c3bdded703931b0fce8a610f09d9a40e8bc1bf/experiments/family_topology_t4_100k/terminal_acceptance/decision.md).
 

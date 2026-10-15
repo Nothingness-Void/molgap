@@ -1,0 +1,39 @@
+{
+  "documentation": {
+    "current_state_lines": 120,
+    "documents_scanned": 900,
+    "ok": true,
+    "pointers_checked": 3534
+  },
+  "focused_tests": {
+    "files": [
+      "tests/test_execution_analysis.py",
+      "tests/test_k1_execution_analysis.py",
+      "tests/test_gptrans_legacy_execution_profile.py",
+      "tests/test_gptrans_infrastructure_comparison.py"
+    ],
+    "passed": 22
+  },
+  "format": "molgap-gptrans-execution-acceptance-validation-v1",
+  "git_evidence_bytes": {
+    "published_hashes_verified": 28,
+    "terminal_bound_tracked_hashes_verified": 18
+  },
+  "local_training_executed": false,
+  "model_inference_executed": false,
+  "retained_k1_regression": {
+    "status": "PASS",
+    "unchanged_fields": [
+      "parent_timed_train_workers",
+      "capture_off_spans",
+      "numerical_comparison"
+    ]
+  },
+  "rml": {
+    "check_frozen": "PASS",
+    "optimized": "COMPLETE/FINALIZED/VALID",
+    "original": "COMPLETE/FINALIZED/VALID",
+    "replay_pool_added": [],
+    "validate": "PASS"
+  }
+}

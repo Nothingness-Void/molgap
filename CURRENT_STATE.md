@@ -42,8 +42,8 @@ accepted a shared100K execution benefit with identical selected tensors and
 predictions. Scientific promotion/Replay remain excluded.
 The [cached-provider round](experiments/k1_infrastructure_t4_100k/execution_providers/results/decision_2026-10-15.md)
 accepted an execution benefit with identical tensors/predictions; incremental gain over the earlier shared version remains unestablished.
-The authorized [GPTrans comparison](experiments/gptrans_infrastructure_t4_100k/STATUS.md)
-binds original/shared reference100K with profiler; exact state and native gates live there.
+The [GPTrans execution diagnostic](experiments/gptrans_infrastructure_t4_100k/results/decision_2026-10-15.md)
+accepted a shared100K execution benefit with explicit numerical drift; both arms are RML-closed without Replay or promotion.
 
 The [reviewed desktop training core](docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md)
 is integrated for new K1/GPTrans declarations. Native qualification remains
