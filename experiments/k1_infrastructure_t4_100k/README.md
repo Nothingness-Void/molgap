@@ -12,3 +12,6 @@ dated [preparation decision](decision.md), then the
 [Exact run and recovery route](STATUS.md). Saved artifacts are compared by
 [the shared analysis owner](../../src/molgap/k1_execution_analysis.py); platform
 retrieval and both existing family inspectors remain authoritative.
+
+[Deep profiler attribution and code opportunities](results/profiler_deep_analysis.md)
+separate measured hot paths from unmeasured implementation candidates.

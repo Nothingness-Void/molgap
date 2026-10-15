@@ -1,0 +1,1321 @@
+{
+  "analysis_script": {
+    "ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/deep_trace.py",
+    "sha256": "374bd34d0b6f4f403382168dfec679a56e64c9d4cc3376a681b89833bbcf35d7"
+  },
+  "arms": {
+    "optimized": {
+      "cpu_events": 313260,
+      "device_activity_union_us": 974679.7583007812,
+      "device_by_leaf_operator": [
+        {
+          "calls": 8432,
+          "leaf_device_us": 298026.2659999973,
+          "name": "aten::_index_put_impl_"
+        },
+        {
+          "calls": 7119,
+          "leaf_device_us": 190514.41099999918,
+          "name": "aten::mm"
+        },
+        {
+          "calls": 1472,
+          "leaf_device_us": 84234.20600000006,
+          "name": "aten::addmm"
+        },
+        {
+          "calls": 2336,
+          "leaf_device_us": 49336.08900000013,
+          "name": "aten::mul"
+        },
+        {
+          "calls": 2976,
+          "leaf_device_us": 39398.14899999931,
+          "name": "aten::sum"
+        },
+        {
+          "calls": 1183,
+          "leaf_device_us": 32760.98999999993,
+          "name": "aten::copy_"
+        },
+        {
+          "calls": 1536,
+          "leaf_device_us": 25459.603000000014,
+          "name": "aten::embedding_dense_backward"
+        },
+        {
+          "calls": 2240,
+          "leaf_device_us": 21116.10700000002,
+          "name": "aten::add_"
+        },
+        {
+          "calls": 1568,
+          "leaf_device_us": 17879.484000000015,
+          "name": "aten::add"
+        },
+        {
+          "calls": 480,
+          "leaf_device_us": 16249.01899999999,
+          "name": "aten::cat"
+        },
+        {
+          "calls": 48,
+          "leaf_device_us": 15783.538,
+          "name": "aten::_efficient_attention_backward"
+        },
+        {
+          "calls": 863,
+          "leaf_device_us": 15297.814000000017,
+          "name": "aten::native_layer_norm_backward"
+        },
+        {
+          "calls": 672,
+          "leaf_device_us": 14079.668000000005,
+          "name": "aten::index_select"
+        },
+        {
+          "calls": 432,
+          "leaf_device_us": 12409.581999999995,
+          "name": "aten::native_layer_norm"
+        },
+        {
+          "calls": 992,
+          "leaf_device_us": 9676.42500000002,
+          "name": "aten::div_"
+        },
+        {
+          "calls": 864,
+          "leaf_device_us": 8696.810999999992,
+          "name": "aten::max"
+        },
+        {
+          "calls": 992,
+          "leaf_device_us": 8553.455000000014,
+          "name": "aten::remainder"
+        },
+        {
+          "calls": 336,
+          "leaf_device_us": 8069.362999999999,
+          "name": "aten::index"
+        },
+        {
+          "calls": 864,
+          "leaf_device_us": 7528.401999999995,
+          "name": "aten::min"
+        },
+        {
+          "calls": 688,
+          "leaf_device_us": 7265.402999999992,
+          "name": "aten::native_dropout_backward"
+        }
+      ],
+      "device_by_phase": [
+        {
+          "calls": 14640,
+          "leaf_device_us": 556725.3659999989,
+          "name": "forward"
+        },
+        {
+          "calls": 30989,
+          "leaf_device_us": 390002.3839999997,
+          "name": "backward"
+        },
+        {
+          "calls": 592,
+          "leaf_device_us": 22794.452999999987,
+          "name": "optimizer"
+        },
+        {
+          "calls": 256,
+          "leaf_device_us": 3819.4700000000016,
+          "name": "gradient_clip"
+        },
+        {
+          "calls": 96,
+          "leaf_device_us": 892.9070000000003,
+          "name": "transfer"
+        },
+        {
+          "calls": 128,
+          "leaf_device_us": 328.98199999999986,
+          "name": "train_update"
+        },
+        {
+          "calls": 48,
+          "leaf_device_us": 84.25299999999997,
+          "name": "layout_enter"
+        },
+        {
+          "calls": 2,
+          "leaf_device_us": 32.096,
+          "name": "unmatched"
+        }
+      ],
+      "device_gap_over_1ms_count": 121,
+      "device_gap_over_1ms_sum_us": 276164.302734375,
+      "first_to_last_device_event_us": 3427937.5141601562,
+      "forward_scatter_by_ordinal": [
+        {
+          "calls": 16,
+          "device_events": 464,
+          "host_inclusive_us": 18918.469999999998,
+          "leaf_device_us": 37269.311999999896,
+          "ordinal": 0
+        },
+        {
+          "calls": 16,
+          "device_events": 464,
+          "host_inclusive_us": 18883.933999999997,
+          "leaf_device_us": 37275.733999999924,
+          "ordinal": 1
+        },
+        {
+          "calls": 16,
+          "device_events": 464,
+          "host_inclusive_us": 19825.277000000002,
+          "leaf_device_us": 37347.139999999956,
+          "ordinal": 2
+        },
+        {
+          "calls": 16,
+          "device_events": 464,
+          "host_inclusive_us": 18134.096000000005,
+          "leaf_device_us": 37314.26799999996,
+          "ordinal": 3
+        },
+        {
+          "calls": 16,
+          "device_events": 464,
+          "host_inclusive_us": 18126.011,
+          "leaf_device_us": 37319.679999999935,
+          "ordinal": 4
+        },
+        {
+          "calls": 16,
+          "device_events": 464,
+          "host_inclusive_us": 18014.41,
+          "leaf_device_us": 37313.88499999992,
+          "ordinal": 5
+        },
+        {
+          "calls": 16,
+          "device_events": 464,
+          "host_inclusive_us": 17886.168999999998,
+          "leaf_device_us": 37324.90199999996,
+          "ordinal": 6
+        },
+        {
+          "calls": 16,
+          "device_events": 464,
+          "host_inclusive_us": 17609.219999999998,
+          "leaf_device_us": 37355.905999999966,
+          "ordinal": 7
+        },
+        {
+          "calls": 16,
+          "device_events": 464,
+          "host_inclusive_us": 23439.711,
+          "leaf_device_us": 37306.94499999998,
+          "ordinal": 8
+        },
+        {
+          "calls": 16,
+          "device_events": 192,
+          "host_inclusive_us": 8159.298,
+          "leaf_device_us": 758.1259999999999,
+          "ordinal": 9
+        },
+        {
+          "calls": 16,
+          "device_events": 432,
+          "host_inclusive_us": 16194.653999999995,
+          "leaf_device_us": 13582.850999999995,
+          "ordinal": 10
+        }
+      ],
+      "host_parent_chains": {
+        "aten::_index_put_impl_": [
+          {
+            "calls": 480,
+            "host_inclusive_us": 173050.91699999996,
+            "host_self_us": 33493.975999999995,
+            "parent_chain": "aten::index_put_ <- aten::index_add_ <- aten::index_select_backward <- IndexSelectBackward0 <- autograd::engine::evaluate_function: IndexSelectBackward0"
+          },
+          {
+            "calls": 176,
+            "host_inclusive_us": 111328.52699999999,
+            "host_self_us": 19292.85199999999,
+            "parent_chain": "aten::index_put_ <- aten::scatter_add_ <- molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 288,
+            "host_inclusive_us": 70967.23400000001,
+            "host_self_us": 15983.781000000004,
+            "parent_chain": "IndexBackward0 <- autograd::engine::evaluate_function: IndexBackward0"
+          },
+          {
+            "calls": 48,
+            "host_inclusive_us": 25503.980000000003,
+            "host_self_us": 4205.164000000002,
+            "parent_chain": "aten::index_put_ <- molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 16,
+            "host_inclusive_us": 536.706,
+            "host_self_us": 440.926,
+            "parent_chain": "aten::index_put_ <- molgap/layout_enter <- molgap/train_update"
+          }
+        ],
+        "aten::_local_scalar_dense": [
+          {
+            "calls": 10016,
+            "host_inclusive_us": 1718.592,
+            "host_self_us": 1718.592,
+            "parent_chain": "aten::item <- Optimizer.step#AdamW.step <- molgap/optimizer <- molgap/train_update"
+          },
+          {
+            "calls": 48,
+            "host_inclusive_us": 24.245000000000005,
+            "host_self_us": 24.245000000000005,
+            "parent_chain": "aten::item <- molgap/layout_enter <- molgap/train_update"
+          },
+          {
+            "calls": 16,
+            "host_inclusive_us": 12.291,
+            "host_self_us": 12.291,
+            "parent_chain": "aten::item <- aten::is_nonzero <- molgap/layout_enter <- molgap/train_update"
+          },
+          {
+            "calls": 32,
+            "host_inclusive_us": 11.328000000000001,
+            "host_self_us": 11.328000000000001,
+            "parent_chain": "aten::item <- aten::repeat_interleave <- aten::repeat_interleave <- molgap/layout_enter <- molgap/train_update"
+          }
+        ],
+        "aten::index": [
+          {
+            "calls": 288,
+            "host_inclusive_us": 19970.63999999998,
+            "host_self_us": 13097.906000000004,
+            "parent_chain": "molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 48,
+            "host_inclusive_us": 2103.2679999999996,
+            "host_self_us": 1280.1019999999996,
+            "parent_chain": "IndexPutBackward0 <- autograd::engine::evaluate_function: IndexPutBackward0"
+          },
+          {
+            "calls": 16,
+            "host_inclusive_us": 708.56,
+            "host_self_us": 637.637,
+            "parent_chain": "molgap/layout_enter <- molgap/train_update"
+          }
+        ],
+        "aten::index_select": [
+          {
+            "calls": 480,
+            "host_inclusive_us": 29644.580000000016,
+            "host_self_us": 13479.77999999999,
+            "parent_chain": "molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 192,
+            "host_inclusive_us": 11782.448,
+            "host_self_us": 4675.3330000000005,
+            "parent_chain": "aten::embedding <- molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 16,
+            "host_inclusive_us": 325.694,
+            "host_self_us": 294.86,
+            "parent_chain": "aten::repeat_interleave <- molgap/layout_enter <- molgap/train_update"
+          }
+        ],
+        "aten::item": [
+          {
+            "calls": 10016,
+            "host_inclusive_us": 12243.955999999947,
+            "host_self_us": 10525.364000000072,
+            "parent_chain": "Optimizer.step#AdamW.step <- molgap/optimizer <- molgap/train_update"
+          },
+          {
+            "calls": 48,
+            "host_inclusive_us": 114.73699999999997,
+            "host_self_us": 90.49200000000003,
+            "parent_chain": "molgap/layout_enter <- molgap/train_update"
+          },
+          {
+            "calls": 32,
+            "host_inclusive_us": 59.74299999999999,
+            "host_self_us": 48.415000000000006,
+            "parent_chain": "aten::repeat_interleave <- aten::repeat_interleave <- molgap/layout_enter <- molgap/train_update"
+          },
+          {
+            "calls": 16,
+            "host_inclusive_us": 40.24300000000001,
+            "host_self_us": 27.951999999999995,
+            "parent_chain": "aten::is_nonzero <- molgap/layout_enter <- molgap/train_update"
+          }
+        ],
+        "aten::max": [
+          {
+            "calls": 480,
+            "host_inclusive_us": 17890.154,
+            "host_self_us": 7148.7580000000025,
+            "parent_chain": "aten::_index_put_impl_ <- aten::index_put_ <- aten::index_add_ <- aten::index_select_backward <- IndexSelectBackward0"
+          },
+          {
+            "calls": 176,
+            "host_inclusive_us": 11873.487,
+            "host_self_us": 5205.901000000001,
+            "parent_chain": "aten::_index_put_impl_ <- aten::index_put_ <- aten::scatter_add_ <- molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 48,
+            "host_inclusive_us": 2603.2059999999997,
+            "host_self_us": 1186.22,
+            "parent_chain": "aten::_index_put_impl_ <- aten::index_put_ <- molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 16,
+            "host_inclusive_us": 480.186,
+            "host_self_us": 152.95399999999998,
+            "parent_chain": "molgap/layout_enter <- molgap/train_update"
+          }
+        ],
+        "cudaStreamSynchronize": [
+          {
+            "calls": 160,
+            "host_inclusive_us": 15227.389999999994,
+            "host_self_us": 15227.389999999994,
+            "parent_chain": "aten::copy_ <- aten::_to_copy <- aten::to <- aten::scatter_add_ <- molgap/forward"
+          }
+        ]
+      },
+      "indexing_kernel_parent_chains": [
+        {
+          "calls": 976,
+          "leaf_device_us": 255113.65499999947,
+          "name": "aten::_index_put_impl_ <- aten::index_put_ <- aten::scatter_add_ <- molgap/forward <- molgap/train_update"
+        },
+        {
+          "calls": 2256,
+          "leaf_device_us": 24332.42700000007,
+          "name": "aten::_index_put_impl_ <- aten::index_put_ <- aten::index_add_ <- aten::index_select_backward <- IndexSelectBackward0 <- autograd::engine::evaluate_function: IndexSelectBackward0"
+        },
+        {
+          "calls": 1440,
+          "leaf_device_us": 14794.053000000034,
+          "name": "aten::_index_put_impl_ <- IndexBackward0 <- autograd::engine::evaluate_function: IndexBackward0"
+        },
+        {
+          "calls": 480,
+          "leaf_device_us": 11695.914000000002,
+          "name": "aten::index_select <- molgap/forward <- molgap/train_update"
+        },
+        {
+          "calls": 480,
+          "leaf_device_us": 4173.605,
+          "name": "aten::embedding_dense_backward <- aten::embedding_backward <- EmbeddingBackward0 <- autograd::engine::evaluate_function: EmbeddingBackward0"
+        },
+        {
+          "calls": 192,
+          "leaf_device_us": 2383.754,
+          "name": "aten::index_select <- aten::embedding <- molgap/forward <- molgap/train_update"
+        },
+        {
+          "calls": 96,
+          "leaf_device_us": 865.6499999999999,
+          "name": "aten::_index_put_impl_ <- aten::index_put_ <- molgap/forward <- molgap/train_update"
+        }
+      ],
+      "kernel_count": 39136,
+      "kernel_duration_us": {
+        "median": 8.991,
+        "p90": 50.623,
+        "under_10us_count": 20525,
+        "under_10us_sum": 82384.01699999985
+      },
+      "leaf_device_duration_sum_us": 974679.9109998792,
+      "leaf_device_events": 46751,
+      "limitations": [
+        "Kernel External id to innermost CPU op, then thread-local containment; no stack/layer/shape capture.",
+        "CPU host self excludes contained child intervals; leaf GPU activities counted once; GPU activity is instrumented capture only.",
+        "Largest gaps are intervals between captured device events, not proof of hardware inactivity outside captured events."
+      ],
+      "longest_device_gaps": [
+        {
+          "duration_us": 5637.159912109375,
+          "host_phase_overlap_us": {
+            "molgap/layout_enter": 936.56494140625,
+            "molgap/layout_exit": 66.87109375,
+            "molgap/loader_wait": 177.672119140625,
+            "molgap/optimizer": 249.02587890625,
+            "molgap/schedule_after": 17.719970703125,
+            "molgap/schedule_before": 48.360107421875
+          }
+        },
+        {
+          "duration_us": 4402.72119140625,
+          "host_phase_overlap_us": {
+            "molgap/optimizer": 4402.72119140625
+          }
+        },
+        {
+          "duration_us": 4338.722900390625,
+          "host_phase_overlap_us": {
+            "molgap/forward": 4338.722900390625
+          }
+        },
+        {
+          "duration_us": 4290.083984375,
+          "host_phase_overlap_us": {
+            "molgap/optimizer": 4290.083984375
+          }
+        },
+        {
+          "duration_us": 4168.5830078125,
+          "host_phase_overlap_us": {
+            "molgap/optimizer": 4168.5830078125
+          }
+        },
+        {
+          "duration_us": 3999.882080078125,
+          "host_phase_overlap_us": {
+            "molgap/gradient_clip": 37.662841796875,
+            "molgap/optimizer": 3909.97412109375
+          }
+        },
+        {
+          "duration_us": 3903.14794921875,
+          "host_phase_overlap_us": {
+            "molgap/optimizer": 3903.14794921875
+          }
+        },
+        {
+          "duration_us": 3864.012939453125,
+          "host_phase_overlap_us": {
+            "molgap/gradient_clip": 69.251953125,
+            "molgap/optimizer": 3732.211181640625
+          }
+        },
+        {
+          "duration_us": 3843.597900390625,
+          "host_phase_overlap_us": {
+            "molgap/gradient_clip": 27.472900390625,
+            "molgap/optimizer": 3749.3740234375
+          }
+        },
+        {
+          "duration_us": 3747.3759765625,
+          "host_phase_overlap_us": {
+            "molgap/optimizer": 3747.3759765625
+          }
+        },
+        {
+          "duration_us": 3708.720947265625,
+          "host_phase_overlap_us": {
+            "molgap/optimizer": 3708.720947265625
+          }
+        },
+        {
+          "duration_us": 3690.321044921875,
+          "host_phase_overlap_us": {
+            "molgap/optimizer": 3690.321044921875
+          }
+        }
+      ],
+      "top_leaf_kernels": [
+        {
+          "calls": 176,
+          "leaf_device_us": 188437.37900000002,
+          "name": "void (anonymous namespace)::indexing_backward_kernel_stride_1<float>(long const*, long const*, float const*, float*, long, long, long, long, bool)"
+        },
+        {
+          "calls": 1184,
+          "leaf_device_us": 88976.60299999992,
+          "name": "volta_sgemm_64x64_tn"
+        },
+        {
+          "calls": 2288,
+          "leaf_device_us": 81842.74500000008,
+          "name": "void at_cuda_detail::cub::DeviceRadixSortOnesweepKernel<at_cuda_detail::cub::DeviceRadixSortPolicy<long, at::cuda::cub::detail::OpaqueType<8>, unsigned long long>::Policy900, false, long, at::cuda::cub::detail::OpaqueType<8>, unsigned long long, int, int, at_cuda_detail::cub::detail::identity_decomposer_t>(int*, int*, unsigned long long*, unsigned long long const*, long*, long const*, at::cuda::cub::detail::OpaqueType<8>*, at::cuda::cub::detail::OpaqueType<8> const*, int, int, int, at_cuda_detail::cub::detail::identity_decomposer_t)"
+        },
+        {
+          "calls": 919,
+          "leaf_device_us": 55448.86200000003,
+          "name": "volta_sgemm_64x64_nn"
+        },
+        {
+          "calls": 736,
+          "leaf_device_us": 47117.93500000001,
+          "name": "volta_sgemm_128x64_nt"
+        },
+        {
+          "calls": 2896,
+          "leaf_device_us": 31327.74200000004,
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>)"
+        },
+        {
+          "calls": 512,
+          "leaf_device_us": 31078.211000000014,
+          "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1} const&)::{lambda(int)#1})"
+        },
+        {
+          "calls": 1504,
+          "leaf_device_us": 26119.940999999977,
+          "name": "void at::native::reduce_kernel<128, 4, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4> >(at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4>)"
+        },
+        {
+          "calls": 768,
+          "leaf_device_us": 24699.32900000005,
+          "name": "volta_sgemm_64x32_sliced1x4_nt"
+        },
+        {
+          "calls": 297,
+          "leaf_device_us": 22208.77800000001,
+          "name": "volta_sgemm_128x64_nn"
+        },
+        {
+          "calls": 144,
+          "leaf_device_us": 19001.548000000003,
+          "name": "void at::native::(anonymous namespace)::embedding_backward_feature_kernel<float, float, long>(long const*, float const*, float*, int, long, int)"
+        },
+        {
+          "calls": 816,
+          "leaf_device_us": 17980.37399999999,
+          "name": "void (anonymous namespace)::indexing_backward_kernel<float, 4>(long const*, long const*, float const*, float*, long, long, long, long, bool)"
+        },
+        {
+          "calls": 432,
+          "leaf_device_us": 16140.63699999999,
+          "name": "void at::native::(anonymous namespace)::CatArrayBatchedCopy_aligned16_contig<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 2, 128, 1>(at::native::(anonymous namespace)::OpaqueType<4u>*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 128, 1>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)"
+        },
+        {
+          "calls": 48,
+          "leaf_device_us": 15783.538,
+          "name": "fmha_cutlassB_f32_aligned_64x64_k32_dropout_sm75(PyTorchMemEffAttention::AttentionBackwardKernel<cutlass::arch::Sm75, float, true, true, false, 64, 64, 32, false>::Params)"
+        },
+        {
+          "calls": 160,
+          "leaf_device_us": 14565.027000000002,
+          "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<long, long, long, at::native::binary_internal::MulFunctor<long> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<long, long, long, at::native::binary_internal::MulFunctor<long> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<long, long, long, at::native::binary_internal::MulFunctor<long> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<long, long, long, at::native::binary_internal::MulFunctor<long> > const&)::{lambda(int)#1})"
+        },
+        {
+          "calls": 544,
+          "leaf_device_us": 13699.508000000023,
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul>)"
+        },
+        {
+          "calls": 432,
+          "leaf_device_us": 12995.617999999997,
+          "name": "volta_sgemm_32x128_tn"
+        },
+        {
+          "calls": 432,
+          "leaf_device_us": 12409.581999999995,
+          "name": "void at::native::(anonymous namespace)::vectorized_layer_norm_kernel<float, float>(int, float, float const*, float const*, float const*, float*, float*, float*)"
+        },
+        {
+          "calls": 160,
+          "leaf_device_us": 11987.808999999994,
+          "name": "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<long, at::native::func_wrapper_t<long, at::native::sum_functor<long, long, long>::operator()(at::TensorIterator&)::{lambda(long, long)#1}>, unsigned int, long, 4, 4> >(at::native::ReduceOp<long, at::native::func_wrapper_t<long, at::native::sum_functor<long, long, long>::operator()(at::TensorIterator&)::{lambda(long, long)#1}>, unsigned int, long, 4, 4>)"
+        },
+        {
+          "calls": 480,
+          "leaf_device_us": 11695.914000000002,
+          "name": "void at::native::(anonymous namespace)::indexSelectLargeIndex<float, long, unsigned int, 2, 2, -2, true>(at::cuda::detail::TensorInfo<float, unsigned int>, at::cuda::detail::TensorInfo<float const, unsigned int>, at::cuda::detail::TensorInfo<long const, unsigned int>, int, int, unsigned int, unsigned int, long)"
+        }
+      ],
+      "trace_sha256": "e95dc64c2b3739dc1f01fb30216e7c9387bbe6a75027215f8812247352ce3cdf"
+    },
+    "original": {
+      "cpu_events": 390668,
+      "device_activity_union_us": 1036159.1071777344,
+      "device_by_leaf_operator": [
+        {
+          "calls": 8624,
+          "leaf_device_us": 293026.6380000043,
+          "name": "aten::_index_put_impl_"
+        },
+        {
+          "calls": 7119,
+          "leaf_device_us": 183489.4939999989,
+          "name": "aten::mm"
+        },
+        {
+          "calls": 1472,
+          "leaf_device_us": 83560.2159999999,
+          "name": "aten::addmm"
+        },
+        {
+          "calls": 32016,
+          "leaf_device_us": 79841.24400000101,
+          "name": "aten::fill_"
+        },
+        {
+          "calls": 2480,
+          "leaf_device_us": 49228.198000000375,
+          "name": "aten::mul"
+        },
+        {
+          "calls": 2976,
+          "leaf_device_us": 38498.044999999795,
+          "name": "aten::sum"
+        },
+        {
+          "calls": 1424,
+          "leaf_device_us": 32908.84399999986,
+          "name": "aten::copy_"
+        },
+        {
+          "calls": 1536,
+          "leaf_device_us": 24442.986000000004,
+          "name": "aten::embedding_dense_backward"
+        },
+        {
+          "calls": 2288,
+          "leaf_device_us": 21112.18499999998,
+          "name": "aten::add_"
+        },
+        {
+          "calls": 1616,
+          "leaf_device_us": 17686.085000000006,
+          "name": "aten::add"
+        },
+        {
+          "calls": 480,
+          "leaf_device_us": 15742.349,
+          "name": "aten::cat"
+        },
+        {
+          "calls": 48,
+          "leaf_device_us": 15431.991000000004,
+          "name": "aten::_efficient_attention_backward"
+        },
+        {
+          "calls": 864,
+          "leaf_device_us": 14412.761000000028,
+          "name": "aten::native_layer_norm_backward"
+        },
+        {
+          "calls": 624,
+          "leaf_device_us": 13928.277000000006,
+          "name": "aten::index_select"
+        },
+        {
+          "calls": 432,
+          "leaf_device_us": 12133.430999999993,
+          "name": "aten::native_layer_norm"
+        },
+        {
+          "calls": 1088,
+          "leaf_device_us": 10117.90100000003,
+          "name": "aten::div_"
+        },
+        {
+          "calls": 1024,
+          "leaf_device_us": 9208.420999999991,
+          "name": "aten::max"
+        },
+        {
+          "calls": 1136,
+          "leaf_device_us": 8875.267000000029,
+          "name": "aten::remainder"
+        },
+        {
+          "calls": 432,
+          "leaf_device_us": 8549.992000000002,
+          "name": "aten::index"
+        },
+        {
+          "calls": 688,
+          "leaf_device_us": 7557.665999999994,
+          "name": "aten::native_dropout"
+        }
+      ],
+      "device_by_phase": [
+        {
+          "calls": 26944,
+          "leaf_device_us": 599646.2739999859,
+          "name": "forward"
+        },
+        {
+          "calls": 40959,
+          "leaf_device_us": 395732.8909999903,
+          "name": "backward"
+        },
+        {
+          "calls": 5600,
+          "leaf_device_us": 29194.243999999984,
+          "name": "optimizer"
+        },
+        {
+          "calls": 5280,
+          "leaf_device_us": 10118.827000000016,
+          "name": "gradient_clip"
+        },
+        {
+          "calls": 352,
+          "leaf_device_us": 1024.2949999999987,
+          "name": "transfer"
+        },
+        {
+          "calls": 192,
+          "leaf_device_us": 420.187,
+          "name": "train_update"
+        },
+        {
+          "calls": 16,
+          "leaf_device_us": 23.646000000000004,
+          "name": "outside"
+        }
+      ],
+      "device_gap_over_1ms_count": 100,
+      "device_gap_over_1ms_sum_us": 190127.25610351562,
+      "first_to_last_device_event_us": 3484136.990966797,
+      "forward_scatter_by_ordinal": [
+        {
+          "calls": 16,
+          "device_events": 624,
+          "host_inclusive_us": 20857.016000000003,
+          "leaf_device_us": 38981.814999999966,
+          "ordinal": 0
+        },
+        {
+          "calls": 16,
+          "device_events": 624,
+          "host_inclusive_us": 20211.421,
+          "leaf_device_us": 38998.86900000003,
+          "ordinal": 1
+        },
+        {
+          "calls": 16,
+          "device_events": 624,
+          "host_inclusive_us": 20525.279000000006,
+          "leaf_device_us": 39027.476999999984,
+          "ordinal": 2
+        },
+        {
+          "calls": 16,
+          "device_events": 288,
+          "host_inclusive_us": 10249.466999999999,
+          "leaf_device_us": 843.891,
+          "ordinal": 3
+        },
+        {
+          "calls": 16,
+          "device_events": 624,
+          "host_inclusive_us": 23630.792000000005,
+          "leaf_device_us": 38996.436000000016,
+          "ordinal": 4
+        },
+        {
+          "calls": 16,
+          "device_events": 624,
+          "host_inclusive_us": 20269.774999999998,
+          "leaf_device_us": 39019.83,
+          "ordinal": 5
+        },
+        {
+          "calls": 16,
+          "device_events": 624,
+          "host_inclusive_us": 21779.960999999996,
+          "leaf_device_us": 38952.27999999994,
+          "ordinal": 6
+        },
+        {
+          "calls": 16,
+          "device_events": 288,
+          "host_inclusive_us": 10394.652,
+          "leaf_device_us": 842.226,
+          "ordinal": 7
+        },
+        {
+          "calls": 16,
+          "device_events": 624,
+          "host_inclusive_us": 15719.502,
+          "leaf_device_us": 38922.423,
+          "ordinal": 8
+        },
+        {
+          "calls": 16,
+          "device_events": 624,
+          "host_inclusive_us": 15972.841999999999,
+          "leaf_device_us": 38920.692,
+          "ordinal": 9
+        },
+        {
+          "calls": 16,
+          "device_events": 624,
+          "host_inclusive_us": 16152.143999999998,
+          "leaf_device_us": 38893.302999999985,
+          "ordinal": 10
+        },
+        {
+          "calls": 16,
+          "device_events": 288,
+          "host_inclusive_us": 6751.465,
+          "leaf_device_us": 839.4790000000003,
+          "ordinal": 11
+        },
+        {
+          "calls": 16,
+          "device_events": 288,
+          "host_inclusive_us": 9694.956999999999,
+          "leaf_device_us": 833.5810000000009,
+          "ordinal": 12
+        },
+        {
+          "calls": 16,
+          "device_events": 592,
+          "host_inclusive_us": 12851.660000000003,
+          "leaf_device_us": 14719.775000000003,
+          "ordinal": 13
+        }
+      ],
+      "host_parent_chains": {
+        "aten::_index_put_impl_": [
+          {
+            "calls": 432,
+            "host_inclusive_us": 166386.43399999998,
+            "host_self_us": 23549.36199999999,
+            "parent_chain": "aten::index_put_ <- aten::index_add_ <- aten::index_select_backward <- IndexSelectBackward0 <- autograd::engine::evaluate_function: IndexSelectBackward0"
+          },
+          {
+            "calls": 224,
+            "host_inclusive_us": 140534.27400000006,
+            "host_self_us": 22780.80200000001,
+            "parent_chain": "aten::index_put_ <- aten::scatter_add_ <- molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 336,
+            "host_inclusive_us": 96126.84799999994,
+            "host_self_us": 15996.35299999999,
+            "parent_chain": "IndexBackward0 <- autograd::engine::evaluate_function: IndexBackward0"
+          },
+          {
+            "calls": 96,
+            "host_inclusive_us": 61312.426999999996,
+            "host_self_us": 7774.8070000000025,
+            "parent_chain": "aten::index_put_ <- molgap/forward <- molgap/train_update"
+          }
+        ],
+        "aten::_local_scalar_dense": [
+          {
+            "calls": 112,
+            "host_inclusive_us": 15812.056999999995,
+            "host_self_us": 1562.524,
+            "parent_chain": "aten::item <- molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 10016,
+            "host_inclusive_us": 1855.9439999999893,
+            "host_self_us": 1855.9439999999893,
+            "parent_chain": "aten::item <- Optimizer.step#AdamW.step <- molgap/optimizer <- molgap/train_update"
+          },
+          {
+            "calls": 16,
+            "host_inclusive_us": 706.683,
+            "host_self_us": 236.838,
+            "parent_chain": "aten::item"
+          }
+        ],
+        "aten::index": [
+          {
+            "calls": 384,
+            "host_inclusive_us": 32736.946000000033,
+            "host_self_us": 14687.918000000001,
+            "parent_chain": "molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 48,
+            "host_inclusive_us": 1799.8460000000005,
+            "host_self_us": 1136.831,
+            "parent_chain": "IndexPutBackward0 <- autograd::engine::evaluate_function: IndexPutBackward0"
+          }
+        ],
+        "aten::index_select": [
+          {
+            "calls": 432,
+            "host_inclusive_us": 45454.28800000002,
+            "host_self_us": 9684.977000000004,
+            "parent_chain": "molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 192,
+            "host_inclusive_us": 23310.132999999987,
+            "host_self_us": 3625.4839999999986,
+            "parent_chain": "aten::embedding <- molgap/forward <- molgap/train_update"
+          }
+        ],
+        "aten::item": [
+          {
+            "calls": 112,
+            "host_inclusive_us": 16167.448,
+            "host_self_us": 355.3910000000002,
+            "parent_chain": "molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 10016,
+            "host_inclusive_us": 11237.712999999983,
+            "host_self_us": 9381.768999999993,
+            "parent_chain": "Optimizer.step#AdamW.step <- molgap/optimizer <- molgap/train_update"
+          },
+          {
+            "calls": 16,
+            "host_inclusive_us": 763.701,
+            "host_self_us": 57.01799999999998,
+            "parent_chain": ""
+          }
+        ],
+        "aten::max": [
+          {
+            "calls": 432,
+            "host_inclusive_us": 17235.511999999995,
+            "host_self_us": 5674.432000000001,
+            "parent_chain": "aten::_index_put_impl_ <- aten::index_put_ <- aten::index_add_ <- aten::index_select_backward <- IndexSelectBackward0"
+          },
+          {
+            "calls": 224,
+            "host_inclusive_us": 15662.247999999987,
+            "host_self_us": 5331.899000000001,
+            "parent_chain": "aten::_index_put_impl_ <- aten::index_put_ <- aten::scatter_add_ <- molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 112,
+            "host_inclusive_us": 7337.235000000003,
+            "host_self_us": 2445.346000000002,
+            "parent_chain": "molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 96,
+            "host_inclusive_us": 6298.512999999998,
+            "host_self_us": 1965.6639999999995,
+            "parent_chain": "aten::_index_put_impl_ <- aten::index_put_ <- molgap/forward <- molgap/train_update"
+          }
+        ],
+        "cudaStreamSynchronize": [
+          {
+            "calls": 160,
+            "host_inclusive_us": 15590.150999999994,
+            "host_self_us": 15590.150999999994,
+            "parent_chain": "aten::copy_ <- aten::_to_copy <- aten::to <- aten::scatter_add_ <- molgap/forward"
+          },
+          {
+            "calls": 112,
+            "host_inclusive_us": 12144.625,
+            "host_self_us": 12144.625,
+            "parent_chain": "aten::_local_scalar_dense <- aten::item <- molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 48,
+            "host_inclusive_us": 369.11999999999983,
+            "host_self_us": 369.11999999999983,
+            "parent_chain": "aten::nonzero <- aten::_index_put_impl_ <- IndexBackward0 <- autograd::engine::evaluate_function: IndexBackward0"
+          },
+          {
+            "calls": 48,
+            "host_inclusive_us": 348.15899999999993,
+            "host_self_us": 348.15899999999993,
+            "parent_chain": "aten::copy_ <- aten::_to_copy <- aten::to <- molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 48,
+            "host_inclusive_us": 335.251,
+            "host_self_us": 335.251,
+            "parent_chain": "aten::nonzero <- aten::index <- molgap/forward <- molgap/train_update"
+          },
+          {
+            "calls": 48,
+            "host_inclusive_us": 333.347,
+            "host_self_us": 333.347,
+            "parent_chain": "aten::copy_ <- aten::_to_copy <- aten::to <- aten::_index_put_impl_ <- aten::index_put_"
+          },
+          {
+            "calls": 16,
+            "host_inclusive_us": 138.873,
+            "host_self_us": 138.873,
+            "parent_chain": "aten::_local_scalar_dense <- aten::item"
+          }
+        ]
+      },
+      "indexing_kernel_parent_chains": [
+        {
+          "calls": 1072,
+          "leaf_device_us": 251313.36200000008,
+          "name": "aten::_index_put_impl_ <- aten::index_put_ <- aten::scatter_add_ <- molgap/forward <- molgap/train_update"
+        },
+        {
+          "calls": 2160,
+          "leaf_device_us": 22746.28100000012,
+          "name": "aten::_index_put_impl_ <- aten::index_put_ <- aten::index_add_ <- aten::index_select_backward <- IndexSelectBackward0 <- autograd::engine::evaluate_function: IndexSelectBackward0"
+        },
+        {
+          "calls": 1536,
+          "leaf_device_us": 14651.262000000022,
+          "name": "aten::_index_put_impl_ <- IndexBackward0 <- autograd::engine::evaluate_function: IndexBackward0"
+        },
+        {
+          "calls": 432,
+          "leaf_device_us": 11608.680000000006,
+          "name": "aten::index_select <- molgap/forward <- molgap/train_update"
+        },
+        {
+          "calls": 480,
+          "leaf_device_us": 3989.732,
+          "name": "aten::embedding_dense_backward <- aten::embedding_backward <- EmbeddingBackward0 <- autograd::engine::evaluate_function: EmbeddingBackward0"
+        },
+        {
+          "calls": 192,
+          "leaf_device_us": 2319.5969999999993,
+          "name": "aten::index_select <- aten::embedding <- molgap/forward <- molgap/train_update"
+        },
+        {
+          "calls": 192,
+          "leaf_device_us": 1454.6830000000007,
+          "name": "aten::_index_put_impl_ <- aten::index_put_ <- molgap/forward <- molgap/train_update"
+        }
+      ],
+      "kernel_count": 71360,
+      "kernel_duration_us": {
+        "median": 2.72,
+        "p90": 30.847,
+        "under_10us_count": 51898,
+        "under_10us_sum": 137370.63099998955
+      },
+      "leaf_device_duration_sum_us": 1036160.3639997981,
+      "leaf_device_events": 79343,
+      "limitations": [
+        "Kernel External id to innermost CPU op, then thread-local containment; no stack/layer/shape capture.",
+        "CPU host self excludes contained child intervals; leaf GPU activities counted once; GPU activity is instrumented capture only.",
+        "Largest gaps are intervals between captured device events, not proof of hardware inactivity outside captured events."
+      ],
+      "longest_device_gaps": [
+        {
+          "duration_us": 5790.81884765625,
+          "host_phase_overlap_us": {
+            "molgap/backward": 111.451904296875,
+            "molgap/gradient_clip": 5612.3330078125
+          }
+        },
+        {
+          "duration_us": 3820.716796875,
+          "host_phase_overlap_us": {
+            "molgap/forward": 3820.716796875
+          }
+        },
+        {
+          "duration_us": 3615.6337890625,
+          "host_phase_overlap_us": {
+            "molgap/forward": 3615.6337890625
+          }
+        },
+        {
+          "duration_us": 3222.363037109375,
+          "host_phase_overlap_us": {
+            "molgap/forward": 3222.363037109375
+          }
+        },
+        {
+          "duration_us": 3067.838134765625,
+          "host_phase_overlap_us": {
+            "molgap/optimizer": 3067.838134765625
+          }
+        },
+        {
+          "duration_us": 3027.64697265625,
+          "host_phase_overlap_us": {
+            "molgap/backward": 3027.64697265625
+          }
+        },
+        {
+          "duration_us": 3019.421875,
+          "host_phase_overlap_us": {
+            "molgap/backward": 3019.421875
+          }
+        },
+        {
+          "duration_us": 2979.64697265625,
+          "host_phase_overlap_us": {
+            "molgap/backward": 2979.64697265625
+          }
+        },
+        {
+          "duration_us": 2937.72900390625,
+          "host_phase_overlap_us": {
+            "molgap/backward": 2937.72900390625
+          }
+        },
+        {
+          "duration_us": 2842.498779296875,
+          "host_phase_overlap_us": {
+            "molgap/backward": 2842.498779296875
+          }
+        },
+        {
+          "duration_us": 2747.81298828125,
+          "host_phase_overlap_us": {
+            "molgap/gradient_clip": 2747.81298828125
+          }
+        },
+        {
+          "duration_us": 2629.159912109375,
+          "host_phase_overlap_us": {
+            "molgap/gradient_clip": 27.363037109375,
+            "molgap/optimizer": 2549.1318359375
+          }
+        }
+      ],
+      "top_leaf_kernels": [
+        {
+          "calls": 176,
+          "leaf_device_us": 185114.92100000006,
+          "name": "void (anonymous namespace)::indexing_backward_kernel_stride_1<float>(long const*, long const*, float const*, float*, long, long, long, long, bool)"
+        },
+        {
+          "calls": 1184,
+          "leaf_device_us": 88189.84800000004,
+          "name": "volta_sgemm_64x64_tn"
+        },
+        {
+          "calls": 2288,
+          "leaf_device_us": 79686.01800000029,
+          "name": "void at_cuda_detail::cub::DeviceRadixSortOnesweepKernel<at_cuda_detail::cub::DeviceRadixSortPolicy<long, at::cuda::cub::detail::OpaqueType<8>, unsigned long long>::Policy900, false, long, at::cuda::cub::detail::OpaqueType<8>, unsigned long long, int, int, at_cuda_detail::cub::detail::identity_decomposer_t>(int*, int*, unsigned long long*, unsigned long long const*, long*, long const*, at::cuda::cub::detail::OpaqueType<8>*, at::cuda::cub::detail::OpaqueType<8> const*, int, int, int, at_cuda_detail::cub::detail::identity_decomposer_t)"
+        },
+        {
+          "calls": 919,
+          "leaf_device_us": 53452.75100000002,
+          "name": "volta_sgemm_64x64_nn"
+        },
+        {
+          "calls": 736,
+          "leaf_device_us": 45091.34999999995,
+          "name": "volta_sgemm_128x64_nt"
+        },
+        {
+          "calls": 21248,
+          "leaf_device_us": 42569.30700000409,
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<float>, std::array<char*, 1ul> >(int, at::native::FillFunctor<float>, std::array<char*, 1ul>)"
+        },
+        {
+          "calls": 2896,
+          "leaf_device_us": 30986.370000000014,
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>)"
+        },
+        {
+          "calls": 512,
+          "leaf_device_us": 30979.57699999999,
+          "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1} const&)::{lambda(int)#1})"
+        },
+        {
+          "calls": 7952,
+          "leaf_device_us": 29367.838999999673,
+          "name": "void at::native::vectorized_elementwise_kernel<2, at::native::FillFunctor<long>, std::array<char*, 1ul> >(int, at::native::FillFunctor<long>, std::array<char*, 1ul>)"
+        },
+        {
+          "calls": 1504,
+          "leaf_device_us": 25374.60900000002,
+          "name": "void at::native::reduce_kernel<128, 4, at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4> >(at::native::ReduceOp<float, at::native::func_wrapper_t<float, at::native::sum_functor<float, float, float>::operator()(at::TensorIterator&)::{lambda(float, float)#1}>, unsigned int, float, 4, 4>)"
+        },
+        {
+          "calls": 768,
+          "leaf_device_us": 23705.485000000008,
+          "name": "volta_sgemm_64x32_sliced1x4_nt"
+        },
+        {
+          "calls": 297,
+          "leaf_device_us": 21389.053000000007,
+          "name": "volta_sgemm_128x64_nn"
+        },
+        {
+          "calls": 144,
+          "leaf_device_us": 18245.06599999999,
+          "name": "void at::native::(anonymous namespace)::embedding_backward_feature_kernel<float, float, long>(long const*, float const*, float*, int, long, int)"
+        },
+        {
+          "calls": 816,
+          "leaf_device_us": 17230.975999999995,
+          "name": "void (anonymous namespace)::indexing_backward_kernel<float, 4>(long const*, long const*, float const*, float*, long, long, long, long, bool)"
+        },
+        {
+          "calls": 432,
+          "leaf_device_us": 15638.705000000004,
+          "name": "void at::native::(anonymous namespace)::CatArrayBatchedCopy_aligned16_contig<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 2, 128, 1>(at::native::(anonymous namespace)::OpaqueType<4u>*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<at::native::(anonymous namespace)::OpaqueType<4u>, unsigned int, 128, 1>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)"
+        },
+        {
+          "calls": 48,
+          "leaf_device_us": 15431.991000000004,
+          "name": "fmha_cutlassB_f32_aligned_64x64_k32_dropout_sm75(PyTorchMemEffAttention::AttentionBackwardKernel<cutlass::arch::Sm75, float, true, true, false, 64, 64, 32, false>::Params)"
+        },
+        {
+          "calls": 160,
+          "leaf_device_us": 14553.891999999998,
+          "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<long, long, long, at::native::binary_internal::MulFunctor<long> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<long, long, long, at::native::binary_internal::MulFunctor<long> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<long, long, long, at::native::binary_internal::MulFunctor<long> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<long, long, long, at::native::binary_internal::MulFunctor<long> > const&)::{lambda(int)#1})"
+        },
+        {
+          "calls": 544,
+          "leaf_device_us": 13751.832999999991,
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul>)"
+        },
+        {
+          "calls": 432,
+          "leaf_device_us": 12740.54,
+          "name": "volta_sgemm_32x128_tn"
+        },
+        {
+          "calls": 432,
+          "leaf_device_us": 12133.430999999993,
+          "name": "void at::native::(anonymous namespace)::vectorized_layer_norm_kernel<float, float>(int, float, float const*, float const*, float const*, float*, float*, float*)"
+        }
+      ],
+      "trace_sha256": "fc801633c1fd79043d4c39c9a651cf338f2d1c63b1d24972121ed8fa7a3f3c8e"
+    }
+  },
+  "format": "molgap-k1-profile-deep-analysis-v1",
+  "input_analysis": {
+    "ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/analysis.json",
+    "sha256": "cdcfa32dc6fc985b7c37ae64f34c7411d95b65be60cf102e8a21c3a38aadd46b"
+  },
+  "interpretation": [
+    "Most index_put work comes from forward deterministic scatter; backward is not the sole or largest indexing source.",
+    "K1 already executes foreach AdamW in the retained trace; CPU step item calls are not CUDA syncs.",
+    "Sorted-segment reduction is an implementation candidate; neither bitwise equality nor a speed gain is established.",
+    "Sort only the aggregation view; reordering canonical edges changes dropout-to-edge assignment even if edge features are permuted consistently.",
+    "Evaluation safety-fill scope and repeated checkpoint finite scans are source-inspected, unmeasured candidates.",
+    "No runtime code, recipe, authority, terminal result or remote execution changed."
+  ],
+  "kernel": "nvoid912/molgap-k1-infrastructure-dual-100k-v1",
+  "kernel_id": 138763393,
+  "metrics": {
+    "capture_coverage_caveat": "Instrumented captured-event coverage only, not unprofiled hardware utilization.",
+    "checkpoint_tensor_counts": {
+      "model": 367,
+      "optimizer_cpu_steps": 313,
+      "optimizer_moments": 626,
+      "optimizer_states": 313
+    },
+    "forward_scatter_percent_leaf_device_duration_sum": 35.92653804065557,
+    "index_put_percent_leaf_device_duration_sum": 30.57683477791862,
+    "leaf_device_capture_coverage_percent": 28.37667192063056,
+    "mm_addmm_percent_leaf_device_duration_sum": 28.188599549378967,
+    "optimized_adam_cpu_item_calls": 10016,
+    "optimized_adam_cpu_item_inclusive_us": 12243.955999999947,
+    "optimized_cuda_stream_sync_calls": 160,
+    "optimized_cuda_stream_sync_parent": "CPU stride tensor H2D copy inside deterministic 2-D scatter_add_",
+    "optimized_forward_scatter_leaf_device_us": 350168.7489999995,
+    "optimized_kernel_launches_per_update": 2446.0,
+    "optimized_nine_local_aggregation_leaf_device_us": 335827.77199999953,
+    "runtime_files_checked_against_frozen_package": 8
+  },
+  "model_inference_executed": false,
+  "raw_attribution": {
+    "ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/deep_trace.json",
+    "sha256": "f9924a93ff139b7322a083fb0e18ec63a96a4560e24856bf6ad8e8d43d8938f0"
+  },
+  "source_commit": "eb640c966139c72ab682cd570aed7782578a77b4",
+  "status": "SAVED_TRACE_ATTRIBUTION_ONLY",
+  "training_executed": false,
+  "version": 1
+}
