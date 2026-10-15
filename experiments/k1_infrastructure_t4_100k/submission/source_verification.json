@@ -1,0 +1,14 @@
+{
+  "dataset_sources": [
+    "nvoid912/molgap-k1-infrastructure-source-v1",
+    "nvoid912/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "docker_image": "gcr.io/kaggle-private-byod/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+  "entry_equal_normalized": true,
+  "entry_sha256": "d2ede0e4b0e31fd188d5ab087208d4aadc75885632796effca78bc8262106ecb",
+  "kernel": "nvoid912/molgap-k1-infrastructure-dual-100k-v1",
+  "kernel_id": 138763393,
+  "machine_shape": "NvidiaTeslaT4",
+  "source_commit": "eb640c966139c72ab682cd570aed7782578a77b4",
+  "version": 1
+}
