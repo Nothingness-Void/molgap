@@ -1,0 +1,62 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "nvoid912/molgap-gptrans-infrastructure-source-v1",
+  "version": 1,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "44c1e91e983529b49c49f8baa5268d82be19e36c72c822490f8e975257a506ec",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "f7c5cabcedcd0589c217dc3283de983a293a31afb95355161703a892e8d59fc6",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "d659188be62cc4a9fc1b365a54058153143c3a0439483c7418b5e9be87fdcccb",
+      "bytes": 23775
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "105e929049ff6f32cfa748dc4484d1cfc493fe2f2d038db1b9d3acddfef74bc7",
+      "bytes": 1191
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "f532dc44196c4aa5c103698af1e2246c65a911e783c3e9f9bb70c0fc26e08769",
+      "bytes": 5202
+    },
+    {
+      "path": "initial_states/optimized.pt",
+      "sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+      "bytes": 21081351
+    },
+    {
+      "path": "initial_states/original.pt",
+      "sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c",
+      "bytes": 21081351
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "09cc3c39b33fc918cafa9a7420a8a3fd0973de192fcdba883b102d6d33bbfc2d",
+      "bytes": 6271
+    },
+    {
+      "path": "prospective/optimized/trajectory.json",
+      "sha256": "b491dde2e9fb0115340b3fd4644fdbec29065d062f8d7f0f0621923b78df3779",
+      "bytes": 54748
+    },
+    {
+      "path": "prospective/original/trajectory.json",
+      "sha256": "100e95fa8c77bed1040f50531c8a053aa3f8bf772cdda4360d52a8b5a7e121b1",
+      "bytes": 54736
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "9f6ad2517a0221ae67ae45729647a7fa8ceb7da3321b97544919622ceac09b46",
+      "bytes": 448193
+    }
+  ]
+}

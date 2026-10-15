@@ -42,6 +42,8 @@ accepted a shared100K execution benefit with identical selected tensors and
 predictions. Scientific promotion/Replay remain excluded.
 The separately authorized [provider round](experiments/k1_infrastructure_t4_100k/execution_providers/STATUS.md)
 compares original K1 and cached execution at fixed100K; exact job state and native gates live there.
+The authorized [GPTrans comparison](experiments/gptrans_infrastructure_t4_100k/STATUS.md)
+binds original/shared reference100K with profiler; exact state and native gates live there.
 
 The [reviewed desktop training core](docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md)
 is integrated for new K1/GPTrans declarations. Native qualification remains

@@ -1,0 +1,33 @@
+{
+  "kernel": "nvoid912/molgap-gptrans-infrastructure-dual-100k-v1",
+  "kernel_id": 138811813,
+  "version": 1,
+  "observed_at": "2026-10-15T07:43:16.005043+00:00",
+  "scope": "bounded startup log observation; not native qualification",
+  "http_status": 200,
+  "content_type": "text/event-stream",
+  "retrieval_status": "ConnectionError",
+  "event_count": 116,
+  "tail": [
+    {
+      "stream_name": "stderr",
+      "time": 43.300416354,
+      "data": " + triton==3.3.1\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 43.300431946,
+      "data": " + typing-extensions==4.16.0\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 43.300520954,
+      "data": " + urllib3==2.8.0\n"
+    },
+    {
+      "stream_name": "stderr",
+      "time": 43.300575734,
+      "data": " + yarl==1.25.1\n"
+    }
+  ]
+}
