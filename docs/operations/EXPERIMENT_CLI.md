@@ -241,6 +241,11 @@ $incompleteDescriptor = 'D:\local-work\attempt-01\terminal_descriptor.json'
 
 ## Registered Kaggle training
 
+Shared-family preparation validates and freezes the contract's optional `logging`
+metadata. The recipe builder pins epoch-only output by default; seconds/batch
+settings and fixed fields are owned by [standard training logs](TRAINING_LOGGING.md).
+The CLI/package/runtime reuse that owner; no experiment-local logging script is needed.
+
 Use the [modular workflow](EXPERIMENT_WORKFLOW.md) for the frozen source
 package, standard `run_experiment.py` bootstrap, all-arm preflight barrier and
 mechanical output acceptance. `platforms/kaggle/README.md` and the

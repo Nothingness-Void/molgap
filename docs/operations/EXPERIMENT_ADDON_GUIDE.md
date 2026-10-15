@@ -13,6 +13,7 @@ state, one-batch sandbox, then source closure. Do not copy a trainer or launcher
 | Operation | Reuse owner | Boundary / next pointer |
 |---|---|---|
 | Shared K1/GPTrans execution and data | [Core, recipe, data, kernel, loader and session owners](FAMILY_TRAINING_CORE.md) | Reuse the common loop and family hooks; the migration status distinguishes implementation primitives from a released cross-scale workflow. |
+| Configure training logs | [Standard training logging](TRAINING_LOGGING.md), `build_family_recipe(..., logging=...)` | Shared sessions automatically emit fixed metric/state fields; choose epoch/seconds/batches in the contract, without a custom printer or timer. |
 | GPTrans accelerated training | [Default execution](GPTRANS_EXECUTION.md), `pcqm_gptrans_v4.py` native entrypoints | Automatic for registered preflight/training; new identity and native gates remain mandatory. No manual backend wrapping. |
 | K1 accelerated training | [Default execution](K1_EXECUTION.md), `experiment_execution.py`: `build_family_recipe` | Automatic base, including no-addon baseline. Scientific addons reuse it; execution-only addons are retired. |
 | Prepare or accept a registered multi-arm run | `experiment_workflow.py`, local [CLI](EXPERIMENT_CLI.md) | The [workflow](EXPERIMENT_WORKFLOW.md) owns the concise plan and lifecycle. |

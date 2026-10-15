@@ -22,10 +22,15 @@ from .v4_runtime import normalized_source_sha256, state_dict_sha256
 INTERFACES = {"neural_atom_k1": ("neural_atom_k1", "3"), "gptrans_t": ("gptrans_t", "2")}
 PROFILES = {"neural_atom_k1": "k1-session-v1", "gptrans_t": "gptrans-session-v1"}
 METADATA = {"acceptance_requirements", "train_role_identity", "development_role_identity"}
-OPTIONAL_METADATA = {"profiling"}
+OPTIONAL_METADATA = {"profiling", "logging"}
 
 
 def _recipe_configuration(record):
+    if "logging" in record:
+        from .training_logging import TrainingLogPolicy
+        if record["logging"] is None:
+            raise ValueError("Explicit logging configuration must be an object")
+        TrainingLogPolicy.from_dict(record["logging"])
     if "profiling" in record:
         from .family_execution_profile import ProfileConfig
         ProfileConfig.from_dict(record["profiling"])
@@ -62,7 +67,9 @@ def _requirements(recipe, source_idx_sha256, target_sha256):
 
 
 def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
-                        target_sha256=None, train_role_identity=None, development_role_identity=None):
+                        target_sha256=None, train_role_identity=None, development_role_identity=None,
+                        logging=None):
+    from .training_logging import TrainingLogPolicy
     if type(configuration) is not FamilyRecipe or family != INTERFACES.get(configuration.family) or mode != configuration.mode:
         raise ValueError("Explicit matching shared family configuration is required")
     _text(train_role_identity, "train_role_identity")
@@ -71,7 +78,8 @@ def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
     elif development_role_identity is not None:
         raise ValueError("Final-only training has no development role")
     return {**configuration.to_dict(), "acceptance_requirements": _requirements(configuration, source_idx_sha256, target_sha256),
-        "train_role_identity": train_role_identity, "development_role_identity": development_role_identity}
+        "train_role_identity": train_role_identity, "development_role_identity": development_role_identity,
+        "logging": TrainingLogPolicy.from_dict(logging).to_dict()}
 
 
 def read_recipe(path):
@@ -427,10 +435,12 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     kernel = FamilyKernel(recipe, Path(options["initial_state_path"]), device="cuda")
     _loaded_source(options["package_dir"])
     session = FamilyTrainingSession(kernel, FamilyLoaders(recipe, data, tuning),
-        checkpoint=outputs.checkpoint, selected=outputs.selected, pass_finished=outputs.pass_finished)
+        checkpoint=outputs.checkpoint, selected=outputs.selected, pass_finished=outputs.pass_finished,
+        batch_finished=outputs.batch_finished)
     try:
         if had_checkpoint:
             session.load_state_dict(outputs.retained_state())
+        outputs.logger.start(session.progress)
     except Exception:
         session.close()
         raise

@@ -136,6 +136,13 @@ class SessionOutputs:
                 "weights": weights, "direction": "minimize"}
         self.stage = StageRecorder(self.root / "canonical_trace.json", context, "downstream",
             semantics, trajectory_id=trajectory_id)
+        from .training_logging import TrainingLogger, TrainingLogPolicy
+        self.logger = TrainingLogger(self.root, context, self.recipe,
+            TrainingLogPolicy.from_dict(record.get("logging")),
+            observations=self.stage.recorder.record["observations"])
+
+    def batch_finished(self, progress, *, learning_rates):
+        self.logger.progress(progress, learning_rates=learning_rates)
 
     def selected(self, progress, weights, state, evaluation):
         _finite_tree(state, "selected.model")
@@ -158,6 +165,7 @@ class SessionOutputs:
             sample_presentations=progress.sample_presentations,
             scheduler_state=state["scheduler"], ema_state=state["ema"])
         if not changed:
+            self.logger.checkpoint_finished(progress)
             return
         names = [*changed, "last_checkpoint.pt"]
         for name in names:
@@ -176,6 +184,7 @@ class SessionOutputs:
         _recover_commit(self.root, self.context)
         if "canonical_trace.json" in changed:
             self.stage.recorder.record = validate_canonical_trace(_json(self.root / "canonical_trace.json"))
+        self.logger.checkpoint_finished(progress)
 
     def pass_finished(self, progress, metrics):
         fields = {"live_train_metric": metrics["normalized_train_gap_mae"]}
@@ -187,6 +196,7 @@ class SessionOutputs:
         recorder.path = self.pending / "canonical_trace.json"
         recorder.append_observation(optimizer_step=progress.optimizer_step, sample_presentations=progress.sample_presentations,
             epoch_or_pass=progress.pass_index, **fields)
+        self.logger.pass_finished(progress, metrics)
 
     def retained_state(self):
         import torch

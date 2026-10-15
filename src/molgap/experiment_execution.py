@@ -219,11 +219,14 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | tuple[str, ...]
                         source_idx_sha256: str | None = None, target_sha256: str | None = None,
                         seed: int | None = None, initialization_sha256: str | None = None,
                         execution_torch_version: str | None = None,
-                        configuration=None, train_role_identity=None, development_role_identity=None) -> dict:
+                        configuration=None, train_role_identity=None, development_role_identity=None,
+                        logging=None) -> dict:
     """Build owned constants before freezing the Spec; never read development rows."""
     adapter = TRAINING_ADAPTERS.get(family)
     if adapter is None:
         raise ValueError("No executable family recipe builder")
+    if logging is not None and adapter.module != "molgap.family_training_runner":
+        raise ValueError("Configurable training logging requires the shared family session")
     if isinstance(addon, tuple):
         if adapter.model_factory is None or len(addon) < 2 or len(set(addon)) != len(addon):
             raise ValueError("Composed addons require distinct reviewed shared-model hooks")
@@ -247,7 +250,7 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | tuple[str, ...]
         return import_module(adapter.module).build_screen_recipe(mode, configuration=configuration,
             family=family, source_idx_sha256=source_idx_sha256, target_sha256=target_sha256,
             train_role_identity=train_role_identity,
-            development_role_identity=development_role_identity)
+            development_role_identity=development_role_identity, logging=logging)
     if configuration is not None or train_role_identity is not None or development_role_identity is not None:
         raise ValueError("Explicit shared configuration requires the shared family interface")
     options = {}

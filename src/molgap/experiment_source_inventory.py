@@ -77,6 +77,7 @@ COMMON_SOURCE_FILES = (
     'src/molgap/research_memory/validate.py',
     'src/molgap/screen_policy.py',
     'src/molgap/training_reproducibility.py',
+    'src/molgap/training_logging.py',
     'src/molgap/v4_bundle.py',
     'src/molgap/v4_runtime.py',
     'src/molgap/v5_common.py',

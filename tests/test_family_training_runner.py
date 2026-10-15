@@ -75,6 +75,8 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
     outputs = SessionOutputs(tmp_path / "output", ctx, contract=path, adapter=PROFILES[family],
         trajectory_id="synthetic-trajectory", train_role_identity=record["train_role_identity"])
     session.checkpoint, session.selected, session.pass_finished = outputs.checkpoint, outputs.selected, outputs.pass_finished
+    session.batch_finished = outputs.batch_finished
+    outputs.logger.start(session.progress)
     progress = session.run()
     runtime = {"platform": ctx.platform, "account": ctx.account, "precision": "fp32",
         "source_commit": ctx.source_commit, "source_archive_sha256": ctx.source_archive_sha256}
@@ -87,6 +89,13 @@ def test_actual_session_output_translation_and_cpu_mechanical_inspection(tmp_pat
     assert report["scientific_acceptance"] == report["replay_readiness"] == "NOT_EVALUATED"
     assert (outputs.root / "development_predictions.pt").is_file() == development
     assert ("development_mae_eV" in report["observed"]) == development
+    telemetry = json.loads((outputs.root / "training_progress.json").read_text(encoding="utf-8"))
+    assert telemetry["optimizer_steps"] == telemetry["checkpoint_optimizer_steps"] == progress.optimizer_step
+    assert telemetry["status"] == progress.status
+    if development:
+        assert telemetry["best_development_mae_eV"] == pytest.approx(report["observed"]["development_mae_eV"])
+    else:
+        assert telemetry["development_mae_eV"] is telemetry["best_development_mae_eV"] is None
     manifest_path = outputs.root / "output_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     resume_path = outputs.root / manifest["artifacts"]["resume"]["path"]

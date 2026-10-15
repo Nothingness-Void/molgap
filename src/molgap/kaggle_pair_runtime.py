@@ -12,6 +12,7 @@ from .experiment_execution import validate_execution_plan
 from .experiment_family_workflow import _json
 from .experiment_spec import ExperimentSpec
 from .training_reproducibility import atomic_json
+from .training_logging import forward_training_logs
 
 
 def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path,
@@ -100,6 +101,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 row = worker_rows[job["arm_id"]]
                 try:
                     log = (arm_output / (phase + ".log")).open("a", encoding="utf-8")
+                    log_offset = log.tell()
                 except BaseException as exc:
                     if phase == "train":
                         state["training_started"] = False
@@ -123,7 +125,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                     raise
                 workers.append({"process": process, "log": log, "job": job,
                                 "started_at": worker_started, "finished": False,
-                                "returncode": None})
+                                "returncode": None, "log_offset": log_offset})
                 state["started"] = True
                 state["terminal_status"] = "running"
                 state["exit_reason"] = "worker_running"
@@ -140,6 +142,10 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                         phase_failed |= worker["returncode"] != 0
                         continue
                     code = worker["process"].poll()
+                    if phase == "train":
+                        worker["log_offset"] = forward_training_logs(
+                            output / worker["job"]["arm_id"] / "train.log", worker["log_offset"],
+                            arm_id=worker["job"]["arm_id"])
                     if code is None:
                         running = True
                         continue
@@ -222,6 +228,10 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         finally:
             for worker in workers:
                 worker["log"].close()
+                if phase == "train":
+                    worker["log_offset"] = forward_training_logs(
+                        output / worker["job"]["arm_id"] / "train.log", worker["log_offset"],
+                        arm_id=worker["job"]["arm_id"])
             report["pair_process_wall_seconds"] = time.perf_counter() - started
             report["scope"] = "orchestration window excluding bootstrap and queue; not per-arm native device cost"
             atomic_json(output / "pair_state.json", report)

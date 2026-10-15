@@ -16,6 +16,9 @@ Reuse family trainers, checkpoint/inference owners, saved-prediction analysis,
 acceptance and V5/RML helpers; inspect the callable and its nearest caller/test.
 Platform operations stay in `kaggle-molgap-workloads`,
 `ims-molgap-workloads`, and `scnet-bw-dcu-molgap` skills and existing adapters.
+Shared-session status and metric output uses [standard training logging](docs/operations/TRAINING_LOGGING.md).
+Select its frozen cadence in the recipe; reuse its fields and relay instead of
+adding experiment-specific metric printers, progress polling or timers.
 Reuse navigation is not scientific, resource, role or submission authorization.
 
 ## Delegation Preference

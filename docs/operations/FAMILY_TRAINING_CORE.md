@@ -27,6 +27,7 @@ layer may copy or alter the training algorithm to fit a platform or scale.
 | `family_training_session.py` | One schedule/train/development/selection/resume lifecycle, using the shared outer loop and caller-owned atomic artifact/trace hooks. |
 | `family_training_runner.py` | Registered contract/source/role bindings, native repeat/resume qualification and the single worker entry. |
 | `family_training_outputs.py` | Existing atomic checkpoint/trace translation and shared CPU inspection for development-selected or final-only endpoints. |
+| `training_logging.py` | [Standard logs](TRAINING_LOGGING.md): fixed fields, epoch/seconds/batch cadence and worker-line forwarding; no additional evaluation. |
 | `family_execution_profile.py` | [Optional session profiler](FAMILY_EXECUTION_PROFILE.md): phase and operator observation; no alternate training implementation. |
 | `gptrans_bond_local.py` | Registered degree-scaled true-bond component; no trainer or platform code. |
 | `packed_graph_dataset.py` | Spawn-pickleable packed PyG payload owner, optionally memory mapped. |
@@ -72,7 +73,7 @@ replay. Historical runners retain their own frozen RNG behavior.
 ## Session Boundary
 
 `FamilyTrainingSession(kernel, loaders, checkpoint=..., selected=...,
-pass_finished=...)` consumes matching typed recipe/data bindings. Callbacks are
+pass_finished=..., batch_finished=None)` consumes matching typed recipe/data bindings. Callbacks are
 trusted static adapter hooks, not imports selected by JSON. `run(should_pause=...)`
 uses exact optimizer steps, not a scale-specific epoch loop. Mid-pass checkpoints
 retain model/optimizer/schedule/EMA/RNG, recipe identity, exact sample/cursor and

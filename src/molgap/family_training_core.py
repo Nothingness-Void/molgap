@@ -52,7 +52,7 @@ def run_training_loop(
     *, start_step: int = 0, before_pass: Callable | None = None,
     before_step: Callable | None = None, after_step: Callable | None = None,
     after_pass: Callable | None = None, observe_batch: Callable | None = None,
-    should_pause: Callable | None = None,
+    should_pause: Callable | None = None, report_progress: Callable | None = None,
 ) -> LoopProgress:
     """One bounded, resumable outer loop for any family, scale or platform.
 
@@ -115,6 +115,8 @@ def run_training_loop(
                 if (current % plan.checkpoint_every == 0 or
                         (pass_finished and plan.checkpoint_at_pass) or complete or paused):
                     checkpoint(progress(current, status))
+                if report_progress is not None:
+                    report_progress(progress(current, status))
                 if complete or paused:
                     return progress(current, status)
         if current != stop:

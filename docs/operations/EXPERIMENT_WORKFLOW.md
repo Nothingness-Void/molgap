@@ -5,6 +5,10 @@ registered local-to-Kaggle comparison path. It
 owns preparation and acceptance orchestration. It does not own scientific
 authorization, a trainer loop, or platform submission.
 
+Shared K1/GPTrans sessions automatically use [standard training logs](TRAINING_LOGGING.md):
+default epoch summaries, or frozen seconds/batch intervals. Reuse this owner for
+fields, MAE/state labels and dual-arm forwarding instead of per-experiment printers.
+
 For model slots, Live/Raw/Clean state, CPU sandbox and AST source closure, use
 the [four-layer runtime](MODULAR_EXPERIMENT_RUNTIME.md). Its optional extension
 interfaces reuse this workflow; they do not replace the accelerated family

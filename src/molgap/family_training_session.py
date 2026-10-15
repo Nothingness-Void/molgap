@@ -155,7 +155,7 @@ def validate_session_resume(recipe, state):
 class FamilyTrainingSession:
     """One algorithm at all scales; scale-specific contracts select explicit policies."""
     def __init__(self, kernel: FamilyKernel, loaders: FamilyLoaders, *, checkpoint,
-                 selected, pass_finished):
+                 selected, pass_finished, batch_finished=None):
         if not isinstance(kernel, FamilyKernel) or not isinstance(loaders, FamilyLoaders):
             raise TypeError("Expected family kernel and persistent input pool")
         if kernel.recipe.identity != loaders.recipe.identity:
@@ -165,6 +165,9 @@ class FamilyTrainingSession:
         self.kernel, self.loaders, self.recipe = kernel, loaders, kernel.recipe
         self.schedule = ContractSchedule(kernel)
         self.checkpoint, self.selected, self.pass_finished = checkpoint, selected, pass_finished
+        if batch_finished is not None and not callable(batch_finished):
+            raise TypeError("Batch reporting must be callable")
+        self.batch_finished = batch_finished
         self.progress = LoopProgress(0, 0, 0, 0, "running")
         self.pending_absolute, self.pending_rows = [], 0
         self._metric_host, self._metric_dtype = [], None
@@ -306,12 +309,15 @@ class FamilyTrainingSession:
                 raise RuntimeError("Family kernel metric exposure differs from batch rows")
             self.pending_absolute.append(absolute)
             self.pending_rows += rows
+        def report(progress):
+            self.batch_finished(progress, learning_rates=[group["lr"] for group in self.kernel.optimizer.param_groups])
         try:
             return run_training_loop(self.kernel.model, self.recipe.loop_plan, self.loaders.train,
                 step, self._persist, start_step=self.progress.optimizer_step,
                 before_pass=self.schedule.before_pass, before_step=self.schedule.before_step,
                 after_step=self.schedule.after_step, after_pass=self._finish_pass,
-                observe_batch=observe, should_pause=should_pause)
+                observe_batch=observe, should_pause=should_pause,
+                report_progress=report if self.batch_finished is not None else None)
         finally:
             self.close()
 
