@@ -4,9 +4,9 @@ import os
 from pathlib import Path
 import tempfile
 from collections.abc import Mapping
-from ..experiment_launch import _safe_local
-from ..experiment_spec import _digest
-from ..experiment_terminal import _path
+from .io import _safe_local
+from .spec import _digest
+from .paths import validate_relative_path as _path
 from ..research_memory.paths import repo_local_path
 from ..research_memory.trace import file_digest
 

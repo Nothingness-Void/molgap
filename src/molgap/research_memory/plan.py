@@ -49,7 +49,6 @@ def _prepare_trajectory(spec: dict[str, Any]) -> dict[str, Any]:
     token = hashlib.sha256(json_bytes(spec)).hexdigest()[:20]
     trajectory.setdefault("schema", "molgap-trajectory-v1")
     trajectory.setdefault("record_mode", "prospective")
-    trajectory.setdefault("owner", "server")
     trajectory.setdefault("trajectory_id", "T-" + token)
     trajectory["hypothesis"].setdefault("hypothesis_id", "H-" + token)
     trajectory.setdefault("result", {"evidence_ids": [], "evidence_refs": []})
@@ -94,8 +93,9 @@ def _prepare_plan(repo_root: str | Path, spec: dict[str, Any], output: str | Pat
     trajectory = _prepare_trajectory(spec)
     if pair_binding(trajectory) is not None and _snapshot is None:
         raise ValueError("same-run replay must be planned in one frozen multi-arm batch")
-    if trajectory["owner"] != "server" or trajectory["record_mode"] != "prospective":
-        raise ValueError("plan creates only server prospective trajectories")
+    # Ownership is scientific provenance, never inferred from the compute host.
+    if trajectory.get("owner") not in {"desktop", "server"} or trajectory["record_mode"] != "prospective":
+        raise ValueError("plan requires an explicit desktop/server owner and prospective mode")
     if trajectory["decision"]["outcome"] != "ACTIVE" or trajectory["result"]["evidence_ids"]:
         raise ValueError("new plan must be ACTIVE with no terminal evidence")
     commit = (_snapshot.commit if _snapshot is not None else
@@ -268,29 +268,24 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
     if paired:
         groups: dict[tuple[str, str], list[tuple[dict[str, Any], Path, dict[str, str]]]] = {}
         for trajectory, output, binding in paired:
-            groups.setdefault((binding["spec_identity"], binding["logical_run_id"]), []).append(
-                (trajectory, output, binding)
-            )
+            groups.setdefault((binding["spec_identity"], binding["logical_run_id"]), []).append((trajectory, output, binding))
         for group in groups.values():
             references = [row for row in group if row[2]["comparison_role"] == "reference"]
             if len(references) != 1 or len(group) < 2:
                 raise ValueError("same-run replay batch requires one reference and at least one candidate")
             if len({binding["arm_id"] for _, _, binding in group}) != len(group):
                 raise ValueError("same-run replay batch repeats an arm identity")
-            source_commits = {
-                trajectory["state_at_start"].get("source_commit") for trajectory, _, _ in group
-            }
-            if len(source_commits) > 1:
-                raise ValueError("same-run arms must freeze one source commit")
-            reference, reference_output, reference_binding = references[0]
+            reference, reference_output, ref_binding = references[0]
             expected_ref = (reference_output / "trajectory.json").as_posix()
-            if reference_binding["reference_trajectory_ref"] != expected_ref:
+            if ref_binding["reference_trajectory_ref"] != expected_ref:
                 raise ValueError("same-run reference path differs from batch output")
             for trajectory, _, binding in group:
-                if (binding["reference_trajectory_id"], binding["reference_trajectory_ref"],
-                        binding["reference_arm_id"]) != (
-                            reference["trajectory_id"], expected_ref, reference_binding["arm_id"]):
+                if (binding["reference_trajectory_id"], binding["reference_trajectory_ref"], binding["reference_arm_id"]) != (
+                    reference["trajectory_id"], expected_ref, ref_binding["arm_id"]
+                ):
                     raise ValueError("same-run candidate does not bind the batch reference")
+                if trajectory["state_at_start"]["source_commit"] != reference["state_at_start"]["source_commit"]:
+                    raise ValueError("same-run arms must freeze one source commit")
 
     discovered = discover_records(root)
     existing_trajectories = [load_json_object(p) for p in discovered.trajectories]

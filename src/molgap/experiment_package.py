@@ -73,9 +73,13 @@ def _name(value) -> str:
     # A Python module under the reviewed package is source, even when its
     # responsibility is data/checkpoint IO. Directories and credential names
     # retain their existing confinement; artifact payload suffixes stay blocked.
-    if value.startswith("src/molgap/") and path.suffix.lower() == ".py":
+    if (value.startswith("src/molgap/") and path.suffix == ".py"
+            and path.name == path.name.lower()):
         io_tokens = {"data", "dataset", "datasets", "checkpoint", "checkpoints",
                      "records", "output", "outputs", "result", "results", "artifacts"}
+        # A reviewed pair-token module is model source, not an auth token file.
+        if value == "src/molgap/k1_pair_token.py":
+            io_tokens.add("token")
         directory_tokens = {token for part in lowered[:-1] for token in re.split(r"[._-]+", part)}
         filename_tokens = set(re.split(r"[._-]+", lowered[-1])) - io_tokens
         tokens = directory_tokens | filename_tokens
@@ -99,18 +103,6 @@ def _allowlist(relative_paths) -> list[str]:
     return names
 
 
-def read_packaged_text(package_dir: Path, relative_path: str) -> str:
-    """Read a reviewed source member from an already verified immutable package."""
-    name = _name(relative_path)
-    with tarfile.open(Path(package_dir) / "source.tar.gz", "r:gz") as archive:
-        members = [member for member in archive.getmembers() if member.name == name]
-        if len(members) != 1 or not members[0].isfile() or members[0].linkname:
-            raise ValueError("Expected one regular packaged text source")
-        stream = archive.extractfile(members[0])
-        if stream is None:
-            raise ValueError("Missing packaged text source")
-        with stream:
-            return stream.read().decode("utf-8")
 def stage_source_inputs(package_dir: Path, destination: Path, initial_states: dict) -> Path:
     """Common immutable worker inputs; no platform metadata or submission."""
     from .experiment_launch import _safe_local, publish_immutable_bytes
@@ -313,3 +305,17 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
 def inspect_experiment_source_package(package_dir: Path, repo_root: Path | None = None) -> dict:
     """Inspection is fail-closed verification, never a readiness decision."""
     return verify_experiment_source_package(package_dir, repo_root)
+
+
+def read_packaged_text(package_dir: Path, relative_path: str) -> str:
+    """Read a reviewed member after the existing immutable-package verifier."""
+    name = _name(relative_path)
+    with tarfile.open(Path(package_dir) / "source.tar.gz", "r:gz") as archive:
+        members = [member for member in archive.getmembers() if member.name == name]
+        if len(members) != 1 or not members[0].isfile() or members[0].linkname:
+            raise ValueError("Expected one regular packaged text source")
+        stream = archive.extractfile(members[0])
+        if stream is None:
+            raise ValueError("Missing packaged text source")
+        with stream:
+            return stream.read().decode("utf-8")
