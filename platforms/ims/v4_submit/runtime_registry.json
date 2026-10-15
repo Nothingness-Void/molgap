@@ -1,0 +1,21 @@
+{
+  "format": "molgap-ims-v4-runtime-registry-v1",
+  "runtimes": {
+    "ims-a100-torch271-v1": {
+      "python": "/lustre/home/users/sm2/chou/molgap/.venv/bin/python",
+      "pythonpath": [
+        "/lustre/home/users/sm2/chou/molgap-pcqm-route-b/code/platforms/ims/pcqm_route_b/shims",
+        "/lustre/home/users/sm2/chou/molgap-pcqm-route-b/vendor-cu126-torch271",
+        "{code_root}/src"
+      ],
+      "packages": {
+        "torch": "2.7.1+cu126",
+        "torch_cuda": "12.6",
+        "torch_geometric": "2.6.1",
+        "torch_cluster": "molgap-portable-1"
+      },
+      "accelerator": "NVIDIA A100",
+      "queue": "H"
+    }
+  }
+}
