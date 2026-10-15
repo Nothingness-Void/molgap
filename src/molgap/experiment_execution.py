@@ -34,6 +34,7 @@ class TrainingAdapter:
     source_files: tuple[str, ...] = ()
     model_factory: str | None = None
     target_identity_in_completion: bool = False
+    profile_adapter: str | None = None
 
     def __post_init__(self):
         # Preserve reviewed legacy tuple registrations while exposing typed hooks.
@@ -89,13 +90,14 @@ TRAINING_ADAPTERS = MappingProxyType({
         ("neural_atom_k1", "3"), "molgap.family_training_runner", "k1-session-v1",
         (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
          ("k1_mean2_clean_second", "mean2_clean_second")), ("molgap.pcqm_wedge",),
-        target_identity_in_completion=True),
+        target_identity_in_completion=True, profile_adapter="molgap.family_execution_profile"),
     ("gptrans_t", "2"): TrainingAdapter(
         ("gptrans_t", "2"), "molgap.family_training_runner", "gptrans-session-v1",
         (("pair_prenorm", "pair_prenorm"), ("centered_logits", "centered_logits"),
          ("memory_value", "memory_value"), ("memory_message", "memory_message"),
          ("gptrans_degree_bond_local", "degree_bond_local_ema999")),
-        ("molgap.pcqm_wedge",), target_identity_in_completion=True),
+        ("molgap.pcqm_wedge",), target_identity_in_completion=True,
+        profile_adapter="molgap.family_execution_profile"),
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
         (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
@@ -183,7 +185,8 @@ def workflow_capabilities(spec: ExperimentSpec) -> dict:
         try:
             adapter = training_adapter(arm)
             supported[arm["arm_id"]] = {"mode": adapter.mode(arm), "trainer": adapter.module,
-                                        "artifact_profile": adapter.artifact_adapter}
+                                        "artifact_profile": adapter.artifact_adapter,
+                                        "profile_adapter": adapter.profile_adapter}
             if adapter.model_factory is not None:
                 supported[arm["arm_id"]]["model_factory"] = adapter.model_factory
         except ValueError as exc:
@@ -282,7 +285,16 @@ def check_family_recipes(spec, repo_root, recipes):
         recipe_path = _artifact_path(repo_root, recipes[arm["arm_id"]])
         if normalized_source_sha256(recipe_path) != arm["training"]["recipe"]["sha256"]:
             raise ValueError("Family recipe/Spec hash mismatch")
-        results[arm["arm_id"]] = owner.validate_screen_recipe(spec, arm["arm_id"], _json(recipe_path))
+        record = _json(recipe_path)
+        if "profiling" in record:
+            if adapter.profile_adapter is None:
+                raise ValueError("Family has no registered execution profiler: " + arm["arm_id"])
+            from .family_execution_profile import ProfileConfig
+            ProfileConfig.from_dict(record["profiling"])
+            profile = import_module(adapter.profile_adapter)
+            if not Path(profile.__file__).resolve().is_relative_to(Path(repo_root).resolve()):
+                raise ValueError("Profile adapter was imported from another checkout")
+        results[arm["arm_id"]] = owner.validate_screen_recipe(spec, arm["arm_id"], record)
     return results
 
 

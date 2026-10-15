@@ -35,7 +35,7 @@ def validate_execution_identity(spec, arm_id, trajectory, source_commit):
     return attempts[0]
 
 
-def plan_prospective(spec: ExperimentSpec, repo_root: Path, *, execution_source_commit=None) -> tuple[dict, int]:
+def _prospective_inputs(spec: ExperimentSpec, repo_root: Path, *, execution_source_commit=None):
     declaration = spec.to_dict()
     if declaration["schema_version"] != SCHEMA_VERSION_V2:
         raise ValueError("plan-prospective requires molgap-experiment-spec-v2")
@@ -104,6 +104,22 @@ def plan_prospective(spec: ExperimentSpec, repo_root: Path, *, execution_source_
                 "reference_trajectory_ref": reference_ref,
             }
 
+    return plans, bindings
+
+
+def check_prospective(spec: ExperimentSpec, repo_root: Path) -> dict:
+    """Run the existing RML validators without publishing or rebuilding indexes."""
+    plans, _ = _prospective_inputs(spec, Path(repo_root))
+    result = plan_many(repo_root, plans, validate_only=True)
+    if result.get("status") != "VALIDATED" or len(result.get("results", [])) != len(plans):
+        raise ValueError("Prospective dry-validation result mismatch")
+    return {"status": "PROSPECTIVE_VALIDATED_ONLY", "batch": result["batch"],
+            "records": result["results"], "published": False, "rml_rebuilt": False,
+            "submission_authorized": False}
+
+
+def plan_prospective(spec: ExperimentSpec, repo_root: Path, *, execution_source_commit=None) -> tuple[dict, int]:
+    plans, bindings = _prospective_inputs(spec, repo_root, execution_source_commit=execution_source_commit)
     try:
         result = plan_many(repo_root, plans)
     except PlanBatchError as exc:

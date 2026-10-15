@@ -304,3 +304,17 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
 def inspect_experiment_source_package(package_dir: Path, repo_root: Path | None = None) -> dict:
     """Inspection is fail-closed verification, never a readiness decision."""
     return verify_experiment_source_package(package_dir, repo_root)
+
+
+def read_packaged_text(package_dir: Path, relative_path: str) -> str:
+    """Read a reviewed member after the existing immutable-package verifier."""
+    name = _name(relative_path)
+    with tarfile.open(Path(package_dir) / "source.tar.gz", "r:gz") as archive:
+        members = [member for member in archive.getmembers() if member.name == name]
+        if len(members) != 1 or not members[0].isfile() or members[0].linkname:
+            raise ValueError("Expected one regular packaged text source")
+        stream = archive.extractfile(members[0])
+        if stream is None:
+            raise ValueError("Missing packaged text source")
+        with stream:
+            return stream.read().decode("utf-8")

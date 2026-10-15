@@ -294,6 +294,18 @@ def test_single_plan_still_discovers_each_time(planning_root):
     assert str(Path("experiments/arm-a/trajectory.json")) in second_state["source_hashes"]
 
 
+def test_validate_only_uses_real_batch_validators_without_publication(planning_root):
+    root, _ = planning_root
+    plans = [_item("a"), _item("b")]
+    before = {p.relative_to(root): p.read_bytes() for p in root.rglob("*") if p.is_file()}
+    result = plan_module.plan_many(root, plans, validate_only=True)
+    assert result["status"] == "VALIDATED"
+    assert [r["status"] for r in result["results"]] == ["VALIDATED", "VALIDATED"]
+    assert before == {p.relative_to(root): p.read_bytes() for p in root.rglob("*") if p.is_file()}
+    assert not (root / "research_memory/.staging").exists()
+    assert plan_module.plan_many(root, plans)["status"] == "PLANNED"
+
+
 def test_bad_second_arm_is_rejected_before_any_publication(planning_root, monkeypatch):
     root, discovery_calls = planning_root
     second = _item("b")

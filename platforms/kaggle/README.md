@@ -19,6 +19,14 @@ successful release check, local receipt or queue response is not training
 acceptance. Keep the platform skill as the owner of account credentials and
 authoritative remote state.
 
+## Prepared Release Submission
+
+For a fresh prepared release, reuse [submit_workflow.py](submit_workflow.py)
+under the skill. Its [operation contract](../../docs/operations/KAGGLE_WORKFLOW_SUBMISSION.md)
+documents read-only checks, explicit authorization, durable publication/POST
+journaling and lost-response reconciliation. Default mode does not call the API.
+It creates no local queue trigger or automatic successor.
+
 ## Frozen K1 continuation
 
 For SDK operations with an explicit key, use `credential_api.py`'s

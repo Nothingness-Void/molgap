@@ -335,7 +335,10 @@ def test_check_family_recipes_rejects_legacy_gptrans_contract_and_hash_tampering
 
 
 @pytest.fixture
-def workflow_case(tmp_path):
+def workflow_case(tmp_path, monkeypatch):
+    # These orchestration fixtures deliberately omit scientific policy/hypothesis.
+    # Real RML read-only validation has separate plan/prospective regression tests.
+    monkeypatch.setattr(workflow, "check_prospective", lambda *_: {"status": "synthetic"})
     repo = tmp_path / "synthetic-repo"
     repo.mkdir()
     source_names = sorted(source_inventory.SHARED_SOURCE_FILES)
@@ -444,6 +447,80 @@ def workflow_case(tmp_path):
         "recipes": recipes,
         "initial_states": initial_states,
     }
+
+
+def test_readiness_reports_independent_gaps_before_staging(workflow_case, tmp_path, monkeypatch):
+    def fail_recipe(*args):
+        raise ValueError("missing profiler")
+    def fail_policy(*args):
+        raise ValueError("missing policy")
+    monkeypatch.setattr(workflow, "check_family_recipes", fail_recipe)
+    monkeypatch.setattr(workflow, "check_prospective", fail_policy)
+    case = workflow_case
+    result = workflow.check_workflow_readiness(case["spec"], case["repo"], case["plan"])
+    assert result["status"] == "BLOCKED"
+    assert [b["message"] for b in result["blockers"]] == ["missing profiler", "missing policy"]
+    output = tmp_path / "must-not-exist"
+    assert workflow.prepare_workflow(case["spec"], case["repo"], case["plan"], output)["status"] == "BLOCKED"
+    assert not output.exists()
+
+
+def test_readiness_cli_routes_without_preparation(workflow_case, tmp_path, monkeypatch, capsys):
+    spec_path, plan_path = tmp_path / "spec.json", tmp_path / "plan.json"
+    spec_path.write_text(workflow_case["spec"].to_json())
+    plan_path.write_text(json.dumps(workflow_case["plan"]))
+    checker = Mock(return_value={"status": "WORKFLOW_INPUTS_READY", "submitted": False})
+    monkeypatch.setattr(workflow, "check_workflow_readiness", checker)
+    assert cli.main(["check-workflow", "--spec", str(spec_path), "--plan", str(plan_path),
+                     "--repo-root", str(workflow_case["repo"])]) == 0
+    assert json.loads(capsys.readouterr().out)["status"] == "WORKFLOW_INPUTS_READY"
+
+
+def test_capability_registry_advertises_only_available_profilers():
+    from molgap.experiment_execution import TRAINING_ADAPTERS
+    assert TRAINING_ADAPTERS[("neural_atom_k1", "3")].profile_adapter == "molgap.family_execution_profile"
+    assert TRAINING_ADAPTERS[("gptrans_t", "2")].profile_adapter == "molgap.family_execution_profile"
+    assert TRAINING_ADAPTERS[("neural_atom_k1", "2")].profile_adapter is None
+
+
+def test_shared_readiness_requires_caller_dataset_manifest_bindings(monkeypatch):
+    spec = ExperimentSpec(_spec_payload([_arm("neural_atom_k1", "3", "k1"),
+                                         _arm("gptrans_t", "2", "gptrans")], platform="kaggle"))
+    monkeypatch.setattr(workflow, "check_family_recipes", lambda *a: {"checked": True})
+    monkeypatch.setattr(workflow, "check_prospective", lambda *a: {"checked": True})
+    inputs = {"recipes": {}, "dataset_manifests": {}}
+    _, blockers = workflow._workflow_checks(spec, ROOT, inputs)
+    assert [b["check"] for b in blockers] == ["dataset_manifests"]
+    inputs["dataset_manifests"] = {"k1": "manifest.json", "gptrans": "manifest.json"}
+    assert workflow._workflow_checks(spec, ROOT, inputs)[1] == []
+
+
+def test_unknown_dataset_manifest_arm_fails_before_staging(workflow_case, tmp_path):
+    case = workflow_case
+    plan = copy.deepcopy(case["plan"])
+    plan["dataset_manifests"] = {"unknown": "irrelevant.json"}
+    output = tmp_path / "not-created"
+    with pytest.raises(ValueError, match="known workflow arms"):
+        workflow.prepare_workflow(case["spec"], case["repo"], plan, output)
+    assert not output.exists()
+
+
+def test_unregistered_profiler_fails_before_legacy_owner_recipe_validation(tmp_path, monkeypatch):
+    from molgap import experiment_family_workflow as family_owner
+    from molgap import k1_screen_training as legacy
+    record = build_family_recipe(("neural_atom_k1", "2"), source_idx_sha256=SOURCE_IDX_SHA256,
+                                 target_sha256=TARGET_SHA256)
+    record["profiling"] = {"active_steps": 2}
+    spec = _process_spec("neural_atom_k1", "2", "reference", legacy, record)
+    path = tmp_path / "recipe.json"
+    path.write_text(json.dumps(record))
+    # The owner/hash checks still run; only the artifact's temporary locator differs.
+    monkeypatch.setattr(family_owner, "_artifact_path", lambda *args: path)
+    declaration = spec.to_dict()
+    declaration["arms"][0]["training"]["recipe"]["sha256"] = normalized_source_sha256(path)
+    spec = ExperimentSpec(declaration)
+    with pytest.raises(ValueError, match="no registered execution profiler"):
+        check_family_recipes(spec, ROOT, {declaration["arms"][0]["arm_id"]: "recipe.json"})
 
 
 def _git(root: Path, *args: str) -> str:
@@ -614,6 +691,10 @@ def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates
 ):
     repo, spec, plan = workflow_case["repo"], workflow_case["spec"], workflow_case["plan"]
     output = tmp_path / "prepared"
+    dataset_manifest = tmp_path / "manifest.json"
+    _write_json(dataset_manifest, {"synthetic": True})
+    plan["dataset_manifests"] = {arm["arm_id"]: str(dataset_manifest)
+                                 for arm in spec.to_dict()["arms"]}
     events = []
     real_package = workflow.build_experiment_source_package
     package_manifest = {}
@@ -631,6 +712,7 @@ def test_prepare_workflow_packages_then_releases_then_plans_synthetic_candidates
     def release(release_spec, package_dir, **kwargs):
         events.append("release")
         assert release_spec == spec
+        assert kwargs["dataset_manifests"] == plan["dataset_manifests"]
         assert (package_dir / "package_manifest.json").is_file()
         assert "molgap.pcqm_wedge" in kwargs["required_modules"]
         assert "molgap.experiment_training_worker" in kwargs["required_modules"]

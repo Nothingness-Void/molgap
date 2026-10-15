@@ -27,6 +27,12 @@ workflow is not a universal platform submitter.
 
 ## Owners
 
+Before fresh legacy multi-arm preparation, use `check-workflow` to aggregate
+recipe/profiler and prospective-policy gaps without staging or RML writes.
+The [prepared Kaggle submission adapter](KAGGLE_WORKFLOW_SUBMISSION.md) then
+composes platform publication, byte verification, quota and receipt owners
+under the workload skill; neither this local workflow nor the CLI submits.
+
 | Layer | Owner | Responsibility |
 |---|---|---|
 | Shared preparation | `experiment_workflow.prepare_family_training`; `prepare-family-training` in the local CLI | Stage source/init and prospective identity for any declared platform; skills supply remote release and submission. |

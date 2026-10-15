@@ -448,4 +448,5 @@ def test_no_remote_or_dynamic_dispatch_in_cli():
     assert set(commands) == {"validate-spec", "package", "preflight", "run-diagnostic",
                              "launch-receipt", "terminal", "plan-prospective", "check-release",
                              "check-acceptance", "inspect-output", "accept-terminal",
-                             "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal", "source-dependencies", "sandbox"}
+                             "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal", "source-dependencies", "sandbox",
+                             "workflow-info", "check-workflow"}

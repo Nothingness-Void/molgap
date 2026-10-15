@@ -75,11 +75,11 @@ def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
         "launch": launch}
 
 
-def stage_acceptance_inputs(spec, repo_root, plan_path, destination):
-    """Retain the exact checked plan and its explicit pins for producer closure."""
+def acceptance_input_pins(spec, repo_root, plan_path):
+    """Return the validated allowlist shared by staging and publication."""
     from .experiment_family_workflow import _json, check_acceptance_plan
     from .research_memory.trace import file_digest
-    root, destination = Path(repo_root).absolute(), Path(destination)
+    root = Path(repo_root).absolute()
     path = _artifact_path(root, plan_path)
     plan = _json(path)
     report = check_acceptance_plan(spec, root, plan)
@@ -94,6 +94,13 @@ def stage_acceptance_inputs(spec, repo_root, plan_path, destination):
             prior = pointers.setdefault(pointer["path"], pointer["sha256"])
             if prior != pointer["sha256"]:
                 raise ValueError("Conflicting acceptance artifact pins")
+    return pointers
+
+
+def stage_acceptance_inputs(spec, repo_root, plan_path, destination):
+    from .research_memory.trace import file_digest
+    root, destination = Path(repo_root).absolute(), Path(destination)
+    pointers = acceptance_input_pins(spec, root, plan_path)
     for relative, digest in pointers.items():
         source = _artifact_path(root, relative)
         if file_digest(source) != digest:

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from types import MappingProxyType
+from time import perf_counter
 
 from .experiment_execution import check_family_recipes, validate_execution_plan
 from .experiment_family_workflow import (
@@ -17,7 +18,7 @@ from .experiment_family_workflow import (
 from .experiment_launch import _safe_local, build_launch_receipt
 from .experiment_package import build_experiment_source_package, _allowlist
 from .experiment_preflight import check_release_inputs, _atomic
-from .experiment_prospective import plan_prospective
+from .experiment_prospective import check_prospective, plan_prospective
 from .experiment_spec import ExperimentSpec
 
 
@@ -99,22 +100,16 @@ def prepare_family_training(spec, repo_root, plan, output):
     return report
 
 
-def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path) -> dict:
-    """Validate and stage once, publish prospective RML only after static gates.
-
-    source_files is an explicit augmentation of the reviewed shared inventory;
-    it never discovers files at runtime or silently copies another experiment.
-    Caller supplies existing contract, initialization and scientific plan inputs.
-    """
+def _workflow_inputs(spec, repo_root, plan):
+    """Resolve one declaration for read-only admission and local preparation."""
     platform_name = spec.to_dict()["platform"]["name"]
     backend = _platform_adapter(platform_name)
-    if type(plan) is not dict or set(plan) != {"format", "spec_identity", "source_files", "arms", "acceptance_plan", platform_name} or plan["format"] != "molgap-experiment-workflow-v1" or plan["spec_identity"] != spec.identity:
+    required = {"format", "spec_identity", "source_files", "arms", "acceptance_plan", platform_name}
+    if (type(plan) is not dict or not required <= set(plan) or set(plan) - required - {"dataset_manifests"}
+            or plan["format"] != "molgap-experiment-workflow-v1" or plan["spec_identity"] != spec.identity):
         raise ValueError("Workflow plan/Spec mismatch")
-    repo_root, output = Path(repo_root).absolute(), Path(output).absolute()
+    repo_root = Path(repo_root).absolute()
     _safe_local(repo_root)
-    _safe_local(output)
-    if output.exists():
-        raise ValueError("Workflow output must be a fresh directory; reconcile before another attempt")
     metadata = backend.validate_plan(spec, plan[platform_name])
     declaration = spec.to_dict()
     bindings = {b["arm_id"]: b for b in declaration["prospective"].get("arms", [])}
@@ -135,6 +130,11 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         jobs.append({"arm_id": arm_id, "device": arm["device"], "recipe": arm["recipe"],
                      "initial_state": f"initial_states/{arm_id}.pt", "trajectory_id": bindings[arm_id]["trajectory_id"]})
     validated_jobs = validate_execution_plan(spec, jobs)
+    dataset_manifests = plan.get("dataset_manifests", {})
+    if type(dataset_manifests) is not dict or set(dataset_manifests) - set(recipes):
+        raise ValueError("Dataset manifest bindings must name known workflow arms")
+    dataset_manifests = {arm: str(_artifact_or_local_path(repo_root, path))
+                         for arm, path in dataset_manifests.items()}
     acceptance_path = _artifact_path(repo_root, plan["acceptance_plan"])
     acceptance = check_acceptance_plan(spec, repo_root, _json(acceptance_path))
     if acceptance["status"] == "BLOCKED":
@@ -143,17 +143,89 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
     # The inventory is maintained with adapters, not assembled by each caller.
     from .experiment_source_inventory import registered_source_files
     source_files = _allowlist(sorted(set(registered_source_files(spec, plan["source_files"])) | set(recipes.values())))
+    return dict(metadata=metadata, bindings=bindings, jobs=jobs, initial_states=initial_states,
+                recipes=recipes, validated_jobs=validated_jobs, source_files=source_files,
+                dataset_manifests=dataset_manifests)
+
+
+def _artifact_or_local_path(repo_root, value):
+    if type(value) is not str:
+        raise ValueError("Expected a local dataset manifest path")
+    path = Path(value)
+    path = path if path.is_absolute() else Path(repo_root) / path
+    _safe_local(path.absolute())
+    if not path.is_file():
+        raise ValueError("Missing frozen dataset manifest")
+    return path.absolute()
+
+
+def _workflow_checks(spec, repo_root, inputs):
+    from .experiment_execution import training_adapter
+    def manifest_bindings():
+        required = {arm["arm_id"] for arm in spec.to_dict()["arms"]
+                    if training_adapter(arm).module == "molgap.family_training_runner"}
+        if required - set(inputs["dataset_manifests"]):
+            raise ValueError("Shared family release requires explicit dataset_manifests bindings")
+        return {"bound_arms": sorted(inputs["dataset_manifests"])}
+    observations, blockers = {}, []
+    for name, check in (("family_recipes", lambda: check_family_recipes(spec, repo_root, inputs["recipes"])),
+                        ("dataset_manifests", manifest_bindings),
+                        ("prospective", lambda: check_prospective(spec, Path(repo_root).absolute()))):
+        try:
+            observations[name] = check()
+        except (ValueError, TypeError, RuntimeError, OSError) as error:
+            blockers.append({"check": name, "error_type": type(error).__name__, "message": str(error)})
+    return observations, blockers
+
+
+def check_workflow_readiness(spec, repo_root, plan):
+    """Check frozen recipes/profilers and RML policy without staging or publication."""
+    from .experiment_execution import workflow_capabilities
+    inputs = _workflow_inputs(spec, repo_root, plan)
+    if inputs.get("status") == "BLOCKED":
+        return inputs
+    observations, blockers = _workflow_checks(spec, repo_root, inputs)
+    return {"status": "BLOCKED" if blockers else "WORKFLOW_INPUTS_READY", "spec_identity": spec.identity,
+            "checks": observations, "blockers": blockers, "capabilities": workflow_capabilities(spec),
+            "published": False, "submitted": False, "native_qualification": "NOT_EVALUATED"}
+
+
+def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path) -> dict:
+    """Stage once after static gates; platform skills own publication/submission."""
+    started = perf_counter()
+    repo_root, output = Path(repo_root).absolute(), Path(output).absolute()
+    _safe_local(output)
+    if output.exists():
+        raise ValueError("Workflow output must be a fresh directory; reconcile before another attempt")
+    inputs = _workflow_inputs(spec, repo_root, plan)
+    if inputs.get("status") == "BLOCKED":
+        return inputs
+    metadata, bindings, jobs, initial_states, recipes, validated_jobs, source_files = (
+        inputs[key] for key in ("metadata", "bindings", "jobs", "initial_states", "recipes",
+                               "validated_jobs", "source_files"))
+    observations, blockers = _workflow_checks(spec, repo_root, inputs)
+    if blockers:
+        return {"status": "BLOCKED", "stage": "workflow_readiness", "checks": observations,
+                "blockers": blockers, "prospective_published": False, "submitted": False}
+    platform_name = spec.to_dict()["platform"]["name"]
+    backend = _platform_adapter(platform_name)
     output.mkdir(parents=True)
     report = {"format": "molgap-workflow-preparation-v1", "status": "PREPARING",
-              "spec_identity": spec.identity, "submitted": False, "stages": []}
+              "spec_identity": spec.identity, "submitted": False, "stages": [],
+              "prospective_published": False, "timings": {"input_validation_seconds": perf_counter() - started}}
+    phase_started = perf_counter()
     def record(stage, result):
+        nonlocal phase_started
+        report["timings"][stage + "_seconds"] = perf_counter() - phase_started
+        phase_started = perf_counter()
         report["stages"].append({"stage": stage, "result": result})
         _atomic(output / "workflow_report.json", report)
     try:
+        record("family_recipes", observations["family_recipes"])
+        record("prospective_check", observations["prospective"])
         package = output / "package"
         manifest = build_experiment_source_package(spec, repo_root, source_files, package)
         record("package", manifest)
-        record("family_recipes", check_family_recipes(spec, repo_root, recipes))
         stage = backend.stage_inputs(repo_root=repo_root, output=output, package=package,
             manifest=manifest, spec=spec, platform_plan=plan[platform_name], metadata=metadata,
             initial_states=initial_states, jobs=jobs, acceptance_plan_path=plan["acceptance_plan"])
@@ -163,12 +235,13 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
             initial_states={a: staged / "initial_states" / (a + ".pt") for a in initial_states},
             required_modules=sorted({module for j in validated_jobs for module in j["required_modules"]} |
                                     {"molgap.experiment_training_worker"}),
-            input_root=staged)
+            input_root=staged, dataset_manifests=inputs["dataset_manifests"] or None)
         _atomic(output / "release_report.json", release)
         record("check_release", release)
         if release["errors"]:
             report.update(status="BLOCKED", stage="check_release", prospective_published=False)
             return report
+        report["prospective_published"] = "inspect_plan_result"
         prospective, code = plan_prospective(spec, repo_root,
             execution_source_commit=manifest["source_commit"])
         record("prospective", prospective)
@@ -192,9 +265,11 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
                                    "Remote all-arm runtime qualification is still mandatory."])
         return report
     except Exception as exc:
-        report.update(status="ERROR_REQUIRES_RECONCILIATION", error=str(exc))
+        status = "ERROR_BEFORE_PUBLICATION" if report["prospective_published"] is False else "ERROR_REQUIRES_RECONCILIATION"
+        report.update(status=status, error=str(exc))
         raise
     finally:
+        report["timings"]["total_local_preparation_seconds"] = perf_counter() - started
         _atomic(output / "workflow_report.json", report)
 
 

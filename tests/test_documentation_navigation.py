@@ -24,6 +24,7 @@ BLOCK_READMES = tuple(
 DOCUMENTS = (
     "README.md", "ARCHITECTURE.md", "AGENTS.md", "BRANCHES.md",
     "CURRENT_STATE.md", "ROADMAP.md", CLI, GUIDE, WORKFLOW, MODULAR_RUNTIME,
+    "docs/operations/KAGGLE_WORKFLOW_SUBMISSION.md",
     "docs/operations/MODULAR_RUNTIME_DESKTOP_ACCEPTANCE.md",
     "docs/operations/INFRASTRUCTURE_REPAIR_20261003.md",
     "docs/operations/RESEARCH_PROTOCOL.md", "docs/operations/BRANCH_HISTORY.md",

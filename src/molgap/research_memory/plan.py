@@ -222,7 +222,8 @@ def plan(repo_root: str | Path, spec: dict[str, Any], output: str | Path,
     return _publish_plan(repo_root, _prepare_plan(repo_root, spec, output, _snapshot=_snapshot))
 
 
-def plan_many(repo_root: str | Path, plans: list[dict[str, Any]]) -> dict[str, Any]:
+def plan_many(repo_root: str | Path, plans: list[dict[str, Any]], *,
+              validate_only: bool = False) -> dict[str, Any]:
     """Publish independent prospective plans against one pre-publication snapshot."""
     from .policy import load_policy_registry
 
@@ -342,11 +343,18 @@ def plan_many(repo_root: str | Path, plans: list[dict[str, Any]]) -> dict[str, A
     results = []
     for index, item in enumerate(validated):
         try:
-            results.append(_publish_plan(root, item))
+            if validate_only:
+                for pointer, digest in item["source_hashes"].items():
+                    if file_digest(resolve_repo_pointer(root, pointer)) != digest:
+                        raise ValueError("decision source changed during planning validation")
+                results.append({"trajectory_id": item["trajectory_id"], "status": "VALIDATED",
+                                "path": item["destination"].relative_to(root).as_posix()})
+            else:
+                results.append(_publish_plan(root, item))
         except Exception as exc:
-            raise PlanBatchError(index, len(prepared), results, exc) from exc
+            raise PlanBatchError(index, len(prepared), [] if validate_only else results, exc) from exc
     return {
-        "status": "PLANNED",
+        "status": "VALIDATED" if validate_only else "PLANNED",
         "results": results,
         "batch": {
             "size": len(results),

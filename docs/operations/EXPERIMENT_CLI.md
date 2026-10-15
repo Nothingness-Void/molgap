@@ -69,6 +69,14 @@ import, training shortcut, platform submit command or authority override exists.
 
 ## Commands
 
+`workflow-info --spec $spec` reports registered training/profiler capabilities.
+Before fresh preparation, run `check-workflow --spec $spec --repo-root $repoRoot
+--plan $plan`; it reports independent recipe/profiler and RML-policy gaps without
+staging or publication. A blocked check exits1. Do not use a fresh-declaration
+check to recreate already published prospective records. See the
+[prepared Kaggle adapter](KAGGLE_WORKFLOW_SUBMISSION.md) for platform operations;
+this local CLI still does not submit.
+
 The following templates require caller-owned real inputs and fresh output paths.
 Replace the variables with independently verified identities and authorized
 local paths. They are not an instruction to run an experiment or access a role.
