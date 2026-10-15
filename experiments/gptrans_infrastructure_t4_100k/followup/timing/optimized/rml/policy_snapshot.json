@@ -1,0 +1,35 @@
+{
+  "action_rule": {
+    "action": "RUN_GPTRANS_EXECUTION_DIAGNOSTIC",
+    "field": "authorized_execution_diagnostic",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "one-user-authorized-two-slot-short-execution-followup",
+    "authority_ref": "experiments/gptrans_infrastructure_t4_100k/followup/authority.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "gptrans-execution-followup-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "full observed T4x2 allocation including idle tail",
+      "no cross-hardware conversion"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "42e2d2f90fbfc812e4904118a9087221259a27e1e66442439155e16e6c09c7c1",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "gptrans-execution-followup",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "authorized_execution_diagnostic"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

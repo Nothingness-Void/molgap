@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "optimized-v3",
+  "category": "training",
+  "cost_event_id": "cost-TC-gptrans-infrastructure-optimized-100k-s42-v3-planned",
+  "evidence_ref": "experiments/gptrans_infrastructure_t4_100k/followup/timing/authority.json",
+  "hardware": "Tesla_T4x2_shared_allocation",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0.3333333333333333
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.3333333333333333
+    }
+  },
+  "platform": "kaggle3",
+  "run_id": "gptrans-infrastructure-t4-100k-s42-v3:optimized:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-gptrans-infrastructure-optimized-100k-s42-v3"
+}
