@@ -32,13 +32,12 @@ def _validate_campaign_reference(previous, *, package_dir, package, reference_pa
         raise ValueError("Frozen slot1 Spec source pin changed")
     first = ExperimentSpec(json.loads(first_text))
     frozen = campaign["arms"]["reference"]
-    from .family_training_recipe import FamilyRecipe
-    from .family_training_runner import METADATA
+    from .family_training_runner import _recipe_configuration
     contract_text = read_packaged_text(Path(package_dir), frozen["contract"]["path"])
     if hashlib.sha256(contract_text.encode()).hexdigest() != frozen["contract"]["sha256"]:
         raise ValueError("Frozen campaign reference recipe source pin changed")
     record = json.loads(contract_text)
-    recipe = FamilyRecipe.from_dict({k: v for k, v in record.items() if k not in METADATA})
+    recipe = _recipe_configuration(record)
     if reference_package_dir is None:
         raise ValueError("Slot2 requires the independently accepted slot1 source package")
     original = verify_experiment_source_package(Path(reference_package_dir))

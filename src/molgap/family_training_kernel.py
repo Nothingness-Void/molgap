@@ -70,6 +70,9 @@ class FamilyKernel:
         if str(torch.__version__).split("+", 1)[0] != recipe.torch_version:
             raise ValueError("Installed Torch differs from the frozen execution pin")
         self.recipe, self.device = recipe, torch.device(device)
+        # Only the native reference enables safety fill for the qualification run.
+        self._qualification_memory_fill = False
+        self._qualification_execution_observer = None
         self.model, self.initialization = load_family_model(recipe, initial_state)
         self.model.to(self.device)
         self.optimizer = make_family_optimizer(recipe, self.model.parameters())
@@ -108,28 +111,34 @@ class FamilyKernel:
         else:
             from .family_training_core import normalized_gap_update
             from .gptrans_execution_backend import prepared_forward
-            batch = self._gptrans_batch(cpu_batch, training=True)
-            if self.recipe.mode == "degree_aggregate_correspondence_ema999":
-                from .family_training_core import optimizer_update
-                from .gptrans_research_campaign import AUX_WEIGHT
-                def objective():
-                    prediction = prepared_forward(self.model, batch).reshape(-1)
-                    gap = (prediction - (batch.y.reshape(-1).float() - mean) / std).abs()
-                    auxiliary = self.model._correspondence_loss
-                    if auxiliary is None:
-                        raise RuntimeError("Missing clean atom/bond correspondence loss")
-                    self.model._auxiliary_metric = auxiliary.detach()
-                    return gap.mean() + AUX_WEIGHT * auxiliary, (gap.detach().sum(), int(batch.num_graphs))
-                loss, (absolute, rows) = optimizer_update(self.model, self.optimizer, objective,
-                    clip_norm=self.recipe.gradient_clip, check_finite=check_finite,
-                    clip_parameters=self._clip_parameters)
-                self.model._correspondence_loss = None
-            else:
-                loss = normalized_gap_update(self.model, self.optimizer, batch, mean, std,
-                    forward=prepared_forward, clip_norm=self.recipe.gradient_clip,
-                    check_finite=check_finite, cast_target_float=True,
-                    clip_parameters=self._clip_parameters)
-                absolute, rows = loss * int(batch.num_graphs), int(batch.num_graphs)
+            from .training_reproducibility import deterministic_memory_fill_context
+            with deterministic_memory_fill_context(enabled=self._qualification_memory_fill):
+                if self._qualification_execution_observer is not None:
+                    self._qualification_execution_observer("before_update")
+                batch = self._gptrans_batch(cpu_batch, training=True)
+                if self.recipe.mode == "degree_aggregate_correspondence_ema999":
+                    from .family_training_core import optimizer_update
+                    from .gptrans_research_campaign import AUX_WEIGHT
+                    def objective():
+                        prediction = prepared_forward(self.model, batch).reshape(-1)
+                        gap = (prediction - (batch.y.reshape(-1).float() - mean) / std).abs()
+                        auxiliary = self.model._correspondence_loss
+                        if auxiliary is None:
+                            raise RuntimeError("Missing clean atom/bond correspondence loss")
+                        self.model._auxiliary_metric = auxiliary.detach()
+                        return gap.mean() + AUX_WEIGHT * auxiliary, (gap.detach().sum(), int(batch.num_graphs))
+                    loss, (absolute, rows) = optimizer_update(self.model, self.optimizer, objective,
+                        clip_norm=self.recipe.gradient_clip, check_finite=check_finite,
+                        clip_parameters=self._clip_parameters)
+                    self.model._correspondence_loss = None
+                else:
+                    loss = normalized_gap_update(self.model, self.optimizer, batch, mean, std,
+                        forward=prepared_forward, clip_norm=self.recipe.gradient_clip,
+                        check_finite=check_finite, cast_target_float=True,
+                        clip_parameters=self._clip_parameters)
+                    absolute, rows = loss * int(batch.num_graphs), int(batch.num_graphs)
+                if self._qualification_execution_observer is not None:
+                    self._qualification_execution_observer("after_update")
         if self.ema is not None:
             self.ema.update(self.model)
         return loss, absolute, rows
@@ -157,7 +166,7 @@ class FamilyKernel:
     def close(self):
         self.weight_view.clear()
 
-    def evaluate(self, loaders, *, weights=None):
+    def evaluate(self, loaders, *, weights=None, on_evaluation=None):
         """Only the explicitly selected internal-development view is consumed."""
         import math
         from types import SimpleNamespace
@@ -165,6 +174,8 @@ class FamilyKernel:
         data = loaders.data
         if self.recipe.identity != loaders.recipe.identity or data.development is None:
             raise ValueError("No matching selected development role")
+        if on_evaluation is not None and not callable(on_evaluation):
+            raise TypeError("Evaluation observer must be a trusted callable")
         weights = weights or self.recipe.selection.rsplit("-", 1)[1]
         if weights not in {"live", "ema"} or (weights == "ema" and self.ema is None):
             raise ValueError("Unavailable evaluation weights")
@@ -175,8 +186,11 @@ class FamilyKernel:
                 lambda model, batch: self.forward(batch), lambda graphs: loaders.dev(),
                 self.model, None, data.development, self.recipe.target_mean_eV, self.recipe.target_std_eV,
                 weights="live", device="cpu", source_idx_start=data.development_source_start)
-        if not math.isfinite(result["mae_eV"]):
-            raise RuntimeError("Development predictions became nonfinite")
+            if not math.isfinite(result["mae_eV"]):
+                raise RuntimeError("Development predictions became nonfinite")
+            # Selection consumes the installed view before live tensors restore.
+            if on_evaluation is not None:
+                on_evaluation(result)
         return result
 
 

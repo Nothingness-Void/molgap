@@ -207,8 +207,6 @@ class _ExecutionCapture:
             (kernel.optimizer, "step", "optimizer"),
             (kernel, "evaluate", "development"),
             (session, "_flush_metrics", "metric_sync"),
-            (session, "state_dict", "checkpoint_state"),
-            (session, "checkpoint", "checkpoint_publish"),
             (session, "selected", "selected_publish"),
             (session, "pass_finished", "trace_publish"),
             (session, "_finish_pass", "pass_end"),
@@ -216,6 +214,14 @@ class _ExecutionCapture:
             (session.schedule, "after_step", "schedule_after"),
         ):
             self._wrap(obj, name, label)
+        if getattr(session, "checkpoint_builder", None) is None:
+            self._wrap(session, "state_dict", "checkpoint_state")
+            self._wrap(session, "checkpoint", "checkpoint_publish")
+        else:
+            self._wrap(session, "_checkpoint_state", "checkpoint_state")
+            self._wrap(session, "checkpoint_builder", "checkpoint_publish")
+        from . import experiment_family_workflow
+        self._wrap(experiment_family_workflow, "_finite_tree", "finite_validation")
         if kernel.ema is not None:
             self._wrap(kernel.ema, "update", "ema")
         if kernel.recipe.family == "gptrans_t":

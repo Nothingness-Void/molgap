@@ -147,9 +147,17 @@ class SessionOutputs:
         self.stage = StageRecorder(self.root / "canonical_trace.json", context, "downstream",
             semantics, trajectory_id=trajectory_id,
             device_time_semantics="sum_over_devices" if self.bounded_pair else None)
+        from .training_logging import TrainingLogger, TrainingLogPolicy
+        self.logger = TrainingLogger(self.root, context, self.recipe,
+            TrainingLogPolicy.from_dict(record.get("logging")),
+            observations=self.stage.recorder.record["observations"],
+            observation_train_unit=semantics["live_train_metric"]["unit"])
         rows = self.stage.recorder.record["observations"]
         self.previous_cumulative = rows[-1]["cumulative_wall_time_seconds"] if rows and self.bounded_pair else 0.
         self.segment_started = self.previous_observation = time.perf_counter()
+
+    def batch_finished(self, progress, *, learning_rates):
+        self.logger.progress(progress, learning_rates=learning_rates)
 
     def selected(self, progress, weights, state, evaluation):
         _finite_tree(state, "selected.model")
@@ -161,6 +169,12 @@ class SessionOutputs:
         if evaluation is not None:
             atomic_torch_save(self.pending / "development_predictions.pt", {"context": self.context.to_dict(),
                 **{key: evaluation[key].detach().cpu() for key in ("source_idx", "target_eV", "prediction_eV")}})
+
+    def checkpoint_from_builder(self, progress, state_builder):
+        """Consume a trusted synchronous producer; the writer validates all state."""
+        if not callable(state_builder):
+            raise TypeError("Checkpoint state builder must be callable")
+        self.checkpoint(progress, state_builder())
 
     def checkpoint(self, progress, state):
         if self.pending_pass is not None and self.pending_pass[0].optimizer_step != progress.optimizer_step:
@@ -213,8 +227,10 @@ class SessionOutputs:
             from .experiment_resume import create_resume_bundle
             destination = self.root.parent / "checkpoint_chunks" / self.context.arm_id / f"pass_{progress.pass_index:02d}"
             create_resume_bundle(self.root, self.context, self.resume_trajectory, destination)
+        self.logger.checkpoint_finished(progress)
 
     def pass_finished(self, progress, metrics):
+        self.logger.pass_finished(progress, metrics)
         fields = {"live_train_metric": metrics["normalized_train_gap_mae"]}
         if metrics["development"] is not None:
             fields["ema_dev_metric" if self.recipe.selection.endswith("ema") else "live_dev_metric"] = metrics["development"]["mae_eV"]

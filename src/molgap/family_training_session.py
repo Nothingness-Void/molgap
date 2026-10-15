@@ -155,7 +155,7 @@ def validate_session_resume(recipe, state):
 class FamilyTrainingSession:
     """One algorithm at all scales; scale-specific contracts select explicit policies."""
     def __init__(self, kernel: FamilyKernel, loaders: FamilyLoaders, *, checkpoint,
-                 selected, pass_finished):
+                 selected, pass_finished, batch_finished=None, checkpoint_builder=None):
         if not isinstance(kernel, FamilyKernel) or not isinstance(loaders, FamilyLoaders):
             raise TypeError("Expected family kernel and persistent input pool")
         if kernel.recipe.identity != loaders.recipe.identity:
@@ -165,6 +165,11 @@ class FamilyTrainingSession:
         self.kernel, self.loaders, self.recipe = kernel, loaders, kernel.recipe
         self.schedule = ContractSchedule(kernel)
         self.checkpoint, self.selected, self.pass_finished = checkpoint, selected, pass_finished
+        if batch_finished is not None and not callable(batch_finished):
+            raise TypeError("Batch reporting must be callable")
+        if checkpoint_builder is not None and not callable(checkpoint_builder):
+            raise TypeError("Checkpoint builder sink must be a trusted callable")
+        self.batch_finished, self.checkpoint_builder = batch_finished, checkpoint_builder
         self.progress = LoopProgress(0, 0, 0, 0, "running")
         self.pending_absolute, self.pending_rows = [], 0
         self._metric_host, self._metric_dtype = [], None
@@ -196,8 +201,8 @@ class FamilyTrainingSession:
             "best_development_mae_eV": self.best, "selected_step": self.selected_step,
             "optimizer_state_ids": sorted(optimizer_state["state"])}
 
-    def state_dict(self):
-        from .experiment_family_workflow import _finite_tree, tensor_safe_rng_state
+    def _checkpoint_state(self):
+        from .experiment_family_workflow import tensor_safe_rng_state
         from .training_reproducibility import capture_rng_state
         optimizer_state = self.kernel.optimizer.state_dict()
         state = {"model": self.kernel.model.state_dict(), "optimizer": optimizer_state,
@@ -206,6 +211,11 @@ class FamilyTrainingSession:
             "rng_state": tensor_safe_rng_state(capture_rng_state()), "cursor": self._cursor(optimizer_state),
             "optimizer_step": self.progress.optimizer_step,
             "sample_presentations": self.progress.sample_presentations}
+        return state
+
+    def state_dict(self):
+        from .experiment_family_workflow import _finite_tree
+        state = self._checkpoint_state()
         _finite_tree(state, "family.checkpoint")
         return state
 
@@ -279,13 +289,22 @@ class FamilyTrainingSession:
         evaluation = None
         live_evaluation = None
         if self.recipe.dataset.development:
-            evaluation = self.kernel.evaluate(self.loaders)
+            observed = []
+            def select_evaluation(result):
+                if observed or not self.kernel.weight_view.busy:
+                    raise RuntimeError("Evaluation observer requires one active weight view")
+                observed.append(result)
+                if self.best is None or result["mae_eV"] < self.best:
+                    weights = self.recipe.selection.rsplit("-", 1)[1]
+                    self.selected(progress, weights, self.kernel.model.state_dict(), result)
+                    self.selected_step = progress.optimizer_step
+                    self.best = result["mae_eV"]
+            evaluation = self.kernel.evaluate(self.loaders, on_evaluation=select_evaluation)
+            if len(observed) != 1 or observed[0] is not evaluation:
+                raise RuntimeError("Evaluation adapter did not retain its observed result")
             from .family_training_recipe import BOUNDED_MODES
             if self.recipe.mode in BOUNDED_MODES and self.recipe.ema_decay is not None:
                 live_evaluation = self.kernel.evaluate(self.loaders, weights="live")
-            if self.best is None or evaluation["mae_eV"] < self.best:
-                self._select(progress, evaluation)
-                self.best = evaluation["mae_eV"]
         metrics = {"normalized_train_gap_mae": metric, "development": evaluation}
         if live_evaluation is not None:
             metrics["development_live"] = live_evaluation
@@ -298,7 +317,12 @@ class FamilyTrainingSession:
             with finite_validation_scope():
                 if progress.status == "complete" and not self.recipe.dataset.development:
                     self._select(progress)
-                self.checkpoint(progress, self.state_dict())
+                if self.checkpoint_builder is None:
+                    self.checkpoint(progress, self.state_dict())
+                else:
+                    # Registered publication validates the full snapshot once;
+                    # generic callbacks still receive independently checked state.
+                    self.checkpoint_builder(progress, self._checkpoint_state)
         except Exception:
             self.progress = LoopProgress(progress.optimizer_step, progress.sample_presentations,
                 progress.pass_index, progress.next_batch, "persistence_failed")
@@ -315,12 +339,23 @@ class FamilyTrainingSession:
                 raise RuntimeError("Family kernel metric exposure differs from batch rows")
             self.pending_absolute.append(absolute)
             self.pending_rows += rows
+        def report(progress):
+            self.batch_finished(progress, learning_rates=[group["lr"] for group in self.kernel.optimizer.param_groups])
         try:
+            if self.recipe.dataset.development:
+                from inspect import Parameter, signature
+                parameters = signature(self.kernel.evaluate).parameters
+                observer = parameters.get("on_evaluation")
+                if not (observer is not None and observer.kind in {
+                        Parameter.POSITIONAL_OR_KEYWORD, Parameter.KEYWORD_ONLY}) and not any(
+                        item.kind == Parameter.VAR_KEYWORD for item in parameters.values()):
+                    raise TypeError("Evaluation adapter must accept the on_evaluation keyword")
             return run_training_loop(self.kernel.model, self.recipe.loop_plan, self.loaders.train,
                 step, self._persist, start_step=self.progress.optimizer_step,
                 before_pass=self.schedule.before_pass, before_step=self.schedule.before_step,
                 after_step=self.schedule.after_step, after_pass=self._finish_pass,
-                observe_batch=observe, should_pause=should_pause)
+                observe_batch=observe, should_pause=should_pause,
+                report_progress=report if self.batch_finished is not None else None)
         finally:
             self.close()
 

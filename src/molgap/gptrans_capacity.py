@@ -65,7 +65,8 @@ MLP and no new coordinate, path or feature cache.
         if flat_target is None:
             flat_target = _flat_bond_targets(graph, target, node.shape[1])
         update = node.new_zeros(node.shape[0] * node.shape[1], node.shape[-1])
-        update = torch.index_add(update, 0, flat_target, message)
+        # This fresh zero buffer has no other readers; do not copy it before sum.
+        update.index_add_(0, flat_target, message)
         update = update.view_as(node)
         return self.core(node + update, pair, padding)
 

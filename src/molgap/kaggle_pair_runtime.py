@@ -11,6 +11,7 @@ from .experiment_execution import validate_execution_plan
 from .experiment_family_workflow import _json
 from .experiment_spec import ExperimentSpec
 from .training_reproducibility import atomic_json
+from .training_logging import forward_training_logs
 from .experiment_allocation import AllocationLedger
 
 
@@ -148,6 +149,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 env.update(CUDA_VISIBLE_DEVICES=str(job["device"]), PYTHONHASHSEED="42",
                            CUBLAS_WORKSPACE_CONFIG=":4096:8", PYTHONPATH=str(source_root / "src"))
                 log = (arm_output / (phase + ".log")).open("a", encoding="utf-8")
+                log_offset = log.tell()
                 try:
                     process = subprocess.Popen(command, cwd=source_root, env=env,
                                                stdout=log, stderr=subprocess.STDOUT)
@@ -156,9 +158,12 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                     state["terminal_status"] = "failed"
                     state["exit_reason"] = phase + "_worker_spawn_" + type(exc).__name__
                     raise
-                workers.append((process, log, {**job, "started": time.perf_counter()}))
+                workers.append((process, log, {**job, "started": time.perf_counter(), "log_offset": log_offset}))
             def poll_workers():
                 for process, _, item in workers:
+                    if phase == "train":
+                        item["log_offset"] = forward_training_logs(
+                            output / item["arm_id"] / "train.log", item["log_offset"], arm_id=item["arm_id"])
                     if process.poll() is not None and "finished" not in item:
                         item["finished"] = time.perf_counter()
                 return any(p.returncode is None for p, _, _ in workers)
@@ -206,8 +211,11 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 "returncode": p.returncode,
                 "worker_wall_seconds": j.get("finished", time.perf_counter()) - j["started"]}
                 for p, _, j in workers]
-            for _, log, _ in workers:
+            for _, log, item in workers:
                 log.close()
+                if phase == "train":
+                    item["log_offset"] = forward_training_logs(
+                        output / item["arm_id"] / "train.log", item["log_offset"], arm_id=item["arm_id"])
             report["phases"].append(phase_record)
             report["pair_process_wall_seconds"] = time.perf_counter() - started
             report["scope"] = "orchestration window excluding bootstrap and queue; not per-arm native device cost"
