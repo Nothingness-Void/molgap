@@ -1,0 +1,53 @@
+{
+  "run_id": "pcqm-k1-norm-ablation-100k-s42",
+  "account": "nothingnessvoid",
+  "title": "MolGap K1 Norm Ablation 100K S42",
+  "kernel": "nothingnessvoid/molgap-k1-norm-ablation-100k-s42",
+  "source_dataset": "nothingnessvoid/molgap-k1-norm-ablation-100k-s42-src",
+  "dataset": "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1",
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "accelerator": "NvidiaTeslaT4",
+  "device_count": 2,
+  "cpu_cores": 4,
+  "memory_gib": 30,
+  "allocation_wall_limit_seconds": 28800,
+  "cleanup_reserve_seconds": 180,
+  "train_rows": 100000,
+  "development_rows": 50000,
+  "seed": 42,
+  "torch_version": "2.11.0",
+  "arms": {
+    "k1_single_bn": {
+      "family": "neural_atom_k1",
+      "mode": "reference",
+      "addon": null,
+      "epochs": 40,
+      "learning_rate": 0.0004,
+      "weight_decay": 1e-05,
+      "schedule": "cosine_epoch",
+      "warmup_units": 0,
+      "selection": "best-development-live",
+      "ema_decay": 0.999,
+      "sampler": "python-epoch-shuffle",
+      "target_mean_eV": 5.3383002281188965,
+      "target_std_eV": 1.275090217590332,
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd"
+    },
+    "k1_ada_rmsnorm": {
+      "family": "neural_atom_k1",
+      "mode": "ada_rmsnorm",
+      "addon": "k1_ada_rmsnorm",
+      "epochs": 40,
+      "learning_rate": 0.0004,
+      "weight_decay": 1e-05,
+      "schedule": "cosine_epoch",
+      "warmup_units": 0,
+      "selection": "best-development-live",
+      "ema_decay": 0.999,
+      "sampler": "python-epoch-shuffle",
+      "target_mean_eV": 5.3383002281188965,
+      "target_std_eV": 1.275090217590332,
+      "initialization_sha256": "cb6dca79b58dd27d76569b8bd2a9ad5e18008d887352efb61249e925be33be33"
+    }
+  }
+}

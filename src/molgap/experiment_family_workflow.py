@@ -25,6 +25,8 @@ OUTPUT_FORMAT = "molgap-family-output-v1"
 ROLES = frozenset({"predictions", "selected_model", "resume", "trace", "contract"})
 EXPECTED = frozenset({"epochs", "optimizer_steps", "sample_presentations",
                       "development_rows", "source_idx_sha256", "target_sha256", "precision"})
+EXPECTED_FAMILY = frozenset({"completed_passes", "next_batch", "optimizer_steps", "sample_presentations",
+                             "development_rows", "source_idx_sha256", "target_sha256", "precision"})
 
 
 def _json(path: Path) -> dict:
@@ -762,17 +764,27 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
                 raise ValueError("Missing or unknown same-run acceptance fields")
             arm = arms[entry["arm_id"]]
             artifact_adapter(entry["adapter"], (arm["family"]["name"], arm["family"]["version"]))
-            for key in ("family", "base", "initialization", "data"):
+            for key in ("family", "base", "data"):
                 if arm[key] != reference[key]:
                     raise ValueError("Same-run peer identity differs: " + key)
+            if (arm["initialization"]["kind"], arm["initialization"]["seed"]) != (
+                reference["initialization"]["kind"], reference["initialization"]["seed"]
+            ):
+                raise ValueError("Same-run peer identity differs: initialization")
+            if not arm.get("addons") and arm["initialization"] != reference["initialization"]:
+                raise ValueError("Same-run peer identity differs: initialization")
             for key in ("sampler", "transform", "overrides"):
                 if arm["training"][key] != reference["training"][key]:
                     raise ValueError("Same-run peer training identity differs: " + key)
             expected = entry["expected"]
-            if type(expected) is not dict or set(expected) != EXPECTED:
+            if type(expected) is not dict or set(expected) not in (EXPECTED, EXPECTED_FAMILY):
                 raise ValueError("Incomplete terminal expectations")
-            for key in ("epochs", "optimizer_steps", "sample_presentations", "development_rows"):
+            for key in ("optimizer_steps", "sample_presentations", "development_rows"):
                 _positive(expected[key], key)
+            if "epochs" in expected:
+                _positive(expected["epochs"], "epochs")
+            if "completed_passes" in expected:
+                _positive(expected["completed_passes"], "completed_passes")
             for key in ("source_idx_sha256", "target_sha256"):
                 _digest(expected[key], key)
             if expected["precision"] not in {"fp32", "fp16", "bf16"}:
@@ -835,10 +847,14 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
                 raise ValueError("Missing or unknown acceptance plan fields")
             arm = expected_arms[entry["arm_id"]]
             artifact_adapter(entry["adapter"], (arm["family"]["name"], arm["family"]["version"]))
-            if type(entry["expected"]) is not dict or set(entry["expected"]) != EXPECTED:
+            if type(entry["expected"]) is not dict or set(entry["expected"]) not in (EXPECTED, EXPECTED_FAMILY):
                 raise ValueError("Incomplete terminal expectations")
-            for key in ("epochs", "optimizer_steps", "sample_presentations", "development_rows"):
+            for key in ("optimizer_steps", "sample_presentations", "development_rows"):
                 _positive(entry["expected"][key], key)
+            if "epochs" in entry["expected"]:
+                _positive(entry["expected"]["epochs"], "epochs")
+            if "completed_passes" in entry["expected"]:
+                _positive(entry["expected"]["completed_passes"], "completed_passes")
             for key in ("source_idx_sha256", "target_sha256"):
                 _digest(entry["expected"][key], key)
             if entry["expected"]["precision"] not in {"fp32", "fp16", "bf16"}:

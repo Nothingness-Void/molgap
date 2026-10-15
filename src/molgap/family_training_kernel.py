@@ -27,8 +27,12 @@ def load_family_model(recipe, initial_state):
             raise ValueError("Frozen initialization tensor keys/shape/dtype differ from the base model")
         model.load_state_dict(state, strict=True)
     if recipe.family == "neural_atom_k1":
-        from .qm9_neural_atom import make_encoder
-        model = make_encoder("neural_atom_k1")
+        if recipe.mode == "ada_rmsnorm":
+            from .k1_ada_rmsnorm import make_k1_ada_rmsnorm
+            model = make_k1_ada_rmsnorm()
+        else:
+            from .qm9_neural_atom import make_encoder
+            model = make_encoder("neural_atom_k1")
         exact_load(model)
         if recipe.mode == "ssma":
             from .k1_joint_aggregation import attach_k1_joint_aggregation

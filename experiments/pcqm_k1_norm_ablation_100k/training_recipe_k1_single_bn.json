@@ -1,0 +1,66 @@
+{
+  "format": "molgap-family-training-recipe-v1",
+  "family": "neural_atom_k1",
+  "mode": "reference",
+  "seed": 42,
+  "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "dataset": {
+    "manifest": "pcqm4mv2-ogb-fixed-100k-v1/manifest.json",
+    "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "development": true
+  },
+  "train_rows": 100000,
+  "development_rows": 50000,
+  "optimizer_steps": 31240,
+  "learning_rate": 0.0004,
+  "weight_decay": 1e-05,
+  "schedule": {
+    "kind": "cosine_epoch",
+    "total_units": 40,
+    "minimum_lr": 1e-06,
+    "warmup_units": 0,
+    "reference_epochs": 60
+  },
+  "selection": "best-development-live",
+  "sampler": "python-epoch-shuffle",
+  "checkpoint_every": 128,
+  "target_mean_eV": 5.3383002281188965,
+  "target_std_eV": 1.275090217590332,
+  "ema_decay": 0.999,
+  "batch_size": 128,
+  "gradient_clip": 1.0,
+  "finite_check_every": 50,
+  "drop_last": true,
+  "torch_version": "2.11.0",
+  "execution_policy": {
+    "name": "shared-family-accelerated",
+    "family": "neural_atom_k1",
+    "cpu_layout": true,
+    "precision": "fp32",
+    "tf32": false,
+    "optimizer": "native-adamw",
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "ema": "bound-foreach",
+    "torch_version": "2.11.0"
+  },
+  "acceptance_requirements": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720,
+    "completed_passes": 40,
+    "next_batch": 0,
+    "development_rows": 50000,
+    "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+    "target_sha256": "a1c0b711815225f0bccee905419d124174e1bf01c76877f5c661b063ee170137",
+    "precision": "fp32"
+  },
+  "train_role_identity": "1055370f70f8a5b4ee4548fcc12f3f27a053e3ae07f8932c009205ee61f12d00",
+  "development_role_identity": "b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+  "logging": {
+    "mode": "epoch",
+    "interval": null
+  }
+}

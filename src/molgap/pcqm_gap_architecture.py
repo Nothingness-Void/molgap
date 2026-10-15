@@ -2321,36 +2321,36 @@ def make_pcqm_gap_encoder(candidate: str):
     if candidate == (
         "ogb_distance_angle_relative_value_triangle_edge_state_graph_state9"
     ):
-        from .pcqm_relative_value import make_relative_value_encoder
-
-        return make_relative_value_encoder(candidate)
+        from importlib import import_module
+        mod = "molgap.pcqm_relative_value"
+        return import_module(mod).make_relative_value_encoder(candidate)
     if candidate == (
         "ogb_distance_angle_hop_path_triangle_edge_state_graph_state9"
     ):
-        from .pcqm_hop_path import make_hop_path_encoder
-
-        return make_hop_path_encoder(candidate)
+        from importlib import import_module
+        mod = "molgap.pcqm_hop_path"
+        return import_module(mod).make_hop_path_encoder(candidate)
     if candidate in {
         "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_descriptor",
         "ogb_distance_angle_triangle_edge_state_graph_state9_conjugated_component",
     }:
-        from .pcqm_conjugated_state import make_conjugated_encoder
-
-        return make_conjugated_encoder(candidate)
+        from importlib import import_module
+        mod = "molgap.pcqm_conjugated_state"
+        return import_module(mod).make_conjugated_encoder(candidate)
     if candidate in {
         "ogb_distance_angle_pna_statistics_triangle_edge_state_graph_state9",
         "ogb_distance_angle_retention_triangle_edge_state_graph_state9",
     }:
-        from .pcqm_local_statistics import make_local_statistics_encoder
-
-        return make_local_statistics_encoder(candidate)
+        from importlib import import_module
+        mod = "molgap.pcqm_local_statistics"
+        return import_module(mod).make_local_statistics_encoder(candidate)
     if candidate in {
         "ogb_distance_angle_directed_bond_triangle_edge_state_graph_state9",
         "ogb_distance_angle_signnet_lappe_triangle_edge_state_graph_state9",
     }:
-        from .pcqm_directed_spectral import make_directed_spectral_encoder
-
-        return make_directed_spectral_encoder(candidate)
+        from importlib import import_module
+        mod = "molgap.pcqm_directed_spectral"
+        return import_module(mod).make_directed_spectral_encoder(candidate)
     common = {
         "in_channels": 9,
         "edge_dim": 3,

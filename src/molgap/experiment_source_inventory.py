@@ -50,6 +50,7 @@ COMMON_SOURCE_FILES = (
     'src/molgap/gptrans_memory.py',
     'src/molgap/gptrans_screen_workflow.py',
     'src/molgap/gptrans_variants.py',
+    'src/molgap/k1_ada_rmsnorm.py',
     'src/molgap/k1_joint_aggregation.py',
     'src/molgap/k1_clean_second.py',
     'src/molgap/k1_screen_training.py',

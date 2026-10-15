@@ -17,7 +17,7 @@ RECIPE_FORMAT = "molgap-family-training-recipe-v1"
 ADAMW_BETAS = (.9, .999)
 ADAMW_EPSILON = 1e-8
 MODES = {
-    "neural_atom_k1": ("reference", "ssma", "mean2", "mean2_clean_second"),
+    "neural_atom_k1": ("reference", "ssma", "mean2", "mean2_clean_second", "ada_rmsnorm"),
     "gptrans_t": ("reference", "pair_prenorm", "centered_logits", "memory_value", "memory_message", "degree_bond_local_ema999"),
 }
 

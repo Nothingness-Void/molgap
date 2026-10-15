@@ -1,0 +1,136 @@
+{
+  "trajectory": {
+    "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm",
+    "record_mode": "prospective",
+    "owner": "desktop",
+    "track": "B",
+    "family_id": "pcqm-k1-norm-ablation-100k-s42",
+    "question": "Does replacing K1 BatchNorm with AdaRMSNorm eliminate EMA running-stat degradation without degrading single-forward PCQM4Mv2 Gap MAE?",
+    "hypothesis": {
+      "hypothesis_id": "H-TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm",
+      "observed_deficiency": "K1 BatchNorm suffers from EMA running-mean/var drift and requires Clean-BN recalibration.",
+      "supporting_evidence_ids": [
+        "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014"
+      ],
+      "alternative_explanations": [
+        "LayerNorm substitution",
+        "Static RMSNorm without scale/shift adaptation",
+        "Frozen BatchNorm"
+      ],
+      "changed_mechanism": "Replace 18 BatchNorm1d layers in 9 LocalGPSBlocks with dimension-matched AdaRMSNorm (alpha=0, beta=1 init).",
+      "cheapest_falsifier": "one matched seed42 T4x2 execution diagnostic comparing single-forward BN vs AdaRMSNorm",
+      "related_closed_family_ids": [
+        "family-topology-t4-execution",
+        "family-100k-operator-profile"
+      ],
+      "expected_native_cost_ref": "cost-TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-planned",
+      "decision_changed_if_positive": "Adopt AdaRMSNorm as standard normalization layer for K1 and future PPGT architectures if non-inferiority \u0394MAE >= -0.5 meV is achieved.",
+      "decision_changed_if_negative": "Retain BatchNorm baseline and investigate alternative norm/residual formulations.",
+      "historical_unknowns": []
+    },
+    "state_at_start": {
+      "source_commit": "ea0c400c34551afe428fda58de97e368f61dfbcf",
+      "source_config_identity": "c81ce0b63d994617afb3220d7b8f919bd336ce051e80becfbc673a14a4479fc4",
+      "contract_refs": [
+        "experiments/pcqm_k1_norm_ablation_100k/protocol.md",
+        "experiments/pcqm_k1_norm_ablation_100k/config.json",
+        "experiments/pcqm_k1_norm_ablation_100k/evidence_review.md"
+      ],
+      "reference_ids": [],
+      "parent_trajectory_ids": [],
+      "prior_trajectory_ids": [
+        "TB-family-topology-t4-100k-k1_mean2-s42"
+      ],
+      "prior_evidence_ids": [
+        "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014"
+      ],
+      "role_snapshot_refs": [
+        "experiments/pcqm_k1_norm_ablation_100k/role_plan.json"
+      ],
+      "budget_snapshot_ref": "experiments/pcqm_k1_norm_ablation_100k/config.json"
+    },
+    "actions": [
+      {
+        "action_id": "A001",
+        "type": "execution_diagnostic",
+        "source_commit": "ea0c400c34551afe428fda58de97e368f61dfbcf",
+        "run_ids": [
+          "pcqm-k1-norm-ablation-100k-s42:k1_ada_rmsnorm:downstream"
+        ],
+        "attempt_ids": [
+          "pcqm-k1-norm-ablation-100k-s42-v1"
+        ],
+        "evidence_refs": [
+          "experiments/pcqm_k1_norm_ablation_100k/config.json"
+        ],
+        "cost_event_ids": [
+          "cost-TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-planned"
+        ]
+      }
+    ],
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "decision": {
+      "decision_ref": "experiments/pcqm_k1_norm_ablation_100k/decision.md",
+      "outcome": "ACTIVE",
+      "next_allowed_actions": [
+        "one authorized execution diagnostic"
+      ],
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    }
+  },
+  "decision_state": {
+    "known_trajectory_ids": [],
+    "known_evidence_ids": [],
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_NORMALIZATION_ABLATION",
+      "DEFER"
+    ],
+    "chosen_action": "RUN_NORMALIZATION_ABLATION",
+    "policy_id": "pcqm-k1-norm-ablation-100k-s42",
+    "policy_version": "v1",
+    "budget_snapshot_ref": "experiments/pcqm_k1_norm_ablation_100k/config.json",
+    "role_snapshot_refs": [
+      "experiments/pcqm_k1_norm_ablation_100k/role_plan.json"
+    ],
+    "state_timestamp": "2026-10-15T18:45:42.776820+00:00",
+    "source_commit": "ea0c400c34551afe428fda58de97e368f61dfbcf"
+  },
+  "costs": [
+    {
+      "schema": "molgap-cost-event-v1",
+      "cost_event_id": "cost-TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-planned",
+      "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm",
+      "action_id": "A001",
+      "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_ada_rmsnorm:downstream",
+      "attempt_id": "pcqm-k1-norm-ablation-100k-s42-v1",
+      "category": "training",
+      "platform": "kaggle1",
+      "hardware": "Tesla_T4x2_shared_allocation",
+      "evidence_ref": "experiments/pcqm_k1_norm_ablation_100k/config.json",
+      "measurement": {
+        "device_hours": {
+          "status": "estimated",
+          "value": 8.0
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 4.0
+        },
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        }
+      }
+    }
+  ]
+}

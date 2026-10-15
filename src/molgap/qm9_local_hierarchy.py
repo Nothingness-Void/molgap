@@ -175,11 +175,12 @@ def build_cache(output_root: Path, *, source_commit: str, shard_size: int = 2_00
 
     from rdkit import rdBase
 
-    from .qm9_data import (
-        fixed_split_from_pool,
-        load_qm9_records,
-        prepare_qm9_files,
-    )
+    from importlib import import_module
+    _mod = "molgap.qm9_data"
+    qm9_data = import_module(_mod)
+    fixed_split_from_pool = qm9_data.fixed_split_from_pool
+    load_qm9_records = qm9_data.load_qm9_records
+    prepare_qm9_files = qm9_data.prepare_qm9_files
 
     output_root.mkdir(parents=True, exist_ok=True)
     manifest_path = output_root / "manifest.json"

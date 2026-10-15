@@ -119,7 +119,8 @@ def validate_screen_recipe(spec, arm_id, record):
     if any(record.get(role + "_role_identity") != value["usage_sha256"] for role, value in roles.items()):
         raise ValueError("Contract role usage identity differs from Spec")
     modules = {"ssma": "k1_joint_aggregation.py", "mean2": "k1_screen_training.py",
-        "mean2_clean_second": "k1_screen_training.py", "pair_prenorm": "gptrans_variants.py",
+        "mean2_clean_second": "k1_screen_training.py", "ada_rmsnorm": "k1_ada_rmsnorm.py",
+        "pair_prenorm": "gptrans_variants.py",
         "centered_logits": "gptrans_variants.py", "memory_value": "gptrans_memory.py", "memory_message": "gptrans_memory.py",
         "degree_bond_local_ema999": "gptrans_bond_local.py"}
     if recipe.mode != "reference" and arm["addons"][0]["source_sha256"] != normalized_source_sha256(Path(__file__).with_name(modules[recipe.mode])):
