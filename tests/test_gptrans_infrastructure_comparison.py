@@ -134,3 +134,31 @@ def test_comparison_base_rejects_cross_round_plan_alias(declaration):
     malformed = ExperimentSpec(payload)
     with pytest.raises(ValueError, match="suffix"):
         comparison_base(malformed)
+
+
+def test_bounded_followup_keeps_full_recipe_but_pins_disposable_scope(declaration):
+    from molgap.gptrans_execution_diagnostic import configuration
+    from molgap.research_memory.trace import atomic_write, json_bytes
+    root, _, _, _ = declaration
+    base = BASE + "/followup/attribution"
+    for name in ("authority.json", "role_plan.json", "protocol.md", "decision.md"):
+        target = root / base / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(root / BASE / name, target)
+    diagnostic = root / base / "diagnostic.json"
+    atomic_write(diagnostic, json_bytes(configuration("attribution")))
+    authority_path = root / base / "authority.json"
+    authority = json.loads(authority_path.read_bytes())
+    authority.update(wall_ceiling_seconds=1200, allocated_t4_hours_ceiling=2400 / 3600,
+        source={"diagnostic": {"path": base + "/diagnostic.json", "sha256": sha256_file(diagnostic)}})
+    atomic_write(authority_path, json_bytes(authority))
+    result = freeze_comparison(root, base=base, run_version="v2")
+    spec = ExperimentSpec.from_json((root / base / "experiment_spec.json").read_text())
+    plan = json.loads((root / base / "acceptance_plan.json").read_bytes())
+    assert result["kernel"] == "nvoid912/molgap-gptrans-drift-attribution-v1"
+    assert check_plan(spec, root, plan)["status"] == "ACCEPTANCE_INPUTS_AVAILABLE"
+    record = configuration("attribution")
+    record["attribution_steps"] = 100
+    atomic_write(diagnostic, json_bytes(record))
+    with pytest.raises(ValueError, match="dimensions|roles"):
+        check_plan(spec, root, plan)

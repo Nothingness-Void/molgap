@@ -159,6 +159,8 @@ def freeze_comparison(root, *, account=ACCOUNT, base=BASE, run_version="v1"):
     if base == BASE and run_version != "v1":
         raise ValueError("The frozen v1 comparison cannot be overwritten")
     here = root / base
+    from .gptrans_execution_diagnostic import read_diagnostic
+    diagnostic = read_diagnostic(root, base)
     dynamic = ("experiment_spec.json", "acceptance_plan.json", "workflow_plan.json",
                "original", "optimized")
     if any((here / name).exists() for name in dynamic):
@@ -218,6 +220,11 @@ def freeze_comparison(root, *, account=ACCOUNT, base=BASE, run_version="v1"):
     kernel = account + "/molgap-gptrans-infrastructure-dual-100k-" + run_version
     title = "MolGap GPTrans Infrastructure Dual 100K " + run_version.upper()
     source_dataset = account + "/molgap-gptrans-infrastructure-source-" + run_version
+    if diagnostic is not None:
+        label = "Drift Attribution" if diagnostic["kind"] == "attribution" else "Execution Repeat"
+        title = "MolGap GPTrans " + label + " V1"
+        kernel = account + "/" + title.lower().replace(" ", "-")
+        source_dataset = kernel + "-source"
     timestamp = datetime.now(timezone.utc).isoformat()
     for device, (arm_id, family_version, record, base_binding, role, contract_ref) in enumerate((
         ("original", "1", old, old_base, "reference", train_contract),
@@ -253,15 +260,21 @@ def freeze_comparison(root, *, account=ACCOUNT, base=BASE, run_version="v1"):
         changed = ("retained original GPTrans-T V4 execution"
                    if arm_id == "original" else "latest shared GPTrans-T execution refinement")
         question = "Does the latest shared GPTrans-T execution refinement change fixed-100K T4 execution cost at matched exposure?"
+        if diagnostic is not None:
+            question = ("Where do forward, gradients, optimizer, EMA and fill policy first diverge under matched input/RNG?"
+                if diagnostic["kind"] == "attribution" else
+                "Does the GPTrans update speed benefit repeat with common CPU/loader settings and exchanged T4 assignment?")
         proposal = execution_proposal(
-            question=ExecutionQuestion("gptrans-infrastructure-execution", "RUN_GPTRANS_EXECUTION_DIAGNOSTIC",
+            question=ExecutionQuestion("gptrans-infrastructure-execution" if diagnostic is None else "gptrans-execution-followup", "RUN_GPTRANS_EXECUTION_DIAGNOSTIC",
                 question, "The latest GPTrans-T shared execution refinement lacks a matched native original profiler comparison",
                 changed, (SUPPORTING_PRIOR,), ("CPU contention", "T4 device variability", "Profiler instrumentation overhead"),
                 ("gptrans-t-v4-reference",), "retain measured execution evidence without scientific promotion",
                 "record no execution gain or regression without an extra seed", reference_ids=(SUPPORTING_PRIOR,)),
             arm=arm, trajectory_id=trajectory, source_commit=source_commit, run=run, version=run_version,
             contract_ref=contract_ref, contract_refs=[contract_ref, authority_ref, role_ref, protocol_ref],
-            authority_ref=authority_ref, role_ref=role_ref, decision_ref=decision_ref, timestamp=timestamp)
+            authority_ref=authority_ref, role_ref=role_ref, decision_ref=decision_ref, timestamp=timestamp,
+            estimated_device_hours=authority["allocated_t4_hours_ceiling"] / 2,
+            estimated_wall_hours=3.5 if diagnostic is None else authority["wall_ceiling_seconds"] / 3600)
         atomic_json(root / plan_ref, proposal)
         bindings.append({"arm_id": arm_id, "trajectory_id": trajectory, "plan_spec_ref": plan_ref,
             "plan_spec_sha256": sha256_file(root / plan_ref), "output": base + "/" + arm_id + "/rml"})
@@ -272,7 +285,8 @@ def freeze_comparison(root, *, account=ACCOUNT, base=BASE, run_version="v1"):
     result = freeze_comparison_declarations(root, base=base, experiment_id=EXPERIMENT_ID,
         logical_run_id=LOGICAL_RUN if run_version == "v1" else run,
         arms=arms, bindings=bindings, jobs=jobs, entries=entries, plan_format=FORMAT,
-        authority_ref=authority_ref, source_extras=[authority_ref, role_ref, protocol_ref, decision_ref, TARGET_MANIFEST],
+        authority_ref=authority_ref, source_extras=[authority_ref, role_ref, protocol_ref, decision_ref, TARGET_MANIFEST,
+            *([base + "/diagnostic.json"] if diagnostic is not None else [])],
         account=account, kernel=kernel, title=title, source_dataset=source_dataset,
         data_datasets=[account + "/pcqm4mv2-ogb-fixed-100k-v1"])
     return {**result, "initial_state": str(initial)}
@@ -282,7 +296,7 @@ def is_comparison(spec):
     return spec.to_dict().get("experiment_id") == EXPERIMENT_ID
 
 
-def _check_authority(root, pointer):
+def _check_authority(root, pointer, *, diagnostic=None):
     authority = _json(_load_pin(root, pointer))
     expected = {"user_authorized", "scope", "arms", "seeds", "wall_ceiling_seconds",
                 "allocated_t4_hours_ceiling", "official_validation_allowed", "source"}
@@ -291,8 +305,8 @@ def _check_authority(root, pointer):
     if (authority.get("scope") != "execution-diagnostic-only"
             or authority.get("arms") != ["original", "optimized"]
             or authority.get("seeds") != [42]
-            or authority.get("wall_ceiling_seconds") != WALL_SECONDS
-            or authority.get("allocated_t4_hours_ceiling") != ALLOCATED_T4_HOURS
+            or authority.get("wall_ceiling_seconds") != (WALL_SECONDS if diagnostic is None else diagnostic["wall_ceiling_seconds"])
+            or authority.get("allocated_t4_hours_ceiling") != (ALLOCATED_T4_HOURS if diagnostic is None else diagnostic["allocated_t4_hours_ceiling"])
             or authority.get("official_validation_allowed") is not False):
         raise ValueError("GPTrans execution diagnostic scope changed")
     return authority
@@ -382,11 +396,19 @@ def check_plan(spec, root, plan, *, initial_states=None):
             or plan["format"] != FORMAT or plan["spec_identity"] != spec.identity):
         raise ValueError("Unsupported GPTrans execution comparison")
     base = comparison_base(spec)
-    if base != BASE:
+    from .gptrans_execution_diagnostic import read_diagnostic
+    diagnostic = read_diagnostic(root, base)
+    if base != BASE and diagnostic is None:
         raise ValueError("GPTrans comparison must use the frozen declaration root")
-    if type(plan.get("authority")) is not dict or plan["authority"].get("path") != BASE + "/authority.json":
+    if base == BASE and diagnostic is not None:
+        raise ValueError("Preserve the frozen full100K comparison")
+    if type(plan.get("authority")) is not dict or plan["authority"].get("path") != base + "/authority.json":
         raise ValueError("Comparison authority path is not bound to the GPTrans declaration")
-    _check_authority(root, plan["authority"])
+    authority = _check_authority(root, plan["authority"], diagnostic=diagnostic)
+    if diagnostic is not None:
+        expected = {"path": base + "/diagnostic.json", "sha256": sha256_file(root / base / "diagnostic.json")}
+        if not isinstance(authority["source"], dict) or authority["source"].get("diagnostic") != expected:
+            raise ValueError("Diagnostic scope is not pinned by its authority")
     platform = declaration["platform"]
     if (platform["name"] != "kaggle" or platform["accelerator"] != "NvidiaTeslaT4"
             or platform["device_count"] != 2 or platform["atomic_checkpoints"] is not True
@@ -411,7 +433,7 @@ def check_plan(spec, root, plan, *, initial_states=None):
     for arm, entry in zip(arms, entries):
         if set(entry) != {"arm_id", "contract", "expected", "initial_state"}:
             raise ValueError("Unexpected GPTrans execution comparison fields")
-        expected_contract = BASE + "/" + arm["arm_id"] + "/contract.json"
+        expected_contract = base + "/" + arm["arm_id"] + "/contract.json"
         if (type(entry["contract"]) is not dict or entry["contract"].get("path") != expected_contract):
             raise ValueError("GPTrans contract path is not bound to the declaration round")
         contract_path = _load_pin(root, entry["contract"])

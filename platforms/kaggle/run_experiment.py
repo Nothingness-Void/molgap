@@ -60,11 +60,18 @@ def _workload(allocation_started):
          or all(a["addons"][0]["name"].startswith("degree_aggregate_") for a in arms)))
     k1_comparison = declaration["experiment_id"] == "k1-infrastructure-t4-100k"
     gptrans_comparison = declaration["experiment_id"] == "gptrans-infrastructure-t4-100k"
+    diagnostic = None
+    if gptrans_comparison:
+        plan_ref = declaration["prospective"]["arms"][0]["plan_spec_ref"]
+        diagnostic_path = source / plan_ref.removesuffix("/original/plan_input.json") / "diagnostic.json"
+        if diagnostic_path.is_file():
+            diagnostic = json.loads(diagnostic_path.read_bytes())
     if shared_cycle_pair or k1_comparison or gptrans_comparison:
         # Read the stdlib-only owner from the already hash-verified source archive.
         import runpy
         prepare = runpy.run_path(str(source / "src/molgap/kaggle_python_environment.py"))["prepare_python"]
-        executable, qualified = prepare(root / "runtime", deadline=time.time() + 1200,
+        remaining = 1200 if diagnostic is None else diagnostic["wall_ceiling_seconds"] - (time.perf_counter() - allocation_started)
+        executable, qualified = prepare(root / "runtime", deadline=time.time() + remaining - 60,
             source_root=source, profile="family-shared" if k1_comparison else "gptrans-shared")
         working = Path("/kaggle/working")
         (working / "environment_qualification.json").write_text(json.dumps(qualified, indent=2), encoding="utf-8")
@@ -72,7 +79,8 @@ def _workload(allocation_started):
             "--source-root", str(source), "--package-dir", str(package), "--input-root", str(mounted),
             "--launch", str(launch), "--output", str(working / "experiment"),
             "--allocation-started", repr(allocation_started)], check=True,
-            env=dict(os.environ, PYTHONPATH=str(source / "src")))
+            env=dict(os.environ, PYTHONPATH=str(source / "src")),
+            timeout=None if diagnostic is None else max(1, diagnostic["wall_ceiling_seconds"] - (time.perf_counter() - allocation_started) - 10))
         return
     # Legacy/default bootstrap remains separate from the pinned shared runtime.
     subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "numpy<2",

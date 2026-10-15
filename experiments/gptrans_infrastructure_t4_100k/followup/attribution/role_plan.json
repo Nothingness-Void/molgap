@@ -1,0 +1,19 @@
+{
+  "development": {
+    "contract_metadata_only": true,
+    "read_allowed": false,
+    "source_idx_start": 100000,
+    "source_idx_stop": 150000
+  },
+  "geometry_model_inputs": false,
+  "official_validation": false,
+  "reuse_scope": "ten-step execution attribution or bounded timing; no scientific training endpoint",
+  "target": "B3LYP Kohn-Sham Gap eV",
+  "test_challenge": false,
+  "test_dev": false,
+  "train": {
+    "disposable_updates_only": true,
+    "source_idx_start": 0,
+    "source_idx_stop": 100000
+  }
+}

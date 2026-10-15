@@ -1,0 +1,22 @@
+{
+  "allocated_t4_hours_ceiling": 0.6666666666666666,
+  "arms": [
+    "original",
+    "optimized"
+  ],
+  "official_validation_allowed": false,
+  "scope": "execution-diagnostic-only",
+  "seeds": [
+    42
+  ],
+  "source": {
+    "diagnostic": {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/timing/diagnostic.json",
+      "sha256": "8350dac0e283493e13bea41b37e066fd50c0f1da0f434d213535f987c0ba48b1"
+    },
+    "parent_authority": "experiments/gptrans_infrastructure_t4_100k/followup/authority.json",
+    "user_request": "Use both Kaggle3 slots for the approved short attribution and repeat timing tests."
+  },
+  "user_authorized": true,
+  "wall_ceiling_seconds": 1200
+}
