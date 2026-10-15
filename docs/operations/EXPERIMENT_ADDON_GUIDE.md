@@ -19,6 +19,10 @@ Training telemetry reuses [standard logging](TRAINING_LOGGING.md), configured by
 
 ## Shared Core
 
+Use the [Common API](../../src/molgap/common/README.md) for shared declarations,
+strict identity checks, SDK compatibility and SHA-pinned transport. Runtime
+exports alias existing model/addon/state/source owners; no second core is added.
+
 Reuse these modules instead of copying their logic into an experiment script:
 
 - `experiment_cli.py`: one local entry point for the shared operations below;

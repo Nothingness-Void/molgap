@@ -7,6 +7,10 @@ wrapper, monitor or RML finalizer.
 
 ## Registered family training workflow
 
+Desktop/server-neutral mechanisms use the [Common API](../../src/molgap/common/README.md).
+Supply question/owner/platform facts explicitly; keep server authority and
+frozen acceptance profiles in their existing adapters, not in common modules.
+
 The additive [registered family workflow](REGISTERED_EXPERIMENT_WORKFLOW.md)
 provides `prepare-workflow`, `accept-workflow` and incomplete `build-terminal`
 translation for K1 family/version 2 and retained GPTrans modes on Kaggle T4x2.
