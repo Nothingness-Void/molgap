@@ -1,0 +1,40 @@
+{
+  "kernel": "nvoid912/molgap-k1-infrastructure-dual-100k-v1",
+  "local_training_executed": false,
+  "model_inference_executed": false,
+  "observations": [
+    {
+      "ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/scheduler.json",
+      "sha256": "7f99681a6ba90c0420a35c6749e668b305a551df60833a180e6e0fba0c15278f"
+    },
+    {
+      "ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/metadata_retrieval.json",
+      "sha256": "415ed455a453ad37feba0e43d732604af575ec2886e72e10df730b2a24dbc7cb"
+    },
+    {
+      "ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/proof_metadata_retrieval.json",
+      "sha256": "079355f4be3a87f5c0801037eb5ba2470b9b91047243fa1c39914491f0f12f5f"
+    },
+    {
+      "ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/artifact_retrieval.json",
+      "sha256": "c701df942ac7e4059aa363bb4571ccfb0894b81cff4e41ae1cb5291500928fd5"
+    },
+    {
+      "ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/qualification_trace_retrieval.json",
+      "sha256": "fb467a84fb051f0d84d2a22846ad56547554c56c18d3375d4d7afcff79687b8e"
+    },
+    {
+      "ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/legacy_native_retrieval.json",
+      "sha256": "c7a24d5d42ebafe988286a4f25f71700971ea1b6388ef27659c622e51d9c2464"
+    },
+    {
+      "ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/trace_context_retrieval.json",
+      "sha256": "71fc1827764b2fa0c1e5ff986d19d15745b876e2e3519d7ede01cc192b503237"
+    }
+  ],
+  "observed_at": "2026-10-15T05:01:30.692205+00:00",
+  "terminal_declared_finalized_at": "2026-10-15T05:15:00+00:00",
+  "terminal_timestamp_semantics": "The caller supplied a declaration timestamp later than the actual closure observation. Immutable terminal packages are preserved; observed_at here records the actual local closure observation and must be used for chronology. Execution duration and cost come from remote monotonic observations.",
+  "transport": "version_specific_manifest_pinned_files",
+  "version": 1
+}

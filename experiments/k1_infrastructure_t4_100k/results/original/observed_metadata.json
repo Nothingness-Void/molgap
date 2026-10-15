@@ -1,0 +1,169 @@
+{
+  "allocation_ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/outputs/bootstrap_allocation.json",
+  "analysis_ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/analysis.json",
+  "cost_attribution": "one full allocated device per arm, including setup and idle tail; excludes unknown queue/pre-Python provisioning",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "original-v1",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-infrastructure-original-100k-s42-observed-v1",
+      "evidence_ref": "experiments/k1_infrastructure_t4_100k/results/original/observed_metadata.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.8626796472675
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.8626796472675
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "k1-infrastructure-t4-100k-s42-v1:original:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+    }
+  ],
+  "evidence_id": "pcqm-k1-infrastructure-original-100k-s42",
+  "local_training_executed": false,
+  "model_inference_executed": false,
+  "observed_role_sources": [
+    "platforms/_records/kaggle/k1_infrastructure_v1/result_check/outputs/experiment/original/output_manifest.json",
+    "platforms/_records/kaggle/k1_infrastructure_v1/result_check/outputs/experiment/original/canonical_trace.json",
+    "platforms/_records/kaggle/k1_infrastructure_v1/result_check/outputs/experiment/original/development_predictions.pt"
+  ],
+  "outcome": {
+    "artifact_status": "accepted",
+    "budget_decision": "stop_under_contract",
+    "comparison_status": "context_only",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_evaluated"
+  },
+  "role_use": {
+    "internal_development": "consumed",
+    "internal_train": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/k1_infrastructure_t4_100k/results/original/observed_metadata.json",
+      "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_train-training_membership",
+      "role_name": "internal_train",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "k1-infrastructure-t4-100k-s42-v1:original:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/k1_infrastructure_t4_100k/results/original/observed_metadata.json",
+      "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_train-labels_read",
+      "role_name": "internal_train",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "k1-infrastructure-t4-100k-s42-v1:original:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/k1_infrastructure_t4_100k/results/original/observed_metadata.json",
+      "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_train-metric_computed",
+      "role_name": "internal_train",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "k1-infrastructure-t4-100k-s42-v1:original:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/k1_infrastructure_t4_100k/results/original/observed_metadata.json",
+      "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-prediction_input",
+      "role_name": "internal_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "k1-infrastructure-t4-100k-s42-v1:original:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/k1_infrastructure_t4_100k/results/original/observed_metadata.json",
+      "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-labels_read",
+      "role_name": "internal_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "k1-infrastructure-t4-100k-s42-v1:original:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/k1_infrastructure_t4_100k/results/original/observed_metadata.json",
+      "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-metric_computed",
+      "role_name": "internal_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "k1-infrastructure-t4-100k-s42-v1:original:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "pcqm4mv2-ogb-fixed-100k-v1",
+      "evidence_ref": "experiments/k1_infrastructure_t4_100k/results/original/observed_metadata.json",
+      "role_event_id": "role-TC-k1-infrastructure-original-100k-s42-internal_development-selection_used",
+      "role_name": "internal_development",
+      "row_manifest_hash": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "run_id": "k1-infrastructure-t4-100k-s42-v1:original:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+    }
+  ],
+  "run_id": "k1-infrastructure-t4-100k-s42-v1:original:downstream",
+  "source_commit": "eb640c966139c72ab682cd570aed7782578a77b4",
+  "summary_ref": "experiments/k1_infrastructure_t4_100k/results/summary.json",
+  "trajectory_decision": {
+    "decision_ref": "experiments/k1_infrastructure_t4_100k/results/decision_2026-10-15.md",
+    "final": true,
+    "next_allowed_actions": [
+      "CLOSE"
+    ],
+    "outcome": "INCONCLUSIVE",
+    "reopen_conditions": [
+      "explicit new compute decision"
+    ]
+  },
+  "trajectory_id": "TC-k1-infrastructure-original-100k-s42"
+}

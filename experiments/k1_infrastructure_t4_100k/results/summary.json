@@ -1,0 +1,711 @@
+{
+  "allocation": {
+    "allocated_device_hours": 3.725359294535,
+    "allocated_device_seconds": 13411.293460326,
+    "allocation_device_count": 2,
+    "cost_status": "measured",
+    "hardware": [
+      "Tesla T4",
+      "Tesla T4"
+    ],
+    "idle_tail_reason": "No independent worker start/end timestamps; whole allocation includes the idle tail.",
+    "idle_tail_seconds": null,
+    "outside_pair_observation_seconds": 67.73109430499971,
+    "overlap": "Same allocation as experiment/allocation_ledger.json; do not double count",
+    "pair_process_wall_seconds": 6637.915635858,
+    "provisioning_before_python_seconds": null,
+    "queue_seconds": null,
+    "sealed_ledger_wall_seconds": 6705.317779811,
+    "status": "complete",
+    "wall_seconds": 6705.646730163
+  },
+  "arms": {
+    "optimized": {
+      "capture": {
+        "capture_start_optimizer_step": 120,
+        "capture_wall_seconds": 3.434792356999992,
+        "captured_updates": 16,
+        "context_peak_allocated_bytes": 576925184,
+        "context_peak_reserved_bytes": 624951296,
+        "device_events_observed": true,
+        "phases_by_host_self_time": [
+          {
+            "calls": 16,
+            "host_self_seconds": 1.632072389999962,
+            "host_total_seconds": 1.632072389999962,
+            "name": "backward"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 1.466234578999888,
+            "host_total_seconds": 1.466234578999888,
+            "name": "forward"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.15100791999964258,
+            "host_total_seconds": 0.15100791999964258,
+            "name": "optimizer"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.09072428699960255,
+            "host_total_seconds": 0.09072428699960255,
+            "name": "gradient_clip"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.027047990001392463,
+            "host_total_seconds": 3.413176619000069,
+            "name": "train_update"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.020304078999970443,
+            "host_total_seconds": 0.020304078999970443,
+            "name": "layout_enter"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.016319126999974287,
+            "host_total_seconds": 0.016319126999974287,
+            "name": "zero_grad"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.008060040999794182,
+            "host_total_seconds": 0.008060040999794182,
+            "name": "transfer"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.00282330599998204,
+            "host_total_seconds": 0.00282330599998204,
+            "name": "loader_wait"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.0015345010000373804,
+            "host_total_seconds": 0.0015345010000373804,
+            "name": "schedule_before"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.0014062059998423138,
+            "host_total_seconds": 0.0014062059998423138,
+            "name": "layout_exit"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.0005723170000919708,
+            "host_total_seconds": 0.0005723170000919708,
+            "name": "schedule_after"
+          }
+        ],
+        "runtime": {
+          "cpu_threads": 1,
+          "cuda": "12.6",
+          "device": "cuda",
+          "device_name": "Tesla T4",
+          "hip": null,
+          "torch": "2.7.1+cu126"
+        },
+        "trace_sha256": "e95dc64c2b3739dc1f01fb30216e7c9387bbe6a75027215f8812247352ce3cdf"
+      },
+      "device_trace": {
+        "device_activity_events": 46751,
+        "device_activity_union_us": 974679.7583007812,
+        "scope": "single-worker capture only; overlapping GPU intervals merged; not allocation cost or whole-run utilization"
+      },
+      "manifest_sha256": "363ff767a19c20300f190ac09b3fd8cd7b097f510b2552d08ae6bd765414fdd4",
+      "mechanical_status": "MECHANICALLY_VERIFIED",
+      "native_certificate_sha256": "21cd4103af90ffefecde856f3d19ed098f8b54bb109bd9d85ea1492e80cb84dd",
+      "preflight_seconds": 39.01605977199995,
+      "profile_report_sha256": "da46473943ecb1ce433a60a55e27e1673422ed093bd297265ad983422776578c",
+      "progress": {
+        "completed_passes": 40,
+        "next_batch": 0,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720,
+        "status": "complete"
+      },
+      "selected_pass": 40.0,
+      "selected_tensor_count": 367,
+      "train_worker_seconds": 5954.162529965,
+      "training_span_seconds": {
+        "count": 39,
+        "max": 130.65242841000054,
+        "median": 126.15524002999973,
+        "min": 123.3711390110002,
+        "q25": 124.91877434450043,
+        "q75": 128.0377691375004,
+        "sum": 4934.8414789080025
+      }
+    },
+    "original": {
+      "capture": {
+        "capture_start_optimizer_step": 120,
+        "capture_wall_seconds": 3.488510238999993,
+        "captured_updates": 16,
+        "context_peak_allocated_bytes": 576582656,
+        "context_peak_reserved_bytes": 618659840,
+        "device_events_observed": true,
+        "phases_by_host_self_time": [
+          {
+            "calls": 16,
+            "host_self_seconds": 1.5774652359999664,
+            "host_total_seconds": 1.5774652359999664,
+            "name": "forward"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 1.5014270499999611,
+            "host_total_seconds": 1.5014270499999611,
+            "name": "backward"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.1960361730001523,
+            "host_total_seconds": 0.1960361730001523,
+            "name": "optimizer"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.1440195859998994,
+            "host_total_seconds": 0.1440195859998994,
+            "name": "gradient_clip"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.022390042999973048,
+            "host_total_seconds": 0.022390042999973048,
+            "name": "transfer"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.019068297000103485,
+            "host_total_seconds": 3.4529764670000986,
+            "name": "train_update"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.014960125000015978,
+            "host_total_seconds": 0.014960125000015978,
+            "name": "zero_grad"
+          },
+          {
+            "calls": 16,
+            "host_self_seconds": 0.0052885749998949905,
+            "host_total_seconds": 0.0052885749998949905,
+            "name": "loader_wait"
+          }
+        ],
+        "runtime": {
+          "cpu_threads": 2,
+          "cuda": "12.6",
+          "device": "cuda",
+          "device_name": "Tesla T4",
+          "hip": null,
+          "torch": "2.7.1+cu126"
+        },
+        "trace_sha256": "fc801633c1fd79043d4c39c9a651cf338f2d1c63b1d24972121ed8fa7a3f3c8e"
+      },
+      "device_trace": {
+        "device_activity_events": 79343,
+        "device_activity_union_us": 1036159.1071777344,
+        "scope": "single-worker capture only; overlapping GPU intervals merged; not allocation cost or whole-run utilization"
+      },
+      "manifest_sha256": "aa4dc1a2199aaccdd093ca202d6a85ebb487316fed3e05124b55247132a4d6ad",
+      "mechanical_status": "MECHANICALLY_VERIFIED",
+      "native_certificate_sha256": "03237f138e79322c4b910134e351daaf215dd5d7ef4007178c2edbf7c455eb25",
+      "preflight_seconds": 27.512384705999978,
+      "profile_report_sha256": "21f1ae26c4ca4801e7a87b9186070ce493032569fa39a84ba91d84529ac1e7fa",
+      "progress": {
+        "epochs": 40,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720
+      },
+      "selected_pass": 40,
+      "selected_tensor_count": 367,
+      "train_worker_seconds": 6598.89427094,
+      "training_span_seconds": {
+        "count": 39,
+        "max": 144.92632696500004,
+        "median": 138.3298878579999,
+        "min": 112.96193915399999,
+        "q25": 136.83856890049992,
+        "q75": 139.72110630199995,
+        "sum": 5307.402069867998
+      }
+    }
+  },
+  "capture_off_spans": {
+    "aggregate": {
+      "speedup_factor": 1.075495959202004,
+      "wall_reduction_percent": 7.019641362299529
+    },
+    "median_paired_speedup_factor": 1.095313590038447,
+    "optimized_graphs_per_second": 790.0460463955426,
+    "original_graphs_per_second": 734.587647341549,
+    "passes": [
+      {
+        "optimized_seconds": 130.41499404,
+        "original_seconds": 142.17157155200005,
+        "pass": 2,
+        "speedup_factor": 1.0901474374058104,
+        "wall_reduction_percent": 8.269288567088816
+      },
+      {
+        "optimized_seconds": 129.22617351300005,
+        "original_seconds": 139.47839305600007,
+        "pass": 3,
+        "speedup_factor": 1.079335472561746,
+        "wall_reduction_percent": 7.350399813456264
+      },
+      {
+        "optimized_seconds": 126.35555307100003,
+        "original_seconds": 138.3298878579999,
+        "pass": 4,
+        "speedup_factor": 1.0947669848769639,
+        "wall_reduction_percent": 8.65636123358381
+      },
+      {
+        "optimized_seconds": 125.551139422,
+        "original_seconds": 137.304587309,
+        "pass": 5,
+        "speedup_factor": 1.0936148245337267,
+        "wall_reduction_percent": 8.56012760924673
+      },
+      {
+        "optimized_seconds": 125.73608175200002,
+        "original_seconds": 136.92367440599992,
+        "pass": 6,
+        "speedup_factor": 1.0889767877136982,
+        "wall_reduction_percent": 8.170678082175149
+      },
+      {
+        "optimized_seconds": 124.41687891000015,
+        "original_seconds": 136.42893161000006,
+        "pass": 7,
+        "speedup_factor": 1.0965468094460809,
+        "wall_reduction_percent": 8.804622713265788
+      },
+      {
+        "optimized_seconds": 124.79611244700004,
+        "original_seconds": 136.81062716099996,
+        "pass": 8,
+        "speedup_factor": 1.096273148885967,
+        "wall_reduction_percent": 8.781857786428482
+      },
+      {
+        "optimized_seconds": 123.3711390110002,
+        "original_seconds": 136.16764232299988,
+        "pass": 9,
+        "speedup_factor": 1.1037236375912742,
+        "wall_reduction_percent": 9.397609515515748
+      },
+      {
+        "optimized_seconds": 123.43648838000013,
+        "original_seconds": 135.13216422799997,
+        "pass": 10,
+        "speedup_factor": 1.0947505555407135,
+        "wall_reduction_percent": 8.654990404998223
+      },
+      {
+        "optimized_seconds": 124.48943027799987,
+        "original_seconds": 137.35161186699997,
+        "pass": 11,
+        "speedup_factor": 1.1033194670445299,
+        "wall_reduction_percent": 9.364419837646158
+      },
+      {
+        "optimized_seconds": 127.42671002299994,
+        "original_seconds": 136.8665106399999,
+        "pass": 12,
+        "speedup_factor": 1.074080234946787,
+        "wall_reduction_percent": 6.897085761051849
+      },
+      {
+        "optimized_seconds": 125.3359389899997,
+        "original_seconds": 135.90247162100013,
+        "pass": 13,
+        "speedup_factor": 1.084305688505222,
+        "wall_reduction_percent": 7.775084959799694
+      },
+      {
+        "optimized_seconds": 125.83100749300002,
+        "original_seconds": 137.29778153400002,
+        "pass": 14,
+        "speedup_factor": 1.091128365491613,
+        "wall_reduction_percent": 8.35175478648241
+      },
+      {
+        "optimized_seconds": 125.51775765699995,
+        "original_seconds": 137.80450732400004,
+        "pass": 15,
+        "speedup_factor": 1.0978885370194063,
+        "wall_reduction_percent": 8.91607241707415
+      },
+      {
+        "optimized_seconds": 124.61366556700023,
+        "original_seconds": 140.00993416999972,
+        "pass": 16,
+        "speedup_factor": 1.1235520079835986,
+        "wall_reduction_percent": 10.996554418992432
+      },
+      {
+        "optimized_seconds": 126.50389642399978,
+        "original_seconds": 144.12266365099958,
+        "pass": 17,
+        "speedup_factor": 1.1392745024070046,
+        "wall_reduction_percent": 12.224841520875964
+      },
+      {
+        "optimized_seconds": 129.74795617300015,
+        "original_seconds": 142.11469967599987,
+        "pass": 18,
+        "speedup_factor": 1.095313590038447,
+        "wall_reduction_percent": 8.701945352024836
+      },
+      {
+        "optimized_seconds": 129.04255054800024,
+        "original_seconds": 139.20807122399992,
+        "pass": 19,
+        "speedup_factor": 1.0787765014937332,
+        "wall_reduction_percent": 7.302393163426805
+      },
+      {
+        "optimized_seconds": 129.1340710300001,
+        "original_seconds": 138.4574291849999,
+        "pass": 20,
+        "speedup_factor": 1.0721990570004862,
+        "wall_reduction_percent": 6.733736289832752
+      },
+      {
+        "optimized_seconds": 128.27574978700022,
+        "original_seconds": 137.98143756399986,
+        "pass": 21,
+        "speedup_factor": 1.0756626859957223,
+        "wall_reduction_percent": 7.0340532381378145
+      },
+      {
+        "optimized_seconds": 126.58683070899997,
+        "original_seconds": 139.2904537849995,
+        "pass": 22,
+        "speedup_factor": 1.1003550132730855,
+        "wall_reduction_percent": 9.12023956473578
+      },
+      {
+        "optimized_seconds": 127.3964248530001,
+        "original_seconds": 139.7758099040002,
+        "pass": 23,
+        "speedup_factor": 1.0971721542836417,
+        "wall_reduction_percent": 8.8566004800848
+      },
+      {
+        "optimized_seconds": 126.55606733900004,
+        "original_seconds": 140.49662704399998,
+        "pass": 24,
+        "speedup_factor": 1.110153230881124,
+        "wall_reduction_percent": 9.92234475538983
+      },
+      {
+        "optimized_seconds": 127.30194838900024,
+        "original_seconds": 139.6664026999997,
+        "pass": 25,
+        "speedup_factor": 1.0971269840522553,
+        "wall_reduction_percent": 8.852847980597046
+      },
+      {
+        "optimized_seconds": 128.3882729220004,
+        "original_seconds": 141.34611057799975,
+        "pass": 26,
+        "speedup_factor": 1.1009269566533668,
+        "wall_reduction_percent": 9.16745257652404
+      },
+      {
+        "optimized_seconds": 126.15524002999973,
+        "original_seconds": 142.16654673500034,
+        "pass": 27,
+        "speedup_factor": 1.1269174922991159,
+        "wall_reduction_percent": 11.262358883096331
+      },
+      {
+        "optimized_seconds": 124.9371853470002,
+        "original_seconds": 138.71416104499986,
+        "pass": 28,
+        "speedup_factor": 1.1102712187707409,
+        "wall_reduction_percent": 9.93191725647269
+      },
+      {
+        "optimized_seconds": 127.79978848800056,
+        "original_seconds": 137.2674718419994,
+        "pass": 29,
+        "speedup_factor": 1.074082151981713,
+        "wall_reduction_percent": 6.8972519322688015
+      },
+      {
+        "optimized_seconds": 126.26486640100029,
+        "original_seconds": 136.93452404100026,
+        "pass": 30,
+        "speedup_factor": 1.0845021892797524,
+        "wall_reduction_percent": 7.79179517709158
+      },
+      {
+        "optimized_seconds": 126.15405056700001,
+        "original_seconds": 138.93054359899998,
+        "pass": 31,
+        "speedup_factor": 1.1012769148083312,
+        "wall_reduction_percent": 9.196316879661246
+      },
+      {
+        "optimized_seconds": 124.81738998799938,
+        "original_seconds": 139.0004089109998,
+        "pass": 32,
+        "speedup_factor": 1.113630151410505,
+        "wall_reduction_percent": 10.203580719019055
+      },
+      {
+        "optimized_seconds": 125.50799500999983,
+        "original_seconds": 138.9111564750001,
+        "pass": 33,
+        "speedup_factor": 1.1067912961555346,
+        "wall_reduction_percent": 9.648729306643157
+      },
+      {
+        "optimized_seconds": 124.99658123300014,
+        "original_seconds": 144.5213730860005,
+        "pass": 34,
+        "speedup_factor": 1.1562026069865472,
+        "wall_reduction_percent": 13.509968412341136
+      },
+      {
+        "optimized_seconds": 124.21410346199991,
+        "original_seconds": 144.92632696500004,
+        "pass": 35,
+        "speedup_factor": 1.166746149798815,
+        "wall_reduction_percent": 14.291553464956143
+      },
+      {
+        "optimized_seconds": 124.7271147399997,
+        "original_seconds": 125.125707014,
+        "pass": 36,
+        "speedup_factor": 1.0031957146994956,
+        "wall_reduction_percent": 0.31855346396220235
+      },
+      {
+        "optimized_seconds": 124.90036334200067,
+        "original_seconds": 114.84255983599996,
+        "pass": 37,
+        "speedup_factor": 0.9194733847293899,
+        "wall_reduction_percent": -8.757906058837142
+      },
+      {
+        "optimized_seconds": 128.75465191200055,
+        "original_seconds": 113.66210798199972,
+        "pass": 38,
+        "speedup_factor": 0.8827805931212794,
+        "wall_reduction_percent": -13.278430426779506
+      },
+      {
+        "optimized_seconds": 130.65242841000054,
+        "original_seconds": 112.99724121300005,
+        "pass": 39,
+        "speedup_factor": 0.8648690467382916,
+        "wall_reduction_percent": -15.624440922164126
+      },
+      {
+        "optimized_seconds": 129.50688124999942,
+        "original_seconds": 112.96193915399999,
+        "pass": 40,
+        "speedup_factor": 0.8722466178143757,
+        "wall_reduction_percent": -14.646474927669098
+      }
+    ],
+    "scope": "matched passes after Kineto capture; passive observer wrappers remain; validation/publication excluded"
+  },
+  "format": "molgap-k1-execution-summary-v1",
+  "full_analysis_ref": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/analysis.json",
+  "full_analysis_sha256": "cdcfa32dc6fc985b7c37ae64f34c7411d95b65be60cf102e8a21c3a38aadd46b",
+  "kernel": "nvoid912/molgap-k1-infrastructure-dual-100k-v1",
+  "kernel_id": 138763393,
+  "limitations": [
+    "One seed and one device assignment; correlated pass timings are not independent replicates.",
+    "Worker wall includes loading, evaluation, persistence and inspection; internal trainer cost windows differ.",
+    "Capture-off spans retain passive wrappers; they are not a pristine profiler-free control.",
+    "Host/self-device operator timings and the capture activity union do not measure allocation billing.",
+    "Train-update range boundaries differ between legacy and shared owners; compare matching subphases and trace operators.",
+    "Legacy CPU RNG ownership and metric reduction precision differ; saved aligned endpoints determine observed drift.",
+    "Deterministic uninitialized-memory safety fill is scoped off by the optimized owner; deterministic algorithms remain enabled. This is part of the bundle, not a mask-only comparison.",
+    "Original uses two CPU threads, optimized one; original final passes accelerate after the other worker ends, consistent with shared-host contention.",
+    "Profile capture wall improves only 1.54%; a 16-update instrumented window does not reproduce the complete-worker speed gain.",
+    "Original training trace reports eV; shared trace explicitly reports normalized-Gap. Development predictions are compared in eV.",
+    "Capture covers no pass-end evaluation or checkpoint, so their individual speed gains are unmeasured."
+  ],
+  "numerical_comparison": {
+    "maximum_prediction_delta_eV": 0.0,
+    "mean_prediction_delta_eV": 0.0,
+    "optimized_mae_eV_float64": 0.1421622129434347,
+    "optimized_minus_original_mae_eV": 0.0,
+    "original_mae_eV_float64": 0.1421622129434347,
+    "prediction_values_equal": true,
+    "rows": 50000
+  },
+  "parent_timed_train_workers": {
+    "speedup_factor": 1.108282522979565,
+    "wall_reduction_percent": 9.770299606318114
+  },
+  "profile_operators": {
+    "aten::_index_put_impl_": {
+      "optimized": {
+        "calls": 1008,
+        "self_cpu_us": 73416.69900004081,
+        "self_device_us": 298026.2660000087
+      },
+      "original": {
+        "calls": 1088,
+        "self_cpu_us": 66216.07600002244,
+        "self_device_us": 293026.637999998
+      }
+    },
+    "aten::_local_scalar_dense": {
+      "optimized": {
+        "calls": 10112,
+        "self_cpu_us": null,
+        "self_device_us": null
+      },
+      "original": {
+        "calls": 10144,
+        "self_cpu_us": null,
+        "self_device_us": null
+      }
+    },
+    "aten::_to_copy": {
+      "optimized": {
+        "calls": 288,
+        "self_cpu_us": null,
+        "self_device_us": null
+      },
+      "original": {
+        "calls": 432,
+        "self_cpu_us": null,
+        "self_device_us": null
+      }
+    },
+    "aten::addmm": {
+      "optimized": {
+        "calls": 1280,
+        "self_cpu_us": 268010.80600000825,
+        "self_device_us": 84234.205999995
+      },
+      "original": {
+        "calls": 1280,
+        "self_cpu_us": 214188.0920000015,
+        "self_device_us": 83560.21600000325
+      }
+    },
+    "aten::arange": {
+      "optimized": {
+        "calls": 2464,
+        "self_cpu_us": 16297.85500001196,
+        "self_device_us": 5344.631000000578
+      },
+      "original": {
+        "calls": 2688,
+        "self_cpu_us": 15274.095999988791,
+        "self_device_us": 5404.456000006179
+      }
+    },
+    "aten::copy_": {
+      "optimized": {
+        "calls": 1184,
+        "self_cpu_us": 17384.830000001006,
+        "self_device_us": 32760.99000000299
+      },
+      "original": {
+        "calls": 1424,
+        "self_cpu_us": 14284.02700001312,
+        "self_device_us": 32908.844000002384
+      }
+    },
+    "aten::empty": {
+      "optimized": {
+        "calls": 15376,
+        "self_cpu_us": 131356.84899999527,
+        "self_device_us": 0
+      },
+      "original": {
+        "calls": 18160,
+        "self_cpu_us": 166835.89599999753,
+        "self_device_us": 0.0
+      }
+    },
+    "aten::fill_": {
+      "optimized": {
+        "calls": 1760,
+        "self_cpu_us": 15740.882999987418,
+        "self_device_us": 4708.5250000023225
+      },
+      "original": {
+        "calls": 34624,
+        "self_cpu_us": 181678.8799999479,
+        "self_device_us": 79841.24399996585
+      }
+    },
+    "aten::item": {
+      "optimized": {
+        "calls": 10112,
+        "self_cpu_us": 10692.222999984893,
+        "self_device_us": 0
+      },
+      "original": {
+        "calls": 10144,
+        "self_cpu_us": 9794.178000019172,
+        "self_device_us": 0.0
+      }
+    },
+    "aten::mm": {
+      "optimized": {
+        "calls": 4416,
+        "self_cpu_us": 543594.7820000214,
+        "self_device_us": 190514.41099999647
+      },
+      "original": {
+        "calls": 4416,
+        "self_cpu_us": 449815.15599999146,
+        "self_device_us": 183489.4939999958
+      }
+    },
+    "cudaLaunchKernel": {
+      "optimized": {
+        "calls": 39136,
+        "self_cpu_us": 432889.37999995373,
+        "self_device_us": 0
+      },
+      "original": {
+        "calls": 71360,
+        "self_cpu_us": 563340.6840000153,
+        "self_device_us": 0.0
+      }
+    },
+    "cudaStreamSynchronize": {
+      "optimized": {
+        "calls": 160,
+        "self_cpu_us": 15227.390000001578,
+        "self_device_us": 0
+      },
+      "original": {
+        "calls": 480,
+        "self_cpu_us": 29253.403999998045,
+        "self_device_us": 0
+      }
+    }
+  },
+  "replay_readiness": "NOT_APPLICABLE_EXECUTION_DIAGNOSTIC",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "selected_model_tensors_equal": true,
+  "source_commit": "eb640c966139c72ab682cd570aed7782578a77b4",
+  "spec_identity": "e063d529c9f7b9791919586c866688a70d143044e975f196368ff01c3e5a0865",
+  "status": "EXECUTION_COMPARISON_VERIFIED",
+  "version": 1
+}
