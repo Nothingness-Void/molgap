@@ -532,7 +532,15 @@ def test_local_desktop_records_have_v5_evidence_and_explicit_roles():
         "TB-gptrans-frozen-transfer-probe-100k-to-500k",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_readback",
         "TH-gptrans-conditional-flow-100k-s42-conditional_pair_recurrence",
+        "TB-pcqm-k1-single-true-ema-100k",
     } | set(input_init_gaps)
+    # This prospective run is ACTIVE, not a finalized V5 result or promotion.
+    pending = trajectories["TB-pcqm-k1-single-true-ema-100k"]
+    pending_canonical = json.loads((REPO_ROOT / pending["record_path"]).read_text(encoding="utf-8"))
+    assert pending_canonical["record_mode"] == "prospective"
+    assert pending_canonical["decision"]["outcome"] == "ACTIVE"
+    assert pending_canonical["result"] == {"evidence_ids": [], "evidence_refs": []}
+    assert pending["result_evidence_ids"] == []
     # Saved-array reconciliation did not recover immutable executed source or
     # prospective chronology, so it remains context-only without a V5 envelope.
     frozen = trajectories["TB-gptrans-frozen-transfer-probe-100k-to-500k"]

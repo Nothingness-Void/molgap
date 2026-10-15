@@ -39,6 +39,7 @@ The already-written [Common API](../../src/molgap/common/README.md) is reusable:
 | Desktop `0edc7bdbea2cee3759758b50c9b7981b219543df` | Seven-file host-neutral API extraction: declarations, strict identity, explicit-account SDK compatibility, pinned atomic downloads, aliases to existing runtime owners. Reuse this patch rather than implementing it again. |
 | Desktop `d969e256` | Desktop callers, source inventory, docs and `tests/test_common_api.py`; review caller-specific changes, do not wholesale apply desktop authority to server. |
 | Local server `c933990d` / `4aacdc58` | Same common extraction and server caller conversion, CPU-tested before subsequent remote changes. Local-only at audit time; not evidence these commits exist on origin. Do not reset remote server to these tips. |
+| Desktop `79f6a96a` / server-compatible `0ea5cf18` | Completed parser/IO extraction and compatibility checks; see the acceptance record below. The server candidate retains its older research base and is a selective-patch reference, not a replacement server tip. |
 
 The desktop publication accompanying this handoff supplies the common extraction
 and shared tests through Git. Verify advertised refs are fetchable before using
@@ -54,9 +55,15 @@ Keep them and their existing registries. `common/runtime.py` aliases these owner
 it does not implement a trainer. Earlier common adapter checks passed on CPU;
 that is not acceptance of the remaining convergence or native platforms.
 
-Uncommitted desktop worktrees `common-contract` and `common-contract-server`
-contain an interrupted, untested extraction attempt. They are not accepted
-dependencies or the implementation baseline. Do not copy them as completed code.
+The formerly interrupted `common-contract` / `common-contract-server` parser/IO
+extraction is completed separately from the remaining training convergence.
+Its [acceptance and publication record](COMMON_CONTRACT_ACCEPTANCE.md) owns
+exact scope, checks and qualification limits. Reuse the reviewed shared patch;
+do not merge an entire retained server snapshot over newer research/submission
+changes. That record is not a native or full training-lifecycle certificate.
+Its historical server RML hash findings need separate evidence-owner review;
+do not suppress them or infer a complete historical-bank acceptance from CPU
+library tests. Desktop's real-checkout frozen/portable check passed separately.
 
 ## Gaps to close
 
@@ -64,7 +71,7 @@ dependencies or the implementation baseline. Do not copy them as completed code.
 |---|---|
 | Generic ordered addons use the `graph_screen_training` factory ABI; accelerated family dispatch still uses fixed modes. | Connect reviewed composition to the existing accelerated lifecycle; prove actual optimized forwards reach the slots. Unsupported compositions fail closed, not silently become a baseline. |
 | `FamilyKernel` imports model construction from `pcqm_gptrans_v4` and K1 forward/update helpers from `k1_screen_training`. | Extract reusable leaf model/input/forward/loss helpers first. Then thin legacy entrypoints. Reversing this order can create circular dependencies. |
-| All eight core/data/recipe/kernel/loaders/session/runner/outputs files differ across branches. | Review semantic differences, not just file hashes. Reconcile evaluator ABI, explicit clip parameters, units, data confinement, initialization identity and completion handling. |
+| The inspected eight training files differed; the completed common patch now aligns update-core helpers and retained logging units. | Do not redo that extraction. Review remaining evaluator ABI, data confinement, initialization identity, session/runner/output and completion differences, not just file hashes. |
 | Server modes add development reads, segmentation, caps and alternate objective/source bindings. | Keep question/role/selection policy explicit. Do not silently change a frozen mode's meaning or infer policy from hostname, branch or dataset size. |
 | Remote `gptrans_execution_diagnostic` adds a manual training loop; generic Kaggle runtime directly imports its phase/device/artifact logic. | Reuse bounded iteration and observation hooks in the existing lifecycle. Expose reviewed neutral phase descriptors at the platform boundary; keep GPTrans attribution/finalization experiment-owned. |
 | Clean state is optional and not fully integrated into session selection/checkpointing. | Integrate explicit state actions and endpoint policy without enabling calibration, EMA or extra evaluation implicitly. |
