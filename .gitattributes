@@ -90,3 +90,5 @@ experiments/pcqm_gptrans_pair_transition_100k/** -text whitespace=cr-at-eol
 # GPTrans terminal receipts bind these exact LF evidence bytes.
 experiments/gptrans_infrastructure_t4_100k/results/** text eol=lf
 experiments/gptrans_infrastructure_t4_100k/*/rml/rml_finalized/** text eol=lf
+experiments/gptrans_infrastructure_t4_100k/followup/** text eol=lf
+research_memory/policies/gptrans-execution-followup.v1.json text eol=lf

@@ -1,0 +1,75 @@
+{
+  "acceptance_requirements": {
+    "completed_passes": 60,
+    "development_rows": 50000,
+    "next_batch": 0,
+    "optimizer_steps": 46860,
+    "precision": "fp32",
+    "sample_presentations": 5998080,
+    "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+    "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e"
+  },
+  "batch_size": 128,
+  "checkpoint_every": 781,
+  "dataset": {
+    "development": true,
+    "manifest": "fixed100k/manifest.json",
+    "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d"
+  },
+  "development_role_identity": "21f4cb789b55ed9ef18e0a6fdd6bff4f69453123f318f3d14e53a6100e2cb8a9",
+  "development_rows": 50000,
+  "drop_last": true,
+  "ema_decay": 0.9999,
+  "execution_policy": {
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "cpu_layout": true,
+    "ema": "bound-foreach",
+    "family": "gptrans_t",
+    "name": "shared-family-accelerated",
+    "optimizer": "foreach-adamw",
+    "precision": "fp32",
+    "tf32": false,
+    "torch_version": "2.7.1"
+  },
+  "family": "gptrans_t",
+  "finite_check_every": 50,
+  "format": "molgap-family-training-recipe-v1",
+  "gradient_clip": 1.0,
+  "initialization_sha256": "8988db8659c6c7e2b27401312f43684215c34cd8d69309aed7ce946ee9cb1ec6",
+  "learning_rate": 0.001,
+  "logging": {
+    "interval": null,
+    "mode": "epoch"
+  },
+  "mode": "reference",
+  "optimizer_steps": 46860,
+  "profiling": {
+    "active_steps": 16,
+    "module_paths": [],
+    "profile_memory": false,
+    "record_shapes": false,
+    "row_limit": 80,
+    "warmup_steps": 120,
+    "with_stack": false
+  },
+  "sampler": "torch-pass-randperm",
+  "schedule": {
+    "kind": "warmup_cosine_epoch",
+    "minimum_lr": 1e-06,
+    "reference_epochs": 60,
+    "total_units": 60,
+    "warmup_units": 4
+  },
+  "seed": 42,
+  "selection": "best-development-ema",
+  "target_mean_eV": 5.338300266634226,
+  "target_std_eV": 1.2750902063230574,
+  "torch_version": "2.7.1",
+  "train_role_identity": "5f848d1277f86a327584f1dc7ab1aafff684f9cf609bc8bb3936ae536f356cbe",
+  "train_rows": 100000,
+  "weight_decay": 0.05
+}

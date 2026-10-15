@@ -1,0 +1,51 @@
+{
+  "arms": [
+    {
+      "arm_id": "original",
+      "contract": {
+        "path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/original/contract.json",
+        "sha256": "9e428cdd761dcc04a5db493ae8a1be827bb6439f0efc80f7a448efca6a61a5a0"
+      },
+      "expected": {
+        "development_rows": 50000,
+        "epochs": 60,
+        "optimizer_steps": 46860,
+        "precision": "fp32",
+        "sample_presentations": 5998080,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/packages/gptrans_t_v4_source_814d104/initial_state.pt",
+        "sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+      }
+    },
+    {
+      "arm_id": "optimized",
+      "contract": {
+        "path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/optimized/contract.json",
+        "sha256": "4adec69612423d1ea893cc7922fdbf66c9c142e171dd24859be00364a4fa040e"
+      },
+      "expected": {
+        "completed_passes": 60,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 46860,
+        "precision": "fp32",
+        "sample_presentations": 5998080,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/packages/gptrans_t_v4_source_814d104/initial_state.pt",
+        "sha256": "9205fc0f0f97f1cc1cea84ab4bd24206274a00c7d84d26366497feee1710c20c"
+      }
+    }
+  ],
+  "authority": {
+    "path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/authority.json",
+    "sha256": "60b8bc69a35702a0a90563b8801910480fa8de1c00ea08334710a5746fdba870"
+  },
+  "format": "molgap-gptrans-infrastructure-comparison-plan-v1",
+  "spec_identity": "fa41678e8de7e44e4fe5fcf08eeb635e23f8e177fe92156bad57e30913551625"
+}

@@ -1,0 +1,138 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "original-v3",
+      "category": "training",
+      "cost_event_id": "cost-TC-gptrans-infrastructure-original-100k-s42-v3-planned",
+      "evidence_ref": "experiments/gptrans_infrastructure_t4_100k/followup/timing/authority.json",
+      "hardware": "Tesla_T4x2_shared_allocation",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "estimated",
+          "value": 0.3333333333333333
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 0.3333333333333333
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "gptrans-infrastructure-t4-100k-s42-v3:original:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v3"
+    }
+  ],
+  "decision_state": {
+    "active_reference_ids": [
+      "pcqm-gptrans-t-v4-100k-reference-s42"
+    ],
+    "available_actions": [
+      "RUN_GPTRANS_EXECUTION_DIAGNOSTIC",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/gptrans_infrastructure_t4_100k/followup/timing/authority.json",
+    "chosen_action": "RUN_GPTRANS_EXECUTION_DIAGNOSTIC",
+    "known_evidence_ids": [],
+    "known_trajectory_ids": [],
+    "policy_id": "gptrans-execution-followup",
+    "policy_version": "v1",
+    "role_snapshot_refs": [
+      "experiments/gptrans_infrastructure_t4_100k/followup/timing/role_plan.json"
+    ],
+    "source_commit": "2869163e1f0150b6678cfed9785e4aebb90e77b0",
+    "state_timestamp": "2026-10-15T14:17:56.737596+00:00"
+  },
+  "trajectory": {
+    "actions": [
+      {
+        "action_id": "A001",
+        "attempt_ids": [
+          "original-v3"
+        ],
+        "cost_event_ids": [
+          "cost-TC-gptrans-infrastructure-original-100k-s42-v3-planned"
+        ],
+        "evidence_refs": [
+          "experiments/gptrans_infrastructure_t4_100k/followup/timing/original/contract.json"
+        ],
+        "run_ids": [
+          "gptrans-infrastructure-t4-100k-s42-v3:original:downstream"
+        ],
+        "source_commit": "2869163e1f0150b6678cfed9785e4aebb90e77b0",
+        "type": "execution_diagnostic"
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/gptrans_infrastructure_t4_100k/followup/timing/decision.md",
+      "next_allowed_actions": [
+        "one authorized execution diagnostic"
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    },
+    "family_id": "gptrans-execution-followup",
+    "hypothesis": {
+      "alternative_explanations": [
+        "CPU contention",
+        "T4 device variability",
+        "Profiler instrumentation overhead"
+      ],
+      "changed_mechanism": "retained original GPTrans-T V4 execution",
+      "cheapest_falsifier": "one matched seed42 T4x2 execution diagnostic with actual operator capture",
+      "decision_changed_if_negative": "record no execution gain or regression without an extra seed",
+      "decision_changed_if_positive": "retain measured execution evidence without scientific promotion",
+      "expected_native_cost_ref": "cost-TC-gptrans-infrastructure-original-100k-s42-v3-planned",
+      "historical_unknowns": [],
+      "hypothesis_id": "H-TC-gptrans-infrastructure-original-100k-s42-v3",
+      "observed_deficiency": "The latest GPTrans-T shared execution refinement lacks a matched native original profiler comparison",
+      "related_closed_family_ids": [
+        "gptrans-t-v4-reference"
+      ],
+      "supporting_evidence_ids": [
+        "pcqm-gptrans-t-v4-100k-reference-s42"
+      ]
+    },
+    "owner": "server",
+    "question": "Does the GPTrans update speed benefit repeat with common CPU/loader settings and exchanged T4 assignment?",
+    "record_mode": "prospective",
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "state_at_start": {
+      "budget_snapshot_ref": "experiments/gptrans_infrastructure_t4_100k/followup/timing/authority.json",
+      "contract_refs": [
+        "experiments/gptrans_infrastructure_t4_100k/followup/timing/original/contract.json",
+        "experiments/gptrans_infrastructure_t4_100k/followup/timing/authority.json",
+        "experiments/gptrans_infrastructure_t4_100k/followup/timing/role_plan.json",
+        "experiments/gptrans_infrastructure_t4_100k/followup/timing/protocol.md"
+      ],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-gptrans-t-v4-100k-reference-s42"
+      ],
+      "prior_trajectory_ids": [],
+      "reference_ids": [
+        "pcqm-gptrans-t-v4-100k-reference-s42"
+      ],
+      "role_snapshot_refs": [
+        "experiments/gptrans_infrastructure_t4_100k/followup/timing/role_plan.json"
+      ],
+      "source_commit": "2869163e1f0150b6678cfed9785e4aebb90e77b0",
+      "source_config_identity": "62603e472b9cf4501fd5213f9341130f195d98541ee41414aa143d8f11f375d3"
+    },
+    "track": "C",
+    "trajectory_id": "TC-gptrans-infrastructure-original-100k-s42-v3"
+  }
+}
