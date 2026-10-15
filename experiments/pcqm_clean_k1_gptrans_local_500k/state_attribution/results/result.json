@@ -1,0 +1,902 @@
+{
+  "format": "molgap-k1-session-state-diagnostic-v1",
+  "status": "complete",
+  "cases": {
+    "selected_clean": {
+      "state_sha256": "23afc4beb52b5b25e3fde6f4ebbaf0ec9b8d88b309805e1f87b5954e2312edee",
+      "train": {
+        "mae_eV": 0.08233518293127418,
+        "rows": 4096,
+        "wall_seconds": 3.960986400001275,
+        "process_cpu_seconds": 15.578125,
+        "forward_seconds": 3.310260300000664,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "mae_eV": 0.10904947858333587,
+        "rows": 50000,
+        "wall_seconds": 48.8958771999969,
+        "process_cpu_seconds": 191.484375,
+        "forward_seconds": 41.874342500042985,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "selected_live": {
+      "state_sha256": "cefbf2d3b4c3383510fadd879a7eb358b348aa8176efcb4b083d4a3d7f6c0b90",
+      "train": {
+        "mae_eV": 0.08132118370849639,
+        "rows": 4096,
+        "wall_seconds": 3.4246898000055808,
+        "process_cpu_seconds": 13.4375,
+        "forward_seconds": 3.265128499995626,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "mae_eV": 0.10998765797138214,
+        "rows": 50000,
+        "wall_seconds": 43.43503540000529,
+        "process_cpu_seconds": 170.03125,
+        "forward_seconds": 41.495055300001695,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "selected_raw": {
+      "state_sha256": "789d0f35b9d10f2c2a014c104bb86352d6dffd58a63e15611468083d2c70fefc",
+      "train": {
+        "mae_eV": 0.07744962279684842,
+        "rows": 4096,
+        "wall_seconds": 3.3735552999933134,
+        "process_cpu_seconds": 13.265625,
+        "forward_seconds": 3.2077363000207697,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "mae_eV": 0.10539697298526764,
+        "rows": 50000,
+        "wall_seconds": 40.815567999998166,
+        "process_cpu_seconds": 160.75,
+        "forward_seconds": 38.99834349993034,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "selected_live_clean_prefix": {
+      "state_sha256": "5cd3fc650cd896b6072de06d460b448938bf53139de730ec24b0fe8965539377",
+      "train": {
+        "mae_eV": 0.08531190874055028,
+        "rows": 4096,
+        "wall_seconds": 3.320935700001428,
+        "process_cpu_seconds": 13.078125,
+        "forward_seconds": 3.1574413999842363,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "mae_eV": 0.11372340787887573,
+        "rows": 50000,
+        "wall_seconds": 40.26333549999981,
+        "process_cpu_seconds": 157.4375,
+        "forward_seconds": 38.50083029999951,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "calibration": {
+        "rows": 16384,
+        "batches": 128,
+        "bn_modules": 18,
+        "num_batches_tracked": {
+          "local_blocks.0.norm1.module": 128,
+          "local_blocks.0.norm3.module": 128,
+          "local_blocks.1.norm1.module": 128,
+          "local_blocks.1.norm3.module": 128,
+          "local_blocks.2.norm1.module": 128,
+          "local_blocks.2.norm3.module": 128,
+          "local_blocks.3.norm1.module": 128,
+          "local_blocks.3.norm3.module": 128,
+          "local_blocks.4.norm1.module": 128,
+          "local_blocks.4.norm3.module": 128,
+          "local_blocks.5.norm1.module": 128,
+          "local_blocks.5.norm3.module": 128,
+          "local_blocks.6.norm1.module": 128,
+          "local_blocks.6.norm3.module": 128,
+          "local_blocks.7.norm1.module": 128,
+          "local_blocks.7.norm3.module": 128,
+          "local_blocks.8.norm1.module": 128,
+          "local_blocks.8.norm3.module": 128
+        },
+        "wall_seconds": 14.850643600002513,
+        "process_cpu_seconds": 58.171875,
+        "parameters_unchanged": true,
+        "non_bn_buffers_unchanged": true,
+        "dropout_disabled": true,
+        "passes_per_batch": 1,
+        "labels_used_for_calibration": false,
+        "buffer_sha256_before": "5ca4bc08a4ab5742193be852797398db942b2cf86a54ca0be837d96f4d95c403",
+        "buffer_sha256_calibrated": "fb01205eec0d293f749012dd2222ef4ae772dc3f165c4868e2d8394527bd7209",
+        "bn_changes": {
+          "local_blocks.0.norm1.module": {
+            "running_mean_rms_change": 0.10116638243198395,
+            "running_var_mean_before": 4.05460262298584,
+            "running_var_mean_after": 3.8909695148468018
+          },
+          "local_blocks.0.norm3.module": {
+            "running_mean_rms_change": 0.01450050063431263,
+            "running_var_mean_before": 1.0864146947860718,
+            "running_var_mean_after": 1.0833364725112915
+          },
+          "local_blocks.1.norm1.module": {
+            "running_mean_rms_change": 0.19394482672214508,
+            "running_var_mean_before": 34.64931106567383,
+            "running_var_mean_after": 33.16028594970703
+          },
+          "local_blocks.1.norm3.module": {
+            "running_mean_rms_change": 0.013613377697765827,
+            "running_var_mean_before": 1.2319890260696411,
+            "running_var_mean_after": 1.2259981632232666
+          },
+          "local_blocks.2.norm1.module": {
+            "running_mean_rms_change": 0.14005622267723083,
+            "running_var_mean_before": 22.60198402404785,
+            "running_var_mean_after": 21.703432083129883
+          },
+          "local_blocks.2.norm3.module": {
+            "running_mean_rms_change": 0.021505577489733696,
+            "running_var_mean_before": 1.2213796377182007,
+            "running_var_mean_after": 1.2271525859832764
+          },
+          "local_blocks.3.norm1.module": {
+            "running_mean_rms_change": 0.14357031881809235,
+            "running_var_mean_before": 19.856422424316406,
+            "running_var_mean_after": 19.335477828979492
+          },
+          "local_blocks.3.norm3.module": {
+            "running_mean_rms_change": 0.019851641729474068,
+            "running_var_mean_before": 1.1928576231002808,
+            "running_var_mean_after": 1.2061744928359985
+          },
+          "local_blocks.4.norm1.module": {
+            "running_mean_rms_change": 0.16108670830726624,
+            "running_var_mean_before": 25.132957458496094,
+            "running_var_mean_after": 24.830251693725586
+          },
+          "local_blocks.4.norm3.module": {
+            "running_mean_rms_change": 0.010754577815532684,
+            "running_var_mean_before": 1.207175612449646,
+            "running_var_mean_after": 1.2161740064620972
+          },
+          "local_blocks.5.norm1.module": {
+            "running_mean_rms_change": 0.21367117762565613,
+            "running_var_mean_before": 39.69485855102539,
+            "running_var_mean_after": 38.87252426147461
+          },
+          "local_blocks.5.norm3.module": {
+            "running_mean_rms_change": 0.006597153376787901,
+            "running_var_mean_before": 1.2163814306259155,
+            "running_var_mean_after": 1.2205806970596313
+          },
+          "local_blocks.6.norm1.module": {
+            "running_mean_rms_change": 0.33289358019828796,
+            "running_var_mean_before": 40.27179718017578,
+            "running_var_mean_after": 40.665428161621094
+          },
+          "local_blocks.6.norm3.module": {
+            "running_mean_rms_change": 0.014766950160264969,
+            "running_var_mean_before": 1.1600135564804077,
+            "running_var_mean_after": 1.1694468259811401
+          },
+          "local_blocks.7.norm1.module": {
+            "running_mean_rms_change": 0.30823925137519836,
+            "running_var_mean_before": 54.28877639770508,
+            "running_var_mean_after": 53.7166862487793
+          },
+          "local_blocks.7.norm3.module": {
+            "running_mean_rms_change": 0.11449890583753586,
+            "running_var_mean_before": 1.2493525743484497,
+            "running_var_mean_after": 1.3680742979049683
+          },
+          "local_blocks.8.norm1.module": {
+            "running_mean_rms_change": 0.35838446021080017,
+            "running_var_mean_before": 73.89765930175781,
+            "running_var_mean_after": 71.9874496459961
+          },
+          "local_blocks.8.norm3.module": {
+            "running_mean_rms_change": 0.04664182290434837,
+            "running_var_mean_before": 1.7559102773666382,
+            "running_var_mean_after": 1.9353814125061035
+          }
+        },
+        "buffers_restored": true
+      }
+    },
+    "selected_live_clean_uniform": {
+      "state_sha256": "cbbbf94ad9076eb261bc43e810c3ed02ce343168a37c93c1c915fe724d40c57c",
+      "train": {
+        "mae_eV": 0.08132068143459037,
+        "rows": 4096,
+        "wall_seconds": 3.8388969999941764,
+        "process_cpu_seconds": 14.265625,
+        "forward_seconds": 3.6585207000098308,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "mae_eV": 0.1105366730594635,
+        "rows": 50000,
+        "wall_seconds": 41.92992640000011,
+        "process_cpu_seconds": 162.546875,
+        "forward_seconds": 40.10436280002614,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "calibration": {
+        "rows": 16384,
+        "batches": 128,
+        "bn_modules": 18,
+        "num_batches_tracked": {
+          "local_blocks.0.norm1.module": 128,
+          "local_blocks.0.norm3.module": 128,
+          "local_blocks.1.norm1.module": 128,
+          "local_blocks.1.norm3.module": 128,
+          "local_blocks.2.norm1.module": 128,
+          "local_blocks.2.norm3.module": 128,
+          "local_blocks.3.norm1.module": 128,
+          "local_blocks.3.norm3.module": 128,
+          "local_blocks.4.norm1.module": 128,
+          "local_blocks.4.norm3.module": 128,
+          "local_blocks.5.norm1.module": 128,
+          "local_blocks.5.norm3.module": 128,
+          "local_blocks.6.norm1.module": 128,
+          "local_blocks.6.norm3.module": 128,
+          "local_blocks.7.norm1.module": 128,
+          "local_blocks.7.norm3.module": 128,
+          "local_blocks.8.norm1.module": 128,
+          "local_blocks.8.norm3.module": 128
+        },
+        "wall_seconds": 16.061765300000843,
+        "process_cpu_seconds": 62.328125,
+        "parameters_unchanged": true,
+        "non_bn_buffers_unchanged": true,
+        "dropout_disabled": true,
+        "passes_per_batch": 1,
+        "labels_used_for_calibration": false,
+        "buffer_sha256_before": "5ca4bc08a4ab5742193be852797398db942b2cf86a54ca0be837d96f4d95c403",
+        "buffer_sha256_calibrated": "f8ac01e6a80d4198a173f3e1e011f6f433337afa3ca3ae4b1a85e11283cffa0a",
+        "bn_changes": {
+          "local_blocks.0.norm1.module": {
+            "running_mean_rms_change": 0.025367114692926407,
+            "running_var_mean_before": 4.05460262298584,
+            "running_var_mean_after": 3.8783762454986572
+          },
+          "local_blocks.0.norm3.module": {
+            "running_mean_rms_change": 0.0071758367121219635,
+            "running_var_mean_before": 1.0864146947860718,
+            "running_var_mean_after": 1.0873967409133911
+          },
+          "local_blocks.1.norm1.module": {
+            "running_mean_rms_change": 0.04682423174381256,
+            "running_var_mean_before": 34.64931106567383,
+            "running_var_mean_after": 34.223228454589844
+          },
+          "local_blocks.1.norm3.module": {
+            "running_mean_rms_change": 0.007112892810255289,
+            "running_var_mean_before": 1.2319890260696411,
+            "running_var_mean_after": 1.2303467988967896
+          },
+          "local_blocks.2.norm1.module": {
+            "running_mean_rms_change": 0.03909018635749817,
+            "running_var_mean_before": 22.60198402404785,
+            "running_var_mean_after": 22.354238510131836
+          },
+          "local_blocks.2.norm3.module": {
+            "running_mean_rms_change": 0.009306108579039574,
+            "running_var_mean_before": 1.2213796377182007,
+            "running_var_mean_after": 1.2297803163528442
+          },
+          "local_blocks.3.norm1.module": {
+            "running_mean_rms_change": 0.044501401484012604,
+            "running_var_mean_before": 19.856422424316406,
+            "running_var_mean_after": 19.70928192138672
+          },
+          "local_blocks.3.norm3.module": {
+            "running_mean_rms_change": 0.011742602102458477,
+            "running_var_mean_before": 1.1928576231002808,
+            "running_var_mean_after": 1.1990516185760498
+          },
+          "local_blocks.4.norm1.module": {
+            "running_mean_rms_change": 0.053158342838287354,
+            "running_var_mean_before": 25.132957458496094,
+            "running_var_mean_after": 25.033227920532227
+          },
+          "local_blocks.4.norm3.module": {
+            "running_mean_rms_change": 0.0074768816120922565,
+            "running_var_mean_before": 1.207175612449646,
+            "running_var_mean_after": 1.2122944593429565
+          },
+          "local_blocks.5.norm1.module": {
+            "running_mean_rms_change": 0.07052432000637054,
+            "running_var_mean_before": 39.69485855102539,
+            "running_var_mean_after": 39.223731994628906
+          },
+          "local_blocks.5.norm3.module": {
+            "running_mean_rms_change": 0.004673389717936516,
+            "running_var_mean_before": 1.2163814306259155,
+            "running_var_mean_after": 1.218893051147461
+          },
+          "local_blocks.6.norm1.module": {
+            "running_mean_rms_change": 0.07045264542102814,
+            "running_var_mean_before": 40.27179718017578,
+            "running_var_mean_after": 39.56557846069336
+          },
+          "local_blocks.6.norm3.module": {
+            "running_mean_rms_change": 0.007598947733640671,
+            "running_var_mean_before": 1.1600135564804077,
+            "running_var_mean_after": 1.1625831127166748
+          },
+          "local_blocks.7.norm1.module": {
+            "running_mean_rms_change": 0.06179070100188255,
+            "running_var_mean_before": 54.28877639770508,
+            "running_var_mean_after": 53.563079833984375
+          },
+          "local_blocks.7.norm3.module": {
+            "running_mean_rms_change": 0.014644663780927658,
+            "running_var_mean_before": 1.2493525743484497,
+            "running_var_mean_after": 1.247141718864441
+          },
+          "local_blocks.8.norm1.module": {
+            "running_mean_rms_change": 0.055308833718299866,
+            "running_var_mean_before": 73.89765930175781,
+            "running_var_mean_after": 73.09436798095703
+          },
+          "local_blocks.8.norm3.module": {
+            "running_mean_rms_change": 0.01838056370615959,
+            "running_var_mean_before": 1.7559102773666382,
+            "running_var_mean_after": 1.7668095827102661
+          }
+        },
+        "buffers_restored": true
+      }
+    },
+    "selected_ema_clean_uniform": {
+      "state_sha256": "1deaec36df7fae67a59b21d99f44c67a8ab2b02b94987ae1a0f7e06ff9547139",
+      "train": {
+        "mae_eV": 0.07569293782580644,
+        "rows": 4096,
+        "wall_seconds": 2.729614699994272,
+        "process_cpu_seconds": 10.734375,
+        "forward_seconds": 2.597906499977398,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "mae_eV": 0.1054193590927124,
+        "rows": 50000,
+        "wall_seconds": 42.64467270000023,
+        "process_cpu_seconds": 166.9375,
+        "forward_seconds": 40.75366390001,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "calibration": {
+        "rows": 16384,
+        "batches": 128,
+        "bn_modules": 18,
+        "num_batches_tracked": {
+          "local_blocks.0.norm1.module": 128,
+          "local_blocks.0.norm3.module": 128,
+          "local_blocks.1.norm1.module": 128,
+          "local_blocks.1.norm3.module": 128,
+          "local_blocks.2.norm1.module": 128,
+          "local_blocks.2.norm3.module": 128,
+          "local_blocks.3.norm1.module": 128,
+          "local_blocks.3.norm3.module": 128,
+          "local_blocks.4.norm1.module": 128,
+          "local_blocks.4.norm3.module": 128,
+          "local_blocks.5.norm1.module": 128,
+          "local_blocks.5.norm3.module": 128,
+          "local_blocks.6.norm1.module": 128,
+          "local_blocks.6.norm3.module": 128,
+          "local_blocks.7.norm1.module": 128,
+          "local_blocks.7.norm3.module": 128,
+          "local_blocks.8.norm1.module": 128,
+          "local_blocks.8.norm3.module": 128
+        },
+        "wall_seconds": 11.463973300000362,
+        "process_cpu_seconds": 45.328125,
+        "parameters_unchanged": true,
+        "non_bn_buffers_unchanged": true,
+        "dropout_disabled": true,
+        "passes_per_batch": 1,
+        "labels_used_for_calibration": false,
+        "buffer_sha256_before": "582398a6af760093b15929edbaed9953c0b5b77b557b7979adf3fed9d8a11234",
+        "buffer_sha256_calibrated": "74548bba720ab4c9833f475c6cc03c85343527c425f42e6342864111b565a6fb",
+        "bn_changes": {
+          "local_blocks.0.norm1.module": {
+            "running_mean_rms_change": 0.006197349634021521,
+            "running_var_mean_before": 3.8708677291870117,
+            "running_var_mean_after": 3.662158250808716
+          },
+          "local_blocks.0.norm3.module": {
+            "running_mean_rms_change": 0.003564333776012063,
+            "running_var_mean_before": 1.0885072946548462,
+            "running_var_mean_after": 1.0830715894699097
+          },
+          "local_blocks.1.norm1.module": {
+            "running_mean_rms_change": 0.03740283474326134,
+            "running_var_mean_before": 34.17543029785156,
+            "running_var_mean_after": 33.79200744628906
+          },
+          "local_blocks.1.norm3.module": {
+            "running_mean_rms_change": 0.004036350175738335,
+            "running_var_mean_before": 1.2279791831970215,
+            "running_var_mean_after": 1.2198172807693481
+          },
+          "local_blocks.2.norm1.module": {
+            "running_mean_rms_change": 0.03560348227620125,
+            "running_var_mean_before": 22.3559513092041,
+            "running_var_mean_after": 22.19202423095703
+          },
+          "local_blocks.2.norm3.module": {
+            "running_mean_rms_change": 0.007183840498328209,
+            "running_var_mean_before": 1.2281032800674438,
+            "running_var_mean_after": 1.2288036346435547
+          },
+          "local_blocks.3.norm1.module": {
+            "running_mean_rms_change": 0.041042085736989975,
+            "running_var_mean_before": 19.532970428466797,
+            "running_var_mean_after": 19.4744815826416
+          },
+          "local_blocks.3.norm3.module": {
+            "running_mean_rms_change": 0.009759228676557541,
+            "running_var_mean_before": 1.1932390928268433,
+            "running_var_mean_after": 1.1930229663848877
+          },
+          "local_blocks.4.norm1.module": {
+            "running_mean_rms_change": 0.054375749081373215,
+            "running_var_mean_before": 24.712682723999023,
+            "running_var_mean_after": 24.889450073242188
+          },
+          "local_blocks.4.norm3.module": {
+            "running_mean_rms_change": 0.006802963558584452,
+            "running_var_mean_before": 1.1978048086166382,
+            "running_var_mean_after": 1.195095181465149
+          },
+          "local_blocks.5.norm1.module": {
+            "running_mean_rms_change": 0.06725916266441345,
+            "running_var_mean_before": 38.4667854309082,
+            "running_var_mean_after": 38.92741775512695
+          },
+          "local_blocks.5.norm3.module": {
+            "running_mean_rms_change": 0.004702825099229813,
+            "running_var_mean_before": 1.2278634309768677,
+            "running_var_mean_after": 1.2289518117904663
+          },
+          "local_blocks.6.norm1.module": {
+            "running_mean_rms_change": 0.07115855067968369,
+            "running_var_mean_before": 41.7977180480957,
+            "running_var_mean_after": 41.517887115478516
+          },
+          "local_blocks.6.norm3.module": {
+            "running_mean_rms_change": 0.0064417775720357895,
+            "running_var_mean_before": 1.1792646646499634,
+            "running_var_mean_after": 1.1707873344421387
+          },
+          "local_blocks.7.norm1.module": {
+            "running_mean_rms_change": 0.07401110976934433,
+            "running_var_mean_before": 54.95988845825195,
+            "running_var_mean_after": 55.30767822265625
+          },
+          "local_blocks.7.norm3.module": {
+            "running_mean_rms_change": 0.011980955488979816,
+            "running_var_mean_before": 1.2241755723953247,
+            "running_var_mean_after": 1.2105189561843872
+          },
+          "local_blocks.8.norm1.module": {
+            "running_mean_rms_change": 0.07283391803503036,
+            "running_var_mean_before": 73.92603302001953,
+            "running_var_mean_after": 73.94561004638672
+          },
+          "local_blocks.8.norm3.module": {
+            "running_mean_rms_change": 0.012809616513550282,
+            "running_var_mean_before": 1.781180500984192,
+            "running_var_mean_after": 1.7603918313980103
+          }
+        },
+        "buffers_restored": true
+      }
+    },
+    "final_clean": {
+      "state_sha256": "8fd7dc16c54aae84984b238c6273e228f776f44f98d18bfcd647dbe32d13cd45",
+      "train": {
+        "mae_eV": 0.0721906284452416,
+        "rows": 4096,
+        "wall_seconds": 2.627938000005088,
+        "process_cpu_seconds": 10.296875,
+        "forward_seconds": 2.500218099979975,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "mae_eV": 0.1100854450893402,
+        "rows": 50000,
+        "wall_seconds": 36.96377489999577,
+        "process_cpu_seconds": 145.984375,
+        "forward_seconds": 35.32724179998331,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "final_live": {
+      "state_sha256": "fa2352826c1f89d0541c69c3aed94f46e480804559a52bf7a8d95db31fde25bc",
+      "train": {
+        "mae_eV": 0.06445556471589953,
+        "rows": 4096,
+        "wall_seconds": 3.3414129999946454,
+        "process_cpu_seconds": 13.15625,
+        "forward_seconds": 3.18265149997751,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "mae_eV": 0.1059204568195343,
+        "rows": 50000,
+        "wall_seconds": 42.75491499999771,
+        "process_cpu_seconds": 168.359375,
+        "forward_seconds": 40.91097530005209,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    },
+    "final_raw": {
+      "state_sha256": "35e4f6a3258fc43261b9996ffd6847304c64af3f029bb504e86770bed850bd27",
+      "train": {
+        "mae_eV": 0.06478329771198332,
+        "rows": 4096,
+        "wall_seconds": 3.3248629000008805,
+        "process_cpu_seconds": 13.109375,
+        "forward_seconds": 3.1650226000056136,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      },
+      "development": {
+        "mae_eV": 0.10601717139720916,
+        "rows": 50000,
+        "wall_seconds": 42.976198999996996,
+        "process_cpu_seconds": 168.28125,
+        "forward_seconds": 41.14112500008923,
+        "forward_scope": "synchronized model forward plus denormalization; excludes H2D/D2H and loader"
+      }
+    }
+  },
+  "runtime": {
+    "device": "cpu",
+    "cpu_threads": 4,
+    "software": {
+      "format": "molgap-runtime-manifest-v1",
+      "python": "3.10.6 (tags/v3.10.6:9c7b4bd, Aug  1 2022, 21:53:49) [MSC v.1932 64 bit (AMD64)]",
+      "python_executable": "D:\\\u6587\u6863\\molgap\\.venv\\Scripts\\python.exe",
+      "platform": "Windows-10-10.0.26220-SP0",
+      "torch": "2.7.1+cu128",
+      "torch_cuda": "12.8",
+      "torch_hip": null,
+      "cudnn": 90701,
+      "accelerator": null,
+      "determinism": {
+        "seed": 20261008,
+        "precision": "fp32",
+        "tf32_enabled": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true,
+        "cublas_workspace_config": ":4096:8",
+        "float32_matmul_precision": "highest",
+        "device": "cpu",
+        "cuda_device_count_visible": 0
+      },
+      "installed_distributions": [
+        "aiohappyeyeballs==2.7.1",
+        "aiohttp==3.14.3",
+        "aiosignal==1.4.0",
+        "alembic==1.18.5",
+        "async-timeout==5.0.1",
+        "attrs==26.1.0",
+        "bleach==6.4.0",
+        "certifi==2026.7.22",
+        "charset-normalizer==3.4.9",
+        "colorama==0.4.6",
+        "colorlog==6.12.0",
+        "contourpy==1.3.2",
+        "cycler==0.12.1",
+        "descriptastorus==2.8.0",
+        "exceptiongroup==1.3.1",
+        "filelock==3.29.0",
+        "fonttools==4.63.0",
+        "frozenlist==1.8.0",
+        "fsspec==2026.4.0",
+        "greenlet==3.5.4",
+        "idna==3.18",
+        "ijson==3.5.0",
+        "iniconfig==2.3.0",
+        "jinja2==3.1.6",
+        "joblib==1.5.3",
+        "kaggle==1.7.4.5",
+        "kagglehub==1.0.2",
+        "kagglesdk==0.1.28",
+        "kiwisolver==1.5.0",
+        "lightgbm==4.7.0",
+        "littleutils==0.2.4",
+        "lxml==6.1.3",
+        "mako==1.3.12",
+        "markupsafe==3.0.3",
+        "matplotlib==3.10.9",
+        "molgap==0.1.0",
+        "mpmath==1.3.0",
+        "multidict==6.7.1",
+        "narwhals==2.24.0",
+        "networkx==3.4.2",
+        "numpy==2.2.6",
+        "ogb==1.3.6",
+        "optuna==4.9.0",
+        "outdated==0.2.2",
+        "packaging==26.2",
+        "pandas-flavor==0.8.1",
+        "pandas==2.3.3",
+        "pillow==12.3.0",
+        "pip==22.2.1",
+        "pluggy==1.6.0",
+        "propcache==0.5.2",
+        "protobuf==7.36.1",
+        "psutil==7.2.2",
+        "pyarrow==25.0.0",
+        "pygments==2.20.0",
+        "pyparsing==3.3.2",
+        "pytest==9.1.1",
+        "python-dateutil==2.9.0.post0",
+        "python-pptx==1.0.2",
+        "python-slugify==9.0.0",
+        "pytz==2026.3.post1",
+        "pyyaml==6.0.3",
+        "rdkit==2026.3.4",
+        "requests==2.34.2",
+        "scikit-learn==1.7.2",
+        "scipy==1.15.3",
+        "seaborn==0.13.2",
+        "setuptools==83.0.0",
+        "six==1.17.0",
+        "sqlalchemy==2.0.51",
+        "sympy==1.14.0",
+        "text-unidecode==1.3",
+        "threadpoolctl==3.6.0",
+        "tomli==2.4.1",
+        "torch-geometric==2.7.0",
+        "torch==2.7.1+cu128",
+        "torch_cluster==1.6.3+pt27cu128",
+        "tqdm==4.70.0",
+        "typing_extensions==4.16.0",
+        "tzdata==2026.3",
+        "urllib3==2.7.0",
+        "webencodings==0.6.1",
+        "xarray==2025.6.1",
+        "xlsxwriter==3.2.9",
+        "xxhash==3.8.1",
+        "yarl==1.24.5"
+      ],
+      "installed_distributions_sha256": "0c7c2e0e5f0a8e77f037412c1e2e8fcc947e0959ef2f40597b9516c0582f4329",
+      "external_runtime_artifacts": {
+        "ogb": {
+          "version": "1.3.6",
+          "source_archive_sha256": null
+        }
+      },
+      "runtime_fingerprint": "36cacb7c5ab09f1a4334ef2e3e9fd1e8af5f1da77b4faef611bc28a25865347e"
+    }
+  },
+  "phase": "complete",
+  "wall_seconds": 467.41983459999756,
+  "process_cpu_seconds": 1798.234375,
+  "native_prediction_max_abs_diff_eV": 2.86102294921875e-06,
+  "contrasts": {
+    "train:selected_live->selected_raw": {
+      "delta": -0.0038715609116479754,
+      "ci95": [
+        -0.005246309153153561,
+        -0.0025746989645995203
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "train:selected_raw->selected_clean": {
+      "delta": 0.004885560134425759,
+      "ci95": [
+        0.004065833280037623,
+        0.005713729654962662
+      ],
+      "probability_better": 0.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "train:selected_live->selected_clean": {
+      "delta": 0.0010139992227777839,
+      "ci95": [
+        -0.0005481013911776244,
+        0.0024381753304623995
+      ],
+      "probability_better": 0.103,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "train:selected_clean->final_clean": {
+      "delta": -0.010144554486032575,
+      "ci95": [
+        -0.011769082871614956,
+        -0.008582858262525406
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "train:selected_live->final_live": {
+      "delta": -0.016865618992596865,
+      "ci95": [
+        -0.018629283987684174,
+        -0.015205608039104845
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "train:selected_raw->final_raw": {
+      "delta": -0.012666325084865093,
+      "ci95": [
+        -0.014169399929232895,
+        -0.011136549744696822
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "train:selected_clean->selected_ema_clean_uniform": {
+      "delta": -0.006642245105467737,
+      "ci95": [
+        -0.007504053392040078,
+        -0.005762000821414404
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "train:selected_live->selected_live_clean_prefix": {
+      "delta": 0.003990725032053888,
+      "ci95": [
+        0.0030802334629697727,
+        0.004902085037610959
+      ],
+      "probability_better": 0.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "train:selected_live_clean_prefix->selected_live_clean_uniform": {
+      "delta": -0.00399122730595991,
+      "ci95": [
+        -0.004858699618489481,
+        -0.0031034642990562145
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "train:selected_live_clean_uniform->selected_ema_clean_uniform": {
+      "delta": -0.0056277436087839305,
+      "ci95": [
+        -0.007026405884244013,
+        -0.004339611613249873
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "development:selected_live->selected_raw": {
+      "delta": -0.004590684986114502,
+      "ci95": [
+        -0.004908089841365814,
+        -0.004256761491894722
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "development:selected_raw->selected_clean": {
+      "delta": 0.003652505598068237,
+      "ci95": [
+        0.0034118316301107406,
+        0.0039020221910476684
+      ],
+      "probability_better": 0.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "development:selected_live->selected_clean": {
+      "delta": -0.0009381793880462646,
+      "ci95": [
+        -0.0013609968507289887,
+        -0.0005221701008081436
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "development:selected_clean->final_clean": {
+      "delta": 0.0010359665060043334,
+      "ci95": [
+        0.0006999381680488587,
+        0.001390256224274635
+      ],
+      "probability_better": 0.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "development:selected_live->final_live": {
+      "delta": -0.004067201151847839,
+      "ci95": [
+        -0.004498287598013877,
+        -0.0036279070432186124
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "development:selected_raw->final_raw": {
+      "delta": 0.0006201984119415283,
+      "ci95": [
+        0.00030757352817058567,
+        0.000935479389667511
+      ],
+      "probability_better": 0.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "development:selected_clean->selected_ema_clean_uniform": {
+      "delta": -0.003630119490623474,
+      "ci95": [
+        -0.0038681831231117247,
+        -0.003402470904827118
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "development:selected_live->selected_live_clean_prefix": {
+      "delta": 0.003735749907493591,
+      "ci95": [
+        0.0034837357528209687,
+        0.003982212406635285
+      ],
+      "probability_better": 0.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "development:selected_live_clean_prefix->selected_live_clean_uniform": {
+      "delta": -0.0031867348194122313,
+      "ci95": [
+        -0.003436620342493057,
+        -0.0029500041434764863
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    },
+    "development:selected_live_clean_uniform->selected_ema_clean_uniform": {
+      "delta": -0.0051173139667510985,
+      "ci95": [
+        -0.005451487084150315,
+        -0.0047665033607482915
+      ],
+      "probability_better": 1.0,
+      "n_bootstrap": 1000,
+      "seed": 42
+    }
+  },
+  "sign": "positive paired error change means second is worse; row CI is not seed variance",
+  "inputs_sha256": "c050ef661147c57002297a1301808ad4013ffb7e9ae750736c166587f93cbdac",
+  "prospective_sha256": "cca7aaa60c83073ad9f372edb689e4d4d349822d9e58c971a0a6b8592db14dc6",
+  "training_executed": false,
+  "gradients_computed": false,
+  "optimizer_created": false,
+  "checks": {
+    "hash_bound_source_inputs": true,
+    "exact_rows_targets": true,
+    "finite_predictions": true,
+    "native_clean_reconstruction": true,
+    "matching_endpoint_states": true,
+    "state_restoration": true,
+    "protected_roles_untouched": true
+  }
+}

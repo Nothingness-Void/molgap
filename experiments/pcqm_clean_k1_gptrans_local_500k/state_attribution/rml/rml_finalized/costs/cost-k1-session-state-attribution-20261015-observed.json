@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "attempt-001",
+  "category": "inference",
+  "cost_event_id": "cost-k1-session-state-attribution-20261015-observed",
+  "evidence_ref": "experiments/pcqm_clean_k1_gptrans_local_500k/state_attribution/acceptance.json",
+  "hardware": "CPU four intra-op threads; no accelerator",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measured",
+      "value": 0.49950954861111113
+    },
+    "device_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "queue_hours": {
+      "status": "not_applicable",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 0.12983884294444376
+    }
+  },
+  "platform": "local-windows",
+  "run_id": "local-k1-session-state-attribution-20261015",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-k1-clean-ema-500k-state-attribution-20261015"
+}

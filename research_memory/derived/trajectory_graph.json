@@ -276,6 +276,11 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-k1-clean-ema-500k-state-attribution-20261015:A001",
+      "target": "experiments/pcqm_clean_k1_gptrans_local_500k/state_attribution/inputs.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-k1-clean-fit-generalization-500k-20261009:A001",
       "target": "experiments/pcqm_k1_clean_fit_generalization_500k/inputs.json",
       "type": "action_produced_evidence"
@@ -638,6 +643,11 @@
     {
       "source": "TB-chemical-aux-fixed-train-cache-20260930",
       "target": "TB-chemical-aux-component-cache-retry2-20260930",
+      "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42",
+      "target": "TB-k1-clean-ema-500k-state-attribution-20261015",
       "type": "parent_trajectory"
     },
     {
@@ -1169,6 +1179,11 @@
       "source": "TC-gptrans-flow-ablation-100k-s42",
       "target": "TB-gptrans-pair-memory-replay-memory-value-100k-s42",
       "type": "parent_trajectory"
+    },
+    {
+      "source": "TB-clean-k1-gptrans-local-500k-k1_clean_ema-s42-terminal-20261015",
+      "target": "TB-k1-clean-ema-500k-state-attribution-20261015",
+      "type": "prior_evidence"
     },
     {
       "source": "TB-family-100k-operator-profile-gptrans_local-s42-terminal-20261014",
@@ -2851,6 +2866,10 @@
       "type": "evidence"
     },
     {
+      "id": "pcqm-k1-session-state-attribution-20261015",
+      "type": "evidence"
+    },
+    {
       "id": "pcqm-k1-slot-readout-diagnostic-20261002",
       "type": "evidence"
     },
@@ -3184,6 +3203,10 @@
     },
     {
       "id": "TB-k1-bn-mechanism-a100-20261008",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-k1-clean-ema-500k-state-attribution-20261015",
       "type": "trajectory"
     },
     {

@@ -13,3 +13,8 @@ Each arm retains its own prospective RML, source/config/input identities,
 native qualification, selected state/predictions, trace, resume, roles and costs.
 Use `molgap-experiment-reuse` and `kaggle-molgap-workloads` for preparation and
 the existing family output/RML terminal routes for acceptance.
+
+Completed training: [terminal decision](terminal_acceptance/decision.md).
+Authorized frozen-state follow-up: [K1 state attribution](state_attribution/analysis_zh.md),
+its [prospective protocol](state_attribution/protocol.md) and
+[diagnostic decision](state_attribution/terminal_decision.md). No retraining or promotion.
