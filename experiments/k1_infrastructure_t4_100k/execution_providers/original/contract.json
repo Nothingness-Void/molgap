@@ -1,0 +1,59 @@
+{
+  "acceptance_requirements": {
+    "development_rows": 50000,
+    "epochs": 40,
+    "optimizer_steps": 31240,
+    "precision": "fp32",
+    "sample_presentations": 3998720,
+    "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+    "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e"
+  },
+  "development_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+  "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "metric_semantics": {
+    "ema_dev_metric": null,
+    "live_dev_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+      "target": "Gap",
+      "unit": "eV",
+      "weights": "live"
+    },
+    "live_train_metric": {
+      "direction": "minimize",
+      "metric": "MAE",
+      "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:training-0-100000",
+      "target": "Gap",
+      "timing": "online-pre-update; includes dropout; no auxiliary BCE",
+      "unit": "eV",
+      "weights": "live"
+    }
+  },
+  "mode": "reference",
+  "profiling": {
+    "active_steps": 16,
+    "module_paths": [],
+    "profile_memory": false,
+    "record_shapes": false,
+    "row_limit": 80,
+    "warmup_steps": 120,
+    "with_stack": false
+  },
+  "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+  "training_recipe": {
+    "auxiliary_weight": 0.0,
+    "batch_size": 128,
+    "clip_grad_norm": 1.0,
+    "drop_last": true,
+    "ema": false,
+    "learning_rate": 0.0004,
+    "optimizer": "AdamW",
+    "scheduler": "CosineAnnealingLR",
+    "scheduler_eta_min": 1e-06,
+    "scheduler_t_max": 40,
+    "seed": 42,
+    "selection": "best-development-live",
+    "weight_decay": 1e-05
+  }
+}

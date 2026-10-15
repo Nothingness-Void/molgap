@@ -1,0 +1,51 @@
+{
+  "arms": [
+    {
+      "arm_id": "original",
+      "contract": {
+        "path": "experiments/k1_infrastructure_t4_100k/execution_providers/original/contract.json",
+        "sha256": "2b4f47bb758ac0ae794490dfba3c49544b7d11ee13481e7ae3642a287cfe4756"
+      },
+      "expected": {
+        "development_rows": 50000,
+        "epochs": 40,
+        "optimizer_steps": 31240,
+        "precision": "fp32",
+        "sample_presentations": 3998720,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/initializations/k1_reference_s42.pt",
+        "sha256": "166862d4f6f37200cfb2e73473ed1a213cfe22699ead032edcc562c0f1bf335d"
+      }
+    },
+    {
+      "arm_id": "optimized",
+      "contract": {
+        "path": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/contract.json",
+        "sha256": "aeea624581e183b7d51135169e8f3fb726a8fe18abed90a0291eb79215914a0c"
+      },
+      "expected": {
+        "completed_passes": 40,
+        "development_rows": 50000,
+        "next_batch": 0,
+        "optimizer_steps": 31240,
+        "precision": "fp32",
+        "sample_presentations": 3998720,
+        "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+        "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e"
+      },
+      "initial_state": {
+        "path": "platforms/_records/kaggle/initializations/k1_reference_s42.pt",
+        "sha256": "166862d4f6f37200cfb2e73473ed1a213cfe22699ead032edcc562c0f1bf335d"
+      }
+    }
+  ],
+  "authority": {
+    "path": "experiments/k1_infrastructure_t4_100k/execution_providers/authority.json",
+    "sha256": "729fe5c8159d2c09aba0f340cf27c232b47099576312e79a52c0803d7eed6d53"
+  },
+  "format": "molgap-k1-infrastructure-comparison-plan-v1",
+  "spec_identity": "09cd4d91c34bb9dfea0e181d52e4290ed37a71a37544a48339bcd98069cef17f"
+}

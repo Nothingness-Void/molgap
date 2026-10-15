@@ -1,0 +1,135 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "original-v2",
+      "category": "training",
+      "cost_event_id": "cost-TC-k1-infrastructure-original-100k-s42-v2-planned",
+      "evidence_ref": "experiments/k1_infrastructure_t4_100k/execution_providers/authority.json",
+      "hardware": "Tesla_T4x2_shared_allocation",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "estimated",
+          "value": 7
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 3.5
+        }
+      },
+      "platform": "kaggle3",
+      "run_id": "k1-infrastructure-t4-100k-s42-v2:original:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+    }
+  ],
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_K1_EXECUTION_DIAGNOSTIC",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/k1_infrastructure_t4_100k/execution_providers/authority.json",
+    "chosen_action": "RUN_K1_EXECUTION_DIAGNOSTIC",
+    "known_evidence_ids": [],
+    "known_trajectory_ids": [],
+    "policy_id": "k1-infrastructure-execution",
+    "policy_version": "v1",
+    "role_snapshot_refs": [
+      "experiments/k1_infrastructure_t4_100k/execution_providers/role_plan.json"
+    ],
+    "source_commit": "b5dd9d0ae11d452a8967fbbe274827816f828c1b",
+    "state_timestamp": "2026-10-15T06:07:34.533170+00:00"
+  },
+  "trajectory": {
+    "actions": [
+      {
+        "action_id": "A001",
+        "attempt_ids": [
+          "original-v2"
+        ],
+        "cost_event_ids": [
+          "cost-TC-k1-infrastructure-original-100k-s42-v2-planned"
+        ],
+        "evidence_refs": [
+          "experiments/k1_infrastructure_t4_100k/execution_providers/original/contract.json"
+        ],
+        "run_ids": [
+          "k1-infrastructure-t4-100k-s42-v2:original:downstream"
+        ],
+        "source_commit": "b5dd9d0ae11d452a8967fbbe274827816f828c1b",
+        "type": "execution_diagnostic"
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/k1_infrastructure_t4_100k/execution_providers/decision.md",
+      "next_allowed_actions": [
+        "one authorized execution diagnostic"
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    },
+    "family_id": "k1-infrastructure-execution",
+    "hypothesis": {
+      "alternative_explanations": [
+        "CPU contention",
+        "Device variability",
+        "Instrumentation overhead"
+      ],
+      "changed_mechanism": "retained original K1 execution in the matched control",
+      "cheapest_falsifier": "one matched seed42 T4x2 execution diagnostic with actual operator capture",
+      "decision_changed_if_negative": "record no gain/regression without a retry or extra seed",
+      "decision_changed_if_positive": "retain measured execution benefit without architecture promotion",
+      "expected_native_cost_ref": "cost-TC-k1-infrastructure-original-100k-s42-v2-planned",
+      "historical_unknowns": [],
+      "hypothesis_id": "H-TC-k1-infrastructure-original-100k-s42-v2",
+      "observed_deficiency": "The qualified K1 execution-provider configuration lacks a matched native 100K profiler comparison",
+      "related_closed_family_ids": [
+        "k1-v4-reference"
+      ],
+      "supporting_evidence_ids": [
+        "pcqm-k1-v4-100k-reference-s42"
+      ]
+    },
+    "owner": "server",
+    "question": "Does the qualified K1 execution-provider configuration reduce T4 execution cost at fixed 100K exposure?",
+    "record_mode": "prospective",
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "state_at_start": {
+      "budget_snapshot_ref": "experiments/k1_infrastructure_t4_100k/execution_providers/authority.json",
+      "contract_refs": [
+        "experiments/k1_infrastructure_t4_100k/execution_providers/original/contract.json",
+        "experiments/k1_infrastructure_t4_100k/execution_providers/protocol.md",
+        "experiments/k1_infrastructure_t4_100k/execution_providers/authority.json"
+      ],
+      "parent_trajectory_ids": [],
+      "prior_evidence_ids": [
+        "pcqm-k1-v4-100k-reference-s42"
+      ],
+      "prior_trajectory_ids": [
+        "TC-k1-infrastructure-original-100k-s42"
+      ],
+      "reference_ids": [],
+      "role_snapshot_refs": [
+        "experiments/k1_infrastructure_t4_100k/execution_providers/role_plan.json"
+      ],
+      "source_commit": "b5dd9d0ae11d452a8967fbbe274827816f828c1b",
+      "source_config_identity": "01f5144d4cc17f4a01dfde87cc69d983adc55aaa41f50a8ebd59f44be5153879"
+    },
+    "track": "C",
+    "trajectory_id": "TC-k1-infrastructure-original-100k-s42-v2"
+  }
+}
