@@ -680,6 +680,9 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
     The owning contract still provides comparison_prelaunch and reference_bundle.
     A passing plan only checks availability and schemas, not trainer execution.
     """
+    if plan.get("format") == "molgap-k1-infrastructure-comparison-plan-v1":
+        from .k1_infrastructure_comparison import check_plan
+        return check_plan(spec, repo_root, plan)
     if plan.get("format") == "molgap-four-arm-campaign-plan-v1":
         from .gptrans_campaign_release import check_campaign
         return check_campaign(spec, repo_root, plan)

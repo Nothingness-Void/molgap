@@ -1,0 +1,59 @@
+{
+  "mode": "reference",
+  "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+  "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+  "development_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+  "metric_semantics": {
+    "live_train_metric": {
+      "metric": "MAE",
+      "unit": "eV",
+      "target": "Gap",
+      "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:training-0-100000",
+      "weights": "live",
+      "direction": "minimize",
+      "timing": "online-pre-update; includes dropout; no auxiliary BCE"
+    },
+    "ema_dev_metric": null,
+    "live_dev_metric": {
+      "metric": "MAE",
+      "unit": "eV",
+      "target": "Gap",
+      "role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
+      "weights": "live",
+      "direction": "minimize"
+    }
+  },
+  "training_recipe": {
+    "seed": 42,
+    "batch_size": 128,
+    "drop_last": true,
+    "optimizer": "AdamW",
+    "learning_rate": 0.0004,
+    "weight_decay": 1e-05,
+    "clip_grad_norm": 1.0,
+    "scheduler": "CosineAnnealingLR",
+    "scheduler_t_max": 40,
+    "scheduler_eta_min": 1e-06,
+    "ema": false,
+    "selection": "best-development-live",
+    "auxiliary_weight": 0.0
+  },
+  "acceptance_requirements": {
+    "epochs": 40,
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720,
+    "development_rows": 50000,
+    "precision": "fp32",
+    "source_idx_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+    "target_sha256": "7b527c571baecbca050dd9fa8318fdde6b91d258e3709ad44fb49f869a9c606e"
+  },
+  "profiling": {
+    "warmup_steps": 120,
+    "active_steps": 16,
+    "record_shapes": false,
+    "profile_memory": false,
+    "with_stack": false,
+    "row_limit": 80,
+    "module_paths": []
+  }
+}

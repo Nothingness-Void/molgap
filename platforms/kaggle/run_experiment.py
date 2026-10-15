@@ -58,12 +58,13 @@ def _workload(allocation_started):
         and len(a["addons"]) == 1 for a in arms) and
         ({a["addons"][0]["name"] for a in arms} == {"degree_bond_local_ema999", "degree_local_cycle_common_ema999"}
          or all(a["addons"][0]["name"].startswith("degree_aggregate_") for a in arms)))
-    if shared_cycle_pair:
+    k1_comparison = declaration["experiment_id"] == "k1-infrastructure-t4-100k"
+    if shared_cycle_pair or k1_comparison:
         # Read the stdlib-only owner from the already hash-verified source archive.
         import runpy
         prepare = runpy.run_path(str(source / "src/molgap/kaggle_python_environment.py"))["prepare_python"]
         executable, qualified = prepare(root / "runtime", deadline=time.time() + 1200,
-            source_root=source, profile="gptrans-shared")
+            source_root=source, profile="family-shared" if k1_comparison else "gptrans-shared")
         working = Path("/kaggle/working")
         (working / "environment_qualification.json").write_text(json.dumps(qualified, indent=2), encoding="utf-8")
         subprocess.run([str(executable), "-m", "molgap.kaggle_pair_runtime",

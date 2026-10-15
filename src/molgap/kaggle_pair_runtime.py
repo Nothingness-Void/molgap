@@ -32,6 +32,12 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         raise ValueError("Runtime launch differs from the verified source package")
     jobs = validate_execution_plan(spec, config["jobs"])
     declaration = spec.to_dict()
+    from .k1_infrastructure_comparison import is_comparison
+    execution_comparison = is_comparison(spec)
+    if execution_comparison:
+        from .k1_infrastructure_comparison import check_plan, BASE
+        check_plan(spec, source_root, _json(source_root / BASE / "acceptance_plan.json"),
+            initial_states={j["arm_id"]: Path(launch_path).parent / j["initial_state"] for j in jobs})
     from .family_pair_release import bounded_cycle_pair, WALL_CEILING_SECONDS
     bounded = bounded_cycle_pair(spec)
     campaign = (len(declaration["arms"]) == 2 and all(a["family"] == {"name": "gptrans_t", "version": "2"}
@@ -157,7 +163,8 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                         item["finished"] = time.perf_counter()
                 return any(p.returncode is None for p, _, _ in workers)
             while poll_workers():
-                if bounded and prior_wall + time.perf_counter() - ledger.started >= WALL_CEILING_SECONDS - 60:
+                wall_ceiling = 7 * 3600 if execution_comparison else WALL_CEILING_SECONDS
+                if (bounded or execution_comparison) and prior_wall + time.perf_counter() - ledger.started >= wall_ceiling - 60:
                     report["exit_reason"] = "native_allocation_hard_budget"
                     raise TimeoutError("Frozen8wall-hour allocation ceiling; stop and retain checkpoints")
                 if any(p.poll() not in (None, 0) for p, _, _ in workers):
@@ -196,7 +203,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                         state["terminal_status"] = "cancelled"
                         state["exit_reason"] = "all_arm_preflight_barrier_blocked_training"
             phase_record["workers"] = [{"arm_id": j["arm_id"], "device": j["device"],
-                "returncode": p.returncode} for p, _, j in workers]
+                "returncode": p.returncode,
+                "worker_wall_seconds": j.get("finished", time.perf_counter()) - j["started"]}
+                for p, _, j in workers]
             for _, log, _ in workers:
                 log.close()
             report["phases"].append(phase_record)

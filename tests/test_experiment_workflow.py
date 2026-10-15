@@ -895,6 +895,7 @@ def test_pair_runtime_preflight_failure_terminates_peer_and_never_starts_trainin
     assert phase["phase"] == "preflight" and phase["status"] == "failed"
     assert {row["arm_id"] for row in phase["workers"]} == set(arm["arm_id"] for arm in spec.to_dict()["arms"])
     assert {row["returncode"] for row in phase["workers"]} == {17, -15}
+    assert all(row["worker_wall_seconds"] >= 0 for row in phase["workers"])
     assert all((output / arm["arm_id"] / "preflight.log").is_file()
                for arm in spec.to_dict()["arms"])
     assert all(not arm["training_started"] for arm in state["arms"].values())

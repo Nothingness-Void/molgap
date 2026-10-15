@@ -1,0 +1,15 @@
+{
+  "user_authorized": true,
+  "scope": "execution-diagnostic-only",
+  "arms": [
+    "original",
+    "optimized"
+  ],
+  "seeds": [
+    42
+  ],
+  "wall_ceiling_seconds": 25200,
+  "allocated_t4_hours_ceiling": 14,
+  "official_validation_allowed": false,
+  "source": "User requested local profiler merge and original-versus-modular optimized K1 dual-arm100K submission with speed/profiler analysis; Kaggle3 selected from available accepted accounts."
+}

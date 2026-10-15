@@ -12,6 +12,7 @@ import math
 import os
 import random
 import struct
+import sys
 import time
 from pathlib import Path
 
@@ -303,6 +304,9 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
     """Enforce the historical exposure before loading a molecular role."""
     if mode not in ARM_MODES:
         raise ValueError("Unsupported K1 screen arm")
+    if "profiling" in recipe:
+        from .family_execution_profile import ProfileConfig
+        ProfileConfig.from_dict(recipe["profiling"])
     expected = {"epochs": EPOCHS, "optimizer_steps": EPOCHS * STEPS_PER_EPOCH,
                 "sample_presentations": SAMPLE_EXPOSURE,
                 "development_rows": DEVELOPMENT_ROWS, "precision": "fp32"}
@@ -796,13 +800,32 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
     if zero_delta != 0.0:
         raise RuntimeError("Zero-added initialization differs from frozen reference")
     del reference, candidate
-    losses, states = [], []
-    for _ in range(2):
+    losses, states, full_states = [], [], []
+    profile_proof = None
+    for repeat in range(2):
         configure_fp32_determinism(SEED)
         model = _make_screen_model(state, mode).train()
         optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
-        _optimizer_step(model, optimizer, batch, mean, std, mode)
-        loss, _, _ = _optimizer_step(model, optimizer, batch, mean, std, mode)
+        from contextlib import nullcontext
+        observation = nullcontext()
+        if repeat == 0 and "profiling" in recipe:
+            from .family_execution_profile import ProfileConfig
+            from .k1_legacy_execution_profile import LegacyK1ExecutionProfiler
+            from dataclasses import replace
+            config = replace(ProfileConfig.from_dict(recipe["profiling"]), warmup_steps=0, active_steps=2)
+            observation = LegacyK1ExecutionProfiler(sys.modules[__name__], recipe,
+                output / "profile_qualification", config, model=model)
+        with observation:
+            _optimizer_step(model, optimizer, batch, mean, std, mode)
+            loss, _, _ = _optimizer_step(model, optimizer, batch, mean, std, mode)
+        if repeat == 0 and "profiling" in recipe:
+            if observation.report["status"] != "COMPLETE" or not observation.report["device_events_observed"]:
+                raise ValueError("Legacy native profiler did not capture CUDA events")
+            profile_proof = {"report": "profile_qualification/profile.json",
+                "sha256": sha256_file(output / "profile_qualification/profile.json")}
+        if "profiling" in recipe:
+            from .k1_legacy_execution_profile import state_fingerprint
+            full_states.append(state_fingerprint(model, optimizer))
         if mode == "ssma" and not any(
             parameter.grad is not None and bool(torch.isfinite(parameter.grad).all())
             and float(parameter.grad.abs().sum()) > 0
@@ -812,6 +835,8 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         states.append({key: value.detach().cpu().clone() for key, value in model.state_dict().items()})
         del model, optimizer
     repeated = certify_numerical_repeatability(losses=losses, states=states)
+    if full_states and len(set(full_states)) != 1:
+        raise ValueError("Legacy profiled/plain optimizer/model/RNG states differ")
     del states
     # Check the same model/optimizer/scheduler/RNG serialization as epoch resume.
     configure_fp32_determinism(SEED)
@@ -893,11 +918,14 @@ def run_screen_preflight(*, spec, package_dir: Path, expected_package_identity: 
         "calibration_output_sha256": repeated["state_sha256"][0],
         "calibration_checks_passed": True, "provenance_sha256": canonical_fingerprint(provenance),
         "architecture_sha256": canonical_fingerprint(architecture)}
+    if profile_proof is not None:
+        certificate["profile_proof"] = profile_proof
+        certificate["profiled_plain_state_fingerprints"] = full_states
     atomic_json(output / "runtime_certificate.json", certificate)
     return certificate
 
 
-def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
+def _run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
                    arm_id: str, mode: str, recipe_path: Path, initial_state_path: Path,
                    input_root: Path, output: Path, account: str, run_reference: str,
                    trajectory_id: str, label_cache=None, preflight_dir: Path | None = None) -> dict:
@@ -1050,6 +1078,15 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
         "source_archive_sha256": context.source_archive_sha256,
         "runtime_certificate_id": canonical_fingerprint(certificate)}, hardware=hardware,
         observed_costs=costs)
+
+
+def run_screen_arm(**options):
+    """Keep the retained loop; optional observation adds no training updates."""
+    recipe = json.loads(Path(options["recipe_path"]).read_text(encoding="utf-8"))
+    if "profiling" in recipe:
+        from .k1_legacy_execution_profile import run_profiled_legacy
+        return run_profiled_legacy(sys.modules[__name__], _run_screen_arm, options)
+    return _run_screen_arm(**options)
 
 
 def _model_batch_to_device(batch, device, *, training: bool, auxiliary: bool = False):

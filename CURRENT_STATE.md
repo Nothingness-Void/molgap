@@ -37,6 +37,10 @@ history and eligibility. See [`research_memory/README.md`](research_memory/READM
 
 ## Shared experiment infrastructure
 
+The [K1 execution diagnostic](experiments/k1_infrastructure_t4_100k/STATUS.md)
+prepares one original/shared100K T4x2 comparison with the reviewed
+[session profiler](docs/operations/FAMILY_EXECUTION_PROFILE.md); no measured speed result yet.
+
 The [reviewed desktop training core](docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md)
 is integrated for new K1/GPTrans declarations. Native qualification remains
 run/recipe/runtime-specific; historical entrypoints and job custody are unchanged.

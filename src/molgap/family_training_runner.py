@@ -581,11 +581,12 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     record, recipe, data, tuning, context, provenance, _ = _bootstrap(cost_root=root, **options)
     certificate = _verify_preflight(preflight_dir or output, recipe, provenance,
         profiling_required="profiling" in record)
+    from .k1_infrastructure_comparison import is_comparison
     outputs = SessionOutputs(root, context, contract=options["recipe_path"], adapter=PROFILES[recipe.family],
         trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"],
         resume_trajectory=(_artifact_path(Path(options["prospective_root"]),
             "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
-            if recipe.mode in BOUNDED_MODES else None))
+            if recipe.mode in BOUNDED_MODES or is_comparison(options["spec"]) else None))
     had_checkpoint = (root / "last_checkpoint.pt").is_file()
     interval = _json(_artifact_path(root, "invocation_cost_state.json"))
     _check_context(interval["context"], context)

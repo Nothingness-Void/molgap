@@ -20,9 +20,9 @@ def prepare_python(directory: Path, *, deadline: float, source_root: Path,
                    profile="legacy-portability") -> tuple[Path, dict]:
     """Install wheels in a new environment; qualify imports, never run a model."""
     directory = directory.resolve()
-    if profile not in {"legacy-portability", "gptrans-shared"}:
+    if profile not in {"legacy-portability", "gptrans-shared", "family-shared"}:
         raise ValueError("Unknown reviewed Kaggle Python profile")
-    shared = profile == "gptrans-shared"
+    shared = profile in {"gptrans-shared", "family-shared"}
     requirements = tuple("torch==2.7.1+cu126" if r.startswith("torch==") else r for r in REQUIREMENTS) if shared else REQUIREMENTS
     cuda_build = "12.6" if shared else "12.1"
     torch_version = "2.7.1+cu126" if shared else "2.4.1+cu121"
@@ -67,6 +67,9 @@ print(json.dumps(dict(python=sys.version,executable=sys.executable,
         probe = probe.replace("import molgap.gptrans,molgap.pcqm_wedge,molgap.gptrans_portability",
                               "import molgap.gptrans,molgap.pcqm_wedge,molgap.family_training_runner,molgap.gptrans_cycle_pair")
         probe = probe.replace("2.4.1+cu121", torch_version).replace("'12.1'", repr(cuda_build))
+    if profile == "family-shared":
+        probe = probe.replace("import molgap.gptrans,molgap.pcqm_wedge,molgap.family_training_runner,molgap.gptrans_cycle_pair",
+            "import molgap.family_training_runner,molgap.qm9_neural_atom")
     probe_environment = dict(os.environ, PYTHONPATH=str(source_root / "src"), CUDA_VISIBLE_DEVICES="")
     result = json.loads(run([str(executable), "-c", probe], capture=True, env=probe_environment).stdout)
     result.update(bootstrap_uv=UV_VERSION, requested_python=PYTHON_VERSION,

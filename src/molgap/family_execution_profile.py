@@ -60,6 +60,10 @@ class _ObservedBatches:
         return len(self.source)
 
     def __iter__(self):
+        capture_off = self.owner._finished
+        if capture_off:
+            self.owner._synchronize()
+            self.owner._span = (self.owner._updates, len(self.source), time.perf_counter())
         self.owner._begin_batch()
         with self.owner.phase("loader_start"):
             iterator = iter(self.source)
@@ -73,6 +77,7 @@ class _ObservedBatches:
                     return
                 yield batch
         finally:
+            self.owner._span = None
             close = getattr(iterator, "close", None)
             if close is not None:
                 close()
@@ -91,7 +96,7 @@ class _ObservedContext:
             return self.context.__exit__(*exception)
 
 
-class FamilyExecutionProfiler:
+class _ExecutionCapture:
     """Temporarily observe a session; the ordinary trainer has no added hooks.
 
     Use in a dedicated, single-training-thread worker. A few module functions
@@ -102,9 +107,8 @@ class FamilyExecutionProfiler:
     """
 
     def __init__(self, session, output, config=ProfileConfig()):
-        from .family_training_session import FamilyTrainingSession
-        if not isinstance(session, FamilyTrainingSession) or type(config) is not ProfileConfig:
-            raise TypeError("Expected a shared session and ProfileConfig")
+        if type(config) is not ProfileConfig:
+            raise TypeError("Expected ProfileConfig")
         self.session, self.output, self.config = session, Path(output), config
         self._used = self._active = self._finished = False
         self._prof = None
@@ -113,6 +117,28 @@ class FamilyExecutionProfiler:
         self._elapsed = None
         self._events = []
         self._thread = None
+        self._train_spans = []
+        self._span = None
+
+    def _after_update(self):
+        self._updates += 1
+        if self._active:
+            self._captured += 1
+        if self._span is not None:
+            updates, expected, began = self._span
+            if self._updates - updates == expected:
+                self._synchronize()
+                self._retain_train_span(updates, time.perf_counter() - began)
+                self._span = None
+
+    def _retain_train_span(self, updates, elapsed):
+        from .training_reproducibility import atomic_json
+        steps = self._updates - updates
+        self._train_spans.append({"start_relative_update": updates,
+            "optimizer_updates": steps, "sample_presentations": steps * self.session.recipe.batch_size,
+            "wall_seconds": elapsed, "scope": "first loader request through last update return; capture off; observer wrappers installed"})
+        atomic_json(self.output / "training_spans.json", {"format": "molgap-capture-off-training-spans-v1",
+            "recipe_identity": self.session.recipe.identity, "spans": self._train_spans})
 
     @contextmanager
     def phase(self, label):
@@ -210,9 +236,7 @@ class FamilyExecutionProfiler:
         def step(*args, **kwargs):
             with self.phase("train_update"):
                 result = original_step(*args, **kwargs)
-            self._updates += 1
-            if self._active:
-                self._captured += 1
+            self._after_update()
             return result
         @wraps(original_loader)
         def loader(*args, **kwargs):
@@ -276,6 +300,8 @@ class FamilyExecutionProfiler:
             for path in self.config.module_paths:
                 self.session.kernel.model.get_submodule(path)
             self.output.mkdir(parents=True, exist_ok=False)
+            if device.type == "cuda":
+                torch.cuda.reset_peak_memory_stats(device)
             self._start_step = self.session.progress.optimizer_step
             self._install()
             return self
@@ -309,12 +335,17 @@ class FamilyExecutionProfiler:
             "observed_updates": self._updates, "captured_updates": self._captured,
             "capture_start_optimizer_step": self._start_step + self.config.warmup_steps if self._prof else None,
             "capture_wall_seconds": self._elapsed,
+            "capture_off_training_spans": self._train_spans,
             "runtime": {"torch": str(torch.__version__), "cuda": torch.version.cuda,
                 "hip": torch.version.hip, "device": str(self.session.kernel.device),
                 "device_name": torch.cuda.get_device_name(self.session.kernel.device)
                     if self.session.kernel.device.type == "cuda" else None,
                 "cpu_threads": torch.get_num_threads()},
             "device_events_observed": cuda_observed,
+            "context_peak_allocated_bytes": torch.cuda.max_memory_allocated(self.session.kernel.device)
+                if self.session.kernel.device.type == "cuda" else None,
+            "context_peak_reserved_bytes": torch.cuda.max_memory_reserved(self.session.kernel.device)
+                if self.session.kernel.device.type == "cuda" else None,
             "phases_by_host_self_time": sorted(phases, key=lambda row: row["host_self_seconds"], reverse=True),
             "operators_by_self_cpu": sorted(operators, key=lambda row: row["self_cpu_us"], reverse=True)[:self.config.row_limit],
             "operators_by_self_device": sorted(operators, key=lambda row: row["self_device_us"] or 0,
@@ -342,3 +373,13 @@ class FamilyExecutionProfiler:
         finally:
             self._cleanup.close()
         return False
+
+
+class FamilyExecutionProfiler(_ExecutionCapture):
+    """Observe the owning shared session without changing its training loop."""
+
+    def __init__(self, session, output, config=ProfileConfig()):
+        from .family_training_session import FamilyTrainingSession
+        if not isinstance(session, FamilyTrainingSession):
+            raise TypeError("Expected a shared session")
+        super().__init__(session, output, config)

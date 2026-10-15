@@ -55,6 +55,8 @@ COMMON_SOURCE_FILES = (
     'src/molgap/k1_clean_second.py',
     'src/molgap/k1_screen_training.py',
     'src/molgap/k1_execution_layout.py',
+    'src/molgap/k1_legacy_execution_profile.py',
+    'src/molgap/k1_infrastructure_comparison.py',
     'src/molgap/packed_graph_dataset.py',
     'src/molgap/pcqm_fixed_records.py',
     'src/molgap/pcqm_wedge.py',

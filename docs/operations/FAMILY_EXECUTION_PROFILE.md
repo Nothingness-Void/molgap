@@ -70,6 +70,19 @@ asynchronously. Device operator durations can also overlap and are not a
 GPU-utilization or allocation-billing measurement. No synchronization is added
 between phases; only capture boundaries drain the owning device.
 
+Complete training passes beginning after capture retain synchronized boundary
+times in `training_spans.json`, atomically after the last update. Each spans the
+first loader request through the last kernel return. These spans have no
+active Kineto capture, but still include passive observer wrappers. They are
+not a pristine profiler-free control. Validation and pass-end publication fall
+outside these spans. Compare worker/allocation wall separately.
+
+The retained K1/2 loop uses `k1_legacy_execution_profile.py`, a small adapter to
+the same capture/report owner. Optional recipe profiling binds a native
+profiled/plain model/optimizer/RNG proof before its existing training loop.
+The [K1 execution diagnostic](../../experiments/k1_infrastructure_t4_100k/protocol.md)
+defines its comparison scope; the observer adds no model or epoch loop.
+
 CPU-only capture reports device time as null. Requested GPU profiling fails if
 the Torch runtime lacks the CUDA profiler activity. If it advertises support
 but emits no device events, the report says so and leaves device rankings empty;

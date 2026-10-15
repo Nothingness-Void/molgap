@@ -20,6 +20,8 @@ and its decision remains the authority. Grouping is by routing domain only.
 
 ## PCQM general and route studies
 
+`k1_infrastructure_t4_100k/`
+
 `pcqm_gptrans_cycle_pair_100k/`
 
 `pcqm_500k_v4_evidence/` · `pcqm_fourier_edge_transfer/` · `pcqm_gap_architecture/` ·
