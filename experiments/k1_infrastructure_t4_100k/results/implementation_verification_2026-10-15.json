@@ -1,0 +1,94 @@
+{
+  "format": "molgap-k1-local-implementation-verification-v1",
+  "date": "2026-10-15",
+  "base_commit": "77490ebe",
+  "scope": "Synthetic CPU and saved-output verification; no new remote execution or scientific acceptance.",
+  "runtime": {
+    "python": ".venv/Scripts/python.exe",
+    "torch": "2.7.1+cpu",
+    "cuda_available": false
+  },
+  "test_runs_overlap": true,
+  "pytest_arguments": [
+    "-q",
+    "--noconftest"
+  ],
+  "test_runs": [
+    {
+      "label": "cross-module regression before final status-gate hardening",
+      "passed": 258,
+      "skipped": 3,
+      "files": [
+        "test_k1_execution_qualification.py",
+        "test_k1_execution_backend.py",
+        "test_k1_execution_aggregation.py",
+        "test_checkpoint_finite_validation.py",
+        "test_modular_training_integration.py",
+        "test_shared_training_server_integration.py",
+        "test_experiment_training_hooks.py",
+        "test_edge_state_training_core.py",
+        "test_family_training_state.py",
+        "test_k1_screen_training.py",
+        "test_k1_topology_reuse.py",
+        "test_gptrans_topology_reuse.py",
+        "test_gptrans_execution_backend.py",
+        "test_experiment_reuse_skill.py",
+        "test_source_dependencies.py",
+        "test_experiment_package.py"
+      ]
+    },
+    {
+      "label": "final execution/profiler/status-gate regression",
+      "passed": 76,
+      "skipped": 1,
+      "files": [
+        "test_k1_execution_backend.py",
+        "test_k1_execution_qualification.py",
+        "test_family_training_runner.py",
+        "test_family_profile_release.py",
+        "test_family_execution_profile.py",
+        "test_k1_legacy_execution_profile.py"
+      ]
+    },
+    {
+      "label": "documentation, layout and CLI regression",
+      "passed": 35,
+      "skipped": 0,
+      "files": [
+        "test_documentation_check.py",
+        "test_repository_layout.py"
+      ]
+    }
+  ],
+  "saved_analysis": {
+    "path": "platforms/_records/kaggle/k1_infrastructure_v1/result_check/analysis_after_execution_repair.json",
+    "sha256": "cdcfa32dc6fc985b7c37ae64f34c7411d95b65be60cf102e8a21c3a38aadd46b",
+    "status": "EXECUTION_COMPARISON_VERIFIED"
+  },
+  "legacy_optimized_recipe_identity": "831490ea842d5694096c754ad7f9efda8f1c37e193ba5da8fad148e56f7ab3e6",
+  "native_execution_qualification": "NOT_PERFORMED",
+  "new_gpu_speed_measurement": "NOT_PERFORMED",
+  "limitations": [
+    "Synthetic checks do not qualify CUDA, native numerical equality, memory use or speed.",
+    "Segmented reduction and node projection may fail the mandatory exact native comparison.",
+    "CUDA-dependent local test cases were skipped; configured recipes require retained native shadow proof before formal training."
+  ],
+  "normalized_source_sha256": {
+    "src/molgap/experiment_family_workflow.py": "7d260c69cc95741549bd97fbb38c848445f7d84d02ede37dbb1296e26605afed",
+    "src/molgap/experiment_source_inventory.py": "6f9836d3381bd90eda464ff083d3fbd2729a6ff8bca50de3abedf8aa5589b8f4",
+    "src/molgap/family_training_core.py": "ed2150105ca2b4daff2515ce4ce9f08d1b957b03fff81e789da617d86922fd91",
+    "src/molgap/family_training_kernel.py": "d0fa7e4fb8a0da6d0a414dfde2b58425a88635701e20862a6b5cb26ccf2051b6",
+    "src/molgap/family_training_recipe.py": "4eb5d441b1fc9aa360f5d5c602b822cfd68c0c8b510d661bd4861f003a4f5d29",
+    "src/molgap/family_training_runner.py": "e97b50996ca36c54d32bc059d07b00a6da8cb92a4b723a56bbdfab9394d989d6",
+    "src/molgap/family_training_session.py": "fe739a7c583aceb919d6c8055c369de6ba069209c11dafdc11a9b2e511d73ac7",
+    "src/molgap/k1_execution_aggregation.py": "32c96c5c7ef723a8d0d05df45a5bfc29c6eaa8e6eb164d05db2b8c49ec10f594",
+    "src/molgap/k1_execution_backend.py": "8c22015b54c5a91356ffc724c1c3289500df6655f26498454766df036b112116",
+    "src/molgap/k1_execution_qualification.py": "f91d8766ce8db7f272d35d2fd5c9492612a3e04686d78db250b79316a10eea87",
+    "src/molgap/k1_screen_training.py": "f7b5aac6389d5595911ca2b1a1bf7ef72ffb9a9d8289ba9e5905a06fb058e94c",
+    "src/molgap/training_reproducibility.py": "50d2d0631a29f558e27dc9a38397ce3e6efba3e10f0aadd462285294beaa1878",
+    "tests/test_checkpoint_finite_validation.py": "e8cfb968bed9aacdadc657fc7e8f1d5a5566bfaaa534a79408825d13f90a4aef",
+    "tests/test_k1_execution_aggregation.py": "030b2f06314faaf39c0d9c6dda9e1c91da1088e5233dd7e65930b58373742220",
+    "tests/test_k1_execution_backend.py": "31fbc80715be19d433498aef0f04289bb99d15ad7bafa934dc2afa88c95ac8f7",
+    "tests/test_k1_execution_qualification.py": "45e89f193496feb7369eb3b69154ef53940e0abe31052c876851ef6ac103f36c"
+  }
+}

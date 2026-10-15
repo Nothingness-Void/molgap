@@ -40,6 +40,8 @@ history and eligibility. See [`research_memory/README.md`](research_memory/READM
 The completed [K1 execution diagnostic](experiments/k1_infrastructure_t4_100k/results/decision_2026-10-15.md)
 accepted a shared100K execution benefit with identical selected tensors and
 predictions. Scientific promotion/Replay remain excluded; no successor was released.
+The opt-in [K1 execution providers](docs/operations/K1_EXECUTION_BACKENDS.md)
+have local synthetic checks; native CUDA admission and new speed measurement remain unperformed.
 
 The [reviewed desktop training core](docs/operations/SHARED_TRAINING_SERVER_INTEGRATION.md)
 is integrated for new K1/GPTrans declarations. Native qualification remains

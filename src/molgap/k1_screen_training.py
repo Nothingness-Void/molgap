@@ -402,7 +402,7 @@ def _make_screen_model(state, mode):
 
 
 def _optimizer_step(model, optimizer, batch, mean, std, mode="reference", *,
-                    clip_norm=1.0, check_finite=False):
+                    clip_norm=1.0, check_finite=False, clip_parameters=None):
     """Family loss hook on the scale-independent optimizer core."""
     import torch.nn.functional as functional
     from .family_training_core import optimizer_update
@@ -433,7 +433,7 @@ def _optimizer_step(model, optimizer, batch, mean, std, mode="reference", *,
         return loss, (absolute, int(target.numel()))
 
     loss, (absolute, rows) = optimizer_update(model, optimizer, loss_builder,
-        clip_norm=clip_norm, check_finite=check_finite)
+        clip_norm=clip_norm, check_finite=check_finite, clip_parameters=clip_parameters)
     return loss, absolute, rows
 
 

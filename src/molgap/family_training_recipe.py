@@ -11,6 +11,7 @@ import math
 from .family_training_core import LoopPlan
 from .family_training_data import DatasetSelection
 from .screen_policy import canonical_fingerprint
+from .k1_execution_backend import K1ExecutionConfig
 
 
 RECIPE_FORMAT = "molgap-family-training-recipe-v1"
@@ -113,11 +114,15 @@ class FamilyRecipe:
     drop_last: bool = True
     torch_version: str = "2.11.0"
     input_sidecar: DatasetSelection | None = None
+    k1_execution: K1ExecutionConfig | None = None
 
     def __post_init__(self):
         from .experiment_spec import _digest
         if self.family not in MODES or self.mode not in MODES[self.family]:
             raise ValueError("Unknown executable family/addon mode")
+        if self.k1_execution is not None and (self.family != "neural_atom_k1" or
+                type(self.k1_execution) is not K1ExecutionConfig):
+            raise ValueError("K1 execution options require the typed K1 family")
         _integer(self.seed, "seed", 0)
         if self.seed > 2**32 - 1:
             raise ValueError("Seed exceeds the supported RNG range")
@@ -174,17 +179,22 @@ class FamilyRecipe:
 
     @property
     def execution_policy(self):
-        return {"name": "shared-family-accelerated", "family": self.family,
+        policy = {"name": "shared-family-accelerated", "family": self.family,
             "cpu_layout": True, "precision": "fp32", "tf32": False,
             "optimizer": "native-adamw" if self.family == "neural_atom_k1" else "foreach-adamw",
             "adamw_betas": list(ADAMW_BETAS), "adamw_epsilon": ADAMW_EPSILON,
             "ema": "bound-foreach" if self.ema_decay is not None else None,
             "torch_version": self.torch_version}
+        if self.k1_execution is not None:
+            policy["k1_execution"] = self.k1_execution.to_dict()
+        return policy
 
     def to_dict(self):
         values = asdict(self)
         if self.input_sidecar is None:
             values.pop("input_sidecar")
+        if self.k1_execution is None:
+            values.pop("k1_execution")
         return {"format": RECIPE_FORMAT, **values, "execution_policy": self.execution_policy}
 
     @property
@@ -196,6 +206,8 @@ class FamilyRecipe:
         expected = {field.name for field in fields(cls)} | {"format", "execution_policy"}
         if type(record) is dict and "input_sidecar" not in record:
             expected.remove("input_sidecar")
+        if type(record) is dict and "k1_execution" not in record:
+            expected.remove("k1_execution")
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
             raise ValueError("Missing or unknown shared training recipe fields")
         values = {field.name: record[field.name] for field in fields(cls) if field.name in record}
@@ -206,6 +218,8 @@ class FamilyRecipe:
             values["schedule"] = ScheduleSpec(**values["schedule"])
             if "input_sidecar" in values:
                 values["input_sidecar"] = DatasetSelection(**values["input_sidecar"])
+            if "k1_execution" in values:
+                values["k1_execution"] = K1ExecutionConfig.from_dict(values["k1_execution"])
         except TypeError as exc:
             raise ValueError("Unknown dataset/schedule fields") from exc
         recipe = cls(**values)

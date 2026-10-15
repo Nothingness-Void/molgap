@@ -12,6 +12,7 @@ import platform
 import random
 import sys
 from collections.abc import Mapping
+from contextvars import ContextVar
 from pathlib import Path
 
 import numpy as np
@@ -20,6 +21,62 @@ import numpy as np
 RUNTIME_MANIFEST_FORMAT = "molgap-runtime-manifest-v1"
 CHECKPOINT_FORMAT = "molgap-resumable-checkpoint-v1"
 MODEL_BUNDLE_FORMAT = "molgap-self-contained-model-v1"
+
+
+_FINITE_VALIDATION_CACHE: ContextVar[dict | None] = ContextVar(
+    "molgap_finite_validation_cache", default=None
+)
+
+
+@contextmanager
+def finite_validation_scope():
+    """Cache successful finite checks for one explicit checkpoint snapshot.
+
+    The cache is context-local and discarded when this scope exits.  Tensor
+    identities are retained only for the scope lifetime, and a cached result is
+    reused only while the tensor's in-place version counter is unchanged.
+    Inference tensors do not expose a version counter and therefore never use
+    the cache.
+    """
+    token = _FINITE_VALIDATION_CACHE.set({})
+    try:
+        yield
+    finally:
+        _FINITE_VALIDATION_CACHE.reset(token)
+
+
+def _tensor_version(value):
+    try:
+        version = value._version
+    except (AttributeError, RuntimeError):
+        return None
+    return version if type(version) is int else None
+
+
+def _cached_finite_tensor(value) -> bool:
+    cache = _FINITE_VALIDATION_CACHE.get()
+    if cache is None:
+        return False
+    version = _tensor_version(value)
+    if version is None:
+        return False
+    cached = cache.get(id(value))
+    if cached is None:
+        return False
+    cached_value, cached_version = cached
+    if cached_value is value and cached_version == version:
+        return True
+    cache.pop(id(value), None)
+    return False
+
+
+def _cache_finite_tensor(value) -> None:
+    cache = _FINITE_VALIDATION_CACHE.get()
+    if cache is None:
+        return
+    version = _tensor_version(value)
+    if version is not None:
+        cache[id(value)] = (value, version)
 
 
 def canonical_fingerprint(value: Mapping) -> str:
@@ -196,14 +253,79 @@ def build_runtime_manifest(determinism: Mapping) -> dict:
     return payload
 
 
+def _batch_finite_tensor_failures(entries) -> list[tuple[int, str]]:
+    """Return non-finite tensor entries with one host observation per device.
+
+    ``entries`` is an ordered iterable of ``(order, label, tensor)`` tuples.
+    CPU tensors keep the inexpensive historical per-tensor path.  Accelerated
+    tensors first reduce one finite scalar per tensor and then reduce those
+    scalars together on each device, so the normal path crosses back to Python
+    once per device instead of once per tensor.  A failed device is rescanned
+    only to recover the first useful path for the existing error contract.
+    Repeated references are checked once; the first path remains authoritative.
+    """
+    import torch
+
+    ordered = list(entries)
+    seen = set()
+    unique_entries = []
+    cpu_failures: list[tuple[int, str]] = []
+    by_device = {}
+    for order, label, value in ordered:
+        identity = id(value)
+        if identity in seen:
+            continue
+        seen.add(identity)
+        if _cached_finite_tensor(value):
+            continue
+        unique_entries.append((order, label, value))
+        # Integer and boolean values cannot represent NaN/Inf.  Avoid an
+        # unnecessary device kernel while retaining explicit handling for
+        # quantized tensors, whose finite support follows their backend.
+        if not (value.is_floating_point() or value.is_complex()) and not value.is_quantized:
+            continue
+        if value.device.type == "cpu":
+            # Keep the CPU fast path and its original per-tensor semantics.
+            if not bool(torch.isfinite(value).all()):
+                cpu_failures.append((order, label))
+            else:
+                _cache_finite_tensor(value)
+        else:
+            by_device.setdefault(value.device, []).append((order, label, value))
+
+    device_failures: set[object] = set()
+    for device, device_entries in by_device.items():
+        finite_scalars = [torch.isfinite(value).all() for _, _, value in device_entries]
+        aggregate = finite_scalars[0] if len(finite_scalars) == 1 else torch.stack(finite_scalars).all()
+        # This is the only normal-path host observation for this device.
+        if not bool(aggregate):
+            device_failures.add(device)
+        else:
+            for _, _, value in device_entries:
+                _cache_finite_tensor(value)
+
+    failures = list(cpu_failures)
+    if device_failures:
+        # Failure diagnostics are deliberately allowed a second pass.  Keep
+        # traversal order so the historical first-path error remains stable.
+        for order, label, value in unique_entries:
+            if value.device in device_failures:
+                if not bool(torch.isfinite(value).all()):
+                    failures.append((order, label))
+                else:
+                    _cache_finite_tensor(value)
+    return sorted(failures, key=lambda item: item[0])
+
+
 def assert_finite_state_dict(state_dict: Mapping, *, label: str) -> None:
     import torch
 
-    failures = [
-        name
-        for name, value in state_dict.items()
-        if torch.is_tensor(value) and not bool(torch.isfinite(value).all())
+    entries = [
+        (order, name, value)
+        for order, (name, value) in enumerate(state_dict.items())
+        if torch.is_tensor(value)
     ]
+    failures = [name for _, name in _batch_finite_tensor_failures(entries)]
     if failures:
         raise RuntimeError(f"{label} contains non-finite tensors: {failures[:8]}")
 

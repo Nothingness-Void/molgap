@@ -73,6 +73,7 @@ class FamilyKernel:
         self.model, self.initialization = load_family_model(recipe, initial_state)
         self.model.to(self.device)
         self.optimizer = make_family_optimizer(recipe, self.model.parameters())
+        self._clip_parameters = tuple(self.model.parameters())
         from .gptrans_execution_hotpath import BoundForeachEMA, ReusedWeightView
         self.ema = BoundForeachEMA(self.model, recipe.ema_decay) if recipe.ema_decay is not None else None
         self.weight_view = ReusedWeightView()
@@ -92,15 +93,18 @@ class FamilyKernel:
         mean, std = self.recipe.target_mean_eV, self.recipe.target_std_eV
         if self.recipe.family == "neural_atom_k1":
             from .k1_execution_layout import cpu_layout_context
+            from .k1_execution_backend import execution_context
             from .k1_screen_training import _model_batch_to_device, _optimizer_step
             from .training_reproducibility import deterministic_memory_fill_context
             borrowed = copy(cpu_batch)
             with deterministic_memory_fill_context(enabled=False), cpu_layout_context(
-                    self.model, borrowed, self.device):
+                    self.model, borrowed, self.device), execution_context(
+                    self.model, borrowed, self.device, self.recipe.k1_execution):
                 batch = _model_batch_to_device(borrowed, self.device, training=True)
                 loss, absolute, rows = _optimizer_step(self.model, self.optimizer,
                     batch, mean, std, self.recipe.mode,
-                    clip_norm=self.recipe.gradient_clip, check_finite=check_finite)
+                    clip_norm=self.recipe.gradient_clip, check_finite=check_finite,
+                    clip_parameters=self._clip_parameters)
         else:
             from .family_training_core import normalized_gap_update
             from .gptrans_execution_backend import prepared_forward
@@ -117,12 +121,14 @@ class FamilyKernel:
                     self.model._auxiliary_metric = auxiliary.detach()
                     return gap.mean() + AUX_WEIGHT * auxiliary, (gap.detach().sum(), int(batch.num_graphs))
                 loss, (absolute, rows) = optimizer_update(self.model, self.optimizer, objective,
-                    clip_norm=self.recipe.gradient_clip, check_finite=check_finite)
+                    clip_norm=self.recipe.gradient_clip, check_finite=check_finite,
+                    clip_parameters=self._clip_parameters)
                 self.model._correspondence_loss = None
             else:
                 loss = normalized_gap_update(self.model, self.optimizer, batch, mean, std,
                     forward=prepared_forward, clip_norm=self.recipe.gradient_clip,
-                    check_finite=check_finite, cast_target_float=True)
+                    check_finite=check_finite, cast_target_float=True,
+                    clip_parameters=self._clip_parameters)
                 absolute, rows = loss * int(batch.num_graphs), int(batch.num_graphs)
         if self.ema is not None:
             self.ema.update(self.model)
@@ -132,10 +138,17 @@ class FamilyKernel:
         """One owning forward for Live/Raw views or an independent Clean model."""
         model = self.model if model is None else model
         if self.recipe.family == "neural_atom_k1":
+            from contextlib import nullcontext
             from .k1_execution_layout import cpu_layout_context
+            from .k1_execution_backend import execution_context
+            from .training_reproducibility import deterministic_memory_fill_context
             from .k1_screen_training import _model_batch_to_device, _forward
             borrowed = copy(cpu_batch)
-            with cpu_layout_context(model, borrowed, self.device):
+            config = getattr(self.recipe, "k1_execution", None)
+            fill = (nullcontext() if config is None else
+                deterministic_memory_fill_context(enabled=config.evaluation_memory_fill))
+            with fill, cpu_layout_context(model, borrowed, self.device), execution_context(
+                    model, borrowed, self.device, config):
                 batch = _model_batch_to_device(borrowed, self.device, training=False)
                 return _forward(model, batch)
         from .gptrans_execution_backend import prepared_forward

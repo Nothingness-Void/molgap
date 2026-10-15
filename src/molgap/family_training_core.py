@@ -195,7 +195,7 @@ def train_batches(
 
 def optimizer_update(
     model, optimizer, loss_builder: Callable, *, clip_norm: float,
-    check_finite: bool, ema=None, label: str = "Training",
+    check_finite: bool, ema=None, label: str = "Training", clip_parameters=None,
 ):
     """Shared zero-grad/backward/clip/update order; loss stays family-owned.
 
@@ -214,7 +214,8 @@ def optimizer_update(
     if check_finite and not bool(torch.isfinite(loss)):
         raise RuntimeError(label + " loss became non-finite")
     loss.backward()
-    gradient_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), clip_norm)
+    gradient_norm = torch.nn.utils.clip_grad_norm_(
+        model.parameters() if clip_parameters is None else clip_parameters, clip_norm)
     if check_finite and not bool(torch.isfinite(gradient_norm)):
         raise RuntimeError(label + " gradient became non-finite")
     optimizer.step()
@@ -226,7 +227,7 @@ def optimizer_update(
 def normalized_gap_update(
     model, optimizer, batch, mean, std, *, forward: Callable,
     clip_norm: float, check_finite: bool, cast_target_float: bool,
-    ema=None, label: str = "Training",
+    ema=None, label: str = "Training", clip_parameters=None,
 ):
     """Single-forward Gap L1 kernel shared by both families and all scales."""
     import torch.nn.functional as functional
@@ -240,4 +241,4 @@ def normalized_gap_update(
         return functional.l1_loss(prediction, target), None
 
     return optimizer_update(model, optimizer, loss_builder, clip_norm=clip_norm,
-        check_finite=check_finite, ema=ema, label=label)[0]
+        check_finite=check_finite, ema=ema, label=label, clip_parameters=clip_parameters)[0]

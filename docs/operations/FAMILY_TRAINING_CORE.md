@@ -5,6 +5,8 @@ reconciliation and retrieval. Data adapters own pinned graph views. Neither
 layer may copy or alter the training algorithm to fit a platform or scale.
 
 For opt-in operator and layer observations, use the [session profiler](FAMILY_EXECUTION_PROFILE.md).
+For explicit K1 aggregation/evaluation acceleration and native shadow admission,
+use [K1 execution providers](K1_EXECUTION_BACKENDS.md).
 
 ## Code Owners
 
@@ -12,7 +14,7 @@ For opt-in operator and layer observations, use the [session profiler](FAMILY_EX
 |---|---|
 | `family_training_core.py` | One outer loop, zero-grad/backward/clip/optimizer/EMA update order and batch-stream execution; tensors stay on-device until an owning reporting boundary. |
 | `family_training_data.py` | Fixed-subset topology selection, shard SHA/row/label verification, train-only normalization and parameterized deterministic samplers. |
-| `family_training_recipe.py` | Typed data/initialization/budget, schedule, tail and selection policies; no platform-dependent algorithm or slow execution option. |
+| `family_training_recipe.py` | Typed data/initialization/budget, schedule, tail, selection and explicit execution options; no platform-dependent algorithm. |
 | `family_training_kernel.py` | Existing K1/GPTrans model/addon factories, accelerated forward/backward, optimizer, bound EMA and existing buffered development evaluation. |
 | `family_training_loaders.py` | One persistent train loader and bounded optional CPU development cache; private loader RNG and deterministic pass/resume cursor. |
 | `family_training_session.py` | One schedule/train/development/selection/resume lifecycle, using the shared outer loop and caller-owned atomic artifact/trace hooks. |

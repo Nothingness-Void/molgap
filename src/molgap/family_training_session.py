@@ -292,11 +292,13 @@ class FamilyTrainingSession:
         self.pass_finished(progress, metrics)
 
     def _persist(self, progress):
+        from .training_reproducibility import finite_validation_scope
         self.progress = progress
         try:
-            if progress.status == "complete" and not self.recipe.dataset.development:
-                self._select(progress)
-            self.checkpoint(progress, self.state_dict())
+            with finite_validation_scope():
+                if progress.status == "complete" and not self.recipe.dataset.development:
+                    self._select(progress)
+                self.checkpoint(progress, self.state_dict())
         except Exception:
             self.progress = LoopProgress(progress.optimizer_step, progress.sample_presentations,
                 progress.pass_index, progress.next_batch, "persistence_failed")

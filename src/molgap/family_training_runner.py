@@ -226,6 +226,10 @@ def _state_fingerprint(value):
 def run_screen_preflight(**options):
     """Three scratch executions: repeat and actual serialized mid-step resume."""
     import torch
+    from .k1_execution_qualification import (
+        _execution_state_fingerprint, _run_execution_evaluation,
+        _native_probe, _run_execution_shadow, _verify_execution_proof,
+        _write_execution_proof)
     from .family_training_kernel import FamilyKernel
     from .family_training_loaders import FamilyLoaders
     from .family_training_session import FamilyTrainingSession
@@ -271,6 +275,36 @@ def run_screen_preflight(**options):
             "state_fingerprint": _state_fingerprint(state)})
     if len({proof["state_fingerprint"] for proof in proofs}) != 1:
         raise ValueError("Native optimizer/EMA/schedule/RNG repeat or serialized resume differs")
+    execution_proof = None
+    if recipe.k1_execution is not None:
+        # Keep the candidate recipe identity in the candidate state, but run a
+        # shadow with the historical backend under the same data/init/RNG.  The
+        # comparison removes only the recipe identity inside the cursor.
+        native_probe = _native_probe(recipe)
+        native_state, native_path = _run_execution_shadow(
+            recipe=native_probe, data=data, tuning=tuning, options=options, output=output)
+        candidate_path = output / "repeat-b.pt"
+        candidate_state = torch.load(candidate_path, map_location="cpu", weights_only=True)
+        if _execution_state_fingerprint(candidate_state) != _execution_state_fingerprint(native_state):
+            raise ValueError("K1 execution candidate/native optimizer state differs")
+        candidate_eval, candidate_source = _run_execution_evaluation(
+            recipe=probe, data=data, tuning=tuning, options=options,
+            retained_state=candidate_state)
+        native_eval, native_source = _run_execution_evaluation(
+            recipe=native_probe, data=data, tuning=tuning, options=options,
+            retained_state=native_state)
+        if not torch.equal(candidate_source, native_source):
+            raise ValueError("K1 execution evaluation fixtures differ")
+        execution_proof = _write_execution_proof(
+            output=output, probe=probe, candidate_state=candidate_state,
+            candidate_path=candidate_path, native_state=native_state,
+            native_path=native_path, candidate_eval=candidate_eval,
+            candidate_eval_path=output / "execution-candidate-evaluation.pt",
+            native_eval=native_eval,
+            native_eval_path=output / "execution-native-evaluation.pt",
+            source_idx=candidate_source,
+            source_idx_path=output / "execution-evaluation-source-idx.pt")
+        _verify_execution_proof(output, probe, execution_proof, required=True)
     resource = None
     if recipe.mode in BOUNDED_MODES:
         resource = _qualify_cycle_resources(recipe, data, tuning, Path(options["initial_state_path"]))
@@ -283,6 +317,8 @@ def run_screen_preflight(**options):
         "formal_training_exposure": 0, "scientific_acceptance": "NOT_EVALUATED"}
     if profile_proof is not None:
         certificate["profile_proof"] = profile_proof
+    if execution_proof is not None:
+        certificate["execution_proof"] = execution_proof
     if resource is not None:
         certificate["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
     atomic_json(output / "runtime_certificate.json", certificate)
@@ -471,11 +507,14 @@ def _verify_profile_proof(root, probe, profile_proof, *, required):
 def _verify_preflight(directory, recipe, provenance, *, profiling_required=False):
     import torch
     from .family_training_session import validate_session_resume
+    from .k1_execution_qualification import _verify_execution_proof
     root = Path(directory).absolute()
     saved = _json(_artifact_path(root, "runtime_provenance.json"))
     certificate = _json(_artifact_path(root, "runtime_certificate.json"))
     if saved != provenance or certificate.get("provenance_sha256") != canonical_fingerprint(provenance):
         raise ValueError("Native preflight source/recipe/data/runtime/device identity differs")
+    if certificate.get("status") != "accepted":
+        raise ValueError("Native preflight certificate is not accepted")
     if recipe.mode in BOUNDED_MODES:
         resource_path = root / "resource_qualification.json"
         if certificate.get("resource_qualification_sha256") != normalized_file_sha(resource_path):
@@ -513,6 +552,9 @@ def _verify_preflight(directory, recipe, provenance, *, profiling_required=False
         fingerprints.append(fingerprint)
     if len(set(fingerprints)) != 1:
         raise ValueError("Native repeat/resume proof differs")
+    _verify_execution_proof(root, probe, certificate.get("execution_proof"),
+        required=recipe.k1_execution is not None,
+        expected_candidate_sha256=proofs[1]["sha256"] if proofs else None)
     _verify_profile_proof(root, probe, certificate.get("profile_proof"), required=profiling_required)
     return certificate
 

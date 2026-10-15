@@ -319,17 +319,37 @@ def _validate_rng_state(state):
 
 def _finite_tree(value, label):
     import torch
-    if isinstance(value, torch.Tensor):
-        if not torch.isfinite(value).all():
-            raise ValueError("Nonfinite checkpoint state: " + label)
-    elif isinstance(value, dict):
-        for key, child in value.items():
-            _finite_tree(child, label + "." + str(key))
-    elif isinstance(value, (list, tuple)):
-        for child in value:
-            _finite_tree(child, label)
-    elif isinstance(value, float) and not math.isfinite(value):
-        raise ValueError("Nonfinite checkpoint state: " + label)
+    from .training_reproducibility import _batch_finite_tensor_failures
+
+    tensor_entries = []
+    scalar_failures = []
+    leaf_order = 0
+
+    def visit(child, child_label):
+        nonlocal leaf_order
+        if isinstance(child, torch.Tensor):
+            tensor_entries.append((leaf_order, child_label, child))
+            leaf_order += 1
+        elif isinstance(child, dict):
+            for key, nested in child.items():
+                visit(nested, child_label + "." + str(key))
+        elif isinstance(child, (list, tuple)):
+            for nested in child:
+                # Preserve the historical list/tuple label, which intentionally
+                # omits positional indexes from checkpoint diagnostics.
+                visit(nested, child_label)
+        elif isinstance(child, float):
+            if not math.isfinite(child):
+                scalar_failures.append((leaf_order, child_label))
+            leaf_order += 1
+
+    visit(value, label)
+    failures = scalar_failures + [
+        (order, path) for order, path in _batch_finite_tensor_failures(tensor_entries)
+    ]
+    if failures:
+        _, path = min(failures, key=lambda item: item[0])
+        raise ValueError("Nonfinite checkpoint state: " + path)
 
 
 class FamilyOutputSession:
