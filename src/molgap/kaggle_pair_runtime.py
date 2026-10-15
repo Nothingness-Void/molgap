@@ -35,8 +35,8 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     from .k1_infrastructure_comparison import is_comparison
     execution_comparison = is_comparison(spec)
     if execution_comparison:
-        from .k1_infrastructure_comparison import check_plan, BASE
-        check_plan(spec, source_root, _json(source_root / BASE / "acceptance_plan.json"),
+        from .k1_infrastructure_comparison import check_plan, comparison_base
+        check_plan(spec, source_root, _json(source_root / comparison_base(spec) / "acceptance_plan.json"),
             initial_states={j["arm_id"]: Path(launch_path).parent / j["initial_state"] for j in jobs})
     from .family_pair_release import bounded_cycle_pair, WALL_CEILING_SECONDS
     bounded = bounded_cycle_pair(spec)

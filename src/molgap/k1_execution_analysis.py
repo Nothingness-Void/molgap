@@ -87,7 +87,7 @@ def analyze(*, package, receipt, output_root):
     from .experiment_package import verify_experiment_source_package, read_packaged_text
     from .experiment_family_workflow import RunContext, inspect_output, _artifact_path, _json, _check_context
     from .experiment_retention import validate_execution_retention
-    from .k1_infrastructure_comparison import BASE, is_comparison
+    from .k1_infrastructure_comparison import comparison_base, is_comparison
     from .screen_policy import canonical_fingerprint
     from .training_reproducibility import sha256_file
     package, output_root = Path(package).absolute(), Path(output_root).absolute()
@@ -95,6 +95,7 @@ def analyze(*, package, receipt, output_root):
     spec = ExperimentSpec.from_json((package / "experiment_spec.json").read_text(encoding="utf-8"))
     if not is_comparison(spec):
         raise ValueError("Not the frozen K1 execution comparison")
+    base = comparison_base(spec)
     retention = validate_execution_retention(output_root, spec, package_identity=manifest["package_identity"],
         source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"])
     retention["manifest_path"] = retention["manifest_path"].relative_to(output_root).as_posix()
@@ -115,7 +116,7 @@ def analyze(*, package, receipt, output_root):
         context = RunContext.from_launch(spec, Path(receipt), package,
             expected_package_identity=manifest["package_identity"], arm_id=arm_id)
         root = _artifact_path(output_root, arm_id + "/output_manifest.json").parent
-        record = json.loads(read_packaged_text(package, BASE + "/" + arm_id + "/contract.json"))
+        record = json.loads(read_packaged_text(package, base + "/" + arm_id + "/contract.json"))
         inspected = inspect_output(root, context=context, expected=record["acceptance_requirements"])
         if inspected["status"] != "MECHANICALLY_VERIFIED":
             raise ValueError("Owning inspection failed: " + arm_id + ": " + repr(inspected.get("blockers")))
@@ -168,6 +169,7 @@ def analyze(*, package, receipt, output_root):
             raise ValueError("Paired native runtime differs: " + key)
     return {"format": "molgap-k1-execution-comparison-v1", "status": "EXECUTION_COMPARISON_VERIFIED",
         "spec_identity": spec.identity, "source_commit": manifest["source_commit"],
+        "logical_run_id": spec.to_dict()["logical_run_id"], "comparison_base": base,
         "scientific_acceptance": "NOT_EVALUATED", "replay_readiness": "NOT_APPLICABLE_EXECUTION_DIAGNOSTIC",
         "parent_timed_train_workers": speed(workers["train"]["original"], workers["train"]["optimized"]),
         "capture_off_spans": paired_spans(profiles["original"]["capture_off_training_spans"], profiles["optimized"]["capture_off_training_spans"]),

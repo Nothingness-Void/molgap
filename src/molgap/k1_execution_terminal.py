@@ -14,6 +14,14 @@ def close_execution(*, repo_root, output_root, analysis_path, summary_path, deci
     analysis = json.loads(analysis_path.read_bytes())
     if analysis["status"] != "EXECUTION_COMPARISON_VERIFIED":
         raise ValueError("Verified saved-output comparison is required")
+    from .experiment_spec import ExperimentSpec
+    from .k1_infrastructure_comparison import comparison_base
+    base = analysis.get("comparison_base", BASE)
+    from .experiment_family_workflow import _artifact_path
+    spec_path = _artifact_path(root, base + "/experiment_spec.json")
+    spec = ExperimentSpec.from_json(spec_path.read_text(encoding="utf-8"))
+    if spec.identity != analysis["spec_identity"] or comparison_base(spec) != base:
+        raise ValueError("Saved analysis differs from the frozen comparison round")
     rel = lambda p: Path(p).resolve().relative_to(root).as_posix()
     save = lambda p, d: atomic_write(p, json_bytes(d))
     bootstrap = outputs.parent / "bootstrap_allocation.json"
@@ -23,15 +31,15 @@ def close_execution(*, repo_root, output_root, analysis_path, summary_path, deci
         raise ValueError("Complete two-device allocation observation is required")
     results = {}
     for arm in ("original", "optimized"):
-        plan = root / BASE / arm / "rml/trajectory.json"
+        plan = root / base / arm / "rml/trajectory.json"
         prospective = json.loads(plan.read_bytes())
         tid = prospective["trajectory_id"]
         run = prospective["actions"][0]["run_ids"][0]
         arm_root = outputs / arm
-        target = root / BASE / "results" / arm
+        target = root / base / "results" / arm
         target.mkdir(parents=True, exist_ok=True)
         metadata = target / "observed_metadata.json"
-        evidence_id = "pcqm-k1-infrastructure-" + arm + "-100k-s42"
+        evidence_id = "pcqm-" + tid.removeprefix("TC-")
         role_use = {"internal_train": "consumed", "internal_development": "consumed",
             "official_validation": "untouched", "test_dev": "untouched", "test_challenge": "untouched"}
         outcome = {"execution_status": "complete", "artifact_status": "accepted",
@@ -51,7 +59,8 @@ def close_execution(*, repo_root, output_root, analysis_path, summary_path, deci
                     "role_name": role, "access_kind": kind, "selection_used": kind == "selection_used",
                     "evidence_ref": rel(metadata)})
         cost = {"schema": "molgap-cost-event-v1", "cost_event_id": f"cost-{tid}-observed-v1",
-            "trajectory_id": tid, "action_id": "A001", "run_id": run, "attempt_id": arm + "-v1",
+            "trajectory_id": tid, "action_id": "A001", "run_id": run,
+            "attempt_id": prospective["actions"][0]["attempt_ids"][0],
             "category": "training", "platform": "kaggle", "hardware": "Tesla_T4",
             "evidence_ref": rel(metadata), "measurement": {
                 "device_hours": {"status": "measured", "value": allocation["wall_seconds"] / 3600},
@@ -71,8 +80,8 @@ def close_execution(*, repo_root, output_root, analysis_path, summary_path, deci
         terminal = {"format": "molgap-rml-terminal-package-v1", "trajectory_id": tid, "run_id": run,
             "action_id": "A001", "finalized_at": finalized_at, "acceptance_ref": rel(metadata),
             "decision": decision, "roles": roles, "costs": [cost], "role_use": role_use}
-        authorities = [root / BASE / name for name in ("protocol.md", "authority.json", "role_plan.json")]
-        authorities += [plan, decision_path, root / BASE / arm / "contract.json", root / BASE / "submission/launch_receipt.json"]
+        authorities = [root / base / name for name in ("protocol.md", "authority.json", "role_plan.json")]
+        authorities += [plan, decision_path, root / base / arm / "contract.json", root / base / "submission/launch_receipt.json"]
         artifacts = [p for p in arm_root.rglob("*") if p.is_file()]
         artifacts += [metadata, summary_path, analysis_path, bootstrap,
             outputs / "execution_report.json", outputs / "execution_retention.json", outputs / "allocation_ledger.json"]
