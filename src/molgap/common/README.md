@@ -89,3 +89,11 @@ show composition through sandbox, neutral packaging and platform handoff.
 Private-resource 403 remains unknown until a complete authenticated bounded owner
 listing proves absence. Dataset status and version/private metadata use separate
 SDK operations; this boundary accepts the installed optional-format signature.
+
+`spec`, `wire`, `paths` and `io` reuse the completed parser/IO extraction from
+Desktop `79f6a96a` / server-compatible `0ea5cf18`. `experiment_spec.py` remains the
+strict wire-only compatibility facade; `experiment_catalog.py` owns static
+capabilities. Callers keep their admission and authority guards. See the
+[extraction acceptance](../../../docs/operations/COMMON_CONTRACT_ACCEPTANCE.md)
+for its historical scope; the training convergence and later checks are in the
+[server return](../../../docs/operations/SHARED_TRAINING_CORE_SERVER_RETURN.md).

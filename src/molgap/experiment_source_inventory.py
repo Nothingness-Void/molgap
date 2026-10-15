@@ -5,6 +5,11 @@ This is not runtime dependency discovery. Extra addon paths remain explicit.
 """
 
 COMMON_SOURCE_FILES = (
+    "src/molgap/common/io.py",
+    "src/molgap/common/paths.py",
+    "src/molgap/common/spec.py",
+    "src/molgap/common/wire.py",
+    "src/molgap/experiment_catalog.py",
     "src/molgap/family_training_policy.py",
     "src/molgap/family_model_ops.py",
     "src/molgap/substrate_scale_addon.py",

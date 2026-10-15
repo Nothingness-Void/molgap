@@ -49,7 +49,6 @@ def _prepare_trajectory(spec: dict[str, Any]) -> dict[str, Any]:
     token = hashlib.sha256(json_bytes(spec)).hexdigest()[:20]
     trajectory.setdefault("schema", "molgap-trajectory-v1")
     trajectory.setdefault("record_mode", "prospective")
-    trajectory.setdefault("owner", "server")
     trajectory.setdefault("trajectory_id", "T-" + token)
     trajectory["hypothesis"].setdefault("hypothesis_id", "H-" + token)
     trajectory.setdefault("result", {"evidence_ids": [], "evidence_refs": []})
@@ -94,8 +93,8 @@ def _prepare_plan(repo_root: str | Path, spec: dict[str, Any], output: str | Pat
     trajectory = _prepare_trajectory(spec)
     if pair_binding(trajectory) is not None and _snapshot is None:
         raise ValueError("same-run replay must be planned in one frozen multi-arm batch")
-    if trajectory["owner"] != "server" or trajectory["record_mode"] != "prospective":
-        raise ValueError("plan creates only server prospective trajectories")
+    if trajectory.get("owner") not in {"desktop", "server"} or trajectory["record_mode"] != "prospective":
+        raise ValueError("plan requires an explicit desktop/server owner and prospective mode")
     if trajectory["decision"]["outcome"] != "ACTIVE" or trajectory["result"]["evidence_ids"]:
         raise ValueError("new plan must be ACTIVE with no terminal evidence")
     commit = (_snapshot.commit if _snapshot is not None else

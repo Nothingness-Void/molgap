@@ -5,11 +5,13 @@ explicitly to terminal_wiring; this module owns neither acceptance nor finalizat
 """
 from __future__ import annotations
 
+from .common.paths import validate_relative_path as _path
+
 import json
 import math
 import re
 from dataclasses import dataclass
-from pathlib import Path, PureWindowsPath
+from pathlib import Path
 from typing import Any
 
 from .experiment_spec import (
@@ -31,18 +33,6 @@ def _fields(value: Any, required: frozenset, optional: frozenset, label: str) ->
     if type(value) is not dict or not required <= value.keys() or value.keys() - required - optional:
         raise ValueError(f"{label}: missing or unknown fields")
 
-
-def _path(value: Any) -> None:
-    _text(value, "descriptor path")
-    # Portable repository-relative spelling avoids host-dependent drive/ADS and
-    # separator interpretation; repo_local_path additionally checks symlinks.
-    if "\\" in value or ":" in value or value.startswith("/"):
-        raise ValueError("descriptor paths must be repository-relative POSIX paths")
-    for part in value.split("/"):
-        if (part in {"", ".", ".."} or part.endswith((" ", "."))
-                or any(ord(c) < 32 or c in '<>"|?*' for c in part)
-                or PureWindowsPath(part).is_reserved()):
-            raise ValueError("invalid descriptor path or path traversal")
 
 
 def _fact(value: Any, label: str, validator) -> None:

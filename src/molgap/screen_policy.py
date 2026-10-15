@@ -7,6 +7,8 @@ qualified once and then reused instead of retraining the baseline per job.
 """
 from __future__ import annotations
 
+from .common.wire import canonical_fingerprint
+
 import hashlib
 import json
 import math
@@ -62,13 +64,6 @@ REFERENCE_PROVENANCE_FIELDS = (
     "runtime_certificate_id",
 )
 
-
-def canonical_fingerprint(value: Mapping) -> str:
-    """Return a stable SHA-256 for a JSON-compatible mapping."""
-    payload = json.dumps(
-        dict(value), sort_keys=True, separators=(",", ":"), ensure_ascii=True
-    ).encode("utf-8")
-    return hashlib.sha256(payload).hexdigest()
 
 
 def validate_screen_arm(
