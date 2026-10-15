@@ -27,6 +27,10 @@ contract and the platform's actual runtime qualification.
 | Kaggle runtime | `platforms/kaggle/run_experiment.py`; `kaggle_pair_runtime.py` | Verify the frozen launch/package and observed T4 allocation; preflight every arm before spawning any training arm. |
 | Platform operations | `kaggle-molgap-workloads` skill and existing Kaggle adapters | Publish the prepared dataset/kernel, submit, reconcile the exact run/version, and retrieve retained outputs. |
 
+Run `check-workflow` for one read-only readiness check before preparation.
+Prepared bounded T4 releases use the journaled
+[platform submission entry](KAGGLE_WORKFLOW_SUBMISSION.md).
+
 The all-arm barrier runs the registered preflight phase for every assigned arm.
 Training starts only after every preflight exits successfully. A failure stops
 the phase and retains per-arm logs and pair state. This is orchestration

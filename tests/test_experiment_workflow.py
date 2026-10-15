@@ -200,6 +200,63 @@ def test_v2_two_candidate_arms_bind_supported_k1_and_gptrans_adapters():
     ]
 
 
+def test_readiness_checks_policy_without_creating_staging(workflow_case, tmp_path, monkeypatch):
+    monkeypatch.setattr(workflow, "check_family_recipes", lambda *a: {"checked": True})
+    def missing_policy(*args):
+        raise ValueError("batch plans require a registered explicit policy version")
+    monkeypatch.setattr(workflow, "check_prospective", missing_policy)
+    output = tmp_path / "must-not-exist"
+    result = workflow.check_workflow_readiness(workflow_case["spec"], workflow_case["repo"], workflow_case["plan"])
+    assert result["status"] == "BLOCKED" and "registered explicit policy" in result["blockers"][0]["message"]
+    assert workflow.prepare_workflow(workflow_case["spec"], workflow_case["repo"], workflow_case["plan"], output)["status"] == "BLOCKED"
+    assert not output.exists()
+
+
+def test_readiness_reports_independent_gaps_together(workflow_case, monkeypatch):
+    def fail_recipe(*args):
+        raise ValueError("missing profiler")
+    def fail_policy(*args):
+        raise ValueError("missing policy")
+    monkeypatch.setattr(workflow, "check_family_recipes", fail_recipe)
+    monkeypatch.setattr(workflow, "check_prospective", fail_policy)
+    result = workflow.check_workflow_readiness(workflow_case["spec"], workflow_case["repo"], workflow_case["plan"])
+    assert [b["message"] for b in result["blockers"]] == ["missing profiler", "missing policy"]
+
+
+def test_readiness_cli_routes_without_preparation(workflow_case, tmp_path, monkeypatch, capsys):
+    spec_path, plan_path = tmp_path / "spec.json", tmp_path / "plan.json"
+    spec_path.write_text(workflow_case["spec"].to_json())
+    atomic_plan = workflow_case["plan"]
+    plan_path.write_text(json.dumps(atomic_plan))
+    checker = Mock(return_value={"status": "WORKFLOW_INPUTS_READY", "submitted": False})
+    monkeypatch.setattr(workflow, "check_workflow_readiness", checker)
+    assert cli.main(["check-workflow", "--spec", str(spec_path), "--plan", str(plan_path),
+                     "--repo-root", str(workflow_case["repo"])]) == 0
+    assert json.loads(capsys.readouterr().out)["status"] == "WORKFLOW_INPUTS_READY"
+    assert checker.call_args.args[2] == atomic_plan
+
+
+def test_workflow_info_exposes_profiler_capability_without_running_model():
+    from molgap.experiment_execution import workflow_capabilities
+    result = workflow_capabilities(_candidate_pair_spec())
+    arms = result["registered_training_arms"]
+    assert arms["k1_candidate"]["profile_adapter"] == "molgap.k1_legacy_execution_profile"
+    assert arms["gptrans_candidate"]["profile_adapter"] == "molgap.gptrans_legacy_execution_profile"
+
+
+def test_unregistered_profiler_fails_before_owner_recipe_validation(monkeypatch):
+    from dataclasses import replace
+    from molgap import experiment_execution as execution
+    spec = ExperimentSpec.from_json((ROOT / "experiments/gptrans_infrastructure_t4_100k/experiment_spec.json").read_text())
+    registry = dict(execution.TRAINING_ADAPTERS)
+    registry[("gptrans_t", "1")] = replace(registry[("gptrans_t", "1")], profile_adapter=None)
+    monkeypatch.setattr(execution, "TRAINING_ADAPTERS", registry)
+    recipes = {a["arm_id"]: "experiments/gptrans_infrastructure_t4_100k/" + a["arm_id"] + "/contract.json"
+               for a in spec.to_dict()["arms"]}
+    with pytest.raises(ValueError, match="no registered execution profiler"):
+        execution.check_family_recipes(spec, ROOT, recipes)
+
+
 @pytest.mark.parametrize(
     ("family", "version"),
     [("neural_atom_k1", "1"), ("edge_state_gps", "1")],

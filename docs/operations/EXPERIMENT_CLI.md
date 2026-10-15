@@ -260,6 +260,12 @@ New K1/GPTrans recipe builders freeze full `metric_semantics` independently;
 the inspector retains exact recipe-to-trace checks, including the declared
 development role. Missing live or EMA observations remain null.
 
+`check-workflow --spec SPEC --repo-root ROOT --plan PLAN` runs the same input,
+recipe, profiler-capability, acceptance and prospective-policy checks before
+staging or RML publication. It neither submits nor qualifies a native runtime.
+Prepared Kaggle releases use the owning
+[platform operation](KAGGLE_WORKFLOW_SUBMISSION.md), outside this local CLI.
+
 `workflow-info --spec SPEC` reports declaration versus executable capability
 and the preparation entry. `build-resume` and `prepare-resume` compose portable
 incomplete checkpoint transport over the original prepared package and a

@@ -8,12 +8,14 @@ submission and terminal evidence remain owned by their existing modules.
 from __future__ import annotations
 
 from datetime import datetime, timezone
-from pathlib import Path, PureWindowsPath
-import re
+from pathlib import Path
 import subprocess
 
 from .experiment_family_workflow import _artifact_path, _json
 from .training_reproducibility import sha256_file
+from .execution_comparison import (safe_comparison_base, run_version as _run_version,
+    comparison_base as shared_comparison_base, ExecutionQuestion, execution_proposal,
+    freeze_comparison_declarations)
 
 
 FORMAT = "molgap-gptrans-infrastructure-comparison-plan-v1"
@@ -70,56 +72,11 @@ _MISSING = object()
 
 
 def _safe_base(value, *, require_under_base=True):
-    """Normalize a comparison storage root without accepting path aliases."""
-    if isinstance(value, Path):
-        value = value.as_posix()
-    if type(value) is not str or not value or "\\" in value or ":" in value:
-        raise ValueError("Comparison base must be a repository-relative POSIX path")
-    if value.startswith("/") or PureWindowsPath(value).drive or PureWindowsPath(value).root:
-        raise ValueError("Comparison base must be relative")
-    parts = value.split("/")
-    if any(not part or part in {".", ".."} or part.endswith((" ", "."))
-            or PureWindowsPath(part).is_reserved() for part in parts):
-        raise ValueError("Comparison base contains an unsafe path component")
-    if require_under_base and value != BASE and not value.startswith(BASE + "/"):
-        raise ValueError("Comparison base must be under the frozen GPTrans comparison root")
-    return value
-
-
-def _run_version(value):
-    if type(value) is not str or re.fullmatch(r"v[1-9][0-9]*", value) is None:
-        raise ValueError("Comparison run_version must be a version such as v1 or v2")
-    return value
-
-
-def _arm_plan_base(path, arm_id):
-    suffix = "/" + arm_id + "/plan_input.json"
-    if type(path) is not str or not path.endswith(suffix):
-        raise ValueError("Comparison plan reference has an unexpected arm suffix")
-    return path[:-len(suffix)]
+    return safe_comparison_base(value, base=BASE, require_under_base=require_under_base)
 
 
 def comparison_base(spec):
-    """Derive the prospective storage root from the Spec identity."""
-    if not is_comparison(spec):
-        raise ValueError("Not the frozen GPTrans execution comparison")
-    declaration = spec.to_dict()
-    arms = declaration.get("arms")
-    prospective = declaration.get("prospective")
-    if (type(arms) is not list or [arm.get("arm_id") for arm in arms] != ["original", "optimized"]
-            or type(prospective) is not dict or type(prospective.get("arms")) is not list
-            or [item.get("arm_id") for item in prospective["arms"]] != ["original", "optimized"]):
-        raise ValueError("Comparison Spec must declare original and optimized prospective arms")
-    bases = []
-    for item, arm_id in zip(prospective["arms"], ("original", "optimized")):
-        if type(item) is not dict or type(item.get("plan_spec_ref")) is not str:
-            raise ValueError("Comparison prospective arm lacks a plan reference")
-        path = item["plan_spec_ref"]
-        _safe_base(path, require_under_base=False)
-        bases.append(_safe_base(_arm_plan_base(path, arm_id)))
-    if bases[0] != bases[1]:
-        raise ValueError("Comparison prospective arms do not share a storage root")
-    return bases[0]
+    return shared_comparison_base(spec, experiment_id='gptrans-infrastructure-t4-100k', base=BASE)
 
 
 def _pin(root, relative):
@@ -186,7 +143,7 @@ def freeze_comparison(root, *, account=ACCOUNT, base=BASE, run_version="v1"):
     pinned.  This function never recreates or mutates frozen model assets.
     """
     import torch
-    from .experiment_spec import ExperimentSpec, FAMILIES, TERMINAL_PROTOCOL
+    from .experiment_spec import FAMILIES
     from .experiment_family_workflow import tensor_digest
     from .experiment_execution import build_family_recipe
     from .family_training_runner import family_arm_bindings
@@ -195,7 +152,6 @@ def freeze_comparison(root, *, account=ACCOUNT, base=BASE, run_version="v1"):
     from .research_memory.trace import atomic_write, json_bytes
     from .screen_policy import canonical_fingerprint
     from .v4_runtime import normalized_source_sha256
-    from .experiment_source_inventory import registered_source_files
 
     root = Path(root).resolve()
     base = _safe_base(base)
@@ -297,43 +253,15 @@ def freeze_comparison(root, *, account=ACCOUNT, base=BASE, run_version="v1"):
         changed = ("retained original GPTrans-T V4 execution"
                    if arm_id == "original" else "latest shared GPTrans-T execution refinement")
         question = "Does the latest shared GPTrans-T execution refinement change fixed-100K T4 execution cost at matched exposure?"
-        proposal = {"trajectory": {"trajectory_id": trajectory, "record_mode": "prospective", "owner": "server", "track": "C",
-            "family_id": "gptrans-infrastructure-execution", "question": question,
-            "hypothesis": {"hypothesis_id": "H-" + trajectory,
-                "observed_deficiency": "The latest GPTrans-T shared execution refinement lacks a matched native original profiler comparison",
-                "supporting_evidence_ids": [SUPPORTING_PRIOR],
-                "alternative_explanations": ["CPU contention", "T4 device variability", "Profiler instrumentation overhead"],
-                "changed_mechanism": changed,
-                "cheapest_falsifier": "one matched seed42 T4x2 execution diagnostic with actual operator capture",
-                "related_closed_family_ids": ["gptrans-t-v4-reference"],
-                "expected_native_cost_ref": cost,
-                "decision_changed_if_positive": "retain measured execution evidence without scientific promotion",
-                "decision_changed_if_negative": "record no execution gain or regression without an extra seed",
-                "historical_unknowns": []},
-            "state_at_start": {"source_commit": source_commit, "source_config_identity": canonical_fingerprint(arm),
-                "contract_refs": [contract_ref, authority_ref, role_ref, protocol_ref],
-                "reference_ids": [SUPPORTING_PRIOR], "parent_trajectory_ids": [], "prior_trajectory_ids": [],
-                "prior_evidence_ids": [SUPPORTING_PRIOR], "role_snapshot_refs": [role_ref],
-                "budget_snapshot_ref": authority_ref},
-            "actions": [{"action_id": "A001", "type": "execution_diagnostic", "source_commit": source_commit,
-                "run_ids": [run + ":" + arm_id + ":downstream"], "attempt_ids": [arm_id + "-" + run_version],
-                "evidence_refs": [contract_ref], "cost_event_ids": [cost]}],
-            "result": {"evidence_ids": [], "evidence_refs": []},
-            "decision": {"decision_ref": decision_ref, "outcome": "ACTIVE",
-                "next_allowed_actions": ["one authorized execution diagnostic"], "reopen_conditions": ["terminal evidence"]}},
-            "decision_state": {"known_trajectory_ids": [], "known_evidence_ids": [], "active_reference_ids": [SUPPORTING_PRIOR],
-                "available_actions": ["RUN_GPTRANS_EXECUTION_DIAGNOSTIC", "DEFER"],
-                "chosen_action": "RUN_GPTRANS_EXECUTION_DIAGNOSTIC", "policy_id": "gptrans-infrastructure-execution",
-                "policy_version": "v1", "budget_snapshot_ref": authority_ref, "role_snapshot_refs": [role_ref],
-                "state_timestamp": timestamp, "source_commit": source_commit},
-            "costs": [{"schema": "molgap-cost-event-v1", "cost_event_id": cost, "trajectory_id": trajectory,
-                "action_id": "A001", "run_id": run + ":" + arm_id + ":downstream", "attempt_id": arm_id + "-" + run_version,
-                "category": "training", "platform": "kaggle3", "hardware": "Tesla_T4x2_shared_allocation",
-                "evidence_ref": authority_ref,
-                "measurement": {"device_hours": {"status": "estimated", "value": 7},
-                    "wall_hours": {"status": "estimated", "value": 3.5},
-                    "cpu_hours": {"status": "measurement_missing", "value": None},
-                    "queue_hours": {"status": "measurement_missing", "value": None}}}]}
+        proposal = execution_proposal(
+            question=ExecutionQuestion("gptrans-infrastructure-execution", "RUN_GPTRANS_EXECUTION_DIAGNOSTIC",
+                question, "The latest GPTrans-T shared execution refinement lacks a matched native original profiler comparison",
+                changed, (SUPPORTING_PRIOR,), ("CPU contention", "T4 device variability", "Profiler instrumentation overhead"),
+                ("gptrans-t-v4-reference",), "retain measured execution evidence without scientific promotion",
+                "record no execution gain or regression without an extra seed", reference_ids=(SUPPORTING_PRIOR,)),
+            arm=arm, trajectory_id=trajectory, source_commit=source_commit, run=run, version=run_version,
+            contract_ref=contract_ref, contract_refs=[contract_ref, authority_ref, role_ref, protocol_ref],
+            authority_ref=authority_ref, role_ref=role_ref, decision_ref=decision_ref, timestamp=timestamp)
         atomic_json(root / plan_ref, proposal)
         bindings.append({"arm_id": arm_id, "trajectory_id": trajectory, "plan_spec_ref": plan_ref,
             "plan_spec_sha256": sha256_file(root / plan_ref), "output": base + "/" + arm_id + "/rml"})
@@ -341,26 +269,13 @@ def freeze_comparison(root, *, account=ACCOUNT, base=BASE, run_version="v1"):
         entries.append({"arm_id": arm_id, "contract": {"path": contract_ref, "sha256": sha256_file(root / contract_ref)},
             "expected": record["acceptance_requirements"],
             "initial_state": {"path": INITIAL_STATE_PATH, "sha256": INITIAL_ARTIFACT_SHA256}})
-    spec = ExperimentSpec({"schema_version": "molgap-experiment-spec-v2", "experiment_id": EXPERIMENT_ID,
-        "logical_run_id": LOGICAL_RUN if run_version == "v1" else run,
-        "arms": arms, "platform": {"name": "kaggle", "accelerator": "NvidiaTeslaT4", "device_count": 2,
-            "cpu_cores": 4, "memory_gib": 29, "atomic_checkpoints": True, "retrievable_chunks": True},
-        "prospective": {"arms": bindings},
-        "evidence": {"policy": ref("molgap-v5", "1", canonical_fingerprint({"contract": "MOLGAP-COMMON-V5-FINAL"})),
-            "required_artifacts": ["v5_evidence", "costs", "roles", "trace_manifest", "terminal_artifact"]},
-        "terminal_protocol": TERMINAL_PROTOCOL})
-    spec.write(here / "experiment_spec.json")
-    atomic_json(here / "acceptance_plan.json", {"format": FORMAT, "spec_identity": spec.identity,
-        "authority": _pin(root, authority_ref), "arms": entries})
-    sources = registered_source_files(spec, repo_root=root, auto_dependencies=True)
-    atomic_json(here / "workflow_plan.json", {"format": "molgap-experiment-workflow-v1", "spec_identity": spec.identity,
-        "source_files": sources + [authority_ref, role_ref, protocol_ref, decision_ref, TARGET_MANIFEST,
-                                    base + "/acceptance_plan.json"], "arms": jobs,
-        "acceptance_plan": base + "/acceptance_plan.json",
-        "kaggle": {"account": account, "kernel": kernel, "title": title,
-            "source_dataset": source_dataset, "accelerator": "NvidiaTeslaT4",
-            "datasets": [source_dataset, account + "/pcqm4mv2-ogb-fixed-100k-v1"]}})
-    return {"spec_identity": spec.identity, "initial_state": str(initial), "kernel": kernel}
+    result = freeze_comparison_declarations(root, base=base, experiment_id=EXPERIMENT_ID,
+        logical_run_id=LOGICAL_RUN if run_version == "v1" else run,
+        arms=arms, bindings=bindings, jobs=jobs, entries=entries, plan_format=FORMAT,
+        authority_ref=authority_ref, source_extras=[authority_ref, role_ref, protocol_ref, decision_ref, TARGET_MANIFEST],
+        account=account, kernel=kernel, title=title, source_dataset=source_dataset,
+        data_datasets=[account + "/pcqm4mv2-ogb-fixed-100k-v1"])
+    return {**result, "initial_state": str(initial)}
 
 
 def is_comparison(spec):

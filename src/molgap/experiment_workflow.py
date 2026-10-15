@@ -265,25 +265,16 @@ def prepare_family_training(spec, repo_root, plan, output):
     return report
 
 
-def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path) -> dict:
-    """Validate and stage once, publish prospective RML only after static gates.
-
-    source_files is an explicit augmentation of the reviewed shared inventory;
-    it never discovers files at runtime or silently copies another experiment.
-    Caller supplies existing contract, initialization and scientific plan inputs.
-    """
-    started = perf_counter()
+def _workflow_inputs(spec, repo_root, plan):
+    """Resolve the same declaration for read-only admission and preparation."""
     platform_name = spec.to_dict()["platform"]["name"]
     backend = _platform_adapter(platform_name)
     if type(plan) is not dict or set(plan) != {"format", "spec_identity", "source_files", "arms", "acceptance_plan", platform_name} or plan["format"] != "molgap-experiment-workflow-v1" or plan["spec_identity"] != spec.identity:
         raise ValueError("Workflow plan/Spec mismatch")
     if type(plan["source_files"]) is not list:
         raise ValueError("Workflow source_files must be an explicit path list")
-    repo_root, output = Path(repo_root).absolute(), Path(output).absolute()
+    repo_root = Path(repo_root).absolute()
     _safe_local(repo_root)
-    _safe_local(output)
-    if output.exists():
-        raise ValueError("Workflow output must be a fresh directory; reconcile before another attempt")
     metadata = backend.validate_plan(spec, plan[platform_name])
     declaration = spec.to_dict()
     bindings = {b["arm_id"]: b for b in declaration["prospective"].get("arms", [])}
@@ -312,6 +303,55 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
     # The inventory is maintained with adapters, not assembled by each caller.
     from .experiment_source_inventory import registered_source_files
     source_files = registered_source_files(spec, [*plan["source_files"], *recipes.values()])
+    return dict(metadata=metadata, bindings=bindings, jobs=jobs, initial_states=initial_states,
+                recipes=recipes, validated_jobs=validated_jobs, source_files=source_files)
+
+
+def _workflow_checks(spec, repo_root, inputs):
+    observations, blockers = {}, []
+    for name, check in (("family_recipes", lambda: check_family_recipes(spec, repo_root, inputs["recipes"])),
+                        ("prospective", lambda: check_prospective(spec, Path(repo_root).absolute()))):
+        try:
+            observations[name] = check()
+        except (ValueError, TypeError, RuntimeError, OSError) as error:
+            blockers.append({"check": name, "error_type": type(error).__name__, "message": str(error)})
+    return observations, blockers
+
+
+def check_workflow_readiness(spec, repo_root, plan):
+    """Check recipes, profilers, acceptance and RML policy before any writes."""
+    from .experiment_execution import workflow_capabilities
+    started = perf_counter()
+    inputs = _workflow_inputs(spec, repo_root, plan)
+    if inputs.get("status") == "BLOCKED":
+        return inputs
+    observations, blockers = _workflow_checks(spec, repo_root, inputs)
+    return {"status": "BLOCKED" if blockers else "WORKFLOW_INPUTS_READY", "spec_identity": spec.identity,
+            "checks": observations, "blockers": blockers, "capabilities": workflow_capabilities(spec),
+            "elapsed_seconds": perf_counter() - started,
+            "published": False, "submitted": False, "native_qualification": "NOT_EVALUATED"}
+
+
+def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path) -> dict:
+    """Prepare one frozen declaration with no platform submission."""
+    started = perf_counter()
+    repo_root, output = Path(repo_root).absolute(), Path(output).absolute()
+    _safe_local(output)
+    if output.exists():
+        raise ValueError("Workflow output must be a fresh directory; reconcile before another attempt")
+    backend = _platform_adapter(spec.to_dict()["platform"]["name"])
+    platform_name = spec.to_dict()["platform"]["name"]
+    inputs = _workflow_inputs(spec, repo_root, plan)
+    if inputs.get("status") == "BLOCKED":
+        return inputs
+    metadata, bindings, jobs, initial_states, recipes, validated_jobs, source_files = (
+        inputs[key] for key in ("metadata", "bindings", "jobs", "initial_states", "recipes",
+                               "validated_jobs", "source_files"))
+    # All cheap owner/policy checks precede the staging directory and package.
+    observations, blockers = _workflow_checks(spec, repo_root, inputs)
+    if blockers:
+        return {"status": "BLOCKED", "stage": "workflow_readiness", "checks": observations,
+                "blockers": blockers, "prospective_published": False, "submitted": False}
     output.mkdir(parents=True)
     report = {"format": "molgap-workflow-preparation-v1", "status": "PREPARING",
               "spec_identity": spec.identity, "submitted": False, "stages": [],
@@ -324,8 +364,8 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         report["stages"].append({"stage": stage, "result": result})
         _atomic(output / "workflow_report.json", report)
     try:
-        record("family_recipes", check_family_recipes(spec, repo_root, recipes))
-        record("prospective_check", check_prospective(spec, repo_root))
+        record("family_recipes", observations["family_recipes"])
+        record("prospective_check", observations["prospective"])
         package = output / "package"
         manifest = build_experiment_source_package(spec, repo_root, source_files, package)
         record("package", manifest)

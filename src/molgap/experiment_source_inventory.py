@@ -11,6 +11,7 @@ COMMON_SOURCE_FILES = (
     'src/molgap/constants.py',
     'src/molgap/evidence_pointers.py',
     'src/molgap/experiment_execution.py',
+    'src/molgap/execution_comparison.py',
     'src/molgap/experiment_launch_config.py',
     'src/molgap/experiment_inspection.py',
     'src/molgap/experiment_resume.py',

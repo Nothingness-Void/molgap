@@ -83,6 +83,8 @@ move reusable behavior into experiment result directories.
 | `experiment_package.py`, `experiment_source_inventory.py` | Explicit source allowlist, package identity, reviewed bootstrap dependencies | Changing packaged source selection |
 | `experiment_preflight.py`, `experiment_launch_config.py` | Supported preflight and strict launch schema/binding | Changing release input or launch boundary |
 | `experiment_launch.py` | Local launch receipts and immutable byte publication | Changing launch binding or atomic no-overwrite publication |
+| `execution_comparison.py` | Shared comparison paths, prospective proposals and declaration envelopes | Reusing comparison plumbing while family owners retain scientific gates |
+| `kaggle_submission.py`; `platforms/kaggle/submit_workflow.py` | Journaled private source publication, remote byte checks, quota, T4 push and observed receipts | [Prepared Kaggle submission](KAGGLE_WORKFLOW_SUBMISSION.md) and lost-response reconciliation |
 | `experiment_inspection.py` | One immutable output-inspection snapshot | Changing descriptor/closure input inspection |
 | `experiment_resume.py` | Hash-bound checkpoint transport and safe restoration; delegates native state checks to family owners | Changing portable incomplete-run recovery |
 | `experiment_allocation.py`, `experiment_retention.py` | Physical allocation observation and compact execution retention | Changing allocation ledgers or execution manifests |

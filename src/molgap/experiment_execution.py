@@ -34,6 +34,7 @@ class TrainingAdapter:
     source_files: tuple[str, ...] = ()
     model_factory: str | None = None
     target_identity_in_completion: bool = False
+    profile_adapter: str | None = None
 
     @property
     def addon_modes(self) -> tuple[tuple[str, str], ...]:
@@ -84,7 +85,7 @@ TRAINING_ADAPTERS = MappingProxyType({
         ("src/molgap/family_training_runner.py", "src/molgap/family_training_kernel.py",
          "src/molgap/k1_screen_training.py", "src/molgap/qm9_neural_atom.py",
          "src/molgap/k1_execution_layout.py", "src/molgap/k1_clean_second.py"),
-        target_identity_in_completion=True),
+        target_identity_in_completion=True, profile_adapter="molgap.family_execution_profile"),
     ("gptrans_t", "2"): TrainingAdapter(
         ("gptrans_t", "2"), "molgap.family_training_runner", "gptrans-session-v1",
         tuple(TrainingAddon(name, "1", name) for name in
@@ -99,20 +100,22 @@ TRAINING_ADAPTERS = MappingProxyType({
          "src/molgap/gptrans_cycle_inputs.py", "src/molgap/pcqm_fixed_records.py",
          "src/molgap/gptrans_research_campaign.py", "src/molgap/gptrans_triplet_communication.py",
          "src/molgap/gptrans_local_relation.py", "src/molgap/bond_message_carry.py"),
-        target_identity_in_completion=True),
+        target_identity_in_completion=True, profile_adapter="molgap.family_execution_profile"),
     ("neural_atom_k1", "2"): TrainingAdapter(
         ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
         (TrainingAddon("k1_joint_aggregation", "1", "ssma"),), ("molgap.pcqm_wedge",),
         ("src/molgap/k1_screen_training.py", "src/molgap/qm9_neural_atom.py",
          "src/molgap/qm9_local_hierarchy.py", "src/molgap/qm9_gape.py",
-         "src/molgap/pcqm_gap_architecture.py", "src/molgap/gps.py", "src/molgap/pcqm_wedge.py")),
+         "src/molgap/pcqm_gap_architecture.py", "src/molgap/gps.py", "src/molgap/pcqm_wedge.py"),
+        profile_adapter="molgap.k1_legacy_execution_profile"),
     ("gptrans_t", "1"): TrainingAdapter(
         ("gptrans_t", "1"), "molgap.gptrans_screen_workflow", "gptrans-v1",
         tuple(TrainingAddon(name, "1", name) for name in
               ("pair_prenorm", "centered_logits", "memory_value", "memory_message")),
         ("molgap.pcqm_wedge",),
         ("src/molgap/gptrans_screen_workflow.py", "src/molgap/pcqm_gptrans_v4.py",
-         "src/molgap/gptrans.py", "src/molgap/gptrans_variants.py", "src/molgap/pcqm_wedge.py")),
+         "src/molgap/gptrans.py", "src/molgap/gptrans_variants.py", "src/molgap/pcqm_wedge.py"),
+        profile_adapter="molgap.gptrans_legacy_execution_profile"),
 })
 
 
@@ -187,7 +190,8 @@ def workflow_capabilities(spec: ExperimentSpec) -> dict:
         try:
             adapter = training_adapter(arm)
             supported[arm["arm_id"]] = {"mode": adapter.mode(arm), "trainer": adapter.module,
-                                        "artifact_profile": adapter.artifact_adapter}
+                                        "artifact_profile": adapter.artifact_adapter,
+                                        "profile_adapter": adapter.profile_adapter}
             if adapter.model_factory is not None:
                 supported[arm["arm_id"]]["model_factory"] = adapter.model_factory
         except ValueError as exc:
@@ -261,7 +265,16 @@ def check_family_recipes(spec, repo_root, recipes):
         recipe_path = _artifact_path(repo_root, recipes[arm["arm_id"]])
         if normalized_source_sha256(recipe_path) != arm["training"]["recipe"]["sha256"]:
             raise ValueError("Family recipe/Spec hash mismatch")
-        results[arm["arm_id"]] = owner.validate_screen_recipe(spec, arm["arm_id"], _json(recipe_path))
+        record = _json(recipe_path)
+        if "profiling" in record:
+            if adapter.profile_adapter is None:
+                raise ValueError("Family has no registered execution profiler: " + arm["arm_id"])
+            from .family_execution_profile import ProfileConfig
+            ProfileConfig.from_dict(record["profiling"])
+            profile = import_module(adapter.profile_adapter)
+            if not Path(profile.__file__).resolve().is_relative_to(Path(repo_root).resolve()):
+                raise ValueError("Profile adapter was imported from another checkout")
+        results[arm["arm_id"]] = owner.validate_screen_recipe(spec, arm["arm_id"], record)
     return results
 
 

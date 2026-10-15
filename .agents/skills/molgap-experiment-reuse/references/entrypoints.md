@@ -90,6 +90,9 @@ entries against their bound paths just to start a different experiment.
 
 Actual submission stays outside the common CLI. Read the selected platform's
 workload skill and [platform routing](../../../../platforms/README.md).
+For a prepared bounded T4 workflow, use the journaled
+[Kaggle submission entry](../../../../docs/operations/KAGGLE_WORKFLOW_SUBMISSION.md)
+instead of writing per-experiment upload, verification or receipt scripts.
 For Kaggle, use the [owning adapter](../../../../platforms/kaggle/README.md).
 For new ExperimentSpec source packages, run `check-release` with the actual
 entry script and staged inputs; pass the report as `--release-report` to the

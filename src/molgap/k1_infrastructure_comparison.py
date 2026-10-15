@@ -1,9 +1,11 @@
 """Release checks for the authorized original/shared K1 execution diagnostic."""
-from pathlib import Path, PureWindowsPath
-import re
+from pathlib import Path
 
 from .experiment_family_workflow import _artifact_path, _json
 from .training_reproducibility import sha256_file
+from .execution_comparison import (safe_comparison_base, run_version as _run_version,
+    comparison_base as shared_comparison_base, ExecutionQuestion, execution_proposal,
+    freeze_comparison_declarations)
 
 FORMAT = "molgap-k1-infrastructure-comparison-plan-v1"
 BASE = "experiments/k1_infrastructure_t4_100k"
@@ -12,65 +14,11 @@ _MISSING = object()
 
 
 def _safe_base(value, *, require_under_base=True):
-    """Normalize a comparison storage root without accepting path aliases."""
-    if isinstance(value, Path):
-        value = value.as_posix()
-    if type(value) is not str or not value or "\\" in value or ":" in value:
-        raise ValueError("Comparison base must be a repository-relative POSIX path")
-    if value.startswith("/") or PureWindowsPath(value).drive or PureWindowsPath(value).root:
-        raise ValueError("Comparison base must be relative")
-    parts = value.split("/")
-    if any(not part or part in {".", ".."} or part.endswith((" ", "."))
-            or PureWindowsPath(part).is_reserved() for part in parts):
-        raise ValueError("Comparison base contains an unsafe path component")
-    if require_under_base and value != BASE and not value.startswith(BASE + "/"):
-        raise ValueError("Comparison base must be under the frozen K1 comparison root")
-    return value
-
-
-def _run_version(value):
-    if type(value) is not str or re.fullmatch(r"v[1-9][0-9]*", value) is None:
-        raise ValueError("Comparison run_version must be a version such as v1 or v2")
-    return value
-
-
-def _arm_plan_base(path, arm_id):
-    suffix = "/" + arm_id + "/plan_input.json"
-    if type(path) is not str or not path.endswith(suffix):
-        raise ValueError("Comparison plan reference has an unexpected arm suffix")
-    return path[:-len(suffix)]
+    return safe_comparison_base(value, base=BASE, require_under_base=require_under_base)
 
 
 def comparison_base(spec):
-    """Return the common prospective storage root for a comparison round.
-
-    The plan references are part of the Spec identity, so deriving the root
-    from them keeps runtime/analysis from silently falling back to the old v1
-    directory when a later diagnostic is selected.
-    """
-    if not is_comparison(spec):
-        raise ValueError("Not the frozen K1 execution comparison")
-    declaration = spec.to_dict()
-    arms = declaration.get("arms")
-    prospective = declaration.get("prospective")
-    if (type(arms) is not list or [arm.get("arm_id") for arm in arms] != ["original", "optimized"]
-            or type(prospective) is not dict or type(prospective.get("arms")) is not list
-            or [item.get("arm_id") for item in prospective["arms"]] != ["original", "optimized"]):
-        raise ValueError("Comparison Spec must declare original and optimized prospective arms")
-    refs = prospective["arms"]
-    bases = []
-    for item, arm_id in zip(refs, ("original", "optimized")):
-        if type(item) is not dict or type(item.get("plan_spec_ref")) is not str:
-            raise ValueError("Comparison prospective arm lacks a plan reference")
-        path = item["plan_spec_ref"]
-        # A reference is deliberately checked before suffix stripping. This
-        # rejects absolute paths, backslashes and traversal aliases even when
-        # the suffix itself looks correct.
-        _safe_base(path, require_under_base=False)
-        bases.append(_safe_base(_arm_plan_base(path, arm_id)))
-    if bases[0] != bases[1]:
-        raise ValueError("Comparison prospective arms do not share a storage root")
-    return bases[0]
+    return shared_comparison_base(spec, experiment_id='k1-infrastructure-t4-100k', base=BASE)
 
 
 def freeze_comparison(root, *, account="nvoid912", base=BASE, run_version="v1",
@@ -79,7 +27,7 @@ def freeze_comparison(root, *, account="nvoid912", base=BASE, run_version="v1",
     import subprocess
     from datetime import datetime, timezone
     import torch
-    from .experiment_spec import ExperimentSpec, FAMILIES, TERMINAL_PROTOCOL
+    from .experiment_spec import FAMILIES
     from .experiment_family_workflow import tensor_digest
     from .family_training_recipe import FamilyRecipe, ScheduleSpec
     from .family_training_data import DatasetSelection
@@ -209,59 +157,29 @@ def freeze_comparison(root, *, account="nvoid912", base=BASE, run_version="v1",
             changed_mechanism = ("retained original K1 execution in the matched control"
                                  if name == "original" else "qualified cached K1 aggregation and pooling providers")
             prior_trajectory_ids = ["TC-k1-infrastructure-" + name + "-100k-s42"]
-        proposal = {"trajectory": {"trajectory_id": tid, "record_mode": "prospective", "owner": "server", "track": "C",
-            "family_id": "k1-infrastructure-execution", "question": question,
-            "hypothesis": {"hypothesis_id": "H-" + tid, "observed_deficiency": observed_deficiency,
-                "supporting_evidence_ids": ["pcqm-k1-v4-100k-reference-s42"],
-                "alternative_explanations": ["CPU contention", "Device variability", "Instrumentation overhead"],
-                "changed_mechanism": changed_mechanism,
-                "cheapest_falsifier": "one matched seed42 T4x2 execution diagnostic with actual operator capture",
-                "related_closed_family_ids": ["k1-v4-reference"], "expected_native_cost_ref": cost,
-                "decision_changed_if_positive": "retain measured execution benefit without architecture promotion",
-                "decision_changed_if_negative": "record no gain/regression without a retry or extra seed", "historical_unknowns": []},
-            "state_at_start": {"source_commit": commit, "source_config_identity": canonical_fingerprint(arm),
-                "contract_refs": [recipe_ref, protocol_ref, authority_ref], "reference_ids": [],
-                "parent_trajectory_ids": [], "prior_trajectory_ids": prior_trajectory_ids,
-                "prior_evidence_ids": ["pcqm-k1-v4-100k-reference-s42"],
-                "role_snapshot_refs": [role_ref], "budget_snapshot_ref": authority_ref},
-            "actions": [{"action_id": "A001", "type": "execution_diagnostic", "source_commit": commit,
-                "run_ids": [run + ":" + name + ":downstream"], "attempt_ids": [name + "-" + run_version],
-                "evidence_refs": [recipe_ref], "cost_event_ids": [cost]}],
-            "result": {"evidence_ids": [], "evidence_refs": []}, "decision": {"decision_ref": decision_ref,
-                "outcome": "ACTIVE", "next_allowed_actions": ["one authorized execution diagnostic"], "reopen_conditions": ["terminal evidence"]}},
-            "decision_state": {"known_trajectory_ids": [], "known_evidence_ids": [], "active_reference_ids": [],
-                "available_actions": ["RUN_K1_EXECUTION_DIAGNOSTIC", "DEFER"], "chosen_action": "RUN_K1_EXECUTION_DIAGNOSTIC",
-                "policy_id": "k1-infrastructure-execution", "policy_version": "v1", "budget_snapshot_ref": authority_ref,
-                "role_snapshot_refs": [role_ref], "state_timestamp": timestamp, "source_commit": commit},
-            "costs": [{"schema": "molgap-cost-event-v1", "cost_event_id": cost, "trajectory_id": tid,
-                "action_id": "A001", "run_id": run + ":" + name + ":downstream", "attempt_id": name + "-" + run_version,
-                "category": "training", "platform": "kaggle3", "hardware": "Tesla_T4x2_shared_allocation", "evidence_ref": authority_ref,
-                "measurement": {"device_hours": {"status": "estimated", "value": 7}, "wall_hours": {"status": "estimated", "value": 3.5},
-                    "cpu_hours": {"status": "measurement_missing", "value": None}, "queue_hours": {"status": "measurement_missing", "value": None}}}]}
+        proposal = execution_proposal(
+            question=ExecutionQuestion("k1-infrastructure-execution", "RUN_K1_EXECUTION_DIAGNOSTIC",
+                question, observed_deficiency, changed_mechanism, ("pcqm-k1-v4-100k-reference-s42",),
+                ("CPU contention", "Device variability", "Instrumentation overhead"), ("k1-v4-reference",),
+                "retain measured execution benefit without architecture promotion",
+                "record no gain/regression without a retry or extra seed",
+                prior_trajectories=tuple(prior_trajectory_ids)),
+            arm=arm, trajectory_id=tid, source_commit=commit, run=run, version=run_version,
+            contract_ref=recipe_ref, contract_refs=[recipe_ref, protocol_ref, authority_ref],
+            authority_ref=authority_ref, role_ref=role_ref, decision_ref=decision_ref, timestamp=timestamp)
         atomic_json(root / plan_ref, proposal)
         bindings.append({"arm_id": name, "trajectory_id": tid, "plan_spec_ref": plan_ref,
             "plan_spec_sha256": sha256_file(root / plan_ref), "output": base + "/" + name + "/rml"})
         jobs.append({"arm_id": name, "device": device, "recipe": recipe_ref, "initial_state": str(initial)})
         entries.append({"arm_id": name, "contract": pin(recipe_ref), "expected": record["acceptance_requirements"],
             "initial_state": pin(initial.relative_to(root).as_posix())})
-    spec = ExperimentSpec({"schema_version": "molgap-experiment-spec-v2", "experiment_id": "k1-infrastructure-t4-100k",
-        "logical_run_id": run, "arms": arms, "platform": {"name": "kaggle", "accelerator": "NvidiaTeslaT4", "device_count": 2,
-            "cpu_cores": 4, "memory_gib": 29, "atomic_checkpoints": True, "retrievable_chunks": True},
-        "prospective": {"arms": bindings}, "evidence": {"policy": ref("molgap-v5", canonical_fingerprint({"contract": "MOLGAP-COMMON-V5-FINAL"})),
-            "required_artifacts": ["v5_evidence", "costs", "roles", "trace_manifest", "terminal_artifact"]}, "terminal_protocol": TERMINAL_PROTOCOL})
-    spec.write(here / "experiment_spec.json")
-    atomic_json(here / "acceptance_plan.json", {"format": FORMAT, "spec_identity": spec.identity,
-        "authority": pin(authority_ref), "arms": entries})
-    from .experiment_source_inventory import registered_source_files
-    sources = registered_source_files(spec, repo_root=root, auto_dependencies=True)
-    source_dataset = account + "/molgap-k1-infrastructure-source-" + run_version
-    title = "MolGap K1 Infrastructure Dual 100K " + run_version.upper()
-    atomic_json(here / "workflow_plan.json", {"format": "molgap-experiment-workflow-v1", "spec_identity": spec.identity,
-        "source_files": sources + [authority_ref, role_ref, protocol_ref, base + "/acceptance_plan.json"],
-        "arms": jobs, "acceptance_plan": base + "/acceptance_plan.json", "kaggle": {"account": account, "kernel": kernel,
-            "title": title, "source_dataset": source_dataset,
-            "accelerator": "NvidiaTeslaT4", "datasets": [source_dataset, account + "/pcqm4mv2-ogb-fixed-100k-v1"]}})
-    return {"spec_identity": spec.identity, "initial_state": str(initial), "kernel": kernel}
+    result = freeze_comparison_declarations(root, base=base, experiment_id="k1-infrastructure-t4-100k",
+        logical_run_id=run, arms=arms, bindings=bindings, jobs=jobs, entries=entries, plan_format=FORMAT,
+        authority_ref=authority_ref, source_extras=[authority_ref, role_ref, protocol_ref],
+        account=account, kernel=kernel, title="MolGap K1 Infrastructure Dual 100K " + run_version.upper(),
+        source_dataset=account + "/molgap-k1-infrastructure-source-" + run_version,
+        data_datasets=[account + "/pcqm4mv2-ogb-fixed-100k-v1"])
+    return {**result, "initial_state": str(initial)}
 
 
 def is_comparison(spec):

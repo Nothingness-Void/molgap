@@ -19,6 +19,12 @@ successful release check, local receipt or queue response is not training
 acceptance. Keep the platform skill as the owner of account credentials and
 authoritative remote state.
 
+For prepared bounded T4 workflows, use the journaled
+[submission entry](../../docs/operations/KAGGLE_WORKFLOW_SUBMISSION.md):
+`submit_workflow.py` composes private source publication, byte verification,
+quota checks, explicit T4 push and observed receipt binding. Repeated calls
+resume the same journal; uncertain outcomes never authorize another POST.
+
 For the new family output protocol, `retrieve_family_outputs.py` streams only
 the pinned manifest's required files through an authenticated owning account.
 Source/job/version reconciliation and obtaining the small manifest belong to

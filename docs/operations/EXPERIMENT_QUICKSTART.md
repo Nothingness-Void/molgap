@@ -93,6 +93,7 @@ before any remote action:
 
 ```powershell
 & $python -m molgap.experiment_cli validate-spec --spec $spec
+& $python -m molgap.experiment_cli check-workflow --spec $spec --repo-root . --plan $plan
 & $python -m molgap.experiment_cli prepare-workflow --spec $spec --repo-root . --plan $plan --output $freshOutput
 ```
 
@@ -103,6 +104,8 @@ combined path once; it publishes prospective records after the static gates.
 For other owning adapters, follow their separate planning entry. Use the
 selected platform workload skill and adapter to submit and reconcile the exact
 returned run/version. The shared CLI has no submitter.
+For prepared bounded Kaggle T4 releases, follow the single journaled
+[platform submission entry](KAGGLE_WORKFLOW_SUBMISSION.md).
 
 After retrieval, inspect and close through the owning family workflow:
 

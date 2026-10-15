@@ -50,10 +50,10 @@ def _parser() -> argparse.ArgumentParser:
                  "launch-receipt", "terminal", "plan-prospective", "check-release",
                  "check-acceptance", "inspect-output", "accept-terminal",
                  "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal", "prepare-release", "check-preparation",
-                 "workflow-info", "build-resume", "prepare-resume", "source-dependencies"):
+                 "workflow-info", "check-workflow", "build-resume", "prepare-resume", "source-dependencies"):
         command = commands.add_parser(name)
         command.add_argument("--spec", required=True, type=_local)
-        if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal", "prepare-workflow", "prepare-family-training", "accept-workflow", "prepare-release", "check-preparation", "build-terminal", "build-resume", "prepare-resume", "source-dependencies"}:
+        if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal", "prepare-workflow", "prepare-family-training", "accept-workflow", "prepare-release", "check-preparation", "build-terminal", "build-resume", "prepare-resume", "source-dependencies", "check-workflow"}:
             command.add_argument("--repo-root", required=True, type=_local)
         if name in {"package", "preflight", "run-diagnostic", "prepare-workflow", "prepare-family-training", "prepare-release", "build-resume", "prepare-resume"}:
             command.add_argument("--output", required=True, type=_local)
@@ -77,7 +77,7 @@ def _parser() -> argparse.ArgumentParser:
             source.add_argument("--execution-state", type=_local)
             command.add_argument("--locations", required=True, type=_local)
             command.add_argument("--output", required=True, type=_local)
-        elif name in {"prepare-workflow", "prepare-family-training"}:
+        elif name in {"prepare-workflow", "prepare-family-training", "check-workflow"}:
             command.add_argument("--plan", required=True, type=_local)
             if name == "prepare-family-training":
                 command.add_argument("--auto-dependencies", action="store_true")
@@ -160,6 +160,11 @@ def _dispatch(args) -> tuple[dict, int]:
     if args.command == "workflow-info":
         from .experiment_execution import workflow_capabilities
         return workflow_capabilities(spec), 0
+    if args.command == "check-workflow":
+        from .experiment_workflow import check_workflow_readiness
+        from .experiment_family_workflow import _json
+        result = check_workflow_readiness(spec, args.repo_root, _json(args.plan))
+        return result, 0 if result["status"] == "WORKFLOW_INPUTS_READY" else 1
     if args.command == "source-dependencies":
         from .source_dependencies import registered_dependencies
         closure = registered_dependencies(spec, args.repo_root, args.extra_source,
