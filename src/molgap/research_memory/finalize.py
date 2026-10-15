@@ -43,6 +43,23 @@ def _bindings(root: Path, bindings: dict[str, str]) -> None:
         verify_bound_artifact(root, pointer, digest)
 
 
+def _excluded_execution_trace(frozen, package, manifest):
+    """Retain a standalone timing trace without inventing a scientific reference."""
+    action = next((a for a in frozen["actions"] if a["action_id"] == package["action_id"]), {})
+    outcome = package["evidence"]["outcome"]
+    return (frozen["state_at_start"]["reference_ids"] == []
+        and action.get("type") == "execution_diagnostic"
+        and package.get("comparison_readiness_ref") is None
+        and package.get("action_replay") is None
+        and manifest["backtest_eligibility"]["eligible"] is False
+        and manifest["comparison_role"] == "reference"
+        and manifest["reference_id"] == package["evidence"]["evidence_id"]
+        and outcome["execution_status"] == "complete"
+        and outcome["comparison_status"] == "context_only"
+        and outcome["scientific_status"] == "INCONCLUSIVE"
+        and package["decision"]["outcome"] == "INCONCLUSIVE")
+
+
 def verified_receipt(directory: Path) -> dict[str, Any]:
     receipt = load_json_object(repo_local_path(directory, "finalization.json"))
     if receipt.get("format") != "molgap-rml-finalization-v1":
@@ -343,6 +360,7 @@ def finalize(repo_root: str | Path, trajectory: str | Path, terminal: str | Path
         if manifest["contract_ref"] not in frozen["state_at_start"]["contract_refs"]:
             raise ValueError("manifest contract not frozen")
         if (not (paired is not None and eligible)
+                and not _excluded_execution_trace(frozen, package, manifest)
                 and manifest["reference_id"] not in frozen["state_at_start"]["reference_ids"]):
             raise ValueError("manifest reference not frozen")
         manifest.update(trace_artifact_ref=prefix + "/trace.json",

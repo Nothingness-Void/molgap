@@ -97,6 +97,7 @@ def analyze(*, package, receipt, output_root):
         raise ValueError("Not the frozen K1 execution comparison")
     retention = validate_execution_retention(output_root, spec, package_identity=manifest["package_identity"],
         source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"])
+    retention["manifest_path"] = retention["manifest_path"].relative_to(output_root).as_posix()
     execution = _json(_artifact_path(output_root, "execution_report.json"))
     if execution["status"] != "complete":
         raise ValueError("Incomplete execution cannot produce a terminal speed claim")

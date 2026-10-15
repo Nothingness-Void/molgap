@@ -127,6 +127,10 @@ unavailable or incompatible traces receive explicit exclusions. Scale/research
 entries instead use the separately frozen action inputs and truth; these cannot
 serve as canonical training-prefix entries.
 Every trace reference must belong to its trajectory's frozen reference IDs.
+An excluded, completed `execution_diagnostic` with no frozen reference may use
+its own evidence ID as a reference-role storage anchor, only with context-only
+comparison and scientific/decision INCONCLUSIVE, without action replay or
+comparison-readiness claims. This preserves the trace without pool admission.
 Retrospective partial trajectories remain `historical_partial` even when their
 retained trace reaches terminal exposure; coverage does not grant prospective
 authority.

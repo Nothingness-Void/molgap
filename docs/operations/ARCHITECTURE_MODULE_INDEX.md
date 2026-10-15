@@ -87,6 +87,7 @@ move reusable behavior into experiment result directories.
 | `experiment_resume.py` | Hash-bound checkpoint transport and safe restoration; delegates native state checks to family owners | Changing portable incomplete-run recovery |
 | `experiment_allocation.py`, `experiment_retention.py` | Physical allocation observation and compact execution retention | Changing allocation ledgers or execution manifests |
 | `experiment_terminal.py` | Terminal descriptor translation and explicit closure delegation | Changing terminal binding or translation |
+| `k1_execution_analysis.py`, `k1_execution_terminal.py` | Saved-output K1 execution comparison and excluded diagnostic closure | Comparing retained timings/predictions or translating them into existing RML closure |
 | `training_reproducibility.py` | FP32 determinism, runtime manifests, RNG structure, finite-state, and atomic artifacts | Changing reusable execution provenance |
 | `screen_policy.py`, `comparison_readiness.py`, `v5_common.py` | Screen comparability, V5 comparison classes, identity, and evidence-envelope validation | Changing scientific comparison gates |
 | `server_control.py`, `server_acceptance.py` | Server-local A/B handoff and V5 fail-closed comparison evidence | Changing server operational semantics or promotion evidence |
