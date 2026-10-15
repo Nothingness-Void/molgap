@@ -55,6 +55,8 @@ and its decision remains the authority. Grouping is by routing domain only.
 
 ## GPTrans family
 
+`gptrans_infrastructure_t4_100k/` ·
+
 `pcqm_gptrans_bond_carry_100k/` · `pcqm_gptrans_research_four_arm_100k/` ·
 `pcqm_gptrans_triplet_followup_100k/` · `pcqm_gptrans_triplet_routing_100k/` ·
 
