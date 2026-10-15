@@ -45,6 +45,20 @@ def phase_device(device, phase):
     return 1 - device if phase == "diagnostic-1" else device
 
 
+def execution_extension(record):
+    """Experiment policy returns neutral phases and its own evidence hooks."""
+    from .experiment_execution import ExecutionExtension, ExecutionPhase
+    def artifacts(root, arms):
+        return {"diagnostic": record, "scientific_training_executed": False,
+            "diagnostic_artifacts": {arm: diagnostic_artifact_refs(root / arm) for arm in arms}}
+    return ExecutionExtension(tuple(ExecutionPhase(name,
+        worker="molgap.experiment_training_worker" if name == "preflight" else "molgap.gptrans_execution_diagnostic",
+        swap_devices=name == "diagnostic-1", separate_output=name != "preflight",
+        preflight_binding=name != "preflight") for name in phases(record)),
+        record, record["wall_ceiling_seconds"], artifacts,
+        lambda root: {"diagnostic_summary": summarize_probes(root, record)})
+
+
 def variants_for_arm(arm):
     if arm not in {"original", "optimized"}:
         raise ValueError("Unknown diagnostic arm")
@@ -64,28 +78,23 @@ def _cpu(value):
 
 @contextmanager
 def observe_step(model):
-    """Observe the owners' existing forward and clipping calls without extra math."""
-    import torch
+    """Local model hook plus explicit pre/post-clip observer; no global patch."""
+    from .family_training_core import UpdateObserver
     observed = {}
     def forward(module, inputs, output):
         observed["prediction"] = _cpu(output)
+    def gradients(current):
+        return {name: _cpu(parameter.grad) for name, parameter in current.named_parameters()
+                if parameter.grad is not None}
+    def after_backward(current):
+        observed["raw_gradients"] = gradients(current)
+    def after_clip(current, norm):
+        observed["clipped_gradients"] = gradients(current)
+        observed["gradient_norm"] = _cpu(norm)
     handle = model.register_forward_hook(forward)
-    original = torch.nn.utils.clip_grad_norm_
-    def clip(parameters, *args, **kwargs):
-        parameters = tuple(parameters)
-        def gradients():
-            return {name: _cpu(parameter.grad) for name, parameter in model.named_parameters()
-                    if parameter.grad is not None}
-        observed["raw_gradients"] = gradients()
-        result = original(parameters, *args, **kwargs)
-        observed["clipped_gradients"] = gradients()
-        observed["gradient_norm"] = _cpu(result)
-        return result
-    torch.nn.utils.clip_grad_norm_ = clip
     try:
-        yield observed
+        yield observed, UpdateObserver(after_backward=after_backward, after_clip=after_clip)
     finally:
-        torch.nn.utils.clip_grad_norm_ = original
         handle.remove()
 
 
@@ -98,9 +107,9 @@ def _state(variant, recipe, initial):
         model, optimizer, scheduler, ema = owner._make_training_state(initial, "reference")
         mean, std = (torch.tensor(value, device="cuda") for value in
                      (recipe.target_mean_eV, recipe.target_std_eV))
-        def step(batch, check_finite):
+        def step(batch, check_finite, observer=None):
             return owner._optimizer_step(model, optimizer, ema,
-                batch.to("cuda", non_blocking=True), mean, std, check_finite=check_finite)
+                batch.to("cuda", non_blocking=True), mean, std, check_finite=check_finite, observer=observer)
     else:
         from .family_training_kernel import FamilyKernel
         kernel = FamilyKernel(recipe, initial, device="cuda")
@@ -113,8 +122,8 @@ def _state(variant, recipe, initial):
         kernel._qualification_memory_fill = variant != "optimized"
         optimizer, ema = kernel.optimizer, kernel.ema
         scheduler = owner.FrozenEpochScheduler(optimizer)
-        def step(batch, check_finite):
-            return kernel.step(batch, check_finite=check_finite)[0]
+        def step(batch, check_finite, observer=None):
+            return kernel.step(batch, check_finite=check_finite, observer=observer)[0]
     scheduler.step(0)
     model.train()
     return model, optimizer, scheduler, ema, step
@@ -207,7 +216,6 @@ def run_probe(*, spec, package, source, staged, inputs, output, arm, phase, pref
         loader = DataLoader(graphs, batch_sampler=owner.DeterministicEpochBatchSampler(len(graphs), 0),
             num_workers=1, persistent_workers=True, pin_memory=True, prefetch_factor=2,
             generator=torch.Generator().manual_seed(42))
-        iterator = iter(loader)
         rows = []
         if mode == "attribution":
             steps, warmup = diagnostic["attribution_steps"], 0
@@ -220,44 +228,53 @@ def run_probe(*, spec, package, source, staged, inputs, output, arm, phase, pref
             profile = torch.profiler.profile(activities=activities, record_shapes=False,
                 profile_memory=False, with_stack=False)
         began = None
+        def before_fetch(next_step):
+            nonlocal began
+            if next_step == warmup + 1 and mode == "timing":
+                torch.cuda.synchronize()
+                atomic_torch_save(output / "warmup_checkpoint.pt", _snapshot(model, optimizer, scheduler, ema))
+                if profile is not None:
+                    profile.__enter__()
+                began = time.perf_counter()
+        def update(batch, *, check_finite):
+            index = len(rows) if mode == "attribution" else 0
+            # CPU collations are independently bound before each owner consumes them.
+            batch_hash = owner._batch_sha256(batch) if mode == "attribution" else None
+            if mode == "attribution":
+                rng_before = tensor_safe_rng_state(capture_rng_state())
+                with observe_step(model) as (observed, observer):
+                    loss = step(batch, True, observer=observer)
+                payload = {**observed, **_snapshot(model, optimizer, scheduler, ema),
+                    "loss": _cpu(loss), "batch_sha256": batch_hash,
+                    "rng_before": rng_before, "step": index + 1, "variant": variant}
+                from .experiment_family_workflow import _finite_tree
+                _finite_tree(payload, "diagnostic step")
+                path = output / f"{variant}-step-{index + 1:02d}.pt"
+                atomic_torch_save(path, payload)
+                rows.append({"step": index + 1, "batch_sha256": batch_hash,
+                    "path": path.name, "sha256": sha256_file(path),
+                    "state_fingerprint": _state_fingerprint(payload)})
+                save(variant + "-steps.json", rows)
+            else:
+                loss = step(batch, check_finite)
+            return loss
+        from contextlib import closing
+        from .family_training_core import BatchPlan, train_batches
         try:
-            for index in range(steps):
-                if index == warmup and mode == "timing":
-                    torch.cuda.synchronize()
-                    atomic_torch_save(output / "warmup_checkpoint.pt", _snapshot(model, optimizer, scheduler, ema))
-                    if profile is not None:
-                        profile.__enter__()
-                    began = time.perf_counter()
-                batch = next(iterator)
-                # CPU collations are independently bound before each owner consumes them.
-                batch_hash = owner._batch_sha256(batch) if mode == "attribution" else None
-                if mode == "attribution":
-                    rng_before = tensor_safe_rng_state(capture_rng_state())
-                    with observe_step(model) as observed:
-                        loss = step(batch, True)
-                    payload = {**observed, **_snapshot(model, optimizer, scheduler, ema),
-                        "loss": _cpu(loss), "batch_sha256": batch_hash,
-                        "rng_before": rng_before, "step": index + 1, "variant": variant}
-                    from .experiment_family_workflow import _finite_tree
-                    _finite_tree(payload, "diagnostic step")
-                    path = output / f"{variant}-step-{index + 1:02d}.pt"
-                    atomic_torch_save(path, payload)
-                    rows.append({"step": index + 1, "batch_sha256": batch_hash,
-                        "path": path.name, "sha256": sha256_file(path),
-                        "state_fingerprint": _state_fingerprint(payload)})
-                    save(variant + "-steps.json", rows)
-                else:
-                    loss = step(batch, (index + 1) % 50 == 0)
-                if (index + 1) % 100 == 0:
-                    save("cursor.json", {"variant": variant, "completed_updates": index + 1,
-                        "scientific_training_executed": False})
+            with closing(train_batches(model, loader,
+                    BatchPlan(diagnostic["physical_batch"], stop_step=steps),
+                    update, before_fetch=before_fetch)) as stream:
+                for processed in stream:
+                    if processed.optimizer_step % 100 == 0:
+                        save("cursor.json", {"variant": variant, "completed_updates": processed.optimizer_step,
+                            "scientific_training_executed": False})
             torch.cuda.synchronize()
             elapsed = time.perf_counter() - began if began is not None else None
         finally:
             if profile is not None and began is not None:
                 profile.__exit__(None, None, None)
                 profile.export_chrome_trace(str(output / "trace.json"))
-            shutdown = getattr(iterator, "_shutdown_workers", None)
+            shutdown = getattr(getattr(loader, "_iterator", None), "_shutdown_workers", None)
             if shutdown is not None:
                 shutdown()
         state = _snapshot(model, optimizer, scheduler, ema)

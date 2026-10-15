@@ -57,3 +57,15 @@ def freeze_comparison_declarations(root, *, base, experiment_id, logical_run_id,
         "kaggle": {"account": account, "kernel": kernel, "title": title, "source_dataset": source_dataset,
             "accelerator": "NvidiaTeslaT4", "datasets": [source_dataset, *data_datasets]}}))
     return {"spec_identity": spec.identity, "kernel": kernel}
+
+
+def execution_extension(spec, source_root):
+    """Select trusted experiment hooks here; no callback names are read from JSON."""
+    from .experiment_execution import ExecutionExtension
+    from .gptrans_infrastructure_comparison import is_comparison, comparison_base
+    if is_comparison(spec):
+        from .gptrans_execution_diagnostic import read_diagnostic, execution_extension as probe_extension
+        record = read_diagnostic(source_root, comparison_base(spec))
+        if record is not None:
+            return probe_extension(record)
+    return ExecutionExtension()

@@ -8,6 +8,7 @@ import sys
 import time
 
 from .experiment_execution import validate_execution_plan
+from .execution_comparison import execution_extension
 from .experiment_family_workflow import _json
 from .experiment_spec import ExperimentSpec
 from .training_reproducibility import atomic_json
@@ -35,7 +36,8 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     declaration = spec.to_dict()
     from .k1_infrastructure_comparison import is_comparison
     execution_comparison = is_comparison(spec)
-    diagnostic = None
+    extension = execution_extension(spec, source_root)
+    diagnostic = extension.configuration
     if execution_comparison:
         from .k1_infrastructure_comparison import check_plan, comparison_base
         check_plan(spec, source_root, _json(source_root / comparison_base(spec) / "acceptance_plan.json"),
@@ -43,9 +45,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
     from .gptrans_infrastructure_comparison import is_comparison as is_gptrans_comparison
     if is_gptrans_comparison(spec):
         from .gptrans_infrastructure_comparison import check_plan, comparison_base
-        from .gptrans_execution_diagnostic import read_diagnostic
         base = comparison_base(spec)
-        diagnostic = read_diagnostic(source_root, base)
         check_plan(spec, source_root, _json(source_root / base / "acceptance_plan.json"),
             initial_states={j["arm_id"]: Path(launch_path).parent / j["initial_state"] for j in jobs})
         execution_comparison = True
@@ -123,18 +123,14 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
             report["profile_artifacts"] = {
                 job["arm_id"]: profile_artifact_refs(output / job["arm_id"])
                 for job in jobs}
-        if diagnostic is not None:
-            from .gptrans_execution_diagnostic import diagnostic_artifact_refs
-            report["diagnostic"] = diagnostic
-            report["scientific_training_executed"] = False
-            report["diagnostic_artifacts"] = {job["arm_id"]: diagnostic_artifact_refs(output / job["arm_id"])
-                                               for job in jobs}
+        if extension.artifacts is not None:
+            report.update(extension.artifacts(output, [job["arm_id"] for job in jobs]))
         atomic_json(output / "execution_report.json", report)
         seal_execution_retention(output, spec, package_identity=manifest["package_identity"],
             source_commit=manifest["source_commit"], source_archive_sha256=manifest["archive_sha256"],
             arm_roots={j["arm_id"]: output / j["arm_id"] for j in jobs})
-    from .gptrans_execution_diagnostic import phases, phase_device
-    for phase in phases(diagnostic):
+    for descriptor in extension.phases:
+        phase = descriptor.name
         if bounded and phase == "train":
             resources = [_json(output / job["arm_id"] / "resource_qualification.json") for job in jobs]
             elapsed = prior_wall + time.perf_counter() - ledger.started
@@ -148,7 +144,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
         ledger_updated = time.perf_counter()
         try:
             for declared_job in jobs:
-                job = {**declared_job, "device": phase_device(declared_job["device"], phase)}
+                job = {**declared_job, "device": descriptor.device(declared_job["device"])}
                 state = report["arms"][job["arm_id"]]
                 state["terminal_status"] = "running"
                 if phase == "train":
@@ -160,14 +156,13 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                 arm_output.mkdir(parents=True, exist_ok=True)
                 preflight_output = output / "_resume_preflight" / job["arm_id"] if "resume" in config else arm_output
                 phase_output = preflight_output if phase == "preflight" else arm_output
-                if phase.startswith("diagnostic-"):
+                if descriptor.separate_output:
                     phase_output = arm_output / phase
-                command = [sys.executable, "-m", "molgap.experiment_training_worker",
+                command = [sys.executable, "-m", descriptor.worker,
                     "--source-root", str(source_root), "--package-dir", str(package_dir),
                     "--input-root", str(input_root), "--output", str(phase_output),
                     "--launch", str(launch_path), "--arm", job["arm_id"], "--phase", phase]
-                if phase.startswith("diagnostic-"):
-                    command[command.index("molgap.experiment_training_worker")] = "molgap.gptrans_execution_diagnostic"
+                if descriptor.preflight_binding:
                     command.extend(["--preflight-output", str(arm_output)])
                 if phase == "train":
                     command.extend(["--preflight-output", str(preflight_output)])
@@ -198,7 +193,7 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
             while poll_workers():
                 wall_ceiling = 7 * 3600 if execution_comparison else WALL_CEILING_SECONDS
                 if diagnostic is not None:
-                    wall_ceiling = diagnostic["wall_ceiling_seconds"]
+                    wall_ceiling = extension.wall_ceiling_seconds
                 if (bounded or execution_comparison) and prior_wall + time.perf_counter() - ledger.started >= wall_ceiling - 60:
                     report["exit_reason"] = "native_allocation_hard_budget"
                     raise TimeoutError("Frozen8wall-hour allocation ceiling; stop and retain checkpoints")
@@ -261,10 +256,9 @@ def run_two_phase_pair(*, source_root: Path, package_dir: Path, input_root: Path
                         atomic_json(output / "pair_state.json", report)
                     except OSError:
                         pass  # Preserve the original worker failure if storage also failed.
-    if diagnostic is not None:
-        from .gptrans_execution_diagnostic import summarize_probes
+    if extension.finalize is not None:
         try:
-            report["diagnostic_summary"] = summarize_probes(output, diagnostic)
+            report.update(extension.finalize(output))
         except BaseException:
             report["status"] = "failed"
             report["exit_reason"] = "diagnostic_summary_failed_preserve_worker_outputs"

@@ -30,6 +30,14 @@ def test_frozen_bounds_and_device_exchange(tmp_path):
         "native", "prepared", "foreach_optimizer", "foreach_ema", "optimized"}
 
 
+def test_server_research_policy_preserves_explicit_roles_objective_and_segments():
+    from molgap.family_training_policy import mode_policy
+    bounded = mode_policy("gptrans_t", "degree_aggregate_correspondence_ema999")
+    assert bounded.segment_passes == 10 and bounded.extra_development_weights == ("live",)
+    assert bounded.objective is not None and bounded.after_update is not None
+    assert bounded.train_metric_unit == "eV" and bounded.qualify_resources is not None
+
+
 def test_observer_preserves_updates_and_restores_after_failure():
     torch.manual_seed(42)
     model = torch.nn.Sequential(torch.nn.Linear(2, 4), torch.nn.Dropout(.1), torch.nn.Linear(4, 1))
@@ -40,15 +48,14 @@ def test_observer_preserves_updates_and_restores_after_failure():
     for current, observe in ((first, False), (model, True)):
         optimizer = torch.optim.AdamW(current.parameters(), lr=.001)
         torch.manual_seed(42)
-        def step():
-            optimizer.zero_grad()
-            loss = current(batch).abs().mean()
-            loss.backward()
-            torch.nn.utils.clip_grad_norm_(current.parameters(), 1.)
-            optimizer.step()
+        def step(observer=None):
+            from molgap.family_training_core import optimizer_update
+            return optimizer_update(current, optimizer, lambda: (current(batch).abs().mean(), None),
+                clip_norm=1., check_finite=True, observer=observer)
         if observe:
-            with observe_step(current) as evidence:
-                step()
+            with observe_step(current) as (evidence, observer):
+                assert torch.nn.utils.clip_grad_norm_ is original_clip
+                step(observer)
             assert set(evidence) == {"prediction", "raw_gradients", "clipped_gradients", "gradient_norm"}
         else:
             step()
