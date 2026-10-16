@@ -1,6 +1,7 @@
 # Modern2D feature and CPU lifecycle proposal
 
-Proposed2026-10-16; approval for formal registration is pending. Scope is a
+Proposed2026-10-16; the human then approved "CPU synthetic integration only".
+Scope is a
 separate `modern2d_cpu_v1` synthetic-only profile, not a V1/V5 schema relaxation.
 The accepted V2 master and old contiguous V1 assets remain immutable.
 
@@ -23,7 +24,8 @@ categorical atom/bond tensors. RWSE16 is not renamed RRWP or fed to ESA.
   history. derived_feature_sha is null until actually materialized.
 - CPU prototypes process each graph separately to bound memory and establish
   isolation. Future batching/cache choice requires real size/cost evidence.
-  No full-data dense RRWP precomputation is authorized.
+  Safety caps are256nodes and1024directed edges per synthetic graph; exceeding
+  either is rejected before dense derivation. No full-data RRWP is authorized.
 
 ## Required minimal owner extensions
 
@@ -38,6 +40,12 @@ categorical atom/bond tensors. RWSE16 is not renamed RRWP or fed to ESA.
    loading. No real training trajectory, runtime certificate or comparison
    eligibility follows from a synthetic lifecycle check.
 
-Without approved safe owner extension, retain models/features and proposal but
-stop before formal registration, Session claims or MODEL_CPU_INTEGRATED status.
+The approved extension permits static CPU families and real Session synthetic
+fixtures only. Actual acceptance is in the [CPU evidence record](MODERN2D_FIDELITY_ACCEPTANCE.md).
 No fallback to an old development role or to a K1/GPTrans family name is valid.
+
+Tensor-only topology imports are separate from feature metadata proofs in
+modern2d_feature_binding.py, so standalone model packages do not import the
+training/role controller. The validator is a synthetic metadata check, not an
+accepted real-V2 loader. Typed frozen model configs enter recipe/checkpoint
+identity; absent model_config is omitted from old family serialization.

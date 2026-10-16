@@ -9,6 +9,9 @@ move reusable behavior into experiment result directories.
 
 | Module | Owns | Edit when |
 |---|---|---|
+| `ppgt_model.py`, `esa_model.py` | CPU-only PPGT/ESA model equations and frozen configs | Changing a Modern2D structural implementation, not a trainer |
+| `ppgt_features.py`, `esa_features.py`, `modern2d_inputs.py` | Pure topology RRWP/SPE, edge masks and bounded CPU views | Changing reviewed synthetic-only features |
+| `modern2d_feature_binding.py`, `modern2d_audit.py` | Feature metadata proof and bounded structural audit | Checking CPU identity/parameter evidence, not releasing real inputs |
 | `k1_edge_memory.py`, `k1_edge_slot_interaction.py`, `k1_edge_kaggle_runtime.py` | Real-bond storage/read separation, slot interactions, and isolated K1 Kaggle execution | Testing normalized edge reads without modifying frozen backbone tensors |
 | `gptrans.py` | Compact GPTrans-T node/all-pairs propagation core | Changing node-to-node, node-to-pair, or pair-to-node behavior |
 | `gptrans_variants.py`, `gptrans_variant_checks.py` | Parameter-free relation-flow hypotheses and remote-only model checks | Changing GPTrans candidates without modifying the frozen core |

@@ -32,7 +32,7 @@ Mirrors are NOT_PUBLISHED. Data acceptance is not an executable input profile.
 | RML/logging/cost | existing owners | No training trajectory or fabricated native certificate |
 
 The [feature/profile proposal](MODERN2D_FEATURE_ABI.md) precedes any formal
-registration. Pending its approval, only direct CPU prototypes are constructed;
+registration. The human separately approved CPU-only family/profile support;
 no K1/GPTrans identity is borrowed to bypass the Session gate. Existing loops,
 optimizers, samplers, resume and submission code are not replaced.
 
@@ -73,6 +73,7 @@ Reviewed files: esa/mha.py, masked_layers.py, mlp_utils.py, models.py and LN.
 | mha.MAB/SAB/PMA | exact projection/residual-Mish and learnable seeds | Fixed-weight scoped CPU parity |
 | masked_layers.*Complete | source LN positions, MLP and conditional residuals | Pre-LN reference; post/Admin path not silently substituted |
 | ESA.forward | encoder global input residual, PMA, seed mean, graph projection/Mish | Retained; not replaced by mean edge pooling |
+| Estimator unused objects | edge-path mlp_norm not executed; output_mlp overwritten by Linear | Dead objects omitted; same-weight parity does not certify constructor RNG or original inventory |
 | upstream masks | float shared-endpoint and boolean-inverted paths differ; diagonal cleared | Known fidelity discrepancy, not silently repaired |
 | requested safe masks | self-enabled, no cross-graph/padding attention, reject empty-edge graph | Explicit MolGap adaptation; whole-family fidelity stays PENDING |
 
@@ -95,3 +96,17 @@ If over7,317,634: lower width by32 (heads8) without changing layer types/seeds.
 Mixed is the initial main; compact is reserve. Combined main cap17,811,268.
 Counts include all stem/head/norm/seed parameters. Native activation/throughput
 remain unknown. Configurations are not selected using any real development MAE.
+
+## Implementation delivery
+
+The [structural audit](../../experiments/modern2d_model_integration/parameter_audit.json)
+records all monotone revisions, exact per-layer counts, weight/buffer and
+hypothetical EMA bytes, construction/inference timings and MAC methodology.
+PPGT main16x256 has9,447,937 parameters; reserve4x512 has9,584,257.
+ESA mixed has5,014,849; compact has5,940,225. Main combined14,462,786 is below
+17,811,268. Reserves are not additional authorized arms.
+
+Implementation/negative test outcomes, scoped official ESA parity and unresolved
+PPGT fidelity live in the [acceptance record](MODERN2D_FIDELITY_ACCEPTANCE.md).
+The [future contract draft](../../experiments/modern2d_model_integration/future_training_contract_draft.md)
+is non-executable and grants no native/scientific authority.

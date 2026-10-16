@@ -1,0 +1,2213 @@
+{
+  "combined_cap": 17811268,
+  "feature_formula_examples": {
+    "n128": {
+      "esa_chain": {
+        "allowed_mask_bytes_bool": 64516,
+        "one_hot_token_bytes_fp32": 366776,
+        "scope": "FORMULA_NOT_NATIVE_MEMORY_MEASUREMENT"
+      },
+      "ppgt": {
+        "extended_spe_bytes_fp32": 37158912,
+        "rrwp_bytes_fp32": 1572864,
+        "scope": "FORMULA_NOT_MEASURED_DATASET_DISTRIBUTION",
+        "walk_dense_matmul_macs": 48234496
+      }
+    },
+    "n16": {
+      "esa_chain": {
+        "allowed_mask_bytes_bool": 900,
+        "one_hot_token_bytes_fp32": 43320,
+        "scope": "FORMULA_NOT_NATIVE_MEMORY_MEASUREMENT"
+      },
+      "ppgt": {
+        "extended_spe_bytes_fp32": 580608,
+        "rrwp_bytes_fp32": 24576,
+        "scope": "FORMULA_NOT_MEASURED_DATASET_DISTRIBUTION",
+        "walk_dense_matmul_macs": 94208
+      }
+    },
+    "n64": {
+      "esa_chain": {
+        "allowed_mask_bytes_bool": 15876,
+        "one_hot_token_bytes_fp32": 181944,
+        "scope": "FORMULA_NOT_NATIVE_MEMORY_MEASUREMENT"
+      },
+      "ppgt": {
+        "extended_spe_bytes_fp32": 9289728,
+        "rrwp_bytes_fp32": 393216,
+        "scope": "FORMULA_NOT_MEASURED_DATASET_DISTRIBUTION",
+        "walk_dense_matmul_macs": 6029312
+      }
+    }
+  },
+  "format": "molgap-modern2d-structural-audit-v1",
+  "main_combined_parameters": 14462786,
+  "native_memory_throughput": "NOT_MEASURED",
+  "real_size_distribution": "NOT_READ",
+  "results": [
+    {
+      "budget_status": "OVER_CAP",
+      "buffer_bytes": 0,
+      "buffers": 0,
+      "cap": 10493634,
+      "config": {
+        "attention_dropout": 0.0,
+        "blocks": 16,
+        "epsilon": 1e-08,
+        "expansion": 2,
+        "heads": 10,
+        "hidden": 320,
+        "pair_dim": 128,
+        "pe_mlp_hidden": 512,
+        "pooling": "sum",
+        "rrwp_steps": 24,
+        "spe_bases": 10,
+        "stem_blocks": 8,
+        "stochastic_depth": 0.0,
+        "use_phi": true
+      },
+      "config_sha256": "ec149ecbaa7008825c59cd012b7edb773f37c31060327edb9e2ef49a2e7324c9",
+      "construction_seconds": 0.14048419997561723,
+      "ema_enabled": false,
+      "hypothetical_fp32_ema_bytes": 56888836,
+      "name": "ppgt_deep_320",
+      "native_activation_peak_bytes": null,
+      "parameters": 14222209,
+      "trainable_parameters": 14222209,
+      "weight_bytes": 56888836
+    },
+    {
+      "budget_status": "OVER_CAP",
+      "buffer_bytes": 0,
+      "buffers": 0,
+      "cap": 10493634,
+      "config": {
+        "attention_dropout": 0.0,
+        "blocks": 16,
+        "epsilon": 1e-08,
+        "expansion": 2,
+        "heads": 9,
+        "hidden": 288,
+        "pair_dim": 128,
+        "pe_mlp_hidden": 512,
+        "pooling": "sum",
+        "rrwp_steps": 24,
+        "spe_bases": 10,
+        "stem_blocks": 8,
+        "stochastic_depth": 0.0,
+        "use_phi": true
+      },
+      "config_sha256": "99eb307c4b329c4c4ce1630b3b0bb29fb8b52848ae3c8f80e959c4a55cd1b35d",
+      "construction_seconds": 0.11245559994131327,
+      "ema_enabled": false,
+      "hypothetical_fp32_ema_bytes": 46813444,
+      "name": "ppgt_deep_288",
+      "native_activation_peak_bytes": null,
+      "parameters": 11703361,
+      "trainable_parameters": 11703361,
+      "weight_bytes": 46813444
+    },
+    {
+      "budget_status": "WITHIN_CAP",
+      "buffer_bytes": 0,
+      "buffers": 0,
+      "cap": 10493634,
+      "config": {
+        "attention_dropout": 0.0,
+        "blocks": 16,
+        "epsilon": 1e-08,
+        "expansion": 2,
+        "heads": 8,
+        "hidden": 256,
+        "pair_dim": 128,
+        "pe_mlp_hidden": 512,
+        "pooling": "sum",
+        "rrwp_steps": 24,
+        "spe_bases": 10,
+        "stem_blocks": 8,
+        "stochastic_depth": 0.0,
+        "use_phi": true
+      },
+      "config_sha256": "f91d37ea9ab1e31f1f1ee83e9637c379d2e83107fa0705b823779c2e78bd9ee0",
+      "construction_seconds": 0.09203149995300919,
+      "cpu_profile": {
+        "format": "molgap-runtime-profile-v1",
+        "metadata": {
+          "directed_edges": [
+            4,
+            2
+          ],
+          "graph_nodes": [
+            3,
+            2
+          ],
+          "scope": "CPU_SYNTHETIC_INFERENCE_ONLY"
+        },
+        "stages": {
+          "allocation": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "backward_optimizer": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "checkpoint_hash_archive": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "forward_loss": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "h2d": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "loader_collate": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "validation": {
+            "count": 3,
+            "samples_seconds": [
+              0.032757399952970445,
+              0.03181950002908707,
+              0.03203650005161762
+            ],
+            "total_seconds": 0.09661340003367513
+          }
+        }
+      },
+      "ema_enabled": false,
+      "hypothetical_fp32_ema_bytes": 37791748,
+      "layer_parameters": [
+        {
+          "name": "atoms.0",
+          "parameters": 30464
+        },
+        {
+          "name": "atoms.1",
+          "parameters": 1280
+        },
+        {
+          "name": "atoms.2",
+          "parameters": 3072
+        },
+        {
+          "name": "atoms.3",
+          "parameters": 3072
+        },
+        {
+          "name": "atoms.4",
+          "parameters": 2560
+        },
+        {
+          "name": "atoms.5",
+          "parameters": 1536
+        },
+        {
+          "name": "atoms.6",
+          "parameters": 1536
+        },
+        {
+          "name": "atoms.7",
+          "parameters": 512
+        },
+        {
+          "name": "atoms.8",
+          "parameters": 512
+        },
+        {
+          "name": "bonds.0",
+          "parameters": 640
+        },
+        {
+          "name": "bonds.1",
+          "parameters": 768
+        },
+        {
+          "name": "bonds.2",
+          "parameters": 256
+        },
+        {
+          "name": "node_pe",
+          "parameters": 6400
+        },
+        {
+          "name": "node_size",
+          "parameters": 768
+        },
+        {
+          "name": "pe_mlp.0",
+          "parameters": 290816
+        },
+        {
+          "name": "pe_mlp.2",
+          "parameters": 65664
+        },
+        {
+          "name": "stem.0.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.0.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.0.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.1.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.1.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.1.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.2.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.2.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.2.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.3.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.3.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.3.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.4.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.4.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.4.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.5.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.5.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.5.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.6.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.6.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.6.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.7.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.7.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.7.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.8",
+          "parameters": 256
+        },
+        {
+          "name": "blocks.0.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.0.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.0.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.0.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.0.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.0.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.0.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.0.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.1.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.1.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.1.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.1.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.1.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.1.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.1.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.1.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.2.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.2.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.2.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.2.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.2.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.2.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.2.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.2.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.3.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.3.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.3.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.3.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.3.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.3.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.3.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.3.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.4.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.4.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.4.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.4.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.4.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.4.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.4.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.4.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.5.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.5.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.5.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.5.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.5.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.5.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.5.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.5.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.6.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.6.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.6.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.6.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.6.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.6.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.6.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.6.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.7.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.7.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.7.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.7.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.7.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.7.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.7.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.7.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.8.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.8.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.8.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.8.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.8.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.8.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.8.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.8.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.9.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.9.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.9.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.9.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.9.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.9.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.9.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.9.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.10.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.10.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.10.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.10.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.10.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.10.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.10.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.10.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.11.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.11.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.11.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.11.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.11.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.11.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.11.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.11.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.12.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.12.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.12.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.12.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.12.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.12.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.12.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.12.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.13.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.13.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.13.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.13.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.13.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.13.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.13.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.13.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.14.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.14.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.14.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.14.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.14.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.14.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.14.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.14.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "blocks.15.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.15.attention.qkv",
+          "parameters": 197376
+        },
+        {
+          "name": "blocks.15.attention.theta",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.15.attention.phi",
+          "parameters": 1032
+        },
+        {
+          "name": "blocks.15.attention.proj",
+          "parameters": 65792
+        },
+        {
+          "name": "blocks.15.ffn.norm",
+          "parameters": 512
+        },
+        {
+          "name": "blocks.15.ffn.mlp.0",
+          "parameters": 131584
+        },
+        {
+          "name": "blocks.15.ffn.mlp.2",
+          "parameters": 131328
+        },
+        {
+          "name": "norm",
+          "parameters": 512
+        },
+        {
+          "name": "head.0",
+          "parameters": 32896
+        },
+        {
+          "name": "head.2",
+          "parameters": 8256
+        },
+        {
+          "name": "head.4",
+          "parameters": 65
+        }
+      ],
+      "median_inference_seconds": 0.03203650005161762,
+      "name": "ppgt_deep_256",
+      "native_activation_peak_bytes": null,
+      "parameters": 9447937,
+      "synthetic_batch_macs": {
+        "attention_qk_and_av": 106496,
+        "excluded": "norm/embedding/activation/SPE/softmax and CPU feature derivation; not an exact FLOP counter",
+        "linear": 53926016,
+        "rough_flops_twice_macs": 108065024,
+        "sum": 54032512
+      },
+      "trainable_parameters": 9447937,
+      "weight_bytes": 37791748
+    },
+    {
+      "budget_status": "OVER_CAP",
+      "buffer_bytes": 0,
+      "buffers": 0,
+      "cap": 10493634,
+      "config": {
+        "attention_dropout": 0.0,
+        "blocks": 8,
+        "epsilon": 1e-08,
+        "expansion": 2,
+        "heads": 16,
+        "hidden": 512,
+        "pair_dim": 128,
+        "pe_mlp_hidden": 512,
+        "pooling": "sum",
+        "rrwp_steps": 24,
+        "spe_bases": 10,
+        "stem_blocks": 8,
+        "stochastic_depth": 0.0,
+        "use_phi": true
+      },
+      "config_sha256": "18ba636edfc6f6c3c48523b608cfd7b5e4cb69a8be031f852ce2e7b50ea079ec",
+      "construction_seconds": 0.1612286000745371,
+      "ema_enabled": false,
+      "hypothetical_fp32_ema_bytes": 72047620,
+      "name": "ppgt_shallow_8",
+      "native_activation_peak_bytes": null,
+      "parameters": 18011905,
+      "trainable_parameters": 18011905,
+      "weight_bytes": 72047620
+    },
+    {
+      "budget_status": "OVER_CAP",
+      "buffer_bytes": 0,
+      "buffers": 0,
+      "cap": 10493634,
+      "config": {
+        "attention_dropout": 0.0,
+        "blocks": 7,
+        "epsilon": 1e-08,
+        "expansion": 2,
+        "heads": 16,
+        "hidden": 512,
+        "pair_dim": 128,
+        "pe_mlp_hidden": 512,
+        "pooling": "sum",
+        "rrwp_steps": 24,
+        "spe_bases": 10,
+        "stem_blocks": 8,
+        "stochastic_depth": 0.0,
+        "use_phi": true
+      },
+      "config_sha256": "f474405543f04cc4e200bf9a79ca743c27e54db4a2b884344370266e99d42218",
+      "construction_seconds": 0.14557429996784776,
+      "ema_enabled": false,
+      "hypothetical_fp32_ema_bytes": 63619972,
+      "name": "ppgt_shallow_7",
+      "native_activation_peak_bytes": null,
+      "parameters": 15904993,
+      "trainable_parameters": 15904993,
+      "weight_bytes": 63619972
+    },
+    {
+      "budget_status": "OVER_CAP",
+      "buffer_bytes": 0,
+      "buffers": 0,
+      "cap": 10493634,
+      "config": {
+        "attention_dropout": 0.0,
+        "blocks": 6,
+        "epsilon": 1e-08,
+        "expansion": 2,
+        "heads": 16,
+        "hidden": 512,
+        "pair_dim": 128,
+        "pe_mlp_hidden": 512,
+        "pooling": "sum",
+        "rrwp_steps": 24,
+        "spe_bases": 10,
+        "stem_blocks": 8,
+        "stochastic_depth": 0.0,
+        "use_phi": true
+      },
+      "config_sha256": "ce944465ce5a771205e557df053ed7931fb9d9b96d708cfcadfd9c83a07ba050",
+      "construction_seconds": 0.12492099998053163,
+      "ema_enabled": false,
+      "hypothetical_fp32_ema_bytes": 55192324,
+      "name": "ppgt_shallow_6",
+      "native_activation_peak_bytes": null,
+      "parameters": 13798081,
+      "trainable_parameters": 13798081,
+      "weight_bytes": 55192324
+    },
+    {
+      "budget_status": "OVER_CAP",
+      "buffer_bytes": 0,
+      "buffers": 0,
+      "cap": 10493634,
+      "config": {
+        "attention_dropout": 0.0,
+        "blocks": 5,
+        "epsilon": 1e-08,
+        "expansion": 2,
+        "heads": 16,
+        "hidden": 512,
+        "pair_dim": 128,
+        "pe_mlp_hidden": 512,
+        "pooling": "sum",
+        "rrwp_steps": 24,
+        "spe_bases": 10,
+        "stem_blocks": 8,
+        "stochastic_depth": 0.0,
+        "use_phi": true
+      },
+      "config_sha256": "9220f72626dfa0a976a8b1be2518eb32056ff0638ce32fd3035cf6e65c7d4f46",
+      "construction_seconds": 0.10752089996822178,
+      "ema_enabled": false,
+      "hypothetical_fp32_ema_bytes": 46764676,
+      "name": "ppgt_shallow_5",
+      "native_activation_peak_bytes": null,
+      "parameters": 11691169,
+      "trainable_parameters": 11691169,
+      "weight_bytes": 46764676
+    },
+    {
+      "budget_status": "WITHIN_CAP",
+      "buffer_bytes": 0,
+      "buffers": 0,
+      "cap": 10493634,
+      "config": {
+        "attention_dropout": 0.0,
+        "blocks": 4,
+        "epsilon": 1e-08,
+        "expansion": 2,
+        "heads": 16,
+        "hidden": 512,
+        "pair_dim": 128,
+        "pe_mlp_hidden": 512,
+        "pooling": "sum",
+        "rrwp_steps": 24,
+        "spe_bases": 10,
+        "stem_blocks": 8,
+        "stochastic_depth": 0.0,
+        "use_phi": true
+      },
+      "config_sha256": "b1ea328be79e96c8faf823ae40f036d2ef036e27294777a7d48b9d423e13f2e9",
+      "construction_seconds": 0.08825160004198551,
+      "cpu_profile": {
+        "format": "molgap-runtime-profile-v1",
+        "metadata": {
+          "directed_edges": [
+            4,
+            2
+          ],
+          "graph_nodes": [
+            3,
+            2
+          ],
+          "scope": "CPU_SYNTHETIC_INFERENCE_ONLY"
+        },
+        "stages": {
+          "allocation": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "backward_optimizer": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "checkpoint_hash_archive": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "forward_loss": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "h2d": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "loader_collate": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "validation": {
+            "count": 3,
+            "samples_seconds": [
+              0.020789399975910783,
+              0.020376999978907406,
+              0.02019289997406304
+            ],
+            "total_seconds": 0.06135929992888123
+          }
+        }
+      },
+      "ema_enabled": false,
+      "hypothetical_fp32_ema_bytes": 38337028,
+      "layer_parameters": [
+        {
+          "name": "atoms.0",
+          "parameters": 60928
+        },
+        {
+          "name": "atoms.1",
+          "parameters": 2560
+        },
+        {
+          "name": "atoms.2",
+          "parameters": 6144
+        },
+        {
+          "name": "atoms.3",
+          "parameters": 6144
+        },
+        {
+          "name": "atoms.4",
+          "parameters": 5120
+        },
+        {
+          "name": "atoms.5",
+          "parameters": 3072
+        },
+        {
+          "name": "atoms.6",
+          "parameters": 3072
+        },
+        {
+          "name": "atoms.7",
+          "parameters": 1024
+        },
+        {
+          "name": "atoms.8",
+          "parameters": 1024
+        },
+        {
+          "name": "bonds.0",
+          "parameters": 640
+        },
+        {
+          "name": "bonds.1",
+          "parameters": 768
+        },
+        {
+          "name": "bonds.2",
+          "parameters": 256
+        },
+        {
+          "name": "node_pe",
+          "parameters": 12800
+        },
+        {
+          "name": "node_size",
+          "parameters": 1536
+        },
+        {
+          "name": "pe_mlp.0",
+          "parameters": 290816
+        },
+        {
+          "name": "pe_mlp.2",
+          "parameters": 65664
+        },
+        {
+          "name": "stem.0.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.0.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.0.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.1.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.1.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.1.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.2.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.2.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.2.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.3.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.3.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.3.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.4.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.4.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.4.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.5.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.5.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.5.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.6.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.6.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.6.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.7.norm",
+          "parameters": 256
+        },
+        {
+          "name": "stem.7.mlp.0",
+          "parameters": 33024
+        },
+        {
+          "name": "stem.7.mlp.2",
+          "parameters": 32896
+        },
+        {
+          "name": "stem.8",
+          "parameters": 256
+        },
+        {
+          "name": "blocks.0.norm",
+          "parameters": 1024
+        },
+        {
+          "name": "blocks.0.attention.qkv",
+          "parameters": 787968
+        },
+        {
+          "name": "blocks.0.attention.theta",
+          "parameters": 2064
+        },
+        {
+          "name": "blocks.0.attention.phi",
+          "parameters": 2064
+        },
+        {
+          "name": "blocks.0.attention.proj",
+          "parameters": 262656
+        },
+        {
+          "name": "blocks.0.ffn.norm",
+          "parameters": 1024
+        },
+        {
+          "name": "blocks.0.ffn.mlp.0",
+          "parameters": 525312
+        },
+        {
+          "name": "blocks.0.ffn.mlp.2",
+          "parameters": 524800
+        },
+        {
+          "name": "blocks.1.norm",
+          "parameters": 1024
+        },
+        {
+          "name": "blocks.1.attention.qkv",
+          "parameters": 787968
+        },
+        {
+          "name": "blocks.1.attention.theta",
+          "parameters": 2064
+        },
+        {
+          "name": "blocks.1.attention.phi",
+          "parameters": 2064
+        },
+        {
+          "name": "blocks.1.attention.proj",
+          "parameters": 262656
+        },
+        {
+          "name": "blocks.1.ffn.norm",
+          "parameters": 1024
+        },
+        {
+          "name": "blocks.1.ffn.mlp.0",
+          "parameters": 525312
+        },
+        {
+          "name": "blocks.1.ffn.mlp.2",
+          "parameters": 524800
+        },
+        {
+          "name": "blocks.2.norm",
+          "parameters": 1024
+        },
+        {
+          "name": "blocks.2.attention.qkv",
+          "parameters": 787968
+        },
+        {
+          "name": "blocks.2.attention.theta",
+          "parameters": 2064
+        },
+        {
+          "name": "blocks.2.attention.phi",
+          "parameters": 2064
+        },
+        {
+          "name": "blocks.2.attention.proj",
+          "parameters": 262656
+        },
+        {
+          "name": "blocks.2.ffn.norm",
+          "parameters": 1024
+        },
+        {
+          "name": "blocks.2.ffn.mlp.0",
+          "parameters": 525312
+        },
+        {
+          "name": "blocks.2.ffn.mlp.2",
+          "parameters": 524800
+        },
+        {
+          "name": "blocks.3.norm",
+          "parameters": 1024
+        },
+        {
+          "name": "blocks.3.attention.qkv",
+          "parameters": 787968
+        },
+        {
+          "name": "blocks.3.attention.theta",
+          "parameters": 2064
+        },
+        {
+          "name": "blocks.3.attention.phi",
+          "parameters": 2064
+        },
+        {
+          "name": "blocks.3.attention.proj",
+          "parameters": 262656
+        },
+        {
+          "name": "blocks.3.ffn.norm",
+          "parameters": 1024
+        },
+        {
+          "name": "blocks.3.ffn.mlp.0",
+          "parameters": 525312
+        },
+        {
+          "name": "blocks.3.ffn.mlp.2",
+          "parameters": 524800
+        },
+        {
+          "name": "norm",
+          "parameters": 1024
+        },
+        {
+          "name": "head.0",
+          "parameters": 131328
+        },
+        {
+          "name": "head.2",
+          "parameters": 32896
+        },
+        {
+          "name": "head.4",
+          "parameters": 129
+        }
+      ],
+      "median_inference_seconds": 0.020376999978907406,
+      "name": "ppgt_shallow_4",
+      "native_activation_peak_bytes": null,
+      "parameters": 9584257,
+      "synthetic_batch_macs": {
+        "attention_qk_and_av": 53248,
+        "excluded": "norm/embedding/activation/SPE/softmax and CPU feature derivation; not an exact FLOP counter",
+        "linear": 53992192,
+        "rough_flops_twice_macs": 108090880,
+        "sum": 54045440
+      },
+      "trainable_parameters": 9584257,
+      "weight_bytes": 38337028
+    },
+    {
+      "budget_status": "REFERENCE_ONLY",
+      "buffer_bytes": 0,
+      "buffers": 0,
+      "cap": null,
+      "config": {
+        "attention_dropout": 0.0,
+        "blocks": 16,
+        "epsilon": 1e-08,
+        "expansion": 2,
+        "heads": 16,
+        "hidden": 512,
+        "pair_dim": 128,
+        "pe_mlp_hidden": 512,
+        "pooling": "sum",
+        "rrwp_steps": 24,
+        "spe_bases": 10,
+        "stem_blocks": 8,
+        "stochastic_depth": 0.0,
+        "use_phi": true
+      },
+      "config_sha256": "89759a86266a623ed9e2906c913e75b55da1167218786bfac6af7ae8f6c05408",
+      "construction_seconds": 0.30682199995499104,
+      "ema_enabled": false,
+      "hypothetical_fp32_ema_bytes": 139468804,
+      "name": "ppgt_paper_structure",
+      "native_activation_peak_bytes": null,
+      "parameters": 34867201,
+      "trainable_parameters": 34867201,
+      "weight_bytes": 139468804
+    },
+    {
+      "budget_status": "WITHIN_CAP",
+      "buffer_bytes": 0,
+      "buffers": 0,
+      "cap": 7317634,
+      "config": {
+        "epsilon": 1e-08,
+        "graph_dim": 256,
+        "heads": 8,
+        "hidden": 192,
+        "include_self": true,
+        "layer_types": [
+          "M",
+          "S",
+          "M",
+          "S",
+          "M",
+          "P"
+        ],
+        "mlp_hidden": 384,
+        "seeds": 32
+      },
+      "config_sha256": "65ca26397338ff579803da28fac9da421839330433fc30995e40aac572b65149",
+      "construction_seconds": 0.024659400107339025,
+      "cpu_profile": {
+        "format": "molgap-runtime-profile-v1",
+        "metadata": {
+          "directed_edges": [
+            4,
+            2
+          ],
+          "graph_nodes": [
+            3,
+            2
+          ],
+          "scope": "CPU_SYNTHETIC_INFERENCE_ONLY"
+        },
+        "stages": {
+          "allocation": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "backward_optimizer": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "checkpoint_hash_archive": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "forward_loss": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "h2d": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "loader_collate": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "validation": {
+            "count": 3,
+            "samples_seconds": [
+              0.010960699990391731,
+              0.012599300011061132,
+              0.012070300057530403
+            ],
+            "total_seconds": 0.035630300058983266
+          }
+        }
+      },
+      "ema_enabled": false,
+      "hypothetical_fp32_ema_bytes": 20059396,
+      "layer_parameters": [
+        {
+          "name": "token_mlp.0",
+          "parameters": 46336
+        },
+        {
+          "name": "token_mlp.2",
+          "parameters": 24768
+        },
+        {
+          "name": "encoder.0.norm",
+          "parameters": 384
+        },
+        {
+          "name": "encoder.0.norm_mlp",
+          "parameters": 384
+        },
+        {
+          "name": "encoder.0.attention.fc_q",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.0.attention.fc_k",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.0.attention.fc_v",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.0.attention.fc_o",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.0.mlp.0.fc1",
+          "parameters": 148224
+        },
+        {
+          "name": "encoder.0.mlp.0.fc2",
+          "parameters": 147840
+        },
+        {
+          "name": "encoder.0.mlp.2.fc1",
+          "parameters": 295680
+        },
+        {
+          "name": "encoder.0.mlp.2.fc2",
+          "parameters": 73920
+        },
+        {
+          "name": "encoder.1.norm",
+          "parameters": 384
+        },
+        {
+          "name": "encoder.1.norm_mlp",
+          "parameters": 384
+        },
+        {
+          "name": "encoder.1.attention.fc_q",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.1.attention.fc_k",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.1.attention.fc_v",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.1.attention.fc_o",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.1.mlp.0.fc1",
+          "parameters": 148224
+        },
+        {
+          "name": "encoder.1.mlp.0.fc2",
+          "parameters": 147840
+        },
+        {
+          "name": "encoder.1.mlp.2.fc1",
+          "parameters": 295680
+        },
+        {
+          "name": "encoder.1.mlp.2.fc2",
+          "parameters": 73920
+        },
+        {
+          "name": "encoder.2.norm",
+          "parameters": 384
+        },
+        {
+          "name": "encoder.2.norm_mlp",
+          "parameters": 384
+        },
+        {
+          "name": "encoder.2.attention.fc_q",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.2.attention.fc_k",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.2.attention.fc_v",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.2.attention.fc_o",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.2.mlp.0.fc1",
+          "parameters": 148224
+        },
+        {
+          "name": "encoder.2.mlp.0.fc2",
+          "parameters": 147840
+        },
+        {
+          "name": "encoder.2.mlp.2.fc1",
+          "parameters": 295680
+        },
+        {
+          "name": "encoder.2.mlp.2.fc2",
+          "parameters": 73920
+        },
+        {
+          "name": "encoder.3.norm",
+          "parameters": 384
+        },
+        {
+          "name": "encoder.3.norm_mlp",
+          "parameters": 384
+        },
+        {
+          "name": "encoder.3.attention.fc_q",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.3.attention.fc_k",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.3.attention.fc_v",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.3.attention.fc_o",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.3.mlp.0.fc1",
+          "parameters": 148224
+        },
+        {
+          "name": "encoder.3.mlp.0.fc2",
+          "parameters": 147840
+        },
+        {
+          "name": "encoder.3.mlp.2.fc1",
+          "parameters": 295680
+        },
+        {
+          "name": "encoder.3.mlp.2.fc2",
+          "parameters": 73920
+        },
+        {
+          "name": "encoder.4.norm",
+          "parameters": 384
+        },
+        {
+          "name": "encoder.4.norm_mlp",
+          "parameters": 384
+        },
+        {
+          "name": "encoder.4.attention.fc_q",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.4.attention.fc_k",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.4.attention.fc_v",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.4.attention.fc_o",
+          "parameters": 37056
+        },
+        {
+          "name": "encoder.4.mlp.0.fc1",
+          "parameters": 148224
+        },
+        {
+          "name": "encoder.4.mlp.0.fc2",
+          "parameters": 147840
+        },
+        {
+          "name": "encoder.4.mlp.2.fc1",
+          "parameters": 295680
+        },
+        {
+          "name": "encoder.4.mlp.2.fc2",
+          "parameters": 73920
+        },
+        {
+          "name": "pool",
+          "parameters": 6144
+        },
+        {
+          "name": "pool.norm",
+          "parameters": 384
+        },
+        {
+          "name": "pool.norm_mlp",
+          "parameters": 384
+        },
+        {
+          "name": "pool.attention.fc_q",
+          "parameters": 37056
+        },
+        {
+          "name": "pool.attention.fc_k",
+          "parameters": 37056
+        },
+        {
+          "name": "pool.attention.fc_v",
+          "parameters": 37056
+        },
+        {
+          "name": "pool.attention.fc_o",
+          "parameters": 37056
+        },
+        {
+          "name": "pool.mlp.0.fc1",
+          "parameters": 148224
+        },
+        {
+          "name": "pool.mlp.0.fc2",
+          "parameters": 147840
+        },
+        {
+          "name": "pool.mlp.2.fc1",
+          "parameters": 295680
+        },
+        {
+          "name": "pool.mlp.2.fc2",
+          "parameters": 73920
+        },
+        {
+          "name": "graph_projection",
+          "parameters": 49408
+        },
+        {
+          "name": "head",
+          "parameters": 257
+        }
+      ],
+      "median_inference_seconds": 0.012070300057530403,
+      "name": "esa_mixed",
+      "native_activation_peak_bytes": null,
+      "parameters": 5014849,
+      "synthetic_batch_macs": {
+        "attention_qk_and_av": 112128,
+        "excluded": "norm/embedding/activation/SPE/softmax and CPU feature derivation; not an exact FLOP counter",
+        "linear": 72482048,
+        "rough_flops_twice_macs": 145188352,
+        "sum": 72594176
+      },
+      "trainable_parameters": 5014849,
+      "weight_bytes": 20059396
+    },
+    {
+      "budget_status": "WITHIN_CAP",
+      "buffer_bytes": 0,
+      "buffers": 0,
+      "cap": 7317634,
+      "config": {
+        "epsilon": 1e-08,
+        "graph_dim": 256,
+        "heads": 8,
+        "hidden": 256,
+        "include_self": true,
+        "layer_types": [
+          "M",
+          "M",
+          "S",
+          "P"
+        ],
+        "mlp_hidden": 512,
+        "seeds": 32
+      },
+      "config_sha256": "39bfce517bc22db7d6731dede2904d9a2d5d446f840390b9a3295fecb4c510e1",
+      "construction_seconds": 0.027256699977442622,
+      "cpu_profile": {
+        "format": "molgap-runtime-profile-v1",
+        "metadata": {
+          "directed_edges": [
+            4,
+            2
+          ],
+          "graph_nodes": [
+            3,
+            2
+          ],
+          "scope": "CPU_SYNTHETIC_INFERENCE_ONLY"
+        },
+        "stages": {
+          "allocation": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "backward_optimizer": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "checkpoint_hash_archive": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "forward_loss": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "h2d": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "loader_collate": {
+            "count": 0,
+            "samples_seconds": [],
+            "total_seconds": 0
+          },
+          "validation": {
+            "count": 3,
+            "samples_seconds": [
+              0.011751499958336353,
+              0.01209440000820905,
+              0.01234190003015101
+            ],
+            "total_seconds": 0.03618779999669641
+          }
+        }
+      },
+      "ema_enabled": false,
+      "hypothetical_fp32_ema_bytes": 23760900,
+      "layer_parameters": [
+        {
+          "name": "token_mlp.0",
+          "parameters": 46336
+        },
+        {
+          "name": "token_mlp.2",
+          "parameters": 33024
+        },
+        {
+          "name": "encoder.0.norm",
+          "parameters": 512
+        },
+        {
+          "name": "encoder.0.norm_mlp",
+          "parameters": 512
+        },
+        {
+          "name": "encoder.0.attention.fc_q",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.0.attention.fc_k",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.0.attention.fc_v",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.0.attention.fc_o",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.0.mlp.0.fc1",
+          "parameters": 263168
+        },
+        {
+          "name": "encoder.0.mlp.0.fc2",
+          "parameters": 262656
+        },
+        {
+          "name": "encoder.0.mlp.2.fc1",
+          "parameters": 525312
+        },
+        {
+          "name": "encoder.0.mlp.2.fc2",
+          "parameters": 131328
+        },
+        {
+          "name": "encoder.1.norm",
+          "parameters": 512
+        },
+        {
+          "name": "encoder.1.norm_mlp",
+          "parameters": 512
+        },
+        {
+          "name": "encoder.1.attention.fc_q",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.1.attention.fc_k",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.1.attention.fc_v",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.1.attention.fc_o",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.1.mlp.0.fc1",
+          "parameters": 263168
+        },
+        {
+          "name": "encoder.1.mlp.0.fc2",
+          "parameters": 262656
+        },
+        {
+          "name": "encoder.1.mlp.2.fc1",
+          "parameters": 525312
+        },
+        {
+          "name": "encoder.1.mlp.2.fc2",
+          "parameters": 131328
+        },
+        {
+          "name": "encoder.2.norm",
+          "parameters": 512
+        },
+        {
+          "name": "encoder.2.norm_mlp",
+          "parameters": 512
+        },
+        {
+          "name": "encoder.2.attention.fc_q",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.2.attention.fc_k",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.2.attention.fc_v",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.2.attention.fc_o",
+          "parameters": 65792
+        },
+        {
+          "name": "encoder.2.mlp.0.fc1",
+          "parameters": 263168
+        },
+        {
+          "name": "encoder.2.mlp.0.fc2",
+          "parameters": 262656
+        },
+        {
+          "name": "encoder.2.mlp.2.fc1",
+          "parameters": 525312
+        },
+        {
+          "name": "encoder.2.mlp.2.fc2",
+          "parameters": 131328
+        },
+        {
+          "name": "pool",
+          "parameters": 8192
+        },
+        {
+          "name": "pool.norm",
+          "parameters": 512
+        },
+        {
+          "name": "pool.norm_mlp",
+          "parameters": 512
+        },
+        {
+          "name": "pool.attention.fc_q",
+          "parameters": 65792
+        },
+        {
+          "name": "pool.attention.fc_k",
+          "parameters": 65792
+        },
+        {
+          "name": "pool.attention.fc_v",
+          "parameters": 65792
+        },
+        {
+          "name": "pool.attention.fc_o",
+          "parameters": 65792
+        },
+        {
+          "name": "pool.mlp.0.fc1",
+          "parameters": 263168
+        },
+        {
+          "name": "pool.mlp.0.fc2",
+          "parameters": 262656
+        },
+        {
+          "name": "pool.mlp.2.fc1",
+          "parameters": 525312
+        },
+        {
+          "name": "pool.mlp.2.fc2",
+          "parameters": 131328
+        },
+        {
+          "name": "graph_projection",
+          "parameters": 65792
+        },
+        {
+          "name": "head",
+          "parameters": 257
+        }
+      ],
+      "median_inference_seconds": 0.01209440000820905,
+      "name": "esa_compact",
+      "native_activation_peak_bytes": null,
+      "parameters": 5940225,
+      "synthetic_batch_macs": {
+        "attention_qk_and_av": 129024,
+        "excluded": "norm/embedding/activation/SPE/softmax and CPU feature derivation; not an exact FLOP counter",
+        "linear": 111230208,
+        "rough_flops_twice_macs": 222718464,
+        "sum": 111359232
+      },
+      "trainable_parameters": 5940225,
+      "weight_bytes": 23760900
+    }
+  ],
+  "scientific_training_authority": "NOT_AUTHORIZED_FOR_SCIENTIFIC_TRAINING",
+  "scope": "CPU_SYNTHETIC_ONLY",
+  "sources": {
+    "esa": {
+      "dynamic_imports": [],
+      "edges": [
+        [
+          "src/molgap/__init__.py",
+          "src/molgap/constants.py"
+        ],
+        [
+          "src/molgap/esa_features.py",
+          "src/molgap/modern2d_inputs.py"
+        ],
+        [
+          "src/molgap/esa_features.py",
+          "src/molgap/ogb_features.py"
+        ],
+        [
+          "src/molgap/esa_model.py",
+          "src/molgap/esa_features.py"
+        ],
+        [
+          "src/molgap/esa_model.py",
+          "src/molgap/modern2d_inputs.py"
+        ],
+        [
+          "src/molgap/esa_model.py",
+          "src/molgap/ogb_features.py"
+        ],
+        [
+          "src/molgap/modern2d_inputs.py",
+          "src/molgap/ogb_features.py"
+        ]
+      ],
+      "external_modules": [
+        "__future__",
+        "copy",
+        "dataclasses",
+        "pathlib",
+        "rdkit",
+        "torch"
+      ],
+      "raw_file_sha256": {
+        "src/molgap/__init__.py": "4e730acb60e6e29c2ac78b3008e15ba91098872144c143196aef96c7e442555d",
+        "src/molgap/constants.py": "c625eeeda73395408783287391df95d5e346eb2ee0e359919b330e542c3f3957",
+        "src/molgap/esa_features.py": "5594fff58692f676369e8860e706c7f7c084cea6b7926d650aacbd50577fbe55",
+        "src/molgap/esa_model.py": "a01959cec6058aca309f5dd782795e5598ad5465c306847e6a9a82bbd12f01a4",
+        "src/molgap/modern2d_inputs.py": "45398a4c4b2738b68db524916b7a4177a365a3533458c0d700da2a45c89ad0d0",
+        "src/molgap/ogb_features.py": "5185e80b87b95e1ab7ce0d581918a546c37d11d87a56aaaa847cacd8f313009f"
+      },
+      "roots": [
+        "src/molgap/esa_model.py"
+      ],
+      "source_files": [
+        "src/molgap/__init__.py",
+        "src/molgap/constants.py",
+        "src/molgap/esa_features.py",
+        "src/molgap/esa_model.py",
+        "src/molgap/modern2d_inputs.py",
+        "src/molgap/ogb_features.py"
+      ]
+    },
+    "ppgt": {
+      "dynamic_imports": [],
+      "edges": [
+        [
+          "src/molgap/__init__.py",
+          "src/molgap/constants.py"
+        ],
+        [
+          "src/molgap/modern2d_inputs.py",
+          "src/molgap/ogb_features.py"
+        ],
+        [
+          "src/molgap/ppgt_features.py",
+          "src/molgap/modern2d_inputs.py"
+        ],
+        [
+          "src/molgap/ppgt_model.py",
+          "src/molgap/modern2d_inputs.py"
+        ],
+        [
+          "src/molgap/ppgt_model.py",
+          "src/molgap/ogb_features.py"
+        ],
+        [
+          "src/molgap/ppgt_model.py",
+          "src/molgap/ppgt_features.py"
+        ]
+      ],
+      "external_modules": [
+        "__future__",
+        "copy",
+        "dataclasses",
+        "math",
+        "pathlib",
+        "rdkit",
+        "torch"
+      ],
+      "raw_file_sha256": {
+        "src/molgap/__init__.py": "4e730acb60e6e29c2ac78b3008e15ba91098872144c143196aef96c7e442555d",
+        "src/molgap/constants.py": "c625eeeda73395408783287391df95d5e346eb2ee0e359919b330e542c3f3957",
+        "src/molgap/modern2d_inputs.py": "45398a4c4b2738b68db524916b7a4177a365a3533458c0d700da2a45c89ad0d0",
+        "src/molgap/ogb_features.py": "5185e80b87b95e1ab7ce0d581918a546c37d11d87a56aaaa847cacd8f313009f",
+        "src/molgap/ppgt_features.py": "91c8dadc2a9a98da48f73c7b5d2e89715b83b5df65460396e174329e6bec3eda",
+        "src/molgap/ppgt_model.py": "aa3da5a4f87adcb90f651e2a935a050908cbf10e762c5d007c5010bc79c80ffa"
+      },
+      "roots": [
+        "src/molgap/ppgt_model.py"
+      ],
+      "source_files": [
+        "src/molgap/__init__.py",
+        "src/molgap/constants.py",
+        "src/molgap/modern2d_inputs.py",
+        "src/molgap/ogb_features.py",
+        "src/molgap/ppgt_features.py",
+        "src/molgap/ppgt_model.py"
+      ]
+    }
+  },
+  "torch_version": "2.7.1+cpu"
+}

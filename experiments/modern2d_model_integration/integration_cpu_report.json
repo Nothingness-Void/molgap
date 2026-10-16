@@ -1,0 +1,302 @@
+{
+  "format": "molgap-modern2d-cpu-acceptance-v1",
+  "date_jst": "2026-10-16",
+  "scope": "CPU_SYNTHETIC_ONLY",
+  "reports": {
+    "baseline_916e0d4c": {
+      "path": "platforms/_records/local/modern2d_cpu/baseline_916e0d4c.xml",
+      "sha256": "afa0c569d8d6b289c729db2d4cc90475ed3578cc3da703e0466edc3bddfcd080",
+      "tests": 1,
+      "passed": 0,
+      "failures": [
+        "tests.test_experiment_modularity_review::test_actual_registered_owner_clean_import_and_inventory_closure[k1_candidate-molgap.k1_screen_training-molgap.gptrans_screen_workflow]"
+      ],
+      "errors": 0,
+      "skipped": [],
+      "junit_seconds": 4.182,
+      "properties": {}
+    },
+    "baseline_916e0d4c_complete_fixture": {
+      "path": "platforms/_records/local/modern2d_cpu/baseline_916e0d4c_complete_fixture.xml",
+      "sha256": "06a50fb8c37fca4ccf2481f09c76f1c05786c889dacb1dec02e3e11c742e769f",
+      "tests": 1,
+      "passed": 0,
+      "failures": [
+        "tests.test_experiment_modularity_review::test_actual_registered_owner_clean_import_and_inventory_closure[k1_candidate-molgap.k1_screen_training-molgap.gptrans_screen_workflow]"
+      ],
+      "errors": 0,
+      "skipped": [],
+      "junit_seconds": 23.229,
+      "properties": {}
+    },
+    "contracts_rml": {
+      "path": "platforms/_records/local/modern2d_cpu/contracts_rml.xml",
+      "sha256": "5ece89ccde4d89aa0b396e67407d4134318759355d332043a12923495703107c",
+      "tests": 279,
+      "passed": 276,
+      "failures": [
+        "tests.test_research_memory::test_repository_cost_completeness_is_internally_consistent",
+        "tests.test_research_memory::test_all_derived_json_schemas_match_generated_top_level_contracts",
+        "tests.test_research_memory::test_invalid_derived_output_is_rejected"
+      ],
+      "errors": 0,
+      "skipped": [],
+      "junit_seconds": 32.05,
+      "properties": {}
+    },
+    "execution_source": {
+      "path": "platforms/_records/local/modern2d_cpu/execution_source.xml",
+      "sha256": "c4990e4b0c035fb42b9b6cd4e3f5f5cebfd47e1b1c65e11df6a72e4f0c7aafae",
+      "tests": 549,
+      "passed": 544,
+      "failures": [
+        "tests.test_experiment_modularity_review::test_actual_registered_owner_clean_import_and_inventory_closure[k1_candidate-molgap.k1_screen_training-molgap.gptrans_screen_workflow]"
+      ],
+      "errors": 0,
+      "skipped": [
+        {
+          "test": "tests.test_experiment_package::test_symlinks_rejected",
+          "reason": "Host does not permit creating symlinks"
+        },
+        {
+          "test": "tests.test_experiment_runner::test_symlink_output_rejected",
+          "reason": "Directory symlinks are unavailable on this host"
+        },
+        {
+          "test": "tests.test_experiment_prospective::test_cli_rejects_ref_symlink_even_inside_repo",
+          "reason": "symlinks unavailable on this host"
+        },
+        {
+          "test": "tests.test_experiment_launch::test_symlink_output",
+          "reason": "Host does not permit symlinks"
+        }
+      ],
+      "junit_seconds": 580.214,
+      "properties": {}
+    },
+    "family_core": {
+      "path": "platforms/_records/local/modern2d_cpu/family_core.xml",
+      "sha256": "0a97f36c0d0fbb5fb0627324fb364c268a6af884ac76037f03d99a7ba274494d",
+      "tests": 294,
+      "passed": 294,
+      "failures": [],
+      "errors": 0,
+      "skipped": [],
+      "junit_seconds": 97.867,
+      "properties": {}
+    },
+    "integration_final": {
+      "path": "platforms/_records/local/modern2d_cpu/integration_final.xml",
+      "sha256": "4c3c8da32014a7c71b03ba353742a191cc98f432e135bbcb076653112a41c8df",
+      "tests": 49,
+      "passed": 49,
+      "failures": [],
+      "errors": 0,
+      "skipped": [],
+      "junit_seconds": 45.995,
+      "properties": {
+        "tests.test_modern2d_fidelity::test_full_sized_author_pre_ln_reference_every_layer[3]": {
+          "author_fp32_max_abs_errors": "{'token': 0.0, 'encoder0': 9.5367431640625e-07, 'encoder1': 1.1920928955078125e-06, 'encoder2': 9.5367431640625e-07, 'PMA': 1.1920928955078125e-06, 'projection': 4.76837158203125e-07, 'output': 1.1920928955078125e-07, 'prediction': 1.1920928955078125e-07}"
+        },
+        "tests.test_modern2d_fidelity::test_full_sized_author_pre_ln_reference_every_layer[17]": {
+          "author_fp32_max_abs_errors": "{'token': 0.0, 'encoder0': 9.5367431640625e-07, 'encoder1': 1.4603137969970703e-06, 'encoder2': 1.1920928955078125e-06, 'PMA': 1.430511474609375e-06, 'projection': 4.76837158203125e-07, 'output': 8.940696716308594e-08, 'prediction': 8.940696716308594e-08}"
+        },
+        "tests.test_modern2d_session::test_exact_actual_session_midpass_resume_and_readonly_eval[ppgt_small]": {
+          "paused_checkpoint_sha256": "01ccbe9feeeee5d855d00371713807ef304a87f7827728d2d04aa1befea1206a",
+          "initialization_state_sha256": "3748ca71f2e9f69eb57ee33a54178eb9249a9ba4e9aa47b65de40d7b04a0194d"
+        },
+        "tests.test_modern2d_session::test_exact_actual_session_midpass_resume_and_readonly_eval[esa_small]": {
+          "paused_checkpoint_sha256": "42574e36436c4d6225697eccb268df794121c9d655d582942c3b7dda71e9f2b8",
+          "initialization_state_sha256": "aa5f4b24b8bd07245db486becb45e8d7a77420c0f60013b181fea95cd230c7f6"
+        },
+        "tests.test_modern2d_registration::test_model_source_bundle_isolated_import_and_byte_identity[ppgt]": {
+          "source_archive_sha256": "5bb2057ddf9f9691780f8572bfb57c50f8975dec8a7e5a733988ea169e80f57c",
+          "source_commit": "1c2e53477c7e7076372b4b1434b621925122d231",
+          "source_files": "src/molgap/__init__.py,src/molgap/constants.py,src/molgap/modern2d_inputs.py,src/molgap/ogb_features.py,src/molgap/ppgt_features.py,src/molgap/ppgt_model.py"
+        },
+        "tests.test_modern2d_registration::test_model_source_bundle_isolated_import_and_byte_identity[esa]": {
+          "source_archive_sha256": "e32cb60cb44865e4e7ef3793c223eacc1d36e741ef98117f8ceca6d2f7c324d3",
+          "source_commit": "1c2e53477c7e7076372b4b1434b621925122d231",
+          "source_files": "src/molgap/__init__.py,src/molgap/constants.py,src/molgap/esa_features.py,src/molgap/esa_model.py,src/molgap/modern2d_inputs.py,src/molgap/ogb_features.py"
+        }
+      }
+    },
+    "primary_integration": {
+      "path": "platforms/_records/local/modern2d_cpu/primary_integration.xml",
+      "sha256": "94d437566287f136e9955e2b9e77236843539aa3e0b960d027801feda63a08e0",
+      "tests": 49,
+      "passed": 49,
+      "failures": [],
+      "errors": 0,
+      "skipped": [],
+      "junit_seconds": 27.653,
+      "properties": {
+        "tests.test_modern2d_fidelity::test_full_sized_author_pre_ln_reference_every_layer[3]": {
+          "author_fp32_max_abs_errors": "{'token': 0.0, 'encoder0': 9.5367431640625e-07, 'encoder1': 1.1920928955078125e-06, 'encoder2': 9.5367431640625e-07, 'PMA': 1.1920928955078125e-06, 'projection': 4.76837158203125e-07, 'output': 1.1920928955078125e-07, 'prediction': 1.1920928955078125e-07}"
+        },
+        "tests.test_modern2d_fidelity::test_full_sized_author_pre_ln_reference_every_layer[17]": {
+          "author_fp32_max_abs_errors": "{'token': 0.0, 'encoder0': 9.5367431640625e-07, 'encoder1': 1.4603137969970703e-06, 'encoder2': 1.1920928955078125e-06, 'PMA': 1.430511474609375e-06, 'projection': 4.76837158203125e-07, 'output': 8.940696716308594e-08, 'prediction': 8.940696716308594e-08}"
+        },
+        "tests.test_modern2d_session::test_exact_actual_session_midpass_resume_and_readonly_eval[ppgt_small]": {
+          "paused_checkpoint_sha256": "01ccbe9feeeee5d855d00371713807ef304a87f7827728d2d04aa1befea1206a",
+          "initialization_state_sha256": "3748ca71f2e9f69eb57ee33a54178eb9249a9ba4e9aa47b65de40d7b04a0194d"
+        },
+        "tests.test_modern2d_session::test_exact_actual_session_midpass_resume_and_readonly_eval[esa_small]": {
+          "paused_checkpoint_sha256": "42574e36436c4d6225697eccb268df794121c9d655d582942c3b7dda71e9f2b8",
+          "initialization_state_sha256": "aa5f4b24b8bd07245db486becb45e8d7a77420c0f60013b181fea95cd230c7f6"
+        },
+        "tests.test_modern2d_registration::test_model_source_bundle_isolated_import_and_byte_identity[ppgt]": {
+          "source_archive_sha256": "5bb2057ddf9f9691780f8572bfb57c50f8975dec8a7e5a733988ea169e80f57c",
+          "source_commit": "1c2e53477c7e7076372b4b1434b621925122d231",
+          "source_files": "src/molgap/__init__.py,src/molgap/constants.py,src/molgap/modern2d_inputs.py,src/molgap/ogb_features.py,src/molgap/ppgt_features.py,src/molgap/ppgt_model.py"
+        },
+        "tests.test_modern2d_registration::test_model_source_bundle_isolated_import_and_byte_identity[esa]": {
+          "source_archive_sha256": "e32cb60cb44865e4e7ef3793c223eacc1d36e741ef98117f8ceca6d2f7c324d3",
+          "source_commit": "1c2e53477c7e7076372b4b1434b621925122d231",
+          "source_files": "src/molgap/__init__.py,src/molgap/constants.py,src/molgap/esa_features.py,src/molgap/esa_model.py,src/molgap/modern2d_inputs.py,src/molgap/ogb_features.py"
+        }
+      }
+    },
+    "primary_rml": {
+      "path": "platforms/_records/local/modern2d_cpu/primary_rml.xml",
+      "sha256": "66db48b0b3086472d10dab0754afb43c1223f830abf213552e70e6d3501f7e91",
+      "tests": 69,
+      "passed": 69,
+      "failures": [],
+      "errors": 0,
+      "skipped": [],
+      "junit_seconds": 71.384,
+      "properties": {}
+    }
+  },
+  "preserved_primary_identity": {
+    "primary_head": "916e0d4c9732c92912c6aa328ac8b8cd867c8d5a",
+    "preserved_dirty_files": {
+      "experiments/pcqm_gptrans_local_transfer_500k/README.md": "775d71891e28765d5e1806a44858c6d0762471a12c549375e4f7d41297037392",
+      "experiments/pcqm_v5_route_portfolio/README.md": "599e3d400620a91c71e2b7a078f0ef9c1c9192d45cd9839ca433af388fa08aaa",
+      "research_memory/derived/completeness_report.json": "4789eb56af83af4f671fae62a8a559737fa057f0e3bf40d69af260b990bc57fd",
+      "research_memory/derived/cost_ledger.json": "554b8234f7bade5881f8ab2b5dfcc3ba3e7fb1a0ff332161bf0afb3296626990",
+      "research_memory/derived/policy_backtest.json": "41a7bffe8a97ee5e4842a4d0ab8cb0fe8e664a9a9fe8771665d4a49e2039a367",
+      "research_memory/derived/reference_reuse_index.json": "8af34de1a4e94cf6bee06159c756af6d7b7dd1e9c2c375e09fddd4745e6e0499",
+      "research_memory/derived/replay_pool.json": "680c2a9e681a19937a395e016c2e0b61f88360bb83a5ec4734af36e1f1c2cd9b",
+      "research_memory/derived/research_summary.json": "bb4e40faed96d8c16dafa7389b97a9b14c70f49fb9cc657f69b341940e89ad32",
+      "research_memory/derived/research_summary.md": "84509eccd3d134c100babad4979ff2681e571727b88d2c74c506755acb2f6caf",
+      "research_memory/derived/role_reuse_index.json": "4777e0dd21a8e936919c469bf20bfd9f6fa3a2f43a6314ac611a894fde46dca7",
+      "research_memory/derived/screening_backtest.json": "fcb64baa57168d817e2eb7379a039eb9c2576809f0fc0a953ea6051ac416313c",
+      "research_memory/derived/trajectory_graph.json": "08079e37a0ba95209af48d71e5240c96046be07cb6c9213524da4119a1c31b5a",
+      "research_memory/derived/trajectory_index.json": "fd065acd3486e5b7eb2c4243bb9626c9ae6bb425482fe1e8d160fd5d310de2f3",
+      "tests/test_research_memory.py": "e623abd9b0a410d6c49ccf1d04e2e1ba5bb23237db4dea2a2c8c874f4b9465f1"
+    }
+  },
+  "preserved_files_byte_identical": {
+    "experiments/pcqm_gptrans_local_transfer_500k/README.md": true,
+    "experiments/pcqm_v5_route_portfolio/README.md": true,
+    "research_memory/derived/completeness_report.json": true,
+    "research_memory/derived/cost_ledger.json": true,
+    "research_memory/derived/policy_backtest.json": true,
+    "research_memory/derived/reference_reuse_index.json": true,
+    "research_memory/derived/replay_pool.json": true,
+    "research_memory/derived/research_summary.json": true,
+    "research_memory/derived/research_summary.md": true,
+    "research_memory/derived/role_reuse_index.json": true,
+    "research_memory/derived/screening_backtest.json": true,
+    "research_memory/derived/trajectory_graph.json": true,
+    "research_memory/derived/trajectory_index.json": true,
+    "tests/test_research_memory.py": true
+  },
+  "retained_cpu_payloads": {
+    "platforms/_records/local/modern2d_cpu/esa_small-paused.pt": "42574e36436c4d6225697eccb268df794121c9d655d582942c3b7dda71e9f2b8",
+    "platforms/_records/local/modern2d_cpu/ppgt_small-paused.pt": "01ccbe9feeeee5d855d00371713807ef304a87f7827728d2d04aa1befea1206a",
+    "platforms/_records/local/modern2d_cpu/esa-source/source.tar.gz": "e32cb60cb44865e4e7ef3793c223eacc1d36e741ef98117f8ceca6d2f7c324d3",
+    "platforms/_records/local/modern2d_cpu/esa-source/SOURCE_ARCHIVE_SHA256.txt": "0ee77fe85da205748787c8b7e9d29408ae0ca945b943830c6a33898d9ce8c972",
+    "platforms/_records/local/modern2d_cpu/esa-source/SOURCE_COMMIT.txt": "b73410e1501557657917c8aba75a97c03c8701ccc7da86edb9dc8a9218926096",
+    "platforms/_records/local/modern2d_cpu/esa-source/SOURCE_FILES.json": "fb68bd254f1c3907fe232237a3d2d5fb05309758434e923aca6fbfe9522e0112",
+    "platforms/_records/local/modern2d_cpu/ppgt-source/source.tar.gz": "5bb2057ddf9f9691780f8572bfb57c50f8975dec8a7e5a733988ea169e80f57c",
+    "platforms/_records/local/modern2d_cpu/ppgt-source/SOURCE_ARCHIVE_SHA256.txt": "f361422ac4b82dd893767832632ddae0c2c08e1e5ff01be1c746046900861a7c",
+    "platforms/_records/local/modern2d_cpu/ppgt-source/SOURCE_COMMIT.txt": "b73410e1501557657917c8aba75a97c03c8701ccc7da86edb9dc8a9218926096",
+    "platforms/_records/local/modern2d_cpu/ppgt-source/SOURCE_FILES.json": "258a8b0dea8d50c525882175bf25a583263e644f04177d4a57343563e03e21e5"
+  },
+  "implementation_commit": "1c2e53477c7e7076372b4b1434b621925122d231",
+  "primary_head_at_start": "916e0d4c9732c92912c6aa328ac8b8cd867c8d5a",
+  "remote_server_head_observed": "63481324aceb807a3f74a08ba2c62bd3e0dcf9ab",
+  "family_states": {
+    "ppgt_small": {
+      "integration": "MODEL_CPU_INTEGRATED",
+      "fidelity": "MODEL_FIDELITY_PENDING",
+      "fidelity_reason": "UPSTREAM_CODE_NOT_VERIFIED; paper Table9 parameter ambiguity; no authorized independent benchmark reproduction",
+      "parameters": 9447937,
+      "parameter_cap": 10493634,
+      "feature_schema": "ogb-atom9-bond3-rrwp-spe-v1"
+    },
+    "esa_small": {
+      "integration": "MODEL_CPU_INTEGRATED",
+      "fidelity": "MODEL_FIDELITY_PENDING",
+      "fidelity_reason": "Author reference is separately accepted; safe self/padding/OGB input adaptations not certified as published family equivalence",
+      "parameters": 5014849,
+      "parameter_cap": 7317634,
+      "feature_schema": "ogb-atom9-bond3-directed-edge-mask-v1"
+    }
+  },
+  "esa_reference": {
+    "state": "MODEL_FIDELITY_ACCEPTED",
+    "commit": "861a0b12d445ae80cc69b3948af623b4331321d4",
+    "license": "MIT, David Buterez2024",
+    "scope": "Same weights; M-M-S-P, hidden256/heads4/MLP512/seeds32/graph512, pre-LN FP32, no padding, author float mask; explicit CPU SDP and SwiGLU substitutes",
+    "maximum_layer_absolute_error": 0.0000014603137969970703,
+    "rtol": 0.00002,
+    "atol": 0.000003
+  },
+  "native_state": "NATIVE_PREFLIGHT_NOT_RUN",
+  "scientific_state": "NOT_AUTHORIZED_FOR_SCIENTIFIC_TRAINING",
+  "real_data_used": false,
+  "scientific_spec_published": false,
+  "protected_roles_opened": [],
+  "remote_submissions": 0,
+  "allocated_gpu_hours": 0,
+  "data_context_only": {
+    "accepted_master_sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65",
+    "rule_sha256": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+    "ims_master": "DATA_ROLE_ACCEPTED",
+    "mirrors": "NOT_PUBLISHED",
+    "real_indexed_model_loader": "NOT_RELEASED"
+  },
+  "known_issues": [
+    {
+      "id": "LEGACY_K1_EXTRA_GPTR_SOURCE",
+      "classification": "BASELINE_REPRODUCED_PREEXISTING",
+      "detail": "Unselected gptrans_screen_workflow.py is in legacy K1 package inventory. Same assertion failed at baseline916e0d4c; no historical test/receipt changed. Modern2D isolated six-file model bundles passed.",
+      "evidence": "baseline_916e0d4c_complete_fixture"
+    },
+    {
+      "id": "FRESH_WORKTREE_HISTORICAL_CRLF",
+      "classification": "CHECKOUT_BYTES_NOT_SCIENTIFIC_FAILURE",
+      "detail": "Three worktree RML tests rejected old finalization payload converted to CRLF. Baseline Git blob and primary LF bytes match frozen receipt983bc57ac3b7d32da7bd3b30eaec517170aec07088995b65346165058f28150f; primary RML69 passed without altering records."
+    },
+    {
+      "id": "MONOLITHIC_REGRESSION_INCOMPLETE",
+      "classification": "NO_TERMINAL_RESULT_NO_ACCEPTANCE_CREDIT",
+      "detail": "Initial large process lost terminal result/JUnit; replaced by retained bounded batches. Interim dots/failures were not counted as complete results."
+    },
+    {
+      "id": "BASELINE_FIXTURE_INCOMPLETE_FIRST_ATTEMPT",
+      "classification": "TEST_SETUP_FAILURE",
+      "detail": "First archive omitted RML schemas; retained first failure and reran with baseline schemas/policies before classifying legacy defect."
+    }
+  ],
+  "gates": {
+    "M0": "ACCEPTED_WITH_FIDELITY_LIMITS",
+    "M1": "CPU_SYNTHETIC_ACCEPTED_REAL_INPUT_NOT_RELEASED",
+    "M2": "CPU_MODEL_MECHANICS_ACCEPTED_SCOPED_ESA_REFERENCE_ACCEPTED",
+    "M3": "PARAMETER_BUDGET_ACCEPTED",
+    "M4": "ACTUAL_SESSION_AND_ISOLATED_MODEL_SOURCE_ACCEPTED",
+    "M5": "CPU_ACCEPTED_WITH_BASELINE_REPRODUCED_LEGACY_ISSUE",
+    "M6": "NON_EXECUTABLE_DRAFT_AND_STOP"
+  },
+  "limitations": [
+    "No real graph-size distribution, no GPU memory/throughput, no scientific MAE/ranking/cross-scale result",
+    "Session uses generated small configurations; paper-size ESA reference is evaluation-only",
+    "CPU synthetic steps do not grant any training/role/native authority",
+    "100K MAE cannot automatically veto500K; old STQS/uncalibrated early stopping not released",
+    "Preserved existing production and V4/V5 conclusions; Desktop not merged; no RML training trajectory created"
+  ]
+}

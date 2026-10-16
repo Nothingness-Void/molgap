@@ -13,6 +13,7 @@ those claims distinct.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Can independent PPGT/ESA families reuse Server CPU lifecycle without training release? | CPU-only integration; scientific/fidelity limitations are separate from mechanics | `modern2d_model_integration/` |
 | How much does the optimized shared K1 infrastructure change fixed100K execution cost? | [Accepted execution benefit with identical endpoints](k1_infrastructure_t4_100k/results/decision_2026-10-15.md); no scientific promotion or Replay eligibility | `k1_infrastructure_t4_100k/` |
 | Does direct pair-to-pair communication improve the qualified local parent, and is query matching worthwhile? | Both100K arms passed the frozen gate with complete STRICT_CAUSAL Replay pairs; aggregation prioritized for separately authorized transfer, no established attention advantage | [Triplet communication terminal](pcqm_gptrans_triplet_communication_100k/gpu/results/interpretation.md) |
 | Does the uncapped real-bond GPTrans stream retain its advantage after equal-update500K training, and where is the benefit lost? | Two-arm planning only; retained reference artifacts hash-verified, prospective qualification/release pending, no new scientific result | `pcqm_gptrans_local_transfer_500k/` |
