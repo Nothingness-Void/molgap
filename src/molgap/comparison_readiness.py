@@ -81,6 +81,71 @@ STRICT_IDENTITY_FIELDS = (
     "evaluation_weight_source",
 )
 
+
+def canonical_weight_state(value):
+    """Reviewed spelling aliases only; Raw EMA and Clean EMA are not equivalent."""
+    return {"live":"live", "Live":"live", "ema":"ema", "EMA":"ema",
+            "raw_ema":"ema", "raw-ema":"ema", "clean-ema":"clean-ema",
+            "clean_ema":"clean-ema"}.get(value) if type(value) is str else None
+
+
+def metric_observation_contract(identity, metric, *, selected=True):
+    """Bind one metric slot to its own frozen V5 identity and canonical semantics.
+
+    Observational pins are per run, not fields which two architectures must
+    share. Missing/unknown historical semantics are not reconstructed from rows.
+    This is a read-only qualification helper, never new training authority.
+    """
+    from .research_memory.trace import METRICS, TRACE_FORMAT, validate_canonical_trace
+    if metric not in METRICS:
+        raise ValueError("Unknown canonical metric slot")
+    reasons = []
+    semantics = identity.get("metric_semantics")
+    try:
+        validate_canonical_trace({"schema":TRACE_FORMAT,"trajectory_id":"semantic-contract",
+            "run_id":"semantic-contract","metric_semantics":semantics,"observations":[]})
+    except (ValueError, TypeError):
+        semantics = {}
+        reasons.append("MISSING_OR_INVALID:declared_metric_semantics")
+    definition = (semantics or {}).get(metric)
+    if definition is None:
+        definition = {}
+        reasons.append("MISSING:declared_metric_definition")
+    train = metric == "live_train_metric"
+    role = identity.get("data_role_identity" if train else "evaluation_role_identity")
+    if not train and identity.get("selection_role_identity") != role:
+        reasons.append("MISMATCH:declared_selection_evaluation_role")
+    if definition.get("role_identity") != role:
+        reasons.append("MISMATCH:declared_metric_role")
+    if (not isinstance(role,str) or not role.startswith("internal_") or
+            any(p in role.lower() for p in ("audit","official","test","ood","protected","external","shadow"))):
+        reasons.append("ROLE_BLOCKED:declared_metric_role")
+    weights = ("live" if metric != "ema_dev_metric" else
+               canonical_weight_state(definition.get("weights")))
+    if selected and not train:
+        weights = canonical_weight_state(identity.get("evaluation_weight_source"))
+    if weights is None or canonical_weight_state(definition.get("weights")) != weights:
+        reasons.append("MISMATCH:declared_metric_weights")
+    if selected and not train and canonical_weight_state(identity.get("weight_semantics")) != weights:
+        reasons.append("MISMATCH:declared_weight_semantics")
+    if weights != "live" and identity.get("ema_enabled") is not True:
+        reasons.append("MISMATCH:declared_ema_availability")
+    if (definition.get("metric") != "MAE" or definition.get("direction") != "minimize" or
+            definition.get("target") not in {"Gap","gap","PCQM4Mv2 Gap"}):
+        reasons.append("MISMATCH:declared_metric_target_or_definition")
+    if not train and definition.get("unit") != identity.get("target_unit"):
+        reasons.append("MISMATCH:declared_target_unit")
+    expected = {"metric":metric,"metric_kind":"online-train" if train else "development",
+        "evaluation_role":role,"weights":weights,"target":"Gap","unit":definition.get("unit"),
+        "target_identity":identity.get("target_identity"),"source_trace_sha256":identity.get("trace_sha256"),
+        "trace_run_id":identity.get("trace_run_id")}
+    for field in ("target_identity","source_trace_sha256","trace_run_id"):
+        if not isinstance(expected[field],str) or not expected[field]:
+            reasons.append("MISSING:declared_"+field)
+    if not isinstance(expected["source_trace_sha256"],str) or not _SHA256.fullmatch(expected["source_trace_sha256"]):
+        reasons.append("MISSING_OR_INVALID:declared_trace_sha256")
+    return expected, reasons
+
 REQUIRED_REFERENCE_ARTIFACTS = frozenset(
     {
         "checkpoint",

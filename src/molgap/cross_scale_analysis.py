@@ -67,10 +67,15 @@ def import_accepted_trace(root, *, trace_binding, manifest_binding, acceptance_b
                 "checkpoint_identity": observed["checkpoint_identity"],
                 "metric": name, "metric_kind": "online-train" if name == "live_train_metric" else "development",
                 "value": value, "target": definition["target"], "unit": definition["unit"], "weights": definition["weights"],
-                "evaluation_role": role})
+                "evaluation_role": role, "target_identity":manifest["comparability_identity"].get("target_identity"),
+                "source_trace_sha256":trace_binding["sha256"], "trace_run_id":trace["run_id"]})
     return {"rows": rows, "comparability_identity": deepcopy(manifest["comparability_identity"]),
             "backtest_eligibility": deepcopy(manifest["backtest_eligibility"]),
             "trace_sha256": trace_binding["sha256"], "scientific_acceptance": "NOT_REASSESSED",
+            "observation_identity": {"trace_sha256":trace_binding["sha256"], "trace_run_id":trace["run_id"],
+                "metric_semantics":deepcopy(trace["metric_semantics"]),
+                "checkpoint_identities":{str(r["optimizer_step"]):r["checkpoint_identity"]
+                    for r in trace["observations"] if r["event"] == "observation" and r["checkpoint_identity"] is not None}},
             "rml_written": False}
 
 
@@ -140,29 +145,68 @@ def align_curves(left, right, *, left_identity, right_identity, metric="live_dev
             elif left_identity[field] != right_identity[field]:
                 reasons.append("MISMATCH:" + field)
 
-    def panel(rows):
-        result, last = {}, -1
+    from .comparison_readiness import metric_observation_contract, canonical_weight_state
+    from .research_memory.trace import METRICS
+    metrics = (metric,metric) if isinstance(metric,str) else metric
+    if type(metrics) is not tuple or len(metrics) != 2 or any(m not in METRICS for m in metrics):
+        raise ValueError("Expected one canonical metric or a two-side metric tuple")
+
+    def panel(rows, identity, selected, side):
+        result, states, last = {}, {}, -1
+        expected, semantic_issues = metric_observation_contract(identity, selected)
+        reasons.extend(f"{r}[{side}]" for r in semantic_issues)
         for row in rows:
-            if row.get("metric", metric) != metric:
-                continue
             point = row.get(axis)
             if point is None:
-                continue
+                raise ValueError("Missing observed coordinate")
             number(point, axis, integer=True)
-            if point <= last:
+            if point < last:
                 raise ValueError("Duplicate or non-monotonic observed coordinate")
             last = point
-            value = row.get("value", row.get(metric))
+            value = row.get("value", row.get(row.get("metric")))
             if value is not None:
                 number(value, "MAE")
+            observed = {k:row.get(k) for k in ("optimizer_step","sample_presentations","learning_rate",
+                "source_trace_sha256","trace_run_id")}
+            if point in states:
+                for key,value in observed.items():
+                    prior = states[point].get(key)
+                    if prior is not None and value is not None and (type(prior) is not type(value) or prior != value):
+                        history_issues.append({"coordinate":point,"side":side,"reason":"MISMATCH:conflicting_step_"+key})
+                    elif prior is None and value is not None:
+                        states[point][key] = value
+            else:
+                states[point] = observed
+            for key in ("source_trace_sha256","trace_run_id"):
+                if row.get(key) != expected.get(key) or row.get(key) is None:
+                    history_issues.append({"coordinate":point,"side":side,"reason":"MISMATCH:observed_"+key})
+            if row.get("metric") not in METRICS:
+                history_issues.append({"coordinate":point,"side":side,"reason":"MISSING_OR_INVALID:metric_slot"})
+            else:
+                row_expected, row_issues = metric_observation_contract(
+                    identity, row["metric"], selected=row["metric"] == selected)
+                for field, declared in row_expected.items():
+                    observed = row.get(field)
+                    if field == "weights":
+                        observed = canonical_weight_state(observed)
+                    if field == "target" and observed in {"gap", "PCQM4Mv2 Gap"}:
+                        observed = "Gap"
+                    if observed is None or declared is None or observed != declared:
+                        row_issues.append("MISMATCH:observed_" + field)
+                history_issues.extend({"coordinate":point,"side":side,"reason":r} for r in row_issues)
+            if row.get("metric") != selected:
+                continue
+            if point in result:
+                raise ValueError("Duplicate or non-monotonic observed coordinate for metric")
             result[point] = row
-        return result
+        return result,states,expected
 
-    a, b = panel(left), panel(right)
     history_issues = []
+    a, astates, aexpected = panel(left,left_identity,metrics[0],"left")
+    b, bstates, bexpected = panel(right,right_identity,metrics[1],"right")
     # Exposure is observed independently on each side, including metric-less
     # rows. No epoch arithmetic and no planned horizon substituted for work.
-    for side, rows, identity in (("left", a, left_identity), ("right", b, right_identity)):
+    for side, rows, identity in (("left", astates, left_identity), ("right", bstates, right_identity)):
         previous_step = previous_samples = -1
         for point, row in rows.items():
             step, samples = row.get("optimizer_step"), row.get("sample_presentations")
@@ -193,8 +237,11 @@ def align_curves(left, right, *, left_identity, right_identity, metric="live_dev
                 number(row["learning_rate"], "actual LR")
             for reason in local:
                 history_issues.append({"coordinate": point, "side": side, "reason": reason})
-    for point in sorted(a.keys() & b.keys()):
-        l, r = a[point], b[point]
+    for point in sorted(astates.keys() | bstates.keys()):
+        if point not in astates or point not in bstates:
+            history_issues.append({"coordinate":point,"side":"pair","reason":"MISSING:paired_training_state"})
+            continue
+        l, r = astates[point], bstates[point]
         for field, code in (("learning_rate", "actual_lr"), ("optimizer_step", "optimizer_step"),
                             ("sample_presentations", "sample_presentations")):
             if lane == "TUNED_RECIPE" and field == "learning_rate":
@@ -205,7 +252,7 @@ def align_curves(left, right, *, left_identity, right_identity, metric="live_dev
     global_reasons = list(reasons)
     for point in sorted(a.keys() & b.keys()):
         l, r = a[point], b[point]
-        lv, rv = l.get("value", l.get(metric)), r.get("value", r.get(metric))
+        lv, rv = l.get("value", l.get(metrics[0])), r.get("value", r.get(metrics[1]))
         if lv is None or rv is None:
             continue
         local = global_reasons + [f"{issue['reason']}[{issue['side']}@{issue['coordinate']}]"
@@ -220,11 +267,21 @@ def align_curves(left, right, *, left_identity, right_identity, metric="live_dev
             elif l[field] != r[field]:
                 if not (lane == "TUNED_RECIPE" and field == "weights"):
                     local.append("MISMATCH:metric_" + field)
-        for side, row in (("left", l), ("right", r)):
+        for side, row, identity, expected in (("left",l,left_identity,aexpected),("right",r,right_identity,bexpected)):
+            for field,value in expected.items():
+                observed=row.get(field)
+                if field == "weights": observed=canonical_weight_state(observed)
+                if field == "target" and observed in {"gap","PCQM4Mv2 Gap"}: observed="Gap"
+                if observed is None or value is None or observed != value:
+                    local.append("MISMATCH:"+side+"_observed_"+field)
             try:
                 digest(row.get("checkpoint_identity"), "checkpoint identity")
             except ValueError:
                 local.append("MISSING_OR_INVALID:" + side + "_checkpoint_identity")
+            checkpoints=identity.get("checkpoint_identities")
+            frozen=checkpoints.get(str(row.get("optimizer_step"))) if type(checkpoints) is dict else None
+            if frozen is None or frozen != row.get("checkpoint_identity"):
+                local.append("MISMATCH:"+side+"_declared_checkpoint_identity")
         reasons.extend(local)
         aligned.append({axis: point, "left": lv, "right": rv,
             "left_observation": deepcopy(l), "right_observation": deepcopy(r),
@@ -237,6 +294,7 @@ def align_curves(left, right, *, left_identity, right_identity, metric="live_dev
     return {"status": "NOT_STRICTLY_COMPARABLE" if reasons else "MATCHED_PREFIX",
             "comparison_class": "CONTEXT_ONLY" if reasons else "MATCHED_PREFIX",
             "comparison_type": comparison_type, "history_issues": history_issues,
+            "metric_slots": list(metrics), "training_history_filter":"ALL_OBSERVED_METRICS",
             "strictness": ("INCOMPARABLE" if not aligned else "CONTEXT_ONLY") if reasons else
                 {"DATA_DIVERSITY": "STRICT_WITH_DECLARED_SCALE_INTERVENTION", "MECHANISM": "STRICT_SAME_SCALE",
                  "TUNED_RECIPE": "SYSTEM_COMPARISON"}[lane],
@@ -439,7 +497,7 @@ def interpret_run(*, stage, fidelity, terminal, runtime, budget, roles,
     return result
 
 
-def comparison_report(left, right, *, comparison_type, cohort_proof=None):
+def comparison_report(left, right, *, comparison_type, cohort_proof=None, metric="live_dev_metric"):
     """One observed report over existing owners, never a release or ranking gate.
 
     Runs carry identity/curve/source/checkpoint/cost/seed metadata. Unknowns
@@ -447,20 +505,34 @@ def comparison_report(left, right, *, comparison_type, cohort_proof=None):
     """
     aligned = align_curves(left.get("curve", []), right.get("curve", []),
         left_identity=left.get("identity", {}), right_identity=right.get("identity", {}),
-        comparison_type=comparison_type, cohort_proof=cohort_proof)
+        comparison_type=comparison_type, cohort_proof=cohort_proof, metric=metric)
     missing, runs = [], {}
     for side, run in (("left", left), ("right", right)):
         view = {key: deepcopy(run.get(key)) for key in
-            ("model", "source_sha256", "identity", "checkpoint_sha256", "weights", "bn_state",
+            ("model", "source_sha256", "trace_sha256", "identity", "checkpoint_sha256", "weights", "bn_state",
              "seed", "uncertainty", "curve", "cost")}
-        for key in ("model", "source_sha256", "checkpoint_sha256", "weights", "bn_state", "seed", "cost"):
+        for key in ("model", "source_sha256", "trace_sha256", "checkpoint_sha256", "weights", "bn_state", "seed", "cost"):
             if view[key] is None:
                 missing.append(side + ":" + key)
-        for key in ("source_sha256", "checkpoint_sha256"):
+        for key in ("source_sha256", "trace_sha256", "checkpoint_sha256"):
             if view[key] is not None:
                 digest(view[key], key)
         if view["cost"] is not None and view["cost"].get("allocation_coverage") != "MEASURED":
             missing.append(side + ":complete_native_cost")
+        from .comparison_readiness import canonical_weight_state
+        identity = run.get("identity",{})
+        for key in ("source_sha256","trace_sha256","seed"):
+            if identity.get(key) is None or view[key] != identity[key]:
+                missing.append(side+":envelope_"+key+"_binding")
+        selected=identity.get("selected_optimizer_step")
+        checkpoints=identity.get("checkpoint_identities",{})
+        if type(selected) is not int or type(checkpoints) is not dict or checkpoints.get(str(selected)) != view["checkpoint_sha256"]:
+            missing.append(side+":selected_checkpoint_binding")
+        weight=canonical_weight_state(view["weights"])
+        if weight is None or weight != canonical_weight_state(identity.get("evaluation_weight_source")):
+            missing.append(side+":selected_weight_binding")
+        if view["bn_state"] != identity.get("bn_calibration_identity"):
+            missing.append(side+":bn_state_binding")
         runs[side] = view
     grade = aligned["strictness"]
     if missing and grade.startswith("STRICT") or missing and grade == "SYSTEM_COMPARISON":

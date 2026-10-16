@@ -11,7 +11,11 @@ def test_equal_steps_different_passes_align_and_no_unobserved_point_is_filled():
     a, b = curve([.3,.2,.1]), curve([.4,.3,.2], steps=(1,3,5))
     for row in b: row["complete_passes"] = 7
     result = align_curves(a,b,left_identity=identity(),right_identity=identity())
-    assert result["status"] == "MATCHED_PREFIX"
+    # Uneven observations do not fill the unpaired step2 state from a schedule
+    # declaration. The common first point stays usable; later evidence is context.
+    assert result["status"] == "NOT_STRICTLY_COMPARABLE"
+    assert result["aligned"][0]["comparison_class"] == "MATCHED_PREFIX"
+    assert result["aligned"][1]["comparison_class"] == "CONTEXT_ONLY"
     assert [r["optimizer_step"] for r in result["aligned"]] == [1,3]
     assert not result["extrapolated"]
     with pytest.raises(ValueError,match="Epoch"):

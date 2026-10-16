@@ -20,7 +20,7 @@ def cohorts():
         targets = [i / 17. for i in ids]
         rows = list(range(len(ids)))
         result.append(CohortIdentity(name, "synthetic-PCQM", role,
-            ("internal_train_" if role == "train" else "internal_development_") + name, len(ids), sha("manifest"+name), index_digest(rows),
+            "internal_train_"+name if role == "train" else "internal_development", len(ids), sha("manifest"+name), index_digest(rows),
             index_digest(ids), target_digest(targets), sha("topology"+name), "gap", "eV",
             "float64-le-eV", "canonical-source-order", sha("history"+name), sha("authority"+name),3378606))
         members[name] = {"row_indices": rows, "source_indices": ids, "targets": targets}
@@ -62,6 +62,15 @@ def identity():
         evaluation_row_sha256=sha("dev rows"), evaluation_target_sha256=sha("dev targets"),
         evaluation_row_count=50000, bn_calibration_identity="not_applicable")
     result.update(drop_last=True, tail_batch_policy="drop_last")
+    result.update(target_identity="pcqm4mv2-gap-eV-direct", evaluation_role_identity="internal_development",
+        selection_role_identity="internal_development", data_role_identity="internal_train",
+        weight_semantics="live", evaluation_weight_source="live",trace_sha256=sha("trace"),
+        trace_run_id="synthetic-run", source_sha256=sha("model-source"),selected_optimizer_step=3,
+        checkpoint_identities={str(s):sha("observed-checkpoint-"+str(s)) for s in range(1,6)},
+        metric_semantics={"live_train_metric":{"metric":"MAE","target":"Gap","unit":"eV",
+            "role_identity":"internal_train","weights":"live","direction":"minimize"},
+            "live_dev_metric":{"metric":"MAE","target":"Gap","unit":"eV",
+            "role_identity":"internal_development","weights":"live","direction":"minimize"},"ema_dev_metric":None})
     return result
 
 
@@ -69,5 +78,7 @@ def curve(values, steps=(1, 2, 3)):
     return [{"optimizer_step": step, "sample_presentations": step*128, "complete_passes": 0,
              "learning_rate": .001, "value": value, "metric": "live_dev_metric", "unit": "eV",
              "checkpoint_identity": sha("observed-checkpoint-"+str(step)),
-             "weights": "live", "evaluation_role": "internal_development", "metric_kind": "development"}
+             "weights": "live", "evaluation_role": "internal_development", "metric_kind": "development",
+             "target":"Gap","target_identity":"pcqm4mv2-gap-eV-direct", "source_trace_sha256":sha("trace"),
+             "trace_run_id":"synthetic-run"}
             for step, value in zip(steps, values)]
