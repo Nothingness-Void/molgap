@@ -481,6 +481,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm:A001",
+      "target": "experiments/pcqm_k1_norm_ablation_100k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-norm-ablation-100k-s42-k1_single_bn:A001",
+      "target": "experiments/pcqm_k1_norm_ablation_100k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-scale-fit-retained-20261001:A001",
       "target": "experiments/pcqm_scale_fit_retained/inputs.json",
       "type": "action_produced_evidence"
@@ -1168,6 +1178,16 @@
     {
       "source": "TB-family-100k-operator-profile-k1_mean2-s42-terminal-20261014",
       "target": "TB-family-topology-t4-100k-k1_mean2-s42",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "target": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "TB-family-topology-t4-100k-k1_mean2-s42-terminal-20261014",
+      "target": "TB-pcqm-k1-norm-ablation-100k-s42-k1_single_bn",
       "type": "prior_evidence"
     },
     {
@@ -3308,6 +3328,14 @@
     },
     {
       "id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_single_bn",
       "type": "trajectory"
     },
     {

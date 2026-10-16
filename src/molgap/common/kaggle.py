@@ -27,8 +27,15 @@ def api_for_credentials(path: Path):
 
 
 def is_not_found(error):
-    return (getattr(error, "status", None) == 404 or getattr(error, "status_code", None) == 404
-            or getattr(getattr(error, "response", None), "status_code", None) == 404)
+    code = (getattr(error, "status", None) or getattr(error, "status_code", None)
+            or getattr(getattr(error, "response", None), "status_code", None))
+    if code == 404:
+        return True
+    if code == 403:
+        text = getattr(getattr(error, "response", None), "text", "") or ""
+        return "PERMISSION_DENIED" in text and (
+            "kernels.get" in text or "datasets.get" in text)
+    return False
 
 
 def dataset_status(api, ref):

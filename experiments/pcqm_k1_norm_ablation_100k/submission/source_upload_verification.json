@@ -1,0 +1,82 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "kaseichou/molgap-k1-norm-ablation-100k-s42-src",
+  "version": 1,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "b24972bc7e3d5253904fd7afd83cad42150b073bb7d3340516ba501242c63d12",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "ff924ffc553f478eb35a672136cc6730ed8c8cb81aa2cb2c627942487829ed2f",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "afd42fa0ce26ae6a8ffdd0dd5919751bbe9ca04d4bd25c071c5bbd058e11ccab",
+      "bytes": 16285
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_norm_ablation_100k/acceptance_plan.json",
+      "sha256": "e62931eb25bbf1b4bdbc15fbc939b14d3323904aa135c55705ca1c5f7e374994",
+      "bytes": 1987
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_norm_ablation_100k/training_recipe_k1_ada_rmsnorm.json",
+      "sha256": "e660a9a4573576fd8e5254a8153301618209f1aa933a7ca747d43620b890904f",
+      "bytes": 2000
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_norm_ablation_100k/training_recipe_k1_single_bn.json",
+      "sha256": "1b395002c4881832b5ba73c5dfe1369517876152a4bc8540177d35903e2c3ca9",
+      "bytes": 1998
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10",
+      "bytes": 408
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "685a3f72c308efefa895e600c5df0511d8f9867ff7b761982b426effbcaba9aa",
+      "bytes": 1406
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "8f4129600181bda7160bb6b23079fa71072817278208d5cc9ea01386f27fc532",
+      "bytes": 5409
+    },
+    {
+      "path": "initial_states/k1_ada_rmsnorm.pt",
+      "sha256": "07ff9a8220e523fbaa7ba49db0d7aaacc02f9f27d9d966c97e5ea7de7493c398",
+      "bytes": 14749634
+    },
+    {
+      "path": "initial_states/k1_single_bn.pt",
+      "sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+      "bytes": 14779763
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "4ca3e575777e67f848034fd0d556637441370f483d18f488d2c7d6a776100871",
+      "bytes": 4484
+    },
+    {
+      "path": "prospective/k1_ada_rmsnorm/trajectory.json",
+      "sha256": "8961f063fb2f6227f13fb5aa62b549d7ee62eeefd8625f37f142615d7abc9f2b",
+      "bytes": 54677
+    },
+    {
+      "path": "prospective/k1_single_bn/trajectory.json",
+      "sha256": "173300f18e1fcf3551ab05523da2f4ef6b7f8fd07128885c277ed7868c1a0532",
+      "bytes": 54665
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "e43382c93ade5ad0cae6f4a8ffa6a9dcfe871d02b38c71af486f01b2dbe08e7c",
+      "bytes": 283698
+    }
+  ]
+}

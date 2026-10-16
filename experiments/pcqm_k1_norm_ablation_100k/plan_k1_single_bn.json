@@ -29,7 +29,7 @@
       "historical_unknowns": []
     },
     "state_at_start": {
-      "source_commit": "ea0c400c34551afe428fda58de97e368f61dfbcf",
+      "source_commit": "1f627236c1f7780e35411e741352504092e145c8",
       "source_config_identity": "b19829460a601bc7af0211e4d9c2c09dcd2cf7e9be922fa65c18b2cbb48b5759",
       "contract_refs": [
         "experiments/pcqm_k1_norm_ablation_100k/protocol.md",
@@ -53,7 +53,7 @@
       {
         "action_id": "A001",
         "type": "execution_diagnostic",
-        "source_commit": "ea0c400c34551afe428fda58de97e368f61dfbcf",
+        "source_commit": "1f627236c1f7780e35411e741352504092e145c8",
         "run_ids": [
           "pcqm-k1-norm-ablation-100k-s42:k1_single_bn:downstream"
         ],
@@ -98,8 +98,8 @@
     "role_snapshot_refs": [
       "experiments/pcqm_k1_norm_ablation_100k/role_plan.json"
     ],
-    "state_timestamp": "2026-10-15T18:45:42.771156+00:00",
-    "source_commit": "ea0c400c34551afe428fda58de97e368f61dfbcf"
+    "state_timestamp": "2026-10-16T01:34:51.566144+00:00",
+    "source_commit": "1f627236c1f7780e35411e741352504092e145c8"
   },
   "costs": [
     {
@@ -110,7 +110,7 @@
       "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_single_bn:downstream",
       "attempt_id": "pcqm-k1-norm-ablation-100k-s42-v1",
       "category": "training",
-      "platform": "kaggle1",
+      "platform": "kaggle2",
       "hardware": "Tesla_T4x2_shared_allocation",
       "evidence_ref": "experiments/pcqm_k1_norm_ablation_100k/config.json",
       "measurement": {

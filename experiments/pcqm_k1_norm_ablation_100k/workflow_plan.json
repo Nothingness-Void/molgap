@@ -21,17 +21,16 @@
   "format": "molgap-experiment-workflow-v1",
   "kaggle": {
     "accelerator": "NvidiaTeslaT4",
-    "account": "nothingnessvoid",
+    "account": "kaseichou",
     "datasets": [
-      "nothingnessvoid/molgap-k1-norm-ablation-100k-s42-src",
-      "nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1"
+      "kaseichou/molgap-k1-norm-ablation-100k-s42-src",
+      "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
     ],
-    "kernel": "nothingnessvoid/molgap-k1-norm-ablation-100k-s42",
-    "source_dataset": "nothingnessvoid/molgap-k1-norm-ablation-100k-s42-src",
+    "kernel": "kaseichou/molgap-k1-norm-ablation-100k-s42",
+    "source_dataset": "kaseichou/molgap-k1-norm-ablation-100k-s42-src",
     "title": "MolGap K1 Norm Ablation 100K S42"
   },
   "source_files": [
-    "experiments/pcqm_k1_norm_ablation_100k/acceptance_plan.json",
     "experiments/pcqm_k1_norm_ablation_100k/authority.json",
     "experiments/pcqm_k1_norm_ablation_100k/config.json",
     "experiments/pcqm_k1_norm_ablation_100k/evidence_review.md",
@@ -126,5 +125,5 @@
     "src/molgap/v4_runtime.py",
     "src/molgap/v5_common.py"
   ],
-  "spec_identity": "8deedb133543217e55e4979e3509fc4463ed352f7b73405cb90f28b3a294d910"
+  "spec_identity": "8f4129600181bda7160bb6b23079fa71072817278208d5cc9ea01386f27fc532"
 }

@@ -5,7 +5,7 @@
 - Evidence without trajectory: 0
 
 ## Trajectories
-- ACTIVE: 1
+- ACTIVE: 3
 - CLOSED: 12
 - INCONCLUSIVE: 23
 - INFRASTRUCTURE_ONLY: 7
@@ -244,6 +244,10 @@
 - Tesla_T4 device_hours: measured=44.598484 (9 measured records), estimated=32.000000 (6 estimated records), measurement_missing=5, not_applicable=0
 - Tesla_T4 queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=11, not_applicable=9
 - Tesla_T4 wall_hours: measured=50.280873 (13 measured records), estimated=32.000000 (6 estimated records), measurement_missing=1, not_applicable=0
+- Tesla_T4x2_shared_allocation cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- Tesla_T4x2_shared_allocation device_hours: measured=unknown (0 measured records), estimated=16.000000 (2 estimated records), measurement_missing=0, not_applicable=0
+- Tesla_T4x2_shared_allocation queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=2, not_applicable=0
+- Tesla_T4x2_shared_allocation wall_hours: measured=unknown (0 measured records), estimated=8.000000 (2 estimated records), measurement_missing=0, not_applicable=0
 - Z100SM DCU cpu_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
 - Z100SM DCU device_hours: measured=0.073889 (1 measured record), estimated=unknown (0 estimated records), measurement_missing=0, not_applicable=0
 - Z100SM DCU queue_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
@@ -268,8 +272,8 @@
 - unknown-before-authorized-device-query device_hours: measured=unknown (0 measured records), estimated=0.250000 (1 estimated record), measurement_missing=0, not_applicable=0
 - unknown-before-authorized-device-query queue_hours: not applicable (1 records); measurement_missing=0
 - unknown-before-authorized-device-query wall_hours: measured=unknown (0 measured records), estimated=unknown (0 estimated records), measurement_missing=1, not_applicable=0
-- Measurement-missing cost events: 210
-- Cost-event coverage: 108/119 trajectories; incomplete native measurement=84
+- Measurement-missing cost events: 212
+- Cost-event coverage: 110/121 trajectories; incomplete native measurement=86
 
 ## Screening Backtest
 - Status: available
@@ -277,9 +281,9 @@
 - Excluded traces: 25
 
 ## Memory Gaps
-- [INFO] trace_unavailable_for_backtest: 84
+- [INFO] trace_unavailable_for_backtest: 86
 - [WARN] historical_partial_record: 20
-- [WARN] incomplete_native_cost_measurement: 84
+- [WARN] incomplete_native_cost_measurement: 86
 - [WARN] missing_cost_event: 11
-- [WARN] missing_explicit_role_identity: 40
-- [WARN] trajectory_without_v5_evidence: 12
+- [WARN] missing_explicit_role_identity: 42
+- [WARN] trajectory_without_v5_evidence: 14

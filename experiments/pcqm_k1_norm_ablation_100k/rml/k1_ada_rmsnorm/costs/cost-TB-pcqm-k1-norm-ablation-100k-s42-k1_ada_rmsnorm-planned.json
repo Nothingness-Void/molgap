@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-norm-ablation-100k-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-planned",
+  "evidence_ref": "experiments/pcqm_k1_norm_ablation_100k/config.json",
+  "hardware": "Tesla_T4x2_shared_allocation",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 8.0
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 4.0
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_ada_rmsnorm:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm"
+}

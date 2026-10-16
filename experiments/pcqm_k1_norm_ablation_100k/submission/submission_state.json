@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "package_identity": "e71d12b00a30765d5003b42255058d6fcc7668f35352306f07a5577e0d717ba3",
+    "kernel": "kaseichou/molgap-k1-norm-ablation-100k-s42",
+    "dataset": "kaseichou/molgap-k1-norm-ablation-100k-s42-src",
+    "authority_ref": "experiments/pcqm_k1_norm_ablation_100k/authority.json",
+    "authority_sha256": "21ed5222020f70644a98d6e4537b27ee5c9e213c4c896d6e127b7371f8a68f01",
+    "monitor_paths": [
+      "platforms/_records/kaggle/staging/pcqm_k1_norm_ablation_100k/submission"
+    ]
+  },
+  "phase": "BOUND",
+  "timings": {
+    "NEW": 20.65250159999414,
+    "SOURCE_SUBMITTING": 22.96129180000571,
+    "SOURCE_PUBLISHED": 0.6956326000072295,
+    "SOURCE_PENDING": 64.68977939999604,
+    "KERNEL_SUBMITTING": 15.103715999997803,
+    "KERNEL_ACCEPTED": 10.918135100000654
+  },
+  "observed_at": "2026-10-16T01:48:25.080684+00:00",
+  "kernel_response": {
+    "status": "submitted",
+    "requested_kernel": "kaseichou/molgap-k1-norm-ablation-100k-s42",
+    "kernel": "kaseichou/molgap-k1-norm-ablation-100k-s42",
+    "url": "https://www.kaggle.com/code/kaseichou/molgap-k1-norm-ablation-100k-s42",
+    "version_number": 1,
+    "script_version_id": null,
+    "kernel_id": 138948853,
+    "identity_conflicts": [],
+    "accelerator": "NvidiaTeslaT4",
+    "invalid_dataset_sources": [],
+    "invalid_kernel_sources": [],
+    "invalid_model_sources": [],
+    "invalid_competition_sources": [],
+    "reconciliation_required": false,
+    "release_binding": {
+      "spec_identity": "8f4129600181bda7160bb6b23079fa71072817278208d5cc9ea01386f27fc532",
+      "package_identity": "e71d12b00a30765d5003b42255058d6fcc7668f35352306f07a5577e0d717ba3",
+      "source_commit": "1f627236c1f7780e35411e741352504092e145c8",
+      "source_archive_sha256": "e43382c93ade5ad0cae6f4a8ffa6a9dcfe871d02b38c71af486f01b2dbe08e7c"
+    },
+    "platform_response": {
+      "ref": "/code/kaseichou/molgap-k1-norm-ablation-100k-s42",
+      "url": "https://www.kaggle.com/code/kaseichou/molgap-k1-norm-ablation-100k-s42",
+      "versionNumber": 1,
+      "kernelId": 138948853,
+      "invalidDatasetSources": [],
+      "invalidKernelSources": [],
+      "invalidModelSources": [],
+      "invalidCompetitionSources": []
+    }
+  }
+}
