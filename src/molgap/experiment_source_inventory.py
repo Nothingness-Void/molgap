@@ -173,3 +173,30 @@ def _all_registered_sources():
 
 # Retain the full reviewed inventory for compatibility and inventory tests.
 SHARED_SOURCE_FILES = _all_registered_sources()
+
+
+# This is a distribution boundary, not an experiment-specific dependency list.
+# Host credentials, controllers and retrieval never belong to worker payloads.
+_HOST_ONLY = frozenset({"src/molgap/common/kaggle.py", "src/molgap/common/transport.py",
+    "src/molgap/local_runtime.py", "src/molgap/experiment_input.py", "src/molgap/kaggle_accelerator_push.py",
+    "src/molgap/kaggle_output_retrieval.py", "src/molgap/kaggle_submission.py",
+    "src/molgap/kaggle_workflow.py", "src/molgap/server_control.py", "src/molgap/server_acceptance.py"})
+
+
+def runtime_source_files(repo_root, records=()):
+    """Fixed tracked Python distribution plus actual frozen record inputs.
+
+    AST discovery remains available for diagnostics, not this preparation path.
+    Legacy registered_source_files inventories remain readable and unchanged.
+    """
+    from .v4_bundle import _tracked_paths
+    from .experiment_package import _allowlist
+    tracked = _tracked_paths(repo_root)
+    names = {p for p in tracked if p.startswith("src/molgap/") and p.endswith(".py")
+             and p not in _HOST_ONLY}
+    if "platforms/kaggle/run_experiment.py" in tracked:
+        names.add("platforms/kaggle/run_experiment.py")
+    names.update(records)
+    if names - tracked:
+        raise ValueError("Runtime distribution has untracked record/source inputs")
+    return _allowlist(sorted(names))

@@ -40,12 +40,64 @@ def _assert_clean_paths(repo_root: Path, names: list[str]) -> str:
     )
     commit = result.stdout.strip()
     status = subprocess.run(
-        ["git", "status", "--porcelain=v1", "--", *names],
+        ["git", "status", "--porcelain=v1", "-z", "--untracked-files=no"],
         cwd=repo_root, check=True, capture_output=True, text=True,
     )
-    if status.stdout.strip():
+    rows = status.stdout.split("\0")
+    changed, index = set(), 0
+    while index < len(rows):
+        row = rows[index]
+        if row:
+            changed.add(row[3:])
+            if "R" in row[:2] or "C" in row[:2]:
+                index += 1
+                changed.add(rows[index])
+        index += 1
+    if set(names) & changed:
         raise RuntimeError("V4 bundle source files must be committed before packaging")
     return commit
+
+
+def committed_payloads(repo_root, commit, names):
+    """One tree read and one batch object read, independent of file count."""
+    tree = subprocess.run(["git", "ls-tree", "-r", "-l", "-z", commit],
+        cwd=repo_root, check=True, capture_output=True).stdout
+    wanted, objects = set(names), {}
+    total = 0
+    for row in tree.split(b"\0"):
+        if not row:
+            continue
+        header, path = row.split(b"\t", 1)
+        name = path.decode("utf-8")
+        if name not in wanted:
+            continue
+        mode, kind, oid, size = header.split()
+        if mode not in {b"100644", b"100755"} or kind != b"blob":
+            raise ValueError("Commit source is not a regular tracked file: " + name)
+        total += int(size)
+        if total > 64 * 1024**2:
+            raise ValueError("Runtime source snapshot exceeds bounded 64MiB source limit")
+        objects[name] = oid
+    if set(objects) != wanted:
+        raise ValueError("Source absent from the frozen commit: " + str(sorted(wanted - set(objects))))
+    names = list(names)
+    requested = b"".join(objects[name] + b"\n" for name in names)
+    raw = subprocess.run(["git", "cat-file", "--batch"], cwd=repo_root,
+        input=requested, check=True, capture_output=True).stdout
+    result, cursor = {}, 0
+    for name in names:
+        end = raw.index(b"\n", cursor)
+        oid, kind, size = raw[cursor:end].split()
+        size = int(size);cursor = end + 1
+        if oid != objects[name] or kind != b"blob" or raw[cursor + size:cursor + size + 1] != b"\n":
+            raise ValueError("Git batch source response mismatch")
+        payload = raw[cursor:cursor + size];cursor += size + 1
+        if Path(name).suffix.lower() in TEXT_SUFFIXES:
+            payload = payload.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        result[name] = payload
+    if cursor != len(raw):
+        raise ValueError("Unexpected Git batch trailing bytes")
+    return result
 
 
 def build_v4_source_bundle(
@@ -82,6 +134,7 @@ def build_v4_source_bundle(
 
     entries = []
     payloads = {}
+    committed = committed_payloads(repo_root, source_commit, names)
     for name in names:
         path = repo_root / Path(name)
         if not path.is_file():
@@ -89,6 +142,8 @@ def build_v4_source_bundle(
         if path.is_symlink():
             raise RuntimeError(f"V4 bundles do not accept symlinked source: {name}")
         payload = _payload(path)
+        if payload != committed[name]:
+            raise ValueError("Repository source payload mismatch: " + name)
         payloads[name] = payload
         entries.append({"path": name, "sha256": hashlib.sha256(payload).hexdigest(), "bytes": len(payload)})
 

@@ -13,7 +13,7 @@ from pathlib import Path, PurePosixPath, PureWindowsPath
 
 from .experiment_spec import ExperimentSpec
 from .screen_policy import canonical_fingerprint
-from .v4_bundle import TEXT_SUFFIXES, _payload, build_v4_source_bundle
+from .v4_bundle import TEXT_SUFFIXES, _payload, build_v4_source_bundle, committed_payloads
 
 
 PACKAGE_FORMAT = "molgap-experiment-source-package-v1"
@@ -77,9 +77,13 @@ def _name(value) -> str:
             and path.name == path.name.lower()):
         io_tokens = {"data", "dataset", "datasets", "checkpoint", "checkpoints",
                      "records", "output", "outputs", "result", "results", "artifacts"}
-        # A reviewed pair-token module is model source, not an auth token file.
-        if value == "src/molgap/k1_pair_token.py":
+        # Token model source is not an authentication payload. Credential-like
+        # token names and directories remain blocked, even under the source root.
+        leaf_tokens = set(re.split(r"[._-]+", lowered[-1]))
+        if ("token" in leaf_tokens and path.stem not in {"token","tokens"} and
+                not leaf_tokens & {"auth","access","refresh","bearer","api","private"}):
             io_tokens.add("token")
+        lowered = [part for part in lowered if part not in io_tokens]
         directory_tokens = {token for part in lowered[:-1] for token in re.split(r"[._-]+", part)}
         filename_tokens = set(re.split(r"[._-]+", lowered[-1])) - io_tokens
         tokens = directory_tokens | filename_tokens
@@ -135,9 +139,8 @@ def stage_source_inputs(package_dir: Path, destination: Path, initial_states: di
 
 
 def _no_links(path: Path) -> None:
-    for part in (path, *path.parents):
-        if part.is_symlink() or (hasattr(part, "is_junction") and part.is_junction()):
-            raise ValueError(f"Symlink/junction path is forbidden: {part}")
+    from .common.io import _safe_local
+    _safe_local(path)
 
 
 def _source(root: Path, name: str) -> Path:
@@ -192,7 +195,7 @@ def _atomic(path: Path, payload: bytes) -> None:
 
 
 def build_experiment_source_package(
-    spec: ExperimentSpec, repo_root: Path, relative_paths, output_dir: Path,
+    spec: ExperimentSpec, repo_root: Path, relative_paths, output_dir: Path, *, source_cache=None,
 ) -> dict:
     """Publish a new source-only package, manifest last; never overwrite a package."""
     spec = _spec(spec)
@@ -217,8 +220,36 @@ def build_experiment_source_package(
     try:
         with tempfile.TemporaryDirectory(prefix=".source-stage-", dir=output) as stage_name:
             stage = Path(stage_name)
-            bundle = build_v4_source_bundle(repo_root=root, relative_paths=names,
-                                           output_dir=stage, source_commit=commit)
+            if source_cache is None:
+                bundle = build_v4_source_bundle(repo_root=root, relative_paths=names,
+                                               output_dir=stage, source_commit=commit)
+            else:
+                from .common.io import copy_immutable_file, publish_immutable_bytes
+                from .v4_bundle import _assert_clean_paths
+                if _assert_clean_paths(root, names) != commit:
+                    raise ValueError("Source HEAD changed before cache lookup")
+                committed = committed_payloads(root, commit, names)
+                if any(_payload(_source(root,n)) != committed[n] for n in names):
+                    raise ValueError("Repository source payload mismatch before cache lookup")
+                key = canonical_fingerprint({"builder":"v4-source-v1", "commit":commit,
+                    "files":{n:_sha(committed[n]) for n in sorted(names)}})
+                cached = Path(source_cache).absolute() / key
+                _no_links(cached)
+                if not cached.exists():
+                    cached.parent.mkdir(parents=True, exist_ok=True)
+                    with tempfile.TemporaryDirectory(dir=cached.parent, prefix=".source-cache-") as temporary:
+                        temporary = Path(temporary)
+                        build_v4_source_bundle(repo_root=root, relative_paths=names,
+                            output_dir=temporary, source_commit=commit)
+                        for name in ("source.tar.gz", "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"):
+                            publish_immutable_bytes(cached / name, (temporary / name).read_bytes())
+                for name in ("source.tar.gz", "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"):
+                    _source(cached, name)
+                archive_hash = (cached / "SOURCE_ARCHIVE_SHA256.txt").read_text().strip()
+                copy_immutable_file(cached / "source.tar.gz",stage / "source.tar.gz",expected_sha256=archive_hash)
+                for name in ("SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"):
+                    publish_immutable_bytes(stage / name, (cached / name).read_bytes())
+                bundle = {"archive_sha256":archive_hash}
             manifest = _manifest(spec, names, commit, bundle["archive_sha256"],
                                  _sha((stage / "SOURCE_FILES.json").read_bytes()))
             _atomic(stage / "experiment_spec.json", spec.to_json().encode("utf-8"))
@@ -297,17 +328,12 @@ def verify_experiment_source_package(package_dir: Path, repo_root: Path | None =
         _no_links(root)
         root = root.resolve()
         tracked = set(_git(root, "ls-files", "-z").decode("utf-8").split("\0"))
+        committed = committed_payloads(root, commit, list(entries))
         for name, entry in entries.items():
             if name not in tracked:
                 raise ValueError(f"Source no longer tracked: {name}")
             path = _source(root, name)
-            tree = _git(root, "ls-tree", "-z", commit, "--", name).split(b"\0")
-            expected_tree = [row for row in tree if row]
-            if len(expected_tree) != 1 or expected_tree[0].split(b" ", 1)[0] not in {b"100644", b"100755"}:
-                raise ValueError(f"Commit source is not a regular tracked file: {name}")
-            payload = _git(root, "show", f"{commit}:{name}")
-            if path.suffix.lower() in TEXT_SUFFIXES:
-                payload = payload.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+            payload = committed[name]
             if any(len(data) != entry["bytes"] or _sha(data) != entry["sha256"]
                    for data in (payload, _payload(path))):
                 raise ValueError(f"Repository source payload mismatch: {name}")

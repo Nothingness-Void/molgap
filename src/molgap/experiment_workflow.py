@@ -269,9 +269,12 @@ def _workflow_inputs(spec, repo_root, plan):
     """Resolve the same declaration for read-only admission and preparation."""
     platform_name = spec.to_dict()["platform"]["name"]
     backend = _platform_adapter(platform_name)
-    if type(plan) is not dict or set(plan) != {"format", "spec_identity", "source_files", "arms", "acceptance_plan", platform_name} or plan["format"] != "molgap-experiment-workflow-v1" or plan["spec_identity"] != spec.identity:
+    fields = {"format", "spec_identity", "arms", "acceptance_plan", platform_name}
+    runtime = type(plan) is dict and plan.get("source_profile") == "runtime-v1"
+    fields |= {"source_profile", "source_records"} if runtime else {"source_files"}
+    if type(plan) is not dict or set(plan) != fields or plan["format"] != "molgap-experiment-workflow-v1" or plan["spec_identity"] != spec.identity:
         raise ValueError("Workflow plan/Spec mismatch")
-    if type(plan["source_files"]) is not list:
+    if type(plan["source_records"] if runtime else plan["source_files"]) is not list:
         raise ValueError("Workflow source_files must be an explicit path list")
     repo_root = Path(repo_root).absolute()
     _safe_local(repo_root)
@@ -302,7 +305,13 @@ def _workflow_inputs(spec, repo_root, plan):
                 "prospective_published": False, "submitted": False}
     # The inventory is maintained with adapters, not assembled by each caller.
     from .experiment_source_inventory import registered_source_files
-    source_files = registered_source_files(spec, [*plan["source_files"], *recipes.values()])
+    if runtime:
+        from .experiment_source_inventory import runtime_source_files
+        records = [*plan["source_records"], *recipes.values(), plan["acceptance_plan"],
+                   *(b["plan_spec_ref"] for b in bindings.values())]
+        source_files = runtime_source_files(repo_root, records)
+    else:
+        source_files = registered_source_files(spec, [*plan["source_files"], *recipes.values()])
     return dict(metadata=metadata, bindings=bindings, jobs=jobs, initial_states=initial_states,
                 recipes=recipes, validated_jobs=validated_jobs, source_files=source_files)
 
@@ -332,7 +341,7 @@ def check_workflow_readiness(spec, repo_root, plan):
             "published": False, "submitted": False, "native_qualification": "NOT_EVALUATED"}
 
 
-def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path) -> dict:
+def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: Path, *, source_cache=None) -> dict:
     """Prepare one frozen declaration with no platform submission."""
     started = perf_counter()
     repo_root, output = Path(repo_root).absolute(), Path(output).absolute()
@@ -367,7 +376,8 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         record("family_recipes", observations["family_recipes"])
         record("prospective_check", observations["prospective"])
         package = output / "package"
-        manifest = build_experiment_source_package(spec, repo_root, source_files, package)
+        manifest = (build_experiment_source_package(spec, repo_root, source_files, package) if source_cache is None else
+                    build_experiment_source_package(spec, repo_root, source_files, package, source_cache=source_cache))
         record("package", manifest)
         stage = backend.stage_inputs(repo_root=repo_root, output=output, package=package,
             manifest=manifest, spec=spec, platform_plan=plan[platform_name], metadata=metadata,
