@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from math import sqrt
+from pathlib import Path
 
 from .cross_scale_analysis import read_bound_json
 from .cross_scale_plan import number
@@ -94,3 +95,43 @@ def backtest_decisions(cases):
             "unscored_cases": unknown, "missing_native_cost_cases": missing,
             "observed_cost_saved_by_hardware": native or None,
             "policy_activated": False, "automatic_training_action": False, "cross_hardware_total": None}
+
+
+def backtest_repository(root):
+    """Read and replay the real RML owners; never write derived files or activate.
+
+    The legacy scale heuristic is retained as a descriptive input only. Even
+    its three-pair flag cannot become training authority in this projection.
+    """
+    from .research_memory.validate import validate_repository_records
+    from .research_memory.backtest import build_screening_backtest, build_policy_backtests
+    from .research_memory.replay import build_replay_pool
+    from .research_memory.policy import load_policy_registry
+    from .screen_backtest import ScaleObservation, backtest_low_cost_screening
+    records = validate_repository_records(root)["records"]
+    pool = build_replay_pool(Path(root), records)
+    policies = load_policy_registry(Path(root))
+    observations = []
+    for group in sorted({e["comparability_key"] for e in pool["entries"]}):
+        entries = [e for e in pool["entries"] if e["comparability_key"] == group]
+        refs = [e for e in entries if e["comparison_role"] == "reference"]
+        if len(refs) != 1:
+            continue
+        ref = refs[0]
+        for candidate in (e for e in entries if e["comparison_role"] == "candidate"):
+            metric = "ema_dev_metric" if candidate["metric_semantics"].get("ema_dev_metric") else "live_dev_metric"
+            a = {r[candidate["axis"]]: r.get(metric) for r in candidate["prefix_observations"]}
+            b = {r[ref["axis"]]: r.get(metric) for r in ref["prefix_observations"]}
+            points = [p for p in sorted(a.keys() & b.keys()) if a[p] is not None and b[p] is not None]
+            complete = candidate["capability"] == ref["capability"] == "complete"
+            observations.append(ScaleObservation(candidate["trajectory_id"], "observed-first-prefix",
+                "accepted-terminal", b[points[0]] - a[points[0]] if points else None,
+                b[points[-1]] - a[points[-1]] if complete and points else None,
+                True, complete and len(points) > 1, "Within-contract replay, not 100K-to-500K extrapolation"))
+    return {"format": "molgap-cross-scale-rml-backtest-v1", "source_digest": pool["source_digest"],
+        "screening": build_screening_backtest([m for _, m in records["traces"]]),
+        "replay": build_policy_backtests(policies, pool),
+        "legacy_scale_description": backtest_low_cost_screening(observations),
+        "role_history": {"events": len(records["roles"]), "new_role_access": False},
+        "early_stop_status": "NOT_RELEASED", "policy_activated": False,
+        "automatic_training_action": False, "veto_500k": False, "rml_written": False}

@@ -108,6 +108,7 @@ def _install_family(repo, monkeypatch):
     # A fresh process must see the reviewed registrations from packaged bytes.
     spec_path = repo / "src/molgap/experiment_spec.py"
     with spec_path.open("a", encoding="utf-8") as handle:
+        handle.write("\nfrom types import MappingProxyType\n")
         handle.write(f"\nFAMILIES = MappingProxyType({{**FAMILIES, {FAMILY!r}: {contract!r}}})\n")
         handle.write(f"ADDONS = MappingProxyType({{**ADDONS, ('synthetic_shift', '1'): {addon_contract!r}}})\n")
     execution_path = repo / "src/molgap/experiment_execution.py"

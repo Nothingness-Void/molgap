@@ -50,10 +50,17 @@ def test_explicit_no_ema_is_not_missing_but_unknown_metric_state_is():
 
 
 def test_data_diversity_lane_requires_shared_disjoint_cohort_proof_and_step_schedule():
-    other=identity(); other["row_membership_identity"]="500K"; other["data_role_identity"]="500K"
-    args=dict(left_identity=identity(),right_identity=other,lane="DATA_DIVERSITY")
+    from cross_scale_fixtures import cohorts
+    from molgap.cross_scale_inputs import verify_comparison_cohorts, cohort_comparison_identity
+    c, members = cohorts()
+    first, other = identity(), identity()
+    first.update(cohort_comparison_identity(c[0], c[2]))
+    other.update(cohort_comparison_identity(c[1], c[2]))
+    args=dict(left_identity=first,right_identity=other,lane="DATA_DIVERSITY")
     assert align_curves(curve([.2,.15,.1]),curve([.21,.13,.09]),**args)["status"] == "NOT_STRICTLY_COMPARABLE"
-    assert align_curves(curve([.2,.15,.1]),curve([.21,.13,.09]),nested_cohorts_verified=True,**args)["status"] == "MATCHED_PREFIX"
+    assert align_curves(curve([.2,.15,.1]),curve([.21,.13,.09]),nested_cohorts_verified=True,**args)["status"] == "NOT_STRICTLY_COMPARABLE"
+    proof=verify_comparison_cohorts(*c,memberships=members)
+    assert align_curves(curve([.2,.15,.1]),curve([.21,.13,.09]),cohort_proof=proof,**args)["status"] == "MATCHED_PREFIX"
 
 
 def decision(**changes):
@@ -69,7 +76,9 @@ def test_slow_starter_100k_cannot_veto_later_500k_winner():
     early=decision(stage="DIAGNOSTIC_100K",seed_deltas=[(42,-.05)])
     late=decision()
     assert not early["veto_500k"] and early["scientific_status"] == "DIAGNOSTIC_ONLY"
-    assert late["scientific_status"] == "EXPLORATORY_PRIMARY_POSITIVE"
+    # A formerly accepted naked terminal=True is no longer endpoint evidence.
+    assert late["scientific_status"] == "INCONCLUSIVE"
+    assert late["terminal_acceptance"] == "MISSING"
     assert late["promotion"] == "NOT_AUTHORIZED" and not late["automatic_training_action"]
 
 

@@ -61,6 +61,68 @@ def validate_nested_cohorts(small, large, development, *, memberships):
             "identity": canonical_fingerprint({c.name: asdict(c) for c in (small, large, development)})}
 
 
+_COHORT_TOKEN = object()
+
+
+class CohortProof:
+    """In-process receipt of actual membership validation, not an asserted flag.
+
+    Recreate through the validator after remounting; a JSON status/hash alone
+    cannot manufacture a receipt. Authority/history pins remain part of its
+    identity. Changing any compared identity makes the receipt stale.
+    """
+    __slots__ = ("_cohorts", "_identity")
+
+    def __init__(self, cohorts, *, _token=None):
+        if _token is not _COHORT_TOKEN:
+            raise TypeError("CohortProof must come from verify_comparison_cohorts")
+        object.__setattr__(self, "_cohorts", tuple(cohorts))
+        object.__setattr__(self, "_identity", canonical_fingerprint({"cohorts": [asdict(c) for c in cohorts]}))
+
+    def __setattr__(self, name, value):
+        raise AttributeError("CohortProof is immutable")
+
+    def summary(self):
+        return {"status": "PAIRED_COHORTS_VERIFIED", "identity": self._identity,
+                "cohorts": [asdict(c) for c in self._cohorts],
+                "nested": True, "train_development_disjoint": True}
+
+    def verify(self, left, right):
+        small, large, dev = self._cohorts
+        if canonical_fingerprint({"cohorts": [asdict(c) for c in self._cohorts]}) != self._identity:
+            raise ValueError("Stale cohort proof")
+        for identity, train in ((left, small), (right, large)):
+            expected = cohort_comparison_identity(train, dev)
+            if any(identity.get(k) != v or type(identity.get(k)) is not type(v)
+                   for k, v in expected.items()):
+                raise ValueError("Cohort proof does not bind the compared data/role/order/authority identity")
+
+
+def cohort_comparison_identity(train, development):
+    """Single translation of validated cohort pins into V5 comparison fields."""
+    return {"dataset_identity": train.dataset, "data_role_identity": train.role_identity,
+            "row_membership_identity": train.source_index_sha256,
+            "row_order_identity": train.row_index_sha256,
+            "train_manifest_sha256": train.manifest_sha256,
+            "train_target_sha256": train.target_sha256,
+            "train_topology_sha256": train.topology_sha256,
+            "train_authority_sha256": train.authority_sha256,
+            "train_role_history_sha256": train.role_history_sha256,
+            "evaluation_role_identity": development.role_identity,
+            "selection_role_identity": development.role_identity,
+            "evaluation_row_sha256": development.source_index_sha256,
+            "evaluation_target_sha256": development.target_sha256,
+            "evaluation_row_count": development.rows,
+            "evaluation_manifest_sha256": development.manifest_sha256,
+            "evaluation_authority_sha256": development.authority_sha256,
+            "evaluation_role_history_sha256": development.role_history_sha256}
+
+
+def verify_comparison_cohorts(small, large, development, *, memberships):
+    validate_nested_cohorts(small, large, development, memberships=memberships)
+    return CohortProof((small, large, development), _token=_COHORT_TOKEN)
+
+
 def audit_fixed_manifests(small, large):
     """Metadata-only historical audit: no inferred observed tensor digests."""
     from .pcqm_fixed_records import graph_records

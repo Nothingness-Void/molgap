@@ -61,11 +61,13 @@ def identity():
         sampler_identity="sampler42", schedule_axis="optimizer_step", target_unit="eV",
         evaluation_row_sha256=sha("dev rows"), evaluation_target_sha256=sha("dev targets"),
         evaluation_row_count=50000, bn_calibration_identity="not_applicable")
+    result.update(drop_last=True, tail_batch_policy="drop_last")
     return result
 
 
 def curve(values, steps=(1, 2, 3)):
     return [{"optimizer_step": step, "sample_presentations": step*128, "complete_passes": 0,
              "learning_rate": .001, "value": value, "metric": "live_dev_metric", "unit": "eV",
+             "checkpoint_identity": sha("observed-checkpoint-"+str(step)),
              "weights": "live", "evaluation_role": "internal_development", "metric_kind": "development"}
             for step, value in zip(steps, values)]

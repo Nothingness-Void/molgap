@@ -47,7 +47,7 @@ def import_accepted_trace(root, *, trace_binding, manifest_binding, acceptance_b
             continue
         for name, definition in trace["metric_semantics"].items():
             value = observed[name]
-            if value is None:
+            if definition is None:
                 continue
             if definition["target"] not in {"Gap", "gap", "PCQM4Mv2 Gap"} or definition["direction"] != "minimize":
                 raise ValueError("Unknown target/direction")
@@ -75,22 +75,37 @@ def import_accepted_trace(root, *, trace_binding, manifest_binding, acceptance_b
 
 
 def align_curves(left, right, *, left_identity, right_identity, metric="live_dev_metric",
-                 axis="optimizer_step", lane="MECHANISM", nested_cohorts_verified=False):
+                 axis="optimizer_step", lane="MECHANISM", nested_cohorts_verified=False,
+                 cohort_proof=None, comparison_type=None):
     """Intersect actually observed coordinates; no interpolation or extrapolation.
 
     Explicit identity uses existing V5 names. Data-diversity matching relaxes
     only train membership/exposure, and requires an independent nested-role proof.
     It never grants V5 STRICT_CAUSAL or prospective admission.
     """
+    from .cross_scale_inputs import CohortProof
+    kinds = {"MECHANISM": "SAME_SCALE_MODEL", "DATA_DIVERSITY": "MATCHED_STEP_SCALE",
+             "TUNED_RECIPE": "TUNED_RECIPE_SYSTEM"}
+    if comparison_type is None:
+        comparison_type = kinds.get(lane)
+    if comparison_type not in {*kinds.values(), "CONTEXT_OR_PORTABILITY"}:
+        raise ValueError("Unknown comparison type")
+    lane = {v: k for k, v in kinds.items()}.get(comparison_type, "CONTEXT")
+    if type(nested_cohorts_verified) is not bool:
+        raise TypeError("Legacy cohort flag must be an exact bool; use a bound cohort proof")
     if axis not in {"optimizer_step", "sample_presentations"}:
         raise ValueError("Epoch/pass-only alignment is forbidden")
-    if lane not in {"MECHANISM", "DATA_DIVERSITY", "TUNED_RECIPE"}:
-        raise ValueError("Unknown comparison lane")
     fields = set(STRICT_IDENTITY_FIELDS) | {"sampler_identity", "schedule_axis", "target_unit", "evaluation_row_sha256",
-        "evaluation_target_sha256", "evaluation_row_count", "bn_calibration_identity"}
+        "evaluation_target_sha256", "evaluation_row_count", "bn_calibration_identity", "drop_last"}
     ignored = {"optimizer_steps", "sample_presentations"}
     if lane == "MECHANISM":
         ignored.add("architecture_config_identity")
+    if lane == "TUNED_RECIPE":
+        ignored |= {"architecture_config_identity", "optimizer_identity", "optimizer_mode", "optimizer_fused",
+                    "schedule_identity", "schedule_axis", "loss_identity", "sampler_identity",
+                    "target_transform_identity", "target_transform_asset_sha256", "weight_semantics",
+                    "ema_enabled", "ema_decay", "ema_update_frequency", "evaluation_weight_source",
+                    "bn_calibration_identity", "checkpoint_selection_identity"}
     if lane == "DATA_DIVERSITY":
         ignored |= {"data_role_identity", "row_membership_identity", "row_order_identity"}
     reasons = []
@@ -101,14 +116,29 @@ def align_curves(left, right, *, left_identity, right_identity, metric="live_dev
             continue  # Explicitly disabled EMA is not missing evidence.
         if left_identity.get(field) is None or right_identity.get(field) is None:
             reasons.append("MISSING:" + field)
-        elif left_identity[field] != right_identity[field]:
+        elif type(left_identity[field]) is not type(right_identity[field]) or left_identity[field] != right_identity[field]:
             reasons.append("MISMATCH:" + field)
-    if lane == "DATA_DIVERSITY" and not nested_cohorts_verified:
-        reasons.append("MISSING:nested_cohorts_and_shared_disjoint_role")
+    for name in ("tf32_enabled", "deterministic_algorithms", "ema_enabled", "drop_last"):
+        if any(type(i.get(name)) is not bool for i in (left_identity, right_identity)):
+            reasons.append("INVALID_TYPE:" + name)
+    if lane == "DATA_DIVERSITY":
+        if type(cohort_proof) is not CohortProof:
+            reasons.append("MISSING:bound_cohort_proof")
+        else:
+            try:
+                cohort_proof.verify(left_identity, right_identity)
+            except ValueError as exc:
+                reasons.append("MISMATCH:bound_cohort_proof:" + str(exc))
     if lane == "DATA_DIVERSITY" and (left_identity.get("schedule_axis") != "optimizer_step" or right_identity.get("schedule_axis") != "optimizer_step"):
         reasons.append("MISMATCH:step_indexed_schedule_required")
+    if lane == "CONTEXT":
+        reasons.append("DECLARED:context_or_portability")
     if lane == "TUNED_RECIPE":
-        reasons.append("TUNED_SYSTEM_NOT_ARCHITECTURE_CAUSAL")
+        for field in ("tuning_budget_identity", "tuning_budget_per_system", "tuning_protocol_sha256"):
+            if any(i.get(field) is None for i in (left_identity, right_identity)):
+                reasons.append("MISSING:" + field)
+            elif left_identity[field] != right_identity[field]:
+                reasons.append("MISMATCH:" + field)
 
     def panel(rows):
         result, last = {}, -1
@@ -123,38 +153,93 @@ def align_curves(left, right, *, left_identity, right_identity, metric="live_dev
                 raise ValueError("Duplicate or non-monotonic observed coordinate")
             last = point
             value = row.get("value", row.get(metric))
-            if value is None:
-                continue
-            number(value, "MAE")
+            if value is not None:
+                number(value, "MAE")
             result[point] = row
         return result
 
     a, b = panel(left), panel(right)
-    aligned = []
+    history_issues = []
+    # Exposure is observed independently on each side, including metric-less
+    # rows. No epoch arithmetic and no planned horizon substituted for work.
+    for side, rows, identity in (("left", a, left_identity), ("right", b, right_identity)):
+        previous_step = previous_samples = -1
+        for point, row in rows.items():
+            step, samples = row.get("optimizer_step"), row.get("sample_presentations")
+            local = []
+            if type(step) is not int or type(samples) is not int or step < 0 or samples < 0:
+                local.append("MISSING_OR_INVALID:observed_exposure")
+            else:
+                if step <= previous_step or samples <= previous_samples:
+                    local.append("MISMATCH:resume_duplicate_or_nonmonotonic_exposure")
+                previous_step, previous_samples = step, samples
+                batch, accumulation = identity.get("physical_batch_per_device"), identity.get("gradient_accumulation_steps")
+                if type(batch) is not int or type(accumulation) is not int or batch < 1 or accumulation < 1:
+                    local.append("INVALID:batch_or_accumulation")
+                elif identity.get("drop_last") is True:
+                    if samples != step * batch * accumulation:
+                        local.append("MISMATCH:observed_exposure_vs_full_batches")
+                else:
+                    # A retained tail cannot be reconstructed from passes.
+                    if row.get("tail_exposure_verified") is not True:
+                        local.append("MISSING:observed_tail_exposure_evidence")
+                for key, observed in (("optimizer_steps", step), ("sample_presentations", samples)):
+                    horizon = identity.get(key)
+                    if type(horizon) is not int or observed > horizon:
+                        local.append("MISMATCH:observed_exceeds_planned_" + key)
+            if row.get("learning_rate") is None:
+                local.append("MISSING:actual_lr")
+            else:
+                number(row["learning_rate"], "actual LR")
+            for reason in local:
+                history_issues.append({"coordinate": point, "side": side, "reason": reason})
     for point in sorted(a.keys() & b.keys()):
         l, r = a[point], b[point]
-        if l.get("learning_rate") is None or r.get("learning_rate") is None:
-            reasons.append(f"MISSING:actual_lr_at_{point}")
-        elif l["learning_rate"] != r["learning_rate"]:
-            reasons.append(f"MISMATCH:actual_lr_at_{point}")
+        for field, code in (("learning_rate", "actual_lr"), ("optimizer_step", "optimizer_step"),
+                            ("sample_presentations", "sample_presentations")):
+            if lane == "TUNED_RECIPE" and field == "learning_rate":
+                continue
+            if l.get(field) != r.get(field):
+                history_issues.append({"coordinate": point, "side": "pair", "reason": f"MISMATCH:{code}_at_{point}"})
+    aligned = []
+    global_reasons = list(reasons)
+    for point in sorted(a.keys() & b.keys()):
+        l, r = a[point], b[point]
+        lv, rv = l.get("value", l.get(metric)), r.get("value", r.get(metric))
+        if lv is None or rv is None:
+            continue
+        local = global_reasons + [f"{issue['reason']}[{issue['side']}@{issue['coordinate']}]"
+            for issue in history_issues if issue["coordinate"] <= point]
         if l.get("unit") is None or r.get("unit") is None:
-            reasons.append("MISSING:metric_unit")
+            local.append("MISSING:metric_unit")
         elif l["unit"] != r["unit"] or l["unit"] != "eV":
-            reasons.append("MISMATCH:metric_unit")
+            local.append("MISMATCH:metric_unit")
         for field in ("weights", "evaluation_role", "metric_kind"):
             if l.get(field) is None or r.get(field) is None:
-                reasons.append("MISSING:metric_" + field)
+                local.append("MISSING:metric_" + field)
             elif l[field] != r[field]:
-                reasons.append("MISMATCH:metric_" + field)
-        lv, rv = l.get("value", l.get(metric)), r.get("value", r.get(metric))
-        aligned.append({axis: point, "left": lv, "right": rv, "left_minus_right_eV": lv - rv})
+                if not (lane == "TUNED_RECIPE" and field == "weights"):
+                    local.append("MISMATCH:metric_" + field)
+        for side, row in (("left", l), ("right", r)):
+            try:
+                digest(row.get("checkpoint_identity"), "checkpoint identity")
+            except ValueError:
+                local.append("MISSING_OR_INVALID:" + side + "_checkpoint_identity")
+        reasons.extend(local)
+        aligned.append({axis: point, "left": lv, "right": rv,
+            "left_observation": deepcopy(l), "right_observation": deepcopy(r),
+            "left_minus_right_eV": None if local else lv - rv,
+            "comparison_class": "CONTEXT_ONLY" if local else "MATCHED_PREFIX",
+            "reasons": sorted(set(local))})
     if not aligned:
         reasons.append("MISSING:common_observed_coordinates")
-    if reasons:
-        for row in aligned:
-            row["left_minus_right_eV"] = None  # Context is displayed, never a cross-role causal delta.
+    reasons.extend(issue["reason"] for issue in history_issues)
     return {"status": "NOT_STRICTLY_COMPARABLE" if reasons else "MATCHED_PREFIX",
             "comparison_class": "CONTEXT_ONLY" if reasons else "MATCHED_PREFIX",
+            "comparison_type": comparison_type, "history_issues": history_issues,
+            "strictness": ("INCOMPARABLE" if not aligned else "CONTEXT_ONLY") if reasons else
+                {"DATA_DIVERSITY": "STRICT_WITH_DECLARED_SCALE_INTERVENTION", "MECHANISM": "STRICT_SAME_SCALE",
+                 "TUNED_RECIPE": "SYSTEM_COMPARISON"}[lane],
             "reasons": sorted(set(reasons)), "axis": axis, "aligned": aligned,
             "extrapolated": False, "automatic_training_action": False}
 
@@ -247,15 +332,70 @@ def profile_view(profile):
 
 def interpret_run(*, stage, fidelity, terminal, runtime, budget, roles,
                   strictly_comparable, seed_deltas=(), material_gain_eV=None,
-                  seed_policy_approved=False, failure=None):
+                  seed_policy_approved=False, failure=None, execution_status=None,
+                  terminal_evidence=()):
     """Review output only. No MAE argument on the 100K veto path by design."""
     if stage not in {"DIAGNOSTIC_100K", "PRIMARY_500K"}:
         raise ValueError("Unknown scale role")
+    for name, value in (("terminal", terminal), ("strictly_comparable", strictly_comparable),
+                        ("seed_policy_approved", seed_policy_approved)):
+        if type(value) is not bool:
+            raise TypeError(name + " must be an exact bool, not a status string")
+    status = execution_status if execution_status is not None else "UNKNOWN"
+    if status not in {"UNKNOWN", "RUNNING", "COMPLETE", "STOP_FOR_COST", "FAILED", "INCONCLUSIVE"}:
+        raise ValueError("Unknown execution status")
     result = {"implementation_fidelity": fidelity, "runtime_mechanical": runtime,
               "scientific_status": "NOT_EVALUATED", "scale_transfer": "NOT_EVALUATED",
               "budget_decision": budget, "replay": "NOT_EVALUATED", "role_usage": roles,
               "promotion": "NOT_AUTHORIZED", "automatic_training_action": False,
-              "veto_500k": False, "warnings": []}
+              "veto_500k": False, "warnings": [], "execution_status": status,
+              "terminal_acceptance": "MISSING", "observed_progress_only": True}
+    verified_seeds, observed_gains = set(), {}
+    if terminal_evidence:
+        from .experiment_inspection import InspectionSnapshot, validate_snapshot
+        from .experiment_family_workflow import _json, _safe_local
+        for seed, candidate, reference in terminal_evidence:
+            number(seed, "terminal paired seed", integer=True)
+            if seed in verified_seeds:
+                raise ValueError("Duplicate terminal seed")
+            paired_reports = []
+            for snapshot in (candidate, reference):
+                if type(snapshot) is not InspectionSnapshot:
+                    raise TypeError("Terminal evidence must use the owning InspectionSnapshot")
+                metadata = snapshot.metadata()
+                report = validate_snapshot(snapshot, output_dir=snapshot.output_dir,
+                    context=metadata["context"], expected=metadata["expected"],
+                    file_digest=file_digest, load_json=_json, safe_local=_safe_local)
+                progress = report["observed"].get("progress", {})
+                if (progress.get("optimizer_steps") != metadata["expected"]["optimizer_steps"] or
+                        progress.get("sample_presentations") != metadata["expected"]["sample_presentations"] or
+                        not {"trace", "selected_model", "resume", "contract"} <= set(snapshot.artifact_bindings())):
+                    raise ValueError("Incomplete accepted endpoint/trace/checkpoint")
+                contract = _json(snapshot.output_dir / snapshot.artifact_bindings()["contract"]["path"])
+                if type(contract.get("seed")) is not int or contract["seed"] != seed:
+                    raise ValueError("Terminal seed is not bound to the frozen output recipe")
+                paired_reports.append(report)
+            if candidate.digest == reference.digest:
+                raise ValueError("Candidate cannot be its own reference")
+            verified_seeds.add(seed)
+            observed_gains[seed] = (paired_reports[1]["observed"]["development_mae_eV"] -
+                                    paired_reports[0]["observed"]["development_mae_eV"])
+        result["terminal_acceptance"] = "BOUND_OUTPUTS_VERIFIED"
+    deltas = dict(seed_deltas)
+    if len(deltas) != len(seed_deltas):
+        raise ValueError("Duplicate seed is not independent evidence")
+    for seed, value in deltas.items():
+        number(seed, "paired seed", integer=True)
+        if type(value) not in (int, float):
+            raise TypeError("Seed effect must be a finite number")
+        number(abs(value), "per-seed effect")
+    values = list(deltas.values())
+    if len(values) < 2:
+        result["warnings"].append("SEED_VARIANCE_UNKNOWN; row bootstrap is conditional on frozen models")
+    elif min(values) <= 0 <= max(values):
+        result["warnings"].append("SEED_SIGN_DISAGREEMENT")
+    if not verified_seeds:
+        result["warnings"].append("MISSING_BOUND_TERMINAL_OUTPUTS; supplied effects are unverified")
     failures = {"INVALID_CODE", "NONFINITE", "CORRUPT_INPUT", "UNAUTHORIZED_ROLE", "CHECKPOINT_FAILURE", "DECLARED_COST_CEILING"}
     if failure is not None:
         if failure not in failures:
@@ -268,25 +408,22 @@ def interpret_run(*, stage, fidelity, terminal, runtime, budget, roles,
     elif stage == "DIAGNOSTIC_100K":
         result["scientific_status"] = "DIAGNOSTIC_ONLY"
         result["warnings"].append("SLOW_START_POSSIBLE; 100K MAE is not a 500K veto")
-    elif (not terminal or runtime != "MECHANICALLY_VERIFIED" or roles != "ROLE_VERIFIED" or
+    elif (not terminal or status != "COMPLETE" or not verified_seeds or
+          runtime != "MECHANICALLY_VERIFIED" or roles != "ROLE_VERIFIED" or
           budget != "MEASURED_WITHIN_CEILING" or not strictly_comparable):
         result["scientific_status"] = "INCONCLUSIVE"
     else:
-        deltas = dict(seed_deltas)
-        if len(deltas) != len(seed_deltas):
-            raise ValueError("Duplicate seed is not independent evidence")
-        for value in deltas.values():
-            number(abs(value), "per-seed effect")
-        values = list(deltas.values())
-        for seed in deltas:
-            number(seed, "paired seed", integer=True)
+        if set(deltas) != verified_seeds:
+            raise ValueError("Seed effects are not bound to all accepted paired outputs")
+        from math import isclose
+        if any(not isclose(deltas[s], observed_gains[s], rel_tol=1e-8, abs_tol=1e-10) for s in deltas):
+            raise ValueError("Seed effect differs from accepted predictions/selected endpoint")
+        result["observed_progress_only"] = False
         result["per_seed_gain_eV"] = deltas
         result["across_seed_spread_eV"] = max(values) - min(values) if len(values) > 1 else None
         result["scientific_status"] = "INCONCLUSIVE"
-        if len(values) < 2:
-            result["warnings"].append("SEED_VARIANCE_UNKNOWN; row bootstrap is conditional on frozen models")
-        elif min(values) <= 0 <= max(values):
-            result["warnings"].append("SEED_SIGN_DISAGREEMENT")
+        if len(values) < 2 or min(values) <= 0 <= max(values):
+            pass
         elif material_gain_eV is None or not seed_policy_approved:
             result["warnings"].append("MISSING_PROSPECTIVE_MATERIAL_OR_SEED_POLICY")
         else:
@@ -294,3 +431,55 @@ def interpret_run(*, stage, fidelity, terminal, runtime, budget, roles,
             result["scientific_status"] = "EXPLORATORY_PRIMARY_POSITIVE" if min(values) > material_gain_eV else "INCONCLUSIVE"
             result["warnings"].append("Two seeds are exploratory, not a precise variance estimate; human review required")
     return result
+
+
+def comparison_report(left, right, *, comparison_type, cohort_proof=None):
+    """One observed report over existing owners, never a release or ranking gate.
+
+    Runs carry identity/curve/source/checkpoint/cost/seed metadata. Unknowns
+    remain null. Prefix eligibility is separate from complete report evidence.
+    """
+    aligned = align_curves(left.get("curve", []), right.get("curve", []),
+        left_identity=left.get("identity", {}), right_identity=right.get("identity", {}),
+        comparison_type=comparison_type, cohort_proof=cohort_proof)
+    missing, runs = [], {}
+    for side, run in (("left", left), ("right", right)):
+        view = {key: deepcopy(run.get(key)) for key in
+            ("model", "source_sha256", "identity", "checkpoint_sha256", "weights", "bn_state",
+             "seed", "uncertainty", "curve", "cost")}
+        for key in ("model", "source_sha256", "checkpoint_sha256", "weights", "bn_state", "seed", "cost"):
+            if view[key] is None:
+                missing.append(side + ":" + key)
+        for key in ("source_sha256", "checkpoint_sha256"):
+            if view[key] is not None:
+                digest(view[key], key)
+        if view["cost"] is not None and view["cost"].get("allocation_coverage") != "MEASURED":
+            missing.append(side + ":complete_native_cost")
+        runs[side] = view
+    grade = aligned["strictness"]
+    if missing and grade.startswith("STRICT") or missing and grade == "SYSTEM_COMPARISON":
+        grade = "CONTEXT_ONLY"
+    report = {"format": "molgap-cross-scale-comparison-report-v1", "comparison_type": comparison_type,
+        "strictness": grade, "curve_comparison": aligned, "runs": runs,
+        "missing_evidence": missing, "cohort_proof": cohort_proof.summary() if cohort_proof is not None else None,
+        "limitations": ["Observed points only; no terminal projection", "Row bootstrap is not training variance",
+                        "Report grades do not grant V5 STRICT_CAUSAL or role/training authority"],
+        "next_gates": ["Bound complete outputs, role history, native cost and separate prospective authority"],
+        "early_stop_status": "NOT_RELEASED", "automatic_training_action": False,
+        "training_authority": "NOT_AUTHORIZED_FOR_SCIENTIFIC_TRAINING"}
+    return report
+
+
+def write_comparison_report(output_dir, report):
+    import json
+    from .common.io import publish_immutable_bytes
+    from .research_memory.trace import json_bytes
+    output = Path(output_dir).absolute()
+    publish_immutable_bytes(output / "comparison.json", json_bytes(report))
+    lines = ["# Cross-scale comparison", "", f"Question: {report['comparison_type']}", "",
+             f"Grade: {report['strictness']}", "", "Automatic early stop: NOT_RELEASED.", "",
+             "Missing evidence: " + (", ".join(report["missing_evidence"]) or "none declared"), "",
+             "## Observed evidence", "", "```json", json.dumps(report, indent=2, allow_nan=False), "```", ""]
+    publish_immutable_bytes(output / "comparison.md", "\n".join(lines).encode())
+    return {name: {"path": str(output / name), "sha256": file_digest(output / name)}
+            for name in ("comparison.json", "comparison.md")}
