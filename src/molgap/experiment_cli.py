@@ -46,6 +46,10 @@ def _read(path: Path) -> str:
 def _parser() -> argparse.ArgumentParser:
     parser = _Parser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
+    commands.add_parser("catalog")
+    freeze=commands.add_parser("freeze-input")
+    freeze.add_argument("--experiment",required=True,type=_local)
+    freeze.add_argument("--repo-root",required=True,type=_local)
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
                  "launch-receipt", "terminal", "plan-prospective", "check-release",
                  "check-acceptance", "inspect-output", "accept-terminal",
@@ -136,6 +140,21 @@ def _parser() -> argparse.ArgumentParser:
 
 
 def _dispatch(args) -> tuple[dict, int]:
+    if args.command == "catalog":
+        from dataclasses import asdict
+        from .experiment_execution import TRAINING_ADAPTERS
+        from .experiment_catalog import FAMILIES,ADDONS
+        families=[]
+        for key,contract in FAMILIES.items():
+            adapter=TRAINING_ADAPTERS.get(key)
+            families.append({**asdict(contract),"execution_support":
+                "DECLARATION_ONLY" if adapter is None else
+                "CPU_SYNTHETIC_ONLY" if adapter.cpu_synthetic_only else "REGISTERED_REQUIRES_QUALIFICATION"})
+        return {"families":families,"addons":[{"name":name,"version":version,**asdict(c)}
+            for (name,version),c in ADDONS.items()],"submitted":False},0
+    if args.command == "freeze-input":
+        from .experiment_input import freeze_experiment_input
+        return freeze_experiment_input(args.experiment,args.repo_root),0
     if args.command == "sandbox":
         from .fast_sandbox import run_arm_sandbox, run_family_sandbox
         if args.spec is not None:

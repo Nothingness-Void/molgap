@@ -8,14 +8,31 @@ from molgap.kaggle_submission import submit_prepared_workflow
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--prepared", required=True, type=Path)
-    parser.add_argument("--credentials", required=True, type=Path)
-    parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument("--authority", required=True, help="Authority path inside the immutable source package")
-    parser.add_argument("--monitor-path", action="append", required=True)
+    inputs=parser.add_mutually_exclusive_group(required=True)
+    inputs.add_argument("--prepared",type=Path)
+    inputs.add_argument("--experiment",type=Path)
+    parser.add_argument("--repo-root",type=Path,default=Path.cwd())
+    parser.add_argument("--credentials",type=Path)
+    parser.add_argument("--output",type=Path)
+    parser.add_argument("--authority",help="Authority path inside the immutable source package")
+    parser.add_argument("--monitor-path",action="append")
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args(argv)
     try:
+        if args.execute and not args.credentials:
+            raise ValueError("--execute requires explicit credentials before preparation")
+        if args.experiment:
+            from molgap.experiment_input import prepare_experiment_input
+            if args.output or args.authority or args.monitor_path:
+                raise ValueError("Editable input already owns the immutable run/authority/monitor bindings")
+            prepared=prepare_experiment_input(args.experiment,args.repo_root)
+            if not args.execute or prepared["status"] != "PREPARED_FOR_PLATFORM":
+                print(canonical_json(prepared))
+                return 0 if prepared["status"] == "PREPARED_FOR_PLATFORM" else 1
+            args.prepared=Path(prepared["prepared"]);args.output=Path(prepared["operations"])
+            args.authority=prepared["authority_ref"];args.monitor_path=prepared["monitor_paths"]
+        if not args.credentials or not args.output or not args.authority or not args.monitor_path:
+            raise ValueError("Platform operations require explicit credentials/output/authority/monitor bindings")
         result = submit_prepared_workflow(args.prepared, args.credentials, args.output,
             authority_ref=args.authority, monitor_paths=args.monitor_path, execute=args.execute)
     except Exception as error:
