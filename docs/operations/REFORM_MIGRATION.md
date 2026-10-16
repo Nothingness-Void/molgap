@@ -343,3 +343,52 @@ and historical shared inventory had no diff from `13eed22e`. This was a bounded
 **INFRA_CPU_ACCEPTED** delivery, not native qualification or overall reform
 completion. No push, training submission, Desktop branch edit or cleanup was
 performed in this review-hardening task.
+
+## Frozen-run continuation follow-up (2026-10-17)
+
+The review of `c3f4c97b` identified an input-ordering defect: a repeated
+scientific input compiled against a newer HEAD before discovering its frozen
+run. `c5b49249` repairs the existing resolver/preparation entry, not the trainer,
+package/cache owner, RML planner or submission journal.
+
+- New runs compile/freeze once. Existing runs first compare the canonical human
+  input and validate their original frozen Spec/workflow. Completed preparations
+  verify/reuse their original package without current Git, development references,
+  generated definitions or original initialization paths. Changed inputs reject
+  overwrite and require an explicit new scientific run. Legacy six-field
+  scientific bindings remain readable and are not rewritten/migrated.
+- New freezes additionally pin their source commit. Unpublished retries under
+  another HEAD, missing original source bindings, partial freezes and ambiguous
+  publication/platform effects do not compile replacement identities. The
+  operator must supply the original source checkout for unpublished recovery;
+  automatic historical checkout/restoration was not introduced. Completed
+  packages retain the original journal path, including `SUBMIT_UNKNOWN`.
+- Both actual family fixtures prepared on A, injected a pre-publication IO
+  failure, committed unrelated documentation B, verified no substitution or
+  mutation, and recovered under A. After completion another documentation commit
+  and temporarily unavailable reference/generated/init paths still allowed
+  reuse and freeze-input calls. A compiler sentinel proved no compilation on
+  continuation; frozen/prepared bytes stayed identical and each original
+  trajectory was published once. All unavailable fixture files were retained
+  and restored, not user artifacts.
+- Both registered readout-scale addons passed the complete scientific-input,
+  recipe, comparison, real package/release/init and prospective CPU path.
+  Their declaration source SHA and packaged recipe addon order agreed. The
+  compiler distinguishes a verified reference/composed default-loss mode label
+  from a real loss change; the owning mode-tagged Spec/recipe digest is unchanged.
+  Architecture-plus-optimizer confounds remain rejected by the original comparator.
+
+`continue-complete.xml`: **58 passed**, zero failures/errors/skips, 181.032s;
+SHA256 `5aa4e1f543a61622a31354976f152d32e0bf7c4dc87b40b95f75911938897cf8`.
+`continue-confound-final.xml`: **2 passed** for the two mixed-intervention
+negatives. `continue-inventory.xml`: **4 passed** for the shared-source inventory
+and unchanged ownership restrictions. Suites overlap and are not independent
+scientific experiments. Earlier fixture/expectation failures remain on E;
+the initial confound test expected a later error message although the original
+comparator had already rejected the input, and its corrected assertion passed.
+Raw JUnit/observations remain under `E:/MolGap/artifacts/reform`.
+
+This was bounded **INFRA_CPU_ACCEPTED** evidence, not a live platform or native
+qualification. No GPU submission, new model, dataset access, historical decision
+rewrite or source regrouping was performed. Desktop application, real platform
+latency and overall A–G completion remain unestablished.
