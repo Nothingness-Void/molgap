@@ -64,6 +64,12 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+K1 normalization100K has a completed direct-substitution negative result on this
+owner. Its [interpretation correction](experiments/pcqm_k1_norm_ablation_100k/INTERPRETATION_REVIEW.md)
+withdraws zero-dropout, proven-overfitting and mandatory-BN claims. The selected
+endpoints and frozen RML outcome remain unchanged; pre-norm adaptation and EMA
+health remain unresolved. This review releases no successor or scale-up.
+
 Kaggle1 K1/GPTrans100K operator profiling is completed and integrated as an
 accepted non-promotion diagnostic. Both arms are finalized in RML with explicit
 missing-reference replay exclusions; [terminal custody](experiments/family_100k_operator_profile/terminal_acceptance/closure.md)
