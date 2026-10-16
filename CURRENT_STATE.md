@@ -64,6 +64,15 @@ compute gates remain mandatory; this is not a model promotion or new job release
 
 ## Active Work and Unresolved Acceptance
 
+The user-authorized K1 pre-norm BN/Ada100K validation is submitted to Kaggle2,
+kernel138980611/version1, with scheduler RUNNING observed2026-10-16 JST.
+[Owning handoff](D:/w/k1-prenorm-norm-100k/experiments/pcqm_k1_prenorm_norm_100k/REMOTE_HANDOFF.md)
+binds the exact source/package/private T4 mounts and two ACTIVE prospective RML
+records. Native qualification and optimizer progress are unobserved; submission
+does not establish training acceptance. The two new pre-norm cells reuse retained
+post-norm evidence contextually. Keep work on its mapped experiment branch;
+no retry, monitor, server transfer, scale-up or adoption is released.
+
 Kaggle1 K1/GPTrans100K operator profiling is completed and integrated as an
 accepted non-promotion diagnostic. Both arms are finalized in RML with explicit
 missing-reference replay exclusions; [terminal custody](experiments/family_100k_operator_profile/terminal_acceptance/closure.md)
