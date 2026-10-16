@@ -199,11 +199,13 @@ print(json.dumps({"status":"CPU_SCENARIO_ACCEPTED","spec_identity":spec.identity
     record_property("scientific_input_observation", json.dumps(observation))
 
 
-@pytest.mark.parametrize("fault", ["seed", "batch", "missing_reference", "wrong_contract", "uncommitted"])
+@pytest.mark.parametrize("fault", ["seed", "batch", "missing_reference", "wrong_contract", "uncommitted", "data_context"])
 def test_scientific_input_does_not_infer_authority_or_reference(scientific, fault):
     from copy import deepcopy
     case = scientific
     original = case.path.read_bytes()
+    data_path = case.repo / case.value["arms"][0]["data_ref"]["spec_ref"]
+    data_original = data_path.read_bytes()
     files = {str(p): p.stat().st_size for root in (case.tmp / "artifact_root", case.repo / "experiments/scientific-fixture")
              if root.exists() for p in root.rglob("*") if p.is_file()}
     value = deepcopy(case.value)
@@ -211,13 +213,19 @@ def test_scientific_input_does_not_infer_authority_or_reference(scientific, faul
     elif fault == "batch":value["arms"][0]["training"]["batch_size"] = 256
     elif fault == "missing_reference":value["arms"][0]["reference_ref"]["plan_ref"] = "missing.json"
     elif fault == "wrong_contract":value["arms"][0]["recipe_ref"] = "experiments/reference/roles.json"
+    elif fault == "data_context":
+        data = json.loads(data_original)
+        data["arms"][0]["data"]["roles"][0]["membership_sha256"] = "0" * 64
+        _write_json(data_path, data)
     else:value["arms"][0]["training"]["learning_rate"] = .0004
     _write_json(case.path, value)
     try:
-        with pytest.raises((ValueError, KeyError, FileNotFoundError, RuntimeError)):
+        with pytest.raises((ValueError, KeyError, FileNotFoundError, RuntimeError),
+                           match="Retained reference context" if fault == "data_context" else None):
             resolve_experiment_input(case.path, case.repo)
     finally:
         case.path.write_bytes(original)
+        data_path.write_bytes(data_original)
     after = {str(p): p.stat().st_size for root in (case.tmp / "artifact_root", case.repo / "experiments/scientific-fixture")
              if root.exists() for p in root.rglob("*") if p.is_file()}
     assert after == files

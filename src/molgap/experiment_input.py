@@ -155,7 +155,8 @@ def _compile_scientific_input(path, root, value):
             raise ValueError("Frozen screen recipe does not match model, seed or development contract")
         _object(item["data_ref"], "spec_ref arm_id", "data_ref")
         data_specs.add(item["data_ref"]["spec_ref"])
-        source = ExperimentSpec(_read(local(item["data_ref"]["spec_ref"]))).to_dict()
+        source_spec = ExperimentSpec(_read(local(item["data_ref"]["spec_ref"])))
+        source = source_spec.to_dict()
         previous = next((a for a in source["arms"] if a["arm_id"] == item["data_ref"]["arm_id"]), None)
         if (previous is None or previous["family"] != {"name": family[0], "version": family[1]}
                 or previous["training"]["recipe"]["sha256"] != hashlib.sha256(_payload(local(item["recipe_ref"]))).hexdigest()
@@ -205,6 +206,8 @@ def _compile_scientific_input(path, root, value):
         inspect_frozen_state_artifact(initial, expected_state_sha256=recipe.initialization_sha256)
         _object(item["reference_ref"], "plan_ref arm_id", "reference_ref")
         reference_plan = _read(local(item["reference_ref"]["plan_ref"]))
+        if type(reference_plan) is not dict or reference_plan.get("spec_identity") != source_spec.identity:
+            raise ValueError("Retained reference context is not bound to the selected baseline data declaration")
         reference = next((e for e in reference_plan["arms"] if e["arm_id"] == item["reference_ref"]["arm_id"]), None)
         if reference is None:
             raise ValueError("Existing retained reference arm is missing; no baseline is trained")
@@ -426,6 +429,7 @@ def local_preparation_error(error,stage):
         "Scientific candidate has no change from the retained reference":("arms","No scientific change from the retained reference was declared"),
         "Scientific change is not a comparable declared intervention":("arms.purpose","Declared purpose does not isolate the scientific change"),
         "Scientific compiler supports reviewed shared K1/3 and GPTrans/2 only":("arms.model","This compiler supports shared K1/3 and GPTrans/2; no new family is qualified"),
+        "Retained reference context is not bound to the selected baseline data declaration":("arms.data_ref","Select the baseline declaration bound by the retained reference context"),
     }
     field,reason=known.get(str(error),("configuration","Local validation failed; check configuration fields and referenced files"))
     if isinstance(error,FileNotFoundError):
