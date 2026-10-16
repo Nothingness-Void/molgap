@@ -159,7 +159,10 @@ def _install_synthetic_owner(repo: Path, monkeypatch):
 
     from molgap.experiment_execution import TrainingAdapter, TrainingAddon
 
+    # Replace only the two synthetic owners; lazy imports still need the real
+    # unselected family registrations, independently of test collection order.
     registry = {
+        **dict(execution.TRAINING_ADAPTERS),
         ("neural_atom_k1", "2"): TrainingAdapter(
             ("neural_atom_k1", "2"),
             "molgap.synthetic_trainer",

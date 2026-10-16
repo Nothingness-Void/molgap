@@ -61,17 +61,27 @@ def _parser() -> argparse.ArgumentParser:
                  "prepare-workflow", "prepare-family-training", "accept-workflow", "build-terminal", "prepare-release", "check-preparation",
                  "workflow-info", "check-workflow", "build-resume", "prepare-resume", "source-dependencies"):
         command = commands.add_parser(name)
-        command.add_argument("--spec", required=True, type=_local)
+        by_run = name in {"inspect-output", "accept-workflow", "build-resume", "prepare-resume"}
+        if by_run:
+            identity = command.add_mutually_exclusive_group(required=True)
+            identity.add_argument("--spec", type=_local)
+            identity.add_argument("--run-id")
+            command.add_argument("--profile", type=_local)
+            command.add_argument("--attempt-id")
+        else:
+            command.add_argument("--spec", required=True, type=_local)
+        if name == "inspect-output":
+            command.add_argument("--repo-root", type=_local)
         if name in {"package", "terminal", "plan-prospective", "check-acceptance", "accept-terminal", "prepare-workflow", "prepare-family-training", "accept-workflow", "prepare-release", "check-preparation", "build-terminal", "build-resume", "prepare-resume", "source-dependencies", "check-workflow"}:
             command.add_argument("--repo-root", required=True, type=_local)
         if name in {"package", "preflight", "run-diagnostic", "prepare-workflow", "prepare-family-training", "prepare-release", "build-resume", "prepare-resume"}:
             command.add_argument("--output", required=True, type=_local)
         if name in {"preflight", "launch-receipt", "check-release", "inspect-output", "accept-terminal", "accept-workflow", "build-terminal", "build-resume", "prepare-resume"}:
-            command.add_argument("--package", required=True, type=_local)
-            command.add_argument("--expected-package-identity", required=True)
+            command.add_argument("--package", required=not by_run, type=_local)
+            command.add_argument("--expected-package-identity", required=not by_run)
         if name in {"build-resume", "prepare-resume"}:
-            command.add_argument("--prepared", required=True, type=_local)
-            command.add_argument("--receipt", required=True, type=_local)
+            command.add_argument("--prepared", type=_local)
+            command.add_argument("--receipt", type=_local)
             if name == "build-resume":
                 command.add_argument("--arm", required=True)
                 command.add_argument("--source-output", required=True, type=_local)
@@ -91,7 +101,7 @@ def _parser() -> argparse.ArgumentParser:
             if name == "prepare-family-training":
                 command.add_argument("--auto-dependencies", action="store_true")
         elif name == "accept-workflow":
-            command.add_argument("--receipt", required=True, type=_local)
+            command.add_argument("--receipt", type=_local)
             command.add_argument("--outputs", required=True, type=_local)
             command.add_argument("--locations", required=True, type=_local)
             command.add_argument("--execute", action="store_true")
@@ -99,7 +109,7 @@ def _parser() -> argparse.ArgumentParser:
         elif name == "check-acceptance":
             command.add_argument("--plan", required=True, type=_local)
         elif name in {"inspect-output", "accept-terminal"}:
-            command.add_argument("--receipt", required=True, type=_local)
+            command.add_argument("--receipt", required=not by_run, type=_local)
             if name == "inspect-output":
                 command.add_argument("--arm", required=True)
                 command.add_argument("--artifact-root", required=True, type=_local)
@@ -178,6 +188,41 @@ def _dispatch(args) -> tuple[dict, int]:
                 raise ValueError("--arm is only used with a Spec")
             result = run_family_sandbox(args.family)
         return result, 0 if result["status"] == "PASSED" else 1
+    if args.command in {"inspect-output", "accept-workflow", "build-resume", "prepare-resume"}:
+        frozen = (args.package, args.expected_package_identity, args.receipt)
+        if args.command in {"build-resume", "prepare-resume"}:
+            frozen += (args.prepared,)
+        if args.run_id is not None:
+            if args.profile is None or args.attempt_id is None or args.repo_root is None:
+                raise ValueError("--run-id requires --profile, --attempt-id and --repo-root")
+            if any(value is not None for value in frozen):
+                raise ValueError("--run-id resolves the original package/receipt/preparation; do not override them")
+            from .experiment_run import (RunReconciliationRequired, inspect_run_output,
+                accept_run_workflow, build_run_resume, prepare_run_resume)
+            from .experiment_family_workflow import _json
+            original = (args.profile, args.repo_root, args.run_id, args.attempt_id)
+            try:
+                if args.command == "inspect-output":
+                    result = inspect_run_output(*original, arm_id=args.arm,
+                        artifact_root=args.artifact_root, expectations=_json(args.expectations))
+                    return result, 1 if result["status"] == "BLOCKED" else 0
+                if args.command == "accept-workflow":
+                    result = accept_run_workflow(*original, supplied=_json(args.outputs),
+                        locations=_json(args.locations), execute=args.execute,
+                        execution_root=args.execution_root)
+                    return result, 0 if result["status"] in {"COMPLETE", "MECHANICALLY_VERIFIED"} else 1
+                if args.command == "build-resume":
+                    return build_run_resume(*original, arm_id=args.arm,
+                        source_output=args.source_output, output=args.output), 0
+                result = prepare_run_resume(*original, plan=_json(args.resume_plan), output=args.output)
+                return result, 0 if result["status"] == "PREPARED_FOR_PLATFORM" else 1
+            except RunReconciliationRequired as exc:
+                return {"status": "RECONCILIATION_REQUIRED", "reason": str(exc),
+                        "executed": False, "network_accessed": False}, 1
+        if args.profile is not None or args.attempt_id is not None:
+            raise ValueError("--profile and --attempt-id require --run-id")
+        if any(value is None for value in frozen):
+            raise ValueError("--spec requires --package, --expected-package-identity, --receipt and, for recovery, --prepared")
     raw = _read(args.spec)
     spec = ExperimentSpec.from_json(raw)
     if raw != spec.to_json():
