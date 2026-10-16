@@ -20,10 +20,10 @@ one cumulative implementation/evidence record, not another operating protocol.
 | Batch | Delivered | Qualification / remainder |
 |---|---|---|
 | A | Default pytest collects `tests`; CLI fixtures load on demand; selected checkout runs under `-I`, including owning platform scripts | CPU accepted; shared `.pth` and running environments were not changed |
-| B | Machine-local external data/artifact/scratch roots; stable run/attempt paths; streaming verified no-clobber copy | New path accepted; one old archive copied and recovered by hash; no bulk historical migration/GC |
+| B | Machine-local external roots, stable run/attempt paths, verified copy and bounded metadata census | New path/copy accepted; census cannot prove unique-copy custody or authorize cleanup; no bulk migration/GC |
 | C | One catalog and read-only projections; shared K1/3 and GPTrans/2 scientific inputs generate recipes, Spec, workflow, source and prospective bindings | Bounded CPU scenarios accepted; arbitrary recipe/new-family compilation is not implemented |
 | D | Fixed runtime distribution, bulk Git, atomic complete archive cache; V2 explicitly distinguishes generated JSON from committed source | CPU package accepted with V1 compatibility; no native qualification |
-| E | Existing Kaggle `--experiment` entry; confirmed pre-publication failure recovery; same original submission journal; read-only run-ID locator | CPU/fake-API accepted; authenticated latency and real receipts not measured |
+| E | Existing Kaggle `--experiment`/journal entry; original-run inspection, acceptance, recovery and pinned-retrieval adapters; retained local timings | CPU/fake-API scope only; authenticated latency and real receipts not measured |
 | F | One normal guide, single portable source inventory and explicit commits | Server patch supplied; Desktop is NOT_APPLIED and requires its own review/tests |
 | G | Public model/recipe/session/checkpoint paths preserved | Deferred until cross-owner integration; no mass source moves or compatibility constants deleted |
 
@@ -202,8 +202,9 @@ No push or remote branch update is authorized by this reform.
    and targeted compatibility tests. Native/runtime qualification stays separate.
 3. G source regrouping and historical constants migration follow that cross-owner
    acceptance; public checkpoint module paths remain intact in this delivery.
-4. Old unique/ignored artifact census and any further copy-only migration remain
-   separate, bounded work. No deletion or generic TTL/GC service was implemented.
+4. The bounded metadata census described in the follow-up does not establish
+   historical unique-copy recoverability. Further copy-only migration remains
+   separate; no deletion or generic TTL/GC service was implemented.
 5. Real platform latency/receipt samples and any native test require separately
    applicable authority; this CPU task does not release them.
 6. V1 archives contain frozen recipe records as well as code. Changed recipe
@@ -401,3 +402,199 @@ The three changed operating documents passed navigation checks: 57 pointers,
 one anchor, zero issues and no length gate. Core/Recipe/Kernel/Runner, package,
 workflow/cache, RML and submission-journal owners had no diff from `c3f4c97b`.
 No remote push or job operation was performed in this continuation follow-up.
+
+## A-G completion re-audit and bounded follow-up (2026-10-17)
+
+The reform plan was reread against server `23784af0`, not treated as an
+implementation report. A read-only fetch observed remote Desktop
+`1ebb2e45d78d623374b50fb5df40b7af8e51ce59`; the local Desktop ref was the
+different `f4956019453b75d85347038d46a917fddc9dbdd1`. Neither ref was updated.
+Core/state paths matched the remote snapshot, but five data/kernel/loader/recipe/
+session owners and catalog glue differed. File-name matching is insufficient
+for applying the shared patch, and local/remote Desktop refs are not substitutes.
+
+The user assigned parallel implementation to GPT-6.1 Sol/high workers and
+test execution to Luna workers; the coordinator did not execute tests. Disjoint
+workers implemented bounded artifact metadata census, original-run lifecycle
+resolution, timing evidence reporting and documentation convergence. No new
+training loop, optimizer, sampler, platform submitter, RML store or scientific
+contract was introduced.
+
+- B: `artifact_inventory.py` counts explicitly selected regular-file metadata
+  with entry/depth/time/Git-output limits, bulk Git classification and no link/
+  reparse traversal or payload reading. Whole-worktree dirty state, unique
+  copies and process custody remain unknown; partial scans are not cleanup
+  evidence. Copying/verifying the earlier archive did not authorize deletion.
+- E: the existing inspection, acceptance and resume CLI operations resolve the
+  original frozen Spec/package/receipt from run/attempt IDs. Missing launches,
+  ambiguous journals and changed source/preparation bindings fail closed.
+  Scientific expectations, retrieved outputs, locations and recovery plans
+  remain explicit inputs to their original owners. There is no inferred verdict
+  or automatic successor. The legacy `--spec` arguments remain supported.
+  The existing Kaggle family retriever gained a thin run-ID entry: local mode
+  checks the exact original context and independently pinned manifest without
+  credentials, network or destination creation. Explicit execution delegates
+  to the original authenticator and pinned-file transport. Its output-list
+  latest-session limitation is retained, not masked as version-specific listing.
+- Performance evidence: successful preparation calls retain immutable local
+  observations outside frozen input/prepared bytes and the operation journal.
+  Auxiliary observation write failure is reported separately from the durable
+  package. `experiment_timings.py` reads bounded allowlisted metadata, separates
+  active phase accumulators from wall waiting, and reports missing duration/cost
+  as missing. Descriptive sample quantiles do not establish stable population
+  latency, warm applicability or the five-minute live target.
+- F: five workflow/API guides lost 187 net lines after the retrieval pointer
+  was integrated (1,216 to 1,029 lines), removing duplicate procedures and
+  manual source-registration instructions. Two linked examples were corrected
+  to declare ordinary addon execution once in the catalog. The quickstart is
+  the sole normal workflow; detailed APIs and old package/readers remain.
+
+### Completion boundaries
+
+A is locally accepted. B covers new external storage and the bounded census
+tool, not verified historical cleanup or complete copy uniqueness. C satisfies
+the plan's first shared K1/GPTrans parameter/addon path; unsupported recipe,
+input and new-family changes still require their actual owning builders, not
+an arbitrary override compiler. D retains verified fixed distribution/cache
+and separate Spec/package identities; a seed change that also changes recipe
+bytes conservatively misses the archive cache. No new config/archive layer was
+invented to hide that limit.
+
+E's CPU/fake-platform path cannot establish authenticated live latency or
+remote qualification. F's server convergence is not Desktop application: the
+owner must review explicit shared commits against its actual checkout and
+preserve its unique recovery/execution behavior. G stays deferred until this
+cross-owner gate, as required by plan sections 14–15; no mass source move,
+historical class-path deletion, worktree removal or hot environment update
+was performed. Overall A–G completion remains **NOT_COMPLETE**.
+
+### Retained follow-up test evidence
+
+Raw reports remain under `E:/MolGap/artifacts/reform`; counts overlap and are
+not independent experiments. The coordinator only read results; Luna workers
+executed the tests. Earlier red reports were retained, not xfailed or replaced
+by passing scientific claims.
+
+| Report suffix (after `completion-`) | Observed result | Scope |
+|---|---|---|
+| `input-20261017-020156-753-b6dd5a0b.xml` | 37 passed, 20.003s | Original prepare/retry and retained-observation behavior |
+| `input-20261017-020242-641-cace8bb8.xml` | 5 passed, 1.717s | Damaged original binding rejected |
+| `run-20261016T170738953Z-48138d309556468e92177591054c11d1.xml` | 149 passed, 2 failed, 208.097s | 59 run-ID, 79 CLI, 3 original fake-journal cases passed; two resume fixtures failed before runtime assertions |
+| `inventory-20261017-021335-607-1369091c.xml` | 73 passed, 3 failed, 2 skipped, 24.565s | Timing, package and environment checks passed; census Git classification failed |
+| `inventory-fix-20261017-021634-131-3563c318.xml` | 21 passed, 1 failed, 1 skipped, 6.473s | Census Git fix; remaining deterministic fixture-byte mismatch |
+| `inventory-bytefix-20261017-021855-765-74c2206a.xml` | 1 passed, 1.345s | Fixed-byte census fixture passed |
+| `retrieval-run-20261016T171359425Z-1b84dcc77eb947c780e1bdb81857d7c3.xml` | 20 passed, 25 failed, 1 skipped, 78.661s | Both corrected resume cases and original retrievers passed; new retrieval fixture used the wrong platform |
+| `reform-retrieval-run-20261016T171751557Z-0fa28d861b8341cbbba53dfde73e5f73.xml` | 33 passed, 1 skipped, 48.732s | Corrected actual Kaggle-context fixture, transport and negative boundary cases |
+
+The three fixes preserve the failing assertions and production gates:
+`check-ignore --stdin` rejects Git's global literal-pathspec flag, so only that
+pathname-consuming command omits it; the census fixture writes known LF bytes
+instead of assuming Windows `write_text` preserves LF; the synthetic execution
+registry overrides only its selected two owners rather than deleting unrelated
+families required by lazy imports. The retrieval fixture binds Kaggle before
+building its real synthetic package/receipt; local-platform and abbreviated
+`--exe` requests remain rejected. Scientific runtime owners were not changed.
+
+One first Luna execution attempted a restricted nested environment and produced
+23 setup permission errors, not business assertion failures. Its original JUnit
+was retained at `E:/MolGap/scratch/reform-completion/retained-c-sandbox-failure-1792170409147-d55fd9ecfda9432cb69b466bb6badb9c/completion-storage.xml`,
+SHA256 `9787e51b7b6d9124b8befb2582ad403f361eb00b23ab265ebd9d667a78b1a8ff`.
+The transient C-drive test directory was moved there with original evidence
+preserved; no project artifact or worktree was deleted. The later module tests
+ran directly in Luna's permitted E-drive environment. Native symlink-creation
+skips remain host limitations, with mocked reparse coverage separate.
+
+Implementation commits are independently applicable: `066749d2` (B census),
+`ec4675df` (preparation observations/report), `4d20c5d3` (E original-run
+lifecycle/retrieval), and `505fcd0c` (D host-only distribution boundary and the
+52-file portable inventory). Desktop must review these alongside the earlier
+compiler/continuation patches; neither matching names nor this inventory is a
+certificate of Desktop installation. No push or remote job operation followed.
+
+### Bounded physical census observation
+
+Luna inspected metadata only for the explicit old source-archive directory and
+five registered worktrees. The source-archive directory contained three ignored
+regular files totaling 28,189 logical bytes; four entries were visited in 0.250s.
+Its complete small-scope report is
+`E:/MolGap/artifacts/reform/completion-sourcearchive-census-20261017-022311-422-774a688c.json`,
+SHA256 `9496e14efef23892e3e9d824b96d4c73effde1602b12126f7ab3602173b0cab9`.
+
+The five-root scan was explicitly partial: 42,187 entries, 33,584 regular files
+and 29,279,656,390 logical bytes were observed, with Git classification unknown.
+The combined limit was 50,000 entries, depth12 and 30s; active return took
+30.593s including cancellation/return overhead. Depth/time limits, excluded
+nested worktrees and incomplete Git classification prevented a full inventory.
+The report is
+`E:/MolGap/artifacts/reform/completion-worktree-census-20261017-022311-422-774a688c.json`,
+SHA256 `f916f8efdfb41a83fbeef1e9cc7ce32346260c3bcb07ff74921f5fc39308a6af`.
+These are observed lower bounds, not total disk allocation or reclaimable space.
+Payload contents were not opened or hashed. Unique-copy custody and process
+dependencies remain unknown; nothing was cleared or declared safe to delete.
+The earlier interrupted zero-byte report was retained and is not evidence.
+
+### Shared inventory and navigation acceptance
+
+Luna passed 17 focused checks: four portable-inventory checks, four reuse-skill
+checks and nine documentation-check tests. The 52-file shared inventory matched;
+native qualification and Desktop application remained explicitly unestablished.
+Eleven changed active documents had 304 checked pointers, 18 checked anchors and
+zero issues, without a line-count gate. An incremental check of the later
+cumulative migration text had 11 pointers and zero issues. The other ten
+documents and tested source/inventory bytes had not changed between those
+observations. All 14 original user byte pins matched independently.
+
+The final metadata at
+`E:/molgap-leaf-testing-c00d612cedcb4c8a958f632c1574205c/result_final.json`
+pins each JUnit, raw log and navigation result; SHA256
+`289e0c2755249641a0f8050b506403678a62ac1819d5253654829bd1f6185e78`.
+These tests ran in parallel leaf processes with separate E-drive scratch;
+they are CPU/local checks, not live receipts or scientific tests.
+
+During the final isolated CPU check, closing an unresponsive Luna conversation
+did not terminate its already launched test process. A replacement invocation
+therefore briefly duplicated the local verification. The later process tree
+(verified root PID24428, scratch suffix `6ec44c43d7f1492cb47a455c39568c5c`)
+was explicitly stopped; its partial log/scratch was retained, not counted as a
+passing suite. The first process (scratch suffix
+`b29a52e8-7ad0-4b98-ae32-625f48c194c7`) was left to finish. This affected only
+CPU synthetic verification; no remote run or source package was resubmitted.
+Conversation status alone is not proof that its background command stopped.
+
+### Final committed-distribution and scientific-entry CPU acceptance
+
+At source `6cc71584b348e5843de1ebcddcfe9dbbad457ebb` (source unchanged from
+`505fcd0c`), Luna's original invocation passed **21 tests**, zero failures/errors/
+skips, in 242.684s JUnit time (244.275s wrapper wall time). It exercised the
+actual fixed distribution and complete K1/GPTrans scientific-input/addon,
+pre-publication interruption, changed-reference, cross-HEAD continuation and
+confounded-intervention CPU scenarios. Both source/HEAD snapshots were identical
+before and after. The JUnit is
+`E:/MolGap/artifacts/reform/completion-distribution-b29a52e8-7ad0-4b98-ae32-625f48c194c7.xml`,
+SHA256 `daa04d309d2b83e22cb19eae213c07d0cb1e989c22d072add165b2a2287da638`.
+The raw command/snapshots/manifests/measurements are in the adjacent `.raw.json`,
+SHA256 `0c05e96233de5af0fa52622f53095e7a2a7fc60fa955e73536708acb751e5cdd`.
+The six pytest warnings concern `record_property` with JUnit xunit2, not hidden
+test failures. Raw reports retain the properties and original observations.
+
+The 426-file distribution archive contained 1,304,088 bytes. Cold/warm source
+package samples took 5.062498/3.671561s; the isolated CPU child took 19.036014s.
+K1 and GPTrans sandbox checks passed with all MolGap modules imported from the
+extracted E-drive package, not host source. Existing Core/Session/State tests
+also ran inside that child: 116 passed in 5.695s, zero failures/errors/skips;
+the retained `driver/cpu-state.xml` SHA256 is
+`373e7e71ea359051195c00555d7aa2f9a7bc5edb11e7e255f8b6e09c5afffd59`.
+These nested tests overlap earlier module regressions. The package identities differed while source
+archive bytes were reused; no receipt or scientific identity was borrowed.
+These are raw local samples, not a stable latency distribution, a 90-second
+preparation certificate, a live five-minute receipt, or native qualification.
+
+Final delivered scope: **INFRA_CPU_ACCEPTED for the server subset**.
+Overall reform remains **NOT_COMPLETE**: Desktop application/compatibility
+requires the independent owner's actual checkout, G source regrouping follows
+that gate, historical unique-copy recovery remains unproved, and authenticated
+platform latency/native qualification were not run. All 14 unrelated user byte
+pins remained identical; no historical scientific conclusion, V5 text, training
+core, recipe, optimizer, sampler, resume owner, platform submission journal or
+canonical RML implementation was changed. No remote push, GPU job, dataset
+rebuild, protected-role access, model promotion or worktree cleanup occurred.
