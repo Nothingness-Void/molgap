@@ -18,13 +18,14 @@ from .research_memory.trace import file_digest
 
 
 COMPAT_MOLECULE_RULE = "rdkit-canonical-isomeric-smiles-clear-atom-maps-known-ogb-si-v2"
+EXPLICIT_H_MOLECULE_RULE = "rdkit-canonical-isomeric-smiles-clear-atom-maps-known-ogb-si-explicit-h-v3"
 
 
-def _key(mol):
+def _key(mol, *, explicit_hydrogens=False):
     from rdkit import Chem
     for atom in mol.GetAtoms():
         atom.SetAtomMapNum(0)
-    return Chem.MolToSmiles(mol, canonical=True, isomericSmiles=True)
+    return Chem.MolToSmiles(mol, canonical=True, isomericSmiles=True, allHsExplicit=explicit_hydrogens)
 
 
 def _silicon_fallback(smiles):
@@ -44,7 +45,7 @@ def _silicon_fallback(smiles):
     return mol
 
 
-def load_fallback_keys(path, expected_sha256):
+def load_fallback_keys(path, expected_sha256, *, explicit_hydrogens=False):
     """Pin the old audit or an independently graph-verified same-class ledger."""
     path = Path(path)
     if file_digest(path) != expected_sha256:
@@ -65,19 +66,20 @@ def load_fallback_keys(path, expected_sha256):
         verified = [{k:e[k] for k in ("source_idx","smiles")} for e in proof["entries"]
                     if e.get("accepted_si_identity") is True]
         if (not entries or entries != verified or indices != sorted(set(indices)) or
+                ledger.get("all_hydrogens_explicit",False) is not explicit_hydrogens or
                 any(proof.get(k) != ledger.get(k) for k in
-                    ("source_manifest_sha256","source_acceptance_sha256","identity_audit_sha256"))):
+                    ("source_manifest_sha256","source_acceptance_sha256","identity_audit_sha256","all_hydrogens_explicit"))):
             raise ValueError("ROLE_BLOCKED: expanded Si ledger differs from verified evidence")
-        return frozenset(_key(_silicon_fallback(e["smiles"])) for e in entries)
+        return frozenset(_key(_silicon_fallback(e["smiles"]),explicit_hydrogens=explicit_hydrogens) for e in entries)
     if (ledger.get("format") != "molgap-pcqm-k1-scale500k-parser-fallback-audit-v1" or
             tuple(indices) != UNSANITIZED_OGB_SOURCE_INDICES or
             index_sha256(indices) != UNSANITIZED_OGB_INDEX_SHA256 or
             ledger.get("ordered_index_sha256") != UNSANITIZED_OGB_INDEX_SHA256):
         raise ValueError("ROLE_BLOCKED: not the accepted OGB exception ledger")
-    return frozenset(_key(_silicon_fallback(e["smiles"])) for e in entries)
+    return frozenset(_key(_silicon_fallback(e["smiles"]),explicit_hydrogens=explicit_hydrogens) for e in entries)
 
 
-def molecular_identity(smiles, *, fallback_keys):
+def molecular_identity(smiles, *, fallback_keys, explicit_hydrogens=False):
     """Return (canonical key, anomaly evidence); no fallback flag in the key.
 
     Known graph-isomorphic aliases are covered too: restricting by source index
@@ -92,7 +94,7 @@ def molecular_identity(smiles, *, fallback_keys):
                 "status": "BLOCKED", "canonical_sha256": None}
     try:
         mol = _silicon_fallback(smiles)
-        key = _key(mol)
+        key = _key(mol,explicit_hydrogens=explicit_hydrogens)
         evidence["canonical_sha256"] = hashlib.sha256(key.encode()).hexdigest()
         if key not in fallback_keys:
             raise ValueError("Si structure absent from the frozen accepted ledger")
@@ -102,9 +104,11 @@ def molecular_identity(smiles, *, fallback_keys):
         if round_trip is None:
             raise ValueError("canonical identity cannot round trip")
         round_trip.UpdatePropertyCache(strict=False)
-        if (_key(reordered) != key or _key(round_trip) != key or
+        if (_key(reordered,explicit_hydrogens=explicit_hydrogens) != key or
+                _key(round_trip,explicit_hydrogens=explicit_hydrogens) != key or
                 (round_trip.GetNumAtoms(), round_trip.GetNumBonds()) !=
-                (mol.GetNumAtoms(), mol.GetNumBonds())):
+                (mol.GetNumAtoms(), mol.GetNumBonds()) or
+                sum(a.GetTotalNumHs() for a in round_trip.GetAtoms()) != sum(a.GetTotalNumHs() for a in mol.GetAtoms())):
             raise ValueError("unstable fallback molecular identity")
         evidence.update(status="KNOWN_FALLBACK", reason="accepted OGB Si topology; no chemistry edits")
         return key, evidence
@@ -113,7 +117,8 @@ def molecular_identity(smiles, *, fallback_keys):
         return None, evidence
 
 
-def audit_exception_graphs(*, boundary, fixed_root, identity_root, output_root, rule, audit_sha256):
+def audit_exception_graphs(*, boundary, fixed_root, identity_root, output_root, rule, audit_sha256,
+                          explicit_hydrogens=False):
     """CPU-only read-only proof against accepted graph bytes; never repair them.
 
     Only individually verified Si structures enter the expanded ledger. Other
@@ -195,18 +200,22 @@ def audit_exception_graphs(*, boundary, fixed_root, identity_root, output_root, 
             try:
                 if raw is None or not problems or any(p.GetType()!="AtomValenceException" for p in problems):
                     raise ValueError("Not a valence-only source exception")
-                mol=raw;mol.UpdatePropertyCache(strict=False);key=_key(mol)
-                if wanted[idx]["canonical_sha256"] is not None and hashlib.sha256(key.encode()).hexdigest()!=wanted[idx]["canonical_sha256"]:
+                mol=raw;mol.UpdatePropertyCache(strict=False)
+                original_key=_key(mol,explicit_hydrogens=rule["molecule_rule"]==EXPLICIT_H_MOLECULE_RULE)
+                key=_key(mol,explicit_hydrogens=explicit_hydrogens)
+                if wanted[idx]["canonical_sha256"] is not None and hashlib.sha256(original_key.encode()).hexdigest()!=wanted[idx]["canonical_sha256"]:
                     raise ValueError("Canonical identity differs from the original full audit")
                 for shift in range(mol.GetNumAtoms()):
                     order=list(range(shift,mol.GetNumAtoms()))+list(range(shift))
-                    if _key(Chem.RenumberAtoms(mol,order))!=key:
+                    if _key(Chem.RenumberAtoms(mol,order),explicit_hydrogens=explicit_hydrogens)!=key:
                         raise ValueError("Atom-order-dependent canonical identity")
                 round_trip=Chem.MolFromSmiles(key,sanitize=False)
                 if round_trip is None:
                     raise ValueError("Identity round-trip cannot parse")
                 round_trip.UpdatePropertyCache(strict=False)
-                if _key(round_trip)!=key or (round_trip.GetNumAtoms(),round_trip.GetNumBonds())!=(mol.GetNumAtoms(),mol.GetNumBonds()):
+                if (_key(round_trip,explicit_hydrogens=explicit_hydrogens)!=key or
+                        (round_trip.GetNumAtoms(),round_trip.GetNumBonds())!=(mol.GetNumAtoms(),mol.GetNumBonds()) or
+                        sum(a.GetTotalNumHs() for a in round_trip.GetAtoms())!=sum(a.GetTotalNumHs() for a in mol.GetAtoms())):
                     raise ValueError("Identity round-trip verification failed")
                 payload=_unsanitized_ogb_payload(smiles,atom_features=atom_to_ogb_feature_vector,
                                                bond_features=bond_to_ogb_feature_vector)
@@ -230,6 +239,7 @@ def audit_exception_graphs(*, boundary, fixed_root, identity_root, output_root, 
     report={"format":"molgap-pcqm-exception-graph-proof-v1","status":"ALL_EXCEPTIONS_VERIFIED" if len(verified)==len(entries) else "PARTIAL_SI_PROOF_ONLY",
             "source_manifest_sha256":rule["source_manifest_sha256"],"source_acceptance_sha256":rule["source_acceptance_sha256"],
             "identity_audit_sha256":audit_sha256,"verifier_sha256":file_digest(Path(__file__)),"entries":entries,
+            "all_hydrogens_explicit":explicit_hydrogens,
             "verified_si_rows":len(verified),"unresolved_rows":len(entries)-len(verified),
             "graphs_rebuilt":False,"source_labels_modified":False,"gpu_used":False,
             "official_validation_read":False,"test_roles_read":False,"data_role_accepted":False}
@@ -238,7 +248,7 @@ def audit_exception_graphs(*, boundary, fixed_root, identity_root, output_root, 
     publish_immutable_bytes(output/"exception_graph_audit.json",json_bytes(report))
     if verified:
         ledger={"format":"molgap-pcqm-unified-accepted-si-ledger-v1","entries":verified,
-                **{k:report[k] for k in ("source_manifest_sha256","source_acceptance_sha256","identity_audit_sha256")},
+                **{k:report[k] for k in ("source_manifest_sha256","source_acceptance_sha256","identity_audit_sha256","all_hydrogens_explicit")},
                 "graph_proof_sha256":file_digest(output/"exception_graph_audit.json")}
         publish_immutable_bytes(output/"fallback_ledger.json",json_bytes(ledger))
     return report

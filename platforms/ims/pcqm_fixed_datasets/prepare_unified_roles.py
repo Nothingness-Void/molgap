@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--verify-exceptions",action="store_true")
     parser.add_argument("--identity-root",type=Path)
     parser.add_argument("--identity-audit-sha256")
+    parser.add_argument("--explicit-fallback-h",action="store_true")
     args=parser.parse_args()
     if not 1 <= args.workers <= 4:
         parser.error("CPU preparation is limited to four workers")
@@ -28,7 +29,7 @@ def main():
             from molgap.pcqm_molecular_identity import audit_exception_graphs
             result=audit_exception_graphs(boundary=args.boundary,fixed_root=args.fixed_root,
                 identity_root=args.identity_root,output_root=args.output_root,rule=json.loads(args.rule.read_text()),
-                audit_sha256=args.identity_audit_sha256)
+                audit_sha256=args.identity_audit_sha256,explicit_hydrogens=args.explicit_fallback_h)
         else:
             result=prepare_unified_roles(boundary=args.boundary,fixed_root=args.fixed_root,
                 output_root=args.output_root,rule=json.loads(args.rule.read_text()),workers=args.workers,

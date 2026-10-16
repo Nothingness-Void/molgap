@@ -111,3 +111,23 @@ Si-only ledger. Do not rerun a complete inventory merely to rediscover already
 documented unresolved members; preserve the evidence and request the missing
 authority or representation decision. Every later rule/source has a new frozen
 identity, never an overwrite of r2/r3 results.
+
+## Explicit-H serialization revision
+
+The complete graph proof found two Si structures for which default canonical
+SMILES serialization dropped the source's zero-H bracket constraint. Re-reading
+introduced one additional implicit H, so the v2 round-trip gate correctly refused
+them. The v3 rule is
+`rdkit-canonical-isomeric-smiles-clear-atom-maps-known-ogb-si-explicit-h-v3`.
+Only fallback identity serialization uses `allHsExplicit=True`; this writes
+existing H counts, not added atoms or a chemistry correction. Normal sanitized
+identity stays byte-identical to v1/v2. The v2 rule/keys remain supported as v2.
+
+`--explicit-fallback-h` (`MOLGAP_EXPLICIT_FALLBACK_H=1`) opts the bounded graph
+proof into this new serialization. The proof still binds original r3 source
+SMILES/candidate keys and exact cached graph tensors. The expanded ledger pins
+`all_hydrogens_explicit=true` in both ledger and proof. A v2 rule cannot consume
+that ledger; a v3 preparation needs new source/parser/rule pins and a separate
+output. It cannot reuse v2 SQLite identity/rank rows. Tests prove that the two
+source H totals survive round-trip, atom order does not matter and ordinary
+sanitized keys stay unchanged. Non-Si exceptions remain outside this release.

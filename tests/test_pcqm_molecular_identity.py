@@ -8,7 +8,7 @@ import pytest
 from rdkit import Chem
 
 from molgap.pcqm_molecular_identity import (
-    COMPAT_MOLECULE_RULE, load_fallback_keys, molecular_identity, audit_exception_graphs,
+    COMPAT_MOLECULE_RULE, EXPLICIT_H_MOLECULE_RULE, load_fallback_keys, molecular_identity, audit_exception_graphs,
 )
 from molgap.pcqm_unified_roles import (
     canonical_molecule, inventory_rows, choose_roles, molecular_audit,
@@ -191,7 +191,7 @@ def test_unknown_real_fixture_collects_all_exceptions_without_materializing_role
     assert not (out/"members").exists() and not (out/"acceptance.json").exists()
 
 
-def proof_fixture(tmp_path, *, non_si=False, tamper_graph=False):
+def proof_fixture(tmp_path, *, non_si=False, tamper_graph=False, round_trip=False):
     from torch_geometric.data import Data,InMemoryDataset
     from molgap.pcqm_k1_scale_cache import _unsanitized_ogb_payload
     from molgap.packed_graph_dataset import PackedGraphDataset
@@ -199,6 +199,7 @@ def proof_fixture(tmp_path, *, non_si=False, tamper_graph=False):
     import torch
     fixed,r=source_fixture(tmp_path)
     smiles={0:"C[Si](C)(C)(C)C",1:ENTRIES[0]["smiles"]}
+    if round_trip:smiles[0]="Cl[C]1C=CC=C2N1C[Si](O2)(C)(C)Cl"
     if non_si:smiles[2]="CN(C)(C)C"
     shard=PackedGraphDataset(fixed/"train.pt",mmap=False)
     graphs=[shard.get(i) for i in range(30)]
@@ -290,3 +291,34 @@ def test_cpu_pbs_uses_registered_entrypoint_without_resolving_system_interpreter
     registry.write_text(json.dumps(payload))
     with pytest.raises(AssertionError):
         exec(compile(snippet,'cpu-pbs-runtime','exec'),{})
+
+
+@pytest.mark.parametrize('smiles',["Cl[C]1C=CC=C2N1C[Si](O2)(C)(C)Cl","C[C]1C=CC=C2N1C[Si](O2)(C)(C)Cl"])
+def test_explicit_h_serialization_does_not_invent_one_implicit_h(smiles):
+    from molgap.pcqm_molecular_identity import _silicon_fallback,_key
+    mol=_silicon_fallback(smiles)
+    legacy=_key(mol)
+    assert molecular_identity(smiles,fallback_keys={legacy})[0] is None
+    explicit=_key(mol,explicit_hydrogens=True)
+    assert molecular_identity(smiles,fallback_keys={explicit},explicit_hydrogens=True)[0]==explicit
+    reread=Chem.MolFromSmiles(explicit,sanitize=False);reread.UpdatePropertyCache(strict=False)
+    assert sorted(a.GetTotalNumHs() for a in reread.GetAtoms())==sorted(a.GetTotalNumHs() for a in mol.GetAtoms())
+    for i in range(mol.GetNumAtoms()):
+        order=list(range(i,mol.GetNumAtoms()))+list(range(i))
+        assert _key(Chem.RenumberAtoms(mol,order),explicit_hydrogens=True)==explicit
+    assert molecular_identity('CCO',fallback_keys={explicit},explicit_hydrogens=True)==(canonical_molecule('CCO'),None)
+
+
+def test_explicit_h_proof_is_new_bound_rule_and_cannot_mix_with_legacy_keys(tmp_path):
+    fixed,r,identity=proof_fixture(tmp_path,round_trip=True)
+    out=tmp_path/'proof'
+    proof=audit_exception_graphs(boundary=tmp_path,fixed_root=fixed,identity_root=identity,output_root=out,
+        rule=r,audit_sha256=sha256_file(identity/'molecular_identity_audit.json'),explicit_hydrogens=True)
+    assert proof['verified_si_rows']==2 and proof['unresolved_rows']==0
+    ledger=out/'fallback_ledger.json'
+    with pytest.raises(ValueError,match='expanded Si ledger'):
+        load_fallback_keys(ledger,sha256_file(ledger))
+    new=deepcopy(r);new.update(molecule_rule=EXPLICIT_H_MOLECULE_RULE,fallback_ledger_sha256=sha256_file(ledger))
+    assert validate_rule(new)!=validate_rule(r)
+    result=prepare_unified_roles(boundary=tmp_path,fixed_root=fixed,output_root=tmp_path/'explicit_roles',rule=new,fallback_ledger=ledger)
+    assert result['status']=='SYNTHETIC_DATA_ROLES_VERIFIED'

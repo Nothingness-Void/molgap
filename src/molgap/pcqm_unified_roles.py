@@ -23,7 +23,7 @@ from .cross_scale_plan import digest, exact, number
 from .pcqm_fixed_datasets import sha256_file, _inside
 from .research_memory.paths import repo_local_path
 from .research_memory.trace import atomic_write, json_bytes
-from .pcqm_molecular_identity import COMPAT_MOLECULE_RULE, molecular_identity, load_fallback_keys
+from .pcqm_molecular_identity import COMPAT_MOLECULE_RULE, EXPLICIT_H_MOLECULE_RULE, molecular_identity, load_fallback_keys
 
 
 FORMAT = "molgap-pcqm4mv2-unified-roles-v2"
@@ -32,6 +32,7 @@ MOLECULE_RULE = "rdkit-canonical-isomeric-smiles-clear-atom-maps-v1"
 TRAIN_ROLES = ("train_100k", "train_500k", "train_1m", "full_minus_holdout")
 ALL_ROLES = (*TRAIN_ROLES, "common_dev", "independent_audit")
 GRAPH_FIELDS = frozenset({"x", "edge_index", "edge_attr", "random_walk_pe", "source_idx", "y"})
+COMPATIBLE_RULES = {COMPAT_MOLECULE_RULE, EXPLICIT_H_MOLECULE_RULE}
 
 
 def freeze_role_inventory(repo_root):
@@ -81,12 +82,12 @@ def freeze_role_inventory(repo_root):
 
 
 def validate_rule(rule):
-    extra = {"fallback_ledger_sha256", "molecule_parser_sha256"} if rule.get("molecule_rule") == COMPAT_MOLECULE_RULE else set()
+    extra = {"fallback_ledger_sha256", "molecule_parser_sha256"} if rule.get("molecule_rule") in COMPATIBLE_RULES else set()
     exact(rule, {"format", "algorithm", "molecule_rule", "rdkit_version", "seed", "official_train_rows",
         "train_sizes", "common_dev_rows", "independent_audit_rows", "excluded_ranges",
         "source_manifest_sha256", "source_acceptance_sha256", "role_inventory_sha256",
         "generator_sha256", "source_commit", "scope"} | extra, "unified rule")
-    if (rule["format"] != FORMAT or rule["algorithm"] != ALGORITHM or rule["molecule_rule"] not in {MOLECULE_RULE, COMPAT_MOLECULE_RULE} or
+    if (rule["format"] != FORMAT or rule["algorithm"] != ALGORITHM or rule["molecule_rule"] not in {MOLECULE_RULE, *COMPATIBLE_RULES} or
             rule["scope"] not in {"CPU_SYNTHETIC_ONLY", "OFFICIAL_TRAIN_CPU_PREPARATION_ONLY"}):
         raise ValueError("Unknown immutable dataset rule")
     for key in ("seed", "official_train_rows", "common_dev_rows", "independent_audit_rows"):
@@ -123,9 +124,9 @@ def canonical_molecule(smiles):
     return Chem.MolToSmiles(mol, canonical=True, isomericSmiles=True)
 
 
-def _molecule_task(row, *, compatible=False, fallback_keys=()):
+def _molecule_task(row, *, compatible=False, fallback_keys=(), explicit_hydrogens=False):
     idx, smiles, target, seed = row
-    key, anomaly = molecular_identity(smiles, fallback_keys=fallback_keys) if compatible else (canonical_molecule(smiles), None)
+    key, anomaly = molecular_identity(smiles, fallback_keys=fallback_keys,explicit_hydrogens=explicit_hydrogens) if compatible else (canonical_molecule(smiles), None)
     molecule = hashlib.sha256(key.encode()).hexdigest() if key is not None else None
     rank = hashlib.sha256(f"{ALGORITHM}:{seed}:{molecule}".encode()).hexdigest() if molecule is not None else None
     return idx, molecule, rank, target, anomaly
@@ -148,7 +149,8 @@ def inventory_rows(database, rows, rule, *, map_rows=map, fallback_keys=()):
     database.execute("CREATE TABLE IF NOT EXISTS rows (idx INTEGER PRIMARY KEY, molecule TEXT, rank TEXT, target REAL, excluded INTEGER)")
     database.execute("CREATE TABLE IF NOT EXISTS molecular_anomalies (idx INTEGER PRIMARY KEY, evidence TEXT NOT NULL)")
     tasks = ((idx, smiles, target, rule["seed"]) for idx, smiles, target in rows)
-    task = partial(_molecule_task, compatible=rule["molecule_rule"] == COMPAT_MOLECULE_RULE, fallback_keys=fallback_keys)
+    task = partial(_molecule_task, compatible=rule["molecule_rule"] in COMPATIBLE_RULES, fallback_keys=fallback_keys,
+                   explicit_hydrogens=rule["molecule_rule"] == EXPLICIT_H_MOLECULE_RULE)
     for idx, molecule, rank, target, anomaly in map_rows(task, tasks):
         number(idx, "source index", integer=True)
         if idx >= rule["official_train_rows"]:
@@ -259,14 +261,15 @@ def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1,
         raise ValueError("Cannot write into old fixed dataset")
     rule_id = validate_rule(rule)
     fallback_keys = ()
-    if rule["molecule_rule"] == COMPAT_MOLECULE_RULE:
+    if rule["molecule_rule"] in COMPATIBLE_RULES:
         from . import pcqm_molecular_identity
         if sha256_file(Path(pcqm_molecular_identity.__file__)) != rule["molecule_parser_sha256"]:
             raise ValueError("Frozen molecular parser bytes changed")
         if fallback_ledger is None:
             raise ValueError("ROLE_BLOCKED: frozen fallback ledger required")
         ledger_path = _safe(boundary, fallback_ledger)
-        fallback_keys = load_fallback_keys(ledger_path, rule["fallback_ledger_sha256"])
+        fallback_keys = load_fallback_keys(ledger_path, rule["fallback_ledger_sha256"],
+                                          explicit_hydrogens=rule["molecule_rule"]==EXPLICIT_H_MOLECULE_RULE)
         ledger = json.loads(ledger_path.read_text())
         if ledger.get("format") == "molgap-pcqm-unified-accepted-si-ledger-v1" and any(
                 ledger.get(k) != rule[k] for k in ("source_manifest_sha256","source_acceptance_sha256")):
@@ -341,9 +344,9 @@ def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1,
                 next_idx += len(rows)
             atomic_write(output/"progress.json", json_bytes({"stage": "MOLECULAR_IDENTITY", "completed_rows": next_idx,
                 "rule_identity": rule_id, "status": "RUNNING", "gpu_used": False}))
-            if rule["molecule_rule"] == COMPAT_MOLECULE_RULE:
+            if rule["molecule_rule"] in COMPATIBLE_RULES:
                 atomic_write(output/"molecular_identity_progress.json", json_bytes(molecular_audit(db, rule)))
-        if rule["molecule_rule"] == COMPAT_MOLECULE_RULE:
+        if rule["molecule_rule"] in COMPATIBLE_RULES:
             audit = molecular_audit(db, rule)
             publish_immutable_bytes(output/"molecular_identity_audit.json", json_bytes(audit))
             if audit["status"] != "IDENTITIES_VERIFIED":
@@ -387,7 +390,7 @@ def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1,
             "parent_cpu_seconds": time.process_time()-cpu_start, "whole_allocation_cpu_hours": None,
             "mirrors": {"kaggle1": "NOT_PUBLISHED", "kaggle2": "NOT_PUBLISHED"},
             "training_authority": "NOT_AUTHORIZED_FOR_SCIENTIFIC_TRAINING"}
-        if rule["molecule_rule"] == COMPAT_MOLECULE_RULE:
+        if rule["molecule_rule"] in COMPATIBLE_RULES:
             report["molecular_identity_audit_sha256"] = sha256_file(output/"molecular_identity_audit.json")
         from .research_memory.schemas import validate_role_event
         events=[]
@@ -515,7 +518,7 @@ def accept_unified_roles(root, *, rule):
     db = sqlite3.connect("file:"+(root/"private_identity.sqlite").as_posix()+"?mode=ro", uri=True)
     roles = {}
     try:
-        if rule["molecule_rule"] == COMPAT_MOLECULE_RULE:
+        if rule["molecule_rule"] in COMPATIBLE_RULES:
             audit = json.loads((root/"molecular_identity_audit.json").read_text())
             if audit != molecular_audit(db, rule) or audit["status"] != "IDENTITIES_VERIFIED":
                 raise ValueError("ROLE_BLOCKED: molecular identity audit changed or incomplete")

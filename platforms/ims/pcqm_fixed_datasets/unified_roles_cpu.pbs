@@ -19,6 +19,7 @@ if test "${MOLGAP_VERIFY_EXCEPTIONS:-0}" = 1; then
   test "$(realpath "$IDENTITY_ROOT")" = "$IDENTITY_ROOT"
   case "$IDENTITY_ROOT" in "$BOUNDARY"/*) ;; *) exit 2 ;; esac
   EXTRA=(--verify-exceptions --identity-root "$IDENTITY_ROOT" --identity-audit-sha256 "${MOLGAP_IDENTITY_AUDIT_SHA:?explicit audit SHA required}")
+  if test "${MOLGAP_EXPLICIT_FALLBACK_H:-0}" = 1; then EXTRA+=(--explicit-fallback-h); fi
 fi
 export PYTHONPATH="$STAGE/code/src"
 if test "$IDENTITY_ONLY" = 0 || test "${MOLGAP_VERIFY_EXCEPTIONS:-0}" = 1; then
