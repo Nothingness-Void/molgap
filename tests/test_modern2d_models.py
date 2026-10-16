@@ -58,10 +58,12 @@ def test_disposable_cpu_sandbox_exact_roundtrip_and_all_gradients(family):
 
 
 @pytest.mark.parametrize("family", ["ppgt_small", "esa_small"])
-def test_batch_isolation_permutations_labels_and_unused_rwse(family):
+@pytest.mark.parametrize("count", [1, 2, 3])
+def test_batch_isolation_permutations_labels_and_unused_rwse(family, count):
     torch.set_num_threads(1)
     model = factory(family).eval()
-    data = batch(); original = deepcopy(data.to_dict())
+    data = Batch.from_data_list([graph(2 + i, i) for i in range(count)])
+    original = deepcopy(data.to_dict())
     expected = model(data)
     singles = torch.cat([model(Batch.from_data_list([g])) for g in data.to_data_list()])
     assert torch.equal(expected, singles)

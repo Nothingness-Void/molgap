@@ -294,6 +294,8 @@ def run_arm_sandbox(spec, arm_id: str, *, addon_parameters=None, seed=42, thread
     if arm is None:
         raise ValueError("Unknown sandbox arm")
     adapter = training_adapter(arm)
+    if adapter.cpu_synthetic_only:
+        raise ValueError("CPU synthetic family requires an explicit bounded configuration and run_sandbox factory")
     if adapter.module == "molgap.family_training_runner":
         result = run_family_sandbox(arm["family"]["name"], addons=tuple(arm["addons"]), seed=seed, threads=threads)
         result.update(spec_identity=spec.identity, arm_id=arm_id)

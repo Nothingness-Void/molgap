@@ -269,6 +269,9 @@ def workflow_capabilities(spec: ExperimentSpec) -> dict:
     for arm in spec.to_dict()["arms"]:
         try:
             adapter = training_adapter(arm)
+            if adapter.cpu_synthetic_only:
+                unsupported[arm["arm_id"]] = "CPU synthetic registration only; native training is not released"
+                continue
             supported[arm["arm_id"]] = {"mode": adapter.mode(arm), "trainer": adapter.module,
                                         "artifact_profile": adapter.artifact_adapter,
                                         "profile_adapter": adapter.profile_adapter}

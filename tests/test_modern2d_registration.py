@@ -9,7 +9,7 @@ import tarfile
 import pytest
 import torch
 
-from molgap.experiment_execution import TRAINING_ADAPTERS, validate_training_registry, validate_execution_plan
+from molgap.experiment_execution import TRAINING_ADAPTERS, validate_training_registry, validate_execution_plan, workflow_capabilities
 from molgap.experiment_spec import ExperimentSpec
 from molgap.shared_model_adapter import build_model, normalized_hook_source_sha256
 from molgap.source_dependencies import discover_source_dependencies
@@ -31,6 +31,10 @@ def test_static_registry_model_abi_and_remote_denial(family, payload):
     declaration.pop("model_config")
     payload["arms"] = [declaration]
     spec = ExperimentSpec(payload)
+    assert not workflow_capabilities(spec)["registered_training_arms"]
+    from molgap.fast_sandbox import run_arm_sandbox
+    with pytest.raises(ValueError, match="bounded configuration"):
+        run_arm_sandbox(spec, declaration["arm_id"])
     with pytest.raises(ValueError, match="CPU synthetic"):
         validate_execution_plan(spec, [])
 
