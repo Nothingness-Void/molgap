@@ -64,6 +64,19 @@ def test_locate_run_reuses_frozen_ids_without_fabricating_receipt_or_predictions
         locate_run(editable.value["machine_profile"],editable.repo,"../outside","v1")
 
 
+@pytest.mark.parametrize("fault",["input_identity","format","authority_ref","monitor_paths","source_commit"])
+def test_locate_run_rejects_damaged_original_binding(editable,fault):
+    frozen=freeze_experiment_input(editable.path,editable.repo)
+    path=Path(frozen["run_directory"])/"inputs/input_binding.json"
+    binding=json.loads(path.read_bytes())
+    binding[fault] = {"input_identity":"not-a-digest","format":"unknown",
+        "authority_ref":"../escape.json","monitor_paths":["../escape.md"],
+        "source_commit":"not-a-commit"}[fault]
+    write(path,binding)
+    with pytest.raises(ValueError):
+        locate_run(editable.value["machine_profile"],editable.repo,"synthetic-run","v1")
+
+
 @pytest.mark.parametrize("change",["unknown","duplicate","nonfinite","authority","workflow","monitor","ambiguous"])
 def test_input_errors_fail_before_publication(editable,change):
     value=editable.value
@@ -124,11 +137,35 @@ def test_legacy_scientific_freeze_reuses_without_compiler_or_current_git(frozen_
     monkeypatch.setattr("molgap.experiment_package._git",forbidden)
     verify=Mock(return_value={"spec_identity":case.spec.identity,"package_identity":"a"*64})
     monkeypatch.setattr("molgap.experiment_package.verify_experiment_source_package",verify)
-    before={str(p):p.read_bytes() for p in case.run.rglob("*") if p.is_file()}
+    before={str(p):p.read_bytes() for base in (case.run/"inputs",case.run/"prepared")
+            for p in base.rglob("*") if p.is_file()}
     result=prepare_experiment_input(case.path,case.repo)
     assert result["reused_preparation"] and result["status"]=="PREPARED_FOR_PLATFORM"
-    assert before=={str(p):p.read_bytes() for p in case.run.rglob("*") if p.is_file()}
+    assert before=={str(p):p.read_bytes() for base in (case.run/"inputs",case.run/"prepared")
+                   for p in base.rglob("*") if p.is_file()}
+    observation=json.loads(Path(result["local_observation"]).read_bytes())
+    assert result["local_observation_status"]=="RETAINED"
+    assert observation["spec_identity"]==case.spec.identity and observation["reused_preparation"]
+    assert observation["local_call_seconds"]>=0 and observation["source_commit"] is None
+    assert not (case.run/"operations").exists()
     forbidden.assert_not_called();verify.assert_called_once()
+
+
+def test_timing_observation_failure_does_not_invalidate_durable_preparation(frozen_scientific,monkeypatch):
+    case=frozen_scientific
+    monkeypatch.setattr("molgap.experiment_package.verify_experiment_source_package",
+        Mock(return_value={"spec_identity":case.spec.identity,"package_identity":"a"*64}))
+    from molgap import experiment_input as owner
+    publish=owner.publish_immutable_bytes
+    def interrupted(path,payload):
+        if "local_observations" in path.parts:
+            raise OSError("untrusted exception details must not be returned")
+        return publish(path,payload)
+    monkeypatch.setattr(owner,"publish_immutable_bytes",interrupted)
+    result=prepare_experiment_input(case.path,case.repo)
+    assert result["status"]=="PREPARED_FOR_PLATFORM" and result["reused_preparation"]
+    assert result["local_observation_status"]=="MISSING" and "local_observation" not in result
+    assert "untrusted" not in str(result) and not (case.run/"operations").exists()
 
 
 @pytest.mark.parametrize("fault",["input","spec","workflow","authority","partial","published"])

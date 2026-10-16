@@ -409,13 +409,31 @@ def locate_run(profile, repo_root, run_id, attempt_id):
     binding=_read(inputs/"input_binding.json")
     spec=ExperimentSpec(_read(inputs/"experiment_spec.json"))
     plan=_read(inputs/"workflow_plan.json")
+    if type(binding) is not dict or type(plan) is not dict:
+        raise ValueError("Original frozen run records must be objects")
+    from .common.spec import _digest
+    if binding.get("format") not in {"molgap-experiment-input-v1", "molgap-scientific-experiment-v1"}:
+        raise ValueError("Unknown original frozen input binding")
+    _digest(binding.get("input_identity"), "original input identity")
+    validate_relative_path(binding.get("authority_ref"))
+    monitors=binding.get("monitor_paths")
+    if (type(monitors) is not list or not monitors or any(type(p) is not str for p in monitors)
+            or len(monitors) != len(set(monitors))):
+        raise ValueError("Original frozen monitor bindings changed")
+    for pointer in monitors:
+        validate_relative_path(pointer)
     if (spec.to_dict()["logical_run_id"] != run_id or spec.identity != binding.get("spec_identity")
+            or plan.get("spec_identity") != spec.identity
             or canonical_fingerprint(plan) != binding.get("workflow_identity")):
         raise ValueError("Original frozen run binding changed")
     package=run/"prepared/package"
     manifest=verify_experiment_source_package(package) if package.exists() else None
     if manifest and manifest["spec_identity"] != spec.identity:
         raise ValueError("Run package differs from original frozen input")
+    if "source_commit" in binding:
+        source_commit=_commit(binding["source_commit"])
+        if manifest and manifest["source_commit"] != source_commit:
+            raise ValueError("Run package differs from original bound source")
     receipt_path=run/"operations/launch_receipt.json"
     _safe_local(receipt_path)
     if receipt_path.exists() and manifest is None:
@@ -498,7 +516,9 @@ def prepare_experiment_input(path, repo_root):
             binding=_read(run/"inputs/input_binding.json")
             if "source_commit" in binding and binding["source_commit"] != manifest["source_commit"]:
                 raise ValueError("Existing prepared package differs from the original bound source")
-            result={"status":"PREPARED_FOR_PLATFORM","reused_preparation":True}
+            result={"status":"PREPARED_FOR_PLATFORM","reused_preparation":True,
+                    "package_identity":manifest["package_identity"],
+                    "source_commit":manifest.get("source_commit")}
     if not prepared.exists() or retained is not None:
         if value["format"] == "molgap-scientific-experiment-v1":
             from .experiment_package import _git
@@ -517,9 +537,34 @@ def prepare_experiment_input(path, repo_root):
             prepared.rename(retained)  # Preserve every byte; only regenerable staging is replaced.
         result=prepare_workflow(spec,Path(repo_root).absolute(),plan,prepared,
                                 source_cache=paths.artifact_root/"source-packages/runtime-cache")
-    return {**result,"prepared":str(prepared),"operations":str(run/"operations"),
-            "authority_ref":value["authority_ref"],"monitor_paths":value["monitor_paths"],
-            "local_call_seconds":perf_counter()-started,"submitted":False}
+    result = {**result,"prepared":str(prepared),"operations":str(run/"operations"),
+              "authority_ref":value["authority_ref"],"monitor_paths":value["monitor_paths"],
+              "local_call_seconds":perf_counter()-started,"submitted":False}
+    if result["status"] == "PREPARED_FOR_PLATFORM":
+        _observe_preparation(run, spec, result)
+    return result
+
+
+def _observe_preparation(run, spec, result):
+    """Retain measured local work, without rewriting frozen bytes or the journal."""
+    from datetime import datetime, timezone
+    from .experiment_launch import canonical_json
+    observation = {"format":"molgap-local-preparation-observation-v1",
+        "observed_at":datetime.now(timezone.utc).isoformat(),
+        "status":result["status"], "spec_identity":spec.identity,
+        "package_identity":result.get("package_identity"),
+        "source_commit":result.get("source_commit"),
+        "reused_preparation":result.get("reused_preparation",False),
+        "local_call_seconds":result["local_call_seconds"]}
+    path = run / "local_observations" / ("preparation-" + uuid4().hex + ".json")
+    try:
+        publish_immutable_bytes(path, canonical_json(observation).encode())
+    except (OSError, ValueError):
+        # An auxiliary observation failure is not loss of the durable package.
+        result.update(local_observation_status="MISSING",
+                      local_observation_reason="Local timing observation could not be retained")
+    else:
+        result.update(local_observation_status="RETAINED", local_observation=str(path))
 
 
 def local_preparation_error(error,stage):
