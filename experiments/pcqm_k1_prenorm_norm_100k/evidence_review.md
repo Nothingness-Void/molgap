@@ -7,6 +7,12 @@ proven-overfitting interpretation was corrected: actual dropout0.05, online
 train metrics, development still improving late, and no retained EMA dev curve.
 Canonical old outcome is preserved. Exact local copies, Git source identities
 and SHA pins are in `reference_binding/post_norm/manifest.json`.
+The prior norm owner is not indexed in this checkout. Its retained files remain
+contextual contract references; no unknown evidence ID is inserted into RML.
+The registered supporting evidence is
+`pcqm-k1-500k-bn-calibration-20261007` and
+`pcqm-k1-bn-mechanism-a100-20261008`: both establish sensitivity to BN state,
+without establishing that replacing BN will improve training.
 
 [PPGT equations3/7](https://arxiv.org/html/2504.12588v4) describes adaptive gain
 and pre-norm residuals. The old experiment only replaced local post-residual

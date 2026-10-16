@@ -116,7 +116,7 @@ def declarations(root, manifest):
         "Does AdaRMSNorm improve local pre-norm K1 versus a same-job pre-norm BN control at100K?",
         "Prior post-norm Ada replacement lost3.890meV; its causal attribution was corrected, leaving placement unresolved.",
         "Move local norms inside residual branches; both arms add the declared final node norm; compare BN versus adaptive RMS gain.",
-        ("TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-terminal-20261016",),
+        ("pcqm-k1-500k-bn-calibration-20261007", "pcqm-k1-bn-mechanism-a100-20261008"),
         ("Operator-by-placement interaction", "Final normalization or source/job effects", "Recipe tuning and seed variance"),
         ("pcqm-k1-norm-ablation-100k-s42",),
         "Nominate a separately qualified pre-norm candidate; no automatic500K/adoption.",
@@ -151,6 +151,7 @@ def declarations(root, manifest):
         proposal["trajectory"]["actions"][0]["attempt_ids"] = [RUN + "-v1"]
         proposal["costs"][0]["attempt_id"] = RUN + "-v1"
         proposal["trajectory"]["actions"][0]["type"] = "training"
+        proposal["decision_state"]["policy_version"] = "1"
         proposal["trajectory"]["decision"]["next_allowed_actions"] = ["one authorized100K training attempt"]
         plan_ref = BASE + "/plan_" + arm + ".json"
         atomic_json(root / plan_ref, proposal)
