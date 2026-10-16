@@ -313,3 +313,33 @@ existing E-drive report root. No historical V4/V5 decision, durable scientific
 contract, existing RML record or primary user change was edited. Desktop/native
 application and end-to-end live platform latency remain unqualified. Overall
 A–G reform completion is still NOT_COMPLETE.
+
+### Primary acceptance (2026-10-17)
+
+The primary server fast-forwarded from `13eed22e` to `06c3abd8`. All 14
+pre-existing dirty tracked files retained their original byte pins before and
+after integration; `tests/test_research_memory.py` was neither edited nor staged.
+Unrelated untracked/ignored evidence and all registered worktrees were retained.
+
+`review-primary.xml` passed **188 tests**, zero failures/errors/skips, in
+165.253s (JUnit timing). SHA256:
+`c25ab77f2b630f1c6a7faf1eccd94948542ea14fc118011d3b6cf22aec881d87`.
+It reran both complete scientific-input scenarios, two-arm bindings, changed
+reference membership rejection, R1–R6 regression cases, original fake-API journal
+integration, actual committed distribution, and Core/Recipe/Session/state tests.
+Each family retained one frozen binding and exactly one published prospective
+record after recovery; actual platform requests/submissions were zero.
+
+The primary source-package cold/warm samples were 5.061107/3.729428s; the isolated
+CPU child took 15.950323s. Its source commit was `06c3abd8`, with 426 files and
+1,303,554 archive bytes. These remain local samples, not live platform latency.
+Compact acceptance metadata and raw JUnit are under
+`E:/MolGap/artifacts/reform/review-primary-acceptance.json` and the report root.
+Five changed entry/operating documents passed a read-only navigation check:
+176 pointers, six anchors, zero issues, no length gate.
+
+The scientific Core/Recipe/Kernel/Loaders/Session/State/Runner, durable V5 texts
+and historical shared inventory had no diff from `13eed22e`. This was a bounded
+**INFRA_CPU_ACCEPTED** delivery, not native qualification or overall reform
+completion. No push, training submission, Desktop branch edit or cleanup was
+performed in this review-hardening task.
