@@ -1,0 +1,31 @@
+{
+  "format": "molgap-unified-identity-repair-cpu-plan-v1",
+  "owner": "molgap-server",
+  "source_commit": "a1082ebe1b85649d7bfe64abe1db52e528a2af20",
+  "source_archive_sha256": "ca3b68f07b43c2c5a43c5c1f5e2229c3fb4d6c6d7d93c9192f15b24812955303",
+  "rule_file": "rule-r3.json",
+  "rule_raw_sha256": "92203c766fd1841c4b816ee38e086b2d9031ba539ad58a3931fe818940bb05b6",
+  "previous_attempt": "1730791.ccpbs1",
+  "previous_attempt_overwritten": false,
+  "stage": "/lustre/home/users/sm2/chou/molgap-pcqm-unified-v2/identity_r3",
+  "output": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-si-r3",
+  "mode": "IDENTITY_ONLY_FIRST",
+  "source_rows_ceiling": 3378606,
+  "requested_cpus": 4,
+  "requested_gpus": 0,
+  "walltime_ceiling_hours": 2,
+  "known_exception_policy": "ONLY_EXISTING_ACCEPTED_TEN_STRUCTURES_AND_CANONICAL_ALIASES",
+  "unknown_exception_policy": "AUDIT_ALL_THEN_ROLE_BLOCKED_NO_SELECTION",
+  "roles_selected": false,
+  "graphs_rebuilt": false,
+  "training_submitted": false,
+  "protected_roles_opened": false,
+  "mirrors_authorized_by_this_launch": false,
+  "local_tests": {
+    "broad_passed": 197,
+    "final_focused_passed": 59,
+    "counts_overlap": true
+  },
+  "actual_allocation_cost": null,
+  "authority": "Human approved the proposed identity repair and CPU data acceptance; no model or GPU work."
+}

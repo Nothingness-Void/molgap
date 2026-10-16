@@ -1,0 +1,22 @@
+{
+  "format": "molgap-unified-exception-proof-cpu-plan-v1",
+  "authority": "Human approved adding only individually evidence-verified same-class Si exceptions; other error classes remain blocked.",
+  "verifier_source_commit": "031fef2cf26b500a396ac2cc06d226f2cbe6a0a1",
+  "source_archive_sha256": "04cb1882e6d676ef669ff84446657f8967a0238cd5557b082bae7c0c3d8bc21a",
+  "identity_rule_identity": "689cfdec5307aa0dbad2702d6e8bdc6c1c6f1314a1905a756d40edb16461f7a5",
+  "identity_audit_sha256": "ca29528a06f3c53b094907be58d0e8349af3fbafc16565e7a3abf4f0de556732",
+  "identity_root": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-si-r3",
+  "stage": "/lustre/home/users/sm2/chou/molgap-pcqm-unified-v2/si_graph_proof_r4",
+  "output": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-si-proof-r4",
+  "audited_anomaly_rows": 33,
+  "requested_cpus": 4,
+  "requested_gpus": 0,
+  "walltime_ceiling_hours": 2,
+  "checks": ["bound source SMILES", "canonical/atom-order/round-trip stability", "exact cached OGB atom9", "exact cached edge index", "exact cached bond3", "Si-only eligibility"],
+  "graphs_rebuilt": false,
+  "labels_modified": false,
+  "roles_selected": false,
+  "training_submitted": false,
+  "actual_cost": null,
+  "local_proof_regression": {"passed": 188, "failed": 0, "skipped": 0}
+}

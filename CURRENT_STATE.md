@@ -87,9 +87,9 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 
 ## Live boundaries and next actions
 
-Cross-scale hardening is CPU-accepted; full V2 identity audit `1731714.ccpbs1` completed with23 unresolved exceptions.
-The authorized [Si identity repair](docs/operations/PCQM_UNIFIED_IDENTITY_REPAIR.md) requires exact accepted-graph proof before expansion.
-Unified V2 roles/mirrors remain unaccepted; no Modern2D implementation or training is released.
+Cross-scale/Si compatibility are CPU-accepted; Unified V2 remains ROLE_BLOCKED by two non-Si exceptions pending separate authority.
+The [identity acceptance](docs/operations/PCQM_UNIFIED_IDENTITY_REPAIR_ACCEPTANCE.md) owns full audit, graph proofs and frozen revisions.
+No CPU job remains active; no V2 roles/mirrors, Modern2D implementation or training is released.
 
 - Preserve terminal interpretations and independent qualifications through the
   history index. The accepted 500K bridge does not establish full-scale qualification.

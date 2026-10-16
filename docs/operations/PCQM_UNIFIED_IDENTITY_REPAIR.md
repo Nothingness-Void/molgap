@@ -1,5 +1,9 @@
 # Unified V2 molecular identity compatibility
 
+Actual evidence and remaining blockers are in the
+[identity acceptance](PCQM_UNIFIED_IDENTITY_REPAIR_ACCEPTANCE.md); live state is
+only in `CURRENT_STATE.md`.
+
 ## Scope and reuse
 
 On 2026-10-16 JST the user authorized repairing the Si canonicalization blocker,

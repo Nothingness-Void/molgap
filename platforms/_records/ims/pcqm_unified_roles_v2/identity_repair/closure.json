@@ -1,0 +1,231 @@
+{
+  "format": "molgap-unified-identity-repair-closure-v1",
+  "date": "2026-10-16",
+  "timezone": "Asia/Tokyo",
+  "branch": "molgap-server",
+  "implementation_head": "1683337a762e3b21df54acfaaf8615b189b13b75",
+  "status": "INFRA_CPU_ACCEPTED",
+  "si_compatibility_status": "SI_IDENTITY_ACCEPTED",
+  "data_status": "ROLE_BLOCKED",
+  "data_role_accepted": false,
+  "complete_official_train_rows_audited": 3378606,
+  "strict_anomaly_rows": 33,
+  "si_rows_verified": 31,
+  "remaining_non_si_rows": [
+    2539039,
+    2980839
+  ],
+  "remaining_gate": "SEPARATE_HUMAN_AUTHORITY_FOR_EXACT_TWO_P_STRUCTURES",
+  "si_rule_identity": "3f99e15efeefda934bbe47628a7b2eb1e15ba646a5fc08b73817f741f7db4f92",
+  "source_manifest_sha256": "4ecd1546c5fc898004809a5b7130bd7963a5eb569120dbee95e65f18ed9cc99e",
+  "source_acceptance_sha256": "82bdf0d304b5a1b20d120dd25c07ad6c6cf02324bab2b13634ed68ee8c63db0e",
+  "old_source_root_hashes_unchanged": true,
+  "old_full_payload_rescan": false,
+  "selected_anomaly_source_and_topology_chunks_sha_verified": true,
+  "all_final_anomalies_identity_and_exact_ogb_features_verified": true,
+  "admitted_chemistry_classes": [
+    "Si"
+  ],
+  "phosphorus_admitted": false,
+  "normal_sanitized_identity_unchanged": true,
+  "source_bonds_charge_hydrogens_labels_edited": false,
+  "rows_skipped_or_replaced": 0,
+  "new_roles_selected": false,
+  "new_role_intersections": null,
+  "new_role_member_sha256": null,
+  "mirrors": {
+    "ims": "MASTER_NOT_CREATED",
+    "kaggle1": "NOT_PUBLISHED",
+    "kaggle2": "NOT_PUBLISHED"
+  },
+  "graphs_rebuilt": false,
+  "gpu_tasks_submitted": false,
+  "training_submitted": false,
+  "modern2d_started": false,
+  "official_validation_read": false,
+  "test_roles_read": false,
+  "model_scoring": false,
+  "canonical_rml_written": false,
+  "training_replay_claimed": false,
+  "final_scheduler_observation": "NO_ACCOUNT_ACTIVE_JOBS",
+  "cpu_jobs": [
+    {
+      "job_id": "1731714.ccpbs1",
+      "purpose": "FULL_TRAIN_IDENTITY_AUDIT",
+      "outcome": "AUDIT_COMPLETE_ROLE_BLOCKED_23_UNKNOWN",
+      "requested_cpus": 4,
+      "requested_gpus": 0,
+      "requested_walltime_hours": 2
+    },
+    {
+      "job_id": "1731916.ccpbs1",
+      "purpose": "EXCEPTION_GRAPH_PROOF",
+      "outcome": "INFRASTRUCTURE_ONLY_STARTUP_ASSERTION_BEFORE_GRAPH_ACCESS",
+      "requested_cpus": 4,
+      "requested_gpus": 0,
+      "requested_walltime_hours": 2
+    },
+    {
+      "job_id": "1732022.ccpbs1",
+      "purpose": "V2_KEY_EXCEPTION_GRAPH_PROOF",
+      "outcome": "PARTIAL_SI_PROOF_29_VERIFIED_4_UNRESOLVED",
+      "requested_cpus": 4,
+      "requested_gpus": 0,
+      "requested_walltime_hours": 2
+    },
+    {
+      "job_id": "1732093.ccpbs1",
+      "purpose": "V3_EXPLICIT_H_EXCEPTION_GRAPH_PROOF",
+      "outcome": "SI_PROOF_31_VERIFIED_2_P_NOT_AUTHORIZED",
+      "requested_cpus": 4,
+      "requested_gpus": 0,
+      "requested_walltime_hours": 2
+    }
+  ],
+  "native_whole_allocation_cpu_hours": null,
+  "native_allocated_wall_hours": null,
+  "native_queue_hours": null,
+  "cost_status": "MEASUREMENT_MISSING_REQUESTS_ARE_NOT_SPEND",
+  "artifact_sha256": {
+    "exception_graph_audit.json": "b213cc21307abea93fc92416d04eb53c3105029947333fb39a55724c1ce08a6f",
+    "exception_proof_launch_r6.json": "ca1714be7df3cb444e8a311f0a377b61628faa206033ee79feae112cfa7a1d2e",
+    "exception_proof_launch_r7.json": "5f6dbb08f11c0e0409788aa6a1b561df7a2cf6d1c7adc52450ab633341084187",
+    "exception_proof_launch_r8.json": "eb07d006e252fdeda74289da8a5dfe84299a6d947fe32d705edbad837323aee6",
+    "exception_proof_plan.json": "52b3564851f9daf5c04a8608c8ccad883c8e95b4056e842f83f171f88a59530a",
+    "explicit_h_v3/exception_graph_audit.json": "6ae32541ec2eca869eaaf38efcc2765b24f10db687d8789e6d185a68d2c381d7",
+    "explicit_h_v3/fallback_ledger.json": "41cbad2edf8b38534cdb7d1fcbb553a1dfccae96b23054b43c3f6342c4f97da7",
+    "failure-r3.json": "ed1b65cbf677f80e11aae24b990305667aad622cfb6ca55e8baa17c40a6f7af5",
+    "fallback_ledger.json": "ff6d07fdcdd01719bfc903306b6859a5d78414cadbf0a89a37672fef1c865e78",
+    "launch_plan.json": "88e24837b83efe65eb461a4a86b2d18a92c82da76bb914237780e2b71e557f25",
+    "mg-si-id-r3.o1731714": "0580a08259055866938fd6abd5971d6854b677328e594b7fe4955a17e115de1c",
+    "mg-si-proof-r6.o1731916": "16b9f46e759b5fcfc0695e5bf2097dc3db7a036e1dd52c0a90e196eee31996b5",
+    "mg-si-proof-r7.o1732022": "cca309893f1a7170b85264792d201241616496bc2e858494d3fad96533544f91",
+    "mg-si-proof-r8.o1732093": "6ebbbc81ee7b177ecee1f0f01c073ab6267f4aebc3a519c45a349a37397cdeee",
+    "molecular_identity_audit-r3.json": "ca29528a06f3c53b094907be58d0e8349af3fbafc16565e7a3abf4f0de556732",
+    "rule-r3.json": "92203c766fd1841c4b816ee38e086b2d9031ba539ad58a3931fe818940bb05b6",
+    "rule-si-v3.json": "0b45f544844bc2eb13cc28a6fd5c49b6319f0ae6e4715513912292940c5acc43",
+    "source-proof-r5.tar": "ae0457d8a69f13de4c61cb8619b8b7f852584b13dcacc83ee057501ded293e57",
+    "source-proof-r6.tar": "acac1c366e5f5d7d5fc43ce9aa7d8d6a29f51add85cc349494f842165c90299d",
+    "source-proof-r7-checked.tar": "f0d01e58b017c3e448310507b397beef3b04d3122e86a93ca3c90b07f26caa3d",
+    "source-proof-r7.tar": "0237f2fc4ac0786ceb5a53b230b4754d77a4ab420d9e95dcbd86309180275bd5",
+    "source-proof-r8.tar": "10901878d959774e42cf6f9fe8caffa0f7b9ff6d132f575b92a03886b02363cb",
+    "source-proof.tar": "04cb1882e6d676ef669ff84446657f8967a0238cd5557b082bae7c0c3d8bc21a",
+    "source-r3.tar": "ca3b68f07b43c2c5a43c5c1f5e2229c3fb4d6c6d7d93c9192f15b24812955303",
+    "submission.json": "084598997912867be8f529e90b19e60e0845354b088fdadb1ca3d14965e2e45b"
+  },
+  "test_groups": [
+    {
+      "path": "../identity_repair_cpu_tests.xml",
+      "sha256": "7a6cf5b823e51bffb173eda991e88d49ff6427a740cfd36cc270b8157d0ca850",
+      "counts": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "197",
+          "time": "9.455",
+          "timestamp": "2026-10-16T12:52:43.345074+09:00",
+          "hostname": "服务器"
+        }
+      ],
+      "skips": []
+    },
+    {
+      "path": "../identity_infrastructure_regression.xml",
+      "sha256": "e1166787c598a94504caf9c9fbabd41706999f9e3bebf11db8bf6c64f5a43022",
+      "counts": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "1",
+          "tests": "105",
+          "time": "122.772",
+          "timestamp": "2026-10-16T12:58:35.943552+09:00",
+          "hostname": "服务器"
+        }
+      ],
+      "skips": [
+        {
+          "type": "pytest.skip",
+          "message": "Host does not permit creating symlinks"
+        }
+      ]
+    },
+    {
+      "path": "../identity_runtime_fix_tests.xml",
+      "sha256": "fd1dce5bda0af378ba36f6c9e269cbc0346a57347ca668ea475c25eb1914b3f7",
+      "counts": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "1",
+          "skipped": "0",
+          "tests": "77",
+          "time": "6.098",
+          "timestamp": "2026-10-16T13:19:00.157783+09:00",
+          "hostname": "服务器"
+        }
+      ],
+      "skips": []
+    },
+    {
+      "path": "../identity_runtime_fix_recheck.xml",
+      "sha256": "7c5a0986aaf2a9bfda7a843b41dfb596d0f4216266f9eced53a0db62023a0dda",
+      "counts": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "77",
+          "time": "5.655",
+          "timestamp": "2026-10-16T13:19:46.328341+09:00",
+          "hostname": "服务器"
+        }
+      ],
+      "skips": []
+    },
+    {
+      "path": "../explicit_h_final_tests.xml",
+      "sha256": "de738e482450bf5f4b8dd0ec853b63ff08670cb8d0758ada997a431ec3f21c13",
+      "counts": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "219",
+          "time": "11.047",
+          "timestamp": "2026-10-16T13:30:01.780120+09:00",
+          "hostname": "服务器"
+        }
+      ],
+      "skips": []
+    }
+  ],
+  "counts_overlap_do_not_sum": true,
+  "final_regression": {
+    "passed": 219,
+    "failed": 0,
+    "skipped": 0
+  },
+  "rml_read_only_validation": {
+    "passed": true,
+    "evidence": 110,
+    "trajectories": 127,
+    "costs": 193,
+    "roles": 481,
+    "traces": 64,
+    "ready": 0,
+    "comparison_prelaunch": 62,
+    "comparison_readiness": 45,
+    "reference_bundles": 17,
+    "target_transform_assets": 3
+  },
+  "preserved_user_test_sha256": "e623abd9b0a410d6c49ccf1d04e2e1ba5bb23237db4dea2a2c8c874f4b9465f1",
+  "pushed": false,
+  "desktop_integrated": false,
+  "stop": "No whole-role preparation until remaining non-Si permission is resolved; never start models or GPU training."
+}

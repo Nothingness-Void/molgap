@@ -1,0 +1,30 @@
+{
+  "format": "molgap-unified-exception-proof-launch-v1",
+  "status": "INFRASTRUCTURE_FAILURE_BEFORE_GRAPH_READ",
+  "job_id": "1731916.ccpbs1",
+  "verifier_source_commit": "ff42de2053f3f01b72e73832392a764d9b8f891c",
+  "source_archive_sha256": "acac1c366e5f5d7d5fc43ce9aa7d8d6a29f51add85cc349494f842165c90299d",
+  "identity_rule_identity": "689cfdec5307aa0dbad2702d6e8bdc6c1c6f1314a1905a756d40edb16461f7a5",
+  "identity_audit_sha256": "ca29528a06f3c53b094907be58d0e8349af3fbafc16565e7a3abf4f0de556732",
+  "stage": "/lustre/home/users/sm2/chou/molgap-pcqm-unified-v2/si_graph_proof_r6",
+  "output": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-si-proof-r6",
+  "requested_cpus": 4,
+  "requested_gpus": 0,
+  "requested_walltime_hours": 2,
+  "training_submitted": false,
+  "retired_pre_submission_stages": [
+    {
+      "stage": "si_graph_proof_r4",
+      "source_commit": "031fef2cf26b500a396ac2cc06d226f2cbe6a0a1",
+      "job_id": null,
+      "reason": "RDKit-only runtime lacks torch; registered runtime required"
+    },
+    {
+      "stage": "si_graph_proof_r5",
+      "source_commit": "ec76769b21b0d36f3a74968b163ff711cc0d0f95",
+      "job_id": null,
+      "reason": "Registered graph runtime has no OGB package; reused existing dependency-free OGB feature contract with tested hook"
+    }
+  ],
+  "native_whole_allocation_cost": null
+}

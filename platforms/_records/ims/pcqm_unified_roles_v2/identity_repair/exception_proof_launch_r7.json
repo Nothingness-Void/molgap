@@ -1,0 +1,20 @@
+{
+  "format": "molgap-unified-exception-proof-launch-v1",
+  "status": "COMPLETED_PARTIAL_SI_PROOF_29_VERIFIED_4_UNRESOLVED",
+  "job_id": "1732022.ccpbs1",
+  "verifier_source_commit": "15741c188bfc29d66e92e5b19d667a135475656e",
+  "source_archive_sha256": "f0d01e58b017c3e448310507b397beef3b04d3122e86a93ca3c90b07f26caa3d",
+  "identity_audit_sha256": "ca29528a06f3c53b094907be58d0e8349af3fbafc16565e7a3abf4f0de556732",
+  "identity_rule_identity": "689cfdec5307aa0dbad2702d6e8bdc6c1c6f1314a1905a756d40edb16461f7a5",
+  "stage": "/lustre/home/users/sm2/chou/molgap-pcqm-unified-v2/si_graph_proof_r7",
+  "output": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-si-proof-r7",
+  "requested_cpus": 4,
+  "requested_gpus": 0,
+  "requested_walltime_hours": 2,
+  "retry_of": "1731916.ccpbs1",
+  "retry_reason": "Startup assertion incorrectly resolved a registered venv interpreter symlink. Exact embedded PBS-runtime code now tested locally and on IMS.",
+  "local_release_tests": {"passed": 77, "failed": 0},
+  "scientific_rule_changed": false,
+  "training_submitted": false,
+  "actual_native_cost": null
+}
