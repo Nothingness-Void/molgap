@@ -71,6 +71,43 @@ def freeze_experiment_input(path, repo_root):
     return _freeze(value,spec,plan,paths)
 
 
+def locate_run(profile, repo_root, run_id, attempt_id):
+    """Read the original frozen run by ID; never create a run or infer artifacts."""
+    from .experiment_launch import read_launch_receipt
+    from .experiment_package import verify_experiment_source_package
+    from .research_memory.trace import file_digest
+    paths=MachinePaths.from_file(profile).outside_checkout(repo_root)
+    run=paths.run_directory(run_id,attempt_id)
+    inputs=run/"inputs"
+    binding=_read(inputs/"input_binding.json")
+    spec=ExperimentSpec(_read(inputs/"experiment_spec.json"))
+    plan=_read(inputs/"workflow_plan.json")
+    if (spec.to_dict()["logical_run_id"] != run_id or spec.identity != binding.get("spec_identity")
+            or canonical_fingerprint(plan) != binding.get("workflow_identity")):
+        raise ValueError("Original frozen run binding changed")
+    package=run/"prepared/package"
+    manifest=verify_experiment_source_package(package) if package.exists() else None
+    if manifest and manifest["spec_identity"] != spec.identity:
+        raise ValueError("Run package differs from original frozen input")
+    receipt_path=run/"operations/launch_receipt.json"
+    _safe_local(receipt_path)
+    if receipt_path.exists() and manifest is None:
+        raise ValueError("A receipt without its original package cannot be resolved")
+    receipt=(read_launch_receipt(receipt_path,spec,package,
+        expected_package_identity=manifest["package_identity"]) if receipt_path.exists() else None)
+    files={}
+    for name in ("inputs/input_binding.json","inputs/experiment_spec.json","inputs/workflow_plan.json",
+                 "prepared/workflow_report.json","prepared/release_report.json",
+                 "operations/submission_state.json","operations/launch_receipt.json"):
+        path=run/name
+        _safe_local(path)
+        files[name]={"path":str(path),"sha256":file_digest(path)} if path.is_file() else None
+    return {"status":"RUN_LOCATED_ONLY","run_directory":str(run),"spec_identity":spec.identity,
+            "package_identity":manifest["package_identity"] if manifest else None,
+            "receipt":receipt,"files":files,"network_accessed":False,
+            "scientific_acceptance":"NOT_EVALUATED"}
+
+
 def _freeze(value,spec,plan,paths):
     from .experiment_launch import canonical_json
     run = paths.run_directory(spec.to_dict()["logical_run_id"],value["attempt_id"])

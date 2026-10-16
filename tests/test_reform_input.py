@@ -7,7 +7,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from molgap.experiment_input import freeze_experiment_input,prepare_experiment_input,resolve_experiment_input
+from molgap.experiment_input import freeze_experiment_input,prepare_experiment_input,locate_run
 from molgap.experiment_spec import ExperimentSpec
 from test_experiment_spec import payload
 
@@ -46,6 +46,22 @@ def test_normal_json_freeze_is_canonical_idempotent_and_outside_worktree(editabl
     assert "source_files" not in plan and plan["source_profile"]=="runtime-v1"
     assert plan["source_records"]==["authority.json","recipes/frozen.json"]
     assert not (editable.repo/"research_memory").exists()
+
+
+def test_locate_run_reuses_frozen_ids_without_fabricating_receipt_or_predictions(editable):
+    frozen=freeze_experiment_input(editable.path,editable.repo)
+    run=Path(frozen["run_directory"])
+    before={str(p):p.read_bytes() for p in run.rglob("*") if p.is_file()}
+    report=locate_run(editable.value["machine_profile"],editable.repo,"synthetic-run","v1")
+    assert report["status"]=="RUN_LOCATED_ONLY" and report["receipt"] is None
+    assert report["package_identity"] is None and not report["network_accessed"]
+    assert report["files"]["operations/launch_receipt.json"] is None
+    assert report["files"]["inputs/experiment_spec.json"]["sha256"]
+    assert before=={str(p):p.read_bytes() for p in run.rglob("*") if p.is_file()}
+    with pytest.raises(FileNotFoundError):
+        locate_run(editable.value["machine_profile"],editable.repo,"missing-run","v1")
+    with pytest.raises(ValueError):
+        locate_run(editable.value["machine_profile"],editable.repo,"../outside","v1")
 
 
 @pytest.mark.parametrize("change",["unknown","duplicate","nonfinite","authority","workflow","monitor","ambiguous"])

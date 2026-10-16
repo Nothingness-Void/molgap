@@ -50,6 +50,11 @@ def _parser() -> argparse.ArgumentParser:
     freeze=commands.add_parser("freeze-input")
     freeze.add_argument("--experiment",required=True,type=_local)
     freeze.add_argument("--repo-root",required=True,type=_local)
+    locate=commands.add_parser("locate-run")
+    locate.add_argument("--profile",required=True,type=_local)
+    locate.add_argument("--repo-root",required=True,type=_local)
+    locate.add_argument("--run-id",required=True)
+    locate.add_argument("--attempt-id",required=True)
     for name in ("validate-spec", "package", "preflight", "run-diagnostic",
                  "launch-receipt", "terminal", "plan-prospective", "check-release",
                  "check-acceptance", "inspect-output", "accept-terminal",
@@ -140,6 +145,9 @@ def _parser() -> argparse.ArgumentParser:
 
 
 def _dispatch(args) -> tuple[dict, int]:
+    if args.command == "locate-run":
+        from .experiment_input import locate_run
+        return locate_run(args.profile,args.repo_root,args.run_id,args.attempt_id),0
     if args.command == "catalog":
         from dataclasses import asdict
         from .experiment_execution import TRAINING_ADAPTERS
