@@ -6,7 +6,8 @@ import numpy as np
 import torch
 
 
-def test_embedding_subset_alignment(tmp_path: Path):
+def test_embedding_subset_alignment(tmp_path: Path, cli_module):
+    cli_module("cli.train_hierarchical_2d3d_fusion")
     from cli.train_hierarchical_2d3d_fusion import (
         load_embedding_subset,
     )
@@ -60,7 +61,8 @@ def test_embedding_subset_alignment(tmp_path: Path):
     assert sum(report["selected_rows"] for report in reports) == 3
 
 
-def test_numeric_scaffold_manifest_alignment(tmp_path: Path):
+def test_numeric_scaffold_manifest_alignment(tmp_path: Path, cli_module):
+    cli_module("cli.train_hierarchical_2d3d_fusion")
     from cli.train_hierarchical_2d3d_fusion import load_scaffold_groups
 
     path = tmp_path / "scaffolds.npz"

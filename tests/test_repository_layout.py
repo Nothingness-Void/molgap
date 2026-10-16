@@ -9,7 +9,6 @@ import pytest
 
 from conftest import CLI_MODULES
 from molgap.constants import REPO_ROOT
-from molgap.documentation_check import ENTRYPOINT_LINE_LIMITS
 
 ACTIVE_ROOTS = ("production", "experiments", "platforms")
 EXCLUDED_PARTS = {
@@ -83,7 +82,6 @@ LOCAL_LINK_SUFFIXES = (
     ".yaml",
     ".yml",
 )
-CONTROL_DOC_LIMITS = ENTRYPOINT_LINE_LIMITS
 TOP_LEVEL_POINTER_DOCS = (
     "AGENTS.md",
     "CURRENT_STATE.md",
@@ -276,16 +274,6 @@ def test_active_experiments_are_indexed_and_traceable() -> None:
     assert not failures, "experiment traceability failures:\n" + "\n".join(failures)
 
 
-def test_live_control_documents_remain_bounded() -> None:
-    failures: list[str] = []
-    for relative, limit in CONTROL_DOC_LIMITS.items():
-        text = (REPO_ROOT / relative).read_text(encoding="utf-8")
-        line_count = len(text.splitlines())
-        if line_count > limit:
-            failures.append(f"{relative}: {line_count} lines exceeds {limit}")
-    assert not failures, "live control documents accumulated history:\n" + "\n".join(failures)
-
-
 def test_top_level_document_pointers_exist() -> None:
     failures: list[str] = []
     for relative in TOP_LEVEL_POINTER_DOCS:
@@ -380,8 +368,7 @@ def test_active_directories_use_role_or_question_names() -> None:
 
 
 def test_cli_aliases_are_complete_and_importable() -> None:
-    # conftest imports every alias during collection; this additionally makes a
-    # missing/moved file failure explicit instead of silently skipping it.
+    # Check the aliases without importing unrelated training CLIs at collection.
     for alias, relative in CLI_MODULES.items():
         path = REPO_ROOT / relative
         assert path.is_file(), f"{alias} points to missing CLI: {relative}"

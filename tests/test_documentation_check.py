@@ -97,19 +97,14 @@ def test_frozen_documents_are_skipped_unless_requested(tmp_path: Path) -> None:
     assert [issue.kind for issue in included.issues] == ["missing_path"]
 
 
-def test_entrypoint_budgets_are_stable_and_do_not_bound_conditional_indexes() -> None:
-    assert ENTRYPOINT_LINE_LIMITS["AGENTS.md"] == 170
-    assert ENTRYPOINT_LINE_LIMITS["CURRENT_STATE.md"] == 120
-    assert ENTRYPOINT_LINE_LIMITS["ROADMAP.md"] == 120
-    assert ENTRYPOINT_LINE_LIMITS["ARCHITECTURE.md"] == 140
-    assert ENTRYPOINT_LINE_LIMITS["experiments/README.md"] == 90
-    assert ENTRYPOINT_LINE_LIMITS["docs/operations/EXPERIMENT_QUICKSTART.md"] == 160
-    assert "experiments/DIRECTORY_INDEX.md" not in ENTRYPOINT_LINE_LIMITS
-    assert "experiments/EVIDENCE_INDEX.md" not in ENTRYPOINT_LINE_LIMITS
+def test_normal_navigation_does_not_enforce_document_length(tmp_path) -> None:
+    document = tmp_path / "CURRENT_STATE.md"
+    document.write_text("Informational line\n" * 1000)
+    assert audit_repository(tmp_path, documents=[document]).ok
 
 
-def test_tracked_active_repository_docs_pass_navigation_and_budget_guard() -> None:
-    result = audit_repository(REPO_ROOT, line_limits=ENTRYPOINT_LINE_LIMITS)
+def test_tracked_active_repository_docs_pass_navigation() -> None:
+    result = audit_repository(REPO_ROOT)
 
     assert result.ok, "active documentation issues:\n" + "\n".join(
         f"{issue.document}:{issue.line} {issue.kind} {issue.pointer}"
@@ -125,7 +120,6 @@ def test_graph_screen_extension_is_auditable_when_supplied_explicitly() -> None:
     result = audit_repository(
         REPO_ROOT,
         documents=[document],
-        line_limits=ENTRYPOINT_LINE_LIMITS,
     )
     assert result.ok, "graph screen contract issues: " + "; ".join(
         f"{issue.line}:{issue.kind}:{issue.pointer}" for issue in result.issues
