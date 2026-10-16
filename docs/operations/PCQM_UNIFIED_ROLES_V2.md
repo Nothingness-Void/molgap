@@ -23,6 +23,9 @@ source shard.
 Canonical molecular identity uses RDKit canonical **isomeric** SMILES, retaining
 stereo/isotopes/charges and clearing atom-map IDs. No tautomer, protonation or
 scaffold splitting is introduced. Unparsable identities block, not replace rows.
+The user-authorized compatibility revision is described in
+[the Si identity repair](PCQM_UNIFIED_IDENTITY_REPAIR.md); historical strict-v1
+rules retain their original behavior and bytes.
 Hash `sha256("sha256-molecule-group-rank-v1:42:" + molecule_sha256)` ranks whole
 unique molecule groups. A group touching an excluded/training row is ineligible.
 Choose the minimum source index as its representative. The first 50K eligible

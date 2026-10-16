@@ -87,9 +87,9 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 
 ## Live boundaries and next actions
 
-Cross-scale hardening is CPU-accepted; actual Unified V2 preparation is
-ROLE_BLOCKED by frozen molecular canonicalization. No accepted V2 master/mirror
-or Modern2D stage-two implementation exists. See the [acceptance](docs/operations/CROSS_SCALE_V1_HARDENING_ACCEPTANCE.md).
+Cross-scale hardening is CPU-accepted; actual Unified V2 remains ROLE_BLOCKED.
+The authorized [Si identity repair](docs/operations/PCQM_UNIFIED_IDENTITY_REPAIR.md)
+requires real CPU acceptance; no accepted V2 master/mirror or Modern2D implementation exists.
 
 - Preserve terminal interpretations and independent qualifications through the
   history index. The accepted 500K bridge does not establish full-scale qualification.

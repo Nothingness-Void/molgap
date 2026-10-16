@@ -13,13 +13,16 @@ def main():
         parser.add_argument("--"+name,type=Path,required=True)
     parser.add_argument("--workers",type=int,default=4)
     parser.add_argument("--role-inventory",type=Path)
+    parser.add_argument("--fallback-ledger",type=Path)
+    parser.add_argument("--identity-only",action="store_true")
     args=parser.parse_args()
     if not 1 <= args.workers <= 4:
         parser.error("CPU preparation is limited to four workers")
     try:
         result=prepare_unified_roles(boundary=args.boundary,fixed_root=args.fixed_root,
             output_root=args.output_root,rule=json.loads(args.rule.read_text()),workers=args.workers,
-            role_inventory=args.role_inventory)
+            role_inventory=args.role_inventory, fallback_ledger=args.fallback_ledger,
+            identity_only=args.identity_only)
         print(json.dumps(result,indent=2))
     except Exception as exc:
         # The module validates output confinement before writing anything.

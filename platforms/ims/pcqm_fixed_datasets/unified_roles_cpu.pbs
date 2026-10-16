@@ -1,0 +1,28 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=1
+#PBS -l walltime=02:00:00
+#PBS -j oe
+set -euo pipefail
+BOUNDARY=/lustre/home/users/sm2/chou
+STAGE="${MOLGAP_V2_STAGE:?explicit immutable source/rule staging required}"
+OUTPUT="${MOLGAP_V2_OUTPUT:?explicit separate versioned output required}"
+IDENTITY_ONLY="${MOLGAP_IDENTITY_ONLY:-1}"
+test "$(realpath "$BOUNDARY")" = "$BOUNDARY"
+test "$(realpath "$STAGE")" = "$STAGE"
+test "$(realpath -m "$OUTPUT")" = "$OUTPUT"
+case "$STAGE" in "$BOUNDARY"/*) ;; *) exit 2 ;; esac
+case "$OUTPUT" in "$BOUNDARY"/*) ;; *) exit 2 ;; esac
+case "$OUTPUT" in "$BOUNDARY/pcqm4mv2-fixed-v1"*) exit 2 ;; esac
+case "$IDENTITY_ONLY" in 1) EXTRA=(--identity-only) ;; 0) EXTRA=() ;; *) exit 2 ;; esac
+export PYTHONPATH="$STAGE/code/src"
+export CUDA_VISIBLE_DEVICES=-1 HIP_VISIBLE_DEVICES=-1 ROCR_VISIBLE_DEVICES=-1
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+umask 077
+cd "$STAGE"
+printf 'CPU_ONLY job=%s identity_only=%s source_stage=%s\n' "${PBS_JOBID:-UNKNOWN}" "$IDENTITY_ONLY" "$STAGE"
+"$BOUNDARY/molgap/.venv/bin/python" "$STAGE/code/platforms/ims/pcqm_fixed_datasets/prepare_unified_roles.py" \
+  --boundary "$BOUNDARY" --fixed-root "$BOUNDARY/pcqm4mv2-fixed-v1" \
+  --output-root "$OUTPUT" --rule "$STAGE/rule.json" --workers 3 \
+  --role-inventory "$STAGE/role_inventory.json" \
+  --fallback-ledger "$STAGE/code/experiments/pcqm_k1_scale500k/parser_fallback_audit_v4.json" \
+  "${EXTRA[@]}"

@@ -12,6 +12,7 @@ import gzip
 import hashlib
 import itertools
 import json
+from functools import partial
 from pathlib import Path
 import sqlite3
 import struct
@@ -22,6 +23,7 @@ from .cross_scale_plan import digest, exact, number
 from .pcqm_fixed_datasets import sha256_file, _inside
 from .research_memory.paths import repo_local_path
 from .research_memory.trace import atomic_write, json_bytes
+from .pcqm_molecular_identity import COMPAT_MOLECULE_RULE, molecular_identity, load_fallback_keys
 
 
 FORMAT = "molgap-pcqm4mv2-unified-roles-v2"
@@ -79,11 +81,12 @@ def freeze_role_inventory(repo_root):
 
 
 def validate_rule(rule):
+    extra = {"fallback_ledger_sha256", "molecule_parser_sha256"} if rule.get("molecule_rule") == COMPAT_MOLECULE_RULE else set()
     exact(rule, {"format", "algorithm", "molecule_rule", "rdkit_version", "seed", "official_train_rows",
         "train_sizes", "common_dev_rows", "independent_audit_rows", "excluded_ranges",
         "source_manifest_sha256", "source_acceptance_sha256", "role_inventory_sha256",
-        "generator_sha256", "source_commit", "scope"}, "unified rule")
-    if (rule["format"] != FORMAT or rule["algorithm"] != ALGORITHM or rule["molecule_rule"] != MOLECULE_RULE or
+        "generator_sha256", "source_commit", "scope"} | extra, "unified rule")
+    if (rule["format"] != FORMAT or rule["algorithm"] != ALGORITHM or rule["molecule_rule"] not in {MOLECULE_RULE, COMPAT_MOLECULE_RULE} or
             rule["scope"] not in {"CPU_SYNTHETIC_ONLY", "OFFICIAL_TRAIN_CPU_PREPARATION_ONLY"}):
         raise ValueError("Unknown immutable dataset rule")
     for key in ("seed", "official_train_rows", "common_dev_rows", "independent_audit_rows"):
@@ -99,6 +102,8 @@ def validate_rule(rule):
         if type(start) is not int or type(stop) is not int or not 0 <= start < stop <= rule["official_train_rows"]:
             raise ValueError("Excluded role outside official train")
     for key in ("source_manifest_sha256", "source_acceptance_sha256", "role_inventory_sha256", "generator_sha256"):
+        digest(rule[key], key)
+    for key in extra:
         digest(rule[key], key)
     if type(rule["rdkit_version"]) is not str or not rule["rdkit_version"]:
         raise ValueError("Frozen RDKit identity required")
@@ -118,18 +123,19 @@ def canonical_molecule(smiles):
     return Chem.MolToSmiles(mol, canonical=True, isomericSmiles=True)
 
 
-def _molecule_task(row):
+def _molecule_task(row, *, compatible=False, fallback_keys=()):
     idx, smiles, target, seed = row
-    molecule = hashlib.sha256(canonical_molecule(smiles).encode()).hexdigest()
-    rank = hashlib.sha256(f"{ALGORITHM}:{seed}:{molecule}".encode()).hexdigest()
-    return idx, molecule, rank, target
+    key, anomaly = molecular_identity(smiles, fallback_keys=fallback_keys) if compatible else (canonical_molecule(smiles), None)
+    molecule = hashlib.sha256(key.encode()).hexdigest() if key is not None else None
+    rank = hashlib.sha256(f"{ALGORITHM}:{seed}:{molecule}".encode()).hexdigest() if molecule is not None else None
+    return idx, molecule, rank, target, anomaly
 
 
 def _excluded(idx, rule):
     return idx < rule["train_sizes"][-1] or any(a <= idx < b for a, b in rule["excluded_ranges"])
 
 
-def inventory_rows(database, rows, rule, *, map_rows=map):
+def inventory_rows(database, rows, rule, *, map_rows=map, fallback_keys=()):
     """One transaction per bounded source shard; a crash cannot acknowledge half.
 
     SQLite insertion fails on repeated source IDs. The driver skips only a
@@ -140,18 +146,38 @@ def inventory_rows(database, rows, rule, *, map_rows=map):
     if rdBase.rdkitVersion != rule["rdkit_version"]:
         raise ValueError("Frozen molecular canonicalization runtime changed")
     database.execute("CREATE TABLE IF NOT EXISTS rows (idx INTEGER PRIMARY KEY, molecule TEXT, rank TEXT, target REAL, excluded INTEGER)")
+    database.execute("CREATE TABLE IF NOT EXISTS molecular_anomalies (idx INTEGER PRIMARY KEY, evidence TEXT NOT NULL)")
     tasks = ((idx, smiles, target, rule["seed"]) for idx, smiles, target in rows)
-    for idx, molecule, rank, target in map_rows(_molecule_task, tasks):
+    task = partial(_molecule_task, compatible=rule["molecule_rule"] == COMPAT_MOLECULE_RULE, fallback_keys=fallback_keys)
+    for idx, molecule, rank, target, anomaly in map_rows(task, tasks):
         number(idx, "source index", integer=True)
         if idx >= rule["official_train_rows"]:
             raise ValueError("ROLE_BLOCKED: non-training source index")
         number(target, "Gap label")
         database.execute("INSERT INTO rows VALUES (?,?,?,?,?)", (idx, molecule, rank, target, int(_excluded(idx, rule))))
+        if anomaly is not None:
+            database.execute("INSERT INTO molecular_anomalies VALUES (?,?)", (idx, json.dumps(anomaly, sort_keys=True)))
+
+
+def molecular_audit(database, rule):
+    total, valid = database.execute("SELECT COUNT(*),COUNT(molecule) FROM rows").fetchone()
+    entries = [{"source_idx": idx, **json.loads(raw)} for idx, raw in
+               database.execute("SELECT idx,evidence FROM molecular_anomalies ORDER BY idx")]
+    blocked = sum(e["status"] == "BLOCKED" for e in entries)
+    complete = total == rule["official_train_rows"]
+    return {"rule_identity": validate_rule(rule), "completed_rows": total, "valid_identity_rows": valid,
+            "status": "IDENTITIES_VERIFIED" if complete and valid == total and not blocked else
+                      "ROLE_BLOCKED" if blocked else "INCOMPLETE",
+            "known_fallback_rows": sum(e["status"] == "KNOWN_FALLBACK" for e in entries),
+            "blocked_rows": blocked, "entries": entries, "rows_skipped_or_replaced": 0,
+            "official_validation_read": False, "test_roles_read": False, "gpu_used": False}
 
 
 def choose_roles(database, rule):
     """Hash-rank unique molecule groups; selection never receives predictions."""
     validate_rule(rule)
+    if database.execute("SELECT COUNT(*) FROM rows WHERE molecule IS NULL OR rank IS NULL").fetchone()[0]:
+        raise ValueError("ROLE_BLOCKED: unresolved molecular identities; inspect molecular_identity_audit.json")
     count, lo, hi = database.execute("SELECT COUNT(*),MIN(idx),MAX(idx) FROM rows").fetchone()
     if (count, lo, hi) != (rule["official_train_rows"], 0, rule["official_train_rows"]-1):
         raise ValueError("ROLE_BLOCKED: official training membership is incomplete")
@@ -217,7 +243,8 @@ def _pin(root, record):
     return path
 
 
-def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1, role_inventory=None):
+def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1, role_inventory=None,
+                          fallback_ledger=None, identity_only=False):
     """IMS CPU owner: reuse accepted row/topology bytes, derive role-only chunks.
 
     No official validation/test shard is selected. Checkpoints are per source
@@ -231,6 +258,14 @@ def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1,
     if output == fixed or _inside(output, fixed):
         raise ValueError("Cannot write into old fixed dataset")
     rule_id = validate_rule(rule)
+    fallback_keys = ()
+    if rule["molecule_rule"] == COMPAT_MOLECULE_RULE:
+        from . import pcqm_molecular_identity
+        if sha256_file(Path(pcqm_molecular_identity.__file__)) != rule["molecule_parser_sha256"]:
+            raise ValueError("Frozen molecular parser bytes changed")
+        if fallback_ledger is None:
+            raise ValueError("ROLE_BLOCKED: frozen fallback ledger required")
+        fallback_keys = load_fallback_keys(_safe(boundary, fallback_ledger), rule["fallback_ledger_sha256"])
     if rule["scope"] != "CPU_SYNTHETIC_ONLY" and sha256_file(Path(__file__)) != rule["generator_sha256"]:
         raise ValueError("Actual generator bytes differ from the frozen source")
     if rule["scope"] != "CPU_SYNTHETIC_ONLY":
@@ -296,11 +331,22 @@ def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1,
                     rows.append((idx, row["smiles"], float(row.get("homolumogap", row.get("gap", "nan")))))
                 with db:
                     mapper = (lambda f, items: pool.imap(f, items, chunksize=256)) if pool else map
-                    inventory_rows(db, rows, rule, map_rows=mapper)
+                    inventory_rows(db, rows, rule, map_rows=mapper, fallback_keys=fallback_keys)
                     db.execute("INSERT INTO chunks VALUES (?,?,?)", (record["file"], record["sha256"], len(rows)))
                 next_idx += len(rows)
             atomic_write(output/"progress.json", json_bytes({"stage": "MOLECULAR_IDENTITY", "completed_rows": next_idx,
                 "rule_identity": rule_id, "status": "RUNNING", "gpu_used": False}))
+            if rule["molecule_rule"] == COMPAT_MOLECULE_RULE:
+                atomic_write(output/"molecular_identity_progress.json", json_bytes(molecular_audit(db, rule)))
+        if rule["molecule_rule"] == COMPAT_MOLECULE_RULE:
+            audit = molecular_audit(db, rule)
+            publish_immutable_bytes(output/"molecular_identity_audit.json", json_bytes(audit))
+            if audit["status"] != "IDENTITIES_VERIFIED":
+                raise ValueError("ROLE_BLOCKED: unresolved molecular identities; inspect molecular_identity_audit.json")
+            if identity_only:
+                return audit
+        elif identity_only:
+            raise ValueError("Identity-only audit requires the versioned compatible rule")
         with db:
             roles = choose_roles(db, rule)
         checks = validate_role_members(db, roles, rule)
@@ -336,6 +382,8 @@ def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1,
             "parent_cpu_seconds": time.process_time()-cpu_start, "whole_allocation_cpu_hours": None,
             "mirrors": {"kaggle1": "NOT_PUBLISHED", "kaggle2": "NOT_PUBLISHED"},
             "training_authority": "NOT_AUTHORIZED_FOR_SCIENTIFIC_TRAINING"}
+        if rule["molecule_rule"] == COMPAT_MOLECULE_RULE:
+            report["molecular_identity_audit_sha256"] = sha256_file(output/"molecular_identity_audit.json")
         from .research_memory.schemas import validate_role_event
         events=[]
         for role in ALL_ROLES:
@@ -462,6 +510,14 @@ def accept_unified_roles(root, *, rule):
     db = sqlite3.connect("file:"+(root/"private_identity.sqlite").as_posix()+"?mode=ro", uri=True)
     roles = {}
     try:
+        if rule["molecule_rule"] == COMPAT_MOLECULE_RULE:
+            audit = json.loads((root/"molecular_identity_audit.json").read_text())
+            if audit != molecular_audit(db, rule) or audit["status"] != "IDENTITIES_VERIFIED":
+                raise ValueError("ROLE_BLOCKED: molecular identity audit changed or incomplete")
+            if (root/"acceptance.json").exists():
+                accepted = json.loads((root/"acceptance.json").read_text())
+                if accepted.get("molecular_identity_audit_sha256") != sha256_file(root/"molecular_identity_audit.json"):
+                    raise ValueError("ROLE_BLOCKED: accepted molecular identity audit SHA changed")
         for role in ALL_ROLES:
             manifest = json.loads((root/"roles"/(role+".json")).read_text())
             if manifest["version_identity"] != rule_id or manifest["role"] != role:

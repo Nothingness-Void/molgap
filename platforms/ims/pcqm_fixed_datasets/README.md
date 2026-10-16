@@ -31,3 +31,13 @@ cache to OGB PCQM4Mv2 under CC BY 4.0 and defaults to private visibility; it
 never exports the 1M or full identities. Raw row gzip files remain only in the
 IMS canonical store because Kaggle rewrites compressed CSV paths; Kaggle graph
 payloads retain source indices and labels directly.
+
+## Separate Unified V2 identity preparation
+
+The [Unified V2 contract](../../../docs/operations/PCQM_UNIFIED_ROLES_V2.md) and
+[Si identity repair](../../../docs/operations/PCQM_UNIFIED_IDENTITY_REPAIR.md)
+own the separate indexed-role CPU flow. `unified_roles_cpu.pbs` requires
+`MOLGAP_V2_STAGE` and `MOLGAP_V2_OUTPUT`, immutable source/rule/ledger staging,
+and defaults `MOLGAP_IDENTITY_ONLY=1`. Mode0 is only for the same accepted
+identity inventory's authorized role derivation, not training. Historical
+`prepare_unified_roles.pbs` remains the frozen r2 attempt, not a new template.
