@@ -161,6 +161,10 @@ platforms/_records/**/inputs/**
 # Local account credentials and credential pointers must never enter Git or
 # immutable source archives.
 platforms/_credentials/
+platforms/_records/ims/pcqm_unified_roles_v2/*.tar
+platforms/_records/ims/pcqm_unified_roles_v2/*.xml
+platforms/_records/ims/pcqm_unified_roles_v2/*.o*
+platforms/_records/ims/pcqm_unified_roles_v2/rml_backtest.json
 
 # Local generated workspaces and presentation render outputs. These are
 # reproducible or separately retained artifacts, not repository source.

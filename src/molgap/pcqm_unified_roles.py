@@ -217,7 +217,7 @@ def _pin(root, record):
     return path
 
 
-def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1):
+def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1, role_inventory=None):
     """IMS CPU owner: reuse accepted row/topology bytes, derive role-only chunks.
 
     No official validation/test shard is selected. Checkpoints are per source
@@ -233,6 +233,17 @@ def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1)
     rule_id = validate_rule(rule)
     if rule["scope"] != "CPU_SYNTHETIC_ONLY" and sha256_file(Path(__file__)) != rule["generator_sha256"]:
         raise ValueError("Actual generator bytes differ from the frozen source")
+    if rule["scope"] != "CPU_SYNTHETIC_ONLY":
+        if role_inventory is None:
+            raise ValueError("ROLE_BLOCKED: hash-bound historical role inventory required")
+        inventory_path = _safe(boundary, role_inventory)
+        if sha256_file(inventory_path) != rule["role_inventory_sha256"]:
+            raise ValueError("ROLE_BLOCKED: historical role inventory SHA differs")
+        inventory = json.loads(inventory_path.read_text())
+        if (inventory.get("status") != "METADATA_ROLE_INVENTORY_FROZEN" or
+                inventory.get("unresolved_roles") != [] or
+                inventory.get("excluded_ranges") != rule["excluded_ranges"]):
+            raise ValueError("ROLE_BLOCKED: exclusion rule is not bound to accepted role inventory")
     for name, key in (("manifest.json", "source_manifest_sha256"), ("acceptance.json", "source_acceptance_sha256")):
         if sha256_file(fixed/name) != rule[key]:
             raise ValueError("Old fixed dataset identity changed")
@@ -498,7 +509,8 @@ def authorize_role(manifest, *, operation, candidate_frozen=False, selection_fro
     # Scoring needs a separate one-time RML transaction; this API deliberately
     # cannot open audit labels, even with both frozen assertions.
     allowed["independent_audit"] = set()
-    if role not in allowed or operation not in allowed[role] or manifest.get("status") != "complete":
+    if (role not in allowed or operation not in allowed[role] or manifest.get("status") != "complete" or
+            manifest.get("format") != FORMAT or manifest.get("protected") is not False):
         raise ValueError("ROLE_BLOCKED: operation requires separate owning authority/event")
     return {"role": role, "operation": operation, "training_authority": False}
 

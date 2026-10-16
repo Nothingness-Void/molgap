@@ -2,6 +2,7 @@
 # New unified-data CPU payloads bind raw generator bytes across platforms.
 src/molgap/pcqm_unified_roles.py text eol=lf
 platforms/ims/pcqm_fixed_datasets/prepare_unified_roles.pbs text eol=lf
+platforms/_records/ims/pcqm_unified_roles_v2/*.json -text
 experiments/pcqm_specialist_combination_transfer/results/three_round_transfer.json text eol=lf
 experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/trace_manifest.json text eol=lf
 experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/canonical_trace_manifest.json text eol=lf

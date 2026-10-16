@@ -195,3 +195,23 @@ def test_actual_git_archive_keeps_frozen_generator_and_pbs_lf_bytes(tmp_path):
             raw=tar.extractfile(name).read()
             assert b"\r\n" not in raw, "Compute-node source bytes must not depend on Windows checkout EOL"
             assert raw==subprocess.check_output(["git","show","HEAD:"+name],cwd=root)
+
+
+def test_protected_flag_and_unknown_manifest_cannot_be_bypassed_by_renaming_role():
+    for m in ({"role":"train_100k","status":"complete","format":FORMAT,"protected":True},
+              {"role":"common_dev","status":"complete","format":"unverified","protected":False}):
+        with pytest.raises(ValueError,match="ROLE_BLOCKED"):
+            authorize_role(m,operation="labels_read")
+
+
+def test_real_preparation_requires_exact_role_inventory_binding(tmp_path):
+    import molgap.pcqm_unified_roles as owner
+    fixed,r=source_fixture(tmp_path)
+    r.update(scope="OFFICIAL_TRAIN_CPU_PREPARATION_ONLY",generator_sha256=sha256_file(Path(owner.__file__)))
+    with pytest.raises(ValueError,match="role inventory required"):
+        prepare_unified_roles(boundary=tmp_path,fixed_root=fixed,output_root=tmp_path/"out",rule=r)
+    inventory=tmp_path/"inventory.json";inventory.write_bytes(json_bytes({"status":"METADATA_ROLE_INVENTORY_FROZEN",
+        "unresolved_roles":[],"excluded_ranges":[[20,21]]}))
+    r["role_inventory_sha256"]=sha256_file(inventory)
+    with pytest.raises(ValueError,match="exclusion rule"):
+        prepare_unified_roles(boundary=tmp_path,fixed_root=fixed,output_root=tmp_path/"out",rule=r,role_inventory=inventory)
