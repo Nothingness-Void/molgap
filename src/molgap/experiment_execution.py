@@ -74,6 +74,7 @@ class TrainingAdapter:
     model_factory: str | None = None
     target_identity_in_completion: bool = False
     profile_adapter: str | None = None
+    cpu_synthetic_only: bool = False
 
     @property
     def addon_modes(self) -> tuple[tuple[str, str], ...]:
@@ -110,18 +111,28 @@ def _hook_source(hook: str) -> str:
 
 
 def graph_training_adapter(family, *, model_factory, addons=(), source_files=(),
-                           serialization_modules=()) -> TrainingAdapter:
+                           serialization_modules=(), cpu_synthetic_only=False) -> TrainingAdapter:
     """Bind a small model to the shared pure-2D normalized-Gap training owner."""
     sources = {"src/molgap/graph_screen_training.py", "src/molgap/pcqm_graph_inputs.py",
                "src/molgap/shared_model_adapter.py", "src/molgap/pcqm_topology.py",
                "src/molgap/ogb_features.py",
                _hook_source(model_factory), *source_files}
+    if cpu_synthetic_only:
+        sources.add("src/molgap/family_training_runner.py")
+        return TrainingAdapter(tuple(family), "molgap.family_training_runner", "modern2d-cpu-v1",
+            tuple(addons), tuple(serialization_modules), tuple(sorted(sources)), model_factory,
+            cpu_synthetic_only=True)
     return TrainingAdapter(tuple(family), "molgap.graph_screen_training", "graph-screen-v1",
         tuple(addons), tuple(serialization_modules), tuple(sorted(sources)), model_factory)
 
 
 
 TRAINING_ADAPTERS = MappingProxyType({
+    **{(name, "1"): graph_training_adapter((name, "1"),
+          model_factory="molgap." + model + ":make_model", cpu_synthetic_only=True,
+          source_files=("src/molgap/modern2d_inputs.py", "src/molgap/" + features + ".py"))
+       for name, model, features in (("ppgt_small", "ppgt_model", "ppgt_features"),
+                                      ("esa_small", "esa_model", "esa_features"))},
     ("neural_atom_k1", "3"): TrainingAdapter(
         ("neural_atom_k1", "3"), "molgap.family_training_runner", "k1-session-v1",
         tuple(TrainingAddon(name, "1", "composed", apply_hook="molgap.substrate_scale_addon:apply_addon")
@@ -166,6 +177,10 @@ TRAINING_ADAPTERS = MappingProxyType({
         profile_adapter="molgap.gptrans_legacy_execution_profile"),
 })
 
+SESSION_INTERFACES = MappingProxyType({"neural_atom_k1": ("neural_atom_k1", "3"),
+    "gptrans_t": ("gptrans_t", "2"), "ppgt_small": ("ppgt_small", "1"),
+    "esa_small": ("esa_small", "1")})
+
 
 def validate_training_registry() -> None:
     """Check cross-owner registrations without importing or executing trainers."""
@@ -176,6 +191,18 @@ def validate_training_registry() -> None:
         artifact_adapter(adapter.artifact_adapter, family)
         if "src/" + adapter.module.replace(".", "/") + ".py" not in adapter.source_files:
             raise ValueError("Training registration omits its owning source module")
+        if adapter.cpu_synthetic_only:
+            contract = FAMILIES[family]
+            expected = {("ppgt_small", "1"): "ogb-atom9-bond3-rrwp-spe-v1",
+                        ("esa_small", "1"): "ogb-atom9-bond3-directed-edge-mask-v1"}
+            if (family not in expected or adapter.module != "molgap.family_training_runner"
+                    or adapter.artifact_adapter != "modern2d-cpu-v1" or adapter.addons
+                    or contract.feature_schema != expected[family] or contract.recipe != "modern2d_cpu_v1"
+                    or contract.roles != ("train", "development")
+                    or adapter.model_factory != contract.source_module + ":make_model"
+                    or _hook_source(adapter.model_factory) not in adapter.source_files):
+                raise ValueError("Unreviewed CPU-only family/profile registration")
+            continue
         if adapter.model_factory is not None:
             if (adapter.module != "molgap.graph_screen_training" or adapter.artifact_adapter != "graph-screen-v1"
                     or _hook_source(adapter.model_factory) not in adapter.source_files
@@ -338,6 +365,8 @@ def check_family_recipes(spec, repo_root, recipes):
 def validate_execution_plan(spec: ExperimentSpec, jobs: list[dict]) -> list[dict]:
     """Bind every independent arm and its assigned device before spawning."""
     declaration = spec.to_dict()
+    if any(training_adapter(arm).cpu_synthetic_only for arm in declaration["arms"]):
+        raise ValueError("CPU synthetic profile cannot enter a platform execution plan")
     if declaration["schema_version"] != SCHEMA_VERSION_V2:
         raise ValueError("Training workflow requires per-arm prospective Spec v2")
     arms = declaration["arms"]

@@ -27,7 +27,14 @@ def load_family_model(recipe, initial_state):
                 for key, value in state.items()):
             raise ValueError("Frozen initialization tensor keys/shape/dtype differ from the base model")
         model.load_state_dict(state, strict=True)
-    if recipe.family == "neural_atom_k1":
+    if recipe.cpu_synthetic_only:
+        from .experiment_execution import TRAINING_ADAPTERS, SESSION_INTERFACES
+        from .shared_model_adapter import resolve_model_factory
+        factory = resolve_model_factory(TRAINING_ADAPTERS[SESSION_INTERFACES[recipe.family]])
+        from dataclasses import asdict
+        model = factory({"model_config": asdict(recipe.model_config)})
+        exact_load(model)
+    elif recipe.family == "neural_atom_k1":
         from .qm9_neural_atom import make_encoder
         model = make_encoder("neural_atom_k1")
         exact_load(model)
@@ -63,7 +70,7 @@ def make_family_optimizer(recipe, parameters):
     """One optimizer owner; explicit constants equal the existing native defaults."""
     import torch
     from .v4_runtime import make_adamw_compat
-    if recipe.family == "neural_atom_k1":
+    if recipe.family == "neural_atom_k1" or recipe.cpu_synthetic_only:
         return torch.optim.AdamW(parameters, lr=recipe.learning_rate, weight_decay=recipe.weight_decay,
             betas=ADAMW_BETAS, eps=ADAMW_EPSILON)
     return make_adamw_compat(parameters, lr=recipe.learning_rate, weight_decay=recipe.weight_decay,
@@ -80,6 +87,8 @@ class FamilyKernel:
         if str(torch.__version__).split("+", 1)[0] != recipe.torch_version:
             raise ValueError("Installed Torch differs from the frozen execution pin")
         self.recipe, self.device = recipe, torch.device(device)
+        if recipe.cpu_synthetic_only and self.device.type != "cpu":
+            raise ValueError("CPU synthetic family cannot allocate an accelerator")
         self.initial_state = Path(initial_state)
         self.update_observer = None
         # Only the native reference enables safety fill for the qualification run.
@@ -140,7 +149,14 @@ class FamilyKernel:
     def step(self, cpu_batch, *, check_finite, observer=None):
         observer = observer if observer is not None else getattr(self, "update_observer", None)
         mean, std = self.recipe.target_mean_eV, self.recipe.target_std_eV
-        if self.recipe.family == "neural_atom_k1":
+        if self.recipe.cpu_synthetic_only:
+            from .family_training_core import normalized_gap_update
+            loss = normalized_gap_update(self.model, self.optimizer, cpu_batch, mean, std,
+                forward=lambda model, batch: model(batch), clip_norm=self.recipe.gradient_clip,
+                check_finite=check_finite, cast_target_float=True,
+                clip_parameters=self._clip_parameters, observer=observer)
+            absolute, rows = loss * int(cpu_batch.num_graphs), int(cpu_batch.num_graphs)
+        elif self.recipe.family == "neural_atom_k1":
             from .k1_execution_layout import cpu_layout_context
             from .k1_execution_backend import execution_context
             from .family_model_ops import k1_batch_to_device, k1_optimizer_step
@@ -191,6 +207,9 @@ class FamilyKernel:
     def forward(self, cpu_batch, *, model=None):
         """One owning forward for Live/Raw views or an independent Clean model."""
         model = self.model if model is None else model
+        if self.recipe.cpu_synthetic_only:
+            from .shared_model_adapter import validate_model_output
+            return validate_model_output(model(cpu_batch), rows=int(cpu_batch.num_graphs), device=self.device)
         if self.recipe.family == "neural_atom_k1":
             from contextlib import nullcontext
             from .k1_execution_layout import cpu_layout_context

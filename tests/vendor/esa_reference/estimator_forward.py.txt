@@ -1,0 +1,46 @@
+def forward(
+    self,
+    x: torch.Tensor,
+    edge_index: torch.Tensor,
+    batch_mapping: torch.Tensor,
+    edge_attr: torch.Tensor,
+    num_max_items: int,
+    batch,
+):
+    x = x.float()
+
+    if self.lap_encoder is not None:
+        lap_pos_enc = self.lap_encoder(batch.EigVals, batch.EigVecs)
+        x = torch.cat((x, lap_pos_enc), 1)
+    if self.rwse_encoder is not None:
+        rwse_pos_enc = self.rwse_encoder(batch.pestat_RWSE)
+        x = torch.cat((x, rwse_pos_enc), 1)
+
+    # ESA
+    if self.apply_attention_on == "edge":
+        source = x[edge_index[0, :], :]
+        target = x[edge_index[1, :], :]
+        h = torch.cat((source, target), dim=1)
+
+        if self.edge_dim is not None and edge_attr is not None:
+            h = torch.cat((h, edge_attr.float()), dim=1)
+
+        h = self.node_edge_mlp(h)
+
+        edge_batch_index = batch_mapping.index_select(0, edge_index[0, :])
+        h, _ = to_dense_batch(h, edge_batch_index, fill_value=0, max_num_nodes=num_max_items)
+        h = self.st_fast(h, edge_index, batch_mapping, num_max_items=num_max_items)
+
+    # NSA
+    else:
+        h = self.mlp_norm(self.node_mlp(x))
+
+        h, dense_batch_index = to_dense_batch(h, batch_mapping, fill_value=0, max_num_nodes=num_max_items)
+        h = self.st_fast(h, edge_index, batch_mapping, num_max_items=num_max_items)
+
+        if self.is_node_task:
+            h = h[dense_batch_index]
+
+    predictions = torch.flatten(self.output_mlp(h))
+
+    return predictions

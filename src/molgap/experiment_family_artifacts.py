@@ -19,6 +19,8 @@ class ArtifactAdapter:
 
 
 ADAPTERS = MappingProxyType({
+    "modern2d-cpu-v1": ArtifactAdapter("modern2d-cpu-v1", None,
+        ("model", "optimizer", "scheduler", "rng_state"), False, "family-session"),
     "graph-screen-v1": ArtifactAdapter("graph-screen-v1", None,
                                       ("model", "optimizer", "scheduler", "rng_state"), False),
     "k1-session-v1": ArtifactAdapter("k1-session-v1", ("neural_atom_k1", "3"),
@@ -44,6 +46,10 @@ def artifact_adapter(name: str, family: tuple[str, str]) -> ArtifactAdapter:
     if adapter.family is None:
         from .experiment_execution import TRAINING_ADAPTERS
         owner = TRAINING_ADAPTERS.get(family)
+        if name == "modern2d-cpu-v1":
+            if owner is None or not owner.cpu_synthetic_only or owner.artifact_adapter != name:
+                raise ValueError("CPU artifact profile requires its static synthetic family")
+            return adapter
         if (owner is None or owner.artifact_adapter != name
                 or owner.module != "molgap.graph_screen_training" or not owner.model_factory):
             raise ValueError("Generic artifact profile requires a reviewed graph training registration")

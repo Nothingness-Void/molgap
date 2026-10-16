@@ -22,6 +22,10 @@ class FamilyLoaders:
 
         if type(recipe) is not FamilyRecipe or type(data) is not TrainingData or type(tuning) is not ExecutionTuning:
             raise TypeError("Expected typed recipe, accepted data and execution resources")
+        if recipe.cpu_synthetic_only and (data.synthetic is not True or
+                type(data.train) not in (list, tuple) or
+                (data.development is not None and type(data.development) not in (list, tuple))):
+            raise ValueError("CPU family cannot load real/packed/protected datasets")
         if (data.manifest_sha256 != recipe.dataset.manifest_sha256 or
                 data.train_rows != recipe.train_rows or data.development_rows != recipe.development_rows):
             raise ValueError("Loaded data differs from the frozen recipe selection")
@@ -41,7 +45,7 @@ class FamilyLoaders:
                 shuffle=False, generator=torch.Generator().manual_seed(recipe.seed),
                 **training_loader_options(tuning.development_workers))
             source = PreparedLoader(self.development) if recipe.family == "gptrans_t" else self.development
-            self.development_cache = PreparedDevelopmentCache(source, rows=data.development_rows,
+            self.development_cache = None if recipe.cpu_synthetic_only else PreparedDevelopmentCache(source, rows=data.development_rows,
                 batch_size=recipe.batch_size, max_bytes=tuning.development_cache_bytes,
                 source_start=data.development_source_start, retain_model_inputs=True,
                 retain_random_walk_pe=recipe.family == "neural_atom_k1")
@@ -58,6 +62,8 @@ class FamilyLoaders:
         return self.training
 
     def dev(self):
+        if not self.closed and self.recipe.cpu_synthetic_only and self.development is not None:
+            return self.development
         if self.closed or self.development_cache is None:
             raise ValueError("No selected development role in this loader pool")
         return self.development_cache

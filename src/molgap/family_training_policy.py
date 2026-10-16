@@ -37,8 +37,8 @@ class FamilyModePolicy:
 
 @lru_cache(maxsize=None)
 def mode_policy(family, mode):
-    from .experiment_execution import TRAINING_ADAPTERS
-    adapter = TRAINING_ADAPTERS[(family, "3" if family == "neural_atom_k1" else "2")]
+    from .experiment_execution import TRAINING_ADAPTERS, SESSION_INTERFACES
+    adapter = TRAINING_ADAPTERS[SESSION_INTERFACES[family]]
     if mode in {"reference", "composed"}:
         return FamilyModePolicy()
     entries = [entry for entry in adapter.addons if entry.mode == mode]

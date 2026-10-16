@@ -23,8 +23,8 @@ def validate_optimizer_schedule(recipe, optimizer, scheduler, *, step, pass_inde
     group = groups[0]
     frozen = {"betas": ADAMW_BETAS, "eps": ADAMW_EPSILON, "weight_decay": recipe.weight_decay,
         "amsgrad": False, "maximize": False, "capturable": False, "differentiable": False,
-        "foreach": None if recipe.family == "neural_atom_k1" else True,
-        "fused": None if recipe.family == "neural_atom_k1" else False}
+            "foreach": None if recipe.family == "neural_atom_k1" or recipe.cpu_synthetic_only else True,
+            "fused": None if recipe.family == "neural_atom_k1" or recipe.cpu_synthetic_only else False}
     for name, value in frozen.items():
         if name not in group or type(group[name]) is not type(value) or group[name] != value:
             raise ValueError("Resume changed frozen AdamW field: " + name)

@@ -41,6 +41,7 @@ class TrainingData:
     development_source_start: int | None
     target_mean_eV: float
     target_std_eV: float
+    synthetic: bool = False
 
 
 def resolve_pinned_manifest(root, selection):

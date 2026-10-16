@@ -20,7 +20,8 @@ from .training_reproducibility import atomic_json, atomic_torch_save
 from .v4_runtime import normalized_source_sha256, state_dict_sha256
 
 
-INTERFACES = {"neural_atom_k1": ("neural_atom_k1", "3"), "gptrans_t": ("gptrans_t", "2")}
+from .experiment_execution import SESSION_INTERFACES
+INTERFACES = SESSION_INTERFACES
 PROFILES = {"neural_atom_k1": "k1-session-v1", "gptrans_t": "gptrans-session-v1"}
 METADATA = {"acceptance_requirements", "train_role_identity", "development_role_identity"}
 OPTIONAL_METADATA = {"profiling", "logging"}
@@ -41,8 +42,13 @@ def _recipe_configuration(record):
 
 def family_arm_bindings(recipe):
     """Static source/sampler/transform/objective bindings for a new Spec arm."""
-    base_files = ("gps.py", "qm9_neural_atom.py") if recipe.family == "neural_atom_k1" else ("gptrans.py", "pcqm_gptrans_v4.py")
-    base = canonical_fingerprint({name: normalized_source_sha256(Path(__file__).with_name(name)) for name in base_files})
+    if recipe.cpu_synthetic_only:
+        from .experiment_execution import TRAINING_ADAPTERS
+        module = TRAINING_ADAPTERS[INTERFACES[recipe.family]].model_factory.split(":")[0]
+        base = normalized_source_sha256(Path(__file__).with_name(module.rsplit(".", 1)[1] + ".py"))
+    else:
+        base_files = ("gps.py", "qm9_neural_atom.py") if recipe.family == "neural_atom_k1" else ("gptrans.py", "pcqm_gptrans_v4.py")
+        base = canonical_fingerprint({name: normalized_source_sha256(Path(__file__).with_name(name)) for name in base_files})
     return {"base": {"name": recipe.family, "version": "1", "sha256": base},
         "sampler": {"name": "frozen-family-pass-order", "version": "1", "sha256": canonical_fingerprint({
             "algorithm": recipe.sampler, "seed": recipe.seed, "rows": recipe.train_rows, "drop_last": recipe.drop_last})},
@@ -190,6 +196,8 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
     from .training_reproducibility import build_runtime_manifest, configure_fp32_determinism, validate_accelerator_request
     from .v4_runtime import inspect_frozen_state_artifact
     record, recipe = read_recipe(recipe_path)
+    if recipe.cpu_synthetic_only:
+        raise ValueError("Modern2D CPU profile is not released for native preflight or training")
     validate_screen_recipe(spec, arm_id, record)
     if recipe.mode != mode:
         raise ValueError("Executable mode differs from recipe")

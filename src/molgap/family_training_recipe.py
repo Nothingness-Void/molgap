@@ -18,12 +18,12 @@ from .family_training_state import CalibrationPolicy
 RECIPE_FORMAT = "molgap-family-training-recipe-v1"
 ADAMW_BETAS = (.9, .999)
 ADAMW_EPSILON = 1e-8
-from .experiment_execution import TRAINING_ADAPTERS
+from .experiment_execution import TRAINING_ADAPTERS, SESSION_INTERFACES
 from .family_training_policy import mode_policy
 
 MODES = {family: tuple(dict.fromkeys(("reference", *(entry.mode for entry in
     TRAINING_ADAPTERS[(family, version)].addons))))
-    for family, version in (("neural_atom_k1", "3"), ("gptrans_t", "2"))}
+    for family, version in SESSION_INTERFACES.values()}
 
 
 def _integer(value, name, minimum=1):
@@ -116,11 +116,29 @@ class FamilyRecipe:
     k1_execution: K1ExecutionConfig | None = None
     addons: tuple[dict, ...] = ()
     clean_bn: CalibrationPolicy | None = None
+    model_config: object | None = None
 
     def __post_init__(self):
         from .experiment_spec import _digest
         if self.family not in MODES or self.mode not in MODES[self.family]:
             raise ValueError("Unknown executable family/addon mode")
+        if self.cpu_synthetic_only:
+            from copy import deepcopy
+            from importlib import import_module
+            adapter = TRAINING_ADAPTERS[SESSION_INTERFACES[self.family]]
+            config_type = import_module(adapter.model_factory.split(":")[0]).CONFIG_TYPE
+            if (type(self.model_config) not in (dict, config_type) or self.mode != "reference" or self.addons
+                    or self.ema_decay is not None or self.clean_bn is not None or not self.drop_last
+                    or not self.dataset.manifest.startswith("synthetic/") or self.train_rows > 256
+                    or self.development_rows > 128 or self.optimizer_steps > 4):
+                raise ValueError("Modern2D profile is bounded CPU synthetic only")
+            values = deepcopy(self.model_config) if type(self.model_config) is dict else asdict(self.model_config)
+            if "layer_types" in values:
+                values["layer_types"] = tuple(values["layer_types"])
+            configuration = config_type(**values)
+            object.__setattr__(self, "model_config", configuration)
+        elif self.model_config is not None:
+            raise ValueError("Existing families cannot reinterpret Modern2D configuration")
         if type(self.addons) is not tuple or (self.mode == "composed") != bool(self.addons):
             raise ValueError("Ordered slot addons require the explicit composed mode")
         if self.addons:
@@ -186,6 +204,10 @@ class FamilyRecipe:
             raise ValueError("Optimizer budget exceeds the frozen schedule")
 
     @property
+    def cpu_synthetic_only(self):
+        return TRAINING_ADAPTERS[SESSION_INTERFACES[self.family]].cpu_synthetic_only
+
+    @property
     def selection_weights(self):
         return "clean-ema" if self.selection.endswith("clean-ema") else self.selection.rsplit("-", 1)[1]
 
@@ -205,10 +227,15 @@ class FamilyRecipe:
             "torch_version": self.torch_version}
         if self.k1_execution is not None:
             policy["k1_execution"] = self.k1_execution.to_dict()
+        if self.cpu_synthetic_only:
+            policy.update(name="modern2d-cpu-v1", scope="CPU_SYNTHETIC_ONLY",
+                          cpu_layout=False, optimizer="native-adamw")
         return policy
 
     def to_dict(self):
         values = asdict(self)
+        if self.model_config is None:
+            values.pop("model_config")
         if self.input_sidecar is None:
             values.pop("input_sidecar")
         if self.k1_execution is None:
@@ -234,7 +261,7 @@ class FamilyRecipe:
             expected.remove("input_sidecar")
         if type(record) is dict and "k1_execution" not in record:
             expected.remove("k1_execution")
-        for name in ("addons", "clean_bn"):
+        for name in ("addons", "clean_bn", "model_config"):
             if type(record) is dict and name not in record:
                 expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
