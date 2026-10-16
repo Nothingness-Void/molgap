@@ -231,6 +231,8 @@ def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1)
     if output == fixed or _inside(output, fixed):
         raise ValueError("Cannot write into old fixed dataset")
     rule_id = validate_rule(rule)
+    if rule["scope"] != "CPU_SYNTHETIC_ONLY" and sha256_file(Path(__file__)) != rule["generator_sha256"]:
+        raise ValueError("Actual generator bytes differ from the frozen source")
     for name, key in (("manifest.json", "source_manifest_sha256"), ("acceptance.json", "source_acceptance_sha256")):
         if sha256_file(fixed/name) != rule[key]:
             raise ValueError("Old fixed dataset identity changed")

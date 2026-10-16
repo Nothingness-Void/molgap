@@ -181,3 +181,17 @@ def test_incomplete_candidate_pool_never_relaxes_rule():
     r=rule();r["common_dev_rows"]=20;r["independent_audit_rows"]=20
     with pytest.raises(ValueError,match="insufficient"):
         choose_roles(database(r),r)
+
+
+def test_actual_git_archive_keeps_frozen_generator_and_pbs_lf_bytes(tmp_path):
+    import subprocess
+    import tarfile
+    root=Path(__file__).resolve().parents[1]
+    archive=tmp_path/"source.tar"
+    names=["src/molgap/pcqm_unified_roles.py", "platforms/ims/pcqm_fixed_datasets/prepare_unified_roles.pbs"]
+    subprocess.run(["git","archive","--format=tar","--output="+str(archive),"HEAD","--",*names],cwd=root,check=True)
+    with tarfile.open(archive) as tar:
+        for name in names:
+            raw=tar.extractfile(name).read()
+            assert b"\r\n" not in raw, "Compute-node source bytes must not depend on Windows checkout EOL"
+            assert raw==subprocess.check_output(["git","show","HEAD:"+name],cwd=root)
