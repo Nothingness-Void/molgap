@@ -43,6 +43,9 @@ def load_family_model(recipe, initial_state):
                  make_gptrans_backbone(variant="reference" if recipe.mode == "composed" else recipe.mode))
         exact_load(model)
         bind_model_layout(model)
+    transform = mode_policy(recipe.family, recipe.mode).transform_model
+    if transform is not None:
+        model = transform(recipe, model)
     if recipe.addons:
         from .experiment_execution import TRAINING_ADAPTERS
         from .shared_model_adapter import apply_reviewed_addons

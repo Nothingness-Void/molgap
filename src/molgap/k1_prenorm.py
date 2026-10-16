@@ -42,11 +42,9 @@ def _final_node_norm(module, args, output):
     return module.output_norm(output)
 
 
-def make_model(mode):
-    from .qm9_neural_atom import make_encoder
+def configure_model(model, mode):
     if mode not in {"prenorm_bn", "prenorm_ada"}:
         raise ValueError("Unknown K1 pre-norm variant")
-    model = make_encoder("neural_atom_k1")
     adaptive = mode == "prenorm_ada"
     final_norm = AdaRMSNorm() if adaptive else deepcopy(model.local_blocks[-1].norm3)
     model.local_blocks = nn.ModuleList(PreNormLocalBlock(block, adaptive=adaptive)
@@ -59,13 +57,18 @@ def make_model(mode):
     return model
 
 
-def construct_family_model(recipe, state):
-    return make_model(recipe.mode)
+def make_model(mode):
+    from .qm9_neural_atom import make_encoder
+    return configure_model(make_encoder("neural_atom_k1"), mode)
+
+
+def transform_family_model(recipe, model):
+    return configure_model(model, recipe.mode)
 
 
 def policy(mode):
     from .family_training_policy import FamilyModePolicy
     if mode not in {"prenorm_bn", "prenorm_ada"}:
         raise ValueError("Unknown K1 pre-norm policy")
-    return FamilyModePolicy(construct=construct_family_model,
+    return FamilyModePolicy(transform_model=transform_family_model,
                            extra_development_weights=("ema",), objective_name="reference")

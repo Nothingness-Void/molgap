@@ -38,8 +38,9 @@ examples can be composed in Spec order; frozen replacement modes stay exclusive.
 
 K1 local pre-norm replacement modes are `k1_prenorm_bn` / `prenorm_bn` and
 `k1_prenorm_ada` / `prenorm_ada`. They use the existing statically registered
-`FamilyModePolicy.construct` hook, not ordered additive slots. The shared loader
-strictly installs the transported full initial tensor state. Both declare a
+`FamilyModePolicy.transform_model` hook, not ordered additive slots. The shared
+loader strictly installs the common transported full backbone state before the
+declared deterministic normalization transformation and optimizer creation. Both declare a
 secondary EMA development observation while preserving Live selection; these
 extra observations retain explicit trace semantics and do not select a second
 model. Their19 local/final norms are an architecture declaration, not adoption.

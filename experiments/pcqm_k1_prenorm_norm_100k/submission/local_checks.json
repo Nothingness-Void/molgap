@@ -55,5 +55,30 @@
     },
     "notes": "The deterministic-algorithm guard now restores the caller state in try/finally, and the synthetic contract explicitly binds the prenorm_bn addon. The original 170 passing tests were not rerun."
   },
+  "post_interface_fix": {
+    "scope": "Base frozen-state loading and the strict same-run shared-family acceptance contract; no implementation files changed by this audit.",
+    "policy_test_file_present": false,
+    "executions": [
+      {
+        "command": ["python", "-m", "pytest", "-q", "tests/test_k1_prenorm.py"],
+        "exit_code": 1,
+        "pytest_elapsed_seconds": 3.64,
+        "outer_elapsed_seconds": 10.909,
+        "summary": {"passed": 6, "failed": 1, "warnings": 3},
+        "failure": {
+          "test": "tests/test_k1_prenorm.py::test_same_run_acceptance_accepts_shared_counters_but_rejects_different_initialization",
+          "cause": "The synthetic declaration used recipe name molgap-family-training-recipe-v1; registered K1 family version 3 requires shared-family-training. Corrected in the test fixture."
+        }
+      },
+      {
+        "command": ["python", "-m", "pytest", "-q", "tests/test_k1_prenorm.py::test_same_run_acceptance_accepts_shared_counters_but_rejects_different_initialization"],
+        "exit_code": 0,
+        "pytest_elapsed_seconds": 7.07,
+        "outer_elapsed_seconds": 14.189,
+        "summary": {"passed": 1, "failed": 0, "warnings": 1},
+        "notes": "The acceptance fixture now proves completed_passes/next_batch expectations are accepted and a differing initialization SHA remains blocked. The six tests that passed in the first execution were not rerun."
+      }
+    ]
+  },
   "scope_note": "One targeted batch plus a selective rerun of its two failed newly authored test nodes; no full-suite run, remote action, or accelerator execution."
 }

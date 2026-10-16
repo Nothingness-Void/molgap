@@ -1,6 +1,7 @@
 """Focused CPU checks for the registered K1 pre-norm variants."""
 from copy import deepcopy
 from contextlib import contextmanager
+import hashlib
 import json
 import re
 
@@ -157,10 +158,11 @@ def test_variants_have_nineteen_norms_retain_dropout_and_preserve_shared_weights
 
 def test_variant_frozen_state_load_and_k1_update_have_finite_gradients_and_final_norm_optimizer_ownership(
         tmp_path, raw_and_prenorm_models):
-    state = {key: value.detach().clone() for key, value in raw_and_prenorm_models[2].state_dict().items()}
-    digest = state_dict_sha256(state)
+    base_state = {key: value.detach().clone() for key, value in raw_and_prenorm_models[0].state_dict().items()}
+    derived_state = {key: value.detach().clone() for key, value in raw_and_prenorm_models[2].state_dict().items()}
+    digest = state_dict_sha256(base_state)
     artifact = tmp_path / "prenorm-ada-initial.pt"
-    atomic_torch_save(artifact, {"model_state": state, "state_sha256": digest})
+    atomic_torch_save(artifact, {"model_state": base_state, "state_sha256": digest})
     recipe = _recipe("prenorm_ada", digest)
 
     rng = torch.get_rng_state()
@@ -170,8 +172,13 @@ def test_variant_frozen_state_load_and_k1_update_have_finite_gradients_and_final
         with _strict_determinism():
             kernel = FamilyKernel(recipe, artifact, device="cpu")
             try:
-                assert all(torch.equal(value, kernel.model.state_dict()[key])
-                           for key, value in state.items())
+                loaded_state = kernel.model.state_dict()
+                assert set(loaded_state) == set(derived_state)
+                assert all(torch.equal(value, loaded_state[key])
+                           for key, value in derived_state.items())
+                shared = [key for key in base_state
+                          if not re.match(r"local_blocks\.\d+\.(?:norm1|norm3)\.", key)]
+                assert all(torch.equal(base_state[key], loaded_state[key]) for key in shared)
                 final_norm = kernel.model.neural_atom_mixers["9"].output_norm
                 optimizer_ids = {id(parameter) for group in kernel.optimizer.param_groups
                                  for parameter in group["params"]}
@@ -268,7 +275,7 @@ def test_live_selection_keeps_ema_as_auxiliary_canonical_trace(tmp_path):
 
 def test_native_prenorm_factory_supports_small_synthetic_session_resume(tmp_path,
         raw_and_prenorm_models):
-    state = {key: value.detach().clone() for key, value in raw_and_prenorm_models[2].state_dict().items()}
+    state = {key: value.detach().clone() for key, value in raw_and_prenorm_models[0].state_dict().items()}
     digest = state_dict_sha256(state)
     artifact = tmp_path / "prenorm-ada-session-initial.pt"
     atomic_torch_save(artifact, {"model_state": state, "state_sha256": digest})
@@ -323,4 +330,136 @@ def test_native_prenorm_factory_supports_small_synthetic_session_resume(tmp_path
     finally:
         torch.set_num_threads(old_threads)
         torch.set_rng_state(rng)
+
+
+def test_same_run_acceptance_accepts_shared_counters_but_rejects_different_initialization(tmp_path):
+    from molgap.experiment_family_workflow import check_acceptance_plan
+    from molgap.experiment_spec import ExperimentSpec, SCHEMA_VERSION_V2, TERMINAL_PROTOCOL
+
+    expected = {
+        "completed_passes": 1,
+        "next_batch": 0,
+        "optimizer_steps": 2,
+        "sample_presentations": 256,
+        "development_rows": 2,
+        "source_idx_sha256": "d" * 64,
+        "target_sha256": "e" * 64,
+        "precision": "fp32",
+    }
+    contract = {
+        "acceptance_requirements": expected,
+        "development_role_identity": "synthetic-development-role",
+        "training_recipe": {"name": "shared-synthetic-recipe"},
+    }
+    target_manifest = {
+        "development_target_sha256": expected["target_sha256"],
+        "target_encoding": "little-endian-float64-contiguous-raw-bytes",
+    }
+
+    def write_json(path, value):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(value, sort_keys=True), encoding="utf-8")
+        return {
+            "path": path.relative_to(tmp_path).as_posix(),
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        }
+
+    contract_pointer = write_json(tmp_path / "experiments/synthetic/recipe.json", contract)
+    target_pointer = write_json(tmp_path / "experiments/synthetic/target.json", target_manifest)
+
+    def reference(name, digest):
+        return {"name": name, "version": "1", "sha256": digest}
+
+    def arm(arm_id, role, *, candidate=False, initialization_sha="c" * 64):
+        return {
+            "arm_id": arm_id,
+            "scientific_role": role,
+            "family": {"name": "neural_atom_k1", "version": "3"},
+            "base": reference("synthetic-k1-base", "1" * 64),
+            "initialization": {
+                "kind": "frozen_state", "seed": 42, "state_sha256": initialization_sha,
+            },
+            "data": {
+                "dataset": reference("pcqm4mv2", "2" * 64),
+                "split": reference("synthetic-split", "3" * 64),
+                "roles": [
+                    {"role": data_role, "membership_sha256": "4" * 64,
+                     "row_order_sha256": "5" * 64, "usage_sha256": "6" * 64}
+                    for data_role in ("train", "development")
+                ],
+                "feature_schema": "ogb-atom9-bond3-rwse16-v1",
+                "feature_sha256": "7" * 64,
+                "target": "pcqm4mv2-gap-eV-direct",
+            },
+            "training": {
+                "recipe": reference("shared-family-training", contract_pointer["sha256"]),
+                "overrides": {},
+                "objective": reference("normalized-gap-l1", "8" * 64),
+                "sampler": reference("frozen-family-pass-order", "9" * 64),
+                "transform": reference("frozen-train-mean-sample-std", "a" * 64),
+            },
+            "addons": ([{
+                "name": "k1_prenorm_ada", "version": "1", "config": {},
+                "source_sha256": "b" * 64,
+            }] if candidate else []),
+            "addon_semantics": "ordered" if candidate else "baseline",
+        }
+
+    def make_spec(candidate_initialization_sha="c" * 64):
+        return ExperimentSpec({
+            "schema_version": SCHEMA_VERSION_V2,
+            "experiment_id": "synthetic-k1-same-run",
+            "logical_run_id": "synthetic-k1-run",
+            "arms": [
+                arm("reference", "reference"),
+                arm("candidate", "candidate", candidate=True,
+                    initialization_sha=candidate_initialization_sha),
+            ],
+            "platform": {
+                "name": "local", "accelerator": "synthetic-cpu", "device_count": 1,
+                "cpu_cores": 2, "memory_gib": 4, "atomic_checkpoints": True,
+                "retrievable_chunks": True,
+            },
+            "prospective": {
+                "arms": [
+                    {"arm_id": arm_id, "trajectory_id": "T-" + arm_id,
+                     "plan_spec_ref": "experiments/synthetic/" + arm_id + ".json",
+                     "plan_spec_sha256": "f" * 64,
+                     "output": "experiments/synthetic/output-" + arm_id}
+                    for arm_id in ("reference", "candidate")
+                ],
+                "same_run_replay": {
+                    "reference_arm_id": "reference", "candidate_arm_ids": ["candidate"],
+                },
+            },
+            "evidence": {
+                "policy": reference("molgap-v5", "c" * 64),
+                "required_artifacts": [
+                    "v5_evidence", "costs", "roles", "trace_manifest", "terminal_artifact",
+                ],
+            },
+            "terminal_protocol": TERMINAL_PROTOCOL,
+        })
+
+    def plan_for(spec):
+        return {
+            "format": "molgap-family-same-run-acceptance-plan-v1",
+            "spec_identity": spec.identity,
+            "arms": [
+                {"arm_id": arm_id, "adapter": "k1-session-v1", "expected": expected,
+                 "contract": contract_pointer, "target_manifest": target_pointer}
+                for arm_id in ("reference", "candidate")
+            ],
+        }
+
+    matching_spec = make_spec()
+    accepted = check_acceptance_plan(matching_spec, tmp_path, plan_for(matching_spec))
+    assert accepted["status"] == "ACCEPTANCE_INPUTS_AVAILABLE", accepted
+    assert all(row["status"] == "AVAILABLE" for row in accepted["arms"])
+
+    mismatched_spec = make_spec("f" * 64)
+    blocked = check_acceptance_plan(mismatched_spec, tmp_path, plan_for(mismatched_spec))
+    assert blocked["status"] == "BLOCKED", blocked
+    candidate_result = next(row for row in blocked["arms"] if row["arm_id"] == "candidate")
+    assert candidate_result["blockers"] == ["Same-run peer identity differs: initialization"]
 

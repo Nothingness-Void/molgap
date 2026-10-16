@@ -13,13 +13,15 @@
     "k1_pre_bn": {
       "mode": "prenorm_bn",
       "addon": "k1_prenorm_bn",
-      "initialization_sha256": "4beeaeffb183dbe3785330ea22d3041ef33aad859a814934767e558fd765e036",
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "derived_model_state_sha256": "4beeaeffb183dbe3785330ea22d3041ef33aad859a814934767e558fd765e036",
       "initial_state": "initial_states/k1_pre_bn.pt"
     },
     "k1_pre_ada": {
       "mode": "prenorm_ada",
       "addon": "k1_prenorm_ada",
-      "initialization_sha256": "5e1bd983c2fbb7a0fdabe49122a4029459938d7d5efa82f6a7a4bcba4aa7e65a",
+      "initialization_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+      "derived_model_state_sha256": "5e1bd983c2fbb7a0fdabe49122a4029459938d7d5efa82f6a7a4bcba4aa7e65a",
       "initial_state": "initial_states/k1_pre_ada.pt"
     }
   }

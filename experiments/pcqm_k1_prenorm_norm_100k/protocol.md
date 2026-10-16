@@ -25,9 +25,11 @@ historical placement contrasts retain their source/job/seed limitations.
   are updated in the original order. This is a local pre-norm adaptation, not a
   complete PPGT reproduction. Pre-norm includes the declared final node norm;
   historical comparisons cannot attribute that package solely to one seam.
-- Start from the retained seed42 K1 tensor artifact. Copy every shared key
-  exactly; initialize only changed/new norm tensors as declared. Transport full
-  initial states, do not rely on cross-runtime random construction.
+- Both arms strictly load the same retained full seed42 K1 tensor artifact
+  before the statically registered norm transformation. Preserve every shared
+  learned tensor exactly; initialize only changed/new norms with the declared
+  deterministic zero/one tensors. Retain derived full-state hashes/artifacts
+  locally. No random parameter initialization replaces transported tensors.
 
 ## Shared recipe and roles
 

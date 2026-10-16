@@ -20,10 +20,11 @@ class FamilyModePolicy:
     qualify_resources: object = None
     refresh_resources: object = None
     objective_name: str | None = None
+    transform_model: object = None
 
     def __post_init__(self):
         if any(value is not None and not callable(value) for value in (
-                self.construct, self.prepare_batch, self.objective, self.after_update, self.attach_inputs,
+                self.construct, self.transform_model, self.prepare_batch, self.objective, self.after_update, self.attach_inputs,
                 self.qualify_resources, self.refresh_resources)):
             raise TypeError("Policy hooks must be trusted registered callables")
         if self.train_metric_unit not in {"normalized-Gap", "eV"} or any(

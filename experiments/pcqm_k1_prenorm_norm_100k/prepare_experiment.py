@@ -32,6 +32,7 @@ def inputs(root, baseline, old):
     storage.mkdir(parents=True, exist_ok=True)
     state, observation = read_frozen_state_artifact(baseline,
         expected_state_sha256="8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd")
+    base_digest = state_dict_sha256(state)
     roles = json.loads((old / "role_plan.json").read_text())
     atomic_json(here / "role_plan.json", roles)
     prior = json.loads((old / "config.json").read_text())
@@ -70,8 +71,12 @@ def inputs(root, baseline, old):
                 initial[key].copy_(state[key])
         digest = state_dict_sha256(initial)
         dest = storage / "initial_states" / (arm + ".pt")
-        atomic_torch_save(dest, {"model_state": initial, "state_sha256": digest})
-        recipe = FamilyRecipe("neural_atom_k1", mode, 42, digest,
+        # The Spec binds the identical pre-addon frozen backbone for both arms.
+        # Norm changes have exact source-defined zero/one initialization, no RNG.
+        atomic_torch_save(dest, {"model_state": state, "state_sha256": base_digest})
+        atomic_torch_save(storage / "derived_initial_states" / (arm + ".pt"),
+                          {"model_state": initial, "state_sha256": digest})
+        recipe = FamilyRecipe("neural_atom_k1", mode, 42, base_digest,
             DatasetSelection("pcqm_fixed_100k_v1/manifest.json", config["dataset_manifest_sha256"], True),
             100000, 50000, 31240, .0004, .00001, ScheduleSpec("cosine_epoch", 40),
             "best-development-live", "python-epoch-shuffle", 128,
@@ -85,7 +90,8 @@ def inputs(root, baseline, old):
             logging={"mode": "epoch", "interval": None})
         atomic_json(here / ("training_recipe_" + arm + ".json"), record)
         config["arms"][arm] = {"mode": mode, "addon": "k1_" + mode,
-                              "initialization_sha256": digest, "initial_state": "initial_states/" + arm + ".pt"}
+                              "initialization_sha256": base_digest, "derived_model_state_sha256": digest,
+                              "initial_state": "initial_states/" + arm + ".pt"}
         del model, initial
     atomic_json(here / "config.json", config)
     atomic_json(here / "authority.json", {"format": "molgap-execution-authority-v1", "user_authorized": True,
