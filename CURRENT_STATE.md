@@ -68,8 +68,10 @@ The [bounded workflow reform](docs/operations/REFORM_MIGRATION.md) adds external
 machine paths, one capability catalog, fixed runtime packaging and the existing
 journal's editable-input front door. The bounded scientific compiler generates
 shared K1/3 and GPTrans/2 optimizer/catalog-addon declarations through existing
-owners; see the reform record for CPU acceptance and limits. Desktop application,
-arbitrary recipe compilation and source regrouping remain pending; no new compute
+owners; see the reform record for CPU acceptance and limits.
+Scientific-input continuation selects the original frozen run before compilation;
+new HEADs do not upgrade old tasks. Completed packages are independent of development inputs.
+Desktop application, arbitrary recipe compilation and source regrouping remain pending; no new compute
 or scientific release follows.
 The shared CLI is a local identity, packaging, diagnostic, receipt, preparation,
 inspection, and terminal entry point; it is never a platform submitter.

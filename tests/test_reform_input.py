@@ -93,6 +93,71 @@ def test_changed_reference_cannot_overwrite_frozen_run(editable):
         freeze_experiment_input(editable.path,editable.repo)
 
 
+@pytest.fixture
+def frozen_scientific(editable):
+    """Legacy frozen-input envelope; scientific/package execution is mocked."""
+    from molgap.common.paths import MachinePaths
+    from molgap.common.wire import canonical_fingerprint
+    from molgap.experiment_launch import canonical_json
+    value={"format":"molgap-scientific-experiment-v1","experiment_id":editable.payload["experiment_id"],
+        "logical_run_id":editable.payload["logical_run_id"],
+        **{k:editable.value[k] for k in ("attempt_id","machine_profile","authority_ref","monitor_paths")}}
+    write(editable.path,value)
+    spec=ExperimentSpec(editable.payload)
+    plan={"spec_identity":spec.identity,"frozen_workflow":True}
+    paths=MachinePaths.from_file(value["machine_profile"])
+    run=paths.run_directory(value["logical_run_id"],value["attempt_id"])
+    binding={"format":value["format"],"input_identity":canonical_fingerprint(value),
+        "spec_identity":spec.identity,"workflow_identity":canonical_fingerprint(plan),
+        "authority_ref":value["authority_ref"],"monitor_paths":value["monitor_paths"]}
+    for name,payload in (("input_binding.json",binding),("experiment_spec.json",spec.to_dict()),("workflow_plan.json",plan)):
+        target=run/"inputs"/name;target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_bytes(canonical_json(payload).encode())
+    write(run/"prepared/workflow_report.json",{"status":"PREPARED_FOR_PLATFORM","package_identity":"a"*64})
+    return SimpleNamespace(**vars(editable),scientific_value=value,run=run,spec=spec)
+
+
+def test_legacy_scientific_freeze_reuses_without_compiler_or_current_git(frozen_scientific,monkeypatch):
+    case=frozen_scientific
+    forbidden=Mock(side_effect=AssertionError("Existing run must not compile or inspect current Git"))
+    monkeypatch.setattr("molgap.experiment_input._compile_scientific_input",forbidden)
+    monkeypatch.setattr("molgap.experiment_package._git",forbidden)
+    verify=Mock(return_value={"spec_identity":case.spec.identity,"package_identity":"a"*64})
+    monkeypatch.setattr("molgap.experiment_package.verify_experiment_source_package",verify)
+    before={str(p):p.read_bytes() for p in case.run.rglob("*") if p.is_file()}
+    result=prepare_experiment_input(case.path,case.repo)
+    assert result["reused_preparation"] and result["status"]=="PREPARED_FOR_PLATFORM"
+    assert before=={str(p):p.read_bytes() for p in case.run.rglob("*") if p.is_file()}
+    forbidden.assert_not_called();verify.assert_called_once()
+
+
+@pytest.mark.parametrize("fault",["input","spec","workflow","authority","partial","published"])
+def test_frozen_scientific_conflicts_and_uncertainty_do_not_compile(frozen_scientific,monkeypatch,fault):
+    case=frozen_scientific
+    forbidden=Mock(side_effect=AssertionError("No replacement identity"))
+    monkeypatch.setattr("molgap.experiment_input._compile_scientific_input",forbidden)
+    if fault=="input":
+        value=dict(case.scientific_value,scientific_change="changed")
+        write(case.path,value)
+    elif fault=="spec":
+        value=dict(case.payload,logical_run_id="other-run")
+        write(case.run/"inputs/experiment_spec.json",value)
+    elif fault=="workflow":write(case.run/"inputs/workflow_plan.json",{"spec_identity":"0"*64})
+    elif fault=="authority":
+        path=case.run/"inputs/input_binding.json";binding=json.loads(path.read_bytes());binding["authority_ref"]="different.json";write(path,binding)
+    elif fault=="partial":(case.run/"inputs/workflow_plan.json").unlink()
+    else:
+        write(case.run/"prepared/workflow_report.json",{"status":"ERROR_REQUIRES_RECONCILIATION",
+            "publication_intent":True,"prospective_published":"inspect_plan_result"})
+        write(case.run/"operations/submission_state.json",{"phase":"SUBMIT_UNKNOWN"})
+    before={str(p):p.read_bytes() for p in case.run.rglob("*") if p.is_file()}
+    if fault=="published":assert prepare_experiment_input(case.path,case.repo)["status"]=="RECONCILIATION_REQUIRED"
+    else:
+        with pytest.raises(ValueError):prepare_experiment_input(case.path,case.repo)
+    assert before=={str(p):p.read_bytes() for p in case.run.rglob("*") if p.is_file()}
+    forbidden.assert_not_called()
+
+
 def test_prepare_once_then_reuse_existing_owner_and_package(editable,monkeypatch):
     def original_owner(spec,root,plan,output,*,source_cache):
         assert root==editable.repo and source_cache.is_relative_to(editable.repo.parent/"artifact_root")

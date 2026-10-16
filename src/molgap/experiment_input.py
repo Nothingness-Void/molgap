@@ -6,6 +6,7 @@ It freezes normal JSON through existing canonical parsers; old --spec is intact.
 from pathlib import Path
 from time import perf_counter
 import json
+import re
 from uuid import uuid4
 
 from .common.io import _safe_local, publish_immutable_bytes
@@ -29,7 +30,8 @@ def resolve_experiment_input(path, repo_root):
     _safe_local(root)
     value = _read(path)
     if type(value) is dict and value.get("format") == "molgap-scientific-experiment-v1":
-        return _compile_scientific_input(path, root, value)
+        existing = _existing_scientific_input(value, root)
+        return existing if existing is not None else _compile_scientific_input(path, root, value)
     _object(value,"format spec_ref workflow_ref machine_profile authority_ref monitor_paths attempt_id","experiment input")
     if value["format"] != "molgap-experiment-input-v1":
         raise ValueError("Unknown editable experiment input")
@@ -66,6 +68,75 @@ def resolve_experiment_input(path, repo_root):
         raise ValueError("New editable workflow requires the fixed runtime source profile")
     plan["source_records"] = sorted(set([*plan["source_records"],value["authority_ref"]]))
     return value,spec,plan,paths
+
+
+def _existing_scientific_input(value, root):
+    """Identify a frozen run before touching any development-time input."""
+    for key in ("experiment_id", "logical_run_id", "attempt_id"):
+        _identifier(value.get(key), key)
+    paths = MachinePaths.from_file(value["machine_profile"]).outside_checkout(root)
+    frozen = paths.run_directory(value["logical_run_id"], value["attempt_id"]) / "inputs"
+    _safe_local(frozen)
+    if not frozen.exists() or not any(frozen.iterdir()):
+        return None
+    # An incomplete original freeze cannot be safely replaced by today's HEAD.
+    binding = _read(frozen / "input_binding.json")
+    if binding.get("format") != value["format"] or binding.get("input_identity") != canonical_fingerprint(value):
+        raise ValueError("Frozen scientific input changed; create an explicit new run instead of overwriting")
+    try:
+        spec = ExperimentSpec(_read(frozen / "experiment_spec.json"))
+        plan = _read(frozen / "workflow_plan.json")
+    except FileNotFoundError as error:
+        raise ValueError("Original frozen inputs are incomplete; reconcile the original freeze") from error
+    _check_frozen_binding(binding, value, spec, plan)
+    return value, spec, plan, paths
+
+
+def _check_frozen_binding(binding, value, spec, plan):
+    declaration = spec.to_dict()
+    if (binding.get("format") != value["format"] or binding.get("input_identity") != canonical_fingerprint(value)
+            or binding.get("spec_identity") != spec.identity
+            or binding.get("workflow_identity") != canonical_fingerprint(plan)
+            or binding.get("authority_ref") != value["authority_ref"]
+            or binding.get("monitor_paths") != value["monitor_paths"]
+            or plan.get("spec_identity") != spec.identity
+            or (value["format"] == "molgap-scientific-experiment-v1" and (
+                declaration["experiment_id"] != value["experiment_id"]
+                or declaration["logical_run_id"] != value["logical_run_id"]))):
+        raise ValueError("Original frozen run binding changed; refusing overwrite")
+    if "source_commit" in binding:
+        _commit(binding["source_commit"])
+
+
+def _commit(value):
+    if type(value) is not str or re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", value) is None:
+        raise ValueError("Missing or invalid original source commit")
+    return value
+
+
+def _bound_source_commit(run, spec, root):
+    """Read new pins, or recover legacy pins from original retained artifacts."""
+    binding = _read(run / "inputs/input_binding.json")
+    if "source_commit" in binding:
+        return _commit(binding["source_commit"])
+    package = run / "prepared/package"
+    _safe_local(package)
+    if package.exists():
+        from .experiment_package import verify_experiment_source_package
+        manifest = verify_experiment_source_package(package)
+        if manifest["spec_identity"] != spec.identity:
+            raise ValueError("Original source package differs from frozen Spec")
+        return _commit(manifest["source_commit"])
+    from .research_memory.trace import file_digest
+    commits = set()
+    for entry in spec.to_dict()["prospective"]["arms"]:
+        path = repo_local_path(root, entry["plan_spec_ref"])
+        if file_digest(path) != entry["plan_spec_sha256"]:
+            raise ValueError("Original prospective input bytes changed")
+        commits.add(_commit(_read(path)["trajectory"]["state_at_start"]["source_commit"]))
+    if len(commits) != 1:
+        raise ValueError("Original prospective inputs do not bind one source commit")
+    return commits.pop()
 
 
 def _compile_scientific_input(path, root, value):
@@ -241,7 +312,13 @@ def _compile_scientific_input(path, root, value):
         if arm["base"] != previous["base"] or addons != previous["addons"]:
             identity["architecture_config_identity"] = canonical_fingerprint({"base": arm["base"], "addons": addons})
             changed.append("architecture_config_identity")
-        if arm["training"]["objective"] != previous["training"]["objective"]:
+        # Reference/composed use the identical default normalized-Gap update.
+        # The recipe owner's mode-tagged digest is still preserved in the Spec;
+        # that label alone is not a changed scientific loss. Never alias an
+        # unverified historical digest or a mode with a different objective.
+        default_loss_alias = (baseline.mode in {"reference", "composed"} and recipe.mode in {"reference", "composed"}
+            and previous["training"]["objective"] == family_arm_bindings(baseline)["objective"])
+        if arm["training"]["objective"] != previous["training"]["objective"] and not default_loss_alias:
             identity["loss_identity"] = arm["training"]["objective"]["sha256"]
             changed.append("loss_identity")
         if not changed:
@@ -318,7 +395,7 @@ def _compile_scientific_input(path, root, value):
 def freeze_experiment_input(path, repo_root):
     """Idempotent local freeze; one run/attempt directory outside the worktree."""
     value,spec,plan,paths = resolve_experiment_input(path,repo_root)
-    return _freeze(value,spec,plan,paths)
+    return _freeze(value,spec,plan,paths,repo_root=repo_root)
 
 
 def locate_run(profile, repo_root, run_id, attempt_id):
@@ -358,13 +435,27 @@ def locate_run(profile, repo_root, run_id, attempt_id):
             "scientific_acceptance":"NOT_EVALUATED"}
 
 
-def _freeze(value,spec,plan,paths):
+def _freeze(value,spec,plan,paths,*,repo_root=None):
     from .experiment_launch import canonical_json
     run = paths.run_directory(spec.to_dict()["logical_run_id"],value["attempt_id"])
     binding = {"format":value["format"],"input_identity":canonical_fingerprint(value),
                "spec_identity":spec.identity,"workflow_identity":canonical_fingerprint(plan),
                "authority_ref":value["authority_ref"],"monitor_paths":value["monitor_paths"]}
     frozen = run / "inputs"
+    _safe_local(frozen / "input_binding.json")
+    if (frozen / "input_binding.json").exists():
+        original = _read(frozen / "input_binding.json")
+        if original.get("source_commit") is not None:
+            binding["source_commit"] = original["source_commit"]
+        _check_frozen_binding(original, value, spec, plan)
+    elif value["format"] == "molgap-scientific-experiment-v1":
+        from .experiment_package import _git
+        commit = _commit(_git(Path(repo_root), "rev-parse", "HEAD").decode().strip())
+        prefix = f"experiments/{value['experiment_id']}/generated/" + canonical_fingerprint({
+            "input": plan["configuration_source"]["sha256"], "commit": commit}) + "/"
+        if not plan["generated_records"] or any(not n.startswith(prefix) for n in plan["generated_records"]):
+            raise ValueError("Source HEAD changed between compilation and first freeze")
+        binding["source_commit"] = commit
     # Binding first: a partial freeze can be retried with identical bytes only.
     publish_immutable_bytes(frozen/"input_binding.json",canonical_json(binding).encode())
     publish_immutable_bytes(frozen/"experiment_spec.json",spec.to_json().encode())
@@ -379,8 +470,9 @@ def prepare_experiment_input(path, repo_root):
     from .experiment_workflow import prepare_workflow
     started=perf_counter()
     value,spec,plan,paths=resolve_experiment_input(path,repo_root)
-    frozen=_freeze(value,spec,plan,paths)
+    frozen=_freeze(value,spec,plan,paths,repo_root=repo_root)
     run=Path(frozen["run_directory"]);prepared=run/"prepared"
+    retained=None
     if prepared.exists():
         _safe_local(prepared)
         report=_read(prepared/"workflow_report.json") if (prepared/"workflow_report.json").is_file() else {}
@@ -399,14 +491,30 @@ def prepare_experiment_input(path, repo_root):
             _safe_local(retained)
             if prepared.resolve().parent != run.resolve() or not retained.resolve().is_relative_to(run.resolve()):
                 raise ValueError("Local preparation retention escaped its bound run")
-            retained.parent.mkdir(parents=True,exist_ok=True)
-            prepared.rename(retained)  # Preserve every byte; only regenerable staging is replaced.
         else:
             manifest=verify_experiment_source_package(prepared/"package")
             if manifest["spec_identity"] != spec.identity or manifest["package_identity"] != report.get("package_identity"):
                 raise ValueError("Existing prepared package/input binding changed")
+            binding=_read(run/"inputs/input_binding.json")
+            if "source_commit" in binding and binding["source_commit"] != manifest["source_commit"]:
+                raise ValueError("Existing prepared package differs from the original bound source")
             result={"status":"PREPARED_FOR_PLATFORM","reused_preparation":True}
-    if not prepared.exists():
+    if not prepared.exists() or retained is not None:
+        if value["format"] == "molgap-scientific-experiment-v1":
+            from .experiment_package import _git
+            try:
+                original_commit=_bound_source_commit(run,spec,Path(repo_root).absolute())
+            except (ValueError, KeyError, OSError):
+                return {"status":"RECONCILIATION_REQUIRED","prepared":str(prepared),"submitted":False,
+                    "reason":"Original source binding is unavailable; reconcile the original run without recompiling"}
+            current_commit=_git(Path(repo_root),"rev-parse","HEAD").decode().strip()
+            if current_commit != original_commit:
+                return {"status":"RECONCILIATION_REQUIRED","prepared":str(prepared),"submitted":False,
+                    "source_commit":original_commit,
+                    "reason":"Unpublished preparation requires the original bound source checkout; current HEAD is not substituted"}
+        if retained is not None:
+            retained.parent.mkdir(parents=True,exist_ok=True)
+            prepared.rename(retained)  # Preserve every byte; only regenerable staging is replaced.
         result=prepare_workflow(spec,Path(repo_root).absolute(),plan,prepared,
                                 source_cache=paths.artifact_root/"source-packages/runtime-cache")
     return {**result,"prepared":str(prepared),"operations":str(run/"operations"),
@@ -430,6 +538,8 @@ def local_preparation_error(error,stage):
         "Scientific change is not a comparable declared intervention":("arms.purpose","Declared purpose does not isolate the scientific change"),
         "Scientific compiler supports reviewed shared K1/3 and GPTrans/2 only":("arms.model","This compiler supports shared K1/3 and GPTrans/2; no new family is qualified"),
         "Retained reference context is not bound to the selected baseline data declaration":("arms.data_ref","Select the baseline declaration bound by the retained reference context"),
+        "Frozen scientific input changed; create an explicit new run instead of overwriting":("logical_run_id","Scientific input changed; create an explicit new run rather than overwrite this run"),
+        "Original frozen inputs are incomplete; reconcile the original freeze":("run.inputs","Original freeze is incomplete; reconcile it without recompiling under a new HEAD"),
     }
     field,reason=known.get(str(error),("configuration","Local validation failed; check configuration fields and referenced files"))
     if isinstance(error,FileNotFoundError):

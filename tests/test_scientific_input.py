@@ -164,6 +164,24 @@ run=paths.run_directory(value["logical_run_id"],value["attempt_id"])
 binding=(run/"inputs/input_binding.json").read_bytes()
 failed=(run/"prepared/workflow_report.json").read_bytes()
 assert json.loads(failed)["prospective_published"] is False
+import subprocess
+original_commit=subprocess.check_output(["git","rev-parse","HEAD"],cwd=repo,text=True).strip()
+def document_commit(name):
+    (repo/name).write_bytes(b"Unrelated CPU fixture documentation\n")
+    subprocess.run(["git","add","--",name],cwd=repo,check=True,capture_output=True)
+    subprocess.run(["git","-c","commit.gpgsign=false","commit","-m","Unrelated documentation"],
+        cwd=repo,check=True,capture_output=True)
+from molgap import experiment_input
+experiment_input._compile_scientific_input=forbidden
+document_commit("FAILURE_NOTES.md")
+out=io.StringIO()
+with contextlib.redirect_stdout(out):code=entry.main(["--experiment",str(config),"--repo-root",str(repo)])
+blocked=json.loads(out.getvalue())
+assert code==1 and blocked["status"]=="RECONCILIATION_REQUIRED",blocked
+assert blocked["source_commit"]==original_commit
+assert failed==(run/"prepared/workflow_report.json").read_bytes()
+assert not (run/"local_preparation_failures").exists()
+subprocess.run(["git","switch","--detach",original_commit],cwd=repo,check=True,capture_output=True)
 kaggle_workflow.stage_inputs=original
 out=io.StringIO()
 with contextlib.redirect_stdout(out):code=entry.main(["--experiment",str(config),"--repo-root",str(repo)])
@@ -184,9 +202,32 @@ recipe=json.loads((repo/plan["arms"][0]["recipe"]).read_bytes())
 assert recipe["learning_rate"]==.0005
 assert len(manifest["generated_records"])==4
 assert not set(manifest["generated_records"])&set(__import__("subprocess").check_output(["git","ls-files"],cwd=repo,text=True).splitlines())
+from molgap.research_memory.trace import file_digest
+snapshot={str(p):file_digest(p) for base in (run/"inputs",run/"prepared") for p in base.rglob("*") if p.is_file()}
+document_commit("COMPLETED_NOTES.md")
+renamed=[]
+try:
+    # Every unavailable input is retained within this synthetic E-drive repo.
+    sources=[repo/"experiments/reference",repo/"experiments/scientific-fixture/generated",
+             pathlib.Path(value["arms"][0]["initial_state_ref"])]
+    for source in sources:
+        target=source.with_name(source.name+"-retained")
+        assert source.resolve().is_relative_to(repo.parent) and target.resolve().is_relative_to(repo.parent)
+        source.rename(target);renamed.append((source,target))
+    out=io.StringIO()
+    with contextlib.redirect_stdout(out):code=entry.main(["--experiment",str(config),"--repo-root",str(repo)])
+    resumed=json.loads(out.getvalue());assert code==0 and resumed["reused_preparation"],resumed
+    frozen=experiment_input.freeze_experiment_input(config,repo)
+    assert frozen["spec_identity"]==spec.identity
+    assert snapshot=={str(p):file_digest(p) for base in (run/"inputs",run/"prepared") for p in base.rglob("*") if p.is_file()}
+    assert verify_experiment_source_package(run/"prepared/package")["source_commit"]==original_commit
+finally:
+    for source,target in reversed(renamed):target.rename(source)
 print(json.dumps({"status":"CPU_SCENARIO_ACCEPTED","spec_identity":spec.identity,
  "package_identity":manifest["package_identity"],"family":spec.to_dict()["arms"][0]["family"],
  "same_frozen_binding":True,"prospective_records":1,"remote_requests":0,
+ "cross_head_reuse":True,"development_inputs_unavailable":True,"compiler_called_on_continue":False,
+ "unpublished_different_head_blocked":True,
  "native_qualification":"NOT_EVALUATED","scientific_acceptance":"NOT_EVALUATED"}))
 '''
     result = subprocess.run([sys.executable, "-I", "-c", program, str(case.repo), str(case.path)],
@@ -214,6 +255,7 @@ def test_scientific_input_does_not_infer_authority_or_reference(scientific, faul
     elif fault == "missing_reference":value["arms"][0]["reference_ref"]["plan_ref"] = "missing.json"
     elif fault == "wrong_contract":value["arms"][0]["recipe_ref"] = "experiments/reference/roles.json"
     elif fault == "data_context":
+        value["logical_run_id"] = "fresh-data-context-run"
         data = json.loads(data_original)
         data["arms"][0]["data"]["roles"][0]["membership_sha256"] = "0" * 64
         _write_json(data_path, data)
@@ -253,3 +295,75 @@ def test_two_arm_compilation_uses_independent_device_and_identity_bindings(scien
     assert [a["scientific_role"] for a in spec.to_dict()["arms"]] == ["candidate", "candidate"]
     assert "same_run_replay" not in spec.to_dict()["prospective"]
     assert len(plan["generated_records"]) == 7
+
+
+def test_ordinary_addon_runs_complete_scientific_entry(scientific, record_property):
+    from copy import deepcopy
+    case = scientific
+    value = deepcopy(case.value)
+    value.update(experiment_id="addon-fixture", logical_run_id="addon-fixture-run")
+    arm = value["arms"][0]
+    name = "k1_readout_scale" if arm["model"]["family"] == "neural_atom_k1" else "gptrans_readout_scale"
+    arm.update(training={}, purpose="architecture_comparison")
+    arm["model"]["addons"] = [{"name": name, "version": "1", "config": None}]
+    value["question"].update(changed_mechanism="readout-scale", question="Does this ordinary addon integrate faithfully?")
+    path = case.repo / "experiments/addon-fixture/experiment.json"
+    _write_json(path, value)
+    _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix())
+    _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "One registered ordinary addon input")
+    program = r'''
+import contextlib, importlib.util, io, json, pathlib, sys
+repo=pathlib.Path(sys.argv[1]);config=pathlib.Path(sys.argv[2]);sys.path.insert(0,str(repo/"src"))
+from molgap.experiment_input import resolve_experiment_input
+from molgap.experiment_package import verify_experiment_source_package,read_packaged_text
+from molgap.experiment_execution import build_addon_declaration
+entry_spec=importlib.util.spec_from_file_location("entry",repo/"platforms/kaggle/submit_workflow.py")
+entry=importlib.util.module_from_spec(entry_spec);entry_spec.loader.exec_module(entry)
+def forbidden(*a,**kw):raise AssertionError("No platform operations in CPU addon acceptance")
+entry.submit_prepared_workflow=forbidden
+out=io.StringIO()
+with contextlib.redirect_stdout(out):code=entry.main(["--experiment",str(config),"--repo-root",str(repo)])
+result=json.loads(out.getvalue());assert code==0,result
+value,spec,plan,paths=resolve_experiment_input(config,repo)
+arm=spec.to_dict()["arms"][0];family=(arm["family"]["name"],arm["family"]["version"])
+expected=build_addon_declaration(family,arm["addons"][0]["name"],repo_root=repo)
+assert arm["addons"]==[expected]
+package=pathlib.Path(result["prepared"])/"package"
+manifest=verify_experiment_source_package(package,repo)
+recipe=json.loads(read_packaged_text(package,plan["arms"][0]["recipe"]))
+assert recipe["mode"]=="composed" and recipe["addons"]==arm["addons"]
+acceptance=json.loads(read_packaged_text(package,plan["acceptance_plan"]))["arms"][0]
+comparison=json.loads(read_packaged_text(package,acceptance["comparison_prelaunch"]["path"]))
+assert comparison["prelaunch_ready"] and comparison["experiment_purpose"]=="architecture_comparison"
+assert comparison["declared_intervention_fields"]==["architecture_config_identity"]
+release=json.loads((pathlib.Path(result["prepared"])/"release_report.json").read_bytes())
+assert release["errors"]==[],release
+assert not (paths.run_directory(value["logical_run_id"],value["attempt_id"])/"operations").exists()
+print(json.dumps({"status":"CPU_ADDON_ENTRY_ACCEPTED","family":arm["family"],"addon":expected,
+ "package_identity":manifest["package_identity"],"spec_identity":spec.identity,
+ "initialization_release_checked":True,"prelaunch_purpose":"architecture_comparison",
+ "platform_requests":0,"native_qualification":"NOT_EVALUATED"}))
+'''
+    result = subprocess.run([sys.executable, "-I", "-c", program, str(case.repo), str(path)], cwd=case.repo,
+        env={**os.environ, "CUDA_VISIBLE_DEVICES": "-1", "OMP_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"},
+        capture_output=True, text=True, timeout=180)
+    assert result.returncode == 0, result.stdout + result.stderr
+    record_property("ordinary_addon_observation", result.stdout.splitlines()[-1])
+
+
+def test_ordinary_addon_alias_does_not_waive_real_optimizer_confound(scientific):
+    from copy import deepcopy
+    case = scientific
+    value = deepcopy(case.value)
+    value.update(experiment_id="mixed-confound", logical_run_id="mixed-confound-run")
+    arm = value["arms"][0]
+    name = "k1_readout_scale" if arm["model"]["family"] == "neural_atom_k1" else "gptrans_readout_scale"
+    arm.update(training={"learning_rate": .0005}, purpose="architecture_comparison")
+    arm["model"]["addons"] = [{"name": name, "version": "1", "config": None}]
+    path = case.repo / "experiments/mixed-confound/experiment.json"
+    _write_json(path, value)
+    _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix())
+    _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Deliberately confounded CPU declaration")
+    with pytest.raises(ValueError, match="not a comparable declared intervention"):
+        resolve_experiment_input(path, case.repo)
+    assert not (case.repo / "experiments/mixed-confound/generated").exists()

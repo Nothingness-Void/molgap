@@ -122,6 +122,8 @@ and retained reference pins must agree. Missing/incompatible references block;
 the compiler never retrains a baseline or creates authority. Ordinary catalog
 addons use ordered `{name, version, config}` declarations; mixed/confounded
 interventions fail the existing purpose-scoped comparison check.
+For catalog addons with literal-only defaults, `config: null` selects those
+reviewed defaults; bounded/configurable addons still require explicit values.
 
 Commit human/source inputs before formal preparation. The tool generates only
 bounded canonical JSON under `experiments/<question>/generated/<input+commit>/`;
@@ -195,6 +197,22 @@ complete validated directories; retained legacy partial objects are rebuilt from
 the same commit. `--prepared` and old
 canonical `--spec` operations remain compatible. IMS/SCNet do not acquire this
 new front door implicitly. See the [platform API](KAGGLE_WORKFLOW_SUBMISSION.md).
+
+Scientific-input continuation looks up the external frozen run **before**
+compilation. The same human input reuses its original Spec/workflow/package,
+even after unrelated HEAD changes or removal of development reference files,
+generated definitions and original initialization paths. The completed package
+and frozen bindings are still checked. New model source does not upgrade an old
+run: choose an explicit new `logical_run_id` to create a new scientific task.
+Changed input cannot overwrite a frozen run. Existing scientific freezes without
+the newer source-commit pin remain readable; their original bindings are not migrated.
+
+Unpublished preparation can regenerate only under its originally bound source
+commit. A different HEAD or unavailable original source pin returns
+`RECONCILIATION_REQUIRED` and preserves the failed directory. Use the original
+source checkout to continue; this entry does not auto-switch Git, recreate
+missing historical inputs, rewrite RML or clear journals. A completed prepared
+package continues through the original journal, including uncertain submissions.
 
 ## 5. Inspect, accept and recover with existing owners
 
