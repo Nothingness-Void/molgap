@@ -392,3 +392,12 @@ This was bounded **INFRA_CPU_ACCEPTED** evidence, not a live platform or native
 qualification. No GPU submission, new model, dataset access, historical decision
 rewrite or source regrouping was performed. Desktop application, real platform
 latency and overall A–G completion remain unestablished.
+
+Primary integration of this follow-up fast-forwarded `c3f4c97b` to `cc7cbea3`.
+All 14 pre-existing user byte pins matched before/after integration.
+`continue-primary.xml` passed **44 tests** (input, recovery, original journal and
+portable inventory; overlapping the suites above), zero failures/errors/skips.
+The three changed operating documents passed navigation checks: 57 pointers,
+one anchor, zero issues and no length gate. Core/Recipe/Kernel/Runner, package,
+workflow/cache, RML and submission-journal owners had no diff from `c3f4c97b`.
+No remote push or job operation was performed in this continuation follow-up.
