@@ -21,16 +21,16 @@ one cumulative implementation/evidence record, not another operating protocol.
 |---|---|---|
 | A | Default pytest collects `tests`; CLI fixtures load on demand; selected checkout runs under `-I`, including owning platform scripts | CPU accepted; shared `.pth` and running environments were not changed |
 | B | Machine-local external data/artifact/scratch roots; stable run/attempt paths; streaming verified no-clobber copy | New path accepted; one old archive copied and recovered by hash; no bulk historical migration/GC |
-| C | One family/addon/execution catalog, read-only legacy projections; pretty-JSON references freeze existing canonical identities | Bounded reference-input path accepted; general short recipe/model override compiler remains unimplemented |
-| D | Fixed tracked runtime distribution, scoped Python `data` namespace, bulk Git validation, archive-only cache | Actual isolated CPU package accepted; seed budget unchanged; no native package qualification |
-| E | Existing Kaggle entry accepts `--experiment`; default preparation only; same original journal under `--execute`; read-only run-ID locator | CPU/fake-API accepted; authenticated platform latency and real receipts not measured |
+| C | One catalog and read-only projections; shared K1/3 and GPTrans/2 scientific inputs generate recipes, Spec, workflow, source and prospective bindings | Bounded CPU scenarios accepted; arbitrary recipe/new-family compilation is not implemented |
+| D | Fixed runtime distribution, bulk Git, atomic complete archive cache; V2 explicitly distinguishes generated JSON from committed source | CPU package accepted with V1 compatibility; no native qualification |
+| E | Existing Kaggle `--experiment` entry; confirmed pre-publication failure recovery; same original submission journal; read-only run-ID locator | CPU/fake-API accepted; authenticated latency and real receipts not measured |
 | F | One normal guide, single portable source inventory and explicit commits | Server patch supplied; Desktop is NOT_APPLIED and requires its own review/tests |
 | G | Public model/recipe/session/checkpoint paths preserved | Deferred until cross-owner integration; no mass source moves or compatibility constants deleted |
 
 The remaining C/F/G work is real work, not declared complete by the CPU status.
-Reference-input V1 removes canonical-byte editing and Python allowlist work for
-existing declarations; it does not yet make every new scientific question a
-single short parameter file. Existing scientific builders/gates remain required.
+Reference-input V1 remains compatible. Scientific-input V1 compiles bounded
+optimizer/catalog-addon changes through existing scientific builders and gates;
+it does not make arbitrary recipe/model changes executable or admissible.
 
 ## Reuse and replaced defaults
 
@@ -177,7 +177,7 @@ baseline above:
 - `84f776cf`: read-only run-ID locator.
 
 The [portable inventory](REFORM_SHARED_FILES.json) reuses the existing
-`molgap-source-files-v1` format and pins 47 shared files. The original
+`molgap-source-files-v1` format and pins 49 shared files after review hardening. The original
 [historical inventory](SHARED_TRAINING_CORE_FILES.json) remains unchanged at
 `f6ec2ad02ea9105c75217bd7e9e0cdb70331229d`. Catalog/platform glue must be reviewed
 against Desktop's own capabilities rather than copied as machine policy.
@@ -192,10 +192,11 @@ No push or remote branch update is authorized by this reform.
 
 ## Remaining work
 
-1. A general human scientific-config compiler, if desired, must use existing
-   recipe/declaration/prospective owners, retain the committed-config boundary,
-   and be tested for changed parameter/addon identities. Reference-input V1 is
-   not that compiler.
+1. Scientific compilation is bounded to shared K1/3 and GPTrans/2, catalog
+   addons, learning rate and weight decay. Other typed recipe/input/family
+   changes require their existing owning builders and focused acceptance.
+   Frozen screen budget, data, batch, seed, sampler and selection cannot be
+   silently changed through this input. No baseline is retrained automatically.
 2. Desktop must apply/review the portable mechanisms with its own catalog glue,
    preserve its unique recovery/execution semantics and pass the same inventory
    and targeted compatibility tests. Native/runtime qualification stays separate.
@@ -209,8 +210,8 @@ No push or remote branch update is authorized by this reform.
    bytes or commits conservatively miss the cache, even if model Python is
    unchanged. Logical Spec-only reuse is verified; seed-only reuse across
    changed recipe records is NOT_ESTABLISHED. A separate runtime/config package
-   layer would need a reviewed backward-compatible format change, not silent
-   removal of recipe byte binding.
+   layer was not introduced. V2 adds explicit generated-record provenance, not
+   removal of recipe byte binding or seed-only reuse claims.
 
 ## Primary server integration verification
 
@@ -240,3 +241,75 @@ shared inventory had no diff from the implementation baseline.
 No push, Desktop integration or worktree removal followed. The local reform
 branch/worktree was retained for recovery; remote reachability of the new commits
 is not claimed. The existing RML derived/user changes remain the user's own.
+
+## Review hardening of 13eed22e (2026-10-16–17)
+
+Review input SHA256:
+`edc25ec00a9a15afc9d48bf57e5f589096f016c46f4ad1c59080ceb6f6176e1f`.
+The supplied review was implemented without a new trainer, RML database,
+platform submitter or approval system. Its core scenario, not test count alone,
+is the acceptance target:
+
+- One committed human learning-rate edit generated a new recipe, Spec,
+  workflow, purpose-scoped comparison and prospective inputs using existing
+  owners. K1 and GPTrans were tested independently in isolated E-drive fixture
+  repositories with actual model initialization schemas and actual package,
+  staging, release and RML checks. These were CPU synthetic infrastructure
+  fixtures, not scientific experiments or accepted native references.
+- An injected staging IO failure preceded RML publication. The same front door
+  retained its complete failed report, regenerated staging with identical frozen
+  input/Spec identity, published one prospective record and reused its completed
+  preparation on the third call. No SDK/remote request occurred. Published,
+  unknown, active PREPARING and operation-journal states remain non-retryable
+  here; the original platform journal owns remote reconciliation.
+- Source caches are validated in temporary directories and published by one
+  directory rename. Legacy partial cache objects are retained and rebuilt from
+  their bound source; corrupt complete objects still fail closed. V1 packages
+  remain unchanged. V2 retains six sidecars while explicitly binding bounded
+  generated JSON and the committed human input; untracked Python is forbidden.
+- Root editable-install ambiguity was removed. The indexed CPU-only prototype
+  hashes once per loaded shard instance across 100 repeated reads, invalidates
+  changed file identities and retains its real-data prohibition. This metadata
+  cache is not a malicious-filesystem or native loading certificate.
+- Permanent old-source/old-capability locks were removed from ordinary tests;
+  prior one-time byte proofs remain in this record. Current package hashes,
+  state/gradient/recovery behavior and source isolation remain tested.
+- Local errors expose finite safe field/reason messages; arbitrary exception
+  strings and SDK/HTTP request details are not echoed by the front door.
+- Baseline data declarations must match the Spec identity bound by the retained
+  reference context. Changed membership cannot borrow an unchanged recipe and
+  prediction manifest to manufacture a compatible comparison. This binds the
+  historical reference input, not the candidate's platform/run identity.
+
+| Raw JUnit name | Observed result | Scope |
+|---|---|---|
+| `review-repairs-2.xml` | 85 passed, 1 skipped, 78.014s | Recovery/input/cache and old package compatibility |
+| `review-regression.xml` | 141 passed, 242.061s | Existing workflow, acceptance, comparison, catalog, indexed CPU and fake-journal fixtures |
+| `review-final.xml` | 106 passed, 1 skipped, 101.765s | Final R1–R6, generated-package safety, V1 compatibility and original journal front door |
+| `committed-review.xml` | 169 passed, 146.429s | e4a11e04: actual K1/GPTrans config/recovery and two-arm compilation; committed isolated distribution plus Core/Recipe/Session/state tests |
+| `data-context.xml` | 2 passed, 14 deselected, 40.23s | eda23d16: changed baseline membership rejected in both families before publication |
+
+These overlapping suites are not independent scientific experiments. The skip
+is the existing Windows link-privilege limitation. Earlier fixture failures were
+retained on E. `scientific-final.xml` had 32 passes and one instrumentation
+failure: counting started after the constructor had already verified/opened the
+shard. Counting before construction passed in `review-final.xml` (one hash for
+construction plus 100 reads, then one additional hash on each identity change).
+No failed infrastructure test was recorded as a model failure or hidden by xfail.
+
+The committed distribution contained 426 source files (1,303,554 archive bytes).
+Its cold/warm package samples were 5.434930/4.127232s; isolated CPU checking took
+15.772613s. These are single local samples, not authenticated preparation/upload
+latency. The actual compiler scenario used original release/RML checks with
+synthetic artifacts; fake-API journal tests retained their explicit qualification
+stubs. Neither proves an actual platform execution or scientific improvement.
+
+Portable implementation commits: `e4a11e04` (compiler and R1–R6) and `eda23d16`
+(baseline data/context binding). Applying these mechanisms to Desktop still needs
+review of its own catalog and runtime semantics, not a whole-branch copy.
+
+Raw review regressions and the final scenario report are stored under the
+existing E-drive report root. No historical V4/V5 decision, durable scientific
+contract, existing RML record or primary user change was edited. Desktop/native
+application and end-to-end live platform latency remain unqualified. Overall
+A–G reform completion is still NOT_COMPLETE.
