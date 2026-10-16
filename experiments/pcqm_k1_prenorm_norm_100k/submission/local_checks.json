@@ -1,0 +1,59 @@
+{
+  "format": "molgap-local-check-receipt-v1",
+  "working_directory": "D:/w/k1-prenorm-norm-100k",
+  "python": "D:/文档/molgap/.venv/Scripts/python.exe",
+  "environment": {
+    "PYTHONPATH": "D:/w/k1-prenorm-norm-100k/src",
+    "CUDA_VISIBLE_DEVICES": "-1",
+    "HIP_VISIBLE_DEVICES": "-1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "command": [
+    "python", "-m", "pytest", "-q",
+    "tests/test_k1_prenorm.py",
+    "tests/test_kaggle_workflow_budget.py",
+    "tests/test_family_training_kernel.py",
+    "tests/test_family_training_session.py",
+    "tests/test_family_training_runner.py",
+    "tests/test_experiment_workflow.py"
+  ],
+  "outputs_test_file_present": false,
+  "exit_code": 1,
+  "pytest_elapsed_seconds": 94.24,
+  "outer_elapsed_seconds": 101.885,
+  "summary": {
+    "passed": 170,
+    "failed": 2,
+    "warnings": 62
+  },
+  "failures": [
+    {
+      "test": "tests/test_k1_prenorm.py::test_variant_frozen_state_load_and_k1_update_have_finite_gradients_and_final_norm_optimizer_ownership",
+      "line": 169,
+      "cause": "Test did not enable the required fail-closed deterministic algorithms before FamilyKernel.step; execution stopped at the deterministic-memory-fill guard."
+    },
+    {
+      "test": "tests/test_k1_prenorm.py::test_live_selection_keeps_ema_as_auxiliary_canonical_trace",
+      "line": 201,
+      "cause": "The imported contract_file helper calls build_family_recipe with its default mode='reference', while this synthetic recipe uses mode='prenorm_bn'; explicit mode binding is needed in the test helper path."
+    }
+  ],
+  "targeted_followup": {
+    "purpose": "Recheck only the two newly authored test cases that failed in the first batch after fixing their fixture setup.",
+    "command": [
+      "python", "-m", "pytest", "-q",
+      "tests/test_k1_prenorm.py::test_variant_frozen_state_load_and_k1_update_have_finite_gradients_and_final_norm_optimizer_ownership",
+      "tests/test_k1_prenorm.py::test_live_selection_keeps_ema_as_auxiliary_canonical_trace"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 9.102,
+    "summary": {
+      "passed": 2,
+      "failed": 0,
+      "warnings": 2
+    },
+    "notes": "The deterministic-algorithm guard now restores the caller state in try/finally, and the synthetic contract explicitly binds the prenorm_bn addon. The original 170 passing tests were not rerun."
+  },
+  "scope_note": "One targeted batch plus a selective rerun of its two failed newly authored test nodes; no full-suite run, remote action, or accelerator execution."
+}

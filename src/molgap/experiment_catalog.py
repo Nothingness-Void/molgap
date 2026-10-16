@@ -59,6 +59,10 @@ ADDONS = MappingProxyType({
         "gptrans_t", "local-bond-architecture", "molgap.gptrans_bond_local",
         family_versions=("2",), single_addon=True,
     ),
+    **{(name, "1"): AddonContract(
+        "neural_atom_k1", "k1-local-normalization", "molgap.k1_prenorm",
+        family_versions=("3",), single_addon=True,
+    ) for name in ("k1_prenorm_bn", "k1_prenorm_ada")},
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
         (AddonConfigField("num_layers", "integer", minimum=EDGE_STATE_MIN_LAYERS,

@@ -312,6 +312,7 @@ class FamilyTrainingSession:
         self._metric_host, self._metric_dtype = [], None
         evaluation = None
         live_evaluation = None
+        ema_evaluation = None
         if self.recipe.dataset.development:
             if self.recipe.selection_weights == "clean-ema":
                 self.kernel.calibrate(self.loaders)
@@ -332,12 +333,18 @@ class FamilyTrainingSession:
             policy = mode_policy(self.recipe.family, self.recipe.mode)
             for weights in policy.extra_development_weights:
                 if weights != self.recipe.selection_weights:
-                    if weights != "live":
+                    if weights not in {"live", "ema"}:
                         raise ValueError("No reporting field for this extra development state")
-                    live_evaluation = self.kernel.evaluate(self.loaders, weights=weights)
+                    extra = self.kernel.evaluate(self.loaders, weights=weights)
+                    if weights == "live":
+                        live_evaluation = extra
+                    else:
+                        ema_evaluation = extra
         metrics = {"normalized_train_gap_mae": metric, "development": evaluation}
         if live_evaluation is not None:
             metrics["development_live"] = live_evaluation
+        if ema_evaluation is not None:
+            metrics["development_ema"] = ema_evaluation
         self.pass_finished(progress, metrics)
 
     def _persist(self, progress):

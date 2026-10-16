@@ -29,7 +29,8 @@ def load_family_model(recipe, initial_state):
         model.load_state_dict(state, strict=True)
     if recipe.family == "neural_atom_k1":
         from .qm9_neural_atom import make_encoder
-        model = make_encoder("neural_atom_k1")
+        construct = mode_policy(recipe.family, recipe.mode).construct
+        model = construct(recipe, state) if construct is not None else make_encoder("neural_atom_k1")
         exact_load(model)
         if recipe.mode == "ssma":
             from .k1_joint_aggregation import attach_k1_joint_aggregation

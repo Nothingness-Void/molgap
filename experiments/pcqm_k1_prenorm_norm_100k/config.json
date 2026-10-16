@@ -1,0 +1,26 @@
+{
+  "run_id": "pcqm-k1-prenorm-norm-100k-s42",
+  "account": "kaseichou",
+  "title": "MolGap K1 PreNorm Norm 100K S42",
+  "kernel": "kaseichou/molgap-k1-prenorm-norm-100k-s42",
+  "source_dataset": "kaseichou/molgap-k1-prenorm-norm-100k-s42-src",
+  "dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "seed": 42,
+  "allocation_wall_limit_seconds": 14400,
+  "cleanup_reserve_seconds": 180,
+  "arms": {
+    "k1_pre_bn": {
+      "mode": "prenorm_bn",
+      "addon": "k1_prenorm_bn",
+      "initialization_sha256": "4beeaeffb183dbe3785330ea22d3041ef33aad859a814934767e558fd765e036",
+      "initial_state": "initial_states/k1_pre_bn.pt"
+    },
+    "k1_pre_ada": {
+      "mode": "prenorm_ada",
+      "addon": "k1_prenorm_ada",
+      "initialization_sha256": "5e1bd983c2fbb7a0fdabe49122a4029459938d7d5efa82f6a7a4bcba4aa7e65a",
+      "initial_state": "initial_states/k1_pre_ada.pt"
+    }
+  }
+}

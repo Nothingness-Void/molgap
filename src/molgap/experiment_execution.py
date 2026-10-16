@@ -98,7 +98,10 @@ TRAINING_ADAPTERS = MappingProxyType({
         tuple(TrainingAddon(name, "1", "composed", apply_hook="molgap.substrate_scale_addon:apply_addon")
               for name in ("k1_node_scale", "k1_aggregate_scale", "k1_readout_scale")) +
         (("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
-         ("k1_mean2_clean_second", "mean2_clean_second")), ("molgap.pcqm_wedge",),
+         ("k1_mean2_clean_second", "mean2_clean_second"),
+         TrainingAddon("k1_prenorm_bn", "1", "prenorm_bn", policy_hook="molgap.k1_prenorm:policy"),
+         TrainingAddon("k1_prenorm_ada", "1", "prenorm_ada", policy_hook="molgap.k1_prenorm:policy")),
+        ("molgap.pcqm_wedge",),
         target_identity_in_completion=True, profile_adapter="molgap.family_execution_profile"),
     ("gptrans_t", "2"): TrainingAdapter(
         ("gptrans_t", "2"), "molgap.family_training_runner", "gptrans-session-v1",

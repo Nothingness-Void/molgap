@@ -36,6 +36,14 @@ examples can be composed in Spec order; frozen replacement modes stay exclusive.
 
 ## GPTrans-T: reuse the same preparation route
 
+K1 local pre-norm replacement modes are `k1_prenorm_bn` / `prenorm_bn` and
+`k1_prenorm_ada` / `prenorm_ada`. They use the existing statically registered
+`FamilyModePolicy.construct` hook, not ordered additive slots. The shared loader
+strictly installs the transported full initial tensor state. Both declare a
+secondary EMA development observation while preserving Live selection; these
+extra observations retain explicit trace semantics and do not select a second
+model. Their19 local/final norms are an architecture declaration, not adoption.
+
 ```python
 family = ("gptrans_t", "2")
 addon = build_addon_declaration(family, "gptrans_readout_scale", repo_root=repo)

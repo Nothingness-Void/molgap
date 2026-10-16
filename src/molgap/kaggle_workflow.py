@@ -11,8 +11,15 @@ from .experiment_launch import canonical_json, publish_immutable_bytes
 
 def _metadata(kaggle: dict) -> dict:
     fields = {"account", "kernel", "title", "datasets", "source_dataset", "accelerator"}
-    if type(kaggle) is not dict or set(kaggle) != fields:
+    budget_fields = {"allocation_wall_limit_seconds", "cleanup_reserve_seconds"}
+    if type(kaggle) is not dict or not fields <= set(kaggle) or set(kaggle) - fields - budget_fields:
         raise ValueError("Expected explicit Kaggle account/kernel/title/datasets/source_dataset/accelerator")
+    limit = kaggle.get("allocation_wall_limit_seconds")
+    reserve = kaggle.get("cleanup_reserve_seconds", 60)
+    if (limit is not None and (type(limit) is not int or limit <= 0)) or type(reserve) is not int or reserve < 0:
+        raise ValueError("Invalid explicit allocation budget")
+    if limit is not None and reserve >= limit:
+        raise ValueError("Cleanup reserve must leave positive execution time")
     if not re.fullmatch(r"[a-z0-9-]+", kaggle["account"]):
         raise ValueError("Invalid Kaggle account")
     prefix = kaggle["account"] + "/"
@@ -67,6 +74,9 @@ def stage_inputs(*, repo_root, output, package, manifest, spec, platform_plan,
         "account": platform_plan["account"], "run_reference": platform_plan["kernel"],
         "dataset_sources": metadata["dataset_sources"], "accelerator": platform_plan["accelerator"],
         "device_count": spec.to_dict()["platform"]["device_count"], "jobs": jobs}
+    for name in ("allocation_wall_limit_seconds", "cleanup_reserve_seconds"):
+        if name in platform_plan:
+            launch[name] = platform_plan[name]
     if acceptance_binding is not None:
         launch["target_identity"] = acceptance_binding
     return {"input_root": staged, "kernel_dir": kernel, "entry_path": kernel / "run.py",

@@ -32,6 +32,12 @@ Use its prepared package and the operation journal below.
 
 ## Platform operation
 
+Workflow-plan `kaggle` optionally freezes `allocation_wall_limit_seconds` and
+`cleanup_reserve_seconds`. The local adapter validates and copies these into
+the existing runtime launch budget. Omission preserves the historical wire;
+an explicit ceiling must leave positive execution time after cleanup. Keep the
+assigned-device ceiling in the authority consistent with devices times wall.
+
 The prepared source package must contain a bounded authority with
 `user_authorized: true`, the exact `arms` and `seeds`, and a positive
 `allocated_t4_hours_ceiling`. Credentials stay outside Git. The operations
