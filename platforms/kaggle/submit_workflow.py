@@ -1,6 +1,8 @@
 """Platform entry: check or submit one already prepared authorized workflow."""
 import argparse
+from contextlib import redirect_stdout
 from pathlib import Path
+import sys
 
 from molgap.experiment_launch import canonical_json
 from molgap.kaggle_submission import submit_prepared_workflow
@@ -25,7 +27,8 @@ def main(argv=None):
             from molgap.experiment_input import prepare_experiment_input
             if args.output or args.authority or args.monitor_path:
                 raise ValueError("Editable input already owns the immutable run/authority/monitor bindings")
-            prepared=prepare_experiment_input(args.experiment,args.repo_root)
+            with redirect_stdout(sys.stderr):
+                prepared=prepare_experiment_input(args.experiment,args.repo_root)
             if not args.execute or prepared["status"] != "PREPARED_FOR_PLATFORM":
                 print(canonical_json(prepared))
                 return 0 if prepared["status"] == "PREPARED_FOR_PLATFORM" else 1
