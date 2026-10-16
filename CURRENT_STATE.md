@@ -89,7 +89,7 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 
 Cross-scale infrastructure is CPU-accepted; V2 IMS data passed [role acceptance](docs/operations/PCQM_UNIFIED_TWO_P_ACCEPTANCE.md).
 Job `1733250.ccpbs1` exited0 with a retained memory warning; Kaggle mirrors are NOT_PUBLISHED.
-Modern2D [CPU integration](experiments/modern2d_model_integration/decision_cpu_2026-10-16.md) retains fidelity/legacy gaps; real inputs, native/training/protected scoring remain unreleased.
+Modern2D [review hardening](experiments/modern2d_model_integration/review_hardening_2026-10-16.md) is CPU-accepted: R1/R2, ESA/2 and indexed fixtures; whole fidelity, real inputs, mirrors/native/training remain unreleased.
 
 - Preserve terminal interpretations and independent qualifications through the
   history index. The accepted 500K bridge does not establish full-scale qualification.

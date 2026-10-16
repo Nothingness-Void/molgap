@@ -17,3 +17,7 @@ The [dated CPU decision](decision_cpu_2026-10-16.md) links the
 results. CPU mechanics do not authorize real training. Raw JUnit, synthetic
 checkpoints and six-file source archives are retained locally under
 platforms/_records/local/modern2d_cpu; Git stores compact evidence only.
+
+The [dated targeted review](review_hardening_2026-10-16.md) appends R1/R2
+observation/history binding, versioned ESA PMA repair, indexed-input preparation
+and newly pinned PPGT author-source evidence without revising that decision.
