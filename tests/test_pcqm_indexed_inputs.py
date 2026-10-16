@@ -67,7 +67,7 @@ def test_real_scope_denied_before_packed_payload_open(tmp_path,monkeypatch):
     assert "independent_audit" not in draft["roles"] and not draft["automatic_training_action"]
 
 
-@pytest.mark.parametrize("kind", ["audit_path","outside_path","offset_bounds","offset_duplicate","offset_order","feature_schema","pure_2d"])
+@pytest.mark.parametrize("kind", ["audit_path","outside_path","junction_path","offset_bounds","offset_duplicate","offset_order","feature_schema","pure_2d"])
 def test_repinned_semantically_invalid_maps_are_not_authorized(tmp_path,monkeypatch,kind):
     from dataclasses import replace
     from molgap import packed_graph_dataset
@@ -76,6 +76,16 @@ def test_repinned_semantically_invalid_maps_are_not_authorized(tmp_path,monkeypa
     m=json.loads(manifest_path.read_bytes());item=m["graph_chunks"][0]
     if kind=="audit_path":item["file"]="payloads/independent_audit/must-not-open.pt"
     elif kind=="outside_path":item["file"]="payloads/full_minus_holdout/../../outside.pt"
+    elif kind=="junction_path":
+        from pathlib import Path
+        from types import SimpleNamespace
+        import stat
+        item["file"]="payloads/full_minus_holdout/junction/must-not-open.pt"
+        original=Path.lstat
+        def fake_reparse(path,*args,**kwargs):
+            if path.name=="junction":return SimpleNamespace(st_mode=stat.S_IFDIR,st_file_attributes=0x400)
+            return original(path,*args,**kwargs)
+        monkeypatch.setattr(Path,"lstat",fake_reparse)
     elif kind=="offset_bounds":item["offsets"]=[999]*item["rows"]
     elif kind=="offset_duplicate":item["offsets"]=[0]*item["rows"]
     elif kind=="offset_order":item["offsets"]=list(reversed(item["offsets"]))
@@ -87,7 +97,7 @@ def test_repinned_semantically_invalid_maps_are_not_authorized(tmp_path,monkeypa
     a["manifest_sha256"]=h["manifest_sha256"]=manifest_sha
     p=replace(p,manifest_sha256=manifest_sha,acceptance_sha256=file_digest(receipt_path),
         authority_sha256=canonical_fingerprint(a),role_history_sha256=canonical_fingerprint(h))
-    if kind in {"audit_path","outside_path","feature_schema","pure_2d"}:
+    if kind in {"audit_path","outside_path","junction_path","feature_schema","pure_2d"}:
         def forbidden(*args,**kwargs):raise AssertionError("Forbidden physical payload was opened")
         monkeypatch.setattr(packed_graph_dataset,"PackedGraphDataset",forbidden)
     with pytest.raises(ValueError):IndexedRoleDataset(root,p,authority=a,role_history=h)

@@ -20,6 +20,13 @@ from .research_memory.paths import repo_local_path
 from .research_memory.trace import file_digest
 
 
+def _local(root, relative):
+    # Check the unresolved components first: resolve() would hide an internal
+    # junction into another role even if it remained within the dataset root.
+    _safe_local(root / relative)
+    return repo_local_path(root, relative)
+
+
 @dataclass(frozen=True)
 class IndexedInputPermit:
     role: str
@@ -53,8 +60,7 @@ class IndexedRoleDataset:
             raise TypeError("Reviewed indexed input permit required")
         permit.verify(authority,role_history)  # Before opening members or payloads.
         self.root=Path(root).absolute();_safe_local(self.root)
-        receipt_path=repo_local_path(self.root,"acceptance.json")
-        _safe_local(receipt_path)
+        receipt_path=_local(self.root,"acceptance.json")
         if file_digest(receipt_path) != permit.acceptance_sha256:
             raise ValueError("Indexed acceptance bytes changed")
         receipt=json.loads(receipt_path.read_bytes())
@@ -65,8 +71,7 @@ class IndexedRoleDataset:
         expected_path="roles/"+permit.role+".json"
         if binding.get("path") != expected_path or binding.get("sha256") != permit.manifest_sha256:
             raise ValueError("Indexed manifest differs from acceptance")
-        manifest_path=repo_local_path(self.root,expected_path)
-        _safe_local(manifest_path)
+        manifest_path=_local(self.root,expected_path)
         if file_digest(manifest_path) != permit.manifest_sha256:
             raise ValueError("Indexed role manifest bytes changed")
         self.manifest=json.loads(manifest_path.read_bytes())
@@ -78,8 +83,7 @@ class IndexedRoleDataset:
             raise ValueError("Unknown/unbounded CPU indexed role ABI")
         for operation in ("prediction_input","labels_read"):
             authorize_role(m,operation=operation)
-        member=repo_local_path(self.root,m["source_index_file"])
-        _safe_local(member)
+        member=_local(self.root,m["source_index_file"])
         if m["source_index_file"] != "members/"+permit.role+".i64le" or member.stat().st_size != m["rows"]*8:
             raise ValueError("Indexed member path/count mismatch")
         if file_digest(member) != m["source_index_file_sha256"]:
@@ -121,8 +125,7 @@ class IndexedRoleDataset:
         prefix="payloads/common_dev/" if role == "common_dev" else "payloads/full_minus_holdout/"
         if not item["file"].startswith(prefix):
             raise ValueError("ROLE_BLOCKED: wrong/audit physical payload")
-        path=repo_local_path(self.root,item["file"])
-        _safe_local(path)
+        path=_local(self.root,item["file"])
         if path.stat().st_size > 64*1024**2:
             raise ValueError("CPU indexed chunk safety cap exceeded")
         path=_pin(self.root,item)
