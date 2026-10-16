@@ -19,13 +19,20 @@ def test_version_two_actual_interruption_resume_matches_uninterrupted(tmp_path):
     assert recipe.interface == ("esa_small","2") and recipe.cpu_synthetic_only
     assert FamilyRecipe.from_dict(json.loads(json.dumps(recipe.to_dict()))).identity==recipe.identity
     complete.run();expected=deepcopy(complete.state_dict())
-    evaluation=complete.kernel.evaluate(complete.loaders)
+    readonly,_,_,_=make_session(tmp_path,"esa_small",[],version="2")
+    readonly.load_state_dict(deepcopy(expected))
+    evaluation=readonly.kernel.evaluate(readonly.loaders)
     assert evaluation["source_idx"].numel()==3
-    assert_equal(expected,complete.state_dict())
+    assert_equal(expected,readonly.state_dict());readonly.close()
     events=[];first,_,_,_=make_session(tmp_path,"esa_small",events,version="2")
     first.run(should_pause=lambda:True)
+    from molgap.training_reproducibility import atomic_torch_save
+    checkpoint=tmp_path/"esa_v2_resume.pt"
+    atomic_torch_save(checkpoint,events[-1])
+    serialized=torch.load(checkpoint,map_location="cpu",weights_only=True)
+    assert_equal(events[-1],serialized)
     resumed,_,_,_=make_session(tmp_path,"esa_small",[],version="2")
-    resumed.load_state_dict(events[-1]);resumed.run()
+    resumed.load_state_dict(serialized);resumed.run()
     assert_equal(expected,resumed.state_dict())
 
 
