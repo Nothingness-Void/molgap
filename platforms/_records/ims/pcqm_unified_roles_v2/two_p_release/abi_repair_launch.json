@@ -1,0 +1,41 @@
+{
+  "format": "molgap-unified-two-p-abi-repair-cpu-launch-v1",
+  "status": "SUBMITTED_PENDING_ACCEPTANCE",
+  "job_id": "1733250.ccpbs1",
+  "source_commit": "9039ee084ab9ed02e1da2c1a611ed1247e51d2f0",
+  "source_archive_sha256": "bced6639edbb7c407402230695cac89b64826c0488333a47f510142564d86589",
+  "rule_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+  "rule_file_sha256": "7756d9cc0fa9f65b5c9d560e72676a35d9db7c08cd33b9819ba4c63d8c4fd658",
+  "native_preflight": "NATIVE_ABI_REPAIR_PREFLIGHT_PASSED",
+  "scientific_identity_unchanged": true,
+  "scope": "CPU_ONLY_TOPOLOGY_PROVENANCE_PROJECTION_AND_DATA_ROLE_ACCEPTANCE",
+  "stage": "/lustre/home/users/sm2/chou/molgap-pcqm-unified-v2/two_p_role_abi_repair",
+  "output": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-si-two-p-r2",
+  "identity_reuse": {
+    "root": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-si-two-p-r1",
+    "audit_sha256": "74ec3926b3fc22f28d5a2e2670d66c0f8981e3529a67e10d45f08077c23ff477",
+    "database_sha256": "9ade30d9203f06a8988c40d3a0dee765f1f51ee39a03d449bbb5b2a9e696191a"
+  },
+  "only_provenance_fields_removed": [
+    "smiles_sanitized",
+    "split_code"
+  ],
+  "model_tensor_values_edited": false,
+  "identity_parser_sha256_unchanged": true,
+  "requested_cpus": 4,
+  "requested_gpus": 0,
+  "walltime_ceiling_hours": 2,
+  "whole_allocation_cost": null,
+  "local_tests": {
+    "regression_passed": 235,
+    "path_recheck_passed": 35,
+    "counts_overlap": true
+  },
+  "parent_attempt": "1732909.ccpbs1",
+  "source_topology_observation_job": "1733018.ccpbs1",
+  "source_topology_observation_sha256": "ed7a85316217189ea8186af2b06bad5169bbdc12e6e6aa38174c5e3e1722fbb6",
+  "training_submitted": false,
+  "model_scoring": false,
+  "graphs_rebuilt": false,
+  "mirror_publication_authorized_by_this_launch": false
+}

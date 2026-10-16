@@ -1,0 +1,16 @@
+{
+  "format": "molgap-unified-source-topology-probe-v1",
+  "status": "SOURCE_ABI_OBSERVATION_COMPLETE_NOT_DATA_ACCEPTANCE",
+  "job_id": "1733018.ccpbs1",
+  "source_commit": "caf1bd61125891e9bca3755529e6e489b7ac53ba",
+  "source_archive_sha256": "77d967eb4ee1d1854697a1b89342c1b3102cff84d3d0db97db7c4628ae2be1cc",
+  "purpose": "Read-only metadata/ABI of first SHA-pinned accepted train topology shard; no models, role selection, graph generation or labels statistics",
+  "stage": "/lustre/home/users/sm2/chou/molgap-pcqm-unified-v2/two_p_topology_probe",
+  "output": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-source-probe",
+  "requested_cpus": 4,
+  "requested_gpus": 0,
+  "requested_walltime_hours": 2,
+  "local_tests": {"passed": 82, "failed": 0},
+  "native_cost": null,
+  "training_submitted": false
+}

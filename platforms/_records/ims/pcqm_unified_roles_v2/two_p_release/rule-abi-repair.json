@@ -1,0 +1,37 @@
+{
+  "algorithm": "sha256-molecule-group-rank-v1",
+  "common_dev_rows": 50000,
+  "excluded_ranges": [
+    [
+      100000,
+      150000
+    ],
+    [
+      500000,
+      550000
+    ],
+    [
+      1000000,
+      1050000
+    ]
+  ],
+  "fallback_ledger_sha256": "c0da6fd985820b4433ec3a889c6c6a33fee3e7388095e6a0f364134bd1055e77",
+  "format": "molgap-pcqm4mv2-unified-roles-v2",
+  "generator_sha256": "3227aa49d07d5d9ca27b639ff9100315f92ae52f0b11106f0e4b4638a9d808f0",
+  "independent_audit_rows": 50000,
+  "molecule_parser_sha256": "8514a0ac6cdc817b6a6a4c65ee89fb3861889c4bfeda654c053233c4c2aa6a0b",
+  "molecule_rule": "rdkit-canonical-isomeric-smiles-clear-atom-maps-known-ogb-si-two-p-explicit-h-v4",
+  "official_train_rows": 3378606,
+  "rdkit_version": "2026.03.2",
+  "role_inventory_sha256": "dbfa3e90979c53c28033d93ba1d222545f212cd3e4193ef3a6cce3e13d74c3c8",
+  "scope": "OFFICIAL_TRAIN_CPU_PREPARATION_ONLY",
+  "seed": 42,
+  "source_acceptance_sha256": "82bdf0d304b5a1b20d120dd25c07ad6c6cf02324bab2b13634ed68ee8c63db0e",
+  "source_commit": "9039ee084ab9ed02e1da2c1a611ed1247e51d2f0",
+  "source_manifest_sha256": "4ecd1546c5fc898004809a5b7130bd7963a5eb569120dbee95e65f18ed9cc99e",
+  "train_sizes": [
+    100000,
+    500000,
+    1000000
+  ]
+}

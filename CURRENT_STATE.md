@@ -87,7 +87,7 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 
 ## Live boundaries and next actions
 
-Cross-scale/Si infrastructure are CPU-accepted; exact two-P authority is frozen and CPU V2 role job `1732909.ccpbs1` is submitted.
+Cross-scale/Si/P infrastructure are CPU-accepted; V2 CPU job `1733250.ccpbs1` reuses the complete identity audit from `1732909.ccpbs1` and tests the topology ABI repair.
 The [two-P CPU release](docs/operations/PCQM_UNIFIED_TWO_P_RELEASE.md) owns the frozen source/rule and acceptance scope.
 V2 roles/mirrors remain unaccepted; no Modern2D implementation, model scoring or training is released.
 

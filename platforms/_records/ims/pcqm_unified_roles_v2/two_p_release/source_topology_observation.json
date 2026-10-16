@@ -1,0 +1,86 @@
+{
+  "data_role_accepted": false,
+  "expected_rows": 50000,
+  "fields": {
+    "edge_attr": {
+      "dtype": "torch.int64",
+      "shape": [
+        40,
+        3
+      ]
+    },
+    "edge_index": {
+      "dtype": "torch.int64",
+      "shape": [
+        2,
+        40
+      ]
+    },
+    "random_walk_pe": {
+      "dtype": "torch.float32",
+      "shape": [
+        18,
+        16
+      ]
+    },
+    "smiles_sanitized": {
+      "dtype": "torch.int8",
+      "shape": [
+        1
+      ]
+    },
+    "source_idx": {
+      "dtype": "torch.int64",
+      "shape": [
+        1
+      ]
+    },
+    "split_code": {
+      "dtype": "torch.int8",
+      "shape": [
+        1
+      ]
+    },
+    "x": {
+      "dtype": "torch.int64",
+      "shape": [
+        18,
+        9
+      ]
+    },
+    "y": {
+      "dtype": "torch.float32",
+      "shape": [
+        1
+      ]
+    }
+  },
+  "gpu_used": false,
+  "graph_fields": [
+    "edge_attr",
+    "edge_index",
+    "random_walk_pe",
+    "smiles_sanitized",
+    "source_idx",
+    "split_code",
+    "x",
+    "y"
+  ],
+  "graphs_rebuilt": false,
+  "observed_rows": 50000,
+  "official_validation_read": false,
+  "packed_fields": [
+    "edge_attr",
+    "edge_index",
+    "random_walk_pe",
+    "smiles_sanitized",
+    "source_idx",
+    "split_code",
+    "x",
+    "y"
+  ],
+  "source_file": "store/topology/train/train_shard_0000.pt",
+  "source_sha256": "86487c2e844de8f3b5dab5ba20bf25a351e454c81543c98d98ec7816ee74962e",
+  "status": "SOURCE_TOPOLOGY_OBSERVATION_ONLY",
+  "test_roles_read": false
+}
