@@ -40,6 +40,13 @@ handoff rules; this root file stays a short navigation and safety protocol.
 - **Don't re-run completed experiments** — cite the experiment's own decision
   record under `experiments/`.
 - **Test scripts locally before delivering.**
+- **Delegate test execution**: the main agent coordinates, implements, and
+  integrates; it must not run tests itself. Use up to five concurrent configured
+  Luna subagents, with independent module scopes and separate scratch/report
+  paths. Parallelize independent checks within available memory; five is a
+  ceiling, not a required count. Test workers execute their assigned suites
+  themselves, without recursive delegation. This grants no additional remote compute or
+  scientific experiment authority.
 - **Remote durability**: every cloud job MUST checkpoint progress atomically and
   produce independently retrievable output chunks. Never rely on a transient
   worker filesystem or a single long-running task as the only copy of results.
