@@ -165,3 +165,21 @@ Real family fidelity/input/native release remains BLOCKED by the listed missing
 evidence. Scientific status is NOT_EVALUATED; training remains
 NOT_AUTHORIZED_FOR_SCIENTIFIC_TRAINING. No STQS/early-stop, 100K veto, new seed,
 500K/full experiment, model ranking or automatic successor was authorized.
+
+## Primary-checkout delivery verification
+
+The reviewed commits were fast-forwarded into local molgap-server. Primary
+acceptance passed 293 tests with zero failures/skips and 14 unrelated CLI-help
+cases deselected: 137 comparison checks, 107 model/indexed checks, 28 RML checks
+and 21 navigation/layout checks. The separately retained shared-owner batch
+passed 234; these batches are not summed into a whole-repository claim. Every
+retained model archive was byte-verified again against the primary test result.
+All 14 pre-existing dirty-file hashes, including the user's RML test, survived
+integration and testing. Canonical RML and frozen model/reference files were
+unchanged. Native preflight, scientific training and remote push were not run.
+
+Primary navigation used its existing untracked historical documents and ignored
+staging directory. That local success did not resolve the isolated checkout's
+historical pointer dependencies or the separately documented legacy K1 package
+issue. Their evidence and limitations were retained; all-green clean-checkout
+or platform qualification was not claimed. Task execution stopped here.

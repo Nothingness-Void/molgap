@@ -410,5 +410,83 @@
       }
     ]
   },
-  "comparator_provenance_note": "Read-only comparator checks trusted independently frozen declarations. Matching caller strings are not cryptographic proof of arbitrary observations; accepted byte import and native/RML authority remain separate."
+  "comparator_provenance_note": "Read-only comparator checks trusted independently frozen declarations. Matching caller strings are not cryptographic proof of arbitrary observations; accepted byte import and native/RML authority remain separate.",
+  "primary_acceptance": {
+    "status": "INFRA_CPU_ACCEPTED",
+    "tested_head": "111b646282928f0d7e8f0d8fba08e88c14ecbc0b",
+    "branch": "molgap-server",
+    "path": "platforms/_records/local/modern2d_review_hardening/primary_acceptance.xml",
+    "sha256": "8f21cdc8e4a60a1d936a96db2dded89f0a7275b5e02c31956f4cd73c75c5388f",
+    "tests": 293,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "deselected": 14,
+    "deselection_reason": "Unrelated representative CLI --help subprocess cases excluded; not native qualification.",
+    "pytest_suite_seconds": 154.498,
+    "module_counts": {
+      "tests.test_cross_scale_analysis": 39,
+      "tests.test_cross_scale_hardening": 28,
+      "tests.test_cross_scale_review_binding": 30,
+      "tests.test_cross_scale_backtest": 7,
+      "tests.test_comparison_readiness": 33,
+      "tests.test_modern2d_features": 16,
+      "tests.test_modern2d_models": 18,
+      "tests.test_modern2d_fidelity": 3,
+      "tests.test_modern2d_session": 6,
+      "tests.test_modern2d_registration": 7,
+      "tests.test_esa_readout_invariance": 25,
+      "tests.test_esa_invariant_session": 7,
+      "tests.test_ppgt_reference_discrepancy": 1,
+      "tests.test_pcqm_indexed_inputs": 24,
+      "tests.test_research_memory": 28,
+      "tests.test_documentation_check": 9,
+      "tests.test_repository_layout": 12
+    },
+    "source_archives": [
+      {
+        "case": "test_model_source_bundle_isolated_import_and_byte_identity[ppgt_model-ppgt_small]",
+        "source_archive_sha256": "5bb2057ddf9f9691780f8572bfb57c50f8975dec8a7e5a733988ea169e80f57c",
+        "source_commit": "111b646282928f0d7e8f0d8fba08e88c14ecbc0b",
+        "source_files": "src/molgap/__init__.py,src/molgap/constants.py,src/molgap/modern2d_inputs.py,src/molgap/ogb_features.py,src/molgap/ppgt_features.py,src/molgap/ppgt_model.py"
+      },
+      {
+        "case": "test_model_source_bundle_isolated_import_and_byte_identity[esa_model-esa_small]",
+        "source_archive_sha256": "e32cb60cb44865e4e7ef3793c223eacc1d36e741ef98117f8ceca6d2f7c324d3",
+        "source_commit": "111b646282928f0d7e8f0d8fba08e88c14ecbc0b",
+        "source_files": "src/molgap/__init__.py,src/molgap/constants.py,src/molgap/esa_features.py,src/molgap/esa_model.py,src/molgap/modern2d_inputs.py,src/molgap/ogb_features.py"
+      },
+      {
+        "case": "test_model_source_bundle_isolated_import_and_byte_identity[esa_invariant-esa_small]",
+        "source_archive_sha256": "83f01f93d7200647421186a753c27aeb9bd8017c39e84eabbd0b531b7a7b8467",
+        "source_commit": "111b646282928f0d7e8f0d8fba08e88c14ecbc0b",
+        "source_files": "src/molgap/__init__.py,src/molgap/constants.py,src/molgap/esa_features.py,src/molgap/esa_invariant.py,src/molgap/esa_model.py,src/molgap/modern2d_inputs.py,src/molgap/ogb_features.py"
+      }
+    ],
+    "source_normalized_sha256": {
+      "src/molgap/comparison_readiness.py": "23fc7d408f993d74c5e983beeeab3dcfbeb2bdb60444991ecfe9e273030fec4f",
+      "src/molgap/cross_scale_analysis.py": "caa1d7d94aa5e9bb11a918519d3c31519c26c7ae4a08429ec42750ea53afdbd7",
+      "src/molgap/esa_invariant.py": "8fc58b740b774fdc814daf6e10bdd4ccc3ac96005e433b9164bff8c88b140fee",
+      "src/molgap/experiment_catalog.py": "2a3387426f1cb4658ae859ddfe03f211f425fed7c8c9add458d247183e8351bd",
+      "src/molgap/experiment_execution.py": "30ec0219b0d126befbdca8beba600b239ec5cb684b8703de72dcebe05aa87105",
+      "src/molgap/family_training_kernel.py": "b4bc295a6c5cf3da677881849c8e727a6cb755e4c7781bafb53f1e9aa6cd3276",
+      "src/molgap/family_training_recipe.py": "95aaa6455b14b85c6d41e8d7aa8dcb58a6bccc007cd81d9464d44cf6524b90cb",
+      "src/molgap/family_training_runner.py": "b9a12b3ecc450c5189d7f57964bfa0a8d0d8322f9fabb87a468e7cf95545185d",
+      "src/molgap/pcqm_indexed_inputs.py": "3e31ffea380773836aa3a5cf22c0099d20f2fbdca785c1fee49139550d2c9ff3",
+      "tests/cross_scale_fixtures.py": "8d5c106a3e070975958457885b34c785d16e0d050108f21e630ce237690138f5",
+      "tests/modern2d_fixtures.py": "b47a63af68a65aa8a46a72ff9c7a671761d48f237d3d3ce3022dd6c656cdc42c",
+      "tests/test_cross_scale_analysis.py": "0d0a8472f04cfc24843b1739a2cf989c4a3ec2d8ad9967ec03fe0b6e30a0710d",
+      "tests/test_cross_scale_review_binding.py": "c00e09f7db5e86e8e45df6e4b266365a1d74d92331c8b6befc049370e4a72942",
+      "tests/test_esa_invariant_session.py": "62e8cc1391a1fc41d6ed85e676e1a82d7280fb48104654ad8306d3617e78518a",
+      "tests/test_esa_readout_invariance.py": "d155aa50248b7e4968568442cf9feeba048390424cc61c7746cc77125d1ef9aa",
+      "tests/test_modern2d_registration.py": "6216c98efcf144d0c005624b9e6dd81aa08140205835e3775faea67c82f12361",
+      "tests/test_modern2d_session.py": "329d4a3709f3551c5d2bc0149e44bf3b589aa1a2bed178d7f3ac7ec251c24227",
+      "tests/test_pcqm_indexed_inputs.py": "f5b68e81551d381ba31199d3434beb400a69a72b0ceeec0753363ea832757ff1",
+      "tests/test_ppgt_reference_discrepancy.py": "d61427d5d96250a3c967b8e6c7e226e982901226f22997f11af0d1497957468b"
+    },
+    "all_14_unrelated_dirty_files_preserved_after_tests": true,
+    "navigation_note": "Primary navigation passes with its existing untracked historical documents and ignored .staging directory present. The isolated-checkout two failures remain recorded; no old links or history rewritten.",
+    "whole_repository_all_green_claimed": false,
+    "remote_push_performed_for_this_review": false
+  }
 }
