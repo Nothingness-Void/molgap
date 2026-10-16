@@ -5,6 +5,8 @@ and2980839 for evidence-qualified P compatibility and subsequent CPU data-role
 acceptance. The original [Si acceptance](PCQM_UNIFIED_IDENTITY_REPAIR_ACCEPTANCE.md)
 remains historical evidence, not silently reinterpreted. Live state is only in
 `CURRENT_STATE.md`; platform evidence is separate under `two_p_release/`.
+The [exact CPU launch receipt](../../platforms/_records/ims/pcqm_unified_roles_v2/two_p_release/cpu_launch.json)
+pins actual submitted job, source, rule, authority and resource ceiling.
 
 ## Delta and reuse
 

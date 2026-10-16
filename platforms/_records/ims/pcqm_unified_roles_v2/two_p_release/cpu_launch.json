@@ -1,0 +1,43 @@
+{
+  "format": "molgap-unified-two-p-cpu-launch-v1",
+  "status": "SUBMITTED_NOT_ACCEPTED",
+  "job_id": "1732909.ccpbs1",
+  "source_commit": "647b7b240d661e003d9b0643aa964166a803a412",
+  "source_archive_sha256": "ae0938b6e731259af7677ce108edae477240bca73d11ea4ff56e7c45031fb77e",
+  "rule_identity": "c28210e507df2611b9a335c370b1b625e433dcbca9bfc793bd972d09915e091b",
+  "rule_raw_sha256": "53e4ffcf75813fdd7c45b2b94567eea11ab76c09b06c96d353993da38dabfb37",
+  "fallback_ledger_sha256": "c0da6fd985820b4433ec3a889c6c6a33fee3e7388095e6a0f364134bd1055e77",
+  "phosphorus_authorization_sha256": "56a992a26f80587e337ddb7052c7e525061a4faabb1e74424d764ee7a7a1e9ef",
+  "scope": "CPU_UNIFIED_DATA_ROLE_PREPARATION_AND_ACCEPTANCE_ONLY",
+  "stage": "/lustre/home/users/sm2/chou/molgap-pcqm-unified-v2/two_p_role_release",
+  "output": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-si-two-p-r1",
+  "requested_cpus": 4,
+  "requested_gpus": 0,
+  "walltime_ceiling_hours": 2,
+  "known_exception_structures": 33,
+  "authorized_p_source_indices": [
+    2539039,
+    2980839
+  ],
+  "train_sizes": [
+    100000,
+    500000,
+    1000000
+  ],
+  "common_dev_rows": 50000,
+  "independent_audit_rows": 50000,
+  "local_tests": {
+    "passed": 228,
+    "failed": 0,
+    "skipped": 0,
+    "junit_sha256": "f2028bb9b70db08d8ca0d8fdd04b1910ab630f4f8e6e21539d0ab1514aa74086"
+  },
+  "graphs_rebuilt": false,
+  "training_submitted": false,
+  "model_scoring": false,
+  "official_validation_read": false,
+  "test_roles_read": false,
+  "mirror_publication_authorized_by_this_launch": false,
+  "native_total_cpu_hours": null,
+  "native_allocation_wall_hours": null
+}
