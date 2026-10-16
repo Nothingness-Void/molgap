@@ -272,6 +272,9 @@ def _workflow_inputs(spec, repo_root, plan):
     fields = {"format", "spec_identity", "arms", "acceptance_plan", platform_name}
     runtime = type(plan) is dict and plan.get("source_profile") == "runtime-v1"
     fields |= {"source_profile", "source_records"} if runtime else {"source_files"}
+    generated = runtime and "generated_records" in plan
+    if generated:
+        fields |= {"generated_records", "configuration_source"}
     if type(plan) is not dict or set(plan) != fields or plan["format"] != "molgap-experiment-workflow-v1" or plan["spec_identity"] != spec.identity:
         raise ValueError("Workflow plan/Spec mismatch")
     if type(plan["source_records"] if runtime else plan["source_files"]) is not list:
@@ -309,7 +312,14 @@ def _workflow_inputs(spec, repo_root, plan):
         from .experiment_source_inventory import runtime_source_files
         records = [*plan["source_records"], *recipes.values(), plan["acceptance_plan"],
                    *(b["plan_spec_ref"] for b in bindings.values())]
-        source_files = runtime_source_files(repo_root, records)
+        derived = plan.get("generated_records", {})
+        if generated:
+            from .experiment_package import _generation_bindings
+            _generation_bindings(derived, plan["configuration_source"], [*records, *derived])
+            if any(hashlib.sha256(_payload(_source(repo_root.resolve(), n))).hexdigest() != h
+                   for n, h in derived.items()):
+                raise ValueError("Generated configuration record bytes changed")
+        source_files = sorted(set(runtime_source_files(repo_root, [p for p in records if p not in derived])) | set(derived))
     else:
         source_files = registered_source_files(spec, [*plan["source_files"], *recipes.values()])
     return dict(metadata=metadata, bindings=bindings, jobs=jobs, initial_states=initial_states,
@@ -364,7 +374,8 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
     output.mkdir(parents=True)
     report = {"format": "molgap-workflow-preparation-v1", "status": "PREPARING",
               "spec_identity": spec.identity, "submitted": False, "stages": [],
-              "prospective_published": False, "timings": {"input_validation_seconds": perf_counter() - started}}
+              "prospective_published": False, "publication_intent": False,
+              "timings": {"input_validation_seconds": perf_counter() - started}}
     phase_started = perf_counter()
     def record(stage, result):
         nonlocal phase_started
@@ -376,8 +387,11 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
         record("family_recipes", observations["family_recipes"])
         record("prospective_check", observations["prospective"])
         package = output / "package"
-        manifest = (build_experiment_source_package(spec, repo_root, source_files, package) if source_cache is None else
-                    build_experiment_source_package(spec, repo_root, source_files, package, source_cache=source_cache))
+        options = {} if source_cache is None else {"source_cache": source_cache}
+        if "generated_records" in plan:
+            options.update(generated_records={n: _payload(_source(repo_root.resolve(), n))
+                for n in plan["generated_records"]}, configuration_source=plan["configuration_source"])
+        manifest = build_experiment_source_package(spec, repo_root, source_files, package, **options)
         record("package", manifest)
         stage = backend.stage_inputs(repo_root=repo_root, output=output, package=package,
             manifest=manifest, spec=spec, platform_plan=plan[platform_name], metadata=metadata,
@@ -395,6 +409,9 @@ def prepare_workflow(spec: ExperimentSpec, repo_root: Path, plan: dict, output: 
             report.update(status="BLOCKED", stage="check_release", prospective_published=False)
             return report
         report["prospective_published"] = "inspect_plan_result"
+        report["publication_intent"] = True
+        # Persist uncertainty BEFORE crossing the irreversible RML boundary.
+        _atomic(output / "workflow_report.json", report)
         prospective, code = plan_prospective(spec, repo_root, execution_source_commit=manifest["source_commit"])
         report["prospective_published"] = True if not code else "inspect_plan_result"
         record("prospective", prospective)

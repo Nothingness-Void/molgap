@@ -96,6 +96,7 @@ class IndexedRoleDataset:
         if logical != m["logical_content_sha256"] or logical != binding.get("logical_content_sha256"):
             raise ValueError("Indexed logical content mismatch")
         self._loaded_index,self._loaded,self._maps=None,None,[]
+        self._loaded_file_identity=None
         self._ends=[];decoded=[]
         for index,item in enumerate(m["graph_chunks"]):
             shard=self._load(index)
@@ -126,12 +127,19 @@ class IndexedRoleDataset:
         if not item["file"].startswith(prefix):
             raise ValueError("ROLE_BLOCKED: wrong/audit physical payload")
         path=_local(self.root,item["file"])
-        if path.stat().st_size > 64*1024**2:
+        info=path.stat()
+        if info.st_size > 64*1024**2:
             raise ValueError("CPU indexed chunk safety cap exceeded")
-        path=_pin(self.root,item)
-        if self._loaded_index != index:
+        identity=(info.st_dev,info.st_ino,info.st_size,info.st_mtime_ns,info.st_ctime_ns,item["sha256"])
+        if self._loaded_index != index or self._loaded_file_identity != identity:
+            path=_pin(self.root,item)
             from .packed_graph_dataset import PackedGraphDataset
-            self._loaded=PackedGraphDataset(path,mmap=True);self._loaded_index=index
+            loaded=PackedGraphDataset(path,mmap=True)
+            after=path.stat()
+            if (after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns,after.st_ctime_ns,item["sha256"]) != identity:
+                raise ValueError("Indexed shard changed while opening")
+            self._loaded,self._loaded_index=loaded,index
+            self._loaded_file_identity=identity
         return self._loaded
 
     def __len__(self):

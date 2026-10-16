@@ -99,7 +99,7 @@ def _estimated(value):
 
 def build_execution_proposal(*, question, arm, trajectory_id, source_commit, run, version,
                        contract_ref, contract_refs, authority_ref, role_ref, decision_ref,
-                       timestamp, profile: ExecutionProfile):
+                       timestamp, profile: ExecutionProfile, action_type="execution_diagnostic"):
     """Translate small question facts to the existing prospective RML schema."""
     run_version(version)
     tid, cost = trajectory_id, "cost-" + trajectory_id + "-planned"
@@ -119,10 +119,12 @@ def build_execution_proposal(*, question, arm, trajectory_id, source_commit, run
             "parent_trajectory_ids": [], "prior_trajectory_ids": list(q.prior_trajectories),
             "prior_evidence_ids": list(q.supporting_evidence), "role_snapshot_refs": [role_ref],
             "budget_snapshot_ref": authority_ref},
-        "actions": [{"action_id": "A001", "type": "execution_diagnostic", "source_commit": source_commit,
+        "actions": [{"action_id": "A001", "type": action_type, "source_commit": source_commit,
             "run_ids": [run_id], "attempt_ids": [attempt], "evidence_refs": [contract_ref], "cost_event_ids": [cost]}],
         "result": {"evidence_ids": [], "evidence_refs": []}, "decision": {"decision_ref": decision_ref,
-            "outcome": "ACTIVE", "next_allowed_actions": ["one authorized execution diagnostic"],
+            "outcome": "ACTIVE", "next_allowed_actions": [
+                "one authorized execution diagnostic" if action_type == "execution_diagnostic"
+                else "one authorized frozen experiment"],
             "reopen_conditions": ["terminal evidence"]}},
         "decision_state": {"known_trajectory_ids": [], "known_evidence_ids": [], "active_reference_ids": list(q.reference_ids),
             "available_actions": [q.action, "DEFER"], "chosen_action": q.action, "policy_id": q.policy_id,

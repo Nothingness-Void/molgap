@@ -731,15 +731,23 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
             if set(entry) != {"arm_id", "adapter", "expected", "contract", "comparison_prelaunch", "reference_bundle", "reference_artifacts"}:
                 raise ValueError("Missing or unknown acceptance plan fields")
             arm = expected_arms[entry["arm_id"]]
-            artifact_adapter(entry["adapter"], (arm["family"]["name"], arm["family"]["version"]))
-            if type(entry["expected"]) is not dict or set(entry["expected"]) != EXPECTED:
+            adapter = artifact_adapter(entry["adapter"], (arm["family"]["name"], arm["family"]["version"]))
+            shared = adapter.protocol == "family-session"
+            expected_fields = ({"optimizer_steps", "sample_presentations", "completed_passes", "next_batch",
+                                "development_rows", "source_idx_sha256", "target_sha256", "precision"}
+                               if shared else EXPECTED)
+            if type(entry["expected"]) is not dict or set(entry["expected"]) != expected_fields:
                 raise ValueError("Incomplete terminal expectations")
-            for key in ("epochs", "optimizer_steps", "sample_presentations", "development_rows"):
+            for key in (("optimizer_steps", "sample_presentations", "development_rows") if shared else
+                        ("epochs", "optimizer_steps", "sample_presentations", "development_rows")):
                 _positive(entry["expected"][key], key)
             for key in ("source_idx_sha256", "target_sha256"):
                 _digest(entry["expected"][key], key)
             if entry["expected"]["precision"] not in {"fp32", "fp16", "bf16"}:
                 raise ValueError("Unsupported precision")
+            if shared and any(type(entry["expected"][k]) is not int or entry["expected"][k] < 0
+                              for k in ("completed_passes", "next_batch")):
+                raise ValueError("Shared pass/offset counters must be nonnegative exact integers")
             def pinned(pointer):
                 if type(pointer) is not dict or set(pointer) != {"path", "sha256"}:
                     raise ValueError("Expected pinned repository artifact")
@@ -752,7 +760,12 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
             contract = _json(contract_path)
             if entry["contract"]["sha256"] != arm["training"]["recipe"]["sha256"] or contract.get("acceptance_requirements") != entry["expected"]:
                 raise ValueError("Acceptance expectations are not pinned by the owning Spec recipe")
-            _metric_semantics(contract)
+            if shared:
+                from .family_training_runner import read_recipe, validate_screen_recipe
+                read_recipe(contract_path)  # Owner checks pass/offset counters and normalized train semantics.
+                validate_screen_recipe(spec, entry["arm_id"], contract)
+            else:
+                _metric_semantics(contract)
             comparison = validate_comparison_prelaunch(_json(pinned(entry["comparison_prelaunch"])))
             if not comparison["prelaunch_ready"]:
                 raise ValueError("Owning comparison prelaunch is blocked")

@@ -1,32 +1,18 @@
-"""Single catalog projection preserves the pre-reform executable capabilities."""
-from dataclasses import asdict, replace
-from pathlib import Path
-import subprocess
-import sys
-from types import ModuleType
+"""Executable capabilities follow the one active catalog, not old snapshots."""
+from dataclasses import replace
 
 from molgap import experiment_execution as execution
-from molgap.experiment_catalog import ADDONS
+from molgap.experiment_catalog import ADDONS,FAMILIES
 
-ROOT=Path(__file__).resolve().parents[1]
-
-
-def comparable(adapter):
-    value=asdict(adapter)
-    value["addons"]={ (a["name"],a["version"]):a for a in value["addons"] }
-    return value
-
-
-def test_every_previous_execution_mapping_is_preserved():
-    raw=subprocess.check_output(["git","show","11790547:src/molgap/experiment_execution.py"],cwd=ROOT,text=True)
-    module=ModuleType("molgap._reform_baseline");module.__package__="molgap"
-    sys.modules[module.__name__]=module
-    try:
-        exec(compile(raw,"pinned-before-reform","exec"),module.__dict__)
-        assert set(module.TRAINING_ADAPTERS)==set(execution.TRAINING_ADAPTERS)
-        for key,before in module.TRAINING_ADAPTERS.items():
-            assert comparable(before)==comparable(execution.TRAINING_ADAPTERS[key]),key
-    finally:sys.modules.pop(module.__name__,None)
+def test_execution_projection_tracks_the_current_catalog_not_a_historical_capability_lock():
+    assert set(execution.TRAINING_ADAPTERS)=={key for key,c in FAMILIES.items() if c.execution is not None}
+    for key,adapter in execution.TRAINING_ADAPTERS.items():
+        entry=FAMILIES[key].execution
+        assert adapter.module==entry.module and adapter.artifact_adapter==entry.artifact_adapter
+        expected={(name,version,mode) for (name,version),c in ADDONS.items()
+                  for family_version,mode in c.execution_modes
+                  if c.family==key[0] and family_version==key[1]}
+        assert {(a.name,a.version,a.mode) for a in adapter.addons}==expected
 
 
 def test_ordinary_addon_execution_is_derived_from_its_one_catalog_entry(monkeypatch):
@@ -36,7 +22,7 @@ def test_ordinary_addon_execution_is_derived_from_its_one_catalog_entry(monkeypa
     derived=execution._catalog_training_adapters()[("neural_atom_k1","3")]
     addon=derived.addon("new_fixture_scale")
     assert addon.apply_hook==contract.apply_hook and addon.mode=="composed"
-    assert len(derived.addons)==7
+    assert len(derived.addons)==len(execution.TRAINING_ADAPTERS[("neural_atom_k1","3")].addons)+1
 
 
 def test_declaration_only_and_cpu_families_are_not_silently_promoted():

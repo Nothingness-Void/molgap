@@ -154,7 +154,10 @@ delivery candidate may be promoted from the integration branches to `master`.
   `production/` is the delivery line, `experiments/` is one question per
   directory, `platforms/` is compute-environment adapters.
 - Comments explain *why*, not *what*.
-- Install: `pip install -e .` (editable, via pyproject.toml).
+- Shared dependency environments: select checkout code with `platforms/local/run.py`;
+  never repoint their editable installation. See the experiment quickstart.
+  Editable installation is only for a dedicated, non-shared development venv;
+  do not change running historical environments.
 
 ## Doc map (single sources of truth)
 | Question | File |

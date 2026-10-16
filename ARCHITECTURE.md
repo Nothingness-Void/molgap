@@ -30,7 +30,7 @@ and job status belong in `CURRENT_STATE.md`; Track A/B/C ownership belongs in
 | Public inference or registry | `inference.py`, `__init__.py`, and `constants.py` | [production/README.md](production/README.md) |
 | Documentation pointers | `documentation_check.py`; no automatic line-count gate | [verification commands](docs/operations/INFRASTRUCTURE_VERIFICATION.md) |
 | Checkout selection / external new-run storage | `local_runtime.py`, `common/paths.py`, `common/io.py` | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |
-| Editable references / fixed runtime distribution | `experiment_input.py`, `experiment_source_inventory.py`, existing package/workflow owners | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |
+| Scientific config compiler / editable references / fixed runtime distribution | `experiment_input.py`, `common/declarations.py`, `experiment_source_inventory.py`, existing Recipe/package/workflow owners | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |
 | Standard substrate slots / addon parameters | `model_substrate.py` and existing Spec/execution registries | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md) |
 | Native Live/Raw/Clean weight actions | `family_training_state.py`; shared kernel owns forward/update | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#2-calibrate-and-retain-clean-ema) |
 | One-batch local model gate | `fast_sandbox.py` | [sandbox](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#3-check-one-batch-locally) |

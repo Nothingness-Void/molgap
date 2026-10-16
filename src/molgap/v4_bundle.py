@@ -107,8 +107,14 @@ def build_v4_source_bundle(
     output_dir: Path,
     source_commit: str,
     archive_name: str = "source.tar.gz",
+    generated_records: dict[str, bytes] | None = None,
 ) -> dict:
-    """Build a small LF-normalized archive from an explicit tracked allowlist."""
+    """Build a small LF-normalized archive from an explicit source allowlist.
+
+    Derived JSON is an inner transport option for the V2 package owner, which
+    binds its configuration provenance separately. Legacy callers remain wholly
+    commit-bound; this inventory alone is not a derived-compilation certificate.
+    """
     repo_root = repo_root.resolve()
     output_dir = output_dir.resolve()
     tracked = _tracked_paths(repo_root)
@@ -123,10 +129,17 @@ def build_v4_source_bundle(
         for name in names
     ):
         raise ValueError("V4 source paths must stay inside the repository")
-    missing = [name for name in names if name not in tracked]
+    generated_records = {} if generated_records is None else generated_records
+    if (type(generated_records) is not dict or len(generated_records)>128 or
+            set(generated_records)-set(names) or any(not n.startswith("experiments/") or
+            "/generated/" not in n or not n.endswith(".json") or type(b) is not bytes
+            or len(b)>1024**2 for n,b in generated_records.items())):
+        raise ValueError("Only bounded explicitly derived JSON records may be untracked")
+    missing = [name for name in names if name not in tracked and name not in generated_records]
     if missing:
         raise RuntimeError(f"V4 source bundle includes untracked paths: {missing}")
-    observed_commit = _assert_clean_paths(repo_root, names)
+    source_names = [n for n in names if n not in generated_records]
+    observed_commit = _assert_clean_paths(repo_root, source_names)
     if source_commit != observed_commit:
         raise RuntimeError(
             f"Requested source commit {source_commit} is not checked-out HEAD {observed_commit}"
@@ -134,7 +147,7 @@ def build_v4_source_bundle(
 
     entries = []
     payloads = {}
-    committed = committed_payloads(repo_root, source_commit, names)
+    committed = {**committed_payloads(repo_root, source_commit, source_names), **generated_records}
     for name in names:
         path = repo_root / Path(name)
         if not path.is_file():

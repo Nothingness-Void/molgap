@@ -39,8 +39,10 @@ support still needs its recipe/data/reference/runtime qualifications.
 
 ## 2. Change only the scientific delta
 
-- Supported parameters: use the owning recipe/configuration builder; preserve
-  its exact batch, sampler, objective, normalization and budget semantics.
+- Shared K1/3 and GPTrans/2: edit `learning_rate` / `weight_decay` in the scientific
+  input below. The compiler calls the existing Recipe and declaration builders;
+  batch, sampler, normalization, schedule, selection and budget remain frozen.
+  Other recipe changes still need their owning typed builder, not arbitrary overrides.
 - Ordinary addon: implement the module and tests; add **one** `AddonContract`
   in `experiment_catalog.py`, including typed fields, family versions and
   `execution_modes` plus the reviewed `apply_hook` or `policy_hook` when needed.
@@ -62,7 +64,80 @@ Formal releases bind committed source and frozen scientific records. Sandbox
 code may be uncommitted, but is not a formal release. Do not retrain an accepted
 baseline or add seeds to fill an allocation.
 
-## 3. Reference and freeze existing scientific records
+## 3. Compile scientific inputs, or reuse an existing declaration
+
+For shared K1/3 and GPTrans/2, one human JSON supplies the scientific question,
+supported parameter/addon delta, frozen recipe/data/reference inputs, seed 42,
+existing authority, platform metadata and local paths. It does not require a
+hand-written new Spec, workflow, prospective envelope or calculated hash:
+
+```json
+{
+  "format": "molgap-scientific-experiment-v1",
+  "experiment_id": "optimizer-question",
+  "logical_run_id": "optimizer-question-screen42",
+  "attempt_id": "v1",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/optimizer-question/authority.json",
+  "monitor_paths": ["experiments/optimizer-question/STATUS.md"],
+  "timestamp": "2026-10-16T00:00:00Z",
+  "platform_ref": "experiments/optimizer-question/platform.json",
+  "role_ref": "experiments/reference/roles.json",
+  "decision_ref": "experiments/optimizer-question/decision.md",
+  "seeds": [42],
+  "question": {
+    "policy_id": "existing-registered-policy", "action": "EXISTING_ALLOWED_ACTION",
+    "question": "Does this optimizer change improve the frozen screen?",
+    "deficiency": "State an evidence-backed deficiency",
+    "changed_mechanism": "optimizer",
+    "supporting_evidence": ["existing-evidence-id"],
+    "alternatives": ["Run noise"], "closed_families": ["existing-closed-route"],
+    "positive_decision": "Review terminal evidence", "negative_decision": "Retain reference",
+    "reference_ids": ["existing-reference-evidence-id"], "prior_trajectories": []
+  },
+  "profile": {
+    "owner": "server", "track": "B", "platform": "kaggle", "hardware": "T4x2",
+    "cheapest_falsifier": "One bounded paired seed-42 screen",
+    "estimated_device_hours": null, "estimated_wall_hours": null
+  },
+  "arms": [{
+    "arm_id": "candidate",
+    "model": {"family": "neural_atom_k1", "version": "3", "addons": []},
+    "recipe_ref": "experiments/reference/contract.json",
+    "data_ref": {"spec_ref": "experiments/reference/experiment_spec.json", "arm_id": "reference"},
+    "initial_state_ref": "E:/MolGap/artifacts/frozen-initialization.pt",
+    "training": {"learning_rate": 0.0005},
+    "reference_ref": {"plan_ref": "experiments/reference/acceptance_plan.json", "arm_id": "reference"},
+    "purpose": "optimizer_comparison"
+  }]
+}
+```
+
+All names above are placeholders, not resources or permissions. `platform_ref`
+contains the existing Spec `platform` object and Kaggle account/kernel/title/
+datasets/source_dataset/accelerator object; it contains no credentials. Authority
+must already cover exactly the arms, seed and positive full-allocation ceiling.
+Reference recipe, data roles, initialization, target-transform asset, counters
+and retained reference pins must agree. Missing/incompatible references block;
+the compiler never retrains a baseline or creates authority. Ordinary catalog
+addons use ordered `{name, version, config}` declarations; mixed/confounded
+interventions fail the existing purpose-scoped comparison check.
+
+Commit human/source inputs before formal preparation. The tool generates only
+bounded canonical JSON under `experiments/<question>/generated/<input+commit>/`;
+these are compact definition metadata, not training payloads. Do not hand-edit
+or commit generated envelopes. A V2 source-package manifest explicitly binds
+their hashes and the committed human configuration; its six sidecars and V1
+reader compatibility are preserved. The old baseline Spec is checked against
+its Git blob; the new package's own Spec contains the complete selected data roles.
+Run artifacts, source caches and scratch remain under the external machine roots.
+
+Use the same single platform command in section 4. The supported CPU proof is
+K1 and GPTrans parameter editing/preparation/recovery, not arbitrary recipe
+compilation, new-family admission, native runtime qualification or training.
+Changing an already frozen scientific input cannot overwrite its run/attempt.
+
+For an already authored declaration, the reference-only V1 input remains valid:
 
 The editable front door accepts normal JSON indentation and a final newline:
 
@@ -85,10 +160,9 @@ prospective and authority owners still validate applicability. No hypothesis,
 authorization or acceptance is invented. A changed input cannot overwrite the
 same frozen run/attempt.
 
-This first front door references existing declarations. It does **not** compile
-an arbitrary short model/recipe override into a new scientific experiment;
-new declarations still use the existing builders and prospective schema.
-Frozen recipe/authority/plan source records must be committed before packaging.
+V1 references existing declarations; the scientific format above compiles the
+bounded supported deltas. Other new declarations retain their existing builders.
+Frozen human/source records must be committed before formal packaging.
 
 ```powershell
 & $python platforms/local/run.py --profile $profilePath -- freeze-input --experiment $experiment --repo-root .
@@ -114,7 +188,11 @@ are never borrowed from another run.
 Only after separate applicable authorization, append `--credentials ...
 --execute`. That calls the **original** journaled submitter. An uncertain outcome
 requires reconciliation, never a fresh slug or blind retry. Completed preparation
-is reused; incomplete preparation is retained and blocked. `--prepared` and old
+is reused. Confirmed pre-publication local failures retain every failed byte and
+regenerate staging with the same frozen identity; published/unknown RML effects
+or any operation journal remain reconciliation-only. Source caches publish as
+complete validated directories; retained legacy partial objects are rebuilt from
+the same commit. `--prepared` and old
 canonical `--spec` operations remain compatible. IMS/SCNet do not acquire this
 new front door implicitly. See the [platform API](KAGGLE_WORKFLOW_SUBMISSION.md).
 
