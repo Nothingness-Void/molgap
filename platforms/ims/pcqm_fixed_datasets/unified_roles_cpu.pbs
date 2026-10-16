@@ -29,7 +29,9 @@ from pathlib import Path
 stage, boundary = map(Path, sys.argv[1:])
 registry = stage/'code/platforms/ims/v4_submit/runtime_registry.json'
 runtime = json.loads(registry.read_text())['runtimes']['ims-a100-torch271-v1']
-assert Path(runtime['python']).resolve().is_relative_to(boundary)
+# The registered venv entrypoint is intentional; following its interpreter
+# symlink probes system paths outside the user boundary and is unnecessary.
+assert Path(runtime['python']) == boundary/'molgap/.venv/bin/python'
 paths = [p.format(code_root=str(stage/'code')) for p in runtime['pythonpath']]
 assert all(Path(p).resolve().is_relative_to(boundary) for p in paths)
 print(os.pathsep.join(paths))

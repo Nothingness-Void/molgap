@@ -263,3 +263,29 @@ def test_dependency_free_feature_hook_is_exactly_ogb(smiles):
     original=_unsanitized_ogb_payload(smiles)
     local=_unsanitized_ogb_payload(smiles,atom_features=atom_to_ogb_feature_vector,bond_features=bond_to_ogb_feature_vector)
     assert all(np.array_equal(original[k],local[k]) for k in original)
+
+
+def test_cpu_pbs_uses_registered_entrypoint_without_resolving_system_interpreter(tmp_path,monkeypatch,capsys):
+    import sys
+    root=Path(__file__).resolve().parents[1]
+    text=(root/'platforms/ims/pcqm_fixed_datasets/unified_roles_cpu.pbs').read_text()
+    snippet=text.split("<<'PY'\n",1)[1].split('\nPY\n',1)[0]
+    stage=tmp_path/'stage';boundary=tmp_path
+    registry=stage/'code/platforms/ims/v4_submit/runtime_registry.json'
+    registry.parent.mkdir(parents=True)
+    executable=boundary/'molgap/.venv/bin/python'
+    payload={'runtimes':{'ims-a100-torch271-v1':{'python':str(executable),
+        'pythonpath':[str(boundary/'vendor'),'{code_root}/src']}}}
+    registry.write_text(json.dumps(payload))
+    original=Path.resolve
+    def no_interpreter_probe(path,*args,**kw):
+        assert path!=executable,'Must not follow the registered interpreter symlink'
+        return original(path,*args,**kw)
+    monkeypatch.setattr(Path,'resolve',no_interpreter_probe)
+    monkeypatch.setattr(sys,'argv',['-',str(stage),str(boundary)])
+    exec(compile(snippet,'cpu-pbs-runtime','exec'),{})
+    assert str(stage/'code/src') in capsys.readouterr().out
+    payload['runtimes']['ims-a100-torch271-v1']['python']=str(boundary/'arbitrary/python')
+    registry.write_text(json.dumps(payload))
+    with pytest.raises(AssertionError):
+        exec(compile(snippet,'cpu-pbs-runtime','exec'),{})
