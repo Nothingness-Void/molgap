@@ -1,0 +1,14 @@
+{
+  "command": "D:/文档/molgap/.venv/Scripts/python.exe -m pytest -q tests/test_experiment_family_workflow.py tests/test_experiment_workflow.py tests/test_experiment_terminal.py -k 'terminal or verified or closure'",
+  "working_directory": "C:\\Users\\17449\\.codex\\worktrees\\k1-prenorm-norm-acceptance\\molgap",
+  "environment": {
+    "PYTHONPATH": "C:\\Users\\17449\\.codex\\worktrees\\k1-prenorm-norm-acceptance\\molgap\\src",
+    "CUDA_VISIBLE_DEVICES": "-1",
+    "HIP_VISIBLE_DEVICES": "-1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 25.603,
+  "output": "........................................................................ [ 24%]\n......................................................s................. [ 48%]\n........................................................................ [ 72%]\n........................................................................ [ 96%]\n......ss.                                                                [100%]\n============================== warnings summary ===============================\nD:\\�ĵ�\\molgap\\.venv\\lib\\site-packages\\torch_geometric\\llm\\utils\\backend_utils.py:26\n  D:\\�ĵ�\\molgap\\.venv\\lib\\site-packages\\torch_geometric\\llm\\utils\\backend_utils.py:26: DeprecationWarning: `torch_geometric.distributed` has been deprecated since 2.7.0 and will no longer be maintained. For distributed training, refer to our tutorials on distributed training at https://pytorch-geometric.readthedocs.io/en/latest/tutorial/distributed.html or cuGraph examples at https://github.com/rapidsai/cugraph-gnn/tree/main/python/cugraph-pyg/cugraph_pyg/examples\n    from torch_geometric.distributed import (\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n294 passed, 3 skipped, 123 deselected, 1 warning in 16.01s"
+}

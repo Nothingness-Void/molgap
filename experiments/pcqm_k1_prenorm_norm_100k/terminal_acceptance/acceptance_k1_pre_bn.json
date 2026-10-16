@@ -1,0 +1,171 @@
+{
+  "cost_attribution": "fixed per-arm device0/device1 slots, each held for the observed complete entry window; per-arm process wall from original output remains separate",
+  "cost_source": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/metadata/experiment/allocation_entry_observation.json",
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-prenorm-norm-100k-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-entry-slot-measured",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_bn.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.9678432923291667
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.9678432923291667
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_bn:downstream",
+      "schema": "molgap-cost-event-v1",
+      "scope": "One explicitly assigned T4 slot for the shared measured entry window; includes setup/preflight/evaluation/idle, excludes unknown pre-entry/post-exit platform allocation. Two arm slot events sum to measured pair assigned-device seconds; overlapping wall is not additive job elapsed.",
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+    }
+  ],
+  "evidence_id": "EV-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-terminal",
+  "format": "molgap-family-terminal-acceptance-v1",
+  "mechanical_report": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/mechanical_k1_pre_bn.json",
+  "native_report": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/native_k1_pre_bn.json",
+  "observed_progress": {
+    "completed_passes": 40,
+    "next_batch": 0,
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720,
+    "status": "complete"
+  },
+  "outcome": {
+    "artifact_status": "locally_retained_hash_verified",
+    "budget_decision": "within_frozen_entry_allocation_ceiling",
+    "comparison_status": "paired_endpoint_frozen_gate",
+    "execution_status": "complete",
+    "full_handoff_status": "not_authorized",
+    "scientific_status": "CLOSED",
+    "transfer_status": "not_evaluated"
+  },
+  "paired_analysis": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/analysis_summary.json",
+  "producer_platform_version": null,
+  "reconciled_platform_version": 1,
+  "replay_blockers": [
+    "canonical_learning_rate_history_missing",
+    "canonical_checkpoint_identity_history_missing",
+    "strict_v5_comparison_not_qualified"
+  ],
+  "role_observation_sources": [
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_bn/training_contract.json",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_bn/canonical_trace.json",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_bn/development_predictions.pt",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_bn/selected_model.pt",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_bn/runtime_provenance.json"
+  ],
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-train-training-membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-train-labels-read",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-development-prediction-input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-development-labels-read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-development-metric-computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_bn.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-development-selection-used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_bn:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+    }
+  ],
+  "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_bn:downstream",
+  "strict_replay_ready": false,
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_prenorm_norm_100k/decision.md",
+    "next_allowed_actions": [
+      "retain accepted evidence; no retry or scale-up"
+    ],
+    "outcome": "CLOSED",
+    "reopen_conditions": [
+      "new explicit user-authorized decision-relevant question"
+    ]
+  }
+}

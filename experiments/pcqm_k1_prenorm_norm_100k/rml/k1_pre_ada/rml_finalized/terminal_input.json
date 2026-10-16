@@ -1,0 +1,608 @@
+{
+  "acceptance_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_ada.json",
+  "action_id": "A001",
+  "artifact_hashes": {
+    "experiments/pcqm_k1_prenorm_norm_100k/acceptance_plan.json": "3173f444c3a816c042bedd3cd8e3c669df7331e01bcd3a44b3b54b171cb84b32",
+    "experiments/pcqm_k1_prenorm_norm_100k/authority.json": "c86c80e7fb47b14b959d0230a3101b7f78f1ebfafc535b883f49079de203b7a2",
+    "experiments/pcqm_k1_prenorm_norm_100k/decision.md": "604705e09226a957dd4587699f2e826528e656a39197f64cf8a43078892b35eb",
+    "experiments/pcqm_k1_prenorm_norm_100k/experiment_spec.json": "5108651c41602075a09da7e10a8a4d71a6337ba8c0a3d930a297a3a974f83863",
+    "experiments/pcqm_k1_prenorm_norm_100k/protocol.md": "de13935b1a7cabed9edab7ba7ac45258ed727ef4249e338d446f477ad46cc786",
+    "experiments/pcqm_k1_prenorm_norm_100k/role_plan.json": "9026dc94c81a3da33d595f7868c617ed815e17c3ed0e7c12967f5212b5bab767",
+    "experiments/pcqm_k1_prenorm_norm_100k/submission/launch_receipt.json": "d1802dbdaca36eca1ed59b2ba6725c0a225240077299cc5ad31acd0123644e17",
+    "experiments/pcqm_k1_prenorm_norm_100k/submission/platform_response.json": "5f3be1e1b07cc34a1308b4a4bd2994710ed26376ad5985c80c6a55ba11ba76c9",
+    "experiments/pcqm_k1_prenorm_norm_100k/submission/source_upload_verification.json": "4962a31cd7fcafc622706d551e78cffcad7ed4cd5b711bc4069325224c886164",
+    "experiments/pcqm_k1_prenorm_norm_100k/submission/source_verification.json": "65e56d9e7a3a3a73b096e02138b3364f5b8955f4220e4c6697f44419dd6b0be1",
+    "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_ada.json": "a2ed8b88010baf84821cc69a49fb14de6a9b039dc0625ef2f6af629b71f5f10c",
+    "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/analysis_summary.json": "b7bf41fd20c723bc7d0740ec884f24245365a4aa2972187c788c35c54ec76432",
+    "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/analyze_retained.py": "c603291e88c7626b3aca4cef1dd7017a07dc401cfad81f6fe221f8953958599c",
+    "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/attribution.md": "0ba82cb787df0352daaa4dfaeb14c2ea0e07dff9ac248eda44db0477ed02284c",
+    "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/development_curves.png": "f0164d9fbacc4369b56df226cf371d50f94b452a32985bcd9e9e9b9a0534377e",
+    "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/mechanical_k1_pre_ada.json": "11153dd95cbcf769d52854dd71775df321febb36516c5063d8553e22419f93b0",
+    "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/native_k1_pre_ada.json": "c2eb272621e58b46b4ec7fdb3f840c09c0ca6eb844feeb873762763cf9f79b84",
+    "platforms/_records/kaggle/staging/k1_prenorm_norm_100k/release001/package/SOURCE_ARCHIVE_SHA256.txt": "16c411024db543124eca4e89ffa9f14887d2ee04bd91d0383fd12c9410917517",
+    "platforms/_records/kaggle/staging/k1_prenorm_norm_100k/release001/package/SOURCE_COMMIT.txt": "1a858d1683a39962d8f262a3153f0de3911216d5208211c4d1b1c71b860e716c",
+    "platforms/_records/kaggle/staging/k1_prenorm_norm_100k/release001/package/SOURCE_FILES.json": "bd660da4ae3e171ade296e83c5b9da8f4f198a53a2441f1c0a3ec6b41bf99baf",
+    "platforms/_records/kaggle/staging/k1_prenorm_norm_100k/release001/package/package_manifest.json": "04f7dc79a5ec34ec43e2107d741c23cb05190d0f0707058b90a03636e81163b0",
+    "platforms/_records/kaggle/staging/k1_prenorm_norm_100k/release001/package/source.tar.gz": "bf66daf8f40a77b63a7ddcccb2aff5133fe6f7aed0f6498862d88737351536e1",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/allocation_costs.json": "7161cf86fceae556039421912457fe78c15459c7ad5adcc40c3ebd85f8871ba9",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/canonical_trace.json": "0ab9492f5eb8b4a43a91e2b6562514dd138aa06bb23bfd11914bfa17c44fd270",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/canonical_trace.json.context.json": "8c7342499f4a32777583d809fda88aa37c57c3841cd8571a4b2c1833bbc83583",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/development_predictions.pt": "8ed64bd2cc7a9fcaa257d11862afa480b01bce7ba65403eefa461894805ba062",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/last_checkpoint.pt": "e88d300dab807503010dce6e297481049652e35f50c730af81836824d5d8a53e",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/output_manifest.json": "5dc208daeaec34f38729f6f81bc1e472246863708c2bdac87e4262ee431b5619",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/preflight_costs.json": "e680c6d19bdb13bb62049509a5e387e0c37c021657b9268a9f5e0e48810759f3",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/repeat-a.pt": "169740dd07eea3f95307f96919fff811e8ac25c4032c36eefc2ac627205ef5ca",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/repeat-b.pt": "20da35157425402c0b4cea756a82be50e7ce8507e0f83f05945a5a5bdaba35c0",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/resumed-first.pt": "b2217dbbd6adc0ab8dd328370c314bd256345350f974cca27d24a08c741d7d76",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/resumed.pt": "c3c05d69f0e7a29b5d31361795f576e9bb7bf891cd22e1ae4a7c93836eda95b0",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/runtime_certificate.json": "78a56452977ddcafadaa3ce0b39d395b53b513d6882e123b7793b04f2ba92285",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/runtime_provenance.json": "061a7f6307bbbe5869f8eded0a4bb29fefc11cc8923116f03678064ec19be15a",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/selected_model.pt": "83b8a7cfad581473890e6c809f892f2959f4bb70a4135ec8c0244177df94c237",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/training_contract.json": "7a5a3ad80b08b0d575d68d953304f5a439fdf4388ddc7e7896e7c054f4044c5b",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/training_progress.json": "de0022723ca6c3d2234c3c618235982178dfa46ffc133a3861d75c88de37316b",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/metadata/experiment/allocation_entry_observation.json": "79f2aaa903a59ceffcb4a0704d7f0e8b3740922b931c04d9d27cc533200dac28",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/metadata/experiment/input_resolution.json": "4c30a1d315b7173758babe6d0761af9c68dbab6fb3fd52d63a75448dd54fd9bc",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/metadata/experiment/pair_state.json": "c4a26178b2f99b25834a22630299c623c2c5ebf8b9a5213a45b113f2181f9d95",
+    "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/reconciliation/observation.json": "73cf4c0f1f635cddbb8f6e3053227063665414930e1db7745a0fa0050082239b"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-prenorm-norm-100k-s42-v1",
+      "category": "training",
+      "cost_event_id": "cost-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-entry-slot-measured",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_ada.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.9678432923291667
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.9678432923291667
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_ada:downstream",
+      "schema": "molgap-cost-event-v1",
+      "scope": "One explicitly assigned T4 slot for the shared measured entry window; includes setup/preflight/evaluation/idle, excludes unknown pre-entry/post-exit platform allocation. Two arm slot events sum to measured pair assigned-device seconds; overlapping wall is not additive job elapsed.",
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+    }
+  ],
+  "decision": {
+    "decision_ref": "experiments/pcqm_k1_prenorm_norm_100k/decision.md",
+    "next_allowed_actions": [
+      "retain accepted evidence; no retry or scale-up"
+    ],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "new explicit user-authorized decision-relevant question"
+    ]
+  },
+  "evidence": {
+    "artifacts": [
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/protocol.md",
+        "name": "protocol.md",
+        "role": "provenance",
+        "sha256": "de13935b1a7cabed9edab7ba7ac45258ed727ef4249e338d446f477ad46cc786"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/authority.json",
+        "name": "authority.json",
+        "role": "provenance",
+        "sha256": "c86c80e7fb47b14b959d0230a3101b7f78f1ebfafc535b883f49079de203b7a2"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/decision.md",
+        "name": "decision.md",
+        "role": "provenance",
+        "sha256": "604705e09226a957dd4587699f2e826528e656a39197f64cf8a43078892b35eb"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/role_plan.json",
+        "name": "role_plan.json",
+        "role": "provenance",
+        "sha256": "9026dc94c81a3da33d595f7868c617ed815e17c3ed0e7c12967f5212b5bab767"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/experiment_spec.json",
+        "name": "experiment_spec.json",
+        "role": "provenance",
+        "sha256": "5108651c41602075a09da7e10a8a4d71a6337ba8c0a3d930a297a3a974f83863"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/acceptance_plan.json",
+        "name": "acceptance_plan.json",
+        "role": "provenance",
+        "sha256": "3173f444c3a816c042bedd3cd8e3c669df7331e01bcd3a44b3b54b171cb84b32"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/analysis_summary.json",
+        "name": "analysis_summary.json",
+        "role": "analysis",
+        "sha256": "b7bf41fd20c723bc7d0740ec884f24245365a4aa2972187c788c35c54ec76432"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/attribution.md",
+        "name": "attribution.md",
+        "role": "analysis",
+        "sha256": "0ba82cb787df0352daaa4dfaeb14c2ea0e07dff9ac248eda44db0477ed02284c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/analyze_retained.py",
+        "name": "analyze_retained.py",
+        "role": "analysis",
+        "sha256": "c603291e88c7626b3aca4cef1dd7017a07dc401cfad81f6fe221f8953958599c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/development_curves.png",
+        "name": "development_curves.png",
+        "role": "analysis",
+        "sha256": "f0164d9fbacc4369b56df226cf371d50f94b452a32985bcd9e9e9b9a0534377e"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/submission/launch_receipt.json",
+        "name": "launch_receipt.json",
+        "role": "provenance",
+        "sha256": "d1802dbdaca36eca1ed59b2ba6725c0a225240077299cc5ad31acd0123644e17"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/submission/platform_response.json",
+        "name": "platform_response.json",
+        "role": "provenance",
+        "sha256": "5f3be1e1b07cc34a1308b4a4bd2994710ed26376ad5985c80c6a55ba11ba76c9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/submission/source_verification.json",
+        "name": "source_verification.json",
+        "role": "provenance",
+        "sha256": "65e56d9e7a3a3a73b096e02138b3364f5b8955f4220e4c6697f44419dd6b0be1"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/submission/source_upload_verification.json",
+        "name": "source_upload_verification.json",
+        "role": "provenance",
+        "sha256": "4962a31cd7fcafc622706d551e78cffcad7ed4cd5b711bc4069325224c886164"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/metadata/experiment/pair_state.json",
+        "name": "pair_state.json",
+        "role": "provenance",
+        "sha256": "c4a26178b2f99b25834a22630299c623c2c5ebf8b9a5213a45b113f2181f9d95"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/metadata/experiment/allocation_entry_observation.json",
+        "name": "allocation_entry_observation.json",
+        "role": "provenance",
+        "sha256": "79f2aaa903a59ceffcb4a0704d7f0e8b3740922b931c04d9d27cc533200dac28"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/metadata/experiment/input_resolution.json",
+        "name": "input_resolution.json",
+        "role": "provenance",
+        "sha256": "4c30a1d315b7173758babe6d0761af9c68dbab6fb3fd52d63a75448dd54fd9bc"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/reconciliation/observation.json",
+        "name": "observation.json",
+        "role": "provenance",
+        "sha256": "73cf4c0f1f635cddbb8f6e3053227063665414930e1db7745a0fa0050082239b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/staging/k1_prenorm_norm_100k/release001/package/source.tar.gz",
+        "name": "source.tar.gz",
+        "role": "provenance",
+        "sha256": "bf66daf8f40a77b63a7ddcccb2aff5133fe6f7aed0f6498862d88737351536e1"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/staging/k1_prenorm_norm_100k/release001/package/package_manifest.json",
+        "name": "package_manifest.json",
+        "role": "provenance",
+        "sha256": "04f7dc79a5ec34ec43e2107d741c23cb05190d0f0707058b90a03636e81163b0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/staging/k1_prenorm_norm_100k/release001/package/SOURCE_COMMIT.txt",
+        "name": "SOURCE_COMMIT.txt",
+        "role": "provenance",
+        "sha256": "1a858d1683a39962d8f262a3153f0de3911216d5208211c4d1b1c71b860e716c"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/staging/k1_prenorm_norm_100k/release001/package/SOURCE_ARCHIVE_SHA256.txt",
+        "name": "SOURCE_ARCHIVE_SHA256.txt",
+        "role": "provenance",
+        "sha256": "16c411024db543124eca4e89ffa9f14887d2ee04bd91d0383fd12c9410917517"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/staging/k1_prenorm_norm_100k/release001/package/SOURCE_FILES.json",
+        "name": "SOURCE_FILES.json",
+        "role": "provenance",
+        "sha256": "bd660da4ae3e171ade296e83c5b9da8f4f198a53a2441f1c0a3ec6b41bf99baf"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/output_manifest.json",
+        "name": "output_manifest.json",
+        "role": "retained_artifact",
+        "sha256": "5dc208daeaec34f38729f6f81bc1e472246863708c2bdac87e4262ee431b5619"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/training_contract.json",
+        "name": "training_contract.json",
+        "role": "retained_artifact",
+        "sha256": "7a5a3ad80b08b0d575d68d953304f5a439fdf4388ddc7e7896e7c054f4044c5b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/canonical_trace.json",
+        "name": "canonical_trace.json",
+        "role": "training_trace",
+        "sha256": "0ab9492f5eb8b4a43a91e2b6562514dd138aa06bb23bfd11914bfa17c44fd270"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/canonical_trace.json.context.json",
+        "name": "canonical_trace.json.context.json",
+        "role": "retained_artifact",
+        "sha256": "8c7342499f4a32777583d809fda88aa37c57c3841cd8571a4b2c1833bbc83583"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/development_predictions.pt",
+        "name": "development_predictions.pt",
+        "role": "retained_artifact",
+        "sha256": "8ed64bd2cc7a9fcaa257d11862afa480b01bce7ba65403eefa461894805ba062"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/selected_model.pt",
+        "name": "selected_model.pt",
+        "role": "retained_artifact",
+        "sha256": "83b8a7cfad581473890e6c809f892f2959f4bb70a4135ec8c0244177df94c237"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/last_checkpoint.pt",
+        "name": "last_checkpoint.pt",
+        "role": "retained_artifact",
+        "sha256": "e88d300dab807503010dce6e297481049652e35f50c730af81836824d5d8a53e"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/runtime_certificate.json",
+        "name": "runtime_certificate.json",
+        "role": "retained_artifact",
+        "sha256": "78a56452977ddcafadaa3ce0b39d395b53b513d6882e123b7793b04f2ba92285"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/runtime_provenance.json",
+        "name": "runtime_provenance.json",
+        "role": "retained_artifact",
+        "sha256": "061a7f6307bbbe5869f8eded0a4bb29fefc11cc8923116f03678064ec19be15a"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/repeat-a.pt",
+        "name": "repeat-a.pt",
+        "role": "retained_artifact",
+        "sha256": "169740dd07eea3f95307f96919fff811e8ac25c4032c36eefc2ac627205ef5ca"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/repeat-b.pt",
+        "name": "repeat-b.pt",
+        "role": "retained_artifact",
+        "sha256": "20da35157425402c0b4cea756a82be50e7ce8507e0f83f05945a5a5bdaba35c0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/resumed.pt",
+        "name": "resumed.pt",
+        "role": "retained_artifact",
+        "sha256": "c3c05d69f0e7a29b5d31361795f576e9bb7bf891cd22e1ae4a7c93836eda95b0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/resumed-first.pt",
+        "name": "resumed-first.pt",
+        "role": "retained_artifact",
+        "sha256": "b2217dbbd6adc0ab8dd328370c314bd256345350f974cca27d24a08c741d7d76"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/allocation_costs.json",
+        "name": "allocation_costs.json",
+        "role": "retained_artifact",
+        "sha256": "7161cf86fceae556039421912457fe78c15459c7ad5adcc40c3ebd85f8871ba9"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/preflight_costs.json",
+        "name": "preflight_costs.json",
+        "role": "retained_artifact",
+        "sha256": "e680c6d19bdb13bb62049509a5e387e0c37c021657b9268a9f5e0e48810759f3"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/training_progress.json",
+        "name": "training_progress.json",
+        "role": "retained_artifact",
+        "sha256": "de0022723ca6c3d2234c3c618235982178dfa46ffc133a3861d75c88de37316b"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/mechanical_k1_pre_ada.json",
+        "name": "mechanical_k1_pre_ada.json",
+        "role": "retained_artifact",
+        "sha256": "11153dd95cbcf769d52854dd71775df321febb36516c5063d8553e22419f93b0"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/native_k1_pre_ada.json",
+        "name": "native_k1_pre_ada.json",
+        "role": "retained_artifact",
+        "sha256": "c2eb272621e58b46b4ec7fdb3f840c09c0ca6eb844feeb873762763cf9f79b84"
+      },
+      {
+        "availability": "locally_retained_hash_verified",
+        "locator": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_ada.json",
+        "name": "acceptance_k1_pre_ada.json",
+        "role": "retained_artifact",
+        "sha256": "a2ed8b88010baf84821cc69a49fb14de6a9b039dc0625ef2f6af629b71f5f10c"
+      }
+    ],
+    "authority": {
+      "pointers": [
+        "experiments/pcqm_k1_prenorm_norm_100k/protocol.md",
+        "experiments/pcqm_k1_prenorm_norm_100k/decision.md",
+        "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/attribution.md",
+        "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_ada.json"
+      ]
+    },
+    "contract": "MOLGAP-COMMON-V5-FINAL",
+    "evidence_id": "EV-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-terminal",
+    "format": "molgap-v5-evidence-envelope-v1",
+    "legacy_contract": "pcqm-k1-prenorm-norm-100k-s42",
+    "migration": {
+      "inference_executed": false,
+      "migrated_at": "2026-10-16T09:42:38.573715+00:00",
+      "scientific_reinterpretation": false,
+      "training_executed": false,
+      "verification_scope": "Local terminal closure of separately executed remote training and development evaluation; no local training/inference"
+    },
+    "observed_execution": {
+      "completed_passes": 40,
+      "development_evaluation_executed": true,
+      "development_gap_mae_eV": 0.147099362706542,
+      "execution_ref": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/output_manifest.json",
+      "local_inference_executed": false,
+      "local_training_executed": false,
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720,
+      "selected_pass": 40,
+      "selected_step": 31240,
+      "selected_weights": "live",
+      "training_executed": true
+    },
+    "outcome": {
+      "artifact_status": "locally_retained_hash_verified",
+      "budget_decision": "within_frozen_entry_allocation_ceiling",
+      "comparison_status": "paired_endpoint_frozen_gate",
+      "execution_status": "complete",
+      "full_handoff_status": "not_authorized",
+      "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+      "transfer_status": "not_evaluated"
+    },
+    "role_use": {
+      "development": "consumed",
+      "official_validation": "untouched",
+      "test_challenge": "untouched",
+      "test_dev": "untouched",
+      "train": "consumed"
+    },
+    "scope": "desktop-owned frozen100K pre-norm pair terminal acceptance",
+    "source_identity": {
+      "kernel_id": 138980611,
+      "package_identity": "a3e1a142da2b460750bed660be003bab6d2a03b2fc532328d298b7ad08702ed8",
+      "producer_platform_version": null,
+      "reconciled_platform_version": 1,
+      "run_reference": "kaseichou/molgap-k1-prenorm-norm-100k-s42",
+      "source_archive_sha256": "bf66daf8f40a77b63a7ddcccb2aff5133fe6f7aed0f6498862d88737351536e1",
+      "source_commit": "dcb8d7b34ae74658a0ae8c31661b8f9d56d0f379",
+      "spec_identity": "5108651c41602075a09da7e10a8a4d71a6337ba8c0a3d930a297a3a974f83863"
+    },
+    "strict_replay_ready": false,
+    "track": "B"
+  },
+  "finalized_at": "2026-10-16T09:42:38.573715+00:00",
+  "format": "molgap-rml-terminal-package-v1",
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_ada.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-train-training-membership",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_ada.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-train-labels-read",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+    },
+    {
+      "access_kind": "prediction_input",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_ada.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-development-prediction-input",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_ada.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-development-labels-read",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_ada.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-development-metric-computed",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_ada.json",
+      "role_event_id": "role-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-development-selection-used",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_ada:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+    }
+  ],
+  "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_ada:downstream",
+  "same_run_observation": {
+    "attempt_id": "pcqm-k1-prenorm-norm-100k-s42-v1",
+    "logical_run_id": "pcqm-k1-prenorm-norm-100k-s42",
+    "platform_name": "kaggle",
+    "platform_run_reference": "kaseichou/molgap-k1-prenorm-norm-100k-s42",
+    "schema": "molgap-same-run-observation-v1",
+    "source_commit": "dcb8d7b34ae74658a0ae8c31661b8f9d56d0f379",
+    "source_package_sha256": "bf66daf8f40a77b63a7ddcccb2aff5133fe6f7aed0f6498862d88737351536e1",
+    "spec_identity": "5108651c41602075a09da7e10a8a4d71a6337ba8c0a3d930a297a3a974f83863"
+  },
+  "trace_manifest": {
+    "backtest_eligibility": {
+      "eligible": false,
+      "exclusion_reasons": [
+        "canonical_learning_rate_history_missing",
+        "canonical_checkpoint_identity_history_missing",
+        "strict_v5_comparison_not_qualified"
+      ]
+    },
+    "comparability_identity": {
+      "architecture_identity": "c6727b49d2e27cc5852c5f8cf9b85b35393ba01323fd93ea779c004158bc258a",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "ema_semantics": "tracked-0.999; selected-live; secondary-ema-development",
+      "evaluation_role_identity": "b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+      "lr_schedule_identity": "924b55ae5da8dddde2d829204eeadf8eb69ff428a6558436e0675955b1ac7f22",
+      "matched_architecture_required": false,
+      "optimizer_identity": "2ec6149284f34754f6979f6dce440d73cac12c5bc1f3040cb5e50dbdc0c03a0b",
+      "precision_identity": "fp32-no-tf32",
+      "row_split_identity": "ead4c9c196c3e27336c5ee0c5fc8e816dbd7a33b7bb6ecc2e1de7b858e375a75",
+      "scientific_contract": "experiments/pcqm_k1_prenorm_norm_100k/protocol.md",
+      "selection_role_identity": "b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef:best-development-live",
+      "target_transform_identity": "84c5c073ee370e8b57214e6582e4c00587c41a75b88932bd5bdedca22e30fcad",
+      "terminal_endpoint_identity": "31240-updates-3998720-presentations",
+      "x_axis_semantics": "optimizer_steps"
+    },
+    "comparison_role": "candidate",
+    "contract_ref": "experiments/pcqm_k1_prenorm_norm_100k/protocol.md",
+    "evaluation_role_identity": "b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+    "exposure": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720
+    },
+    "metric_semantics": "Gap MAE eV; EMA secondary only",
+    "model_identity": "neural_atom_k1/3:prenorm_ada",
+    "presentation_semantics_ref": "experiments/pcqm_k1_prenorm_norm_100k/protocol.md",
+    "reference_id": "EV-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-terminal",
+    "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_ada:downstream",
+    "schema": "molgap-trace-manifest-v1",
+    "selection_semantics": "best-development-live",
+    "terminal_evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_ada/rml_finalized/v5_evidence.json",
+    "trace_artifact_ref": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/family_outputs/k1_pre_ada/canonical_trace.json",
+    "trace_artifact_sha256": "0ab9492f5eb8b4a43a91e2b6562514dd138aa06bb23bfd11914bfa17c44fd270",
+    "trace_fields": {
+      "checkpoint_identity": false,
+      "ema_dev_metric": true,
+      "epoch_or_pass": true,
+      "learning_rate": false,
+      "live_dev_metric": true,
+      "live_train_metric": true,
+      "optimizer_step": true,
+      "sample_presentations": true
+    },
+    "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada",
+    "weight_semantics": "live",
+    "x_axis": "optimizer_steps"
+  },
+  "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+}

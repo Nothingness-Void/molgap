@@ -1,7 +1,7 @@
 {
   "backtest": {
     "eligible": 10,
-    "excluded": 25,
+    "excluded": 27,
     "status": "available"
   },
   "cost": {
@@ -2724,7 +2724,7 @@
             "known_total": null
           },
           "not_applicable_records": 11,
-          "unknown_records": 11
+          "unknown_records": 13
         },
         "device_hours": {
           "estimated": {
@@ -2732,8 +2732,8 @@
             "known_total": 36.0
           },
           "measured": {
-            "known_records": 9,
-            "known_total": 44.598483827412224
+            "known_records": 11,
+            "known_total": 48.53417041207055
           },
           "not_applicable_records": 0,
           "unknown_records": 5
@@ -2748,7 +2748,7 @@
             "known_total": null
           },
           "not_applicable_records": 9,
-          "unknown_records": 13
+          "unknown_records": 15
         },
         "wall_hours": {
           "estimated": {
@@ -2756,8 +2756,8 @@
             "known_total": 36.0
           },
           "measured": {
-            "known_records": 13,
-            "known_total": 50.28087347456861
+            "known_records": 15,
+            "known_total": 54.216560059226936
           },
           "not_applicable_records": 0,
           "unknown_records": 1
@@ -3064,17 +3064,17 @@
         }
       }
     },
-    "unknown_events": 212
+    "unknown_events": 214
   },
   "evidence": {
-    "validated": 107,
+    "validated": 109,
     "without_trajectory": 0
   },
   "format": "molgap-rml-research-summary-v1",
   "memory_gaps": [
     {
       "code": "trace_unavailable_for_backtest",
-      "count": 86,
+      "count": 84,
       "severity": "INFO"
     },
     {
@@ -3094,29 +3094,29 @@
     },
     {
       "code": "missing_explicit_role_identity",
-      "count": 42,
+      "count": 40,
       "severity": "WARN"
     },
     {
       "code": "trajectory_without_v5_evidence",
-      "count": 14,
+      "count": 12,
       "severity": "WARN"
     }
   ],
   "roles": {
-    "coarse_historical": 512,
-    "explicit_events": 301,
+    "coarse_historical": 522,
+    "explicit_events": 313,
     "repeatedly_selected": 22
   },
-  "source_digest": "4590184c46c9c33df387c9ca370b0a0ab53ba657622ad790ccd909feb464f573",
+  "source_digest": "689f57ea77f99a075371f7689fa17f2fca67ee192997d811a3bb62e09e5975e4",
   "trajectories": {
     "count": 121,
     "outcomes": {
-      "ACTIVE": 3,
-      "CLOSED": 12,
+      "ACTIVE": 1,
+      "CLOSED": 13,
       "INCONCLUSIVE": 23,
       "INFRASTRUCTURE_ONLY": 7,
-      "NEGATIVE_UNDER_CONTRACT": 24,
+      "NEGATIVE_UNDER_CONTRACT": 25,
       "NO_TRAIN": 44,
       "POSITIVE_UNDER_CONTRACT": 8
     }

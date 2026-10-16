@@ -8,6 +8,48 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "paired_endpoint_frozen_gate",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "EV-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-terminal",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "desktop-owned frozen100K pre-norm pair terminal acceptance",
+      "source_envelope": "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_ada/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "paired_endpoint_frozen_gate",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "EV-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-terminal",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "desktop-owned frozen100K pre-norm pair terminal acceptance",
+      "source_envelope": "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_bn/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "context_only",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,

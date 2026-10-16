@@ -1,9 +1,12 @@
 # K1 pre-norm100K desktop handoff
 
-Owner: `codex/exp/k1-prenorm-norm-100k`, checkout `D:/w/k1-prenorm-norm-100k`,
+Source owner: `codex/exp/k1-prenorm-norm-100k`, accepted custody at
+`C:/Users/17449/.codex/worktrees/k1-prenorm-norm-acceptance/molgap`,
 from verified desktop `b04970c4815f402d4e06bb511094d2040dc967d9`.
 The [protocol](protocol.md) owns roles, recipe, decisions and bounded authority;
-[status](STATUS.md) owns the latest retained execution observation.
+[status](STATUS.md) owns observed disposition; [closure](terminal_acceptance/closure.md)
+owns terminal RML and archive/canonical routing. The D: workspace copy is a
+preserved migration snapshot, not the registered worktree.
 
 ## Frozen release
 
@@ -43,7 +46,15 @@ EMA is a secondary per-pass observation. Historical Post-Norm records are
 context only; source/job/final-normalization confound placement attribution.
 Standard shared logging emits per completed pass.
 
-## Reconciliation
+## Accepted terminal observation
+
+Exact physical version is COMPLETE. Both native preflights, selected/resume
+states,40-pass traces and aligned finite50K predictions are accepted through
+the existing family/workflow owners. BN closes CLOSED; Ada closes negative.
+Both traces retain explicit strict-replay exclusions. See the decision and
+per-arm finalized records; do not resubmit or reopen based on old startup silence.
+
+## Reconciliation history
 
 Query this exact owner/kernel and reverify physical version/source before any
 artifact access. No successor or duplicate POST follows a quiet log. The initial

@@ -1,0 +1,66 @@
+{
+  "arm_id": "k1_pre_bn",
+  "checks": {
+    "account": true,
+    "arm_identity": true,
+    "certificate_canonical_sha_matches_manifest": true,
+    "certificate_provenance_fingerprint_matches": true,
+    "data_manifest_matches_spec_contract_provenance_and_local_file": true,
+    "exact_kernel_reference": true,
+    "experiment_spec_identity": true,
+    "initialization_file_matches_provenance": true,
+    "initialization_state_matches_spec_and_contract": true,
+    "manifest_context_matches_provenance": true,
+    "metadata_output_manifest_matches": true,
+    "package_identity_matches_launch": true,
+    "proof_hashes_match_certificate": true,
+    "recipe_identity_matches_executable_recipe": true,
+    "recipe_sha_matches_spec_file_and_contract": true,
+    "source_archive_matches_launch_and_manifest": true,
+    "source_commit_matches_launch_and_manifest": true
+  },
+  "data_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "download_duration_seconds": 19.406,
+  "downloaded_bytes": 177434615,
+  "format": "molgap-native-proof-terminal-acceptance-v1",
+  "kernel_id": 138980611,
+  "kernel_reference": "kaseichou/molgap-k1-prenorm-norm-100k-s42",
+  "output_manifest_file_sha256": "3ba0f26aadd8a3cb61c08816df7bdda384e32f785d9fe6520ee7a4042bc9f981",
+  "preflight_duration_seconds": 0.902,
+  "proofs": [
+    {
+      "path": "repeat-a.pt",
+      "sha256": "1301443557949c16f7ef07cfef865ca0d2852d255da23b41c1392a49b9198432"
+    },
+    {
+      "path": "repeat-b.pt",
+      "sha256": "1a9c62923c476aa269d5fd881500f3b4a550d5e08426bc772a9eef21bbf715b0"
+    },
+    {
+      "path": "resumed.pt",
+      "sha256": "e0f7b98f46d6a0acdf2459ca57d6e2afef4087d65e9df596cc7f3b858e27c7e1"
+    },
+    {
+      "path": "resumed-first.pt",
+      "sha256": "29ef60d0f2686c2ba042895515c0e0ce2ca48f9c363f5e6e3154e9bb7be92149"
+    }
+  ],
+  "retention_receipt": "platforms/_records/kaggle/training/k1_prenorm_norm_100k_s42_v1/reconciliation/native_proof_retention_completed_k1_pre_bn.json",
+  "runtime_certificate_canonical_sha256": "d986206e3e7609c78d090143adb8d01686933cf79e44a243b84218d126fc9f97",
+  "runtime_certificate_file_sha256": "349ba66faba023c7e341c337b0bf775cae03a0811cf7a96bf2430fa6b185778e",
+  "runtime_certificate_id_in_output_manifest": "d986206e3e7609c78d090143adb8d01686933cf79e44a243b84218d126fc9f97",
+  "runtime_provenance_canonical_sha256": "ce4669f04c6215b0e88ed44cbdfea9bb44a31767b9e991b7ffb6fb262471b71e",
+  "status": "NATIVE_PREFLIGHT_VERIFIED",
+  "validated_at_utc": "2026-10-16T09:32:09.897526+00:00",
+  "validator": "molgap.family_training_runner._verify_preflight",
+  "verification_scope": {
+    "inference_executed": false,
+    "model_constructed": false,
+    "native_cuda_rng_state": "saved proof metadata inspected; no CUDA device used",
+    "remote_calls_executed": false,
+    "scientific_acceptance": "not evaluated by this mechanical preflight",
+    "serialized_state_validation": "CPU only; validator loads proof tensors with map_location=cpu",
+    "training_executed": false
+  },
+  "version": 1
+}

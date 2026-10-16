@@ -180,6 +180,14 @@ version. Unknown producer version remains null in the report, not backfilled.
 `MECHANICALLY_VERIFIED` is not scientific acceptance, runtime qualification or
 replay readiness; those fields remain `NOT_EVALUATED` here.
 
+Shared-session K1/GPTrans output progress uses `completed_passes` and
+`next_batch`; legacy screen output uses `epochs`. The terminal adapter maps the
+observed completed-pass counter to descriptor `epoch` and retains the original
+step/sample counters. Acceptance plans support the owning frozen seven-field
+legacy or eight-field shared-session requirements. Neither UI epoch logging nor
+mechanical completion establishes that canonical learning-rate/checkpoint
+history exists; missing strict trace fields retain explicit replay exclusions.
+
 Plan format `molgap-family-acceptance-plan-v1`: `spec_identity` and ordered `arms`.
 Each arm has `arm_id`, `adapter`, `expected`, `contract`, `comparison_prelaunch`,
 `reference_bundle`, `reference_artifacts`. Contract/comparison/bundle pointers

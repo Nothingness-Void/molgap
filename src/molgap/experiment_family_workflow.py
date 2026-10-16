@@ -950,7 +950,8 @@ def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *,
                 raise ValueError("Descriptor/verified artifact path mismatch: " + role)
             if role == "trace" and ("trace" not in arm or repo_local_path(repo_root, arm["trace"]) != inspected_path):
                 raise ValueError("Descriptor closure trace differs from the inspected trace")
-        for field, counter in (("epoch", "epochs"), ("step", "optimizer_steps"), ("samples", "sample_presentations")):
+        pass_counter = "completed_passes" if "completed_passes" in report["observed"]["progress"] else "epochs"
+        for field, counter in (("epoch", pass_counter), ("step", "optimizer_steps"), ("samples", "sample_presentations")):
             if arm["observed"]["progress"][field]["value"] != report["observed"]["progress"][counter]:
                 raise ValueError("Descriptor/verified progress mismatch")
     if any(r["status"] == "BLOCKED" for r in reports.values()):
@@ -1036,7 +1037,7 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
                     "terminal": {"status": fact("complete"), "exit_reason": fact("verified_outputs_complete")},
                     "artifacts": {"metrics": metrics, "predictions": binding("predictions"),
                                   "checkpoint": binding("selected_model"), "trace": binding("trace")},
-                    "progress": {"epoch": fact(progress["epochs"]), "step": fact(progress["optimizer_steps"]),
+                    "progress": {"epoch": fact(progress["completed_passes"] if "completed_passes" in progress else progress["epochs"]), "step": fact(progress["optimizer_steps"]),
                                  "samples": fact(progress["sample_presentations"])},
                     "costs": costs, "missing_evidence": missing}}
         if repo_local_path(root, where["trace"]) != repo_local_path(root, entry["observed"]["artifacts"]["trace"]["locator"]):
