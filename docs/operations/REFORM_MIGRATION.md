@@ -7,6 +7,9 @@ Input: `MOLGAP_REFORM_PLAN.md`, SHA256
 
 ## Acceptance scope
 
+Status: **INFRA_CPU_ACCEPTED for the delivered server subset**;
+the entire A–G reform is **NOT_COMPLETE**.
+
 The bounded server implementation is CPU-qualified, not a completed deployment
 of every reform batch. No remote POST, credential inspection, GPU allocation,
 real-data run, graph rebuild, official/protected-role read or scientific ranking
@@ -208,3 +211,32 @@ No push or remote branch update is authorized by this reform.
    changed recipe records is NOT_ESTABLISHED. A separate runtime/config package
    layer would need a reviewed backward-compatible format change, not silent
    removal of recipe byte binding.
+
+## Primary server integration verification
+
+After a read-only remote fetch, the primary `molgap-server` checkout was
+fast-forwarded from `1179054750fd8ff500548ad6b3ee3eece94bb786` to
+`5985e26b8305ac7c65ccff69d2c24b9e63557742`. All 14 unrelated dirty tracked
+files matched their original SHA256 pins before and after integration, including
+`tests/test_research_memory.py`. They were not staged or included in the patch.
+Unrelated untracked/ignored evidence was retained, not adopted or cleaned.
+
+The final primary suite (`primary-acceptance.xml`) passed **41 tests**, with
+zero failures/errors, in 61.098s (JUnit suite timing). Its byte pin is
+`2a31c213e309147d2b83072e8653e57510b3149ec4874e9a8a58cd4922236189` under the same E-drive report root. It reran
+the actual committed fixed distribution and isolated family/state/session proof,
+as well as input/run-ID, cache, catalog, path and platform-journal integration.
+The primary distribution sample used 426 source files;
+cold/warm packaging took 6.068310/3.710259s and the isolated CPU
+child took 15.619401s. These remain raw single samples, not platform latency.
+
+The 14 changed active Markdown documents passed targeted navigation audits:
+317 pointers before integration and 318 after, eight anchors, zero issues,
+no line-count gate. This does not claim
+a clean-checkout audit of every historical/untracked evidence link. Twelve
+scientific execution owners, both durable V5 contract texts and the historical
+shared inventory had no diff from the implementation baseline.
+
+No push, Desktop integration or worktree removal followed. The local reform
+branch/worktree was retained for recovery; remote reachability of the new commits
+is not claimed. The existing RML derived/user changes remain the user's own.
