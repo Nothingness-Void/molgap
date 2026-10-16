@@ -136,3 +136,13 @@ def test_selected_checkpoint_is_bound_at_selected_step_not_last_observation():
         checkpoint_sha256=rows[0]["checkpoint_identity"],weights="live",bn_state="not_applicable",seed=42,
         cost={"allocation_coverage":"MEASURED"})
     assert comparison_report(run,run,comparison_type="SAME_SCALE_MODEL")["strictness"]=="STRICT_SAME_SCALE"
+
+
+def test_reviewed_raw_ema_aliases_are_equivalent_but_clean_ema_is_not():
+    i=declared_identity("ema");a,b=bound_curve(),bound_curve()
+    for row in a:row.update(metric="ema_dev_metric",weights="ema")
+    for row in b:row.update(metric="ema_dev_metric",weights="raw_ema")
+    args=dict(left_identity=i,right_identity=deepcopy(i),metric="ema_dev_metric")
+    assert compare(a,b,**args)["strictness"]=="STRICT_SAME_SCALE"
+    for row in b:row["weights"]="clean-ema"
+    assert compare(a,b,**args)["strictness"]=="CONTEXT_ONLY"

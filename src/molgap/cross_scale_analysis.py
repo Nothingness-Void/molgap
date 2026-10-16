@@ -264,7 +264,8 @@ def align_curves(left, right, *, left_identity, right_identity, metric="live_dev
         for field in ("weights", "evaluation_role", "metric_kind"):
             if l.get(field) is None or r.get(field) is None:
                 local.append("MISSING:metric_" + field)
-            elif l[field] != r[field]:
+            elif ((canonical_weight_state(l[field]) != canonical_weight_state(r[field]))
+                  if field == "weights" else l[field] != r[field]):
                 if not (lane == "TUNED_RECIPE" and field == "weights"):
                     local.append("MISMATCH:metric_" + field)
         for side, row, identity, expected in (("left",l,left_identity,aexpected),("right",r,right_identity,bexpected)):
