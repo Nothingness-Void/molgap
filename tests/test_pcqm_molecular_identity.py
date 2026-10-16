@@ -284,7 +284,8 @@ def test_cpu_pbs_uses_registered_entrypoint_without_resolving_system_interpreter
     monkeypatch.setattr(Path,'resolve',no_interpreter_probe)
     monkeypatch.setattr(sys,'argv',['-',str(stage),str(boundary)])
     exec(compile(snippet,'cpu-pbs-runtime','exec'),{})
-    assert str(stage/'code/src') in capsys.readouterr().out
+    import os
+    assert stage/'code/src' in [Path(p) for p in capsys.readouterr().out.strip().split(os.pathsep)]
     payload['runtimes']['ims-a100-torch271-v1']['python']=str(boundary/'arbitrary/python')
     registry.write_text(json.dumps(payload))
     with pytest.raises(AssertionError):
