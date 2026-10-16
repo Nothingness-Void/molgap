@@ -22,7 +22,8 @@ def test_python_data_namespace_is_source_but_payloads_and_credentials_are_not():
 
 def add_runtime(root):
     for name in ("__init__.py","model.py","new_addon.py","data/__init__.py","data/loader.py",
-                 "server_control.py","common/kaggle.py"):
+                 "server_control.py","common/kaggle.py", "artifact_inventory.py",
+                 "experiment_run.py", "experiment_timings.py"):
         path=root/"src/molgap"/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_text("VALUE=42\n")
     private=root/"platforms/_records/credentials.json";private.parent.mkdir(parents=True);private.write_text('{}')
     git(root,"add",".");git(root,"-c","commit.gpgsign=false","commit","-m","Fixture runtime")
@@ -35,6 +36,8 @@ def test_new_tracked_addon_enters_fixed_distribution_without_ast_or_manual_list(
     assert "src/molgap/new_addon.py" in names and "src/molgap/data/loader.py" in names
     assert "src/molgap/server_control.py" not in names
     assert "src/molgap/common/kaggle.py" not in names
+    assert not {"src/molgap/"+name+".py" for name in
+                ("artifact_inventory","experiment_run","experiment_timings")} & set(names)
     assert not any("_records" in p for p in names)
 
 
