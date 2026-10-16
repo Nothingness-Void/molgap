@@ -1,0 +1,35 @@
+{
+  "algorithm": "sha256-molecule-group-rank-v1",
+  "common_dev_rows": 50000,
+  "excluded_ranges": [
+    [
+      100000,
+      150000
+    ],
+    [
+      500000,
+      550000
+    ],
+    [
+      1000000,
+      1050000
+    ]
+  ],
+  "format": "molgap-pcqm4mv2-unified-roles-v2",
+  "generator_sha256": "ec460b06eee968ceb264b2b855fc2a9e356ce191d52dbc2e5853d59f9e6e29d6",
+  "independent_audit_rows": 50000,
+  "molecule_rule": "rdkit-canonical-isomeric-smiles-clear-atom-maps-v1",
+  "official_train_rows": 3378606,
+  "rdkit_version": "2026.03.2",
+  "role_inventory_sha256": "dbfa3e90979c53c28033d93ba1d222545f212cd3e4193ef3a6cce3e13d74c3c8",
+  "scope": "OFFICIAL_TRAIN_CPU_PREPARATION_ONLY",
+  "seed": 42,
+  "source_acceptance_sha256": "82bdf0d304b5a1b20d120dd25c07ad6c6cf02324bab2b13634ed68ee8c63db0e",
+  "source_commit": "c3f40e3b34ffcd3fdd89bb066a0812476a56a686",
+  "source_manifest_sha256": "4ecd1546c5fc898004809a5b7130bd7963a5eb569120dbee95e65f18ed9cc99e",
+  "train_sizes": [
+    100000,
+    500000,
+    1000000
+  ]
+}

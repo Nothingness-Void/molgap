@@ -1,0 +1,209 @@
+{
+  "base": "f0676fbf3c9f082574f4e9a22d162a0e1a0e7d80",
+  "branch": "molgap-server",
+  "changed_code_and_docs": [
+    ".gitattributes",
+    ".gitignore",
+    "docs/operations/CROSS_SCALE_V1_HARDENING.md",
+    "docs/operations/PCQM_UNIFIED_ROLES_V2.md",
+    "platforms/ims/pcqm_fixed_datasets/prepare_unified_roles.pbs",
+    "platforms/ims/pcqm_fixed_datasets/prepare_unified_roles.py",
+    "src/molgap/cross_scale_analysis.py",
+    "src/molgap/cross_scale_backtest.py",
+    "src/molgap/cross_scale_inputs.py",
+    "src/molgap/experiment_source_inventory.py",
+    "src/molgap/pcqm_unified_roles.py",
+    "tests/cross_scale_fixtures.py",
+    "tests/test_cross_scale_analysis.py",
+    "tests/test_cross_scale_hardening.py",
+    "tests/test_experiment_cli.py",
+    "tests/test_pcqm_unified_roles.py",
+    "tests/test_shared_graph_lifecycle.py"
+  ],
+  "counts_overlap_do_not_sum": true,
+  "data_status": "ROLE_BLOCKED",
+  "date": "2026-10-16",
+  "format": "molgap-cross-scale-hardening-acceptance-v1",
+  "implementation_head": "4df187ce6b73862a30286e4c9aa8452d0138c231",
+  "phase_two": {
+    "attachment_sha256": "c8193cb80da2c44b66e3d88f54e821f53ed8e86e4bbf7ee6385f4548629b30e4",
+    "models_implemented": false,
+    "read_completely": true,
+    "scientific_spec_published": false,
+    "status": "NOT_STARTED_DATA_PREREQUISITE_UNSATISFIED"
+  },
+  "preserved_user_test_sha256": "e623abd9b0a410d6c49ccf1d04e2e1ba5bb23237db4dea2a2c8c874f4b9465f1",
+  "real_data": {
+    "actual_allocated_wall_hours": null,
+    "actual_cpu_hours": null,
+    "actual_queue_hours": null,
+    "actual_role_intersections": null,
+    "cpu_count_requested": 4,
+    "failure": {
+      "error_type": "ValueError",
+      "gpu_used": false,
+      "reason": "ROLE_BLOCKED: unparsable molecular identity",
+      "status": "ROLE_BLOCKED",
+      "training_submitted": false
+    },
+    "graphs_rebuilt": false,
+    "job_id": "1730791.ccpbs1",
+    "new_role_source_index_sha256": {
+      "common_dev": null,
+      "full_minus_holdout": null,
+      "independent_audit": null,
+      "train_100k": null,
+      "train_1m": null,
+      "train_500k": null
+    },
+    "observed_error": "RDKit 2026.03.2: Explicit valence for atom #1 Si, 5, is greater than permitted",
+    "offending_source_idx": null,
+    "old_fixed_acceptance_raw_sha256_before_after": "82bdf0d304b5a1b20d120dd25c07ad6c6cf02324bab2b13634ed68ee8c63db0e",
+    "old_fixed_manifest_raw_sha256_before_after": "4ecd1546c5fc898004809a5b7130bd7963a5eb569120dbee95e65f18ed9cc99e",
+    "old_payload_full_rescan": false,
+    "platforms": {
+      "ims": "ROLE_BLOCKED_MASTER_NOT_ACCEPTED",
+      "kaggle1": "BLOCKED_BY_MASTER_NOT_PUBLISHED",
+      "kaggle2": "BLOCKED_BY_MASTER_NOT_PUBLISHED"
+    },
+    "progress": {
+      "completed_rows": 50000,
+      "gpu_used": false,
+      "rule_identity": "853cb74dade995592240ca869386d43958efac032d8b61f3f16471bb3ba18eab",
+      "stage": "MOLECULAR_IDENTITY",
+      "status": "RUNNING"
+    },
+    "publishable_data_packages": false,
+    "raw_failure_sha256": "d6ff9dafac9b8b02a5ac7c858e0393e6af367980f4c962e6be45821cd1279114",
+    "raw_progress_sha256": "2fa8b3e474e897d0a9b38c1e38d48deb314191481f1b978fa57faae20d8c7882",
+    "raw_stdout_sha256": "5e40ea16f6ae98de2cd7fb9a987ceb9b5e100d3d9942b595cba609e1159d3399",
+    "retry_after_role_failure": false,
+    "role_rule_relaxed": false,
+    "rule_file": "rule-r2.json",
+    "rule_file_sha256": "de1da9af140788dc16234d412512ea0e26f0f98a3945023658255977261dafff",
+    "source_archive_sha256": "0370c9764b95b3dd09b0aaca152390861ea5cf8d7f4fb326d94ce6064b5b31b8",
+    "source_commit": "4200e1688c43083b311dfbff6602218c78427279",
+    "wall_ceiling_hours": 2
+  },
+  "remaining": [
+    "Audit the frozen molecular-identity failure and approve a versioned rule before any data retry",
+    "Capture exact offending source identity using CPU-only accepted-source diagnostics",
+    "Complete actual role/content acceptance, then private mirror export and byte/content validation",
+    "Retain native CPU allocation cost as unknown until authoritative accounting is available",
+    "Review indexed-input ABI before any real V2 loader/model release; no fallback to old development"
+  ],
+  "remote_head_observed": "63481324aceb807a3f74a08ba2c62bd3e0dcf9ab",
+  "resolved_failure": "final_regression.xml main-guard formatting failure repaired and rechecked in guard_doc_recheck.xml; original failure retained",
+  "rml": {
+    "canonical_records_written": false,
+    "early_stop_status": "NOT_RELEASED",
+    "frozen_check": "PASS",
+    "policies_replayed": 22,
+    "validation": "PASS"
+  },
+  "runtime": {
+    "gpu_execution": false,
+    "python": ".venv/Scripts/python.exe",
+    "synthetic_session_updates_only": true
+  },
+  "scope": {
+    "desktop_jobs_adopted": false,
+    "historical_conclusions_changed": false,
+    "new_audit_scoring": false,
+    "official_validation_labels_read": false,
+    "production_registry_changed": false,
+    "scientific_training_submitted": false,
+    "test_labels_read": false
+  },
+  "status": "INFRA_CPU_ACCEPTED",
+  "test_groups": [
+    {
+      "artifact": "core_regression.xml",
+      "errors": 0,
+      "failed": 0,
+      "failures": [],
+      "passed": 551,
+      "sha256": "f8a480948ad793aaed180ded67512d78ded8c1b030dc494d779e8e328693b540",
+      "skipped": 1,
+      "skips": [
+        {
+          "name": "test_symlinks_rejected",
+          "reason": "Host does not permit creating symlinks"
+        }
+      ],
+      "wall_seconds": 157.867
+    },
+    {
+      "artifact": "counterexamples_regression.xml",
+      "errors": 0,
+      "failed": 0,
+      "failures": [],
+      "passed": 28,
+      "sha256": "977048d9de40897c8101f93983d382eadc0fa6249e795c44fad047316195c3c0",
+      "skipped": 0,
+      "skips": [],
+      "wall_seconds": 2.907
+    },
+    {
+      "artifact": "data_regression.xml",
+      "errors": 0,
+      "failed": 0,
+      "failures": [],
+      "passed": 17,
+      "sha256": "6ec7dc1d46e5787a0d36f98aade317e06db08233f285b3bfd5db07ae038657bf",
+      "skipped": 0,
+      "skips": [],
+      "wall_seconds": 6.497
+    },
+    {
+      "artifact": "final_focused.xml",
+      "errors": 0,
+      "failed": 0,
+      "failures": [],
+      "passed": 149,
+      "sha256": "467f05c4d8819ec52e16e1c6d21212b66677d6b61f001ba7153a9c85937a54c7",
+      "skipped": 0,
+      "skips": [],
+      "wall_seconds": 8.587
+    },
+    {
+      "artifact": "final_regression.xml",
+      "errors": 0,
+      "failed": 1,
+      "failures": [
+        {
+          "message": "AssertionError: argparse CLIs missing main guard:\n  platforms\\ims\\pcqm_fixed_datasets\\prepare_unified_roles.py\nassert not ['platforms\\\\ims\\\\pcqm_fixed_datasets\\\\prepare_unified_roles.py']",
+          "name": "test_argparse_clis_have_a_guarded_entrypoint"
+        }
+      ],
+      "passed": 243,
+      "sha256": "7eb72103627448908b89ebe917d866589d395bdd7e6ec355e13740347796c86d",
+      "skipped": 0,
+      "skips": [],
+      "wall_seconds": 243.052
+    },
+    {
+      "artifact": "guard_doc_recheck.xml",
+      "errors": 0,
+      "failed": 0,
+      "failures": [],
+      "passed": 27,
+      "sha256": "aef1cda130d752e98748865718ed13c831ce1a8d87cb0c830938b71f1e3b2a44",
+      "skipped": 0,
+      "skips": [],
+      "wall_seconds": 14.269
+    },
+    {
+      "artifact": "hardening_regression.xml",
+      "errors": 0,
+      "failed": 0,
+      "failures": [],
+      "passed": 149,
+      "sha256": "a3306f9fac140b653517b0637b3a62b7d45c407deab4318a978d0945df449868",
+      "skipped": 0,
+      "skips": [],
+      "wall_seconds": 38.626
+    }
+  ],
+  "training_authority": "NOT_AUTHORIZED_FOR_SCIENTIFIC_TRAINING"
+}

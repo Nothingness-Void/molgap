@@ -52,6 +52,11 @@ acceptance are recorded in `_records/kaggle/pcqm_fixed_datasets_v1/` and
 `_records/kaggle/pcqm_fixed_datasets_kaggle2_v1/`. Platform adapters may point
 to these assets but must not recreate an alternative cache for comparison.
 
+Prospective shared-development/audit roles use the separately versioned
+[Unified V2 contract](../docs/operations/PCQM_UNIFIED_ROLES_V2.md). Actual data
+acceptance and private mirror status are independent of CPU fixture success;
+old fixed identities remain unchanged.
+
 ## Resource Separation
 
 Remote workloads use two independently resumable stages:

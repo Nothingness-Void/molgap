@@ -91,5 +91,6 @@ and budget. At least two finalist seeds are reserved in a later approved plan,
 not launched here. Full-minus-holdout and final official/Audit evaluation remain
 Desktop-owned. Modern2D implementation gates from the user's second-stage
 specification remain inactive until their required actual acceptance exists.
+Preparing1M/Full identities does not raise the Server500K training ceiling.
 
 **NOT_AUTHORIZED_FOR_SCIENTIFIC_TRAINING**.

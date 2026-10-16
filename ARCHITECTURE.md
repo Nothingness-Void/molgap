@@ -25,6 +25,7 @@ and job status belong in `CURRENT_STATE.md`; Track A/B/C ownership belongs in
 | Platform submission or retrieval | The selected platform adapter and workload skill | [platforms/README.md](platforms/README.md) |
 | Scientific evidence or RML closure | Family acceptance and `research_memory/` | [experiment evidence contract](experiments/README.md#evidence-contract) |
 | Draft cross-scale review / read-only curves | `cross_scale_plan.py`, `cross_scale_inputs.py`, `cross_scale_analysis.py`, `cross_scale_checkpoint.py`, `cross_scale_backtest.py`, `model_fidelity.py` | [CPU-only comparison contract](docs/operations/CROSS_SCALE_EVAL_INFRA_V1.md); no trainer, publisher or release |
+| Prospective indexed PCQM roles | `pcqm_unified_roles.py`, existing fixed datasets and packed-graph owner | [Unified V2 contract](docs/operations/PCQM_UNIFIED_ROLES_V2.md); CPU preparation/acceptance, not a training-loader ABI |
 | Public inference or registry | `inference.py`, `__init__.py`, and `constants.py` | [production/README.md](production/README.md) |
 | Documentation pointers or entry size | `documentation_check.py` | [verification commands](docs/operations/INFRASTRUCTURE_VERIFICATION.md) |
 | Standard substrate slots / addon parameters | `model_substrate.py` and existing Spec/execution registries | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md) |

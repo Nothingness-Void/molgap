@@ -1,0 +1,418 @@
+{
+  "probes": {
+    "F1_missing_mae_lr_conflict": {
+      "aligned": [
+        {
+          "comparison_class": "MATCHED_PREFIX",
+          "left": 0.3,
+          "left_minus_right_eV": -0.10000000000000003,
+          "left_observation": {
+            "checkpoint_identity": "3d2f0a2b152dee4bfa14db9f022f62a494e243c06a769a57f9cf8068eef8a96f",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 1,
+            "sample_presentations": 128,
+            "unit": "eV",
+            "value": 0.3,
+            "weights": "live"
+          },
+          "optimizer_step": 1,
+          "reasons": [],
+          "right": 0.4,
+          "right_observation": {
+            "checkpoint_identity": "3d2f0a2b152dee4bfa14db9f022f62a494e243c06a769a57f9cf8068eef8a96f",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 1,
+            "sample_presentations": 128,
+            "unit": "eV",
+            "value": 0.4,
+            "weights": "live"
+          }
+        },
+        {
+          "comparison_class": "CONTEXT_ONLY",
+          "left": 0.1,
+          "left_minus_right_eV": null,
+          "left_observation": {
+            "checkpoint_identity": "318ac0ae4f83e9f457597dd577e1886da5f48845b688401be446abfcd9cb6765",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 3,
+            "sample_presentations": 384,
+            "unit": "eV",
+            "value": 0.1,
+            "weights": "live"
+          },
+          "optimizer_step": 3,
+          "reasons": [
+            "MISMATCH:actual_lr_at_2[pair@2]"
+          ],
+          "right": 0.09,
+          "right_observation": {
+            "checkpoint_identity": "318ac0ae4f83e9f457597dd577e1886da5f48845b688401be446abfcd9cb6765",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 3,
+            "sample_presentations": 384,
+            "unit": "eV",
+            "value": 0.09,
+            "weights": "live"
+          }
+        }
+      ],
+      "automatic_training_action": false,
+      "axis": "optimizer_step",
+      "comparison_class": "CONTEXT_ONLY",
+      "comparison_type": "SAME_SCALE_MODEL",
+      "extrapolated": false,
+      "history_issues": [
+        {
+          "coordinate": 2,
+          "reason": "MISMATCH:actual_lr_at_2",
+          "side": "pair"
+        }
+      ],
+      "reasons": [
+        "MISMATCH:actual_lr_at_2",
+        "MISMATCH:actual_lr_at_2[pair@2]"
+      ],
+      "status": "NOT_STRICTLY_COMPARABLE",
+      "strictness": "CONTEXT_ONLY"
+    },
+    "F2_actual_exposure_conflict": {
+      "aligned": [
+        {
+          "comparison_class": "CONTEXT_ONLY",
+          "left": 0.3,
+          "left_minus_right_eV": null,
+          "left_observation": {
+            "checkpoint_identity": "3d2f0a2b152dee4bfa14db9f022f62a494e243c06a769a57f9cf8068eef8a96f",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 1,
+            "sample_presentations": 128,
+            "unit": "eV",
+            "value": 0.3,
+            "weights": "live"
+          },
+          "optimizer_step": 1,
+          "reasons": [
+            "MISMATCH:observed_exposure_vs_full_batches[right@1]",
+            "MISMATCH:sample_presentations_at_1[pair@1]"
+          ],
+          "right": 0.4,
+          "right_observation": {
+            "checkpoint_identity": "3d2f0a2b152dee4bfa14db9f022f62a494e243c06a769a57f9cf8068eef8a96f",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 1,
+            "sample_presentations": 256,
+            "unit": "eV",
+            "value": 0.4,
+            "weights": "live"
+          }
+        },
+        {
+          "comparison_class": "CONTEXT_ONLY",
+          "left": 0.2,
+          "left_minus_right_eV": null,
+          "left_observation": {
+            "checkpoint_identity": "1246f895ff5deaafc1b2b5b90fa9f902662a35042da3e5962fa8e43f738b3818",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 2,
+            "sample_presentations": 256,
+            "unit": "eV",
+            "value": 0.2,
+            "weights": "live"
+          },
+          "optimizer_step": 2,
+          "reasons": [
+            "MISMATCH:observed_exposure_vs_full_batches[right@1]",
+            "MISMATCH:observed_exposure_vs_full_batches[right@2]",
+            "MISMATCH:sample_presentations_at_1[pair@1]",
+            "MISMATCH:sample_presentations_at_2[pair@2]"
+          ],
+          "right": 0.25,
+          "right_observation": {
+            "checkpoint_identity": "1246f895ff5deaafc1b2b5b90fa9f902662a35042da3e5962fa8e43f738b3818",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 2,
+            "sample_presentations": 384,
+            "unit": "eV",
+            "value": 0.25,
+            "weights": "live"
+          }
+        },
+        {
+          "comparison_class": "CONTEXT_ONLY",
+          "left": 0.1,
+          "left_minus_right_eV": null,
+          "left_observation": {
+            "checkpoint_identity": "318ac0ae4f83e9f457597dd577e1886da5f48845b688401be446abfcd9cb6765",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 3,
+            "sample_presentations": 384,
+            "unit": "eV",
+            "value": 0.1,
+            "weights": "live"
+          },
+          "optimizer_step": 3,
+          "reasons": [
+            "MISMATCH:observed_exposure_vs_full_batches[right@1]",
+            "MISMATCH:observed_exposure_vs_full_batches[right@2]",
+            "MISMATCH:observed_exposure_vs_full_batches[right@3]",
+            "MISMATCH:sample_presentations_at_1[pair@1]",
+            "MISMATCH:sample_presentations_at_2[pair@2]",
+            "MISMATCH:sample_presentations_at_3[pair@3]"
+          ],
+          "right": 0.09,
+          "right_observation": {
+            "checkpoint_identity": "318ac0ae4f83e9f457597dd577e1886da5f48845b688401be446abfcd9cb6765",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 3,
+            "sample_presentations": 512,
+            "unit": "eV",
+            "value": 0.09,
+            "weights": "live"
+          }
+        }
+      ],
+      "automatic_training_action": false,
+      "axis": "optimizer_step",
+      "comparison_class": "CONTEXT_ONLY",
+      "comparison_type": "SAME_SCALE_MODEL",
+      "extrapolated": false,
+      "history_issues": [
+        {
+          "coordinate": 1,
+          "reason": "MISMATCH:observed_exposure_vs_full_batches",
+          "side": "right"
+        },
+        {
+          "coordinate": 2,
+          "reason": "MISMATCH:observed_exposure_vs_full_batches",
+          "side": "right"
+        },
+        {
+          "coordinate": 3,
+          "reason": "MISMATCH:observed_exposure_vs_full_batches",
+          "side": "right"
+        },
+        {
+          "coordinate": 1,
+          "reason": "MISMATCH:sample_presentations_at_1",
+          "side": "pair"
+        },
+        {
+          "coordinate": 2,
+          "reason": "MISMATCH:sample_presentations_at_2",
+          "side": "pair"
+        },
+        {
+          "coordinate": 3,
+          "reason": "MISMATCH:sample_presentations_at_3",
+          "side": "pair"
+        }
+      ],
+      "reasons": [
+        "MISMATCH:observed_exposure_vs_full_batches",
+        "MISMATCH:observed_exposure_vs_full_batches[right@1]",
+        "MISMATCH:observed_exposure_vs_full_batches[right@2]",
+        "MISMATCH:observed_exposure_vs_full_batches[right@3]",
+        "MISMATCH:sample_presentations_at_1",
+        "MISMATCH:sample_presentations_at_1[pair@1]",
+        "MISMATCH:sample_presentations_at_2",
+        "MISMATCH:sample_presentations_at_2[pair@2]",
+        "MISMATCH:sample_presentations_at_3",
+        "MISMATCH:sample_presentations_at_3[pair@3]"
+      ],
+      "status": "NOT_STRICTLY_COMPARABLE",
+      "strictness": "CONTEXT_ONLY"
+    },
+    "F3_bare_true": {
+      "aligned": [
+        {
+          "comparison_class": "CONTEXT_ONLY",
+          "left": 0.3,
+          "left_minus_right_eV": null,
+          "left_observation": {
+            "checkpoint_identity": "3d2f0a2b152dee4bfa14db9f022f62a494e243c06a769a57f9cf8068eef8a96f",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 1,
+            "sample_presentations": 128,
+            "unit": "eV",
+            "value": 0.3,
+            "weights": "live"
+          },
+          "optimizer_step": 1,
+          "reasons": [
+            "MISSING:bound_cohort_proof"
+          ],
+          "right": 0.4,
+          "right_observation": {
+            "checkpoint_identity": "3d2f0a2b152dee4bfa14db9f022f62a494e243c06a769a57f9cf8068eef8a96f",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 1,
+            "sample_presentations": 128,
+            "unit": "eV",
+            "value": 0.4,
+            "weights": "live"
+          }
+        },
+        {
+          "comparison_class": "CONTEXT_ONLY",
+          "left": 0.2,
+          "left_minus_right_eV": null,
+          "left_observation": {
+            "checkpoint_identity": "1246f895ff5deaafc1b2b5b90fa9f902662a35042da3e5962fa8e43f738b3818",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 2,
+            "sample_presentations": 256,
+            "unit": "eV",
+            "value": 0.2,
+            "weights": "live"
+          },
+          "optimizer_step": 2,
+          "reasons": [
+            "MISSING:bound_cohort_proof"
+          ],
+          "right": 0.25,
+          "right_observation": {
+            "checkpoint_identity": "1246f895ff5deaafc1b2b5b90fa9f902662a35042da3e5962fa8e43f738b3818",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 2,
+            "sample_presentations": 256,
+            "unit": "eV",
+            "value": 0.25,
+            "weights": "live"
+          }
+        },
+        {
+          "comparison_class": "CONTEXT_ONLY",
+          "left": 0.1,
+          "left_minus_right_eV": null,
+          "left_observation": {
+            "checkpoint_identity": "318ac0ae4f83e9f457597dd577e1886da5f48845b688401be446abfcd9cb6765",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 3,
+            "sample_presentations": 384,
+            "unit": "eV",
+            "value": 0.1,
+            "weights": "live"
+          },
+          "optimizer_step": 3,
+          "reasons": [
+            "MISSING:bound_cohort_proof"
+          ],
+          "right": 0.09,
+          "right_observation": {
+            "checkpoint_identity": "318ac0ae4f83e9f457597dd577e1886da5f48845b688401be446abfcd9cb6765",
+            "complete_passes": 0,
+            "evaluation_role": "internal_development",
+            "learning_rate": 0.001,
+            "metric": "live_dev_metric",
+            "metric_kind": "development",
+            "optimizer_step": 3,
+            "sample_presentations": 384,
+            "unit": "eV",
+            "value": 0.09,
+            "weights": "live"
+          }
+        }
+      ],
+      "automatic_training_action": false,
+      "axis": "optimizer_step",
+      "comparison_class": "CONTEXT_ONLY",
+      "comparison_type": "MATCHED_STEP_SCALE",
+      "extrapolated": false,
+      "history_issues": [],
+      "reasons": [
+        "MISSING:bound_cohort_proof"
+      ],
+      "status": "NOT_STRICTLY_COMPARABLE",
+      "strictness": "CONTEXT_ONLY"
+    },
+    "F3_truthy_flag": {
+      "reason": "Legacy cohort flag must be an exact bool; use a bound cohort proof",
+      "rejected": "TypeError"
+    },
+    "F4_naked_complete": {
+      "automatic_training_action": false,
+      "budget_decision": "MEASURED_WITHIN_CEILING",
+      "execution_status": "COMPLETE",
+      "implementation_fidelity": "MODEL_FIDELITY_ACCEPTED",
+      "observed_progress_only": true,
+      "promotion": "NOT_AUTHORIZED",
+      "replay": "NOT_EVALUATED",
+      "role_usage": "ROLE_VERIFIED",
+      "runtime_mechanical": "MECHANICALLY_VERIFIED",
+      "scale_transfer": "NOT_EVALUATED",
+      "scientific_status": "INCONCLUSIVE",
+      "terminal_acceptance": "MISSING",
+      "veto_500k": false,
+      "warnings": [
+        "MISSING_BOUND_TERMINAL_OUTPUTS; supplied effects are unverified"
+      ]
+    },
+    "F4_running_string": {
+      "reason": "terminal must be an exact bool, not a status string",
+      "rejected": "TypeError"
+    }
+  },
+  "scope": "CPU_SYNTHETIC_ONLY"
+}

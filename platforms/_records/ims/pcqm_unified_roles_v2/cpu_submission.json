@@ -1,0 +1,21 @@
+{
+  "cpu_count": 4,
+  "format": "molgap-unified-data-cpu-launch-v1",
+  "gpu_count": 0,
+  "job_id": "1730791.ccpbs1",
+  "output": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2",
+  "platform": "IMS",
+  "prior_rejected_attempt": {
+    "job_id": null,
+    "outcome": "INFRASTRUCTURE_ONLY",
+    "reason": "scheduler rejected CRLF PBS",
+    "source_commit": "c3f40e3b34ffcd3fdd89bb066a0812476a56a686"
+  },
+  "rule_sha256": "de1da9af140788dc16234d412512ea0e26f0f98a3945023658255977261dafff",
+  "source_archive_sha256": "0370c9764b95b3dd09b0aaca152390861ea5cf8d7f4fb326d94ce6064b5b31b8",
+  "source_commit": "4200e1688c43083b311dfbff6602218c78427279",
+  "stage": "/lustre/home/users/sm2/chou/molgap-pcqm-unified-v2",
+  "status": "SUBMITTED_NOT_ACCEPTED",
+  "training_submitted": false,
+  "walltime_ceiling_hours": 2
+}

@@ -1,0 +1,33 @@
+{
+  "base_acceptance": {
+    "path": "acceptance.json",
+    "sha256": "621fc631f73ce4041367dcb346a4005882fa495a6067991349d5ea5b0c1d9b71"
+  },
+  "data_status": "ROLE_BLOCKED",
+  "format": "molgap-cross-scale-hardening-closure-v1",
+  "historical_conclusions_rewritten": false,
+  "implementation_head": "a7ce3db1f80a1a0fb89fe86b537e0a100872a010",
+  "modern2d_started": false,
+  "native_or_scientific_acceptance": false,
+  "new_remote_job_after_data_failure": false,
+  "preserved_user_test_sha256": "e623abd9b0a410d6c49ccf1d04e2e1ba5bb23237db4dea2a2c8c874f4b9465f1",
+  "source_inventory_recheck": {
+    "failed": 0,
+    "passed": 119,
+    "scope": "registration, static dependencies, workflow, actual synthetic graph lifecycle, source packaging",
+    "skip_reason": "Host does not permit creating symlinks",
+    "skipped": 1,
+    "wall_seconds": 101.308,
+    "xml_sha256": "37874ac0f37babba8ed0a1aabc5ecb963085144e5c747cbfbbc20b69de1c0d41"
+  },
+  "source_sha256": {
+    "src/molgap/cross_scale_analysis.py": "56f7d5518639d8674f7eb2881724c063bc0e832c76d64660d6293fbfa822f49d",
+    "src/molgap/cross_scale_backtest.py": "2602e54af2047b6bd560a7a6a6a5d63eca2fadec4130e4b8e10c9ccb2e477c4d",
+    "src/molgap/cross_scale_inputs.py": "aac433759d064f61b991ec3cdebd10e855cb73d4b8c257c03b04e648844ddfb7",
+    "src/molgap/experiment_source_inventory.py": "69c65b42c0f7c6921203e832756f109e57a28704c162ee6ff4fbe9303dab7b25",
+    "src/molgap/pcqm_unified_roles.py": "6bf78c0cbd903f63137017ccb10f247030f6f06001e3778c9d00d6ada556bce9"
+  },
+  "status": "INFRA_CPU_ACCEPTED",
+  "training_authority": "NOT_AUTHORIZED_FOR_SCIENTIFIC_TRAINING",
+  "whole_project_green_claim": false
+}

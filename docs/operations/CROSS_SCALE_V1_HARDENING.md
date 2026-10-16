@@ -63,8 +63,10 @@ Two seeds are exploratory; row bootstrap is not training-seed variance.
 The graph lifecycle fixture generated declarations in the compatibility shim
 without importing `MappingProxyType`; its generated source now imports it.
 The GPTrans legacy package inherited the shared-session inventory, including
-unselected K1 trainer/addons. Inventory selection now removes those session
-roots for non-session adapters, then adds only declared family/addon roots.
+unselected K1 trainer/addons. Inventory selection removes unselected concrete
+mechanisms/trainers but preserves shared update/session/profiling primitives,
+then restores declared family/addon roots. Static dependency discovery is not
+weakened; an extra regression requires the legacy GPTrans shared dependencies.
 The original exclusion assertions are retained. The CLI command-set test now
 explicitly includes the already-existing local `check-workflow`; its forbidden
 network/dynamic dispatch assertions remain unchanged.

@@ -1,0 +1,47 @@
+{
+  "automatic_training_action": false,
+  "early_stop_status": "NOT_RELEASED",
+  "format": "molgap-cross-scale-rml-backtest-v1",
+  "full_output_sha256": "3b43d96d848c8ae8b9433670d8c2429b8b3e6008e584c98762b79caba34b8c6a",
+  "legacy_scale_description": {
+    "calibration_status": "PENDING",
+    "direction_preserved": false,
+    "early_stop_rule_released": false,
+    "eligible_pairs": [
+      "TC-gptrans-g1-group-decay-recovery-100k-s42",
+      "TC-gptrans-g1-decay-clock-wd001-100k-s42",
+      "TC-gptrans-g1-ema999-100k-s42",
+      "TC-gptrans-g1-local-transfer-equal-updates-500k-s42",
+      "TC-gptrans-g1-local-bond-return-100k-s42",
+      "TC-gptrans-g1-local-connected-pair-100k-s42",
+      "TC-gptrans-g1-local-control-100k-s42",
+      "TC-gptrans-g1-local-triplet-aggregate-100k-s42",
+      "TC-gptrans-g1-local-triplet-attention-100k-s42",
+      "TC-gptrans-g1-local-triplet-bond-route-100k-s42",
+      "TC-gptrans-g1-local-triplet-drop-100k-s42",
+      "TC-gptrans-g1-local-triplet-product-recovery-100k-s42",
+      "TC-gptrans-g1-bond-local-100k-s42",
+      "TC-gptrans-g1-bond-mean-readout-100k-s42",
+      "TC-gptrans-g1-ffn2-100k-s42",
+      "TC-gptrans-g1-node-mean-readout-100k-s42",
+      "TC-gptrans-g1-node352-100k-s42",
+      "TC-gptrans-g1-pair-depth-scale-100k-s42",
+      "TC-gptrans-g1-pair-transition-100k-s42",
+      "TC-gptrans-g1-path-endpoints-100k-s42",
+      "TC-gptrans-g1-path-mean-ema999-combination-100k-s42",
+      "TC-gptrans-g1-path-mean-100k-s42",
+      "TC-gptrans-author-degree-scale-100k-s42",
+      "TC-gptrans-author-path-bond-mean-100k-s42"
+    ],
+    "reason": "direction_not_preserved",
+    "required_pairs": 3
+  },
+  "policy_count": 22,
+  "replay_policy_activated": false,
+  "role_history": {
+    "events": 481,
+    "new_role_access": false
+  },
+  "source_digest": "303f60db0b37459aa2eda96440892dfd9c522ea17ddb598e0c9ddd5a3ab179d4",
+  "veto_500k": false
+}

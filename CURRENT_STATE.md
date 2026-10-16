@@ -87,6 +87,10 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 
 ## Live boundaries and next actions
 
+Cross-scale hardening is CPU-accepted; actual Unified V2 preparation is
+ROLE_BLOCKED by frozen molecular canonicalization. No accepted V2 master/mirror
+or Modern2D stage-two implementation exists. See the [acceptance](docs/operations/CROSS_SCALE_V1_HARDENING_ACCEPTANCE.md).
+
 - Preserve terminal interpretations and independent qualifications through the
   history index. The accepted 500K bridge does not establish full-scale qualification.
   Any successor training, full run, extra seed or protected-role access needs
@@ -111,10 +115,6 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 | What is active? | This file |
 | Historical state and authority map | `docs/operations/CURRENT_STATE_HISTORY_INDEX.md` |
 | What happens next? | `ROADMAP.md` |
-| How to add or run a family/addon | `docs/operations/EXPERIMENT_QUICKSTART.md` |
-| What ships? | `production/README.md` |
 | Track meanings | `TRACKS.md` |
 | Experiment directory/evidence index | `experiments/README.md` and `experiments/EVIDENCE_INDEX.md` |
-| Remote operations | `platforms/README.md` and `platforms/REMOTE_HANDOFF.md` |
-| Code ownership | `ARCHITECTURE.md` and `docs/operations/ARCHITECTURE_MODULE_INDEX.md` |
 | Artifact inventory | `models/README.md` |

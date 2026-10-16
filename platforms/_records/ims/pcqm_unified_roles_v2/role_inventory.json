@@ -1,0 +1,2404 @@
+{
+  "ambiguous_development_resolution": "conservative union of all documented fixed development roles",
+  "excluded_ranges": [
+    [
+      100000,
+      150000
+    ],
+    [
+      500000,
+      550000
+    ],
+    [
+      1000000,
+      1050000
+    ]
+  ],
+  "format": "molgap-pcqm-unified-role-inventory-v2",
+  "official_labels_opened": false,
+  "old_full_already_consumed_entire_official_train": true,
+  "pins": [
+    {
+      "path": "platforms/_records/ims/pcqm_fixed_datasets_v1/ogb-train-100k.manifest.json",
+      "sha256": "abc0c3d39a5f18d62a0a0b44912b01927f4b4f670567da44e20f53af0dc76db1"
+    },
+    {
+      "path": "platforms/_records/ims/pcqm_fixed_datasets_v1/ogb-train-1m.manifest.json",
+      "sha256": "dcfbaebd6cb4107a267bd369daacc97d050e2732b2edfaa191ae3a67f7faa840"
+    },
+    {
+      "path": "platforms/_records/ims/pcqm_fixed_datasets_v1/ogb-train-500k-scnet-v1.manifest.json",
+      "sha256": "b476f23d0e22f4b8b64f4c4384d8ecdd92765c9898dedeaf3690a7db651683c9"
+    },
+    {
+      "path": "platforms/_records/ims/pcqm_fixed_datasets_v1/ogb-train-full.manifest.json",
+      "sha256": "30fb002323dce1b080a3c9d136d4caef0fe418cb092322c7cefdbf6b3429c724"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-v2-internal-train-labels_read.json",
+      "sha256": "d61854b25330f7387b3bad2a11154707fd3ada6689d059236a83c2a8baed428c"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-v2-internal-train-metric_computed.json",
+      "sha256": "7f3b08f4ec352fac6b7f87519eee32cfb7e0c9e740ec12085eb82efd5dd607df"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-v2-internal-train-training_membership.json",
+      "sha256": "42374bb2a111a6319d98240904964fe2ca4575878942f81c7ca875e5450cdecc"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-v2-internal-train-labels_read.json",
+      "sha256": "e933d420e86f6c25e2e60502d5fd952fce25af022891089a3ef2584c20ab2dc3"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-v2-internal-train-metric_computed.json",
+      "sha256": "9d7b95894e4472d7c22a1128326827918dd6fceea9243afc5da51040a83fceb0"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-v2-internal-train-training_membership.json",
+      "sha256": "53998139193f65773eff55c0ed2a395d450376d8e0a173d3b369dbb1ef1e0103"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/timing/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-labels_read.json",
+      "sha256": "99d0be5eb15c2c6a1e370950cea875912a1c7e0f032c39bc65826196a9bb48dc"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/timing/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-metric_computed.json",
+      "sha256": "fcfe940654d3d26ffb8f780653663ee3ea48d67466b814368afb512f71c64ad5"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/timing/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-v3-internal-train-training_membership.json",
+      "sha256": "7e0eafe67a6f75409ec2970c2dbfc43107dcd04a48d29be5e15169cf47501f00"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/timing/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-v3-internal-train-labels_read.json",
+      "sha256": "8244539898e8a97c8088e57acf85821a34c5072d06d3ad8616c995bb8ab9df44"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/timing/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-v3-internal-train-metric_computed.json",
+      "sha256": "a6b2382b438c126700dc78cad64ba2d40eda7da4d2545dccf17fcbb1711416d2"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/timing/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-v3-internal-train-training_membership.json",
+      "sha256": "3ef2c4300565e4a2986fc676b13b6c913a521d3978897e31290e0a3dcb3d1e79"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-labels_read.json",
+      "sha256": "6e32a8ce8e097927f025e39f30aa1a4bbd6672697b2e82ec31857e2a6accc478"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-metric_computed.json",
+      "sha256": "2500261e36eb45286599944ec360313595a727f19cdc3a3ac19e2a88285f4875"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-prediction_input.json",
+      "sha256": "27713eda5c928548258322d79ed6d9d3a3914b2cb284d76da87f84c0e28a42e0"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-internal_development-selection_used.json",
+      "sha256": "419d13d9880f38c61548d23c1fa9b0a96c38d600507946d55947b5590585509e"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-internal_train-labels_read.json",
+      "sha256": "cd26498f948965d493c87ff108ad455d628b55d1bc16e0de6a6cb5e7353f8571"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-internal_train-metric_computed.json",
+      "sha256": "db034c240949f1882a65d13e5eff57afcd00ace7cb65f228555897b4d165f7b4"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-optimized-100k-s42-internal_train-training_membership.json",
+      "sha256": "b50bec1f351e2ca0e5794e6334d93e219897e4e6beaaf29394f3fb911fe6c920"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-internal_development-labels_read.json",
+      "sha256": "381057cee40d2032b34bf49d86c7dfcc5f6ab546acbd7776eada9348ee522953"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-internal_development-metric_computed.json",
+      "sha256": "06b4db7843f7ec90825fd32accc81858c30e61d0c01a0d5c2757d9680ad07833"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-internal_development-prediction_input.json",
+      "sha256": "37362761d43aa1c9db5e8fc9fa680c63dcce357d97eaaca526d4054fd3970a82"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-internal_development-selection_used.json",
+      "sha256": "4d641e679759d77a05ce12dc9d8be4b169f3eacd803e3271e1e2734e198fb270"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-internal_train-labels_read.json",
+      "sha256": "5e1d5b3ea55a782731085a5da7e61c2d5c6ca5f5201bfe80c1d5db2ec63a95d3"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-internal_train-metric_computed.json",
+      "sha256": "f2dc66579b0b1ba7f8e62694517d30cbd21976e81d710cdcc0d04733ad398fc5"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-gptrans-infrastructure-original-100k-s42-internal_train-training_membership.json",
+      "sha256": "ecb4677ff9ae33afca3c33a5b1027a944494ba6c6b60992a77ceffe451af7fb3"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-labels_read.json",
+      "sha256": "d090a3dfe25de67e942250682fb7769a62601bf43b29456a725375b79a673344"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-metric_computed.json",
+      "sha256": "6b2c56625e8f4ac9bd2756d0a94bb3632452a99597e498087b4844871eda46d0"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-prediction_input.json",
+      "sha256": "a75a33f85783af752ae0d2464045c4fef5975ff0fb04bf0c47c67a220538b04e"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_development-selection_used.json",
+      "sha256": "ba9ede479d5876f7b6d64ac93687a34ad603915e0380fd2540466b7e3f4ed171"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_train-labels_read.json",
+      "sha256": "4a5ab0c7d409b2e420a62364e157f008ac9d83156fbfbbb1da72cc348dee6af9"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_train-metric_computed.json",
+      "sha256": "0f997fa2f5721144e9ea42ff4a3a39c3af9435338ba1cbef921b1da3b8d4224a"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-v2-internal_train-training_membership.json",
+      "sha256": "bbd4e8db75be96da159a76200cbc53b97999d99abaf93dc351d5bcbfdb27b9f5"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-labels_read.json",
+      "sha256": "a724f8df7fb9416b35674c7934c6067394c014cc87f1630063df637f0f7148f8"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-metric_computed.json",
+      "sha256": "8bbc582a0f7db3c8467d7038ecae617148b9217ba5361cdd0fc919a308b312d9"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-prediction_input.json",
+      "sha256": "cfd9c028f80c83c105a3de68de54e159793dc2c6b58683139028465664dbff98"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-v2-internal_development-selection_used.json",
+      "sha256": "2f4f476990d9bad2e2335e5a567ecaa54fcdecd360faacfbe51c12b8633e08e1"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-v2-internal_train-labels_read.json",
+      "sha256": "4c00c2d229e5f0e7b782aa19d0ae719f1fb55fc6d178e03c0fd7767d97ea2c28"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-v2-internal_train-metric_computed.json",
+      "sha256": "22c2a2bc75e8b6a304179cf648e3520573c7ee70ab1e88ab56363894d8589cfa"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-v2-internal_train-training_membership.json",
+      "sha256": "07ca90ebfe2b96eed2db592bd3e9dee8e2571ccc5a572afde74dc03362de4bb8"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-internal_development-labels_read.json",
+      "sha256": "d3cc28a43d789f466afc89838bd762ea73d1fc5ffefccd84a6190d17f132ae20"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-internal_development-metric_computed.json",
+      "sha256": "155b8a2ff217a5bb38d78a2fff6b80aa8cb5a617b1015b44486c7550a50a95a6"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-internal_development-prediction_input.json",
+      "sha256": "0c300e51bcac101bf98672c4704bd6cd18b5420267e3b587c94e8c89bc10f790"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-internal_development-selection_used.json",
+      "sha256": "584e8bb9cd2b2b4b76d81af84b631353b0eb41cf8b7f1443a40ee228bc57f04c"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-internal_train-labels_read.json",
+      "sha256": "5ebc767a2b7dbf6879075ce0f58d2b3544080c689456aaa759687517e09e7d63"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-internal_train-metric_computed.json",
+      "sha256": "776860db15d58385e1abe32fc670765d57c15e267f3257ea128d412f38b92cf2"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/optimized/rml/rml_finalized/roles/role-TC-k1-infrastructure-optimized-100k-s42-internal_train-training_membership.json",
+      "sha256": "fa9594e35884140de1ba5b05ece6e87129173f43f40bf574255c2bab27fb70b0"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-internal_development-labels_read.json",
+      "sha256": "cb2297720cc4253c19bdf58feda99b1f75f4e49f173d1ddbcbda4856b874845f"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-internal_development-metric_computed.json",
+      "sha256": "91a60b6d68f92b0c3239eec1321096956e1ebc9dc9b7701f7a3544c2f43a07a5"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-internal_development-prediction_input.json",
+      "sha256": "2e4ae2b271887897fa6d15d8b94a0258a0b5bb02d39026f2045cc28148128934"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-internal_development-selection_used.json",
+      "sha256": "c8a2642488c0b4874c483ee7fba67350328f08c88a5308946f2152ce8c05176d"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-internal_train-labels_read.json",
+      "sha256": "a736d33dd97d94ff02145be1a5e82baedf434dc13ea10e004d67c5e6593f3d39"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-internal_train-metric_computed.json",
+      "sha256": "666ca2093d934151edcd4253644d4541e24bb32304de0d472eec3c4dedb834c5"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/original/rml/rml_finalized/roles/role-TC-k1-infrastructure-original-100k-s42-internal_train-training_membership.json",
+      "sha256": "f5d148fb26c7140db7a01d7dcddcaf6c3abb331d48fb0545bd837138158ca198"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/rml_finalized/roles/role-TC-gptrans-author-degree-scale-100k-s42-internal_development-labels_read.json",
+      "sha256": "ac540284066d1e469d0940317c97e0bc5feb940e290b33523fc440aaa8feeedd"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/rml_finalized/roles/role-TC-gptrans-author-degree-scale-100k-s42-internal_development-metric_computed.json",
+      "sha256": "8f0304da2dc1e796c43493595c98f8cda7d418f0b404fc0e817a0afb31a362ab"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/rml_finalized/roles/role-TC-gptrans-author-degree-scale-100k-s42-internal_development-prediction_input.json",
+      "sha256": "02723e830fe8b3fb6e2633aa7dbd8c35a16c880fff6983aa8fd84b7089316e61"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/rml_finalized/roles/role-TC-gptrans-author-degree-scale-100k-s42-internal_development-selection_used.json",
+      "sha256": "8bc7ba2c707726766f374cfd98cbaf4e80fa962ae0902a2f5774cd848a26a646"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/rml_finalized/roles/role-TC-gptrans-author-degree-scale-100k-s42-internal_train-labels_read.json",
+      "sha256": "1430f5f0725fcaeb3e7aaf06f0babafdad81419a5449b6bef779b6a761220d62"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/rml_finalized/roles/role-TC-gptrans-author-degree-scale-100k-s42-internal_train-metric_computed.json",
+      "sha256": "0581c88e534e6becc836db2d552bac806ca9c6ff202f02e209b439013e1b1cca"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/rml_finalized/roles/role-TC-gptrans-author-degree-scale-100k-s42-internal_train-training_membership.json",
+      "sha256": "09abc0c10ef9309f110175f08c866c02bbc0930306ce8c1e45e2647698536ef0"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-author-path-bond-mean-100k-s42-internal_development-labels_read.json",
+      "sha256": "dcd98a7e2b03811622df1354c67e874927accd3cb34617894424a20545680d77"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-author-path-bond-mean-100k-s42-internal_development-metric_computed.json",
+      "sha256": "9b643cce1253b08f6c3452bdee3ea2fa3f6c061c6dbfa603e6a14549e115224f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-author-path-bond-mean-100k-s42-internal_development-prediction_input.json",
+      "sha256": "cf0568393b94cf26c4f07b6028bb7f5fbc627c1fcbc57d4c9215ab7a25d9aaf1"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-author-path-bond-mean-100k-s42-internal_development-selection_used.json",
+      "sha256": "1570dbe04236038d0dc52343799135086a865aa14d27b08568860ec0f944848d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-author-path-bond-mean-100k-s42-internal_train-labels_read.json",
+      "sha256": "7344f7a8353fb5f2675b848f2e40399724dcba7db8ea5550c98df9dcb2948789"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-author-path-bond-mean-100k-s42-internal_train-metric_computed.json",
+      "sha256": "a3bd0202d73d9154c30ee9e2617fad2bf10eaa0172965b1ca4a6a9dc87b1b910"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-author-path-bond-mean-100k-s42-internal_train-training_membership.json",
+      "sha256": "1c40c702cc2d03ddeb2abb7b4fea2a65511d57d2a4c396abc8ad6ab830757a94"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/recovered_reference/roles/labels-read.json",
+      "sha256": "285f97a208234dd5c3d2e402420cdb87afc651396a2f129f6c986dc053af46dc"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/recovered_reference/roles/metric-computed.json",
+      "sha256": "e1f3b826dff797c73b763b44ad2facec0d0355a89a6bc7abf26525ce61a05365"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/recovered_reference/roles/prediction-input.json",
+      "sha256": "be93f850e9f1967e21855470ad750d8d5d726db39a7e673ce16b035846cf7a08"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/recovered_reference/roles/selection-used.json",
+      "sha256": "48e6047e3dec7014818b3fe05deab93a16fc9a195b7ed251a9c904dde95cd22f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/recovered_reference/roles/train.json",
+      "sha256": "4953df820694876d4daa424e2d95161772f7a6d0d9e8f1cbf8987ac00100c608"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bottleneck_audit/rml_plan/rml_finalized/roles/role-TC-gptrans-bottleneck-frozen-v1-original_100k-labels_read.json",
+      "sha256": "8a50084c864eeb6250324d1405bc69be6aec47a55bafa446c77031e3be4cb3d3"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bottleneck_audit/rml_plan/rml_finalized/roles/role-TC-gptrans-bottleneck-frozen-v1-original_100k-metric_computed.json",
+      "sha256": "1ec699f3c77c7287ccf7ab7b3f4c51f668bacc92c4c32016886fb64d457b7f6d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bottleneck_audit/rml_plan/rml_finalized/roles/role-TC-gptrans-bottleneck-frozen-v1-original_100k-prediction_input.json",
+      "sha256": "03618c6c09d144eac8eaa62d59a60ff338a916db24f169fbdcaea29ad50ef72f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bottleneck_audit/rml_plan/rml_finalized/roles/role-TC-gptrans-bottleneck-frozen-v1-unseen_500k-labels_read.json",
+      "sha256": "4e174cba06db9b8ce2c340d04a7e1e06b1a8147fc76465f05ef91d1a9672ce07"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bottleneck_audit/rml_plan/rml_finalized/roles/role-TC-gptrans-bottleneck-frozen-v1-unseen_500k-metric_computed.json",
+      "sha256": "743813b888d43b165aa8b9c7b7e607f231e07a36af35a3b9f15d9fa780a3b05d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bottleneck_audit/rml_plan/rml_finalized/roles/role-TC-gptrans-bottleneck-frozen-v1-unseen_500k-prediction_input.json",
+      "sha256": "ca25ee20915949f8734b812fe699f5a3102d080ed56fadeb02b61a3b2f685866"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ffn2-100k-s42-internal_development-labels_read.json",
+      "sha256": "702cee818d2a2c4794040476991a89f469c1cecaaf617438cb5c85e11ed5ef74"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ffn2-100k-s42-internal_development-metric_computed.json",
+      "sha256": "30d9b90eea0bf5c6dce423ce3a33f3ebf6880bc096bd9e194f3ff75b4b913b2f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ffn2-100k-s42-internal_development-prediction_input.json",
+      "sha256": "b483fe21fe40c928575d7438f84d8bf13631304ba32f775b6235f3f0379c0e97"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ffn2-100k-s42-internal_development-selection_used.json",
+      "sha256": "39d6f101879f8193c382ad979abe5ec8f24b8e5b893240b5d5303f8643c4a7c0"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ffn2-100k-s42-internal_train-labels_read.json",
+      "sha256": "c0fde336f22695445a2979cc871137abd4e3a5d47f1f9de96864bd780a274dbd"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ffn2-100k-s42-internal_train-metric_computed.json",
+      "sha256": "2d0f26bc799d1c234e9fdcdb2ce6ddf1d670e47b79c4f6d0249bda4d69f843d6"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ffn2-100k-s42-internal_train-training_membership.json",
+      "sha256": "7bb750e66064636ecec9ce4548951e1ae4ac99d02740bb4406d68b7c8c1064c4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node352-100k-s42-internal_development-labels_read.json",
+      "sha256": "2b32969da090b9bdd00ff0da86bc70665441bbd1a399d0d898d03efc707dece3"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node352-100k-s42-internal_development-metric_computed.json",
+      "sha256": "6f862c314e260e269e378c76667d58f82a082f32570c52d9bdddb13970a29265"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node352-100k-s42-internal_development-prediction_input.json",
+      "sha256": "b3141a673ad7ce17c86977a277c9cdc65ed5516e9f499470afebb29d3172e0c4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node352-100k-s42-internal_development-selection_used.json",
+      "sha256": "3453648c72e0ac4426b18648a1cbd802e4bd63dd8f78fdc56556de52410e1f96"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node352-100k-s42-internal_train-labels_read.json",
+      "sha256": "512a2ba18e6d3a4e6b14aba339bb3bd1f98d8b3c9fa894591e70f28c20d089a1"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node352-100k-s42-internal_train-metric_computed.json",
+      "sha256": "ab0d7d31da86c831a00d04d59a97c1177aa1988332c661c4a364d6cb2de571ec"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node352-100k-s42-internal_train-training_membership.json",
+      "sha256": "22572e4da644129218accf5cefb1dad1b9a00ca6f5a48d0629afa62caf6ed5e9"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-local-100k-s42-internal_development-labels_read.json",
+      "sha256": "0b04fd8c12bf45660b4b0e426e526371b1b296aeb5d194323858435b349b3a6d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-local-100k-s42-internal_development-metric_computed.json",
+      "sha256": "18bc01da47aefa7984edd075801e1c7dd6ffa30739c6a5b0bfd6b5c9cd867b93"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-local-100k-s42-internal_development-prediction_input.json",
+      "sha256": "49c7c506899c400a56eccac7f65abc6c04c685c2fa6c71e80152a22b93a71e6a"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-local-100k-s42-internal_development-selection_used.json",
+      "sha256": "67fe45a78015e6b715b9785a0d8c87bfad1ba5525ff3ccf825b2cc98d6c81914"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-local-100k-s42-internal_train-labels_read.json",
+      "sha256": "92ee55516507373ddb2079440de7caf5967c28fe4f8e31291a9d3b3a0462499d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-local-100k-s42-internal_train-metric_computed.json",
+      "sha256": "4de360fbe53011f49dfbe0db5c36006e65bbcb4baccd5d06647fd4a0b3c2ed8b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-local-100k-s42-internal_train-training_membership.json",
+      "sha256": "438b3d8c4881b4a824d1727f13624a2079161ecaff40ceb1687b11d306d51b27"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-scale-ema-equal-updates-500k-s42-internal_development-labels_read.json",
+      "sha256": "15499eee772592c6cd7a12becf90459493e8bdff379416ccf0fe734e6ee97c3e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-scale-ema-equal-updates-500k-s42-internal_development-metric_computed.json",
+      "sha256": "82718e396e9ed41d155d1cb83145c37d0497621d70892ee2f3a3a2833762afa2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-scale-ema-equal-updates-500k-s42-internal_development-prediction_input.json",
+      "sha256": "eada1172f714ae7b8f0ddcab0f003b4f2a373c764f9748f57679b149b8abeb33"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-scale-ema-equal-updates-500k-s42-internal_development-selection_used.json",
+      "sha256": "cf8845aef035a2f5d6efda6fd80884cfd86b84ea10413696650d2730ab9cde14"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-scale-ema-equal-updates-500k-s42-internal_train-labels_read.json",
+      "sha256": "d95ff7951788bf43e80c8a307ea195d36a0e76140ece4d3517488034f550729a"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-scale-ema-equal-updates-500k-s42-internal_train-metric_computed.json",
+      "sha256": "3aba91af950cf3d05b192aa3a3be312c5330f8070339df2076b2e5583e1de4a0"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-scale-ema-equal-updates-500k-s42-internal_train-training_membership.json",
+      "sha256": "90fbc6b743236ba520ca21a6727ecdf5857c28379ec889fe1741b2b51e9778f9"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan_v2/rml_finalized/roles/role-TC-gptrans-cycle-input-preparation-recovery-v2-internal_development_100000_150000-incidental-deserialization.json",
+      "sha256": "cf6862e061c27592b23c7cda7aff6f059c4d6a5dd24dba86313a5728f737ea2e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan_v2/rml_finalized/roles/role-TC-gptrans-cycle-input-preparation-recovery-v2-internal_development_500000_550000-incidental-deserialization.json",
+      "sha256": "de29cc8a15ea6110cd14225074ee5f397e34810ee2a32590be5a5431b446ceb7"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan_v2/rml_finalized/roles/role-TC-gptrans-cycle-input-preparation-recovery-v2-train-incidental-deserialization.json",
+      "sha256": "930073e2c60568887d27d786c3e80d67932eabdbfa002a65f9eefb1caaff85c0"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_development-labels_read.json",
+      "sha256": "7254a789fea5049dcdabea0dbb6e8107fcfd2914373d1229223c5ae05eb35e6f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_development-metric_computed.json",
+      "sha256": "7283f5461e48e5dd1f4988d3d492e6aa2721d8f1f20e33ee9d540e44cc4c08af"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_development-prediction_input.json",
+      "sha256": "83220940f152713d7e645481e5286595fa917dd012529353ff5e76b7b73d81cb"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_development-selection_used.json",
+      "sha256": "3233ffce65dfd13a7aa54bfdfa206ee024eabb1c91c7e895aaa82fa9a09d19e8"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_train-labels_read.json",
+      "sha256": "7348c252903a26b993b97ed3f782605a732d26d23eb43f562058cb4b9c49051e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_train-metric_computed.json",
+      "sha256": "86ecf1d8150120298ab6662c6c15588154c13d1adf10124f932ba0006dc65815"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-decay-clock-wd001-100k-s42-internal_train-training_membership.json",
+      "sha256": "51de642bdd7bede5a3ab6e57551d583960822d0b9332b515c4e75b1c2a8a8c06"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_ema_portability/attempt_v4/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema-portability-frozen-s42-v4-original_100k-labels_read.json",
+      "sha256": "cb54d2861ab3512083becda99064c62ce39eea4c27441804ab97b5d9c49d139b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_ema_portability/attempt_v4/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema-portability-frozen-s42-v4-original_100k-metric_computed.json",
+      "sha256": "93ff52806d3dfa46d79b8afbd30d6a850816bc912713e10cc730e5e9518f302f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_ema_portability/attempt_v4/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema-portability-frozen-s42-v4-original_100k-prediction_input.json",
+      "sha256": "a1493e7c008970645bbc55da4e34c177cc9c2f18451beb90ed1c7d0d51e2b9ca"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_ema_portability/attempt_v4/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema-portability-frozen-s42-v4-unseen_500k-labels_read.json",
+      "sha256": "2fa4a6cf8c2302832e5bb42d0be5954da87ab496624e0e7242533657f9c92f4c"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_ema_portability/attempt_v4/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema-portability-frozen-s42-v4-unseen_500k-metric_computed.json",
+      "sha256": "88a29bbfc91c76e5c74ae893d9e701e750d3c7332e63efdbbb5ed00db096066a"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_ema_portability/attempt_v4/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema-portability-frozen-s42-v4-unseen_500k-prediction_input.json",
+      "sha256": "b6b38ae34831f90a41f91d5abca078ea1ff52729925b7c58d5c92c792a3d0953"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-100k-s42-internal_development-labels_read.json",
+      "sha256": "1485f3c290b13424b4756f093a583e8b81c509a068fe2e3ca2abb7e2c190e574"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-100k-s42-internal_development-metric_computed.json",
+      "sha256": "171da6c507faa3ccc9fbb8ef9da8c15bc15383d16301fba0235623c3805cb8b7"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-100k-s42-internal_development-prediction_input.json",
+      "sha256": "3bc09c1f92c94aae38db519ebd8785961b5923b14254f569b3b3071d41558bd8"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-100k-s42-internal_development-selection_used.json",
+      "sha256": "8969a127a046bc427c40750b70358789038866c8a5bd7d082f9877fe449eed1e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-100k-s42-internal_train-labels_read.json",
+      "sha256": "b5c26da94d65085ef6fb77c5b7a90febf620aa998b7debcfb2af615b797375c9"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-100k-s42-internal_train-metric_computed.json",
+      "sha256": "23152115a74a37f8d047d45755c1afd1923dd26b25eb79ab94fc47a12d8e3227"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-100k-s42-internal_train-training_membership.json",
+      "sha256": "60c4ae3803f1a2c3ebc488add7c6c52e780b045c9088745a9aed077d2b47f0fd"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema999-100k-s42-internal_development-labels_read.json",
+      "sha256": "5f1020cbcfa9cb9ca15b43369922c2efddd19a2ca998f350168894d0794558ab"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema999-100k-s42-internal_development-metric_computed.json",
+      "sha256": "d684baecc67a05d59bb5b6537826c8be97bbea646feb6e3023d20ef879cccad8"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema999-100k-s42-internal_development-prediction_input.json",
+      "sha256": "15154a49c72fc86a45add62ecfc22ab5859abc5dfdfc04414db934d789a849a6"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema999-100k-s42-internal_development-selection_used.json",
+      "sha256": "866117af35e6ed2b0197c5c49190ee7301ef4b8666127073542643a0970eedb1"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema999-100k-s42-internal_train-labels_read.json",
+      "sha256": "305716e89fd8c238f925017409f4b21cd0756b99fdfb60faa0c7e874234c6b88"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema999-100k-s42-internal_train-metric_computed.json",
+      "sha256": "3cb979e1b57901e68a18672d54e8ba9d10740f52a3d71ece4de49b3fca498d0c"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-ema999-100k-s42-internal_train-training_membership.json",
+      "sha256": "783201654b06c3814d41c6320b3df9113e01b4d9d3f697585cfc896f42c1759d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-control-100k-s42-internal_development-labels_read.json",
+      "sha256": "3b55bd0b4311113620e9d8c960bf33cd81d838d8449c0211c35b6f381d044866"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-control-100k-s42-internal_development-metric_computed.json",
+      "sha256": "97670d9a5b97c5bd2c3d41f462240eef655184ace168417ef56d9abd0f27387e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-control-100k-s42-internal_development-prediction_input.json",
+      "sha256": "1fba89517651f296238948731ac9948a396cebc3c6b00a8d06cfa888294461ec"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-control-100k-s42-internal_development-selection_used.json",
+      "sha256": "f0428bffbad554e61c5973729d8b0a0c8d96a5aa32ca7a2036f73518f156f9e0"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-control-100k-s42-internal_train-labels_read.json",
+      "sha256": "83a8132500267ae63809009b6828786030a6a08f71cd65707c3e276bed785bc4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-control-100k-s42-internal_train-metric_computed.json",
+      "sha256": "72ba88eff0c1cb14f543cebcfc9764ced12111b950a0ad0213fed13345237da1"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-control-100k-s42-internal_train-training_membership.json",
+      "sha256": "abc0385caacd0f0fef3d8fedce2d951f7517af7bddf25fd72ecfa9703b3db39c"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-bond-return-100k-s42-internal_development-labels_read.json",
+      "sha256": "271c1082ab6e20842aae35f2b6b9978acb565c661c450ed9e94d62366144f79d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-bond-return-100k-s42-internal_development-metric_computed.json",
+      "sha256": "2761b5d842e178837ddd80a4f5a743d2effdcc770ad308cf7628f821f4b17dc5"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-bond-return-100k-s42-internal_development-prediction_input.json",
+      "sha256": "f896f391c8e09cedb8093c219c136f96b4d1f31ec931fa774b72e2013864743c"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-bond-return-100k-s42-internal_development-selection_used.json",
+      "sha256": "960727501853b4c728fa51e661f98ca1381cf3d3094f18d2db57c1b2e110dd4f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-bond-return-100k-s42-internal_train-labels_read.json",
+      "sha256": "ddf999aaca3958df37f79c9c47a3f75a0d70f45d71ad4040cdaeec4c1f033061"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-bond-return-100k-s42-internal_train-metric_computed.json",
+      "sha256": "6fbed9bdfa3a2ba0723732cc669321fac2f93e469e611333b3fdc3d87c23f0de"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-bond-return-100k-s42-internal_train-training_membership.json",
+      "sha256": "558da32c3ed2642139c3c5c5ac48afbfd065b0e16c102f3c00befce37c5c71c4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_development-labels_read.json",
+      "sha256": "8af78aec2db43c2cfb4a875d02b4ec2401a33dbe01a2bd988ffead041ac2593f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_development-metric_computed.json",
+      "sha256": "6dbe9de115ad320a7e9097581cdbed5049992e2a0a2e600ec07b11008ded87ee"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_development-prediction_input.json",
+      "sha256": "5e97aa10cc93a5efa047cc2e1f1ce87d03a767fb608e515702f27ac53140307a"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_development-selection_used.json",
+      "sha256": "fc131a0b4462e46fc4ef627b10a443ed75a2085a6dcb9e87b0cf5bc3ec9241b4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_train-labels_read.json",
+      "sha256": "9618f11161d2904f061b3c0ea0d2e469b0af88478c40226abf3204e0c5781fbf"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_train-metric_computed.json",
+      "sha256": "7d14d6a32e163714651d3f572e5a560692c7cd299a65b163287f92cb58b3a9f9"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-connected-pair-100k-s42-internal_train-training_membership.json",
+      "sha256": "4c7a3ef6d15d082000b2a1be1c33c97064b6d73fdc1828909e40bda87ef10600"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-labels_read.json",
+      "sha256": "3a2f42cf1e2b9eff7aaffd3768b332562977348ef990c45e53b0b95e9fb9fc9d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-metric_computed.json",
+      "sha256": "db92cdb73c014a6036a1a06d26f72ff9dd33d28ef359e82614eb48dc2513d171"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-prediction_input.json",
+      "sha256": "5d878e69496aa098651f3b62eccd57b679d1909677ae217d3df3578676179607"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_development-selection_used.json",
+      "sha256": "2a5a07fbbabf3cb9055c169c30bc34e231782f1f80dfb8a5e4b971d018cbac93"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_train-labels_read.json",
+      "sha256": "343ec49a4671540af18ab2777aba48324e5e1c1d64804b9eb1061dcd41a70cde"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_train-metric_computed.json",
+      "sha256": "5ada856c8a945b427874c4630476725fd4fa6b191e0d13f96a7e4faabd5c7581"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-transfer-equal-updates-500k-s42-internal_train-training_membership.json",
+      "sha256": "0fed863864ad552b065bfd504144f4f0c06f5b4993ea7f75735a0007a6cab35a"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-group-decay-recovery-100k-s42-internal_development-labels_read.json",
+      "sha256": "92382e26789f4c5194d22f5e84a90f7403c10c4f73459530fdf637932d044965"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-group-decay-recovery-100k-s42-internal_development-metric_computed.json",
+      "sha256": "b601caaa586dbbd3e9f83254e463e80e76e0f5abbaa98ff8a6a015088d9ac36e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-group-decay-recovery-100k-s42-internal_development-prediction_input.json",
+      "sha256": "1696e6eb995022d40fd28a071f84d0720259a2ccaef186e2714b7b07470182c4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-group-decay-recovery-100k-s42-internal_development-selection_used.json",
+      "sha256": "a404186ceaebc2b430e407b043b3101c33345c5158fe76f6414edb11f9fd8bec"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-group-decay-recovery-100k-s42-internal_train-labels_read.json",
+      "sha256": "279502b7f578ce342001f6095e4c6eec117c855e99a68941213d45e9b33cb3aa"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-group-decay-recovery-100k-s42-internal_train-metric_computed.json",
+      "sha256": "771e26dbabbc7a2731117f86e9fe9593341b8b2cebdda8fc26b3622c201f9c91"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-group-decay-recovery-100k-s42-internal_train-training_membership.json",
+      "sha256": "5f57ea4f6efab4911ecc6750f56acd30f8b992c7721b7887dd201e439da1769d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-depth-scale-100k-s42-internal_development-labels_read.json",
+      "sha256": "31364b611cd570279fa9e11850b56800405230f3a66fdefe6e953dfd4d3532ed"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-depth-scale-100k-s42-internal_development-metric_computed.json",
+      "sha256": "44db50efbcad846c65f34d66c72ca64106fe5f52afc6222f82fbe609ff6a6028"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-depth-scale-100k-s42-internal_development-prediction_input.json",
+      "sha256": "2606389778842c098bf03628846b8d297f52b1c3c77429c66472ee02f32a7074"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-depth-scale-100k-s42-internal_development-selection_used.json",
+      "sha256": "b185cab1dcfb0f32a07d33b4477162d1ed3dfba827c9f043a974aff4cc0dc3fe"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-depth-scale-100k-s42-internal_train-labels_read.json",
+      "sha256": "1a66564a305c12be5ca1283b84d05cd6f408ab1b6f978f4de445a2f6e03ec381"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-depth-scale-100k-s42-internal_train-metric_computed.json",
+      "sha256": "254878626d060873629b6f2b534f2cd1afbe2e4504d1691aa538a1a34f299b59"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-depth-scale-100k-s42-internal_train-training_membership.json",
+      "sha256": "6c8bcaf35bfb9369226acbd9618dd9e8b6ca87a6bdc29c706863542806472216"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-transition-100k-s42-internal_development-labels_read.json",
+      "sha256": "df5dbc53a59d4d09677a0447ce05d42fe6ee15bd74dde88198e61de4de5f661f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-transition-100k-s42-internal_development-metric_computed.json",
+      "sha256": "99de79c44f31cff599c044971273c0986c05baa0d1fd998aa88315927aa80791"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-transition-100k-s42-internal_development-prediction_input.json",
+      "sha256": "79e1914a520f9e345fe1e3fd52ea04f1f3e35ca8ff30801c3fb4d5826737478d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-transition-100k-s42-internal_development-selection_used.json",
+      "sha256": "4f72d12503cddd5768343f1bd768c0b49af8b0c04e50e435ee54eaaeaa61f007"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-transition-100k-s42-internal_train-labels_read.json",
+      "sha256": "3397fd4d1fa1a13972f0355296dbe2f7019ed6e9dc7161bee2d1681c6b85f7e3"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-transition-100k-s42-internal_train-metric_computed.json",
+      "sha256": "e6caf91db465a60b6ed53a50b021867a97e44190f203cfe43c189f5b4518f581"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-pair-transition-100k-s42-internal_train-training_membership.json",
+      "sha256": "7467c0ada85d7f4c59931f66b66991c2a23bb2d493a43bc2295fee5d18070e30"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_development-labels_read.json",
+      "sha256": "be237e5cdf48a9ec72f0f1e5b6764b25b5fcf58c66d152607752acfd8bb92ea9"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_development-metric_computed.json",
+      "sha256": "b4753754ba454824f4cdff9a2d0725a441479fbd1150d7c4da22c852af05a019"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_development-prediction_input.json",
+      "sha256": "95e703275eccc0551c4b0191d4c80c035970e02ddf1e3df935eb5e8bd4491a18"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_development-selection_used.json",
+      "sha256": "b92c39345948393dc052d246567abbfc487ece49e3962686e4c8887ef4a90666"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_train-labels_read.json",
+      "sha256": "b588fde11128172add095e90ce313164fc96bcb8937a3879f247121a38e6f470"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_train-metric_computed.json",
+      "sha256": "67aaf3862bdbfea5173549b1282774a5d0f87871c3ec935206febc4a0bd71841"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-mean-ema999-combination-100k-s42-internal_train-training_membership.json",
+      "sha256": "771c516ebab76963a8c7a81862c3e0e0d5894709062d9e1a61b6e42252de76be"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_prenorm_500k_v5/roles/development.json",
+      "sha256": "c8470ac11879ecec36b9c8ffe6cb198a0fba76e8c2ef152f80481695addb60fa"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_prenorm_500k_v5/roles/train.json",
+      "sha256": "026b8e567b98adb07f6ae7cbdce7aa81660728c70e5f2cd093a79b3a6f8880d6"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-mean-readout-100k-s42-internal_development-labels_read.json",
+      "sha256": "fc7ef4c0a5607f34712ca009eba18a989e7748ef692d8655592b61dcf65baf28"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-mean-readout-100k-s42-internal_development-metric_computed.json",
+      "sha256": "8d0213740fb0a8d4c401bd6d2aaf96df775abc22fc5a0c61b01aaca6d46b1816"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-mean-readout-100k-s42-internal_development-prediction_input.json",
+      "sha256": "9421fe0b38abbbe39484934a4beef442a49a07a637be5796c72fb902e0a2f9f8"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-mean-readout-100k-s42-internal_development-selection_used.json",
+      "sha256": "b93a070078b97950457a27ee2a136db9ead100e7f126d5a819252506756a3e5e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-mean-readout-100k-s42-internal_train-labels_read.json",
+      "sha256": "50be699bce3939117216437bb04edd057796ad41a2e853a42a6e933029627fa5"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-mean-readout-100k-s42-internal_train-metric_computed.json",
+      "sha256": "6f7c224a363f37fc1fd6bb4b1173114be38b4000c9381252c565eac06ee00411"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-bond-mean-readout-100k-s42-internal_train-training_membership.json",
+      "sha256": "bc5b1dee055c81c4a5264bcd82abb0e9ecf7dc71a2c3c3b5ff4a2393cb3199b1"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node-mean-readout-100k-s42-internal_development-labels_read.json",
+      "sha256": "726da098ed2874643f938a98331977104180950c6bb9d54df352da49a239fe28"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node-mean-readout-100k-s42-internal_development-metric_computed.json",
+      "sha256": "58c440f8f5c57c82d67c5c2d8f770daaf695b2466b8b5894af72eafb2136d134"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node-mean-readout-100k-s42-internal_development-prediction_input.json",
+      "sha256": "09d6c56765534339fdfb20f11c03e56931cd08a4b3c23c07df9324d32ec2f971"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node-mean-readout-100k-s42-internal_development-selection_used.json",
+      "sha256": "5b4ea5a0308a5cf99a23605764e0ca2b9b0d832c4baae5707b5e11804ba0c511"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node-mean-readout-100k-s42-internal_train-labels_read.json",
+      "sha256": "a14e7d5b8239af81779e2dd585d64ac2e7f8e3ba189e1adddde7a0822066e0eb"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node-mean-readout-100k-s42-internal_train-metric_computed.json",
+      "sha256": "689c4da3722472138f3dd2e9b23c4513166db56b68348a00343284bd1aadc95a"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-node-mean-readout-100k-s42-internal_train-training_membership.json",
+      "sha256": "7ca4b0233973b0b7774244e2030d029f07e747434797c6cc3d9282bf5b29133e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-group-decay-100k-s42-failure-internal_development-labels.json",
+      "sha256": "97cabf8a1ce349dd45a8537c442ab46d8f4f29b9618fe0dd04342aeb344aadca"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-group-decay-100k-s42-failure-internal_train-labels.json",
+      "sha256": "031e9b165abc6507a647a4bd85652f52e821770a07a8edf547c5ab755494d764"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-endpoints-100k-s42-internal_development-labels_read.json",
+      "sha256": "3252f2a8263940ca6145dc3bd839866adbe86452249186d5b816c6baf06209f8"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-endpoints-100k-s42-internal_development-metric_computed.json",
+      "sha256": "b23383508fcac7cdc48cc110b0eaa0dbbfd978307193c6e30fa1a569bf7ad85b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-endpoints-100k-s42-internal_development-prediction_input.json",
+      "sha256": "a5dfac8bcd1afc353033579b06eb7b5d667edbe77111f580b55f91d7ba285376"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-endpoints-100k-s42-internal_development-selection_used.json",
+      "sha256": "a06fa3a2064e9c523ba0faf3cf9932b78b9112943010ce78bf360d712bd99183"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-endpoints-100k-s42-internal_train-labels_read.json",
+      "sha256": "282706727fd18116c153d6de0c95a145d9f9006d954ee2de677e9ddc95845211"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-endpoints-100k-s42-internal_train-metric_computed.json",
+      "sha256": "2dc6fb37121fa1564b18568349949d699e3e35f51a630c0722ca554eb750d173"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-path-endpoints-100k-s42-internal_train-training_membership.json",
+      "sha256": "519750268183b0f70cd7740f6e13b728a9fe1a8df04618b7d4a58548b5c41de0"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_scale_qualification/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-scale500k-qualification-s42-labels_read.json",
+      "sha256": "b61616bc28961a3285e418694d8adfd658369998a0076c254f698d1223d9b611"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_scale_qualification/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-scale500k-qualification-s42-metric_computed.json",
+      "sha256": "c53c0e493c1e4850504ea22a919b3d10c244af3b3e5e8ae3ceb65a1780331331"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_scale_qualification/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-scale500k-qualification-s42-training_membership.json",
+      "sha256": "9e1593041fe5302d77260790da0ee17c391c489ee41f0c1fe7054e4a3cabd745"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_shortest_path_profile_v5/roles/train.json",
+      "sha256": "9c99441f88a0118aad0abfb418c8c5aaf6ca3d35a90301c05465c495df0665b5"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_source_dependence/rml_plan/rml_finalized/roles/role-TC-gptrans-source-dependence-s42-v1-original_100k-labels_read.json",
+      "sha256": "d6f552c2361edc4b9fbcc752016c4d28d5bee6d81bf1be34157633885f6c8d17"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_source_dependence/rml_plan/rml_finalized/roles/role-TC-gptrans-source-dependence-s42-v1-original_100k-metric_computed.json",
+      "sha256": "b6dfca02603d931c105491157328e5c9cbfbf95290ea6c81ee5fdac81ed73756"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_source_dependence/rml_plan/rml_finalized/roles/role-TC-gptrans-source-dependence-s42-v1-original_100k-prediction_input.json",
+      "sha256": "4e37eed40a1a4ae23ed1107204e66c0436a1147d56802899f492e69c1a2278a7"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_source_dependence/rml_plan/rml_finalized/roles/role-TC-gptrans-source-dependence-s42-v1-unseen_500k-labels_read.json",
+      "sha256": "5333f3feb6b35297decc4739a58f541501dddc25a6c0c55e21d4174f5bd68ea2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_source_dependence/rml_plan/rml_finalized/roles/role-TC-gptrans-source-dependence-s42-v1-unseen_500k-metric_computed.json",
+      "sha256": "45fd8c8ff0142e4d9aa00c914281d6e4665b5c4897905cfa633face8e1ad177c"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_source_dependence/rml_plan/rml_finalized/roles/role-TC-gptrans-source-dependence-s42-v1-unseen_500k-prediction_input.json",
+      "sha256": "f6511404fd08eb2a0e9d6cb5b5dd5e7535c9d898080310d917a1b32eb7739d02"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_step_profile_v5/roles/train.json",
+      "sha256": "2976fae8f903e48bc388cbcaf94b4e7c24ad42406e35e54fb24f5ec97556eaaf"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-aggregate-100k-s42-internal_development-labels_read.json",
+      "sha256": "fcd24be445f0840e1de38de75c4ae0a0c875657bb9c0bb2493edef587c7c7a09"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-aggregate-100k-s42-internal_development-metric_computed.json",
+      "sha256": "692b2d1519807359b7740a0d303047dada839d02b21943f57e0aa35ae57b3fcb"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-aggregate-100k-s42-internal_development-prediction_input.json",
+      "sha256": "d0082d8fa3156bf660958d68c3078f08aaad1a310c87f927a1d8d258671bdab6"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-aggregate-100k-s42-internal_development-selection_used.json",
+      "sha256": "3b41c263200338f12d0e4c0dd86a557b65d4262f8d8e0ff282bd620cd6aa1079"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-aggregate-100k-s42-internal_train-labels_read.json",
+      "sha256": "808a8320c96a1f78a37692501b6d641a26ac57498ad59191a7b1ec436cebd2da"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-aggregate-100k-s42-internal_train-metric_computed.json",
+      "sha256": "48a34979529fa4298c311b0fd394705fb59f98fcce2b7c312d76f7789c0874b4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-aggregate-100k-s42-internal_train-training_membership.json",
+      "sha256": "c1092f5ce033ad5c2fa91062faa90f42c67102ac21e49f8cb3ebe5c907a696d2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_development-labels_read.json",
+      "sha256": "4831442ca52bc348250f422d3efba6f64a49fbcb4c54f1f3bf8d7147fac21dad"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_development-metric_computed.json",
+      "sha256": "55281f6a40607ceab1635ed4308b2e73ad2e74c560785201de36f53730aaaf1d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_development-prediction_input.json",
+      "sha256": "73b22c62a19e359844cdb937b7decd1baa40dbf642a1fb62b93fae06d0f91fe2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_development-selection_used.json",
+      "sha256": "c838cd5c36f92f608224328382b46d7632d6e5149c70f87ed1126e704320786e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_train-labels_read.json",
+      "sha256": "42aa9b0e89c9fe6d2f7a9530ca58354333a20c9a46477022a034f9be559dbe89"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_train-metric_computed.json",
+      "sha256": "ecd84a50fb6912deffdb15e59b6b22ce7a4f4729403a4a9c322d85ce4ca171c2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-attention-100k-s42-internal_train-training_membership.json",
+      "sha256": "0ef5cbde54684ce5d149a600ce7cf2714cbc81c0ede2cbd2bf2ff2cbfc7c631a"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-drop-100k-s42-internal_development-labels_read.json",
+      "sha256": "73946341830ec01314c1da3387e5222f23ecef0e2bd8df5357a7d2939f4fdcc8"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-drop-100k-s42-internal_development-metric_computed.json",
+      "sha256": "071837c97f75624c0ff357cd66616bc8cd9d99e489daab3ef9e5b502ee5806c0"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-drop-100k-s42-internal_development-prediction_input.json",
+      "sha256": "6cb5d56d2c4f40a79ef12ad9cfdf2a4de0072e33116b052a507cbc755faf188b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-drop-100k-s42-internal_development-selection_used.json",
+      "sha256": "d50ca6e68f309fe6f692cd2936d49acd1bb43ded74f2d4cbb2c6b28c42a4e3e4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-drop-100k-s42-internal_train-labels_read.json",
+      "sha256": "6389698be7867fdd828b8f462a03368f6c1e2834869e69ea1e8b5583178d230a"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-drop-100k-s42-internal_train-metric_computed.json",
+      "sha256": "abb9559a22bfede137c19a852ea32d02f288f357f3d1d77de0989e5ab5d7ed61"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-drop-100k-s42-internal_train-training_membership.json",
+      "sha256": "2f57074cd657f3f1fe976580d837cad426bb12e0d500f410ce00c51148975b79"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-product-100k-s42-preflight-labels_read.json",
+      "sha256": "14d831bd8fd2da9885362f633c1510236c320c7fe6568cf9230385e7aa366a75"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-product-100k-s42-preflight-training_membership.json",
+      "sha256": "f63c5c721174c61d9692c239396a8b472666aa711aeab8a75e6a60b819f5b891"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_portability/rml_plan/rml_finalized/roles/role-TC-gptrans-triplet-portability-s42-v1-original_100k-labels_read.json",
+      "sha256": "fd42eda83a9a745a3e7cd78cfb36545fc6571281609cc022c185be3d811cd462"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_portability/rml_plan/rml_finalized/roles/role-TC-gptrans-triplet-portability-s42-v1-original_100k-metric_computed.json",
+      "sha256": "82dafd9104647bbd3ff9c06f54ebb898909ab2e368879c2868c0c631b84a8f8e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_portability/rml_plan/rml_finalized/roles/role-TC-gptrans-triplet-portability-s42-v1-original_100k-prediction_input.json",
+      "sha256": "7b41829c91a110ae5f4388ebedb6480c4e4b6fb36f1e1cde28d1740d5e9621d8"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_portability/rml_plan/rml_finalized/roles/role-TC-gptrans-triplet-portability-s42-v1-unseen_500k-labels_read.json",
+      "sha256": "5b4cad6c8eaa07f05f5457ed56ccea7b0d22e1003762cfcc50cd7ec559551053"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_portability/rml_plan/rml_finalized/roles/role-TC-gptrans-triplet-portability-s42-v1-unseen_500k-metric_computed.json",
+      "sha256": "4a767a99167e7eb25cf2b5119ea0e1b769fb6ddb5abf4aae32761df1dd612999"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_portability/rml_plan/rml_finalized/roles/role-TC-gptrans-triplet-portability-s42-v1-unseen_500k-prediction_input.json",
+      "sha256": "f29f02443da7b5609bafbd1dd721b3cb3f4655ee26ac2ba98e39a2ae46e76d59"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_development-labels_read.json",
+      "sha256": "098f44b798064bc59e0d44d5193fadfce31175ec566a29523031633c794a26a2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_development-metric_computed.json",
+      "sha256": "7a92a817ddc152324730fd029d8caaa6ced065f25bcacd709e9ebcfb763a1cfa"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_development-prediction_input.json",
+      "sha256": "df272d648f7a1acca4a74ff336ffba8647f6cf0786157547f4dba434d4b10d2e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_development-selection_used.json",
+      "sha256": "9d1db9cdce4e1e91e4514cfe36ab85b3f44dfafe2ec969acb0cea7e18df9a487"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_train-labels_read.json",
+      "sha256": "1584b379586b8396012b3c23656297cc4551d0410c751492e38c55f69eef577a"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_train-metric_computed.json",
+      "sha256": "48017e701d47780c1de906f9b307d2a1d5005a25f0bc20dc6541679e940afe3b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-bond-route-100k-s42-internal_train-training_membership.json",
+      "sha256": "23df7fe125a785f407466444e1254be887bb00ce108dd7f5a0fa9ce85ee89b6b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-product-recovery-100k-s42-internal_development-labels_read.json",
+      "sha256": "b6b3b9c95da8466a54d07c082cffaae20d751b47b3596f0b4d78cde8d052f7ef"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-product-recovery-100k-s42-internal_development-metric_computed.json",
+      "sha256": "f4d5b3c5ee50f86f2a00d2751d1e30e374729760d8fc80bd6cacac597e1be005"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-product-recovery-100k-s42-internal_development-prediction_input.json",
+      "sha256": "6bf42bb70d2775afb52e1d6e34a1fb1b5b57c3c602ba2f5dafcd136eb525b06e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-product-recovery-100k-s42-internal_development-selection_used.json",
+      "sha256": "e38052b1cb7396891b698d78d449159c8b0c3aabd5b5a2ae3937c1f239315e41"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-product-recovery-100k-s42-internal_train-labels_read.json",
+      "sha256": "06f6eb327632aaeefad4f41884622d78230be2eed1d02c7060e4353bc4f4c42e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-product-recovery-100k-s42-internal_train-metric_computed.json",
+      "sha256": "8ea7f372cff503b1d70f84149167280cb7ef6eb6225da9ad8c3f168fdb5091ae"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/rml_plan/rml_finalized/roles/role-TC-gptrans-g1-local-triplet-product-recovery-100k-s42-internal_train-training_membership.json",
+      "sha256": "bf5a2b2690b62cbd62a2157f7539b76309b597659189432e7523d03f0c24926d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_v5_audit_reference/rml_plan/rml_finalized/roles/role-TC-gptrans-v5-audit-reference-100k-internal_development-labels_read.json",
+      "sha256": "e4ffcb59e839c581826bec361cc400c0e836f8757d135dcabd049f0b31703670"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_v5_audit_reference/rml_plan/rml_finalized/roles/role-TC-gptrans-v5-audit-reference-100k-internal_development-metric_computed.json",
+      "sha256": "35bc067e47715905eba3bc14f7fdddfa93793bc984fcb9fcc33e965a307774df"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_v5_audit_reference/rml_plan/rml_finalized/roles/role-TC-gptrans-v5-audit-reference-100k-internal_development-prediction_input.json",
+      "sha256": "3810ac554a7d3f716e23c240d487818648fa03bda9dbffde9cf7d6131922cf46"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_v5_audit_reference/rml_plan/rml_finalized/roles/role-TC-gptrans-v5-audit-reference-100k-internal_development-selection_used.json",
+      "sha256": "30d4110e54fb048280fb3e471e5daceb8a4561848412decacdb2992d673c5d9f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_v5_audit_reference/rml_plan/rml_finalized/roles/role-TC-gptrans-v5-audit-reference-100k-internal_train-labels_read.json",
+      "sha256": "45e8f8f5c9c57a68eff6394562c45a4b0838b3ad9b2672d18516ae6fc27d03dc"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_v5_audit_reference/rml_plan/rml_finalized/roles/role-TC-gptrans-v5-audit-reference-100k-internal_train-metric_computed.json",
+      "sha256": "85b9b6ea2b83f56cef4bd31a08f34abecc5a3a90517a616442e29af7c20cc0fa"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_v5_audit_reference/rml_plan/rml_finalized/roles/role-TC-gptrans-v5-audit-reference-100k-internal_train-training_membership.json",
+      "sha256": "856d707ceae23ee81fc304bff0ebfed68296f1024d2462a72a3af55e423a2cac"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/rml_finalized/roles/role-TC-k1-atom-pair-local-100k-s42-labels-read.json",
+      "sha256": "ee0346df704f23d61b01692ce02130b25963098ef19de11011dc0bec497aa761"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/rml_finalized/roles/role-TC-k1-atom-pair-local-100k-s42-metric-computed.json",
+      "sha256": "b05af5427588e4060f80307e7ccaeb24456918b2dd3b6e750915e9f0f62b7438"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/rml_finalized/roles/role-TC-k1-atom-pair-local-100k-s42-prediction-input.json",
+      "sha256": "757cc5941a90734fbfa441288b8ce50f0e6288b7fa1fb255309001294dea338a"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/rml_finalized/roles/role-TC-k1-atom-pair-local-100k-s42-selection-used.json",
+      "sha256": "462754aa168ee3046958c75e7e7a9fe61fc2f71988c45b11a188d0a7cd32413e"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/rml_finalized/roles/role-TC-k1-atom-pair-local-100k-s42-training-membership.json",
+      "sha256": "7207e2998dd27e7651f8cf65f0068179899910b05d497e420dc6110a5bd47e66"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/rml_plan/rml_finalized/roles/role-TC-k1-bond-type-local-100k-s42-labels-read.json",
+      "sha256": "d21cfca27985382ba1f81ff8a09138a74780a19e4b8fdba057076ae9e308bfef"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/rml_plan/rml_finalized/roles/role-TC-k1-bond-type-local-100k-s42-metric-computed.json",
+      "sha256": "19dac44d1eeaf59cfe9db5db14589b868a3005861a2f02919dda5bab93e5a340"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/rml_plan/rml_finalized/roles/role-TC-k1-bond-type-local-100k-s42-prediction-input.json",
+      "sha256": "702a764dcc8677bf3d02a8386389df1231bfec58e7cc35b595ed12f3f697f4fd"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/rml_plan/rml_finalized/roles/role-TC-k1-bond-type-local-100k-s42-selection-used.json",
+      "sha256": "a37b3b692c128541313240e729aee554ad5e6998c062c8b6ce4f9305f352ad16"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/rml_plan/rml_finalized/roles/role-TC-k1-bond-type-local-100k-s42-training-membership.json",
+      "sha256": "e06b4172177cff7677a457c6fb5029bb4b25cbcacf95ba3e2e21dbec6ae989a6"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_typed_pair_token_100k/rml_finalized/roles/role-TC-k1-chem-typed-pair-token-100k-s42-labels-read.json",
+      "sha256": "767d555e9fdca737d1e9c87517d161705cbd0aa950319d0d3c5f556b107d3430"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_typed_pair_token_100k/rml_finalized/roles/role-TC-k1-chem-typed-pair-token-100k-s42-metric-computed.json",
+      "sha256": "2dca01b56c9f87812bf92ef651a53c0e08b3f880f4a73cc29b55a7e8f68b3b28"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_typed_pair_token_100k/rml_finalized/roles/role-TC-k1-chem-typed-pair-token-100k-s42-prediction-input.json",
+      "sha256": "9eef786fa2610f781eb89edb34988ea7100cb2fbece900440de3622b3790e483"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_typed_pair_token_100k/rml_finalized/roles/role-TC-k1-chem-typed-pair-token-100k-s42-selection-used.json",
+      "sha256": "ba7a3398f7eb13186af236ed1dd5d6396f70850600c51f7b36c0b8c1e8ce6fd1"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_typed_pair_token_100k/rml_finalized/roles/role-TC-k1-chem-typed-pair-token-100k-s42-training-membership.json",
+      "sha256": "9a50268af5f63a0bcf0e6edef570a0634dc480db1f655bd51f8ef8ccb00bb262"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/rml_finalized/roles/role-TC-k1-conjugated-oneshot-100k-s42-labels-read.json",
+      "sha256": "cf476def283055ed704c3db54148f27ff786788cbd559235a63649ede26735df"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/rml_finalized/roles/role-TC-k1-conjugated-oneshot-100k-s42-metric-computed.json",
+      "sha256": "e3f3a6b9ead580027066298d263d0dfb62607887d69858e1b2ab61e415b23b73"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/rml_finalized/roles/role-TC-k1-conjugated-oneshot-100k-s42-prediction-input.json",
+      "sha256": "d1966f1c7d2d5ff6d525cb6a71f881076ac3b48aa1bfe48b7bc7706ebbd31508"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/rml_finalized/roles/role-TC-k1-conjugated-oneshot-100k-s42-selection-used.json",
+      "sha256": "a68a4278eafcc72efea0c9faba0eaf501f0c329c504be47d863422ae89d53c37"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/rml_finalized/roles/role-TC-k1-conjugated-oneshot-100k-s42-training-membership.json",
+      "sha256": "02b35c8a2228985690219d2da85b9b152be102d76f0a7c62f232f96f4341b70d"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/rml_finalized/roles/role-TC-k1-conjugated-persistent-100k-s42-labels-read.json",
+      "sha256": "eae32a012cb436d33c4941305e52bbb4324edbeba4750a192136b7c72f23dc88"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/rml_finalized/roles/role-TC-k1-conjugated-persistent-100k-s42-metric-computed.json",
+      "sha256": "a184827fe85971d693f78587539ef631cabd6d18a2a27aa6cf7a4106f07a440b"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/rml_finalized/roles/role-TC-k1-conjugated-persistent-100k-s42-prediction-input.json",
+      "sha256": "441c210376d833f2bff249c5177449d815025d93870b4748666fd57eb1a91506"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/rml_finalized/roles/role-TC-k1-conjugated-persistent-100k-s42-selection-used.json",
+      "sha256": "d8a7bbca1e842db51e4b9cc49511b60c8ed630f37a3668e01361de6779761389"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/rml_finalized/roles/role-TC-k1-conjugated-persistent-100k-s42-training-membership.json",
+      "sha256": "c5d0ff060f806c2f23349171e004fdfad2a77d5c66146173b453cfa5ac3b63c1"
+    },
+    {
+      "path": "experiments/pcqm_k1_cross_scale_frozen/roles/full_100k_labels.json",
+      "sha256": "d23ccd38599428d22a710486d1509b28dfc966aca0cb4b1c7ccb66505691a346"
+    },
+    {
+      "path": "experiments/pcqm_k1_cross_scale_frozen/roles/full_100k_metric.json",
+      "sha256": "176578606bdb1047c2acbcb746b107b022d0216d4e4f7e53b7b20f3c6ab4f7d3"
+    },
+    {
+      "path": "experiments/pcqm_k1_cross_scale_frozen/roles/full_100k_prediction.json",
+      "sha256": "b8d1e314e5d8d85eca5cc61b2a28c3f94457d27cb7ec997ef9e02a137d0b40e6"
+    },
+    {
+      "path": "experiments/pcqm_k1_cross_scale_frozen/roles/full_500k_labels.json",
+      "sha256": "2efb72486a66956fa8d80bbb64086259317414588270c93d4aa5d711ae251f93"
+    },
+    {
+      "path": "experiments/pcqm_k1_cross_scale_frozen/roles/full_500k_metric.json",
+      "sha256": "ca9a4e4f29d33665dbfd62246af342f41d90824a7b5e2c0ca384d32762e9523b"
+    },
+    {
+      "path": "experiments/pcqm_k1_cross_scale_frozen/roles/full_500k_prediction.json",
+      "sha256": "3eca539897243dd006ebe4c11fe8ce5daf059938e057410d5cf94259e0003432"
+    },
+    {
+      "path": "experiments/pcqm_k1_cross_scale_frozen/roles/preflight_labels.json",
+      "sha256": "a537719a086b5e6b5df333043998ed45fce40fbd62698e300b217fad18d29ce4"
+    },
+    {
+      "path": "experiments/pcqm_k1_cross_scale_frozen/roles/preflight_metric.json",
+      "sha256": "b82f4d7441acc731442a61947c5968bee12f8c64b7f3507d92f3262f83673eb4"
+    },
+    {
+      "path": "experiments/pcqm_k1_cross_scale_frozen/roles/preflight_prediction.json",
+      "sha256": "6a80e237775b4965581a6aad16625d2a04e1134a9d534be6bc320351dbbbc40f"
+    },
+    {
+      "path": "experiments/pcqm_k1_explainability_audit/representation/rml_plan/rml_finalized/roles/role-TC-k1-representation-100k-500k-internal_development_100000_150000-labels_read.json",
+      "sha256": "0eb02a0e6879cd4f1b7c3771e77d51b349d1850257d5743da1be382dfab74122"
+    },
+    {
+      "path": "experiments/pcqm_k1_explainability_audit/representation/rml_plan/rml_finalized/roles/role-TC-k1-representation-100k-500k-internal_development_100000_150000-metric_computed.json",
+      "sha256": "2d6806e698490e37ef98e4bbf75ae9c64ae9165c81c7f191f7515abf8086575c"
+    },
+    {
+      "path": "experiments/pcqm_k1_explainability_audit/representation/rml_plan/rml_finalized/roles/role-TC-k1-representation-100k-500k-internal_development_100000_150000-prediction_input.json",
+      "sha256": "3ed6b6a3989c337f639a9f19e6b9ad357c54d3f74e2f183fb69dac802641dd8d"
+    },
+    {
+      "path": "experiments/pcqm_k1_explainability_audit/representation/rml_plan/rml_finalized/roles/role-TC-k1-representation-100k-500k-internal_development_500000_550000-labels_read.json",
+      "sha256": "a9f3d2550114bb7195d4934b8e3f9c57d0de2113547100a057d9c4daf671df19"
+    },
+    {
+      "path": "experiments/pcqm_k1_explainability_audit/representation/rml_plan/rml_finalized/roles/role-TC-k1-representation-100k-500k-internal_development_500000_550000-metric_computed.json",
+      "sha256": "9e7dd2786bda59bc5e3b2cf7709bb21d18f7d37ceb7000ba1d99cf85c282f789"
+    },
+    {
+      "path": "experiments/pcqm_k1_explainability_audit/representation/rml_plan/rml_finalized/roles/role-TC-k1-representation-100k-500k-internal_development_500000_550000-prediction_input.json",
+      "sha256": "295d4e8244a70af40a2ac0a7714c2f54b595889a5665b7b6b5b5f957bd4a4a5f"
+    },
+    {
+      "path": "experiments/pcqm_k1_functional_group_token_100k/rml_finalized/roles/role-TC-k1-functional-group-token-100k-s42-labels-read.json",
+      "sha256": "49f3af871776c443b92bcdcd364291d2a7f1ee22dfdfa40a172990500a18de2d"
+    },
+    {
+      "path": "experiments/pcqm_k1_functional_group_token_100k/rml_finalized/roles/role-TC-k1-functional-group-token-100k-s42-metric-computed.json",
+      "sha256": "67fca38c152e168e0e9b8d52351e2de864951579ea1ecbfe1501741b6c61f3cd"
+    },
+    {
+      "path": "experiments/pcqm_k1_functional_group_token_100k/rml_finalized/roles/role-TC-k1-functional-group-token-100k-s42-prediction-input.json",
+      "sha256": "542ab9a64d2c74e726598cadcfa875b07a3f7a8edfbf8de15d2f0689dbde3573"
+    },
+    {
+      "path": "experiments/pcqm_k1_functional_group_token_100k/rml_finalized/roles/role-TC-k1-functional-group-token-100k-s42-selection-used.json",
+      "sha256": "6eb68a813f45f312c3f78fed390c6f71953a42481a46c57b92f59369b789c965"
+    },
+    {
+      "path": "experiments/pcqm_k1_functional_group_token_100k/rml_finalized/roles/role-TC-k1-functional-group-token-100k-s42-training-membership.json",
+      "sha256": "dbc4cf992267f8d7a90c44b7622cfc42da74a6275ec45ea1923b8f7c5ebe94d9"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/rml_plan/rml_finalized/roles/role-TC-k1-corrupt-gap-100k-s42-v3-labels-read.json",
+      "sha256": "547b7c5cd9f7fa314165ddff3c38ed9350bf0a4c772cfec8b3824b0c838891ef"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/rml_plan/rml_finalized/roles/role-TC-k1-corrupt-gap-100k-s42-v3-metric-computed.json",
+      "sha256": "f74081fadfc73db874a5be0399b38b889efa8432cfd64b3214c6679028999fe3"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/rml_plan/rml_finalized/roles/role-TC-k1-corrupt-gap-100k-s42-v3-prediction-input.json",
+      "sha256": "6415bb9445112525d91278b19884cfec63258e0c241b4535bd68ffbe9bc9e726"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/rml_plan/rml_finalized/roles/role-TC-k1-corrupt-gap-100k-s42-v3-selection-used.json",
+      "sha256": "8dc58f69f9de80fd7f7ccbcd4e1106e073e7439fdeb400772bb14ad7af7d811d"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/rml_plan/rml_finalized/roles/role-TC-k1-corrupt-gap-100k-s42-v3-training-membership.json",
+      "sha256": "e318c125375e7e6681aa70fe877722a090483b810a5a7ce70fa05119743324f8"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/roles/role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-labels-read.json",
+      "sha256": "c5524d1321ddfaa05b108313f8e39e758cc69f1e54e90938a2d2ccc7fe1469f5"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/roles/role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-metric-computed.json",
+      "sha256": "770f0c3be66a12940a438b539a8857252ff0dcf9a03ee657d576793f400d374e"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/roles/role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-prediction-input.json",
+      "sha256": "f34aa1498800e486a31d3b94c7e936b420f557ae87a9c6d53df06646f547f11c"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/roles/role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-selection-used.json",
+      "sha256": "fc6791a4bba24e88f590ae09e815e7fd2b0aa1da136b6b4f03710912483557b8"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/roles/role-TC-k1-corrupt-gap-atom-aux-100k-s42-v3-training-membership.json",
+      "sha256": "088b8b8ddac41b8bff03f0cc858c592da30674e784ba293bf49d2cd6c5cce40f"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/rml_plan/rml_finalized/roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-original_100k-labels_read.json",
+      "sha256": "26b6d1c26560b828a951af49bcc69f3be0f69d27318df18d0e348a69f0f90d35"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/rml_plan/rml_finalized/roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-original_100k-metric_computed.json",
+      "sha256": "65bee431a48994b435d6b881ad6260a4bb061cfc3914b92502d3d0aecab7f576"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/rml_plan/rml_finalized/roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-original_100k-prediction_input.json",
+      "sha256": "6f9837101c369faa1556de084abd53f8ad9f9b17a581cb48d4e9ce18e04973a7"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/rml_plan/rml_finalized/roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-unseen_500k-labels_read.json",
+      "sha256": "08888d76880aa6a5a30e26471b15d6b388306291a5f52e3ba0b00d18da6dfcb3"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/rml_plan/rml_finalized/roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-unseen_500k-metric_computed.json",
+      "sha256": "0a6b250ef5ab9c248b00920dfbc8175eacf1501e65eaea4575111970a5d97220"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/rml_plan/rml_finalized/roles/role-TC-k1-joint-atom-post100k-audit-s42-v3-unseen_500k-prediction_input.json",
+      "sha256": "e1af97b7c32826067be09e8bca6f78a0ca37780f914cc9fc49fe8a6196431142"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/audit_recovery/roles/role-TC-k1-linear-attention-post100k-audit-s42-recovery-internal_development_100000_150000-labels_read.json",
+      "sha256": "c7eb74cf219834a6b84528c50cd5c94d0298d2b8606c9034df2bc89445f64454"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/audit_recovery/roles/role-TC-k1-linear-attention-post100k-audit-s42-recovery-internal_development_100000_150000-metric_computed.json",
+      "sha256": "5963a8eed30489148c61eb20f0db8a1415bd21b6be95d6537003d133a1869b82"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/audit_recovery/roles/role-TC-k1-linear-attention-post100k-audit-s42-recovery-internal_development_100000_150000-prediction_input.json",
+      "sha256": "5ac8fa6efc3e9598dd5e8c46591cca3fd06c558c2bdc5feb4f7d90cf013ed3f4"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/audit_recovery/roles/role-TC-k1-linear-attention-post100k-audit-s42-recovery-internal_development_500000_550000-labels_read.json",
+      "sha256": "8f3a4f900d4ac762da0661328f0b903be74f501b8bd2ad4db8b0e1d01a2cdec1"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/audit_recovery/roles/role-TC-k1-linear-attention-post100k-audit-s42-recovery-internal_development_500000_550000-metric_computed.json",
+      "sha256": "656701ed3418e10af8f1860e09e538f13c659cd0c91a49a586b3d279a9405b82"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/audit_recovery/roles/role-TC-k1-linear-attention-post100k-audit-s42-recovery-internal_development_500000_550000-prediction_input.json",
+      "sha256": "eb15242b9094b3470d848646b2245c16b6cb679d99dfb1f476b6cb8380c2e1bd"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/rml_plan/rml_finalized/roles/role-TC-k1-linear-attention-100k-s42-labels-read.json",
+      "sha256": "c7985c0ce6697c9f359db1d287f0a850b81fc96a105c63f23b150d7dca9e1fb4"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/rml_plan/rml_finalized/roles/role-TC-k1-linear-attention-100k-s42-metric-computed.json",
+      "sha256": "005401277ad1b68ef77b20629ed6b77533efddbb3d8ae41817286215a08e58e7"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/rml_plan/rml_finalized/roles/role-TC-k1-linear-attention-100k-s42-prediction-input.json",
+      "sha256": "c171d0fdcabc47091acd95838c86bb0561a5465dc742b4403abc65d0946567b9"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/rml_plan/rml_finalized/roles/role-TC-k1-linear-attention-100k-s42-selection-used.json",
+      "sha256": "4725e6a59c6b2e7ea640cfdeef91536fe7ca18956faff033e1af4f21602a388a"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/rml_plan/rml_finalized/roles/role-TC-k1-linear-attention-100k-s42-training-membership.json",
+      "sha256": "3b3e772a361052b8b63788d68edf2124fb80d2a85ce42ad45c0f0acb4c9115c4"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_100k/roles/development.json",
+      "sha256": "65e893ca2051c3542718b7adc60971a9245791ad740714dd3b52856b43b45551"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_100k/roles/train.json",
+      "sha256": "a9413c8648e77a021ecd5d76e4e70f87a9ff5cb7640cb5edc9ae4f22a09ad5f3"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_context_gate_100k/roles/development.json",
+      "sha256": "dd38af23f60010055ba3c0fa574955c30eb1bc561d4cff6e020acfbbf0b9e6ec"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_context_gate_100k/roles/train.json",
+      "sha256": "8cbe970c81fd64b81fb4ef3a331558db7e7c87de75d9cd6310d23b5796047d54"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_hidden_bn_100k/roles/development.json",
+      "sha256": "753c4a5a60f872de238838bca54f697a9852bc6ab172d3047a6189441a063d44"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_hidden_bn_100k/roles/train.json",
+      "sha256": "c8930d44d7088cf95e0cfbcd189d619c9424efd27d91b9efae8c49aabd870610"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_residual_gate_100k/roles/development.json",
+      "sha256": "aa9330bce2ffc782a23f44c5e646e82ae60ff9e886d243cc3ee5323ef068274c"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_residual_gate_100k/roles/train.json",
+      "sha256": "d269dcafc4baf5a866667dd4f34fb800321b154bfd00c09e5db93fe445d9bcd1"
+    },
+    {
+      "path": "experiments/pcqm_k1_multiplicative_pair_value_100k/rml_finalized/roles/role-TC-k1-multiplicative-pair-value-100k-s42-labels-read.json",
+      "sha256": "71a3bb91d0b0e0ac3e79f425a6eb30e94a94254a5fc5758341e2ec660ee62fe8"
+    },
+    {
+      "path": "experiments/pcqm_k1_multiplicative_pair_value_100k/rml_finalized/roles/role-TC-k1-multiplicative-pair-value-100k-s42-metric-computed.json",
+      "sha256": "99cbdfa28c2c69740da99a331f8f63649480e957f0707c429fee0da3a6a393bf"
+    },
+    {
+      "path": "experiments/pcqm_k1_multiplicative_pair_value_100k/rml_finalized/roles/role-TC-k1-multiplicative-pair-value-100k-s42-prediction-input.json",
+      "sha256": "09d8a51d4b5b1dc655235865a32b911dbf08327bc6a8a1113b627ef434b1cd5f"
+    },
+    {
+      "path": "experiments/pcqm_k1_multiplicative_pair_value_100k/rml_finalized/roles/role-TC-k1-multiplicative-pair-value-100k-s42-selection-used.json",
+      "sha256": "ef080b4a75eebd99a16b0f3a36feb08f964395064b37583bd7004829f25d4e87"
+    },
+    {
+      "path": "experiments/pcqm_k1_multiplicative_pair_value_100k/rml_finalized/roles/role-TC-k1-multiplicative-pair-value-100k-s42-training-membership.json",
+      "sha256": "3a51354a7f2a120abc4df208661317fe093e4279152746ea31ac954654cd078a"
+    },
+    {
+      "path": "experiments/pcqm_k1_oneshot_triplet_pair_token_100k/rml_finalized/roles/role-TC-k1-oneshot-triplet-pair-token-100k-s42-labels-read.json",
+      "sha256": "5458ebaa543f924e7af6834ce058c4fe8db3537ab1ccf2b1ec260a93e28cbcfd"
+    },
+    {
+      "path": "experiments/pcqm_k1_oneshot_triplet_pair_token_100k/rml_finalized/roles/role-TC-k1-oneshot-triplet-pair-token-100k-s42-metric-computed.json",
+      "sha256": "f40d4e3afbb1302323378e7966a9af22142dc91a3d3cba366b870bb0ec5eb4a1"
+    },
+    {
+      "path": "experiments/pcqm_k1_oneshot_triplet_pair_token_100k/rml_finalized/roles/role-TC-k1-oneshot-triplet-pair-token-100k-s42-prediction-input.json",
+      "sha256": "19c61322b8b68a4ce01522324275f9f818b80cb03ccb5c37659e6edba013c72e"
+    },
+    {
+      "path": "experiments/pcqm_k1_oneshot_triplet_pair_token_100k/rml_finalized/roles/role-TC-k1-oneshot-triplet-pair-token-100k-s42-selection-used.json",
+      "sha256": "a4cf0bc9a1553807fb17947a6ab734d35f6642681208f74fa0294a4eac0b3f4b"
+    },
+    {
+      "path": "experiments/pcqm_k1_oneshot_triplet_pair_token_100k/rml_finalized/roles/role-TC-k1-oneshot-triplet-pair-token-100k-s42-training-membership.json",
+      "sha256": "829ccd6ebf715f5a5e561317955a957da905b2e49fa7ce640416604a64b107e1"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_100k/roles/development.json",
+      "sha256": "bc37646dbb8c8a090a510a631d8f120cb98012a50abd2011e76529cce3e523fc"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_100k/roles/train.json",
+      "sha256": "6fbee0fe6e63885c619df1d8975c3d4740b6ace441d3b216483bf172eefbc842"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_500k/roles/development.json",
+      "sha256": "9078b07ba7196a22d29cb5270b4421174dd500ed7bed7efce821dfd2697e3653"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_500k/roles/train.json",
+      "sha256": "605b7188775b06090b8aacb2362236f1bbb0564656d5a967911c6d9c2f7e8668"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_batch_profile/roles/train.json",
+      "sha256": "b19a8cc203dfb379e2b8310af6fb5423970eb31d6bdfdc216acf3dc75a3a60da"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_mose_100k/roles/role-TC-k1-pair-token-mose-100k-s42-labels-read.json",
+      "sha256": "c2f77d7ed3db70f12dfc937f80a398a663160e79a58078e4a69d272aa5cf46d2"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_mose_100k/roles/role-TC-k1-pair-token-mose-100k-s42-metric-computed.json",
+      "sha256": "a2c9849edd692116bac9978246fde2ac55669d3f4f38711ebb5e42cece5cc3ea"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_mose_100k/roles/role-TC-k1-pair-token-mose-100k-s42-prediction-input.json",
+      "sha256": "2b912398cb77df9059d9eb35d8cb6f9a584267ddbd365a142b6033d8e538bda6"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_mose_100k/roles/role-TC-k1-pair-token-mose-100k-s42-selection-used.json",
+      "sha256": "4806dd1ae4e7f1db5c512286ed3e51d985a5a9c5b54261223e737f3dd43a277a"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_mose_100k/roles/role-TC-k1-pair-token-mose-100k-s42-training-membership.json",
+      "sha256": "085e3f791ed7cbc70aa486b9538b9cffdbd2f9ae0ed2c8c448a5aab3cd821aa5"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_node_return_100k/roles/labels-read.json",
+      "sha256": "fb7ff4c2449fedd00873ec18008efb3e1c9239806023ce68deb5dec1e67a2c4d"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_node_return_100k/roles/metric-computed.json",
+      "sha256": "4f4aef3ea6169d8874569a2e30d6f5be65767f7f5093d47942503a0e39c4087a"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_node_return_100k/roles/prediction-input.json",
+      "sha256": "2cc6488e3635b5d082c62fb3ac11e234430cf879926f74352eb33ec447d51c8e"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_node_return_100k/roles/selection-used.json",
+      "sha256": "91de4f70850cddc3e87fccea816f10272b6a18e1662679531f874ee07d2b37bb"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_node_return_100k/roles/training-membership.json",
+      "sha256": "3d64dbe8250702842b3f2584d7e317dda323c72e21928affe441a0a43ff63e8c"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_scale_attribution/roles/role-TC-k1-pairtoken-round2-development-labels.json",
+      "sha256": "b929a3b856d614e85d201b7d8521a05851d185be61dae74469a5836c1bdb2123"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_scale_attribution/roles/role-TC-k1-pairtoken-round2-development-metric.json",
+      "sha256": "1588eef0a67cd77a426ecf17b1bf4192a8b0b7bbf08d75f0e75f4e2ad7dc6381"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_scale_attribution/roles/role-TC-k1-pairtoken-round3-development-labels.json",
+      "sha256": "89ed7f95c7a69475ab7a743a0010c738f05f4495bd267c39f722ce2176b33a54"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_scale_attribution/roles/role-TC-k1-pairtoken-round3-development-metric.json",
+      "sha256": "1fd423b39f5549f1bcb66b40243583bcd58ecc1c23912c918642f905652b4fa6"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_scale_attribution/roles/role-TC-k1-pairtoken-round3-development-prediction.json",
+      "sha256": "a812f02931cbb62c1b8d4b922dcec31bee806ea272bdcbbdc5bcc0c547006116"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_scale_attribution/roles/role-TC-k1-reference-round1-development-labels.json",
+      "sha256": "5105721e4e417a1e96c4fd22dbafca2639a687f148d0d4692566590d0b49753f"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_scale_attribution/roles/role-TC-k1-reference-round1-development-metric.json",
+      "sha256": "a73608cc8787c91c04ec91685e16cecff6fc5d7f7089c1d198b57f9fcd88c02f"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_scale_attribution/roles/role-TC-k1-reference-round1-development-prediction.json",
+      "sha256": "7de4e20f719a9d3710fdbb5b841a503e67b2eeafa7721524a2463208643d2b12"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_scale_attribution/roles/role-TC-k1-reference-round1-select.json",
+      "sha256": "3c5b9914ffdb31c92bacb63980c96e1d37f04e849ac5620de0159915be83dac1"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_scale_attribution/roles/role-TC-k1-reference-round1-train-labels.json",
+      "sha256": "b02fe487bac02a2c07c9b214b66647f4fc88d06d5fd4ca3fb4786f6151ce3545"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_scale_attribution/roles/role-TC-k1-reference-round1-train.json",
+      "sha256": "d399a7c0ce218865a99a8ec41490ec827b7bc52bffc992c53e43e5523b1de233"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/rml_finalized/roles/role-TC-k1-degree-balance-100k-s42-labels-read.json",
+      "sha256": "09eb57b9c3f64cc69061c97ecfc720f444702eaed4e5548dab16a556f93f7cf7"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/rml_finalized/roles/role-TC-k1-degree-balance-100k-s42-metric-computed.json",
+      "sha256": "d6ba4118a8849004703bff0a1ae3fa763dccecfa9946dd9bf4d3e463005e8cca"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/rml_finalized/roles/role-TC-k1-degree-balance-100k-s42-prediction-input.json",
+      "sha256": "6a9c663052c21f5f7f1dd47e9769dc70c6ad301916df13bfa8e2569b08256063"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/rml_finalized/roles/role-TC-k1-degree-balance-100k-s42-selection-used.json",
+      "sha256": "3b6628afd9cb66463aa4d777447b9d199bc82fa2d4609eb77891561cd84399cf"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/rml_finalized/roles/role-TC-k1-degree-balance-100k-s42-training-membership.json",
+      "sha256": "6452bc7fceb36b8ebd96af4efe8d854225e2e9c8e46aade6cf9d5d64194db918"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/rml_finalized/roles/role-TC-k1-rwse-refresh-100k-s42-labels-read.json",
+      "sha256": "a8cdfb004f96b4003de3e43e268c4cea6e7bf6a41e3d7f2f3aaa75f4b946d9b6"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/rml_finalized/roles/role-TC-k1-rwse-refresh-100k-s42-metric-computed.json",
+      "sha256": "3bc3e181ff8ed168fdcdfa2acb0eff40e47e72e712a80230efb603fba11f03ea"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/rml_finalized/roles/role-TC-k1-rwse-refresh-100k-s42-prediction-input.json",
+      "sha256": "05833586b770506f91be18312969c906e56c2c48a5b5f9dccfd1ccc12afa20d9"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/rml_finalized/roles/role-TC-k1-rwse-refresh-100k-s42-selection-used.json",
+      "sha256": "96145570b48adb58009865222c8f824685790d4099fa6777b372ce882d6a7800"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/rml_finalized/roles/role-TC-k1-rwse-refresh-100k-s42-training-membership.json",
+      "sha256": "93abc2013ab1e3cb8bf666d06f0efa701a910508f7636d7ed755cf196514e51c"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/audit/rml_finalized/roles/role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-labels_read.json",
+      "sha256": "fc8e8d087e9157399c1a61bedf1ee5137b6b8bc94ddbbcc9d2fb18a1963f3a99"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/audit/rml_finalized/roles/role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-metric_computed.json",
+      "sha256": "52c51bb1771b3cc420377ea3c91939e8cbeac15dcd288a560ffd4ba2c0cdbeaf"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/audit/rml_finalized/roles/role-TC-k1-topology-portability-post100k-audit-s42-frozen-500k-prediction_input.json",
+      "sha256": "1f67bb6d0178d3355731a22e5b7c925beaa0d7d16442b6ec42523f703058b5e3"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/audit/rml_finalized/roles/role-TC-k1-topology-portability-post100k-audit-s42-original-100k-labels_read.json",
+      "sha256": "57387d078131a37a5169c8559790b9a4a5a37d9afd1720546090634753db3471"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/audit/rml_finalized/roles/role-TC-k1-topology-portability-post100k-audit-s42-original-100k-metric_computed.json",
+      "sha256": "0da89d9a6f9fe3102bb6a082c1b6d5e18581904d3daa2251c35cc564e8b6f8db"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/audit/rml_finalized/roles/role-TC-k1-topology-portability-post100k-audit-s42-original-100k-prediction_input.json",
+      "sha256": "1bfa2dd5cb33f281d4b4ff10b9c3451f66ff9abd84b472d10f8d716735369e59"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/rml_plan/rml_finalized/roles/role-TC-k1-receiver-pair-100k-s42-labels-read.json",
+      "sha256": "c4d708dde6a51e8f268191dd2de708bdb4019579bd5c586116a2e8985d399343"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/rml_plan/rml_finalized/roles/role-TC-k1-receiver-pair-100k-s42-metric-computed.json",
+      "sha256": "c97fa5fbcaeb4b45ecd22c805bb131fc90d86af0721619e13b43a0a669f411da"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/rml_plan/rml_finalized/roles/role-TC-k1-receiver-pair-100k-s42-prediction-input.json",
+      "sha256": "f66209e456db13d7b078d714efc6765e1163f5b36a318a5894b83ea33833e437"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/rml_plan/rml_finalized/roles/role-TC-k1-receiver-pair-100k-s42-selection-used.json",
+      "sha256": "65b70ef13c6fca4c40430567177fb7d5a29a44136bc0ba559f687f394d2b76d0"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/rml_plan/rml_finalized/roles/role-TC-k1-receiver-pair-100k-s42-training-membership.json",
+      "sha256": "3a337b33274169c7c6f30e282f1c1085bb7dbc6a8390bdde5e38bc1046b87b98"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/rml_plan/rml_finalized/roles/role-TC-k1-rrwp-pair-100k-s42-labels-read.json",
+      "sha256": "f04cf3718ccda448093f51d7d54adb1a141fd70d3898a76a6122761b828717eb"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/rml_plan/rml_finalized/roles/role-TC-k1-rrwp-pair-100k-s42-metric-computed.json",
+      "sha256": "17479abe0de18a52cdc6a6bbcc89d5469fd2b29e2b4bd2882fafb474b9599233"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/rml_plan/rml_finalized/roles/role-TC-k1-rrwp-pair-100k-s42-prediction-input.json",
+      "sha256": "1f712bd93c5de94d54da5a2ad9a252c94f39dbec2317dad3b631f910e6d08689"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/rml_plan/rml_finalized/roles/role-TC-k1-rrwp-pair-100k-s42-selection-used.json",
+      "sha256": "3993027a54ce95f13946c5da124e3feb490d40968fcddc63ca5122d0b364c3e9"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/rml_plan/rml_finalized/roles/role-TC-k1-rrwp-pair-100k-s42-training-membership.json",
+      "sha256": "ce5e676e4507bc4ad3f0a21a9da8a13c562e3dc2916ea0c1baf569b55937b4c5"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/rml_plan/rml_finalized/roles/role-TC-k1-triplet-aggregate-100k-s42-labels-read.json",
+      "sha256": "374c24297a72ac9b904f1e63b80a6440218829f0314a395b910cb673712184ab"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/rml_plan/rml_finalized/roles/role-TC-k1-triplet-aggregate-100k-s42-metric-computed.json",
+      "sha256": "6fb79b88d1130a5f4242f6da6e293dd08019a6ed4fa24681234aea19d1dc872f"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/rml_plan/rml_finalized/roles/role-TC-k1-triplet-aggregate-100k-s42-prediction-input.json",
+      "sha256": "75f92a56ee34c179af84dad6e813a9e3f9f33169b772dc797b9ab8cc9900afb6"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/rml_plan/rml_finalized/roles/role-TC-k1-triplet-aggregate-100k-s42-selection-used.json",
+      "sha256": "47434ff0ebbb6f00a83d81cf9719ccbf7a3760e2e10ebe35960d06d09a809f77"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/rml_plan/rml_finalized/roles/role-TC-k1-triplet-aggregate-100k-s42-training-membership.json",
+      "sha256": "821512cbe2b8d7fb7819c44badc8641dab7c750d34055fd61fe7e54c52177855"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/rml_finalized/roles/role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-labels_read.json",
+      "sha256": "9f199ec6762c9546bb33098c5485f3c562bdbe5cdd9f46da581843f74cfb5fee"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/rml_finalized/roles/role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-metric_computed.json",
+      "sha256": "855f98606173fbfecdfa856fe5a4e9c41e2d5b3392161e0ee319522b018e7dc7"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/rml_finalized/roles/role-TC-k1-relation-resolution-post100k-audit-s42-original_100k-prediction_input.json",
+      "sha256": "6391514e04a174d5cfb9532d97549d2049110a97007a61891f7d2fe64b1d07ba"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/rml_finalized/roles/role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-labels_read.json",
+      "sha256": "bce39bfb051b6f12f62de4f84c9f7806deb02b61e76a278f4e8ebbb560aad73e"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/rml_finalized/roles/role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-metric_computed.json",
+      "sha256": "c50e90ebbbd0d33703938a54134dd9de6d3ceb503886a865a1415270cc268e1c"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/rml_finalized/roles/role-TC-k1-relation-resolution-post100k-audit-s42-unseen_500k-prediction_input.json",
+      "sha256": "fa6750c17817477591e6dc561704370fcea43647530d861488465271946292e0"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/rml_finalized/roles/role-TC-k1-relation-frozen-intervention-s42-original_100k-labels_read.json",
+      "sha256": "7614d0ebc533c39b447a5aa7f7e894ac1db41012758a7e91256296c00f3de47b"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/rml_finalized/roles/role-TC-k1-relation-frozen-intervention-s42-original_100k-metric_computed.json",
+      "sha256": "982d100205e1e0be5c3ce0469e5417dac3efcd1cea2916a777134d4f93af0f20"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/rml_finalized/roles/role-TC-k1-relation-frozen-intervention-s42-original_100k-prediction_input.json",
+      "sha256": "3ae896b8cb64db5160c00ed0a97115afbd3e15fd86c9c447d8dbf1bc8d0d6234"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/rml_finalized/roles/role-TC-k1-relation-frozen-intervention-s42-unseen_500k-labels_read.json",
+      "sha256": "be898dbb0185b7207dcb692eb78c0f59e7f78e0f230761c7be0a4ad44da5c268"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/rml_finalized/roles/role-TC-k1-relation-frozen-intervention-s42-unseen_500k-metric_computed.json",
+      "sha256": "618254f9fd67d48ec18f582d500bfcf11bcfba9a7ccadd7afe85bc7ff3a505e3"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/rml_finalized/roles/role-TC-k1-relation-frozen-intervention-s42-unseen_500k-prediction_input.json",
+      "sha256": "6d0e83fced3f34371050f780c43f8b7a2a6e3df29341a3022ee72483145325f3"
+    },
+    {
+      "path": "experiments/pcqm_k1_sparse_triplet_100k/rml_finalized/roles/role-TC-k1-sparse-triplet-100k-s42-labels-read.json",
+      "sha256": "f7c0c5db73be2cf8c6c8636287a4dabc16e8553e11705d8c5dd8850f86f2c8fb"
+    },
+    {
+      "path": "experiments/pcqm_k1_sparse_triplet_100k/rml_finalized/roles/role-TC-k1-sparse-triplet-100k-s42-metric-computed.json",
+      "sha256": "2eeb54a05467b59b9079af8a6381c2e7abe3e125a5c8f3c88fb2e5f10cbfcbe1"
+    },
+    {
+      "path": "experiments/pcqm_k1_sparse_triplet_100k/rml_finalized/roles/role-TC-k1-sparse-triplet-100k-s42-prediction-input.json",
+      "sha256": "eea2b4be3acfffbb065c27a14a10251645faa0b8155724258882fe9f97690439"
+    },
+    {
+      "path": "experiments/pcqm_k1_sparse_triplet_100k/rml_finalized/roles/role-TC-k1-sparse-triplet-100k-s42-selection-used.json",
+      "sha256": "221f58e9f4cbf185c028d83bd06635a40f9f1b0e5ce73456d2c15a44e93e0d70"
+    },
+    {
+      "path": "experiments/pcqm_k1_sparse_triplet_100k/rml_finalized/roles/role-TC-k1-sparse-triplet-100k-s42-training-membership.json",
+      "sha256": "40153df1dd494ac0bfb94c449c27d1210fb4f61d3ffd5ad3e6044767d72e32ec"
+    },
+    {
+      "path": "experiments/pcqm_k1_spd_pair_token_100k/rml_finalized/roles/role-TC-k1-spd-pair-token-100k-s42-labels-read.json",
+      "sha256": "4364a2a5e1755299e603e57d6be5cfc7988e44c5c76acd5c4a0fd5f74e9d573a"
+    },
+    {
+      "path": "experiments/pcqm_k1_spd_pair_token_100k/rml_finalized/roles/role-TC-k1-spd-pair-token-100k-s42-metric-computed.json",
+      "sha256": "5fd06bd93dfbee69785d8c342af3b60f692ef1ee188608eb688d2245589b7609"
+    },
+    {
+      "path": "experiments/pcqm_k1_spd_pair_token_100k/rml_finalized/roles/role-TC-k1-spd-pair-token-100k-s42-prediction-input.json",
+      "sha256": "0866f45111bd477141ae389a0c3fbfdcf9a0b4a02a29b5e1443b897e041555eb"
+    },
+    {
+      "path": "experiments/pcqm_k1_spd_pair_token_100k/rml_finalized/roles/role-TC-k1-spd-pair-token-100k-s42-selection-used.json",
+      "sha256": "04e883a4f96b0a624329b23f572dbaaa14e1015526d9e21f2dc86eaf73c7aea3"
+    },
+    {
+      "path": "experiments/pcqm_k1_spd_pair_token_100k/rml_finalized/roles/role-TC-k1-spd-pair-token-100k-s42-training-membership.json",
+      "sha256": "411e5d000d75897845ccf53db7af05c66069a23097504b94bdf744123a1afda4"
+    },
+    {
+      "path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/roles/role-TC-k1-tf32-a100-paired-s42-fp32-labels-read.json",
+      "sha256": "385bd162f2c53856ba00ec62e7ca3ac0cc6f8eed8065511373d3b27696b1d8bd"
+    },
+    {
+      "path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/roles/role-TC-k1-tf32-a100-paired-s42-fp32-metric-computed.json",
+      "sha256": "0252331677f8a60ed808ac33a7635bb7d2fca0d9c8ef7dc73179f8eac2dd5e56"
+    },
+    {
+      "path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/roles/role-TC-k1-tf32-a100-paired-s42-fp32-prediction-input.json",
+      "sha256": "dee6b59bd3dbd9dbb78feb1c271d0b35af6bb12b11b685fc90c38160535cad68"
+    },
+    {
+      "path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/roles/role-TC-k1-tf32-a100-paired-s42-fp32-selection-used.json",
+      "sha256": "b60483ba3ca2297ec0c7cdb4013d60e0cb4c91be5a535fbbe0e07f679a733186"
+    },
+    {
+      "path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/roles/role-TC-k1-tf32-a100-paired-s42-fp32-training-membership.json",
+      "sha256": "58749b53cfb947a509152b19d3448488818dd38b798e7db5d8da126a2bc094ce"
+    },
+    {
+      "path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/roles/role-TC-k1-tf32-a100-paired-s42-tf32_matmul-labels-read.json",
+      "sha256": "a4b46d75eaf000aa783e10ecded849c16920d8f143090d9aaabc352ad374dcbb"
+    },
+    {
+      "path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/roles/role-TC-k1-tf32-a100-paired-s42-tf32_matmul-metric-computed.json",
+      "sha256": "be00acfa35d5ec59173e4b77293f3e8f436760cabfed68b8efb0b39f59868418"
+    },
+    {
+      "path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/roles/role-TC-k1-tf32-a100-paired-s42-tf32_matmul-prediction-input.json",
+      "sha256": "6b2498a52be0933ac4edf69375c19da0561cb26ddacfd2beac4f527582b12ba0"
+    },
+    {
+      "path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/roles/role-TC-k1-tf32-a100-paired-s42-tf32_matmul-selection-used.json",
+      "sha256": "c39025258d0e8b33377deb32e87c655a6afa4995be9f0aa2a53c39085c0c8b0c"
+    },
+    {
+      "path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/roles/role-TC-k1-tf32-a100-paired-s42-tf32_matmul-training-membership.json",
+      "sha256": "45d0621954ed8061e2e8eb86c632808595e3f03925b5473a40e77cf65ef67f26"
+    },
+    {
+      "path": "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/rml_finalized/roles/role-TC-metagin-2d-3hop-100k-s42-v2-labels-read.json",
+      "sha256": "5f4ae93a39e0c89d386a57d70e9d264def3d723fc716f212b7c75fdfbc19934b"
+    },
+    {
+      "path": "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/rml_finalized/roles/role-TC-metagin-2d-3hop-100k-s42-v2-metric-computed.json",
+      "sha256": "d830b53be4f411d3e8efd78c1df0b723d71248ceaeea58fd2a68d8863417514e"
+    },
+    {
+      "path": "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/rml_finalized/roles/role-TC-metagin-2d-3hop-100k-s42-v2-prediction-input.json",
+      "sha256": "3cb1d224289e23ea17bde6b38c69252414d0c16e3226bf0fa1d9ad1fdd201dea"
+    },
+    {
+      "path": "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/rml_finalized/roles/role-TC-metagin-2d-3hop-100k-s42-v2-selection-used.json",
+      "sha256": "04f059c6eaf0f82724619bd3a8fd26c70e75eb4abc7d1d03c3511260cf1f7f77"
+    },
+    {
+      "path": "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/rml_finalized/roles/role-TC-metagin-2d-3hop-100k-s42-v2-training-membership.json",
+      "sha256": "49103b1845fde6bce35a3ff994ccfe2b7dfb93e52a8681fb0d5f7b4ac1feaac3"
+    },
+    {
+      "path": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/rml_finalized/roles/role-TC-k1-motif-hierarchy-100k-s42-v3-labels-read.json",
+      "sha256": "ac391e4b2fe0c3d2275c71883686eaee3a300062daa4c00d48245f363108aa2f"
+    },
+    {
+      "path": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/rml_finalized/roles/role-TC-k1-motif-hierarchy-100k-s42-v3-metric-computed.json",
+      "sha256": "74caab73d31927887c8a825301b808c2fb678200db8728131d859f619908a690"
+    },
+    {
+      "path": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/rml_finalized/roles/role-TC-k1-motif-hierarchy-100k-s42-v3-prediction-input.json",
+      "sha256": "08acb750c9c539176da8a3fbeff9e246b05dd26e06d846619c9438aa7afd5ae6"
+    },
+    {
+      "path": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/rml_finalized/roles/role-TC-k1-motif-hierarchy-100k-s42-v3-selection-used.json",
+      "sha256": "11d4a427630099ba1e20f7976870767867a79c3ca4bd8f3f71055c24282812a7"
+    },
+    {
+      "path": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/rml_finalized/roles/role-TC-k1-motif-hierarchy-100k-s42-v3-training-membership.json",
+      "sha256": "b978ab19f57f09982f50dbc129c2bc1f2aea547d93fae9d9ea0702c820d8ccb6"
+    },
+    {
+      "path": "experiments/pcqm_specialist_combination_transfer/roles/fitting_labels.json",
+      "sha256": "34fa4e2160ec6abb6e2fa9b11fbb67ca30eb10c0402b935b1199300b50e936fc"
+    },
+    {
+      "path": "experiments/pcqm_specialist_combination_transfer/roles/fitting_metrics.json",
+      "sha256": "ca1086c2e18ebd876ed899f13e715e75f84440df886a52099303370e2de6d480"
+    },
+    {
+      "path": "experiments/pcqm_specialist_combination_transfer/roles/fitting_prediction_input.json",
+      "sha256": "9d71120bcb9a94b5e31366ab86b54762b7b10bcbeed3eabde7f947854c48c795"
+    },
+    {
+      "path": "experiments/pcqm_specialist_combination_transfer/roles/fitting_selection.json",
+      "sha256": "5978fa4a55ddc2d955b68fde245cc75e9a7556fb6015d646e0ba892c782e4cdb"
+    },
+    {
+      "path": "experiments/pcqm_specialist_combination_transfer/roles/transfer_labels.json",
+      "sha256": "06ea49b134a51a9459ca270577c1086915130b3296b06eeca1348753742e4134"
+    },
+    {
+      "path": "experiments/pcqm_specialist_combination_transfer/roles/transfer_metrics.json",
+      "sha256": "bb4279acd0749cc216f4f118ab5773392772bb4ef8b42027a8ba75077b6ad7cc"
+    },
+    {
+      "path": "experiments/pcqm_specialist_combination_transfer/roles/transfer_prediction_input.json",
+      "sha256": "ea2d321ae10258e3d366f6632ef2001eb9eaa0fe978586c3624035744bdf52b0"
+    },
+    {
+      "path": "experiments/pcqm_specialist_combination_transfer/roles/transfer_selection.json",
+      "sha256": "6810780049bf20d55e606fc4a8e073e862ba9eba52a911f66663a4c235ca1494"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/roles/development.json",
+      "sha256": "95a3acfe20b5866ef97f831d87633430c966b280edff5ed5322aafb4fc6601e3"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/roles/labels-read.json",
+      "sha256": "79999889fabc5901d54e2637862d856b7cd7667555b881aed3568835919d0c8d"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/roles/metric-computed.json",
+      "sha256": "f0a8094dd3be5a6bddf9b16b197d1050ee312998e6ffe21d137d6ca746ea7b45"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/roles/prediction-input.json",
+      "sha256": "a22f185d93540f0c8c796a06d9be2f309bc7c2db01c3a78c22f77c487cd8fb6a"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/roles/train.json",
+      "sha256": "1436a634c90e11da707e1d55bcbc851f5c36ee9987b3200f37fffbddcc670bcc"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/optimized/rml/rml_finalized/v5_evidence.json",
+      "sha256": "7d65b939c4a88be86b6dea9343a7b608be2d3b9f1652d075eee7fcb59cbe8c34"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/attribution/original/rml/rml_finalized/v5_evidence.json",
+      "sha256": "393f528763195b43452c400c4801534d968edfa598abb4ad0075479993e12d7a"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/timing/optimized/rml/rml_finalized/v5_evidence.json",
+      "sha256": "c16e2a26632b1ce27fc542cb599fca922269f1a96a0bf88836bb09fd227ce401"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/followup/timing/original/rml/rml_finalized/v5_evidence.json",
+      "sha256": "eb8307c825e292729c6b964503ad0cfae1676a56f939e4bb31b35155f4b9fafe"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/optimized/rml/rml_finalized/v5_evidence.json",
+      "sha256": "48c723b0e1bf6c3ff90555dbf0ca46a6a14d04957e7c743ab511647afc4b756a"
+    },
+    {
+      "path": "experiments/gptrans_infrastructure_t4_100k/original/rml/rml_finalized/v5_evidence.json",
+      "sha256": "92512832f5147e01bb110957b24a929e7e3f005d895f2d824390bd908b0e172f"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/optimized/rml/rml_finalized/v5_evidence.json",
+      "sha256": "43d3a41a5f448aac1f74aad4bf259df6ba5789aacad4b83d511995c03053740c"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/execution_providers/original/rml/rml_finalized/v5_evidence.json",
+      "sha256": "c52028f58b5f3dcfc86875d3483461f4f7ffb1e981d7fb98b675025c3a0b5f53"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/optimized/rml/rml_finalized/v5_evidence.json",
+      "sha256": "579616455165a72aa6e06276ed604e55a5a933ce2ece60131bd969631e57cca2"
+    },
+    {
+      "path": "experiments/k1_infrastructure_t4_100k/original/rml/rml_finalized/v5_evidence.json",
+      "sha256": "4880fdb517b869a7b27966f5f611779c4b9bdfa7e417f7a7ef7582022aadd3ce"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/degree_scale/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "261bab771994f503c822926cc9a15d65c47f36ac89265c304739769cf28b27fc"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/gpu/path_bond_mean/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "8268a599414eed5880abfd888680682f0605aa4c443aea5b6c115ba31a7d2bcf"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/preparation_rml/rml_finalized/v5_evidence.json",
+      "sha256": "2c46604754db504ea1ce15ec50f8e7ae2f9365f1573b1d7f4e8b583101f2e1aa"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/recovered_reference/v5_evidence.json",
+      "sha256": "236c8658e02df5f07a8d114e7a88942d6718cd08df12e493ceae662190ad14cc"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "0e4c6bee5220d248886c550ff62e3314078b63241f639372a32fd560b0aeb68d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_author_alignment/verification_recovery/rml_plan_v2/rml_finalized/v5_evidence.json",
+      "sha256": "77c7f0ad2d7cf4295f641b7a237e6463b54c23181a32042edd6bd0e413916bd1"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_bottleneck_audit/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "d819ae46ba890a771e3fd8b8778f8d743ae15b7fba8fa8448872e65a21a8b8b3"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_ffn2_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "01b0e282b5f212cd61e47eb8d7afa3b13d68823d6c73ac2a360224826dc1ea10"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_nodes_100k/gpu/degree_node352_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "357b3a53645b19ef6d80add9005c1041dfd96f04d5d7f9bf84681ec8792c9225"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/degree_bond_local_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "b47d6ded863078fd9ab0dff7aad2cf7b05925e13e610b66a49424f6bb4349214"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_capacity_relations_100k/gpu/scale_ema/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "18b242a581cfde3fba2a0013f3864d57cbe21b8cd71a0e65feccca2d1ffe2fb6"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "65d35b0df6ffb6f25e485d17419d27b018fa7e2d0d63c2be161f71d0e7d8f547"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/recovery_rml_plan_v2/rml_finalized/v5_evidence.json",
+      "sha256": "30569d4fdc7b192900134411b23b3e9500587a630d0c8df1b878b3c9b8b3ef2b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_cycle_pair_100k/cpu/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "a4e421af5aef24b9b7918a0f65ab5f61dbdeb54f301a49e38cb354918bc45b0c"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_decay_clock_100k/gpu/degree_decay001_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "e106a9709e87077dab786c1bad766ab8e6d44dcdc7382423b44d4492e6b77779"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_ema_portability/attempt_v2/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "e8ecdd848cd60f15057962321b17e9d46c349cbedf43e6bc0a375f8e5edfe229"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_ema_portability/attempt_v3/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "611cd0280acde8354174131b6eef79b125666e13faf8749737c984ef2cf544a4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_ema_portability/attempt_v4/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "aba067187b898a66034593186c35ea12604700ba0ade555a481a28a53a9b5567"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_ema_portability/environment_rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "faeb13b4fa0cbe82f8341ffb7d1e455908445bdc472089a0f575f8f40b9c71a4"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_ema_portability/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "395404a67d3c8f5586cb42949266a6700384cf04e016573ddfba94d26680f177"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_path_bond_mean/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "4537dbeee583348af2308d1d0962d40bd19af6aa2a6c17753068df956bf5712f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_input_ema_100k/gpu/degree_scale_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "9d8b4c2052dcb8e727abc85d8d593a6f9db3039b3c05c93f23ebd95cb41b2ea2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_control_100k/gpu/degree_bond_local_cap_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "dd1ee4c4b823549fb2a47e47f75f552b4d7e54f18d6f0b36a785aa77e0837ed2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_bond_return_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "fd93992a9db687091b3d3443030a79ec2686c745066cd973f05ddc3553d08720"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_relation_100k/gpu/degree_local_connected_pair_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "9005e8feb28c0339e3189b2caad61c7c8855d5c721d90f1c166d69996c3a0701"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_local_transfer_500k/gpu/scale_ema/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "d454ac2aa6ab5d1eec906a3714984b89102871d25e5bc97d413e36af4c1b48dd"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "3ece2c27f2353adde455f846567563dcc11fed96afe817f50caa9c1d648ede20"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_scale_100k/gpu/degree_pair_depth_scale_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "033d6fe9cacb77535729c08cdbfacd273106eb0d53fdc5ef51d2cc9fa3edfc40"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_pair_transition_100k/gpu/degree_pair_transition_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "a32bd862e836720a8ba9f9e1383a377218f928196dbf64b8192eabb2328f21e0"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_path_ema_combination_100k/gpu/degree_path_bond_mean_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "3ef8d6042f1f8de558a369f679940d94e2a678aea449e44809e7a982fc986d69"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_prenorm_500k_v5/reference/v5_evidence.json",
+      "sha256": "e7c0e42e5fddb935db5dc28b2ca1f01079250e65c85ce93c9e0187ea0deecc18"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_prenorm_500k_v5/v5_evidence.json",
+      "sha256": "4fcd260bb8702feb699328c68e79db5e5e6d411bcdaee37eaa7a1b1c5a3b2508"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_bond_mean_readout_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "f7e0e260314ac486b7599ba15fe3347de44861265b39c35d93f0042f829c6a7b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_readout_100k/gpu/degree_node_mean_readout_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "48c43fe0509362db7ef6f9fe68cd20c38528044e878c1494d2e170faab17db40"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_group_decay_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "5cc76b0084d813ea883f125829e40967d80d916b67b9dad8ffd2cc3b13d94562"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_recipe_paths_100k/gpu/degree_path_endpoints_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "35d46e16e19408b447a5f6767c177294dbf0faa13185c720d24fb8b75a6dc451"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_scale_qualification/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "4a29ff88636412951fa1f4150b005bddaccdc6ab8b5532c76af983347717ca0d"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_shortest_path_profile_v5/v5_evidence.json",
+      "sha256": "f5a05bf4a57680b626ce4f33093c660742c843d7147bd76ebe97747b0a08dd68"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_source_dependence/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "5fb2c34fa864a02ca5ab79b81fc3e2223921d52b1d535e3c954274c35007a30b"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_step_profile_v5/v5_evidence.json",
+      "sha256": "f567e242cf9a174e56cb61a076472fe2b62fde10f9e91c43d5225c4d937c6020"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_aggregate_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "fe95583bf3116df7e25763f9a66950d1bf550807f7a961e27edaf8c4c3e8178f"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_communication_100k/gpu/degree_local_triplet_attention_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "3c45c75f19ab1f834fec563c1bf16b4cbc95ae6b970a78c40c377f7e25a4a778"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_drop_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "a23b8505cf5a95f2d2da837ea3b786a47b62e5be30095f2b25de25ffcc6f42d2"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_followup_100k/gpu/degree_local_triplet_product_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "60a8baafe165fba98c9ab75f606a31c8e786d990e2342a0eaf1da5876b4e47e6"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_portability/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "4cb18ef834f54c202e6b31c488a2198d77bb058943b6b02d1317b7c5cbe4f60e"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_bond_route_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "6d2228cff76528905a223624c3a8b3d741a12181fc140b57fe54782b43dc4458"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_triplet_routing_100k/gpu/degree_local_triplet_product_v2_ema999/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "e7bb6c5cb621631aa066066f621efa92117cf89399f5c63407d4da6178d092af"
+    },
+    {
+      "path": "experiments/pcqm_gptrans_v5_audit_reference/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "2f02cfc45e594f6619bad45adba042abbc1238cece1411d3ec66c2312a92c342"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/atom_pair_local/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "b84cd508444cee69a9e70fe16ebff7909df0dce5cba72039e230464f0f826744"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/arms/bond_type_local/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "887d331e5f45d7da5a9b0ecb0dc5ba3e1dbc1c04b0167a98340b8f03d4f77ce0"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_local_100k/audit/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "e2c1f4eddf934376b770d824636f7c1b00526d42e7d9606e0489332266e1c2fb"
+    },
+    {
+      "path": "experiments/pcqm_k1_chem_typed_pair_token_100k/rml_finalized/v5_evidence.json",
+      "sha256": "21154f272c2bd8fc5660cc0f1d50bdab161136e12fe74d234102baa2a60940f7"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/oneshot/rml_finalized/v5_evidence.json",
+      "sha256": "65f7ab3037f1eb8b7bf1bac3965c9338692e813e1e9867394461d6c377e80246"
+    },
+    {
+      "path": "experiments/pcqm_k1_conjugated_hyperedge_100k/arms/persistent/rml_finalized/v5_evidence.json",
+      "sha256": "ed7be2dcba02a32c62843177a15a0fbcc87ba86859faf404b21e5bfae084378b"
+    },
+    {
+      "path": "experiments/pcqm_k1_cross_scale_frozen/v5_evidence.json",
+      "sha256": "84a1797878348a1eecf1278e05815511a3aa32a8bc1bf2a655a3d237f078d4b1"
+    },
+    {
+      "path": "experiments/pcqm_k1_explainability_audit/representation/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "1f84c55675c86a78b3868372650a53c70ad1a153de9678167cfe0fa9a36f0fef"
+    },
+    {
+      "path": "experiments/pcqm_k1_functional_group_token_100k/rml_finalized/v5_evidence.json",
+      "sha256": "2953177136e9c4b0884e322c55eb01c966ff7a8a93a17e3ed0d3abc0da2642fc"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "2240f9d882af68894d6c2489bb8005325e20cee0c05109b9c2400d01f164af01"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "f2c27e1ec01623d4befaea9d2def66381f7ae85e686c0bc801bbdf2246d1422a"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "6f16359a3da5483e10b219f609dafaa2e7fb425367551ba0549690db3861039f"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "532f4e97baf4f9ae9ea8391b39915a131dd027b9ec120e4004c45595361f7a19"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v2/audit/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "3ad4c15379acca8f2b9c194a992ee6e7a1e07128c4b38c592a2bc9f09362e958"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "bcfc0baa4445006fa7a228394c2c8b83f31ae2b5630431f38d81092727158f14"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/arms/k1_corrupt_gap_atom_aux/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "ff6ede466b87d6b8da5351517c970f1c86fa6bb8691d4253fd2161e685dd71c4"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/attempts/v3/audit/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "c3e248d6027071026a2cde98b57b14b335322c230bcba152c4b37b2160a61f4f"
+    },
+    {
+      "path": "experiments/pcqm_k1_joint_atom_reconstruction_100k/audit/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "c86eb983698e812cee5cb02d6ee5e6ce31555f8ae6a99afae56fd1963773d333"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/audit_plan/rml_finalized/v5_evidence.json",
+      "sha256": "9be7faae5eb6e849fd5ad9cdc6a4ddd4c1bbcdfed7db8f85af4857211891dcf6"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/audit_recovery/v5_evidence.json",
+      "sha256": "005540ac8f86cf7d7870fbdcd040290ebc054fb793ce9e0789de16aac27a5014"
+    },
+    {
+      "path": "experiments/pcqm_k1_linear_attention_100k/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "b6c8d980d0317f7d23679c384f10dc69b9c44c26fdb196de5f6f0a4d484e3218"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_100k/v5_evidence.json",
+      "sha256": "000a5a173ffc4513dc5fb8dc2b7ade85eb602164411aba475a2b3c84abd87386"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_context_gate_100k/v5_evidence.json",
+      "sha256": "df394c40df26fcc15de7c3775511b5d0caea353b51a26c48af5d74024bb1061f"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_hidden_bn_100k/v5_evidence.json",
+      "sha256": "5603266c5cf5a68b737180c617418c5fe4e54294397c6e8da8376440308d313b"
+    },
+    {
+      "path": "experiments/pcqm_k1_mose_residual_gate_100k/v5_evidence.json",
+      "sha256": "def54495729ced0330bba2d365ca595da4b84d8e4fc0b96728a47f6c31be0506"
+    },
+    {
+      "path": "experiments/pcqm_k1_multiplicative_pair_value_100k/rml_finalized/v5_evidence.json",
+      "sha256": "562ee2763213c591311113bf008a46926299bf018fdbfbf8a0530c26c130a7fe"
+    },
+    {
+      "path": "experiments/pcqm_k1_oneshot_triplet_pair_token_100k/rml_finalized/v5_evidence.json",
+      "sha256": "85d2b036353a7fe26e9ff122b5b8b48f1eb0b6d2b2f984b59ef03fd68e9d5db0"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_100k/v5_evidence.json",
+      "sha256": "15b73a9c88cf5734033c2aea061fc6431d77a4b74a5b471f08f767643617bccb"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_500k/v5_evidence.json",
+      "sha256": "c736e594b51c5ae2c90153fbdf76c3312d48ade91002fcc53f729b42e66eb9da"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_batch_profile/v5_evidence.json",
+      "sha256": "4a44cf091d1ab925ccccbea24e26e6b8a7cc6972a74d9a015dcfa57b8a7abb85"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_mose_100k/v5_evidence.json",
+      "sha256": "ae0c75d7e7d426de154db191e9ee3e4098308369b14a2bb815479886253994d0"
+    },
+    {
+      "path": "experiments/pcqm_k1_pair_token_node_return_100k/v5_evidence.json",
+      "sha256": "765301107706f4ce00602b27a8f1b4899c4c3ba6c2f8cc17703e794722a2e8d8"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/degree_balance/rml_finalized/v5_evidence.json",
+      "sha256": "da8589c3bf74d9edac6a9d71de64680ce804d107c24099df0b5d088b381d9b91"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/arms/rwse_refresh/rml_finalized/v5_evidence.json",
+      "sha256": "cf8fd52265dfa14b2ce7ea976218aa5b5480638ab9679414a4e2771f4bca5d71"
+    },
+    {
+      "path": "experiments/pcqm_k1_portability_dual_100k/audit/rml_finalized/v5_evidence.json",
+      "sha256": "995a7f9f3a517dea9f9b4231b466ce05b62059c17e68431c5bd29c6f399e871d"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/receiver_pair/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "e544a6c7c3c29213be5574ccb2a396fabd5d163be2e18205c97ea8fa68f77f18"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/rrwp_pair/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "9c9727fc3f1c53a7391c295d6b1810c91c47fb5f042fa943cde91beba0915fe9"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/arms/triplet_aggregate/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "4c9d1b57d48f26493e0a8842acba4cdc7a5d85d1104690cc40bf1d2084300f15"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/audit/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "5a7fc90803c3751f4290c868d558eb1acc35705f862360df327a0b62bb3dd0b2"
+    },
+    {
+      "path": "experiments/pcqm_k1_relation_resolution_100k/diagnostic/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "b19d4d040fc704b96b7ed62fc3dc22ef460b41e2376bd5065c4a580852dcbebc"
+    },
+    {
+      "path": "experiments/pcqm_k1_sparse_triplet_100k/rml_finalized/v5_evidence.json",
+      "sha256": "cdfc017e3ec6a28cbb820e394ae47ad66b2774b2fb700f73ca95c1d486f037c9"
+    },
+    {
+      "path": "experiments/pcqm_k1_spd_pair_token_100k/rml_finalized/v5_evidence.json",
+      "sha256": "b0a62dc66b9ed3cc0c2d94577d671bf2272b5d975096eeb50f3c9603fdaad3ff"
+    },
+    {
+      "path": "experiments/pcqm_k1_tf32_runtime_comparison_100k/v5_evidence.json",
+      "sha256": "b4351e72628ef96486bb43005898baa7837f84c915507df80d6e32cbacf330d2"
+    },
+    {
+      "path": "experiments/pcqm_metagin_2d_100k/attempt_v2/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "c95aab9d031cbfd83ed251442bb39cb45d6a567c568448c25cd64273cb526f72"
+    },
+    {
+      "path": "experiments/pcqm_metagin_2d_100k/rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "79ca62a973c76c9533eeb3ab28ea7c58139ec28cd2134b3bdc46f1e2e7c7fb54"
+    },
+    {
+      "path": "experiments/pcqm_motif_hierarchy_100k/attempt_v2/gpu_rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "d8bef5512b31489c74e7de27930e782168be2facff4dfe47cb2a2c65ff9a3b55"
+    },
+    {
+      "path": "experiments/pcqm_motif_hierarchy_100k/attempt_v3/gpu_rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "9c05a8489b0bf41f6859f3db0e4ae307f36db81f7a8025864499ddbb06f185d6"
+    },
+    {
+      "path": "experiments/pcqm_motif_hierarchy_100k/gpu_rml_plan/rml_finalized/v5_evidence.json",
+      "sha256": "ed082d4b79dde5b68bdcd7766d04e52b8f7eb2b9a189a60a9214517271ac6f47"
+    },
+    {
+      "path": "experiments/pcqm_specialist_combination_transfer/v5_evidence.json",
+      "sha256": "b6747f39649bc6d570fbf326b7f1915813edc0fab3142bf4fd96dedb7465db37"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_500k_scalar_reference/v5_evidence.json",
+      "sha256": "45fa9704beaabd1803ebea35509cece5a5ae3d8fdc93e42e03d0610d81c40aa3"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/k1_v4_100k_reference/v5_evidence.json",
+      "sha256": "bfb20f300820315e3d4a869d3709c22fc61fe94a43582eb5d674b47b3918b9b2"
+    },
+    {
+      "path": "experiments/v5_legacy_evidence_migration/v5_evidence.json",
+      "sha256": "5a00ed2e0b6a1cbaa7e1a8b04d017ded4c0cdd8433db9d95d0904079d603ddc3"
+    }
+  ],
+  "status": "METADATA_ROLE_INVENTORY_FROZEN",
+  "unresolved_roles": []
+}
