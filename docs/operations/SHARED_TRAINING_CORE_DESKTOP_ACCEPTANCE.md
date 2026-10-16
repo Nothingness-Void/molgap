@@ -158,6 +158,14 @@ Primary completion preceded the upstream SDK follow-up; the final batch verifies
 that follow-up, all 42 resulting pins and the comprehensive dependency inventory.
 No implementation changed after that final inventory and batch.
 
+Post-integration checks on Desktop `caf69ce7` also passed: the read-only
+`python -m molgap.research_memory --repo-root D:/文档/molgap check --frozen --portable`
+reported current derived outputs and complete portable evidence closure. No
+canonical records or derived indexes were rebuilt. Final documentation navigation
+had 63 passed and four root-budget cases explicitly deselected; the ten baseline
+failures above remain recorded. The four pre-existing untracked Desktop paths
+were preserved. This paragraph is a documentation-only follow-up to that check.
+
 ## Reuse entry
 
 Use the [workflow](EXPERIMENT_WORKFLOW.md), [examples](FAMILY_TRAINING_EXAMPLES.md)
