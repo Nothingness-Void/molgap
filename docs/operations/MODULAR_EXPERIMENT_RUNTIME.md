@@ -89,8 +89,9 @@ $python = '.\.venv\Scripts\python.exe'
 & $python -m molgap.experiment_cli sandbox --spec $spec --arm $arm
 ```
 
-Family presets use retained random baseline constructors. Spec mode supports
-the reviewed generic graph factory/forward ABI. Other owners use
+Family presets use retained random baseline constructors and registered ordered
+slots, including K1's declared accelerated provider. Spec mode supports the
+shared K1/GPTrans recipe and the reviewed generic graph factory/forward ABI. Other owners use
 `run_sandbox(factory, forward=..., addon_parameters=...)` directly; unsupported
 Spec forwards fail rather than silently becoming baseline checks.
 
@@ -157,7 +158,9 @@ The generic screen has a bounded local-CPU/Kaggle-T4 execution policy, not an
 IMS/DCU/full-data trainer. Cross-scale K1/GPTrans continue through the existing
 family sessions and their owning platform skills.
 
-Clean state is available to addon implementers but is not automatically merged
-into session checkpointing or endpoint selection. Attach/seal hooks before
-building the optimizer; prove the hooks are reached on the selected accelerated
-path. Dynamic dependency reports still require review and isolated imports.
+The [shared-core adoption](SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md) connects
+ordered slots to the accelerated forward and optimizer. Explicit `clean_bn`
+recipes retain Clean state in session checkpoints and select/evaluate it through
+the same lifecycle; no calibration is enabled by default. Use the
+[two-family examples](FAMILY_TRAINING_EXAMPLES.md), not a copied legacy runner.
+Dynamic dependency reports still require review and isolated imports.

@@ -18,3 +18,9 @@ Committed V4 model variants use `v4_submit/` for immutable source packaging,
 fixed-dataset lookup, fail-closed staging, preflight dependencies, and atomic
 submission records. Scientific contracts and checkpoint semantics remain with
 the owning experiment.
+
+Shared K1/GPTrans uses [the same family worker](run_family_training.py) with an
+explicit index inside scheduler-assigned `CUDA_VISIBLE_DEVICES`. This is a thin
+entrypoint, not a submitter. See the [prepared bundle boundary](../../docs/operations/FAMILY_TRAINING_EXAMPLES.md#sandbox-to-package-to-platform):
+neutral sidecar transport, native preflight and actual PBS execution require
+their owning IMS release; the Git-archive uploader does not stage arbitrary bundles.

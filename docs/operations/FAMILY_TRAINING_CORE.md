@@ -23,6 +23,8 @@ layer may copy or alter the training algorithm to fit a platform or scale.
 | `family_training_data.py` | Fixed-subset topology selection, shard SHA/row/label verification, train-only normalization and parameterized deterministic samplers. |
 | `family_training_recipe.py` | Typed data/initialization/budget, schedule, tail and selection policies; no platform-dependent algorithm or slow execution option. |
 | `family_training_kernel.py` | Existing K1/GPTrans model/addon factories, accelerated forward/backward, optimizer, bound EMA and existing buffered development evaluation. |
+| `family_model_ops.py`, `family_training_policy.py` | Leaf family operations and statically registered typed mode policies; no legacy trainer or controller import in the kernel. |
+| `family_training_state.py` | Live/Raw EMA revision and optional independent Clean model, calibration identity, staleness and checkpoint component. |
 | `family_training_loaders.py` | One persistent train loader and bounded optional CPU development cache; private loader RNG and deterministic pass/resume cursor. |
 | `family_training_session.py` | One schedule/train/development/selection/resume lifecycle, using the shared outer loop and caller-owned atomic artifact/trace hooks. |
 | `family_training_runner.py` | Registered contract/source/role bindings, native repeat/resume qualification and the single worker entry. |
@@ -31,7 +33,7 @@ layer may copy or alter the training algorithm to fit a platform or scale.
 | `family_execution_profile.py` | [Optional session profiler](FAMILY_EXECUTION_PROFILE.md): phase and operator observation; no alternate training implementation. |
 | `gptrans_bond_local.py` | Registered degree-scaled true-bond component; no trainer or platform code. |
 | `packed_graph_dataset.py` | Spawn-pickleable packed PyG payload owner, optionally memory mapped. |
-| Existing K1/GPTrans trainer | Family loss/addon, frozen schedule, selection and artifact hooks during migration. |
+| Existing K1/GPTrans trainer | Historical CLI/recipe compatibility; shared leaf operations retain its frozen schedule, initialization, roles and artifact contract. |
 | [Family outputs](EXPERIMENT_FAMILY_WORKFLOW.md) | Existing checkpoint, trace, artifact inspection and V5/RML closure. |
 | [Platform routing](../../platforms/README.md) | Skills/adapters; no model or optimizer implementation. |
 
@@ -81,6 +83,15 @@ partial-pass metric order. A different budget/recipe is not a resume. Publicatio
 must complete before a pause or endpoint is acknowledged; failure propagates and
 worker/cache cleanup runs. `load_state_dict` validates identity/exposure and
 rolls back state if restoration fails.
+Optional `addons` are attached in declaration order before optimizer construction
+and sealed. `clean_bn` explicitly binds training-only calibration; Clean state
+lives in `cursor.weight_state`, while Live and Raw EMA retain their existing
+locations. No component is inferred for old checkpoints. Same-runtime synthetic
+resume is not a cross-device bit-exact guarantee.
+Optional `resume_chunks=True` retains resumable bundles at the registered chunk
+cadence on eligible complete-pass checkpoints, using the staged prospective
+identity. It is false and omitted from the wire by default. No experiment-name
+lookup or host-specific module chooses retention inside the shared runner.
 The registered runner wires the complete-state checkpoint sink and selection
 inside the existing evaluation weight view; the
 [refinement owner](GPTRANS_EXECUTION_REFINEMENT.md) owns these controls and the
@@ -134,8 +145,12 @@ owns the evidence; no native speedup or old-checkpoint migration is implied.
 
 `training_reproducibility.nonfinite_tensor_keys` owns tensor finite checking.
 The nested session/output checker reuses it: accelerator flags cross to CPU once
-per device and CPU scalars are checked in same-dtype groups. Every tensor and
-host float still participates; no cached success or skipped optimizer/EMA guard.
+per device and CPU scalars are checked in same-dtype groups. Model, optimizer,
+EMA, cursor tensors and host floats remain covered by the validation boundary.
+An explicit `finite_validation_scope` may reuse successful checks for an unchanged
+tensor within one checkpoint snapshot. The scope owns tensor references and
+checks mutation versions; inference tensors are never cached. Results do not
+survive the scope, and standalone checks do not reuse earlier success.
 That checker alone did not change state format, update math, metric addition
 order or checkpoint policy. New packages freeze shared code; old jobs keep source
 pins. The later participation field above is an explicit checkpoint extension,
@@ -235,8 +250,12 @@ owns retained execution evidence, not a model promotion.
 
 A new addon adds a small model/loss hook and static mode/Spec/execution/source
 registration, not a trainer, optimizer, loader or platform script. JSON cannot
-select arbitrary imports. Current adapters allow one reviewed addon mode per
-arm; new combinations require explicit registration and a new frozen recipe.
+select arbitrary imports. Registered `apply_hook` slots compose in frozen Spec
+order; replacement/objective modes remain exclusive and cannot mix with slots.
+Lifecycle deviations use `TrainingAddon.policy_hook` returning `FamilyModePolicy`,
+never a host/controller branch in the kernel. See the
+[two-family examples](FAMILY_TRAINING_EXAMPLES.md) and
+[adoption/qualification boundary](SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md).
 
 Mechanical verification keeps science/runtime/replay `NOT_EVALUATED`. Final-only
 outputs have no predictions or development score; scientific/full-scale closure

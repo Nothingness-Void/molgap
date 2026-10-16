@@ -1,5 +1,8 @@
 # Independent Test Handoff
 
+This historical run precedes the [shared-core Desktop adoption](SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md),
+which owns the subsequent source inventory and independent regression results.
+
 ## Scope
 
 Worktree: `C:/Users/17449/.codex/worktrees/family-training-core/molgap`.

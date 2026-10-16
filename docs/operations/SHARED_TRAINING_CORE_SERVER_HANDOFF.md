@@ -1,5 +1,8 @@
 # Shared training core: server implementation handoff
 
+Historical implementation specification; the [Desktop adoption record](SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md)
+owns the received implementation and remaining qualification boundaries.
+
 Snapshot: 2026-10-16. This is an engineering specification and source audit,
 not a training release, completed-capability claim or replacement V5 contract.
 Server implements; desktop pauses implementation and later reviews/integrates

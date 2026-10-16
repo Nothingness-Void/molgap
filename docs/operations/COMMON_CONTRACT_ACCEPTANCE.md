@@ -1,5 +1,8 @@
 # Common contract extraction acceptance
 
+Historical extraction acceptance; subsequent lifecycle integration is recorded
+in the [shared-core adoption](SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md).
+
 Snapshot: 2026-10-16. This records the formerly interrupted parser/IO extraction,
 not the remaining full training-core convergence. The
 [server handoff](SHARED_TRAINING_CORE_SERVER_HANDOFF.md) owns that specification;

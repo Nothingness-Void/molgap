@@ -1,5 +1,9 @@
 # Shared training core: server return
 
+This dated return describes Server `006a8d46` and its 39-file snapshot. The
+[Desktop adoption record](SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md) records
+subsequent compatibility repairs and the expanded mechanism inventory.
+
 Snapshot: 2026-10-16. Branch: `molgap-server`. Reviewed code HEAD:
 `882ab5f160aa267eecafb88e7f03e5b4152a2b0f`. The documentation commit containing
 this report follows that code HEAD. The worktree retained unrelated pre-existing
