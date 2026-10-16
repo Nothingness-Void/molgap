@@ -8,7 +8,7 @@ import pytest
 from rdkit import Chem
 
 from molgap.pcqm_molecular_identity import (
-    COMPAT_MOLECULE_RULE, load_fallback_keys, molecular_identity,
+    COMPAT_MOLECULE_RULE, load_fallback_keys, molecular_identity, audit_exception_graphs,
 )
 from molgap.pcqm_unified_roles import (
     canonical_molecule, inventory_rows, choose_roles, molecular_audit,
@@ -189,3 +189,67 @@ def test_unknown_real_fixture_collects_all_exceptions_without_materializing_role
     audit=json.loads((out/"molecular_identity_audit.json").read_text())
     assert audit["completed_rows"]==30 and audit["blocked_rows"]==2
     assert not (out/"members").exists() and not (out/"acceptance.json").exists()
+
+
+def proof_fixture(tmp_path, *, non_si=False, tamper_graph=False):
+    from torch_geometric.data import Data,InMemoryDataset
+    from molgap.pcqm_k1_scale_cache import _unsanitized_ogb_payload
+    from molgap.packed_graph_dataset import PackedGraphDataset
+    import gzip
+    import torch
+    fixed,r=source_fixture(tmp_path)
+    smiles={0:"C[Si](C)(C)(C)C",1:ENTRIES[0]["smiles"]}
+    if non_si:smiles[2]="CN(C)(C)C"
+    shard=PackedGraphDataset(fixed/"train.pt",mmap=False)
+    graphs=[shard.get(i) for i in range(30)]
+    for idx,smi in smiles.items():
+        p=_unsanitized_ogb_payload(smi)
+        graphs[idx]=Data(x=torch.as_tensor(p["node_feat"]),edge_index=torch.as_tensor(p["edge_index"]),
+            edge_attr=torch.as_tensor(p["edge_feat"]),random_walk_pe=torch.zeros((p["num_nodes"],16)),
+            y=torch.tensor([float(idx)/10]),source_idx=torch.tensor([idx]))
+    if tamper_graph:graphs[0].x[0,0]+=1
+    torch.save(InMemoryDataset.collate(graphs),fixed/"train.pt")
+    path=fixed/"source_0000000_0000030.csv.gz"
+    with gzip.open(path,"wt") as f:
+        f.write("idx,smiles,homolumogap\n")
+        for idx in range(30):f.write(f"{idx},{smiles.get(idx,'C'*(idx+1))},{float(idx)/10}\n")
+        f.write("30,PROTECTED,not-a-label\n")
+    m=json.loads((fixed/"manifest.json").read_text())
+    m["store_assets"]["source"]=[{"file":path.name,"sha256":sha256_file(path)}]
+    m["store_assets"]["topology"][0]["sha256"]=sha256_file(fixed/"train.pt")
+    (fixed/"manifest.json").write_bytes(json_bytes(m))
+    r["source_manifest_sha256"]=sha256_file(fixed/"manifest.json");r=compatible_rule(r)
+    ledger=fixture_ledger(tmp_path);out=tmp_path/"identity"
+    with pytest.raises(ValueError,match="unresolved molecular"):
+        prepare_unified_roles(boundary=tmp_path,fixed_root=fixed,output_root=out,rule=r,fallback_ledger=ledger,identity_only=True)
+    return fixed,r,out
+
+
+def test_exception_proof_reuses_exact_cached_features_and_expanded_ledger(tmp_path):
+    fixed,r,identity=proof_fixture(tmp_path)
+    output=tmp_path/"proof"
+    report=audit_exception_graphs(boundary=tmp_path,fixed_root=fixed,identity_root=identity,output_root=output,
+        rule=r,audit_sha256=sha256_file(identity/"molecular_identity_audit.json"))
+    assert report["verified_si_rows"]==2 and report["unresolved_rows"]==0
+    ledger=output/"fallback_ledger.json"
+    keys=load_fallback_keys(ledger,sha256_file(ledger))
+    assert molecular_identity("C[Si](C)(C)(C)C",fallback_keys=keys)[0]
+    r["fallback_ledger_sha256"]=sha256_file(ledger)
+    result=prepare_unified_roles(boundary=tmp_path,fixed_root=fixed,output_root=tmp_path/"final",rule=r,fallback_ledger=ledger)
+    assert result["status"]=="SYNTHETIC_DATA_ROLES_VERIFIED"
+    assert not report["graphs_rebuilt"] and not report["data_role_accepted"]
+
+
+@pytest.mark.parametrize("kind",["non_si","graph_tamper","audit_pin"])
+def test_exception_proof_cannot_release_other_chemistry_or_graph_mismatch(tmp_path,kind):
+    fixed,r,identity=proof_fixture(tmp_path,non_si=kind=="non_si",tamper_graph=kind=="graph_tamper")
+    output=tmp_path/"proof"
+    if kind=="audit_pin":
+        with pytest.raises(ValueError,match="audit SHA"):
+            audit_exception_graphs(boundary=tmp_path,fixed_root=fixed,identity_root=identity,output_root=output,rule=r,audit_sha256="0"*64)
+        assert not output.exists();return
+    report=audit_exception_graphs(boundary=tmp_path,fixed_root=fixed,identity_root=identity,output_root=output,
+        rule=r,audit_sha256=sha256_file(identity/"molecular_identity_audit.json"))
+    assert report["unresolved_rows"]==1 and not report["data_role_accepted"]
+    ledger=json.loads((output/"fallback_ledger.json").read_text())
+    assert (2 if kind=="non_si" else 0) not in [e["source_idx"] for e in ledger["entries"]]

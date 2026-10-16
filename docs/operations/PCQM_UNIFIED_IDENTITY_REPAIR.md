@@ -76,3 +76,30 @@ r2 failure records remain unchanged. New source/rule/CPU receipts and retrieved
 audit outcomes are stored separately under the owning platform record tree.
 No private mirror, indexed-input ABI or Modern2D release follows from identity
 tests alone. Stop after the authorized data acceptance or an actionable block.
+
+## Evidence-qualified expansion
+
+The user separately authorized admitting additional **same-class Si** exceptions
+only after all per-structure checks pass. `--verify-exceptions` reuses the same
+thin CPU CLI, source/hash boundary and `PackedGraphDataset`; its OGB feature
+calculation calls the existing `_unsanitized_ogb_payload`, not a copied builder.
+It compares exact atom9, edge-index and bond3 tensors against SHA-pinned accepted
+train graphs, validates source SMILES SHA and canonical identity, checks every
+cyclic atom reordering and serialization round-trip, and records failures.
+No source graph/cache, label, bond or charge is modified. An original full audit
+SHA and its rule are mandatory. Only official-train source rows are decoded.
+
+`MOLGAP_VERIFY_EXCEPTIONS=1`, `MOLGAP_IDENTITY_ROOT` and
+`MOLGAP_IDENTITY_AUDIT_SHA` select this read-only CPU proof. A distinct private
+output root retains `exception_graph_audit.json` and any individually proven
+Si-only `fallback_ledger.json`. The new ledger pins the proof bytes and parent
+source identities; preparation checks these in addition to the ledger SHA.
+`MOLGAP_FALLBACK_LEDGER` can explicitly select a later frozen verified ledger.
+
+Partial proof is **not** complete data acceptance. A different error class,
+unstable identity or any feature mismatch remains blocked. Even a non-Si
+structure with stable identity and matching graph tensors cannot enter the
+Si-only ledger. Do not rerun a complete inventory merely to rediscover already
+documented unresolved members; preserve the evidence and request the missing
+authority or representation decision. Every later rule/source has a new frozen
+identity, never an overwrite of r2/r3 results.

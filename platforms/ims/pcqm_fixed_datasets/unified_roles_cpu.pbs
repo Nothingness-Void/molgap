@@ -14,9 +14,18 @@ case "$STAGE" in "$BOUNDARY"/*) ;; *) exit 2 ;; esac
 case "$OUTPUT" in "$BOUNDARY"/*) ;; *) exit 2 ;; esac
 case "$OUTPUT" in "$BOUNDARY/pcqm4mv2-fixed-v1"*) exit 2 ;; esac
 case "$IDENTITY_ONLY" in 1) EXTRA=(--identity-only) ;; 0) EXTRA=() ;; *) exit 2 ;; esac
+if test "${MOLGAP_VERIFY_EXCEPTIONS:-0}" = 1; then
+  IDENTITY_ROOT="${MOLGAP_IDENTITY_ROOT:?explicit identity audit root required}"
+  test "$(realpath "$IDENTITY_ROOT")" = "$IDENTITY_ROOT"
+  case "$IDENTITY_ROOT" in "$BOUNDARY"/*) ;; *) exit 2 ;; esac
+  EXTRA=(--verify-exceptions --identity-root "$IDENTITY_ROOT" --identity-audit-sha256 "${MOLGAP_IDENTITY_AUDIT_SHA:?explicit audit SHA required}")
+fi
 export PYTHONPATH="$STAGE/code/src"
 export CUDA_VISIBLE_DEVICES=-1 HIP_VISIBLE_DEVICES=-1 ROCR_VISIBLE_DEVICES=-1
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+FALLBACK_LEDGER="${MOLGAP_FALLBACK_LEDGER:-$STAGE/code/experiments/pcqm_k1_scale500k/parser_fallback_audit_v4.json}"
+test "$(realpath "$FALLBACK_LEDGER")" = "$FALLBACK_LEDGER"
+case "$FALLBACK_LEDGER" in "$BOUNDARY"/*) ;; *) exit 2 ;; esac
 umask 077
 cd "$STAGE"
 printf 'CPU_ONLY job=%s identity_only=%s source_stage=%s\n' "${PBS_JOBID:-UNKNOWN}" "$IDENTITY_ONLY" "$STAGE"
@@ -24,5 +33,5 @@ printf 'CPU_ONLY job=%s identity_only=%s source_stage=%s\n' "${PBS_JOBID:-UNKNOW
   --boundary "$BOUNDARY" --fixed-root "$BOUNDARY/pcqm4mv2-fixed-v1" \
   --output-root "$OUTPUT" --rule "$STAGE/rule.json" --workers 3 \
   --role-inventory "$STAGE/role_inventory.json" \
-  --fallback-ledger "$STAGE/code/experiments/pcqm_k1_scale500k/parser_fallback_audit_v4.json" \
+  --fallback-ledger "$FALLBACK_LEDGER" \
   "${EXTRA[@]}"

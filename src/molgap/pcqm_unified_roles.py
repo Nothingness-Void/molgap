@@ -265,7 +265,12 @@ def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1,
             raise ValueError("Frozen molecular parser bytes changed")
         if fallback_ledger is None:
             raise ValueError("ROLE_BLOCKED: frozen fallback ledger required")
-        fallback_keys = load_fallback_keys(_safe(boundary, fallback_ledger), rule["fallback_ledger_sha256"])
+        ledger_path = _safe(boundary, fallback_ledger)
+        fallback_keys = load_fallback_keys(ledger_path, rule["fallback_ledger_sha256"])
+        ledger = json.loads(ledger_path.read_text())
+        if ledger.get("format") == "molgap-pcqm-unified-accepted-si-ledger-v1" and any(
+                ledger.get(k) != rule[k] for k in ("source_manifest_sha256","source_acceptance_sha256")):
+            raise ValueError("ROLE_BLOCKED: Si proof belongs to different source assets")
     if rule["scope"] != "CPU_SYNTHETIC_ONLY" and sha256_file(Path(__file__)) != rule["generator_sha256"]:
         raise ValueError("Actual generator bytes differ from the frozen source")
     if rule["scope"] != "CPU_SYNTHETIC_ONLY":
