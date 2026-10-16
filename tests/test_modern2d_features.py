@@ -4,7 +4,8 @@ import pytest
 import torch
 from torch_geometric.data import Batch
 
-from molgap.modern2d_inputs import topology_views, validate_feature_binding, BINDING_FIELDS
+from molgap.modern2d_inputs import topology_views
+from molgap.modern2d_feature_binding import validate_feature_binding, BINDING_FIELDS
 from molgap.ppgt_features import rrwp, positional_inputs, sinusoidal_pe, feature_cost
 from molgap.esa_features import shared_endpoint_mask, edge_tokens
 from modern2d_fixtures import graph, batch
@@ -98,8 +99,10 @@ def test_binding_checks_all_identities_and_no_fake_cache_sha():
 
 
 def test_cpu_safety_caps_precede_dense_features():
+    large = graph(257)
+    large.x[:, 0] = 5
     with pytest.raises(ValueError, match="node safety cap"):
-        topology_views(Batch.from_data_list([graph(257)]))
+        topology_views(Batch.from_data_list([large]))
     g = graph(2)
     g.edge_index = g.edge_index.repeat(1, 513)
     g.edge_attr = g.edge_attr.repeat(513, 1)

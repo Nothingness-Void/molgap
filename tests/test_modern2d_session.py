@@ -50,10 +50,13 @@ def test_exact_actual_session_midpass_resume_and_readonly_eval(tmp_path, family)
     assert FamilyRecipe.from_dict(json.loads(json.dumps(recipe.to_dict()))).identity == recipe.identity
     result = complete.run()
     expected = deepcopy(complete.state_dict())
-    before_eval = deepcopy(complete.state_dict())
-    evaluation = complete.kernel.evaluate(complete.loaders)
-    assert_equal(before_eval, complete.state_dict())
-    assert evaluation.rows == 3
+    readonly, _, _, _ = make_session(tmp_path, family, [])
+    readonly.load_state_dict(expected)
+    before_eval = deepcopy(readonly.state_dict())
+    evaluation = readonly.kernel.evaluate(readonly.loaders)
+    assert_equal(before_eval, readonly.state_dict())
+    assert evaluation["source_idx"].numel() == 3
+    readonly.close()
     log = []
     first, _, _, _ = make_session(tmp_path, family, log)
     assert first.run(should_pause=lambda: True).optimizer_step == 1
