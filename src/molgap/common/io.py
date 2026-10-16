@@ -58,3 +58,44 @@ def publish_immutable_bytes(path: Path, payload: bytes) -> Path:
         if temporary is not None:
             temporary.unlink(missing_ok=True)
     return path
+
+
+def copy_immutable_file(source: Path, destination: Path, *, expected_sha256: str) -> dict:
+    """Copy then stream-verify; never delete the source or clobber another copy."""
+    from .spec import _digest
+    from ..research_memory.trace import file_digest
+    _digest(expected_sha256, "retained artifact SHA256")
+    source, destination = Path(source).absolute(), Path(destination).absolute()
+    _safe_local(source)
+    _safe_local(destination)
+    if not stat.S_ISREG(source.stat().st_mode) or file_digest(source) != expected_sha256:
+        raise ValueError("Retained source identity mismatch")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if destination.exists():
+        if not stat.S_ISREG(destination.stat().st_mode) or file_digest(destination) != expected_sha256:
+            raise ValueError("Retained artifact retry conflict")
+    else:
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(dir=destination.parent, prefix=".copy-", delete=False) as handle:
+                temporary = Path(handle.name)
+                with source.open("rb") as reader:
+                    while block := reader.read(1024 * 1024):
+                        handle.write(block)
+                handle.flush()
+                os.fsync(handle.fileno())
+            if file_digest(temporary) != expected_sha256:
+                raise ValueError("Copied artifact checksum mismatch; original retained")
+            _safe_local(destination)
+            try:
+                os.link(temporary, destination)
+            except FileExistsError:
+                if file_digest(destination) != expected_sha256:
+                    raise ValueError("Concurrent retained artifact conflict")
+        finally:
+            if temporary is not None:
+                temporary.unlink(missing_ok=True)
+    if file_digest(source) != expected_sha256 or file_digest(destination) != expected_sha256:
+        raise ValueError("Retained artifact changed during relocation")
+    return {"path": str(destination), "sha256": expected_sha256,
+            "bytes": destination.stat().st_size, "original_retained": True}
