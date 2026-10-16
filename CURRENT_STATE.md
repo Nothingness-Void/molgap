@@ -73,9 +73,12 @@ Scientific-input continuation selects the original frozen run before compilation
 new HEADs do not upgrade old tasks. Completed packages are independent of development inputs.
 The [reform follow-up](docs/operations/REFORM_MIGRATION.md#a-g-completion-re-audit-and-bounded-follow-up-2026-10-17)
 extends original-run inspection/acceptance/recovery and the owning Kaggle retrieval
-adapter, bounded artifact census and retained timing observations. Desktop remains
-unapplied; G source regrouping waits for cross-owner acceptance. Live latency and
-arbitrary recipe compilation remain unestablished; no new compute
+adapter, bounded artifact census and retained timing observations. The subsequent
+[server-only completion](docs/operations/REFORM_MIGRATION.md#server-only-source-regrouping-and-recovery-2026-10-17)
+adds compatible training/model/data namespaces, lazy historical constants and
+content-keyed source reuse, accepted as `INFRA_CPU_ACCEPTED` for the server-local
+scope after isolated package and continuation checks. Desktop application is explicitly excluded by the user.
+Live latency and arbitrary recipe compilation remain unestablished; no new compute
 or scientific release follows.
 The shared CLI is a local identity, packaging, diagnostic, receipt, preparation,
 inspection, and terminal entry point; it is never a platform submitter.

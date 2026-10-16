@@ -33,8 +33,11 @@ and job status belong in `CURRENT_STATE.md`; Track A/B/C ownership belongs in
 | Bounded local artifact census | `artifact_inventory.py` | Explicit selections only; metadata/size counts never authorize cleanup |
 | Original run-ID lifecycle / measured preparation timings | `experiment_run.py`, `experiment_timings.py`, existing lifecycle owners | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md); local operations only, no inferred scientific verdict |
 | Scientific config compiler / editable references / fixed runtime distribution | `experiment_input.py`, `common/declarations.py`, `experiment_source_inventory.py`, existing Recipe/package/workflow owners | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |
-| Standard substrate slots / addon parameters | `model_substrate.py` and existing Spec/execution registries | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md) |
-| Native Live/Raw/Clean weight actions | `family_training_state.py`; shared kernel owns forward/update | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#2-calibrate-and-retain-clean-ema) |
+| Training loop / Session / retained state | `training/core.py`, `training/session.py`, `training/state.py`; old `family_training_*` imports alias these owners | [shared core](docs/operations/FAMILY_TRAINING_CORE.md) |
+| Standard substrate slots / addon parameters | `models/substrate.py`; `model_substrate.py` aliases it | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md) |
+| Frozen GPTrans model | `gptrans.py`; `models/gptrans.py` aliases this byte-pinned exception | [module index](docs/operations/ARCHITECTURE_MODULE_INDEX.md) |
+| Packed/fixed/indexed loaders | `data/packed_graph.py`, `data/fixed_records.py`, `data/indexed_inputs.py`; legacy imports alias them | [Unified V2 contract](docs/operations/PCQM_UNIFIED_ROLES_V2.md) |
+| Native Live/Raw/Clean weight actions | `training/state.py`; shared kernel owns forward/update | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#2-calibrate-and-retain-clean-ema) |
 | One-batch local model gate | `fast_sandbox.py` | [sandbox](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#3-check-one-batch-locally) |
 | Optional source closure diagnostic | `source_dependencies.py`; new preparation uses fixed runtime inventory | [dependency handoff](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#4-discover-package-and-hand-off) |
 

@@ -5,6 +5,10 @@
   "baseline_inventory_commit": "f6ec2ad02ea9105c75217bd7e9e0cdb70331229d",
   "files": [
     {
+      "sha256": "32e84217ed0f9a60ce5cc6164c444ff0833dd1d3b173de83e5f79ed5d8f4e107",
+      "path": "src/molgap/__init__.py"
+    },
+    {
       "sha256": "9ca9e4fbc7068146d6352b64d03a1bce817522dec97421c09e7f1049f5161328",
       "path": "src/molgap/artifact_inventory.py"
     },
@@ -49,6 +53,30 @@
       "path": "src/molgap/common/wire.py"
     },
     {
+      "sha256": "9a65600c824f367249890a5e0bd1c969df419f072b5be238027b49ffe58f644f",
+      "path": "src/molgap/compat/__init__.py"
+    },
+    {
+      "sha256": "2420b0f301e3b47aaa60953a10039c3952ccfaa49599b823500218369203d48d",
+      "path": "src/molgap/compat/legacy_constants.py"
+    },
+    {
+      "sha256": "2ee9550ae36992caad43a00665767a0361583cddec8739a878d8d1a01f0b3e12",
+      "path": "src/molgap/data/__init__.py"
+    },
+    {
+      "sha256": "8892b87447b8a5622d8a6af8a1917b350db48b5a86669bb9ee1fe511d2be7333",
+      "path": "src/molgap/data/fixed_records.py"
+    },
+    {
+      "sha256": "9f537078b2d12fde29943a22541a14fd8c9210cb36ac425475b47429f969bfc0",
+      "path": "src/molgap/data/indexed_inputs.py"
+    },
+    {
+      "sha256": "95dada4f837b51f260c722673abd2df89efa794d9e4a9fd75dab4c4e8a43209f",
+      "path": "src/molgap/data/packed_graph.py"
+    },
+    {
       "sha256": "a2d1b8e6f6cd1185891f4f935cd44769a5465346dec8fc97021b9cf02ea69689",
       "path": "src/molgap/experiment_cli.py"
     },
@@ -65,7 +93,7 @@
       "path": "src/molgap/experiment_input.py"
     },
     {
-      "sha256": "c86bb08fb947454bbaf9c9c9bb98318509189c6f087f8ade0ee45cb2370dbc99",
+      "sha256": "064f71740857dfa1aa158cb2fe089d26ec2aeb5088aea6f53112fdf4ac2f25fe",
       "path": "src/molgap/experiment_package.py"
     },
     {
@@ -73,7 +101,7 @@
       "path": "src/molgap/experiment_run.py"
     },
     {
-      "sha256": "59c4a5c25ede4fb045862c5f85119cfad1367a6d88c77842b5d896935125de6c",
+      "sha256": "4a27108254665458a2ef940659125e4c68f0dfe0d2e710466eda61d9298f07ea",
       "path": "src/molgap/experiment_source_inventory.py"
     },
     {
@@ -97,7 +125,7 @@
       "path": "src/molgap/family_model_ops.py"
     },
     {
-      "sha256": "2d8cd62aa2ed1e6e04547f4a9e8de6f794971258af99a6d4e165a9abd98dfea8",
+      "sha256": "9bf6337da54c91ad32c4bcbde2d72b7362bc174051b4c084809c3ed59ac63429",
       "path": "src/molgap/family_training_core.py"
     },
     {
@@ -129,11 +157,11 @@
       "path": "src/molgap/family_training_runner.py"
     },
     {
-      "sha256": "371e4542ce77b1e902c7d375542dcc7c0bc6bb845e46f0490e884decf18441b8",
+      "sha256": "e40a43aa588456e6c0c915689c63cba7396700a58a16f3ee1dfb04b4fbcfa468",
       "path": "src/molgap/family_training_session.py"
     },
     {
-      "sha256": "98e62d209da93d45b5afc47bebb045ea148b6e0f31cd338216136fcddd1dee63",
+      "sha256": "02c00ef8a4c99599a2e6a47a7d805c1fbed84c5d8877db615bc4a1f53a67cd1b",
       "path": "src/molgap/family_training_state.py"
     },
     {
@@ -173,20 +201,36 @@
       "path": "src/molgap/local_runtime.py"
     },
     {
-      "sha256": "57a24a87cea9dac059cec1421fea903829f334292e35c16b43cbeae05501f7e2",
+      "sha256": "90c55a14d5691e7be3de7d398bf54ffe8de6312ed38cbd66a3dc905f78c8eb71",
       "path": "src/molgap/model_substrate.py"
     },
     {
-      "sha256": "552215051a08fe171ab950c3d57449eba2441c1fa95f87ab53207d28b70b3122",
+      "sha256": "1bc56f615112fbbc7519b57a1cc4f0a24deb874f1c64199bc411f8f1cfd9d868",
+      "path": "src/molgap/models/__init__.py"
+    },
+    {
+      "sha256": "f254babad172efdb15e294fcfe9cea1778c80dc16a820076d991870b70bb5045",
+      "path": "src/molgap/models/gptrans.py"
+    },
+    {
+      "sha256": "cc17b6d300d18c86dc005b650fdf3affc224586136fc7a2feedfba42b0c1258c",
+      "path": "src/molgap/models/substrate.py"
+    },
+    {
+      "sha256": "eeac6d4958cb8de6a9f42577e20ae06e386242aabd18490c21fc463785b95dc2",
       "path": "src/molgap/packed_graph_dataset.py"
     },
     {
-      "sha256": "a7e017923ce94b4c609f19947ac72dcbcea397f7e31b5e25aeee56591fcd3566",
+      "sha256": "4a3082145caafa5f91bb7b80ff723b0c22ababad093fd1dc9ef661c7d25f44ab",
       "path": "src/molgap/pcqm_fixed_records.py"
     },
     {
-      "sha256": "6a0e687288021f0b0fda1d37234adc59d300b15f35ff78728744fd50f0115287",
+      "sha256": "16aca3412fef65029d7dede43f04bd65e1f7eeb2ed503216ad32fd91f59744a1",
       "path": "src/molgap/pcqm_indexed_inputs.py"
+    },
+    {
+      "sha256": "de0b284f39200ad6e16f3274adfbb25d44d8a0289dc924df9e37ee7ec8434944",
+      "path": "src/molgap/research_memory/portability.py"
     },
     {
       "sha256": "212a16060fbe250c517f68c857e1ef2c96e161eb9fd0af977e879a7faea542e0",
@@ -199,6 +243,22 @@
     {
       "sha256": "c3b1c697ab052887a3f26f590dc82a1089c328b85132cb33968554610084f567",
       "path": "src/molgap/substrate_scale_addon.py"
+    },
+    {
+      "sha256": "ebd9c8def17b68a0868ad75e203a03b43d38b7a2c9d39b9578cef91c008e00a9",
+      "path": "src/molgap/training/__init__.py"
+    },
+    {
+      "sha256": "d5ae7041999827fe0f6363ded03894b0c6edcdb26e13113b068288553238024e",
+      "path": "src/molgap/training/core.py"
+    },
+    {
+      "sha256": "f4438b9d6a34bf330343cbb7f347da271a097339c1112778063bb8d275a7295b",
+      "path": "src/molgap/training/session.py"
+    },
+    {
+      "sha256": "7c4563cc3c1bedcf1d5c8bbb61b40f5c95c1959b412b871fb6929f6beb56848e",
+      "path": "src/molgap/training/state.py"
     },
     {
       "sha256": "584a2b38ea408259018c4c19d8871656e446521229817d7e223006af31d6fb76",

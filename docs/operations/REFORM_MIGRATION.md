@@ -598,3 +598,189 @@ pins remained identical; no historical scientific conclusion, V5 text, training
 core, recipe, optimizer, sampler, resume owner, platform submission journal or
 canonical RML implementation was changed. No remote push, GPU job, dataset
 rebuild, protected-role access, model promotion or worktree cleanup occurred.
+
+## Server-only source regrouping and recovery (2026-10-17)
+
+The user subsequently authorized the remaining reform on `molgap-server`,
+explicitly excluding Desktop synchronization. This changed the earlier G
+deferral: the server may organize its own implementation while keeping a
+reviewable portable patch. It did not authorize training, protected roles or
+rewriting historical contracts. The earlier dated results above are unchanged.
+
+### Replaced paths and retained compatibility
+
+Five GPT-6.1 Sol/high implementation workers had disjoint ownership. They
+relocated existing implementations rather than creating new training/data
+systems; the coordinator integrated packaging and public-import boundaries.
+
+| Existing responsibility | Implementation owner | Preserved reader |
+|---|---|---|
+| Family loop, Session and complete state | `training/core.py`, `training/session.py`, `training/state.py` | Old `family_training_*` modules alias the same module objects |
+| Substrate slots, attachment and parameter ownership | `models/substrate.py` | `model_substrate.py` aliases it |
+| Packed graphs, fixed manifest records and bounded indexed loading | `data/packed_graph.py`, `data/fixed_records.py`, `data/indexed_inputs.py` | Old module objects, private monkeypatch paths and pickle names |
+| Nine historical-only constants | `compat/legacy_constants.py` | Lazy `constants` and package exports, including old star imports |
+| Frozen GPTrans implementation | Original `gptrans.py` | `models/gptrans.py` aliases the original implementation |
+
+The GPTrans exception is deliberate: `pcqm_gptrans_v4.py` hashes the literal
+historical file, not merely equivalent equations. Its raw SHA256 remains
+`04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2`.
+No expected hash or scientific identity was relaxed to accommodate a move.
+The LF attribute protects these exact bytes on subsequent checkouts.
+
+Historical type/function `__module__` names are retained for pickles. Old/new
+imports share one implementation and globals, rather than maintaining copies
+or hiding private monkeypatches behind star imports. Package imports remain
+lazy. Live model registry, asset locations and inference defaults are unchanged.
+Runtime source inventories and the older CPU cycle stage include the new
+implementation closure; RML portability includes the lazy compatibility owner.
+The portable reform inventory contains 67 normalized-source pins. Matching it
+does not imply Desktop installation or native qualification.
+
+### Source archive reuse without identity reuse
+
+The existing six-file package and verifier were retained. Source cache keys now
+cover builder version, exact selected paths and normalized committed payload
+digests instead of the current commit string. An unrelated documentation commit
+can reuse the archive bytes; its package receives fresh commit/inventory
+sidecars and a distinct package identity. Original cached metadata is checked
+before rebinding; the ordinary verifier rechecks all actual archived payloads.
+Dirty or filter-hidden source, corrupt archives/sidecars and a changed HEAD
+before publication fail closed. There is no reuse of another Spec, receipt or
+scientific acceptance.
+
+The cache's creation provenance is retained unchanged. V1/V2 package readers and
+old cache objects remain intact; the versioned new key causes one cold miss
+when transitioning from commit-keyed caches. Identical payloads with a
+seed-only synthetic Spec reuse the source bytes, but changed included recipe
+bytes intentionally rebuild the full archive. That is not a promise of archive
+reuse when actual packaged contents differ.
+
+### Verified physical worktree retirement
+
+Only this chat's ended `codex/reform` worktree at
+`C:/Users/Adminn/.codex/worktrees/modern2d-cpu/molgap` was retired. Its HEAD was
+`23784af09e0b339c52814641db28ceb8ea393719`; nonignored working files were clean.
+Before retirement, the editable environment was checked against its actual
+`.pth` target and process command lines were checked for dependencies on this
+exact worktree. Neither check authorized changing the environment itself.
+
+All 733 ignored regular files (12,468,914 logical bytes) were stream-copied and
+hash-verified under
+`E:/MolGap/artifacts/reform/retained-worktree-modern2d-cpu-23784af0/ignored/`.
+The immutable `ignored_files_manifest.json` SHA256 is
+`2ec4f3438d4f99c3fedb77a2f5ac21f2714eda49a74be5d899d1b3cb585e017a`.
+It describes the pre-retirement copy observation, when originals still existed;
+its original-retained flags were not rewritten after cleanup. A verified
+complete-history `source-history.bundle` preserves the old branch at the same
+E-drive root (152,191,128 bytes; SHA256
+`62bcd012a420df6fcc1146dab39f456dfcb3f9be52bd0f37e58da882652192c7`).
+
+The app's recoverable worktree archive completed: the attachment became
+`archived_worktree`, and Git's registered physical worktrees fell from five to
+four. The retained source bundle and ignored files provide an additional
+independent recovery route. The main checkout, archive-branch worktree,
+other-owner detached checkout and frozen staging checkout were not removed.
+Logical byte counts are not measured reclaimed filesystem allocation. This is
+one exact safe retirement, not a claim that every historical copy is redundant.
+
+### CPU evidence and completion scope
+
+Luna leaf workers executed all tests directly with separate E-drive scratch and
+reports, hidden CUDA and single-threaded CPU kernels. The main agent executed
+no tests. The raw reports below overlap; they are not independent experiments.
+
+| Report under `E:/MolGap/artifacts/reform/` | Result | Scope |
+|---|---|---|
+| `server-completion-training-43b5789f-9c8e-4c1a-ae90-4b32113b4639.xml` | 142 passed, 16.380s | Frozen AST parity, module/pickle aliases and existing loop/Session/state including interruption and recovery |
+| `server-completion-models-b818528215034a4f8f4b906abfce1d44.xml` | 78 passed, 68.410s | Model migration, substrate slots, sandbox and topology reuse before GPTrans's byte-pin exception |
+| `server-completion-models-18cc4af07052421e8fe9f04fe64b690e.xml` | 23 passed, 35.190s | Final model namespace and unchanged GPTrans V4 initial parameter/source identity |
+| `server-completion-data-6fe5ecd2d70742af9e53deab7c76418e.xml` | 52 passed, 53.991s | Data aliases/ABI/indexed negative cases and all historical constants/inference defaults |
+| `server-completion-cacheworker-62c20e41-237a-4421-9c61-ea203eed486a.xml` | 89 passed, 1 skipped, 135.909s | Package/cache, fresh cross-commit sidecars, retry and corruption negatives |
+
+The cache skip is native symlink creation unavailable on this host; it is not a
+passing symlink capability. The separate portability JUnit at
+`E:/MolGap/artifacts/reports/portability-9c8bc9fb23e4417b82d9b7a90ccfc233.xml`
+passed two cases in 2.552s (SHA256
+`b5c8313bb3faab7c19bc10336dd1c1f236cfce38e2df18f8ec343d4972cf0b9c`).
+
+Implementation commits are `712146e9` (G owners/compatibility and runtime
+closure) and `5bfc5ab2` (D verified content cache). Final isolated-distribution,
+scientific-input and portable-inventory evidence is recorded below after the
+committed-source check; no pending check is described as accepted here.
+
+Desktop remains `NOT_APPLIED` by explicit user scope, not a server code blocker.
+Authenticated upload/source-ready/receipt latency, accelerator qualification,
+arbitrary recipe overrides and unexamined historical storage remain outside
+the CPU evidence. Existing native gates and unsupported-family limits remain
+unchanged. No remote job, dataset rebuild, protected-role access, promotion,
+shared-environment rewrite or bulk historical deletion occurred.
+
+### Final integration observations
+
+The first portable inventory check had seven passes and one sorting failure:
+all 67 unique files matched their normalized hashes, but PowerShell's cultural
+ordering put underscores before directory separators. The inventory was sorted
+by ordinal POSIX paths without changing any hash. The targeted rerun passed all
+four compatibility cases in 0.419s; the four reuse-skill cases were not rerun.
+Both reports remain at `E:/MolGap/artifacts/reports/`:
+`shared-reuse-2c762aed8a2448668aaaedec62f0e210.xml` (original red report) and
+`shared-compat-abaa81ccc40342a9935433b73b43682a.xml` (green SHA256
+`6ca74c3ac8251452720c3e0915e9eb76e96185427b3c9c59317f292f7448838f`).
+The 14 pre-existing user file pins also matched raw bytes, including the dirty
+RML-derived outputs, experiment READMEs and `tests/test_research_memory.py`.
+They were not staged, overwritten or made part of these commits.
+
+The first final-source invocation at `5bfc5ab2` passed all 20 scientific-input
+cases in its 181.31s run, but its separate actual-distribution case was blocked
+before publishing a package by the existing clean-source gate. Adding the LF
+attribute left Git's old stat entry flagging `gptrans.py` despite identical raw
+bytes/blob identity; staging that exact unchanged file refreshed the index,
+with no content change or commit. The frozen SHA gate was not bypassed.
+The original failed report/log were retained under
+`E:/MolGap/artifacts/reform/server-completion-final-distribution-18658996-5cb3-47a7-ba81-dd634e31e882.*`.
+Only the blocked distribution case was selected for a fresh check after the
+source/index were confirmed clean; the 20 successful cases were not repeated.
+
+The four edited navigation documents had 319 checked pointers, eight anchors
+and zero issues; three focused documentation-owner tests passed in 0.45s.
+That report precedes this final appendix, which receives an incremental check.
+The complete earlier navigation report is
+`E:/MolGap/artifacts/reports/docs-owner-0098f78971e545aa901155798144d27d.json`,
+SHA256 `4fd087e4aa4159d96abe8dfa185f9c7ff32a9fc2af82e6bf9568063fbab967de`.
+
+The single distribution rerun passed in 30.424s JUnit time at unchanged
+`5bfc5ab2f385587a5ec06c150ccd96c5a90ff804`. Its independently extracted
+439-file archive contained 1,307,066 bytes. Cold/warm package samples were
+5.469637/3.787575s; the isolated CPU child took 16.836722s. Both K1 and GPTrans
+addon sandbox checks passed, and the original Core/Session/State suites passed
+all 116 cases inside that extracted package. Every loaded MolGap module came
+from the package, not the host checkout. Cold/warm packages reused identical
+archive bytes while retaining distinct package identities. These are individual
+local samples, not p50/p95 estimates or proof of five-minute remote receipts.
+
+The green outer JUnit is
+`E:/MolGap/artifacts/reform/server-completion-final-distribution-rerun-bcf54746-d58f-4088-9b36-dcc626cacabd.xml`,
+SHA256 `6be7afbeb82bd01c8b42b283b378fcb026b672803196dc5c2b1ca314091f31b1`.
+The extracted-package nested JUnit is retained below the corresponding E-drive
+scratch at `test_committed_distribution_im0/driver/cpu-state.xml`, SHA256
+`719509b03bfd38cd0c682493b8c9ff9b225a19854a2dd7e430adf205952ff5f2`.
+The initial 20-pass/one-blocked JUnit SHA256 is
+`e0eb00f123a3e1d778125e1a551cac80b68bfc66976f023fec2398331945d754`;
+neither that evidence nor either earlier red report was discarded or xfailed.
+
+Delivered status: **INFRA_CPU_ACCEPTED for the server-local reform scope**.
+A/new-task B, the supported K1/GPTrans C-D path, existing E journal/lifecycle,
+server documentation F and bounded active-owner G now have CPU evidence.
+This task did not add a second core, catalog, RML database, submitter or generic
+cleanup service. G is responsibility-based relocation, not a claim of net
+source-line deletion; the earlier duplicate workflow removal remains separately
+measured above. One ended physical checkout was actually retired recoverably.
+
+Remaining boundaries are explicit: Desktop synchronization was excluded; live
+authenticated latency has **INSUFFICIENT_EVIDENCE**; unexamined historical
+directories are not declared safe to delete. Source-pinned historical paths,
+registry-backed compatibility constants and unsupported scientific recipe/input
+changes remain with their owning contracts. None is silently promoted to a
+supported arbitrary override. New native/model/data qualification is separate
+from this CPU reform acceptance. The implementation commits and final compact
+records are local to `molgap-server`; no push was performed in this task.
