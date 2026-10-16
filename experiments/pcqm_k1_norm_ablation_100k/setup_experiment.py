@@ -121,7 +121,7 @@ def setup_plans_and_declarations():
     profile = ExecutionProfile(
         owner="desktop",
         track="B",
-        platform="kaggle1",
+        platform="kaggle2",
         hardware="Tesla_T4x2_shared_allocation",
         cheapest_falsifier="one matched seed42 T4x2 execution diagnostic comparing single-forward BN vs AdaRMSNorm",
         estimated_device_hours=8.0,
@@ -233,6 +233,12 @@ def setup_plans_and_declarations():
             "k1_ada_rmsnorm": "data/pcqm_fixed_100k_v1/manifest.json",
         },
     )
+    wf_path = HERE / "workflow_plan.json"
+    wf = json.loads(wf_path.read_text(encoding="utf-8"))
+    acc_ref = REL + "/acceptance_plan.json"
+    if acc_ref in wf.get("source_files", []):
+        wf["source_files"].remove(acc_ref)
+        wf_path.write_bytes((json.dumps(wf, indent=2, sort_keys=True) + "\n").encode("utf-8"))
     print("Envelopes frozen successfully.")
 
 

@@ -1,8 +1,8 @@
 # Protocol - K1 Normalization Ablation 100K Dual-Arm Comparison
 
 ## User Authorization and Scope
-- User explicit directive: Submit a 100K dual-arm experiment on Kaggle1.
-- Target hardware: Kaggle1 private Notebook with 2x Nvidia Tesla T4 GPUs (`NvidiaTeslaT4`).
+- User explicit directive: Submit a 100K dual-arm experiment on Kaggle2 (`kaseichou`).
+- Target hardware: Kaggle2 private Notebook with 2x Nvidia Tesla T4 GPUs (`NvidiaTeslaT4`).
 - Allocation envelope: 28,800 seconds (8.0 wall hours) maximum allocation, with 180s cleanup reserve.
 - Strict pure 2D: PCQM4Mv2 molecular graph topology (OGB atom9/bond3/RWSE16). No 3D conformer construction or geometric coordinates.
 

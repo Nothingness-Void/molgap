@@ -1,11 +1,11 @@
 # Remote Handoff - K1 Normalization Ablation 100K Dual-Arm Comparison
 
 ## Execution Identity
-- Platform: Kaggle1
+- Platform: Kaggle2
 - Accelerator: `NvidiaTeslaT4` (2 GPUs: `cuda:0` and `cuda:1`)
-- Kernel: `nothingnessvoid/molgap-k1-norm-ablation-100k-s42`
-- Source Dataset: `nothingnessvoid/molgap-k1-norm-ablation-100k-s42-src`
-- Fixed Dataset: `nothingnessvoid/pcqm4mv2-ogb-fixed-100k-v1`
+- Kernel: `kaseichou/molgap-k1-norm-ablation-100k-s42`
+- Source Dataset: `kaseichou/molgap-k1-norm-ablation-100k-s42-src`
+- Fixed Dataset: `kaseichou/pcqm4mv2-ogb-fixed-100k-v1`
 - Manifest SHA256: `1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d`
 
 ## Dual Arms
