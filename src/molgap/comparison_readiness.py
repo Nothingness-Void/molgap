@@ -118,7 +118,7 @@ def metric_observation_contract(identity, metric, *, selected=True):
     if definition.get("role_identity") != role:
         reasons.append("MISMATCH:declared_metric_role")
     if (not isinstance(role,str) or not role.startswith("internal_") or
-            any(p in role.lower() for p in ("audit","official","test","ood","protected","external","shadow"))):
+            any(p in role.lower() for p in ("audit","official","test","ood","p8","protected","external","shadow"))):
         reasons.append("ROLE_BLOCKED:declared_metric_role")
     weights = ("live" if metric != "ema_dev_metric" else
                canonical_weight_state(definition.get("weights")))

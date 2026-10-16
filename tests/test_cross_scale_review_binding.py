@@ -146,3 +146,13 @@ def test_reviewed_raw_ema_aliases_are_equivalent_but_clean_ema_is_not():
     assert compare(a,b,**args)["strictness"]=="STRICT_SAME_SCALE"
     for row in b:row["weights"]="clean-ema"
     assert compare(a,b,**args)["strictness"]=="CONTEXT_ONLY"
+
+
+@pytest.mark.parametrize("role", ["internal_development_audit", "internal_development_p8_hard",
+    "internal_development_ood", "internal_official_validation", "internal_test_dev", "internal_development_external"])
+def test_matching_declarations_do_not_authorize_protected_roles(role):
+    i=declared_identity();i.update(evaluation_role_identity=role,selection_role_identity=role)
+    i["metric_semantics"]["live_dev_metric"]["role_identity"]=role
+    rows=bound_curve()
+    for row in rows:row["evaluation_role"]=role
+    assert compare(rows,deepcopy(rows),left_identity=i,right_identity=deepcopy(i))["strictness"]=="CONTEXT_ONLY"

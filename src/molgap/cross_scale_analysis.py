@@ -55,7 +55,7 @@ def import_accepted_trace(root, *, trace_binding, manifest_binding, acceptance_b
                 raise ValueError("Unknown metric unit")
             role = definition["role_identity"]
             if (not (role.startswith("internal_") or role.endswith(":train") or role.endswith(":development")) or
-                    any(term in role.lower() for term in ("official", "test", "ood", "p8", "external", "shadow", "protected"))):
+                    any(term in role.lower() for term in ("audit", "official", "test", "ood", "p8", "external", "shadow", "protected"))):
                 raise ValueError("ROLE_BLOCKED: trace role is not an internal role")
             rows.append({"optimizer_step": observed["optimizer_step"],
                 "sample_presentations": observed["sample_presentations"],
