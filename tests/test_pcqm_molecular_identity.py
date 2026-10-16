@@ -253,3 +253,13 @@ def test_exception_proof_cannot_release_other_chemistry_or_graph_mismatch(tmp_pa
     assert report["unresolved_rows"]==1 and not report["data_role_accepted"]
     ledger=json.loads((output/"fallback_ledger.json").read_text())
     assert (2 if kind=="non_si" else 0) not in [e["source_idx"] for e in ledger["entries"]]
+
+
+@pytest.mark.parametrize("smiles",[e["smiles"] for e in ENTRIES]+["CCO","c1ccccc1","C[Si](C)(C)(C)C","CP(C)(C)(C)(C)C"])
+def test_dependency_free_feature_hook_is_exactly_ogb(smiles):
+    import numpy as np
+    from molgap.pcqm_k1_scale_cache import _unsanitized_ogb_payload
+    from molgap.ogb_features import atom_to_ogb_feature_vector,bond_to_ogb_feature_vector
+    original=_unsanitized_ogb_payload(smiles)
+    local=_unsanitized_ogb_payload(smiles,atom_features=atom_to_ogb_feature_vector,bond_features=bond_to_ogb_feature_vector)
+    assert all(np.array_equal(original[k],local[k]) for k in original)

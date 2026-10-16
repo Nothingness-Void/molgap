@@ -130,6 +130,7 @@ def audit_exception_graphs(*, boundary, fixed_root, identity_root, output_root, 
     from .pcqm_fixed_datasets import _inside
     from .packed_graph_dataset import PackedGraphDataset
     from .pcqm_k1_scale_cache import _unsanitized_ogb_payload
+    from .ogb_features import atom_to_ogb_feature_vector, bond_to_ogb_feature_vector
     from .research_memory.trace import json_bytes
     from rdkit import Chem, rdBase
 
@@ -207,7 +208,8 @@ def audit_exception_graphs(*, boundary, fixed_root, identity_root, output_root, 
                 round_trip.UpdatePropertyCache(strict=False)
                 if _key(round_trip)!=key or (round_trip.GetNumAtoms(),round_trip.GetNumBonds())!=(mol.GetNumAtoms(),mol.GetNumBonds()):
                     raise ValueError("Identity round-trip verification failed")
-                payload=_unsanitized_ogb_payload(smiles)
+                payload=_unsanitized_ogb_payload(smiles,atom_features=atom_to_ogb_feature_vector,
+                                               bond_features=bond_to_ogb_feature_vector)
                 graph=shard.get(idx-start)
                 matches={name:torch.equal(getattr(graph,name),torch.as_tensor(payload[field],dtype=torch.long))
                          for name,field in (("x","node_feat"),("edge_index","edge_index"),("edge_attr","edge_feat"))}

@@ -12,7 +12,9 @@ worker mapping, member selection, graph filtering, acceptance and atomic IO.
 The new identity adapter uses the already accepted scale-cache strategy
 (`sanitize=False`, `UpdatePropertyCache(strict=False)`), not its graph-builder
 function: that function returns OGB features rather than a canonical molecule.
-It does not modify the historical cache implementation, trainer or optimizer.
+It preserves historical cache default behavior, trainer and optimizer. A paired
+optional feature-callable hook lets the same cache helper consume the existing
+dependency-free `ogb_features` contract; local tests check exact OGB equivalence.
 
 The evidence is the existing
 [ten-row audit](../../experiments/pcqm_k1_scale500k/parser_fallback_audit_v4.json)
@@ -83,6 +85,8 @@ The user separately authorized admitting additional **same-class Si** exceptions
 only after all per-structure checks pass. `--verify-exceptions` reuses the same
 thin CPU CLI, source/hash boundary and `PackedGraphDataset`; its OGB feature
 calculation calls the existing `_unsanitized_ogb_payload`, not a copied builder.
+The injected feature functions are the existing dependency-free OGB contract;
+the remote environment need not install the full OGB package.
 It compares exact atom9, edge-index and bond3 tensors against SHA-pinned accepted
 train graphs, validates source SMILES SHA and canonical identity, checks every
 cyclic atom reordering and serialization round-trip, and records failures.

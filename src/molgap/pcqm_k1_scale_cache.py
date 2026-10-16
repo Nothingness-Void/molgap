@@ -27,18 +27,22 @@ from .pcqm_k1_scale import (
 SHARD_SIZE = 5_000
 
 
-def _unsanitized_ogb_payload(smiles: str) -> dict:
+def _unsanitized_ogb_payload(smiles: str, *, atom_features=None, bond_features=None) -> dict:
     """Preserve OGB topology for known hypervalent molecules RDKit rejects."""
     import numpy as np
-    from ogb.utils.features import atom_to_feature_vector, bond_to_feature_vector
     from rdkit import Chem
+    if atom_features is None and bond_features is None:
+        from ogb.utils.features import atom_to_feature_vector, bond_to_feature_vector
+        atom_features, bond_features = atom_to_feature_vector, bond_to_feature_vector
+    elif atom_features is None or bond_features is None:
+        raise ValueError("Both OGB feature callables must be supplied together")
 
     molecule = Chem.MolFromSmiles(smiles, sanitize=False)
     if molecule is None:
         raise ValueError("RDKit could not parse the unsanitized SMILES")
     molecule.UpdatePropertyCache(strict=False)
     node_features = np.asarray(
-        [atom_to_feature_vector(atom) for atom in molecule.GetAtoms()],
+        [atom_features(atom) for atom in molecule.GetAtoms()],
         dtype=np.int64,
     )
     edges = []
@@ -46,7 +50,7 @@ def _unsanitized_ogb_payload(smiles: str) -> dict:
     for bond in molecule.GetBonds():
         source = bond.GetBeginAtomIdx()
         target = bond.GetEndAtomIdx()
-        features = bond_to_feature_vector(bond)
+        features = bond_features(bond)
         edges.extend(((source, target), (target, source)))
         edge_features.extend((features, features))
     if edges:
