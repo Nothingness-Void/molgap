@@ -95,6 +95,10 @@ output root retains `exception_graph_audit.json` and any individually proven
 Si-only `fallback_ledger.json`. The new ledger pins the proof bytes and parent
 source identities; preparation checks these in addition to the ledger SHA.
 `MOLGAP_FALLBACK_LEDGER` can explicitly select a later frozen verified ledger.
+Graph proof/derivation reuses Python paths from the existing IMS runtime
+registry (including the preserved shim), while retaining a CPU-only allocation
+and disabled CUDA visibility. The lightweight RDKit-only audit needs no Torch.
+No runtime installation or training submitter is invoked.
 
 Partial proof is **not** complete data acceptance. A different error class,
 unstable identity or any feature mismatch remains blocked. Even a non-Si

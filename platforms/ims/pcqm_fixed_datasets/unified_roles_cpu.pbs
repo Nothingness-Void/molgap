@@ -21,6 +21,23 @@ if test "${MOLGAP_VERIFY_EXCEPTIONS:-0}" = 1; then
   EXTRA=(--verify-exceptions --identity-root "$IDENTITY_ROOT" --identity-audit-sha256 "${MOLGAP_IDENTITY_AUDIT_SHA:?explicit audit SHA required}")
 fi
 export PYTHONPATH="$STAGE/code/src"
+if test "$IDENTITY_ONLY" = 0 || test "${MOLGAP_VERIFY_EXCEPTIONS:-0}" = 1; then
+  # Reuse the owning runtime registry, not an installation or training launcher.
+  PYTHONPATH="$("$BOUNDARY/molgap/.venv/bin/python" - "$STAGE" "$BOUNDARY" <<'PY'
+import json, os, sys
+from pathlib import Path
+stage, boundary = map(Path, sys.argv[1:])
+registry = stage/'code/platforms/ims/v4_submit/runtime_registry.json'
+runtime = json.loads(registry.read_text())['runtimes']['ims-a100-torch271-v1']
+assert Path(runtime['python']).resolve().is_relative_to(boundary)
+paths = [p.format(code_root=str(stage/'code')) for p in runtime['pythonpath']]
+assert all(Path(p).resolve().is_relative_to(boundary) for p in paths)
+print(os.pathsep.join(paths))
+PY
+)"
+  export PYTHONPATH
+fi
+export PYTHONNOUSERSITE=1
 export CUDA_VISIBLE_DEVICES=-1 HIP_VISIBLE_DEVICES=-1 ROCR_VISIBLE_DEVICES=-1
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 FALLBACK_LEDGER="${MOLGAP_FALLBACK_LEDGER:-$STAGE/code/experiments/pcqm_k1_scale500k/parser_fallback_audit_v4.json}"
