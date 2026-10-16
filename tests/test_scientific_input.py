@@ -364,6 +364,6 @@ def test_ordinary_addon_alias_does_not_waive_real_optimizer_confound(scientific)
     _write_json(path, value)
     _git(case.repo, "add", "--", path.relative_to(case.repo).as_posix())
     _git(case.repo, "-c", "commit.gpgsign=false", "commit", "-m", "Deliberately confounded CPU declaration")
-    with pytest.raises(ValueError, match="not a comparable declared intervention"):
+    with pytest.raises(ValueError, match="outside one logical group.*optimizer_identity"):
         resolve_experiment_input(path, case.repo)
     assert not (case.repo / "experiments/mixed-confound/generated").exists()
