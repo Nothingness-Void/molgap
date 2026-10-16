@@ -180,9 +180,9 @@ def align_curves(left, right, *, left_identity, right_identity, metric="live_dev
                     if samples != step * batch * accumulation:
                         local.append("MISMATCH:observed_exposure_vs_full_batches")
                 else:
-                    # A retained tail cannot be reconstructed from passes.
-                    if row.get("tail_exposure_verified") is not True:
-                        local.append("MISSING:observed_tail_exposure_evidence")
+                    # Existing released screens drop tails. A caller's boolean
+                    # cannot replace the owning session's actual batch ledger.
+                    local.append("UNSUPPORTED:retained_tail_requires_bound_session_evidence")
                 for key, observed in (("optimizer_steps", step), ("sample_presentations", samples)):
                     horizon = identity.get(key)
                     if type(horizon) is not int or observed > horizon:
@@ -377,6 +377,12 @@ def interpret_run(*, stage, fidelity, terminal, runtime, budget, roles,
                 paired_reports.append(report)
             if candidate.digest == reference.digest:
                 raise ValueError("Candidate cannot be its own reference")
+            for key in ("source_idx_sha256", "target_sha256", "development_rows", "precision",
+                        "optimizer_steps", "sample_presentations"):
+                if candidate.metadata()["expected"].get(key) != reference.metadata()["expected"].get(key):
+                    raise ValueError("Paired terminal evaluation/exposure identity differs: " + key)
+            if paired_reports[0]["observed"].get("selected_weights") != paired_reports[1]["observed"].get("selected_weights"):
+                raise ValueError("Paired terminal weight state differs")
             verified_seeds.add(seed)
             observed_gains[seed] = (paired_reports[1]["observed"]["development_mae_eV"] -
                                     paired_reports[0]["observed"]["development_mae_eV"])

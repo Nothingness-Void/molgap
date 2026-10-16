@@ -54,6 +54,15 @@ def test_resume_duplicate_exposure_and_boolean_counter_are_rejected():
         align(a, curve([.4, .25, .09]))
 
 
+def test_bare_tail_verification_flag_cannot_substitute_for_session_evidence():
+    i=identity();i.update(drop_last=False,tail_batch_policy="retain")
+    a,b=curve([.3,.2,.1]),curve([.4,.25,.09])
+    for row in a+b: row["tail_exposure_verified"]=True
+    report=align_curves(a,b,left_identity=i,right_identity=i)
+    assert report["status"]=="NOT_STRICTLY_COMPARABLE"
+    assert any("retained_tail_requires_bound_session_evidence" in r for r in report["reasons"])
+
+
 def test_f3_original_truthy_flag_and_bare_true_cannot_forge_membership():
     other = identity(); other.update(row_membership_identity="500K", data_role_identity="500K")
     args = dict(left_identity=identity(), right_identity=other, lane="DATA_DIVERSITY")
