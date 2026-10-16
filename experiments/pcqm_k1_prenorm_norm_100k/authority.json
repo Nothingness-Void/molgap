@@ -1,16 +1,16 @@
 {
-  "format": "molgap-execution-authority-v1",
-  "user_authorized": true,
-  "platform": "kaggle",
   "account": "kaseichou",
   "allocated_t4_hours_ceiling": 8.0,
   "arms": [
     "k1_pre_bn",
     "k1_pre_ada"
   ],
+  "authorized_at": "2026-10-16T06:17:28.619618+00:00",
+  "format": "molgap-execution-authority-v1",
+  "platform": "kaggle",
+  "scope": "One100K PreNorm BN/Ada paired validation; no retry/scale-up",
   "seeds": [
     42
   ],
-  "scope": "One100K PreNorm BN/Ada paired validation; no retry/scale-up",
-  "authorized_at": "2026-10-16T06:17:28.619618+00:00"
+  "user_authorized": true
 }

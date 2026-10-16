@@ -17,13 +17,19 @@ from molgap.family_training_recipe import FamilyRecipe, ScheduleSpec
 from molgap.family_training_runner import family_arm_bindings, read_recipe
 from molgap.k1_prenorm import make_model
 from molgap.screen_policy import canonical_fingerprint
-from molgap.training_reproducibility import atomic_json, atomic_torch_save, sha256_file
+from molgap.research_memory.trace import atomic_write, json_bytes
+from molgap.training_reproducibility import atomic_torch_save, sha256_file
 from molgap.v4_runtime import read_frozen_state_artifact, state_dict_sha256, normalized_source_sha256
 
 
 BASE = "experiments/pcqm_k1_prenorm_norm_100k"
 RUN = "pcqm-k1-prenorm-norm-100k-s42"
 ARMS = {"k1_pre_bn": "prenorm_bn", "k1_pre_ada": "prenorm_ada"}
+
+
+def atomic_json(path, value):
+    # Recipes are byte-pinned before packaging; retain canonical LF on Windows.
+    atomic_write(path, json_bytes(value))
 
 
 def inputs(root, baseline, old):

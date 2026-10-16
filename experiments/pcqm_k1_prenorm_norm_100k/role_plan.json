@@ -1,19 +1,19 @@
 {
+  "official_validation": "forbidden",
   "roles": [
     {
-      "role": "train",
       "membership_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "role": "train",
       "row_order_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
       "usage_sha256": "1055370f70f8a5b4ee4548fcc12f3f27a053e3ae07f8932c009205ee61f12d00"
     },
     {
-      "role": "development",
       "membership_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "role": "development",
       "row_order_sha256": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
       "usage_sha256": "b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef"
     }
   ],
-  "official_validation": "forbidden",
-  "test_dev": "forbidden",
-  "test_challenge": "forbidden"
+  "test_challenge": "forbidden",
+  "test_dev": "forbidden"
 }
