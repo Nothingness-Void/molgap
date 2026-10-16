@@ -1,4 +1,10 @@
 *.slurm text eol=lf
+# Modern2D pinned author files and compact CPU evidence bind exact bytes.
+tests/vendor/esa_reference/* -text
+src/molgap/ppgt_*.py text eol=lf
+src/molgap/esa_*.py text eol=lf
+src/molgap/modern2d_*.py text eol=lf
+experiments/modern2d_model_integration/*.json -text
 # New unified-data CPU payloads bind raw generator bytes across platforms.
 src/molgap/pcqm_unified_roles.py text eol=lf
 src/molgap/pcqm_molecular_identity.py text eol=lf

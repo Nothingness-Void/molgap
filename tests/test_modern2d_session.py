@@ -12,7 +12,7 @@ from molgap.family_training_loaders import FamilyLoaders
 from molgap.family_training_kernel import FamilyKernel
 from molgap.family_training_session import FamilyTrainingSession
 from molgap.gptrans_execution_tuning import ExecutionTuning
-from molgap.training_reproducibility import configure_fp32_determinism
+from molgap.training_reproducibility import configure_fp32_determinism, atomic_torch_save, sha256_file
 from molgap.v4_runtime import model_state_sha256
 from modern2d_fixtures import factory, model_config, graph
 from test_family_training_session import assert_equal
@@ -45,7 +45,7 @@ def make_session(tmp_path, family, events):
 
 
 @pytest.mark.parametrize("family", ["ppgt_small", "esa_small"])
-def test_exact_actual_session_midpass_resume_and_readonly_eval(tmp_path, family):
+def test_exact_actual_session_midpass_resume_and_readonly_eval(tmp_path, family, record_property):
     complete, recipe, _, _ = make_session(tmp_path, family, [])
     assert FamilyRecipe.from_dict(json.loads(json.dumps(recipe.to_dict()))).identity == recipe.identity
     result = complete.run()
@@ -60,8 +60,14 @@ def test_exact_actual_session_midpass_resume_and_readonly_eval(tmp_path, family)
     log = []
     first, _, _, _ = make_session(tmp_path, family, log)
     assert first.run(should_pause=lambda: True).optimizer_step == 1
+    checkpoint_path = tmp_path / "paused_checkpoint.pt"
+    atomic_torch_save(checkpoint_path, log[-1])
+    record_property("paused_checkpoint_sha256", sha256_file(checkpoint_path))
+    record_property("initialization_state_sha256", recipe.initialization_sha256)
+    serialized = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+    assert_equal(log[-1], serialized)
     resumed, _, _, _ = make_session(tmp_path, family, [])
-    resumed.load_state_dict(log[-1])
+    resumed.load_state_dict(serialized)
     assert resumed.run() == result
     assert_equal(expected, resumed.state_dict())
     assert result.optimizer_step == 4 and result.sample_presentations == 512

@@ -59,7 +59,7 @@ def test_registered_native_bootstrap_denies_before_any_real_io(monkeypatch, tmp_
 
 
 @pytest.mark.parametrize("module", ["ppgt", "esa"])
-def test_model_source_bundle_isolated_import_and_byte_identity(tmp_path, module):
+def test_model_source_bundle_isolated_import_and_byte_identity(tmp_path, module, record_property):
     root = Path(__file__).parents[1]
     closure = discover_source_dependencies(root, [f"src/molgap/{module}_model.py"], require_static=True)
     assert not any("vendor" in p or "training_runner" in p for p in closure.source_files)
@@ -67,6 +67,9 @@ def test_model_source_bundle_isolated_import_and_byte_identity(tmp_path, module)
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     bundle = build_v4_source_bundle(repo_root=root, relative_paths=closure.source_files,
                                    output_dir=tmp_path / "bundle", source_commit=commit)
+    record_property("source_archive_sha256", bundle["archive_sha256"])
+    record_property("source_commit", commit)
+    record_property("source_files", ",".join(closure.source_files))
     archive_path = tmp_path / "bundle/source.tar.gz"
     assert hashlib.sha256(archive_path.read_bytes()).hexdigest() == bundle["archive_sha256"]
     extracted = tmp_path / "isolated"
