@@ -80,5 +80,51 @@
       }
     ]
   },
+  "rml_frozen_portable_check": {
+    "command": ["python", "-m", "molgap.research_memory", "check", "--frozen", "--portable"],
+    "python": "D:/文档/molgap/.venv/Scripts/python.exe",
+    "working_directory": "D:/w/k1-prenorm-norm-100k",
+    "environment": {
+      "PYTHONPATH": "D:/w/k1-prenorm-norm-100k/src",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    },
+    "runs": 1,
+    "exit_code": 1,
+    "elapsed_seconds": 22.014,
+    "blockers": {
+      "portable_inputs_absent_from_git_head": [
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_ada/costs/cost-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-planned.json",
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_ada/trajectory.json",
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_bn/costs/cost-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-planned.json",
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_bn/trajectory.json"
+      ],
+      "derived_outputs_differ_from_git_head": [
+        "research_memory/derived/completeness_report.json",
+        "research_memory/derived/cost_ledger.json",
+        "research_memory/derived/policy_backtest.json",
+        "research_memory/derived/research_summary.json",
+        "research_memory/derived/research_summary.md",
+        "research_memory/derived/trajectory_graph.json",
+        "research_memory/derived/trajectory_index.json"
+      ]
+    },
+    "prospective_index_verification": {
+      "trajectory_ids": [
+        "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn",
+        "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+      ],
+      "index_path": "research_memory/derived/trajectory_index.json",
+      "record_paths": [
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_bn/trajectory.json",
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_ada/trajectory.json"
+      ],
+      "both_indexed_as": {"outcome": "ACTIVE", "record_mode": "prospective"},
+      "both_have_empty": {"result_evidence_ids": [], "ready_package_ids": []},
+      "terminal_or_replay_ready_declaration_present": false,
+      "note": "Canonical records include the prospective same-run binding; no terminal closure or replay-ready/ready_for_desktop declaration is present."
+    },
+    "notes": "The check was run once. No canonical or derived RML files were modified; only this receipt was appended."
+  },
   "scope_note": "One targeted batch plus a selective rerun of its two failed newly authored test nodes; no full-suite run, remote action, or accelerator execution."
 }

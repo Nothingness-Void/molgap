@@ -481,6 +481,16 @@
       "type": "action_produced_evidence"
     },
     {
+      "source": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada:A001",
+      "target": "experiments/pcqm_k1_prenorm_norm_100k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
+      "source": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn:A001",
+      "target": "experiments/pcqm_k1_prenorm_norm_100k/config.json",
+      "type": "action_produced_evidence"
+    },
+    {
       "source": "TB-pcqm-scale-fit-retained-20261001:A001",
       "target": "experiments/pcqm_scale_fit_retained/inputs.json",
       "type": "action_produced_evidence"
@@ -1696,6 +1706,16 @@
       "type": "prior_evidence"
     },
     {
+      "source": "pcqm-k1-500k-bn-calibration-20261007",
+      "target": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-500k-bn-calibration-20261007",
+      "target": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn",
+      "type": "prior_evidence"
+    },
+    {
       "source": "pcqm-k1-500k-bottleneck-diagnostic-20261007",
       "target": "TB-k1-500k-bn-calibration-20261007",
       "type": "prior_evidence"
@@ -1743,6 +1763,16 @@
     {
       "source": "pcqm-k1-bn-mechanism-a100-20261008",
       "target": "TB-molgap-k1-clean-second-100k-s42-v1-mean2",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada",
+      "type": "prior_evidence"
+    },
+    {
+      "source": "pcqm-k1-bn-mechanism-a100-20261008",
+      "target": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn",
       "type": "prior_evidence"
     },
     {
@@ -3308,6 +3338,14 @@
     },
     {
       "id": "TB-pcqm-geometry-reliability-screen-20260928",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada",
+      "type": "trajectory"
+    },
+    {
+      "id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn",
       "type": "trajectory"
     },
     {

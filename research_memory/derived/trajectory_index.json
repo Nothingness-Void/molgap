@@ -1,6 +1,6 @@
 {
   "format": "molgap-rml-trajectory-index-v1",
-  "source_digest": "7d4196cb7a90c96e73454dfcb87ea7f47afa3986b46e99de1f85561dcd79f00f",
+  "source_digest": "4590184c46c9c33df387c9ca370b0a0ab53ba657622ad790ccd909feb464f573",
   "trajectories": [
     {
       "completeness_status": "complete",
@@ -1851,6 +1851,34 @@
       ],
       "track": "B",
       "trajectory_id": "TB-pcqm-geometry-reliability-screen-20260928"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_prenorm_norm_100k/decision.md",
+      "family_id": "pcqm-k1-prenorm-norm-100k-s42",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_ada/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+    },
+    {
+      "completeness_status": "complete",
+      "decision_ref": "experiments/pcqm_k1_prenorm_norm_100k/decision.md",
+      "family_id": "pcqm-k1-prenorm-norm-100k-s42",
+      "outcome": "ACTIVE",
+      "owner": "desktop",
+      "parent_trajectory_ids": [],
+      "ready_package_ids": [],
+      "record_mode": "prospective",
+      "record_path": "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_bn/trajectory.json",
+      "result_evidence_ids": [],
+      "track": "B",
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
     },
     {
       "completeness_status": "complete",
