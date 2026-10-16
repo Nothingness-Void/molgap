@@ -129,11 +129,15 @@ def registered_source_files(spec, extras=(), *, repo_root=None, auto_dependencie
     arms = spec.to_dict()["arms"]
     adapters = [training_adapter(arm) for arm in arms]
     names = set(COMMON_SOURCE_FILES)
-    if all(adapter.module != "molgap.family_training_runner" for adapter in adapters):
-        # Legacy/generic packages do not execute the shared-session diagnostic
-        # routes. Select only their declared family roots and addons below;
-        # retaining the entire shared-session inventory leaked other trainers.
+    if all(adapter.model_factory is not None for adapter in adapters):
         names.difference_update(_FAMILY_SOURCE_FILES)
+    elif all(adapter.module != "molgap.family_training_runner" for adapter in adapters):
+        # Keep shared execution/session/profiling primitives: the legacy
+        # GPTrans update path also uses update_scope. Remove only unselected
+        # model mechanisms/trainers, restored by the declared adapter below.
+        names.difference_update({"src/molgap/k1_screen_training.py",
+            "src/molgap/k1_joint_aggregation.py", "src/molgap/k1_clean_second.py",
+            "src/molgap/gptrans_memory.py"})
     names.update(_allowlist(extras) if extras else ())
     for arm, adapter in zip(arms, adapters):
         names.update(adapter.source_files)

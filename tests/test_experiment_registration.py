@@ -35,6 +35,10 @@ def test_single_family_package_excludes_unselected_trainers_and_addons():
     assert "src/molgap/k1_screen_training.py" not in sources
     assert "src/molgap/k1_joint_aggregation.py" not in sources
     assert "src/molgap/gptrans_memory.py" not in sources
+    assert "src/molgap/family_training_core.py" in sources
+    assert "src/molgap/family_training_session.py" in sources
+    assert "src/molgap/family_execution_profile.py" in sources
+    assert "src/molgap/gptrans_legacy_execution_profile.py" in sources
 
 
 def test_new_reviewed_addon_extends_config_and_dependencies_without_generic_dispatch_changes(tmp_path, monkeypatch):
