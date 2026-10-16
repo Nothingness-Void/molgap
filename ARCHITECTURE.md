@@ -19,7 +19,7 @@ and job status belong in `CURRENT_STATE.md`; Track A/B/C ownership belongs in
 | Change | Owner | Route |
 |---|---|---|
 | Model or graph representation | The owning family model and graph primitive | Read the family section of the [module index](docs/operations/ARCHITECTURE_MODULE_INDEX.md) |
-| Existing-family addon | `experiment_spec.py` + `experiment_execution.py` + the owning family hook | [Addon guide](docs/operations/EXPERIMENT_ADDON_GUIDE.md) |
+| Existing-family addon | `experiment_catalog.py` + owning family hook; Spec/execution consume it | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |
 | New pure-2D graph family | `experiment_execution.py: graph_training_adapter`, `shared_model_adapter.py`, `graph_screen_training.py`, `pcqm_graph_inputs.py` | [registered workflow](docs/operations/REGISTERED_EXPERIMENT_WORKFLOW.md) and [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |
 | Package, preflight, launch, recovery, or retention | The shared `experiment_*` lifecycle modules | [lifecycle module index](docs/operations/ARCHITECTURE_MODULE_INDEX.md#lifecycle-evidence-and-platform-owners) |
 | Platform submission or retrieval | The selected platform adapter and workload skill | [platforms/README.md](platforms/README.md) |
@@ -28,11 +28,13 @@ and job status belong in `CURRENT_STATE.md`; Track A/B/C ownership belongs in
 | Prospective indexed PCQM roles | `pcqm_unified_roles.py`, `pcqm_molecular_identity.py`, `pcqm_indexed_inputs.py`, existing packed-graph owner | [Unified V2 contract](docs/operations/PCQM_UNIFIED_ROLES_V2.md); bounded indexed prototype remains synthetic-only, not a released real training ABI |
 | Modern2D CPU model/reference versions | `ppgt_model.py`, `esa_model.py`, `esa_invariant.py`, model features, shared family registry/Recipe/Session | [targeted review](experiments/modern2d_model_integration/review_hardening_2026-10-16.md); author reference and corrected candidate are distinct; no native release |
 | Public inference or registry | `inference.py`, `__init__.py`, and `constants.py` | [production/README.md](production/README.md) |
-| Documentation pointers or entry size | `documentation_check.py` | [verification commands](docs/operations/INFRASTRUCTURE_VERIFICATION.md) |
+| Documentation pointers | `documentation_check.py`; no automatic line-count gate | [verification commands](docs/operations/INFRASTRUCTURE_VERIFICATION.md) |
+| Checkout selection / external new-run storage | `local_runtime.py`, `common/paths.py`, `common/io.py` | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |
+| Editable references / fixed runtime distribution | `experiment_input.py`, `experiment_source_inventory.py`, existing package/workflow owners | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |
 | Standard substrate slots / addon parameters | `model_substrate.py` and existing Spec/execution registries | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md) |
 | Native Live/Raw/Clean weight actions | `family_training_state.py`; shared kernel owns forward/update | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#2-calibrate-and-retain-clean-ema) |
 | One-batch local model gate | `fast_sandbox.py` | [sandbox](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#3-check-one-batch-locally) |
-| Automatic source closure | `source_dependencies.py`; existing packager/skills own release | [dependency handoff](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#4-discover-package-and-hand-off) |
+| Optional source closure diagnostic | `source_dependencies.py`; new preparation uses fixed runtime inventory | [dependency handoff](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#4-discover-package-and-hand-off) |
 
 ## Registered family lifecycle
 
@@ -51,10 +53,10 @@ preflight, immutable inspection, checkpoint transport, allocation retention,
 terminal translation, and RML closure. Platform adapters own submission,
 reconciliation, and retrieval. The shared CLI never submits a job.
 
-For a same-family addon, add only its model delta, typed `AddonContract`, one
-`TrainingAddon` descriptor, reviewed source dependency, and focused tests. For
-a new graph family, add the family contract, `make_model(arm)`, static adapter
-entry, and focused factory/training/output checks; reuse the shared PCQM graph
+For a same-family addon, add its model delta, one typed `AddonContract` with
+execution metadata in the catalog, and focused tests. For
+a new graph family, add the catalog family/execution contract, `make_model(arm)`,
+and focused factory/training/output checks; reuse the shared PCQM graph
 input owner when its contract applies. Do not copy lifecycle or platform
 code. A declaration or synthetic check does not qualify real shards, GPU
 runtime, scientific acceptance, or a non-PCQM/non-pure-2D route.
@@ -83,8 +85,8 @@ Three top-level trees are split by role, not calendar phase:
 
 Production stage scripts resolve roots from `constants.py`; they do not derive
 roots from `Path(__file__).parents[n]`. `tests/test_repository_layout.py` checks
-this, CLI aliases, help paths, active experiment pointers, and bounded control
-documents. `production/history/` is frozen reproducibility evidence.
+this, lazy CLI aliases, help paths and active experiment pointers.
+`production/history/` is frozen reproducibility evidence.
 
 ## Asset map
 

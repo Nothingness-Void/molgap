@@ -5,7 +5,7 @@ new-agent route. This document owns the detailed registry, preparation,
 acceptance, recovery, and allocation-retention contract; it does not authorize
 remote submission.
 
-This is the entry point for the registered local-to-Kaggle training path. It
+This is the API contract for the registered local-to-Kaggle training path. It
 owns preparation and acceptance orchestration. It does not own scientific
 authorization, a trainer loop, or platform submission.
 
@@ -18,7 +18,7 @@ contract and the platform's actual runtime qualification.
 | Layer | Owner | Responsibility |
 |---|---|---|
 | Lifecycle | `experiment_workflow.py`; `prepare-workflow` / `accept-workflow` in the local CLI | Reuse package, release-check, prospective-planning, family-output inspection and existing terminal closure owners. |
-| Family execution | `experiment_execution.py`; `experiment_training_worker.py` | Static family/addon-to-trainer dispatch and one isolated subprocess per arm/phase. No caller-selected import or callback. |
+| Family execution | `experiment_catalog.py` -> derived `experiment_execution.py`; `experiment_training_worker.py` | Single-source static dispatch and isolated subprocesses. No caller-selected import or callback. |
 | Launch boundary | `experiment_launch_config.py` | Complete schema, immutable package/archive, per-arm recipe/init/prospective and unique device assignments; reused locally and by the frozen bootstrap. |
 | Inspection | `experiment_inspection.py`; `experiment_family_workflow.py` | One CPU inspection produces an immutable snapshot; descriptor/closure recheck file hashes without deserializing tensors again. |
 | Recovery | `experiment_resume.py`; `experiment_workflow_resume.py` | Hash-bound incomplete checkpoint transport and local staging against the original frozen release; family owners validate optimizer/RNG/cursor semantics. |
@@ -44,14 +44,13 @@ the static training registry, its mode, and its output profile.
 
 | Family/version | Reference mode | Registered addon mode(s) | Output profile |
 |---|---|---|---|
-| `neural_atom_k1/2` | `reference` | `k1_joint_aggregation/1` → `ssma` | `k1-screen-v1` |
-| `gptrans_t/1` | `reference` | `pair_prenorm/1`, `centered_logits/1`, `memory_value/1`, `memory_message/1` | `gptrans-v1` |
+| Existing family/version | Query `catalog` | Query `workflow-info --spec SPEC`; derived, not hand-maintained here | Owning profile stays frozen |
 
-The executable registry is in `experiment_execution.py`; the output profiles
-are in `experiment_family_artifacts.py`. `experiment_source_inventory.py`
-owns reviewed common bootstrap files. Each family adapter declares its source
-and serialized-module dependencies; an addon declares only additional reviewed
-dependencies. Packaging selects the registered families/addons in the Spec.
+The human-maintained registry is `experiment_catalog.py`; executable adapters
+are derived in `experiment_execution.py`. Output profiles remain in
+`experiment_family_artifacts.py`. New preparation uses the tracked `runtime-v1`
+distribution from `experiment_source_inventory.py`. Legacy selected inventories
+remain compatibility APIs; AST discovery is not required by the new path.
 The family trainer or shared graph owner supplies model/input semantics,
 optimizer, selection and resume behavior. A same-family variant supplies only
 its registered addon set, frozen contract/recipe and config; legacy adapters
@@ -67,13 +66,14 @@ execution. Declaration support alone is not runtime qualification.
 ## Add an addon
 
 1. Implement the model delta under `src/molgap/` and add an `AddonContract` in
-   `experiment_spec.py`. Declare configuration with `AddonConfigField` (frozen
+   `experiment_catalog.py`. Declare configuration with `AddonConfigField` (frozen
    literals or bounded integers), applicable family versions, source module and
    zero-initialization contract. Configuration validation uses these fields;
    it does not require an addon-name branch in the Spec parser.
-2. Add the approved `TrainingAddon(name, version, mode, ...)` entries to the
-   owning `TrainingAdapter` in `experiment_execution.py`. Generic graph addons
-   bind `apply_hook="molgap.<module>:apply_addon"`; legacy adapters retain their
+2. In that same contract set `execution_modes=((family_version, mode), ...)`.
+   Generic graph/slot addons bind `apply_hook="molgap.<module>:apply_addon"`;
+   policy-bearing modes bind their existing reviewed `policy_hook`. Do not add
+   a duplicate `TrainingAddon` row: adapters derive it. Legacy adapters retain their
    mode dispatch. Reuse the family's or shared graph owner's recipe, preflight,
    training, output and resume hooks. A new dependency belongs in that
    descriptor; do not copy the full source inventory into an experiment.
@@ -122,7 +122,7 @@ acceptance schemas remain with their owners; see [Spec](EXPERIMENT_SPEC.md),
 [prospective planning](EXPERIMENT_PROSPECTIVE_PLANNING.md), and
 [family output acceptance](EXPERIMENT_FAMILY_WORKFLOW.md).
 
-The workflow plan is ordinary UTF-8 JSON with exactly these top-level fields:
+The legacy workflow plan is ordinary UTF-8 JSON with exactly these top-level fields:
 `format`, `spec_identity`, `source_files`, `arms`, `acceptance_plan`, `kaggle`.
 The current static platform registry accepts only the `kaggle` platform key;
 this does not claim that the same entry point supports IMS or SCNet. `source_files`
@@ -132,6 +132,12 @@ appears exactly once. `recipe` is a repository-relative POSIX path pinned by
 that arm's Spec; `initial_state` is an existing local file pinned by the Spec;
 `device` is a distinct integer in the declared device range. `acceptance_plan`
 points to the full pinned family acceptance plan under the repository root.
+
+New editable preparations replace `source_files` with
+`source_profile: "runtime-v1"` and `source_records: [...]`. Records are actual
+recipe/acceptance/prospective/authority references, not hand-written Python
+dependencies; the fixed distribution adds tracked runtime Python automatically.
+The [quickstart](EXPERIMENT_QUICKSTART.md) owns the normal `--experiment` path.
 
 The `kaggle` object has exactly `account`, `kernel`, `title`, `datasets`,
 `source_dataset`, and `accelerator`. The kernel must equal the account plus the

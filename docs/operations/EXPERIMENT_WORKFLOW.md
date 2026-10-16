@@ -1,5 +1,10 @@
 # Standard variant workflow
 
+Compatibility/API reference: new work starts with the
+[quickstart](EXPERIMENT_QUICKSTART.md), one capability catalog and the fixed
+runtime distribution. The retained `prepare-release` APIs below keep their
+scientific and custody boundaries; they are not another default workflow.
+
 Use this for a new GPTrans-T or EdgeState-family variant on server. It composes
 existing components; it does not introduce a trainer, submitter or evidence
 schema. A small scientific change should not require another packager, account

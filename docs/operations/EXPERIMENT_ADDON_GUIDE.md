@@ -1,6 +1,6 @@
 # Experiment Addon Guide
 
-This is the short handoff for extending the shared experiment core. It defines
+This is the ownership/API reference for extending the shared experiment core. It defines
 ownership boundaries; the linked contracts remain authoritative for field-level
 schemas and safety checks.
 
@@ -27,7 +27,8 @@ Reuse these modules instead of copying their logic into an experiment script:
 
 - `experiment_cli.py`: one local entry point for the shared operations below;
   it has no platform submitter.
-- `experiment_spec.py`: strict immutable experiment identity and arm bindings.
+- `experiment_catalog.py`: one human-maintained family/addon/execution catalog;
+  `common.spec` parses it and `experiment_spec.py` is the compatibility facade.
 - `experiment_prospective.py` and `research_memory/plan.py`: per-arm prospective
   RML planning against one frozen evidence snapshot.
 - `experiment_package.py`: explicit allowlist, source archive and package hash.
@@ -116,8 +117,8 @@ and the shared core retains canonical identity, path confinement, immutable
 packaging and evidence rules.
 
 For an addon within a registered training family, follow the
-[three-step registration contract](REGISTERED_EXPERIMENT_WORKFLOW.md#add-an-addon).
-Typed config fields and a small execution descriptor bind the model delta,
+[single-catalog registration contract](REGISTERED_EXPERIMENT_WORKFLOW.md#add-an-addon).
+Typed config fields and execution metadata in that same contract bind the model delta,
 mode and extra dependencies. Generic graph addons additionally bind a reviewed
 `apply_addon` hook whose source is hash-pinned; legacy family addons retain
 their owning mode dispatch. The lifecycle, launch validation, recovery transport
@@ -145,45 +146,12 @@ or protected-role access. If only one arm is justified or the combined run
 cannot be made durable within the platform limit, submit the justified arm
 alone and record why two arms were not feasible.
 
-## Minimal Handoff Sequence
+## Normal workflow
 
-1. Follow the selected checkout's `AGENTS.md`, `CURRENT_STATE.md`, and owning
-   experiment contract. Query RML before opening a new research question.
-   On server, branch governance is in `AGENTS.md`: use `molgap-server`, with
-   temporary isolation only when needed. Desktop's branch/worktree policy
-   belongs to its own checkout; do not import that workflow or adopt its jobs.
-2. Identify the existing family trainer and platform submitter before writing
-   an addon. Inspect the platform input mounts, staged source shape, kernel
-   entry point, and metadata limits with read-only or local static checks.
-   Finish the executable bootstrap and source allowlist, then freeze the source
-   commit. This inspection is not a diagnostic or training experiment.
-3. Build and `validate-spec` a Spec v2 with exactly one arm-to-trajectory
-   mapping per independent arm. Supply frozen, SHA-pinned RML plan inputs
-   bound to the executable source commit; do not invent missing evidence.
-4. Run `plan-prospective` before any new diagnostic or training experiment,
-   then package the explicit source set and run the supported preflight. A
-   nonzero planning result may retain published trajectories: reconcile them
-   before retrying. If executable source changes before submission, reconcile
-   the superseded plan and plan again against the new commit; never hand-edit
-   canonical RML records. Use only a preflight mode supported by that family,
-   or implement a scoped addon diagnostic without relabeling it as shared-core
-   acceptance.
-5. Use the owning trainer/platform addon and its tests. Run
-   `check-release` with the actual entry script and staged inputs for new
-   ExperimentSpec source packages; retain the report for the platform adapter's
-   pre-submission recheck. This does not replace the owning scientific gate.
-   Follow `platforms/README.md`, `platforms/REMOTE_HANDOFF.md`, and the specific
-   platform instructions before touching remote resources.
-   For a trainer emitting the family output protocol, run `check-acceptance`
-   before release to check frozen expectations and retained reference inputs.
-   This availability check is separate from executable bootstrap preflight.
-6. Submit only under the owning experiment's explicit resource/role authority.
-   Reconcile the authoritative platform state and durable artifacts before
-   creating terminal evidence or considering a retry.
-
-The shared code makes identities and evidence flows reusable. It does not make
-an experiment scientifically valid, authorize resource use, submit a job, or
-promote a candidate.
+The [quickstart](EXPERIMENT_QUICKSTART.md) is the single normal path. The
+sections above are ownership/API references, not a second sequence of manual
+registration, package, prospective or submission steps. Historical frozen runs
+keep their matching package and existing recovery APIs.
 
 
 ## Shared family training

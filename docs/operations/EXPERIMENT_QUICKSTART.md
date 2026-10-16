@@ -1,143 +1,143 @@
 # Experiment infrastructure quickstart
 
-This is the shortest route for a new agent. It selects an existing owner,
-freezes one scientific contract, and reuses package, launch, recovery,
-acceptance, and RML plumbing. It does not authorize compute or submit a job.
-For standard substrate slots, Live/Raw/Clean state actions, the one-batch
-sandbox and automatic source closure, use the [four-module interface](MODULAR_EXPERIMENT_RUNTIME.md).
+This is the normal entry for new work. Read `AGENTS.md`, `CURRENT_STATE.md`, the
+relevant `ROADMAP.md` section and the question's decision first. Query existing
+RML before proposing a new experiment. This guide grants no compute, role,
+scientific acceptance or cross-machine custody.
 
-## 1. Route the question
+## 1. Select code and local storage
 
-Read [`AGENTS.md`](../../AGENTS.md), [`CURRENT_STATE.md`](../../CURRENT_STATE.md),
-the relevant [`ROADMAP.md`](../../ROADMAP.md) section, and the owning experiment
-decision. Then query the registry before writing code:
+Use the project dependency interpreter; do not repoint its shared editable
+installation. `platforms/local/run.py` selects this checkout in an isolated child
+and logs the interpreter and actual MolGap module. Configure a machine-local
+profile once, outside Git:
 
-```powershell
-$python = '.\.venv\Scripts\python.exe'
-& $python -m molgap.experiment_cli workflow-info --spec $spec
+```json
+{
+  "format": "molgap-machine-paths-v1",
+  "python": "C:/Users/Adminn/Documents/molgap/.venv/Scripts/python.exe",
+  "data_root": "E:/MolGap/data",
+  "artifact_root": "E:/MolGap/artifacts",
+  "scratch_root": "E:/MolGap/scratch"
+}
 ```
 
-Choose one route:
-
-| Question | Route |
-|---|---|
-| A variant of a registered family | Add one typed addon and use the existing family trainer/output/recovery hooks. |
-| A new pure-2D graph Gap family | Implement the small graph model owner and register the generic graph adapter described below. |
-| A different target, geometry, trainer contract, or platform | Use or add the owning adapter; the shared graph screen is not a fallback. |
-
-`workflow-info` reports declaration versus executable support. A declaration,
-metadata probe, or synthetic fixture is not real-shard, GPU, scientific, or
-platform qualification.
-
-## 2. Add an existing-family addon
-
-Keep the change to the scientific delta:
-
-1. Add an `AddonContract` in `src/molgap/experiment_spec.py` with typed frozen
-   configuration, supported family versions, source module, and any exclusive
-   group or single-addon rule.
-2. Add one or more reviewed `TrainingAddon(name, version, mode, ...)` entries to
-   the owning `TrainingAdapter` in `src/molgap/experiment_execution.py`.
-   Existing family adapters keep their mode dispatch and declared stacking
-   limits; the generic graph adapter may compose approved addons in Spec
-   order and additionally binds each
-   `apply_hook="molgap.<module>:apply_addon"`. Put only genuinely new source
-   dependencies in `extra_source_files`.
-3. Implement the model delta under `src/molgap/`, build the declaration with
-   `build_addon_declaration(...)`, build the fixed recipe with
-   `build_family_recipe(...)` (generic graph recipes also require explicit
-   `recipe_config`), and add focused configuration,
-   initialization, source-digest, and hook tests.
-
-The family or shared adapter owns input semantics, sampler, optimizer, selection,
-resume, output profile, and native checks for its declared scientific contract.
-The generic PCQM graph route reuses `pcqm_graph_inputs.py` and
-`graph_screen_training.py`; an addon supplies only its model delta. Do not copy
-a trainer, source inventory, launcher, receipt, recovery transport, or
-terminal/RML closure. See the
-[addon guide](EXPERIMENT_ADDON_GUIDE.md) and the [registered workflow](REGISTERED_EXPERIMENT_WORKFLOW.md#add-an-addon).
-
-## 3. Add a new pure-2D graph Gap family
-
-Use the [graph extension contract](GRAPH_SCREEN_EXTENSION.md) for the small
-model/addon interface, registration entries, and complete recipe input fields.
-
-The generic graph extension is intentionally narrow. It is available only after
-the static registry and focused tests accept all of these contracts:
-
-- `FamilyContract` uses features `ogb-atom9-bond3-rwse16-v1`, roles
-  `("train", "development")`, recipe `graph_gap_screen_v1`, sampler
-  `seed42-epoch-global-randperm-v1`, and transform `train-mean-unbiased-std`.
-- `graph_training_adapter(family, model_factory=..., addons=..., source_files=...)`
-  selects `graph_screen_training.py` and `graph-screen-v1`.
-- The family module exposes reviewed `make_model(arm) -> torch.nn.Module`; its
-  `forward(batch)` returns one finite normalized Gap value per graph.
-- An addon exposes `apply_addon(model, config)` and is registered with a typed
-  `AddonContract` plus a `TrainingAddon` hook. The hook is a small model delta,
-  not a second trainer.
-- `pcqm_graph_inputs.py` is the shared accepted PCQM input contract; source
-  hashes and frozen initialization remain bound by the shared Spec and launch
-  checks.
-
-The generic path currently covers this pure-2D direct-Gap screen only. It does
-not claim support for HOMO/LUMO targets, 3D or privileged geometry, arbitrary
-conformer rules, arbitrary callbacks/imports, non-PCQM scientific contracts, or
-IMS/SCNet/other platform submission. New-family registration remains subject to
-family-agent review and actual focused tests; do not describe declaration
-support as a qualified family.
-
-## 4. Prepare, submit, and accept
-
-Freeze the Spec, prospective records, recipe, source package, and platform plan
-before any remote action:
+Paths are machine locations, not evidence identities. Use the actual profile on
+each host; do not copy another machine's absolute paths. Storage roots must be
+separate and outside the selected checkout. Old data/checkpoints remain where
+their retained manifests say; this profile does not rebuild or relocate them.
 
 ```powershell
-& $python -m molgap.experiment_cli validate-spec --spec $spec
-& $python -m molgap.experiment_cli check-workflow --spec $spec --repo-root . --plan $plan
-& $python -m molgap.experiment_cli prepare-workflow --spec $spec --repo-root . --plan $plan --output $freshOutput
+$python = 'C:/Users/Adminn/Documents/molgap/.venv/Scripts/python.exe'
+$profilePath = 'E:/MolGap/machine-profile.json'
+& $python platforms/local/run.py --profile $profilePath -- catalog
 ```
 
-`prepare-workflow` validates every arm, packages the explicit source allowlist,
-binds the recipe/initial state/prospective records, freezes the launch config,
-and writes release/timing reports. It is preparation, not submission. Use the
-combined path once; it publishes prospective records after the static gates.
-For other owning adapters, follow their separate planning entry. Use the
-selected platform workload skill and adapter to submit and reconcile the exact
-returned run/version. The shared CLI has no submitter.
-For prepared bounded Kaggle T4 releases, follow the single journaled
-[platform submission entry](KAGGLE_WORKFLOW_SUBMISSION.md).
+The capability catalog is the authority for declarations and derived execution
+support. `DECLARATION_ONLY` and `CPU_SYNTHETIC_ONLY` are real limits. Registered
+support still needs its recipe/data/reference/runtime qualifications.
 
-After retrieval, inspect and close through the owning family workflow:
+## 2. Change only the scientific delta
+
+- Supported parameters: use the owning recipe/configuration builder; preserve
+  its exact batch, sampler, objective, normalization and budget semantics.
+- Ordinary addon: implement the module and tests; add **one** `AddonContract`
+  in `experiment_catalog.py`, including typed fields, family versions and
+  `execution_modes` plus the reviewed `apply_hook` or `policy_hook` when needed.
+  `experiment_execution.py` derives its read-only adapters; do not register the
+  same addon there again. Build source-bound declarations with
+  `build_addon_declaration(...)`.
+- New family: declare `FamilyContract.execution` in that same catalog and supply
+  the actual model/input ABI and focused checks. Reuse the existing training
+  owner. The [graph extension API](GRAPH_SCREEN_EXTENSION.md) applies only to
+  its narrow pure-2D PCQM Gap contract.
+
+Keep composition order and parameter ownership explicit before optimizer
+construction. New objectives or input structures need their owning step/input
+adapter, not a disguised ordinary addon. K1 sparse and GPTrans dense contexts
+remain different. Use the [runtime API](MODULAR_EXPERIMENT_RUNTIME.md) for slots,
+Live/Raw/Clean actions and source-free single-batch sandbox checks.
+
+Formal releases bind committed source and frozen scientific records. Sandbox
+code may be uncommitted, but is not a formal release. Do not retrain an accepted
+baseline or add seeds to fill an allocation.
+
+## 3. Reference and freeze existing scientific records
+
+The editable front door accepts normal JSON indentation and a final newline:
+
+```json
+{
+  "format": "molgap-experiment-input-v1",
+  "spec_ref": "experiments/question/experiment_spec.json",
+  "workflow_ref": "experiments/question/workflow_plan.json",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/question/authority.json",
+  "monitor_paths": ["experiments/question/STATUS.md"],
+  "attempt_id": "v1"
+}
+```
+
+These are illustrative references, not approved resources. The referenced Spec
+may also be pretty JSON: freezing publishes the original canonical Spec identity.
+The workflow must match that identity. Existing recipe, data, reference,
+prospective and authority owners still validate applicability. No hypothesis,
+authorization or acceptance is invented. A changed input cannot overwrite the
+same frozen run/attempt.
+
+This first front door references existing declarations. It does **not** compile
+an arbitrary short model/recipe override into a new scientific experiment;
+new declarations still use the existing builders and prospective schema.
+Frozen recipe/authority/plan source records must be committed before packaging.
 
 ```powershell
-& $python -m molgap.experiment_cli accept-workflow --spec $spec --repo-root . --package $package --expected-package-identity $packageIdentity --receipt $receipt --outputs $outputs --locations $locations --execution-root $executionRoot
+& $python platforms/local/run.py --profile $profilePath -- freeze-input --experiment $experiment --repo-root .
 ```
 
-Without `--execute`, this is mechanical verification only. Scientific
-acceptance, role/cost review, replay readiness, promotion, and RML closure keep
-their existing owners. Read [EXPERIMENT_CLI.md](EXPERIMENT_CLI.md) for exact
-fields and [REGISTERED_EXPERIMENT_WORKFLOW.md](REGISTERED_EXPERIMENT_WORKFLOW.md)
-for output and retention boundaries.
+## 4. Prepare through the owning platform entry
 
-## 5. Recover an incomplete run
-
-Reconcile the exact original platform run/version first. Recovery requires every
-arm to be incomplete and checkpoint-bearing, the original package and ACTIVE
-prospective bytes, and the registered family/native runtime. Build one fresh
-bundle per arm, then prepare a fresh recovery directory:
+Use the Kaggle workload skill. The same existing platform entry now accepts the
+editable envelope and prepares without credentials or any API call:
 
 ```powershell
-& $python -m molgap.experiment_cli build-resume --spec $spec --repo-root . --prepared $originalPrepared --package $package --expected-package-identity $packageIdentity --receipt $receipt --arm $armId --source-output $retainedArm --output $freshArmBundle
-& $python -m molgap.experiment_cli prepare-resume --spec $spec --repo-root . --prepared $originalPrepared --package $package --expected-package-identity $packageIdentity --receipt $receipt --resume-plan $resumePlan --output $freshRecovery
+& $python platforms/local/run.py --profile $profilePath --script platforms/kaggle/submit_workflow.py -- --experiment $experiment --repo-root .
 ```
 
-Completed arms, missing checkpoints, mixed completed/incomplete sets, changed
-prospective bytes, unsupported packaged runtimes, and extra pickled input
-staging are rejected or remain with their owning adapter. Recovery reuses the
-original scientific contract and does not create a new prospective action.
+Outputs live at `<artifact_root>/runs/<logical_run_id>/<attempt_id>/`, with
+`inputs`, `prepared` and `operations` separated. The fixed `runtime-v1` source
+distribution automatically includes tracked model/addon Python; callers supply
+scientific record references, not per-experiment Python lists. AST closure is
+an optional development diagnostic, not a default packaging prerequisite.
+Only source archives are cached; Specs, package identities, releases and receipts
+are never borrowed from another run.
 
-## 6. Verify the local infrastructure
+Only after separate applicable authorization, append `--credentials ...
+--execute`. That calls the **original** journaled submitter. An uncertain outcome
+requires reconciliation, never a fresh slug or blind retry. Completed preparation
+is reused; incomplete preparation is retained and blocked. `--prepared` and old
+canonical `--spec` operations remain compatible. IMS/SCNet do not acquire this
+new front door implicitly. See the [platform API](KAGGLE_WORKFLOW_SUBMISSION.md).
 
-Use [infrastructure verification](INFRASTRUCTURE_VERIFICATION.md) for the
-repeatable local lifecycle, documentation, and RML checks and their scope.
-Keep experiment evidence in its decision rather than expanding this entry.
+## 5. Inspect, accept and recover with existing owners
+
+The run directory locates its frozen inputs, package and operation journal.
+`locate-run` reads it without creating files or contacting a platform:
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath -- locate-run --profile $profilePath --repo-root . --run-id $runId --attempt-id $attemptId
+```
+
+Use the exact returned receipt and actual retrieved artifacts with
+`accept-workflow`; use `build-resume` / `prepare-resume` only for a supported
+incomplete run. These API arguments remain in the
+[CLI reference](EXPERIMENT_CLI.md) and
+[lifecycle contract](REGISTERED_EXPERIMENT_WORKFLOW.md).
+
+Scientific acceptance, complete allocation cost, role review, Replay, 500K/full
+qualification and canonical RML closure are separate decisions. Missing facts
+remain missing, not zero. No 100K score automatically rejects 500K; no old STQS
+or uncalibrated early-stop rule acquires authority from this interface.
+
+For targeted tests, migration measurements, portable commits and remaining
+work, see the [cumulative reform record](REFORM_MIGRATION.md). Do not run a full
+historical/document-format audit for a routine model configuration change.

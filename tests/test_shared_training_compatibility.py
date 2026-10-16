@@ -1,4 +1,4 @@
-"""The same mechanism snapshot is reviewed and installed on both owner branches."""
+"""Portable mechanism snapshot; matching hashes do not imply Desktop installation."""
 import ast
 import json
 from pathlib import Path
@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_shared_mechanism_snapshot_matches_reviewed_inventory():
-    record = json.loads((ROOT / "docs/operations/SHARED_TRAINING_CORE_FILES.json").read_text())
+    record = json.loads((ROOT / "docs/operations/REFORM_SHARED_FILES.json").read_text())
     assert record["format"] == "molgap-source-files-v1"
     paths = [item["path"] for item in record["files"]]
     assert paths == sorted(set(paths))
@@ -19,6 +19,13 @@ def test_shared_mechanism_snapshot_matches_reviewed_inventory():
     for item in record["files"]:
         assert item["path"].startswith("src/molgap/")
         assert normalized_source_sha256(ROOT / item["path"]) == item["sha256"], item["path"]
+
+
+def test_portable_inventory_does_not_claim_desktop_or_native_qualification():
+    record=json.loads((ROOT/"docs/operations/REFORM_SHARED_FILES.json").read_text())
+    assert record["desktop_application"]=="NOT_APPLIED"
+    assert record["native_qualification"]=="NOT_EVALUATED"
+    assert record["baseline_inventory_commit"]=="f6ec2ad02ea9105c75217bd7e9e0cdb70331229d"
 
 
 def test_accelerated_kernel_has_no_legacy_trainer_or_controller_imports():

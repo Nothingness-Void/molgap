@@ -108,6 +108,11 @@ real-data loaders, native runtime speed or scientific acceptance.
 
 ## 4. Discover, package and hand off
 
+Optional compatibility/development API: the normal
+[quickstart](EXPERIMENT_QUICKSTART.md) uses the fixed tracked runtime
+distribution, not these AST discovery steps. Keep them for dependency diagnosis
+or exact historical selected-source workflows, not a second default path.
+
 ```powershell
 & $python -m molgap.experiment_cli source-dependencies --spec $spec --repo-root .
 & $python -m molgap.experiment_cli package --spec $spec --repo-root . --auto-dependencies --output $freshPackage

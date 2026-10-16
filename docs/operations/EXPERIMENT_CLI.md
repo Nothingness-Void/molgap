@@ -1,5 +1,14 @@
 # Unified Local Experiment CLI
 
+`catalog` emits the single capability catalog without a Spec. `freeze-input
+--experiment FILE --repo-root ROOT` accepts normal JSON references and freezes
+canonical inputs under the configured external run root; it does not prepare
+or submit. See the [quickstart](EXPERIMENT_QUICKSTART.md) for the default path.
+The old `--spec` byte contract below is intentionally unchanged.
+`locate-run --profile PROFILE --repo-root ROOT --run-id ID --attempt-id ID`
+reads the frozen inputs and original package/receipt from the external run root;
+missing receipts remain null. It neither retrieves remote files nor changes RML.
+
 New agents: use the [infrastructure quickstart](EXPERIMENT_QUICKSTART.md) to
 choose the family/addon route. This page is the exact command and result
 reference; the CLI remains local preparation and evidence plumbing, never a

@@ -7,8 +7,18 @@ Use it under the `kaggle-molgap-workloads` skill after an owning authorization.
 
 ## Local admission
 
-For a fresh declaration, run `check-workflow` before preparation. It checks
-family recipes, registered profiler support, acceptance inputs and prospective
+For the new editable `--experiment` input, follow the
+[quickstart](EXPERIMENT_QUICKSTART.md). Without `--execute`, this entry resolves
+and freezes inputs, prepares with the original workflow owner and makes no
+SDK/API call. Its external run directory separates immutable preparation from
+the existing operations journal. Exact completed preparations are reused;
+interrupted preparation requires reconciliation. Explicit credentials are
+required before an `--execute` call starts preparation. The old `--prepared`
+entry below remains compatible; no second submitter was introduced.
+
+For a fresh declaration, the preparation owner runs readiness checks. An
+optional read-only `check-workflow` checks family recipes, registered profiler
+support, acceptance inputs and prospective
 RML policy without writing staging or RML records. Independent recipe/profiler
 and policy failures are reported together. `prepare-workflow` repeats these
 cheap checks before creating its output directory; native accelerator

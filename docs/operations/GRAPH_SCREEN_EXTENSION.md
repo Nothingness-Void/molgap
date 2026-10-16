@@ -20,25 +20,23 @@ The shared owner loads the separately frozen initialization, runs optimization,
 selects development weights, persists predictions/checkpoints/traces, and
 validates recovery. Do not add a second trainer to the model module.
 
-Register two static entries:
+Register one static family contract with its execution descriptor:
 
 ```python
-# experiment_spec.py
+# experiment_catalog.py (FamilyContract / FamilyExecution from common.spec)
 ("my_graph", "1"): FamilyContract(
     "my_graph", "1", "molgap.my_graph", "graph_gap_screen_v1",
     "ogb-atom9-bond3-rwse16-v1", ("train", "development"),
-    "seed42-epoch-global-randperm-v1", "train-mean-unbiased-std"),
-
-# experiment_execution.py
-("my_graph", "1"): graph_training_adapter(
-    ("my_graph", "1"), model_factory="molgap.my_graph:make_model",
-    source_files=("src/molgap/my_graph_helpers.py",)),
+    "seed42-epoch-global-randperm-v1", "train-mean-unbiased-std",
+    execution=FamilyExecution("molgap.graph_screen_training", "graph-screen-v1",
+        model_factory="molgap.my_graph:make_model")),
 ```
 
-Omit `source_files` when there are no additional imports. It is an explicit
-allowlist of reviewed dependencies. The factory module must match the declared
-family source. The shared helper selects the trainer, input loader, output
-profile, and required common source automatically.
+`graph_training_adapter` is a derived compatibility view, not another manual
+registration. The fixed runtime distribution includes tracked helper modules
+automatically. Legacy `source_files` metadata remains readable. The factory
+module must match the declared family source. The shared helper retains the
+trainer, input loader and output profile; registration is not qualification.
 
 ## Small addon interface
 
@@ -46,9 +44,9 @@ An addon exposes `apply_addon(model, config)`. It may modify the model in place
 and return `None`, or return a replacement `torch.nn.Module`. It receives a
 detached typed config and supplies only the architecture delta.
 
-Add its `AddonContract` in `experiment_spec.py`, then add
-`TrainingAddon("my_delta", "1", "my_delta",
-apply_hook="molgap.my_delta:apply_addon")` to the family adapter. Use
+Add one `AddonContract` in `experiment_catalog.py`, including
+`execution_modes=(("1", "my_delta"),)` and
+`apply_hook="molgap.my_delta:apply_addon"`. No duplicate execution row is needed. Use
 `build_addon_declaration(...)` to validate config and bind the actual source SHA.
 Config fields, supported family versions, and exclusive groups retain Spec
 ownership. Ordered, compatible addons are applied in the arm's Spec order;

@@ -3,7 +3,7 @@
 One mechanism for desktop and server, within this repository. No separate
 service, duplicate trainer, controller import or cross-machine coordination.
 
-Start with the [workflow](../../../docs/operations/EXPERIMENT_WORKFLOW.md).
+Start with the [quickstart](../../../docs/operations/EXPERIMENT_QUICKSTART.md).
 This API factors mechanisms out of the existing owners; it grants no execution,
 role, submission, promotion or full-admission authority.
 
@@ -17,6 +17,8 @@ role, submission, promotion or full-admission authority.
 | `kaggle` | `api_for_credentials`, `dataset_status`, `dataset_details`, `kernel_source` | Explicit-account SDK compatibility. Status is not metadata or proof of native execution. |
 | `transport` | `download_pinned_files` | Exact allowlist, SHA256, atomic no-clobber retention; no bulk fallback or scientific acceptance. |
 | `runtime` | Existing substrate, state, sandbox, graph-model and dependency APIs | Object aliases, not replacement types, loops or registries. |
+| `paths` | `MachinePaths` | Explicit external data/artifact/scratch roots; no scientific identity or authority. |
+| `io` | `copy_immutable_file` | Streaming copy/hash/no-clobber with original retained; no bulk migration or deletion. |
 
 Import the submodule required, not all runtime dependencies at startup:
 
@@ -82,9 +84,11 @@ legacy forwarding, provenance rejection, SDK call shape, no-global-auth behavior
 pinned no-clobber downloads and actual static package closure. It uses synthetic
 CPU/files and fake APIs only, not native runtime or scientific qualification.
 
-The [reviewed mechanism inventory](../../../docs/operations/SHARED_TRAINING_CORE_FILES.json)
-and `tests/test_shared_training_compatibility.py` pin the same normalized source
-snapshot for both owners. The [family examples](../../../docs/operations/FAMILY_TRAINING_EXAMPLES.md)
+The [historical mechanism inventory](../../../docs/operations/SHARED_TRAINING_CORE_FILES.json)
+remains frozen. The [reform inventory](../../../docs/operations/REFORM_SHARED_FILES.json)
+and `tests/test_shared_training_compatibility.py` pin the portable server snapshot;
+Desktop application is explicitly pending, not inferred from shared file names.
+The [family examples](../../../docs/operations/FAMILY_TRAINING_EXAMPLES.md)
 show composition through sandbox, neutral packaging and platform handoff.
 Private-resource 403 remains unknown until a complete authenticated bounded owner
 listing proves absence. Dataset status and version/private metadata use separate

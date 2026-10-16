@@ -64,6 +64,10 @@ separate from local schema or synthetic checks.
 Start with the [new-agent quickstart](docs/operations/EXPERIMENT_QUICKSTART.md),
 then use the [addon guide](docs/operations/EXPERIMENT_ADDON_GUIDE.md) and
 [registered workflow](docs/operations/REGISTERED_EXPERIMENT_WORKFLOW.md).
+The [bounded workflow reform](docs/operations/REFORM_MIGRATION.md) adds external
+machine paths, one capability catalog, fixed runtime packaging and the existing
+journal's editable-input front door. Desktop application/general config compilation
+and source regrouping remain pending; no new compute or scientific release follows.
 The shared CLI is a local identity, packaging, diagnostic, receipt, preparation,
 inspection, and terminal entry point; it is never a platform submitter.
 Compatible new PCQM graph families reuse the [shared graph owner](docs/operations/GRAPH_SCREEN_EXTENSION.md).

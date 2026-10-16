@@ -15,8 +15,8 @@ terminal/RML closure. [Platform adapters](../../platforms/README.md) own remote
 submission, reconciliation, and retrieval; the shared CLI has no submitter.
 
 For a new pure-2D PCQM direct-Gap family, implement one small model factory and
-add the two static family/adapter registrations. A compatible addon implements
-one small model hook, typed configuration, and its registry entries. Accepted
+add one catalog contract including execution metadata. A compatible addon implements
+one small model hook, typed configuration, and one catalog entry. Accepted
 input loading, optimizer/schedule, selection, trace/checkpoint persistence,
 recovery transport, output inspection, and terminal closure remain shared.
 The exact model, addon, recipe, and source interfaces are in the
@@ -73,13 +73,14 @@ $python = '.\.venv\Scripts\python.exe'
 & $python -m pytest -q --noconftest tests/test_shared_family_registration.py tests/test_graph_screen_training.py tests/test_shared_graph_lifecycle.py
 & $python -m pytest -q --noconftest tests/test_model_substrate.py tests/test_family_training_state.py tests/test_fast_sandbox.py tests/test_source_dependencies.py tests/test_modular_experiment_cli.py tests/test_modular_training_integration.py tests/test_gptrans_campaign_segments.py tests/test_family_pair_acceptance.py
 & $python -m pytest -q tests/test_documentation_check.py tests/test_repository_layout.py
-& $python -m molgap.documentation_check --repo-root . --check-entrypoint-budgets
+& $python -m molgap.documentation_check --repo-root .
 & $python -m molgap.research_memory --repo-root . validate
 & $python -m molgap.research_memory --repo-root . check --frozen
 ```
 
 The documentation command audits tracked active Markdown: local file pointers,
-anchors, code pointers, and fixed entrypoint line budgets. During development,
+anchors and code pointers, not document length. Optional legacy budget checks
+are not a repository acceptance gate. During development,
 add repeatable `--document` arguments to audit newly created files explicitly;
 when supplied, they select the documents rather than extend the tracked set.
 Frozen/generated trees are excluded by default; use `--include-frozen` only

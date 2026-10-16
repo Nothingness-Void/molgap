@@ -24,6 +24,9 @@ For prepared bounded T4 workflows, use the journaled
 `submit_workflow.py` composes private source publication, byte verification,
 quota checks, explicit T4 push and observed receipt binding. Repeated calls
 resume the same journal; uncertain outcomes never authorize another POST.
+New work can use `--experiment` through the checkout-selecting local launcher;
+see the [quickstart](../../docs/operations/EXPERIMENT_QUICKSTART.md). It uses
+external machine-local storage and prepares only unless `--execute` is explicit.
 
 For the new family output protocol, `retrieve_family_outputs.py` streams only
 the pinned manifest's required files through an authenticated owning account.
