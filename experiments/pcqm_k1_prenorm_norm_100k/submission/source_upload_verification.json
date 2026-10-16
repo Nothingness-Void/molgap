@@ -1,0 +1,82 @@
+{
+  "status": "REMOTE_SOURCE_BYTES_VERIFIED",
+  "dataset": "kaseichou/molgap-k1-prenorm-norm-100k-s42-src",
+  "version": 1,
+  "files": [
+    {
+      "path": "SOURCE_ARCHIVE_SHA256.txt",
+      "sha256": "16c411024db543124eca4e89ffa9f14887d2ee04bd91d0383fd12c9410917517",
+      "bytes": 65
+    },
+    {
+      "path": "SOURCE_COMMIT.txt",
+      "sha256": "1a858d1683a39962d8f262a3153f0de3911216d5208211c4d1b1c71b860e716c",
+      "bytes": 41
+    },
+    {
+      "path": "SOURCE_FILES.json",
+      "sha256": "bd660da4ae3e171ade296e83c5b9da8f4f198a53a2441f1c0a3ec6b41bf99baf",
+      "bytes": 19890
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_prenorm_norm_100k/acceptance_plan.json",
+      "sha256": "3173f444c3a816c042bedd3cd8e3c669df7331e01bcd3a44b3b54b171cb84b32",
+      "bytes": 1971
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_prenorm_norm_100k/training_recipe_k1_pre_ada.json",
+      "sha256": "7a5a3ad80b08b0d575d68d953304f5a439fdf4388ddc7e7896e7c054f4044c5b",
+      "bytes": 1992
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_prenorm_norm_100k/training_recipe_k1_pre_bn.json",
+      "sha256": "cc0791b0bdab0f2c9ba4a22591c48afbcfffd02f8c96a861aff93f4c856c8c27",
+      "bytes": 1991
+    },
+    {
+      "path": "acceptance/experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+      "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10",
+      "bytes": 408
+    },
+    {
+      "path": "experiment_launch.json",
+      "sha256": "db3866b215a9756fb6d238f9effcda3e35b6886b101ca010421146a92daf7d41",
+      "bytes": 1432
+    },
+    {
+      "path": "experiment_spec.json",
+      "sha256": "5108651c41602075a09da7e10a8a4d71a6337ba8c0a3d930a297a3a974f83863",
+      "bytes": 5491
+    },
+    {
+      "path": "initial_states/k1_pre_ada.pt",
+      "sha256": "747c30bb80c559e7fdddd84283d678cab4009770d4e80cbb27c7da12cd942ed1",
+      "bytes": 14778772
+    },
+    {
+      "path": "initial_states/k1_pre_bn.pt",
+      "sha256": "2761a842f1b7efdee39e1963be69770ab48ea99bb3a827c5dc4f20ea50411479",
+      "bytes": 14778399
+    },
+    {
+      "path": "package_manifest.json",
+      "sha256": "04f7dc79a5ec34ec43e2107d741c23cb05190d0f0707058b90a03636e81163b0",
+      "bytes": 5298
+    },
+    {
+      "path": "prospective/k1_pre_ada/trajectory.json",
+      "sha256": "1079c4391fb3eef32310317d0ab5581d991ad8262a0da21b46149ac3a873a589",
+      "bytes": 54895
+    },
+    {
+      "path": "prospective/k1_pre_bn/trajectory.json",
+      "sha256": "8680fdd9da5527abf3787d08b7e4d29aee4214494bfe6e14f6f7daf72f25e2ed",
+      "bytes": 54888
+    },
+    {
+      "path": "source_payload.bin",
+      "sha256": "bf66daf8f40a77b63a7ddcccb2aff5133fe6f7aed0f6498862d88737351536e1",
+      "bytes": 340237
+    }
+  ]
+}

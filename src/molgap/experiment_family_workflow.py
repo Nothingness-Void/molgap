@@ -25,6 +25,8 @@ OUTPUT_FORMAT = "molgap-family-output-v1"
 ROLES = frozenset({"predictions", "selected_model", "resume", "trace", "contract"})
 EXPECTED = frozenset({"epochs", "optimizer_steps", "sample_presentations",
                       "development_rows", "source_idx_sha256", "target_sha256", "precision"})
+EXPECTED_FAMILY = frozenset({"completed_passes", "next_batch", "optimizer_steps", "sample_presentations",
+                            "development_rows", "source_idx_sha256", "target_sha256", "precision"})
 
 
 def _json(path: Path) -> dict:
@@ -776,10 +778,16 @@ def _check_same_run_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan:
                 if arm["training"][key] != reference["training"][key]:
                     raise ValueError("Same-run peer training identity differs: " + key)
             expected = entry["expected"]
-            if type(expected) is not dict or set(expected) != EXPECTED:
+            if type(expected) is not dict or set(expected) not in (EXPECTED, EXPECTED_FAMILY):
                 raise ValueError("Incomplete terminal expectations")
-            for key in ("epochs", "optimizer_steps", "sample_presentations", "development_rows"):
+            for key in ("optimizer_steps", "sample_presentations", "development_rows"):
                 _positive(expected[key], key)
+            if "epochs" in expected:
+                _positive(expected["epochs"], "epochs")
+            else:
+                for key in ("completed_passes", "next_batch"):
+                    if type(expected[key]) is not int or expected[key] < 0:
+                        raise ValueError("Invalid shared terminal counter: " + key)
             for key in ("source_idx_sha256", "target_sha256"):
                 _digest(expected[key], key)
             if expected["precision"] not in {"fp32", "fp16", "bf16"}:
@@ -842,10 +850,16 @@ def check_acceptance_plan(spec: ExperimentSpec, repo_root: Path, plan: dict) -> 
                 raise ValueError("Missing or unknown acceptance plan fields")
             arm = expected_arms[entry["arm_id"]]
             artifact_adapter(entry["adapter"], (arm["family"]["name"], arm["family"]["version"]))
-            if type(entry["expected"]) is not dict or set(entry["expected"]) != EXPECTED:
+            if type(entry["expected"]) is not dict or set(entry["expected"]) not in (EXPECTED, EXPECTED_FAMILY):
                 raise ValueError("Incomplete terminal expectations")
-            for key in ("epochs", "optimizer_steps", "sample_presentations", "development_rows"):
+            for key in ("optimizer_steps", "sample_presentations", "development_rows"):
                 _positive(entry["expected"][key], key)
+            if "epochs" in entry["expected"]:
+                _positive(entry["expected"]["epochs"], "epochs")
+            else:
+                for key in ("completed_passes", "next_batch"):
+                    if type(entry["expected"][key]) is not int or entry["expected"][key] < 0:
+                        raise ValueError("Invalid shared terminal counter: " + key)
             for key in ("source_idx_sha256", "target_sha256"):
                 _digest(entry["expected"][key], key)
             if entry["expected"]["precision"] not in {"fp32", "fp16", "bf16"}:
@@ -936,7 +950,8 @@ def close_verified_outputs(repo_root: Path, spec: ExperimentSpec, descriptor, *,
                 raise ValueError("Descriptor/verified artifact path mismatch: " + role)
             if role == "trace" and ("trace" not in arm or repo_local_path(repo_root, arm["trace"]) != inspected_path):
                 raise ValueError("Descriptor closure trace differs from the inspected trace")
-        for field, counter in (("epoch", "epochs"), ("step", "optimizer_steps"), ("samples", "sample_presentations")):
+        pass_counter = "completed_passes" if "completed_passes" in report["observed"]["progress"] else "epochs"
+        for field, counter in (("epoch", pass_counter), ("step", "optimizer_steps"), ("samples", "sample_presentations")):
             if arm["observed"]["progress"][field]["value"] != report["observed"]["progress"][counter]:
                 raise ValueError("Descriptor/verified progress mismatch")
     if any(r["status"] == "BLOCKED" for r in reports.values()):
@@ -1022,7 +1037,7 @@ def build_verified_terminal_descriptor(repo_root: Path, spec: ExperimentSpec, *,
                     "terminal": {"status": fact("complete"), "exit_reason": fact("verified_outputs_complete")},
                     "artifacts": {"metrics": metrics, "predictions": binding("predictions"),
                                   "checkpoint": binding("selected_model"), "trace": binding("trace")},
-                    "progress": {"epoch": fact(progress["epochs"]), "step": fact(progress["optimizer_steps"]),
+                    "progress": {"epoch": fact(progress["completed_passes"] if "completed_passes" in progress else progress["epochs"]), "step": fact(progress["optimizer_steps"]),
                                  "samples": fact(progress["sample_presentations"])},
                     "costs": costs, "missing_evidence": missing}}
         if repo_local_path(root, where["trace"]) != repo_local_path(root, entry["observed"]["artifacts"]["trace"]["locator"]):

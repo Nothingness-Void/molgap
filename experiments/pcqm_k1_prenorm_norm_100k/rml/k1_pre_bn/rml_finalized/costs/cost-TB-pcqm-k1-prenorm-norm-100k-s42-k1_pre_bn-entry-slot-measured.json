@@ -1,0 +1,31 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-prenorm-norm-100k-s42-v1",
+  "category": "training",
+  "cost_event_id": "cost-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-entry-slot-measured",
+  "evidence_ref": "experiments/pcqm_k1_prenorm_norm_100k/terminal_acceptance/acceptance_k1_pre_bn.json",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 1.9678432923291667
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 1.9678432923291667
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_bn:downstream",
+  "schema": "molgap-cost-event-v1",
+  "scope": "One explicitly assigned T4 slot for the shared measured entry window; includes setup/preflight/evaluation/idle, excludes unknown pre-entry/post-exit platform allocation. Two arm slot events sum to measured pair assigned-device seconds; overlapping wall is not additive job elapsed.",
+  "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+}

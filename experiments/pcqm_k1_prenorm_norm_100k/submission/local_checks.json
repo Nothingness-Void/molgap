@@ -1,0 +1,144 @@
+{
+  "format": "molgap-local-check-receipt-v1",
+  "working_directory": "D:/w/k1-prenorm-norm-100k",
+  "python": "D:/文档/molgap/.venv/Scripts/python.exe",
+  "environment": {
+    "PYTHONPATH": "D:/w/k1-prenorm-norm-100k/src",
+    "CUDA_VISIBLE_DEVICES": "-1",
+    "HIP_VISIBLE_DEVICES": "-1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "command": [
+    "python", "-m", "pytest", "-q",
+    "tests/test_k1_prenorm.py",
+    "tests/test_kaggle_workflow_budget.py",
+    "tests/test_family_training_kernel.py",
+    "tests/test_family_training_session.py",
+    "tests/test_family_training_runner.py",
+    "tests/test_experiment_workflow.py"
+  ],
+  "outputs_test_file_present": false,
+  "exit_code": 1,
+  "pytest_elapsed_seconds": 94.24,
+  "outer_elapsed_seconds": 101.885,
+  "summary": {
+    "passed": 170,
+    "failed": 2,
+    "warnings": 62
+  },
+  "failures": [
+    {
+      "test": "tests/test_k1_prenorm.py::test_variant_frozen_state_load_and_k1_update_have_finite_gradients_and_final_norm_optimizer_ownership",
+      "line": 169,
+      "cause": "Test did not enable the required fail-closed deterministic algorithms before FamilyKernel.step; execution stopped at the deterministic-memory-fill guard."
+    },
+    {
+      "test": "tests/test_k1_prenorm.py::test_live_selection_keeps_ema_as_auxiliary_canonical_trace",
+      "line": 201,
+      "cause": "The imported contract_file helper calls build_family_recipe with its default mode='reference', while this synthetic recipe uses mode='prenorm_bn'; explicit mode binding is needed in the test helper path."
+    }
+  ],
+  "targeted_followup": {
+    "purpose": "Recheck only the two newly authored test cases that failed in the first batch after fixing their fixture setup.",
+    "command": [
+      "python", "-m", "pytest", "-q",
+      "tests/test_k1_prenorm.py::test_variant_frozen_state_load_and_k1_update_have_finite_gradients_and_final_norm_optimizer_ownership",
+      "tests/test_k1_prenorm.py::test_live_selection_keeps_ema_as_auxiliary_canonical_trace"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 9.102,
+    "summary": {
+      "passed": 2,
+      "failed": 0,
+      "warnings": 2
+    },
+    "notes": "The deterministic-algorithm guard now restores the caller state in try/finally, and the synthetic contract explicitly binds the prenorm_bn addon. The original 170 passing tests were not rerun."
+  },
+  "post_interface_fix": {
+    "scope": "Base frozen-state loading and the strict same-run shared-family acceptance contract; no implementation files changed by this audit.",
+    "policy_test_file_present": false,
+    "executions": [
+      {
+        "command": ["python", "-m", "pytest", "-q", "tests/test_k1_prenorm.py"],
+        "exit_code": 1,
+        "pytest_elapsed_seconds": 3.64,
+        "outer_elapsed_seconds": 10.909,
+        "summary": {"passed": 6, "failed": 1, "warnings": 3},
+        "failure": {
+          "test": "tests/test_k1_prenorm.py::test_same_run_acceptance_accepts_shared_counters_but_rejects_different_initialization",
+          "cause": "The synthetic declaration used recipe name molgap-family-training-recipe-v1; registered K1 family version 3 requires shared-family-training. Corrected in the test fixture."
+        }
+      },
+      {
+        "command": ["python", "-m", "pytest", "-q", "tests/test_k1_prenorm.py::test_same_run_acceptance_accepts_shared_counters_but_rejects_different_initialization"],
+        "exit_code": 0,
+        "pytest_elapsed_seconds": 7.07,
+        "outer_elapsed_seconds": 14.189,
+        "summary": {"passed": 1, "failed": 0, "warnings": 1},
+        "notes": "The acceptance fixture now proves completed_passes/next_batch expectations are accepted and a differing initialization SHA remains blocked. The six tests that passed in the first execution were not rerun."
+      }
+    ]
+  },
+  "rml_frozen_portable_check": {
+    "command": ["python", "-m", "molgap.research_memory", "check", "--frozen", "--portable"],
+    "python": "D:/文档/molgap/.venv/Scripts/python.exe",
+    "working_directory": "D:/w/k1-prenorm-norm-100k",
+    "environment": {
+      "PYTHONPATH": "D:/w/k1-prenorm-norm-100k/src",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    },
+    "runs": 1,
+    "exit_code": 1,
+    "elapsed_seconds": 22.014,
+    "blockers": {
+      "portable_inputs_absent_from_git_head": [
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_ada/costs/cost-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada-planned.json",
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_ada/trajectory.json",
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_bn/costs/cost-TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn-planned.json",
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_bn/trajectory.json"
+      ],
+      "derived_outputs_differ_from_git_head": [
+        "research_memory/derived/completeness_report.json",
+        "research_memory/derived/cost_ledger.json",
+        "research_memory/derived/policy_backtest.json",
+        "research_memory/derived/research_summary.json",
+        "research_memory/derived/research_summary.md",
+        "research_memory/derived/trajectory_graph.json",
+        "research_memory/derived/trajectory_index.json"
+      ]
+    },
+    "prospective_index_verification": {
+      "trajectory_ids": [
+        "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn",
+        "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+      ],
+      "index_path": "research_memory/derived/trajectory_index.json",
+      "record_paths": [
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_bn/trajectory.json",
+        "experiments/pcqm_k1_prenorm_norm_100k/rml/k1_pre_ada/trajectory.json"
+      ],
+      "both_indexed_as": {"outcome": "ACTIVE", "record_mode": "prospective"},
+      "both_have_empty": {"result_evidence_ids": [], "ready_package_ids": []},
+      "terminal_or_replay_ready_declaration_present": false,
+      "note": "Canonical records include the prospective same-run binding; no terminal closure or replay-ready/ready_for_desktop declaration is present."
+    },
+    "notes": "The initial check was run once; the post-commit rerun is recorded below. No canonical or derived RML files were modified; only this receipt was appended.",
+    "post_commit_rerun": {
+      "command": ["python", "-m", "molgap.research_memory", "check", "--frozen", "--portable"],
+      "python": "D:/文档/molgap/.venv/Scripts/python.exe",
+      "working_directory": "D:/w/k1-prenorm-norm-100k",
+      "environment": {
+        "PYTHONPATH": "D:/w/k1-prenorm-norm-100k/src",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1"
+      },
+      "runs": 1,
+      "exit_code": 0,
+      "elapsed_seconds": 21.875,
+      "output": "RML derived outputs are frozen and current; committed evidence closure, runtime, derived outputs, and local artifact claims are complete"
+    }
+  },
+  "scope_note": "One targeted batch plus a selective rerun of its two failed newly authored test nodes; no full-suite run, remote action, or accelerator execution."
+}

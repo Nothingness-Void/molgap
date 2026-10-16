@@ -1,0 +1,14 @@
+{
+  "kernel": "kaseichou/molgap-k1-prenorm-norm-100k-s42",
+  "kernel_id": 138980611,
+  "version": 1,
+  "entry_sha256": "271db0c5ca4ff1edd3c3b85e61afc4305c39459539d655bf18329a0e1fd36bd4",
+  "entry_bytes_equal": true,
+  "private": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "kaseichou/molgap-k1-prenorm-norm-100k-s42-src",
+    "kaseichou/pcqm4mv2-ogb-fixed-100k-v1"
+  ],
+  "observed_at": "2026-10-16T06:42:03.788512+00:00"
+}

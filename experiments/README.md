@@ -13,6 +13,7 @@ Track C.
 
 | Question | Verdict | Directory |
 |---|---|---|
+| Does Pre-Norm AdaRMSNorm improve K1 against matched Pre-Norm BN? | Accepted40/40-pass pair; Ada is2.182meV worse and closes NEGATIVE_UNDER_CONTRACT, control CLOSED. Complete history archived; terminal RML evidence retained with strict replay exclusions; no model adoption | [Decision and custody](pcqm_k1_prenorm_norm_100k/terminal_custody_decision.md) |
 | Do recovery-safe shared K1/GPTrans sessions improve local execution? | Synthetic NO_TRAIN diagnostic; exact update endpoints match, no stable compute speedup and short-session publication overhead rises; no full-epoch/quality/model promotion claim | [Session speed decision](family_session_execution_speed/terminal_decision.md) |
 | Do block/bucket samplers improve the fixed-index input pipeline locally? | Completed execution-only diagnostic; reduced padding does not yield a stable throughput gain; no sampler/model adoption or quality claim | [Input pipeline decision](pcqm_input_pipeline/terminal_decision.md) |
 | Does fused AdamW plus CPU layout speed up a real100K TRAIN stream? | Accepted local10ep speed diagnostic; joint pipeline time reduced24.13%; no development/accuracy/model promotion, scientific replay excluded | [Local speed result](pcqm_k1_fused_layout_speed/terminal_decision.md) |

@@ -1,0 +1,45 @@
+{
+  "comparison_scope": "context_only_cross_job",
+  "files": [
+    {
+      "path": "experiments/pcqm_k1_prenorm_norm_100k/reference_binding/post_norm/k1_single_bn/canonical_trace.json",
+      "sha256": "4eb35f31853cd453a096453c49e62db1c576f1f297801f9c30156f975096bd0e",
+      "source": "codex/exp/k1-norm-ablation-100k@d1438c87080c67a30dfeda775626de7ed57be2f9:terminal_acceptance/outputs/experiment/k1_single_bn/canonical_trace.json"
+    },
+    {
+      "path": "experiments/pcqm_k1_prenorm_norm_100k/reference_binding/post_norm/k1_single_bn/development_predictions.pt",
+      "sha256": "05a2113f9e736f9994ff6628acad57c0c88c0447409ee86411baf65923c6a2b5",
+      "source": "codex/exp/k1-norm-ablation-100k@d1438c87080c67a30dfeda775626de7ed57be2f9:terminal_acceptance/outputs/experiment/k1_single_bn/development_predictions.pt"
+    },
+    {
+      "path": "experiments/pcqm_k1_prenorm_norm_100k/reference_binding/post_norm/k1_single_bn/training_contract.json",
+      "sha256": "1b395002c4881832b5ba73c5dfe1369517876152a4bc8540177d35903e2c3ca9",
+      "source": "codex/exp/k1-norm-ablation-100k@d1438c87080c67a30dfeda775626de7ed57be2f9:terminal_acceptance/outputs/experiment/k1_single_bn/training_contract.json"
+    },
+    {
+      "path": "experiments/pcqm_k1_prenorm_norm_100k/reference_binding/post_norm/k1_ada_rmsnorm/canonical_trace.json",
+      "sha256": "ae8a5856cc0a92422d7d37538a6f0fc6cd726862bdf5aedc741479b42f68c62c",
+      "source": "codex/exp/k1-norm-ablation-100k@d1438c87080c67a30dfeda775626de7ed57be2f9:terminal_acceptance/outputs/experiment/k1_ada_rmsnorm/canonical_trace.json"
+    },
+    {
+      "path": "experiments/pcqm_k1_prenorm_norm_100k/reference_binding/post_norm/k1_ada_rmsnorm/development_predictions.pt",
+      "sha256": "31a43e1cd49f146178cd69a1e39a76c0786589415c619f43e89127761c453343",
+      "source": "codex/exp/k1-norm-ablation-100k@d1438c87080c67a30dfeda775626de7ed57be2f9:terminal_acceptance/outputs/experiment/k1_ada_rmsnorm/development_predictions.pt"
+    },
+    {
+      "path": "experiments/pcqm_k1_prenorm_norm_100k/reference_binding/post_norm/k1_ada_rmsnorm/training_contract.json",
+      "sha256": "e660a9a4573576fd8e5254a8153301618209f1aa933a7ca747d43620b890904f",
+      "source": "codex/exp/k1-norm-ablation-100k@d1438c87080c67a30dfeda775626de7ed57be2f9:terminal_acceptance/outputs/experiment/k1_ada_rmsnorm/training_contract.json"
+    },
+    {
+      "path": "experiments/pcqm_k1_prenorm_norm_100k/reference_binding/post_norm/summary.json",
+      "sha256": "819ec31533134bb73a84508e59d79f990edb84012fd177e2b4bd5de79a8cd829"
+    },
+    {
+      "path": "experiments/pcqm_k1_prenorm_norm_100k/reference_binding/post_norm/interpretation_review_20261016.md",
+      "sha256": "aa1055a178fda5bdbb7565dd0cc778e2e18ce320b78545aedf0f9baad4866502"
+    }
+  ],
+  "format": "molgap-retained-reference-files-v1",
+  "source_commit": "1f627236c1f7780e35411e741352504092e145c8"
+}

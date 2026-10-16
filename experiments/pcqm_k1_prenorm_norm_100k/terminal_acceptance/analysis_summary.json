@@ -1,0 +1,131 @@
+{
+  "allocation_entry": {
+    "allocated_device_seconds": 14168.47170477,
+    "entire_platform_release_seconds": null,
+    "error": null,
+    "format": "molgap-kaggle-allocation-entry-v1",
+    "gpu_count_source": "nvidia-smi",
+    "monotonic_seconds": 7084.235852385,
+    "observed_gpu_count": 2,
+    "platform_release_scope": "not observed: queue, allocation before entry and platform release after entry are excluded",
+    "scope": "entry invocation through bootstrap completion, including setup, pip, extraction, preflight, training/evaluation and idle assigned GPU time; not device busy time",
+    "status": "complete",
+    "wall_end_utc": "2026-10-16T08:41:58.098375+00:00",
+    "wall_start_utc": "2026-10-16T06:43:53.862507+00:00"
+  },
+  "arms": {
+    "post_ada": {
+      "last_live_mae_eV": 0.14522992074489594,
+      "last_online_train_mae_eV": 0.08740943501881912,
+      "live_30_mae_eV": 0.14886309206485748,
+      "live_30_to_last_improvement_eV": 0.003633171319961548,
+      "mae_eV": 0.1451841760343313,
+      "prediction_sha256": "31a43e1cd49f146178cd69a1e39a76c0786589415c619f43e89127761c453343",
+      "selected_pass": 39,
+      "selected_step": 30459
+    },
+    "post_bn": {
+      "last_live_mae_eV": 0.141294464468956,
+      "last_online_train_mae_eV": 0.09823122512808116,
+      "live_30_mae_eV": 0.14530746638774872,
+      "live_30_to_last_improvement_eV": 0.004013001918792725,
+      "mae_eV": 0.1412944608205557,
+      "prediction_sha256": "05a2113f9e736f9994ff6628acad57c0c88c0447409ee86411baf65923c6a2b5",
+      "selected_pass": 40,
+      "selected_step": 31240
+    },
+    "pre_ada": {
+      "invocation_wall_seconds": 6761.064041238999,
+      "last_live_mae_eV": 0.14709937572479248,
+      "last_online_train_mae_eV": 0.10201380963270663,
+      "live_30_mae_eV": 0.15071886777877808,
+      "live_30_to_last_improvement_eV": 0.0036194920539855957,
+      "mae_eV": 0.147099362706542,
+      "prediction_sha256": "8ed64bd2cc7a9fcaa257d11862afa480b01bce7ba65403eefa461894805ba062",
+      "secondary_best_ema_mae_eV": 0.14719010889530182,
+      "secondary_best_ema_pass": 40,
+      "selected_pass": 40,
+      "selected_step": 31240
+    },
+    "pre_bn": {
+      "invocation_wall_seconds": 6338.445042296999,
+      "last_live_mae_eV": 0.14504443109035492,
+      "last_online_train_mae_eV": 0.10235361414309432,
+      "live_30_mae_eV": 0.14797329902648926,
+      "live_30_to_last_improvement_eV": 0.0029288679361343384,
+      "mae_eV": 0.14491751976430417,
+      "prediction_sha256": "5d384a0c9a92fecc85e7c7e3e1ccb5297395e1f30927cf58d6273950dac99171",
+      "secondary_best_ema_mae_eV": 0.1448703110218048,
+      "secondary_best_ema_pass": 36,
+      "selected_pass": 38,
+      "selected_step": 29678
+    }
+  },
+  "candidate_over_reference_invocation_wall_ratio": 1.066675501029326,
+  "comparisons": {
+    "context_pre_ada_minus_post_ada": {
+      "candidate": "pre_ada",
+      "candidate_better_rows": 24542,
+      "ci95": [
+        0.0009088730930089951,
+        0.002915596331477165
+      ],
+      "delta": 0.0019151866722106933,
+      "n_bootstrap": 10000,
+      "probability_better": 0.0,
+      "reference": "post_ada",
+      "reference_better_rows": 25457,
+      "rows": 50000,
+      "scope": "cross_job_context_only",
+      "seed": 42,
+      "tie_rows": 1
+    },
+    "context_pre_bn_minus_post_bn": {
+      "candidate": "pre_bn",
+      "candidate_better_rows": 24168,
+      "ci95": [
+        0.0026880395225286485,
+        0.004537413128137589
+      ],
+      "delta": 0.003623058943748474,
+      "n_bootstrap": 10000,
+      "probability_better": 0.0,
+      "reference": "post_bn",
+      "reference_better_rows": 25832,
+      "rows": 50000,
+      "scope": "cross_job_context_only",
+      "seed": 42,
+      "tie_rows": 0
+    },
+    "primary": {
+      "candidate": "pre_ada",
+      "candidate_better_rows": 24840,
+      "ci95": [
+        0.0011964949984550476,
+        0.0031611830875873563
+      ],
+      "delta": 0.002181842942237854,
+      "material_superiority_passed": false,
+      "n_bootstrap": 10000,
+      "noninferiority_passed": false,
+      "probability_better": 0.0,
+      "reference": "pre_bn",
+      "reference_better_rows": 25159,
+      "rows": 50000,
+      "scope": "same_job_frozen_gate",
+      "seed": 42,
+      "tie_rows": 1
+    }
+  },
+  "entry_assigned_t4_device_hours": 3.9356865846583333,
+  "format": "molgap-retained-pair-analysis-v1",
+  "kernel_id": 138980611,
+  "limits": [
+    "paired row bootstrap is not seed variance",
+    "historical placement comparisons have source/job/final-norm confounding",
+    "online train MAE is not a same-checkpoint generalization gap",
+    "no new training or inference"
+  ],
+  "scientific_outcome": "NEGATIVE_UNDER_CONTRACT",
+  "version": 1
+}

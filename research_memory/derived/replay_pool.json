@@ -11045,6 +11045,26 @@
     },
     {
       "reasons": [
+        "canonical_checkpoint_identity_history_missing",
+        "canonical_learning_rate_history_missing",
+        "canonical_trace_marked_ineligible",
+        "strict_v5_comparison_not_qualified"
+      ],
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_ada:downstream",
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_ada"
+    },
+    {
+      "reasons": [
+        "canonical_checkpoint_identity_history_missing",
+        "canonical_learning_rate_history_missing",
+        "canonical_trace_marked_ineligible",
+        "strict_v5_comparison_not_qualified"
+      ],
+      "run_id": "pcqm-k1-prenorm-norm-100k-s42:k1_pre_bn:downstream",
+      "trajectory_id": "TB-pcqm-k1-prenorm-norm-100k-s42-k1_pre_bn"
+    },
+    {
+      "reasons": [
         "no_compatible_candidate_reference_trace_pair"
       ],
       "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
@@ -11052,5 +11072,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "e118b4f458d3a2f16841cdb21bb6a72ca267952510e7b8df387c2fe6b43633f1"
+  "source_digest": "d605576187e54fa2ac22120822088300154f9fd0a16cfba43d7eb30dc2ff38c6"
 }
