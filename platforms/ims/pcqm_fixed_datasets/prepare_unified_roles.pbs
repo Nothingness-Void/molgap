@@ -1,0 +1,18 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=4:mpiprocs=1:ompthreads=1
+#PBS -l walltime=02:00:00
+#PBS -j oe
+set -euo pipefail
+BOUNDARY=/lustre/home/users/sm2/chou
+STAGE="$BOUNDARY/molgap-pcqm-unified-v2"
+OUTPUT="$BOUNDARY/pcqm4mv2-unified-v2"
+test "$(realpath "$BOUNDARY")" = /lustre/home/users/sm2/chou
+test "$(realpath "$STAGE")" = "$STAGE"
+test "$(realpath -m "$OUTPUT")" = "$OUTPUT"
+export PYTHONPATH="$STAGE/code/src"
+export CUDA_VISIBLE_DEVICES=-1 HIP_VISIBLE_DEVICES=-1 ROCR_VISIBLE_DEVICES=-1
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+umask 077
+"$BOUNDARY/molgap/.venv/bin/python" "$STAGE/code/platforms/ims/pcqm_fixed_datasets/prepare_unified_roles.py" \
+  --boundary "$BOUNDARY" --fixed-root "$BOUNDARY/pcqm4mv2-fixed-v1" \
+  --output-root "$OUTPUT" --rule "$STAGE/rule.json" --workers 3
