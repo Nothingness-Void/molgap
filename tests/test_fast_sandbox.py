@@ -203,16 +203,18 @@ def test_baseline_presets_reuse_factory_and_owning_forward(monkeypatch, family):
     calls = []
     if family == "neural_atom_k1":
         from molgap import qm9_neural_atom as owner
+        original = owner.make_encoder
         def factory(mode):
             calls.append(mode)
-            return TinySlotGraph()
+            return original(mode)
         monkeypatch.setattr(owner, "make_encoder", factory)
     else:
-        from molgap import pcqm_gptrans_v4 as owner
+        from molgap import family_model_ops as owner
+        original = owner.make_gptrans_backbone
         def factory(*, variant):
             calls.append(variant)
-            return TinySlotGraph()
-        monkeypatch.setattr(owner, "_make_model", factory)
+            return original(variant=variant)
+        monkeypatch.setattr(owner, "make_gptrans_backbone", factory)
     result = run_family_sandbox(family)
     assert result["status"] == "PASSED", result
     assert calls == (["neural_atom_k1"] * 2 if family == "neural_atom_k1" else ["reference"] * 2)

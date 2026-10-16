@@ -143,6 +143,18 @@ def test_missing_internal_dependency_fails(tmp_path):
         discover_source_dependencies(tmp_path, ["src/molgap/plugin.py"])
 
 
+def test_all_reachable_missing_modules_are_reported_without_execution(tmp_path):
+    _write(tmp_path, "src/molgap/__init__.py", "")
+    _write(tmp_path, "src/molgap/plugin.py", "from .missing_one import value\nfrom .branch import run\n")
+    _write(tmp_path, "src/molgap/branch.py", "def run():\n    from .missing_two import value\nraise RuntimeError('must not execute')\n")
+    with pytest.raises(ValueError, match="Missing internal dependency") as caught:
+        discover_source_dependencies(tmp_path, ["src/molgap/plugin.py"])
+    message = str(caught.value)
+    assert "'molgap.missing_one' imported by src/molgap/plugin.py" in message
+    assert "'molgap.missing_two' imported by src/molgap/branch.py" in message
+    assert message.index("molgap.missing_one") < message.index("molgap.missing_two")
+
+
 def test_relative_import_escape_fails(tmp_path):
     _write(tmp_path, "src/molgap/__init__.py", "")
     _write(tmp_path, "src/molgap/plugin.py", "from ...credentials import token\n")

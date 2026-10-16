@@ -63,7 +63,7 @@ def development_cpu_view(batch, *, retain_random_walk_pe=False):
 
 class BoundForeachEMA(ForeachExponentialMovingAverage):
     """Reuse tensor lists, retaining the v1 foreach equation and strict topology."""
-    def __init__(self, model, decay=0.999):
+    def __init__(self, model, decay=0.9999):
         super().__init__(model, decay)
         self._binding = None
         # Reports retain this plain counter dict, never the EMA/model tensors.
@@ -169,6 +169,10 @@ class TransferLoader:
     @property
     def loader(self):
         return self.source.loader
+
+    @property
+    def generator(self):
+        return self.loader.generator
 
     def __len__(self):
         return len(self.source)

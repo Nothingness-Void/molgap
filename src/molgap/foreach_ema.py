@@ -1,5 +1,21 @@
 """Tensor-list EMA primitive, independent of any profiling/training entrypoint."""
-from .pcqm_gptrans_v4 import ExponentialMovingAverage
+
+
+class ExponentialMovingAverage:
+    """Retained EMA state ABI without a dependency on a trainer or its constants."""
+    def __init__(self, model, decay=0.9999):
+        if decay not in (0.9999, 0.999):
+            raise ValueError("EMA decay must be a reviewed frozen value")
+        self.decay = decay
+        self.state = {name: value.detach().clone() for name, value in model.state_dict().items()}
+
+    def state_dict(self):
+        return self.state
+
+    def load_state_dict(self, state):
+        if state.keys() != self.state.keys():
+            raise RuntimeError("EMA state identity changed")
+        self.state = {name: value.detach().clone() for name, value in state.items()}
 
 
 class ForeachExponentialMovingAverage(ExponentialMovingAverage):

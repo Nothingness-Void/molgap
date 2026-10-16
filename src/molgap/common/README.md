@@ -55,6 +55,11 @@ for call contracts. Training still uses the existing
 platform skills own remote operations. This package does not wrap another
 training launcher around that core.
 
+The same module also aliases `FamilyRecipe`, `ScheduleSpec`, `FamilyKernel`,
+`FamilyTrainingSession` and `UpdateObserver`. The
+[two-family examples](../../../docs/operations/FAMILY_TRAINING_EXAMPLES.md) show
+how registered slots reach that lifecycle without importing a host controller.
+
 ## Compatibility and limits
 
 `execution_comparison.py` keeps legacy T4 question defaults as an explicit
@@ -87,4 +92,5 @@ immutable Spec compatibility, static inventory plus isolated imports, explicit
 planning ownership, retained metric units and unchanged default optimizer update.
 Catalogs intentionally differ by reviewed capabilities. Shared parsing does not
 make an unregistered family/addon executable or authorize a previously forbidden
-role. Full training-lifecycle convergence remains a separate implementation task.
+role. The [shared-core adoption](../../../docs/operations/SHARED_TRAINING_CORE_DESKTOP_ACCEPTANCE.md)
+owns lifecycle integration, exact source inventory and remaining native checks.

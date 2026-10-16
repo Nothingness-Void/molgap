@@ -257,7 +257,7 @@ def test_cache_rejects_invalid_role_offset(start):
 def test_retired_execution_switches_are_not_available():
     for option in ("cache_development", "selective_transfers", "cache_ema_plan",
                    "reuse_weight_backup", "reuse_loaded_datasets"):
-        with pytest.raises(TypeError):
+        with pytest.raises((TypeError, ValueError)):
             ExecutionTuning(**{option: False})
 
 

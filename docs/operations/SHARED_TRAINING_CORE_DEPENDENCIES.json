@@ -1,0 +1,2397 @@
+{
+  "checkout": "C:\\Users\\17449\\.codex\\worktrees\\common-contract\\molgap",
+  "closure": {
+    "dynamic_imports": [
+      "src/molgap/experiment_execution.py:262: import_module(...) requires registry binding",
+      "src/molgap/experiment_execution.py:276: import_module(...) requires registry binding",
+      "src/molgap/experiment_execution.py:294: import_module(...) requires registry binding",
+      "src/molgap/experiment_execution.py:305: import_module(...) requires registry binding",
+      "src/molgap/experiment_execution.py:317: import_module(...) requires registry binding",
+      "src/molgap/experiment_execution.py:420: import_module(...) requires registry binding",
+      "src/molgap/experiment_preflight.py:717: importlib.import_module(...) requires registry binding",
+      "src/molgap/experiment_preflight.py:722: importlib.import_module(...) requires registry binding",
+      "src/molgap/experiment_resume.py:609: __import__(...) requires registry binding",
+      "src/molgap/experiment_workflow.py:33: import_module(...) requires registry binding",
+      "src/molgap/family_training_policy.py:54: import_module(...) requires registry binding",
+      "src/molgap/shared_model_adapter.py:40: importlib.import_module(...) requires registry binding"
+    ],
+    "edges": [
+      [
+        "platforms/ims/run_family_training.py",
+        "src/molgap/experiment_training_worker.py"
+      ],
+      [
+        "platforms/kaggle/run_experiment.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "platforms/kaggle/run_experiment.py",
+        "src/molgap/experiment_package.py"
+      ],
+      [
+        "platforms/kaggle/run_experiment.py",
+        "src/molgap/family_training_data.py"
+      ],
+      [
+        "platforms/kaggle/run_experiment.py",
+        "src/molgap/family_training_runner.py"
+      ],
+      [
+        "platforms/kaggle/run_experiment.py",
+        "src/molgap/kaggle_pair_runtime.py"
+      ],
+      [
+        "platforms/kaggle/run_experiment.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/__init__.py",
+        "src/molgap/constants.py"
+      ],
+      [
+        "src/molgap/common/declarations.py",
+        "src/molgap/common/wire.py"
+      ],
+      [
+        "src/molgap/common/paths.py",
+        "src/molgap/common/spec.py"
+      ],
+      [
+        "src/molgap/common/runtime.py",
+        "src/molgap/family_training_core.py"
+      ],
+      [
+        "src/molgap/common/runtime.py",
+        "src/molgap/family_training_kernel.py"
+      ],
+      [
+        "src/molgap/common/runtime.py",
+        "src/molgap/family_training_recipe.py"
+      ],
+      [
+        "src/molgap/common/runtime.py",
+        "src/molgap/family_training_session.py"
+      ],
+      [
+        "src/molgap/common/runtime.py",
+        "src/molgap/family_training_state.py"
+      ],
+      [
+        "src/molgap/common/runtime.py",
+        "src/molgap/fast_sandbox.py"
+      ],
+      [
+        "src/molgap/common/runtime.py",
+        "src/molgap/model_substrate.py"
+      ],
+      [
+        "src/molgap/common/runtime.py",
+        "src/molgap/shared_model_adapter.py"
+      ],
+      [
+        "src/molgap/common/runtime.py",
+        "src/molgap/source_dependencies.py"
+      ],
+      [
+        "src/molgap/common/spec.py",
+        "src/molgap/common/io.py"
+      ],
+      [
+        "src/molgap/common/spec.py",
+        "src/molgap/common/wire.py"
+      ],
+      [
+        "src/molgap/common/transport.py",
+        "src/molgap/common/io.py"
+      ],
+      [
+        "src/molgap/common/transport.py",
+        "src/molgap/common/paths.py"
+      ],
+      [
+        "src/molgap/common/transport.py",
+        "src/molgap/common/spec.py"
+      ],
+      [
+        "src/molgap/common/transport.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/common/transport.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/execution_comparison.py",
+        "src/molgap/common/declarations.py"
+      ],
+      [
+        "src/molgap/execution_comparison.py",
+        "src/molgap/experiment_source_inventory.py"
+      ],
+      [
+        "src/molgap/execution_comparison.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/execution_comparison.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/execution_comparison.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/execution_comparison.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/experiment_catalog.py",
+        "src/molgap/common/spec.py"
+      ],
+      [
+        "src/molgap/experiment_execution.py",
+        "src/molgap/experiment_family_artifacts.py"
+      ],
+      [
+        "src/molgap/experiment_execution.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/experiment_execution.py",
+        "src/molgap/experiment_package.py"
+      ],
+      [
+        "src/molgap/experiment_execution.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/experiment_execution.py",
+        "src/molgap/family_execution_profile.py"
+      ],
+      [
+        "src/molgap/experiment_execution.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/experiment_execution.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/experiment_execution.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/experiment_execution.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/experiment_family_artifacts.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/experiment_family_workflow.py",
+        "src/molgap/comparison_readiness.py"
+      ],
+      [
+        "src/molgap/experiment_family_workflow.py",
+        "src/molgap/experiment_family_artifacts.py"
+      ],
+      [
+        "src/molgap/experiment_family_workflow.py",
+        "src/molgap/experiment_launch.py"
+      ],
+      [
+        "src/molgap/experiment_family_workflow.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/experiment_family_workflow.py",
+        "src/molgap/experiment_terminal.py"
+      ],
+      [
+        "src/molgap/experiment_family_workflow.py",
+        "src/molgap/family_training_outputs.py"
+      ],
+      [
+        "src/molgap/experiment_family_workflow.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/experiment_family_workflow.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/experiment_family_workflow.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/experiment_family_workflow.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/experiment_launch.py",
+        "src/molgap/common/io.py"
+      ],
+      [
+        "src/molgap/experiment_launch.py",
+        "src/molgap/experiment_package.py"
+      ],
+      [
+        "src/molgap/experiment_launch.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/experiment_launch.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/experiment_package.py",
+        "src/molgap/experiment_launch.py"
+      ],
+      [
+        "src/molgap/experiment_package.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/experiment_package.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/experiment_package.py",
+        "src/molgap/v4_bundle.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/experiment_package.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/family_training_data.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/family_training_kernel.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/family_training_runner.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/gptrans_execution_backend.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/k1_screen_training.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/pcqm_gptrans_v4.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/pcqm_topology.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/experiment_preflight.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/experiment_prospective.py",
+        "src/molgap/common/identity.py"
+      ],
+      [
+        "src/molgap/experiment_prospective.py",
+        "src/molgap/experiment_launch.py"
+      ],
+      [
+        "src/molgap/experiment_prospective.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/experiment_prospective.py",
+        "src/molgap/research_memory/compiler.py"
+      ],
+      [
+        "src/molgap/experiment_prospective.py",
+        "src/molgap/research_memory/paired.py"
+      ],
+      [
+        "src/molgap/experiment_prospective.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/experiment_prospective.py",
+        "src/molgap/research_memory/plan.py"
+      ],
+      [
+        "src/molgap/experiment_prospective.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/experiment_resume.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/experiment_resume.py",
+        "src/molgap/experiment_launch.py"
+      ],
+      [
+        "src/molgap/experiment_resume.py",
+        "src/molgap/experiment_retention.py"
+      ],
+      [
+        "src/molgap/experiment_resume.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/experiment_resume.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/experiment_retention.py",
+        "src/molgap/experiment_launch.py"
+      ],
+      [
+        "src/molgap/experiment_retention.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/experiment_source_inventory.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/experiment_source_inventory.py",
+        "src/molgap/experiment_package.py"
+      ],
+      [
+        "src/molgap/experiment_source_inventory.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/experiment_source_inventory.py",
+        "src/molgap/source_dependencies.py"
+      ],
+      [
+        "src/molgap/experiment_spec.py",
+        "src/molgap/common/spec.py"
+      ],
+      [
+        "src/molgap/experiment_spec.py",
+        "src/molgap/experiment_catalog.py"
+      ],
+      [
+        "src/molgap/experiment_terminal.py",
+        "src/molgap/common/paths.py"
+      ],
+      [
+        "src/molgap/experiment_terminal.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/experiment_terminal.py",
+        "src/molgap/research_memory/paired.py"
+      ],
+      [
+        "src/molgap/experiment_terminal.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/experiment_terminal.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/experiment_terminal.py",
+        "src/molgap/research_memory/terminal_wiring.py"
+      ],
+      [
+        "src/molgap/experiment_terminal.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/experiment_terminal.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/experiment_training_worker.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/experiment_training_worker.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/experiment_training_worker.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/experiment_workflow.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/experiment_workflow.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/experiment_workflow.py",
+        "src/molgap/experiment_launch.py"
+      ],
+      [
+        "src/molgap/experiment_workflow.py",
+        "src/molgap/experiment_package.py"
+      ],
+      [
+        "src/molgap/experiment_workflow.py",
+        "src/molgap/experiment_preflight.py"
+      ],
+      [
+        "src/molgap/experiment_workflow.py",
+        "src/molgap/experiment_prospective.py"
+      ],
+      [
+        "src/molgap/experiment_workflow.py",
+        "src/molgap/experiment_source_inventory.py"
+      ],
+      [
+        "src/molgap/experiment_workflow.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/experiment_workflow.py",
+        "src/molgap/family_training_runner.py"
+      ],
+      [
+        "src/molgap/experiment_workflow.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/family_execution_profile.py",
+        "src/molgap/experiment_launch.py"
+      ],
+      [
+        "src/molgap/family_execution_profile.py",
+        "src/molgap/family_training_core.py"
+      ],
+      [
+        "src/molgap/family_execution_profile.py",
+        "src/molgap/family_training_session.py"
+      ],
+      [
+        "src/molgap/family_execution_profile.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/family_model_ops.py",
+        "src/molgap/family_training_core.py"
+      ],
+      [
+        "src/molgap/family_model_ops.py",
+        "src/molgap/gptrans.py"
+      ],
+      [
+        "src/molgap/family_model_ops.py",
+        "src/molgap/gptrans_memory.py"
+      ],
+      [
+        "src/molgap/family_model_ops.py",
+        "src/molgap/gptrans_variants.py"
+      ],
+      [
+        "src/molgap/family_model_ops.py",
+        "src/molgap/k1_clean_second.py"
+      ],
+      [
+        "src/molgap/family_training_data.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/family_training_data.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/family_training_data.py",
+        "src/molgap/packed_graph_dataset.py"
+      ],
+      [
+        "src/molgap/family_training_data.py",
+        "src/molgap/pcqm_fixed_records.py"
+      ],
+      [
+        "src/molgap/family_training_data.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/family_training_data.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/family_model_ops.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/family_training_core.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/family_training_policy.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/family_training_recipe.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/family_training_state.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/gptrans_execution_backend.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/gptrans_execution_hotpath.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/k1_execution_backend.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/k1_execution_layout.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/k1_joint_aggregation.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/qm9_neural_atom.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/shared_model_adapter.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/family_training_kernel.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/family_training_loaders.py",
+        "src/molgap/family_training_data.py"
+      ],
+      [
+        "src/molgap/family_training_loaders.py",
+        "src/molgap/family_training_recipe.py"
+      ],
+      [
+        "src/molgap/family_training_loaders.py",
+        "src/molgap/gptrans_execution_backend.py"
+      ],
+      [
+        "src/molgap/family_training_loaders.py",
+        "src/molgap/gptrans_execution_tuning.py"
+      ],
+      [
+        "src/molgap/family_training_outputs.py",
+        "src/molgap/experiment_family_artifacts.py"
+      ],
+      [
+        "src/molgap/family_training_outputs.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/family_training_outputs.py",
+        "src/molgap/experiment_launch.py"
+      ],
+      [
+        "src/molgap/family_training_outputs.py",
+        "src/molgap/experiment_resume.py"
+      ],
+      [
+        "src/molgap/family_training_outputs.py",
+        "src/molgap/family_training_policy.py"
+      ],
+      [
+        "src/molgap/family_training_outputs.py",
+        "src/molgap/family_training_runner.py"
+      ],
+      [
+        "src/molgap/family_training_outputs.py",
+        "src/molgap/family_training_session.py"
+      ],
+      [
+        "src/molgap/family_training_outputs.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/family_training_outputs.py",
+        "src/molgap/training_logging.py"
+      ],
+      [
+        "src/molgap/family_training_outputs.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/family_training_outputs.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/family_training_policy.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/family_training_recipe.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/family_training_recipe.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/family_training_recipe.py",
+        "src/molgap/family_training_core.py"
+      ],
+      [
+        "src/molgap/family_training_recipe.py",
+        "src/molgap/family_training_data.py"
+      ],
+      [
+        "src/molgap/family_training_recipe.py",
+        "src/molgap/family_training_policy.py"
+      ],
+      [
+        "src/molgap/family_training_recipe.py",
+        "src/molgap/family_training_state.py"
+      ],
+      [
+        "src/molgap/family_training_recipe.py",
+        "src/molgap/k1_execution_backend.py"
+      ],
+      [
+        "src/molgap/family_training_recipe.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/family_training_recipe.py",
+        "src/molgap/shared_model_adapter.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/experiment_launch.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/experiment_package.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/family_execution_profile.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/family_training_data.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/family_training_kernel.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/family_training_loaders.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/family_training_outputs.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/family_training_policy.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/family_training_recipe.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/family_training_session.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/gptrans_execution_tuning.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/k1_execution_qualification.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/shared_model_adapter.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/training_logging.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/family_training_session.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/family_training_session.py",
+        "src/molgap/family_training_core.py"
+      ],
+      [
+        "src/molgap/family_training_session.py",
+        "src/molgap/family_training_kernel.py"
+      ],
+      [
+        "src/molgap/family_training_session.py",
+        "src/molgap/family_training_loaders.py"
+      ],
+      [
+        "src/molgap/family_training_session.py",
+        "src/molgap/family_training_policy.py"
+      ],
+      [
+        "src/molgap/family_training_session.py",
+        "src/molgap/family_training_recipe.py"
+      ],
+      [
+        "src/molgap/family_training_session.py",
+        "src/molgap/family_training_state.py"
+      ],
+      [
+        "src/molgap/family_training_session.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/family_training_state.py",
+        "src/molgap/gptrans_execution_hotpath.py"
+      ],
+      [
+        "src/molgap/family_training_state.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/family_training_state.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/family_training_state.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/fast_sandbox.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/fast_sandbox.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/fast_sandbox.py",
+        "src/molgap/family_model_ops.py"
+      ],
+      [
+        "src/molgap/fast_sandbox.py",
+        "src/molgap/gptrans_execution_backend.py"
+      ],
+      [
+        "src/molgap/fast_sandbox.py",
+        "src/molgap/k1_execution_backend.py"
+      ],
+      [
+        "src/molgap/fast_sandbox.py",
+        "src/molgap/k1_execution_layout.py"
+      ],
+      [
+        "src/molgap/fast_sandbox.py",
+        "src/molgap/model_substrate.py"
+      ],
+      [
+        "src/molgap/fast_sandbox.py",
+        "src/molgap/qm9_neural_atom.py"
+      ],
+      [
+        "src/molgap/fast_sandbox.py",
+        "src/molgap/shared_model_adapter.py"
+      ],
+      [
+        "src/molgap/gptrans_bond_local.py",
+        "src/molgap/family_training_policy.py"
+      ],
+      [
+        "src/molgap/gptrans_bond_local.py",
+        "src/molgap/gptrans.py"
+      ],
+      [
+        "src/molgap/gptrans_execution_backend.py",
+        "src/molgap/gptrans.py"
+      ],
+      [
+        "src/molgap/gptrans_execution_backend.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/gptrans_execution_hotpath.py",
+        "src/molgap/foreach_ema.py"
+      ],
+      [
+        "src/molgap/gptrans_execution_tuning.py",
+        "src/molgap/gptrans_execution_backend.py"
+      ],
+      [
+        "src/molgap/gptrans_execution_tuning.py",
+        "src/molgap/gptrans_execution_hotpath.py"
+      ],
+      [
+        "src/molgap/gptrans_execution_tuning.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/gptrans_execution_tuning.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/gptrans_memory.py",
+        "src/molgap/gptrans.py"
+      ],
+      [
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/__init__.py"
+      ],
+      [
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/experiment_launch.py"
+      ],
+      [
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/pcqm_gptrans_v4.py"
+      ],
+      [
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/gptrans_variants.py",
+        "src/molgap/gptrans.py"
+      ],
+      [
+        "src/molgap/k1_execution_backend.py",
+        "src/molgap/k1_execution_aggregation.py"
+      ],
+      [
+        "src/molgap/k1_execution_qualification.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/k1_execution_qualification.py",
+        "src/molgap/family_training_data.py"
+      ],
+      [
+        "src/molgap/k1_execution_qualification.py",
+        "src/molgap/family_training_kernel.py"
+      ],
+      [
+        "src/molgap/k1_execution_qualification.py",
+        "src/molgap/family_training_loaders.py"
+      ],
+      [
+        "src/molgap/k1_execution_qualification.py",
+        "src/molgap/family_training_runner.py"
+      ],
+      [
+        "src/molgap/k1_execution_qualification.py",
+        "src/molgap/family_training_session.py"
+      ],
+      [
+        "src/molgap/k1_execution_qualification.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/k1_joint_aggregation.py",
+        "src/molgap/qm9_neural_atom.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/family_model_ops.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/family_training_core.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/k1_execution_layout.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/k1_joint_aggregation.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/packed_graph_dataset.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/qm9_neural_atom.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/k1_screen_training.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/kaggle_pair_runtime.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/kaggle_pair_runtime.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/kaggle_pair_runtime.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/kaggle_pair_runtime.py",
+        "src/molgap/training_logging.py"
+      ],
+      [
+        "src/molgap/kaggle_pair_runtime.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/kaggle_workflow.py",
+        "src/molgap/experiment_family_workflow.py"
+      ],
+      [
+        "src/molgap/kaggle_workflow.py",
+        "src/molgap/experiment_launch.py"
+      ],
+      [
+        "src/molgap/kaggle_workflow.py",
+        "src/molgap/experiment_package.py"
+      ],
+      [
+        "src/molgap/kaggle_workflow.py",
+        "src/molgap/experiment_preflight.py"
+      ],
+      [
+        "src/molgap/kaggle_workflow.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/packed_graph_dataset.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/pcqm_conjugated_state.py",
+        "src/molgap/pcqm_gap_architecture.py"
+      ],
+      [
+        "src/molgap/pcqm_directed_spectral.py",
+        "src/molgap/pcqm_gap_architecture.py"
+      ],
+      [
+        "src/molgap/pcqm_gap_architecture.py",
+        "src/molgap/gps.py"
+      ],
+      [
+        "src/molgap/pcqm_gap_architecture.py",
+        "src/molgap/pcqm_conjugated_state.py"
+      ],
+      [
+        "src/molgap/pcqm_gap_architecture.py",
+        "src/molgap/pcqm_directed_spectral.py"
+      ],
+      [
+        "src/molgap/pcqm_gap_architecture.py",
+        "src/molgap/pcqm_hop_path.py"
+      ],
+      [
+        "src/molgap/pcqm_gap_architecture.py",
+        "src/molgap/pcqm_local_statistics.py"
+      ],
+      [
+        "src/molgap/pcqm_gap_architecture.py",
+        "src/molgap/pcqm_relative_value.py"
+      ],
+      [
+        "src/molgap/pcqm_gptrans_v4.py",
+        "src/molgap/family_model_ops.py"
+      ],
+      [
+        "src/molgap/pcqm_gptrans_v4.py",
+        "src/molgap/family_training_core.py"
+      ],
+      [
+        "src/molgap/pcqm_gptrans_v4.py",
+        "src/molgap/gptrans_execution_backend.py"
+      ],
+      [
+        "src/molgap/pcqm_gptrans_v4.py",
+        "src/molgap/gptrans_execution_hotpath.py"
+      ],
+      [
+        "src/molgap/pcqm_gptrans_v4.py",
+        "src/molgap/gptrans_execution_tuning.py"
+      ],
+      [
+        "src/molgap/pcqm_gptrans_v4.py",
+        "src/molgap/gptrans_memory.py"
+      ],
+      [
+        "src/molgap/pcqm_gptrans_v4.py",
+        "src/molgap/gptrans_variants.py"
+      ],
+      [
+        "src/molgap/pcqm_gptrans_v4.py",
+        "src/molgap/packed_graph_dataset.py"
+      ],
+      [
+        "src/molgap/pcqm_gptrans_v4.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/pcqm_gptrans_v4.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/pcqm_gptrans_v4.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/pcqm_hop_path.py",
+        "src/molgap/pcqm_gap_architecture.py"
+      ],
+      [
+        "src/molgap/pcqm_local_statistics.py",
+        "src/molgap/pcqm_gap_architecture.py"
+      ],
+      [
+        "src/molgap/pcqm_relative_value.py",
+        "src/molgap/pcqm_gap_architecture.py"
+      ],
+      [
+        "src/molgap/pcqm_relative_value.py",
+        "src/molgap/pcqm_hop_path.py"
+      ],
+      [
+        "src/molgap/pcqm_topology.py",
+        "src/molgap/ogb_features.py"
+      ],
+      [
+        "src/molgap/pcqm_topology.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/pcqm_topology.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/qm9_gape.py",
+        "src/molgap/pcqm_gap_architecture.py"
+      ],
+      [
+        "src/molgap/qm9_gape.py",
+        "src/molgap/qm9_local_hierarchy.py"
+      ],
+      [
+        "src/molgap/qm9_gape.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/qm9_local_hierarchy.py",
+        "src/molgap/pcqm_gap_architecture.py"
+      ],
+      [
+        "src/molgap/qm9_local_hierarchy.py",
+        "src/molgap/qm9_data.py"
+      ],
+      [
+        "src/molgap/qm9_neural_atom.py",
+        "src/molgap/pcqm_gap_architecture.py"
+      ],
+      [
+        "src/molgap/qm9_neural_atom.py",
+        "src/molgap/qm9_gape.py"
+      ],
+      [
+        "src/molgap/qm9_neural_atom.py",
+        "src/molgap/qm9_local_hierarchy.py"
+      ],
+      [
+        "src/molgap/qm9_neural_atom.py",
+        "src/molgap/screen_policy.py"
+      ],
+      [
+        "src/molgap/research_memory/__init__.py",
+        "src/molgap/research_memory/compiler.py"
+      ],
+      [
+        "src/molgap/research_memory/__init__.py",
+        "src/molgap/research_memory/finalize.py"
+      ],
+      [
+        "src/molgap/research_memory/__init__.py",
+        "src/molgap/research_memory/pipeline.py"
+      ],
+      [
+        "src/molgap/research_memory/__init__.py",
+        "src/molgap/research_memory/plan.py"
+      ],
+      [
+        "src/molgap/research_memory/__init__.py",
+        "src/molgap/research_memory/recovery.py"
+      ],
+      [
+        "src/molgap/research_memory/__init__.py",
+        "src/molgap/research_memory/terminal_wiring.py"
+      ],
+      [
+        "src/molgap/research_memory/__init__.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/research_memory/__init__.py",
+        "src/molgap/research_memory/validate.py"
+      ],
+      [
+        "src/molgap/research_memory/backtest.py",
+        "src/molgap/research_memory/policy.py"
+      ],
+      [
+        "src/molgap/research_memory/backtest.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/research_memory/compiler.py",
+        "src/molgap/research_memory/backtest.py"
+      ],
+      [
+        "src/molgap/research_memory/compiler.py",
+        "src/molgap/research_memory/cost.py"
+      ],
+      [
+        "src/molgap/research_memory/compiler.py",
+        "src/molgap/research_memory/derived.py"
+      ],
+      [
+        "src/molgap/research_memory/compiler.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/research_memory/compiler.py",
+        "src/molgap/research_memory/policy.py"
+      ],
+      [
+        "src/molgap/research_memory/compiler.py",
+        "src/molgap/research_memory/references.py"
+      ],
+      [
+        "src/molgap/research_memory/compiler.py",
+        "src/molgap/research_memory/replay.py"
+      ],
+      [
+        "src/molgap/research_memory/compiler.py",
+        "src/molgap/research_memory/roles.py"
+      ],
+      [
+        "src/molgap/research_memory/compiler.py",
+        "src/molgap/research_memory/summary.py"
+      ],
+      [
+        "src/molgap/research_memory/compiler.py",
+        "src/molgap/research_memory/validate.py"
+      ],
+      [
+        "src/molgap/research_memory/derived.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/research_memory/discovery.py",
+        "src/molgap/research_memory/finalize.py"
+      ],
+      [
+        "src/molgap/research_memory/discovery.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/research_memory/finalize.py",
+        "src/molgap/evidence_pointers.py"
+      ],
+      [
+        "src/molgap/research_memory/finalize.py",
+        "src/molgap/research_memory/paired.py"
+      ],
+      [
+        "src/molgap/research_memory/finalize.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/research_memory/finalize.py",
+        "src/molgap/research_memory/replay.py"
+      ],
+      [
+        "src/molgap/research_memory/finalize.py",
+        "src/molgap/research_memory/roles.py"
+      ],
+      [
+        "src/molgap/research_memory/finalize.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/research_memory/finalize.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/research_memory/finalize.py",
+        "src/molgap/research_memory/validate.py"
+      ],
+      [
+        "src/molgap/research_memory/finalize.py",
+        "src/molgap/v5_common.py"
+      ],
+      [
+        "src/molgap/research_memory/paired.py",
+        "src/molgap/evidence_pointers.py"
+      ],
+      [
+        "src/molgap/research_memory/paired.py",
+        "src/molgap/research_memory/finalize.py"
+      ],
+      [
+        "src/molgap/research_memory/paired.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/research_memory/paired.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/research_memory/paired.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/research_memory/paths.py",
+        "src/molgap/evidence_pointers.py"
+      ],
+      [
+        "src/molgap/research_memory/pipeline.py",
+        "src/molgap/research_memory/compiler.py"
+      ],
+      [
+        "src/molgap/research_memory/pipeline.py",
+        "src/molgap/research_memory/finalize.py"
+      ],
+      [
+        "src/molgap/research_memory/pipeline.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/research_memory/pipeline.py",
+        "src/molgap/research_memory/validate.py"
+      ],
+      [
+        "src/molgap/research_memory/plan.py",
+        "src/molgap/evidence_pointers.py"
+      ],
+      [
+        "src/molgap/research_memory/plan.py",
+        "src/molgap/research_memory/discovery.py"
+      ],
+      [
+        "src/molgap/research_memory/plan.py",
+        "src/molgap/research_memory/paired.py"
+      ],
+      [
+        "src/molgap/research_memory/plan.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/research_memory/plan.py",
+        "src/molgap/research_memory/policy.py"
+      ],
+      [
+        "src/molgap/research_memory/plan.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/research_memory/plan.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/research_memory/policy.py",
+        "src/molgap/evidence_pointers.py"
+      ],
+      [
+        "src/molgap/research_memory/policy.py",
+        "src/molgap/research_memory/backtest.py"
+      ],
+      [
+        "src/molgap/research_memory/policy.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/research_memory/policy.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/research_memory/policy.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/research_memory/recovery.py",
+        "src/molgap/constants.py"
+      ],
+      [
+        "src/molgap/research_memory/recovery.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/research_memory/recovery.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/research_memory/replay.py",
+        "src/molgap/evidence_pointers.py"
+      ],
+      [
+        "src/molgap/research_memory/replay.py",
+        "src/molgap/research_memory/backtest.py"
+      ],
+      [
+        "src/molgap/research_memory/replay.py",
+        "src/molgap/research_memory/paired.py"
+      ],
+      [
+        "src/molgap/research_memory/replay.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/research_memory/replay.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/research_memory/replay.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/research_memory/roles.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/research_memory/schemas.py",
+        "src/molgap/research_memory/paired.py"
+      ],
+      [
+        "src/molgap/research_memory/schemas.py",
+        "src/molgap/research_memory/plan.py"
+      ],
+      [
+        "src/molgap/research_memory/terminal_wiring.py",
+        "src/molgap/evidence_pointers.py"
+      ],
+      [
+        "src/molgap/research_memory/terminal_wiring.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/research_memory/terminal_wiring.py",
+        "src/molgap/research_memory/pipeline.py"
+      ],
+      [
+        "src/molgap/research_memory/terminal_wiring.py",
+        "src/molgap/research_memory/recovery.py"
+      ],
+      [
+        "src/molgap/research_memory/terminal_wiring.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/research_memory/trace.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/research_memory/validate.py",
+        "src/molgap/evidence_pointers.py"
+      ],
+      [
+        "src/molgap/research_memory/validate.py",
+        "src/molgap/research_memory/discovery.py"
+      ],
+      [
+        "src/molgap/research_memory/validate.py",
+        "src/molgap/research_memory/paired.py"
+      ],
+      [
+        "src/molgap/research_memory/validate.py",
+        "src/molgap/research_memory/paths.py"
+      ],
+      [
+        "src/molgap/research_memory/validate.py",
+        "src/molgap/research_memory/schemas.py"
+      ],
+      [
+        "src/molgap/research_memory/validate.py",
+        "src/molgap/research_memory/trace.py"
+      ],
+      [
+        "src/molgap/research_memory/validate.py",
+        "src/molgap/v5_common.py"
+      ],
+      [
+        "src/molgap/screen_policy.py",
+        "src/molgap/common/wire.py"
+      ],
+      [
+        "src/molgap/shared_model_adapter.py",
+        "src/molgap/experiment_execution.py"
+      ],
+      [
+        "src/molgap/shared_model_adapter.py",
+        "src/molgap/experiment_spec.py"
+      ],
+      [
+        "src/molgap/shared_model_adapter.py",
+        "src/molgap/pcqm_topology.py"
+      ],
+      [
+        "src/molgap/shared_model_adapter.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/source_dependencies.py",
+        "src/molgap/experiment_package.py"
+      ],
+      [
+        "src/molgap/source_dependencies.py",
+        "src/molgap/experiment_source_inventory.py"
+      ],
+      [
+        "src/molgap/substrate_scale_addon.py",
+        "src/molgap/model_substrate.py"
+      ],
+      [
+        "src/molgap/training_logging.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/training_reproducibility.py",
+        "src/molgap/v4_runtime.py"
+      ],
+      [
+        "src/molgap/v4_bundle.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/v4_runtime.py",
+        "src/molgap/training_reproducibility.py"
+      ],
+      [
+        "src/molgap/v5_common.py",
+        "src/molgap/comparison_readiness.py"
+      ]
+    ],
+    "external_modules": [
+      "__future__",
+      "argparse",
+      "ast",
+      "collections",
+      "contextlib",
+      "contextvars",
+      "copy",
+      "csv",
+      "dataclasses",
+      "datetime",
+      "enum",
+      "functools",
+      "gzip",
+      "hashlib",
+      "importlib",
+      "inspect",
+      "io",
+      "json",
+      "kaggle",
+      "kagglesdk",
+      "math",
+      "numpy",
+      "ogb",
+      "operator",
+      "os",
+      "pathlib",
+      "pickletools",
+      "platform",
+      "random",
+      "rdkit",
+      "re",
+      "requests",
+      "shutil",
+      "signal",
+      "stat",
+      "struct",
+      "subprocess",
+      "sys",
+      "sysconfig",
+      "tarfile",
+      "tempfile",
+      "threading",
+      "time",
+      "torch",
+      "torch_geometric",
+      "types",
+      "typing",
+      "urllib",
+      "weakref",
+      "zipfile"
+    ],
+    "roots": [
+      "platforms/ims/run_family_training.py",
+      "platforms/kaggle/run_experiment.py",
+      "src/molgap/__init__.py",
+      "src/molgap/common/__init__.py",
+      "src/molgap/common/declarations.py",
+      "src/molgap/common/identity.py",
+      "src/molgap/common/io.py",
+      "src/molgap/common/kaggle.py",
+      "src/molgap/common/paths.py",
+      "src/molgap/common/runtime.py",
+      "src/molgap/common/spec.py",
+      "src/molgap/common/transport.py",
+      "src/molgap/common/wire.py",
+      "src/molgap/comparison_readiness.py",
+      "src/molgap/constants.py",
+      "src/molgap/evidence_pointers.py",
+      "src/molgap/execution_comparison.py",
+      "src/molgap/experiment_catalog.py",
+      "src/molgap/experiment_execution.py",
+      "src/molgap/experiment_family_artifacts.py",
+      "src/molgap/experiment_family_workflow.py",
+      "src/molgap/experiment_launch.py",
+      "src/molgap/experiment_package.py",
+      "src/molgap/experiment_preflight.py",
+      "src/molgap/experiment_prospective.py",
+      "src/molgap/experiment_resume.py",
+      "src/molgap/experiment_retention.py",
+      "src/molgap/experiment_source_inventory.py",
+      "src/molgap/experiment_spec.py",
+      "src/molgap/experiment_terminal.py",
+      "src/molgap/experiment_training_worker.py",
+      "src/molgap/experiment_workflow.py",
+      "src/molgap/family_execution_profile.py",
+      "src/molgap/family_model_ops.py",
+      "src/molgap/family_training_core.py",
+      "src/molgap/family_training_data.py",
+      "src/molgap/family_training_kernel.py",
+      "src/molgap/family_training_loaders.py",
+      "src/molgap/family_training_outputs.py",
+      "src/molgap/family_training_policy.py",
+      "src/molgap/family_training_recipe.py",
+      "src/molgap/family_training_runner.py",
+      "src/molgap/family_training_session.py",
+      "src/molgap/family_training_state.py",
+      "src/molgap/fast_sandbox.py",
+      "src/molgap/foreach_ema.py",
+      "src/molgap/gps.py",
+      "src/molgap/gptrans.py",
+      "src/molgap/gptrans_bond_local.py",
+      "src/molgap/gptrans_execution_backend.py",
+      "src/molgap/gptrans_execution_hotpath.py",
+      "src/molgap/gptrans_execution_tuning.py",
+      "src/molgap/gptrans_memory.py",
+      "src/molgap/gptrans_screen_workflow.py",
+      "src/molgap/gptrans_variants.py",
+      "src/molgap/k1_clean_second.py",
+      "src/molgap/k1_execution_aggregation.py",
+      "src/molgap/k1_execution_backend.py",
+      "src/molgap/k1_execution_layout.py",
+      "src/molgap/k1_execution_qualification.py",
+      "src/molgap/k1_joint_aggregation.py",
+      "src/molgap/k1_screen_training.py",
+      "src/molgap/kaggle_pair_runtime.py",
+      "src/molgap/kaggle_workflow.py",
+      "src/molgap/model_substrate.py",
+      "src/molgap/packed_graph_dataset.py",
+      "src/molgap/pcqm_conjugated_state.py",
+      "src/molgap/pcqm_directed_spectral.py",
+      "src/molgap/pcqm_fixed_records.py",
+      "src/molgap/pcqm_gap_architecture.py",
+      "src/molgap/pcqm_gptrans_v4.py",
+      "src/molgap/pcqm_hop_path.py",
+      "src/molgap/pcqm_local_statistics.py",
+      "src/molgap/pcqm_relative_value.py",
+      "src/molgap/pcqm_wedge.py",
+      "src/molgap/qm9_data.py",
+      "src/molgap/qm9_gape.py",
+      "src/molgap/qm9_local_hierarchy.py",
+      "src/molgap/qm9_neural_atom.py",
+      "src/molgap/research_memory/__init__.py",
+      "src/molgap/research_memory/backtest.py",
+      "src/molgap/research_memory/compiler.py",
+      "src/molgap/research_memory/cost.py",
+      "src/molgap/research_memory/derived.py",
+      "src/molgap/research_memory/discovery.py",
+      "src/molgap/research_memory/finalize.py",
+      "src/molgap/research_memory/paired.py",
+      "src/molgap/research_memory/paths.py",
+      "src/molgap/research_memory/pipeline.py",
+      "src/molgap/research_memory/plan.py",
+      "src/molgap/research_memory/policy.py",
+      "src/molgap/research_memory/recovery.py",
+      "src/molgap/research_memory/references.py",
+      "src/molgap/research_memory/replay.py",
+      "src/molgap/research_memory/roles.py",
+      "src/molgap/research_memory/schemas.py",
+      "src/molgap/research_memory/summary.py",
+      "src/molgap/research_memory/terminal_wiring.py",
+      "src/molgap/research_memory/trace.py",
+      "src/molgap/research_memory/validate.py",
+      "src/molgap/screen_policy.py",
+      "src/molgap/shared_model_adapter.py",
+      "src/molgap/source_dependencies.py",
+      "src/molgap/substrate_scale_addon.py",
+      "src/molgap/training_logging.py",
+      "src/molgap/training_reproducibility.py",
+      "src/molgap/v4_bundle.py",
+      "src/molgap/v4_runtime.py",
+      "src/molgap/v5_common.py"
+    ],
+    "source_files": [
+      "platforms/ims/run_family_training.py",
+      "platforms/kaggle/run_experiment.py",
+      "src/molgap/__init__.py",
+      "src/molgap/common/__init__.py",
+      "src/molgap/common/declarations.py",
+      "src/molgap/common/identity.py",
+      "src/molgap/common/io.py",
+      "src/molgap/common/kaggle.py",
+      "src/molgap/common/paths.py",
+      "src/molgap/common/runtime.py",
+      "src/molgap/common/spec.py",
+      "src/molgap/common/transport.py",
+      "src/molgap/common/wire.py",
+      "src/molgap/comparison_readiness.py",
+      "src/molgap/constants.py",
+      "src/molgap/evidence_pointers.py",
+      "src/molgap/execution_comparison.py",
+      "src/molgap/experiment_catalog.py",
+      "src/molgap/experiment_execution.py",
+      "src/molgap/experiment_family_artifacts.py",
+      "src/molgap/experiment_family_workflow.py",
+      "src/molgap/experiment_launch.py",
+      "src/molgap/experiment_package.py",
+      "src/molgap/experiment_preflight.py",
+      "src/molgap/experiment_prospective.py",
+      "src/molgap/experiment_resume.py",
+      "src/molgap/experiment_retention.py",
+      "src/molgap/experiment_source_inventory.py",
+      "src/molgap/experiment_spec.py",
+      "src/molgap/experiment_terminal.py",
+      "src/molgap/experiment_training_worker.py",
+      "src/molgap/experiment_workflow.py",
+      "src/molgap/family_execution_profile.py",
+      "src/molgap/family_model_ops.py",
+      "src/molgap/family_training_core.py",
+      "src/molgap/family_training_data.py",
+      "src/molgap/family_training_kernel.py",
+      "src/molgap/family_training_loaders.py",
+      "src/molgap/family_training_outputs.py",
+      "src/molgap/family_training_policy.py",
+      "src/molgap/family_training_recipe.py",
+      "src/molgap/family_training_runner.py",
+      "src/molgap/family_training_session.py",
+      "src/molgap/family_training_state.py",
+      "src/molgap/fast_sandbox.py",
+      "src/molgap/foreach_ema.py",
+      "src/molgap/gps.py",
+      "src/molgap/gptrans.py",
+      "src/molgap/gptrans_bond_local.py",
+      "src/molgap/gptrans_execution_backend.py",
+      "src/molgap/gptrans_execution_hotpath.py",
+      "src/molgap/gptrans_execution_tuning.py",
+      "src/molgap/gptrans_memory.py",
+      "src/molgap/gptrans_screen_workflow.py",
+      "src/molgap/gptrans_variants.py",
+      "src/molgap/k1_clean_second.py",
+      "src/molgap/k1_execution_aggregation.py",
+      "src/molgap/k1_execution_backend.py",
+      "src/molgap/k1_execution_layout.py",
+      "src/molgap/k1_execution_qualification.py",
+      "src/molgap/k1_joint_aggregation.py",
+      "src/molgap/k1_screen_training.py",
+      "src/molgap/kaggle_pair_runtime.py",
+      "src/molgap/kaggle_workflow.py",
+      "src/molgap/model_substrate.py",
+      "src/molgap/ogb_features.py",
+      "src/molgap/packed_graph_dataset.py",
+      "src/molgap/pcqm_conjugated_state.py",
+      "src/molgap/pcqm_directed_spectral.py",
+      "src/molgap/pcqm_fixed_records.py",
+      "src/molgap/pcqm_gap_architecture.py",
+      "src/molgap/pcqm_gptrans_v4.py",
+      "src/molgap/pcqm_hop_path.py",
+      "src/molgap/pcqm_local_statistics.py",
+      "src/molgap/pcqm_relative_value.py",
+      "src/molgap/pcqm_topology.py",
+      "src/molgap/pcqm_wedge.py",
+      "src/molgap/qm9_data.py",
+      "src/molgap/qm9_gape.py",
+      "src/molgap/qm9_local_hierarchy.py",
+      "src/molgap/qm9_neural_atom.py",
+      "src/molgap/research_memory/__init__.py",
+      "src/molgap/research_memory/backtest.py",
+      "src/molgap/research_memory/compiler.py",
+      "src/molgap/research_memory/cost.py",
+      "src/molgap/research_memory/derived.py",
+      "src/molgap/research_memory/discovery.py",
+      "src/molgap/research_memory/finalize.py",
+      "src/molgap/research_memory/paired.py",
+      "src/molgap/research_memory/paths.py",
+      "src/molgap/research_memory/pipeline.py",
+      "src/molgap/research_memory/plan.py",
+      "src/molgap/research_memory/policy.py",
+      "src/molgap/research_memory/recovery.py",
+      "src/molgap/research_memory/references.py",
+      "src/molgap/research_memory/replay.py",
+      "src/molgap/research_memory/roles.py",
+      "src/molgap/research_memory/schemas.py",
+      "src/molgap/research_memory/summary.py",
+      "src/molgap/research_memory/terminal_wiring.py",
+      "src/molgap/research_memory/trace.py",
+      "src/molgap/research_memory/validate.py",
+      "src/molgap/screen_policy.py",
+      "src/molgap/shared_model_adapter.py",
+      "src/molgap/source_dependencies.py",
+      "src/molgap/substrate_scale_addon.py",
+      "src/molgap/training_logging.py",
+      "src/molgap/training_reproducibility.py",
+      "src/molgap/v4_bundle.py",
+      "src/molgap/v4_runtime.py",
+      "src/molgap/v5_common.py"
+    ]
+  },
+  "counts": {
+    "dynamic_import_obligations": 12,
+    "edges": 392,
+    "external_modules": 50,
+    "manifest_pin_mismatches": 0,
+    "manifest_pins": 42,
+    "missing_diagnostics": 0,
+    "normalized_hashes": 111,
+    "roots": 109,
+    "source_files": 111
+  },
+  "format": "molgap-shared-training-dependency-audit-v1",
+  "generated_at_utc": "2026-10-16T01:54:03.683909+00:00",
+  "manifest_pin_comparison": {
+    "src/molgap/common/__init__.py": {
+      "actual": "f2003b868337f30e31f377d4df16d5121fc34f0960c421c2646e2ff01be21277",
+      "expected": "f2003b868337f30e31f377d4df16d5121fc34f0960c421c2646e2ff01be21277",
+      "matches": true
+    },
+    "src/molgap/common/declarations.py": {
+      "actual": "08be17a40734cfeea045aaaaefee4cba954ec0f2ee843b68811a2b01767e5718",
+      "expected": "08be17a40734cfeea045aaaaefee4cba954ec0f2ee843b68811a2b01767e5718",
+      "matches": true
+    },
+    "src/molgap/common/identity.py": {
+      "actual": "b5a08639de5bf5ceb1df0e7bc8fbf936c38c380da0dbbd9b0085ab2f8e16a687",
+      "expected": "b5a08639de5bf5ceb1df0e7bc8fbf936c38c380da0dbbd9b0085ab2f8e16a687",
+      "matches": true
+    },
+    "src/molgap/common/io.py": {
+      "actual": "5941ff9fa2e4b32d15ee81fdedeff0b9174a325fb3460bb1e2639602d229f359",
+      "expected": "5941ff9fa2e4b32d15ee81fdedeff0b9174a325fb3460bb1e2639602d229f359",
+      "matches": true
+    },
+    "src/molgap/common/kaggle.py": {
+      "actual": "6d7e0092f538c6955105f0313ce969d55606c296d1c227abf10b709d7767c57d",
+      "expected": "6d7e0092f538c6955105f0313ce969d55606c296d1c227abf10b709d7767c57d",
+      "matches": true
+    },
+    "src/molgap/common/paths.py": {
+      "actual": "836ef367cf39cf3212076f076e7b2b86627de518039588ac7f669071b8dcd7e1",
+      "expected": "836ef367cf39cf3212076f076e7b2b86627de518039588ac7f669071b8dcd7e1",
+      "matches": true
+    },
+    "src/molgap/common/runtime.py": {
+      "actual": "29d6b701e3357a5b50ac005b0f3dbdbfec9c4dcb46a7e6937058c624fecb7e9f",
+      "expected": "29d6b701e3357a5b50ac005b0f3dbdbfec9c4dcb46a7e6937058c624fecb7e9f",
+      "matches": true
+    },
+    "src/molgap/common/spec.py": {
+      "actual": "ef25ffdcbacb245510097bcb3d2322feba9972fa920887779af38c43b54cc377",
+      "expected": "ef25ffdcbacb245510097bcb3d2322feba9972fa920887779af38c43b54cc377",
+      "matches": true
+    },
+    "src/molgap/common/transport.py": {
+      "actual": "bd2ea743bf79eed10552143b1a5455c22a2344743622918f2fad556a7bec3173",
+      "expected": "bd2ea743bf79eed10552143b1a5455c22a2344743622918f2fad556a7bec3173",
+      "matches": true
+    },
+    "src/molgap/common/wire.py": {
+      "actual": "f5eb2bfaa21fa7318aaa8b50340ffe821c117f74ef72b511de0fe1c59e892417",
+      "expected": "f5eb2bfaa21fa7318aaa8b50340ffe821c117f74ef72b511de0fe1c59e892417",
+      "matches": true
+    },
+    "src/molgap/experiment_resume.py": {
+      "actual": "92c45c58f2cee04a8765760f405866f7ef588d3c98ab49fdd7783df30f7bc34e",
+      "expected": "92c45c58f2cee04a8765760f405866f7ef588d3c98ab49fdd7783df30f7bc34e",
+      "matches": true
+    },
+    "src/molgap/experiment_retention.py": {
+      "actual": "f9c5f99b183f57470ea3cd5e02902e381f7e3192cf0fa9d065b8ab3ee65f13a2",
+      "expected": "f9c5f99b183f57470ea3cd5e02902e381f7e3192cf0fa9d065b8ab3ee65f13a2",
+      "matches": true
+    },
+    "src/molgap/experiment_spec.py": {
+      "actual": "2ffbf527ff641ff356f3bac519af7afcd927c7a68727afc7a24715c74a073bc7",
+      "expected": "2ffbf527ff641ff356f3bac519af7afcd927c7a68727afc7a24715c74a073bc7",
+      "matches": true
+    },
+    "src/molgap/family_execution_profile.py": {
+      "actual": "54f6b14eb5a857bd1f18e33f5461cbd828dc07028aea92c927bea00cd2056b3e",
+      "expected": "54f6b14eb5a857bd1f18e33f5461cbd828dc07028aea92c927bea00cd2056b3e",
+      "matches": true
+    },
+    "src/molgap/family_model_ops.py": {
+      "actual": "80c758bbe8bbbe1448573694f940014b8cd15e6c0c6fb5390def6da0365f8149",
+      "expected": "80c758bbe8bbbe1448573694f940014b8cd15e6c0c6fb5390def6da0365f8149",
+      "matches": true
+    },
+    "src/molgap/family_training_core.py": {
+      "actual": "2d8cd62aa2ed1e6e04547f4a9e8de6f794971258af99a6d4e165a9abd98dfea8",
+      "expected": "2d8cd62aa2ed1e6e04547f4a9e8de6f794971258af99a6d4e165a9abd98dfea8",
+      "matches": true
+    },
+    "src/molgap/family_training_data.py": {
+      "actual": "8f7539309cb86083104ae3ded83e6606a3a2bbd31b4c0cc6127806f798582f31",
+      "expected": "8f7539309cb86083104ae3ded83e6606a3a2bbd31b4c0cc6127806f798582f31",
+      "matches": true
+    },
+    "src/molgap/family_training_kernel.py": {
+      "actual": "bdb4eba18793a1d411300cc86df085d8da763d429d7f8b616d6dfdd00b0f0b7e",
+      "expected": "bdb4eba18793a1d411300cc86df085d8da763d429d7f8b616d6dfdd00b0f0b7e",
+      "matches": true
+    },
+    "src/molgap/family_training_loaders.py": {
+      "actual": "82073f2524132eda173a5981d15c34293616c5ea952692bb0226a1c47f443664",
+      "expected": "82073f2524132eda173a5981d15c34293616c5ea952692bb0226a1c47f443664",
+      "matches": true
+    },
+    "src/molgap/family_training_outputs.py": {
+      "actual": "edd6efca67072474cb9eb0afc76c011651955bf0ae97a35456c3c3748c745eb1",
+      "expected": "edd6efca67072474cb9eb0afc76c011651955bf0ae97a35456c3c3748c745eb1",
+      "matches": true
+    },
+    "src/molgap/family_training_policy.py": {
+      "actual": "684cb31616a0cfcc8c4550a0e19e866cf59947e57f3f1c5353a11b2ab8c8ee4d",
+      "expected": "684cb31616a0cfcc8c4550a0e19e866cf59947e57f3f1c5353a11b2ab8c8ee4d",
+      "matches": true
+    },
+    "src/molgap/family_training_recipe.py": {
+      "actual": "347e9fcc4b42e213287535bb3c2009c901048953c79ae5a37d0e9964ded19f0f",
+      "expected": "347e9fcc4b42e213287535bb3c2009c901048953c79ae5a37d0e9964ded19f0f",
+      "matches": true
+    },
+    "src/molgap/family_training_runner.py": {
+      "actual": "a929025c36b553405c5c48cb0a6a4f6c0695d922dcde3d56f6969d8403601b75",
+      "expected": "a929025c36b553405c5c48cb0a6a4f6c0695d922dcde3d56f6969d8403601b75",
+      "matches": true
+    },
+    "src/molgap/family_training_session.py": {
+      "actual": "16bf88a6770cad03258697c19ffe3309a16247a5738d0006ded7e0bc6fcae03d",
+      "expected": "16bf88a6770cad03258697c19ffe3309a16247a5738d0006ded7e0bc6fcae03d",
+      "matches": true
+    },
+    "src/molgap/family_training_state.py": {
+      "actual": "98e62d209da93d45b5afc47bebb045ea148b6e0f31cd338216136fcddd1dee63",
+      "expected": "98e62d209da93d45b5afc47bebb045ea148b6e0f31cd338216136fcddd1dee63",
+      "matches": true
+    },
+    "src/molgap/fast_sandbox.py": {
+      "actual": "a5c784a5460fefdf407788a0fdda0f4f1c80a64f754dfe3caf4de308b4c4c096",
+      "expected": "a5c784a5460fefdf407788a0fdda0f4f1c80a64f754dfe3caf4de308b4c4c096",
+      "matches": true
+    },
+    "src/molgap/foreach_ema.py": {
+      "actual": "155ad22f5d3400cea6c94205512ac51a49fb2dd37acfaa18ea1a5e32569a6bfe",
+      "expected": "155ad22f5d3400cea6c94205512ac51a49fb2dd37acfaa18ea1a5e32569a6bfe",
+      "matches": true
+    },
+    "src/molgap/gptrans_execution_backend.py": {
+      "actual": "d3a47e369ddfc790dcfff2369c322ba1b6b09133f8f19e8f7b52eed9495f666f",
+      "expected": "d3a47e369ddfc790dcfff2369c322ba1b6b09133f8f19e8f7b52eed9495f666f",
+      "matches": true
+    },
+    "src/molgap/gptrans_execution_hotpath.py": {
+      "actual": "304f8546d3d90e8eb7bb7be91eed1d3c94c7ad47b37931f389926abf97eac0d3",
+      "expected": "304f8546d3d90e8eb7bb7be91eed1d3c94c7ad47b37931f389926abf97eac0d3",
+      "matches": true
+    },
+    "src/molgap/gptrans_execution_tuning.py": {
+      "actual": "57aa210d1cbf77ca674d47d81d0e0ccc0e12e6e4265772d84f1d41f6f5295a42",
+      "expected": "57aa210d1cbf77ca674d47d81d0e0ccc0e12e6e4265772d84f1d41f6f5295a42",
+      "matches": true
+    },
+    "src/molgap/k1_execution_aggregation.py": {
+      "actual": "32c96c5c7ef723a8d0d05df45a5bfc29c6eaa8e6eb164d05db2b8c49ec10f594",
+      "expected": "32c96c5c7ef723a8d0d05df45a5bfc29c6eaa8e6eb164d05db2b8c49ec10f594",
+      "matches": true
+    },
+    "src/molgap/k1_execution_backend.py": {
+      "actual": "8c22015b54c5a91356ffc724c1c3289500df6655f26498454766df036b112116",
+      "expected": "8c22015b54c5a91356ffc724c1c3289500df6655f26498454766df036b112116",
+      "matches": true
+    },
+    "src/molgap/k1_execution_layout.py": {
+      "actual": "6a03dc91d00b06b931b1d227890558aa006d383691fa951fda4f5198a40ac0d4",
+      "expected": "6a03dc91d00b06b931b1d227890558aa006d383691fa951fda4f5198a40ac0d4",
+      "matches": true
+    },
+    "src/molgap/k1_execution_qualification.py": {
+      "actual": "f91d8766ce8db7f272d35d2fd5c9492612a3e04686d78db250b79316a10eea87",
+      "expected": "f91d8766ce8db7f272d35d2fd5c9492612a3e04686d78db250b79316a10eea87",
+      "matches": true
+    },
+    "src/molgap/model_substrate.py": {
+      "actual": "57a24a87cea9dac059cec1421fea903829f334292e35c16b43cbeae05501f7e2",
+      "expected": "57a24a87cea9dac059cec1421fea903829f334292e35c16b43cbeae05501f7e2",
+      "matches": true
+    },
+    "src/molgap/packed_graph_dataset.py": {
+      "actual": "19cd6b02730ebc237952788722b622ae988197c9fb0838e656a41c2d996fc3c4",
+      "expected": "19cd6b02730ebc237952788722b622ae988197c9fb0838e656a41c2d996fc3c4",
+      "matches": true
+    },
+    "src/molgap/pcqm_fixed_records.py": {
+      "actual": "a7e017923ce94b4c609f19947ac72dcbcea397f7e31b5e25aeee56591fcd3566",
+      "expected": "a7e017923ce94b4c609f19947ac72dcbcea397f7e31b5e25aeee56591fcd3566",
+      "matches": true
+    },
+    "src/molgap/shared_model_adapter.py": {
+      "actual": "212a16060fbe250c517f68c857e1ef2c96e161eb9fd0af977e879a7faea542e0",
+      "expected": "212a16060fbe250c517f68c857e1ef2c96e161eb9fd0af977e879a7faea542e0",
+      "matches": true
+    },
+    "src/molgap/source_dependencies.py": {
+      "actual": "98f5c819a5be8ae8f50f401320c7b5b17b37e0ad022af84bf08e1a0e7d15612b",
+      "expected": "98f5c819a5be8ae8f50f401320c7b5b17b37e0ad022af84bf08e1a0e7d15612b",
+      "matches": true
+    },
+    "src/molgap/substrate_scale_addon.py": {
+      "actual": "c3b1c697ab052887a3f26f590dc82a1089c328b85132cb33968554610084f567",
+      "expected": "c3b1c697ab052887a3f26f590dc82a1089c328b85132cb33968554610084f567",
+      "matches": true
+    },
+    "src/molgap/training_logging.py": {
+      "actual": "584a2b38ea408259018c4c19d8871656e446521229817d7e223006af31d6fb76",
+      "expected": "584a2b38ea408259018c4c19d8871656e446521229817d7e223006af31d6fb76",
+      "matches": true
+    },
+    "src/molgap/training_reproducibility.py": {
+      "actual": "1cbbc071b1a27967bd87cefc4c1bb7471f324134640e8042e955f7edfdd600a0",
+      "expected": "1cbbc071b1a27967bd87cefc4c1bb7471f324134640e8042e955f7edfdd600a0",
+      "matches": true
+    }
+  },
+  "missing_diagnostics": [],
+  "missing_error": null,
+  "normalization": "UTF-8 source bytes with CRLF and bare CR converted to LF, SHA-256",
+  "normalized_file_sha256": {
+    "platforms/ims/run_family_training.py": "eb383870f8803aff61f59778302ebcf85d7ed536c51c6a1fc283408161a5c58a",
+    "platforms/kaggle/run_experiment.py": "6e0cdf75fba645d0d84486e5f72d7fec89230d112ae3c319a4e2c5056bd5a36f",
+    "src/molgap/__init__.py": "053a75f05ab6c3b4ba2c19b6a51f8e222b6c637d7177e453630da64aa5bf132f",
+    "src/molgap/common/__init__.py": "f2003b868337f30e31f377d4df16d5121fc34f0960c421c2646e2ff01be21277",
+    "src/molgap/common/declarations.py": "08be17a40734cfeea045aaaaefee4cba954ec0f2ee843b68811a2b01767e5718",
+    "src/molgap/common/identity.py": "b5a08639de5bf5ceb1df0e7bc8fbf936c38c380da0dbbd9b0085ab2f8e16a687",
+    "src/molgap/common/io.py": "5941ff9fa2e4b32d15ee81fdedeff0b9174a325fb3460bb1e2639602d229f359",
+    "src/molgap/common/kaggle.py": "6d7e0092f538c6955105f0313ce969d55606c296d1c227abf10b709d7767c57d",
+    "src/molgap/common/paths.py": "836ef367cf39cf3212076f076e7b2b86627de518039588ac7f669071b8dcd7e1",
+    "src/molgap/common/runtime.py": "29d6b701e3357a5b50ac005b0f3dbdbfec9c4dcb46a7e6937058c624fecb7e9f",
+    "src/molgap/common/spec.py": "ef25ffdcbacb245510097bcb3d2322feba9972fa920887779af38c43b54cc377",
+    "src/molgap/common/transport.py": "bd2ea743bf79eed10552143b1a5455c22a2344743622918f2fad556a7bec3173",
+    "src/molgap/common/wire.py": "f5eb2bfaa21fa7318aaa8b50340ffe821c117f74ef72b511de0fe1c59e892417",
+    "src/molgap/comparison_readiness.py": "c84a5d87ae63885950a9b6cb2df3471131d659df4314d3e22d6af4c9a7ec70b0",
+    "src/molgap/constants.py": "d466ac1467034511bace9e7158093b364d80f423e4ee458c3e9a62bddcd65a63",
+    "src/molgap/evidence_pointers.py": "6533b6b53042c13299a1a2e9a4835524817e72e55d969c4b4325521087cc483b",
+    "src/molgap/execution_comparison.py": "fdafb8f963cd40fbcef6bc39bc85022aeb0417567f84c4dff8bf8b8efa50b7a9",
+    "src/molgap/experiment_catalog.py": "f5c79a6128c4da05e6e825b17feaa32e0c266df60459dd4d56eacfe0e44ba4bc",
+    "src/molgap/experiment_execution.py": "b09c22f93b44b1d742da382c66a9649f6fdb5836f35f717114369b95ae2858c2",
+    "src/molgap/experiment_family_artifacts.py": "33cd9de5edfb02f5ce0cef207b8ea475d2f1db38df7895650f483b670a32136d",
+    "src/molgap/experiment_family_workflow.py": "e49f70c567bd043184e31e067159f482abcc3425c2ac9431a0cb30be451b62bb",
+    "src/molgap/experiment_launch.py": "701d740aa5623cbc38846a54883856e7bc1671e3ae7a0e621970b3c50f9be0c1",
+    "src/molgap/experiment_package.py": "38fe115d0090abbbbe00c71cd9e3ee9e0c3e18a275d1595499dbe0e976af041b",
+    "src/molgap/experiment_preflight.py": "523a3417606826aea08fbe26b32cf62b9fe94f7a9b36e988657098336402a85e",
+    "src/molgap/experiment_prospective.py": "544c55b2bd996b9fe871ad3f8e006ca0deceef267c90f5f5521deb336b916fa2",
+    "src/molgap/experiment_resume.py": "92c45c58f2cee04a8765760f405866f7ef588d3c98ab49fdd7783df30f7bc34e",
+    "src/molgap/experiment_retention.py": "f9c5f99b183f57470ea3cd5e02902e381f7e3192cf0fa9d065b8ab3ee65f13a2",
+    "src/molgap/experiment_source_inventory.py": "ca6a2aa8f08433fb5c62bf06162122c1ab25b101f8a477264551362e708d627b",
+    "src/molgap/experiment_spec.py": "2ffbf527ff641ff356f3bac519af7afcd927c7a68727afc7a24715c74a073bc7",
+    "src/molgap/experiment_terminal.py": "28a40e81b4903999856853869d29ba4dc576f3b63522e069f88c4272940e9f8a",
+    "src/molgap/experiment_training_worker.py": "3944aca14d7d9d2fd7980580bc3134c830f7e6d55ad65ab4960b417d50867319",
+    "src/molgap/experiment_workflow.py": "5cf32990720f1425233ac3cf0f9d97ccd00e660546ebc07f746fcfee32aa6cae",
+    "src/molgap/family_execution_profile.py": "54f6b14eb5a857bd1f18e33f5461cbd828dc07028aea92c927bea00cd2056b3e",
+    "src/molgap/family_model_ops.py": "80c758bbe8bbbe1448573694f940014b8cd15e6c0c6fb5390def6da0365f8149",
+    "src/molgap/family_training_core.py": "2d8cd62aa2ed1e6e04547f4a9e8de6f794971258af99a6d4e165a9abd98dfea8",
+    "src/molgap/family_training_data.py": "8f7539309cb86083104ae3ded83e6606a3a2bbd31b4c0cc6127806f798582f31",
+    "src/molgap/family_training_kernel.py": "bdb4eba18793a1d411300cc86df085d8da763d429d7f8b616d6dfdd00b0f0b7e",
+    "src/molgap/family_training_loaders.py": "82073f2524132eda173a5981d15c34293616c5ea952692bb0226a1c47f443664",
+    "src/molgap/family_training_outputs.py": "edd6efca67072474cb9eb0afc76c011651955bf0ae97a35456c3c3748c745eb1",
+    "src/molgap/family_training_policy.py": "684cb31616a0cfcc8c4550a0e19e866cf59947e57f3f1c5353a11b2ab8c8ee4d",
+    "src/molgap/family_training_recipe.py": "347e9fcc4b42e213287535bb3c2009c901048953c79ae5a37d0e9964ded19f0f",
+    "src/molgap/family_training_runner.py": "a929025c36b553405c5c48cb0a6a4f6c0695d922dcde3d56f6969d8403601b75",
+    "src/molgap/family_training_session.py": "16bf88a6770cad03258697c19ffe3309a16247a5738d0006ded7e0bc6fcae03d",
+    "src/molgap/family_training_state.py": "98e62d209da93d45b5afc47bebb045ea148b6e0f31cd338216136fcddd1dee63",
+    "src/molgap/fast_sandbox.py": "a5c784a5460fefdf407788a0fdda0f4f1c80a64f754dfe3caf4de308b4c4c096",
+    "src/molgap/foreach_ema.py": "155ad22f5d3400cea6c94205512ac51a49fb2dd37acfaa18ea1a5e32569a6bfe",
+    "src/molgap/gps.py": "2a751b9d8c93c8c0ef890d743ccddda90500a67ec7e7813e178a1856d87b0906",
+    "src/molgap/gptrans.py": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+    "src/molgap/gptrans_bond_local.py": "6ce800ef827f9e57fdadf7f71d9ab25f00e626c5e02e9ed68717b298db679cd8",
+    "src/molgap/gptrans_execution_backend.py": "d3a47e369ddfc790dcfff2369c322ba1b6b09133f8f19e8f7b52eed9495f666f",
+    "src/molgap/gptrans_execution_hotpath.py": "304f8546d3d90e8eb7bb7be91eed1d3c94c7ad47b37931f389926abf97eac0d3",
+    "src/molgap/gptrans_execution_tuning.py": "57aa210d1cbf77ca674d47d81d0e0ccc0e12e6e4265772d84f1d41f6f5295a42",
+    "src/molgap/gptrans_memory.py": "fe6b4631b581bdcd7747edd9fa9553ca95f0734bb651961d8887159a2ec6f2ee",
+    "src/molgap/gptrans_screen_workflow.py": "1650b726f3250134469fc48eff3d077f5457ab590757534ef4acfaa02552e716",
+    "src/molgap/gptrans_variants.py": "b6b8cc3dadc7c12cc6d8d62c26a349c50284a815dc741d4f1625bbd5e4796c6d",
+    "src/molgap/k1_clean_second.py": "605cc9359690d80f406e74e7e1620365f51b32dd67587b35706693dd64921597",
+    "src/molgap/k1_execution_aggregation.py": "32c96c5c7ef723a8d0d05df45a5bfc29c6eaa8e6eb164d05db2b8c49ec10f594",
+    "src/molgap/k1_execution_backend.py": "8c22015b54c5a91356ffc724c1c3289500df6655f26498454766df036b112116",
+    "src/molgap/k1_execution_layout.py": "6a03dc91d00b06b931b1d227890558aa006d383691fa951fda4f5198a40ac0d4",
+    "src/molgap/k1_execution_qualification.py": "f91d8766ce8db7f272d35d2fd5c9492612a3e04686d78db250b79316a10eea87",
+    "src/molgap/k1_joint_aggregation.py": "79680f7165e0773168f01845e45c5917e91d82b79b7bd557bbc74f4056ff39f9",
+    "src/molgap/k1_screen_training.py": "74417b69979a1ae606f814b5f97672798b5aaca3b6672d5116efc4078511eeff",
+    "src/molgap/kaggle_pair_runtime.py": "735ffecd66f254e5a4b18761677df1ed153bef7ee4ff6772d76d35aaa9d99705",
+    "src/molgap/kaggle_workflow.py": "d8d07ad9a5ed51fb2c3c96bf6342ddd9bbc0a60477f1fd7ff4b3903dde714233",
+    "src/molgap/model_substrate.py": "57a24a87cea9dac059cec1421fea903829f334292e35c16b43cbeae05501f7e2",
+    "src/molgap/ogb_features.py": "6eff5c05f27dc0e0999d95034a447164dde5fd5c39f9666302bcb12066e92124",
+    "src/molgap/packed_graph_dataset.py": "19cd6b02730ebc237952788722b622ae988197c9fb0838e656a41c2d996fc3c4",
+    "src/molgap/pcqm_conjugated_state.py": "23c2cf56fd91219cd8630d4aa6321ac6fed8717bafbcba53be403323d90426f5",
+    "src/molgap/pcqm_directed_spectral.py": "2da8ef250264d509ea2a28e604dcbf8dfade5d0a909c88a3585b65627399ad24",
+    "src/molgap/pcqm_fixed_records.py": "a7e017923ce94b4c609f19947ac72dcbcea397f7e31b5e25aeee56591fcd3566",
+    "src/molgap/pcqm_gap_architecture.py": "0de3c77c50531d7f49e884c4c2bd5c67a554935c1996bd0eae952c4b5434c045",
+    "src/molgap/pcqm_gptrans_v4.py": "092e7bff5f8acb48fc80b2711246a684ed0bbcb18b13cf5ec763f06604bf9719",
+    "src/molgap/pcqm_hop_path.py": "69fdca5cdc54ba99ef34d4eb4afb4480534ecdde295246b310a3eb883ce90321",
+    "src/molgap/pcqm_local_statistics.py": "8ed276be81dc458927c06aa50db152d63103fbd76a0e9f39e8dd6661dbfa965b",
+    "src/molgap/pcqm_relative_value.py": "883b02b0b7e2e4fccd1adb5b09e5f916872cd6925e54a0e4530aab844862c44b",
+    "src/molgap/pcqm_topology.py": "12da67e50e7d11d408ef1b186e9cf6f8ea2547aba0917aa89a8d84de80cb15c1",
+    "src/molgap/pcqm_wedge.py": "e8ccb24322a033bca3d56541377799b06aab8c8f04cdfbf8757cbf9f78fb742d",
+    "src/molgap/qm9_data.py": "a62e5d5cb0bbdbcb0b186c27039c25c38949178471c608a0f44218e538253984",
+    "src/molgap/qm9_gape.py": "619d6c3719032441cbc01082904f512bbbe5370202263ce60fa428e0e1d373f3",
+    "src/molgap/qm9_local_hierarchy.py": "b9d5b72c02d4ce459cf7b6666daee07e402e493fea64eca9ac08335364efd25b",
+    "src/molgap/qm9_neural_atom.py": "38061e39662f0826ec42bc61a26eae83eba55ddde4403ccb418c5d29845a3019",
+    "src/molgap/research_memory/__init__.py": "172baf3963c36d2a3d9c423ab05db6850a11ac58195a9647d7ee6f95df28fc48",
+    "src/molgap/research_memory/backtest.py": "c2aaea3aa29d33c9d2b3acef60ca9329a075612d29d673aa76871f1d63d20f09",
+    "src/molgap/research_memory/compiler.py": "0df95d15b3fba8a219bc93650ccd80436d23e780eba46ca7b8a699c468719161",
+    "src/molgap/research_memory/cost.py": "471fc2b983417ea59198ce28a40e04c9fc0526160d71474e1f793fbd845392c4",
+    "src/molgap/research_memory/derived.py": "a468ac39279741b06721e4c3161ff898fbea4ebb1c18d0bc597bd6629d7db943",
+    "src/molgap/research_memory/discovery.py": "d93ae30227e8367fc88cb0e80da046e723d1f51ace2daeb2d4c5fb4a463b9b28",
+    "src/molgap/research_memory/finalize.py": "51c83dd1c50704ca027bb87546480e545759217c63b44a09fe819555a51a0fe9",
+    "src/molgap/research_memory/paired.py": "88e1837218621e25afdff5c1de7b20ba07c20f549f61807446388a9793a514c5",
+    "src/molgap/research_memory/paths.py": "48fc8bfac2fe1d91472650c5ee72af2904cf6f546000cadf68b2ca3c08e02b97",
+    "src/molgap/research_memory/pipeline.py": "47258bdb0642a651386e8ecf880e3caac60bbb474ec9695def576e2a233e0b87",
+    "src/molgap/research_memory/plan.py": "e7365b4ca20bea78f60806fa16762067fff21cd894cf1efa4499c22f2bc65d57",
+    "src/molgap/research_memory/policy.py": "7c41b7d8f5ba258f64543ad2313818fc67d8f916bfeb770583c0b02f9818fa57",
+    "src/molgap/research_memory/recovery.py": "582e0ec58cce2dd28a2b6c337680771070c1b564db6ef20160fa8b9319b07c35",
+    "src/molgap/research_memory/references.py": "e55d4e025cebd59a7f87c38d05fcb7d018239a43c0d2d963d96fd918eca003a4",
+    "src/molgap/research_memory/replay.py": "7ae8f9d6a1f11fe506206ab238fee69a7d50285e40567c6e23443bdb29b5bcfa",
+    "src/molgap/research_memory/roles.py": "34afe417d96d48591427899537e607685fb16f3014314616bd43052d21e6466a",
+    "src/molgap/research_memory/schemas.py": "556f1a0d5d03a0967cc5afbcab331a1e9a1ead332e220abd9a3ae58341bc76a1",
+    "src/molgap/research_memory/summary.py": "e2a798970e7a16e27d41a23fde6b7fb13077e1af0727cd5f04e8c88cc600dc35",
+    "src/molgap/research_memory/terminal_wiring.py": "aa92fd70a3f7d8c48d03adbfb83a902cee30ef79db434a961e70df270d73eaab",
+    "src/molgap/research_memory/trace.py": "b25d968c6b545ec65f2dfa74ee7d9236dc9dbe6a207dd3d88731d62f22bc894a",
+    "src/molgap/research_memory/validate.py": "22107263050d03d2e4b1f4dc48ae8e10d7ce41b83433cd247ad59d9c76592a8a",
+    "src/molgap/screen_policy.py": "cce65676316b46cc62a69d18d5d0278891902e953afec93250ca6f2d7ef49888",
+    "src/molgap/shared_model_adapter.py": "212a16060fbe250c517f68c857e1ef2c96e161eb9fd0af977e879a7faea542e0",
+    "src/molgap/source_dependencies.py": "98f5c819a5be8ae8f50f401320c7b5b17b37e0ad022af84bf08e1a0e7d15612b",
+    "src/molgap/substrate_scale_addon.py": "c3b1c697ab052887a3f26f590dc82a1089c328b85132cb33968554610084f567",
+    "src/molgap/training_logging.py": "584a2b38ea408259018c4c19d8871656e446521229817d7e223006af31d6fb76",
+    "src/molgap/training_reproducibility.py": "1cbbc071b1a27967bd87cefc4c1bb7471f324134640e8042e955f7edfdd600a0",
+    "src/molgap/v4_bundle.py": "a92d7d061d91dafae764f7830cadd8657b07e587c5b1f38ca66be9e31f7639b5",
+    "src/molgap/v4_runtime.py": "994e7080d0940492060c1e13187770569bf24e8bd300d974a1dc92dfefd2c7e0",
+    "src/molgap/v5_common.py": "06fff9bd262fe236eef2b5657ca20e697fad1e5da0af86ba605c47c144f94652"
+  },
+  "root_inputs": {
+    "adapter_root_paths": {
+      "apply_hook": [
+        "src/molgap/substrate_scale_addon.py"
+      ],
+      "module": [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/k1_screen_training.py"
+      ],
+      "policy_hook": [
+        "src/molgap/gptrans_bond_local.py"
+      ],
+      "profile_adapter": [
+        "src/molgap/family_execution_profile.py"
+      ],
+      "serialization_modules": [
+        "src/molgap/pcqm_wedge.py"
+      ],
+      "source_files": [
+        "src/molgap/family_training_runner.py",
+        "src/molgap/gptrans_screen_workflow.py",
+        "src/molgap/k1_screen_training.py"
+      ]
+    },
+    "common_source_inventory": "src/molgap/experiment_source_inventory.py:COMMON_SOURCE_FILES",
+    "common_source_path_count": 104,
+    "ims_bridge": [
+      "platforms/ims/run_family_training.py"
+    ],
+    "manifest": "docs/operations/SHARED_TRAINING_CORE_FILES.json",
+    "manifest_path_count": 42,
+    "registered_adapters": [
+      {
+        "family": [
+          "neural_atom_k1",
+          "3"
+        ],
+        "module": "molgap.family_training_runner",
+        "profile_adapter": "molgap.family_execution_profile",
+        "serialization_modules": [
+          "molgap.pcqm_wedge"
+        ]
+      },
+      {
+        "family": [
+          "gptrans_t",
+          "2"
+        ],
+        "module": "molgap.family_training_runner",
+        "profile_adapter": "molgap.family_execution_profile",
+        "serialization_modules": [
+          "molgap.pcqm_wedge"
+        ]
+      },
+      {
+        "family": [
+          "neural_atom_k1",
+          "2"
+        ],
+        "module": "molgap.k1_screen_training",
+        "profile_adapter": null,
+        "serialization_modules": [
+          "molgap.pcqm_wedge"
+        ]
+      },
+      {
+        "family": [
+          "gptrans_t",
+          "1"
+        ],
+        "module": "molgap.gptrans_screen_workflow",
+        "profile_adapter": null,
+        "serialization_modules": [
+          "molgap.pcqm_wedge"
+        ]
+      }
+    ]
+  },
+  "roots": [
+    "platforms/ims/run_family_training.py",
+    "platforms/kaggle/run_experiment.py",
+    "src/molgap/__init__.py",
+    "src/molgap/common/__init__.py",
+    "src/molgap/common/declarations.py",
+    "src/molgap/common/identity.py",
+    "src/molgap/common/io.py",
+    "src/molgap/common/kaggle.py",
+    "src/molgap/common/paths.py",
+    "src/molgap/common/runtime.py",
+    "src/molgap/common/spec.py",
+    "src/molgap/common/transport.py",
+    "src/molgap/common/wire.py",
+    "src/molgap/comparison_readiness.py",
+    "src/molgap/constants.py",
+    "src/molgap/evidence_pointers.py",
+    "src/molgap/execution_comparison.py",
+    "src/molgap/experiment_catalog.py",
+    "src/molgap/experiment_execution.py",
+    "src/molgap/experiment_family_artifacts.py",
+    "src/molgap/experiment_family_workflow.py",
+    "src/molgap/experiment_launch.py",
+    "src/molgap/experiment_package.py",
+    "src/molgap/experiment_preflight.py",
+    "src/molgap/experiment_prospective.py",
+    "src/molgap/experiment_resume.py",
+    "src/molgap/experiment_retention.py",
+    "src/molgap/experiment_source_inventory.py",
+    "src/molgap/experiment_spec.py",
+    "src/molgap/experiment_terminal.py",
+    "src/molgap/experiment_training_worker.py",
+    "src/molgap/experiment_workflow.py",
+    "src/molgap/family_execution_profile.py",
+    "src/molgap/family_model_ops.py",
+    "src/molgap/family_training_core.py",
+    "src/molgap/family_training_data.py",
+    "src/molgap/family_training_kernel.py",
+    "src/molgap/family_training_loaders.py",
+    "src/molgap/family_training_outputs.py",
+    "src/molgap/family_training_policy.py",
+    "src/molgap/family_training_recipe.py",
+    "src/molgap/family_training_runner.py",
+    "src/molgap/family_training_session.py",
+    "src/molgap/family_training_state.py",
+    "src/molgap/fast_sandbox.py",
+    "src/molgap/foreach_ema.py",
+    "src/molgap/gps.py",
+    "src/molgap/gptrans.py",
+    "src/molgap/gptrans_bond_local.py",
+    "src/molgap/gptrans_execution_backend.py",
+    "src/molgap/gptrans_execution_hotpath.py",
+    "src/molgap/gptrans_execution_tuning.py",
+    "src/molgap/gptrans_memory.py",
+    "src/molgap/gptrans_screen_workflow.py",
+    "src/molgap/gptrans_variants.py",
+    "src/molgap/k1_clean_second.py",
+    "src/molgap/k1_execution_aggregation.py",
+    "src/molgap/k1_execution_backend.py",
+    "src/molgap/k1_execution_layout.py",
+    "src/molgap/k1_execution_qualification.py",
+    "src/molgap/k1_joint_aggregation.py",
+    "src/molgap/k1_screen_training.py",
+    "src/molgap/kaggle_pair_runtime.py",
+    "src/molgap/kaggle_workflow.py",
+    "src/molgap/model_substrate.py",
+    "src/molgap/packed_graph_dataset.py",
+    "src/molgap/pcqm_conjugated_state.py",
+    "src/molgap/pcqm_directed_spectral.py",
+    "src/molgap/pcqm_fixed_records.py",
+    "src/molgap/pcqm_gap_architecture.py",
+    "src/molgap/pcqm_gptrans_v4.py",
+    "src/molgap/pcqm_hop_path.py",
+    "src/molgap/pcqm_local_statistics.py",
+    "src/molgap/pcqm_relative_value.py",
+    "src/molgap/pcqm_wedge.py",
+    "src/molgap/qm9_data.py",
+    "src/molgap/qm9_gape.py",
+    "src/molgap/qm9_local_hierarchy.py",
+    "src/molgap/qm9_neural_atom.py",
+    "src/molgap/research_memory/__init__.py",
+    "src/molgap/research_memory/backtest.py",
+    "src/molgap/research_memory/compiler.py",
+    "src/molgap/research_memory/cost.py",
+    "src/molgap/research_memory/derived.py",
+    "src/molgap/research_memory/discovery.py",
+    "src/molgap/research_memory/finalize.py",
+    "src/molgap/research_memory/paired.py",
+    "src/molgap/research_memory/paths.py",
+    "src/molgap/research_memory/pipeline.py",
+    "src/molgap/research_memory/plan.py",
+    "src/molgap/research_memory/policy.py",
+    "src/molgap/research_memory/recovery.py",
+    "src/molgap/research_memory/references.py",
+    "src/molgap/research_memory/replay.py",
+    "src/molgap/research_memory/roles.py",
+    "src/molgap/research_memory/schemas.py",
+    "src/molgap/research_memory/summary.py",
+    "src/molgap/research_memory/terminal_wiring.py",
+    "src/molgap/research_memory/trace.py",
+    "src/molgap/research_memory/validate.py",
+    "src/molgap/screen_policy.py",
+    "src/molgap/shared_model_adapter.py",
+    "src/molgap/source_dependencies.py",
+    "src/molgap/substrate_scale_addon.py",
+    "src/molgap/training_logging.py",
+    "src/molgap/training_reproducibility.py",
+    "src/molgap/v4_bundle.py",
+    "src/molgap/v4_runtime.py",
+    "src/molgap/v5_common.py"
+  ],
+  "status": "complete"
+}

@@ -180,3 +180,31 @@ def test_windows_packager_fills_source_and_contract_hashes(tmp_path):
         contract.read_bytes()
     ).hexdigest()
     assert (output / "source_files.json").is_file()
+
+
+@pytest.mark.parametrize("assigned,index,selected", [("4,7", 1, "7"), ("GPU-fixture", 0, "GPU-fixture")])
+def test_family_bridge_uses_only_scheduler_assigned_device(monkeypatch, assigned, index, selected):
+    from molgap import experiment_training_worker
+    spec = importlib.util.spec_from_file_location("ims_family_bridge", ROOT / "platforms/ims/run_family_training.py")
+    bridge = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bridge)
+    monkeypatch.setenv("CUDA_VISIBLE_DEVICES", assigned)
+    calls = []
+    monkeypatch.setattr(experiment_training_worker, "main", lambda argv: calls.append(argv) or "fixture")
+    assert bridge.main(["--device", str(index), "--prepared", "synthetic.json"]) == "fixture"
+    assert calls == [["--prepared", "synthetic.json"]]
+    import os
+    assert os.environ["CUDA_VISIBLE_DEVICES"] == selected
+
+
+@pytest.mark.parametrize("assigned,index", [("", 0), ("4,7", 2), ("4", -1),
+    ("4,,7", 1), ("4,", 1), ("4, 7", 1)])
+def test_family_bridge_rejects_unassigned_device_without_dispatch(monkeypatch, assigned, index):
+    from molgap import experiment_training_worker
+    spec = importlib.util.spec_from_file_location("ims_family_bridge_reject", ROOT / "platforms/ims/run_family_training.py")
+    bridge = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bridge)
+    monkeypatch.setenv("CUDA_VISIBLE_DEVICES", assigned)
+    monkeypatch.setattr(experiment_training_worker, "main", lambda argv: pytest.fail("must not dispatch"))
+    with pytest.raises(ValueError, match="scheduler"):
+        bridge.main(["--device", str(index)])

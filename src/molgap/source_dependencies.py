@@ -86,10 +86,13 @@ def discover_source_dependencies(repo_root, roots, *, require_static=False) -> D
     modules are named in the report, never copied from the host environment.
     Dynamic names cannot be inferred safely: optional strict mode rejects them.
     Existing source confinement/link/secret boundaries are applied to every file.
+    Report all reachable missing internal modules together; never return a
+    partial closure that could be mistaken for a publishable source package.
     """
     root = Path(repo_root).resolve()
     seeds = tuple(sorted(_allowlist(roots)))
     pending, seen, external, dynamic, edges = list(seeds), set(), set(), set(), set()
+    missing = set()
     for seed in seeds:
         module = _module(seed)
         if module is not None:
@@ -141,7 +144,7 @@ def discover_source_dependencies(repo_root, roots, *, require_static=False) -> D
         relative = _module_path(root, name)
         if relative is None:
             if required:
-                raise ValueError(f"Missing internal dependency {name!r} imported by {importer}")
+                missing.add(f"{name!r} imported by {importer}")
             return
         _allowlist([relative])
         _source(root, relative)
@@ -235,6 +238,8 @@ def discover_source_dependencies(repo_root, roots, *, require_static=False) -> D
                         unresolved(importer, node)
                 else:
                     unresolved(importer, node)
+    if missing:
+        raise ValueError("Missing internal dependency: " + "; ".join(sorted(missing)))
     if require_static and dynamic:
         raise ValueError("Dynamic import requires reviewed registry roots and runtime checks: " +
                          "; ".join(sorted(dynamic)))

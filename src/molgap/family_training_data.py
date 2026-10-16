@@ -131,7 +131,7 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
             shard_path = _artifact_path(path.parent, record["file"])
             if sha256_file(shard_path) != record["sha256"]:
                 raise ValueError("Topology shard SHA differs from its manifest")
-            shard = PackedGraphDataset(shard_path, mmap=True)
+            shard = PackedGraphDataset(shard_path, mmap=True).topology_only()
             if len(shard) != count:
                 raise ValueError("Decoded graph count differs from manifest")
             indices = shard._data.source_idx.reshape(-1)

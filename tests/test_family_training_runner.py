@@ -129,9 +129,10 @@ def test_contract_rejects_counter_changes_and_unknown_fields(tmp_path):
         session.close()
 
 
-def test_source_exception_is_exact_not_a_general_output_allowance():
+def test_reviewed_python_io_source_does_not_allow_artifact_directories():
     assert _name("src/molgap/family_training_outputs.py") == "src/molgap/family_training_outputs.py"
-    for path in ("src/molgap/other_outputs.py", "experiments/example/outputs/model.py", "data/family_training_outputs.py"):
+    assert _name("src/molgap/other_outputs.py") == "src/molgap/other_outputs.py"
+    for path in ("experiments/example/outputs/model.py", "data/family_training_outputs.py"):
         with pytest.raises(ValueError):
             _name(path)
 

@@ -30,6 +30,26 @@ def test_same_recipe_interface_for_all_scales_and_families(family, rows, develop
     assert plan.execution_policy["cpu_layout"] is True
 
 
+def test_resume_chunk_retention_is_explicit_and_omitted_by_default(tmp_path):
+    from types import SimpleNamespace
+    from molgap.family_training_runner import _resume_trajectory
+    plan = recipe()
+    assert "resume_chunks" not in plan.to_dict()
+    assert _resume_trajectory(plan, SimpleNamespace(arm_id="reference"), {}) is None
+    chunked = replace(plan, resume_chunks=True)
+    assert FamilyRecipe.from_dict(chunked.to_dict()) == chunked
+    assert chunked.identity != plan.identity
+    with pytest.raises(ValueError, match="prospective root"):
+        _resume_trajectory(chunked, SimpleNamespace(arm_id="reference"), {})
+    target = tmp_path / "prospective/reference/trajectory.json"
+    target.parent.mkdir(parents=True)
+    target.write_bytes(b'{"synthetic":true}')
+    assert _resume_trajectory(chunked, SimpleNamespace(arm_id="reference"),
+                              {"prospective_root": tmp_path}) == target.read_bytes()
+    with pytest.raises(ValueError, match="exact boolean"):
+        replace(plan, resume_chunks=1)
+
+
 @pytest.mark.parametrize("change", ["unknown", "callback", "slow", "fp16", "missing", "schedule_unknown"])
 def test_cannot_inject_execution_or_silently_select_another_backend(change):
     record = recipe().to_dict()

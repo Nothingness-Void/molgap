@@ -116,11 +116,14 @@ class FamilyRecipe:
     k1_execution: K1ExecutionConfig | None = None
     addons: tuple[dict, ...] = ()
     clean_bn: CalibrationPolicy | None = None
+    resume_chunks: bool = False
 
     def __post_init__(self):
         from .experiment_spec import _digest
         if self.family not in MODES or self.mode not in MODES[self.family]:
             raise ValueError("Unknown executable family/addon mode")
+        if type(self.resume_chunks) is not bool:
+            raise ValueError("Resume chunk selection must be an exact boolean")
         if type(self.addons) is not tuple or (self.mode == "composed") != bool(self.addons):
             raise ValueError("Ordered slot addons require the explicit composed mode")
         if self.addons:
@@ -221,6 +224,8 @@ class FamilyRecipe:
             values.pop("clean_bn")
         else:
             values["clean_bn"] = self.clean_bn.to_dict()
+        if not self.resume_chunks:
+            values.pop("resume_chunks")
         return {"format": RECIPE_FORMAT, **values, "execution_policy": self.execution_policy}
 
     @property
@@ -234,7 +239,7 @@ class FamilyRecipe:
             expected.remove("input_sidecar")
         if type(record) is dict and "k1_execution" not in record:
             expected.remove("k1_execution")
-        for name in ("addons", "clean_bn"):
+        for name in ("addons", "clean_bn", "resume_chunks"):
             if type(record) is dict and name not in record:
                 expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:

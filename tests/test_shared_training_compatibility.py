@@ -1,4 +1,4 @@
-"""The same mechanism snapshot is reviewed and installed on both owner branches."""
+"""Pin the reviewed mechanism snapshot; branch adoption is recorded separately."""
 import ast
 import json
 from pathlib import Path
@@ -25,6 +25,9 @@ def test_accelerated_kernel_has_no_legacy_trainer_or_controller_imports():
     tree = ast.parse((ROOT / "src/molgap/family_training_kernel.py").read_text())
     imports = {node.module for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)}
     assert not {"k1_screen_training", "pcqm_gptrans_v4", "server_control"} & imports
+    runner = ast.parse((ROOT / "src/molgap/family_training_runner.py").read_text())
+    assert not any(isinstance(node, ast.ImportFrom) and node.module and
+                   node.module.endswith("_infrastructure_comparison") for node in ast.walk(runner))
 
 
 def test_branch_policy_is_explicit_and_reference_has_no_extra_roles_or_segments():

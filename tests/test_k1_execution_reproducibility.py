@@ -136,27 +136,37 @@ def test_finite_state_check_keeps_original_named_errors_and_does_not_mutate_stat
     owner.assert_finite_state_dict({"empty": torch.empty(0), "good": state["good"]}, label="model")
 
 
-def test_device_finite_flags_use_one_transfer_per_device_and_preserve_key_order(monkeypatch):
+def test_device_finite_flags_use_one_host_observation_per_device_and_preserve_key_order(monkeypatch):
     # Simulate accelerator routing with CPU boolean flags; no CUDA allocation.
     class DeviceValue:
         def __init__(self, device, finite):
             self.device, self.finite = torch.device(device), finite
+        is_quantized = False
+        def is_floating_point(self):
+            return True
+        def is_complex(self):
+            return False
 
     state = {"gpu0_bad": DeviceValue("cuda:0", False),
              "cpu_bad": DeviceValue("cpu", False),
              "gpu1_good": DeviceValue("cuda:1", True),
              "gpu0_good": DeviceValue("cuda:0", True),
              "gpu1_bad": DeviceValue("cuda:1", False)}
-    original_cpu = torch.Tensor.cpu
+    original_bool = torch.Tensor.__bool__
     calls = []
 
-    def transfer(value, *args, **kwargs):
+    def observe(value):
         calls.append(tuple(value.shape))
-        return original_cpu(value, *args, **kwargs)
+        return original_bool(value)
 
     monkeypatch.setattr(torch, "is_tensor", lambda value: isinstance(value, DeviceValue))
     monkeypatch.setattr(torch, "isfinite", lambda value: torch.tensor(value.finite))
-    monkeypatch.setattr(torch.Tensor, "cpu", transfer)
+    monkeypatch.setattr(torch.Tensor, "__bool__", observe)
+    for value in state.values():
+        value.finite = True
+    owner.assert_finite_state_dict(state, label="model")
+    assert calls == [(), (), ()]  # One CPU tensor and two accelerator aggregates.
+    for name in ("gpu0_bad", "cpu_bad", "gpu1_bad"):
+        state[name].finite = False
     with pytest.raises(RuntimeError, match=r"\['gpu0_bad', 'cpu_bad', 'gpu1_bad'\]"):
         owner.assert_finite_state_dict(state, label="model")
-    assert calls == [(2,), (2,)]

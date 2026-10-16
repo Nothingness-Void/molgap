@@ -139,7 +139,7 @@ def test_full_train_selection_never_reads_unselected_development(pinned_data):
 
 
 @pytest.mark.parametrize("development", [False, True])
-def test_existing_kaggle_mirror_uses_same_topology_loader(pinned_data, development):
+def test_existing_kaggle_mirror_uses_same_topology_loader(pinned_data, development, monkeypatch):
     root, selection, manifest = pinned_data
     manifest["format"] = "molgap-pcqm4mv2-kaggle-fixed-subset-v1"
     manifest["geometry_shards"] = manifest.pop("assets")["topology"]
@@ -154,6 +154,7 @@ def test_existing_kaggle_mirror_uses_same_topology_loader(pinned_data, developme
         record["sha256"] = sha256_file(path)
     path = root / selection.manifest
     path.write_text(json.dumps(manifest), encoding="utf-8")
+    monkeypatch.setattr("molgap.pcqm_fixed_records.FIXED_KAGGLE_MANIFESTS", frozenset({sha256_file(path)}))
     if not development:
         (root / "development.pt").unlink()
     data = load_training_data(root, replace(selection, manifest_sha256=sha256_file(path),
@@ -179,7 +180,8 @@ def test_kaggle_mirror_missing_or_protected_flags_fail_before_pickle(pinned_data
     path.write_text(json.dumps(manifest), encoding="utf-8")
     monkeypatch.setattr("molgap.packed_graph_dataset.PackedGraphDataset",
                         lambda *a, **k: pytest.fail("no protected/ambiguous pickle access"))
-    with pytest.raises(ValueError, match="protected-role"):
+    monkeypatch.setattr("molgap.pcqm_fixed_records.FIXED_KAGGLE_MANIFESTS", frozenset({sha256_file(path)}))
+    with pytest.raises(ValueError, match="[Pp]rotected.*role"):
         load_training_data(root, replace(selection, manifest_sha256=sha256_file(path)))
 
 

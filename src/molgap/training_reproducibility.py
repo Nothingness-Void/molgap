@@ -14,6 +14,7 @@ import sys
 from collections.abc import Mapping
 from contextvars import ContextVar
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 
@@ -120,7 +121,8 @@ def configure_fp32_determinism(seed: int) -> dict:
     torch.backends.cudnn.allow_tf32 = False
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.deterministic = True
-    torch.set_float32_matmul_precision("highest")
+    if hasattr(torch, "set_float32_matmul_precision"):
+        torch.set_float32_matmul_precision("highest")
     torch.use_deterministic_algorithms(True, warn_only=False)
     return {
         "seed": int(seed),
@@ -130,7 +132,11 @@ def configure_fp32_determinism(seed: int) -> dict:
         "cudnn_deterministic": True,
         "deterministic_algorithms": True,
         "cublas_workspace_config": os.environ["CUBLAS_WORKSPACE_CONFIG"],
-        "float32_matmul_precision": torch.get_float32_matmul_precision(),
+        "float32_matmul_precision": (
+            torch.get_float32_matmul_precision()
+            if hasattr(torch, "get_float32_matmul_precision")
+            else "tf32-disabled-by-backend-flags"
+        ),
     }
 
 
@@ -253,6 +259,15 @@ def build_runtime_manifest(determinism: Mapping) -> dict:
         }
     packages = _installed_distributions()
     package_fingerprint = hashlib.sha256("\n".join(packages).encode()).hexdigest()
+    external_runtime_artifacts = {}
+    try:
+        import ogb
+        external_runtime_artifacts["ogb"] = {
+            "version": getattr(ogb, "__version__", "unknown"),
+            "source_archive_sha256": os.environ.get("MOLGAP_OGB_SOURCE_SHA256"),
+        }
+    except ImportError:
+        pass
     payload = {
         "format": RUNTIME_MANIFEST_FORMAT,
         "python": sys.version,
@@ -266,6 +281,7 @@ def build_runtime_manifest(determinism: Mapping) -> dict:
         "determinism": dict(determinism),
         "installed_distributions": packages,
         "installed_distributions_sha256": package_fingerprint,
+        "external_runtime_artifacts": external_runtime_artifacts,
     }
     payload["runtime_fingerprint"] = canonical_fingerprint(payload)
     return payload
@@ -275,7 +291,7 @@ def _batch_finite_tensor_failures(entries) -> list[tuple[int, str]]:
     """Return non-finite tensor entries with one host observation per device.
 
     ``entries`` is an ordered iterable of ``(order, label, tensor)`` tuples.
-    CPU tensors keep the inexpensive historical per-tensor path.  Accelerated
+    CPU scalars are grouped without dtype conversion. Accelerated
     tensors first reduce one finite scalar per tensor and then reduce those
     scalars together on each device, so the normal path crosses back to Python
     once per device instead of once per tensor.  A failed device is rescanned
@@ -288,6 +304,7 @@ def _batch_finite_tensor_failures(entries) -> list[tuple[int, str]]:
     seen = set()
     unique_entries = []
     cpu_failures: list[tuple[int, str]] = []
+    cpu_scalars = {}
     by_device = {}
     for order, label, value in ordered:
         identity = id(value)
@@ -303,13 +320,24 @@ def _batch_finite_tensor_failures(entries) -> list[tuple[int, str]]:
         if not (value.is_floating_point() or value.is_complex()) and not value.is_quantized:
             continue
         if value.device.type == "cpu":
-            # Keep the CPU fast path and its original per-tensor semantics.
+            if (type(value) is torch.Tensor and value.ndim == 0
+                    and value.layout == torch.strided and not value.is_quantized):
+                cpu_scalars.setdefault(value.dtype, []).append((order, label, value))
+                continue
             if not bool(torch.isfinite(value).all()):
                 cpu_failures.append((order, label))
             else:
                 _cache_finite_tensor(value)
         else:
             by_device.setdefault(value.device, []).append((order, label, value))
+
+    for entries in cpu_scalars.values():
+        observed = torch.isfinite(torch.stack([value.detach() for _, _, value in entries])).tolist()
+        for (order, label, value), finite in zip(entries, observed):
+            if finite:
+                _cache_finite_tensor(value)
+            else:
+                cpu_failures.append((order, label))
 
     device_failures: set[object] = set()
     for device, device_entries in by_device.items():
@@ -335,15 +363,23 @@ def _batch_finite_tensor_failures(entries) -> list[tuple[int, str]]:
     return sorted(failures, key=lambda item: item[0])
 
 
-def assert_finite_state_dict(state_dict: Mapping, *, label: str) -> None:
+def nonfinite_tensor_keys(state_dict: Mapping) -> list:
+    """Compatibility API backed by the single scoped finite-check implementation."""
     import torch
-
     entries = [
         (order, name, value)
         for order, (name, value) in enumerate(state_dict.items())
         if torch.is_tensor(value)
     ]
-    failures = [name for _, name in _batch_finite_tensor_failures(entries)]
+    failures = _batch_finite_tensor_failures(entries)
+    # The low-level checker deduplicates tensors; this mapping API retains all keys.
+    failed_orders = {order for order, _ in failures}
+    failed_ids = {id(value) for order, _, value in entries if order in failed_orders}
+    return [name for name, value in state_dict.items() if id(value) in failed_ids]
+
+
+def assert_finite_state_dict(state_dict: Mapping, *, label: str) -> None:
+    failures = nonfinite_tensor_keys(state_dict)
     if failures:
         raise RuntimeError(f"{label} contains non-finite tensors: {failures[:8]}")
 
@@ -353,17 +389,26 @@ def atomic_torch_save(path: Path, value) -> None:
 
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.tmp")
-    torch.save(value, temporary)
-    os.replace(temporary, path)
+    try:
+        torch.save(value, temporary)
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def atomic_json(path: Path, value: Mapping | list) -> None:
-    if not isinstance(value, (Mapping, list)):
-        raise ValueError("Atomic JSON requires a mapping or list")
+    if isinstance(value, Mapping):
+        value = dict(value)
+    elif not isinstance(value, list):
+        raise TypeError("Expected a JSON object or array")
+    payload = json.dumps(value, indent=2) + "\n"
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.tmp")
-    temporary.write_text(json.dumps(dict(value) if isinstance(value, Mapping) else value, indent=2) + "\n", encoding="utf-8")
-    os.replace(temporary, path)
+    try:
+        temporary.write_text(payload, encoding="utf-8")
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def sha256_file(path: Path) -> str:
@@ -428,3 +473,79 @@ def sum_scalar_metrics(values) -> float:
     if not math.isfinite(total):
         raise ValueError("Nonfinite scalar metric total")
     return total
+
+
+def _safe_torch_tree(value: Any, label: str = "checkpoint") -> None:
+    """Reject objects outside the weights-only CPU inspection domain."""
+    import numpy as np
+    import torch
+
+    safe_scalars = (str, int, float, bool, bytes, type(None), np.generic, np.dtype)
+    if torch.is_tensor(value):
+        if value.device.type != "cpu":
+            raise ValueError(f"{label} contains a non-CPU tensor")
+        if value.is_floating_point() and not bool(torch.isfinite(value).all()):
+            raise ValueError(f"{label} contains a non-finite tensor")
+        return
+    if isinstance(value, Mapping):
+        for key, item in value.items():
+            if not isinstance(key, (str, int, float, bool, type(None))):
+                raise ValueError(f"{label} contains an unsafe mapping key")
+            _safe_torch_tree(item, label + "." + str(key))
+        return
+    if isinstance(value, (list, tuple)):
+        for item in value:
+            _safe_torch_tree(item, label)
+        return
+    if isinstance(value, np.ndarray):
+        if value.dtype.hasobject:
+            raise ValueError(f"{label} contains an object NumPy array")
+        if np.issubdtype(value.dtype, np.floating) and not bool(np.isfinite(value).all()):
+            raise ValueError(f"{label} contains a non-finite NumPy array")
+        return
+    if isinstance(value, safe_scalars):
+        if isinstance(value, (float, np.floating)) and not bool(np.isfinite(value)):
+            raise ValueError(f"{label} contains a non-finite scalar")
+        return
+    raise ValueError(f"{label} contains an unsupported object: {type(value).__name__}")
+
+
+def safe_cpu_torch_load(path: Path) -> dict:
+    """Load a trusted checkpoint with weights-only semantics and known NumPy RNG types."""
+    import numpy as np
+    import torch
+
+    from .v4_runtime import torch_load_compat
+
+    safe = []
+    try:
+        from numpy._core.multiarray import _reconstruct
+    except ImportError:  # pragma: no cover - old NumPy spelling
+        from numpy.core.multiarray import _reconstruct
+    safe.extend([_reconstruct, np.ndarray, np.dtype])
+    # GPTrans stores a NumPy uint32 RNG array.  NumPy 2 exposes concrete dtype
+    # classes that PyTorch's weights-only unpickler requires explicitly.
+    dtype_module = getattr(np, "dtypes", None)
+    if dtype_module is not None:
+        for name in dir(dtype_module):
+            candidate = getattr(dtype_module, name, None)
+            if isinstance(candidate, type) and name.endswith("DType"):
+                safe.append(candidate)
+    try:
+        context = torch.serialization.safe_globals(safe)
+    except AttributeError:  # pragma: no cover - PyTorch before 2.6
+        context = None
+    try:
+        if context is None:
+            for item in safe:
+                torch.serialization.add_safe_globals([item])
+            payload = torch_load_compat(path, map_location="cpu", weights_only=True)
+        else:
+            with context:
+                payload = torch_load_compat(path, map_location="cpu", weights_only=True)
+    except Exception as exc:
+        raise ValueError("Resume checkpoint is not a safe CPU tensor artifact") from exc
+    if not isinstance(payload, Mapping):
+        raise ValueError("Resume checkpoint must contain a mapping")
+    _safe_torch_tree(payload)
+    return dict(payload)

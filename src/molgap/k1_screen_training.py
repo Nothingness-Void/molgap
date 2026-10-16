@@ -52,13 +52,7 @@ FIXED_GEOMETRY_SHA256 = (
 )
 BENCHMARK_ID = "pcqm4mv2-ogb-fixed-100k-gap-v4"
 PLATFORM_ID = "kaggle2"
-FORBIDDEN_MODEL_FIELDS = (
-    "pos",
-    "edge_distance",
-    "wedge_angle_cos",
-    "wedge_edge_ids",
-    "geometry_valid",
-)
+from .packed_graph_dataset import TOPOLOGY_EXCLUDED_FIELDS as FORBIDDEN_MODEL_FIELDS
 
 
 def _hash_mapping(value: dict) -> str:
@@ -137,12 +131,7 @@ class _PackedGraphDatasetFactory:
     def load(path: Path, *, mmap: bool = False):
         from .packed_graph_dataset import PackedGraphDataset
 
-        payload = PackedGraphDataset(path, mmap=mmap)
-        for field in FORBIDDEN_MODEL_FIELDS:
-            if field in payload._data:
-                del payload._data[field]
-                payload.slices.pop(field, None)
-        return payload
+        return PackedGraphDataset(path, mmap=mmap).topology_only()
 
 
 def find_fixed_cache(input_root: Path) -> tuple[Path, dict]:

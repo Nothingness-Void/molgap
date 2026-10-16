@@ -631,6 +631,16 @@ def _finish_cost_interval(root, context, prior, elapsed):
     return total
 
 
+def _resume_trajectory(recipe, context, options):
+    """Chunk retention is explicit recipe/policy, never an experiment-name lookup."""
+    if not recipe.resume_chunks and mode_policy(recipe.family, recipe.mode).segment_passes is None:
+        return None
+    if options.get("prospective_root") is None:
+        raise ValueError("Resume chunks require the verified staged prospective root")
+    return _artifact_path(Path(options["prospective_root"]),
+        "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
+
+
 def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **options):
     """Same callable for every scale/platform; same-budget resume only."""
     import torch
@@ -654,13 +664,9 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
     record, recipe, data, tuning, context, provenance, _ = _bootstrap(cost_root=root, **options)
     certificate = _verify_preflight(preflight_dir or output, recipe, provenance,
         profiling_required="profiling" in record)
-    from .k1_infrastructure_comparison import is_comparison
-    from .gptrans_infrastructure_comparison import is_comparison as is_gptrans_comparison
     outputs = SessionOutputs(root, context, contract=options["recipe_path"], adapter=PROFILES[recipe.family],
         trajectory_id=options["trajectory_id"], train_role_identity=record["train_role_identity"],
-        resume_trajectory=(_artifact_path(Path(options["prospective_root"]),
-            "prospective/" + context.arm_id + "/trajectory.json").read_bytes()
-            if mode_policy(recipe.family, recipe.mode).segment_passes is not None or is_comparison(options["spec"]) or is_gptrans_comparison(options["spec"]) else None))
+        resume_trajectory=_resume_trajectory(recipe, context, options))
     had_checkpoint = (root / "last_checkpoint.pt").is_file()
     interval = _json(_artifact_path(root, "invocation_cost_state.json"))
     _check_context(interval["context"], context)

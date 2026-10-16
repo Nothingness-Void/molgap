@@ -65,6 +65,12 @@ def test_cpu_scalar_checks_are_batched_by_dtype_without_precision_conversion(mon
     assert state["good32"].grad is None
 
 
+def test_alias_keys_and_metadata_keep_the_mapping_api_order():
+    bad = torch.tensor(float("nan"))
+    assert nonfinite_tensor_keys({"metadata": "fixture", "first": bad,
+                                  "good": torch.tensor(1.), "alias": bad}) == ["first", "alias"]
+
+
 def test_heterogeneous_finite_state_and_bytes_remain_unchanged(tmp_path):
     state = {"model": {"w": torch.randn(3, requires_grad=True)}, "optimizer": {"step": torch.tensor(4.)},
         "cursor": {"metrics": [torch.tensor(0., dtype=torch.float64), torch.tensor(2.)]},

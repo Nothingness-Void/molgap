@@ -103,7 +103,7 @@ def _install_family(repo, monkeypatch):
         else:
             shutil.copyfile(ROOT / relative, target)
     # A fresh process must see the reviewed registrations from packaged bytes.
-    spec_path = repo / "src/molgap/experiment_spec.py"
+    spec_path = repo / "src/molgap/experiment_catalog.py"
     with spec_path.open("a", encoding="utf-8") as handle:
         handle.write(f"\nFAMILIES = MappingProxyType({{**FAMILIES, {FAMILY!r}: {contract!r}}})\n")
         handle.write(f"ADDONS = MappingProxyType({{**ADDONS, ('synthetic_shift', '1'): {addon_contract!r}}})\n")

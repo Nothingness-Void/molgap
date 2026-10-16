@@ -186,8 +186,9 @@ def test_explicit_account_client_ignores_global_oauth_without_environment_change
     before = dict(os.environ)
     clients = []
     class Api:
-        def _load_config(self, value):
-            self.config = value
+        config_values = {"username": "global-account", "token": "global-oauth"}
+        def _load_config(self):
+            raise AssertionError("Explicit credentials must not load global config")
     def client(**kwargs):
         value = NS(credentials=kwargs, _http_client=NS(_session=NS(auth="global-oauth"), _signed_in=False))
         clients.append(value)
@@ -201,6 +202,8 @@ def test_explicit_account_client_ignores_global_oauth_without_environment_change
     key = tmp_path / "synthetic-key.json"
     key.write_text(json.dumps({"username": "requested", "key": "synthetic-not-a-real-key"}))
     api = kaggle.api_for_credentials(key)
+    assert api.config_values == {"username": "requested", "key": "synthetic-not-a-real-key"}
+    assert Api.config_values == {"username": "global-account", "token": "global-oauth"}
     for _ in range(2):
         c = api.build_kaggle_client()
         c._http_client._try_fill_auth()
