@@ -2,6 +2,41 @@
   "format": "molgap-modern2d-cpu-acceptance-v1",
   "date_jst": "2026-10-16",
   "scope": "CPU_SYNTHETIC_ONLY",
+  "runtime": {
+    "python": "3.11.15",
+    "os": "Windows-10-10.0.26300-SP0",
+    "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "torch": "2.7.1+cpu",
+    "torch_geometric": "2.6.1",
+    "rdkit": "2026.3.5",
+    "threads": 1,
+    "precision": "FP32",
+    "accelerator_used": false
+  },
+  "navigation_acceptance": {
+    "documentation": {
+      "path": "platforms/_records/local/modern2d_cpu/documentation.xml",
+      "sha256": "ebcabfafc4f7ab3a34595468c9ecf02e434ecb1f69754f93a1a2bc503ad4bfc7",
+      "tests": 35,
+      "failures": 2,
+      "passed": 33,
+      "junit_seconds": 122.743
+    },
+    "documentation_recheck": {
+      "path": "platforms/_records/local/modern2d_cpu/documentation_recheck.xml",
+      "sha256": "28a7df125b1e1b4fb4db44db5626d3265e20c1d24e671573ad08842bef843afd",
+      "tests": 2,
+      "failures": 0,
+      "passed": 2,
+      "junit_seconds": 11.08
+    },
+    "classification": "Initial two line-budget failures corrected by compacting only the new live delta; remaining33 checks passed, both failed checks rechecked and passed",
+    "final_documents_scanned": 930,
+    "final_pointers_checked": 3734,
+    "final_anchors_checked": 28,
+    "final_issues": 0,
+    "current_state_lines": 120
+  },
   "reports": {
     "baseline_916e0d4c": {
       "path": "platforms/_records/local/modern2d_cpu/baseline_916e0d4c.xml",

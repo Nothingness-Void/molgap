@@ -90,3 +90,8 @@ silently repaired; the two new isolated model archives both passed. Whole-repo
 all-green status is therefore NOT claimed. The first baseline attempt's missing
 schema fixture and the incomplete initial monolithic run are retained without
 acceptance credit in the machine report. Native-dependent skips grant no gate.
+
+Navigation/layout checks passed33 with2 initial live-document budget failures;
+compacting the new delta restored the unchanged120-line cap and both checks
+passed on recheck. The final audit covered930documents/3734pointers/28anchors
+with zero issues. No old document limit or history was relaxed to get a pass.
