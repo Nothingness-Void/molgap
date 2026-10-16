@@ -21,8 +21,9 @@ if test "${MOLGAP_VERIFY_EXCEPTIONS:-0}" = 1; then
   EXTRA=(--verify-exceptions --identity-root "$IDENTITY_ROOT" --identity-audit-sha256 "${MOLGAP_IDENTITY_AUDIT_SHA:?explicit audit SHA required}")
   if test "${MOLGAP_EXPLICIT_FALLBACK_H:-0}" = 1; then EXTRA+=(--explicit-fallback-h); fi
 fi
+if test "${MOLGAP_INSPECT_TOPOLOGY:-0}" = 1; then EXTRA=(--inspect-source-topology); fi
 export PYTHONPATH="$STAGE/code/src"
-if test "$IDENTITY_ONLY" = 0 || test "${MOLGAP_VERIFY_EXCEPTIONS:-0}" = 1; then
+if test "$IDENTITY_ONLY" = 0 || test "${MOLGAP_VERIFY_EXCEPTIONS:-0}" = 1 || test "${MOLGAP_INSPECT_TOPOLOGY:-0}" = 1; then
   # Reuse the owning runtime registry, not an installation or training launcher.
   PYTHONPATH="$("$BOUNDARY/molgap/.venv/bin/python" - "$STAGE" "$BOUNDARY" <<'PY'
 import json, os, sys

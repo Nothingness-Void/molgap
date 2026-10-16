@@ -19,11 +19,16 @@ def main():
     parser.add_argument("--identity-root",type=Path)
     parser.add_argument("--identity-audit-sha256")
     parser.add_argument("--explicit-fallback-h",action="store_true")
+    parser.add_argument("--inspect-source-topology",action="store_true")
     args=parser.parse_args()
     if not 1 <= args.workers <= 4:
         parser.error("CPU preparation is limited to four workers")
     try:
-        if args.verify_exceptions:
+        if args.inspect_source_topology:
+            from molgap.pcqm_unified_roles import inspect_unified_source_topology
+            result=inspect_unified_source_topology(boundary=args.boundary,fixed_root=args.fixed_root,
+                output_root=args.output_root,rule=json.loads(args.rule.read_text()))
+        elif args.verify_exceptions:
             if args.identity_root is None or args.identity_audit_sha256 is None:
                 parser.error("Exception proof requires the bound complete identity audit")
             from molgap.pcqm_molecular_identity import audit_exception_graphs

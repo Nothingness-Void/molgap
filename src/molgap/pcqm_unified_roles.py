@@ -259,6 +259,31 @@ def _pin(root, record):
     return path
 
 
+def inspect_unified_source_topology(*, boundary, fixed_root, output_root, rule):
+    """Observe one SHA-pinned train shard's ABI; no role or data acceptance."""
+    import os
+    from .packed_graph_dataset import PackedGraphDataset
+    fixed,output=(_safe(boundary,p) for p in (fixed_root,output_root))
+    if _inside(output,fixed) or _inside(fixed,output):
+        raise ValueError("Separate topology observation output required")
+    for name,key in (("manifest.json","source_manifest_sha256"),("acceptance.json","source_acceptance_sha256")):
+        if sha256_file(fixed/name)!=rule[key]:raise ValueError("Old fixed dataset identity changed")
+    source=json.loads((fixed/'manifest.json').read_text())
+    record=next(r for r in source['store_assets']['topology'] if r.get('role')=='train')
+    shard=PackedGraphDataset(_pin(fixed,record),mmap=True)
+    sample=shard.get(0)
+    report={'status':'SOURCE_TOPOLOGY_OBSERVATION_ONLY','source_file':record['file'],
+        'source_sha256':record['sha256'],'expected_rows':record['source_idx_max']-record['source_idx_min']+1,
+        'observed_rows':len(shard),'packed_fields':sorted(shard._data.keys()),'graph_fields':sorted(sample.keys()),
+        'fields':{k:{'shape':list(v.shape),'dtype':str(v.dtype)} if hasattr(v,'shape') else {'type':type(v).__name__}
+                  for k,v in sample.to_dict().items()},'official_validation_read':False,'test_roles_read':False,
+        'gpu_used':False,'data_role_accepted':False,'graphs_rebuilt':False}
+    output.mkdir(parents=True,exist_ok=True)
+    if os.name!='nt':os.chmod(output,0o700)
+    publish_immutable_bytes(output/'source_topology_observation.json',json_bytes(report))
+    return report
+
+
 def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1, role_inventory=None,
                           fallback_ledger=None, identity_only=False):
     """IMS CPU owner: reuse accepted row/topology bytes, derive role-only chunks.

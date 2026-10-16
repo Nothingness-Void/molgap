@@ -128,3 +128,12 @@ def test_v4_whole_cpu_fixture_with_both_p_rows_and_resume(tmp_path):
     assert prepare_unified_roles(**kwargs)==report
     audit=json.loads((tmp_path/'out/molecular_identity_audit.json').read_text())
     assert audit['known_fallback_rows']==2 and audit['blocked_rows']==0 and audit['rows_skipped_or_replaced']==0
+
+
+def test_source_topology_probe_is_observation_only_and_readonly(tmp_path):
+    from molgap.pcqm_unified_roles import inspect_unified_source_topology
+    fixed,r=source_fixture(tmp_path);before={p.name:sha256_file(p) for p in fixed.iterdir()}
+    result=inspect_unified_source_topology(boundary=tmp_path,fixed_root=fixed,output_root=tmp_path/'probe',rule=r)
+    assert result['observed_rows']==30 and result['expected_rows']==30
+    assert not result['data_role_accepted'] and not result['graphs_rebuilt']
+    assert {p.name:sha256_file(p) for p in fixed.iterdir()}==before
