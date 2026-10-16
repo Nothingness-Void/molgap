@@ -58,3 +58,15 @@ def test_scratch_environment_is_only_applied_to_the_selected_child(tmp_path,capf
     output,_=capfd.readouterr()
     assert Path(output.strip())==scratch
     assert before=={key:os.environ.get(key) for key in before}
+
+
+def test_platform_script_uses_selected_checkout_and_cannot_escape(tmp_path,capfd):
+    root=tmp_path/"checkout";package=root/"src/molgap";package.mkdir(parents=True)
+    (package/"__init__.py").write_text("MARKER='selected-platform-checkout'\n")
+    entry=root/"platforms/local/probe.py";entry.parent.mkdir(parents=True)
+    entry.write_text("from molgap import MARKER\nprint(MARKER)\n")
+    assert launch_local(root,None,script="platforms/local/probe.py")==0
+    assert capfd.readouterr().out.strip()=="selected-platform-checkout"
+    for script in ("../escape.py","src/molgap/__init__.py","platforms/local/probe.py/.."):
+        with pytest.raises(ValueError):launch_local(root,None,script=script)
+    with pytest.raises(ValueError):launch_local(root,"molgap.probe",script="platforms/local/probe.py")
