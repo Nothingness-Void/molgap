@@ -265,7 +265,8 @@ def build_experiment_source_package(
                 committed = {**committed_payloads(root, commit, [n for n in names if n not in generated]),**generated}
                 if any(_payload(_source(root,n)) != committed[n] for n in names):
                     raise ValueError("Repository source payload mismatch before cache lookup")
-                key = canonical_fingerprint({"builder":"v4-source-v1", "commit":commit,
+                # Commit provenance belongs to each package, not to reusable tar bytes.
+                key = canonical_fingerprint({"builder":"v4-source-content-v1",
                     "files":{n:_sha(committed[n]) for n in sorted(names)}})
                 cached = Path(source_cache).absolute() / key
                 _no_links(cached)
@@ -295,10 +296,29 @@ def build_experiment_source_package(
                             # checked again below and by the package verifier.
                 for name in ("source.tar.gz", "SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"):
                     _source(cached, name)
-                archive_hash = (cached / "SOURCE_ARCHIVE_SHA256.txt").read_text().strip()
+                cached_commit = (cached / "SOURCE_COMMIT.txt").read_bytes()
+                if not re.fullmatch(rb"(?:[0-9a-f]{40}|[0-9a-f]{64})\n", cached_commit):
+                    raise ValueError("Invalid cached source commit")
+                inventory = {"format":"molgap-v4-source-inventory-v1",
+                    "source_commit":cached_commit.decode("ascii").removesuffix("\n"),
+                    "files":[{"path":n,"sha256":_sha(committed[n]),"bytes":len(committed[n])}
+                             for n in sorted(names)]}
+                if (cached / "SOURCE_FILES.json").read_bytes() != (json.dumps(inventory, indent=2)+"\n").encode():
+                    raise ValueError("Cached source inventory payload or commit mismatch")
+                cached_hash = (cached / "SOURCE_ARCHIVE_SHA256.txt").read_bytes()
+                if not re.fullmatch(rb"[0-9a-f]{64}\n", cached_hash):
+                    raise ValueError("Invalid cached archive hash")
+                archive_hash = cached_hash.decode("ascii").removesuffix("\n")
                 copy_immutable_file(cached / "source.tar.gz",stage / "source.tar.gz",expected_sha256=archive_hash)
-                for name in ("SOURCE_COMMIT.txt", "SOURCE_ARCHIVE_SHA256.txt", "SOURCE_FILES.json"):
-                    publish_immutable_bytes(stage / name, (cached / name).read_bytes())
+                # Rebind only after checking the cache's original metadata. The
+                # ordinary package verifier below checks every archived payload.
+                inventory["source_commit"] = commit
+                for name, contents in (
+                    ("SOURCE_COMMIT.txt", (commit+"\n").encode()),
+                    ("SOURCE_ARCHIVE_SHA256.txt", cached_hash),
+                    ("SOURCE_FILES.json", (json.dumps(inventory, indent=2)+"\n").encode()),
+                ):
+                    publish_immutable_bytes(stage / name, contents)
                 bundle = {"archive_sha256":archive_hash}
             manifest = _manifest(spec, names, commit, bundle["archive_sha256"],
                 _sha((stage / "SOURCE_FILES.json").read_bytes()),
@@ -308,6 +328,8 @@ def build_experiment_source_package(
             _atomic(stage / "package_manifest.json", _json_bytes(manifest))
             # Recheck commit blobs too: Git clean filters must not conceal changed bytes.
             verify_experiment_source_package(stage, repo_root=root)
+            if _git(root, "rev-parse", "HEAD").decode().strip() != commit:
+                raise ValueError("Source HEAD changed before package publication")
             for name in sorted(SIDECARS - {"package_manifest.json"}):
                 os.replace(stage / name, output / name)
         _atomic(output / "package_manifest.json", _json_bytes(manifest))
