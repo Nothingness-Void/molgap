@@ -30,6 +30,8 @@ and job status belong in `CURRENT_STATE.md`; Track A/B/C ownership belongs in
 | Public inference or registry | `inference.py`, `__init__.py`, and `constants.py` | [production/README.md](production/README.md) |
 | Documentation pointers | `documentation_check.py`; no automatic line-count gate | [verification commands](docs/operations/INFRASTRUCTURE_VERIFICATION.md) |
 | Checkout selection / external new-run storage | `local_runtime.py`, `common/paths.py`, `common/io.py` | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |
+| Bounded local artifact census | `artifact_inventory.py` | Explicit selections only; metadata/size counts never authorize cleanup |
+| Original run-ID lifecycle / measured preparation timings | `experiment_run.py`, `experiment_timings.py`, existing lifecycle owners | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md); local operations only, no inferred scientific verdict |
 | Scientific config compiler / editable references / fixed runtime distribution | `experiment_input.py`, `common/declarations.py`, `experiment_source_inventory.py`, existing Recipe/package/workflow owners | [quickstart](docs/operations/EXPERIMENT_QUICKSTART.md) |
 | Standard substrate slots / addon parameters | `model_substrate.py` and existing Spec/execution registries | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md) |
 | Native Live/Raw/Clean weight actions | `family_training_state.py`; shared kernel owns forward/update | [four-module interface](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md#2-calibrate-and-retain-clean-ema) |

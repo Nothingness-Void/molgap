@@ -1,17 +1,9 @@
 # Modular Experiment Workflow
 
-Use the [infrastructure quickstart](EXPERIMENT_QUICKSTART.md) for the shortest
-new-agent route. This document owns the detailed registry, preparation,
-acceptance, recovery, and allocation-retention contract; it does not authorize
-remote submission.
-
-This is the API contract for the registered local-to-Kaggle training path. It
-owns preparation and acceptance orchestration. It does not own scientific
-authorization, a trainer loop, or platform submission.
-
-For a supported Spec, query `workflow-info` before selecting the preparation
-entry. Registration and local preparation still require the owning scientific
-contract and the platform's actual runtime qualification.
+The [quickstart](EXPERIMENT_QUICKSTART.md) owns the default workflow. This page
+is the preparation, acceptance, recovery and allocation-retention API reference.
+Family trainers own execution; platform adapters own submission/retrieval;
+scientific and native qualifications retain their existing owners.
 
 ## Owners
 
@@ -27,7 +19,8 @@ contract and the platform's actual runtime qualification.
 | Kaggle runtime | `platforms/kaggle/run_experiment.py`; `kaggle_pair_runtime.py` | Verify the frozen launch/package and observed T4 allocation; preflight every arm before spawning any training arm. |
 | Platform operations | `kaggle-molgap-workloads` skill and existing Kaggle adapters | Publish the prepared dataset/kernel, submit, reconcile the exact run/version, and retrieve retained outputs. |
 
-Run `check-workflow` for one read-only readiness check before preparation.
+`prepare-workflow` includes readiness checks. `check-workflow` is available when
+only a read-only result is needed, without staging or publication.
 Prepared bounded T4 releases use the journaled
 [platform submission entry](KAGGLE_WORKFLOW_SUBMISSION.md).
 
@@ -42,102 +35,44 @@ behavior; it is not evidence of real-shard or GPU qualification.
 support. This workflow requires Spec v2 and fails closed unless each arm matches
 the static training registry, its mode, and its output profile.
 
-| Family/version | Reference mode | Registered addon mode(s) | Output profile |
-|---|---|---|---|
-| Existing family/version | Query `catalog` | Query `workflow-info --spec SPEC`; derived, not hand-maintained here | Owning profile stays frozen |
-
-The human-maintained registry is `experiment_catalog.py`; executable adapters
-are derived in `experiment_execution.py`. Output profiles remain in
-`experiment_family_artifacts.py`. New preparation uses the tracked `runtime-v1`
-distribution from `experiment_source_inventory.py`. Legacy selected inventories
-remain compatibility APIs; AST discovery is not required by the new path.
-The family trainer or shared graph owner supplies model/input semantics,
-optimizer, selection and resume behavior. A same-family variant supplies only
-its registered addon set, frozen contract/recipe and config; legacy adapters
-retain their declared single-addon limits, while the generic graph adapter may
-apply multiple approved hooks in registry order. It does not add an
-experiment-specific training loop or launcher. A new graph family registers its
-declarative family contract, `graph_training_adapter` model factory, output
-profile and reviewed source inventory once. A new addon adds its reviewed mode
-or `apply_addon` hook and source path only when it introduces a new dependency.
-Unsupported families, addon versions, modes and platform allocations stop before
-execution. Declaration support alone is not runtime qualification.
+Query `catalog` for the single `experiment_catalog.py` projection and
+`workflow-info --spec SPEC` for the selected execution modes, output profiles
+and preparation entry. Executable adapters are derived in
+`experiment_execution.py`; output profiles live in `experiment_family_artifacts.py`.
+`DECLARATION_ONLY` and `CPU_SYNTHETIC_ONLY` registrations do not release native
+training. Unsupported families, addons, modes and allocations stop before execution.
 
 ## Add an addon
 
-1. Implement the model delta under `src/molgap/` and add an `AddonContract` in
-   `experiment_catalog.py`. Declare configuration with `AddonConfigField` (frozen
-   literals or bounded integers), applicable family versions, source module and
-   zero-initialization contract. Configuration validation uses these fields;
-   it does not require an addon-name branch in the Spec parser.
-2. In that same contract set `execution_modes=((family_version, mode), ...)`.
-   Generic graph/slot addons bind `apply_hook="molgap.<module>:apply_addon"`;
-   policy-bearing modes bind their existing reviewed `policy_hook`. Do not add
-   a duplicate `TrainingAddon` row: adapters derive it. Legacy adapters retain their
-   mode dispatch. Reuse the family's or shared graph owner's recipe, preflight,
-   training, output and resume hooks. A new dependency belongs in that
-   descriptor; do not copy the full source inventory into an experiment.
-3. Add focused checks for configuration, zero initialization, the owning mode
-   and source dependency selection. No lifecycle, package, receipt, closure or
-   platform launcher changes are needed for an existing-family addon.
-
-Use `build_addon_declaration(family, addon, repo_root=..., config=..., version="1")`
-to obtain the validated config and actual source digest. Use
-`build_family_recipe(..., addon=..., addon_version="1")` for the recipe, then
-freeze both in the Spec. `workflow-info --spec SPEC` reports the registered
-execution support and preparation route. A declaration-only arm stays on its
-owning `prepare-release` route; this query does not qualify execution.
-
-Build the family's fixed recipe before freezing the Spec. This helper uses the
-registered family builder; do not copy an old recipe JSON and edit constants.
-The hashes come from the frozen training row and target identities:
-
-```python
-from molgap.experiment_execution import build_family_recipe
-
-recipe = build_family_recipe(
-    ("neural_atom_k1", "2"), addon="k1_joint_aggregation",
-    source_idx_sha256="<frozen-source-index-sha256>",
-    target_sha256="<frozen-target-sha256>",
-)
-```
-
-Write the returned mapping as the canonical recipe file and pin its SHA256 in
-`Spec.arms[].training.recipe`. For a reference arm, pass `addon=None`. The
-helper accepts only registered families/addons and does not read development
-rows. `k1-screen-v1` is the new adapter for `neural_atom_k1/2`; it is separate
-from the retained `k1-v1` output protocol for `neural_atom_k1/1`.
-
-For the current K1 and GPTrans candidate directions, the acceptance plan binds
-the retained family reference by default. Add a baseline training arm only when
-the owning contract explicitly requires reference retraining; neither the
-workflow nor a recipe silently recreates one.
+The [addon ownership API](EXPERIMENT_ADDON_GUIDE.md#addon-ownership) defines
+the single catalog entry, declaration/recipe helpers and focused checks.
+Normal scientific inputs invoke those helpers; manual recipe/Spec construction
+is needed only for an owning API not covered by the compiler. Legacy family
+versions/output profiles keep their original semantics. Reuse an accepted
+reference unless the scientific contract explicitly requires retraining.
 
 ## Prepare once
 
-First follow `AGENTS.md`, `BRANCHES.md`, the owning experiment contract, and
-RML navigation. For a new question, freeze its prospective plan and acceptance
-inputs before diagnostics or training. The exact Spec, prospective and
-acceptance schemas remain with their owners; see [Spec](EXPERIMENT_SPEC.md),
-[prospective planning](EXPERIMENT_PROSPECTIVE_PLANNING.md), and
-[family output acceptance](EXPERIMENT_FAMILY_WORKFLOW.md).
+For the default `--experiment` route, preparation generates or resolves these
+records; see [editable inputs](EXPERIMENT_CLI.md#editable-inputs-and-frozen-records).
+Direct `prepare-workflow` callers supply ordinary UTF-8 JSON with top-level
+`format`, `spec_identity`, `source_profile`, `source_records`, `arms`,
+`acceptance_plan`, `kaggle`. `source_profile: "runtime-v1"` includes tracked
+runtime Python automatically. `source_records` names actual frozen scientific
+records. Scientific compilation additionally binds `generated_records` and
+`configuration_source`; callers do not hand-edit those machine records.
 
-The legacy workflow plan is ordinary UTF-8 JSON with exactly these top-level fields:
-`format`, `spec_identity`, `source_files`, `arms`, `acceptance_plan`, `kaggle`.
-The current static platform registry accepts only the `kaggle` platform key;
-this does not claim that the same entry point supports IMS or SCNet. `source_files`
-adds repository-relative POSIX extras to the reviewed bootstrap and family
-registrations; arm recipe paths are included automatically. Every Spec arm
-appears exactly once. `recipe` is a repository-relative POSIX path pinned by
-that arm's Spec; `initial_state` is an existing local file pinned by the Spec;
-`device` is a distinct integer in the declared device range. `acceptance_plan`
-points to the full pinned family acceptance plan under the repository root.
+Legacy plans replace `source_profile`/`source_records` with `source_files`,
+repository-relative POSIX extras to the registered inventory. Arm recipes are
+included automatically. Keep that schema for frozen legacy packages; new inputs
+do not require manual Python lists or AST discovery.
 
-New editable preparations replace `source_files` with
-`source_profile: "runtime-v1"` and `source_records: [...]`. Records are actual
-recipe/acceptance/prospective/authority references, not hand-written Python
-dependencies; the fixed distribution adds tracked runtime Python automatically.
-The [quickstart](EXPERIMENT_QUICKSTART.md) owns the normal `--experiment` path.
+Every Spec arm appears once. `recipe` is a pinned repository-relative POSIX path;
+`initial_state` is a pinned existing local file; `device` is distinct and within
+the declared range. `acceptance_plan` names the full pinned family plan under
+the repository root. Field contracts remain in [Spec](EXPERIMENT_SPEC.md),
+[prospective planning](EXPERIMENT_PROSPECTIVE_PLANNING.md) and
+[family acceptance](EXPERIMENT_FAMILY_WORKFLOW.md).
 
 The `kaggle` object has exactly `account`, `kernel`, `title`, `datasets`,
 `source_dataset`, and `accelerator`. The kernel must equal the account plus the
@@ -149,12 +84,13 @@ the explicit `NvidiaTeslaT4` allocation only.
 {
   "format": "molgap-experiment-workflow-v1",
   "spec_identity": "<identity returned by validate-spec>",
-  "source_files": ["src/molgap/<explicit-extra-module>.py"],
+  "source_profile": "runtime-v1",
+  "source_records": ["experiments/<question>/authority.json"],
   "arms": [{
     "arm_id": "<Spec arm id>",
     "device": 0,
     "recipe": "experiments/<question>/training_contract.json",
-    "initial_state": "D:/frozen/<arm>-initial-state.pt"
+    "initial_state": "E:/MolGap/artifacts/frozen/<arm>-initial-state.pt"
   }],
   "acceptance_plan": "experiments/<question>/family_acceptance_plan.json",
   "kaggle": {
@@ -185,20 +121,12 @@ before POST. The output contains `package/`, `source_dataset/`, `kernel/`,
 checking, prospective publication and final binding durations. Static family
 recipe and all-arm prospective checks precede packaging and publication.
 
-```powershell
-$repoRoot = (Get-Location).Path
-$python = '.\.venv\Scripts\python.exe'
-& $python -m molgap.experiment_cli validate-spec --spec $spec
-& $python -m molgap.experiment_cli prepare-workflow --spec $spec --repo-root $repoRoot --plan $plan --output $freshOutput
-```
-
-The prepared payload is not a submission. Follow the `kaggle-molgap-workloads`
-skill and the [Kaggle adapter guide](../../platforms/kaggle/README.md) to publish
-the source dataset and kernel. Pass `$freshOutput/release_report.json` to the
-adapter's `--release-report` gate; it rechecks the report immediately before
-POST. The platform skill owns submission and reconciliation of the same remote
-attempt. Preserve its observed account, run reference and version in the
-launch receipt. Do not treat a local receipt or queue response as acceptance.
+The [CLI reference](EXPERIMENT_CLI.md#registered-family-lifecycle) gives direct
+command arguments. Prepared payloads retain the platform's final release report;
+the owning adapter rechecks it before POST and retains the observed account,
+run reference and version. A local receipt or queue response is not acceptance.
+Existing `--prepared` submission remains supported by the
+[platform entry](KAGGLE_WORKFLOW_SUBMISSION.md).
 
 If preparation returns `RECONCILIATION_REQUIRED` or prospective publication
 fails partway, preserve the report and reconcile any published trajectories

@@ -47,8 +47,7 @@ support still needs its recipe/data/reference/runtime qualifications.
   in `experiment_catalog.py`, including typed fields, family versions and
   `execution_modes` plus the reviewed `apply_hook` or `policy_hook` when needed.
   `experiment_execution.py` derives its read-only adapters; do not register the
-  same addon there again. Build source-bound declarations with
-  `build_addon_declaration(...)`.
+  same addon there again. See the [addon API](EXPERIMENT_ADDON_GUIDE.md).
 - New family: declare `FamilyContract.execution` in that same catalog and supply
   the actual model/input ABI and focused checks. Reuse the existing training
   owner. The [graph extension API](GRAPH_SCREEN_EXTENSION.md) applies only to
@@ -64,7 +63,7 @@ Formal releases bind committed source and frozen scientific records. Sandbox
 code may be uncommitted, but is not a formal release. Do not retrain an accepted
 baseline or add seeds to fill an allocation.
 
-## 3. Compile scientific inputs, or reuse an existing declaration
+## 3. Write one scientific input
 
 For shared K1/3 and GPTrans/2, one human JSON supplies the scientific question,
 supported parameter/addon delta, frozen recipe/data/reference inputs, seed 42,
@@ -134,41 +133,15 @@ reader compatibility are preserved. The old baseline Spec is checked against
 its Git blob; the new package's own Spec contains the complete selected data roles.
 Run artifacts, source caches and scratch remain under the external machine roots.
 
-Use the same single platform command in section 4. The supported CPU proof is
+The platform command in section 4 compiles and freezes this input. The supported CPU proof is
 K1 and GPTrans parameter editing/preparation/recovery, not arbitrary recipe
 compilation, new-family admission, native runtime qualification or training.
 Changing an already frozen scientific input cannot overwrite its run/attempt.
 
-For an already authored declaration, the reference-only V1 input remains valid:
-
-The editable front door accepts normal JSON indentation and a final newline:
-
-```json
-{
-  "format": "molgap-experiment-input-v1",
-  "spec_ref": "experiments/question/experiment_spec.json",
-  "workflow_ref": "experiments/question/workflow_plan.json",
-  "machine_profile": "E:/MolGap/machine-profile.json",
-  "authority_ref": "experiments/question/authority.json",
-  "monitor_paths": ["experiments/question/STATUS.md"],
-  "attempt_id": "v1"
-}
-```
-
-These are illustrative references, not approved resources. The referenced Spec
-may also be pretty JSON: freezing publishes the original canonical Spec identity.
-The workflow must match that identity. Existing recipe, data, reference,
-prospective and authority owners still validate applicability. No hypothesis,
-authorization or acceptance is invented. A changed input cannot overwrite the
-same frozen run/attempt.
-
-V1 references existing declarations; the scientific format above compiles the
-bounded supported deltas. Other new declarations retain their existing builders.
-Frozen human/source records must be committed before formal packaging.
-
-```powershell
-& $python platforms/local/run.py --profile $profilePath -- freeze-input --experiment $experiment --repo-root .
-```
+Already authored declarations can use the reference-only V1 input in the
+[CLI compatibility reference](EXPERIMENT_CLI.md#editable-inputs-and-frozen-records).
+Other unsupported deltas retain their owning builders. `freeze-input` is an
+optional freeze-only operation; it is not a separate required preparation step.
 
 ## 4. Prepare through the owning platform entry
 
@@ -187,7 +160,7 @@ an optional development diagnostic, not a default packaging prerequisite.
 Only source archives are cached; Specs, package identities, releases and receipts
 are never borrowed from another run.
 
-Only after separate applicable authorization, append `--credentials ...
+With existing applicable submission authority, append `--credentials ...
 --execute`. That calls the **original** journaled submitter. An uncertain outcome
 requires reconciliation, never a fresh slug or blind retry. Completed preparation
 is reused. Confirmed pre-publication local failures retain every failed byte and
@@ -223,16 +196,45 @@ The run directory locates its frozen inputs, package and operation journal.
 & $python platforms/local/run.py --profile $profilePath -- locate-run --profile $profilePath --repo-root . --run-id $runId --attempt-id $attemptId
 ```
 
-Use the exact returned receipt and actual retrieved artifacts with
-`accept-workflow`; use `build-resume` / `prepare-resume` only for a supported
-incomplete run. These API arguments remain in the
-[CLI reference](EXPERIMENT_CLI.md) and
-[lifecycle contract](REGISTERED_EXPERIMENT_WORKFLOW.md).
+For the family output protocol, the existing
+`platforms/kaggle/retrieve_family_outputs.py` adapter accepts the same run ID,
+profile, attempt and arm plus an independently pinned local/remote manifest and
+an external artifact-root destination. Without `--execute` it validates locally
+without authentication or creating the destination. Explicit credentials and
+`--execute` call the original exact-file transport; unsupported historical
+protocols still use their owning retriever. This is not scientific acceptance.
+
+After the owning platform retrieves the exact attempt, `inspect-output`,
+`accept-workflow`, `build-resume` and `prepare-resume` can resolve their frozen
+Spec/package/receipt from the same run ID. Supply the actual outputs and
+scientific/evidence inputs required by the existing owners:
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath -- accept-workflow --profile $profilePath --repo-root . --run-id $runId --attempt-id $attemptId --outputs $outputs --locations $locations
+```
+
+Acceptance is read-only by default; explicit `--execute` invokes existing
+terminal closure. Missing/uncertain receipt or journal bindings require original
+platform reconciliation. No remote retrieval or scientific verdict is inferred.
+The [CLI reference](EXPERIMENT_CLI.md#local-lifecycle-by-run-id) owns the remaining
+arguments and local path limits; the [recovery contract](REGISTERED_EXPERIMENT_WORKFLOW.md#recover-an-incomplete-workflow)
+retains incomplete-checkpoint and native-runtime restrictions.
 
 Scientific acceptance, complete allocation cost, role review, Replay, 500K/full
 qualification and canonical RML closure are separate decisions. Missing facts
 remain missing, not zero. No 100K score automatically rejects 500K; no old STQS
 or uncalibrated early-stop rule acquires authority from this interface.
+
+Preparation timing observations are retained outside frozen run bytes. Read the
+named run's local samples and existing journal timings with:
+
+```powershell
+& $python platforms/local/run.py --profile $profilePath --module molgap.experiment_timings -- --run-directory $runDirectory
+```
+
+This read-only report does not qualify live latency. Active phase timers exclude
+offline waiting; upload transfer, source-ready wait, end-to-end receipt latency
+and training queue time remain unmeasured without their required observations.
 
 For targeted tests, migration measurements, portable commits and remaining
 work, see the [cumulative reform record](REFORM_MIGRATION.md). Do not run a full

@@ -1,47 +1,88 @@
 # Unified Local Experiment CLI
 
-`catalog` emits the single capability catalog without a Spec. `freeze-input
---experiment FILE --repo-root ROOT` accepts normal JSON references and freezes
-canonical inputs under the configured external run root; it does not prepare
-or submit. See the [quickstart](EXPERIMENT_QUICKSTART.md) for the default path.
-The old `--spec` byte contract below is intentionally unchanged.
-`locate-run --profile PROFILE --repo-root ROOT --run-id ID --attempt-id ID`
-reads the frozen inputs and original package/receipt from the external run root;
-missing receipts remain null. It neither retrieves remote files nor changes RML.
+The [quickstart](EXPERIMENT_QUICKSTART.md) owns the default workflow. This page
+is the command/result and compatibility reference for `molgap.experiment_cli`.
+It provides local identity, preparation and evidence operations; family trainers
+and platform adapters retain training and submission.
 
-New agents: use the [infrastructure quickstart](EXPERIMENT_QUICKSTART.md) to
-choose the family/addon route. This page is the exact command and result
-reference; the CLI remains local preparation and evidence plumbing, never a
-platform submitter.
-
-Run from the selected checkout using its configured project environment:
+Use the selected checkout launcher and its configured project interpreter:
 
 ```powershell
-# Start in the selected MolGap checkout; use its project virtual environment.
-.\.venv\Scripts\python.exe -m molgap.experiment_cli --help
-.\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/gptrans_t_v1.json
-.\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/k1_v1.json
-.\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec docs/operations/examples/edge_state_v1.json
+$python = '.\.venv\Scripts\python.exe'
+& $python platforms/local/run.py --profile $profilePath -- --help
 ```
 
-The module is the unified local entry point for identity, planning, packaging,
-preflight, preparation, inspection, receipts, recovery, and terminal translation.
-Existing scripts remain available as family/platform-specific thin entry points.
-`sandbox` and `source-dependencies` are local gates documented by the
-[four-module interface](MODULAR_EXPERIMENT_RUNTIME.md). `package` accepts either
-`--allowlist` or `--auto-dependencies`; `prepare-family-training` also accepts
-`--auto-dependencies`. Neither flag submits or replaces isolated release checks.
-For new family/platform work, start with the [quickstart](EXPERIMENT_QUICKSTART.md)
-and [addon guide](EXPERIMENT_ADDON_GUIDE.md); this CLI remains shared local
-plumbing, not a trainer or submitter.
-For producer output inspection and guarded terminal closure, see the
-[family workflow](EXPERIMENT_FAMILY_WORKFLOW.md). Its additional local commands
-are `check-acceptance`, `inspect-output`, and `accept-terminal`, retaining the
-existing V5/RML authority and applying only to that output protocol.
+Below, `--spec` templates describe direct APIs, not a second default sequence.
+The [four-module interface](MODULAR_EXPERIMENT_RUNTIME.md) documents `sandbox`
+and optional `source-dependencies`; the [family workflow](EXPERIMENT_FAMILY_WORKFLOW.md)
+documents `check-acceptance`, `inspect-output` and `accept-terminal`.
+
+## Editable inputs and frozen records
+
+`catalog` emits capabilities without a Spec. `freeze-input --experiment FILE
+--repo-root ROOT` freezes inputs only; platform `--experiment` preparation
+already includes this operation. Both scientific and reference-only inputs
+accept ordinary JSON indentation and a final newline. Scientific input fields
+are shown once in the [quickstart](EXPERIMENT_QUICKSTART.md).
+
+For an already authored declaration, reference-only V1 accepts:
+
+```json
+{
+  "format": "molgap-experiment-input-v1",
+  "spec_ref": "experiments/question/experiment_spec.json",
+  "workflow_ref": "experiments/question/workflow_plan.json",
+  "machine_profile": "E:/MolGap/machine-profile.json",
+  "authority_ref": "experiments/question/authority.json",
+  "monitor_paths": ["experiments/question/STATUS.md"],
+  "attempt_id": "v1"
+}
+```
+
+References are illustrative, not approved resources. Freezing canonicalizes the
+referenced Spec, checks its workflow identity and preserves owning applicability
+checks. New scientific inputs compile once; continuation selects and verifies
+the original frozen run before compilation. The
+[quickstart continuation rules](EXPERIMENT_QUICKSTART.md#4-prepare-through-the-owning-platform-entry)
+cover completed package reuse and unpublished original-source recovery.
+Neither format overwrites an existing run with changed input.
+
+`locate-run --profile PROFILE --repo-root ROOT --run-id ID --attempt-id ID`
+reads frozen inputs and original package/receipt locations from the external run
+root; absent receipts remain null. It creates no files, retrieves no remote
+outputs and changes no RML. The original platform `--prepared` entry and direct
+canonical `--spec` APIs remain available.
+
+## Local lifecycle by run ID
+
+Four existing commands accept `--run-id RUN --attempt-id ATTEMPT --profile
+PROFILE --repo-root ROOT` in place of `--spec`, `--package`,
+`--expected-package-identity`, `--receipt` and, for recovery, `--prepared`.
+The adapter resolves and verifies the original frozen inputs/package/receipt;
+explicit frozen-identity overrides reject. `locate-run` remains read-only.
+
+| Command | Caller-supplied local inputs |
+|---|---|
+| `inspect-output` | `--arm`, `--artifact-root`, `--expectations` |
+| `accept-workflow` | `--outputs`, `--locations`; optional `--execute`, `--execution-root` |
+| `build-resume` | `--arm`, `--source-output`, fresh `--output` |
+| `prepare-resume` | `--resume-plan`, fresh `--output` |
+
+These are operations on already retrieved files. No platform download,
+submission or scientific verdict is automated. Missing/unreconciled receipts or
+an existing journal phase other than `BOUND` return `RECONCILIATION_REQUIRED`
+(exit 1) before calling an owner. Changed frozen/package/receipt/journal bindings
+reject. Reconcile the original platform attempt; changing run IDs is no retry.
+
+Inspection can read external local outputs. Acceptance retains the owning
+repository-confined output/evidence paths; the run shortcut does not relocate
+them. Recovery output must be fresh and outside the checkout and original
+inputs/prepared/operations. The existing owner validates checkpoint/native
+semantics and all acceptance gates; owner result/exit meanings are unchanged.
 
 ## Input and Output Contract
 
-Spec, terminal descriptor and launch-response JSON is UTF-8 canonical JSON:
+Direct `--spec`, terminal descriptor and launch-response JSON is UTF-8 canonical JSON:
 sorted keys, compact separators, ASCII escaping, finite numbers, no BOM or
 trailing newline. Family plans/expectations/output maps accept ordinary UTF-8
 JSON objects and retain their owning artifact byte hashes. Duplicate keys and
@@ -70,42 +111,19 @@ source identity. Descriptor references remain confined to `--repo-root` by the
 terminal core. No argument abbreviation, arbitrary worker, callback, dynamic
 import, training shortcut, platform submit command or authority override exists.
 
-## Commands
+## Direct API commands
 
-`check-preparation --spec ... --workflow ... --repo-root ...` is a read-only
-Spec-v2 input/plan check. It validates transport files and actual prospective
-RML semantics without publication, rebuild, tensor loading or model execution.
-It does not qualify runtime or authorize submission. `prepare-release` runs
-this check automatically before publishing any arm; see the standard workflow
-for capability limits and measured local stage timings.
+`prepare-release --spec SPEC --workflow WORKFLOW --repo-root ROOT --output
+FRESH` composes server legacy prospective/package/staging/release checks.
+It includes `check-preparation --spec SPEC --workflow WORKFLOW --repo-root ROOT`,
+which is also available as a read-only input/RML check without publication,
+tensor loading or model execution. See the
+[server compatibility API](EXPERIMENT_WORKFLOW.md) for configuration, retained
+failure reports and reconciliation. Neither operation submits or qualifies runtime.
 
-For GPTrans/EdgeState variant preparation, `prepare-release` composes the
-existing prospective, package, staging and release checks in one local call:
-see [configuration and boundaries](EXPERIMENT_WORKFLOW.md). It accepts
-`--spec`, `--workflow`, `--repo-root`, and fresh `--output`; it does not submit
-a job. Planning/staging failure retains a reconciliation receipt rather than
-silently retrying or authorizing training.
-
-The following templates require caller-owned real inputs and fresh output paths.
-Replace the variables with independently verified identities and authorized
-local paths. They are not an instruction to run an experiment or access a role.
-
-```powershell
-$spec = 'D:\local-inputs\experiment_spec_v2.json'
-$package = 'D:\local-work\source-package'
-$packageIdentity = '<independently-pinned-package-sha256>'
-$shardRoot = 'D:\local-inputs\real-shard'
-$shardManifestSha = '<independently-pinned-manifest-sha256>'
-
-.\.venv\Scripts\python.exe -m molgap.experiment_cli validate-spec --spec $spec
-.\.venv\Scripts\python.exe -m molgap.experiment_cli plan-prospective --spec $spec --repo-root .
-.\.venv\Scripts\python.exe -m molgap.experiment_cli package --spec $spec --repo-root . --output $package --allowlist src/molgap/__init__.py src/molgap/experiment_spec.py
-.\.venv\Scripts\python.exe -m molgap.experiment_cli check-release --spec $spec --package $package --expected-package-identity $packageIdentity --recipe-file arm_id=experiments/question/training_contract.json --initial-state arm_id=D:\local-inputs\family_initial_state.pt --required-module molgap.family_trainer --entry-script D:\local-work\kernel\run.py --input-root D:\local-work\input --output-report D:\local-work\release.json
-.\.venv\Scripts\python.exe -m molgap.experiment_cli preflight --spec $spec --package $package --shard-root $shardRoot --output D:\local-work\preflight-new --expected-package-identity $packageIdentity --expected-shard-manifest-sha256 $shardManifestSha
-.\.venv\Scripts\python.exe -m molgap.experiment_cli run-diagnostic --spec $spec --output D:\local-work\diagnostic-new --device 0 1 --worker adapter_probe
-.\.venv\Scripts\python.exe -m molgap.experiment_cli launch-receipt --spec $spec --package $package --expected-package-identity $packageIdentity --output-dir D:\local-work\receipts
-.\.venv\Scripts\python.exe -m molgap.experiment_cli terminal --spec $spec --descriptor D:\local-inputs\terminal_descriptor.json --repo-root .
-```
+The commands below require independently verified inputs and applicable
+authority. Use `COMMAND --help` for required arguments. New preparation uses
+the fixed runtime distribution; manual source selection is a compatibility API.
 
 - `validate-spec` returns the canonical declaration and its identity. This is
   structural validation, not verification of declared source/data/state bytes.
@@ -116,10 +134,11 @@ $shardManifestSha = '<independently-pinned-manifest-sha256>'
   server-only; desktop-owned records must be planned on the independent desktop
   checkout. It is not a submission or training authorization. See
   the [planning contract](EXPERIMENT_PROSPECTIVE_PLANNING.md).
-- `package` calls `build_experiment_source_package` with exactly the supplied
-  allowlist. Repeat `--allowlist` or provide multiple names. No dependency
-  discovery or automatic file additions occur. The short list above illustrates
-  syntax only; it is not a complete runnable family source package.
+- `package` accepts either `--allowlist` (repeatable explicit POSIX names) or
+  `--auto-dependencies` (registered/AST-selected sources), plus `--spec`,
+  `--repo-root` and fresh `--output`. Explicit lists add no files automatically.
+  `prepare-family-training` also retains `--auto-dependencies`. These selected
+  inventory APIs do not replace default fixed-distribution preparation.
 - `check-release` calls `experiment_preflight.check_release_inputs`. Supply one
   `--recipe-file ARM=PACKAGED_PATH` per arm and `--initial-state ARM=LOCAL_PATH`
   for every pinned initialization. Recipe hashes use the archive's LF-normalized
@@ -147,8 +166,8 @@ $shardManifestSha = '<independently-pinned-manifest-sha256>'
 - `run-diagnostic` calls `run_experiment`. Only `adapter_probe` (default) and
   `construct` are allowed. Neither runs forward, trains or loads state. Construct
   requires random initialization. Device tokens must be unique and match the
-  arm count and declared device count. The example command assumes two arms;
-  use `--device cpu` for a one-arm structural example. Device visibility
+  arm count and declared device count. Use `--device cpu` for a one-arm
+  structural check. Device visibility
   tokens do not certify actual accelerator allocation.
 - `launch-receipt` builds and writes a local receipt in an existing dedicated
   directory. Optional `--response PATH` invokes local reconciliation of a
@@ -165,44 +184,21 @@ $shardManifestSha = '<independently-pinned-manifest-sha256>'
 
 ## Desktop Kaggle GPTrans Paired Route (reference only)
 
-The experiment paths in this subsection belong to `molgap-desktop`, not this
-server checkout. They are context, not server-local runnable examples.
-For a desktop-owned GPTrans two-arm screen, use the owning experiment's contract
-and the [addon handoff sequence](EXPERIMENT_ADDON_GUIDE.md). The submitted
-Kaggle1 paired example belongs to the desktop checkout: its `run_pair.py`
-bootstraps the frozen source and delegates training to the existing
-`run_candidates.py` profile. The shared model implementation is
-`src/molgap/pcqm_gptrans_v4.py` in that checkout. Actual Kaggle
-submission uses `platforms/kaggle/push_kernel_with_accelerator.py`, outside
-this CLI. `launch-receipt` records a local observation; it does not push a
-kernel. This section describes the desktop-owned route for context; it does not
-authorize the server to submit, monitor, or take custody of that work.
+Desktop-owned runs keep their owning checkout, original package, platform
+adapter and recovery semantics. Shared local commands do not authorize server
+submission, monitoring or custody of those jobs. Review portable changes
+against Desktop's own capabilities; server CPU acceptance is not Desktop/native
+qualification.
 
-Before freezing the source commit or publishing prospective trajectories,
-verify the Kaggle dataset metadata and the files the kernel will actually
-see. In the paired example, the staged source directory could not be relied
-on as a mounted directory: `-r skip` omitted it and `-r zip` mounted an
-archive. The frozen entry point therefore opens the explicitly mounted
-`source_payload.bin`. Check slug/title length and archive bootstrap locally
-before publication. Changing that entry point after `plan-prospective` changes
-source identity and requires reconciling the old unsubmitted plan and
-planning again from the new commit.
-
-After a real remote completion, use the existing per-arm acceptance and RML
-pipeline. A two-arm launch yields two replay-ready entries only when each arm
-independently satisfies its V5 artifact, role, cost, trace, and replay gates.
-The paired launch receipt and a queue state do not establish either result.
-For a newly planned pair with explicit `prospective.same_run_replay`, `plan-prospective`
-freezes the peer binding in both trajectories. Terminal execution verifies that
-the observed arms belong to one platform run and closes the reference first.
-Each replay-eligible terminal package must retain `same_run_observation`
-(Spec/logical run, platform run/attempt, source commit/package), matching the
-terminal descriptor and the other arm's accepted terminal input.
-Supply explicit calibrated trace manifests: the reference names its own accepted
-evidence ID and the candidate names that same ID. The candidate also needs a
-strict V5 comparison-readiness record and its verified reference bundle after
-the control arm has been accepted. The synthesized default manifest remains
-replay-ineligible. Older terminal records are not upgraded by this workflow.
+Optional `prospective.same_run_replay` binds both peers before execution;
+closure verifies the actual common platform run and accepts the reference
+first. Each arm still needs its own V5 artifacts, roles, costs, calibrated trace,
+acceptance and matching `same_run_observation`. The candidate requires its
+strict comparison record and verified reference bundle. A synthesized default
+trace manifest remains replay-ineligible. See the
+[prospective contract](EXPERIMENT_PROSPECTIVE_PLANNING.md) and
+[server Replay boundary](EXPERIMENT_WORKFLOW.md#replay-first-release-and-closure).
+Older terminal records are not upgraded.
 
 ## Structural Examples and Limitations
 
@@ -233,21 +229,11 @@ release any of those operations.
 
 ## Local Verification
 
-Use the configured project virtual environment with this checkout's `src` on
-`PYTHONPATH`, not system Python. CLI tests mock construction/preflight workers;
-local package fixtures use temporary local Git repositories. They do not submit
-remotely or train models.
-
-```powershell
-# Start in the selected MolGap checkout.
-$env:PYTHONPATH = (Resolve-Path src).Path
-.\.venv\Scripts\python.exe -m pytest --noconftest tests/test_experiment_cli.py tests/test_experiment_prospective.py -q
-.\.venv\Scripts\python.exe -m pytest --noconftest tests/test_experiment_spec.py tests/test_experiment_package.py tests/test_experiment_launch.py tests/test_experiment_terminal.py -q
-```
-
-These local tests do not confer formal training authorization.
-Server verification scope is retained in
-[shared_experiment_verification.md](shared_experiment_verification.md).
+Delegate focused tests through the policy in `AGENTS.md`, using the selected
+checkout and project interpreter. Local CLI/package fixtures mock platform
+effects and do not establish remote/native qualification. Commands and scope
+are in [infrastructure verification](INFRASTRUCTURE_VERIFICATION.md); retained
+server evidence is in [the integration review](shared_experiment_verification.md).
 
 
 ## Registered family lifecycle

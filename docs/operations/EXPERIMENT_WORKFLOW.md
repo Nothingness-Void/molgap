@@ -1,59 +1,32 @@
-# Standard variant workflow
+# Server variant API compatibility
 
 Compatibility/API reference: new work starts with the
 [quickstart](EXPERIMENT_QUICKSTART.md), one capability catalog and the fixed
 runtime distribution. The retained `prepare-release` APIs below keep their
 scientific and custody boundaries; they are not another default workflow.
 
-Use this for a new GPTrans-T or EdgeState-family variant on server. It composes
-existing components; it does not introduce a trainer, submitter or evidence
-schema. A small scientific change should not require another packager, account
-wrapper, monitor or RML finalizer.
+This page retains the server GPTrans/EdgeState release APIs and strict Replay
+boundary. It does not select new work or upgrade historical family versions.
 
 ## Registered family training workflow
 
-The additive [registered family workflow](REGISTERED_EXPERIMENT_WORKFLOW.md)
-provides `prepare-workflow`, `accept-workflow` and incomplete `build-terminal`
-translation for K1 family/version 2 and retained GPTrans modes on Kaggle T4x2.
-It reuses family trainers and all-arm preflight rather than changing the server
-`prepare-release`/`check-preparation` path below. Existing server author/input
-screens and EdgeState event hooks retain their owning adapters and contracts.
-Registration and local tests do not release a remote run or establish strict
-runtime/scientific qualification.
+Query `catalog` / `workflow-info --spec SPEC` for capabilities. The
+[registered API](REGISTERED_EXPERIMENT_WORKFLOW.md) owns `prepare-workflow`,
+acceptance and recovery. Existing author/input screens and EdgeState event hooks
+retain their adapters; `prepare-release`/`check-preparation` below remain callable.
+Registration and local tests do not release compute or native qualification.
 
 ## What changes per experiment
 
-Keep the addon implementation, reviewed registry entry, executable scientific
-contract, comparison/reference decision, budget, and per-arm prospective plan
-inputs beside the owning question. Freeze their actual identities in Spec v2.
-Plan contents need scientific judgment: do not copy another experiment's
-hypothesis, evidence IDs or authorization. Unchanged frozen references are
-reused, not retrained to fill a device.
-
-Everything else uses the following owners:
-
-| Operation | Reusable entry | Input supplied by the experiment |
-|---|---|---|
-| Read-only preparation check | `experiment_cli check-preparation` | Frozen Spec v2 and workflow; no trajectory publication, tensor loading or platform call |
-| Plan + package + upload layout + release check | `experiment_cli prepare-release` | Spec v2 and release workflow configuration |
-| GPTrans arm arguments | `gptrans_screen_adapter.gptrans_screen_arguments` | Actual source package, fixed cache, initialization, transform and optional accepted sidecar |
-| EdgeState arm context | `edge_state_screen_adapter.bind_edge_state_screen` | Actual package, pinned metadata, accepted runtime, train rows and approved statistics |
-| Remote submit/reconcile/retrieve | Owning platform adapter and workload skill | Account, budget/role authority, staged inputs and returned physical identity |
-| Monitoring | Existing server A/B binding | Exact returned job/version; no new conversation or cron |
-| New-protocol output events, inspection and terminal translation | [Family output workflow](EXPERIMENT_FAMILY_WORKFLOW.md) | One-time owning-trainer hooks, frozen metric/exposure requirements and observed launch receipt |
-| Saved-artifact acceptance | Owning family/experiment acceptance | Actual retrieved artifacts and frozen comparison conditions |
-| RML closure | `experiment_cli terminal --execute` | Independently accepted per-arm terminal descriptor |
-
-Independent acceptance is not replaced by a generic `accepted=true` flag.
-The terminal descriptor delegates to existing RML wiring; roles, costs,
-predictions, traces and reference binding must actually be present. Rebuild and
-validate RML using its existing commands; inspect replay eligibility rather
-than assuming every terminal entry is eligible.
-Supported K1/GPTrans server screens can opt into the shared trainer event hooks;
-use the family guide's exact capability limits. Science/cache/runtime/budget
-approval and platform submission remain explicit owning stages, not CLI side
-effects. Terminal closure can compose the replay-pair check with
-`close_family_replay` without upgrading incomplete records.
+The question owns its scientific delta, comparison/reference, authority and
+prospective inputs. The [addon API](EXPERIMENT_ADDON_GUIDE.md) owns extension
+registration; the [architecture map](../../ARCHITECTURE.md) locates lifecycle
+owners. Reuse unchanged references. The
+[family output API](EXPERIMENT_FAMILY_WORKFLOW.md) owns event hooks, inspection
+and terminal translation; `close_family_replay` composes the existing pair
+check. Actual roles, costs, predictions, traces and accepted reference bindings
+remain required. Server A/B monitors only exact server-owned jobs; shared code
+does not adopt Desktop jobs or release full training/evaluation.
 
 ### Replay-first release and closure
 
@@ -83,12 +56,12 @@ and observed identities. It recomputes the strict assessor and is not a recipe,
 checkpoint, gate or prospective-information replacement. G1/G2's owning wrapper
 is `experiments/pcqm_gptrans_author_alignment/qualify_candidates.py`.
 
-## Local preparation configuration
+## Legacy release configuration
 
-Construct Specs through `ExperimentSpec(payload).write(path)`. This uses the
-shared canonical UTF-8, no-newline, atomic no-overwrite publisher; identical
-retries are allowed, changed declarations require a distinct reviewed identity.
-Never save CLI stdout (with its framing newline) or generic pretty JSON as a Spec.
+Direct legacy callers publish Specs through `ExperimentSpec(payload).write(path)`;
+the [CLI byte contract](EXPERIMENT_CLI.md#input-and-output-contract) applies to
+these frozen machine records. Normal editable inputs use the quickstart's
+automatic freeze path and accept readable JSON.
 For upload inputs, use `UploadArtifact.from_file(path).to_workflow()` when
 freezing the workflow. This computes **file bytes SHA**, distinct from tensor
 state SHA and target-transform semantic identity. Consumption verifies that
@@ -126,7 +99,7 @@ upload directory. Directory caches stay on accepted platform mounts; they are
 not silently included as source or rebuilt on a GPU.
 
 ```powershell
-.venv\Scripts\python.exe -m molgap.experiment_cli prepare-release --spec experiments/question/spec.json --workflow experiments/question/release_workflow.json --repo-root . --output platforms/_records/kaggle/packages/question_attempt_v1
+.venv\Scripts\python.exe platforms/local/run.py --profile $profilePath -- prepare-release --spec $spec --workflow $workflow --repo-root . --output $freshOutput
 ```
 
 After read-only preparation checks, the command publishes per-arm plans through `plan_prospective`, then uses
@@ -139,9 +112,7 @@ No account selection or platform API call occurs in this command.
 Before publication, `prepare-release` automatically executes the same
 read-only checks available independently as:
 
-```powershell
-.venv\Scripts\python.exe -m molgap.experiment_cli check-preparation --spec experiments/question/spec.json --workflow experiments/question/release_workflow.json --repo-root .
-```
+`check-preparation --spec SPEC --workflow WORKFLOW --repo-root ROOT`.
 
 The check validates every arm using the actual RML planner's schema, policy,
 reference, closed-route context, pointer and cost rules without writing plans
@@ -193,14 +164,7 @@ authorizes extra candidates, seeds or protected-role use.
 
 ## Verification boundary
 
-Focused tests use temporary source repositories, small trusted tensors, metadata
-and mocked family dispatch. They do not train, infer, access protected roles,
-publish prospective experiments in this repository, or contact a platform.
-No measured five-minute end-to-end submission claim follows from these tests.
-
-
-## Shared family training
-
-New K1/GPTrans training interfaces use the [shared core](FAMILY_TRAINING_CORE.md).
-Server integration scope and compatibility are recorded in
+Focused CPU fixtures do not establish real-data/native qualification or measured
+submission latency. Shared K1/GPTrans execution uses the
+[training core](FAMILY_TRAINING_CORE.md); compatibility scope is retained in
 [the integration record](SHARED_TRAINING_SERVER_INTEGRATION.md).

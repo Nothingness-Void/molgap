@@ -71,7 +71,11 @@ shared K1/3 and GPTrans/2 optimizer/catalog-addon declarations through existing
 owners; see the reform record for CPU acceptance and limits.
 Scientific-input continuation selects the original frozen run before compilation;
 new HEADs do not upgrade old tasks. Completed packages are independent of development inputs.
-Desktop application, arbitrary recipe compilation and source regrouping remain pending; no new compute
+The [reform follow-up](docs/operations/REFORM_MIGRATION.md#a-g-completion-re-audit-and-bounded-follow-up-2026-10-17)
+extends original-run inspection/acceptance/recovery and the owning Kaggle retrieval
+adapter, bounded artifact census and retained timing observations. Desktop remains
+unapplied; G source regrouping waits for cross-owner acceptance. Live latency and
+arbitrary recipe compilation remain unestablished; no new compute
 or scientific release follows.
 The shared CLI is a local identity, packaging, diagnostic, receipt, preparation,
 inspection, and terminal entry point; it is never a platform submitter.

@@ -9,11 +9,12 @@ owns scientific comparison. These local tools grant no compute or role authority
 | Substrate and addon | [model_substrate.py](../../src/molgap/model_substrate.py), existing Spec/execution registries | Model hooks and parameter ownership; no training loop |
 | Training and state | [shared core](FAMILY_TRAINING_CORE.md), [family_training_state.py](../../src/molgap/family_training_state.py) | Optimizer/EMA order and explicit Live/Raw/Clean actions; no platform submission |
 | Fast local sandbox | [fast_sandbox.py](../../src/molgap/fast_sandbox.py) | One CPU batch and memory roundtrip; no cache, native qualification or scientific result |
-| Source and platform bridge | [source_dependencies.py](../../src/molgap/source_dependencies.py), existing packager and [platforms](../../platforms/README.md) | Reviewed import closure and prepared inputs; platform skills own POST/reconciliation |
+| Source and platform bridge | [experiment_source_inventory.py](../../src/molgap/experiment_source_inventory.py), existing packager and [platforms](../../platforms/README.md) | Fixed tracked runtime distribution; AST closure remains diagnostic; platform skills own POST/reconciliation |
 
 ## 1. Attach a small addon
 
-Keep scientific identity in `AddonContract` and `TrainingAddon`; these remain
+Keep scientific identity in the catalog's `AddonContract`; `TrainingAddon` is
+a derived execution view, not a second registration. These remain
 the single declaration/execution registry. Do not create a competing registry.
 A reviewed generic `apply_addon(model, config)` mounts an independent module
 through `ModelSubstrate`. New slot hooks require no trainer mode branch.

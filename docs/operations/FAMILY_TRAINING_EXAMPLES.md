@@ -29,8 +29,9 @@ contract = build_family_recipe(family, addon="k1_node_scale",
 
 `SlotScale` is the small example in
 [`substrate_scale_addon.py`](../../src/molgap/substrate_scale_addon.py).
-For a new idea, register its `AddonContract` and `TrainingAddon.apply_hook`;
-the hook attaches a module to `ModelSubstrate` and returns the same model.
+For a new idea, declare `AddonContract.apply_hook` and its execution mode once
+in `experiment_catalog.py`; `TrainingAddon` is a read-only derived projection.
+The hook attaches a module to `ModelSubstrate` and returns the same model.
 No trainer, downloader or platform code is needed. Node, aggregate and readout
 examples can be composed in Spec order; frozen replacement modes stay exclusive.
 
