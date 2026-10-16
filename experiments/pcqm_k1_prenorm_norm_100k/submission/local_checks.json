@@ -124,7 +124,21 @@
       "terminal_or_replay_ready_declaration_present": false,
       "note": "Canonical records include the prospective same-run binding; no terminal closure or replay-ready/ready_for_desktop declaration is present."
     },
-    "notes": "The check was run once. No canonical or derived RML files were modified; only this receipt was appended."
+    "notes": "The initial check was run once; the post-commit rerun is recorded below. No canonical or derived RML files were modified; only this receipt was appended.",
+    "post_commit_rerun": {
+      "command": ["python", "-m", "molgap.research_memory", "check", "--frozen", "--portable"],
+      "python": "D:/文档/molgap/.venv/Scripts/python.exe",
+      "working_directory": "D:/w/k1-prenorm-norm-100k",
+      "environment": {
+        "PYTHONPATH": "D:/w/k1-prenorm-norm-100k/src",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1"
+      },
+      "runs": 1,
+      "exit_code": 0,
+      "elapsed_seconds": 21.875,
+      "output": "RML derived outputs are frozen and current; committed evidence closure, runtime, derived outputs, and local artifact claims are complete"
+    }
   },
   "scope_note": "One targeted batch plus a selective rerun of its two failed newly authored test nodes; no full-suite run, remote action, or accelerator execution."
 }
