@@ -87,9 +87,9 @@ decision pointers are in the [historical index](docs/operations/CURRENT_STATE_HI
 
 ## Live boundaries and next actions
 
-Cross-scale/Si/P infrastructure are CPU-accepted; V2 CPU job `1733250.ccpbs1` reuses the complete identity audit from `1732909.ccpbs1` and tests the topology ABI repair.
-The [two-P CPU release](docs/operations/PCQM_UNIFIED_TWO_P_RELEASE.md) owns the frozen source/rule and acceptance scope.
-V2 roles/mirrors remain unaccepted; no Modern2D implementation, model scoring or training is released.
+Cross-scale infrastructure is CPU-accepted; V2 IMS data passed [role acceptance](docs/operations/PCQM_UNIFIED_TWO_P_ACCEPTANCE.md).
+Job `1733250.ccpbs1` exited0 with a retained memory warning; Kaggle mirrors are NOT_PUBLISHED.
+Modern2D CPU integration is unstarted; indexed/family inputs need review, and training/protected scoring remain unauthorized.
 
 - Preserve terminal interpretations and independent qualifications through the
   history index. The accepted 500K bridge does not establish full-scale qualification.

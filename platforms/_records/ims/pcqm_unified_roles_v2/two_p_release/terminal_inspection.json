@@ -1,0 +1,63 @@
+{
+  "status": "TERMINAL_METADATA_AND_CONTENT_BINDINGS_VERIFIED",
+  "job_id": "1733250.ccpbs1",
+  "rule_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+  "acceptance_sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65",
+  "stdout_sha256": "c0c3e832c5456342fd84120ac8bda8eb7123879d7358bf3ffadf4899c644b4dc",
+  "source_and_implementation_pins_verified": true,
+  "roles": {
+    "common_dev": {
+      "rows": 50000,
+      "graph_chunk_views": 47,
+      "manifest_sha_verified": true,
+      "members_unchanged": true,
+      "logical_binding_verified": true
+    },
+    "full_minus_holdout": {
+      "rows": 3275585,
+      "graph_chunk_views": 68,
+      "manifest_sha_verified": true,
+      "members_unchanged": true,
+      "logical_binding_verified": true
+    },
+    "independent_audit": {
+      "rows": 50000,
+      "graph_chunk_views": 47,
+      "manifest_sha_verified": true,
+      "members_unchanged": true,
+      "logical_binding_verified": true
+    },
+    "train_100k": {
+      "rows": 100000,
+      "graph_chunk_views": 2,
+      "manifest_sha_verified": true,
+      "members_unchanged": true,
+      "logical_binding_verified": true
+    },
+    "train_1m": {
+      "rows": 1000000,
+      "graph_chunk_views": 20,
+      "manifest_sha_verified": true,
+      "members_unchanged": true,
+      "logical_binding_verified": true
+    },
+    "train_500k": {
+      "rows": 500000,
+      "graph_chunk_views": 10,
+      "manifest_sha_verified": true,
+      "members_unchanged": true,
+      "logical_binding_verified": true
+    }
+  },
+  "physical_payload_files_present": 162,
+  "durable_source_chunk_receipts": 68,
+  "preparation_role_events_verified": 6,
+  "native_stdout_report_matches_acceptance": true,
+  "memory_warning_retained": true,
+  "acceptance_mtime_ns": 1792137277000000000,
+  "stdout_mtime_ns": 1792137280000000000,
+  "graph_bytes_rehashed_in_this_inspection": false,
+  "independent_graph_content_validation": "COMPLETED_IN_FROZEN_ORIGINAL_JOB_BEFORE_ACCEPTANCE_PUBLICATION",
+  "audit_metrics_computed": false,
+  "gpu_work_submitted": false
+}

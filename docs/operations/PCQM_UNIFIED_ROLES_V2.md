@@ -3,7 +3,9 @@
 This prospective data version reuses IMS accepted official-train rows and
 topology. It does not replace historical fixed datasets, historical model
 identities or V5. Source/role acceptance and platform mirrors are independent.
-See the [acceptance](CROSS_SCALE_V1_HARDENING_ACCEPTANCE.md) for actual status.
+The [hardening acceptance](CROSS_SCALE_V1_HARDENING_ACCEPTANCE.md) and later
+[data acceptance](PCQM_UNIFIED_TWO_P_ACCEPTANCE.md) retain their separate dated
+outcomes; live status is only in `CURRENT_STATE.md`.
 
 ## Frozen selection
 

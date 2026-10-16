@@ -1,6 +1,6 @@
 {
   "format": "molgap-unified-two-p-abi-repair-cpu-launch-v1",
-  "status": "SUBMITTED_PENDING_ACCEPTANCE",
+  "status": "DATA_ROLE_ACCEPTED",
   "job_id": "1733250.ccpbs1",
   "source_commit": "9039ee084ab9ed02e1da2c1a611ed1247e51d2f0",
   "source_archive_sha256": "bced6639edbb7c407402230695cac89b64826c0488333a47f510142564d86589",
@@ -25,7 +25,13 @@
   "requested_cpus": 4,
   "requested_gpus": 0,
   "walltime_ceiling_hours": 2,
-  "whole_allocation_cost": null,
+  "whole_allocation_cost": {
+    "allocated_cpu_core_hours": 4.341111111111111,
+    "native_cpu_points": 4.34111111111111,
+    "gpu_hours": 0,
+    "scope": "BOUND_JOB_1733250_ONLY",
+    "evidence": "scheduler_observation.json"
+  },
   "local_tests": {
     "regression_passed": 235,
     "path_recheck_passed": 35,
@@ -37,12 +43,19 @@
   "retrieved_identity_reuse_sha256": "bd292494721ede863db28c09ed725e3a0ae977d65834b57cb50e2db5691f1234",
   "retrieved_identity_audit_sha256": "a4c0b5c68f125afec1c461d505e83ae1d29d84b684ee2bbd24e9b6ba29649f34",
   "membership_observation": "membership_observation.json",
+  "native_acceptance": "native_acceptance.json",
+  "native_acceptance_sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65",
+  "native_stdout_sha256": "c0c3e832c5456342fd84120ac8bda8eb7123879d7358bf3ffadf4899c644b4dc",
+  "terminal_inspection": "terminal_inspection.json",
+  "native_exit_status": 0,
+  "memory_warning_retained": true,
+  "native_exit_and_data_acceptance_reconciled": true,
   "last_observation": {
     "date_jst": "2026-10-16",
-    "scheduler_status": "RUNNING",
-    "stage": "DERIVED_GRAPH_CHUNKS",
-    "last_source_stop": 400000,
-    "acceptance_published": false,
+    "scheduler_status": "TERMINAL_EXIT_0",
+    "stage": "DATA_ROLE_ACCEPTED",
+    "last_source_stop": 3378606,
+    "acceptance_published": true,
     "failure_published": false
   },
   "documentation_checks": {
@@ -50,6 +63,17 @@
     "failed": 0,
     "junit_sha256": "bb53779c7f881cdb564b05c51dbfa3b4f1d2ddf4ad9bec0f1c70a55620ccd299",
     "counts_overlap_with_regression": true
+  },
+  "terminal_evidence_checks": {
+    "documentation_tests_passed": 9,
+    "documentation_tests_failed": 0,
+    "documentation_junit_sha256": "45ac26e7f520d362ae19bdc776dfe1c5267b15358e152690010b64bc7ebfb366",
+    "counts_overlap_with_prior_documentation_suite": true,
+    "targeted_navigation_and_budget_check_passed": true,
+    "terminal_record_consistency_check_passed": true,
+    "rml_validate_passed": true,
+    "rml_check_frozen_passed": true,
+    "canonical_or_derived_rml_written_by_inspection": false
   },
   "training_submitted": false,
   "model_scoring": false,

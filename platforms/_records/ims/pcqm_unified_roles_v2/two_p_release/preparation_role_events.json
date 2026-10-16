@@ -1,0 +1,85 @@
+{
+  "canonical_research_trajectory_published": false,
+  "events": [
+    {
+      "access_kind": "labels_read",
+      "action_id": "PREPARE-IDENTITY",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "roles/train_100k.json",
+      "role_event_id": "DATA-PCQM-V2-train-100k",
+      "role_name": "train_100k",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "IMS-UNIFIED-V2-CPU",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "DATA-PCQM-UNIFIED-V2-CPU-PREPARATION"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "PREPARE-IDENTITY",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "roles/train_500k.json",
+      "role_event_id": "DATA-PCQM-V2-train-500k",
+      "role_name": "train_500k",
+      "row_manifest_hash": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad",
+      "run_id": "IMS-UNIFIED-V2-CPU",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "DATA-PCQM-UNIFIED-V2-CPU-PREPARATION"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "PREPARE-IDENTITY",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "roles/train_1m.json",
+      "role_event_id": "DATA-PCQM-V2-train-1m",
+      "role_name": "train_1m",
+      "row_manifest_hash": "6f8f1531c1170336132e3a5cf9fde98aa28840393edd4387ab4d7c7e743586fb",
+      "run_id": "IMS-UNIFIED-V2-CPU",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "DATA-PCQM-UNIFIED-V2-CPU-PREPARATION"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "PREPARE-IDENTITY",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "roles/full_minus_holdout.json",
+      "role_event_id": "DATA-PCQM-V2-full-minus-holdout",
+      "role_name": "full_minus_holdout",
+      "row_manifest_hash": "242ed2c5847260ebc3fb8a6433d46d138bb52e7a02ac1a256f18e75d656acb7f",
+      "run_id": "IMS-UNIFIED-V2-CPU",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "DATA-PCQM-UNIFIED-V2-CPU-PREPARATION"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "PREPARE-IDENTITY",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "roles/common_dev.json",
+      "role_event_id": "DATA-PCQM-V2-common-dev",
+      "role_name": "common_dev",
+      "row_manifest_hash": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89",
+      "run_id": "IMS-UNIFIED-V2-CPU",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "DATA-PCQM-UNIFIED-V2-CPU-PREPARATION"
+    },
+    {
+      "access_kind": "labels_read",
+      "action_id": "PREPARE-IDENTITY",
+      "dataset_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "evidence_ref": "roles/independent_audit.json",
+      "role_event_id": "DATA-PCQM-V2-independent-audit",
+      "role_name": "independent_audit",
+      "row_manifest_hash": "fe3b08e4a34d965e121c1636c191ac24a09ab7e38f0e901887c32e552dc97bcd",
+      "run_id": "IMS-UNIFIED-V2-CPU",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "DATA-PCQM-UNIFIED-V2-CPU-PREPARATION"
+    }
+  ],
+  "metrics_computed": false,
+  "purpose": "CPU identity/content validation only"
+}

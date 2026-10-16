@@ -1,0 +1,73 @@
+{
+  "audit_label_statistics_exposed": false,
+  "checks": {
+    "cross_role_exact_molecule_intersection": 0,
+    "development_audit_intersection": 0,
+    "nested": true,
+    "old_full_independent_audit_applicability": "NOT_APPLICABLE_ALREADY_TRAINED_ON_ROWS",
+    "train_audit_intersection": 0,
+    "train_development_intersection": 0
+  },
+  "format": "molgap-pcqm4mv2-unified-roles-v2-acceptance",
+  "gpu_used": false,
+  "graphs_rebuilt": false,
+  "mirrors": {
+    "kaggle1": "NOT_PUBLISHED",
+    "kaggle2": "NOT_PUBLISHED"
+  },
+  "molecular_identity_audit_sha256": "a4c0b5c68f125afec1c461d505e83ae1d29d84b684ee2bbd24e9b6ba29649f34",
+  "official_validation_read": false,
+  "parent_cpu_seconds": 2249.566082493,
+  "preparation_role_events_sha256": "1d939d7d490f7fd74e8b4fd7b42568ada6a767d15c440c2c5b17a296a41bd97c",
+  "preparation_wall_seconds": 2323.4180450928397,
+  "roles": {
+    "common_dev": {
+      "logical_content_sha256": "868a20257aa86547bb8647e5aa1d60cbd377ebdbcaccefb88320649e7a5dde94",
+      "path": "roles/common_dev.json",
+      "rows": 50000,
+      "sha256": "7e5d398a8a2d25558e3a7686268cad81642918d8e9f6a5192bca62205a77a39a",
+      "source_index_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89"
+    },
+    "full_minus_holdout": {
+      "logical_content_sha256": "8553bb8727927ee87f1c4a99477980d6630f8291ebd76e5de3fc67ee3296133a",
+      "path": "roles/full_minus_holdout.json",
+      "rows": 3275585,
+      "sha256": "209507353dfb8f48fda685e563e92d90d92998b6c02bec4b737b426031fd2aa3",
+      "source_index_sha256": "242ed2c5847260ebc3fb8a6433d46d138bb52e7a02ac1a256f18e75d656acb7f"
+    },
+    "independent_audit": {
+      "logical_content_sha256": "00a7fcbe76386eea106d252ccc2f4f6bd931ff975bdea7451dc7711f9e1cb082",
+      "path": "roles/independent_audit.json",
+      "rows": 50000,
+      "sha256": "d1fd57cb8c63dc9b16bef2880d6feec3b35d8fb01b0e5c11797b75b4488064b4",
+      "source_index_sha256": "fe3b08e4a34d965e121c1636c191ac24a09ab7e38f0e901887c32e552dc97bcd"
+    },
+    "train_100k": {
+      "logical_content_sha256": "34955f5ef782ca44fee5c833df3e74957a51dad3d8f4889116aa02d1d59b0251",
+      "path": "roles/train_100k.json",
+      "rows": 100000,
+      "sha256": "c722bea060d2450b9c79430374d817c167d98776c496e01fa9a7020af1fee030",
+      "source_index_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e"
+    },
+    "train_1m": {
+      "logical_content_sha256": "22ebf6d3fff63aa30dc46585c07a43d9be24481cf956c37e481038f6f19e303f",
+      "path": "roles/train_1m.json",
+      "rows": 1000000,
+      "sha256": "4d8e975bfbac1f92184d61bbf7265ae5b8c21a9cf8dfc2df8294a97e43a41ced",
+      "source_index_sha256": "6f8f1531c1170336132e3a5cf9fde98aa28840393edd4387ab4d7c7e743586fb"
+    },
+    "train_500k": {
+      "logical_content_sha256": "a5a952bfcdb32df01c362aef688b877e903ac26b5d0b35d77d767c7f7811edbf",
+      "path": "roles/train_500k.json",
+      "rows": 500000,
+      "sha256": "591fd14c3c01a9fc085b633003de676496b184a0d3557402ec1ac07521b7a72f",
+      "source_index_sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad"
+    }
+  },
+  "rule_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+  "scope": "OFFICIAL_TRAIN_CPU_PREPARATION_ONLY",
+  "status": "DATA_ROLE_ACCEPTED",
+  "test_roles_read": false,
+  "training_authority": "NOT_AUTHORIZED_FOR_SCIENTIFIC_TRAINING",
+  "whole_allocation_cpu_hours": null
+}
