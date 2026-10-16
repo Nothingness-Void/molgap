@@ -19,6 +19,8 @@ from .research_memory.trace import file_digest
 
 COMPAT_MOLECULE_RULE = "rdkit-canonical-isomeric-smiles-clear-atom-maps-known-ogb-si-v2"
 EXPLICIT_H_MOLECULE_RULE = "rdkit-canonical-isomeric-smiles-clear-atom-maps-known-ogb-si-explicit-h-v3"
+TWO_P_MOLECULE_RULE = "rdkit-canonical-isomeric-smiles-clear-atom-maps-known-ogb-si-two-p-explicit-h-v4"
+AUTHORIZED_P_SOURCE_INDICES = (2539039, 2980839)
 
 
 def _key(mol, *, explicit_hydrogens=False):
@@ -28,7 +30,7 @@ def _key(mol, *, explicit_hydrogens=False):
     return Chem.MolToSmiles(mol, canonical=True, isomericSmiles=True, allHsExplicit=explicit_hydrogens)
 
 
-def _silicon_fallback(smiles):
+def _valence_fallback(smiles, *, allow_phosphorus=False):
     from rdkit import Chem
     mol = Chem.MolFromSmiles(smiles, sanitize=False)
     if mol is None:
@@ -36,7 +38,7 @@ def _silicon_fallback(smiles):
     problems = Chem.DetectChemistryProblems(mol)
     if not problems or any(
         p.GetType() != "AtomValenceException" or
-        mol.GetAtomWithIdx(p.GetAtomIdx()).GetAtomicNum() != 14
+        mol.GetAtomWithIdx(p.GetAtomIdx()).GetAtomicNum() not in ({14,15} if allow_phosphorus else {14})
         for p in problems
     ):
         raise ValueError("not exclusively a known-class Si valence exception")
@@ -45,7 +47,11 @@ def _silicon_fallback(smiles):
     return mol
 
 
-def load_fallback_keys(path, expected_sha256, *, explicit_hydrogens=False):
+def _silicon_fallback(smiles):
+    return _valence_fallback(smiles)
+
+
+def load_fallback_keys(path, expected_sha256, *, explicit_hydrogens=False, allow_phosphorus=False):
     """Pin the old audit or an independently graph-verified same-class ledger."""
     path = Path(path)
     if file_digest(path) != expected_sha256:
@@ -53,7 +59,10 @@ def load_fallback_keys(path, expected_sha256, *, explicit_hydrogens=False):
     ledger = json.loads(path.read_text(encoding="utf-8"))
     entries = ledger["entries"]
     indices = [e["source_idx"] for e in entries]
-    if ledger.get("format") == "molgap-pcqm-unified-accepted-si-ledger-v1":
+    two_p = ledger.get("format") == "molgap-pcqm-unified-accepted-si-two-p-ledger-v1"
+    if two_p is not allow_phosphorus:
+        raise ValueError("ROLE_BLOCKED: phosphorus ledger requires its separately authorized rule")
+    if ledger.get("format") == "molgap-pcqm-unified-accepted-si-ledger-v1" or two_p:
         proof_path = path.with_name("exception_graph_audit.json")
         if file_digest(proof_path) != ledger["graph_proof_sha256"]:
             raise ValueError("ROLE_BLOCKED: exception graph proof SHA differs")
@@ -63,14 +72,37 @@ def load_fallback_keys(path, expected_sha256, *, explicit_hydrogens=False):
                     entry.get("identity_stable") is not True or
                     entry.get("feature_matches") != {"x":True,"edge_index":True,"edge_attr":True}):
                 raise ValueError("ROLE_BLOCKED: incomplete graph/identity proof")
+        if two_p:
+            authorization_path=path.with_name("phosphorus_authorization.json")
+            if file_digest(authorization_path)!=ledger.get("phosphorus_authorization_sha256"):
+                raise ValueError("ROLE_BLOCKED: phosphorus authority SHA differs")
+            authorization=json.loads(authorization_path.read_text(encoding="utf-8"))
+            if (authorization.get("scope")!="EXACT_TWO_GRAPH_VERIFIED_P_STRUCTURES_CPU_PREPARATION_ONLY" or
+                    authorization.get("source_indices")!=list(AUTHORIZED_P_SOURCE_INDICES) or
+                    authorization.get("graph_proof_sha256")!=ledger["graph_proof_sha256"] or
+                    authorization.get("user_approved") is not True or not explicit_hydrogens):
+                raise ValueError("ROLE_BLOCKED: phosphorus scope exceeds exact human authority")
+            p_entries=[e for e in proof["entries"] if e["source_idx"] in AUTHORIZED_P_SOURCE_INDICES]
+            if [e["source_idx"] for e in p_entries]!=list(AUTHORIZED_P_SOURCE_INDICES):
+                raise ValueError("ROLE_BLOCKED: missing exact phosphorus evidence")
+            from rdkit import Chem
+            for entry in p_entries:
+                if entry.get("identity_stable") is not True or entry.get("feature_matches")!={"x":True,"edge_index":True,"edge_attr":True}:
+                    raise ValueError("ROLE_BLOCKED: incomplete phosphorus graph/identity proof")
+                mol=_valence_fallback(entry["smiles"],allow_phosphorus=True)
+                problems=Chem.DetectChemistryProblems(mol)
+                if any(mol.GetAtomWithIdx(p.GetAtomIdx()).GetAtomicNum()!=15 for p in problems):
+                    raise ValueError("ROLE_BLOCKED: authorized phosphorus row has different chemistry")
+                if _key(mol,explicit_hydrogens=True)!=entry.get("canonical_smiles"):
+                    raise ValueError("ROLE_BLOCKED: phosphorus canonical proof changed")
         verified = [{k:e[k] for k in ("source_idx","smiles")} for e in proof["entries"]
-                    if e.get("accepted_si_identity") is True]
+                    if e.get("accepted_si_identity") is True or (two_p and e["source_idx"] in AUTHORIZED_P_SOURCE_INDICES)]
         if (not entries or entries != verified or indices != sorted(set(indices)) or
                 ledger.get("all_hydrogens_explicit",False) is not explicit_hydrogens or
                 any(proof.get(k) != ledger.get(k) for k in
                     ("source_manifest_sha256","source_acceptance_sha256","identity_audit_sha256","all_hydrogens_explicit"))):
             raise ValueError("ROLE_BLOCKED: expanded Si ledger differs from verified evidence")
-        return frozenset(_key(_silicon_fallback(e["smiles"]),explicit_hydrogens=explicit_hydrogens) for e in entries)
+        return frozenset(_key(_valence_fallback(e["smiles"],allow_phosphorus=two_p),explicit_hydrogens=explicit_hydrogens) for e in entries)
     if (ledger.get("format") != "molgap-pcqm-k1-scale500k-parser-fallback-audit-v1" or
             tuple(indices) != UNSANITIZED_OGB_SOURCE_INDICES or
             index_sha256(indices) != UNSANITIZED_OGB_INDEX_SHA256 or
@@ -79,7 +111,7 @@ def load_fallback_keys(path, expected_sha256, *, explicit_hydrogens=False):
     return frozenset(_key(_silicon_fallback(e["smiles"]),explicit_hydrogens=explicit_hydrogens) for e in entries)
 
 
-def molecular_identity(smiles, *, fallback_keys, explicit_hydrogens=False):
+def molecular_identity(smiles, *, fallback_keys, explicit_hydrogens=False, allow_phosphorus=False):
     """Return (canonical key, anomaly evidence); no fallback flag in the key.
 
     Known graph-isomorphic aliases are covered too: restricting by source index
@@ -93,11 +125,11 @@ def molecular_identity(smiles, *, fallback_keys, explicit_hydrogens=False):
     evidence = {"smiles_sha256": hashlib.sha256(smiles.encode()).hexdigest(),
                 "status": "BLOCKED", "canonical_sha256": None}
     try:
-        mol = _silicon_fallback(smiles)
+        mol = _valence_fallback(smiles,allow_phosphorus=allow_phosphorus)
         key = _key(mol,explicit_hydrogens=explicit_hydrogens)
         evidence["canonical_sha256"] = hashlib.sha256(key.encode()).hexdigest()
         if key not in fallback_keys:
-            raise ValueError("Si structure absent from the frozen accepted ledger")
+            raise ValueError("Si/P structure absent from the frozen accepted ledger" if allow_phosphorus else "Si structure absent from the frozen accepted ledger")
         # A second ordering and a serialization round trip must retain identity.
         reordered = Chem.RenumberAtoms(mol, list(reversed(range(mol.GetNumAtoms()))))
         round_trip = Chem.MolFromSmiles(key, sanitize=False)
@@ -110,7 +142,7 @@ def molecular_identity(smiles, *, fallback_keys, explicit_hydrogens=False):
                 (mol.GetNumAtoms(), mol.GetNumBonds()) or
                 sum(a.GetTotalNumHs() for a in round_trip.GetAtoms()) != sum(a.GetTotalNumHs() for a in mol.GetAtoms())):
             raise ValueError("unstable fallback molecular identity")
-        evidence.update(status="KNOWN_FALLBACK", reason="accepted OGB Si topology; no chemistry edits")
+        evidence.update(status="KNOWN_FALLBACK", reason="accepted OGB Si/P topology; no chemistry edits" if allow_phosphorus else "accepted OGB Si topology; no chemistry edits")
         return key, evidence
     except ValueError as exc:
         evidence["reason"] = str(exc)
@@ -201,7 +233,7 @@ def audit_exception_graphs(*, boundary, fixed_root, identity_root, output_root, 
                 if raw is None or not problems or any(p.GetType()!="AtomValenceException" for p in problems):
                     raise ValueError("Not a valence-only source exception")
                 mol=raw;mol.UpdatePropertyCache(strict=False)
-                original_key=_key(mol,explicit_hydrogens=rule["molecule_rule"]==EXPLICIT_H_MOLECULE_RULE)
+                original_key=_key(mol,explicit_hydrogens=rule["molecule_rule"] in {EXPLICIT_H_MOLECULE_RULE,TWO_P_MOLECULE_RULE})
                 key=_key(mol,explicit_hydrogens=explicit_hydrogens)
                 if wanted[idx]["canonical_sha256"] is not None and hashlib.sha256(original_key.encode()).hexdigest()!=wanted[idx]["canonical_sha256"]:
                     raise ValueError("Canonical identity differs from the original full audit")

@@ -1,0 +1,765 @@
+{
+  "all_hydrogens_explicit": true,
+  "data_role_accepted": false,
+  "entries": [
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[OH][Si]123[O][Si]1([OH])([O]2)[O]3",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 3 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "O[Si]123O[Si]3(O1)(O2)O",
+      "source_chunk_sha256": "1d6021a62b26d8fbb7b4887866a8d560c877b8f55826b614cc8e57a81d04bded",
+      "source_idx": 51128,
+      "topology_chunk_sha256": "dac3c79e37fdc9b6167407078c8adc30c77c568db07f6eb509178472ced5a1ed"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH2]1[SiH2]2[CH2][SiH2]12",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 2 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "C1[SiH2]2[SiH2]1C2",
+      "source_chunk_sha256": "3fb8a47d008f41d670f166f728603e0bb94d4e60e2e1c587ba57ba54e9485081",
+      "source_idx": 142541,
+      "topology_chunk_sha256": "55fe8184cae90ce6b6c6897ae545f1b0090b19dab992c5e2ec449006770b0b7d"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[Cl][SiH]12[CH2][SiH2]1[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 3 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "Cl[SiH]12C[SiH2]2C1",
+      "source_chunk_sha256": "f3af653752276ad82be07e911e02054e18757863728ad9a0aff0167811b41d12",
+      "source_idx": 155174,
+      "topology_chunk_sha256": "d81ed9ef7c62953b239dfdb9bb55cee110834e71d096e375d9ee742e0b885e19"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[Cl][SiH]12[CH2][SiH]1([Cl])[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 3 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "Cl[SiH]12C[SiH]2(C1)Cl",
+      "source_chunk_sha256": "f3af653752276ad82be07e911e02054e18757863728ad9a0aff0167811b41d12",
+      "source_idx": 155175,
+      "topology_chunk_sha256": "d81ed9ef7c62953b239dfdb9bb55cee110834e71d096e375d9ee742e0b885e19"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[Cl][SiH]12[CH2][Si]1([Cl])([Cl])[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 4 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "Cl[Si]12(Cl)C[SiH]2(C1)Cl",
+      "source_chunk_sha256": "f3af653752276ad82be07e911e02054e18757863728ad9a0aff0167811b41d12",
+      "source_idx": 155176,
+      "topology_chunk_sha256": "d81ed9ef7c62953b239dfdb9bb55cee110834e71d096e375d9ee742e0b885e19"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[cH]1[cH][cH][c]([SiH]23[CH2][SiH]2([c]2[cH][cH][cH][cH][cH]2)[CH2]3)[cH][cH]1",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 6 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 8 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "c1ccc(cc1)[SiH]12C[SiH]2(C1)c1ccccc1",
+      "source_chunk_sha256": "f3af653752276ad82be07e911e02054e18757863728ad9a0aff0167811b41d12",
+      "source_idx": 155180,
+      "topology_chunk_sha256": "d81ed9ef7c62953b239dfdb9bb55cee110834e71d096e375d9ee742e0b885e19"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[Br][SiH]12[CH2][SiH2]1[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 3 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "Br[SiH]12C[SiH2]2C1",
+      "source_chunk_sha256": "f3af653752276ad82be07e911e02054e18757863728ad9a0aff0167811b41d12",
+      "source_idx": 155181,
+      "topology_chunk_sha256": "d81ed9ef7c62953b239dfdb9bb55cee110834e71d096e375d9ee742e0b885e19"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][Si]1234[CH2][Si]156[CH2][Si]517([CH3])[CH2][Si]21([CH2]3)[C]647",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 6, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 3 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 5 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 7 Si, 6, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "C[Si]1234C[Si]564C42[Si]23(C1)[Si]54(C2)(C6)C",
+      "source_chunk_sha256": "f3af653752276ad82be07e911e02054e18757863728ad9a0aff0167811b41d12",
+      "source_idx": 193600,
+      "topology_chunk_sha256": "d81ed9ef7c62953b239dfdb9bb55cee110834e71d096e375d9ee742e0b885e19"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][O][Si]12([CH3])[O][Si]1([CH3])([O][CH3])[O]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 2 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 5 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "CO[Si]12(C)O[Si]2(O1)(C)OC",
+      "source_chunk_sha256": "2c9eee514444381d1739674c58ee2c7467c8a22f056deaf93716f21424bd7114",
+      "source_idx": 411357,
+      "topology_chunk_sha256": "1c00ca8c6c0eb1baf63b06a51bf239652373d38112d57256b1e70913119bf79c"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][C]1([CH3])[Si]2[CH2][Si]21([CH3])[CH3]",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 4 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "CC1(C)[Si]2[Si]1(C2)(C)C",
+      "source_chunk_sha256": "be29198cf8925a034e2c3f5dc52b5cb228687e566896a10f0e626cca42176567",
+      "source_idx": 505556,
+      "topology_chunk_sha256": "3879dc27106034c27c893bac7d182d54fbbe93906efb83108e9dac541e0894ae"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][CH2][O][Si]12([CH3])[CH2][Si]1([CH3])([O][CH2][CH3])[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 3 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 6 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "CCO[Si]12(C)C[Si]2(C1)(C)OCC",
+      "source_chunk_sha256": "314bd7a5e74568823317c7f32a1ea9e0cf40296d4de87e4d5790de5972a6ea52",
+      "source_idx": 1756391,
+      "topology_chunk_sha256": "3cb283dc6a63d81f75c07699b0d98caa46bd4f641c2c73fd56ece256713c0812"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][CH]1[Si]2([Cl])([Cl])[CH2][Si]12([Cl])[Cl]",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 2 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 3 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "CC1[Si]2([Si]1(C2)(Cl)Cl)(Cl)Cl",
+      "source_chunk_sha256": "314bd7a5e74568823317c7f32a1ea9e0cf40296d4de87e4d5790de5972a6ea52",
+      "source_idx": 1756392,
+      "topology_chunk_sha256": "3cb283dc6a63d81f75c07699b0d98caa46bd4f641c2c73fd56ece256713c0812"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[cH]1[cH][cH][c]([Si]23([c]4[cH][cH][cH][cH][cH]4)[CH2][Si]2[CH2]3)[cH][cH]1",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 6 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "c1ccc(cc1)[Si]12(C[Si]2C1)c1ccccc1",
+      "source_chunk_sha256": "c50708ed16ca254bb96f642ea57bd6fe8aec2fc13e96afd99d9b693de660ac4d",
+      "source_idx": 2064546,
+      "topology_chunk_sha256": "ecda8f3e72a2b58bc8ad0bd94b3700bb93daf73b5b58377c8641f12fcc769438"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][O][Si]1([O][CH3])([O][CH3])[N]([CH3])[C]([N]([CH3])[CH3])[N]1[CH3]",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 2 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "CO[Si]1(OC)(OC)N(C)[C](N1C)N(C)C",
+      "source_chunk_sha256": "fe98df30405b87fe3d3cbf8ecc9ef807fb653ad9a3cf1c43e54d69fcd0cf22ff",
+      "source_idx": 2100882,
+      "topology_chunk_sha256": "97311e090b47cec9853003d365ec3319b402069ce25c76c7b6e018d51d75f574"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][Si]123[O][Si]1([CH3])([O]2)[O]3",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 3 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "C[Si]123O[Si]3(O1)(O2)C",
+      "source_chunk_sha256": "fe98df30405b87fe3d3cbf8ecc9ef807fb653ad9a3cf1c43e54d69fcd0cf22ff",
+      "source_idx": 2119947,
+      "topology_chunk_sha256": "97311e090b47cec9853003d365ec3319b402069ce25c76c7b6e018d51d75f574"
+    },
+    {
+      "accepted_si_identity": false,
+      "canonical_smiles": "[CH3][N]1[C]([c]2[cH][cH][cH][cH][cH]2)[O][P]1([F])([F])([F])[F]",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 4 P, 6, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "reason": "Non-Si valence exception: separate authority required even with matching graph",
+      "smiles": "CN1[C](O[P]1(F)(F)(F)F)c1ccccc1",
+      "source_chunk_sha256": "252f0f538df42aada2302c5e46001a365b264ff9447a1177ac33e459210859fb",
+      "source_idx": 2539039,
+      "topology_chunk_sha256": "11a93fddef8de4f846bfecba08ce70997477214b384d2baeb10beebd35ec419b"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[O][N]1[O][Si]2([O])([O]1)[O][N]([O])[O]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 3 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "[O]N1O[Si]2(O1)([O])ON(O2)[O]",
+      "source_chunk_sha256": "8c125c45ef6e66dd02e3ff863739e867448c2d5fb7e1ef67234cf315f310d463",
+      "source_idx": 2620153,
+      "topology_chunk_sha256": "704f937342b72b800f0cca440f4d32005a3672c0d35d517c2a4e78690933d59a"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[F][Si]([F])([F])([F])([F])[F]",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 6, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "F[Si](F)(F)(F)(F)F",
+      "source_chunk_sha256": "28dea316b3305a9c697d36d7b83306a9c302feb401f54de99d6e2157a036c4f7",
+      "source_idx": 2661113,
+      "topology_chunk_sha256": "022425f9b822264fa0799a6b95918d6b0b56cc4bcfdb6d7aafe3d255bf45ab55"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][Si]1([CH3])([Cl])[CH2][N]2[C]([Cl])[CH]=[CH][CH]=[C]2[O]1",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 8 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "Cl[C]1C=CC=C2N1C[Si](O2)(C)(C)Cl",
+      "source_chunk_sha256": "28dea316b3305a9c697d36d7b83306a9c302feb401f54de99d6e2157a036c4f7",
+      "source_idx": 2690488,
+      "topology_chunk_sha256": "022425f9b822264fa0799a6b95918d6b0b56cc4bcfdb6d7aafe3d255bf45ab55"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][C]1[CH]=[CH][CH]=[C]2[O][Si]([CH3])([CH3])([Cl])[CH2][N]12",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 8 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "C[C]1C=CC=C2N1C[Si](O2)(C)(C)Cl",
+      "source_chunk_sha256": "28dea316b3305a9c697d36d7b83306a9c302feb401f54de99d6e2157a036c4f7",
+      "source_idx": 2690489,
+      "topology_chunk_sha256": "022425f9b822264fa0799a6b95918d6b0b56cc4bcfdb6d7aafe3d255bf45ab55"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][O][Si]12([CH3])[CH2][Si]1([O][CH3])([O][CH3])[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 2 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 5 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "CO[Si]12(C)C[Si]2(C1)(OC)OC",
+      "source_chunk_sha256": "de6a316d0b62152f566518a328c6c1043bedbd8dcd7edc1af11f39e0ff07f91a",
+      "source_idx": 2885109,
+      "topology_chunk_sha256": "668cba6f27e1f6c5a74967483b7a76220804c7248f65c900c7e82fbbccd49ee7"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][O][Si]12([O][CH3])[CH2][Si]1([O][CH3])([O][CH3])[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 2 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 6 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "CO[Si]12(OC)C[Si]2(C1)(OC)OC",
+      "source_chunk_sha256": "de6a316d0b62152f566518a328c6c1043bedbd8dcd7edc1af11f39e0ff07f91a",
+      "source_idx": 2885110,
+      "topology_chunk_sha256": "668cba6f27e1f6c5a74967483b7a76220804c7248f65c900c7e82fbbccd49ee7"
+    },
+    {
+      "accepted_si_identity": false,
+      "canonical_smiles": "[F][P]([F])([F])([F])([F])[F]",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 P, 6, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "reason": "Non-Si valence exception: separate authority required even with matching graph",
+      "smiles": "F[P](F)(F)(F)(F)F",
+      "source_chunk_sha256": "84eb9c8793bca44081758360ea085dae7b72dff3fe53d341280e3eccba2db347",
+      "source_idx": 2980839,
+      "topology_chunk_sha256": "ba5cb07de08ff6d47371b7715b6e7d3d8f6fc668876d1b44921178006f374146"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[F][Si]12([F])[CH2][Si]1([F])([F])[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 4 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "F[Si]12(F)C[Si]2(C1)(F)F",
+      "source_chunk_sha256": "84eb9c8793bca44081758360ea085dae7b72dff3fe53d341280e3eccba2db347",
+      "source_idx": 2992920,
+      "topology_chunk_sha256": "ba5cb07de08ff6d47371b7715b6e7d3d8f6fc668876d1b44921178006f374146"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][Si]1([CH3])([Cl])[CH2][N]2[CH][CH]=[CH][CH]=[C]2[O]1",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "C[Si]1(C)(Cl)OC2=CC=C[CH]N2C1",
+      "source_chunk_sha256": "a994085080d2bbc5daa3e97d8cc03831b66f630c19c2d22d344ea5ef83d8e9cc",
+      "source_idx": 3003839,
+      "topology_chunk_sha256": "32551f291e2d10dc482e8f82d3955eeee014ca41e3f5a0e94ff454f4417616ed"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][Si]12([CH3])[CH2][Si]1([CH3])([c]1[cH][cH][cH][cH][cH]1)[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 3 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "C[Si]12(C[Si]2(C1)(C)C)c1ccccc1",
+      "source_chunk_sha256": "a994085080d2bbc5daa3e97d8cc03831b66f630c19c2d22d344ea5ef83d8e9cc",
+      "source_idx": 3006497,
+      "topology_chunk_sha256": "32551f291e2d10dc482e8f82d3955eeee014ca41e3f5a0e94ff454f4417616ed"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][Si]12([CH3])[CH2][Si]1[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "C[Si]12(C)C[Si]2C1",
+      "source_chunk_sha256": "9328781b2814f6dc31f536f588b4bab15d57f0c65615389e716e22692b2b1b86",
+      "source_idx": 3096168,
+      "topology_chunk_sha256": "35272cfdb0e338cd9956fccb1ba72b0bdb17b3d1c64cb88f164e71270d36da12"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][Si]12([CH3])[CH2][Si]1([Cl])([Cl])[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 4 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "C[Si]12(C)C[Si]2(C1)(Cl)Cl",
+      "source_chunk_sha256": "0cedfaefad91eb11170173a16c4cd78522c9485a5654d5fe12643c3a42aa2136",
+      "source_idx": 3132431,
+      "topology_chunk_sha256": "c7e06da183f2d00584f249eece5f449d784395b6a9caf741e9b23d60d84a7237"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][Si]12([Cl])[CH2][Si]1([CH3])([Cl])[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 1 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 4 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "C[Si]12(Cl)C[Si]2(C1)(C)Cl",
+      "source_chunk_sha256": "0cedfaefad91eb11170173a16c4cd78522c9485a5654d5fe12643c3a42aa2136",
+      "source_idx": 3132432,
+      "topology_chunk_sha256": "c7e06da183f2d00584f249eece5f449d784395b6a9caf741e9b23d60d84a7237"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[F][c]1[cH][cH][c]([C]2[O][CH2][Si]([F])([F])([F])[O]2)[cH][cH]1",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 10 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "Fc1ccc(cc1)[C]1OC[Si](O1)(F)(F)F",
+      "source_chunk_sha256": "0cedfaefad91eb11170173a16c4cd78522c9485a5654d5fe12643c3a42aa2136",
+      "source_idx": 3143920,
+      "topology_chunk_sha256": "c7e06da183f2d00584f249eece5f449d784395b6a9caf741e9b23d60d84a7237"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][c]1[cH][cH][c]([C]2[O][CH2][Si]([F])([F])([F])[O]2)[cH][cH]1",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 10 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "Cc1ccc(cc1)[C]1OC[Si](O1)(F)(F)F",
+      "source_chunk_sha256": "0cedfaefad91eb11170173a16c4cd78522c9485a5654d5fe12643c3a42aa2136",
+      "source_idx": 3143921,
+      "topology_chunk_sha256": "c7e06da183f2d00584f249eece5f449d784395b6a9caf741e9b23d60d84a7237"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH2]=[CH][Si]12([CH3])[CH2][Si]1([CH3])([CH3])[CH2]2",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 2 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        },
+        {
+          "message": "Explicit valence for atom # 5 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "C=C[Si]12(C)C[Si]2(C1)(C)C",
+      "source_chunk_sha256": "64e5cd109396ecb76febb576640d0baf0a0fdd41cddecb808e52a6f735c5815d",
+      "source_idx": 3208535,
+      "topology_chunk_sha256": "1fab182847ff951d5065c1474d1cce6bac5f95e5235bd0902ef6c0dd5e5d8e51"
+    },
+    {
+      "accepted_si_identity": true,
+      "canonical_smiles": "[CH3][Si]1([CH3])([Cl])[CH2][N]2[CH][C]([Cl])=[CH][CH]=[C]2[O]1",
+      "chemistry_problems": [
+        {
+          "message": "Explicit valence for atom # 8 Si, 5, is greater than permitted",
+          "type": "AtomValenceException"
+        }
+      ],
+      "feature_matches": {
+        "edge_attr": true,
+        "edge_index": true,
+        "x": true
+      },
+      "identity_stable": true,
+      "smiles": "ClC1=CC=C2N([CH]1)C[Si](O2)(C)(C)Cl",
+      "source_chunk_sha256": "8732279ccc48f0b33f689e86b12b483623918e8da05cf3f355559fe9c1a913aa",
+      "source_idx": 3318575,
+      "topology_chunk_sha256": "05b09bb37ad4ea923aa8292e9dcbffba80c78e0eb7254169ec4f163b74f599db"
+    }
+  ],
+  "format": "molgap-pcqm-exception-graph-proof-v1",
+  "gpu_used": false,
+  "graphs_rebuilt": false,
+  "identity_audit_sha256": "ca29528a06f3c53b094907be58d0e8349af3fbafc16565e7a3abf4f0de556732",
+  "official_validation_read": false,
+  "source_acceptance_sha256": "82bdf0d304b5a1b20d120dd25c07ad6c6cf02324bab2b13634ed68ee8c63db0e",
+  "source_labels_modified": false,
+  "source_manifest_sha256": "4ecd1546c5fc898004809a5b7130bd7963a5eb569120dbee95e65f18ed9cc99e",
+  "status": "PARTIAL_SI_PROOF_ONLY",
+  "test_roles_read": false,
+  "unresolved_rows": 2,
+  "verified_si_rows": 31,
+  "verifier_sha256": "0c16852a9252c5d0f645e80f7feaffb2b458542eb430bccbe178ac8f81974a1f"
+}

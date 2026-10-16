@@ -23,7 +23,7 @@ from .cross_scale_plan import digest, exact, number
 from .pcqm_fixed_datasets import sha256_file, _inside
 from .research_memory.paths import repo_local_path
 from .research_memory.trace import atomic_write, json_bytes
-from .pcqm_molecular_identity import COMPAT_MOLECULE_RULE, EXPLICIT_H_MOLECULE_RULE, molecular_identity, load_fallback_keys
+from .pcqm_molecular_identity import COMPAT_MOLECULE_RULE, EXPLICIT_H_MOLECULE_RULE, TWO_P_MOLECULE_RULE, molecular_identity, load_fallback_keys
 
 
 FORMAT = "molgap-pcqm4mv2-unified-roles-v2"
@@ -32,7 +32,8 @@ MOLECULE_RULE = "rdkit-canonical-isomeric-smiles-clear-atom-maps-v1"
 TRAIN_ROLES = ("train_100k", "train_500k", "train_1m", "full_minus_holdout")
 ALL_ROLES = (*TRAIN_ROLES, "common_dev", "independent_audit")
 GRAPH_FIELDS = frozenset({"x", "edge_index", "edge_attr", "random_walk_pe", "source_idx", "y"})
-COMPATIBLE_RULES = {COMPAT_MOLECULE_RULE, EXPLICIT_H_MOLECULE_RULE}
+COMPATIBLE_RULES = {COMPAT_MOLECULE_RULE, EXPLICIT_H_MOLECULE_RULE, TWO_P_MOLECULE_RULE}
+EXPLICIT_H_RULES = {EXPLICIT_H_MOLECULE_RULE, TWO_P_MOLECULE_RULE}
 
 
 def freeze_role_inventory(repo_root):
@@ -124,9 +125,10 @@ def canonical_molecule(smiles):
     return Chem.MolToSmiles(mol, canonical=True, isomericSmiles=True)
 
 
-def _molecule_task(row, *, compatible=False, fallback_keys=(), explicit_hydrogens=False):
+def _molecule_task(row, *, compatible=False, fallback_keys=(), explicit_hydrogens=False, allow_phosphorus=False):
     idx, smiles, target, seed = row
-    key, anomaly = molecular_identity(smiles, fallback_keys=fallback_keys,explicit_hydrogens=explicit_hydrogens) if compatible else (canonical_molecule(smiles), None)
+    key, anomaly = molecular_identity(smiles, fallback_keys=fallback_keys,explicit_hydrogens=explicit_hydrogens,
+                                     allow_phosphorus=allow_phosphorus) if compatible else (canonical_molecule(smiles), None)
     molecule = hashlib.sha256(key.encode()).hexdigest() if key is not None else None
     rank = hashlib.sha256(f"{ALGORITHM}:{seed}:{molecule}".encode()).hexdigest() if molecule is not None else None
     return idx, molecule, rank, target, anomaly
@@ -150,7 +152,8 @@ def inventory_rows(database, rows, rule, *, map_rows=map, fallback_keys=()):
     database.execute("CREATE TABLE IF NOT EXISTS molecular_anomalies (idx INTEGER PRIMARY KEY, evidence TEXT NOT NULL)")
     tasks = ((idx, smiles, target, rule["seed"]) for idx, smiles, target in rows)
     task = partial(_molecule_task, compatible=rule["molecule_rule"] in COMPATIBLE_RULES, fallback_keys=fallback_keys,
-                   explicit_hydrogens=rule["molecule_rule"] == EXPLICIT_H_MOLECULE_RULE)
+                   explicit_hydrogens=rule["molecule_rule"] in EXPLICIT_H_RULES,
+                   allow_phosphorus=rule["molecule_rule"] == TWO_P_MOLECULE_RULE)
     for idx, molecule, rank, target, anomaly in map_rows(task, tasks):
         number(idx, "source index", integer=True)
         if idx >= rule["official_train_rows"]:
@@ -185,7 +188,7 @@ def choose_roles(database, rule):
         raise ValueError("ROLE_BLOCKED: official training membership is incomplete")
     database.execute("CREATE INDEX IF NOT EXISTS molecule_idx ON rows(molecule)")
     needed = rule["common_dev_rows"] + rule["independent_audit_rows"]
-    groups = database.execute("SELECT MIN(idx), molecule, MIN(rank) FROM rows GROUP BY molecule HAVING MAX(excluded)=0 ORDER BY MIN(rank),MIN(idx) LIMIT ?", (needed,)).fetchall()
+    groups = _ranked_molecule_groups(database, rule)
     if len(groups) != needed:
         raise ValueError("ROLE_BLOCKED: insufficient disjoint, unique molecular groups")
     dev = sorted(r[0] for r in groups[:rule["common_dev_rows"]])
@@ -197,6 +200,11 @@ def choose_roles(database, rule):
     roles.update(common_dev=dev, independent_audit=audit, full_minus_holdout=full)
     validate_role_members(database, roles, rule)
     return roles
+
+
+def _ranked_molecule_groups(database, rule):
+    return database.execute("SELECT MIN(idx), molecule, MIN(rank) FROM rows GROUP BY molecule HAVING MAX(excluded)=0 ORDER BY MIN(rank),MIN(idx) LIMIT ?",
+        (rule["common_dev_rows"]+rule["independent_audit_rows"],)).fetchall()
 
 
 def validate_role_members(database, roles, rule):
@@ -217,11 +225,17 @@ def validate_role_members(database, roles, rule):
         if any(sets[role] & sets[t] for t in TRAIN_ROLES) or sets["common_dev"] & sets["independent_audit"]:
             raise ValueError("ROLE_BLOCKED: role intersection")
     molecules = {i: m for i, m in database.execute("SELECT idx,molecule FROM rows")}
+    if len(molecules)!=rule["official_train_rows"] or any(m is None for m in molecules.values()):
+        raise ValueError("ROLE_BLOCKED: incomplete molecular membership")
     dev_m, audit_m = ({molecules[i] for i in roles[r]} for r in ("common_dev", "independent_audit"))
     train_m = {molecules[i] for i in roles["full_minus_holdout"]}
     if (len(dev_m) != len(roles["common_dev"]) or len(audit_m) != len(roles["independent_audit"]) or
             dev_m & audit_m or (dev_m | audit_m) & train_m):
         raise ValueError("ROLE_BLOCKED: exact duplicate molecular leakage")
+    held_molecules=dev_m | audit_m
+    expected_full=[i for i in sorted(molecules) if molecules[i] not in held_molecules]
+    if roles["full_minus_holdout"]!=expected_full:
+        raise ValueError("ROLE_BLOCKED: Full is not the exact held-molecule complement")
     return {"nested": True, "train_development_intersection": 0, "train_audit_intersection": 0,
             "development_audit_intersection": 0, "cross_role_exact_molecule_intersection": 0,
             "old_full_independent_audit_applicability": "NOT_APPLICABLE_ALREADY_TRAINED_ON_ROWS"}
@@ -269,9 +283,10 @@ def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1,
             raise ValueError("ROLE_BLOCKED: frozen fallback ledger required")
         ledger_path = _safe(boundary, fallback_ledger)
         fallback_keys = load_fallback_keys(ledger_path, rule["fallback_ledger_sha256"],
-                                          explicit_hydrogens=rule["molecule_rule"]==EXPLICIT_H_MOLECULE_RULE)
+                                          explicit_hydrogens=rule["molecule_rule"] in EXPLICIT_H_RULES,
+                                          allow_phosphorus=rule["molecule_rule"]==TWO_P_MOLECULE_RULE)
         ledger = json.loads(ledger_path.read_text())
-        if ledger.get("format") == "molgap-pcqm-unified-accepted-si-ledger-v1" and any(
+        if ledger.get("format") in {"molgap-pcqm-unified-accepted-si-ledger-v1","molgap-pcqm-unified-accepted-si-two-p-ledger-v1"} and any(
                 ledger.get(k) != rule[k] for k in ("source_manifest_sha256","source_acceptance_sha256")):
             raise ValueError("ROLE_BLOCKED: Si proof belongs to different source assets")
     if rule["scope"] != "CPU_SYNTHETIC_ONLY" and sha256_file(Path(__file__)) != rule["generator_sha256"]:
@@ -558,7 +573,12 @@ def accept_unified_roles(root, *, rule):
             if decoded != ids:
                 raise ValueError("Non-contiguous row map differs from manifest")
             roles[role] = ids
-        return validate_role_members(db, roles, rule)
+        checks=validate_role_members(db, roles, rule)
+        groups=_ranked_molecule_groups(db,rule)
+        if (roles["common_dev"]!=sorted(g[0] for g in groups[:rule["common_dev_rows"]]) or
+                roles["independent_audit"]!=sorted(g[0] for g in groups[rule["common_dev_rows"]:])):
+            raise ValueError("ROLE_BLOCKED: held-out membership differs from frozen hash ranking")
+        return checks
     finally:
         db.close()
 
