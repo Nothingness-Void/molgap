@@ -1,0 +1,39 @@
+{
+  "context": {
+    "experiment_id": "pcqm-k1-norm-ablation-100k-s42",
+    "logical_run_id": "pcqm-k1-norm-ablation-100k-s42",
+    "arm_id": "k1_ada_rmsnorm",
+    "arm_identity": "c81ce0b63d994617afb3220d7b8f919bd336ce051e80becfbc673a14a4479fc4",
+    "spec_identity": "8f4129600181bda7160bb6b23079fa71072817278208d5cc9ea01386f27fc532",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "1f627236c1f7780e35411e741352504092e145c8",
+    "source_archive_sha256": "e43382c93ade5ad0cae6f4a8ffa6a9dcfe871d02b38c71af486f01b2dbe08e7c",
+    "package_identity": "e71d12b00a30765d5003b42255058d6fcc7668f35352306f07a5577e0d717ba3",
+    "training_recipe_sha256": "e660a9a4573576fd8e5254a8153301618209f1aa933a7ca747d43620b890904f",
+    "platform": "kaggle",
+    "account": "kaseichou",
+    "run_reference": "kaseichou/molgap-k1-norm-ablation-100k-s42",
+    "platform_version": null
+  },
+  "costs": [
+    {
+      "metric": "wall_seconds",
+      "unit": "seconds",
+      "value": 34.12219646099999,
+      "status": "measured",
+      "semantics": "process_wall",
+      "hardware": "Tesla T4",
+      "scope": "native qualification entry through proof publication"
+    },
+    {
+      "metric": "device_seconds",
+      "unit": "seconds",
+      "value": null,
+      "status": "missing",
+      "semantics": "allocated_device",
+      "hardware": "Tesla T4",
+      "reason": "requires platform allocation accounting"
+    }
+  ]
+}

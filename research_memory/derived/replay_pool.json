@@ -11045,6 +11045,22 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated"
+      ],
+      "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_ada_rmsnorm:downstream",
+      "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated"
+      ],
+      "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_single_bn:downstream",
+      "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_single_bn"
+    },
+    {
+      "reasons": [
         "no_compatible_candidate_reference_trace_pair"
       ],
       "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
@@ -11052,5 +11068,5 @@
     }
   ],
   "format": "molgap-rml-replay-pool-v1",
-  "source_digest": "e118b4f458d3a2f16841cdb21bb6a72ca267952510e7b8df387c2fe6b43633f1"
+  "source_digest": "0bde28cd47c0e9d27603713baba360f1d04c6c7b8a4b3cd477bd4becb4a219a0"
 }

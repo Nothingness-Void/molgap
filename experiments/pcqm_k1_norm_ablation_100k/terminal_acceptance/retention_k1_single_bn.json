@@ -1,0 +1,40 @@
+{
+  "kernel": "kaseichou/molgap-k1-norm-ablation-100k-s42",
+  "receipt_version": null,
+  "producer_version": null,
+  "files": [
+    {
+      "path": "training_contract.json",
+      "sha256": "1b395002c4881832b5ba73c5dfe1369517876152a4bc8540177d35903e2c3ca9",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "development_predictions.pt",
+      "sha256": "05a2113f9e736f9994ff6628acad57c0c88c0447409ee86411baf65923c6a2b5",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "last_checkpoint.pt",
+      "sha256": "ba2469e9f7c2848c21c2bd6044977ab785261260e86e3bc8099a82edd17d6bbc",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "selected_model.pt",
+      "sha256": "664bd72f331d49e36b55c405fb7da61820e6235877e652e1c0b363f58f907bb4",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "canonical_trace.json",
+      "sha256": "4eb35f31853cd453a096453c49e62db1c576f1f297801f9c30156f975096bd0e",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "output_manifest.json",
+      "sha256": "9b9273d4de94c25bbb16d30240c1ec34cc2839814479aefe7b0bc813c5e52e6a",
+      "state": "ALREADY_RETAINED"
+    }
+  ],
+  "manifest_sha256": "9b9273d4de94c25bbb16d30240c1ec34cc2839814479aefe7b0bc813c5e52e6a",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": false
+}

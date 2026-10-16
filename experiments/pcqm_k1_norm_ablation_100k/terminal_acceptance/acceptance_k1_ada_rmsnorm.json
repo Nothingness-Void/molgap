@@ -1,0 +1,132 @@
+{
+  "cost_attribution": {
+    "allocation_entry_ref": "experiments/pcqm_k1_norm_ablation_100k/terminal_acceptance/outputs/experiment/allocation_entry_observation.json",
+    "method": "Two observed T4 devices assigned one per arm for entire measured entry interval; each trajectory records one device times interval. Totals sum once to pair allocation, including idle; not busy time or billing.",
+    "pair_allocated_device_hours": 3.1007140944844442,
+    "per_arm_allocated_device_hours": 1.5503570472422221,
+    "per_arm_allocation_cost_ref": "experiments/pcqm_k1_norm_ablation_100k/terminal_acceptance/outputs/experiment/k1_ada_rmsnorm/allocation_costs.json",
+    "per_arm_wall_seconds": 5323.659744557,
+    "pre_entry_and_post_entry_allocation": "unknown",
+    "queue_status": "unknown"
+  },
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-v1",
+      "category": "other",
+      "cost_event_id": "cost-TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-entry-allocation",
+      "evidence_ref": "experiments/pcqm_k1_norm_ablation_100k/terminal_acceptance/acceptance_k1_ada_rmsnorm.json",
+      "hardware": "Tesla_T4",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "measured",
+          "value": 1.5503570472422221
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "measured",
+          "value": 1.4787943734880555
+        }
+      },
+      "platform": "kaggle",
+      "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_ada_rmsnorm:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm"
+    }
+  ],
+  "evidence_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-terminal-20261016",
+  "format": "molgap-terminal-acceptance-metadata-v1",
+  "observed_execution": {
+    "completed_passes": 40,
+    "execution_ref": "experiments/pcqm_k1_norm_ablation_100k/terminal_acceptance/outputs/experiment/k1_ada_rmsnorm/output_manifest.json",
+    "inference_executed": false,
+    "internal_development_gap_mae_eV": 0.1451841760343313,
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720,
+    "selected_pass": 39,
+    "selected_weights": "live",
+    "training_executed": true
+  },
+  "outcome": {
+    "artifact_status": "durable_local_verified",
+    "budget_decision": "closed",
+    "comparison_status": "candidate_falsified",
+    "execution_status": "complete",
+    "full_handoff_status": "not_applicable",
+    "scientific_status": "NEGATIVE_UNDER_CONTRACT",
+    "transfer_status": "not_evaluated"
+  },
+  "role_observation_basis": {
+    "canonical_trace_ref": "experiments/pcqm_k1_norm_ablation_100k/terminal_acceptance/outputs/experiment/k1_ada_rmsnorm/canonical_trace.json",
+    "development_role_identity": "b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+    "role_plan_ref": "experiments/pcqm_k1_norm_ablation_100k/role_plan.json",
+    "scope": "Observed train membership and internal development metrics/selection only; official roles not used.",
+    "train_role_identity": "1055370f70f8a5b4ee4548fcc12f3f27a053e3ae07f8932c009205ee61f12d00",
+    "training_contract_ref": "experiments/pcqm_k1_norm_ablation_100k/terminal_acceptance/outputs/experiment/k1_ada_rmsnorm/training_contract.json"
+  },
+  "role_use": {
+    "development": "consumed",
+    "official_validation": "untouched",
+    "test_challenge": "untouched",
+    "test_dev": "untouched",
+    "train": "consumed"
+  },
+  "roles": [
+    {
+      "access_kind": "training_membership",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_ablation_100k/terminal_acceptance/acceptance_k1_ada_rmsnorm.json",
+      "role_event_id": "role-TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-train",
+      "role_name": "train",
+      "row_manifest_hash": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e",
+      "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_ada_rmsnorm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm"
+    },
+    {
+      "access_kind": "metric_computed",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_ablation_100k/terminal_acceptance/acceptance_k1_ada_rmsnorm.json",
+      "role_event_id": "role-TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-development-metric",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_ada_rmsnorm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": false,
+      "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm"
+    },
+    {
+      "access_kind": "selection_used",
+      "action_id": "A001",
+      "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+      "evidence_ref": "experiments/pcqm_k1_norm_ablation_100k/terminal_acceptance/acceptance_k1_ada_rmsnorm.json",
+      "role_event_id": "role-TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-development-selection",
+      "role_name": "development",
+      "row_manifest_hash": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+      "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_ada_rmsnorm:downstream",
+      "schema": "molgap-role-event-v1",
+      "selection_used": true,
+      "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm"
+    }
+  ],
+  "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_ada_rmsnorm:downstream",
+  "trajectory_decision": {
+    "decision_ref": "experiments/pcqm_k1_norm_ablation_100k/terminal_acceptance/decision.md",
+    "final": true,
+    "next_allowed_actions": [],
+    "outcome": "NEGATIVE_UNDER_CONTRACT",
+    "reopen_conditions": [
+      "Distinct explicitly authorized decision-relevant prospective question; no automatic retry or scale-up."
+    ]
+  }
+}

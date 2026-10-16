@@ -92,6 +92,48 @@
       "artifact_availability": [
         "locally_retained_hash_verified"
       ],
+      "comparison_status": "candidate_falsified",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm-terminal-20261016",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "100k",
+      "source_envelope": "experiments/pcqm_k1_norm_ablation_100k/rml/k1_ada_rmsnorm/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
+      "comparison_status": "context_only",
+      "contract": "MOLGAP-COMMON-V5-FINAL",
+      "native_cost_available": false,
+      "reference_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_single_bn-terminal-20261016",
+      "role_use": {
+        "development": "consumed",
+        "official_validation": "untouched",
+        "test_challenge": "untouched",
+        "test_dev": "untouched",
+        "train": "consumed"
+      },
+      "scientific_scope": "100k",
+      "source_envelope": "experiments/pcqm_k1_norm_ablation_100k/rml/k1_single_bn/rml_finalized/v5_evidence.json",
+      "track": "B",
+      "transfer_status": "not_evaluated",
+      "used_by_trajectory_ids": []
+    },
+    {
+      "artifact_availability": [
+        "locally_retained_hash_verified"
+      ],
       "comparison_status": "matched_state_bytes_execution_only",
       "contract": "MOLGAP-COMMON-V5-FINAL",
       "native_cost_available": false,

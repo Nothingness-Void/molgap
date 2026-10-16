@@ -240,6 +240,22 @@
     },
     {
       "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated"
+      ],
+      "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_ada_rmsnorm:downstream",
+      "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_ada_rmsnorm"
+    },
+    {
+      "reasons": [
+        "canonical_trace_marked_ineligible",
+        "closure_synthesized_manifest_not_prelaunch_calibrated"
+      ],
+      "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_single_bn:downstream",
+      "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_single_bn"
+    },
+    {
+      "reasons": [
         "no_compatible_candidate_reference_trace_pair"
       ],
       "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_v4",
@@ -313,5 +329,5 @@
   "recommended_early_stop": null,
   "slow_starter_count": null,
   "status": "available",
-  "trace_count": 35
+  "trace_count": 37
 }

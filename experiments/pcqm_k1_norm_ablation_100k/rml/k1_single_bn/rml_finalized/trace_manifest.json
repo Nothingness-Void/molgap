@@ -1,0 +1,54 @@
+{
+  "backtest_eligibility": {
+    "eligible": false,
+    "exclusion_reasons": [
+      "closure_synthesized_manifest_not_prelaunch_calibrated"
+    ]
+  },
+  "comparability_identity": {
+    "architecture_identity": "neural_atom_k1",
+    "dataset_identity": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "ema_semantics": "none",
+    "evaluation_role_identity": "internal_development",
+    "lr_schedule_identity": "cosine",
+    "matched_architecture_required": false,
+    "optimizer_identity": "adamw",
+    "precision_identity": "fp32",
+    "row_split_identity": "3270b30071692d712c468fa52fa247d37f0a8e4b5444dc7c913aadb8ca0832c4",
+    "scientific_contract": "experiments/pcqm_k1_norm_ablation_100k/protocol.md",
+    "selection_role_identity": "best_development_metric",
+    "target_transform_identity": "none",
+    "terminal_endpoint_identity": "endpoint_31240",
+    "x_axis_semantics": "optimizer_steps"
+  },
+  "comparison_role": "reference",
+  "contract_ref": "experiments/pcqm_k1_norm_ablation_100k/protocol.md",
+  "evaluation_role_identity": "b22ef6c26d7fe79ea5f1d13f40dc9dca06b0e0cf3846a44fd5bf80495df601ef",
+  "exposure": {
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720
+  },
+  "metric_semantics": "Gap MAE in eV",
+  "model_identity": "neural_atom_k1",
+  "presentation_semantics_ref": "experiments/pcqm_k1_norm_ablation_100k/protocol.md",
+  "reference_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_single_bn-terminal-20261016",
+  "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_single_bn:downstream",
+  "schema": "molgap-trace-manifest-v1",
+  "selection_semantics": "best_development_metric",
+  "terminal_evidence_ref": "experiments/pcqm_k1_norm_ablation_100k/rml/k1_single_bn/rml_finalized/v5_evidence.json",
+  "trace_artifact_ref": "experiments/pcqm_k1_norm_ablation_100k/rml/k1_single_bn/rml_finalized/trace.json",
+  "trace_artifact_sha256": "4eb35f31853cd453a096453c49e62db1c576f1f297801f9c30156f975096bd0e",
+  "trace_fields": {
+    "checkpoint_identity": false,
+    "ema_dev_metric": false,
+    "epoch_or_pass": true,
+    "learning_rate": false,
+    "live_dev_metric": true,
+    "live_train_metric": true,
+    "optimizer_step": true,
+    "sample_presentations": true
+  },
+  "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_single_bn",
+  "weight_semantics": "live",
+  "x_axis": "optimizer_steps"
+}

@@ -1,0 +1,87 @@
+{
+  "status": "MECHANICALLY_VERIFIED",
+  "blockers": [],
+  "context": {
+    "experiment_id": "pcqm-k1-norm-ablation-100k-s42",
+    "logical_run_id": "pcqm-k1-norm-ablation-100k-s42",
+    "arm_id": "k1_ada_rmsnorm",
+    "arm_identity": "c81ce0b63d994617afb3220d7b8f919bd336ce051e80becfbc673a14a4479fc4",
+    "spec_identity": "8f4129600181bda7160bb6b23079fa71072817278208d5cc9ea01386f27fc532",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "1f627236c1f7780e35411e741352504092e145c8",
+    "source_archive_sha256": "e43382c93ade5ad0cae6f4a8ffa6a9dcfe871d02b38c71af486f01b2dbe08e7c",
+    "package_identity": "e71d12b00a30765d5003b42255058d6fcc7668f35352306f07a5577e0d717ba3",
+    "training_recipe_sha256": "e660a9a4573576fd8e5254a8153301618209f1aa933a7ca747d43620b890904f",
+    "platform": "kaggle",
+    "account": "kaseichou",
+    "run_reference": "kaseichou/molgap-k1-norm-ablation-100k-s42",
+    "platform_version": null
+  },
+  "observed": {
+    "target_identity": {
+      "encoding": "little-endian-float32-contiguous-raw-bytes",
+      "manifest": {
+        "path": "experiments/pcqm_k1_slot_width96/reference_binding/target_manifest.json",
+        "sha256": "9c5b2f4a161cc3d6539cfa7bca89da37773276b201d775b1ab88300ac4c9de10"
+      },
+      "acceptance_plan_sha256": "e62931eb25bbf1b4bdbc15fbc939b14d3323904aa135c55705ca1c5f7e374994"
+    },
+    "development_mae_eV": 0.1451841760343313,
+    "progress": {
+      "optimizer_steps": 31240,
+      "sample_presentations": 3998720,
+      "completed_passes": 40,
+      "next_batch": 0,
+      "status": "complete"
+    },
+    "artifacts": {
+      "contract": {
+        "path": "training_contract.json",
+        "sha256": "e660a9a4573576fd8e5254a8153301618209f1aa933a7ca747d43620b890904f"
+      },
+      "predictions": {
+        "path": "development_predictions.pt",
+        "sha256": "31a43e1cd49f146178cd69a1e39a76c0786589415c619f43e89127761c453343"
+      },
+      "resume": {
+        "path": "last_checkpoint.pt",
+        "sha256": "9e8a159e103559b79dab84765c499fb02fb024c6940b2652c8a46620b7aee465"
+      },
+      "selected_model": {
+        "path": "selected_model.pt",
+        "sha256": "31d628f54b8a93df78a2a01863b931af5e84ca8aa880fde3ccd5ef94d1d79379"
+      },
+      "trace": {
+        "path": "canonical_trace.json",
+        "sha256": "ae8a5856cc0a92422d7d37538a6f0fc6cd726862bdf5aedc741479b42f68c62c"
+      }
+    },
+    "costs": [
+      {
+        "hardware": "Tesla T4",
+        "metric": "wall_seconds",
+        "scope": "entry through acknowledged training endpoint; excludes terminal inspection/publication",
+        "semantics": "process_wall",
+        "status": "measured",
+        "unit": "seconds",
+        "value": 5323.659744557
+      },
+      {
+        "hardware": "Tesla T4",
+        "metric": "device_seconds",
+        "reason": "requires platform allocation accounting",
+        "semantics": "allocated_device",
+        "status": "missing",
+        "unit": "seconds",
+        "value": null
+      }
+    ],
+    "selected_optimizer_step": 30459,
+    "selected_weights": "live",
+    "producer_platform_version": null
+  },
+  "scientific_acceptance": "NOT_EVALUATED",
+  "replay_readiness": "NOT_EVALUATED",
+  "runtime_qualification": "NOT_EVALUATED"
+}

@@ -1,0 +1,83 @@
+{
+  "allocation_entry": {
+    "allocated_device_seconds": 11162.570740144,
+    "entire_platform_release_seconds": null,
+    "error": null,
+    "format": "molgap-kaggle-allocation-entry-v1",
+    "gpu_count_source": "nvidia-smi",
+    "monotonic_seconds": 5581.285370072,
+    "observed_gpu_count": 2,
+    "platform_release_scope": "not observed: queue, allocation before entry and platform release after entry are excluded",
+    "scope": "entry invocation through bootstrap completion, including setup, pip, extraction, preflight, training/evaluation and idle assigned GPU time; not device busy time",
+    "status": "complete",
+    "wall_end_utc": "2026-10-16T03:36:28.026848+00:00",
+    "wall_start_utc": "2026-10-16T02:03:26.741478+00:00"
+  },
+  "arms": {
+    "k1_single_bn": {
+      "arm_identity": "b19829460a601bc7af0211e4d9c2c09dcd2cf7e9be922fa65c18b2cbb48b5759",
+      "development_rows": 50000,
+      "mae_eV": 0.1412944608205557,
+      "normalized_gap_train_mae": 0.0770386469701875,
+      "train_mae_eV": 0.09823122512808116,
+      "generalization_gap_eV": 0.04306323569247453,
+      "progress": {
+        "completed_passes": 40,
+        "next_batch": 0,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720,
+        "status": "complete"
+      },
+      "recipe_sha256": "1b395002c4881832b5ba73c5dfe1369517876152a4bc8540177d35903e2c3ca9",
+      "selection_pass": 40,
+      "selection_step": 31240,
+      "weights": "live",
+      "worker_entry_wall_seconds": 5088.709723024
+    },
+    "k1_ada_rmsnorm": {
+      "arm_identity": "c81ce0b63d994617afb3220d7b8f919bd336ce051e80becfbc673a14a4479fc4",
+      "development_rows": 50000,
+      "mae_eV": 0.1451841760343313,
+      "normalized_gap_train_mae": 0.06855156898937366,
+      "train_mae_eV": 0.08740943501881912,
+      "generalization_gap_eV": 0.05777474101551219,
+      "progress": {
+        "completed_passes": 40,
+        "next_batch": 0,
+        "optimizer_steps": 31240,
+        "sample_presentations": 3998720,
+        "status": "complete"
+      },
+      "recipe_sha256": "e660a9a4573576fd8e5254a8153301618209f1aa933a7ca747d43620b890904f",
+      "selection_pass": 39,
+      "selection_step": 30459,
+      "weights": "live",
+      "worker_entry_wall_seconds": 5323.659744557
+    }
+  },
+  "comparison": {
+    "candidate_advantage_eV": -0.003889715213775624,
+    "delta_mae_candidate_minus_ref_eV": 0.003889715213775635,
+    "paired_standard_error_eV": 0.0005393640211011602,
+    "bootstrap_95_ci_delta_eV": [
+      0.002827876994252205,
+      0.004949145998239517
+    ],
+    "non_inferiority_gate_passed": false,
+    "non_inferiority_gate_threshold_eV": -0.0005,
+    "superiority_gate_passed": false,
+    "superiority_gate_threshold_eV": 0.001,
+    "prediction_correlation": 0.9907201357903876,
+    "max_abs_prediction_difference_eV": 2.7479681968688965,
+    "ref_better_count": 25421,
+    "cand_better_count": 24579,
+    "tie_count": 0,
+    "wall_ratio_candidate_over_ref": 1.0461708437543533,
+    "control_outcome": "CLOSED",
+    "scientific_outcome": "NEGATIVE_UNDER_CONTRACT"
+  },
+  "format": "molgap-family-same-run-comparison-summary-v1",
+  "kernel": "kaseichou/molgap-k1-norm-ablation-100k-s42",
+  "kernel_version": 1,
+  "spec_identity": "8f4129600181bda7160bb6b23079fa71072817278208d5cc9ea01386f27fc532"
+}

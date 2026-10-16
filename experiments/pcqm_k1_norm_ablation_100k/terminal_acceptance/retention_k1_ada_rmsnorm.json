@@ -1,0 +1,40 @@
+{
+  "kernel": "kaseichou/molgap-k1-norm-ablation-100k-s42",
+  "receipt_version": null,
+  "producer_version": null,
+  "files": [
+    {
+      "path": "training_contract.json",
+      "sha256": "e660a9a4573576fd8e5254a8153301618209f1aa933a7ca747d43620b890904f",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "development_predictions.pt",
+      "sha256": "31a43e1cd49f146178cd69a1e39a76c0786589415c619f43e89127761c453343",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "last_checkpoint.pt",
+      "sha256": "9e8a159e103559b79dab84765c499fb02fb024c6940b2652c8a46620b7aee465",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "selected_model.pt",
+      "sha256": "31d628f54b8a93df78a2a01863b931af5e84ca8aa880fde3ccd5ef94d1d79379",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "canonical_trace.json",
+      "sha256": "ae8a5856cc0a92422d7d37538a6f0fc6cd726862bdf5aedc741479b42f68c62c",
+      "state": "ALREADY_RETAINED"
+    },
+    {
+      "path": "output_manifest.json",
+      "sha256": "28bce1d0264f6a08e1ad0ffaaeb897fe9be5f7d50767f251d4df423379675838",
+      "state": "ALREADY_RETAINED"
+    }
+  ],
+  "manifest_sha256": "28bce1d0264f6a08e1ad0ffaaeb897fe9be5f7d50767f251d4df423379675838",
+  "unselected_outputs_downloaded": false,
+  "platform_version_verified_by_output_api": false
+}

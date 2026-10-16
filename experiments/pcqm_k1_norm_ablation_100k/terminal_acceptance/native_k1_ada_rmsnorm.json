@@ -1,0 +1,50 @@
+{
+  "arm_id": "k1_ada_rmsnorm",
+  "blockers": [],
+  "context": {
+    "experiment_id": "pcqm-k1-norm-ablation-100k-s42",
+    "logical_run_id": "pcqm-k1-norm-ablation-100k-s42",
+    "arm_id": "k1_ada_rmsnorm",
+    "arm_identity": "c81ce0b63d994617afb3220d7b8f919bd336ce051e80becfbc673a14a4479fc4",
+    "spec_identity": "8f4129600181bda7160bb6b23079fa71072817278208d5cc9ea01386f27fc532",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "1f627236c1f7780e35411e741352504092e145c8",
+    "source_archive_sha256": "e43382c93ade5ad0cae6f4a8ffa6a9dcfe871d02b38c71af486f01b2dbe08e7c",
+    "package_identity": "e71d12b00a30765d5003b42255058d6fcc7668f35352306f07a5577e0d717ba3",
+    "training_recipe_sha256": "e660a9a4573576fd8e5254a8153301618209f1aa933a7ca747d43620b890904f",
+    "platform": "kaggle",
+    "account": "kaseichou",
+    "run_reference": "kaseichou/molgap-k1-norm-ablation-100k-s42",
+    "platform_version": null
+  },
+  "execution_scope": "CPU-only weights_only tensor inspection; no GPU execution, model construction or inference",
+  "formal_training_exposure": 0,
+  "format": "molgap-independent-native-preflight-acceptance-v1",
+  "probe_recipe_identity": "4f1428bceefa035f52f4534d44cf1fd67546cc0215034b9cc93305db43c99ff0",
+  "profiling_required": false,
+  "repeat_resume_proofs": [
+    {
+      "path": "repeat-a.pt",
+      "sha256": "b82aabdef7fd53e7fa0ebce3ab9a3ad323a4476ac101d7a64777c20a3dd3faee",
+      "state_fingerprint": "b33d4d64de32e077ba61de96d755dcd1fca707769e6fc1c81284b17581a2acf4"
+    },
+    {
+      "path": "repeat-b.pt",
+      "sha256": "137fa8866bb9cb438be1fdad924c2770978e6af0e2e93d3be6e9868f6ea208c5",
+      "state_fingerprint": "b33d4d64de32e077ba61de96d755dcd1fca707769e6fc1c81284b17581a2acf4"
+    },
+    {
+      "path": "resumed.pt",
+      "sha256": "9b37fe5958310104f66c4b3016ee4847d4367f3f1dfcc40838d5b605890c6d76",
+      "state_fingerprint": "b33d4d64de32e077ba61de96d755dcd1fca707769e6fc1c81284b17581a2acf4"
+    }
+  ],
+  "resume_origin": {
+    "path": "resumed-first.pt",
+    "sha256": "d6b9c7685b57039ca4723b049256fc773d1d878b4683023de707beb441309784"
+  },
+  "scientific_acceptance": "NOT_EVALUATED",
+  "status": "NATIVE_PREFLIGHT_VERIFIED",
+  "validator": "molgap.family_training_runner._verify_preflight"
+}

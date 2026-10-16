@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "pcqm-k1-norm-ablation-100k-s42-k1_single_bn-v1",
+  "category": "other",
+  "cost_event_id": "cost-TB-pcqm-k1-norm-ablation-100k-s42-k1_single_bn-entry-allocation",
+  "evidence_ref": "experiments/pcqm_k1_norm_ablation_100k/terminal_acceptance/acceptance_k1_single_bn.json",
+  "hardware": "Tesla_T4",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "measured",
+      "value": 1.5503570472422221
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "measured",
+      "value": 1.4135304786177776
+    }
+  },
+  "platform": "kaggle",
+  "run_id": "pcqm-k1-norm-ablation-100k-s42:k1_single_bn:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TB-pcqm-k1-norm-ablation-100k-s42-k1_single_bn"
+}

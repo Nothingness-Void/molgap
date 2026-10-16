@@ -1,0 +1,30 @@
+{
+  "context": {
+    "experiment_id": "pcqm-k1-norm-ablation-100k-s42",
+    "logical_run_id": "pcqm-k1-norm-ablation-100k-s42",
+    "arm_id": "k1_single_bn",
+    "arm_identity": "b19829460a601bc7af0211e4d9c2c09dcd2cf7e9be922fa65c18b2cbb48b5759",
+    "spec_identity": "8f4129600181bda7160bb6b23079fa71072817278208d5cc9ea01386f27fc532",
+    "family_name": "neural_atom_k1",
+    "family_version": "3",
+    "source_commit": "1f627236c1f7780e35411e741352504092e145c8",
+    "source_archive_sha256": "e43382c93ade5ad0cae6f4a8ffa6a9dcfe871d02b38c71af486f01b2dbe08e7c",
+    "package_identity": "e71d12b00a30765d5003b42255058d6fcc7668f35352306f07a5577e0d717ba3",
+    "training_recipe_sha256": "1b395002c4881832b5ba73c5dfe1369517876152a4bc8540177d35903e2c3ca9",
+    "platform": "kaggle",
+    "account": "kaseichou",
+    "run_reference": "kaseichou/molgap-k1-norm-ablation-100k-s42",
+    "platform_version": null
+  },
+  "recipe_identity": "ca5b0ef141dc4c972fd2ecb01f4b864a917391d2845aa054a62920eabfdfdd3e",
+  "dataset_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "initialization": {
+    "file_sha256": "7b088bad6359804309a1cd98792cc4ef99f2fcc3051b9e2f5a37916c3c83c242",
+    "state_sha256": "8ef6d4ba1abdca04d8740a11ec0e04587358117b1e9f9534b4fc19d2b6caedbd",
+    "tensor_count": 367,
+    "device": "cpu"
+  },
+  "runtime_fingerprint": "6c704d88b7c3800979b1f20f9c2433092a25f38151cda00d4da5e08b7d823985",
+  "tuning_identity": "fc9c14aa43b7d985606a492f916a7949cd3f6ece23040f19221a1ceb27e3655c",
+  "accelerator": "Tesla T4"
+}
