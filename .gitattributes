@@ -1,4 +1,6 @@
 *.slurm text eol=lf
+# The frozen GPTrans architecture contract hashes its historical source file.
+src/molgap/gptrans.py text eol=lf
 # Modern2D pinned author files and compact CPU evidence bind exact bytes.
 tests/vendor/esa_reference/* -text
 src/molgap/ppgt_*.py text eol=lf

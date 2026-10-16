@@ -1,4 +1,4 @@
-"""Centralized path constants and model configurations."""
+"""Live paths and model registry, with lazy historical constant aliases."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -32,19 +32,12 @@ DATABASE_DIR = PRODUCTION_DIR / "07_database"
 TARGET_COLS = ["homo", "lumo", "gap"]
 METADATA_COLS = ["cid", "mw", "formula", "smiles", "canonical_smiles"]
 
-# ── Data files ──
-
-DATA_PHASE3 = RAW_DIR / "phase3_chonsfcl_mw200_500_30k.csv"
-DATA_PHASE6_LARGE = RAW_DIR / "phase6_chonsfcl_mw500_1000_15k.csv"
-
 # ── Graph caches ──
 
-GRAPHS_PHASE4 = PRODUCTION_HISTORY_DIR / "phase4" / "pyg_3d_graphs_etkdg.pt"
 GRAPHS_PHASE6 = PRODUCTION_HISTORY_DIR / "phase6" / "pyg_3d_graphs_etkdg_expanded.pt"
 
 # ── Model checkpoints ──
 
-MODEL_PHASE4 = MODELS_DIR / "gnn_schnet_3d_tuned.pt"
 MODEL_PHASE6 = MODELS_DIR / "gnn_schnet_3d_optuna_expanded.pt"
 
 # Phase 7 (300k, raw eV — no normalization)
@@ -113,15 +106,6 @@ FUSION_TENSORNET_METRICS = PRODUCTION_HISTORY_DIR / "phase7" / "fusion_tensornet
 
 # ── Model hyperparameters ──
 
-PARAMS_PHASE4 = {
-    "hidden_channels": 192,
-    "num_filters": 256,
-    "num_interactions": 6,
-    "num_gaussians": 100,
-    "cutoff": 6.0,
-    "dropout": 0.2,
-}
-
 PARAMS_PHASE6 = {
     "hidden_channels": 192,
     "num_filters": 256,
@@ -147,33 +131,6 @@ PARAMS_GPS_2D = {
     "dropout": 0.05,
 }
 
-# ── A/B 3D-encoder comparison (experiments/_closed/ab3d_scripts) ──
-# Same hidden=192 across encoders for capacity parity; layer counts follow each
-# architecture's convention. Param counts are reported by train_encoder.py.
-PARAMS_AB_SCHNET = dict(PARAMS_SCHNET_300K)  # invariant baseline, deployed form
-
-# Feasibility-tuned for the RTX 5060 (8 GB, 30 SM): the equivariant/tensor nets
-# are 40-130x heavier per batch than SchNet at hidden=192, so they run at
-# hidden=128 with fewer layers + cutoff 5.0 (fewer edges). Capacity therefore
-# differs from SchNet (h192) — param counts are reported and the gap is noted in
-# the comparison; the speed gap is itself a decision-relevant deliverable.
-PARAMS_VISNET = {
-    "hidden_channels": 128,
-    "num_layers": 4,
-    "num_heads": 8,      # 128 % 8 == 0
-    "num_rbf": 32,
-    "cutoff": 5.0,
-    "dropout": 0.0,
-}
-
-PARAMS_TENSORNET = {
-    "hidden_channels": 128,
-    "num_layers": 2,
-    "num_rbf": 32,
-    "cutoff": 5.0,
-    "dropout": 0.0,
-}
-
 # Experimental TensorNet for 300k training (same arch as ab3d winner; not production)
 PARAMS_TENSORNET_300K = {
     "hidden_channels": 128,
@@ -181,16 +138,6 @@ PARAMS_TENSORNET_300K = {
     "num_rbf": 32,
     "cutoff": 5.0,
     "dropout": 0.0,
-}
-
-# Single source of truth for the A/B arms. `kind` selects the wrapper class in
-# experiments/_closed/ab3d_scripts/train_encoder.py; `use_charges` is each
-# encoder's native form
-# (SchNet uses Gasteiger charges = deployed form; equivariant nets use Z+geometry).
-AB_ENCODERS = {
-    "schnet":    {"kind": "schnet",    "params": PARAMS_AB_SCHNET,  "use_charges": True},
-    "visnet":    {"kind": "visnet",    "params": PARAMS_VISNET,     "use_charges": False},
-    "tensornet": {"kind": "tensornet", "params": PARAMS_TENSORNET,  "use_charges": False},
 }
 
 # ── Model registry ──
@@ -305,3 +252,25 @@ MODEL_REGISTRY = {
 }
 
 SEED = 42
+
+# Registry-backed historical values stay above: inference still uses them.
+# Only package re-exports and closed-study readers need these definitions.
+_LEGACY_CONSTANTS = frozenset({
+    "DATA_PHASE3", "DATA_PHASE6_LARGE", "GRAPHS_PHASE4", "MODEL_PHASE4",
+    "PARAMS_PHASE4", "PARAMS_AB_SCHNET", "PARAMS_VISNET", "PARAMS_TENSORNET",
+    "AB_ENCODERS",
+})
+
+# Preserve star imports as well as explicit imports without eager legacy loads.
+__all__ = [name for name in globals() if not name.startswith("_")] + sorted(_LEGACY_CONSTANTS)
+
+
+def __getattr__(name):
+    if name in _LEGACY_CONSTANTS:
+        from .compat import legacy_constants
+        return getattr(legacy_constants, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def __dir__():
+    return sorted(set(globals()) | _LEGACY_CONSTANTS)

@@ -1,0 +1,20 @@
+"""Spawn-pickleable owner of the legacy two-item packed graph payload."""
+from pathlib import Path
+
+from torch_geometric.data import InMemoryDataset
+
+from ..v4_runtime import torch_load_compat
+
+
+class PackedGraphDataset(InMemoryDataset):
+    """Keep PyG's inherited separation and lazy graph-cache semantics."""
+
+    def __init__(self, path: Path, *, mmap: bool = False):
+        super().__init__(root=None)
+        self.data, self.slices = torch_load_compat(
+            path, map_location="cpu", weights_only=False, **({"mmap": True} if mmap else {})
+        )
+
+
+# Spawn workers and retained pickles continue to resolve the historical owner.
+PackedGraphDataset.__module__ = "molgap.packed_graph_dataset"

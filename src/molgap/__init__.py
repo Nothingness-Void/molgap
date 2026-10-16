@@ -9,12 +9,17 @@ from .constants import (
     REPO_ROOT, DATA_DIR, RAW_DIR, PROCESSED_DIR, MODELS_DIR,
     PRODUCTION_DIR, EXPERIMENTS_DIR, PLATFORMS_DIR,
     TARGET_COLS, METADATA_COLS,
-    DATA_PHASE3, DATA_PHASE6_LARGE,
-    GRAPHS_PHASE4, GRAPHS_PHASE6,
-    MODEL_PHASE4, MODEL_PHASE6,
-    PARAMS_PHASE4, PARAMS_PHASE6,
+    GRAPHS_PHASE6,
+    MODEL_PHASE6,
+    PARAMS_PHASE6,
     MODEL_REGISTRY, SEED,
 )
+
+_LAZY_CONSTANTS = {"DATA_PHASE3", "DATA_PHASE6_LARGE", "GRAPHS_PHASE4",
+                   "MODEL_PHASE4", "PARAMS_PHASE4"}
+# Preserve the old star-import surface without importing historical constants
+# or expanding it to inference functions (which would eagerly import Torch).
+__all__ = [name for name in globals() if not name.startswith("_")] + sorted(_LAZY_CONSTANTS)
 
 # Lazily forwarded to molgap.inference on first access (keeps torch out of import).
 _LAZY_API = {
@@ -33,6 +38,9 @@ _LAZY_API = {
 
 
 def __getattr__(name):
+    if name in _LAZY_CONSTANTS:
+        from . import constants
+        return getattr(constants, name)
     if name in _LAZY_API:
         from . import inference
         return getattr(inference, name)
@@ -40,4 +48,4 @@ def __getattr__(name):
 
 
 def __dir__():
-    return sorted([*globals(), *_LAZY_API])
+    return sorted(set(globals()) | _LAZY_API | _LAZY_CONSTANTS)

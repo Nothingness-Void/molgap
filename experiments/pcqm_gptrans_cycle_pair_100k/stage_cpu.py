@@ -76,7 +76,9 @@ def main():
     plan(root, proposal, plan_ref)
     sources = ["src/molgap/" + name for name in ("__init__.py", "constants.py", "training_reproducibility.py",
         "v4_runtime.py", "packed_graph_dataset.py", "experiment_preflight.py", "gptrans_cycle_inputs.py",
-        "pcqm_fixed_records.py", "pcqm_wedge.py")]
+        "pcqm_fixed_records.py", "pcqm_wedge.py", "data/__init__.py",
+        "data/packed_graph.py", "data/fixed_records.py", "compat/__init__.py",
+        "compat/legacy_constants.py")]
     sources += [f"{BASE}/cpu_run.py", protocol]
     built = build_v4_source_bundle(repo_root=root, relative_paths=sources, output_dir=output / "source",
                                    source_commit=commit)

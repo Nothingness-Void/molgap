@@ -5,6 +5,19 @@ This is not runtime dependency discovery. Extra addon paths remain explicit.
 """
 
 COMMON_SOURCE_FILES = (
+    "src/molgap/training/__init__.py",
+    "src/molgap/training/core.py",
+    "src/molgap/training/state.py",
+    "src/molgap/training/session.py",
+    "src/molgap/models/__init__.py",
+    "src/molgap/models/gptrans.py",
+    "src/molgap/models/substrate.py",
+    "src/molgap/data/__init__.py",
+    "src/molgap/data/packed_graph.py",
+    "src/molgap/data/fixed_records.py",
+    "src/molgap/data/indexed_inputs.py",
+    "src/molgap/compat/__init__.py",
+    "src/molgap/compat/legacy_constants.py",
     "src/molgap/common/io.py",
     "src/molgap/common/paths.py",
     "src/molgap/common/spec.py",

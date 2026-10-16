@@ -1,16 +1,7 @@
-"""Spawn-pickleable owner of the legacy two-item packed graph payload."""
-from pathlib import Path
+"""Compatibility alias for the packed-graph implementation in ``molgap.data``."""
+import sys as _sys
 
-from torch_geometric.data import InMemoryDataset
+from .data import packed_graph as _implementation
 
-from .v4_runtime import torch_load_compat
-
-
-class PackedGraphDataset(InMemoryDataset):
-    """Keep PyG's inherited separation and lazy graph-cache semantics."""
-
-    def __init__(self, path: Path, *, mmap: bool = False):
-        super().__init__(root=None)
-        self.data, self.slices = torch_load_compat(
-            path, map_location="cpu", weights_only=False, **({"mmap": True} if mmap else {})
-        )
+# Share globals as well as objects so legacy monkeypatches reach the implementation.
+_sys.modules[__name__] = _implementation

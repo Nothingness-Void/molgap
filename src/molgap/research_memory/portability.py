@@ -135,6 +135,8 @@ def _runtime_paths(root: Path, head_paths: set[str]) -> set[Path]:
             "pyproject.toml",
             "src/molgap/__init__.py",
             "src/molgap/constants.py",
+            "src/molgap/compat/__init__.py",
+            "src/molgap/compat/legacy_constants.py",
             "src/molgap/comparison_readiness.py",
             "src/molgap/evidence_pointers.py",
             "src/molgap/v5_common.py",
