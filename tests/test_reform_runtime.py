@@ -45,3 +45,16 @@ def test_two_workspaces_select_their_own_sources_not_inherited_editable(tmp_path
         info=json.loads(logs.strip());assert Path(info["molgap_module"])==root/"src/molgap/__init__.py"
         assert info["package_identity"] is None
     assert "PYTHONPATH" in __import__('os').environ
+
+
+def test_scratch_environment_is_only_applied_to_the_selected_child(tmp_path,capfd):
+    import os
+    root=tmp_path/"checkout";package=root/"src/molgap";package.mkdir(parents=True)
+    (package/"__init__.py").write_text("")
+    (package/"probe.py").write_text("import tempfile\nprint(tempfile.gettempdir())\n")
+    before={key:os.environ.get(key) for key in ("TMP","TEMP","TMPDIR")}
+    scratch=tmp_path/"external-scratch"
+    assert launch_local(root,"molgap.probe",scratch_root=scratch)==0
+    output,_=capfd.readouterr()
+    assert Path(output.strip())==scratch
+    assert before=={key:os.environ.get(key) for key in before}
