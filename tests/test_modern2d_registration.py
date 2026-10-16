@@ -62,10 +62,11 @@ def test_registered_native_bootstrap_denies_before_any_real_io(monkeypatch, tmp_
     session.close()
 
 
-@pytest.mark.parametrize("module", ["ppgt", "esa"])
-def test_model_source_bundle_isolated_import_and_byte_identity(tmp_path, module, record_property):
+@pytest.mark.parametrize("module,family", [("ppgt_model","ppgt_small"), ("esa_model","esa_small"),
+                                           ("esa_invariant","esa_small")])
+def test_model_source_bundle_isolated_import_and_byte_identity(tmp_path, module, family, record_property):
     root = Path(__file__).parents[1]
-    closure = discover_source_dependencies(root, [f"src/molgap/{module}_model.py"], require_static=True)
+    closure = discover_source_dependencies(root, [f"src/molgap/{module}.py"], require_static=True)
     assert not any("vendor" in p or "training_runner" in p for p in closure.source_files)
     assert {"xformers", "flash_attn", "admin_torch", "pytorch_lightning", "wandb"}.isdisjoint(closure.external_modules)
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
@@ -87,8 +88,8 @@ def test_model_source_bundle_isolated_import_and_byte_identity(tmp_path, module,
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(data)
     script = ("import sys; sys.path.insert(0,sys.argv[1]); "
-              f"from molgap.{module}_model import make_model; "
-              f"model=make_model({{'model_config':{model_config(module + '_small')!r}}}); "
+              f"from molgap.{module} import make_model; "
+              f"model=make_model({{'model_config':{model_config(family)!r}}}); "
               "assert all(t.device.type=='cpu' for t in model.parameters()); "
               "assert 'wandb' not in sys.modules; print('ISOLATED_CPU_OK')")
     result = subprocess.run([sys.executable, "-I", "-c", script, str(extracted / "src")],

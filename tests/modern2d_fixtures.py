@@ -26,7 +26,9 @@ def model_config(family):
                 mlp_hidden=32, seeds=3)
 
 
-def factory(family, config=None):
+def factory(family, config=None, version="1"):
     from molgap.ppgt_model import make_model as ppgt
     from molgap.esa_model import make_model as esa
+    if family == "esa_small" and version == "2":
+        from molgap.esa_invariant import make_model as esa
     return (ppgt if family == "ppgt_small" else esa)({"model_config": config or model_config(family)})

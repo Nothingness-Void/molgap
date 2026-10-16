@@ -18,12 +18,12 @@ from modern2d_fixtures import factory, model_config, graph
 from test_family_training_session import assert_equal
 
 
-def make_session(tmp_path, family, events):
+def make_session(tmp_path, family, events, version="1"):
     configure_fp32_determinism(42)
     torch.set_num_threads(1)
     cfg = model_config(family)
     if family == "ppgt_small": cfg.update(attention_dropout=.1, stochastic_depth=.1)
-    initial = factory(family, cfg)
+    initial = factory(family, cfg, version=version)
     sha = model_state_sha256(initial)
     path = tmp_path / (family + ".pt")
     torch.save(initial.state_dict(), path)
@@ -32,7 +32,7 @@ def make_session(tmp_path, family, events):
         .001, .01, ScheduleSpec("cosine_step", 4), "best-development-live",
         "torch-pass-randperm", checkpoint_every=1, target_mean_eV=3., target_std_eV=2.,
         finite_check_every=1, model_config=cfg,
-        torch_version=str(torch.__version__).split("+", 1)[0])
+        torch_version=str(torch.__version__).split("+", 1)[0], family_version=version if version != "1" else None)
     train = [graph(2, i) for i in range(256)]
     dev = [graph(3, 256 + i) for i in range(3)]
     data = TrainingData(train, dev, selection.manifest_sha256, 256, 3, 0, 256, 3., 2., synthetic=True)

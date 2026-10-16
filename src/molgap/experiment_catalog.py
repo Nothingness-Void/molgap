@@ -4,6 +4,9 @@ from .common.spec import (FamilyContract, AddonContract, AddonConfigField,
     EDGE_STATE_BASE_LAYERS, EDGE_STATE_MIN_LAYERS, EDGE_STATE_MAX_LAYERS)
 
 FAMILIES = MappingProxyType({
+    ("esa_small", "2"): FamilyContract("esa_small", "2", "molgap.esa_invariant",
+        "modern2d_cpu_v1", "ogb-atom9-bond3-directed-edge-mask-v1", ("train", "development"),
+        "frozen-family-pass-order", "frozen-train-mean-sample-std"),
     **{(name, "1"): FamilyContract(name, "1", "molgap." + module,
         "modern2d_cpu_v1", schema, ("train", "development"),
         "frozen-family-pass-order", "frozen-train-mean-sample-std")

@@ -128,6 +128,9 @@ def graph_training_adapter(family, *, model_factory, addons=(), source_files=(),
 
 
 TRAINING_ADAPTERS = MappingProxyType({
+    ("esa_small", "2"): graph_training_adapter(("esa_small", "2"),
+        model_factory="molgap.esa_invariant:make_model", cpu_synthetic_only=True,
+        source_files=("src/molgap/modern2d_inputs.py", "src/molgap/esa_features.py", "src/molgap/esa_model.py")),
     **{(name, "1"): graph_training_adapter((name, "1"),
           model_factory="molgap." + model + ":make_model", cpu_synthetic_only=True,
           source_files=("src/molgap/modern2d_inputs.py", "src/molgap/" + features + ".py"))
@@ -194,7 +197,8 @@ def validate_training_registry() -> None:
         if adapter.cpu_synthetic_only:
             contract = FAMILIES[family]
             expected = {("ppgt_small", "1"): "ogb-atom9-bond3-rrwp-spe-v1",
-                        ("esa_small", "1"): "ogb-atom9-bond3-directed-edge-mask-v1"}
+                        ("esa_small", "1"): "ogb-atom9-bond3-directed-edge-mask-v1",
+                        ("esa_small", "2"): "ogb-atom9-bond3-directed-edge-mask-v1"}
             if (family not in expected or adapter.module != "molgap.family_training_runner"
                     or adapter.artifact_adapter != "modern2d-cpu-v1" or adapter.addons
                     or contract.feature_schema != expected[family] or contract.recipe != "modern2d_cpu_v1"

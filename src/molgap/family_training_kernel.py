@@ -30,7 +30,7 @@ def load_family_model(recipe, initial_state):
     if recipe.cpu_synthetic_only:
         from .experiment_execution import TRAINING_ADAPTERS, SESSION_INTERFACES
         from .shared_model_adapter import resolve_model_factory
-        factory = resolve_model_factory(TRAINING_ADAPTERS[SESSION_INTERFACES[recipe.family]])
+        factory = resolve_model_factory(TRAINING_ADAPTERS[recipe.interface])
         from dataclasses import asdict
         model = factory({"model_config": asdict(recipe.model_config)})
         exact_load(model)

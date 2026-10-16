@@ -44,7 +44,7 @@ def family_arm_bindings(recipe):
     """Static source/sampler/transform/objective bindings for a new Spec arm."""
     if recipe.cpu_synthetic_only:
         from .experiment_execution import TRAINING_ADAPTERS
-        module = TRAINING_ADAPTERS[INTERFACES[recipe.family]].model_factory.split(":")[0]
+        module = TRAINING_ADAPTERS[recipe.interface].model_factory.split(":")[0]
         base = normalized_source_sha256(Path(__file__).with_name(module.rsplit(".", 1)[1] + ".py"))
     else:
         base_files = ("gps.py", "qm9_neural_atom.py") if recipe.family == "neural_atom_k1" else ("gptrans.py", "pcqm_gptrans_v4.py")
@@ -78,7 +78,7 @@ def build_screen_recipe(mode, *, configuration, family, source_idx_sha256=None,
                         target_sha256=None, train_role_identity=None, development_role_identity=None,
                         logging=None):
     from .training_logging import TrainingLogPolicy
-    if type(configuration) is not FamilyRecipe or family != INTERFACES.get(configuration.family) or mode != configuration.mode:
+    if type(configuration) is not FamilyRecipe or family != configuration.interface or mode != configuration.mode:
         raise ValueError("Explicit matching shared family configuration is required")
     _text(train_role_identity, "train_role_identity")
     if configuration.clean_bn is not None and configuration.clean_bn.training_role_identity != train_role_identity:
@@ -118,7 +118,7 @@ def validate_screen_recipe(spec, arm_id, record):
     arm = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == arm_id)
     recipe = _recipe_configuration(record)
     adapter = training_adapter(arm)
-    if (adapter.family != INTERFACES.get(recipe.family) or adapter.mode(arm) != recipe.mode or
+    if (adapter.family != recipe.interface or adapter.mode(arm) != recipe.mode or
             arm["initialization"] != {"kind": "frozen_state", "seed": recipe.seed, "state_sha256": recipe.initialization_sha256} or
             arm["data"]["dataset"]["sha256"] != recipe.dataset.manifest_sha256):
         raise ValueError("Shared family/initialization/data binding differs from Spec")

@@ -117,6 +117,7 @@ class FamilyRecipe:
     addons: tuple[dict, ...] = ()
     clean_bn: CalibrationPolicy | None = None
     model_config: object | None = None
+    family_version: str | None = None
 
     def __post_init__(self):
         from .experiment_spec import _digest
@@ -125,7 +126,7 @@ class FamilyRecipe:
         if self.cpu_synthetic_only:
             from copy import deepcopy
             from importlib import import_module
-            adapter = TRAINING_ADAPTERS[SESSION_INTERFACES[self.family]]
+            adapter = TRAINING_ADAPTERS[self.interface]
             config_type = import_module(adapter.model_factory.split(":")[0]).CONFIG_TYPE
             if (type(self.model_config) not in (dict, config_type) or self.mode != "reference" or self.addons
                     or self.ema_decay is not None or self.clean_bn is not None or not self.drop_last
@@ -205,7 +206,17 @@ class FamilyRecipe:
 
     @property
     def cpu_synthetic_only(self):
-        return TRAINING_ADAPTERS[SESSION_INTERFACES[self.family]].cpu_synthetic_only
+        return TRAINING_ADAPTERS[self.interface].cpu_synthetic_only
+
+    @property
+    def interface(self):
+        if self.family_version is None:
+            return SESSION_INTERFACES[self.family]
+        key = (self.family,self.family_version)
+        if (type(self.family_version) is not str or key not in TRAINING_ADAPTERS or
+                not TRAINING_ADAPTERS[key].cpu_synthetic_only):
+            raise ValueError("Explicit family version is restricted to reviewed CPU synthetic interfaces")
+        return key
 
     @property
     def selection_weights(self):
@@ -234,6 +245,8 @@ class FamilyRecipe:
 
     def to_dict(self):
         values = asdict(self)
+        if self.family_version is None:
+            values.pop("family_version")
         if self.model_config is None:
             values.pop("model_config")
         if self.input_sidecar is None:
@@ -261,7 +274,7 @@ class FamilyRecipe:
             expected.remove("input_sidecar")
         if type(record) is dict and "k1_execution" not in record:
             expected.remove("k1_execution")
-        for name in ("addons", "clean_bn", "model_config"):
+        for name in ("addons", "clean_bn", "model_config", "family_version"):
             if type(record) is dict and name not in record:
                 expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
