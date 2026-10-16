@@ -19,6 +19,19 @@ EDGE_STATE_MAX_LAYERS = 16
 
 
 @dataclass(frozen=True)
+class FamilyExecution:
+    """Pure catalog data; parsing never imports these implementation strings."""
+    module: str
+    artifact_adapter: str
+    serialization_modules: tuple[str, ...] = ()
+    source_files: tuple[str, ...] = ()
+    model_factory: str | None = None
+    target_identity_in_completion: bool = False
+    profile_adapter: str | None = None
+    cpu_synthetic_only: bool = False
+
+
+@dataclass(frozen=True)
 class FamilyContract:
     """Static adapter lookup key and supported declaration contracts."""
 
@@ -34,6 +47,7 @@ class FamilyContract:
     optional_roles: tuple[str, ...] = ()
     allow_any_seed: bool = False
     replication_samplers: tuple[tuple[int, str], ...] = ()
+    execution: FamilyExecution | None = None
 
 
 @dataclass(frozen=True)
@@ -54,6 +68,10 @@ class AddonContract:
     config_fields: tuple[AddonConfigField, ...] = ()
     family_versions: tuple[str, ...] = ()
     single_addon: bool = False
+    execution_modes: tuple[tuple[str, str], ...] = ()
+    apply_hook: str | None = None
+    policy_hook: str | None = None
+    extra_source_files: tuple[str, ...] = ()
 
 
 def validate_addon_config(contract: AddonContract, config: dict, *, name="addon",

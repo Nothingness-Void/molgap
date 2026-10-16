@@ -1,18 +1,24 @@
 """Reviewed family/addon capabilities; host-neutral parsing lives in common.spec."""
 from types import MappingProxyType
-from .common.spec import (FamilyContract, AddonContract, AddonConfigField,
+from .common.spec import (FamilyContract, FamilyExecution, AddonContract, AddonConfigField,
     EDGE_STATE_BASE_LAYERS, EDGE_STATE_MIN_LAYERS, EDGE_STATE_MAX_LAYERS)
 
 FAMILIES = MappingProxyType({
     ("esa_small", "2"): FamilyContract("esa_small", "2", "molgap.esa_invariant",
         "modern2d_cpu_v1", "ogb-atom9-bond3-directed-edge-mask-v1", ("train", "development"),
-        "frozen-family-pass-order", "frozen-train-mean-sample-std"),
+        "frozen-family-pass-order", "frozen-train-mean-sample-std",
+        execution=FamilyExecution("molgap.family_training_runner","modern2d-cpu-v1",
+            model_factory="molgap.esa_invariant:make_model",cpu_synthetic_only=True,
+            source_files=("src/molgap/modern2d_inputs.py","src/molgap/esa_features.py","src/molgap/esa_model.py"))),
     **{(name, "1"): FamilyContract(name, "1", "molgap." + module,
         "modern2d_cpu_v1", schema, ("train", "development"),
-        "frozen-family-pass-order", "frozen-train-mean-sample-std")
-       for name, module, schema in (
-           ("ppgt_small", "ppgt_model", "ogb-atom9-bond3-rrwp-spe-v1"),
-           ("esa_small", "esa_model", "ogb-atom9-bond3-directed-edge-mask-v1"))},
+        "frozen-family-pass-order", "frozen-train-mean-sample-std",
+        execution=FamilyExecution("molgap.family_training_runner","modern2d-cpu-v1",
+            model_factory="molgap."+module+":make_model",cpu_synthetic_only=True,
+            source_files=("src/molgap/modern2d_inputs.py","src/molgap/"+features+".py")))
+       for name, module, features, schema in (
+           ("ppgt_small", "ppgt_model", "ppgt_features", "ogb-atom9-bond3-rrwp-spe-v1"),
+           ("esa_small", "esa_model", "esa_features", "ogb-atom9-bond3-directed-edge-mask-v1"))},
     ("gptrans_scale_ema", "1"): FamilyContract(
         "gptrans_scale_ema", "1", "molgap.gptrans_scale_ema", "gptrans_scale_ema_v1",
         "ogb-atom9-bond3-shortest-path-cap20", ("train", "development"),
@@ -26,11 +32,24 @@ FAMILIES = MappingProxyType({
     ("neural_atom_k1", "3"): FamilyContract(
         "neural_atom_k1", "3", "molgap.family_training_runner", "shared-family-training",
         "ogb-atom9-bond3-rwse16-v1", ("train",), "frozen-family-pass-order",
-        "frozen-train-mean-sample-std", "ogb_edge_state_structural_gps9", ("development",)),
+        "frozen-train-mean-sample-std", "ogb_edge_state_structural_gps9", ("development",),
+        execution=FamilyExecution("molgap.family_training_runner","k1-session-v1",("molgap.pcqm_wedge",),
+            ("src/molgap/family_training_runner.py","src/molgap/family_training_kernel.py",
+             "src/molgap/k1_screen_training.py","src/molgap/qm9_neural_atom.py",
+             "src/molgap/k1_execution_layout.py","src/molgap/k1_clean_second.py"),
+            target_identity_in_completion=True,profile_adapter="molgap.family_execution_profile")),
     ("gptrans_t", "2"): FamilyContract(
         "gptrans_t", "2", "molgap.family_training_runner", "shared-family-training",
         "ogb-atom9-bond3-shortest-path-cap20", ("train",), "frozen-family-pass-order",
-        "frozen-train-mean-sample-std", optional_roles=("development",)),
+        "frozen-train-mean-sample-std", optional_roles=("development",),
+        execution=FamilyExecution("molgap.family_training_runner","gptrans-session-v1",("molgap.pcqm_wedge",),
+            ("src/molgap/family_training_runner.py","src/molgap/family_training_kernel.py",
+             "src/molgap/pcqm_gptrans_v4.py","src/molgap/gptrans.py",
+             "src/molgap/gptrans_capacity.py","src/molgap/gptrans_cycle_pair.py",
+             "src/molgap/gptrans_cycle_inputs.py","src/molgap/pcqm_fixed_records.py",
+             "src/molgap/gptrans_research_campaign.py","src/molgap/gptrans_triplet_communication.py",
+             "src/molgap/gptrans_local_relation.py","src/molgap/bond_message_carry.py"),
+            target_identity_in_completion=True,profile_adapter="molgap.family_execution_profile")),
     ("edge_state_gps", "1"): FamilyContract(
         "edge_state_gps", "1", "molgap.edge_state_model_only_v1",
         "edge_state_model_only_v1", "ogb-atom9-bond3-rwse16-v1",
@@ -41,6 +60,10 @@ FAMILIES = MappingProxyType({
         "gptrans_t", "1", "molgap.gptrans", "pcqm_gptrans_v4",
         "ogb-atom9-bond3-shortest-path-cap20", ("train", "development"),
         "seed-plus-epoch-global-randperm-v1", "fixed-train-100k-mean-sample-std",
+        execution=FamilyExecution("molgap.gptrans_screen_workflow","gptrans-v1",("molgap.pcqm_wedge",),
+            ("src/molgap/gptrans_screen_workflow.py","src/molgap/pcqm_gptrans_v4.py",
+             "src/molgap/gptrans.py","src/molgap/gptrans_variants.py","src/molgap/pcqm_wedge.py"),
+            profile_adapter="molgap.gptrans_legacy_execution_profile"),
     ),
     ("neural_atom_k1", "1"): FamilyContract(
         "neural_atom_k1", "1", "molgap.qm9_neural_atom", "pcqm_k1_full",
@@ -53,6 +76,11 @@ FAMILIES = MappingProxyType({
         "ogb-atom9-bond3-rwse16-v1", ("train", "development"),
         "seed42-python-epoch-shuffle-v4", "fixed-train-100k-mean-sample-std",
         "ogb_edge_state_structural_gps9",
+        execution=FamilyExecution("molgap.k1_screen_training","k1-screen-v1",("molgap.pcqm_wedge",),
+            ("src/molgap/k1_screen_training.py","src/molgap/qm9_neural_atom.py",
+             "src/molgap/qm9_local_hierarchy.py","src/molgap/qm9_gape.py",
+             "src/molgap/pcqm_gap_architecture.py","src/molgap/gps.py","src/molgap/pcqm_wedge.py"),
+            profile_adapter="molgap.k1_legacy_execution_profile"),
     ),
 })
 
@@ -61,15 +89,18 @@ ADDONS = MappingProxyType({
     **{(prefix + "_" + suffix + "_scale", "1"): AddonContract(family,
         "slot-" + suffix, "molgap.substrate_scale_addon",
         tuple(AddonConfigField(key, value=value) for key, value in (
-            ("family", family), ("slot", slot), ("name", suffix + "_scale"))), (version,))
+            ("family", family), ("slot", slot), ("name", suffix + "_scale"))), (version,),
+        execution_modes=((version,"composed"),), apply_hook="molgap.substrate_scale_addon:apply_addon")
        for family, prefix, version in (("neural_atom_k1", "k1", "3"), ("gptrans_t", "gptrans", "2"))
        for suffix, slot in (("node", "pre_message"), ("aggregate", "post_aggregation"), ("readout", "pre_readout"))},
     **{(name, "1"): AddonContract("gptrans_t", "aggregate-research", "molgap.gptrans_research_campaign",
-        family_versions=("2",), single_addon=True) for name in (
+        family_versions=("2",), single_addon=True, execution_modes=(("2",name),),
+        policy_hook="molgap.gptrans_training_policy:policy") for name in (
         "degree_aggregate_shared_ema999", "degree_aggregate_cycle_ema999",
         "degree_aggregate_carry_ema999", "degree_aggregate_correspondence_ema999")},
     ("degree_local_cycle_common_ema999", "1"): AddonContract(
-        "gptrans_t", "cycle-pair-input", "molgap.gptrans_cycle_pair", family_versions=("2",), single_addon=True),
+        "gptrans_t", "cycle-pair-input", "molgap.gptrans_cycle_pair", family_versions=("2",), single_addon=True,
+        execution_modes=(("2","degree_local_cycle_common_ema999"),),policy_hook="molgap.gptrans_training_policy:policy"),
     **{(name, "1"): AddonContract("gptrans_t", "triplet-routing", "molgap.gptrans_triplet_routing", single_addon=True)
        for name in ("degree_local_triplet_product_v2_ema999", "degree_local_triplet_bond_route_ema999")},
     **{(name, "1"): AddonContract("gptrans_t", "triplet-followup", "molgap.gptrans_triplet_followup", single_addon=True)
@@ -82,7 +113,9 @@ ADDONS = MappingProxyType({
         "gptrans_t", "local-update-control", "molgap.gptrans_local_control", single_addon=True),
     ("degree_pair_transition_ema999", "1"): AddonContract(
         "gptrans_t", "relation-transition", "molgap.gptrans_pair_transition", single_addon=True),
-    **{(name, "1"): AddonContract("gptrans_t", "capacity-intervention", "molgap.gptrans_capacity")
+    **{(name, "1"): AddonContract("gptrans_t", "capacity-intervention", "molgap.gptrans_capacity",
+        execution_modes=(("2",name),) if name=="degree_bond_local_ema999" else (),
+        policy_hook="molgap.gptrans_training_policy:policy" if name=="degree_bond_local_ema999" else None)
        for name in ("degree_node352_ema999", "degree_pair64_ema999", "degree_ffn2_ema999", "degree_bond_local_ema999")},
     ("edge_state_depth", "1"): AddonContract(
         "edge_state_gps", "edge-state-architecture", "molgap.edge_state_model_only_v1",
@@ -93,11 +126,13 @@ ADDONS = MappingProxyType({
         "edge_state_gps", "edge-state-architecture", "molgap.qm9_neural_atom",
     ),
     **{
-        (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_variants")
+        (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_variants",
+            execution_modes=(("1",name),("2",name)))
         for name in ("pair_prenorm", "centered_logits")
     },
     **{
-        (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_memory")
+        (name, "1"): AddonContract("gptrans_t", "attention-replacement", "molgap.gptrans_memory",
+            execution_modes=(("1",name),("2",name)))
         for name in ("memory_value", "memory_message")
     },
     **{
@@ -115,8 +150,10 @@ ADDONS = MappingProxyType({
         tuple(AddonConfigField(name, value=value) for name, value in
               (("layer", 6), ("latent_channels", 64), ("kappa", 4),
                ("seed", 42), ("degree_policy", "original-sum-above-four"))), ("2", "3"), True,
+        execution_modes=(("2","ssma"),("3","ssma")),
     ),
     **{(name, "1"): AddonContract("neural_atom_k1", "k1-training-view",
-        "molgap.k1_screen_training", family_versions=("3",), single_addon=True)
-       for name in ("k1_two_pass_mean", "k1_mean2_clean_second")},
+        "molgap.k1_screen_training", family_versions=("3",), single_addon=True,
+        execution_modes=(("3",mode),))
+       for name,mode in (("k1_two_pass_mean","mean2"),("k1_mean2_clean_second","mean2_clean_second"))},
 })

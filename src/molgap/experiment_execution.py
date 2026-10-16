@@ -127,58 +127,43 @@ def graph_training_adapter(family, *, model_factory, addons=(), source_files=(),
 
 
 
-TRAINING_ADAPTERS = MappingProxyType({
-    ("esa_small", "2"): graph_training_adapter(("esa_small", "2"),
-        model_factory="molgap.esa_invariant:make_model", cpu_synthetic_only=True,
-        source_files=("src/molgap/modern2d_inputs.py", "src/molgap/esa_features.py", "src/molgap/esa_model.py")),
-    **{(name, "1"): graph_training_adapter((name, "1"),
-          model_factory="molgap." + model + ":make_model", cpu_synthetic_only=True,
-          source_files=("src/molgap/modern2d_inputs.py", "src/molgap/" + features + ".py"))
-       for name, model, features in (("ppgt_small", "ppgt_model", "ppgt_features"),
-                                      ("esa_small", "esa_model", "esa_features"))},
-    ("neural_atom_k1", "3"): TrainingAdapter(
-        ("neural_atom_k1", "3"), "molgap.family_training_runner", "k1-session-v1",
-        tuple(TrainingAddon(name, "1", "composed", apply_hook="molgap.substrate_scale_addon:apply_addon")
-              for name in ("k1_node_scale", "k1_aggregate_scale", "k1_readout_scale")) + tuple(TrainingAddon(name, "1", mode) for name, mode in (
-            ("k1_joint_aggregation", "ssma"), ("k1_two_pass_mean", "mean2"),
-            ("k1_mean2_clean_second", "mean2_clean_second"))), ("molgap.pcqm_wedge",),
-        ("src/molgap/family_training_runner.py", "src/molgap/family_training_kernel.py",
-         "src/molgap/k1_screen_training.py", "src/molgap/qm9_neural_atom.py",
-         "src/molgap/k1_execution_layout.py", "src/molgap/k1_clean_second.py"),
-        target_identity_in_completion=True, profile_adapter="molgap.family_execution_profile"),
-    ("gptrans_t", "2"): TrainingAdapter(
-        ("gptrans_t", "2"), "molgap.family_training_runner", "gptrans-session-v1",
-        tuple(TrainingAddon(name, "1", "composed", apply_hook="molgap.substrate_scale_addon:apply_addon")
-              for name in ("gptrans_node_scale", "gptrans_aggregate_scale", "gptrans_readout_scale")) + tuple(TrainingAddon(name, "1", name,
-              policy_hook="molgap.gptrans_training_policy:policy" if name.startswith("degree_") else None) for name in
-              ("pair_prenorm", "centered_logits", "memory_value", "memory_message",
-               "degree_bond_local_ema999", "degree_local_cycle_common_ema999",
-               "degree_aggregate_shared_ema999", "degree_aggregate_cycle_ema999",
-               "degree_aggregate_carry_ema999", "degree_aggregate_correspondence_ema999")),
-        ("molgap.pcqm_wedge",),
-        ("src/molgap/family_training_runner.py", "src/molgap/family_training_kernel.py",
-         "src/molgap/pcqm_gptrans_v4.py", "src/molgap/gptrans.py",
-         "src/molgap/gptrans_capacity.py", "src/molgap/gptrans_cycle_pair.py",
-         "src/molgap/gptrans_cycle_inputs.py", "src/molgap/pcqm_fixed_records.py",
-         "src/molgap/gptrans_research_campaign.py", "src/molgap/gptrans_triplet_communication.py",
-         "src/molgap/gptrans_local_relation.py", "src/molgap/bond_message_carry.py"),
-        target_identity_in_completion=True, profile_adapter="molgap.family_execution_profile"),
-    ("neural_atom_k1", "2"): TrainingAdapter(
-        ("neural_atom_k1", "2"), "molgap.k1_screen_training", "k1-screen-v1",
-        (TrainingAddon("k1_joint_aggregation", "1", "ssma"),), ("molgap.pcqm_wedge",),
-        ("src/molgap/k1_screen_training.py", "src/molgap/qm9_neural_atom.py",
-         "src/molgap/qm9_local_hierarchy.py", "src/molgap/qm9_gape.py",
-         "src/molgap/pcqm_gap_architecture.py", "src/molgap/gps.py", "src/molgap/pcqm_wedge.py"),
-        profile_adapter="molgap.k1_legacy_execution_profile"),
-    ("gptrans_t", "1"): TrainingAdapter(
-        ("gptrans_t", "1"), "molgap.gptrans_screen_workflow", "gptrans-v1",
-        tuple(TrainingAddon(name, "1", name) for name in
-              ("pair_prenorm", "centered_logits", "memory_value", "memory_message")),
-        ("molgap.pcqm_wedge",),
-        ("src/molgap/gptrans_screen_workflow.py", "src/molgap/pcqm_gptrans_v4.py",
-         "src/molgap/gptrans.py", "src/molgap/gptrans_variants.py", "src/molgap/pcqm_wedge.py"),
-        profile_adapter="molgap.gptrans_legacy_execution_profile"),
-})
+def catalog_addons(family):
+    """Read-only execution projection of the single human-maintained catalog."""
+    result=[]
+    for (name,version), contract in ADDONS.items():
+        if contract.family != family[0]:
+            continue
+        modes=dict(contract.execution_modes)
+        if len(modes) != len(contract.execution_modes):
+            raise ValueError("Duplicate catalog execution family version")
+        if family[1] in modes:
+            result.append(TrainingAddon(name,version,modes[family[1]],contract.extra_source_files,
+                                        contract.apply_hook,contract.policy_hook))
+    return tuple(result)
+
+
+def _catalog_training_adapters():
+    result={}
+    for key, contract in FAMILIES.items():
+        entry=contract.execution
+        if entry is None:
+            continue
+        if entry.model_factory is not None:
+            adapter=graph_training_adapter(key, model_factory=entry.model_factory,
+                addons=catalog_addons(key), source_files=entry.source_files,
+                serialization_modules=entry.serialization_modules,
+                cpu_synthetic_only=entry.cpu_synthetic_only)
+            if (adapter.module,adapter.artifact_adapter) != (entry.module,entry.artifact_adapter):
+                raise ValueError("Catalog graph family execution boundary differs from its owner")
+        else:
+            adapter=TrainingAdapter(key,entry.module,entry.artifact_adapter,catalog_addons(key),
+                entry.serialization_modules,entry.source_files,entry.model_factory,
+                entry.target_identity_in_completion,entry.profile_adapter,entry.cpu_synthetic_only)
+        result[key]=adapter
+    return result
+
+
+TRAINING_ADAPTERS = MappingProxyType(_catalog_training_adapters())
 
 SESSION_INTERFACES = MappingProxyType({"neural_atom_k1": ("neural_atom_k1", "3"),
     "gptrans_t": ("gptrans_t", "2"), "ppgt_small": ("ppgt_small", "1"),
