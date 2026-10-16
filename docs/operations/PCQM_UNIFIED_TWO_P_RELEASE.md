@@ -46,3 +46,27 @@ GPU work, production/legacy conclusion change or platform mirror publication
 is released by this repair. Missing native allocation cost stays explicit.
 Stop on data acceptance or an actionable blocked condition; scientific-model
 and indexed-loader release remain separate tasks.
+
+## Source ABI repair and bounded identity reuse
+
+The first complete v4 attempt verified all3,378,606 identities and33 expected
+fallbacks, then stopped before graph derivation. CPU source observation proved
+the first accepted50K shard also carries scalar int8 `smiles_sanitized` and
+`split_code` provenance. These are not extra model features or geometry. The
+projection validates boolean/code ranges and removes only these two fields;
+all six model-facing tensors retain their original objects/values. Unknown
+fields and3D inputs still fail closed. Old source payloads are read-only.
+
+An infrastructure-only successor may explicitly import that **complete**
+identity checkpoint with `MOLGAP_REUSE_IDENTITY_ROOT`,
+`MOLGAP_REUSE_IDENTITY_AUDIT_SHA` and `MOLGAP_REUSE_IDENTITY_DATABASE_SHA`.
+Only generator/source provenance may differ: parser SHA, molecular rule,
+ledger/authority, RDKit, source data, exclusions, sampling and counts must match
+exactly. Reuse requires closed SQLite bytes without WAL, the pinned database
+and verified audit, a separate output and atomic no-overwrite publication.
+The parent stays immutable. Existing per-chunk recovery still verifies source
+SHA and continues; no second parser/recovery implementation is introduced.
+V2/v3 keys cannot enter v4 by this mechanism. Reuse proves only identity input,
+never graph/data acceptance. Acceptance and final role membership checks run
+again under the frozen repaired source. Compare successor member bytes with
+the retained first-attempt arrays before accepting an infrastructure-only claim.

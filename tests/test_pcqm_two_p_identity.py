@@ -137,3 +137,53 @@ def test_source_topology_probe_is_observation_only_and_readonly(tmp_path):
     assert result['observed_rows']==30 and result['expected_rows']==30
     assert not result['data_role_accepted'] and not result['graphs_rebuilt']
     assert {p.name:sha256_file(p) for p in fixed.iterdir()}==before
+
+
+def test_only_known_provenance_is_projected_without_model_tensor_changes(tmp_path):
+    import torch
+    from molgap.pcqm_unified_roles import _project_source_graph
+    from molgap.packed_graph_dataset import PackedGraphDataset
+    fixed,r=source_fixture(tmp_path);g=PackedGraphDataset(fixed/'train.pt').get(0)
+    g.smiles_sanitized=torch.tensor([1],dtype=torch.int8);g.split_code=torch.tensor([0],dtype=torch.int8)
+    clean=_project_source_graph(g)
+    assert not {'smiles_sanitized','split_code'}&set(clean.keys())
+    assert {'smiles_sanitized','split_code'}<=set(g.keys())
+    assert all(getattr(clean,k) is getattr(g,k) for k in ('x','edge_index','edge_attr','random_walk_pe','y','source_idx'))
+    g.split_code=torch.tensor([3],dtype=torch.int8)
+    with pytest.raises(ValueError,match='provenance'):_project_source_graph(g)
+    g.split_code=torch.tensor([0],dtype=torch.int8);g.pos=torch.zeros((1,3))
+    with pytest.raises(ValueError,match='Non-2D'):_project_source_graph(g)
+
+
+def identity_parent(tmp_path):
+    fixed,r=source_fixture(tmp_path);r=compatible_rule(r)
+    ledger=tmp_path/'old_ledger.json';ledger.write_bytes(Path(__file__).resolve().parents[1].joinpath('experiments/pcqm_k1_scale500k/parser_fallback_audit_v4.json').read_bytes())
+    parent=tmp_path/'parent'
+    prepare_unified_roles(boundary=tmp_path,fixed_root=fixed,output_root=parent,rule=r,fallback_ledger=ledger,identity_only=True)
+    reuse={'root':parent,'audit_sha256':sha256_file(parent/'molecular_identity_audit.json'),
+           'database_sha256':sha256_file(parent/'private_identity.sqlite')}
+    return fixed,r,ledger,parent,reuse
+
+
+def test_hash_bound_complete_identity_reuse_skips_parsing_and_preserves_parent(tmp_path,monkeypatch):
+    import molgap.pcqm_unified_roles as owner
+    fixed,r,ledger,parent,reuse=identity_parent(tmp_path)
+    before={p.name:sha256_file(p) for p in parent.iterdir()}
+    r=deepcopy(r);r['source_commit']='e'*40;r['generator_sha256']='b'*64
+    monkeypatch.setattr(owner,'inventory_rows',lambda *a,**k:(_ for _ in ()).throw(AssertionError('must reuse complete identities')))
+    kwargs=dict(boundary=tmp_path,fixed_root=fixed,output_root=tmp_path/'reused',rule=r,fallback_ledger=ledger,identity_reuse=reuse)
+    result=prepare_unified_roles(**kwargs)
+    assert result['status']=='SYNTHETIC_DATA_ROLES_VERIFIED'
+    assert prepare_unified_roles(**kwargs)==result
+    assert {p.name:sha256_file(p) for p in parent.iterdir()}==before
+
+
+@pytest.mark.parametrize('tamper',['seed','audit_sha','database_sha','wal'])
+def test_identity_reuse_cannot_accept_changed_contract_or_unclosed_bytes(tmp_path,tamper):
+    fixed,r,ledger,parent,reuse=identity_parent(tmp_path)
+    if tamper=='seed':r['seed']=43
+    elif tamper=='audit_sha':reuse['audit_sha256']='0'*64
+    elif tamper=='database_sha':reuse['database_sha256']='0'*64
+    else:(parent/'private_identity.sqlite-wal').write_bytes(b'not-closed')
+    with pytest.raises(ValueError,match='Identity reuse'):
+        prepare_unified_roles(boundary=tmp_path,fixed_root=fixed,output_root=tmp_path/'reused',rule=r,fallback_ledger=ledger,identity_reuse=reuse)

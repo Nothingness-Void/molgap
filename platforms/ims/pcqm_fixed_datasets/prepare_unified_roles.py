@@ -20,10 +20,19 @@ def main():
     parser.add_argument("--identity-audit-sha256")
     parser.add_argument("--explicit-fallback-h",action="store_true")
     parser.add_argument("--inspect-source-topology",action="store_true")
+    parser.add_argument("--reuse-identity-root",type=Path)
+    parser.add_argument("--reuse-identity-audit-sha256")
+    parser.add_argument("--reuse-identity-database-sha256")
     args=parser.parse_args()
     if not 1 <= args.workers <= 4:
         parser.error("CPU preparation is limited to four workers")
     try:
+        reuse=None
+        if args.reuse_identity_root is not None:
+            if not args.reuse_identity_audit_sha256 or not args.reuse_identity_database_sha256:
+                parser.error("Identity reuse requires audit and database SHA pins")
+            reuse={'root':args.reuse_identity_root,'audit_sha256':args.reuse_identity_audit_sha256,
+                   'database_sha256':args.reuse_identity_database_sha256}
         if args.inspect_source_topology:
             from molgap.pcqm_unified_roles import inspect_unified_source_topology
             result=inspect_unified_source_topology(boundary=args.boundary,fixed_root=args.fixed_root,
@@ -39,7 +48,7 @@ def main():
             result=prepare_unified_roles(boundary=args.boundary,fixed_root=args.fixed_root,
                 output_root=args.output_root,rule=json.loads(args.rule.read_text()),workers=args.workers,
                 role_inventory=args.role_inventory, fallback_ledger=args.fallback_ledger,
-                identity_only=args.identity_only)
+                identity_only=args.identity_only,identity_reuse=reuse)
         print(json.dumps(result,indent=2))
     except Exception as exc:
         # The module validates output confinement before writing anything.

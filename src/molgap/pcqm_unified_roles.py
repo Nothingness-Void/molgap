@@ -32,6 +32,7 @@ MOLECULE_RULE = "rdkit-canonical-isomeric-smiles-clear-atom-maps-v1"
 TRAIN_ROLES = ("train_100k", "train_500k", "train_1m", "full_minus_holdout")
 ALL_ROLES = (*TRAIN_ROLES, "common_dev", "independent_audit")
 GRAPH_FIELDS = frozenset({"x", "edge_index", "edge_attr", "random_walk_pe", "source_idx", "y"})
+SOURCE_METADATA_FIELDS = frozenset({"smiles_sanitized", "split_code"})
 COMPATIBLE_RULES = {COMPAT_MOLECULE_RULE, EXPLICIT_H_MOLECULE_RULE, TWO_P_MOLECULE_RULE}
 EXPLICIT_H_RULES = {EXPLICIT_H_MOLECULE_RULE, TWO_P_MOLECULE_RULE}
 
@@ -284,8 +285,62 @@ def inspect_unified_source_topology(*, boundary, fixed_root, output_root, rule):
     return report
 
 
+def _project_source_graph(graph):
+    """Drop only validated source provenance, never model tensors or geometry."""
+    import torch
+    from torch_geometric.data import Data
+    unknown=set(graph.keys())-(GRAPH_FIELDS|SOURCE_METADATA_FIELDS|{"num_nodes"})
+    if unknown:raise ValueError("Non-2D/unknown source graph fields: "+str(sorted(unknown)))
+    for name in SOURCE_METADATA_FIELDS & set(graph.keys()):
+        value=getattr(graph,name)
+        allowed=(0,1) if name=="smiles_sanitized" else (0,1,2)
+        if not torch.is_tensor(value) or value.dtype!=torch.int8 or value.numel()!=1 or int(value.item()) not in allowed:
+            raise ValueError("Invalid source provenance metadata: "+name)
+    return Data(**{k:v for k,v in graph.to_dict().items() if k not in SOURCE_METADATA_FIELDS})
+
+
+def _reuse_complete_identity(boundary, output, rule, reuse):
+    """Explicit immutable input copy; existing SQLite chunk recovery stays owner.
+
+    Only source/generator provenance may differ. Parser, rule, data, roles,
+    runtime and all scientific identity fields must be exactly unchanged.
+    """
+    parent=_safe(boundary,reuse["root"])
+    if _inside(output,parent) or _inside(parent,output):raise ValueError("Separate identity reuse output required")
+    original=json.loads(repo_local_path(parent,'rule.json').read_text())
+    if any(original.get(k)!=v for k,v in rule.items() if k not in {'source_commit','generator_sha256'}):
+        raise ValueError("Identity reuse scientific/parser/data contract changed")
+    audit_path=repo_local_path(parent,'molecular_identity_audit.json');db_path=repo_local_path(parent,'private_identity.sqlite')
+    if sha256_file(audit_path)!=reuse['audit_sha256'] or sha256_file(db_path)!=reuse['database_sha256']:
+        raise ValueError("Identity reuse source bytes changed")
+    if (db_path.with_name(db_path.name+'-wal')).exists():
+        raise ValueError("Identity reuse requires a closed checkpoint without WAL")
+    db=sqlite3.connect('file:'+db_path.as_posix()+'?mode=ro&immutable=1',uri=True)
+    try:
+        audit=molecular_audit(db,original)
+        if json.loads(audit_path.read_text())!=audit or audit['status']!='IDENTITIES_VERIFIED':
+            raise ValueError("Identity reuse requires complete verified membership")
+    finally:db.close()
+    binding={'parent_rule_identity':validate_rule(original),'rule_identity':validate_rule(rule),
+             'parent_root':str(parent),'database_sha256':reuse['database_sha256'],'audit_sha256':reuse['audit_sha256'],
+             'scientific_identity_unchanged':True,'status':'IMMUTABLE_IDENTITY_INPUT_ONLY_NOT_DATA_ACCEPTANCE'}
+    dest=output/'private_identity.sqlite';receipt=output/'identity_reuse.json'
+    if receipt.exists():
+        if json.loads(receipt.read_text())!=binding or not dest.exists():raise ValueError("Identity reuse binding changed")
+        return
+    if dest.exists():
+        if sha256_file(dest)!=reuse['database_sha256']:raise ValueError("Unbound identity reuse destination")
+    else:
+        # Remote CPU only: reuse atomic no-overwrite IO, not a second recovery
+        # implementation. These source bytes are not graph/model reconstruction.
+        raw=db_path.read_bytes()
+        if hashlib.sha256(raw).hexdigest()!=reuse['database_sha256']:raise ValueError("Identity reuse changed during copy")
+        publish_immutable_bytes(dest,raw)
+    publish_immutable_bytes(receipt,json_bytes(binding))
+
+
 def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1, role_inventory=None,
-                          fallback_ledger=None, identity_only=False):
+                          fallback_ledger=None, identity_only=False, identity_reuse=None):
     """IMS CPU owner: reuse accepted row/topology bytes, derive role-only chunks.
 
     No official validation/test shard is selected. Checkpoints are per source
@@ -348,6 +403,8 @@ def prepare_unified_roles(*, boundary, fixed_root, output_root, rule, workers=1,
         accept_unified_roles(output, rule=rule)
         return previous
     started, cpu_start = time.monotonic(), time.process_time()
+    if identity_reuse is not None:
+        _reuse_complete_identity(boundary,output,rule,identity_reuse)
     db = sqlite3.connect(output/"private_identity.sqlite")
     db.execute("PRAGMA journal_mode=WAL")
     db.execute("CREATE TABLE IF NOT EXISTS chunks (path TEXT PRIMARY KEY, sha TEXT, rows INTEGER)")
@@ -486,15 +543,15 @@ def _derive_graph_chunks(fixed, output, source, db, roles, rule_id):
                 _pin(output, item); records[role].append(item)
             continue
         shard = PackedGraphDataset(path, mmap=True)
-        if len(shard) != stop-start or not set(shard._data.keys()) <= GRAPH_FIELDS | {"num_nodes"}:
-            raise ValueError("Non-2D/unknown topology field or row count")
+        if len(shard) != stop-start or not set(shard._data.keys()) <= GRAPH_FIELDS | SOURCE_METADATA_FIELDS | {"num_nodes"}:
+            raise ValueError("Non-2D/unknown topology field or row count: "+str(sorted(shard._data.keys())))
         source_ids = shard._data.source_idx.reshape(-1)
         if source_ids.dtype != torch.int64 or not torch.equal(source_ids, torch.arange(start, stop)):
             raise ValueError("Source topology membership/order differs")
         raw_targets = dict(db.execute("SELECT idx,target FROM rows WHERE idx>=? AND idx<?", (start, stop)))
         chosen = defaultdict(list)
         for offset in range(len(shard)):
-            graph = shard.get(offset)
+            graph = _project_source_graph(shard.get(offset))
             idx = start+offset
             if set(graph.keys()) - (GRAPH_FIELDS | {"num_nodes"}):
                 raise ValueError("Forbidden 3D or unknown graph field")
