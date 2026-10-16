@@ -1,0 +1,19 @@
+{
+  "status": "MEMBERSHIP_OBSERVATION_NOT_DATA_ACCEPTANCE",
+  "job_id": "1733250.ccpbs1",
+  "operation": "SHA256 of both native members/<role>.i64le files; no label or model access",
+  "parent_root": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-si-two-p-r1",
+  "successor_root": "/lustre/home/users/sm2/chou/pcqm4mv2-unified-v2-si-two-p-r2",
+  "all_six_roles_byte_identical": true,
+  "roles": {
+    "train_100k": {"rows": 100000, "both_file_sha256": "baa5f49fbad78af4964d9ec7eaf2d6327b2d2ca1f4dcf54e2394dfff2e36d58e"},
+    "train_500k": {"rows": 500000, "both_file_sha256": "be4b3c536ea19ff1514e0cf2d086c66fd06ba637c2b0b48d7768dd8b42f57cad"},
+    "train_1m": {"rows": 1000000, "both_file_sha256": "6f8f1531c1170336132e3a5cf9fde98aa28840393edd4387ab4d7c7e743586fb"},
+    "full_minus_holdout": {"rows": 3275585, "both_file_sha256": "242ed2c5847260ebc3fb8a6433d46d138bb52e7a02ac1a256f18e75d656acb7f"},
+    "common_dev": {"rows": 50000, "both_file_sha256": "5312b19ce977459aac827770d8b73dcda896be43bc91d14014fc1292c7698a89"},
+    "independent_audit": {"rows": 50000, "both_file_sha256": "fe3b08e4a34d965e121c1636c191ac24a09ab7e38f0e901887c32e552dc97bcd"}
+  },
+  "data_role_accepted": false,
+  "training_submitted": false,
+  "audit_metrics_computed": false
+}

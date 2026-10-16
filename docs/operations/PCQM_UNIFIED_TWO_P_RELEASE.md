@@ -7,6 +7,9 @@ remains historical evidence, not silently reinterpreted. Live state is only in
 `CURRENT_STATE.md`; platform evidence is separate under `two_p_release/`.
 The [exact CPU launch receipt](../../platforms/_records/ims/pcqm_unified_roles_v2/two_p_release/cpu_launch.json)
 pins actual submitted job, source, rule, authority and resource ceiling.
+The [ABI-repair receipt](../../platforms/_records/ims/pcqm_unified_roles_v2/two_p_release/abi_repair_launch.json)
+binds the infrastructure-only successor and its complete identity input; the
+first attempt's failure evidence is retained, not overwritten.
 
 ## Delta and reuse
 

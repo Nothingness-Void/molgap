@@ -34,6 +34,23 @@
   "parent_attempt": "1732909.ccpbs1",
   "source_topology_observation_job": "1733018.ccpbs1",
   "source_topology_observation_sha256": "ed7a85316217189ea8186af2b06bad5169bbdc12e6e6aa38174c5e3e1722fbb6",
+  "retrieved_identity_reuse_sha256": "bd292494721ede863db28c09ed725e3a0ae977d65834b57cb50e2db5691f1234",
+  "retrieved_identity_audit_sha256": "a4c0b5c68f125afec1c461d505e83ae1d29d84b684ee2bbd24e9b6ba29649f34",
+  "membership_observation": "membership_observation.json",
+  "last_observation": {
+    "date_jst": "2026-10-16",
+    "scheduler_status": "RUNNING",
+    "stage": "DERIVED_GRAPH_CHUNKS",
+    "last_source_stop": 400000,
+    "acceptance_published": false,
+    "failure_published": false
+  },
+  "documentation_checks": {
+    "passed": 35,
+    "failed": 0,
+    "junit_sha256": "bb53779c7f881cdb564b05c51dbfa3b4f1d2ddf4ad9bec0f1c70a55620ccd299",
+    "counts_overlap_with_regression": true
+  },
   "training_submitted": false,
   "model_scoring": false,
   "graphs_rebuilt": false,
