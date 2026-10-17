@@ -13,6 +13,20 @@ declaration root, rather than exporting an arbitrary historical results tree.
 The preparation path verifies that pin and the freezer applies the existing
 source allowlist. No model, scientific contract or dataset change was introduced.
 
+The final retry/preparation suite passed32/32 in79.03s. Its JUnit SHA256 was
+`5739ccbe3e1091f1b5d84354293cbdbb74fe806f71d587b1f244c9bffd232f2a`.
+Actual committed V4 preparation passed in29.5637087s, followed by all12 remote
+file hash checks and the separate launch/core release guards. The four modified
+runtime modules' normalized hashes matched the archived inventory. RML validation
+passed; its frozen check reported only the known seven user-derived outputs,
+which were not rebuilt. All14 preserved user-file pins matched before submission.
+
+The pre-POST adapter initially received a wrapper around the shared release
+report and rejected it locally, before HTTP. That wrapper and local failure were
+preserved; its unchanged `check_release_inputs` core was published separately
+and accepted by the adapter. No validator was bypassed and only one remote
+kernel submission followed.
+
 The unchanged device/registry CPU checks remain linked above; the owning status
 must separately report actual immutable preparation, private remote byte checks,
 exact submission identity, native numerical qualification and complete cost.
