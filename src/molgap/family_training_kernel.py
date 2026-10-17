@@ -79,7 +79,7 @@ def make_family_optimizer(recipe, parameters):
 
 class FamilyKernel:
     """Exclusively owned by one worker; never shared by concurrent threads."""
-    def __init__(self, recipe: FamilyRecipe, initial_state: Path, *, device):
+    def __init__(self, recipe: FamilyRecipe, initial_state: Path, *, device, qualification=None):
         import torch
 
         if type(recipe) is not FamilyRecipe:
@@ -89,7 +89,14 @@ class FamilyKernel:
         self.recipe, self.device = recipe, torch.device(device)
         if recipe.cpu_synthetic_only and self.device.type != "cpu":
             raise ValueError("CPU synthetic family cannot allocate an accelerator")
-        if recipe.integration_preview and self.device.type != "cpu":
+        self._qualification_admission = None
+        if qualification is not None:
+            from .modern2d_qualification import _QualificationAdmission
+            if type(qualification) is not _QualificationAdmission or self.device.type != "cuda":
+                raise TypeError("Only a process-local bounded qualification admission permits preview CUDA")
+            qualification.validate(recipe)
+            self._qualification_admission = qualification
+        if recipe.integration_preview and self.device.type != "cpu" and self._qualification_admission is None:
             raise ValueError("INTEGRATION_PENDING: Modern2D session preview cannot allocate an accelerator")
         self.initial_state = Path(initial_state)
         self.update_observer = None
@@ -158,6 +165,10 @@ class FamilyKernel:
         return validate_model_output(model(batch), rows=int(batch.num_graphs), device=self.device)
 
     def step(self, cpu_batch, *, check_finite, observer=None):
+        if self._qualification_admission is not None:
+            if int(cpu_batch.num_graphs) != 128:
+                raise ValueError("Qualification requires physical batch128")
+            self._qualification_admission.before_update(self.recipe)
         observer = observer if observer is not None else getattr(self, "update_observer", None)
         mean, std = self.recipe.target_mean_eV, self.recipe.target_std_eV
         if self.recipe.cpu_synthetic_only or self.recipe.integration_preview:
@@ -219,6 +230,8 @@ class FamilyKernel:
 
     def forward(self, cpu_batch, *, model=None):
         """One owning forward for Live/Raw views or an independent Clean model."""
+        if self._qualification_admission is not None:
+            raise ValueError("Qualification admission permits scratch updates only, not evaluation")
         model = self.model if model is None else model
         if self.recipe.cpu_synthetic_only:
             from .shared_model_adapter import validate_model_output

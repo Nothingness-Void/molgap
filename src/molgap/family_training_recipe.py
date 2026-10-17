@@ -118,6 +118,7 @@ class FamilyRecipe:
     clean_bn: CalibrationPolicy | None = None
     model_config: object | None = None
     family_version: str | None = None
+    qualification: object | None = None
 
     def __post_init__(self):
         from .experiment_spec import _digest
@@ -138,7 +139,7 @@ class FamilyRecipe:
                 if self.integration_preview:
                     raise ValueError("Modern2D integration preview requires explicit reference configuration; synthetic fixtures are bounded to 256 train/128 development rows, four steps")
                 raise ValueError("Modern2D profile is bounded CPU synthetic only")
-            if self.integration_preview and not bounded_fixture and (
+            if self.integration_preview and not bounded_fixture and self.qualification is None and (
                     self.train_rows not in (100000, 500000) or self.development_rows != 50000
                     or not self.dataset.development):
                 raise ValueError("Real-input integration preview requires accepted indexed 100K/500K train and 50K development declarations")
@@ -212,6 +213,11 @@ class FamilyRecipe:
         maximum_steps = self.schedule.total_units * (plan.steps_per_pass if self.schedule.epoch_based else 1)
         if self.optimizer_steps > maximum_steps:
             raise ValueError("Optimizer budget exceeds the frozen schedule")
+        if self.qualification is not None:
+            from .modern2d_qualification import QualificationProbe
+            if type(self.qualification) is not QualificationProbe:
+                raise TypeError("Expected explicit Modern2D QualificationProbe")
+            self.qualification.validate(self)
 
     @property
     def cpu_synthetic_only(self):
@@ -259,12 +265,17 @@ class FamilyRecipe:
             policy.update(name="modern2d-session-preview-v1", scope="INTEGRATION_PREVIEW_ONLY",
                           cpu_layout=False, device="cpu", native_qualification="INTEGRATION_PENDING",
                           feature_transform_source_sha256=indexed_transform_identity(self.interface))
+        if self.qualification is not None:
+            policy.update(scope="QUALIFICATION_ONLY", device="cpu_or_admitted_cuda",
+                          native_qualification="NOT_EVALUATED")
         return policy
 
     def to_dict(self):
         values = asdict(self)
         if self.family_version is None:
             values.pop("family_version")
+        if self.qualification is None:
+            values.pop("qualification")
         if self.model_config is None:
             values.pop("model_config")
         if self.input_sidecar is None:
@@ -292,7 +303,7 @@ class FamilyRecipe:
             expected.remove("input_sidecar")
         if type(record) is dict and "k1_execution" not in record:
             expected.remove("k1_execution")
-        for name in ("addons", "clean_bn", "model_config", "family_version"):
+        for name in ("addons", "clean_bn", "model_config", "family_version", "qualification"):
             if type(record) is dict and name not in record:
                 expected.remove(name)
         if type(record) is not dict or set(record) != expected or record["format"] != RECIPE_FORMAT:
@@ -303,6 +314,11 @@ class FamilyRecipe:
         try:
             values["dataset"] = DatasetSelection(**values["dataset"])
             values["schedule"] = ScheduleSpec(**values["schedule"])
+            if "qualification" in values:
+                from .modern2d_qualification import QualificationProbe
+                if type(values["qualification"]) is not dict:
+                    raise ValueError("Qualification probe must be an object")
+                values["qualification"] = QualificationProbe(**values["qualification"])
             if "input_sidecar" in values:
                 values["input_sidecar"] = DatasetSelection(**values["input_sidecar"])
             if "k1_execution" in values:

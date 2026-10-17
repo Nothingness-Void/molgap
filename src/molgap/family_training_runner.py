@@ -280,7 +280,27 @@ def _state_fingerprint(value):
     return canonical_fingerprint(encode(value))
 
 
-def run_screen_preflight(**options):
+def run_screen_preflight(*, qualification=None, **options):
+    """Ordinary native gate, or explicit bounded Modern2D qualification only."""
+    began = time.perf_counter()
+    output = options.pop("output")
+    if qualification is None:
+        prepared = _bootstrap(training_only=True, **options)
+        admission = None
+    else:
+        from .modern2d_qualification import bootstrap_qualification
+        from .common.io import _safe_local
+        scratch = Path(output).absolute()
+        _safe_local(scratch)
+        if scratch.exists() and (not scratch.is_dir() or any(scratch.iterdir())):
+            raise ValueError("Qualification output must be a fresh scratch directory")
+        prepared, admission = bootstrap_qualification(qualification, began=began, **options)
+    return _run_screen_preflight(prepared, output=output, options=options,
+        qualification=admission, began=began)
+
+
+def _run_screen_preflight(prepared, *, output, options, device="cuda", qualification=None,
+                          synthetic=False, began=None):
     """Scratch repeat/resume plus a GPTrans safety-fill reference; never dev."""
     import torch
     from .k1_execution_qualification import (
@@ -291,12 +311,25 @@ def run_screen_preflight(**options):
     from .family_training_loaders import FamilyLoaders
     from .family_training_session import FamilyTrainingSession
     from .training_reproducibility import configure_fp32_determinism
-    began = time.perf_counter()
-    output = Path(options.pop("output")).absolute()
-    record, recipe, data, tuning, context, provenance, _ = _bootstrap(training_only=True, **options)
+    began = time.perf_counter() if began is None else began
+    output = Path(output).absolute()
+    from .common.io import _safe_local
+    _safe_local(output)
+    record, recipe, data, tuning, context, provenance, _ = prepared
+    bounded = recipe.qualification is not None
+    if bounded and (qualification is None) != synthetic:
+        raise ValueError("Qualification requires a native admission or explicit synthetic CPU route")
+    if bounded and output.exists() and (not output.is_dir() or any(output.iterdir())):
+        raise ValueError("Qualification output must be a fresh scratch directory")
+    if bounded and not synthetic:
+        _loaded_source(options["package_dir"])
     # Preflight consumes training topology only, never development selection.
     probe = _probe_recipe(recipe)
-    data = replace(data, development=None, development_rows=0, development_source_start=None)
+    data = replace(data, development=None, development_rows=0, development_source_start=None,
+                   development_source_indices=None)
+    if qualification is not None:
+        qualification.validate(probe)
+        torch.cuda.reset_peak_memory_stats()
     output.mkdir(parents=True, exist_ok=True)
     proofs = []
     profile_proof = None
@@ -305,8 +338,10 @@ def run_screen_preflight(**options):
     if recipe.family == "gptrans_t":
         labels += ("fill-enabled",)
     for label in labels:
+        path_began = time.perf_counter()
         configure_fp32_determinism(recipe.seed)
-        kernel = FamilyKernel(probe, Path(options["initial_state_path"]), device="cuda")
+        kernel_options = {"qualification": qualification} if qualification is not None else {}
+        kernel = FamilyKernel(probe, Path(options["initial_state_path"]), device=device, **kernel_options)
         kernel._qualification_memory_fill = label == "fill-enabled"
         observations = []
         def observe_execution(boundary):
@@ -316,7 +351,8 @@ def run_screen_preflight(**options):
                 "warn_only": torch.is_deterministic_algorithms_warn_only_enabled()})
         if label == "fill-enabled":
             kernel._qualification_execution_observer = observe_execution
-        _loaded_source(options["package_dir"])
+        if not synthetic:
+            _loaded_source(options["package_dir"])
         def checkpoint(progress, state):
             payload = state
             if label == "fill-enabled":
@@ -332,7 +368,8 @@ def run_screen_preflight(**options):
             session.run(should_pause=lambda: True)
             retained = torch.load(output / (label + ".pt"), map_location="cpu", weights_only=True)
             atomic_torch_save(output / "resumed-first.pt", retained)
-            kernel = FamilyKernel(probe, Path(options["initial_state_path"]), device="cuda")
+            del session, kernel
+            kernel = FamilyKernel(probe, Path(options["initial_state_path"]), device=device, **kernel_options)
             session = FamilyTrainingSession(kernel, FamilyLoaders(probe, data, tuning),
                 checkpoint=checkpoint, selected=lambda *args: None, pass_finished=lambda *args: None)
             session.load_state_dict(retained)
@@ -351,10 +388,19 @@ def run_screen_preflight(**options):
         state = retained["state"] if label == "fill-enabled" else retained
         proof = {"path": label + ".pt", "sha256": normalized_file_sha(output / (label + ".pt")),
             "state_fingerprint": _state_fingerprint(state)}
+        if bounded:
+            proof["process_wall_seconds"] = time.perf_counter() - path_began
         if label == "fill-enabled":
             memory_fill_proof = proof
         else:
             proofs.append(proof)
+        if bounded:
+            from .family_training_session import validate_session_resume
+            if validate_session_resume(probe, state).status != "complete":
+                raise ValueError("Qualification scratch endpoint is incomplete")
+            if qualification is not None:
+                qualification.validate(probe)
+        del session, kernel, state, retained
     if len({proof["state_fingerprint"] for proof in proofs}) != 1:
         raise ValueError("Native optimizer/EMA/schedule/RNG repeat or serialized resume differs")
     if memory_fill_proof is not None:
@@ -407,8 +453,32 @@ def run_screen_preflight(**options):
         certificate["execution_proof"] = execution_proof
     if resource is not None:
         certificate["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
+    if bounded:
+        from .modern2d_qualification import CERTIFICATE_FORMAT
+        if qualification is not None and qualification.updates != probe.qualification.scratch_updates_per_model:
+            raise ValueError("Qualification did not execute exactly six scratch optimizer updates")
+        certificate.update(format=CERTIFICATE_FORMAT,
+            status="CPU_SYNTHETIC_VERIFIED" if synthetic else "QUALIFICATION_VERIFIED",
+            scope="CPU_SYNTHETIC_ONLY" if synthetic else "QUALIFICATION_ONLY",
+            native_execution_released=False, scratch_optimizer_updates=6,
+            qualification_context_identity=qualification.context.identity if qualification is not None else None)
+        resource = {"scope": certificate["scope"], "physical_batch_size": 128,
+            "scratch_optimizer_updates": 6, "process_wall_seconds": time.perf_counter() - began,
+            "scratch_sample_presentations": 6 * probe.batch_size,
+            "end_to_end_scratch_samples_per_second": 6 * probe.batch_size / (time.perf_counter() - began),
+            "timing_scope": "input admission, model construction, repeat/resume updates and serialization",
+            "peak_allocated_bytes": torch.cuda.max_memory_allocated() if not synthetic else None,
+            "peak_reserved_bytes": torch.cuda.max_memory_reserved() if not synthetic else None,
+            "allocated_accelerators": list(qualification.context.allocated_accelerators) if qualification is not None else [],
+            "allocation_wall_ceiling_seconds": qualification.context.max_wall_seconds if qualification is not None else None,
+            "allocated_device_seconds": None,
+            "allocation_accounting": "requires platform allocation observations"}
+        atomic_json(output / "resource_qualification.json", resource)
+        certificate["resource_qualification_sha256"] = normalized_file_sha(output / "resource_qualification.json")
+        if qualification is not None:
+            qualification.validate(probe)
     atomic_json(output / "runtime_certificate.json", certificate)
-    atomic_json(output / "preflight_costs.json", {"context": context.to_dict(), "costs": [
+    atomic_json(output / "preflight_costs.json", {"context": provenance["context"], "costs": [
         {"metric": "wall_seconds", "unit": "seconds", "value": time.perf_counter() - began,
             "status": "measured", "semantics": "process_wall", "hardware": provenance["accelerator"],
             "scope": "native qualification entry through proof publication"},
@@ -425,6 +495,11 @@ def normalized_file_sha(path):
 
 
 def _probe_recipe(recipe):
+    if recipe.integration_preview and not recipe.dataset.manifest.startswith("synthetic/"):
+        from .modern2d_qualification import QualificationProbe
+        return replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
+            optimizer_steps=2, checkpoint_every=1, finite_check_every=1,
+            selection="final-live", qualification=QualificationProbe())
     return replace(recipe, dataset=replace(recipe.dataset, development=False), development_rows=0,
         input_sidecar=replace(recipe.input_sidecar, development=False) if recipe.input_sidecar is not None else None,
         optimizer_steps=2, checkpoint_every=1,
@@ -459,6 +534,8 @@ def validate_screen_resume(*, spec, arm_id, manifest, bundle_root, artifacts, si
 
 def run_screen_resume_preflight(*, resume_output, **options):
     """Qualify initial repeat/resume plus two scratch next-steps from actual work."""
+    if options.get("qualification") is not None:
+        raise ValueError("Qualification-only admission cannot resume formal work")
     import torch
     from .family_training_kernel import FamilyKernel
     from .family_training_loaders import FamilyLoaders
@@ -558,6 +635,8 @@ def _verify_memory_fill_proof(root, probe, proof, expected_fingerprint, provenan
 
 
 def _verify_preflight(directory, recipe, provenance, *, profiling_required=False):
+    if recipe.integration_preview or recipe.qualification is not None:
+        raise ValueError("Qualification-only Modern2D evidence cannot admit formal training")
     import torch
     from .family_training_session import validate_session_resume
     from .k1_execution_qualification import _verify_execution_proof
@@ -657,6 +736,8 @@ def _finish_cost_interval(root, context, prior, elapsed):
 
 def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **options):
     """Same callable for every scale/platform; same-budget resume only."""
+    if options.get("qualification") is not None:
+        raise ValueError("Qualification-only context/recipe cannot enter formal training")
     import torch
     from .family_training_kernel import FamilyKernel
     from .family_training_loaders import FamilyLoaders
@@ -668,6 +749,8 @@ def run_screen_arm(*, output, preflight_dir=None, target_identity=None, **option
         # A completed retry only inspects immutable artifacts; no model/data is opened.
         from .experiment_family_workflow import inspect_output
         record, recipe = read_recipe(options["recipe_path"])
+        if recipe.integration_preview or recipe.qualification is not None:
+            raise ValueError("Qualification-only recipe cannot enter formal training")
         validate_screen_recipe(options["spec"], options["arm_id"], record)
         context = RunContext.for_training(options["spec"], options["package_dir"],
             expected_package_identity=options["expected_package_identity"], arm_id=options["arm_id"],

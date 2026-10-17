@@ -107,10 +107,35 @@ does not touch payloads by default; `--execute` performs only the CPU export.
 On IMS the boundary must be the authorized user root from `REMOTE_HANDOFF.md`,
 and execution must run in a scheduled high-memory CPU job, not on the login host.
 
+## Bounded qualification adapter
+
+`modern2d_input_preparation.prepare_qualification_inputs` freezes portable
+indexed bindings, selected-train-only FP64 normalization, membership tensor
+digests and default-version feature metadata from independently pinned selected
+exports. Run real payload work on scheduled CPU; outputs remain separate from
+the immutable export. It constructs no model and derives no tensor features.
+
+`modern2d_qualification.QualificationProbe` is a distinct train-only recipe:
+seed42, BS128, exactly two optimizer steps on each of three repeat/resume paths.
+`Modern2DQualificationContext` binds source/package/account, authority, accepted
+100K/Common-Dev permits and train-feature identity. A process-local expiring
+admission permits at most six scratch updates. The shared Session, sampler,
+optimizer and serialized state remain their existing owners. No Dev evaluation
+or formal continuation is available through this admission.
+
+The thin Kaggle bootstrap and `modern2d_qualification_runtime` supervise only
+those two independently isolated workers, the pinned environment and an atomic
+whole-allocation ledger. Environment startup and idle devices count inside the
+same thirty-minute allocation; unknown pre-Python provisioning stays unknown.
+Qualification certificates are distinct from screen certificates and are
+explicitly rejected by formal training. Synthetic results are separately marked
+`CPU_SYNTHETIC_VERIFIED`, never GPU-qualified. Actual releases and observations
+are recorded in the owning [bounded task](../../experiments/modern2d_model_integration/native_preflight/README.md).
+
 ## Remaining native/scientific boundary
 
-Real accepted assets still need a scheduled, budgeted export/census and private
-mirror verification. Feature timing and BS128 GPU numerical/optimizer/resume,
+Each release needs a scheduled, budgeted export/census and private mirror
+verification; actual status belongs to `CURRENT_STATE.md`. Feature timing and BS128 GPU numerical/optimizer/resume,
 memory/throughput and full-allocation cost are unmeasured. Then freeze the
 two-arm comparison, initial states, tuning/selection and resource contract;
 use the existing platform journal. No LR/horizon is silently inherited from
