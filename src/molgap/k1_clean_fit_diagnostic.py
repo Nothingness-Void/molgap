@@ -9,7 +9,7 @@ import time
 @contextmanager
 def retained_buffers(model, buffers, *, expected_sha256):
     import torch
-    from .v4_runtime import state_dict_sha256
+    from .training_runtime import state_dict_sha256
     current = dict(model.named_buffers())
     original = {name: value.detach().clone() for name, value in current.items()}
     parameters = state_dict_sha256(dict(model.named_parameters()))
@@ -58,7 +58,7 @@ def run(experiment, output):
     import torch
     from torch_geometric.loader import DataLoader
     from .training_reproducibility import sha256_file, atomic_json, atomic_torch_save
-    from .v4_runtime import state_dict_sha256
+    from .training_runtime import state_dict_sha256
     from .k1_frozen_inference import load_native500k_k1, predict_clean
     from .k1_bn_calibration import recalibrated_batch_norm
     if trajectory["state_at_start"]["source_config_identity"] != sha256_file(experiment / "inputs.json"):
@@ -78,7 +78,7 @@ def run(experiment, output):
     inventory = owner._json(inputs["source_inventory"]["path"])
     for entry in inventory["files"]:
         if entry["path"].startswith("src/molgap/"):
-            from .v4_runtime import normalized_source_sha256
+            from .training_runtime import normalized_source_sha256
             if normalized_source_sha256(Path(inputs["frozen_source_root"]) / entry["path"]) != entry["sha256"]:
                 raise ValueError("Frozen dependency differs")
     output.mkdir(exist_ok=False)

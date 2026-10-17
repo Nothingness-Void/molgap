@@ -8,7 +8,7 @@ from pathlib import Path
 
 from . import k1_screen_training as owner
 from .training_reproducibility import sha256_file
-from .v4_runtime import load_frozen_initial_state, validate_standard_source_bundle
+from .training_runtime import load_frozen_initial_state, validate_standard_source_bundle
 
 ARMS = ("reference", "fused_layout")
 FORMAT = "molgap-k1-local-speed-v1"

@@ -46,7 +46,7 @@ FAMILIES = MappingProxyType({
         "train-mean-unbiased-std", "ogb_edge_state_structural_gps9",
     ),
     ("gptrans_t", "1"): FamilyContract(
-        "gptrans_t", "1", "molgap.gptrans", "pcqm_gptrans_v4",
+        "gptrans_t", "1", "molgap.gptrans", "gptrans_screen_training",
         "ogb-atom9-bond3-shortest-path-cap20", ("train", "development"),
         "seed-plus-epoch-global-randperm-v1", "fixed-train-100k-mean-sample-std",
     ),
@@ -57,9 +57,9 @@ FAMILIES = MappingProxyType({
         "ogb_edge_state_structural_gps9",
     ),
     ("neural_atom_k1", "2"): FamilyContract(
-        "neural_atom_k1", "2", "molgap.k1_screen_training", "pcqm_k1_v4_100k",
+        "neural_atom_k1", "2", "molgap.k1_screen_training", "k1_screen_100k",
         "ogb-atom9-bond3-rwse16-v1", ("train", "development"),
-        "seed42-python-epoch-shuffle-v4", "fixed-train-100k-mean-sample-std",
+        "seed42-python-epoch-shuffle", "fixed-train-100k-mean-sample-std",
         "ogb_edge_state_structural_gps9",
     ),
 })
@@ -141,12 +141,31 @@ def _choice(value, choices, path: str) -> None:
         raise ValueError(f"{path}: unsupported value {value!r}")
 
 
+_HISTORICAL_NAMES = {
+    "gptrans_screen_training": ("pcqm_gptrans_v4",),
+    "k1_screen_100k": ("pcqm_k1_v4_100k",),
+    "seed42-python-epoch-shuffle": ("seed42-python-epoch-shuffle-v4",),
+    "seed43-python-epoch-shuffle": ("seed43-python-epoch-shuffle-v4",),
+}
+
+
+def validate_training_interface(arm):
+    """Live training uses canonical names; historical Spec parsing stays read-only."""
+    family = FAMILIES[(arm["family"]["name"], arm["family"]["version"])]
+    training = arm["training"]
+    sampler = (f"seed{arm['initialization']['seed']}-python-epoch-shuffle"
+               if family.name == "neural_atom_k1" and family.version == "2" else family.sampler)
+    if (training["recipe"].get("name") != family.recipe
+            or training["sampler"].get("name") != sampler):
+        raise ValueError("Retired training interface: build a new V5 recipe/Spec; do not rewrite frozen records")
+
+
 def _reference(value, path: str, *, name: str | None = None) -> None:
     _object(value, "name version sha256", path)
     _text(value["name"], path + ".name")
     _choice(value["version"], ("1",), path + ".version")
     _digest(value["sha256"], path + ".sha256")
-    if name is not None and value["name"] != name:
+    if name is not None and value["name"] not in (name, *_HISTORICAL_NAMES.get(name, ())):
         raise ValueError(f"{path}: expected {name}")
 
 
@@ -215,7 +234,7 @@ def _arm(arm: dict) -> None:
     if init["seed"] != 42 and not explicit_k1_replication:
         raise ValueError("Frozen recipe initialization requires seed 42")
     _reference(training["objective"], "training.objective", name="normalized-gap-l1")
-    sampler_name = "seed43-python-epoch-shuffle-v4" if explicit_k1_replication else contract.sampler
+    sampler_name = "seed43-python-epoch-shuffle" if explicit_k1_replication else contract.sampler
     _reference(training["sampler"], "training.sampler", name=sampler_name)
     _reference(training["transform"], "training.transform", name=contract.transform)
 

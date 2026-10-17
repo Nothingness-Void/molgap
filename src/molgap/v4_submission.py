@@ -1,7 +1,6 @@
-"""Validation and identity helpers for small V4 experiment submissions."""
+"""Read-only historical run-spec validation; not an execution or submission entry."""
 from __future__ import annotations
 
-import importlib
 import json
 import re
 from collections.abc import Mapping
@@ -200,24 +199,6 @@ def read_run_spec(path: Path, runtime_certificate: Mapping | None = None) -> dic
     return validate_run_spec(json.loads(path.read_text(encoding="utf-8")), runtime_certificate)
 
 
-def execute_run_spec(
-    spec: Mapping,
-    *,
-    mode: str,
-    runtime_certificate: Mapping | None = None,
-):
-    """Dispatch a validated spec to its small family-specific adapter."""
-    if mode not in {"preflight", "train"}:
-        raise ValueError("V4 execution mode must be preflight or train")
-    if mode == "preflight" and runtime_certificate is not None:
-        raise ValueError("Preflight creates the platform certificate; it does not consume one")
-    if mode == "train" and runtime_certificate is None:
-        raise ValueError("Training requires an accepted platform runtime certificate")
-    normalized = validate_run_spec(spec, runtime_certificate)
-    module_name, function_name = normalized["runner_entrypoint"].split(":", 1)
-    adapter = getattr(importlib.import_module(module_name), function_name)
-    return adapter(
-        mode=mode,
-        run_spec=normalized,
-        runtime_certificate=runtime_certificate,
-    )
+def execute_run_spec(spec, *, mode, runtime_certificate=None):
+    """Historical declarations never authorize new execution."""
+    raise RuntimeError("Retired run-spec dispatcher: use experiment_cli and the registered V5 workflow")

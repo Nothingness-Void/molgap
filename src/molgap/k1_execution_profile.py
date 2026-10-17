@@ -32,7 +32,7 @@ def run(root: Path, output: Path):
     from .k1_screen_training import _forward
     from .k1_pretrained_combo import objective
     from .training_reproducibility import atomic_json, configure_fp32_determinism, sha256_file
-    from .v4_runtime import state_dict_sha256
+    from .training_runtime import state_dict_sha256
 
     started, cpu_started = time.perf_counter(), time.process_time()
     deadline = started + 1200

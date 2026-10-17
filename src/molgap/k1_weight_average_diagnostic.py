@@ -42,7 +42,7 @@ def run(root: Path, output: Path):
     from .k1_bn_calibration import recalibrated_batch_norm
     from .k1_screen_training import FORBIDDEN_MODEL_FIELDS
     from .training_reproducibility import atomic_json, atomic_torch_save, configure_fp32_determinism, sha256_file
-    from .v4_runtime import state_dict_sha256
+    from .training_runtime import state_dict_sha256
     from .router import paired_bootstrap_mean
     if torch.__version__.split("+")[0] != "2.7.1":
         raise ValueError("Expected accepted CPU Torch2.7.1")

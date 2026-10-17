@@ -3,7 +3,7 @@ from pathlib import Path
 
 from torch_geometric.data import InMemoryDataset
 
-from .v4_runtime import torch_load_compat
+from .training_runtime import torch_load_compat
 
 
 class PackedGraphDataset(InMemoryDataset):

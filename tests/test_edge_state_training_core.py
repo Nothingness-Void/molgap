@@ -21,7 +21,7 @@ from molgap.edge_state_training_core import (
     validate_ogb_gap_batch,
 )
 from molgap.experiment_spec import ExperimentSpec
-from molgap.v4_runtime import model_state_sha256
+from molgap.training_runtime import model_state_sha256
 
 
 @pytest.fixture(scope="module")

@@ -258,7 +258,7 @@ def test_unpacked_origin_in_fresh_interpreter_rejects_fake_real_manifest(tmp_pat
             b'def forbidden(*a, **kw): raise AssertionError("synthetic loader must never run")\n'
             b'validate_fixed_assets = _load_datasets = _training_loader = _development_loader = forbidden\n')
     with tarfile.open(archive_dir / "source.tar.gz", "w:gz") as archive:
-        for name, raw in {"src/molgap/__init__.py": b"", "src/molgap/pcqm_gptrans_v4.py": stub}.items():
+        for name, raw in {"src/molgap/__init__.py": b"", "src/molgap/gptrans_screen_training.py": stub}.items():
             member = tarfile.TarInfo(name)
             member.size = len(raw)
             archive.addfile(member, io.BytesIO(raw))
@@ -276,7 +276,7 @@ def test_unpacked_origin_in_fresh_interpreter_rejects_fake_real_manifest(tmp_pat
     assert result["status"] == "LOADER_FAILED"
     assert result["shard_verified"] is False
     assert result["loader_batch_built"] is False
-    assert result["import_origins"]["molgap.pcqm_gptrans_v4"] == "src/molgap/pcqm_gptrans_v4.py"
+    assert result["import_origins"]["molgap.gptrans_screen_training"] == "src/molgap/gptrans_screen_training.py"
     assert "frozen real PCQM" in result["error"]["message"]
     assert not any(result[key] for key in pf.MODEL_CHECKS)
 
@@ -286,7 +286,7 @@ def test_worker_missing_frozen_loader_is_unsupported(tmp_path, manifest):
     module = root / "src/molgap"
     module.mkdir(parents=True)
     (module / "__init__.py").write_text("", encoding="ascii")
-    (module / "pcqm_gptrans_v4.py").write_text("", encoding="ascii")
+    (module / "gptrans_screen_training.py").write_text("", encoding="ascii")
     stage = tmp_path / "worker"
     stage.mkdir()
     result = pf._launch(root, tmp_path / "missing-data", manifest[0]["arms"][0], 30, stage)
@@ -324,7 +324,7 @@ def test_smoke_dependency_failure_is_structured(tmp_path, manifest):
     module = root / "src/molgap"
     module.mkdir(parents=True)
     (module / "__init__.py").write_text("", encoding="ascii")
-    (module / "pcqm_gptrans_v4.py").write_text(
+    (module / "gptrans_screen_training.py").write_text(
         'raise ModuleNotFoundError("required frozen dependency unavailable")\n', encoding="ascii")
     stage = tmp_path / "worker"
     stage.mkdir()
@@ -503,7 +503,7 @@ def test_checkpoint_mismatch_or_failure_raises(tmp_path, failure):
 
 def test_real_scheduler_step_api():
     from types import SimpleNamespace
-    from molgap.pcqm_gptrans_v4 import FrozenEpochScheduler
+    from molgap.gptrans_screen_training import FrozenEpochScheduler
     optimizer = SimpleNamespace(param_groups=[{"lr": -1}])
     scheduler = FrozenEpochScheduler(optimizer)
     rate = scheduler.step(0)

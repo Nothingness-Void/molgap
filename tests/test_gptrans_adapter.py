@@ -7,7 +7,7 @@ from unittest.mock import Mock
 import pytest
 import torch
 
-from molgap import gptrans_variants, pcqm_gptrans_v4
+from molgap import gptrans_variants, gptrans_screen_training
 from molgap.experiment_spec import (
     ExperimentSpec, FAMILIES, SCHEMA_VERSION, TERMINAL_PROTOCOL,
 )
@@ -100,7 +100,7 @@ def synthetic_inputs():
 def test_reference_matches_frozen_factory(spec, synthetic_inputs):
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(42)
-        expected = pcqm_gptrans_v4._make_model(variant="reference")
+        expected = gptrans_screen_training._make_model(variant="reference")
         expected_rng = torch.get_rng_state().clone()
         torch.manual_seed(42)
         actual = build_gptrans_model(spec, "reference")
@@ -109,7 +109,7 @@ def test_reference_matches_frozen_factory(spec, synthetic_inputs):
     assert actual is not expected
     assert sum(p.numel() for p in actual.parameters()) == (
         sum(p.numel() for p in expected.parameters())
-    ) == pcqm_gptrans_v4.EXPECTED_PARAMETERS
+    ) == gptrans_screen_training.EXPECTED_PARAMETERS
     actual_state, expected_state = actual.state_dict(), expected.state_dict()
     assert actual_state.keys() == expected_state.keys()
     for name, tensor in actual_state.items():
@@ -165,8 +165,8 @@ def test_real_addon_executes_in_every_block_and_receives_gradients(
 def test_metadata_declares_identity_factory_and_unimplemented_resume(spec, variant):
     metadata = gptrans_metadata(spec, variant)
     assert metadata.family == FAMILIES[("gptrans_t", "1")]
-    assert metadata.family.recipe == "pcqm_gptrans_v4"
-    assert metadata.factory == "molgap.pcqm_gptrans_v4._make_model"
+    assert metadata.family.recipe == "gptrans_screen_training"
+    assert metadata.factory == "molgap.gptrans_screen_training._make_model"
     assert metadata.variant == variant
     assert metadata.arm_id == variant
     assert metadata.spec_identity == spec.identity
@@ -190,7 +190,7 @@ def test_public_initial_state_path_delegates_to_existing_factory(
     path = tmp_path / "unwritten-initial-state.pt" if use_path else None
     sentinel = object()
     factory = Mock(return_value=sentinel)
-    monkeypatch.setattr(pcqm_gptrans_v4, "_make_model", factory)
+    monkeypatch.setattr(gptrans_screen_training, "_make_model", factory)
     assert build_gptrans_model(spec, variant, initial_state_path=path) is sentinel
     factory.assert_called_once_with(initial_state_path=path, variant=variant)
     if path is not None:
@@ -200,7 +200,7 @@ def test_public_initial_state_path_delegates_to_existing_factory(
 def test_initial_state_validation_error_is_not_swallowed(spec, tmp_path, monkeypatch):
     error = ValueError("frozen initial state rejected")
     factory = Mock(side_effect=error)
-    monkeypatch.setattr(pcqm_gptrans_v4, "_make_model", factory)
+    monkeypatch.setattr(gptrans_screen_training, "_make_model", factory)
     path = tmp_path / "unwritten.pt"
     with pytest.raises(ValueError, match="frozen initial state rejected") as caught:
         build_gptrans_model(spec, "pair_prenorm", initial_state_path=path)
@@ -211,7 +211,7 @@ def test_initial_state_validation_error_is_not_swallowed(spec, tmp_path, monkeyp
 @pytest.fixture
 def forbidden_factory(monkeypatch):
     factory = Mock(side_effect=AssertionError("Invalid declarations reached model construction"))
-    monkeypatch.setattr(pcqm_gptrans_v4, "_make_model", factory)
+    monkeypatch.setattr(gptrans_screen_training, "_make_model", factory)
     yield factory
     factory.assert_not_called()
 

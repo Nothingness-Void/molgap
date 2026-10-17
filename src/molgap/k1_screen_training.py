@@ -1,4 +1,4 @@
-"""K1 V4 100K owning trainer extraction and family output event hooks.
+"""Shared accelerated K1 fixed-100K trainer and family output event hooks.
 
 Loader/order/stats/forward helpers retained from pcqm_k1_variants_runner.py
 at archive commit 8821b5ce893680121260627436dc11a8f7fd8403.
@@ -28,7 +28,8 @@ from .training_reproducibility import (
     sha256_file,
     sum_scalar_metrics,
 )
-from .v4_runtime import state_dict_sha256, certify_numerical_repeatability, normalized_source_sha256
+from .training_runtime import state_dict_sha256, certify_numerical_repeatability, normalized_source_sha256
+from .v5_common import V5_CONTRACT_ID
 
 
 SEED = 42
@@ -308,7 +309,7 @@ ACCELERATED_RUNTIME_PINS = ("2.7.1", "2.11.0")
 
 
 def build_initial_state(seed: int = SEED) -> dict:
-    """Construct fresh V4 K1 CPU tensors without consuming caller CPU RNG."""
+    """Construct fresh K1 CPU tensors without consuming caller CPU RNG."""
     import torch
     _validate_seed(seed)
     with torch.random.fork_rng(devices=[]), torch.device("cpu"):
@@ -326,7 +327,7 @@ def _validate_initialization(seed: int, initialization_sha256: str) -> None:
 
 def _load_initial_state(path: Path, recipe: dict) -> dict:
     """Verify transported tensors, never regenerate them on another runtime."""
-    from .v4_runtime import read_frozen_state_artifact
+    from .training_runtime import read_frozen_state_artifact
     try:
         state, _ = read_frozen_state_artifact(
             path, expected_state_sha256=recipe["initialization_sha256"])
@@ -354,6 +355,8 @@ def validate_recipe(recipe: dict, *, mode: str) -> None:
     """Enforce the historical exposure before loading a molecular role."""
     if mode not in ARM_MODES:
         raise ValueError("Unsupported K1 screen arm")
+    if recipe.get("operating_contract") != V5_CONTRACT_ID:
+        raise ValueError("V5 operating_contract is required for new K1 training")
     limit = recipe.get("allocation_wall_limit_seconds")
     if limit is not None and (type(limit) is not int or not 120 <= limit <= 14400):
         raise ValueError("Invalid allocation ceiling")
@@ -414,7 +417,8 @@ def build_screen_recipe(mode: str, *, source_idx_sha256: str, target_sha256: str
         raise ValueError("Unsupported accelerated K1 runtime pin")
     if mode not in {"reference", "ssma", "mean2", "mean2_clean_second"}:
         raise ValueError("No executable screen recipe for this K1 addon")
-    recipe = {"mode": mode, "row_order_fingerprint": compute_row_order_fingerprint(seed),
+    recipe = {"mode": mode, "operating_contract": V5_CONTRACT_ID,
+        "row_order_fingerprint": compute_row_order_fingerprint(seed),
         "initialization_sha256": initialization_sha256,
         "development_role_identity": "pcqm4mv2-ogb-fixed-100k-v1:development-100000-150000",
         "training_recipe": {"seed": seed, "batch_size": BATCH_SIZE, "drop_last": True,
@@ -509,7 +513,7 @@ def _make_screen_model(state, mode, seed=SEED):
 
 
 def _optimizer_step(model, optimizer, batch, mean, std, mode="reference"):
-    """Original V4 optimizer-inclusive step, with optional clean auxiliary loss."""
+    """Shared optimizer-inclusive step, with optional clean auxiliary loss."""
     import torch
     import torch.nn.functional as functional
     optimizer.zero_grad(set_to_none=True)
@@ -601,6 +605,8 @@ def _runtime_provenance(context, recipe_path, initial_state_path, runtime, mode)
 def _validate_arm_binding(spec, context, mode, recipe):
     seed = _recipe_seed(recipe)
     declaration = next(arm for arm in spec.to_dict()["arms"] if arm["arm_id"] == context.arm_id)
+    from .experiment_spec import validate_training_interface
+    validate_training_interface(declaration)
     if (declaration["initialization"] != {"kind": "frozen_state", "seed": seed,
                                           "state_sha256": recipe["initialization_sha256"]} or
         declaration["training"]["sampler"]["sha256"] != recipe["row_order_fingerprint"] or
@@ -886,7 +892,7 @@ def run_screen_arm(*, spec, package_dir: Path, expected_package_identity: str,
                    input_root: Path, output: Path, account: str, run_reference: str,
                    trajectory_id: str, label_cache=None, preflight_dir: Path | None = None,
                    target_identity=None, prospective_root: Path | None = None) -> dict:
-    """Execute the owning V4 epoch loop with shared durable-output hooks.
+    """Execute the shared K1 epoch loop with shared durable-output hooks.
 
     Resume is restricted to acknowledged complete epochs. Re-created epoch
     loaders retain the original Python row order and worker setup. No EMA,

@@ -15,7 +15,7 @@ from molgap import k1_screen_training as owner
 from molgap.experiment_family_workflow import RunContext, tensor_digest
 from molgap.research_memory.trace import load_canonical_trace
 from molgap.training_reproducibility import atomic_json, sha256_file
-from molgap.v4_runtime import normalized_source_sha256, state_dict_sha256
+from molgap.training_runtime import normalized_source_sha256, state_dict_sha256
 
 
 @pytest.fixture

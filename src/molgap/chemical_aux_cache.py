@@ -25,7 +25,7 @@ def export_fixed_training_smiles(archive: Path, graph_root: Path, manifest_path:
     import gzip
     import zipfile
     import pandas as pd
-    from .pcqm_gptrans_v4 import validate_fixed_assets, TRAIN_ROWS
+    from .gptrans_screen_training import validate_fixed_assets, TRAIN_ROWS
     from .pcqm_official_edge_state import load_official_splits, CSV_MEMBER
 
     assets = validate_fixed_assets(graph_root, manifest_path, verify_content=True)

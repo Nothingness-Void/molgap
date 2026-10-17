@@ -86,7 +86,7 @@ def build_family_recipe(family: tuple[str, str], *, addon: str | None = None,
 def check_family_recipes(spec, repo_root, recipes):
     """Call the selected family's static validator on its frozen recipe."""
     from .experiment_family_workflow import _json, _artifact_path
-    from .v4_runtime import normalized_source_sha256
+    from .training_runtime import normalized_source_sha256
     results = {}
     for arm in spec.to_dict()["arms"]:
         adapter = training_adapter(arm)
@@ -170,7 +170,7 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
     """Static dispatch; each owning trainer retains its recipe/runtime gates."""
     from .experiment_family_workflow import RunContext, _artifact_path
     from .research_memory.trace import file_digest
-    from .v4_runtime import inspect_frozen_state_artifact
+    from .training_runtime import inspect_frozen_state_artifact
     if phase not in {"preflight", "train"}:
         raise ValueError("Unsupported execution phase")
     arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == job["arm_id"])

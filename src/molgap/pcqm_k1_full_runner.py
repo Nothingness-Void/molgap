@@ -23,7 +23,7 @@ from .training_reproducibility import (
     restore_rng_state,
     sha256_file,
 )
-from .v4_runtime import (
+from .training_runtime import (
     certify_numerical_repeatability,
     make_adamw_compat,
     sample_std_compat,

@@ -8,7 +8,7 @@ import torch
 from molgap import experiment_execution as execution
 from molgap import experiment_family_workflow as family
 from molgap.training_reproducibility import sha256_file
-from molgap.v4_runtime import state_dict_sha256
+from molgap.training_runtime import state_dict_sha256
 
 
 @pytest.mark.parametrize("family_id,version", [("neural_atom_k1", "2"), ("gptrans_t", "1")])

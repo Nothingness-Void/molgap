@@ -41,7 +41,7 @@ from molgap.experiment_spec import (
     TERMINAL_PROTOCOL,
 )
 from molgap.screen_policy import canonical_fingerprint
-from molgap.v4_runtime import normalized_source_sha256
+from molgap.training_runtime import normalized_source_sha256
 
 
 ROOT = Path(__file__).resolve().parents[1]

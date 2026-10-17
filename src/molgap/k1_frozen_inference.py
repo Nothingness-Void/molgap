@@ -21,7 +21,7 @@ def load_native500k_k1(path: Path, *, expected_sha256: str,
     """
     import torch
     from .training_reproducibility import sha256_file
-    from .v4_runtime import torch_load_compat
+    from .training_runtime import torch_load_compat
 
     if expected_arm not in ("k1_pretrained_mean2", "k1_pretrained_consistency"):
         raise ValueError("Unknown native500K K1 arm")

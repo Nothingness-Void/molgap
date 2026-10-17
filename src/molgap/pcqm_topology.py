@@ -105,7 +105,7 @@ def load_packed_topology_shard(path: Path):
     """Load a trusted, SHA-verified PyG (data, slices) shard on CPU."""
     from torch_geometric.data import InMemoryDataset
 
-    from .v4_runtime import torch_load_compat
+    from .training_runtime import torch_load_compat
 
     class PackedGraphDataset(InMemoryDataset):
         def __init__(self, source: Path):

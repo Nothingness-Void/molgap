@@ -13,7 +13,7 @@ from molgap.experiment_spec import ExperimentSpec
 from molgap.training_reproducibility import (
     configure_fp32_determinism, deterministic_memory_fill_context,
 )
-from molgap.v4_runtime import normalized_source_sha256
+from molgap.training_runtime import normalized_source_sha256
 
 
 @pytest.fixture

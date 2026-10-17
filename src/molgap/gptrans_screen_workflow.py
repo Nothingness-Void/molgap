@@ -10,7 +10,7 @@ from pathlib import Path
 import tarfile
 import time
 
-from . import pcqm_gptrans_v4 as owner
+from . import gptrans_screen_training as owner
 from .experiment_family_workflow import (
     EXPECTED, FamilyOutputSession, RunContext, inspect_output, write_output_manifest,
 )
@@ -69,7 +69,7 @@ def _validate_recipe_fields(recipe):
         if requirements[key] != value:
             raise ValueError("GPTrans acceptance exposure differs from executable recipe")
     if recipe.get("development_role_identity") != DEV_ROLE:
-        raise ValueError("GPTrans development role differs from fixed V4 rows")
+        raise ValueError("GPTrans development role differs from fixed training rows")
 
 
 def validate_screen_recipe(spec, arm_id, recipe):
@@ -78,6 +78,8 @@ def validate_screen_recipe(spec, arm_id, recipe):
     arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == arm_id)
     mode = training_adapter(arm).mode(arm)
     _validate_recipe_fields(recipe)
+    from .experiment_spec import validate_training_interface
+    validate_training_interface(arm)
     if arm["initialization"] != {"kind": "frozen_state", "seed": owner.SEED, "state_sha256": owner.EXPECTED_INITIAL_MODEL_SHA256} or arm["training"]["overrides"]:
         raise ValueError("GPTrans executable initialization/overrides differ from Spec")
     if arm["training"]["sampler"]["sha256"] != recipe["row_order_fingerprint"]:
@@ -126,13 +128,15 @@ def _validate_request(*, spec, package_dir, expected_package_identity, arm_id, m
                    for member in archive if member.name.endswith(".json")):
             raise ValueError("GPTrans recipe bytes absent from source package")
     _validate_recipe_fields(recipe)
+    from .experiment_spec import validate_training_interface
+    validate_training_interface(arm)
     if arm["training"]["sampler"]["sha256"] != recipe["row_order_fingerprint"]:
         raise ValueError("GPTrans Spec sampler differs from executable recipe")
     if file_digest(initial_state_path) != owner.EXPECTED_INITIAL_STATE_ARTIFACT_SHA256:
         raise ValueError("GPTrans initial-state artifact changed")
     import torch
     state = torch.load(initial_state_path, map_location="cpu", weights_only=True)
-    from .v4_runtime import state_dict_sha256
+    from .training_runtime import state_dict_sha256
     if (state.get("format") != "molgap-gptrans-t-seed42-initial-state-v1" or
             state_dict_sha256(state.get("model_state", {})) != owner.EXPECTED_INITIAL_MODEL_SHA256
             or state.get("state_sha256") != owner.EXPECTED_INITIAL_MODEL_SHA256):
@@ -235,7 +239,7 @@ def _normalize(output: Path, context: RunContext, recipe_path: Path, trajectory_
     for index, row in enumerate(rows):
         if (row["epoch"] != index or row["optimizer_steps"] != owner.BATCHES_PER_EPOCH
                 or row["sample_presentations"] != owner.BATCHES_PER_EPOCH * owner.PHYSICAL_BATCH):
-            raise ValueError("GPTrans trace exposure differs from owning V4 loop")
+            raise ValueError("GPTrans trace exposure differs from owning training loop")
         steps += row["optimizer_steps"]
         samples += row["sample_presentations"]
         session.epoch_finished(epoch=index + 1, optimizer_step=steps, sample_presentations=samples,
@@ -262,7 +266,7 @@ def _normalize(output: Path, context: RunContext, recipe_path: Path, trajectory_
               "scope": "workflow_invocation_excludes_previous_resume_segments_bootstrap_queue",
               "hardware": hardware}, {"metric": "device_seconds", "unit": "seconds", "value": None,
               "status": "missing", "semantics": "allocated_device", "hardware": hardware,
-              "reason": "Owning V4 output retained no allocated-device cost ledger"}]
+              "reason": "Historical output retained no allocated-device cost ledger"}]
     write_output_manifest(session.root, context, adapter="gptrans-v1",
         artifacts={"predictions": "development_predictions.pt", "selected_model": "selected_model.pt",
                    "resume": "last_checkpoint.pt", "trace": "canonical_trace.json", "contract": "training_contract.json"},

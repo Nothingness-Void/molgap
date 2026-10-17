@@ -10,7 +10,7 @@ import torch
 from molgap.experiment_package import build_experiment_source_package
 from molgap.experiment_preflight import check_release_inputs
 from molgap.experiment_spec import ExperimentSpec, FAMILIES
-from molgap.v4_runtime import state_dict_sha256, inspect_frozen_state_artifact
+from molgap.training_runtime import state_dict_sha256, inspect_frozen_state_artifact
 from test_experiment_package import git
 from test_experiment_spec import payload
 
@@ -33,7 +33,7 @@ def release(tmp_path, payload, request):
     allowlist = ["src/molgap/__init__.py", "src/molgap/loader.py", "src/molgap/child.py", "recipe.json"]
     if loader_mode != "generic":
         owner = Path(__file__).resolve().parents[1] / "src/molgap"
-        for name in ("k1_screen_training.py", "v4_runtime.py", "screen_policy.py", "training_reproducibility.py"):
+        for name in ("k1_screen_training.py", "training_runtime.py", "screen_policy.py", "training_reproducibility.py"):
             source = (owner / name).read_bytes()
             if name == "k1_screen_training.py" and loader_mode == "broken":
                 source += (b"\ndef _load_initial_state(path, recipe):\n"
@@ -117,7 +117,7 @@ def test_packaged_k1_loader_accepts_real_wrapper_without_model_construction(rele
     assert "family_initialization:gptrans_t" not in checks
     assert checks["initialization:neural_atom_k1"]["state_sha256"] == digest
     assert checks["clean_import:package"]["molgap.k1_screen_training"] == "src/molgap/k1_screen_training.py"
-    assert checks["clean_import:package"]["molgap.v4_runtime"] == "src/molgap/v4_runtime.py"
+    assert checks["clean_import:package"]["molgap.training_runtime"] == "src/molgap/training_runtime.py"
 
 
 @pytest.mark.parametrize("release", ["broken_output_io", "rewrapped_output_io"], indirect=True)

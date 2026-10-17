@@ -88,7 +88,7 @@ def test_reuse_map_covers_operations(operation):
 
 
 @pytest.mark.parametrize("module, callable_name", (
-    ("src/molgap/pcqm_gptrans_v4.py", "run_training"),
+    ("src/molgap/gptrans_screen_training.py", "run_training"),
     ("src/molgap/pcqm_gptrans_full_runner.py", "train_full"),
     ("src/molgap/pcqm_official_edge_state.py", "train_official_edge_state"),
     ("src/molgap/edge_state_training_core.py", "save_checkpoint"),

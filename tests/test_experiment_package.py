@@ -340,7 +340,7 @@ def test_failure_never_publishes_complete_manifest(repo, payload, tmp_path, monk
         (kwargs["output_dir"] / "source.tar.gz").write_bytes(b"partial")
         raise OSError("Synthetic interruption")
 
-    monkeypatch.setattr(implementation, "build_v4_source_bundle", fail)
+    monkeypatch.setattr(implementation, "build_source_bundle", fail)
     output = tmp_path / "interrupted"
     with pytest.raises(OSError, match="interruption"):
         build_experiment_source_package(ExperimentSpec(payload), repo, ["README.md"], output)

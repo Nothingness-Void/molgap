@@ -15,7 +15,7 @@ from .training_reproducibility import (
 from .screen_policy import canonical_fingerprint, validate_runtime_certificate
 from .pcqm_k1_scale_runner import find_cache, load_roles, _targets
 from .pcqm_k1_scale import FIXED_500K_MANIFEST_SHA256
-from .pcqm_gptrans_v4 import _state_sha256, _batch_sha256, _forward
+from .gptrans_screen_training import _state_sha256, _batch_sha256, _forward
 from .futility_gate import MatchedPrefixGate, evaluate_matched_prefix_futility
 
 PARAMETERS = {
@@ -88,7 +88,7 @@ def scientific_contract(arm="gptrans"):
 
 def make_model(arm):
     if arm in {"gptrans", "gptrans_pair_update_norm"}:
-        from .pcqm_gptrans_v4 import _make_model
+        from .gptrans_screen_training import _make_model
         variant = "pair_update_norm" if arm == "gptrans_pair_update_norm" else "reference"
         model = _make_model(variant=variant)
     elif arm in {"gptrans_noisy_nodes", "gptrans_noisy_pair_norm"}:

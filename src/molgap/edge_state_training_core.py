@@ -16,7 +16,7 @@ from .training_reproducibility import (
     assert_finite_state_dict, atomic_torch_save, capture_rng_state,
     restore_rng_state, sha256_file,
 )
-from .v4_runtime import model_state_sha256, torch_load_compat
+from .training_runtime import model_state_sha256, torch_load_compat
 
 
 CHECKPOINT_FORMAT = "molgap-edge-state-training-checkpoint-v1"

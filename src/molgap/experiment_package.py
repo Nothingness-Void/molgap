@@ -13,7 +13,7 @@ from pathlib import Path, PurePosixPath, PureWindowsPath
 
 from .experiment_spec import ExperimentSpec
 from .screen_policy import canonical_fingerprint
-from .v4_bundle import TEXT_SUFFIXES, _payload, build_v4_source_bundle
+from .source_bundle import TEXT_SUFFIXES, _payload, build_source_bundle
 
 
 PACKAGE_FORMAT = "molgap-experiment-source-package-v1"
@@ -178,7 +178,7 @@ def build_experiment_source_package(
     try:
         with tempfile.TemporaryDirectory(prefix=".source-stage-", dir=output) as stage_name:
             stage = Path(stage_name)
-            bundle = build_v4_source_bundle(repo_root=root, relative_paths=names,
+            bundle = build_source_bundle(repo_root=root, relative_paths=names,
                                            output_dir=stage, source_commit=commit)
             manifest = _manifest(spec, names, commit, bundle["archive_sha256"],
                                  _sha((stage / "SOURCE_FILES.json").read_bytes()))

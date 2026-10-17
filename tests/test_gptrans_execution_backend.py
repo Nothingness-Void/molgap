@@ -44,7 +44,7 @@ def test_layout_rejects_unordered_membership():
 
 
 def test_epoch_sampler_preserves_frozen_order():
-    from molgap import pcqm_gptrans_v4 as native
+    from molgap import gptrans_screen_training as native
     sampler = EpochBatches(native, native.TRAIN_ROWS)
     for epoch in (0, 1, 39):
         sampler.epoch = epoch
@@ -58,7 +58,7 @@ def test_static_dataset_rejects_transform():
 
 def test_foreach_ema_respects_own_decay_and_reload():
     from test_gptrans_execution_hotpath import ScalarEMA
-    from molgap.pcqm_gptrans_v4 import ExponentialMovingAverage
+    from molgap.gptrans_screen_training import ExponentialMovingAverage
     # An elementary CPU layer tests arithmetic only; no MolGap model executes.
     layer = torch.nn.Linear(2, 1)
     for decay in (.999, .9999):
@@ -92,7 +92,7 @@ def test_execution_ema_import_does_not_require_k1_profile():
 
 
 def test_buffered_cpu_evaluation_preserves_payload_and_live_weights():
-    from molgap.pcqm_gptrans_v4 import ExponentialMovingAverage
+    from molgap.gptrans_screen_training import ExponentialMovingAverage
     model = torch.nn.Linear(1, 1)
     ema = ExponentialMovingAverage(model)
     initial = {k:v.clone() for k,v in model.state_dict().items()}
@@ -125,7 +125,7 @@ def test_instrumentation_restores_native_methods():
 
 
 def test_native_default_ema_equation_is_unchanged():
-    from molgap.pcqm_gptrans_v4 import ExponentialMovingAverage, EMA_DECAY
+    from molgap.gptrans_screen_training import ExponentialMovingAverage, EMA_DECAY
     model = torch.nn.Linear(2, 1)
     ema = ExponentialMovingAverage(model)
     expected = {k: v.clone() for k, v in ema.state_dict().items()}
@@ -141,6 +141,6 @@ def test_native_default_ema_equation_is_unchanged():
 
 @pytest.mark.parametrize('decay', [.998, 0, 1, True, float('nan')])
 def test_native_ema_rejects_unreviewed_decay(decay):
-    from molgap.pcqm_gptrans_v4 import ExponentialMovingAverage
+    from molgap.gptrans_screen_training import ExponentialMovingAverage
     with pytest.raises(ValueError, match='reviewed frozen'):
         ExponentialMovingAverage(torch.nn.Linear(1, 1), decay)

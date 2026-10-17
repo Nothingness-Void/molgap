@@ -423,7 +423,7 @@ def _worker(request):
             result.update(status="PARTIAL_LOADER_VERIFIED_ONLY", shard_verified=True,
                           loader_batch_built=True, device="cpu", scope="selected-topology-shards")
             return result
-        runtime = importlib.import_module("molgap.pcqm_gptrans_v4")
+        runtime = importlib.import_module("molgap.gptrans_screen_training")
         result["import_origins"] = _origins(root)
         if (not all(callable(getattr(runtime, name, None)) for name in (
                 "validate_fixed_assets", "_load_datasets", "_training_loader", "_development_loader"))
@@ -542,7 +542,7 @@ def _launch(source_root, data_root, entry, timeout_seconds, workspace, *, mode=L
     elif result["status"] in {"LOADER_VERIFIED_ONLY", "MODEL_SMOKE_VERIFIED_ONLY"}:
         if (not result["shard_verified"] or not result["loader_batch_built"] or result["error"] is not None
                 or set(result["batches"]) != {"train", "development"}
-                or "molgap.pcqm_gptrans_v4" not in result["import_origins"]
+                or "molgap.gptrans_screen_training" not in result["import_origins"]
                 or result["device"] != "cpu" or result["scope"] != "complete-frozen-shards"):
             raise ValueError("Incomplete worker observations")
     elif result["loader_batch_built"] and result["status"] != "MODEL_SMOKE_FAILED":
@@ -676,7 +676,7 @@ def run_experiment_preflight(spec, package_dir, output_root, *, expected_package
                 data_root.mkdir()
                 try:
                     _unpack(snapshot, source_root)
-                    module = ("pcqm_gptrans_v4" if arm["family"]["name"] == "gptrans_t"
+                    module = ("gptrans_screen_training" if arm["family"]["name"] == "gptrans_t"
                               else "pcqm_topology")
                     if not (source_root / f"src/molgap/{module}.py").is_file():
                         report["status"] = "UNSUPPORTED_FAMILY_PREFLIGHT"
@@ -730,7 +730,7 @@ def _release_imports(request):
             if item["family"] != ["neural_atom_k1", "2"]:
                 raise ValueError("Unsupported family initialization check")
             trainer = importlib.import_module("molgap.k1_screen_training")
-            runtime = importlib.import_module("molgap.v4_runtime")
+            runtime = importlib.import_module("molgap.training_runtime")
             recipe = _load(Path(item["recipe_path"]).read_bytes())
             state = trainer._load_initial_state(Path(item["path"]), recipe)
             initialization_checks[item["arm_id"]] = {
@@ -777,7 +777,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
     import pickletools
     import zipfile
     from .experiment_package import verify_experiment_source_package
-    from .v4_runtime import inspect_frozen_state_artifact
+    from .training_runtime import inspect_frozen_state_artifact
 
     package = Path(package_dir).absolute()
     manifest = verify_experiment_source_package(package)
@@ -834,7 +834,7 @@ def check_release_inputs(spec, package_dir, *, expected_package_identity,
                     if input_root and not p.resolve().is_relative_to(Path(input_root).resolve()):
                         raise ValueError("Initialization is outside the staged input root")
                     if (declaration["family"]["name"], declaration["family"]["version"]) == ("neural_atom_k1", "2"):
-                        modules.update({"molgap.k1_screen_training", "molgap.v4_runtime"})
+                        modules.update({"molgap.k1_screen_training", "molgap.training_runtime"})
                         family_initializations.append({"arm_id": a,
                             "family": ["neural_atom_k1", "2"], "path": str(p),
                             "recipe_path": str(_under(source, _relative(recipe_files[a])))})

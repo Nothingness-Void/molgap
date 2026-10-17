@@ -42,7 +42,7 @@ def _json(path):
 
 def _bound(binding, *, normalized=False):
     from .training_reproducibility import sha256_file
-    from .v4_runtime import normalized_source_sha256
+    from .training_runtime import normalized_source_sha256
     _keys(binding, ("path", "sha256"))
     path = Path(binding["path"])
     digest = binding["sha256"]
@@ -57,7 +57,7 @@ def _bound(binding, *, normalized=False):
 def validate_inputs(inputs):
     """Verify both original trajectories and all pins before state adaptation."""
     from .training_reproducibility import sha256_file
-    from .v4_runtime import normalized_source_sha256
+    from .training_runtime import normalized_source_sha256
     from .experiment_package import verify_experiment_source_package
     _keys(inputs, ("format", "settings", "protocol", "source_archive",
                    "source_inventory", "frozen_source_root", "cache_root",
@@ -132,7 +132,7 @@ def _frozen_imports(inputs):
         raise ValueError("Nonfrozen dependency imported: molgap.constants")
     for name in exported:
         setattr(molgap, name, vars(constants)[name])
-    for name in ("k1_screen_training", "pcqm_k1_scale_runner", "v4_runtime",
+    for name in ("k1_screen_training", "pcqm_k1_scale_runner", "training_runtime",
                  "training_reproducibility", "pcqm_wedge", "pcqm_gap_architecture"):
         importlib.import_module(f"molgap.{name}")
     # The diagnostic loader is the reviewed adapter, not the packaged old loader.
@@ -152,7 +152,7 @@ def _verify_frozen_modules(inputs):
     """Recheck lazy model/serialized-graph imports before any model forward."""
     inventory = _json(inputs["source_inventory"]["path"])
     pins = {item["path"]: item["sha256"] for item in inventory["files"]}
-    from .v4_runtime import normalized_source_sha256
+    from .training_runtime import normalized_source_sha256
     for name, module in tuple(sys.modules.items()):
         if name.startswith("molgap.") and name not in (
                 "molgap.k1_bn_diagnostic", "molgap.k1_frozen_inference", "molgap.k1_bn_calibration",
@@ -230,7 +230,7 @@ def _execute_arm(inputs, arm, output, deadline, progress):
     from .k1_frozen_inference import load_native500k_k1, predict_clean
     from .k1_bn_calibration import recalibrated_batch_norm
     from .training_reproducibility import atomic_torch_save, sha256_file
-    from .v4_runtime import state_dict_sha256
+    from .training_runtime import state_dict_sha256
     progress("runtime_configured", runtime=_cpu_runtime(),
              cpu_threads=torch.get_num_threads(), device="cpu", autocast_enabled=False,
              cpu_processor=__import__("platform").processor(), cpu_logical_count=os.cpu_count(),
@@ -240,7 +240,7 @@ def _execute_arm(inputs, arm, output, deadline, progress):
         {"source_idx": torch.as_tensor(indices, dtype=torch.long)}),
         development_source_idx_sha256=state_dict_sha256(
         {"source_idx": torch.arange(500000, 550000)}),
-        row_hash_scope="v4_runtime.state_dict_sha256({'source_idx': int64 ordered rows})")
+        row_hash_scope="training_runtime.state_dict_sha256({'source_idx': int64 ordered rows})")
     calibration, development = _load_graphs(inputs, indices, deadline)
     _verify_frozen_modules(inputs)
     progress("graphs_verified")

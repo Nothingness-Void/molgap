@@ -10,7 +10,7 @@ from torch_geometric.loader import DataLoader
 
 from molgap.gptrans_execution_backend import PreparedLoader
 from molgap.gptrans_execution_tuning import ExecutionTuning, PreparedDevelopmentCache, tuned_backend
-from molgap.pcqm_gptrans_v4 import ExponentialMovingAverage
+from molgap.gptrans_screen_training import ExponentialMovingAverage
 
 
 @pytest.fixture(autouse=True)
@@ -206,7 +206,7 @@ def test_worker_cleanup_fault_still_restores_runtime_and_owner(monkeypatch):
 
 
 def test_training_loader_matches_native_epoch_order_without_main_rng_draw():
-    from molgap import pcqm_gptrans_v4 as recipe
+    from molgap import gptrans_screen_training as recipe
     native = owner()
     native.DeterministicEpochBatchSampler = recipe.DeterministicEpochBatchSampler
     # Exercise the real frozen 100K sampler without loading any molecule data.
@@ -326,7 +326,7 @@ def test_context_reuses_loaded_datasets_and_restores_loader_owner(tmp_path):
 
 
 def test_native_desktop_owner_uses_accelerated_scope_without_addon():
-    from molgap import pcqm_gptrans_v4 as native
+    from molgap import gptrans_screen_training as native
     original = native._training_loader
     threads = torch.get_num_threads()
     with tuned_backend(native) as report:

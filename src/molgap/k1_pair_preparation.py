@@ -14,7 +14,7 @@ from molgap.research_memory.policy import validate_policy
 from molgap.research_memory.schemas import validate_cost_event, validate_trajectory
 from molgap.research_memory.trace import file_digest
 from molgap.screen_policy import canonical_fingerprint
-from molgap.v4_runtime import inspect_frozen_state_artifact, normalized_source_sha256
+from molgap.training_runtime import inspect_frozen_state_artifact, normalized_source_sha256
 
 REL = "experiments/pcqm_k1_t4_cost_quality"
 RUN = "molgap-k1-t4-cost-quality-100k-s42-v1"
@@ -139,8 +139,8 @@ def build_inputs(root: Path, *, source_commit: str, initial_state: Path,
         arm.update(arm_id=arm_id, scientific_role=role, addon_semantics="ordered" if addon else "baseline")
         arm["initialization"] = {"kind": "frozen_state", "seed": initialization_seed, "state_sha256": initialization_sha256}
         arm["training"]["sampler"]["sha256"] = recipe["row_order_fingerprint"]
-        if initialization_seed != 42:
-            arm["training"]["sampler"]["name"] = f"seed{initialization_seed}-python-epoch-shuffle-v4"
+        arm["training"]["sampler"]["name"] = f"seed{initialization_seed}-python-epoch-shuffle"
+        arm["training"]["recipe"]["name"] = "k1_screen_100k"
         addon_source = candidate_addon_source if role == "candidate" else "src/molgap/k1_screen_training.py"
         arm["addons"] = [] if addon is None else [{"name": addon, "version": "1", "config": {},
             "source_sha256": normalized_source_sha256(resolve_repo_pointer(root, addon_source))}]

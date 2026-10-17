@@ -17,7 +17,7 @@ from molgap.k1_screen_training import (
     _load_initial_state,
     ACCELERATED_EXECUTION_POLICY,
 )
-from molgap.v4_runtime import state_dict_sha256, normalized_source_sha256
+from molgap.training_runtime import state_dict_sha256, normalized_source_sha256
 from molgap.training_reproducibility import sha256_file
 from molgap.screen_policy import canonical_fingerprint
 

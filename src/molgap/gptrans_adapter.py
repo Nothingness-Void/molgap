@@ -22,7 +22,7 @@ class GPTransAdapterMetadata:
     variant: str
     spec_identity: str
     arm_id: str
-    factory: str = "molgap.pcqm_gptrans_v4._make_model"
+    factory: str = "molgap.gptrans_screen_training._make_model"
     checkpoint_resume_owner: str = "existing trainer"
     checkpoint_resume_implemented: bool = False
     # Parameter-free variants share tensor keys/shapes, so tensor compatibility
@@ -90,6 +90,6 @@ def build_gptrans_model(
     this constructor alone does not certify that they match runtime bytes.
     """
     metadata = _resolve(spec, arm_id)
-    from .pcqm_gptrans_v4 import _make_model
+    from .gptrans_screen_training import _make_model
 
     return _make_model(initial_state_path=initial_state_path, variant=metadata.variant)

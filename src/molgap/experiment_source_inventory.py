@@ -38,7 +38,7 @@ SHARED_SOURCE_FILES = (
     'src/molgap/kaggle_pair_runtime.py',
     'src/molgap/kaggle_workflow.py',
     'src/molgap/pcqm_gap_architecture.py',
-    'src/molgap/pcqm_gptrans_v4.py',
+    'src/molgap/gptrans_screen_training.py',
     'src/molgap/pcqm_wedge.py',
     'src/molgap/qm9_gape.py',
     'src/molgap/qm9_local_hierarchy.py',
@@ -66,7 +66,7 @@ SHARED_SOURCE_FILES = (
     'src/molgap/research_memory/validate.py',
     'src/molgap/screen_policy.py',
     'src/molgap/training_reproducibility.py',
-    'src/molgap/v4_bundle.py',
-    'src/molgap/v4_runtime.py',
+    'src/molgap/source_bundle.py',
+    'src/molgap/training_runtime.py',
     'src/molgap/v5_common.py',
 )

@@ -31,7 +31,7 @@ def test_noisy_nodes_parameters():
 
 def test_frozen_core_load_preserves_only_auxiliary_head(tmp_path):
     from molgap.training_reproducibility import sha256_file
-    from molgap.v4_runtime import load_frozen_initial_state, model_state_sha256
+    from molgap.training_runtime import load_frozen_initial_state, model_state_sha256
 
     configure_fp32_determinism(42)
     core = OGBGPTransTiny()
@@ -97,7 +97,7 @@ def test_noisy_nodes_eval_mode_determinism():
 
 def test_noisy_nodes_optimizer_step():
     from molgap.noisy_nodes import _optimizer_step_noisy_nodes
-    from molgap.pcqm_gptrans_v4 import ExponentialMovingAverage, make_adamw_compat
+    from molgap.gptrans_screen_training import ExponentialMovingAverage, make_adamw_compat
 
     configure_fp32_determinism(42)
     model = GPTransNoisyNodes(noise_std=0.15, loss_weight=0.1)

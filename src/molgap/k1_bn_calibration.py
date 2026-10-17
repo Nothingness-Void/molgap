@@ -16,7 +16,7 @@ def recalibrated_batch_norm(model, loader, *, source_idx, source_bounds,
     node-weighted population moments. Restore original buffers even on failure.
     """
     import torch
-    from .v4_runtime import state_dict_sha256
+    from .training_runtime import state_dict_sha256
 
     if type(dropout_enabled) is not bool or type(passes_per_batch) is not int or passes_per_batch < 1:
         raise ValueError("Expected boolean dropout and positive integer passes_per_batch")

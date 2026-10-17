@@ -193,7 +193,7 @@ def run(root: Path, output: Path):
     from .k1_frozen_inference import load_native500k_k1, predict_clean
     from .k1_screen_training import FORBIDDEN_MODEL_FIELDS
     from .training_reproducibility import atomic_json, atomic_torch_save, configure_fp32_determinism, sha256_file
-    from .v4_runtime import state_dict_sha256
+    from .training_runtime import state_dict_sha256
     from .router import paired_bootstrap_mean
     if torch.__version__.split("+")[0] != "2.7.1":
         raise ValueError("Frozen local Torch2.7.1 required")

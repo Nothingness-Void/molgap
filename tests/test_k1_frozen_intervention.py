@@ -27,11 +27,11 @@ def _checkpoint_state():
 
 
 def _patch_checkpoint_io(monkeypatch, state, *, digest=GOOD_SHA256, loader=None):
-    from molgap import training_reproducibility, v4_runtime
+    from molgap import training_reproducibility, training_runtime
 
     monkeypatch.setattr(training_reproducibility, "sha256_file", lambda path: digest)
     monkeypatch.setattr(
-        v4_runtime,
+        training_runtime,
         "torch_load_compat",
         loader or (lambda path, **kwargs: state),
     )

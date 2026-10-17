@@ -6,7 +6,7 @@ import pytest
 import torch
 from torch_geometric.data import Batch, Data
 
-from molgap import pcqm_gptrans_v4 as native
+from molgap import gptrans_screen_training as native
 from molgap.experiment_execution import build_family_recipe
 from molgap.gptrans_execution_backend import bind_model_layout, prepare_layout, prepared_forward
 from molgap.gptrans_execution_tuning import execution_policy

@@ -20,7 +20,7 @@ import torch.nn.functional as F
 from torch_geometric.utils import to_dense_batch
 
 from .gptrans import OGBGPTransTiny
-from .pcqm_gptrans_v4 import (
+from .gptrans_screen_training import (
     DEVELOPMENT_ROWS,
     EMA_DECAY,
     EPOCHS,
@@ -59,7 +59,7 @@ from .training_reproducibility import (
     restore_rng_state,
     sha256_file,
 )
-from .v4_runtime import (
+from .training_runtime import (
     certify_numerical_repeatability,
     load_frozen_initial_state,
     make_adamw_compat,

@@ -2,7 +2,7 @@ import pytest
 import torch
 import json
 from molgap.k1_clean_fit_diagnostic import retained_buffers, validate_prediction
-from molgap.v4_runtime import state_dict_sha256
+from molgap.training_runtime import state_dict_sha256
 
 
 def test_retained_bn_buffers_restore_parameters_and_buffers_on_error():
