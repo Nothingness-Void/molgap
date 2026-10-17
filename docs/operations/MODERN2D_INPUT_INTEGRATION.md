@@ -132,6 +132,26 @@ explicitly rejected by formal training. Synthetic results are separately marked
 `CPU_SYNTHETIC_VERIFIED`, never GPU-qualified. Actual releases and observations
 are recorded in the owning [bounded task](../../experiments/modern2d_model_integration/native_preflight/README.md).
 
+`kaggle_mounts.resolve_dataset_mount(input_root, dataset_source, *,
+mount_name=None, marker=None, report=None)` resolves an explicitly bound
+`owner/slug` at either `input_root/slug` or
+`input_root/datasets/owner/slug`. These are two supported transport locations,
+not evidence of the failed worker's actual layout. It never enumerates
+directories or reads payloads. Multiple roots, missing markers, namespace/slug
+drift, symlinks and junctions fail closed, with bounded discovery diagnostics.
+Flat paths do not encode an owner: ownership is not inferred from their names;
+the frozen source identity and content/authority gates remain necessary.
+The preparation path and parent/worker data validation share this resolver;
+launch/source/acceptance/role identities remain independently hash-checked.
+
+Before the source is available, the prepared entry embeds the exact packaged
+stdlib resolver and pins its source-dataset identity. It verifies launch bytes
+before parsing, then the archive digest and embedded resolver's archive bytes
+before executing the runtime. Failures retain their phase and discovery
+observations. Bootstrap timing is explicitly `PYTHON_OBSERVED_WINDOW_ONLY`;
+unknown provisioning, queue and complete allocation/billing cost stay null.
+A CPU fixture or repaired entry grants no remote retry or training authority.
+
 ## Remaining native/scientific boundary
 
 Each release needs a scheduled, budgeted export/census and private mirror

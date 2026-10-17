@@ -7,7 +7,9 @@ from copy import deepcopy
 from dataclasses import asdict
 from importlib import import_module
 import json
+from pathlib import Path
 import subprocess
+import tarfile
 from types import SimpleNamespace
 
 import pytest
@@ -21,6 +23,9 @@ from molgap.family_training_runner import METADATA, read_recipe, validate_screen
 from molgap.modern2d_input_preparation import METADATA_FORMAT
 from molgap.modern2d_qualification_runtime import LAUNCH_FILENAME, validate_launch
 from molgap.research_memory.trace import file_digest, json_bytes
+
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def _write(path, value):
@@ -74,7 +79,14 @@ def preparation_case(tmp_path, monkeypatch):
     _write(root / "experiments/modern2d_model_integration/integration_attempt_report.json", {})
     entry = root / owner.ENTRY
     entry.parent.mkdir(parents=True)
-    entry.write_bytes(b"EXPECTED_LAUNCH_SHA256 = None\n")
+    entry.write_bytes(
+        b"EXPECTED_LAUNCH_SHA256 = None\n"
+        b"EXPECTED_SOURCE_DATASET = None\n"
+        b"MOUNT_RESOLVER_SOURCE = None\n"
+    )
+    helper = root / "src/molgap/kaggle_mounts.py"
+    helper.parent.mkdir(parents=True)
+    helper.write_bytes((ROOT / "src/molgap/kaggle_mounts.py").read_bytes())
     _git(root, "add", ".")
     _git(root, "-c", "commit.gpgsign=false", "commit", "-m", "Generated preparation inputs")
 
@@ -139,6 +151,17 @@ def _freeze(case):
 
 @pytest.fixture
 def frozen_case(preparation_case):
+    preparation_case.result = _freeze(preparation_case)
+    return preparation_case
+
+
+@pytest.fixture
+def namespaced_frozen_case(preparation_case):
+    namespaced = preparation_case.mounted / "datasets" / owner.ACCOUNT / owner.MOUNT
+    namespaced.parent.mkdir(parents=True)
+    preparation_case.asset.rename(namespaced)
+    preparation_case.asset = namespaced
+    preparation_case.metadata_path = namespaced / "qualification_inputs.json"
     preparation_case.result = _freeze(preparation_case)
     return preparation_case
 
@@ -370,6 +393,47 @@ def test_package_validates_exact_launch_then_shared_release_and_plan_many(frozen
     assert report["launch_sha256"] == file_digest(case.output / "inputs" / LAUNCH_FILENAME)
     entry = (case.output / "run_modern2d_qualification.py").read_text(encoding="utf-8")
     assert "EXPECTED_LAUNCH_SHA256 = " + repr(report["launch_sha256"]) in entry
+    assert "EXPECTED_SOURCE_DATASET = " + repr(owner.SOURCE_DATASET) in entry
+    helper_bytes = (ROOT / "src/molgap/kaggle_mounts.py").read_bytes()
+    assert "MOUNT_RESOLVER_SOURCE = " + repr(helper_bytes.decode("utf-8")) in entry
+    with tarfile.open(case.output / "package/source.tar.gz", "r:gz") as archive:
+        helpers = [member for member in archive.getmembers()
+                   if member.name == "src/molgap/kaggle_mounts.py"]
+        assert len(helpers) == 1 and helpers[0].isfile() and not helpers[0].issym()
+        assert archive.extractfile(helpers[0]).read() == helper_bytes
     for root in (case.output, case.root / owner.BASE):
         for path in root.rglob("*.json"):
             assert b"E:" not in path.read_bytes().upper(), path
+
+
+def test_package_accepts_owner_namespaced_dataset_mount(namespaced_frozen_case, monkeypatch):
+    case = namespaced_frozen_case
+    _commit(case)
+    runtime = import_module("molgap.modern2d_qualification_runtime")
+    observed = []
+
+    def checked_launch(**kwargs):
+        observed.append(kwargs["mounted_root"])
+        return validate_launch(**kwargs)
+
+    def release(*args, **kwargs):
+        return {"status": "LOCAL_RELEASE_INPUTS_VERIFIED", "scope": "mocked-generic-release-only"}
+
+    def publish(root, plans):
+        return {"status": "PLANNED", "batch": {"size": len(plans)}, "results": []}
+
+    def no_rebuild(*args, **kwargs):
+        raise AssertionError("Preparation rebuilt RML derived files")
+
+    monkeypatch.setattr(runtime, "validate_launch", checked_launch)
+    monkeypatch.setattr("molgap.experiment_preflight.check_release_inputs", release)
+    monkeypatch.setattr(import_module("molgap.research_memory.plan"), "plan_many", publish)
+    monkeypatch.setattr("molgap.research_memory.compiler.rebuild_research_memory", no_rebuild)
+    monkeypatch.setattr("molgap.experiment_prospective.rebuild_research_memory", no_rebuild)
+
+    report = _package(case)
+    assert report["status"] == "QUALIFICATION_PACKAGE_PREPARED"
+    assert observed == [case.mounted]
+    launch = _read(case.output / "inputs" / LAUNCH_FILENAME)
+    assert launch["private_asset"]["dataset_source"] == owner.DATASET
+    assert launch["private_asset"]["mount"] == owner.MOUNT

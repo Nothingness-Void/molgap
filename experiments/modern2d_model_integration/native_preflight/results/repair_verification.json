@@ -1,0 +1,85 @@
+{
+  "format": "molgap-modern2d-bootstrap-repair-verification-v1",
+  "date_jst": "2026-10-18",
+  "status": "INFRA_CPU_ACCEPTED",
+  "scope": "LOCAL_INFRASTRUCTURE_REPAIR_CPU_ONLY",
+  "tests_executed_by": "independent Luna leaf agents",
+  "main_executed_tests": false,
+  "remote_commands_performed": false,
+  "remote_submissions_performed": false,
+  "gpu_model_execution_performed": false,
+  "graph_rebuild_performed": false,
+  "scientific_training_authorized": false,
+  "scientific_acceptance": "NOT_EVALUATED",
+  "native_model_acceptance": "NOT_EVALUATED",
+  "old_attempt": {"kernel_id": 139199488, "version": 1, "disposition": "INFRASTRUCTURE_FAILURE_UNCHANGED"},
+  "new_attempt_created": false,
+  "source_sha256_semantics": "UTF8_SOURCE_CRLF_AND_CR_NORMALIZED_TO_LF",
+  "source_files": {
+    "src/molgap/kaggle_mounts.py": "62c7ab8b97b5b8f8bda010e27956fad70396aa9f7ba6c221a7b34458147d59d2",
+    "src/molgap/modern2d_qualification_prepare.py": "7434e50008769d8c10e54d0b05d2d6a681fe4658a2db6d66dd35825e4b3c3046",
+    "src/molgap/modern2d_qualification_runtime.py": "2cc3791da75c6c9139939a81800cbb6b5345cf20c996741030ffe0e4d743058a",
+    "platforms/kaggle/run_modern2d_qualification.py": "547ee67dde124c27b32b599a83523bc7ef71b6820fa073eddfc561ed4e7d2949"
+  },
+  "suites": [
+    {
+      "scope": "shared deterministic mount resolver and real entry with stdlib-only fake hardware/runtime",
+      "files": ["tests/test_kaggle_mounts.py", "tests/test_modern2d_bootstrap_repair.py"],
+      "passed": 20,
+      "skipped": 2,
+      "subtests_passed_separately": 13,
+      "skipped_reason": "Windows symlink capability unavailable; mocked junction guard was exercised",
+      "junit_sha256": "e3729ac1d1b0cb0cc283cb57fe1d5131434f510a1050e2ebc3bc223501579a62"
+    },
+    {
+      "scope": "qualification runtime metadata and supervision",
+      "files": ["tests/test_modern2d_qualification_runtime.py"],
+      "passed": 37,
+      "junit_sha256": "93b435cf63f45b78f4ef1fbb719ec59675afde83f26582026fa32c6a58510856"
+    },
+    {
+      "scope": "package preparation including owner-namespaced mount",
+      "files": ["tests/test_modern2d_qualification_prepare.py"],
+      "passed": 27,
+      "junit_sha256": "7ca02b542fe6f19c22867dd87c1956377beac0cd67b894f874a442fdc1801b10"
+    },
+    {
+      "scope": "reviewed shared mechanism snapshot",
+      "files": ["tests/test_shared_training_compatibility.py"],
+      "passed": 4,
+      "junit_sha256": "1639aeab076a7b94705cf5e031809defd883a3691ccdd46448d0407208d484d5"
+    }
+  ],
+  "total_pytest_passed": 88,
+  "total_pytest_skipped": 2,
+  "subtests_passed_separately_not_added_to_pytest_count": 13,
+  "failed_fixture_attempts": {
+    "classification": "TEST_FIXTURE_ERRORS_NOT_SCIENTIFIC_RESULTS",
+    "bootstrap_summary": "luna-bootstrap/failed-attempts.txt",
+    "preparation_original_error_junit": "luna-runtime/prepare-junit-final.xml",
+    "preparation_original_error": "Moved fixture did not update its metadata path; production behavior was not weakened"
+  },
+  "preservation": {
+    "user_dirty_files_checked": 14,
+    "user_dirty_files_changed": [],
+    "frozen_gptrans_raw_sha256": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+    "old_prepared_entry_sha256": "318c3e26964e2e2f89f03c4c78284795215370a720d6668299474d2efb175f3e",
+    "old_source_archive_sha256": "e1ff9c22748d9db011d7080b2515827f2c1c2da275d2c5749faada7e693bf950",
+    "ppgt_initial_state_sha256": "f772ebc41d426c11757a01c38da2ca5eda7a79dbc80e3a0680b0623d7c1293d4",
+    "esa_initial_state_sha256": "205214e65307497ca6e02c4558a40c6a79d7848b7dbc19ba6f87350df92f666a",
+    "old_spec_plans_receipts_and_acceptance_rewritten": false
+  },
+  "rml": {"validate": "PASSED", "terminal_publication_performed": false, "derived_rebuild_performed": false},
+  "cost_scope": "Bootstrap Python observation is not full allocation or billing; unknown full cost remains null",
+  "review": {"additional_deterministic_code_defects_found": [], "full_model_or_cuda_execution_reviewed": false},
+  "raw_artifact_root": "E:/MolGap/artifacts/modern2d-native-preflight/repair",
+  "remaining": [
+    "actual failed worker mount layout was not observed",
+    "a separately authorized newly frozen remote qualification attempt",
+    "both native numerical and repeat/resume certificates",
+    "default-model resource and throughput acceptance",
+    "full GPU allocation/billing cost",
+    "metadata-only RML terminal publication for the failed V1 attempt",
+    "user-owned stale derived records remain preserved"
+  ]
+}

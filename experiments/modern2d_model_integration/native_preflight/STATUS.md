@@ -41,6 +41,11 @@ Historical preparation observations below remain unchanged.
 
 ## CPU prerequisite history
 
+The [2026-10-18 bootstrap repair](results/repair_2026-10-18.md) is
+`INFRA_CPU_ACCEPTED` for local infrastructure only. It changed no V1 remote
+artifact or scientific interpretation. The failed V1 and its missing native
+proof/full-cost evidence remain separate from this repair; no retry is released.
+
 - CPU phase: first staging attempt rejected by jsub before a job was created
   (`CR+LF type of newline is not allowed`); scheduler had no user job afterward.
   The original archive/stage are retained unchanged. A reviewed LF-packaging

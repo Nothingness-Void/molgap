@@ -11,8 +11,9 @@ acceptance_sha256,version_identity,train_logical_content_sha256,
 development_logical_content_sha256}, jobs=[{arm_id,device,context,recipe,
 initial_state}]. The last three job fields are {path,sha256} references.
 Recipes are relative to extracted source; other references are relative to
-the launch directory. mount is relative to mounted_root; data_root is relative
-to that mount. Each recipe's input binding must exist directly in that mount.
+the launch directory. mount is the exact dataset_source slug; the shared mount
+resolver selects its deterministic root. data_root is relative to that mount.
+Each recipe's input binding must exist directly in that mount.
 """
 from __future__ import annotations
 
@@ -128,6 +129,8 @@ def read_launch(path, expected_sha256):
     if (type(asset["dataset_source"]) is not str or
             re.fullmatch(re.escape(config["account"]) + r"/[a-z0-9-]+", asset["dataset_source"]) is None):
         raise ValueError("Private data must bind the owning account's exact dataset")
+    if asset["mount"] != asset["dataset_source"].split("/")[1]:
+        raise ValueError("Private asset mount must equal the exact dataset_source slug")
     for key in _ASSET_FIELDS - {"dataset_source", "mount", "data_root"}:
         _digest(asset[key])
     _under(Path("/kaggle/input"), asset["mount"])
@@ -142,11 +145,14 @@ def read_launch(path, expected_sha256):
     return config
 
 
-def validate_launch(*, launch_path, expected_launch_sha256, source_root, package_dir, mounted_root):
+def validate_launch(*, launch_path, expected_launch_sha256, source_root, package_dir, mounted_root,
+                    discovery_report=None):
     """Metadata-only binding gate; it never calls the formal execution planner."""
     from molgap.experiment_package import verify_experiment_source_package
     from molgap.experiment_spec import ExperimentSpec
     from molgap.experiment_family_workflow import RunContext
+    # Bootstrap installs the extracted, frozen source before reaching this gate.
+    from molgap.kaggle_mounts import resolve_dataset_mount
     config = read_launch(launch_path, expected_launch_sha256)
     manifest = verify_experiment_source_package(Path(package_dir))
     spec = ExperimentSpec.from_json((Path(package_dir) / "experiment_spec.json").read_text(encoding="utf-8"))
@@ -170,7 +176,8 @@ def validate_launch(*, launch_path, expected_launch_sha256, source_root, package
                 "protected_role_access_authorized", "extra_seed_authorized", "automatic_successor_authorized"))):
         raise ValueError("Qualification-only authority required")
     asset = config["private_asset"]
-    input_root = _under(mounted_root, asset["mount"])
+    input_root = resolve_dataset_mount(mounted_root, asset["dataset_source"],
+        mount_name=asset["mount"], report=discovery_report)
     data_root = _under(input_root, asset["data_root"])
     if not input_root.is_dir() or not data_root.is_dir():
         raise ValueError("Exact private input/data root is absent")
@@ -328,9 +335,10 @@ def run_qualification_pair(*, source_root, package_dir, mounted_root, launch_pat
         "launch_sha256": expected_launch_sha256, "phase": "metadata",
         "max_wall_seconds": config["max_wall_seconds"], "seal_reserve_seconds": SEAL_RESERVE_SECONDS,
         "scientific_acceptance": "NOT_EVALUATED", "native_execution_released": False,
-        "formal_training_exposure": 0, "workers": {}}
+        "formal_training_exposure": 0, "workers": {}, "data_discovery": {}}
     try:
         names = _observe_hardware(work_deadline)
+        report["hardware"] = names
         from molgap.experiment_allocation import AllocationLedger
         jobs = config["jobs"]
         for job in jobs:
@@ -345,10 +353,10 @@ def run_qualification_pair(*, source_root, package_dir, mounted_root, launch_pat
         tick()
         config, spec, manifest, contexts, input_root, _ = validate_launch(
             launch_path=launch_path, expected_launch_sha256=expected_launch_sha256,
-            source_root=source_root, package_dir=package_dir, mounted_root=mounted_root)
+            source_root=source_root, package_dir=package_dir, mounted_root=mounted_root,
+            discovery_report=report["data_discovery"])
         if time.perf_counter() >= work_deadline:
             raise TimeoutError("Qualification metadata exhausted allocation budget")
-        report["hardware"] = names
         report["phase"] = "environment"
         environment = dict(os.environ, CUDA_VISIBLE_DEVICES="", PYTHONPATH=str(source_root / "src"),
             OMP_NUM_THREADS="1", MKL_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1")
@@ -424,7 +432,11 @@ def run_qualification_pair(*, source_root, package_dir, mounted_root, launch_pat
             report.update(status="failed", cleanup_error=str(exc))
             final_error = exc
         for log in logs:
-            log.close()
+            try:
+                log.close()
+            except Exception as exc:
+                report.update(status="failed", log_close_error=str(exc))
+                final_error = exc
         for state in report["workers"].values():
             process = next(p for p in children if p.pid == state["pid"])
             state["returncode"] = process.returncode
@@ -451,7 +463,7 @@ def run_qualification_pair(*, source_root, package_dir, mounted_root, launch_pat
             raise RuntimeError("Qualification finalization failed; retained frame identifies the blocker") from final_error
 
 
-def run_worker(args):
+def run_worker(args, *, discovery_report=None):
     # This assignment precedes every package import that can import torch.
     os.environ["CUDA_VISIBLE_DEVICES"] = str(args.device)
     # Match CPU metadata's one-thread train-statistics reduction before torch
@@ -462,7 +474,8 @@ def run_worker(args):
         raise ValueError("Only the two explicitly assigned T4 devices are admissible")
     config, spec, _, contexts, input_root, authority_path = validate_launch(
         launch_path=args.launch, expected_launch_sha256=args.expected_launch_sha256,
-        source_root=args.source_root, package_dir=args.package_dir, mounted_root=args.mounted_root)
+        source_root=args.source_root, package_dir=args.package_dir, mounted_root=args.mounted_root,
+        discovery_report=discovery_report)
     job = next((j for j in config["jobs"] if j["arm_id"] == args.arm), None)
     if job is None or job["device"] != args.device:
         raise ValueError("Worker arm/device differs from pinned launch")
@@ -538,10 +551,12 @@ def main(argv=None):
     worker.add_argument("--allocation-started", type=float, required=True)
     args = parser.parse_args(argv)
     if args.command == "worker":
+        discovery_report = {}
         try:
-            run_worker(args)
+            run_worker(args, discovery_report=discovery_report)
         except BaseException:
-            _atomic(args.output / "failure.log", {"traceback": traceback.format_exc()})
+            _atomic(args.output / "failure.log", {"traceback": traceback.format_exc(),
+                "data_discovery": discovery_report})
             raise
     else:
         os.environ["CUDA_VISIBLE_DEVICES"] = ""

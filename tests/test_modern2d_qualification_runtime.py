@@ -65,7 +65,7 @@ def _launch_payload(runtime, *, max_wall_seconds: int = 1800) -> dict:
         "authority": {"path": "authority.json", "sha256": "4" * 64},
         "private_asset": {
             "dataset_source": "fixture/accepted-data",
-            "mount": "private-mount",
+            "mount": "accepted-data",
             "data_root": "data",
             "acceptance_sha256": "5" * 64,
             "version_identity": "6" * 64,
@@ -491,13 +491,19 @@ def test_bootstrap_checks_launch_marker_and_uses_one_frozen_extractor(runtime, t
         )
 
 
-def _validation_case(runtime, tmp_path: Path):
+def _validation_case(runtime, tmp_path: Path, *, layout="flat"):
     stage = tmp_path / "stage"
     source = tmp_path / "source"
     package = tmp_path / "package"
     mounted = tmp_path / "mounted"
-    data_root = mounted / "private-mount" / "data"
-    for path in (stage, source / "recipes", package, data_root):
+    if layout == "flat":
+        dataset_root = mounted / "accepted-data"
+    elif layout == "owner_namespaced":
+        dataset_root = mounted / "datasets" / "fixture" / "accepted-data"
+    else:
+        raise AssertionError(f"unsupported fixture layout: {layout}")
+    data_root = dataset_root / "data"
+    for path in (stage, source / "recipes", package, dataset_root, data_root):
         path.mkdir(parents=True, exist_ok=True)
 
     acceptance = {
@@ -516,7 +522,7 @@ def _validation_case(runtime, tmp_path: Path):
         "scope": "ACCEPTED_INDEXED_INPUT_V1",
         "data_root": "data",
     }
-    binding_path = mounted / "private-mount" / "indexed-binding.json"
+    binding_path = dataset_root / "indexed-binding.json"
     binding_sha = _write_json(binding_path, binding)
 
     recipes = {}
@@ -640,6 +646,8 @@ def _validation_case(runtime, tmp_path: Path):
         source=source,
         package=package,
         mounted=mounted,
+        dataset_root=dataset_root,
+        layout=layout,
         data_root=data_root,
         acceptance=acceptance,
         acceptance_path=acceptance_path,
@@ -703,8 +711,163 @@ def test_validate_launch_binds_selection_metadata_hashes_and_logical_roles_witho
 
     assert result[0]["jobs"] == case.payload["jobs"]
     assert result[3].keys() == {"ppgt_author_v2", "esa_native_v3"}
-    assert result[4] == case.mounted / "private-mount"
+    assert result[4] == case.dataset_root
     assert result[4] / "data" == case.data_root
+
+
+@pytest.mark.parametrize(
+    "layout, selected_root",
+    [("flat", "accepted-data"),
+     ("owner_namespaced", "datasets/fixture/accepted-data")],
+)
+def test_validate_launch_accepts_flat_and_owner_namespaced_dataset_mounts(
+        runtime, tmp_path, monkeypatch, layout, selected_root):
+    case = _validation_case(runtime, tmp_path, layout=layout)
+    _install_validation_mocks(monkeypatch, case)
+    discovery_report = {}
+
+    result = runtime.validate_launch(
+        launch_path=case.launch,
+        expected_launch_sha256=case.launch_digest,
+        source_root=case.source,
+        package_dir=case.package,
+        mounted_root=case.mounted,
+        discovery_report=discovery_report,
+    )
+
+    assert result[4] == case.dataset_root
+    assert discovery_report["status"] == "selected"
+    assert discovery_report["candidate_count"] == 1
+    assert discovery_report["selected_root"] == selected_root
+    assert len(discovery_report["candidates"]) == 2
+    assert discovery_report["recursive_scan"] is False
+    assert discovery_report["file_contents_read"] is False
+
+
+def test_validate_launch_rejects_both_dataset_mount_layouts_before_payload(
+        runtime, tmp_path, monkeypatch):
+    case = _validation_case(runtime, tmp_path, layout="flat")
+    _install_validation_mocks(monkeypatch, case)
+    (case.mounted / "datasets" / "fixture" / "accepted-data").mkdir(parents=True)
+    discovery_report = {}
+
+    with pytest.raises(ValueError, match="exactly one dataset mount"):
+        runtime.validate_launch(
+            launch_path=case.launch,
+            expected_launch_sha256=case.launch_digest,
+            source_root=case.source,
+            package_dir=case.package,
+            mounted_root=case.mounted,
+            discovery_report=discovery_report,
+        )
+
+    assert discovery_report["status"] == "rejected"
+    assert discovery_report["candidate_count"] == 2
+    assert len(discovery_report["candidates"]) == 2
+    assert discovery_report["file_contents_read"] is False
+
+
+def test_validate_launch_rejects_wrong_dataset_mount_slug_before_payload(
+        runtime, tmp_path, monkeypatch):
+    case = _validation_case(runtime, tmp_path)
+    _install_validation_mocks(monkeypatch, case)
+    changed = copy.deepcopy(case.payload)
+    changed["private_asset"]["mount"] = "wrong-data"
+    launch = case.stage / "wrong-mount-launch.json"
+    digest = _write_json(launch, changed)
+
+    with pytest.raises(ValueError, match="exact dataset_source slug"):
+        runtime.validate_launch(
+            launch_path=launch,
+            expected_launch_sha256=digest,
+            source_root=case.source,
+            package_dir=case.package,
+            mounted_root=case.mounted,
+        )
+
+
+def test_validate_launch_rejects_acceptance_sha_tamper_before_payload(
+        runtime, tmp_path, monkeypatch):
+    case = _validation_case(runtime, tmp_path)
+    _install_validation_mocks(monkeypatch, case)
+    payload_path = case.data_root / "opaque-label-payload.bin"
+    payload_path.write_bytes(b"must not be opened")
+    real_open = Path.open
+
+    def reject_payload(path, *args, **kwargs):
+        if path == payload_path:
+            raise AssertionError("payload was opened before acceptance SHA rejection")
+        return real_open(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "open", reject_payload)
+    case.acceptance_path.write_bytes(case.acceptance_path.read_bytes() + b" ")
+
+    with pytest.raises(ValueError, match="accepted-data receipt differs"):
+        runtime.validate_launch(
+            launch_path=case.launch,
+            expected_launch_sha256=case.launch_digest,
+            source_root=case.source,
+            package_dir=case.package,
+            mounted_root=case.mounted,
+        )
+
+
+def test_validate_launch_rejects_binding_tamper_before_payload(
+        runtime, tmp_path, monkeypatch):
+    case = _validation_case(runtime, tmp_path)
+    _install_validation_mocks(monkeypatch, case)
+    payload_path = case.data_root / "opaque-label-payload.bin"
+    payload_path.write_bytes(b"must not be opened")
+    real_open = Path.open
+
+    def reject_payload(path, *args, **kwargs):
+        if path == payload_path:
+            raise AssertionError("payload was opened before binding rejection")
+        return real_open(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "open", reject_payload)
+    case.binding_path.write_bytes(case.binding_path.read_bytes() + b" ")
+
+    with pytest.raises(ValueError, match="Exact indexed binding is absent"):
+        runtime.validate_launch(
+            launch_path=case.launch,
+            expected_launch_sha256=case.launch_digest,
+            source_root=case.source,
+            package_dir=case.package,
+            mounted_root=case.mounted,
+        )
+
+
+def test_validate_launch_rejects_protected_role_authority_before_payload(
+        runtime, tmp_path, monkeypatch):
+    case = _validation_case(runtime, tmp_path)
+    _install_validation_mocks(monkeypatch, case)
+    payload_path = case.data_root / "opaque-label-payload.bin"
+    payload_path.write_bytes(b"must not be opened")
+    real_open = Path.open
+
+    def reject_payload(path, *args, **kwargs):
+        if path == payload_path:
+            raise AssertionError("payload was opened before protected-role rejection")
+        return real_open(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "open", reject_payload)
+    authority = json.loads(case.authority_path.read_text(encoding="utf-8"))
+    authority["protected_role_access_authorized"] = True
+    authority_sha = _write_json(case.authority_path, authority)
+    changed = copy.deepcopy(case.payload)
+    changed["authority"]["sha256"] = authority_sha
+    launch = case.stage / "protected-role-launch.json"
+    digest = _write_json(launch, changed)
+
+    with pytest.raises(ValueError, match="Qualification-only authority required"):
+        runtime.validate_launch(
+            launch_path=launch,
+            expected_launch_sha256=digest,
+            source_root=case.source,
+            package_dir=case.package,
+            mounted_root=case.mounted,
+        )
 
 
 def test_validate_launch_rejects_logical_role_hash_drift_before_payload(runtime, tmp_path, monkeypatch):
@@ -821,14 +984,20 @@ def test_platform_entry_uses_launch_marker_and_frozen_runtime_extract(tmp_path, 
         b"    return {'status': 'complete', 'hardware': ['Tesla T4', 'Tesla T4']}\n"
     )
     archive = mount / "source_payload.bin"
+    helper_source = (ROOT / "src/molgap/kaggle_mounts.py").read_bytes()
     _write_source_archive(
         archive,
-        [(_tar_member("src/molgap/modern2d_qualification_runtime.py", runtime_code), runtime_code)],
+        [
+            (_tar_member("src/molgap/kaggle_mounts.py", helper_source), helper_source),
+            (_tar_member("src/molgap/modern2d_qualification_runtime.py", runtime_code), runtime_code),
+        ],
     )
     payload = {"expected_source_archive_sha256": _sha(archive)}
     launch = mount / "modern2d_qualification_launch.json"
     launch_digest = _write_json(launch, payload)
     entry.EXPECTED_LAUNCH_SHA256 = launch_digest
+    entry.EXPECTED_SOURCE_DATASET = "fixture/qualification-mount"
+    entry.MOUNT_RESOLVER_SOURCE = helper_source.decode("utf-8")
 
     real_path = Path
     monkeypatch.setattr(
@@ -859,6 +1028,8 @@ def test_platform_entry_uses_launch_marker_and_frozen_runtime_extract(tmp_path, 
     allocation = json.loads((output_root / "bootstrap_allocation.json").read_text(encoding="utf-8"))
     assert allocation["status"] == "complete"
     assert allocation["allocation_device_count"] == 2
-    assert allocation["cost_status"] == "measured"
+    assert allocation["cost_status"] == "PYTHON_OBSERVED_WINDOW_ONLY"
+    assert allocation["source_discovery"]["status"] == "selected"
+    assert allocation["source_discovery"]["candidate_count"] == 1
     assert not (output_root / "bootstrap_allocation.tmp").exists()
 

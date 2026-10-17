@@ -32,3 +32,5 @@ historical CPU-only evidence. Live progress is owned by `CURRENT_STATE.md`.
 The [2026-10-18 native acceptance](results/decision_2026-10-18.md) retained the
 first GPU attempt's pre-runtime infrastructure failure, without a model result
 or automatic retry.
+The [dated bootstrap repair](results/repair_2026-10-18.md) documents shared
+mount resolution, frozen helper/entry binding and local CPU-only acceptance.

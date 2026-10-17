@@ -210,8 +210,9 @@ def freeze_qualification_declarations(repo_root, input_metadata_path, input_meta
 def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected_spec_identity):
     """Package committed declarations and validate the separate qualification ABI.
 
-    mounted_root contains the exact MOUNT directory with training_input.json and
-    indexed_assets. Direct plan_many publication never rebuilds RML derived files.
+    mounted_root contains the declared dataset in a flat or owner-namespaced
+    layout, with training_input.json and indexed_assets. Direct plan_many
+    publication never rebuilds RML derived files.
     """
     from .experiment_family_workflow import RunContext
     from .experiment_package import build_experiment_source_package, stage_source_inputs, read_packaged_text
@@ -223,6 +224,7 @@ def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected
     from .modern2d_qualification_runtime import LAUNCH_FORMAT, LAUNCH_FILENAME, validate_launch
     from .data.indexed_inputs import AcceptedIndexedInputPermit
     from .family_training_runner import read_recipe
+    from .kaggle_mounts import resolve_dataset_mount
     from .research_memory.plan import plan_many
 
     root, output = Path(repo_root).absolute(), Path(output_root).absolute()
@@ -247,7 +249,8 @@ def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected
     staged = stage_source_inputs(package, output / "inputs", states)
     publish_immutable_bytes(staged / "authority.json", authority.read_bytes())
     authority_pin = {"path": "authority.json", "sha256": _sha(staged / "authority.json")}
-    asset_root = _under(Path(mounted_root).absolute(), MOUNT)
+    asset_root = resolve_dataset_mount(Path(mounted_root).absolute(), DATASET,
+        mount_name=MOUNT, marker="training_input.json")
     receipt = _json(_ref(asset_root / "indexed_assets", {"path": "acceptance.json", "sha256": metadata["export_acceptance_sha256"]}))
     jobs = []
     for job in prep["jobs"]:
@@ -271,11 +274,19 @@ def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected
             "development_logical_content_sha256": receipt["roles"]["common_dev"]["logical_content_sha256"]}}
     launch_pin = _write(staged / LAUNCH_FILENAME, launch)
     entry = read_packaged_text(package, ENTRY)
-    marker = "EXPECTED_LAUNCH_SHA256 = None"
-    if entry.count(marker) != 1:
-        raise ValueError("Qualification entrypoint pin marker changed")
+    resolver_source = read_packaged_text(package, "src/molgap/kaggle_mounts.py")
+    replacements = {
+        "EXPECTED_LAUNCH_SHA256 = None": "EXPECTED_LAUNCH_SHA256 = " + repr(launch_pin["sha256"]),
+        "EXPECTED_SOURCE_DATASET = None": "EXPECTED_SOURCE_DATASET = " + repr(SOURCE_DATASET),
+        "MOUNT_RESOLVER_SOURCE = None": "MOUNT_RESOLVER_SOURCE = " + repr(resolver_source),
+    }
+    for marker in replacements:
+        if entry.count(marker) != 1:
+            raise ValueError("Qualification entrypoint pin marker changed: " + marker)
+    for marker, replacement in replacements.items():
+        entry = entry.replace(marker, replacement)
     publish_immutable_bytes(output / "run_modern2d_qualification.py",
-        entry.replace(marker, "EXPECTED_LAUNCH_SHA256 = " + repr(launch_pin["sha256"])).encode("utf-8"))
+        entry.encode("utf-8"))
     _write(output / "kernel-metadata.json", {"id": KERNEL, "title": "MolGap Modern2D Native 100K V1",
         "code_file": "run_modern2d_qualification.py", "language": "python", "kernel_type": "script",
         "is_private": True, "enable_gpu": True, "enable_internet": True, "machine_shape": "NvidiaTeslaT4",
