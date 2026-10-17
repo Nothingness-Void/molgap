@@ -1,0 +1,34 @@
+{
+  "action_rule": {
+    "action": "RUN_MODERN2D_QUALIFICATION",
+    "field": "user_authorized_qualification",
+    "operator": "eq",
+    "threshold": true
+  },
+  "approval": {
+    "activation": "new-human-authorized-six-scratch-updates-only",
+    "authority_ref": "experiments/modern2d_model_integration/native_preflight/authority.json"
+  },
+  "borderline_action": "DEFER",
+  "comparability_selector": {
+    "scientific_contract": "modern2d-native-qualification-only-v1"
+  },
+  "cost_model": {
+    "assumptions": [
+      "entire T4x2 allocation including environment preparation and idle tail"
+    ],
+    "kind": "measured_only"
+  },
+  "created_from_source_digest": "2ff64b99455ef7d8516756299d9dfbd13f8578bd1d7df6bfe6200f4d0d98a7d1",
+  "early_stop_rule": null,
+  "observation_point": null,
+  "policy_id": "modern2d-native-qualification",
+  "policy_type": "research_action",
+  "promotion_rule": null,
+  "required_observable_fields": [
+    "user_authorized_qualification"
+  ],
+  "schema": "molgap-policy-v1",
+  "status": "candidate",
+  "version": "v1"
+}

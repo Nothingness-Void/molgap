@@ -2,6 +2,35 @@
 
 Owner: server. Authority: [authority.json](authority.json).
 
+## Exact GPU attempt
+
+Kaggle2 `kaseichou/molgap-modern2d-native-100k-v1`, kernel139199488/version1,
+was submitted once and observed QUEUED. The observed private/T4 metadata,
+both dataset mounts and remote entry bytes matched the frozen release. This is
+execution state, not numerical acceptance. No second POST or formal training is
+authorized by a queued/running status.
+
+Frozen source commit `d3791e9dbcb4a106bde70f0728acfb837a622b9b`, archive
+`e1ff9c22748d9db011d7080b2515827f2c1c2da275d2c5749faada7e693bf950`;
+Spec `4ea8268666f1822aeefcd650a95c2874677e3065be8fbc9fd0c86dd0e3ac5626`;
+package `39e2ae43ccb295f3a56b20143bcd064e367db3a36fdbb35e9270e8fa4032577a`.
+The two independent interfaces have six scratch updates each, physical BS128,
+seed42, train-only access and separate checkpoints. Whole-allocation ceiling:
+1800 seconds /1 allocated T4-hour including startup, idle tail and output seal.
+Formal training and all protected roles remain blocked.
+
+Both private data/source datasets were observed ready at version1 and all files
+downloaded back with exact SHA checks (106 selected-data files,12 source files).
+Actual CPU finite-state/source/launch acceptance passed before POST; retained
+pre-POST proof SHA256 `97cde8b3923c2ea26c70c755250da7e8c7eaa1c4e046cf007684c48305401f0e`.
+Raw operation receipts, source packages, checkpoints and roundtrips are retained
+under `E:/MolGap/artifacts/modern2d-native-preflight`; they are not committed
+model payloads. On completion retrieve only manifest-bound outputs from this
+exact version, verify both repeat/resume proofs, source/role/cost identities and
+budget, and distinguish infrastructure faults from scientific outcomes.
+
+## CPU prerequisite history
+
 - CPU phase: first staging attempt rejected by jsub before a job was created
   (`CR+LF type of newline is not allowed`); scheduler had no user job afterward.
   The original archive/stage are retained unchanged. A reviewed LF-packaging

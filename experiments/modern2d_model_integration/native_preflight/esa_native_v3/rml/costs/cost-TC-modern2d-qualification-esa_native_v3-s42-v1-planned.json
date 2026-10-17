@@ -1,0 +1,30 @@
+{
+  "action_id": "A001",
+  "attempt_id": "esa_native_v3-v1",
+  "category": "preflight",
+  "cost_event_id": "cost-TC-modern2d-qualification-esa_native_v3-s42-v1-planned",
+  "evidence_ref": "experiments/modern2d_model_integration/native_preflight/authority.json",
+  "hardware": "NvidiaTeslaT4x2_shared_allocation",
+  "measurement": {
+    "cpu_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "device_hours": {
+      "status": "estimated",
+      "value": 0.5
+    },
+    "queue_hours": {
+      "status": "measurement_missing",
+      "value": null
+    },
+    "wall_hours": {
+      "status": "estimated",
+      "value": 0.5
+    }
+  },
+  "platform": "kaggle2",
+  "run_id": "modern2d-native-100k-s42-v1:esa_native_v3:downstream",
+  "schema": "molgap-cost-event-v1",
+  "trajectory_id": "TC-modern2d-qualification-esa_native_v3-s42-v1"
+}

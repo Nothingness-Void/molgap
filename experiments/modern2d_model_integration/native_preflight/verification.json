@@ -1,0 +1,32 @@
+{
+  "format": "molgap-modern2d-native-preparation-verification-v1",
+  "scope": "CPU_ACCEPTANCE_AND_EXACT_PLATFORM_SUBMISSION_ONLY",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "native_model_acceptance": "PENDING",
+  "formal_training_authorized": false,
+  "tests_executed_by": "independent Luna leaf agents",
+  "main_executed_pytest": false,
+  "suites": [
+    {"scope": "export CLI and real Git archive LF regression", "passed": 11, "junit_sha256": "e3a800faf2030626c720a109c0f7bf79873cf5100dbaddd06a019109d328629e"},
+    {"scope": "metadata scheduler adapter (overlaps earlier PBS cases)", "passed": 4, "junit_sha256": "9b540ec366968ea51b57a67b85fc3239bc888b8512a18defa027c62bddd5e608"},
+    {"scope": "qualification guards and actual tiny CPU repeat/resume", "passed": 163, "junit_sha256": "652553726d453abe5ef41543d1768f54ad324a038a9ccd7c2cac953c9f5e4d4c"},
+    {"scope": "existing recipe/kernel and all16 Session cases", "passed": 53, "junit_sha256": "f8f74748fe9b6dae224fbe14858a5535d6f9379aa8d479c4d2a860b82f996d52"},
+    {"scope": "runtime supervision after explicit inherited-thread repair", "passed": 30, "junit_sha256": "908f43472bf33bf4173ebec2168e1f31d3568a9f9a3dd2c92f11c81ea2e29175"},
+    {"scope": "generated accepted100K/50K metadata helper and CLI", "passed": 12, "junit_sha256": "e72243b5999baa1c0719733b336c293749ce5fb0f1203401c81504f0ef364c6d"},
+    {"scope": "preparation fixtures and shared snapshot compatibility", "passed": 30, "junit_sha256": "b3fdb16066098beace1afad689c3a63a47fa4841cf07e26f030e8891a9a5eec8"}
+  ],
+  "suite_counts_may_overlap": true,
+  "real_preparation": {"scope": "Actual IMS-accepted export metadata, not a generated PCQM substitute", "ppgt_initial_state_tensors": 370, "esa_initial_state_tensors": 130, "total_initial_state_bytes": 58381134, "cpu_finite_state_checks": "PASSED", "separate_launch_binding_check_sha256": "97cde8b3923c2ea26c70c755250da7e8c7eaa1c4e046cf007684c48305401f0e"},
+  "data_roundtrip": {"private": true, "version": 1, "files": 106, "bytes": 467633530, "status": "BYTES_VERIFIED"},
+  "source_roundtrip": {"private": true, "version": 1, "files": 12, "status": "BYTES_VERIFIED"},
+  "rml_validate": "PASSED",
+  "rml_frozen_check": "STALE_DERIVED_OUTPUTS_NOT_REBUILT",
+  "documentation_navigation": {"pointers": 3807, "anchors": 38, "link_errors": 0},
+  "documentation_budget_check": "FAILED_ENTRY_LINE_LIMITS_AGENTS_CURRENT_STATE_QUICKSTART",
+  "readonly_check_report_sha256": "43d30266383fab944b54b63e26335fde62e7f077bf6781e8f5149b208ec4d53c",
+  "preserved_user_dirty_files": {"checked": 14, "changed": []},
+  "frozen_gptrans_raw_sha256": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+  "remaining": ["exact native139199488/version1 terminal artifacts and both numerical/resume proofs", "whole T4x2 allocation cost and budget acceptance", "IMS metadata1740093 native terminal accounting (helper output was retrieved)", "preserved user-owned stale RML derived outputs", "entry-document line budgets"],
+  "not_claimed": ["whole-repository all-green", "native qualification", "scientific ranking", "60-pass training", "500K qualification", "Desktop application", "new Git push"],
+  "raw_artifact_root": "E:/MolGap/artifacts/modern2d-native-preflight"
+}

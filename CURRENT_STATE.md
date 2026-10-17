@@ -112,7 +112,7 @@ Cross-scale infrastructure is CPU-accepted; V2 IMS data passed [role acceptance]
 Job `1733250.ccpbs1` exited0 with a retained memory warning; Kaggle mirrors are NOT_PUBLISHED.
 Modern2D [versioned integration](experiments/modern2d_model_integration/integration_attempt_2026-10-17.md) is CPU-accepted for PPGT/2, ESA/3 and indexed loading.
 The human authorized a separate bounded [native qualification](experiments/modern2d_model_integration/native_preflight/STATUS.md): IMS CPU at most2h, then Kaggle2 T4x2 at most30min, no formal training/protected roles.
-Its exact IMS job `1739747.ccpbs1` exited0; selected100K/Common-Dev export and independent verification passed. Private mirror/native qualification are pending; scientific training stays unauthorized.
+Its exact IMS job `1739747.ccpbs1` exited0; selected100K/Common-Dev export and independent verification passed. Private Kaggle2 mirror/source byte roundtrips passed; exact qualification kernel139199488/version1 was submitted once and observed QUEUED. Native numerical acceptance is pending; scientific training stays unauthorized.
 
 - Preserve terminal interpretations and independent qualifications through the
   history index. The accepted 500K bridge does not establish full-scale qualification.

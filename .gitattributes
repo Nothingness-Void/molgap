@@ -8,6 +8,8 @@ src/molgap/ppgt_*.py text eol=lf
 src/molgap/esa_*.py text eol=lf
 src/molgap/modern2d_*.py text eol=lf
 experiments/modern2d_model_integration/*.json -text
+experiments/modern2d_model_integration/native_preflight/*.json text eol=lf
+experiments/modern2d_model_integration/native_preflight/**/*.json text eol=lf
 # New unified-data CPU payloads bind raw generator bytes across platforms.
 src/molgap/pcqm_unified_roles.py text eol=lf
 src/molgap/pcqm_molecular_identity.py text eol=lf
