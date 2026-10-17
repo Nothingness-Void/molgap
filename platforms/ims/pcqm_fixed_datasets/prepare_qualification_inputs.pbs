@@ -1,0 +1,31 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=16:mpiprocs=1:ompthreads=1
+#PBS -l walltime=00:10:00
+#PBS -j oe
+set -euo pipefail
+umask 077
+BOUNDARY=/lustre/home/users/sm2/chou
+STAGE="${MOLGAP_METADATA_STAGE:?explicit immutable source/request stage required}"
+test "$(realpath "$BOUNDARY")" = "$BOUNDARY"
+test "$(realpath "$STAGE")" = "$STAGE"
+test "$(realpath "$STAGE/request.json")" = "$STAGE/request.json"
+case "$STAGE" in "$BOUNDARY"/*) ;; *) exit 2 ;; esac
+export PYTHONPATH="$STAGE/code/src"
+PYTHONPATH="$("$BOUNDARY/molgap/.venv/bin/python" - "$STAGE" "$BOUNDARY" <<'PY'
+import json, os, sys
+from pathlib import Path
+stage, boundary = map(Path, sys.argv[1:])
+runtime = json.loads((stage/'code/platforms/ims/v4_submit/runtime_registry.json').read_bytes())['runtimes']['ims-a100-torch271-v1']
+assert Path(runtime['python']) == boundary/'molgap/.venv/bin/python'
+paths = [p.format(code_root=str(stage/'code')) for p in runtime['pythonpath']]
+assert all(Path(p).resolve().is_relative_to(boundary) for p in paths)
+print(os.pathsep.join(paths))
+PY
+)"
+export PYTHONPATH PYTHONNOUSERSITE=1
+export CUDA_VISIBLE_DEVICES=-1 HIP_VISIBLE_DEVICES=-1 ROCR_VISIBLE_DEVICES=-1
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+cd "$STAGE"
+printf 'CPU_ONLY_METADATA job=%s started=%s\n' "${PBS_JOBID:-UNKNOWN}" "$(date -u +%FT%TZ)"
+"$BOUNDARY/molgap/.venv/bin/python" "$STAGE/code/experiments/modern2d_model_integration/scripts/prepare_qualification_inputs.py" --request "$STAGE/request.json" --execute
+printf 'CPU_METADATA_COMPLETED completed=%s\n' "$(date -u +%FT%TZ)"
