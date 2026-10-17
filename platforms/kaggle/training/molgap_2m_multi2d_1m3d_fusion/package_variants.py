@@ -42,12 +42,12 @@ def main() -> None:
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     repo_root = next(
-        (parent for parent in root.parents if (parent / "src/molgap/fusion.py").exists()),
+        (parent for parent in root.parents if (parent / "src/molgap/models/fusion.py").exists()),
         None,
     )
     if repo_root is None:
-        raise FileNotFoundError("Could not locate src/molgap/fusion.py from the package")
-    fusion_source = repo_root / "src/molgap/fusion.py"
+        raise FileNotFoundError("Could not locate src/molgap/models/fusion.py from the package")
+    fusion_source = repo_root / "src/molgap/models/fusion.py"
     fusion_head = _fusion_head_source(fusion_source)
     train_source = (root / "train_fusion.py").read_text(encoding="utf-8")
     import_line = "from fusion import FusionHead"
@@ -55,7 +55,7 @@ def main() -> None:
         raise RuntimeError("Expected one FusionHead import in train_fusion.py")
     entry_source = train_source.replace(
         import_line,
-        "# Injected from src/molgap/fusion.py because Kaggle script kernels "
+        "# Injected from src/molgap/models/fusion.py because Kaggle script kernels "
         "upload only code_file.\n" + fusion_head,
     )
     variant_line = 'VARIANT = json.loads(Path("variant.json").read_text(encoding="utf-8"))["variant"]'

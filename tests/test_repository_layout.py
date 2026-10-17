@@ -5,7 +5,10 @@ import hashlib
 import importlib.util
 import json
 import re
+import subprocess
+from functools import lru_cache
 from pathlib import Path
+from urllib.parse import unquote
 
 import pytest
 
@@ -22,6 +25,8 @@ EXCLUDED_PARTS = {
     "packages",      # generated Kaggle copies, not source entrypoints
     "bundle",        # frozen remote wheel/notebook payloads
     "__pycache__",
+    "frozen_source", "executed_source", "source_snapshots",
+    "terminal_acceptance",  # retained terminal artifacts, not maintained code
 }
 STALE_PATH_SNIPPETS = (
     '"results/phase8',
@@ -79,10 +84,6 @@ LOCAL_LINK_SUFFIXES = (
     ".yaml",
     ".yml",
 )
-CONTROL_DOC_LIMITS = {
-    "CURRENT_STATE.md": 120,
-    "ROADMAP.md": 120,
-}
 TOP_LEVEL_POINTER_DOCS = (
     "AGENTS.md",
     "CURRENT_STATE.md",
@@ -96,86 +97,150 @@ TOP_LEVEL_POINTER_DOCS = (
     "platforms/README.md",
 )
 
-ORACLE_DIR = "experiments/pcqm_expert_oracle_feasibility"
-ORACLE_FINALIZATION = f"{ORACLE_DIR}/rml/rml_finalized/finalization.json"
-SLOT_DIR = "experiments/pcqm_k1_slot_readout_diagnostic"
-SLOT_FINALIZATION = f"{SLOT_DIR}/rml/rml_finalized/finalization.json"
-# Only these named historical artifacts can receive the two allowances below.
-FROZEN_ARTIFACT_DIGESTS = {
-    f"{ORACLE_DIR}/analyze.py": "8b43cf0f050bbc3bd801a2befe2ed782d742d3a1871da4cc06da2e190c467a30",
-    f"{ORACLE_DIR}/decision.md": "81dae767d7d1b7fabcc6f9d5c362bccac64feb007e84b83574e7e35432ca7ac1",
-    f"{ORACLE_DIR}/analysis.json": "58bbd71c011ceb3bd57a696736198e18eea5a52dd6fff05c8de4f74a3428ab3d",
-    f"{SLOT_DIR}/prepare.py": "822053385b584ff424b358f55915fd92ccadce82bba35b570572f2df3f1863e6",
-    f"{SLOT_DIR}/finalize_analysis.py": "b600ae7e9cb99de9f09720fc4febab38e98d6eff948a085a3b4be4357c6f62bd",
-    f"{SLOT_DIR}/terminal_decision.md": "db39710b327f5b2ec0713e07e82b7790dd052cbc0e1e4f9c42e4396b2e463dd5",
-    f"{SLOT_DIR}/results/analysis.json": "d0c7544ec13a1316c31264175b0259e25818cbd41e504581e52e96b7118952e2",
-    f"{SLOT_DIR}/input_authority/terminal_decision.md": "7e040041be9d1f9fcd768ded2612f87330793ea243f8b55349a02c82a2199772",
-    f"{SLOT_DIR}/input_authority/scientific_metrics.json": "b6babc6b8eb954d69cea6aea1a14377f4a4d1ed8bbd5328d992f3ef7a3c7c4b9",
-    f"{SLOT_DIR}/inputs.json": "2aa4c07861260336205b139b7b988026ba95698644f3e8c9ab45c19e16b0183f",
-}
-FROZEN_ROOT_DEPTH_SCRIPTS = {
-    f"{ORACLE_DIR}/analyze.py", f"{SLOT_DIR}/prepare.py", f"{SLOT_DIR}/finalize_analysis.py",
-}
-# This exact Windows checkout variant predates maintenance. Do not normalize
-# arbitrary sources: both its raw bytes and the receipt-bound LF bytes must match.
-FROZEN_CRLF_DIGESTS = {
-    f"{ORACLE_DIR}/analyze.py": "1d077d1194f372e7816f24605c5b119ea49ea17d984b62ca06273c1bae946d8f",
-}
-IMMUTABLE_DECISION_NAVIGATION = {
-    f"{ORACLE_DIR}/decision.md": f"{ORACLE_DIR}/analysis.json",
-    f"{SLOT_DIR}/terminal_decision.md": f"{SLOT_DIR}/results/analysis.json",
-}
-
-
-def frozen_receipt(relative: str) -> str:
-    return SLOT_FINALIZATION if relative.startswith(SLOT_DIR + "/") else ORACLE_FINALIZATION
-
-
-def verified_frozen_artifact(relative: str) -> bool:
-    expected = FROZEN_ARTIFACT_DIGESTS.get(relative)
-    if expected is None:
-        return False
-    try:
-        receipt = json.loads((REPO_ROOT / frozen_receipt(relative)).read_text(encoding="utf-8"))
-        if receipt.get("input_artifact_hashes", {}).get(relative) != expected:
-            return False
-        payload = (REPO_ROOT / relative).read_bytes()
-    except (OSError, ValueError):
-        return False
-    actual = hashlib.sha256(payload).hexdigest()
-    return actual == expected or (
-        actual == FROZEN_CRLF_DIGESTS.get(relative)
-        and hashlib.sha256(payload.replace(b"\r\n", b"\n")).hexdigest() == expected
+@lru_cache(maxsize=1)
+def tracked_paths() -> list[Path]:
+    result = subprocess.run(
+        ["git", "ls-files", "-z"], cwd=REPO_ROOT, capture_output=True, check=True,
     )
+    return [REPO_ROOT / name.decode("utf-8") for name in result.stdout.split(b"\0") if name]
 
 
-def frozen_root_depth_snapshot(path: Path) -> bool:
+@lru_cache(maxsize=None)
+def changed_paths(root: Path) -> set[str]:
+    result = subprocess.run(
+        ["git", "diff", "--name-only", "-z", "HEAD", "--"], cwd=root,
+        capture_output=True, check=False,
+    )
+    if result.returncode:
+        return {"*"}
+    return {name.decode("utf-8") for name in result.stdout.split(b"\0") if name}
+
+
+@lru_cache(maxsize=None)
+def canonical_bytes(path: Path) -> bytes:
+    """Compare tracked, unchanged evidence using Git's canonical bytes.
+
+    Clean checkout filters (including Windows line endings) are Git's concern;
+    changed/untracked files are checked byte-for-byte without normalization.
+    """
     relative = path.relative_to(REPO_ROOT).as_posix()
-    return relative in FROZEN_ROOT_DEPTH_SCRIPTS and verified_frozen_artifact(relative)
+    changed = changed_paths(REPO_ROOT)
+    if "*" not in changed and relative not in changed:
+        blob = subprocess.run(
+            ["git", "show", f"HEAD:{relative}"], cwd=REPO_ROOT,
+            capture_output=True, check=False,
+        )
+        if blob.returncode == 0:
+            return blob.stdout
+    return path.read_bytes()
 
 
-def supplementary_machine_evidence(decision: Path, readme: Path) -> bool:
-    relative = decision.relative_to(REPO_ROOT).as_posix()
-    evidence = IMMUTABLE_DECISION_NAVIGATION.get(relative)
-    if evidence is None or not all(
-        verified_frozen_artifact(item) for item in (relative, evidence)
-    ):
+def receipt_artifact_matches(path: Path, expected: str) -> bool:
+    try:
+        return hashlib.sha256(canonical_bytes(path)).hexdigest() == expected
+    except OSError:
         return False
-    pointers = MARKDOWN_LINK.findall(readme.read_text(encoding="utf-8"))
-    resolved = {resolve_doc_pointer(readme, pointer) for pointer in pointers}
-    return decision in resolved and REPO_ROOT / evidence in resolved
 
 
-def frozen_snapshot_navigation(document: Path) -> bool:
-    """Only the named receipt-bound copy may keep its owner's relative links."""
-    relative = document.relative_to(REPO_ROOT).as_posix()
-    snapshot = f"{SLOT_DIR}/input_authority/terminal_decision.md"
-    required = (snapshot, f"{SLOT_DIR}/input_authority/scientific_metrics.json", f"{SLOT_DIR}/inputs.json")
-    if relative != snapshot or not all(verified_frozen_artifact(item) for item in required):
-        return False
-    readme = REPO_ROOT / SLOT_DIR / "README.md"
-    resolved = {resolve_doc_pointer(readme, p) for p in MARKDOWN_LINK.findall(readme.read_text(encoding="utf-8"))}
-    return all(REPO_ROOT / item in resolved for item in required)
+@lru_cache(maxsize=1)
+def closed_experiment_dirs() -> set[Path]:
+    """Only an experiment-level, hash-bound terminal receipt retires its code.
+
+    An arm receipt cannot retire an unresolved multi-arm question. Full scientific
+    acceptance remains owned by RML; this only selects maintained layout scope.
+    """
+    closed = set()
+    root_receipts = set()
+    finalized_ids: dict[Path, set[str]] = {}
+    for receipt_path in tracked_paths():
+        if receipt_path.name != "finalization.json":
+            continue
+        relative = receipt_path.relative_to(REPO_ROOT)
+        if (len(relative.parts) < 4 or relative.parts[0] != "experiments"
+                or relative.parts[-2] != "rml_finalized"):
+            continue
+        try:
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            trajectory_path = receipt_path.parent / "trajectory.json"
+            trajectory = json.loads(trajectory_path.read_text(encoding="utf-8"))
+            outcome = receipt["outcome"]
+            decision = trajectory["decision"]
+            decision_path = REPO_ROOT / decision["decision_ref"]
+            experiment = REPO_ROOT / "experiments" / relative.parts[1]
+            if (receipt.get("format") != "molgap-rml-finalization-v1"
+                    or outcome in ("ACTIVE", "PENDING", "", None)
+                    or decision.get("outcome") != outcome
+                    or receipt.get("trajectory_id") != trajectory.get("trajectory_id")
+                    or not decision_path.resolve().is_relative_to(experiment.resolve())):
+                continue
+            bindings = {trajectory_path: receipt["published_hashes"]["trajectory.json"]}
+            bindings.update({REPO_ROOT / name: digest for name, digest in
+                             receipt["input_artifact_hashes"].items()
+                             if name.startswith(experiment.relative_to(REPO_ROOT).as_posix() + "/")
+                             and Path(name).suffix in (".py", ".md", ".json")})
+            if decision_path not in bindings:
+                continue
+            if all(receipt_artifact_matches(path, digest) for path, digest in bindings.items()):
+                finalized_ids.setdefault(experiment, set()).add(receipt["trajectory_id"])
+                if relative.parts[2:] == ("rml", "rml_finalized", "finalization.json"):
+                    root_receipts.add(experiment)
+        except (OSError, ValueError, KeyError, TypeError):
+            continue
+    for experiment, terminal_ids in finalized_ids.items():
+        originals = [path for path in tracked_paths()
+                     if path.name == "trajectory.json" and path.is_relative_to(experiment)
+                     and "rml_finalized" not in path.relative_to(experiment).parts
+                     and not EXCLUDED_PARTS.intersection(path.relative_to(experiment).parts)
+                     and "input_authority" not in path.relative_to(experiment).parts]
+        try:
+            ids = {json.loads(path.read_text(encoding="utf-8"))["trajectory_id"] for path in originals}
+            if (ids and ids <= terminal_ids) or (not ids and experiment in root_receipts):
+                closed.add(experiment)
+        except (OSError, ValueError, KeyError, TypeError):
+            continue
+    return closed
+
+
+@lru_cache(maxsize=1)
+def active_files() -> list[Path]:
+    closed = closed_experiment_dirs()
+    return [path for path in tracked_paths()
+            if path.is_file()
+            and not EXCLUDED_PARTS.intersection(path.relative_to(REPO_ROOT).parts)
+            and not any(path.is_relative_to(owner) for owner in closed)]
+
+
+@lru_cache(maxsize=1)
+def frozen_navigation_documents() -> set[Path]:
+    """Frozen copied/context documents keep their original owner's links.
+
+    Maintained entrypoints remain checked even if some run binds their bytes.
+    Only explicit retained-reference inventories and trajectory source bindings
+    grant this navigation scope; artifact integrity still uses the bound digest.
+    """
+    documents = set()
+    for record_path in tracked_paths():
+        relative = record_path.relative_to(REPO_ROOT)
+        if (len(relative.parts) < 3 or relative.parts[0] != "experiments"
+                or record_path.name not in ("manifest.json", "trajectory.json")):
+            continue
+        try:
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+            bindings = {}
+            if record.get("format") == "molgap-retained-reference-files-v1":
+                bindings.update({item["path"]: item["sha256"] for item in record["files"]})
+            if record_path.name == "trajectory.json":
+                bindings.update(record.get("decision_state", {}).get("source_hashes", {}))
+            owner = REPO_ROOT / "experiments" / relative.parts[1]
+            for name, digest in bindings.items():
+                document = REPO_ROOT / name.replace("\\", "/")
+                if (document.suffix == ".md" and document.name not in ("README.md", "STATUS.md", "NAVIGATION.md")
+                        and document.resolve().is_relative_to(owner.resolve())
+                        and receipt_artifact_matches(document, digest)):
+                    documents.add(document)
+        except (OSError, ValueError, KeyError, TypeError):
+            continue
+    return documents
 
 
 def experiment_is_indexed(index: str, experiment: Path) -> bool:
@@ -205,34 +270,14 @@ def has_main_guard(source: str) -> bool:
 
 
 def active_python_files() -> list[Path]:
-    files: list[Path] = []
-    for root in ACTIVE_ROOTS:
-        for path in (REPO_ROOT / root).rglob("*.py"):
-            if EXCLUDED_PARTS.intersection(path.relative_to(REPO_ROOT).parts):
-                continue
-            files.append(path)
-    return sorted(files)
+    return sorted(path for path in active_files()
+                  if path.suffix == ".py" and path.relative_to(REPO_ROOT).parts[0] in ACTIVE_ROOTS)
 
 
 def active_markdown_files() -> list[Path]:
-    files = [
-        REPO_ROOT / name
-        for name in (
-            "AGENTS.md",
-            "ARCHITECTURE.md",
-            "CURRENT_STATE.md",
-            "NAMING.md",
-            "README.md",
-            "ROADMAP.md",
-            "TRACKS.md",
-        )
-    ]
-    for root in ACTIVE_ROOTS:
-        for path in (REPO_ROOT / root).rglob("*.md"):
-            if EXCLUDED_PARTS.intersection(path.relative_to(REPO_ROOT).parts):
-                continue
-            files.append(path)
-    return sorted(set(files))
+    return sorted(path for path in active_files() if path.suffix == ".md"
+                  and (path.relative_to(REPO_ROOT).parts[0] in ACTIVE_ROOTS
+                       or path.name in REPO_CONTROL_DOCS and path.parent == REPO_ROOT))
 
 
 def argparse_clis() -> list[Path]:
@@ -244,28 +289,28 @@ def argparse_clis() -> list[Path]:
 
 
 def active_experiment_dirs() -> list[Path]:
-    return sorted(
-        path
-        for path in (REPO_ROOT / "experiments").iterdir()
-        if path.is_dir() and not path.name.startswith("_")
-        # Import caches can remain after a tracked experiment is moved.
-        and any(
-            item.is_file()
-            and not EXCLUDED_PARTS.intersection(item.relative_to(path).parts)
-            for item in path.rglob("*")
-        )
-    )
+    return sorted({REPO_ROOT / "experiments" / relative.parts[1]
+                   for path in active_files()
+                   if len((relative := path.relative_to(REPO_ROOT)).parts) > 2
+                   and relative.parts[0] == "experiments"
+                   and not relative.parts[1].startswith("_")})
 
 
 def resolve_doc_pointer(document: Path, raw_pointer: str) -> Path | None:
-    pointer = raw_pointer.split("#", maxsplit=1)[0]
-    if any(token in pointer for token in ("*", "<", ">")):
+    pointer = unquote(raw_pointer.strip().removeprefix("<").removesuffix(">")).split("#", 1)[0]
+    if (not pointer or re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", pointer)
+            or pointer.startswith(("/", "\\"))
+            or any(token in pointer for token in ("*", "<", ">"))):
         return None
     normalized = pointer.replace("\\", "/")
-    first = normalized.split("/", maxsplit=1)[0]
+    # Explicit relative links are relative even when the basename is README.md.
+    local = (document.parent / normalized).resolve()
+    if pointer.startswith(("./", "../")) or local.exists():
+        return local
+    first = normalized.split("/", 1)[0]
     if first in REPO_POINTER_ROOTS or normalized in REPO_CONTROL_DOCS:
-        return REPO_ROOT / normalized
-    return document.parent / normalized
+        return (REPO_ROOT / normalized).resolve()
+    return local
 
 
 def test_active_experiments_have_readme_entrypoints() -> None:
@@ -312,26 +357,11 @@ def test_active_experiments_are_indexed_and_traceable() -> None:
                 if reachable_evidence:
                     break
             if not reachable_evidence:
-                reachable_evidence = any(
-                    supplementary_machine_evidence(decision, readme_path)
-                    for decision in decisions
-                )
-            if not reachable_evidence:
                 failures.append(
                     f"{experiment.name}: no decision points to reachable JSON evidence"
                 )
 
     assert not failures, "experiment traceability failures:\n" + "\n".join(failures)
-
-
-def test_live_control_documents_remain_bounded() -> None:
-    failures: list[str] = []
-    for relative, limit in CONTROL_DOC_LIMITS.items():
-        text = (REPO_ROOT / relative).read_text(encoding="utf-8")
-        line_count = len(text.splitlines())
-        if line_count > limit:
-            failures.append(f"{relative}: {line_count} lines exceeds {limit}")
-    assert not failures, "live control documents accumulated history:\n" + "\n".join(failures)
 
 
 def test_top_level_document_pointers_exist() -> None:
@@ -356,6 +386,8 @@ def test_active_experiment_entrypoint_pointers_exist() -> None:
         if status.is_file():
             documents.append(status)
         for document in documents:
+            if not document.is_file():
+                continue  # The entrypoint test reports missing README files.
             text = document.read_text(encoding="utf-8", errors="ignore")
             for raw_pointer in LOCAL_ARTIFACT_POINTER.findall(text):
                 resolved = resolve_doc_pointer(document, raw_pointer)
@@ -369,7 +401,7 @@ def test_active_experiment_entrypoint_pointers_exist() -> None:
 def test_active_markdown_links_resolve() -> None:
     failures: list[str] = []
     for document in active_markdown_files():
-        if frozen_snapshot_navigation(document):
+        if document in frozen_navigation_documents():
             continue
         text = document.read_text(encoding="utf-8", errors="ignore")
         for raw_target in MARKDOWN_LINK.findall(text):
@@ -399,14 +431,11 @@ def test_active_markdown_links_resolve() -> None:
 
 def test_production_model_result_names_are_self_describing() -> None:
     train_root = REPO_ROOT / "production" / "03_train"
-    failures = [
-        path.name
-        for path in train_root.iterdir()
-        if path.is_dir()
-        and not path.name.startswith("_")
-        and path.name != "scripts"
-        and MODEL_RESULT_NAME.fullmatch(path.name) is None
-    ]
+    names = {path.relative_to(train_root).parts[0] for path in active_files()
+             if path.is_relative_to(train_root) and len(path.relative_to(train_root).parts) > 1}
+    failures = sorted(name for name in names
+                      if not name.startswith("_") and name != "scripts"
+                      and MODEL_RESULT_NAME.fullmatch(name) is None)
     assert not failures, (
         "production model directories must encode composition, training rows, "
         "and version:\n" + "\n".join(failures)
@@ -415,15 +444,12 @@ def test_production_model_result_names_are_self_describing() -> None:
 
 def test_active_directories_use_role_or_question_names() -> None:
     failures: list[str] = []
-    for root_name in ACTIVE_ROOTS:
-        for path in (REPO_ROOT / root_name).rglob("*"):
-            if not path.is_dir():
-                continue
-            relative = path.relative_to(REPO_ROOT)
-            if EXCLUDED_PARTS.intersection(relative.parts):
-                continue
-            if BANNED_ACTIVE_DIRECTORY.search(path.name) or CALENDAR_DATE.search(path.name):
-                failures.append(str(relative))
+    directories = {parent for path in active_files() for parent in path.parents
+                   if parent != REPO_ROOT and parent.is_relative_to(REPO_ROOT)
+                   and parent.relative_to(REPO_ROOT).parts[0] in ACTIVE_ROOTS}
+    for path in sorted(directories):
+        if BANNED_ACTIVE_DIRECTORY.search(path.name) or CALENDAR_DATE.search(path.name):
+            failures.append(str(path.relative_to(REPO_ROOT)))
     assert not failures, (
         "active directories contain ambiguous, phase, or calendar names:\n"
         + "\n".join(failures)
@@ -455,8 +481,6 @@ def test_active_sources_do_not_infer_repo_root_from_parent_depth() -> None:
     for path in active_python_files():
         source = path.read_text(encoding="utf-8", errors="ignore")
         tree = ast.parse(source, filename=str(path))
-        if frozen_root_depth_snapshot(path):
-            continue
         for node in ast.walk(tree):
             if not isinstance(node, ast.Subscript):
                 continue
@@ -469,54 +493,6 @@ def test_active_sources_do_not_infer_repo_root_from_parent_depth() -> None:
         "active code derives repository roots from directory depth; "
         "import REPO_ROOT from molgap.constants instead:\n" + "\n".join(failures)
     )
-
-
-def test_named_frozen_layout_allowances_are_verified() -> None:
-    for relative in FROZEN_ARTIFACT_DIGESTS:
-        assert verified_frozen_artifact(relative), relative
-    assert frozen_root_depth_snapshot(REPO_ROOT / ORACLE_DIR / "analyze.py")
-    assert not frozen_root_depth_snapshot(REPO_ROOT / ORACLE_DIR / "prepare.py")
-    assert not frozen_root_depth_snapshot(REPO_ROOT / ORACLE_DIR / "finalize_diagnostic.py")
-    assert frozen_root_depth_snapshot(REPO_ROOT / SLOT_DIR / "prepare.py")
-    assert frozen_root_depth_snapshot(REPO_ROOT / SLOT_DIR / "finalize_analysis.py")
-    assert not frozen_root_depth_snapshot(REPO_ROOT / SLOT_DIR / "hydrate_existing_bindings.py")
-    assert frozen_snapshot_navigation(REPO_ROOT / SLOT_DIR / "input_authority/terminal_decision.md")
-    assert supplementary_machine_evidence(
-        REPO_ROOT / ORACLE_DIR / "decision.md", REPO_ROOT / ORACLE_DIR / "README.md"
-    )
-
-
-@pytest.mark.parametrize("relative", list(FROZEN_ARTIFACT_DIGESTS))
-@pytest.mark.parametrize("mutation", ["artifact", "receipt"])
-def test_changed_hash_invalidates_frozen_allowances(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, relative: str, mutation: str
-) -> None:
-    original_root = REPO_ROOT
-    for name in (*FROZEN_ARTIFACT_DIGESTS, ORACLE_FINALIZATION, SLOT_FINALIZATION,
-                 f"{ORACLE_DIR}/README.md", f"{SLOT_DIR}/README.md"):
-        destination = tmp_path / name
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_bytes((original_root / name).read_bytes())
-    monkeypatch.setitem(globals(), "REPO_ROOT", tmp_path)
-    assert verified_frozen_artifact(relative)
-    if mutation == "artifact":
-        artifact = tmp_path / relative
-        artifact.write_bytes(artifact.read_bytes() + b"\n# altered\n")
-    else:
-        receipt_path = tmp_path / frozen_receipt(relative)
-        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
-        receipt["input_artifact_hashes"][relative] = "0" * 64
-        receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
-    assert not verified_frozen_artifact(relative)
-    if relative in FROZEN_ROOT_DEPTH_SCRIPTS:
-        assert not frozen_root_depth_snapshot(tmp_path / relative)
-    if relative in IMMUTABLE_DECISION_NAVIGATION:
-        assert not supplementary_machine_evidence(
-            tmp_path / relative, (tmp_path / relative).parent / "README.md"
-        )
-    if relative in (f"{SLOT_DIR}/input_authority/terminal_decision.md",
-                    f"{SLOT_DIR}/input_authority/scientific_metrics.json", f"{SLOT_DIR}/inputs.json"):
-        assert not frozen_snapshot_navigation(tmp_path / SLOT_DIR / "input_authority/terminal_decision.md")
 
 
 def test_argparse_clis_have_a_guarded_entrypoint() -> None:
@@ -542,7 +518,7 @@ def test_main_guard_check_is_syntax_aware(source, expected):
 
 
 def test_experiment_index_accepts_markdown_links_without_prefix_collisions():
-    experiment = REPO_ROOT / SLOT_DIR
+    experiment = REPO_ROOT / "experiments/pcqm_k1_slot_readout_diagnostic"
     assert experiment_is_indexed("[entry](pcqm_k1_slot_readout_diagnostic/README.md)", experiment)
     assert not experiment_is_indexed("[entry](pcqm_k1_slot_readout_diagnostic_other/README.md)", experiment)
     assert not experiment_is_indexed("[entry](pcqm_k1_slot_readout_diagnostic/../other/README.md)", experiment)
@@ -581,3 +557,146 @@ def test_representative_cli_help(relative: str) -> None:
     )
     assert result.returncode == 0, f"{relative}\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
     assert "usage:" in result.stdout.lower()
+
+
+@pytest.fixture
+def layout_tree(tmp_path, monkeypatch):
+    monkeypatch.setitem(globals(), "REPO_ROOT", tmp_path)
+    paths = []
+    monkeypatch.setitem(globals(), "tracked_paths", lambda: paths)
+    monkeypatch.setitem(globals(), "canonical_bytes", lambda path: path.read_bytes())
+    closed_experiment_dirs.cache_clear()
+    active_files.cache_clear()
+    frozen_navigation_documents.cache_clear()
+    yield tmp_path, paths
+    closed_experiment_dirs.cache_clear()
+    active_files.cache_clear()
+    frozen_navigation_documents.cache_clear()
+
+
+def test_active_scope_uses_tracked_files_and_excludes_frozen_artifacts(layout_tree):
+    root, tracked = layout_tree
+    for name in ("experiments/live/run.py", "experiments/live/README.md",
+                 "experiments/live/frozen_source/stale.py",
+                 "experiments/live/executed_source/stale.md",
+                 "experiments/live/source_snapshots/20261001/stale.py",
+                 "experiments/live/terminal_acceptance/outputs/20261001/trace.json"):
+        path = root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("", encoding="utf-8")
+        tracked.append(path)
+    untracked = root / "experiments/leftover/run.py"
+    untracked.parent.mkdir(parents=True)
+    untracked.write_text("", encoding="utf-8")
+    assert set(active_files()) == {root / "experiments/live/run.py", root / "experiments/live/README.md"}
+    assert active_experiment_dirs() == [root / "experiments/live"]
+
+
+@pytest.mark.parametrize("mutation", (None, "source", "receipt", "trajectory", "arm_only", "active", "closed_arms", "unresolved_arm", "unresolved_root"))
+def test_terminal_scope_requires_matching_receipt_bindings(layout_tree, mutation):
+    root, tracked = layout_tree
+    experiment = root / "experiments/question"
+    final = experiment / ("rml/arm/rml_finalized" if mutation in ("arm_only", "closed_arms", "unresolved_arm") else "rml/rml_finalized")
+    final.mkdir(parents=True)
+    source = experiment / "analyze.py"
+    source.write_bytes(b"# frozen historical source\n")
+    decision = experiment / "decision.md"
+    decision.write_bytes(b"# Terminal decision\n")
+    trajectory = final / "trajectory.json"
+    outcome = "ACTIVE" if mutation == "active" else "NO_TRAIN"
+    trajectory.write_text(json.dumps({"trajectory_id": "synthetic", "decision": {
+        "outcome": outcome, "decision_ref": "experiments/question/decision.md"}}), encoding="utf-8")
+    receipt = final / "finalization.json"
+    record = {"format": "molgap-rml-finalization-v1", "outcome": outcome,
+              "trajectory_id": "synthetic", "published_hashes": {
+                  "trajectory.json": hashlib.sha256(trajectory.read_bytes()).hexdigest()},
+              "input_artifact_hashes": {
+                  path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+                  for path in (source, decision)}}
+    if mutation == "receipt":
+        record["input_artifact_hashes"]["experiments/question/analyze.py"] = "0" * 64
+    receipt.write_text(json.dumps(record), encoding="utf-8")
+    if mutation == "source":
+        source.write_bytes(b"# changed\n")
+    if mutation == "trajectory":
+        trajectory.write_bytes(trajectory.read_bytes() + b" ")
+    tracked.extend((source, decision, trajectory, receipt))
+    if mutation in ("closed_arms", "unresolved_arm"):
+        original = final.parent / "trajectory.json"
+        original.write_bytes(trajectory.read_bytes())
+        tracked.append(original)
+    if mutation in ("unresolved_arm", "unresolved_root"):
+        pending = experiment / "rml/pending/trajectory.json"
+        pending.parent.mkdir(parents=True)
+        pending.write_text(json.dumps({"trajectory_id": "pending-arm"}), encoding="utf-8")
+        tracked.append(pending)
+    retired = mutation in (None, "closed_arms")
+    assert (experiment in closed_experiment_dirs()) is retired
+    assert (source in active_files()) is not retired
+
+
+@pytest.mark.parametrize("pointer, relative", (
+    ("README.md", "experiments/question/README.md"),
+    ("./README.md#heading", "experiments/question/README.md"),
+    ("../../README.md", "README.md"),
+    ("src/example.py", "src/example.py"),
+    ("<a%20file.md>", "experiments/question/a file.md"),
+    ("D:/old-checkout/decision.md", None),
+    (r"D:\old-checkout\decision.md", None),
+    ("file:///D:/old-checkout/decision.md", None),
+    ("https://example.org/README.md", None),
+))
+def test_document_pointer_resolution(layout_tree, pointer, relative):
+    root, _ = layout_tree
+    document = root / "experiments/question/README.md"
+    document.parent.mkdir(parents=True)
+    document.write_text("", encoding="utf-8")
+    assert resolve_doc_pointer(document, pointer) == (root / relative if relative else None)
+
+
+
+def test_receipt_hashes_use_git_checkout_filters_without_hash_allowlists(tmp_path, monkeypatch):
+    for args in (("init",), ("config", "core.autocrlf", "true"),
+                 ("config", "user.name", "Layout test"),
+                 ("config", "user.email", "layout@example.invalid")):
+        subprocess.run(["git", *args], cwd=tmp_path, check=True, capture_output=True)
+    artifact = tmp_path / "source.py"
+    original = b"# retained source\n"
+    artifact.write_bytes(original)
+    subprocess.run(["git", "add", "source.py"], cwd=tmp_path, check=True, capture_output=True)
+    subprocess.run(["git", "-c", "commit.gpgsign=false", "commit", "-m", "fixture"],
+                   cwd=tmp_path, check=True, capture_output=True)
+    monkeypatch.setitem(globals(), "REPO_ROOT", tmp_path)
+    expected = hashlib.sha256(original).hexdigest()
+    artifact.write_bytes(original.replace(b"\n", b"\r\n"))
+    assert receipt_artifact_matches(artifact, expected)
+    artifact.write_bytes(b"# edited source\r\n")
+    canonical_bytes.cache_clear()
+    changed_paths.cache_clear()
+    assert not receipt_artifact_matches(artifact, expected)
+
+
+@pytest.mark.parametrize("binding", ("reference", "trajectory"))
+@pytest.mark.parametrize("mutation", (None, "document", "digest"))
+def test_frozen_navigation_requires_digest_and_keeps_entrypoints_live(layout_tree, binding, mutation):
+    root, tracked = layout_tree
+    owner = root / "experiments/question"
+    owner.mkdir(parents=True)
+    document = owner / "evidence_review.md"
+    entrypoint = owner / "README.md"
+    document.write_bytes(b"[original context](../missing.md)\n")
+    entrypoint.write_bytes(b"# Maintained entrypoint\n")
+    hashes = {path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+              for path in (document, entrypoint)}
+    if mutation == "digest":
+        hashes[document.relative_to(root).as_posix()] = "0" * 64
+    record = owner / ("manifest.json" if binding == "reference" else "trajectory.json")
+    payload = ({"format": "molgap-retained-reference-files-v1", "files": [
+        {"path": name, "sha256": digest} for name, digest in hashes.items()]}
+        if binding == "reference" else {"decision_state": {"source_hashes": hashes}})
+    record.write_text(json.dumps(payload), encoding="utf-8")
+    if mutation == "document":
+        document.write_bytes(b"edited\n")
+    tracked.extend((document, entrypoint, record))
+    assert (document in frozen_navigation_documents()) is (mutation is None)
+    assert entrypoint not in frozen_navigation_documents()

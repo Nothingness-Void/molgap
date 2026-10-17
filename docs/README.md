@@ -18,7 +18,7 @@ Contents:
 
 | Path | Role |
 |---|---|
-| `operations/` | Platform runbooks (e.g. SCNet DCU environment) |
+| [operations/](operations/README.md) | Three working guides and their detailed contracts |
 Method documents now live beside the work they describe: the Delta-learning and
 calibration contracts are `production/05_delta_gw/METHOD.md` and
 `production/06_uq/METHOD.md`; the phase-8 decision timeline is

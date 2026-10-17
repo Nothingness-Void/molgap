@@ -25,11 +25,15 @@ ownership index, not execution authority or a copy of scientific contracts.
 - `models/` contains assets; registration is explicit in `constants.py`.
 - Archived code is reproducibility evidence and is not imported by supported
   paths.
+- Pure model implementations begin in [models/](src/molgap/models/README.md).
+  Historical root module paths remain compatibility exports for existing imports
+  and serialized checkpoints; source packages include implementation companions.
 
 ## Package Map
 
 | Module | Owns | Edit when |
 |---|---|---|
+| `models/schnet.py`, `models/gine.py`, `models/egnn.py`, `models/tensornet.py`, `models/fusion.py` | Pure model implementations behind the historical root imports | Changing network behavior; retain serialization names and tensor keys when only reorganizing files |
 | `model_substrate.py`, `family_training_state.py`, `fast_sandbox.py`, `source_dependencies.py` | Reviewed addon slots, optional Live/Raw/Clean state, synthetic CPU checks and AST source closure | See [four-layer runtime and limitations](docs/operations/MODULAR_EXPERIMENT_RUNTIME.md); existing accelerated sessions remain the default |
 | `shared_model_adapter.py`, `graph_screen_training.py`, `pcqm_graph_inputs.py` | Opt-in registered pure-2D graph factory ABI and bounded normalized-Gap lifecycle | Compatible new factories reuse this owner; registration is not native qualification or authority |
 | `family_training_*.py` | K1/GPTrans common loop, pinned recipe/data, accelerated family hooks, persistent loaders and resumable session | See [owners and migration status](docs/operations/FAMILY_TRAINING_CORE.md); public registration/native qualification and artifact acceptance remain explicit gates |

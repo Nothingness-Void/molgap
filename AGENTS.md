@@ -98,6 +98,9 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
 
 - **Python:** use `.venv\Scripts\python.exe` on this Windows checkout, not
   system Python. Install editable with that environment's `pip install -e .`.
+  Worktrees reuse the primary checkout's environment; select their source with
+  explicit `PYTHONPATH`. Do not create another environment or install a temporary
+  worktree into the shared environment. Keep its editable install on the primary.
 - **Targets:** `homo`, `lumo`, `gap` in eV under applicable PubChemQC /
   B3LYP Kohn-Sham contracts; no experimental or alternate target substitution.
 - **Geometry:** generated-3D training/inference contracts must be compatible.
@@ -129,6 +132,9 @@ Attribution is interpretation, not a replacement RML schema or promotion gate.
 
 [BRANCHES.md](BRANCHES.md) owns checkout mapping and terminal Git routing.
 Compute host does not determine ownership: source/protocol/branch decisions do.
+Worktrees are temporary execution directories. Keep Git identities and canonical
+records; retire closed checkouts under BRANCHES' artifact lifetime rule. Never
+copy an inherited RML artifact catalog just to populate a new worktree.
 
 - `molgap-desktop`: integration, full training, official evaluation, submission,
   and explicitly desktop-owned selected 500K work.

@@ -125,6 +125,13 @@ _FAMILY_SOURCE_FILES = frozenset(path for path in COMMON_SOURCE_FILES if path.st
 })
 
 
+def _include_model_companions(names):
+    # Historical import shims require these reviewed implementation companions.
+    for model in ("schnet", "gine", "egnn", "tensornet", "fusion"):
+        if f"src/molgap/{model}.py" in names:
+            names.update(("src/molgap/models/__init__.py", f"src/molgap/models/{model}.py"))
+
+
 def registered_source_files(spec, extras=(), *, repo_root=None, auto_dependencies=False):
     """Select reviewed roots, optionally following static import dependencies."""
     from .experiment_execution import training_adapter, validate_training_registry
@@ -149,6 +156,7 @@ def registered_source_files(spec, extras=(), *, repo_root=None, auto_dependencie
             if execution.policy_hook is not None:
                 from .experiment_execution import _hook_source
                 names.add(_hook_source(execution.policy_hook))
+    _include_model_companions(names)
     selected = _allowlist(sorted(names))
     if auto_dependencies:
         if repo_root is None:
@@ -172,6 +180,7 @@ def _all_registered_sources():
             if addon.policy_hook is not None:
                 from .experiment_execution import _hook_source
                 names.add(_hook_source(addon.policy_hook))
+    _include_model_companions(names)
     return tuple(sorted(names))
 
 

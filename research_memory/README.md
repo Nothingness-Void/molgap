@@ -44,6 +44,14 @@ a scoped reproducibility check, not a requirement that unrelated worktree files
 be clean; it does not recursively traverse arbitrary launch/debug metadata or
 hash large retained artifacts.
 
+A local-retention declaration is a claim to verify, not an instruction to copy
+the entire artifact catalog into every worktree. Long-term custody and checkout
+retirement follow [branch routing](../BRANCHES.md#local-checkout-and-artifact-lifetime).
+Existing checks can still require historical root-relative local artifacts;
+report that limitation without bulk hydration or a false passing result. Moving
+artifacts requires supported, hash-bound custody reconciliation; documentation
+alone does not migrate evidence or change the validators.
+
 ## Research workflow
 
 Every new research question follows this order:
@@ -63,8 +71,8 @@ Every new research question follows this order:
    `roles/*.json`, and `trace_manifest.json` records. Do not infer or invent
    missing facts.
 7. Run `python -m molgap.research_memory rebuild` after canonical records are
-   complete, and treat the regenerated completeness report as the remaining-gap
-   authority.
+   complete, and use the regenerated completeness report to locate gaps in the
+   canonical evidence. Generated reports do not override that evidence.
 
 RML lookup is a decision prerequisite, not a substitute for reading the linked
 authoritative files. A trajectory must exist before its first experiment; the
@@ -87,7 +95,7 @@ comparison, and the legacy GPS/SchNet specialist route. These remain
 it does not fill missing native cost, role-identity, learning-trace, or archive
 artifacts.
 
-The generated completeness report is the authority for those remaining gaps.
+The generated completeness report indexes those remaining canonical gaps.
 The matched 500K V4 comparison now has a validated V5 envelope; its migration
 record documents the recovered second K1 prediction copy. This is a historical
 nomination, not READY_FOR_DESKTOP or full-scale promotion. Records with only
