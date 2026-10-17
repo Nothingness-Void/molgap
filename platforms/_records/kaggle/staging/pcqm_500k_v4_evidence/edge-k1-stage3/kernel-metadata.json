@@ -1,0 +1,19 @@
+{
+  "id": "nothingnessvoid/molgap-500k-v4-edge-k1-s42",
+  "title": "MolGap 500K V4 edge-k1 S42",
+  "code_file": "run.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_internet": "true",
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "nothingnessvoid/molgap-500k-v4-source-raw-811a40969e",
+    "nothingnessvoid/pcqm4mv2-ogb-fixed-500k-scnet-v1",
+    "nothingnessvoid/molgap-500k-v4-resume-e8-b68feead71"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
