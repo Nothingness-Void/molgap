@@ -26,6 +26,27 @@ class FamilyLoaders:
                 type(data.train) not in (list, tuple) or
                 (data.development is not None and type(data.development) not in (list, tuple))):
             raise ValueError("CPU family cannot load real/packed/protected datasets")
+        if data.indexed and not getattr(recipe, "integration_preview", False):
+            raise ValueError("Indexed data requires its explicitly versioned integration interface")
+        if getattr(recipe, "integration_preview", False):
+            if recipe.dataset.manifest.startswith("synthetic/"):
+                if data.synthetic is not True:
+                    raise ValueError("Integration fixture cannot substitute real data")
+            else:
+                from .data.indexed_inputs import AcceptedIndexedInputPermit, IndexedRoleDataset
+                selected = (data.train, data.development) if recipe.dataset.development else (data.train,)
+                if data.synthetic or not data.indexed or any(
+                        type(dataset) is not IndexedRoleDataset or
+                        type(dataset.permit) is not AcceptedIndexedInputPermit for dataset in selected):
+                    raise ValueError("Real integration input requires accepted indexed role datasets, not an unverified list/cache")
+                if (data.train.permit.role != ("train_100k" if recipe.train_rows == 100000 else "train_500k") or
+                        (recipe.dataset.development and data.development.permit.role != "common_dev")):
+                    raise ValueError("Real integration data role differs from the explicit scale")
+        if data.indexed and (data.train_source_start is not None or data.development_source_start is not None or
+                data.train_source_indices is None or len(data.train_source_indices) != data.train_rows or
+                (data.development is not None and (data.development_source_indices is None or
+                    len(data.development_source_indices) != data.development_rows))):
+            raise ValueError("Indexed data cannot be represented as a contiguous source range")
         if (data.manifest_sha256 != recipe.dataset.manifest_sha256 or
                 data.train_rows != recipe.train_rows or data.development_rows != recipe.development_rows):
             raise ValueError("Loaded data differs from the frozen recipe selection")
@@ -45,7 +66,7 @@ class FamilyLoaders:
                 shuffle=False, generator=torch.Generator().manual_seed(recipe.seed),
                 **training_loader_options(tuning.development_workers))
             source = PreparedLoader(self.development) if recipe.family == "gptrans_t" else self.development
-            self.development_cache = None if recipe.cpu_synthetic_only else PreparedDevelopmentCache(source, rows=data.development_rows,
+            self.development_cache = None if recipe.cpu_synthetic_only or data.indexed or getattr(recipe, "integration_preview", False) else PreparedDevelopmentCache(source, rows=data.development_rows,
                 batch_size=recipe.batch_size, max_bytes=tuning.development_cache_bytes,
                 source_start=data.development_source_start, retain_model_inputs=True,
                 retain_random_walk_pe=recipe.family == "neural_atom_k1")
@@ -62,7 +83,8 @@ class FamilyLoaders:
         return self.training
 
     def dev(self):
-        if not self.closed and self.recipe.cpu_synthetic_only and self.development is not None:
+        if not self.closed and (self.recipe.cpu_synthetic_only or self.data.indexed or
+                getattr(self.recipe, "integration_preview", False)) and self.development is not None:
             return self.development
         if self.closed or self.development_cache is None:
             raise ValueError("No selected development role in this loader pool")

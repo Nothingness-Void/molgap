@@ -42,7 +42,7 @@ def _recipe_configuration(record):
 
 def family_arm_bindings(recipe):
     """Static source/sampler/transform/objective bindings for a new Spec arm."""
-    if recipe.cpu_synthetic_only:
+    if recipe.cpu_synthetic_only or recipe.integration_preview:
         from .experiment_execution import TRAINING_ADAPTERS
         module = TRAINING_ADAPTERS[recipe.interface].model_factory.split(":")[0]
         base = normalized_source_sha256(Path(__file__).with_name(module.rsplit(".", 1)[1] + ".py"))
@@ -146,7 +146,10 @@ def validate_screen_recipe(spec, arm_id, record):
             record.get("acceptance_requirements", {}).get("source_idx_sha256"),
             record.get("acceptance_requirements", {}).get("target_sha256")):
         raise ValueError("Shared acceptance requirements differ from recipe")
-    return {"family": arm["family"], "mode": recipe.mode, "recipe": "frozen_recipe_verified"}
+    result = {"family": arm["family"], "mode": recipe.mode, "recipe": "frozen_recipe_verified"}
+    if recipe.integration_preview:
+        result.update(integration_status="INTEGRATION_PENDING", native_execution_released=False)
+    return result
 
 
 def _loaded_source(package_dir):
@@ -196,6 +199,8 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
     from .training_reproducibility import build_runtime_manifest, configure_fp32_determinism, validate_accelerator_request
     from .v4_runtime import inspect_frozen_state_artifact
     record, recipe = read_recipe(recipe_path)
+    if recipe.integration_preview:
+        raise ValueError("INTEGRATION_PENDING: Modern2D preview requires future family fidelity, real-input acceptance and native qualification before native preflight or training")
     if recipe.cpu_synthetic_only:
         raise ValueError("Modern2D CPU profile is not released for native preflight or training")
     validate_screen_recipe(spec, arm_id, record)
@@ -228,7 +233,18 @@ def _bootstrap(*, spec, package_dir, expected_package_identity, arm_id, mode, re
             continue
         start = data.train_source_start if role["role"] == "train" else data.development_source_start
         rows = data.train_rows if role["role"] == "train" else data.development_rows
-        digest = tensor_digest(torch.arange(start, start + rows), role="source_idx")
+        indices = getattr(data, role["role"] + "_source_indices", None)
+        if indices is not None:
+            if (start is not None or type(indices) is not tuple or len(indices) != rows
+                    or any(type(index) is not int or index < 0 for index in indices)
+                    or any(left >= right for left, right in zip(indices, indices[1:]))):
+                raise ValueError("Decoded indexed role requires explicit ordered unique members")
+            source = torch.tensor(indices, dtype=torch.int64)
+        else:
+            if getattr(data, "indexed", False) or type(start) is not int:
+                raise ValueError("Indexed role cannot infer contiguous source membership")
+            source = torch.arange(start, start + rows)
+        digest = tensor_digest(source, role="source_idx")
         if role["row_order_sha256"] != digest or role["membership_sha256"] != digest:
             raise ValueError("Decoded role membership/order differs from Spec")
     if data.train_rows != recipe.train_rows or (not training_only and data.development_rows != recipe.development_rows):

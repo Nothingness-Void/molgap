@@ -237,6 +237,8 @@ class _ExecutionCapture:
             self._wrap(kernel, "_gptrans_batch", "layout_and_transfer")
             if hasattr(kernel.model, "_shortest_path"):
                 self._wrap(kernel.model, "_shortest_path", "shortest_path")
+        if getattr(kernel.recipe, "integration_preview", False):
+            self._wrap(kernel, "_model_batch", "topology_transfer")
         for path in self.config.module_paths:
             self._observe_module(kernel.model.get_submodule(path), "module/" + path)
         original_step, original_loader = kernel.step, session.loaders.train
@@ -367,6 +369,11 @@ class _ExecutionCapture:
                 "Update counts are successful kernel returns; a failing update may have partially changed state.",
                 "DataLoader subprocess work is seen as main-process wait, not worker CPU attribution.",
                 "The caller owns real-input authority, provenance, stop budget and terminal evidence."]}
+        if getattr(self.session.recipe, "integration_preview", False):
+            self.report.update(integration_status="INTEGRATION_PENDING",
+                execution_scope="INTEGRATION_PREVIEW_ONLY", native_execution_released=False)
+            self.report["limitations"].append(
+                "Modern2D session preview observations do not qualify family fidelity, real inputs or native training.")
         atomic_json(self.output / "profile.json", self.report)
 
     def __exit__(self, exc_type, error, traceback):

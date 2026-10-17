@@ -1,0 +1,164 @@
+@register_node_encoder('MLPNodeEncoder')
+class MLPNodeEncoder(torch.nn.Module):
+    def __init__(self,
+                 in_dim,
+                 out_dim,
+                 pe_name=None,
+                 add_to_x=True,
+                 add_invN:bool=False,
+                 add_invD:bool=False,
+                 bias:bool=True,
+                 add_loc:bool=False,
+                 loc_dim:int=2,
+                 loc_name:str='loc',
+                 **kwargs):
+        super().__init__()
+        self.kwargs = kwargs
+
+
+        self.pe_name = pe_name
+        # self.raw_norm = act_dict[kwargs.get('raw_norm', 'none')](in_dim)
+        self.raw_norm = NormalizationLayer(kwargs.get('raw_norm', 'none'), in_dim)
+
+        if pe_name not in ['rrwp']:
+            # only applied to positional encoding
+            add_invN = False
+            add_invD = False
+        self.add_invN = add_invN
+        self.add_invD = add_invD
+        if self.add_invN: in_dim += 1
+        if self.add_invD: in_dim += 1
+
+        self.add_loc = add_loc
+        self.loc_name = loc_name
+        if self.add_loc: in_dim += loc_dim
+
+
+
+        act_fn = act_dict[kwargs.get('act', 'gelu')]
+        hid_dim= kwargs.get('hid_dim', '')
+        if hid_dim == "":
+            self.mlp = nn.Identity()
+            self.out_fc = nn.Linear(in_dim, out_dim, bias=bias)
+        else:
+            hid_dim = [in_dim] + [int(i) for i in hid_dim.split(',')]
+            mlp = []
+            for i in range(len(hid_dim)-1):
+                mlp += [
+                    nn.Linear(hid_dim[i], hid_dim[i+1]),
+                    act_fn()
+                ]
+            self.mlp = nn.Sequential(*mlp)
+            self.out_fc = nn.Linear(hid_dim[-1], out_dim, bias=bias)
+
+
+        # self.post_norm = act_dict[kwargs.get('post_norm', 'none')](out_dim)
+        self.post_norm = NormalizationLayer(kwargs.get('post_norm', 'none'), out_dim)
+
+        self.add_to_x = add_to_x
+        self.in_dim = in_dim
+
+        self.default_init = kwargs.get('default_init', False)
+        self.trunc_init = kwargs.get('trunc_init', False)
+        self.kaiming_linear_init = kwargs.get('kaiming_linear_init', False)
+        self.uniform_init = kwargs.get('uniform_init', False)
+        self.kaiming_init = kwargs.get('kaiming_init', False)
+        self.kaiming_uniform_init = kwargs.get('kaiming_uniform_init', False)
+        self.kaiming_uniform_linear_init = kwargs.get('kaiming_uniform_linear_init', False)
+        self.xavier_init = kwargs.get('xavier_init', False)
+        self.lecun_init = kwargs.get('lecun_init', False)
+
+
+
+
+        # self.init_weights()
+
+    def forward(self, batch):
+
+        if 'order' in self.pe_name and 'order' not in batch:
+            if 'ptr' in batch:
+                order = batch.ptr[1:] - batch.ptr[:-1]
+            else:
+                order = scatter(torch.ones_like(batch.batch), batch.batch, dim=0, dim_size=max(batch.batch)+1, reduce='sum')
+            batch.order = order[batch.batch]
+            if self.pe_name == 'log_order':
+                batch.log_order = torch.log1p(batch.order)
+            # store graph order
+
+        if self.pe_name == 'deg' and 'deg' not in batch:
+            raw_edge_index = batch.raw_edge_index if 'raw_edge_index' in batch else batch.edge_index
+            batch.deg = pyg.utils.degree(raw_edge_index, num_nodes=batch.num_nodes, dtype=torch.float)
+
+
+        attr = batch[self.pe_name].type(torch.float)
+        attr = attr.view(attr.size(0), -1)
+
+        if self.add_invN:
+            invN = 1 / (batch.ptr[1:] - batch.ptr[:-1])[batch.batch].view(-1, 1) # E x 1
+            attr = torch.cat([attr, invN], dim=-1)
+
+        if self.add_invD:
+            if 'deg' not in batch:
+                raw_edge_index = batch.raw_edge_index if 'raw_edge_index' in batch else batch.edge_index
+                batch.deg = pyg.utils.degree(raw_edge_index, num_nodes=batch.num_nodes, dtype=torch.float)
+
+            invD = (1 / batch.deg).view(-1, 1)
+            invD[invD==float('inf')] = 0.
+            attr = torch.cat([attr, invD], dim=-1)
+
+        if self.add_loc:
+            loc = batch[f'{self.loc_name}']
+            attr = torch.cat([attr, loc], dim=-1)
+
+        x = self.post_norm(self.out_fc(self.mlp(self.raw_norm(attr, batch.batch))), batch.batch)
+
+        if self.add_to_x:
+            if 'x' in batch:
+                batch.x = batch.x + x
+            else:
+                batch.x = x
+        else:
+            batch[self.pe_name] = x
+
+        return batch
+
+    def __repr__(self):
+        return f'{super().__repr__()}(pe_name={self.pe_name})'
+
+    def init_weights(self):
+        # use kaiming_init with fan_in mode to adjust to different input-dims
+        # self.apply(kaiming_uniform_init_)
+        # self.apply(kaiming_normal_init_)
+        # self.apply(kaiming_normal_linear_init_)
+        # self.apply(kaiming_uniform_linear_init_)
+
+        if self.xavier_init:
+            self.apply(xavier_normal_init_)
+
+        elif self.trunc_init:
+            self.apply(trunc_init_)
+
+        elif self.kaiming_linear_init:
+            self.apply(kaiming_normal_linear_init_)
+
+        elif self.kaiming_uniform_init:
+            self.mlp.apply(kaiming_uniform_init_)
+            self.out_fc.apply(kaiming_uniform_linear_init_)
+
+        elif self.kaiming_uniform_linear_init:
+            self.mlp.apply(kaiming_uniform_init_)
+            self.out_fc.apply(kaiming_uniform_linear_init_)
+
+
+        elif self.kaiming_init:
+            self.apply(kaiming_normal_init_)
+
+        elif self.uniform_init:
+            self.apply(uniform_init_)
+
+        elif self.lecun_init:
+            self.apply(lecun_normal_init_)
+        else:
+            self.apply(default_init_)
+        # self.apply(trunc_init_)
+        # self.apply(trunc_normal_fan_init_)

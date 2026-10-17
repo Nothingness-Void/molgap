@@ -1,0 +1,163 @@
+{
+  "format": "molgap-ppgt-author-reference-v1",
+  "repository": "https://github.com/LiamMa/PPGT",
+  "commit": "62cafd3abbb8d72e9a8b3146f947a192cf0aacaf",
+  "license": "MIT",
+  "files": [
+    {
+      "file": "LICENSE",
+      "upstream_path": "LICENSE",
+      "upstream_sha256": "9c4e4f2b05af303070fe0fd2a47665e012483a29e65212598906b5e48401ebc7",
+      "start_line": 1,
+      "end_line": 21,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/LICENSE",
+      "sha256": "9c4e4f2b05af303070fe0fd2a47665e012483a29e65212598906b5e48401ebc7"
+    },
+    {
+      "file": "pcqm_base.yaml",
+      "upstream_path": "configs/pcqm4mv2-PPGT-ViT-B-BS256x2GPU.yaml",
+      "upstream_sha256": "c1b7cd164a2d3850b951431f3a631248f43eab3f40314b3913f9ed6c679ac0cc",
+      "start_line": 1,
+      "end_line": 141,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/configs/pcqm4mv2-PPGT-ViT-B-BS256x2GPU.yaml",
+      "sha256": "c1b7cd164a2d3850b951431f3a631248f43eab3f40314b3913f9ed6c679ac0cc"
+    },
+    {
+      "file": "attention_and_block.py.txt",
+      "upstream_path": "ppgt/layer/ppgt.py",
+      "upstream_sha256": "97b2475af9bc5f497c2254df97f13e980b44a42831a73732497e0655a2dfefc9",
+      "start_line": 26,
+      "end_line": 474,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/layer/ppgt.py",
+      "sha256": "e1cb45358e90cc39d2fd4298e67db08d78580321441b2f2b90f2bb85a6a909d9"
+    },
+    {
+      "file": "ada_rms_norm.py.txt",
+      "upstream_path": "ppgt/act/norms/ada_rms_norm.py",
+      "upstream_sha256": "6dbae004cc6263d7a735e81cad4de6a282bfebf9247ca210fa3dd4537810154a",
+      "start_line": 1,
+      "end_line": 50,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/act/norms/ada_rms_norm.py",
+      "sha256": "6dbae004cc6263d7a735e81cad4de6a282bfebf9247ca210fa3dd4537810154a"
+    },
+    {
+      "file": "sin_edge_encoder.py.txt",
+      "upstream_path": "ppgt/encoder/mlp_edge_encoder.py",
+      "upstream_sha256": "1b7039efa57a887839a0bf8cd1749e0f3bc239819c568f5102199733a01a7cbc",
+      "start_line": 348,
+      "end_line": 633,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/encoder/mlp_edge_encoder.py",
+      "sha256": "a7a3b47acb0116d77c44b83a474e90a03d28c4654bbda2cecbd5b83e3ef5b3f4"
+    },
+    {
+      "file": "edge_ffn.py.txt",
+      "upstream_path": "ppgt/encoder/mlp_edge_encoder.py",
+      "upstream_sha256": "1b7039efa57a887839a0bf8cd1749e0f3bc239819c568f5102199733a01a7cbc",
+      "start_line": 637,
+      "end_line": 756,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/encoder/mlp_edge_encoder.py",
+      "sha256": "5dea4eb0713e2603c51d0ea855850b09532bf4d22e4ff2bde01105f5f765374e"
+    },
+    {
+      "file": "node_encoder.py.txt",
+      "upstream_path": "ppgt/encoder/mlp_node_encoder.py",
+      "upstream_sha256": "7b11b84a0fd31764adaf5a3004b21b6a911b5abc3955fc8a9a75b8cf5ae038cf",
+      "start_line": 100,
+      "end_line": 264,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/encoder/mlp_node_encoder.py",
+      "sha256": "b7d44276fca69fcb186e08b2876f9c0b94404eb8ecf5ef82794b43e65da188a5"
+    },
+    {
+      "file": "linear_head.py.txt",
+      "upstream_path": "ppgt/head/mlp_head.py",
+      "upstream_sha256": "7fba3c27c8b93a7d9de1abd54bf2045b5b8003be3ef390dbea6e1a8e4d64a1be",
+      "start_line": 136,
+      "end_line": 255,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/head/mlp_head.py",
+      "sha256": "391b95897d25cc53e190872537f55916816df276a8aa54d79b65049871672684"
+    },
+    {
+      "file": "mlp.py.txt",
+      "upstream_path": "ppgt/layer/utils/mlp.py",
+      "upstream_sha256": "fbd4efb6948339a810aae90f4f39a9d2a0804c52be606fc678725ed8cf5789d2",
+      "start_line": 35,
+      "end_line": 150,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/layer/utils/mlp.py",
+      "sha256": "7cb5efa6a2cefd511902ea8e5a17b4a7e8c83a757f72026ec16946f0d023d62c"
+    },
+    {
+      "file": "normalization.py.txt",
+      "upstream_path": "ppgt/layer/utils/norm.py",
+      "upstream_sha256": "104b6adb04e3178c088c20257a0510630441fb47bbd879210233b6498f1ef1a0",
+      "start_line": 1,
+      "end_line": 62,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/layer/utils/norm.py",
+      "sha256": "104b6adb04e3178c088c20257a0510630441fb47bbd879210233b6498f1ef1a0"
+    },
+    {
+      "file": "residual.py.txt",
+      "upstream_path": "ppgt/layer/utils/residual.py",
+      "upstream_sha256": "6d1a6bdfcf7dbd0551519c2812298fc5a5c4880afaeef658f7f82976ee3dc2f1",
+      "start_line": 8,
+      "end_line": 65,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/layer/utils/residual.py",
+      "sha256": "b67af43ec3cf5986c70c2434525ea556f74b5473b3d96493c1481394d88183ce"
+    },
+    {
+      "file": "initializers.py.txt",
+      "upstream_path": "ppgt/layer/utils/init.py",
+      "upstream_sha256": "d518fed5704e5d6d2cebbe602c5db564c422bf23d36f5e8375d57afa86abdf07",
+      "start_line": 1,
+      "end_line": 143,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/layer/utils/init.py",
+      "sha256": "d518fed5704e5d6d2cebbe602c5db564c422bf23d36f5e8375d57afa86abdf07"
+    },
+    {
+      "file": "graph_drop_path.py.txt",
+      "upstream_path": "ppgt/layer/utils/drop_path.py",
+      "upstream_sha256": "f97525a22b7e298e85613949d81dd6f60b122bbfebf3a336d0af2a5a857b261c",
+      "start_line": 1,
+      "end_line": 110,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/layer/utils/drop_path.py",
+      "sha256": "f97525a22b7e298e85613949d81dd6f60b122bbfebf3a336d0af2a5a857b261c"
+    },
+    {
+      "file": "rrwp.py.txt",
+      "upstream_path": "ppgt/transform/rrwp.py",
+      "upstream_sha256": "e297f744755bcb59d425d62fccc566dac015bb2a12ef2637c564245c9e1f6c7b",
+      "start_line": 1,
+      "end_line": 266,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/transform/rrwp.py",
+      "sha256": "e297f744755bcb59d425d62fccc566dac015bb2a12ef2637c564245c9e1f6c7b"
+    },
+    {
+      "file": "graph_network.py.txt",
+      "upstream_path": "ppgt/network/base.py",
+      "upstream_sha256": "7692bdfa86dac3d840bfbeee288bfb343bd043aa41e18b881efd1bbb294d714b",
+      "start_line": 1,
+      "end_line": 291,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/network/base.py",
+      "sha256": "7692bdfa86dac3d840bfbeee288bfb343bd043aa41e18b881efd1bbb294d714b"
+    },
+    {
+      "file": "vit_initializer.py.txt",
+      "upstream_path": "ppgt/network/initialization.py",
+      "upstream_sha256": "64a1ed5b8bfcea1784164ae53dbf1fb4627904a44ed6f75fda927a5d9be34d09",
+      "start_line": 1,
+      "end_line": 29,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/network/initialization.py",
+      "sha256": "64a1ed5b8bfcea1784164ae53dbf1fb4627904a44ed6f75fda927a5d9be34d09"
+    },
+    {
+      "file": "pos_encoder.py.txt",
+      "upstream_path": "ppgt/network/utils.py",
+      "upstream_sha256": "aa671c6aa306fb18a67b30a928e7410c6a97874dc3706331515ec1d263292108",
+      "start_line": 1,
+      "end_line": 125,
+      "url": "https://raw.githubusercontent.com/LiamMa/PPGT/62cafd3abbb8d72e9a8b3146f947a192cf0aacaf/ppgt/network/utils.py",
+      "sha256": "6734b802bacac5d0332928549582fd9acceea205d96f316d6f8daa76c74c63dc"
+    }
+  ],
+  "slice_policy": "Inclusive original line ranges, UTF-8 with LF; complete sources retain their bytes. Imports/decorators are removed only in memory by the test harness.",
+  "qualification": "UNEXECUTED_SYNTHETIC_CPU_ORACLE_NOT_BENCHMARK_REPRODUCTION"
+}

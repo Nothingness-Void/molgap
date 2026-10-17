@@ -1,0 +1,119 @@
+@register_edge_encoder('EdgeFFN')
+class FFN(torch.nn.Module):
+    def __init__(self,
+                 in_dim,
+                 out_dim,
+                 pe_name='edge',
+                 edge_mode=True,
+                 **kwargs):
+        super().__init__()
+        # print(f'kwargs is {kwargs}')
+
+        self.edge_mode = edge_mode
+
+        self.pe_name = pe_name if pe_name != '' else 'edge'
+        assert in_dim == out_dim
+
+        self.pre_backbone_norm = NormalizationLayer(kwargs.get('pre_backbone_norm', 'none'), in_dim)
+        # self.pre_backbone_norm = act_dict[kwargs.get('pre_backbone_norm', 'none')](in_dim)
+
+
+        self.add_spectral_norm = kwargs.get('add_spectral_norm', False)
+        self.add_weight_norm = kwargs.get('add_weight_norm', False)
+
+
+
+        act = kwargs.get('act', 'gelu')
+        self.act = act
+        if act not in ['siren', 'spder']:
+            self.num_blocks = kwargs.get('num_blocks', 0)
+            # ---- DropPath sccaling -----
+            drop_path_rate = kwargs.get('drop_path', 0.)
+            kwargs = copy_and_pop(kwargs, ['drop_path'])
+            # safe operation, prevent from changing the cfg.
+            layerwise_drop_path_rate = kwargs.get('layerwise_drop_path_rate', False)
+            # by default use uniform droprate for droppath (from CaiT)
+            num_layers =  self.num_blocks
+            drop_path_rate = [x.item() for x in torch.linspace(0, drop_path_rate, num_layers)] if layerwise_drop_path_rate else [drop_path_rate] * num_layers
+            # ---------------------------
+            if kwargs.get('swiglu', False):
+                mlp =  ([(nn.Identity(), 'x -> x')] +
+                        [(MLP(out_dim, out_dim, drop_path=drop_path_rate[i],
+                              **kwargs), 'x, index, batch_tensor -> x')
+                         for i in range(self.num_blocks)])
+
+
+            else:
+                mlp =  ([(nn.Identity(), 'x -> x')] +
+                        [(MLP(out_dim, out_dim, drop_path=drop_path_rate[i],
+                                                           **kwargs), 'x, index, batch_tensor -> x')
+                         for i in range(self.num_blocks)])
+            self.mlp = pyg.nn.Sequential('x, index, batch_tensor', mlp)
+
+        else:
+            # if kwargs.get('add_spectral_norm', False):
+            #     warnings.warn("Siren MLP doesn't support spectral norm for now.")
+            # if kwargs.get('add_weight_norm', False):
+            #     warnings.warn("Siren MLP doesn't support weight norm for now.")
+            self.num_blocks = kwargs.get('num_blocks', 0)
+            ffn_ratio = kwargs.get('ffn_ratio', 2)
+            omega = kwargs.get('omega', 30)
+            mlp_dim = int(out_dim * ffn_ratio)
+            mlp = [(nn.Identity(), 'x -> x')] + [(SirenMLP(out_dim, out_dim, mlp_dim,
+                                              omega=omega, act=act
+                                            ), 'x, index, batch_tensor -> x') for i in range(self.num_blocks)]
+            self.mlp = pyg.nn.Sequential('x, index, batch_tensor', mlp)
+
+
+        # self.post_backbone_norm = act_dict[kwargs.get('post_backbone_norm', 'none')](out_dim)
+        self.post_backbone_norm = NormalizationLayer(kwargs.get('post_backbone_norm', 'none'), out_dim)
+
+
+        self.lecun_init = kwargs.get('lecun_init', False)
+        self.xavier_init = kwargs.get('xavier_init', False)
+
+        self.init_weights()
+
+    def forward(self, batch):
+
+        batch_tensor = batch.get('batch_tensor', None)
+
+        if self.edge_mode:
+            edge_index, attr = batch[f'{self.pe_name}_index'], batch[f'{self.pe_name}_attr']
+            batch_index = batch.batch[edge_index[1]]
+        else:
+            attr = batch[f'{self.pe_name}']
+            batch_index = batch.batch
+
+        attr = self.pre_backbone_norm(attr, batch_index)
+        attr = self.mlp(attr, batch_index, batch_tensor)
+        attr= self.post_backbone_norm(attr, batch_index)
+
+        if self.edge_mode:
+            batch[f'{self.pe_name}_attr'] = attr
+        else:
+            batch[f'{self.pe_name}'] = attr
+
+        return batch
+
+
+    def __repr__(self):
+        return f'{super().__repr__()}(pe_name={self.pe_name}, edge_mode={self.edge_mode})'
+
+    def init_weights(self):
+        if 'gaussian' in self.act:
+            self.mlp.apply(uniform_init_)
+        else:
+            init_weights_vit_timm(self.mlp)
+
+        if self.lecun_init:
+            self.mlp.apply(lecun_normal_init_)
+
+        if self.xavier_init:
+            self.mlp.apply(xavier_normal_init_)
+
+        if self.add_weight_norm:
+            self.mlp.apply(apply_weight_norm)
+
+        if self.add_spectral_norm:
+            self.mlp.apply(apply_spectral_norm)

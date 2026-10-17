@@ -506,7 +506,9 @@ def inspect_output(output_dir: Path, *, context: RunContext, expected: dict, tar
     from .training_reproducibility import assert_finite_state_dict
     root = Path(output_dir).absolute()
     _safe_local(root)
-    if (context.family_name, context.family_version) in {("neural_atom_k1", "3"), ("gptrans_t", "2")}:
+    from .experiment_execution import MODERN2D_PREVIEW_INTERFACES
+    if (context.family_name, context.family_version) in {
+            ("neural_atom_k1", "3"), ("gptrans_t", "2"), *MODERN2D_PREVIEW_INTERFACES}:
         from .family_training_outputs import inspect_session_output
         return inspect_session_output(root, context=context, expected=expected, target_identity=target_identity)
     blockers, observed = [], {}

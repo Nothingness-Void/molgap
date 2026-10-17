@@ -27,8 +27,8 @@ def load_family_model(recipe, initial_state):
                 for key, value in state.items()):
             raise ValueError("Frozen initialization tensor keys/shape/dtype differ from the base model")
         model.load_state_dict(state, strict=True)
-    if recipe.cpu_synthetic_only:
-        from .experiment_execution import TRAINING_ADAPTERS, SESSION_INTERFACES
+    if recipe.cpu_synthetic_only or recipe.integration_preview:
+        from .experiment_execution import TRAINING_ADAPTERS
         from .shared_model_adapter import resolve_model_factory
         factory = resolve_model_factory(TRAINING_ADAPTERS[recipe.interface])
         from dataclasses import asdict
@@ -89,6 +89,8 @@ class FamilyKernel:
         self.recipe, self.device = recipe, torch.device(device)
         if recipe.cpu_synthetic_only and self.device.type != "cpu":
             raise ValueError("CPU synthetic family cannot allocate an accelerator")
+        if recipe.integration_preview and self.device.type != "cpu":
+            raise ValueError("INTEGRATION_PENDING: Modern2D session preview cannot allocate an accelerator")
         self.initial_state = Path(initial_state)
         self.update_observer = None
         # Only the native reference enables safety fill for the qualification run.
@@ -146,13 +148,24 @@ class FamilyKernel:
         fields = (*MODEL_FIELDS, "y") if training else MODEL_FIELDS
         return prepared.to(self.device, *fields, non_blocking=True)
 
+    def _model_batch(self, batch, *, training):
+        """Borrow topology for explicit model factories without GPTrans layout."""
+        fields = ("x", "edge_index", "edge_attr", "batch", "ptr")
+        return copy(batch).to(self.device, *(fields + (("y",) if training else ())), non_blocking=True)
+
+    def _model_forward(self, model, batch):
+        from .shared_model_adapter import validate_model_output
+        return validate_model_output(model(batch), rows=int(batch.num_graphs), device=self.device)
+
     def step(self, cpu_batch, *, check_finite, observer=None):
         observer = observer if observer is not None else getattr(self, "update_observer", None)
         mean, std = self.recipe.target_mean_eV, self.recipe.target_std_eV
-        if self.recipe.cpu_synthetic_only:
+        if self.recipe.cpu_synthetic_only or self.recipe.integration_preview:
             from .family_training_core import normalized_gap_update
-            loss = normalized_gap_update(self.model, self.optimizer, cpu_batch, mean, std,
-                forward=lambda model, batch: model(batch), clip_norm=self.recipe.gradient_clip,
+            batch = self._model_batch(cpu_batch, training=True) if self.recipe.integration_preview else cpu_batch
+            forward = self._model_forward if self.recipe.integration_preview else lambda model, batch: model(batch)
+            loss = normalized_gap_update(self.model, self.optimizer, batch, mean, std,
+                forward=forward, clip_norm=self.recipe.gradient_clip,
                 check_finite=check_finite, cast_target_float=True,
                 clip_parameters=self._clip_parameters, observer=observer)
             absolute, rows = loss * int(cpu_batch.num_graphs), int(cpu_batch.num_graphs)
@@ -210,6 +223,8 @@ class FamilyKernel:
         if self.recipe.cpu_synthetic_only:
             from .shared_model_adapter import validate_model_output
             return validate_model_output(model(cpu_batch), rows=int(cpu_batch.num_graphs), device=self.device)
+        if self.recipe.integration_preview:
+            return self._model_forward(model, self._model_batch(cpu_batch, training=False))
         if self.recipe.family == "neural_atom_k1":
             from contextlib import nullcontext
             from .k1_execution_layout import cpu_layout_context
@@ -244,10 +259,12 @@ class FamilyKernel:
         def evaluate(model):
             self._evaluation_model = model
             try:
+                indexed = getattr(data, "development_source_indices", None)
+                identity = {"source_indices": indexed} if indexed is not None else {}
                 result = evaluate_development(model, loaders.dev(),
                     forward=lambda model, batch: self.forward(batch) if model is self.model else self.forward(batch, model=model),
                     rows=data.development_rows, source_start=data.development_source_start,
-                    mean=self.recipe.target_mean_eV, std=self.recipe.target_std_eV)
+                    mean=self.recipe.target_mean_eV, std=self.recipe.target_std_eV, **identity)
                 if on_evaluation is not None:
                     on_evaluation(result)
                 return result

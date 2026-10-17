@@ -123,16 +123,25 @@ class FamilyRecipe:
         from .experiment_spec import _digest
         if self.family not in MODES or self.mode not in MODES[self.family]:
             raise ValueError("Unknown executable family/addon mode")
-        if self.cpu_synthetic_only:
+        if self.cpu_synthetic_only or self.integration_preview:
             from copy import deepcopy
             from importlib import import_module
             adapter = TRAINING_ADAPTERS[self.interface]
             config_type = import_module(adapter.model_factory.split(":")[0]).CONFIG_TYPE
+            if self.integration_preview and type(self.dataset) is not DatasetSelection:
+                raise TypeError("Integration preview requires the typed dataset selection")
+            bounded_fixture = self.cpu_synthetic_only or self.dataset.manifest.startswith("synthetic/")
             if (type(self.model_config) not in (dict, config_type) or self.mode != "reference" or self.addons
                     or self.ema_decay is not None or self.clean_bn is not None or not self.drop_last
-                    or not self.dataset.manifest.startswith("synthetic/") or self.train_rows > 256
-                    or self.development_rows > 128 or self.optimizer_steps > 4):
+                    or (self.cpu_synthetic_only and not self.dataset.manifest.startswith("synthetic/"))
+                    or (bounded_fixture and (self.train_rows > 256 or self.development_rows > 128 or self.optimizer_steps > 4))):
+                if self.integration_preview:
+                    raise ValueError("Modern2D integration preview requires explicit reference configuration; synthetic fixtures are bounded to 256 train/128 development rows, four steps")
                 raise ValueError("Modern2D profile is bounded CPU synthetic only")
+            if self.integration_preview and not bounded_fixture and (
+                    self.train_rows not in (100000, 500000) or self.development_rows != 50000
+                    or not self.dataset.development):
+                raise ValueError("Real-input integration preview requires accepted indexed 100K/500K train and 50K development declarations")
             values = deepcopy(self.model_config) if type(self.model_config) is dict else asdict(self.model_config)
             if "layer_types" in values:
                 values["layer_types"] = tuple(values["layer_types"])
@@ -209,13 +218,17 @@ class FamilyRecipe:
         return TRAINING_ADAPTERS[self.interface].cpu_synthetic_only
 
     @property
+    def integration_preview(self):
+        return TRAINING_ADAPTERS[self.interface].integration_preview
+
+    @property
     def interface(self):
         if self.family_version is None:
             return SESSION_INTERFACES[self.family]
         key = (self.family,self.family_version)
         if (type(self.family_version) is not str or key not in TRAINING_ADAPTERS or
-                not TRAINING_ADAPTERS[key].cpu_synthetic_only):
-            raise ValueError("Explicit family version is restricted to reviewed CPU synthetic interfaces")
+                not (TRAINING_ADAPTERS[key].cpu_synthetic_only or TRAINING_ADAPTERS[key].integration_preview)):
+            raise ValueError("Explicit family version is restricted to reviewed CPU synthetic or integration preview interfaces")
         return key
 
     @property
@@ -241,6 +254,9 @@ class FamilyRecipe:
         if self.cpu_synthetic_only:
             policy.update(name="modern2d-cpu-v1", scope="CPU_SYNTHETIC_ONLY",
                           cpu_layout=False, optimizer="native-adamw")
+        if self.integration_preview:
+            policy.update(name="modern2d-session-preview-v1", scope="INTEGRATION_PREVIEW_ONLY",
+                          cpu_layout=False, device="cpu", native_qualification="INTEGRATION_PENDING")
         return policy
 
     def to_dict(self):

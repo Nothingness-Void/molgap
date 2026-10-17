@@ -4,6 +4,18 @@ from .common.spec import (FamilyContract, FamilyExecution, AddonContract, AddonC
     EDGE_STATE_BASE_LAYERS, EDGE_STATE_MIN_LAYERS, EDGE_STATE_MAX_LAYERS)
 
 FAMILIES = MappingProxyType({
+    **{(name, version): FamilyContract(name, version, "molgap." + module,
+        "modern2d_session_preview_v1", schema, ("train", "development"),
+        "frozen-family-pass-order", "frozen-train-mean-sample-std",
+        execution=FamilyExecution("molgap.family_training_runner", "modern2d-session-preview-v1",
+            model_factory="molgap." + module + ":make_model",
+            profile_adapter="molgap.family_execution_profile",
+            source_files=("src/molgap/modern2d_inputs.py", "src/molgap/" + features + ".py",
+                          *extra_sources)))
+       for name, version, module, features, schema, extra_sources in (
+           ("ppgt_small", "2", "ppgt_author", "ppgt_author_features", "ogb-atom9-bond3-author-rrwp-spe-v2", ()),
+           ("esa_small", "3", "esa_native", "esa_features", "ogb-atom9-bond3-directed-edge-isolate-mask-v3",
+            ("src/molgap/esa_model.py", "src/molgap/esa_invariant.py")))},
     ("esa_small", "2"): FamilyContract("esa_small", "2", "molgap.esa_invariant",
         "modern2d_cpu_v1", "ogb-atom9-bond3-directed-edge-mask-v1", ("train", "development"),
         "frozen-family-pass-order", "frozen-train-mean-sample-std",

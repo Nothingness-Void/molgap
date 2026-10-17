@@ -115,6 +115,13 @@ class SessionOutputs:
         if file_digest(contract) != context.training_recipe_sha256:
             raise ValueError("Session contract differs from the frozen Spec")
         record, self.recipe = read_recipe(contract)
+        if self.recipe.integration_preview:
+            from .experiment_family_artifacts import artifact_adapter
+            from .experiment_execution import MODERN2D_PREVIEW_PROFILE
+            if (adapter != MODERN2D_PREVIEW_PROFILE or
+                    self.recipe.interface != (context.family_name, context.family_version)):
+                raise ValueError("Integration preview output family/version/profile differs from contract")
+            artifact_adapter(adapter, self.recipe.interface)
         from .family_training_policy import mode_policy
         self.policy = mode_policy(self.recipe.family, self.recipe.mode)
         self.bounded_pair = self.policy.process_timing
@@ -312,6 +319,14 @@ def inspect_session_output(root, *, context, expected, target_identity=None):
         if artifacts["contract"]["sha256"] != context.training_recipe_sha256:
             raise ValueError("Unpinned session contract")
         contract, recipe = read_recipe(paths["contract"])
+        if recipe.interface != (context.family_name, context.family_version):
+            raise ValueError("Session contract family/version differs from context")
+        if recipe.integration_preview:
+            from .experiment_execution import MODERN2D_PREVIEW_PROFILE
+            if manifest["adapter"] != MODERN2D_PREVIEW_PROFILE:
+                raise ValueError("Integration preview requires its explicit output profile")
+            observed.update(integration_status="INTEGRATION_PENDING",
+                execution_scope="INTEGRATION_PREVIEW_ONLY", native_execution_released=False)
         if expected != contract["acceptance_requirements"]:
             raise ValueError("Expectations differ from the frozen contract")
         if set(paths) != (ROLES if recipe.dataset.development else ROLES - {"predictions"}):

@@ -14,6 +14,13 @@ from types import MappingProxyType
 from .experiment_spec import ADDONS, FAMILIES, ExperimentSpec, SCHEMA_VERSION_V2, validate_addon_config
 
 
+MODERN2D_PREVIEW_PROFILE = "modern2d-session-preview-v1"
+MODERN2D_PREVIEW_INTERFACES = MappingProxyType({
+    ("ppgt_small", "2"): ("molgap.ppgt_author:make_model", "ogb-atom9-bond3-author-rrwp-spe-v2"),
+    ("esa_small", "3"): ("molgap.esa_native:make_model", "ogb-atom9-bond3-directed-edge-isolate-mask-v3"),
+})
+
+
 @dataclass(frozen=True)
 class ExecutionPhase:
     """Reviewed neutral worker descriptor; platform owns spawning and timeouts."""
@@ -77,6 +84,11 @@ class TrainingAdapter:
     cpu_synthetic_only: bool = False
 
     @property
+    def integration_preview(self):
+        return (self.family in MODERN2D_PREVIEW_INTERFACES and
+                self.artifact_adapter == MODERN2D_PREVIEW_PROFILE)
+
+    @property
     def addon_modes(self) -> tuple[tuple[str, str], ...]:
         return tuple((addon.name, addon.mode) for addon in self.addons)
 
@@ -111,12 +123,23 @@ def _hook_source(hook: str) -> str:
 
 
 def graph_training_adapter(family, *, model_factory, addons=(), source_files=(),
-                           serialization_modules=(), cpu_synthetic_only=False) -> TrainingAdapter:
+                           serialization_modules=(), cpu_synthetic_only=False,
+                           integration_preview=False) -> TrainingAdapter:
     """Bind a small model to the shared pure-2D normalized-Gap training owner."""
     sources = {"src/molgap/graph_screen_training.py", "src/molgap/pcqm_graph_inputs.py",
                "src/molgap/shared_model_adapter.py", "src/molgap/pcqm_topology.py",
                "src/molgap/ogb_features.py",
                _hook_source(model_factory), *source_files}
+    if integration_preview:
+        expected = MODERN2D_PREVIEW_INTERFACES.get(tuple(family))
+        if cpu_synthetic_only or expected is None or model_factory != expected[0] or addons:
+            raise ValueError("Unreviewed Modern2D session integration preview")
+        sources.update({"src/molgap/family_training_runner.py", "src/molgap/family_training_kernel.py",
+                        "src/molgap/family_training_recipe.py", "src/molgap/family_training_outputs.py",
+                        "src/molgap/family_execution_profile.py"})
+        return TrainingAdapter(tuple(family), "molgap.family_training_runner", MODERN2D_PREVIEW_PROFILE,
+            tuple(addons), tuple(serialization_modules), tuple(sorted(sources)), model_factory,
+            profile_adapter="molgap.family_execution_profile")
     if cpu_synthetic_only:
         sources.add("src/molgap/family_training_runner.py")
         return TrainingAdapter(tuple(family), "molgap.family_training_runner", "modern2d-cpu-v1",
@@ -152,7 +175,8 @@ def _catalog_training_adapters():
             adapter=graph_training_adapter(key, model_factory=entry.model_factory,
                 addons=catalog_addons(key), source_files=entry.source_files,
                 serialization_modules=entry.serialization_modules,
-                cpu_synthetic_only=entry.cpu_synthetic_only)
+                cpu_synthetic_only=entry.cpu_synthetic_only,
+                integration_preview=entry.artifact_adapter == MODERN2D_PREVIEW_PROFILE)
             if (adapter.module,adapter.artifact_adapter) != (entry.module,entry.artifact_adapter):
                 raise ValueError("Catalog graph family execution boundary differs from its owner")
         else:
@@ -179,6 +203,20 @@ def validate_training_registry() -> None:
         artifact_adapter(adapter.artifact_adapter, family)
         if "src/" + adapter.module.replace(".", "/") + ".py" not in adapter.source_files:
             raise ValueError("Training registration omits its owning source module")
+        if adapter.integration_preview:
+            contract = FAMILIES[family]
+            factory, schema = MODERN2D_PREVIEW_INTERFACES[family]
+            if (adapter.cpu_synthetic_only or adapter.module != "molgap.family_training_runner"
+                    or adapter.addons or adapter.model_factory != factory
+                    or contract.source_module != factory.split(":")[0]
+                    or contract.feature_schema != schema or contract.recipe != "modern2d_session_preview_v1"
+                    or contract.roles != ("train", "development") or contract.optional_roles
+                    or contract.sampler != "frozen-family-pass-order"
+                    or contract.transform != "frozen-train-mean-sample-std"
+                    or adapter.profile_adapter != "molgap.family_execution_profile"
+                    or _hook_source(factory) not in adapter.source_files):
+                raise ValueError("Unreviewed Modern2D integration preview registration")
+            continue
         if adapter.cpu_synthetic_only:
             contract = FAMILIES[family]
             expected = {("ppgt_small", "1"): "ogb-atom9-bond3-rrwp-spe-v1",
@@ -255,11 +293,17 @@ def build_addon_declaration(family, addon, *, repo_root, config=None, version="1
 def workflow_capabilities(spec: ExperimentSpec) -> dict:
     """Expose route selection without claiming scientific or platform authority."""
     supported, unsupported = {}, {}
+    integration_pending = False
     for arm in spec.to_dict()["arms"]:
         try:
             adapter = training_adapter(arm)
             if adapter.cpu_synthetic_only:
                 unsupported[arm["arm_id"]] = "CPU synthetic registration only; native training is not released"
+                continue
+            if adapter.integration_preview:
+                integration_pending = True
+                unsupported[arm["arm_id"]] = (
+                    "INTEGRATION_PENDING: session preview only; family fidelity, real inputs and native qualification remain unreleased")
                 continue
             supported[arm["arm_id"]] = {"mode": adapter.mode(arm), "trainer": adapter.module,
                                         "artifact_profile": adapter.artifact_adapter,
@@ -272,7 +316,7 @@ def workflow_capabilities(spec: ExperimentSpec) -> dict:
     return {"spec_identity": spec.identity, "registered_training_arms": supported,
             "unsupported_training_arms": unsupported,
             "preparation_entry": "prepare-workflow" if registered else "prepare-release",
-            "execution_qualification": "requires_owning_contract_and_runtime",
+            "execution_qualification": "INTEGRATION_PENDING" if integration_pending else "requires_owning_contract_and_runtime",
             "submitted": False}
 
 
@@ -359,6 +403,8 @@ def validate_execution_plan(spec: ExperimentSpec, jobs: list[dict]) -> list[dict
     declaration = spec.to_dict()
     if any(training_adapter(arm).cpu_synthetic_only for arm in declaration["arms"]):
         raise ValueError("CPU synthetic profile cannot enter a platform execution plan")
+    if any(training_adapter(arm).integration_preview for arm in declaration["arms"]):
+        raise ValueError("INTEGRATION_PENDING: Modern2D session preview cannot enter a platform execution plan")
     if declaration["schema_version"] != SCHEMA_VERSION_V2:
         raise ValueError("Training workflow requires per-arm prospective Spec v2")
     arms = declaration["arms"]
@@ -436,6 +482,8 @@ def execute_training_phase(*, spec, job, phase, source_root, package_dir,
         raise ValueError("Unsupported execution phase")
     arm = next(a for a in spec.to_dict()["arms"] if a["arm_id"] == job["arm_id"])
     adapter = training_adapter(arm)
+    if adapter.integration_preview:
+        raise ValueError("INTEGRATION_PENDING: Modern2D session preview has no native execution release")
     context = RunContext.for_training(spec, package_dir,
         expected_package_identity=expected_package_identity, arm_id=job["arm_id"],
         account=account, run_reference=run_reference)

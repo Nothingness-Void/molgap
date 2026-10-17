@@ -37,11 +37,14 @@ class TrainingData:
     manifest_sha256: str
     train_rows: int
     development_rows: int
-    train_source_start: int
+    train_source_start: int | None
     development_source_start: int | None
     target_mean_eV: float
     target_std_eV: float
     synthetic: bool = False
+    train_source_indices: tuple[int, ...] | None = None
+    development_source_indices: tuple[int, ...] | None = None
+    indexed: bool = False
 
 
 def resolve_pinned_manifest(root, selection):
@@ -88,6 +91,8 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
     if sha256_file(path) != selection.manifest_sha256:
         raise ValueError("Dataset manifest SHA differs from the frozen selection")
     manifest = _json(path)
+    if manifest.get("format") == "molgap-indexed-training-input-v1":
+        return load_indexed_training_data(root, selection)
     from .pcqm_fixed_records import graph_records
     records = graph_records(manifest, selection.manifest_sha256)
     source = manifest.get("source", {})
@@ -156,6 +161,57 @@ def load_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
         len(datasets["development"]) if selection.development else 0,
         role_ranges["train"][0], development_range[0] if development_range else None,
         float(targets.mean()), float(sample_std_compat(targets).clamp_min(1e-6)))
+
+
+def load_indexed_training_data(root: Path, selection: DatasetSelection) -> TrainingData:
+    """Consume explicit accepted V2 maps; never infer an interval or reselect.
+
+    The small binding is frozen as the recipe's dataset manifest. Each role
+    additionally carries the independently supplied acceptance/manifest pins,
+    authority and selection history consumed by the existing indexed owner.
+    No network, graph construction, Audit IO or training happens here.
+    """
+    import torch
+    from .data.indexed_inputs import AcceptedIndexedInputPermit, IndexedInputPermit, IndexedRoleDataset
+    from .common.io import _safe_local
+    from .research_memory.paths import repo_local_path
+    path = resolve_pinned_manifest(root, selection)
+    binding = _json(path)
+    if (type(binding) is not dict or set(binding) != {"format", "data_root", "scope", "train", "development"} or
+            binding["format"] != "molgap-indexed-training-input-v1" or
+            binding["scope"] not in {"CPU_SYNTHETIC_ONLY", "ACCEPTED_INDEXED_INPUT_V1"}):
+        raise ValueError("Unknown indexed family input binding")
+    relative = binding["data_root"]
+    if type(relative) is not str or not relative or "\\" in relative or ":" in relative or any(
+            part in {"", ".", ".."} for part in relative.split("/")):
+        raise ValueError("Indexed data root must be confined and explicit")
+    _safe_local(path.parent / relative)
+    data_root = repo_local_path(path.parent, relative)
+    if selection.development and binding["development"] is None:
+        raise ValueError("Indexed selected development differs from input binding")
+    datasets = {}
+    for role in ("train", "development") if selection.development else ("train",):
+        record = binding[role]
+        if type(record) is not dict or set(record) != {"permit", "authority", "role_history"}:
+            raise ValueError("Indexed role lacks its exact authority/history binding")
+        kind = IndexedInputPermit if binding["scope"] == "CPU_SYNTHETIC_ONLY" else AcceptedIndexedInputPermit
+        permit = kind(**record["permit"])
+        if permit.role not in ({"train_100k", "train_500k"} if role == "train" else {"common_dev"}):
+            raise ValueError("ROLE_BLOCKED: indexed role substituted in family input")
+        datasets[role] = IndexedRoleDataset(data_root, permit, authority=record["authority"],
+                                             role_history=record["role_history"])
+    train, dev = datasets["train"], datasets.get("development")
+    if dev is not None and (train.permit.version_identity != dev.permit.version_identity or
+            train.permit.acceptance_sha256 != dev.permit.acceptance_sha256 or
+            set(train.source_indices) & set(dev.source_indices)):
+        raise ValueError("Indexed train/development versions overlap or disagree")
+    targets = torch.cat(list(train.selected_targets()))
+    if len(targets) < 2 or not bool(torch.isfinite(targets).all()):
+        raise ValueError("Indexed train-only normalization needs finite labels")
+    return TrainingData(train, dev, selection.manifest_sha256, len(train), len(dev) if dev else 0,
+        None, None, float(targets.mean()), float(sample_std_compat(targets).clamp_min(1e-6)),
+        synthetic=binding["scope"] == "CPU_SYNTHETIC_ONLY", train_source_indices=train.source_indices,
+        development_source_indices=dev.source_indices if dev else None, indexed=True)
 
 
 class PassBatchSampler:

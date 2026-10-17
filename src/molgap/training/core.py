@@ -295,9 +295,27 @@ def normalized_gap_update(
         check_finite=check_finite, ema=ema, label=label, clip_parameters=clip_parameters, observer=observer)[0]
 
 
-def evaluate_development(model, batches, *, forward, rows, source_start, mean, std):
+def evaluate_development(model, batches, *, forward, rows, source_start, mean, std, source_indices=None):
     """One ordered FP32/eV evaluator; the state owner installs the selected view."""
     import torch
+    if source_indices is None:
+        if type(source_start) is not int or type(rows) is not int or rows < 1 or source_start < 0:
+            raise ValueError("Development requires a valid contiguous or explicit indexed identity")
+        expected_source = torch.arange(source_start, source_start + rows)
+    else:
+        if source_start is not None or not isinstance(source_indices, (tuple, list, torch.Tensor)):
+            raise ValueError("Indexed development cannot infer a contiguous source range")
+        if isinstance(source_indices, torch.Tensor):
+            if source_indices.dtype != torch.int64 or source_indices.device.type != "cpu" or source_indices.ndim != 1:
+                raise ValueError("Indexed development identity must be one-dimensional CPU int64")
+            expected_source = source_indices
+        else:
+            if any(type(i) is not int for i in source_indices):
+                raise ValueError("Indexed source IDs must be exact integers")
+            expected_source = torch.tensor(source_indices, dtype=torch.int64)
+        if (expected_source.numel() != rows or bool((expected_source < 0).any()) or
+                not bool((expected_source[1:] > expected_source[:-1]).all())):
+            raise ValueError("Indexed development identity must be unique ascending exact members")
     predictions, targets, sources = [], [], []
     with torch.no_grad():
         for batch in batches:
@@ -305,11 +323,13 @@ def evaluate_development(model, batches, *, forward, rows, source_start, mean, s
             index = getattr(batch, "source_idx", getattr(batch, "row_index", None))
             if index is None:
                 raise ValueError("Development source identity is missing")
+            if source_indices is not None and (not torch.is_tensor(index) or index.dtype != torch.int64):
+                raise ValueError("Indexed observed source IDs must be exact int64")
             sources.append(index.reshape(-1).long().cpu())
             predictions.append(forward(model, batch).reshape(-1) * std + mean)
     prediction, target, source = torch.cat(predictions).cpu(), torch.cat(targets), torch.cat(sources)
     if (prediction.shape != target.shape or prediction.numel() != rows or
-            not torch.equal(source, torch.arange(source_start, source_start + rows)) or
+            not torch.equal(source, expected_source) or
             not bool(torch.isfinite(prediction).all()) or not bool(torch.isfinite(target).all())):
         raise ValueError("Development count/order/finite predictions differ")
     return {"mae_eV": float((prediction - target).abs().mean()), "prediction_eV": prediction,

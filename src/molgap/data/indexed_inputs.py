@@ -53,20 +53,63 @@ class IndexedInputPermit:
             raise ValueError("ROLE_BLOCKED: indexed role authority/history mismatch")
 
 
+@dataclass(frozen=True)
+class AcceptedIndexedInputPermit:
+    """Explicit accepted-data binding; possession is not training authority.
+
+    Pins must be supplied by the owning accepted-data record, never discovered
+    from an untrusted mount. Only train100K/500K and Common-Dev are admissible.
+    The synthetic permit above deliberately retains its original restrictions.
+    """
+    role: str
+    acceptance_sha256: str
+    manifest_sha256: str
+    version_identity: str
+    authority_sha256: str
+    role_history_sha256: str
+    max_chunk_bytes: int
+    scope: str = "ACCEPTED_INDEXED_INPUT_V1"
+
+    def __post_init__(self):
+        if self.scope != "ACCEPTED_INDEXED_INPUT_V1" or self.role not in {"train_100k", "train_500k", "common_dev"}:
+            raise ValueError("ROLE_BLOCKED: accepted indexed train/Common-Dev only")
+        for key in ("acceptance_sha256", "manifest_sha256", "version_identity", "authority_sha256", "role_history_sha256"):
+            digest(getattr(self, key), key)
+        if type(self.max_chunk_bytes) is not int or not 1 <= self.max_chunk_bytes <= 512 * 1024**2:
+            raise ValueError("An explicit bounded CPU chunk budget is required")
+
+    def verify(self, authority, history):
+        if (canonical_fingerprint(authority) != self.authority_sha256 or
+                canonical_fingerprint(history) != self.role_history_sha256 or
+                authority != {"scope": self.scope, "role": self.role,
+                    "acceptance_sha256": self.acceptance_sha256, "manifest_sha256": self.manifest_sha256,
+                    "version_identity": self.version_identity, "operations": ["prediction_input", "labels_read"],
+                    "protected": False, "max_chunk_bytes": self.max_chunk_bytes} or
+                history != {"role": self.role, "manifest_sha256": self.manifest_sha256,
+                    "usage": "training" if self.role.startswith("train_") else "selection-used"}):
+            raise ValueError("ROLE_BLOCKED: accepted indexed authority/history mismatch")
+
+
 class IndexedRoleDataset:
     """One retained packed chunk at a time, explicit offsets, immutable copies."""
     def __init__(self,root,permit,*,authority,role_history):
-        if type(permit) is not IndexedInputPermit:
+        if type(permit) not in (IndexedInputPermit, AcceptedIndexedInputPermit):
             raise TypeError("Reviewed indexed input permit required")
         permit.verify(authority,role_history)  # Before opening members or payloads.
+        self.permit = permit
+        real = type(permit) is AcceptedIndexedInputPermit
         self.root=Path(root).absolute();_safe_local(self.root)
         receipt_path=_local(self.root,"acceptance.json")
         if file_digest(receipt_path) != permit.acceptance_sha256:
             raise ValueError("Indexed acceptance bytes changed")
         receipt=json.loads(receipt_path.read_bytes())
-        if (receipt.get("scope") != "CPU_SYNTHETIC_ONLY" or receipt.get("status") != "SYNTHETIC_DATA_ROLES_VERIFIED" or
+        if (receipt.get("scope") != ("OFFICIAL_TRAIN_CPU_PREPARATION_ONLY" if real else "CPU_SYNTHETIC_ONLY") or
+                receipt.get("status") != ("DATA_ROLE_ACCEPTED" if real else "SYNTHETIC_DATA_ROLES_VERIFIED") or
                 receipt.get("rule_identity") != permit.version_identity):
             raise ValueError("Real indexed V2/native loading is not released")
+        if real and any(receipt.get(key) is not False for key in (
+                "official_validation_read", "test_roles_read", "graphs_rebuilt", "audit_label_statistics_exposed")):
+            raise ValueError("Accepted indexed receipt lacks confined data provenance")
         binding=receipt.get("roles",{}).get(permit.role,{})
         expected_path="roles/"+permit.role+".json"
         if binding.get("path") != expected_path or binding.get("sha256") != permit.manifest_sha256:
@@ -79,8 +122,10 @@ class IndexedRoleDataset:
         if (m.get("role") != permit.role or m.get("version_identity") != permit.version_identity or
                 m.get("format") != FORMAT or m.get("feature_schema") != "ogb-atom9-bond3-rwse16-v1" or
                 m.get("pure_2d") is not True or m.get("ordering") != "ascending-source-index" or
-                type(m.get("rows")) is not int or not 1 <= m["rows"] <= 512):
+                type(m.get("rows")) is not int or not 1 <= m["rows"] <= (500000 if real else 512)):
             raise ValueError("Unknown/unbounded CPU indexed role ABI")
+        if real and m["rows"] != {"train_100k": 100000, "train_500k": 500000, "common_dev": 50000}[permit.role]:
+            raise ValueError("Accepted indexed role count differs from the frozen scale")
         for operation in ("prediction_input","labels_read"):
             authorize_role(m,operation=operation)
         member=_local(self.root,m["source_index_file"])
@@ -104,17 +149,34 @@ class IndexedRoleDataset:
             if (type(offsets) is not list or any(type(i) is not int or not 0 <= i < len(shard) for i in offsets) or
                     offsets != sorted(set(offsets)) or len(offsets) != item["rows"]):
                 raise ValueError("Invalid non-contiguous indexed offsets")
-            graphs=[shard.get(i) for i in offsets]
-            if any(set(g.keys())-GRAPH_FIELDS-{"num_nodes"} for g in graphs):
-                raise ValueError("Unknown/3D indexed graph field")
-            ids=[int(g.source_idx.item()) for g in graphs]
-            if index_digest(ids) != item["row_sha256"] or target_digest([float(g.y.item()) for g in graphs]) != item["target_sha256"]:
+            if real:
+                # The independently accepted, byte-pinned shard already binds
+                # topology. Do not duplicate a whole collated chunk in RAM.
+                import torch
+                if set(shard._data.keys()) - GRAPH_FIELDS - {"num_nodes"}:
+                    raise ValueError("Unknown/3D indexed graph field")
+                source, target = shard._data.source_idx.reshape(-1), shard._data.y.reshape(-1)
+                if source.dtype != torch.int64 or len(source) != len(shard) or len(target) != len(shard):
+                    raise ValueError("Invalid decoded indexed identity/target schema")
+                chosen = torch.tensor(offsets, dtype=torch.int64)
+                ids = source[chosen].tolist()
+                values = target[chosen]
+                if not values.is_floating_point() or not bool(torch.isfinite(values).all()):
+                    raise ValueError("Decoded indexed targets are nonfinite")
+                values = values.tolist()
+            else:
+                graphs=[shard.get(i) for i in offsets]
+                if any(set(g.keys())-GRAPH_FIELDS-{"num_nodes"} for g in graphs):
+                    raise ValueError("Unknown/3D indexed graph field")
+                ids=[int(g.source_idx.item()) for g in graphs]
+                values=[float(g.y.item()) for g in graphs]
+                from torch_geometric.data import InMemoryDataset
+                data,slices=InMemoryDataset.collate(graphs)
+                topology={k:v for k,v in data.to_dict().items() if k not in {"source_idx","y"}}
+                if state_digest({"data":topology,"slices":{k:v for k,v in (slices or {}).items() if k not in {"source_idx","y"}}}) != item["topology_sha256"]:
+                    raise ValueError("Decoded indexed topology identity changed")
+            if index_digest(ids) != item["row_sha256"] or target_digest(values) != item["target_sha256"]:
                 raise ValueError("Decoded indexed row/target identity changed")
-            from torch_geometric.data import InMemoryDataset
-            data,slices=InMemoryDataset.collate(graphs)
-            topology={k:v for k,v in data.to_dict().items() if k not in {"source_idx","y"}}
-            if state_digest({"data":topology,"slices":{k:v for k,v in (slices or {}).items() if k not in {"source_idx","y"}}}) != item["topology_sha256"]:
-                raise ValueError("Decoded indexed topology identity changed")
             decoded.extend(ids);self._maps.append(tuple(offsets));self._ends.append(len(decoded))
         if tuple(decoded) != self.source_indices:
             raise ValueError("Decoded chunks differ from explicit indexed members")
@@ -128,7 +190,8 @@ class IndexedRoleDataset:
             raise ValueError("ROLE_BLOCKED: wrong/audit physical payload")
         path=_local(self.root,item["file"])
         info=path.stat()
-        if info.st_size > 64*1024**2:
+        limit = self.permit.max_chunk_bytes if type(self.permit) is AcceptedIndexedInputPermit else 64*1024**2
+        if info.st_size > limit:
             raise ValueError("CPU indexed chunk safety cap exceeded")
         identity=(info.st_dev,info.st_ino,info.st_size,info.st_mtime_ns,info.st_ctime_ns,item["sha256"])
         if self._loaded_index != index or self._loaded_file_identity != identity:
@@ -150,7 +213,25 @@ class IndexedRoleDataset:
             raise IndexError("Indexed role row out of range")
         chunk=bisect_right(self._ends,index)
         local=index-(self._ends[chunk-1] if chunk else 0)
-        return self._load(chunk).get(self._maps[chunk][local]).clone()
+        graph = self._load(chunk).get(self._maps[chunk][local]).clone()
+        if int(graph.source_idx.item()) != self.source_indices[index]:
+            raise ValueError("Decoded row identity changed during indexed access")
+        # Clearing PyG's per-graph memoization keeps the one-chunk memory bound.
+        self._loaded._data_list = None
+        graph.role_name = "CPU_SYNTHETIC_ONLY" if type(self.permit) is IndexedInputPermit else self.permit.role
+        return graph
+
+    def selected_targets(self):
+        """Train-only statistics callers need labels, not cloned graph lists."""
+        import torch
+        for chunk, offsets in enumerate(self._maps):
+            shard = self._load(chunk)
+            yield shard._data.y.reshape(-1)[torch.tensor(offsets, dtype=torch.int64)].double().clone()
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        state.update(_loaded=None, _loaded_index=None, _loaded_file_identity=None)
+        return state
 
 
 def mirror_prerequisites(acceptance):
