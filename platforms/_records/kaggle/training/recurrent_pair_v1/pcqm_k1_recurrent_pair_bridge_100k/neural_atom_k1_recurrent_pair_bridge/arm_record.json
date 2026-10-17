@@ -1,0 +1,149 @@
+{
+  "format": "molgap-pcqm-k1-variant-arm-v1",
+  "complete": true,
+  "source_commit": "b1e4790f240c578671ad78210749a4970ba4780d",
+  "fixed_dataset": "kaseichou/pcqm4mv2-ogb-fixed-100k-v1",
+  "fixed_manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "fixed_geometry_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+  "architecture": {
+    "backbone": "neural_atom_k1_v4",
+    "exchange_layers": [
+      3,
+      6,
+      9
+    ],
+    "change": "persistent-pre-normalized-ordered-pair-bridge",
+    "pair_channels": 32,
+    "pair_state_update": "recurrent-addition",
+    "pair_selection": "accumulated-state-softmax-over-sources",
+    "pair_to_node": "current-normalized-update-to-target",
+    "dense_atom_to_atom_attention": false,
+    "added_parameters": 30881,
+    "initialization_policy": "nested-function",
+    "geometry": false
+  },
+  "preflight": {
+    "mode": "neural_atom_k1_recurrent_pair_bridge",
+    "parameter_count": 3689698,
+    "shared_k1_initial_state_sha256": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3",
+    "exact_k1_function_at_initialization": true,
+    "initialization_policy": "nested-function",
+    "candidate_mechanism_trainable_after_two_steps": true,
+    "preflight_peak_reserved_mib": 694.0,
+    "preflight_total_memory_mib": 14911.6875,
+    "preflight_memory_reserve_fraction": 0.9534593251099179,
+    "exchange_layers": [
+      3,
+      6,
+      9
+    ],
+    "mechanism_checks": {
+      "exchange_layers": [
+        3,
+        6,
+        9
+      ],
+      "pair_channels": 32,
+      "pair_state": "persistent-ordered-all-pairs",
+      "pair_update": "silu-source-plus-target-then-layernorm",
+      "selection": "accumulated-pair-state-softmax-over-sources",
+      "pair_to_node": "normalized-current-update-to-target-node",
+      "self_pairs_included": true,
+      "return_projections_zero": true,
+      "layers": [
+        {
+          "layer": 3,
+          "valid_target_mass_one": true,
+          "padding_assignment_zero": true,
+          "padding_pair_state_zero": true,
+          "recurrent_addition_exact": true,
+          "zero_initial_update_exact": true
+        },
+        {
+          "layer": 6,
+          "valid_target_mass_one": true,
+          "padding_assignment_zero": true,
+          "padding_pair_state_zero": true,
+          "recurrent_addition_exact": true,
+          "zero_initial_update_exact": true
+        },
+        {
+          "layer": 9,
+          "valid_target_mass_one": true,
+          "padding_assignment_zero": true,
+          "padding_pair_state_zero": true,
+          "recurrent_addition_exact": true,
+          "zero_initial_update_exact": true
+        }
+      ],
+      "resume_two_step_bitwise_equal": true
+    }
+  },
+  "runtime_certificate": {
+    "format": "molgap-runtime-certificate-v1",
+    "status": "accepted",
+    "platform_id": "kaggle1",
+    "accelerator": "Tesla T4",
+    "precision": "fp32",
+    "tf32_enabled": false,
+    "deterministic_algorithms": true,
+    "physical_batch_per_device": 128,
+    "tail_batch_policy": "drop_last",
+    "software_fingerprint": "01a422b3553be49b84623a1b965dcba1f5a269a081152e05f5fb0b8bc90c3b98",
+    "determinism_fingerprint": "e0a4d34648a1c83343fabce29d2036cc59b491f2784adab101ba19106d0566b9",
+    "calibration_fixture_sha256": "e6c5dcaed3b939511e843d315774d35242f9dcd4eb3649277058deaf627889f4",
+    "calibration_model_id": "neural_atom_k1_recurrent_pair_bridge",
+    "calibration_output_sha256": "4c7307de4f26bf33fce206373cce384e34c1b901cf7fd083635f3a04d9f45ef7",
+    "runtime_fingerprint": "915cda181bb6b77b968bd3f216c75b3906d261b0bf16254fc9b4479f191fc10b",
+    "calibration_checks_passed": true
+  },
+  "contract": {
+    "run_id": "pcqm-k1-variants-100k-s42-v1-neural_atom_k1_recurrent_pair_bridge",
+    "model_id": "neural_atom_k1_recurrent_pair_bridge",
+    "architecture_fingerprint": "2d12f718a93f3c29da35476c03fff3eef6fb65f48d32d48ecc29e626c69aa114",
+    "source_archive_sha256": "1a6bcbea94c996f16ff0f65dec6749e275fec2e29a8f7b6f4cf717506033efc1",
+    "result_artifact_sha256": "fe837bb41d9d63018dafb962339503b39170060b62b92dde5cddc16d15efdcaf",
+    "platform_id": "kaggle1",
+    "accelerator": "Tesla T4",
+    "runtime_certificate_id": "1e1eab9ea353c8653a94c31d0180aa74763c7e373fce64a800edbe9c7692d951",
+    "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+    "data_role_fingerprint": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+    "row_order_fingerprint": "e85736669a04029e0fa40e993a085b2e0226b4be98a923a141f999a672ce3f34",
+    "feature_fingerprint": "3773a4dddb549c13b0103570020d7360f057f278f06a80cdee7513be55f356f1",
+    "target_fingerprint": "106854975b2fc711b1d4548f6164ce847c845f31be6eac1ae436edb9684c1967",
+    "seed": 42,
+    "precision": "fp32",
+    "optimizer_fingerprint": "1b37790838e8ad79c4212c382b030c4ef25766e9adb21986ca78813c38960152",
+    "schedule_fingerprint": "97c8f6fa99991299b9855036aa8b24da20d5d5b87b0b3ea3750a7708d37a330f",
+    "loss_fingerprint": "bc9a919797dc84d2071edda7e5bd9e386db766b6ecd7e99a1297cf6e54a8ba1a",
+    "target_transform_fingerprint": "a5ebd05f82f481020f2059c77a7bc7b9dee84081fdb9806fdc18d93a6b8d89d7",
+    "selection_fingerprint": "45ffbe5f7dd49f286fa4b2850898194574e3af74879db1f0fa39cf0f16bcef55",
+    "role_access_fingerprint": "6dadc354f329e38bbacdbe0a9e60b8011a9ce1cf9857174d731894dbefced024",
+    "sample_exposure": 3998720,
+    "tail_batch_policy": "drop_last",
+    "physical_batch_per_device": 128,
+    "device_count": 1,
+    "gradient_accumulation_steps": 1
+  },
+  "training": {
+    "parameter_count": 3689698,
+    "best_epoch": 35,
+    "development_gap_mae_eV": 0.14166533946990967,
+    "epochs_completed": 40,
+    "optimizer_steps": 31240,
+    "sample_presentations": 3998720,
+    "mean_epoch_seconds": 130.578727841625,
+    "mean_graphs_per_second": 765.5764583742014,
+    "peak_allocated_mib": 641.52392578125,
+    "peak_reserved_mib": 662.0,
+    "total_memory_mib": 14911.6875,
+    "best_model_sha256": "11d9f1f1235529b7b0bd702715d3d2303fee64c8c59644e5197db54bac8ff3e5",
+    "payload_sha256": "fe837bb41d9d63018dafb962339503b39170060b62b92dde5cddc16d15efdcaf",
+    "checkpoint_sha256": "30666007c9a8d3efd7af5f3cb22b9778b1c107f8707adc5bde6f268af59c2afc"
+  },
+  "pure_2d": true,
+  "geometry_attributes_removed_before_batching": true,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}

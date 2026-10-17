@@ -1,0 +1,64 @@
+{
+  "format": "molgap-pcqm-k1-stateless-pair-bridge-contract-v1",
+  "benchmark_id": "pcqm4mv2-ogb-fixed-100k-gap-v4",
+  "manifest_sha256": "1b0e8fd579ab1cb86c02e833e7ad284b4af7582b059f912a77853fdccf3ede6d",
+  "geometry_aggregate_sha256": "bc83a4bd9a7fd7fd6fc6fd085d78ba3caab0e40f997d1932e0f344e701dd40c5",
+  "roles": {
+    "train": [0, 100000],
+    "development": [100000, 150000],
+    "official_validation_role_read": false,
+    "test_dev_role_read": false,
+    "test_challenge_role_read": false
+  },
+  "arms": ["neural_atom_k1_stateless_pair_bridge"],
+  "reference": "neural_atom_k1_v4",
+  "immutable_source_commit": "0efcdf7697befdff3989b7c781fba7ebe0d8c526",
+  "source_config_sha256": "4756597365e557327fd9a12000aeec5a49a31be95662742dc64458d5042f3ba5",
+  "seed": 42,
+  "precision": "fp32",
+  "tf32_enabled": false,
+  "deterministic_algorithms": true,
+  "physical_batch_per_device": 128,
+  "gradient_accumulation_steps": 1,
+  "tail_batch_policy": "drop_last",
+  "epochs": 40,
+  "optimizer_steps_per_epoch": 781,
+  "sample_presentations_per_epoch": 99968,
+  "total_optimizer_steps": 31240,
+  "total_sample_presentations": 3998720,
+  "optimizer": {
+    "name": "AdamW",
+    "learning_rate": 0.0004,
+    "weight_decay": 0.00001,
+    "gradient_clip": 1.0
+  },
+  "schedule": {"name": "CosineAnnealingLR", "eta_min": 0.000001},
+  "target": "direct-normalized-gap-l1",
+  "checkpoint_selection": "minimum-development-gap-mae-each-epoch",
+  "architecture": {
+    "backbone": "neural_atom_k1_v4",
+    "parameters": 3689698,
+    "added_parameters": 30881,
+    "exchange_layers": [3, 6, 9],
+    "pair_channels": 32,
+    "pair_state": "stateless-current-layer-only",
+    "pair_update": "pre-normalized-current-layer-only",
+    "pair_to_node": "source-softmax-to-target",
+    "dense_atom_to_atom_attention": false,
+    "geometry_model_input": false
+  },
+  "minimum_gain_eV": 0.003,
+  "stochasticity_floor_eV": 0.003,
+  "durability": {
+    "atomic_checkpoint_each_epoch": true,
+    "rng_optimizer_scheduler_state": true,
+    "recovery_bundle_every_epochs": 10,
+    "resume_identity_fail_closed": true
+  },
+  "budget_ceiling": {
+    "platform": "kaggle1",
+    "hardware": "NVIDIA_TESLA_T4",
+    "device_hours": 3.0,
+    "wall_hours": 3.0
+  }
+}

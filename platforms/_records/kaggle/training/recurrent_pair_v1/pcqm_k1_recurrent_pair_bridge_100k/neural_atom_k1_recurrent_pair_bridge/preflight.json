@@ -1,0 +1,57 @@
+{
+  "mode": "neural_atom_k1_recurrent_pair_bridge",
+  "parameter_count": 3689698,
+  "shared_k1_initial_state_sha256": "ce878c7a6e71519e4bd25ef10e45e6c9f693687f7f8c76dbf37c66f3c5708dc3",
+  "exact_k1_function_at_initialization": true,
+  "initialization_policy": "nested-function",
+  "candidate_mechanism_trainable_after_two_steps": true,
+  "preflight_peak_reserved_mib": 694.0,
+  "preflight_total_memory_mib": 14911.6875,
+  "preflight_memory_reserve_fraction": 0.9534593251099179,
+  "exchange_layers": [
+    3,
+    6,
+    9
+  ],
+  "mechanism_checks": {
+    "exchange_layers": [
+      3,
+      6,
+      9
+    ],
+    "pair_channels": 32,
+    "pair_state": "persistent-ordered-all-pairs",
+    "pair_update": "silu-source-plus-target-then-layernorm",
+    "selection": "accumulated-pair-state-softmax-over-sources",
+    "pair_to_node": "normalized-current-update-to-target-node",
+    "self_pairs_included": true,
+    "return_projections_zero": true,
+    "layers": [
+      {
+        "layer": 3,
+        "valid_target_mass_one": true,
+        "padding_assignment_zero": true,
+        "padding_pair_state_zero": true,
+        "recurrent_addition_exact": true,
+        "zero_initial_update_exact": true
+      },
+      {
+        "layer": 6,
+        "valid_target_mass_one": true,
+        "padding_assignment_zero": true,
+        "padding_pair_state_zero": true,
+        "recurrent_addition_exact": true,
+        "zero_initial_update_exact": true
+      },
+      {
+        "layer": 9,
+        "valid_target_mass_one": true,
+        "padding_assignment_zero": true,
+        "padding_pair_state_zero": true,
+        "recurrent_addition_exact": true,
+        "zero_initial_update_exact": true
+      }
+    ],
+    "resume_two_step_bitwise_equal": true
+  }
+}

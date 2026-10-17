@@ -1,0 +1,22 @@
+{
+  "format": "molgap-pcqm-k1-variant-completion-v1",
+  "complete": true,
+  "mode": "neural_atom_k1_stateless_pair_bridge",
+  "artifact_sha256": {
+    "arm_record.json": "d2bf3451b38925348c7a3d94a704006d8b0a861bb99b8f6f760c8d2a24ffe0fb",
+    "best_development_payload.pt": "f1a4444337de7e3ebac7d826efd5598141cc725d842665e6a8056541646a62f9",
+    "best_model.pt": "88d86d506725bb9616b66b6b85dd677c5bdc1c8ef994fbb80fc52693fa68b51c",
+    "last_checkpoint.pt": "950630e930af98e25b63abd31eaaf4a1457fd552e7bd3a28c2e60d4621debcfe",
+    "preflight.json": "5a25fe263389378d0c66b451275125f71b9234c02d0c0e1ee57e59de02a6c909",
+    "recovery_epoch_10.tar": "17217525237ac7eb8aa38dfa391d1a81f9e162760aac44352fa7dabc11199fab",
+    "recovery_epoch_20.tar": "e7557115c65b274a51a0a1416c4a9868a2161aa8a49c120c481485b56ffca9f9",
+    "recovery_epoch_30.tar": "4e500b73c40c0cce44a6bd24442bf75b725d9887034a91aafcd4cfffd36354f9",
+    "recovery_epoch_40.tar": "01b1d52bebc3f834ce111c7ee9815e19cf7302f5c7a99700c30a37159b5f9a99",
+    "runtime_certificate.json": "5d8076a8e9fa52e401ad3db517b254e39b23b58892f1b911395a3da3bb73e822",
+    "runtime_manifest.json": "4e9a1cf378a76ee0fc931eb7f32e709e1fafe8406d933a57ba8888d31ce2ae60",
+    "trace.json": "e72b3c94f44dcd7620d0633a9b37504a7cc4ab80023e6acd006d3c17e661f3b7"
+  },
+  "official_validation_role_read": false,
+  "test_dev_role_read": false,
+  "test_challenge_role_read": false
+}
