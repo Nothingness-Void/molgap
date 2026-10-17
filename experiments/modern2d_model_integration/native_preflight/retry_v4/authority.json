@@ -1,0 +1,61 @@
+{
+  "arms": [
+    "ppgt_author_v2",
+    "esa_native_v3"
+  ],
+  "authorization": "Human explicitly requested detailed repair, thorough checking and resubmission on 2026-10-18 JST. This authorizes one repaired PPGT/2 plus ESA/3 qualification attempt only: Kaggle2 T4x2 at most1800 seconds /1 allocated T4-hour, seed42 BS128 six scratch optimizer updates per model using unchanged accepted data, recipes and V1 initial states. Local V3 packaging was rejected before any upload/GPU submission and remains preserved; V4 is the newly frozen publishable binding for this one authorized remote retry. No formal training, protected roles, extra seeds or automatic successor.",
+  "automatic_successor_authorized": false,
+  "cpu": {
+    "allocated_cpus": 16,
+    "allocated_gpus": 0,
+    "platform": "ims",
+    "wall_ceiling_seconds": 7200
+  },
+  "extra_seed_authorized": false,
+  "format": "molgap-modern2d-bounded-qualification-authority-v1",
+  "gpu": {
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "allocated_t4_hours_ceiling": 1,
+    "owner": "kaseichou",
+    "platform": "kaggle2",
+    "wall_ceiling_seconds": 1800
+  },
+  "interfaces": [
+    [
+      "ppgt_small",
+      "2"
+    ],
+    [
+      "esa_small",
+      "3"
+    ]
+  ],
+  "logical_run_id": "modern2d-native-100k-s42-v4",
+  "owner": "server",
+  "physical_batch_size": 128,
+  "previous_attempt_refs": [
+    "experiments/modern2d_model_integration/native_preflight/retry_v2/STATUS.md",
+    "experiments/modern2d_model_integration/native_preflight/retry_v2/experiment_spec.json",
+    "experiments/modern2d_model_integration/native_preflight/retry_v2/results/inspection_2026-10-18.md"
+  ],
+  "previous_decision_artifact": {
+    "path": "prior_inspection.md",
+    "sha256": "ed8d18cdcf307a3b40e6311e4ce75df01e49ab6af83f5a9b222f13063a2e1161"
+  },
+  "previous_spec_identity": "832b6197819a8321c63c5d42b38039b4b5f7a6ed8b02f99b89a0e1fca627d8de",
+  "protected_role_access_authorized": false,
+  "purpose": "EXECUTION_QUALIFICATION_ONLY",
+  "roles": [
+    "train_100k",
+    "common_dev"
+  ],
+  "run_reference": "kaseichou/molgap-modern2d-native-100k-v4",
+  "scientific_training_authorized": false,
+  "scratch_optimizer_updates_per_model": 6,
+  "seeds": [
+    42
+  ],
+  "source_dataset": "kaseichou/molgap-modern2d-qualification-source-v4",
+  "user_authorized": true
+}

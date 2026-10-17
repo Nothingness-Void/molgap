@@ -7,6 +7,7 @@ from copy import deepcopy
 from dataclasses import asdict
 from datetime import datetime, timezone
 from importlib import import_module
+import hashlib
 from pathlib import Path
 import subprocess
 import re
@@ -153,16 +154,24 @@ def freeze_qualification_retry(repo_root, *, base, kernel, source_dataset,
         raise ValueError("Retry policy already exists; preserve its bytes")
     run = "modern2d-native-100k-s42-" + suffix
     failed_refs = [previous_base + "/STATUS.md", previous_base + "/experiment_spec.json"]
+    prior_payload = None
     if previous_decision_ref is not None:
+        from .v4_bundle import _payload
         safe_comparison_base(previous_decision_ref, base=previous_base)
         if not _under(root, previous_decision_ref).is_file():
             raise ValueError("Previous attempt decision must be an existing retained record")
+        prior_payload = _payload(_under(root, previous_decision_ref))
         failed_refs.append(previous_decision_ref)
     authority = deepcopy(prior_authority)
     authority.update(authorization=authorization, owner="server", run_reference=kernel,
         source_dataset=source_dataset, logical_run_id=run, scratch_optimizer_updates_per_model=6,
         previous_attempt_refs=failed_refs, previous_spec_identity=original.identity)
+    if prior_payload is not None:
+        authority["previous_decision_artifact"] = {"path": "prior_inspection.md",
+            "sha256": hashlib.sha256(prior_payload).hexdigest()}
     _write(here / "authority.json", authority)
+    if prior_payload is not None:
+        publish_immutable_bytes(here / "prior_inspection.md", prior_payload)
     _authority(root, base)
     def rebase_record(path):
         if path == old_policy_ref:
@@ -245,7 +254,9 @@ def freeze_qualification_retry(repo_root, *, base, kernel, source_dataset,
                if record != old_policy_ref and not record.endswith("/plan_input.json")]
     records.extend([policy_ref, ENTRY, *new_plan_records, base + "/STATUS.md"])
     if previous_decision_ref is not None:
-        records.append(previous_decision_ref)
+        records.append(base + "/prior_inspection.md")
+    from .experiment_package import _allowlist
+    _allowlist(list(dict.fromkeys(records)))
     prep.update(jobs=jobs, spec_identity=spec.identity,
                 source_records=list(dict.fromkeys(records)))
     _write(here / "preparation.json", prep)
@@ -454,6 +465,8 @@ def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected
     binding = _json(_ref(here, {k: metadata["training_input"][k] for k in ("path", "sha256")}))
     authority = _authority(root, base)
     authorization = _json(authority)
+    if "previous_decision_artifact" in authorization:
+        _ref(here, authorization["previous_decision_artifact"])
     if is_retry:
         if (authorization.get("owner") != "server" or
                 authorization.get("run_reference") != kernel or

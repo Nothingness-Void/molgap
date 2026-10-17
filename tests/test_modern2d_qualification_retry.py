@@ -4,6 +4,7 @@ The retained V1 fixture contains JSON/source declarations but no initial-state
 payloads.  A retry must therefore prove its byte reuse without constructing a
 model, loading a graph, or reading the external state root.
 """
+import hashlib
 import inspect
 import json
 from pathlib import Path
@@ -13,6 +14,7 @@ import pytest
 
 from molgap import modern2d_qualification_prepare as owner
 from molgap.experiment_spec import ExperimentSpec
+from molgap.v4_bundle import _payload
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,7 +70,7 @@ def _retry(root, version, *, previous_base=owner.BASE, previous_decision_ref=Non
     )
 
 
-def test_retry_reuses_frozen_bytes_and_derives_v2_then_v3(retained_v1):
+def test_retry_reuses_frozen_bytes_and_derives_v2_then_v4(retained_v1):
     root = retained_v1
     v1_snapshot = {**_snapshot(root, owner.BASE),
                    **_snapshot(root, "research_memory/policies")}
@@ -126,22 +128,33 @@ def test_retry_reuses_frozen_bytes_and_derives_v2_then_v3(retained_v1):
     previous_decision_ref = v2["base"] + "/results/inspection_2026-10-18.md"
     previous_decision = root / previous_decision_ref
     previous_decision.parent.mkdir(parents=True)
-    previous_decision.write_bytes(b"retry-v2 actual inspection; infrastructure-only\n")
+    previous_decision.write_bytes(
+        b"retry-v2 actual inspection; infrastructure-only\r\n"
+        b"preserve this retained history\r\n")
     previous_decision_bytes = previous_decision.read_bytes()
+    previous_decision_payload = _payload(previous_decision)
     v2_snapshot = {**_snapshot(root, v2["base"]),
                    v2_policy_path: (root / v2_policy_path).read_bytes()}
-    v3 = _retry(root, 3, previous_base=v2["base"],
+    v4 = _retry(root, 4, previous_base=v2["base"],
                 previous_decision_ref=previous_decision_ref)
-    v3_spec = ExperimentSpec(_json(root / v3["base"] / "experiment_spec.json"))
-    v3_prep = _json(root / v3["base"] / "preparation.json")
-    v3_authority = _json(root / v3["base"] / "authority.json")
-    assert v3_spec.identity not in {v1_spec.identity, v2_spec.identity}
-    assert v3_spec.to_dict()["logical_run_id"].endswith("-v3")
-    assert v3["kernel"].endswith("-v3") and v3["source_dataset"].endswith("-v3")
-    assert v3_authority["previous_attempt_refs"] == [
+    v4_spec = ExperimentSpec(_json(root / v4["base"] / "experiment_spec.json"))
+    v4_prep = _json(root / v4["base"] / "preparation.json")
+    v4_authority = _json(root / v4["base"] / "authority.json")
+    assert v4_spec.identity not in {v1_spec.identity, v2_spec.identity}
+    assert v4_spec.to_dict()["logical_run_id"].endswith("-v4")
+    assert v4["kernel"].endswith("-v4") and v4["source_dataset"].endswith("-v4")
+    assert v4_authority["previous_attempt_refs"] == [
         v2["base"] + "/STATUS.md", v2["base"] + "/experiment_spec.json",
         previous_decision_ref]
-    assert previous_decision_ref in v3_prep["source_records"]
+    prior_inspection_ref = v4["base"] + "/prior_inspection.md"
+    assert previous_decision_ref not in v4_prep["source_records"]
+    assert prior_inspection_ref in v4_prep["source_records"]
+    assert not (root / v4["base"] / "results/inspection_2026-10-18.md").exists()
+    assert v4_authority["previous_decision_artifact"] == {
+        "path": "prior_inspection.md",
+        "sha256": hashlib.sha256(previous_decision_payload).hexdigest(),
+    }
+    assert (root / prior_inspection_ref).read_bytes() == previous_decision_payload
     assert (root / previous_decision_ref).read_bytes() == previous_decision_bytes
     assert previous_decision.is_file()
     assert previous_decision.read_bytes() == previous_decision_bytes
@@ -157,11 +170,11 @@ def test_retry_rejects_previous_decision_escape_and_missing_record(retained_v1):
     decision_ref = v2["base"] + "/results/inspection_2026-10-18.md"
 
     with pytest.raises(ValueError):
-        _retry(root, 3, previous_base=v2["base"],
+        _retry(root, 4, previous_base=v2["base"],
                previous_decision_ref=v2["base"] + "/../escape.md")
 
     with pytest.raises(ValueError, match="existing retained record"):
-        _retry(root, 4, previous_base=v2["base"],
+        _retry(root, 5, previous_base=v2["base"],
                previous_decision_ref=decision_ref)
 
 

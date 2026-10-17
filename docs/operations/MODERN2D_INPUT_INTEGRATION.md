@@ -164,7 +164,9 @@ declarations, then call `prepare_package` with the same explicit `base`,
 `kernel` and `source_dataset`, retaining the original initialization root.
 Supply `previous_decision_ref` when freezing a retry to bind the actual retained
 decision/inspection under `previous_base`; absent or escaping references fail
-before declaration publication, and no dated history path is fabricated.
+before declaration publication, and no dated history path is fabricated. Its
+canonical text is hash-bound as `prior_inspection.md` in the new source root;
+historical `results/` trees remain excluded by the shared source allowlist.
 This is the bounded qualification adapter, not a formal-training release.
 
 ## Remaining native/scientific boundary
