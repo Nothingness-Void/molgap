@@ -1,0 +1,70 @@
+# Bounded qualification status
+
+Owner: server. Authority: [authority.json](authority.json).
+
+- CPU phase: first staging attempt rejected by jsub before a job was created
+  (`CR+LF type of newline is not allowed`); scheduler had no user job afterward.
+  The original archive/stage are retained unchanged. A reviewed LF-packaging
+  repair is required before a separate, explicitly bound attempt.
+- LF-repaired source `2227ef6adf0028c20888325e2fdabaebae9472bc`, archive SHA
+  `73dcf8f89f1ff40edc1202f3d8d44ecd07fb36c56929ffeaa51ccc56ea36b408`,
+  was submitted as `1739747.ccpbs1` from sibling stage `cpu_export_lf_v2`.
+  The actual Git archive LF regression and focused CLI/PBS batch passed11.
+- That exact job completed with exit0; native elapsed442s,16 CPUs,0 GPUs,
+  CPU time288s, used memory2645MB, allocated cost1.96444444444444 CPU-core-hours.
+  Timestamp span445s differs from native elapsed442s; accounting uses elapsed.
+  Scheduler Workdir's `/home/users` alias was reported, never accessed.
+- Selected-role export and its independent read-only chunk verification passed.
+  Export acceptance SHA256
+  `8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b`;
+  census SHA256 `d6ea1817391d798d9874f2476dbe6d983a596444b99ce4c704f968ebefb4bd7c`.
+  Both logical role identities match the accepted parent. Exact150K members,
+  labels and topology were preserved; no graphs rebuilt. All members are below
+  both declared model caps; train100K includes one zero-edge graph/eight isolated
+  atoms, Common-Dev five isolated atoms. No labels were summarized by census.
+- Committed CPU source: `8b414b0ca061dad736ae7786bf41119969770019`.
+- Source archive SHA256: `4113a7d13ecaf272d07c02208fa2b3963789aa86f5138d5032e9bee4070d1b4c`.
+- IMS stage: `/lustre/home/users/sm2/chou/molgap-modern2d-qualification/cpu_export_v1`.
+- Selected output: `/lustre/home/users/sm2/chou/pcqm4mv2-modern2d-100k-commondev-v1`.
+- Requested allocation:16 CPUs,0 GPUs,7200 seconds maximum.
+- Parent pins were observed identical to the frozen acceptance and both selected
+  role manifests. Account scheduler observation had no active user job.
+- Focused CLI/PBS CPU checks:10 passed; JUnit raw SHA256
+  `e08614f8851188b4c23163f16569a64d0244d32b4595da7a17c94a28e757fbca`.
+- Kaggle2 authenticated owner `kaseichou`; observed available GPU quota30h;
+  target kernel `kaseichou/molgap-modern2d-native-100k-v1` and selected-data slug
+  `kaseichou/molgap-modern2d-100k-commondev-v1` were absent. No publication or
+  GPU submission was performed by that read-only observation.
+- Native qualification entry and CPU tests are being integrated. GPU release
+  waits for actual export acceptance, private byte-verified mirror, source and
+  local tests. Formal training remains unauthorized and fail-closed.
+- Kaggle2 private selected-data publication returned the exact requested ref,
+  observed ready/version1/private with106 files and preserved nested paths.
+  Downloaded byte roundtrip is in progress; readiness/listing alone is not mirror
+  acceptance. Publication intent/response and pinned inventory are retained on E.
+- Shared qualification CPU verification passed163 guard/repeat/resume cases and53
+  existing-owner cases (including16 Session cases). Runtime supervision passed30
+  focused cases after an inherited-thread-limit repair. Metadata helper passed12
+  generated accepted-ABI cases; its first fixture expected old ESA schema and
+  was corrected without changing model/source behavior. Original failures remain
+  separate evidence, not scientific route negatives.
+- A bounded CPU metadata stage freezes the train-only transform and portable
+  feature bindings without constructing models or changing the accepted export.
+  Source `aebf0a8e953619f33002e6659e0327626ef42e1e`; archive SHA256
+  `c24bb896680f65f8a7ac4b56db0fdf989ce315409685c95841bdd3f5907f0f45`;
+  request SHA256 `5e02a5fbb92e6980daf86417b40def576ee8c89b3e5e06d4f7c4237a520838b3`.
+  Its600s wall ceiling plus measured export442s is below the authorized7200s
+  aggregate CPU wall allowance; no further CPU stage is automatically authorized.
+- Metadata job `1740093.ccpbs1` produced both immutable JSON files and its
+  completed helper marker. Qualification metadata SHA256
+  `b67653c4c353c9c1201c6cb1d8399e846658dd21053490154d934e2c80adb8a4`;
+  training-input SHA256 `70da7c30d2c7e3deb4643813b78a074bb751bb2cd2c4ceebd7728be568de8690`.
+  The latter matches the published bytes exactly. Native scheduler terminal
+  accounting is pending reconciliation, not inferred from the marker.
+- All106 Kaggle2 private-data version1 files were independently downloaded and
+  SHA/size checked against the frozen publication inventory,467633530 bytes.
+  Byte roundtrip acceptance SHA256
+  `9ad69f4b5be725339605d48d3e80088af73e9e6c6620714382186489bfe4107a`.
+  Earlier read-only transfers retained partial verified files; they did not
+  create another dataset version. Missing-directory path-alias and transient
+  transport observations did not authorize relaxed hash checks.

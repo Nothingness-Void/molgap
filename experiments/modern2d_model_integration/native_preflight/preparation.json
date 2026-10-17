@@ -1,0 +1,38 @@
+{
+  "jobs": [
+    {
+      "arm_id": "ppgt_author_v2",
+      "device": 0,
+      "initial_state": {
+        "path": "ppgt_author_v2.pt",
+        "sha256": "f772ebc41d426c11757a01c38da2ca5eda7a79dbc80e3a0680b0623d7c1293d4"
+      },
+      "recipe": "experiments/modern2d_model_integration/native_preflight/ppgt_author_v2/contract.json"
+    },
+    {
+      "arm_id": "esa_native_v3",
+      "device": 1,
+      "initial_state": {
+        "path": "esa_native_v3.pt",
+        "sha256": "205214e65307497ca6e02c4558a40c6a79d7848b7dbc19ba6f87350df92f666a"
+      },
+      "recipe": "experiments/modern2d_model_integration/native_preflight/esa_native_v3/contract.json"
+    }
+  ],
+  "metadata_sha256": "b67653c4c353c9c1201c6cb1d8399e846658dd21053490154d934e2c80adb8a4",
+  "source_records": [
+    "experiments/modern2d_model_integration/native_preflight/authority.json",
+    "experiments/modern2d_model_integration/native_preflight/role_plan.json",
+    "research_memory/policies/modern2d-native-qualification.v1.json",
+    "experiments/modern2d_model_integration/native_preflight/qualification_inputs.json",
+    "experiments/modern2d_model_integration/native_preflight/training_input.json",
+    "platforms/kaggle/run_modern2d_qualification.py",
+    "experiments/modern2d_model_integration/integration_attempt_report.json",
+    "experiments/modern2d_model_integration/native_preflight/cpu_acceptance.json",
+    "experiments/modern2d_model_integration/native_preflight/ppgt_author_v2/contract.json",
+    "experiments/modern2d_model_integration/native_preflight/ppgt_author_v2/plan_input.json",
+    "experiments/modern2d_model_integration/native_preflight/esa_native_v3/contract.json",
+    "experiments/modern2d_model_integration/native_preflight/esa_native_v3/plan_input.json"
+  ],
+  "spec_identity": "4ea8268666f1822aeefcd650a95c2874677e3065be8fbc9fd0c86dd0e3ac5626"
+}
