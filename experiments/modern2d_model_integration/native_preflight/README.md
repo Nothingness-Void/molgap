@@ -29,3 +29,6 @@ comparison, 500K run, extra seed, protected-role read or automatic successor.
 
 The [CPU integration record](../integration_attempt_2026-10-17.md) remains
 historical CPU-only evidence. Live progress is owned by `CURRENT_STATE.md`.
+The [2026-10-18 native acceptance](results/decision_2026-10-18.md) retained the
+first GPU attempt's pre-runtime infrastructure failure, without a model result
+or automatic retry.

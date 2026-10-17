@@ -1,0 +1,16 @@
+Read-only native accounting retrieved 2026-10-18 JST.
+Command scope: cd /lustre/home/users/sm2/chou; joblog -f 202610171800 -t 202610171840 -o jobid,Start,Finish,elaps,ncpu,ngpu,cputime,walltime,used_memory,exit_status,point,Workdir --points-detail
+Job ID: 1740093
+Start: 2026-10-17 18:13:29 JST
+Finish: 2026-10-17 18:16:11 JST
+Native elapsed: 00:02:39 (159 seconds)
+CPUs: 16
+GPUs: 0
+CPU time: 00:00:20
+Walltime limit: 00:10:00
+UsedMem(MB): 1720
+Exit: 0
+Points: 0.706666666666667
+Working directory reported: /home/users/sm2/chou/molgap-modern2d-qualification/metadata_cpu_v1
+The reported /home/users alias was not accessed. Accounting uses native elapsed, not the 162-second timestamp span.
+This is a transcription of the native command response retained in the task tool output, not a remote raw file.

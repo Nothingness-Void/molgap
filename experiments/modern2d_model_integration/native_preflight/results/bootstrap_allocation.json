@@ -1,0 +1,15 @@
+{
+  "allocated_device_seconds": 0.10275580400002582,
+  "allocation_device_count": 2,
+  "cost_status": "measured",
+  "failure": "Traceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 42, in main\n    raise ValueError(\"Expected exactly one direct mounted qualification launch\")\nValueError: Expected exactly one direct mounted qualification launch\n",
+  "hardware": [
+    "Tesla T4",
+    "Tesla T4"
+  ],
+  "overlap": "Same allocation as qualification/allocation_ledger.json; do not double count",
+  "provisioning_before_python_seconds": null,
+  "queue_seconds": null,
+  "status": "failed",
+  "wall_seconds": 0.05137790200001291
+}

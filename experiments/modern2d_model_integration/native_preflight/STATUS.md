@@ -5,10 +5,14 @@ Owner: server. Authority: [authority.json](authority.json).
 ## Exact GPU attempt
 
 Kaggle2 `kaseichou/molgap-modern2d-native-100k-v1`, kernel139199488/version1,
-was submitted once and observed QUEUED. The observed private/T4 metadata,
-both dataset mounts and remote entry bytes matched the frozen release. This is
-execution state, not numerical acceptance. No second POST or formal training is
-authorized by a queued/running status.
+is terminal ERROR. Acceptance: **INFRASTRUCTURE_FAILURE / NATIVE_NOT_ACCEPTED**.
+The [dated acceptance](results/decision_2026-10-18.md) owns the raw bootstrap
+failure, independent CPU reproduction, missing proofs and cost limitations.
+Neither arm started; neither route receives a scientific negative. No retry,
+new version, formal training or protected-role access is released.
+The observed private/T4 metadata, both dataset mounts and remote entry bytes
+still match the frozen release; matching declared mounts does not prove their
+worker filesystem layout was supported.
 
 Frozen source commit `d3791e9dbcb4a106bde70f0728acfb837a622b9b`, archive
 `e1ff9c22748d9db011d7080b2515827f2c1c2da275d2c5749faada7e693bf950`;
@@ -25,9 +29,15 @@ Actual CPU finite-state/source/launch acceptance passed before POST; retained
 pre-POST proof SHA256 `97cde8b3923c2ea26c70c755250da7e8c7eaa1c4e046cf007684c48305401f0e`.
 Raw operation receipts, source packages, checkpoints and roundtrips are retained
 under `E:/MolGap/artifacts/modern2d-native-preflight`; they are not committed
-model payloads. On completion retrieve only manifest-bound outputs from this
-exact version, verify both repeat/resume proofs, source/role/cost identities and
-budget, and distinguish infrastructure faults from scientific outcomes.
+model payloads. Acceptance artifacts are retained in `acceptance_20261018/`.
+The exact-version bootstrap report was retrieved; qualification manifests,
+repeat/resume proofs and whole-allocation accounting were unavailable. Their
+absence cannot be replaced with the earlier CPU tests or queue state.
+
+Metadata job1740093 native accounting was reconciled: exit0,159s,16 CPUs,
+0 GPUs,1720MB,0.706666666666667 native points. With export442s, the two CPU
+jobs used601 native elapsed seconds and2.671111111111111 allocated CPU-core-hours.
+Historical preparation observations below remain unchanged.
 
 ## CPU prerequisite history
 

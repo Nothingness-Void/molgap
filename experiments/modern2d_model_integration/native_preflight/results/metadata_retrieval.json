@@ -1,0 +1,33 @@
+{
+  "remote_frozen_identity_verified": true,
+  "results": [
+    {
+      "files": [
+        {
+          "path": "bootstrap_allocation.json",
+          "sha256": "06fa44deb5bf7367f02abcc7f95d8cc1e879b9e61577eda0d277a109c8fead86"
+        }
+      ],
+      "kernel": "kaseichou/molgap-modern2d-native-100k-v1",
+      "scientific_acceptance": false,
+      "transport": "version_specific_exact_file",
+      "unselected_outputs_downloaded": false,
+      "version": 1
+    },
+    {
+      "error": "Exact metadata retrieval failed; no bulk fallback",
+      "path": "qualification/qualification_manifest.json",
+      "status": "RETRIEVAL_UNAVAILABLE"
+    },
+    {
+      "error": "Exact metadata retrieval failed; no bulk fallback",
+      "path": "qualification/execution_report.json",
+      "status": "RETRIEVAL_UNAVAILABLE"
+    },
+    {
+      "error": "Exact metadata retrieval failed; no bulk fallback",
+      "path": "qualification/allocation_ledger.json",
+      "status": "RETRIEVAL_UNAVAILABLE"
+    }
+  ]
+}

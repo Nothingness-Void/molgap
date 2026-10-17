@@ -1,0 +1,92 @@
+{
+  "format": "molgap-modern2d-native-attempt-acceptance-v1",
+  "accepted_on_jst": "2026-10-18",
+  "status": "NATIVE_NOT_ACCEPTED",
+  "execution_outcome": "INFRASTRUCTURE_FAILURE",
+  "scientific_acceptance": "NOT_EVALUATED",
+  "scientific_negative": false,
+  "native_execution_released": false,
+  "formal_training_authorized": false,
+  "retry_authorized_by_this_acceptance": false,
+  "kernel": "kaseichou/molgap-modern2d-native-100k-v1",
+  "kernel_id": 139199488,
+  "version": 1,
+  "observed_platform_status": "KernelWorkerStatus.ERROR",
+  "source_commit": "d3791e9dbcb4a106bde70f0728acfb837a622b9b",
+  "source_archive_sha256": "e1ff9c22748d9db011d7080b2515827f2c1c2da275d2c5749faada7e693bf950",
+  "spec_identity": "4ea8268666f1822aeefcd650a95c2874677e3065be8fbc9fd0c86dd0e3ac5626",
+  "package_identity": "39e2ae43ccb295f3a56b20143bcd064e367db3a36fdbb35e9270e8fa4032577a",
+  "remote_entry_sha256": "318c3e26964e2e2f89f03c4c78284795215370a720d6668299474d2efb175f3e",
+  "remote_entry_private_t4_declared_mount_binding": "VERIFIED",
+  "failure": {
+    "phase": "ENTRY_LAUNCH_DISCOVERY_BEFORE_RUNTIME",
+    "type": "ValueError",
+    "message": "Expected exactly one direct mounted qualification launch",
+    "actual_remote_candidate_count": null,
+    "actual_remote_filesystem_layout": null,
+    "models_started": false,
+    "scratch_optimizer_updates_observed": 0,
+    "formal_training_exposure": 0,
+    "gpu_attempt_dataset_payload_read": false,
+    "protected_role_access": false
+  },
+  "arms": {
+    "ppgt_author_v2": {"status": "NOT_STARTED", "numerical_acceptance": "NOT_EVALUATED", "resume_acceptance": "NOT_EVALUATED"},
+    "esa_native_v3": {"status": "NOT_STARTED", "numerical_acceptance": "NOT_EVALUATED", "resume_acceptance": "NOT_EVALUATED"}
+  },
+  "gpu_cost": {
+    "observed_devices": ["Tesla T4", "Tesla T4"],
+    "python_observed_wall_seconds": 0.05137790200001291,
+    "python_observed_device_seconds": 0.10275580400002582,
+    "full_allocation_device_hours": null,
+    "full_allocation_cost_status": "MEASUREMENT_MISSING",
+    "full_allocation_budget_acceptance": "INSUFFICIENT_EVIDENCE",
+    "queue_seconds": null,
+    "provisioning_before_python_seconds": null,
+    "shutdown_or_billing_seconds": null,
+    "overlap_policy": "Do not add bootstrap timing to any ledger for the same allocation"
+  },
+  "ims_cpu_prerequisites": {
+    "export_job": {"id": "1739747.ccpbs1", "exit": 0, "native_elapsed_seconds": 442, "allocated_cpus": 16},
+    "metadata_job": {"id": "1740093.ccpbs1", "exit": 0, "native_elapsed_seconds": 159, "allocated_cpus": 16, "gpus": 0, "cpu_seconds": 20, "used_memory_mb": 1720, "native_points": 0.706666666666667},
+    "total_native_elapsed_seconds": 601,
+    "total_allocated_cpu_core_hours": 2.671111111111111,
+    "wall_ceiling_seconds": 7200,
+    "budget_acceptance": "PASSED",
+    "metadata_accounting_source": "ims_metadata_accounting.txt",
+    "metadata_accounting_source_kind": "TRANSCRIPTION_OF_NATIVE_TOOL_RESPONSE_NOT_RAW_REMOTE_FILE"
+  },
+  "retained_files": {
+    "bootstrap_allocation.json": "06fa44deb5bf7367f02abcc7f95d8cc1e879b9e61577eda0d277a109c8fead86",
+    "observation.json": "d7a5474638e5c378f3001b8ccf09f8f516c38e8134ec90d7e98730cc31b4930a",
+    "metadata_retrieval.json": "acd8a222f93526f983c4e39f23bc889463f8601108ad67d5b360a9f15ad493f0",
+    "ims_metadata_accounting.txt": "15b852db24ab88b79818178319cafa5462318e059b75291a2f6788df0fcc7529",
+    "remote_identity.json": "e76596a42276770db8aa051e1084eab10b1fa7acb11c17045973ecbbf4d196fd"
+  },
+  "verification": {
+    "executed_by": "independent Luna leaf agents",
+    "main_executed_tests": false,
+    "bootstrap_synthetic_cases": 4,
+    "bootstrap_synthetic_result": "PASSED",
+    "existing_targeted_tests_passed": 2,
+    "existing_targeted_tests_seconds": 0.43,
+    "bootstrap_fixture_script_sha256": "c381b7f396c4805786e074f834a3860bc39e466aef6a4b33f34611bc9b4a93b4",
+    "bootstrap_fixture_results_sha256": "6e346f343cfbb4ae15c1e610311e024bd1ca4b91cfad9dd8bdc5068ac10aa8bb",
+    "bootstrap_report_sha256": "f45f07121f9c5a20dc25622f710279a2c9173fa43f722b7e8f908b81210c21c9",
+    "evidence_report_sha256": "1c4f5ab0cd4e1ee72a9e1242eefd45af2836c496b67dfdff4b32577471eb186c",
+    "rml_validate": "PASSED",
+    "preserved_user_dirty_files_checked": 14,
+    "preserved_user_dirty_files_changed": [],
+    "frozen_gptrans_raw_sha256": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+    "native_gpu_execution_certified_by_cpu_fixtures": false
+  },
+  "rml_terminal_publication": "NOT_YET_FINALIZED",
+  "rml_terminal_limitation": "No per-arm V5 acceptance metadata or terminal package was fabricated; original prospective records remain unchanged. Unknown full cost must stay explicit. Any subsequent finalize must omit a nonexistent trace and must not rebuild user-owned derived outputs.",
+  "raw_artifact_root": "E:/MolGap/artifacts/modern2d-native-preflight/acceptance_20261018",
+  "missing_acceptance_evidence": [
+    "actual worker launch candidate count and mount layout",
+    "both native finite/repeat/resume proofs and certificates",
+    "qualification output manifest and execution/allocation reports",
+    "full two-T4 allocation/billing cost"
+  ]
+}
