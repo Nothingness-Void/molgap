@@ -155,6 +155,15 @@ observations. Bootstrap timing is explicitly `PYTHON_OBSERVED_WINDOW_ONLY`;
 unknown provisioning, queue and complete allocation/billing cost stay null.
 A CPU fixture or repaired entry grants no remote retry or training authority.
 
+After explicit human retry authorization,
+`modern2d_qualification_prepare.freeze_qualification_retry` declares a separate
+attempt from frozen recipes, metadata and initial-state identities without
+reconstructing models. Matching kernel/source `vN` suffixes bind fresh run,
+policy and prospective IDs; originals are not overwritten. Commit the returned
+declarations, then call `prepare_package` with the same explicit `base`,
+`kernel` and `source_dataset`, retaining the original initialization root.
+This is the bounded qualification adapter, not a formal-training release.
+
 ## Remaining native/scientific boundary
 
 Each release needs a scheduled, budgeted export/census and private mirror

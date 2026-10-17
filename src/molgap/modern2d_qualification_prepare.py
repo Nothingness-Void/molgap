@@ -3,11 +3,13 @@
 Freeze writes reviewable declarations; package preparation requires their commit.
 Neither operation submits, publishes datasets, opens graphs or trains a model.
 """
+from copy import deepcopy
 from dataclasses import asdict
 from datetime import datetime, timezone
 from importlib import import_module
 from pathlib import Path
 import subprocess
+import re
 
 from .common.io import _safe_local, publish_immutable_bytes
 from .common.wire import canonical_fingerprint
@@ -34,8 +36,37 @@ def _write(path, value):
     return {"path": path.name, "sha256": _sha(path)}
 
 
-def _authority(root):
-    path = _under(root, BASE + "/authority.json")
+def _qualification_base(root, base):
+    from .common.declarations import safe_comparison_base
+    base = safe_comparison_base(base, base="experiments/modern2d_model_integration")
+    path = _under(root, base)
+    _safe_local(path)
+    return path
+
+
+def _qualification_refs(kernel, source_dataset):
+    for value in (kernel, source_dataset):
+        if (type(value) is not str or
+                re.fullmatch(ACCOUNT + r"/[a-z0-9]+(?:-[a-z0-9]+)*", value) is None):
+            raise ValueError("Qualification requires a safe kaseichou owner/reference")
+    if kernel in {source_dataset, DATASET} or source_dataset == DATASET:
+        raise ValueError("Qualification kernel, source and accepted data must be distinct")
+
+
+def _retry_suffix(kernel, source_dataset):
+    _qualification_refs(kernel, source_dataset)
+    match = re.search(r"(?:^|-)v([2-9][0-9]*)$", kernel)
+    if match is None:
+        raise ValueError("Retry kernel and source dataset need the same version suffix, v2 or later")
+    suffix = "v" + match.group(1)
+    if re.search(r"(?:^|-)" + re.escape(suffix) + r"$", source_dataset) is None:
+        raise ValueError("Retry kernel and source dataset need the same version suffix, v2 or later")
+    return suffix
+
+
+def _authority(root, base=BASE):
+    _qualification_base(root, base)
+    path = _under(root, base + "/authority.json")
     record = _json(path)
     if (record.get("purpose") != "EXECUTION_QUALIFICATION_ONLY" or record.get("user_authorized") is not True
             or record.get("arms") != list(ARMS) or record.get("seeds") != [42]
@@ -47,6 +78,176 @@ def _authority(root):
                 "protected_role_access_authorized", "extra_seed_authorized", "automatic_successor_authorized"))):
         raise ValueError("Exact new human qualification authority required")
     return path
+
+
+def freeze_qualification_retry(repo_root, *, base, kernel, source_dataset,
+                               authorization, previous_base=BASE):
+    """Declare a versioned retry using frozen recipes/states, without models.
+
+    authorization is the new human authorization text. The returned commit_required
+    paths must be committed before prepare_package; init_root remains the V1 root.
+    This operation does not publish prospective RML records or execute a job.
+    """
+    from .experiment_spec import ExperimentSpec
+
+    from .common.declarations import safe_comparison_base
+
+    root = Path(repo_root).absolute()
+    _safe_local(root)
+    base = safe_comparison_base(base, base="experiments/modern2d_model_integration")
+    previous_base = safe_comparison_base(previous_base, base="experiments/modern2d_model_integration")
+    here = _qualification_base(root, base)
+    previous = _qualification_base(root, previous_base)
+    suffix = _retry_suffix(kernel, source_dataset)
+    if (here == previous or previous.is_relative_to(here)
+            or kernel == KERNEL or source_dataset == SOURCE_DATASET):
+        raise ValueError("Retry requires separate declaration, kernel and source identities")
+    prior_authority = _json(_authority(root, previous_base))
+    if (type(authorization) is not str or not authorization.strip() or
+            authorization == prior_authority.get("authorization")):
+        raise ValueError("Retry requires new explicit human authorization")
+    if here.exists():
+        raise ValueError("Retry declaration root already exists; preserve its bytes")
+    original = ExperimentSpec(_json(previous / "experiment_spec.json"))
+    declaration = deepcopy(original.to_dict())
+    old_suffix = declaration["logical_run_id"].rsplit("-", 1)[-1]
+    if old_suffix == suffix:
+        raise ValueError("Retry must have a new logical run version")
+    prep = deepcopy(_json(previous / "preparation.json"))
+    if (prep["spec_identity"] != original.identity or
+            [a["arm_id"] for a in declaration["arms"]] != list(ARMS) or
+            [j["arm_id"] for j in prep["jobs"]] != list(ARMS)):
+        raise ValueError("Retry requires the frozen two-arm preparation and Spec")
+    metadata = _ref(previous, {"path": "qualification_inputs.json", "sha256": prep["metadata_sha256"]})
+    training = _ref(previous, {k: _json(metadata)["training_input"][k] for k in ("path", "sha256")})
+    source_records = list(prep["source_records"])
+    if len(source_records) != len(set(source_records)):
+        raise ValueError("Frozen preparation source records must be unique")
+    policy_sources = [path for path in source_records
+                      if path.startswith("research_memory/policies/") and path.endswith(".json")]
+    if len(policy_sources) != 1:
+        raise ValueError("Frozen preparation must bind exactly one policy")
+    old_policy_ref = policy_sources[0]
+    old_policy_path = _under(root, old_policy_ref)
+    if not old_policy_path.is_file():
+        raise ValueError("Frozen policy source is absent")
+    for record in source_records:
+        source = _under(root, record)
+        if not source.is_file():
+            raise ValueError("Frozen preparation source record is absent: " + record)
+    jobs = deepcopy(prep["jobs"])
+    old_recipe_paths = []
+    for job in jobs:
+        recipe_path = job.get("recipe")
+        if type(recipe_path) is not str or not recipe_path.startswith(previous_base + "/"):
+            raise ValueError("Frozen retry recipes must remain under the previous declaration base")
+        recipe = _under(root, recipe_path)
+        if not recipe.is_file() or recipe_path not in source_records:
+            raise ValueError("Frozen retry recipe is not a committed source record")
+        old_recipe_paths.append(recipe_path)
+    authority_ref, role_ref = base + "/authority.json", base + "/role_plan.json"
+    policy_id = "modern2d-native-qualification-retry-" + suffix
+    policy_ref = "research_memory/policies/" + policy_id + ".v1.json"
+    policy_path = _under(root, policy_ref)
+    if policy_path.exists():
+        raise ValueError("Retry policy already exists; preserve its bytes")
+    run = "modern2d-native-100k-s42-" + suffix
+    failed_refs = [previous_base + "/STATUS.md", previous_base + "/experiment_spec.json",
+                   previous_base + "/results/decision_2026-10-18.md"]
+    authority = deepcopy(prior_authority)
+    authority.update(authorization=authorization, owner="server", run_reference=kernel,
+        source_dataset=source_dataset, logical_run_id=run, scratch_optimizer_updates_per_model=6,
+        previous_attempt_refs=failed_refs, previous_spec_identity=original.identity)
+    _write(here / "authority.json", authority)
+    _authority(root, base)
+    def rebase_record(path):
+        if path == old_policy_ref:
+            return policy_ref
+        if path == previous_base or path.startswith(previous_base + "/"):
+            return base + path[len(previous_base):]
+        return path
+
+    # Copy every retained declaration byte, including the frozen contracts. The
+    # new preparation points at those copied bytes so the retry package never
+    # depends on an old-base path that could be edited later.
+    for record in source_records:
+        if (record == old_policy_ref or record.endswith("/plan_input.json")
+                or record.endswith("/authority.json") or record.endswith("/STATUS.md")):
+            continue
+        target = rebase_record(record)
+        if target == record:
+            continue
+        publish_immutable_bytes(_under(root, target), _under(root, record).read_bytes())
+    for job, old_recipe in zip(jobs, old_recipe_paths):
+        job["recipe"] = rebase_record(old_recipe)
+    status = here / "STATUS.md"
+    _safe_local(status)
+    publish_immutable_bytes(status, (
+        "# Bounded qualification retry\n\nDeclarations only; no submission or execution claimed.\n"
+        "Authority: [authority.json](authority.json). Frozen V1 recipes and initial states reused.\n"
+        "T4x2, 1800 seconds, six scratch updates/model, BS128, seed42; no formal training or protected roles.\n"
+    ).encode("utf-8"))
+    policy = deepcopy(_json(old_policy_path))
+    policy.update(policy_id=policy_id, created_from_source_digest=_sha(here / "authority.json"))
+    policy["approval"]["authority_ref"] = authority_ref
+    _write(policy_path, policy)
+    commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+    timestamp = datetime.now(timezone.utc).isoformat()
+    prospective, new_plan_records = [], []
+    for item in declaration["prospective"]["arms"]:
+        old_plan_path = _ref(root, {"path": item["plan_spec_ref"], "sha256": item["plan_spec_sha256"]})
+        proposal = deepcopy(_json(old_plan_path))
+        old_policy_id = proposal["decision_state"]["policy_id"]
+        old_tid = item["trajectory_id"]
+        tid = "TC-modern2d-qualification-" + item["arm_id"] + "-s42-" + suffix
+        old_run = declaration["logical_run_id"]
+
+        def rebind(value):
+            if isinstance(value, dict):
+                return {k: commit if k == "source_commit" else
+                        timestamp if k == "state_timestamp" else rebind(v) for k, v in value.items()}
+            if isinstance(value, list):
+                return [rebind(v) for v in value]
+            if isinstance(value, str):
+                if value == old_policy_id:
+                    value = policy_id
+                elif value == old_policy_ref:
+                    value = policy_ref
+                elif value == previous_base or value.startswith(previous_base + "/"):
+                    value = base + value[len(previous_base):]
+                value = value.replace(old_tid, tid).replace(old_run, run)
+                return value.replace(item["arm_id"] + "-" + old_suffix,
+                                     item["arm_id"] + "-" + suffix)
+            return value
+
+        proposal = rebind(proposal)
+        arm = next(a for a in declaration["arms"] if a["arm_id"] == item["arm_id"])
+        proposal["trajectory"]["state_at_start"]["source_config_identity"] = canonical_fingerprint(arm)
+        parent = _under(root, item["output"] + "/trajectory.json")
+        if parent.is_file() and _json(parent).get("trajectory_id") == old_tid:
+            proposal["trajectory"]["state_at_start"]["parent_trajectory_ids"] = [old_tid]
+            proposal["trajectory"]["state_at_start"]["prior_trajectory_ids"] = [old_tid]
+            proposal["decision_state"]["known_trajectory_ids"] = [old_tid]
+        plan_ref = base + "/" + item["arm_id"] + "/plan_input.json"
+        _write(root / plan_ref, proposal)
+        prospective.append({**item, "trajectory_id": tid, "plan_spec_ref": plan_ref,
+            "plan_spec_sha256": _sha(root / plan_ref), "output": base + "/" + item["arm_id"] + "/rml"})
+        new_plan_records.append(plan_ref)
+    declaration["logical_run_id"] = run
+    declaration["prospective"]["arms"] = prospective
+    spec = ExperimentSpec(declaration)
+    _write(here / "experiment_spec.json", spec.to_dict())
+    records = [rebase_record(record) for record in source_records
+               if record != old_policy_ref and not record.endswith("/plan_input.json")]
+    records.extend([policy_ref, ENTRY, *new_plan_records, base + "/STATUS.md"])
+    prep.update(jobs=jobs, spec_identity=spec.identity,
+                source_records=list(dict.fromkeys(records)))
+    _write(here / "preparation.json", prep)
+    return {"spec_identity": spec.identity, "base": base, "kernel": kernel,
+        "source_dataset": source_dataset,
+        "commit_required": [*prep["source_records"], base + "/experiment_spec.json",
+                             base + "/preparation.json"],
+        "scope": "QUALIFICATION_ONLY"}
 
 
 def freeze_qualification_declarations(repo_root, input_metadata_path, input_metadata_sha256, *, init_root):
@@ -207,7 +408,8 @@ def freeze_qualification_declarations(repo_root, input_metadata_path, input_meta
         "commit_required": [*records, BASE + "/experiment_spec.json", BASE + "/preparation.json"], "scope": "QUALIFICATION_ONLY"}
 
 
-def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected_spec_identity):
+def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected_spec_identity,
+                    base=BASE, kernel=KERNEL, source_dataset=SOURCE_DATASET):
     """Package committed declarations and validate the separate qualification ABI.
 
     mounted_root contains the declared dataset in a flat or owner-namespaced
@@ -226,19 +428,38 @@ def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected
     from .family_training_runner import read_recipe
     from .kaggle_mounts import resolve_dataset_mount
     from .research_memory.plan import plan_many
+    from .common.declarations import safe_comparison_base
 
     root, output = Path(repo_root).absolute(), Path(output_root).absolute()
     _safe_local(output)
     if output.exists() or output.is_relative_to(root) or root.is_relative_to(output):
         raise ValueError("Package preparation requires a fresh external output root")
-    here = _under(root, BASE)
+    base = safe_comparison_base(base, base="experiments/modern2d_model_integration")
+    here = _qualification_base(root, base)
+    _qualification_refs(kernel, source_dataset)
+    is_retry = (base != BASE or kernel != KERNEL or source_dataset != SOURCE_DATASET)
+    if is_retry:
+        _retry_suffix(kernel, source_dataset)
     spec = ExperimentSpec(_json(here / "experiment_spec.json"))
     prep = _json(here / "preparation.json")
     if spec.identity != expected_spec_identity or prep["spec_identity"] != spec.identity:
         raise ValueError("Frozen Spec identity differs")
     metadata = _json(_ref(here, {"path": "qualification_inputs.json", "sha256": prep["metadata_sha256"]}))
     binding = _json(_ref(here, {k: metadata["training_input"][k] for k in ("path", "sha256")}))
-    authority = _authority(root)
+    authority = _authority(root, base)
+    authorization = _json(authority)
+    if is_retry:
+        if (authorization.get("owner") != "server" or
+                authorization.get("run_reference") != kernel or
+                authorization.get("source_dataset") != source_dataset or
+                authorization.get("logical_run_id") != spec.to_dict()["logical_run_id"] or
+                authorization.get("scratch_optimizer_updates_per_model") != 6):
+            raise ValueError("Retry authority must bind the exact kernel, source dataset and run")
+        from .v4_bundle import committed_payloads, _payload
+        commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+        spec_ref = base + "/experiment_spec.json"
+        if committed_payloads(root, commit, [spec_ref])[spec_ref] != _payload(here / "experiment_spec.json"):
+            raise ValueError("Retry Spec must be committed before packaging")
     package = output / "package"
     sources = runtime_source_files(root, prep["source_records"])
     manifest = build_experiment_source_package(spec, root, sources, package)
@@ -257,7 +478,7 @@ def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected
         arm = job["arm_id"]
         _, recipe = read_recipe(root / job["recipe"])
         context = Modern2DQualificationContext(RunContext.for_training(spec, package,
-            expected_package_identity=manifest["package_identity"], arm_id=arm, account=ACCOUNT, run_reference=KERNEL),
+            expected_package_identity=manifest["package_identity"], arm_id=arm, account=ACCOUNT, run_reference=kernel),
             recipe.identity, authority_pin["sha256"], AcceptedIndexedInputPermit(**binding["train"]["permit"]),
             AcceptedIndexedInputPermit(**binding["development"]["permit"]),
             metadata["models"][arm]["feature_binding_sha256"]["train_100k"])
@@ -266,7 +487,7 @@ def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected
             "recipe": {"path": job["recipe"], "sha256": _sha(root / job["recipe"])},
             "initial_state": {"path": "initial_states/" + arm + ".pt", "sha256": job["initial_state"]["sha256"]}})
     launch = {"format": LAUNCH_FORMAT, "spec_identity": spec.identity, "expected_package_identity": manifest["package_identity"],
-        "expected_source_archive_sha256": manifest["archive_sha256"], "account": ACCOUNT, "run_reference": KERNEL,
+        "expected_source_archive_sha256": manifest["archive_sha256"], "account": ACCOUNT, "run_reference": kernel,
         "max_wall_seconds": 1800, "authority": authority_pin, "jobs": jobs,
         "private_asset": {"dataset_source": DATASET, "mount": MOUNT, "data_root": "indexed_assets",
             "acceptance_sha256": metadata["export_acceptance_sha256"], "version_identity": binding["train"]["permit"]["version_identity"],
@@ -277,7 +498,7 @@ def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected
     resolver_source = read_packaged_text(package, "src/molgap/kaggle_mounts.py")
     replacements = {
         "EXPECTED_LAUNCH_SHA256 = None": "EXPECTED_LAUNCH_SHA256 = " + repr(launch_pin["sha256"]),
-        "EXPECTED_SOURCE_DATASET = None": "EXPECTED_SOURCE_DATASET = " + repr(SOURCE_DATASET),
+        "EXPECTED_SOURCE_DATASET = None": "EXPECTED_SOURCE_DATASET = " + repr(source_dataset),
         "MOUNT_RESOLVER_SOURCE = None": "MOUNT_RESOLVER_SOURCE = " + repr(resolver_source),
     }
     for marker in replacements:
@@ -287,10 +508,11 @@ def prepare_package(repo_root, output_root, *, init_root, mounted_root, expected
         entry = entry.replace(marker, replacement)
     publish_immutable_bytes(output / "run_modern2d_qualification.py",
         entry.encode("utf-8"))
-    _write(output / "kernel-metadata.json", {"id": KERNEL, "title": "MolGap Modern2D Native 100K V1",
+    title = "MolGap Modern2D Native 100K " + kernel.rsplit("-", 1)[-1].upper()
+    _write(output / "kernel-metadata.json", {"id": kernel, "title": title,
         "code_file": "run_modern2d_qualification.py", "language": "python", "kernel_type": "script",
         "is_private": True, "enable_gpu": True, "enable_internet": True, "machine_shape": "NvidiaTeslaT4",
-        "dataset_sources": [SOURCE_DATASET, DATASET], "competition_sources": [], "kernel_sources": []})
+        "dataset_sources": [source_dataset, DATASET], "competition_sources": [], "kernel_sources": []})
     source = output / "source"
     source.mkdir()
     _unpack(package, source)

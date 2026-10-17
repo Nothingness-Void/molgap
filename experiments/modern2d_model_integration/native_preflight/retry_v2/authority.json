@@ -1,0 +1,57 @@
+{
+  "arms": [
+    "ppgt_author_v2",
+    "esa_native_v3"
+  ],
+  "authorization": "Human explicitly requested a new PPGT/2 and ESA/3 dual-arm submission through local infrastructure on 2026-10-18 JST. This retry retains the prior bounded qualification only: T4x2 at most 1800 seconds, seed42, BS128, six scratch updates per model; no formal training, new seed, protected-role access or automatic successor.",
+  "automatic_successor_authorized": false,
+  "cpu": {
+    "allocated_cpus": 16,
+    "allocated_gpus": 0,
+    "platform": "ims",
+    "wall_ceiling_seconds": 7200
+  },
+  "extra_seed_authorized": false,
+  "format": "molgap-modern2d-bounded-qualification-authority-v1",
+  "gpu": {
+    "accelerator": "NvidiaTeslaT4",
+    "allocated_devices": 2,
+    "allocated_t4_hours_ceiling": 1,
+    "owner": "kaseichou",
+    "platform": "kaggle2",
+    "wall_ceiling_seconds": 1800
+  },
+  "interfaces": [
+    [
+      "ppgt_small",
+      "2"
+    ],
+    [
+      "esa_small",
+      "3"
+    ]
+  ],
+  "logical_run_id": "modern2d-native-100k-s42-v2",
+  "owner": "server",
+  "physical_batch_size": 128,
+  "previous_attempt_refs": [
+    "experiments/modern2d_model_integration/native_preflight/STATUS.md",
+    "experiments/modern2d_model_integration/native_preflight/experiment_spec.json",
+    "experiments/modern2d_model_integration/native_preflight/results/decision_2026-10-18.md"
+  ],
+  "previous_spec_identity": "4ea8268666f1822aeefcd650a95c2874677e3065be8fbc9fd0c86dd0e3ac5626",
+  "protected_role_access_authorized": false,
+  "purpose": "EXECUTION_QUALIFICATION_ONLY",
+  "roles": [
+    "train_100k",
+    "common_dev"
+  ],
+  "run_reference": "kaseichou/molgap-modern2d-native-100k-v2",
+  "scientific_training_authorized": false,
+  "scratch_optimizer_updates_per_model": 6,
+  "seeds": [
+    42
+  ],
+  "source_dataset": "kaseichou/molgap-modern2d-qualification-source-v2",
+  "user_authorized": true
+}

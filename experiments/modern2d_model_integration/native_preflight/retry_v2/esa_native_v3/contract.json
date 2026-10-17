@@ -1,0 +1,99 @@
+{
+  "acceptance_requirements": {
+    "completed_passes": 0,
+    "development_rows": 0,
+    "next_batch": 2,
+    "optimizer_steps": 2,
+    "precision": "fp32",
+    "sample_presentations": 256,
+    "source_idx_sha256": null,
+    "target_sha256": null
+  },
+  "batch_size": 128,
+  "checkpoint_every": 1,
+  "dataset": {
+    "development": false,
+    "manifest": "training_input.json",
+    "manifest_sha256": "70da7c30d2c7e3deb4643813b78a074bb751bb2cd2c4ceebd7728be568de8690"
+  },
+  "development_role_identity": null,
+  "development_rows": 0,
+  "drop_last": true,
+  "ema_decay": null,
+  "execution_policy": {
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "cpu_layout": false,
+    "device": "cpu_or_admitted_cuda",
+    "ema": null,
+    "family": "esa_small",
+    "feature_transform_source_sha256": "1b6325a227194424a4623ad5440ee47efab6a1c69cedbe694092e1def6f8378c",
+    "name": "modern2d-session-preview-v1",
+    "native_qualification": "NOT_EVALUATED",
+    "optimizer": "foreach-adamw",
+    "precision": "fp32",
+    "scope": "QUALIFICATION_ONLY",
+    "tf32": false,
+    "torch_version": "2.7.1"
+  },
+  "family": "esa_small",
+  "family_version": "3",
+  "finite_check_every": 1,
+  "format": "molgap-family-training-recipe-v1",
+  "gradient_clip": 1.0,
+  "initialization_sha256": "3e6a7beecfc14880cad68e365bb25255dd12359b2dc8c3c5ee219b3582efa8c0",
+  "learning_rate": 0.001,
+  "logging": {
+    "interval": null,
+    "mode": "epoch"
+  },
+  "mode": "reference",
+  "model_config": {
+    "epsilon": 1e-08,
+    "graph_dim": 256,
+    "heads": 8,
+    "hidden": 192,
+    "include_self": true,
+    "isolated_atom_policy": "explicit-atom-only-token-v3",
+    "layer_types": [
+      "M",
+      "S",
+      "M",
+      "S",
+      "M",
+      "P"
+    ],
+    "max_edges": 4096,
+    "max_nodes": 1024,
+    "mlp_hidden": 384,
+    "readout_version": "pma-no-input-residual-v2",
+    "seeds": 32,
+    "tensor_device": "cpu_or_cuda",
+    "tokenization_version": "directed-bond-and-isolated-atom-v3"
+  },
+  "optimizer_steps": 2,
+  "qualification": {
+    "purpose": "numerical-resume-resources-only",
+    "scratch_updates_per_model": 6,
+    "steps_per_path": 2
+  },
+  "sampler": "torch-pass-randperm",
+  "schedule": {
+    "kind": "cosine_step",
+    "minimum_lr": 1e-06,
+    "reference_epochs": 60,
+    "total_units": 2,
+    "warmup_units": 0
+  },
+  "seed": 42,
+  "selection": "final-live",
+  "target_mean_eV": 5.338300266634226,
+  "target_std_eV": 1.275090206323082,
+  "torch_version": "2.7.1",
+  "train_role_identity": "009c93f43b9607acf35db0953fefe47a71548b32702b6211b835aff6a94f902d",
+  "train_rows": 100000,
+  "weight_decay": 0.01
+}

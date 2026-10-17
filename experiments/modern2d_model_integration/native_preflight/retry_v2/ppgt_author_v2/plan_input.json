@@ -1,0 +1,140 @@
+{
+  "costs": [
+    {
+      "action_id": "A001",
+      "attempt_id": "ppgt_author_v2-v2",
+      "category": "preflight",
+      "cost_event_id": "cost-TC-modern2d-qualification-ppgt_author_v2-s42-v2-planned",
+      "evidence_ref": "experiments/modern2d_model_integration/native_preflight/retry_v2/authority.json",
+      "hardware": "NvidiaTeslaT4x2_shared_allocation",
+      "measurement": {
+        "cpu_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "device_hours": {
+          "status": "estimated",
+          "value": 0.5
+        },
+        "queue_hours": {
+          "status": "measurement_missing",
+          "value": null
+        },
+        "wall_hours": {
+          "status": "estimated",
+          "value": 0.5
+        }
+      },
+      "platform": "kaggle2",
+      "run_id": "modern2d-native-100k-s42-v2:ppgt_author_v2:downstream",
+      "schema": "molgap-cost-event-v1",
+      "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v2"
+    }
+  ],
+  "decision_state": {
+    "active_reference_ids": [],
+    "available_actions": [
+      "RUN_MODERN2D_QUALIFICATION",
+      "DEFER"
+    ],
+    "budget_snapshot_ref": "experiments/modern2d_model_integration/native_preflight/retry_v2/authority.json",
+    "chosen_action": "RUN_MODERN2D_QUALIFICATION",
+    "known_evidence_ids": [],
+    "known_trajectory_ids": [
+      "TC-modern2d-qualification-ppgt_author_v2-s42-v1"
+    ],
+    "policy_id": "modern2d-native-qualification-retry-v2",
+    "policy_version": "v1",
+    "role_snapshot_refs": [
+      "experiments/modern2d_model_integration/native_preflight/retry_v2/role_plan.json"
+    ],
+    "source_commit": "80f4fb3cb4d27203eb429876bcc98b21ade3893d",
+    "state_timestamp": "2026-10-17T16:58:22.737533+00:00"
+  },
+  "trajectory": {
+    "actions": [
+      {
+        "action_id": "A001",
+        "attempt_ids": [
+          "ppgt_author_v2-v2"
+        ],
+        "cost_event_ids": [
+          "cost-TC-modern2d-qualification-ppgt_author_v2-s42-v2-planned"
+        ],
+        "evidence_refs": [
+          "experiments/modern2d_model_integration/native_preflight/retry_v2/ppgt_author_v2/contract.json"
+        ],
+        "run_ids": [
+          "modern2d-native-100k-s42-v2:ppgt_author_v2:downstream"
+        ],
+        "source_commit": "80f4fb3cb4d27203eb429876bcc98b21ade3893d",
+        "type": "execution_diagnostic"
+      }
+    ],
+    "decision": {
+      "decision_ref": "experiments/modern2d_model_integration/native_preflight/retry_v2/STATUS.md",
+      "next_allowed_actions": [
+        "one authorized execution diagnostic"
+      ],
+      "outcome": "ACTIVE",
+      "reopen_conditions": [
+        "terminal evidence"
+      ]
+    },
+    "family_id": "modern2d-native-qualification-retry-v2",
+    "hypothesis": {
+      "alternative_explanations": [
+        "runtime incompatibility",
+        "resource ceiling"
+      ],
+      "changed_mechanism": "Versioned model execution only",
+      "cheapest_falsifier": "exactly six scratch updates per model; no development metrics",
+      "decision_changed_if_negative": "retain execution failure; no automatic successor",
+      "decision_changed_if_positive": "retain qualification evidence; no scientific release",
+      "expected_native_cost_ref": "cost-TC-modern2d-qualification-ppgt_author_v2-s42-v2-planned",
+      "historical_unknowns": [],
+      "hypothesis_id": "H-TC-modern2d-qualification-ppgt_author_v2-s42-v2",
+      "observed_deficiency": "Native qualification is unestablished",
+      "related_closed_family_ids": [
+        "k1-infrastructure-execution"
+      ],
+      "supporting_evidence_ids": [
+        "pcqm-k1-infrastructure-optimized-100k-s42"
+      ]
+    },
+    "owner": "server",
+    "question": "Can this frozen interface complete numerical, resume and resource qualification?",
+    "record_mode": "prospective",
+    "result": {
+      "evidence_ids": [],
+      "evidence_refs": []
+    },
+    "state_at_start": {
+      "budget_snapshot_ref": "experiments/modern2d_model_integration/native_preflight/retry_v2/authority.json",
+      "contract_refs": [
+        "experiments/modern2d_model_integration/native_preflight/retry_v2/ppgt_author_v2/contract.json",
+        "experiments/modern2d_model_integration/native_preflight/retry_v2/authority.json",
+        "experiments/modern2d_model_integration/native_preflight/retry_v2/role_plan.json",
+        "experiments/modern2d_model_integration/integration_attempt_report.json",
+        "experiments/modern2d_model_integration/native_preflight/retry_v2/cpu_acceptance.json"
+      ],
+      "parent_trajectory_ids": [
+        "TC-modern2d-qualification-ppgt_author_v2-s42-v1"
+      ],
+      "prior_evidence_ids": [
+        "pcqm-k1-infrastructure-optimized-100k-s42"
+      ],
+      "prior_trajectory_ids": [
+        "TC-modern2d-qualification-ppgt_author_v2-s42-v1"
+      ],
+      "reference_ids": [],
+      "role_snapshot_refs": [
+        "experiments/modern2d_model_integration/native_preflight/retry_v2/role_plan.json"
+      ],
+      "source_commit": "80f4fb3cb4d27203eb429876bcc98b21ade3893d",
+      "source_config_identity": "611e307e4d898a64c21cdb303fec9f21e419412dc7af06989c97a18786550028"
+    },
+    "track": "C",
+    "trajectory_id": "TC-modern2d-qualification-ppgt_author_v2-s42-v2"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "data_root": "indexed_assets",
+  "development": {
+    "authority": {
+      "acceptance_sha256": "8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b",
+      "manifest_sha256": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "max_chunk_bytes": 536870912,
+      "operations": [
+        "prediction_input",
+        "labels_read"
+      ],
+      "protected": false,
+      "role": "common_dev",
+      "scope": "ACCEPTED_INDEXED_INPUT_V1",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077"
+    },
+    "permit": {
+      "acceptance_sha256": "8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b",
+      "authority_sha256": "30bbaac38bd37d966bf94ba0758cd97707f842d76912e69bb5a2ea5c8de77d7a",
+      "manifest_sha256": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "max_chunk_bytes": 536870912,
+      "role": "common_dev",
+      "role_history_sha256": "5110d3324383338426bd6bab011bc3922cce2bde05504687c7b19ef07bac0cae",
+      "scope": "ACCEPTED_INDEXED_INPUT_V1",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077"
+    },
+    "role_history": {
+      "manifest_sha256": "df1ef08d686fa1db46334895c5b6c882a9c7c74339f7e655a8af50c50b1e7323",
+      "role": "common_dev",
+      "usage": "selection-used"
+    }
+  },
+  "format": "molgap-indexed-training-input-v1",
+  "scope": "ACCEPTED_INDEXED_INPUT_V1",
+  "train": {
+    "authority": {
+      "acceptance_sha256": "8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b",
+      "manifest_sha256": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "max_chunk_bytes": 536870912,
+      "operations": [
+        "prediction_input",
+        "labels_read"
+      ],
+      "protected": false,
+      "role": "train_100k",
+      "scope": "ACCEPTED_INDEXED_INPUT_V1",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077"
+    },
+    "permit": {
+      "acceptance_sha256": "8f879adf15af0b41e0cef7f10ce1d581244aaac037227ef8defa7a75cc728e1b",
+      "authority_sha256": "6ff650abbbe9c49cd8c38b48894a466aed561ba1901836112ea4f6e6eee5d229",
+      "manifest_sha256": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "max_chunk_bytes": 536870912,
+      "role": "train_100k",
+      "role_history_sha256": "e8392d7465cf215a145852281cf1056189b64ddc7ffdfb2395cf0fb1abd2588b",
+      "scope": "ACCEPTED_INDEXED_INPUT_V1",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077"
+    },
+    "role_history": {
+      "manifest_sha256": "4652a55e21c1622af57d61aef6318a8c23b1f0379a122cb4f093467b412989fc",
+      "role": "train_100k",
+      "usage": "training"
+    }
+  }
+}
