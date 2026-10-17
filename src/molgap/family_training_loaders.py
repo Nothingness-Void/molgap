@@ -29,6 +29,9 @@ class FamilyLoaders:
         if data.indexed and not getattr(recipe, "integration_preview", False):
             raise ValueError("Indexed data requires its explicitly versioned integration interface")
         if getattr(recipe, "integration_preview", False):
+            if (len(data.train) != data.train_rows or
+                    (data.development is not None and len(data.development) != data.development_rows)):
+                raise ValueError("Integration input decoded row count differs from its declaration")
             if recipe.dataset.manifest.startswith("synthetic/"):
                 if data.synthetic is not True:
                     raise ValueError("Integration fixture cannot substitute real data")
@@ -47,6 +50,16 @@ class FamilyLoaders:
                 (data.development is not None and (data.development_source_indices is None or
                     len(data.development_source_indices) != data.development_rows))):
             raise ValueError("Indexed data cannot be represented as a contiguous source range")
+        if data.indexed:
+            from .data.indexed_inputs import IndexedRoleDataset
+            for dataset, indices in ((data.train, data.train_source_indices),
+                                     (data.development, data.development_source_indices)):
+                if dataset is None:
+                    continue
+                if (type(indices) is not tuple or any(type(i) is not int or i < 0 for i in indices) or
+                        any(a >= b for a, b in zip(indices, indices[1:])) or
+                        (type(dataset) is IndexedRoleDataset and indices != dataset.source_indices)):
+                    raise ValueError("Indexed input members differ from the verified dataset")
         if (data.manifest_sha256 != recipe.dataset.manifest_sha256 or
                 data.train_rows != recipe.train_rows or data.development_rows != recipe.development_rows):
             raise ValueError("Loaded data differs from the frozen recipe selection")

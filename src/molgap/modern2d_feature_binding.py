@@ -70,7 +70,7 @@ def build_indexed_feature_binding(dataset, *, family, configuration):
     binding = {
         "base_dataset_manifest_sha": permit.manifest_sha256,
         "source_row_sha": manifest["source_index_sha256"],
-        "source_topology_sha": canonical_fingerprint([c["topology_sha256"] for c in manifest["graph_chunks"]]),
+        "source_topology_sha": canonical_fingerprint({"chunks": [c["topology_sha256"] for c in manifest["graph_chunks"]]}),
         "feature_schema_version": FAMILIES[family].feature_schema,
         "transform_code_sha": indexed_transform_identity(family),
         "transform_config_sha": canonical_fingerprint(asdict(config)),

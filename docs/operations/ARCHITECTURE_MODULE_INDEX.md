@@ -34,8 +34,8 @@ move reusable behavior into experiment result directories.
 |---|---|---|
 | `constants.py`, `compat/legacy_constants.py` | Live registry/paths and lazily forwarded historical constants respectively | Keep asset locations and public aliases stable; do not delete by Phase prefix |
 | `training/core.py`, `training/session.py`, `training/state.py` | Existing family loop, Session and complete retained state | Legacy `family_training_*` modules are same-object aliases, not second implementations |
-| `models/substrate.py`, `models/gptrans.py` | Substrate implementation and organized GPTrans alias | GPTrans itself remains byte-pinned at `gptrans.py`; never rewrite its frozen hash to accommodate relocation |
-| `data/packed_graph.py`, `data/fixed_records.py`, `data/indexed_inputs.py` | Existing packed graphs, fixed manifests and bounded indexed loading | Preserve input ABI, mmap, role/hash checks and old pickle/monkeypatch paths |
+| `src/molgap/models/substrate.py`, `src/molgap/models/gptrans.py` | Substrate implementation and organized GPTrans alias | GPTrans itself remains byte-pinned at `gptrans.py`; never rewrite its frozen hash to accommodate relocation |
+| `src/molgap/data/packed_graph.py`, `src/molgap/data/fixed_records.py`, `src/molgap/data/indexed_inputs.py` | Existing packed graphs, fixed manifests and bounded indexed loading | Preserve input ABI, mmap, role/hash checks and old pickle/monkeypatch paths |
 | `graphs.py` | SMILES-to-2D/3D PyG graphs and ETKDG construction | Changing graph or conformer representation |
 | `gine.py` | `GINEWrapper` local message passing | Changing the reusable GINE encoder |
 | `egnn.py` | Lightweight equivariant 3D encoder | Testing a low-compute SchNet alternative |
