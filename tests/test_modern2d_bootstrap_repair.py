@@ -91,6 +91,9 @@ class _BootstrapCase:
         if layout == "flat":
             self.source_root = self.input_root / "qualification-source"
             self.source_relative = "qualification-source"
+        elif layout == "owner_qualified":
+            self.source_root = self.input_root / "owner" / "qualification-source"
+            self.source_relative = "owner/qualification-source"
         elif layout == "owner_namespaced":
             self.source_root = self.input_root / "datasets" / "owner" / "qualification-source"
             self.source_relative = "datasets/owner/qualification-source"
@@ -185,8 +188,8 @@ class Modern2DBootstrapRepairTests(unittest.TestCase):
             raise AssertionError("bootstrap report was not retained")
         return json.loads(report.read_text(encoding="utf-8"))
 
-    def test_real_entry_resolves_flat_and_namespaced_source_before_runtime_import(self):
-        for layout in ("flat", "owner_namespaced"):
+    def test_real_entry_resolves_all_declared_source_layouts_before_runtime_import(self):
+        for layout in ("flat", "owner_qualified", "owner_namespaced"):
             with self.subTest(layout=layout), tempfile.TemporaryDirectory() as temporary:
                 case = _BootstrapCase(Path(temporary), layout=layout)
                 result, _, _ = self._run_entry(case)
@@ -198,7 +201,7 @@ class Modern2DBootstrapRepairTests(unittest.TestCase):
                 self.assertEqual(report["source_discovery"]["status"], "selected")
                 self.assertEqual(report["source_discovery"]["candidate_count"], 1)
                 self.assertEqual(report["source_discovery"]["selected_root"], case.source_relative)
-                self.assertEqual(len(report["source_discovery"]["candidates"]), 2)
+                self.assertEqual(len(report["source_discovery"]["candidates"]), 3)
                 self.assertEqual(report["allocation_device_count"], 2)
                 self.assertEqual(report["cost_status"], "PYTHON_OBSERVED_WINDOW_ONLY")
                 self.assertIsNone(report["full_allocation_seconds"])
@@ -207,6 +210,24 @@ class Modern2DBootstrapRepairTests(unittest.TestCase):
                 self.assertEqual(report["python_observed_device_seconds"],
                                  2 * report["python_observed_wall_seconds"])
                 self.assertFalse((case.output_root / "bootstrap_allocation.tmp").exists())
+
+    def test_real_entry_rejects_owner_qualified_ambiguity_with_flat_or_namespaced(self):
+        for other_layout in ("flat", "owner_namespaced"):
+            with self.subTest(other_layout=other_layout), tempfile.TemporaryDirectory() as temporary:
+                case = _BootstrapCase(Path(temporary), layout="owner_qualified")
+                other = (case.input_root / "qualification-source" if other_layout == "flat"
+                         else case.input_root / "datasets" / "owner" / "qualification-source")
+                other.mkdir(parents=True)
+
+                with self.assertRaisesRegex(ValueError, "exactly one dataset mount"):
+                    self._run_entry(case)
+
+                report = self._report(case)
+                self.assertEqual(report["status"], "failed")
+                self.assertEqual(report["phase"], "source_discovery")
+                self.assertEqual(report["source_discovery"]["candidate_count"], 2)
+                self.assertEqual(len(report["source_discovery"]["candidates"]), 3)
+                self.assertFalse(case.sentinel.exists())
 
     def test_source_mount_failure_is_retained_before_frozen_runtime_import(self):
         with tempfile.TemporaryDirectory() as temporary:

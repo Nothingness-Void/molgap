@@ -16,7 +16,7 @@
   "new_attempt_created": false,
   "source_sha256_semantics": "UTF8_SOURCE_CRLF_AND_CR_NORMALIZED_TO_LF",
   "source_files": {
-    "src/molgap/kaggle_mounts.py": "62c7ab8b97b5b8f8bda010e27956fad70396aa9f7ba6c221a7b34458147d59d2",
+    "src/molgap/kaggle_mounts.py": "d72b3891eca086da172004a45574d2cefc1a21bc4b29f400f33b14331eed0903",
     "src/molgap/modern2d_qualification_prepare.py": "7434e50008769d8c10e54d0b05d2d6a681fe4658a2db6d66dd35825e4b3c3046",
     "src/molgap/modern2d_qualification_runtime.py": "2cc3791da75c6c9139939a81800cbb6b5345cf20c996741030ffe0e4d743058a",
     "platforms/kaggle/run_modern2d_qualification.py": "547ee67dde124c27b32b599a83523bc7ef71b6820fa073eddfc561ed4e7d2949"
@@ -25,34 +25,22 @@
     {
       "scope": "shared deterministic mount resolver and real entry with stdlib-only fake hardware/runtime",
       "files": ["tests/test_kaggle_mounts.py", "tests/test_modern2d_bootstrap_repair.py"],
-      "passed": 20,
+      "passed": 23,
       "skipped": 2,
-      "subtests_passed_separately": 13,
+      "subtests_passed_separately": 19,
       "skipped_reason": "Windows symlink capability unavailable; mocked junction guard was exercised",
-      "junit_sha256": "e3729ac1d1b0cb0cc283cb57fe1d5131434f510a1050e2ebc3bc223501579a62"
+      "junit_sha256": "a9f3d06e54787b8224e5f0ca0494b0f14516818af02c1b7536696e8bb3783191"
     },
     {
-      "scope": "qualification runtime metadata and supervision",
-      "files": ["tests/test_modern2d_qualification_runtime.py"],
-      "passed": 37,
-      "junit_sha256": "93b435cf63f45b78f4ef1fbb719ec59675afde83f26582026fa32c6a58510856"
-    },
-    {
-      "scope": "package preparation including owner-namespaced mount",
-      "files": ["tests/test_modern2d_qualification_prepare.py"],
-      "passed": 27,
-      "junit_sha256": "7ca02b542fe6f19c22867dd87c1956377beac0cd67b894f874a442fdc1801b10"
-    },
-    {
-      "scope": "reviewed shared mechanism snapshot",
-      "files": ["tests/test_shared_training_compatibility.py"],
-      "passed": 4,
-      "junit_sha256": "1639aeab076a7b94705cf5e031809defd883a3691ccdd46448d0407208d484d5"
+      "scope": "qualification runtime, preparation with three mount layouts, reviewed source snapshot",
+      "files": ["tests/test_modern2d_qualification_runtime.py", "tests/test_modern2d_qualification_prepare.py", "tests/test_shared_training_compatibility.py"],
+      "passed": 70,
+      "junit_sha256": "07e90a508e504764c5a6e4fe10b212bb4cc515d4e1b0f9d9e7519ddb2ad304be"
     }
   ],
-  "total_pytest_passed": 88,
+  "total_pytest_passed": 93,
   "total_pytest_skipped": 2,
-  "subtests_passed_separately_not_added_to_pytest_count": 13,
+  "subtests_passed_separately_not_added_to_pytest_count": 19,
   "failed_fixture_attempts": {
     "classification": "TEST_FIXTURE_ERRORS_NOT_SCIENTIFIC_RESULTS",
     "bootstrap_summary": "luna-bootstrap/failed-attempts.txt",
@@ -69,7 +57,20 @@
     "esa_initial_state_sha256": "205214e65307497ca6e02c4558a40c6a79d7848b7dbc19ba6f87350df92f666a",
     "old_spec_plans_receipts_and_acceptance_rewritten": false
   },
-  "rml": {"validate": "PASSED", "terminal_publication_performed": false, "derived_rebuild_performed": false},
+  "rml": {
+    "validate": "PASSED",
+    "check_frozen": "STALE_DERIVED_OUTPUTS_PRESERVED",
+    "check_frozen_exit_code": 1,
+    "stale_derived": ["trajectory_index.json", "trajectory_graph.json", "cost_ledger.json", "policy_backtest.json", "completeness_report.json", "research_summary.json", "research_summary.md"],
+    "terminal_publication_performed": false,
+    "derived_rebuild_performed": false
+  },
+  "primary_transport_evidence": {
+    "url": "https://github.com/Kaggle/kaggle-cli/blob/main/docs/benchmarks.md",
+    "scope": "Owner-qualified fallback for benchmark task underlying notebook attachments, not an observation of failed V1",
+    "observed_on_jst": "2026-10-18",
+    "verbatim_quote_in_this_record": false
+  },
   "cost_scope": "Bootstrap Python observation is not full allocation or billing; unknown full cost remains null",
   "review": {"additional_deterministic_code_defects_found": [], "full_model_or_cuda_execution_reviewed": false},
   "raw_artifact_root": "E:/MolGap/artifacts/modern2d-native-preflight/repair",

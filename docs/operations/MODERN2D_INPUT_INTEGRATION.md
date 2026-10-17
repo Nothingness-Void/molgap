@@ -134,13 +134,16 @@ are recorded in the owning [bounded task](../../experiments/modern2d_model_integ
 
 `kaggle_mounts.resolve_dataset_mount(input_root, dataset_source, *,
 mount_name=None, marker=None, report=None)` resolves an explicitly bound
-`owner/slug` at either `input_root/slug` or
-`input_root/datasets/owner/slug`. These are two supported transport locations,
+`owner/slug` at `input_root/slug`, `input_root/owner/slug` or
+`input_root/datasets/owner/slug`. These are three supported transport locations,
 not evidence of the failed worker's actual layout. It never enumerates
 directories or reads payloads. Multiple roots, missing markers, namespace/slug
 drift, symlinks and junctions fail closed, with bounded discovery diagnostics.
 Flat paths do not encode an owner: ownership is not inferred from their names;
 the frozen source identity and content/authority gates remain necessary.
+The owner-qualified fallback is documented for underlying benchmark notebook
+attachments in the [official CLI documentation](https://github.com/Kaggle/kaggle-cli/blob/main/docs/benchmarks.md);
+that source does not establish the failed V1 worker's actual layout.
 The preparation path and parent/worker data validation share this resolver;
 launch/source/acceptance/role identities remain independently hash-checked.
 

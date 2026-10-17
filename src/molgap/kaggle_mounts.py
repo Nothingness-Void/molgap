@@ -21,9 +21,9 @@ def _no_link(path):
 
 def resolve_dataset_mount(input_root, dataset_source, *, mount_name=None,
                           marker=None, report=None):
-    """Select exactly one flat or owner-namespaced dataset root.
+    """Select exactly one flat, owner-qualified or namespaced dataset root.
 
-    Only two declared locations and an optional direct marker are inspected.
+    Only three declared locations and an optional direct marker are inspected.
     No directory is enumerated and no file content is read. Duplicate roots
     are rejected even if just one has the marker, rather than selecting a
     convenient identity. ``report`` is populated on failure as well as success.
@@ -56,6 +56,7 @@ def resolve_dataset_mount(input_root, dataset_source, *, mount_name=None,
             raise ValueError("Dataset input root is absent")
         found = []
         for layout, parts in (("flat", (slug,)),
+                              ("owner_qualified", (owner, slug)),
                               ("owner_namespaced", ("datasets", owner, slug))):
             candidate = root
             present = True

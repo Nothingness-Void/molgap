@@ -39,7 +39,7 @@ class KaggleMountResolverTests(unittest.TestCase):
         marker.write_bytes(b"marker payload must not be opened")
         return marker
 
-    def test_flat_root_is_selected_and_report_is_two_bounded_records(self) -> None:
+    def test_flat_root_is_selected_and_report_has_three_bounded_records(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             input_root = Path(temporary)
             flat = input_root / "qualification-source"
@@ -59,14 +59,18 @@ class KaggleMountResolverTests(unittest.TestCase):
             self.assertEqual(report["selected_root"], "qualification-source")
             self.assertFalse(report["recursive_scan"])
             self.assertFalse(report["file_contents_read"])
-            self.assertEqual(len(report["candidates"]), 2)
+            self.assertEqual(len(report["candidates"]), 3)
             self.assertEqual(
                 {record["layout"] for record in report["candidates"]},
-                {"flat", "owner_namespaced"},
+                {"flat", "owner_qualified", "owner_namespaced"},
             )
             self.assertEqual(
                 {record["path"] for record in report["candidates"]},
-                {"qualification-source", "datasets/owner/qualification-source"},
+                {
+                    "qualification-source",
+                    "owner/qualification-source",
+                    "datasets/owner/qualification-source",
+                },
             )
 
     def test_owner_namespaced_root_is_selected_when_flat_root_is_missing(self) -> None:
@@ -85,8 +89,30 @@ class KaggleMountResolverTests(unittest.TestCase):
             self.assertEqual(selected, namespaced)
             self.assertEqual(report["candidate_count"], 1)
             self.assertEqual(report["selected_root"], "datasets/owner/qualification-source")
-            self.assertEqual(report["candidates"][0]["exists"], False)
-            self.assertEqual(report["candidates"][1]["marker_present"], True)
+            by_layout = {record["layout"]: record for record in report["candidates"]}
+            self.assertFalse(by_layout["flat"]["exists"])
+            self.assertFalse(by_layout["owner_qualified"]["exists"])
+            self.assertTrue(by_layout["owner_namespaced"]["marker_present"])
+
+    def test_owner_qualified_root_is_selected_when_other_layouts_are_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            input_root = Path(temporary)
+            owner_qualified = input_root / "owner" / "qualification-source"
+            owner_qualified.mkdir(parents=True)
+            self._marker(owner_qualified)
+            report = {}
+
+            selected = self.resolver.resolve_dataset_mount(
+                input_root, "owner/qualification-source",
+                marker="modern2d_qualification_launch.json", report=report)
+
+            self.assertEqual(selected, owner_qualified)
+            self.assertEqual(report["candidate_count"], 1)
+            self.assertEqual(report["selected_root"], "owner/qualification-source")
+            by_layout = {record["layout"]: record for record in report["candidates"]}
+            self.assertTrue(by_layout["owner_qualified"]["marker_present"])
+            self.assertFalse(by_layout["flat"]["exists"])
+            self.assertFalse(by_layout["owner_namespaced"]["exists"])
 
     def test_flat_root_is_selected_when_namespaced_root_is_missing(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -102,8 +128,10 @@ class KaggleMountResolverTests(unittest.TestCase):
 
             self.assertEqual(selected, flat)
             self.assertEqual(report["candidate_count"], 1)
-            self.assertEqual(report["candidates"][0]["marker_present"], True)
-            self.assertEqual(report["candidates"][1]["exists"], False)
+            by_layout = {record["layout"]: record for record in report["candidates"]}
+            self.assertTrue(by_layout["flat"]["marker_present"])
+            self.assertFalse(by_layout["owner_qualified"]["exists"])
+            self.assertFalse(by_layout["owner_namespaced"]["exists"])
 
     def test_duplicate_roots_are_rejected_even_when_only_one_has_marker(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -122,9 +150,35 @@ class KaggleMountResolverTests(unittest.TestCase):
 
             self.assertEqual(report["status"], "rejected")
             self.assertEqual(report["candidate_count"], 2)
-            self.assertEqual(len(report["candidates"]), 2)
-            self.assertTrue(report["candidates"][0]["exists"])
-            self.assertTrue(report["candidates"][1]["exists"])
+            self.assertEqual(len(report["candidates"]), 3)
+            by_layout = {record["layout"]: record for record in report["candidates"]}
+            self.assertTrue(by_layout["flat"]["exists"])
+            self.assertFalse(by_layout["owner_qualified"]["exists"])
+            self.assertTrue(by_layout["owner_namespaced"]["exists"])
+
+    def test_owner_qualified_root_is_ambiguous_with_flat_or_namespaced(self) -> None:
+        for other_layout in ("flat", "owner_namespaced"):
+            with self.subTest(other_layout=other_layout), tempfile.TemporaryDirectory() as temporary:
+                input_root = Path(temporary)
+                owner_qualified = input_root / "owner" / "qualification-source"
+                owner_qualified.mkdir(parents=True)
+                self._marker(owner_qualified)
+                other = (input_root / "qualification-source" if other_layout == "flat"
+                         else input_root / "datasets" / "owner" / "qualification-source")
+                other.mkdir(parents=True)
+                report = {}
+
+                with self.assertRaisesRegex(ValueError, "exactly one dataset mount"):
+                    self.resolver.resolve_dataset_mount(
+                        input_root, "owner/qualification-source",
+                        marker="modern2d_qualification_launch.json", report=report)
+
+                self.assertEqual(report["status"], "rejected")
+                self.assertEqual(report["candidate_count"], 2)
+                self.assertEqual(len(report["candidates"]), 3)
+                by_layout = {record["layout"]: record for record in report["candidates"]}
+                self.assertTrue(by_layout["owner_qualified"]["exists"])
+                self.assertTrue(by_layout[other_layout]["exists"])
 
     def test_no_dataset_root_is_rejected_without_fallback_discovery(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -134,15 +188,18 @@ class KaggleMountResolverTests(unittest.TestCase):
                     Path(temporary), "owner/qualification-source", report=report)
             self.assertEqual(report["status"], "rejected")
             self.assertEqual(report["candidate_count"], 0)
-            self.assertEqual(len(report["candidates"]), 2)
+            self.assertEqual(len(report["candidates"]), 3)
             self.assertTrue(all(not item["exists"] for item in report["candidates"]))
 
-    def test_missing_marker_is_rejected_for_both_layouts(self) -> None:
-        for layout in ("flat", "owner_namespaced"):
+    def test_missing_marker_is_rejected_for_all_layouts(self) -> None:
+        for layout in ("flat", "owner_qualified", "owner_namespaced"):
             with self.subTest(layout=layout), tempfile.TemporaryDirectory() as temporary:
                 input_root = Path(temporary)
-                root = (input_root / "qualification-source" if layout == "flat"
-                        else input_root / "datasets" / "owner" / "qualification-source")
+                root = {
+                    "flat": input_root / "qualification-source",
+                    "owner_qualified": input_root / "owner" / "qualification-source",
+                    "owner_namespaced": input_root / "datasets" / "owner" / "qualification-source",
+                }[layout]
                 root.mkdir(parents=True)
                 report = {}
 
@@ -153,7 +210,7 @@ class KaggleMountResolverTests(unittest.TestCase):
 
                 self.assertEqual(report["status"], "rejected")
                 self.assertEqual(report["candidate_count"], 1)
-                self.assertEqual(len(report["candidates"]), 2)
+                self.assertEqual(len(report["candidates"]), 3)
 
     def test_marker_is_filename_only_and_its_content_is_never_read(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -206,7 +263,7 @@ class KaggleMountResolverTests(unittest.TestCase):
                         self.resolver.resolve_dataset_mount(
                             input_root, dataset_source, mount_name=mount_name, report=report)
                     self.assertEqual(report["status"], "rejected")
-                    self.assertIn(len(report["candidates"]), (0, 2))
+                    self.assertIn(len(report["candidates"]), (0, 3))
 
             for dataset_source in ("other/qualification-source", "owner/other-source"):
                 with self.subTest(dataset_source=dataset_source):
@@ -216,7 +273,7 @@ class KaggleMountResolverTests(unittest.TestCase):
                             input_root, dataset_source, report=report)
                     self.assertEqual(report["status"], "rejected")
                     self.assertEqual(report["candidate_count"], 0)
-                    self.assertEqual(len(report["candidates"]), 2)
+                    self.assertEqual(len(report["candidates"]), 3)
 
     def test_marker_directory_and_marker_symlink_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

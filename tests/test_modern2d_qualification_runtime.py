@@ -498,6 +498,8 @@ def _validation_case(runtime, tmp_path: Path, *, layout="flat"):
     mounted = tmp_path / "mounted"
     if layout == "flat":
         dataset_root = mounted / "accepted-data"
+    elif layout == "owner_qualified":
+        dataset_root = mounted / "fixture" / "accepted-data"
     elif layout == "owner_namespaced":
         dataset_root = mounted / "datasets" / "fixture" / "accepted-data"
     else:
@@ -718,9 +720,10 @@ def test_validate_launch_binds_selection_metadata_hashes_and_logical_roles_witho
 @pytest.mark.parametrize(
     "layout, selected_root",
     [("flat", "accepted-data"),
+     ("owner_qualified", "fixture/accepted-data"),
      ("owner_namespaced", "datasets/fixture/accepted-data")],
 )
-def test_validate_launch_accepts_flat_and_owner_namespaced_dataset_mounts(
+def test_validate_launch_accepts_declared_dataset_mount_layouts(
         runtime, tmp_path, monkeypatch, layout, selected_root):
     case = _validation_case(runtime, tmp_path, layout=layout)
     _install_validation_mocks(monkeypatch, case)
@@ -739,7 +742,7 @@ def test_validate_launch_accepts_flat_and_owner_namespaced_dataset_mounts(
     assert discovery_report["status"] == "selected"
     assert discovery_report["candidate_count"] == 1
     assert discovery_report["selected_root"] == selected_root
-    assert len(discovery_report["candidates"]) == 2
+    assert len(discovery_report["candidates"]) == 3
     assert discovery_report["recursive_scan"] is False
     assert discovery_report["file_contents_read"] is False
 
@@ -763,7 +766,7 @@ def test_validate_launch_rejects_both_dataset_mount_layouts_before_payload(
 
     assert discovery_report["status"] == "rejected"
     assert discovery_report["candidate_count"] == 2
-    assert len(discovery_report["candidates"]) == 2
+    assert len(discovery_report["candidates"]) == 3
     assert discovery_report["file_contents_read"] is False
 
 

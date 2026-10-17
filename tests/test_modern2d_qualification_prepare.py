@@ -155,15 +155,31 @@ def frozen_case(preparation_case):
     return preparation_case
 
 
-@pytest.fixture
-def namespaced_frozen_case(preparation_case):
-    namespaced = preparation_case.mounted / "datasets" / owner.ACCOUNT / owner.MOUNT
-    namespaced.parent.mkdir(parents=True)
-    preparation_case.asset.rename(namespaced)
-    preparation_case.asset = namespaced
-    preparation_case.metadata_path = namespaced / "qualification_inputs.json"
-    preparation_case.result = _freeze(preparation_case)
-    return preparation_case
+@pytest.fixture(params=["flat", "owner_namespaced", "owner_qualified"],
+                ids=["flat", "owner-namespaced", "owner-qualified"])
+def package_case(preparation_case, request):
+    if request.param == "flat":
+        return_case = preparation_case
+    elif request.param == "owner_namespaced":
+        relative = Path("datasets") / owner.ACCOUNT / owner.MOUNT
+        return_case = preparation_case
+        namespaced = preparation_case.mounted / relative
+        namespaced.parent.mkdir(parents=True)
+        preparation_case.asset.rename(namespaced)
+        preparation_case.asset = namespaced
+        preparation_case.metadata_path = namespaced / "qualification_inputs.json"
+    elif request.param == "owner_qualified":
+        relative = Path(owner.ACCOUNT) / owner.MOUNT
+        return_case = preparation_case
+        qualified = preparation_case.mounted / relative
+        qualified.parent.mkdir(parents=True)
+        preparation_case.asset.rename(qualified)
+        preparation_case.asset = qualified
+        preparation_case.metadata_path = qualified / "qualification_inputs.json"
+    else:
+        raise AssertionError(f"unsupported fixture layout: {request.param}")
+    return_case.result = _freeze(return_case)
+    return return_case
 
 
 def _commit(case):
@@ -345,8 +361,8 @@ def test_package_retains_incomplete_output_and_refuses_duplicate(frozen_case):
     assert _snapshot(case.output) == before
 
 
-def test_package_validates_exact_launch_then_shared_release_and_plan_many(frozen_case, monkeypatch):
-    case = frozen_case
+def test_package_validates_exact_launch_then_shared_release_and_plan_many(package_case, monkeypatch):
+    case = package_case
     _commit(case)
     events = []
     runtime = import_module("molgap.modern2d_qualification_runtime")
@@ -404,36 +420,3 @@ def test_package_validates_exact_launch_then_shared_release_and_plan_many(frozen
     for root in (case.output, case.root / owner.BASE):
         for path in root.rglob("*.json"):
             assert b"E:" not in path.read_bytes().upper(), path
-
-
-def test_package_accepts_owner_namespaced_dataset_mount(namespaced_frozen_case, monkeypatch):
-    case = namespaced_frozen_case
-    _commit(case)
-    runtime = import_module("molgap.modern2d_qualification_runtime")
-    observed = []
-
-    def checked_launch(**kwargs):
-        observed.append(kwargs["mounted_root"])
-        return validate_launch(**kwargs)
-
-    def release(*args, **kwargs):
-        return {"status": "LOCAL_RELEASE_INPUTS_VERIFIED", "scope": "mocked-generic-release-only"}
-
-    def publish(root, plans):
-        return {"status": "PLANNED", "batch": {"size": len(plans)}, "results": []}
-
-    def no_rebuild(*args, **kwargs):
-        raise AssertionError("Preparation rebuilt RML derived files")
-
-    monkeypatch.setattr(runtime, "validate_launch", checked_launch)
-    monkeypatch.setattr("molgap.experiment_preflight.check_release_inputs", release)
-    monkeypatch.setattr(import_module("molgap.research_memory.plan"), "plan_many", publish)
-    monkeypatch.setattr("molgap.research_memory.compiler.rebuild_research_memory", no_rebuild)
-    monkeypatch.setattr("molgap.experiment_prospective.rebuild_research_memory", no_rebuild)
-
-    report = _package(case)
-    assert report["status"] == "QUALIFICATION_PACKAGE_PREPARED"
-    assert observed == [case.mounted]
-    launch = _read(case.output / "inputs" / LAUNCH_FILENAME)
-    assert launch["private_asset"]["dataset_source"] == owner.DATASET
-    assert launch["private_asset"]["mount"] == owner.MOUNT
