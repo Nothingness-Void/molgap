@@ -1,0 +1,92 @@
+{
+  "format": "molgap-v5-evidence-envelope-v1",
+  "contract": "MOLGAP-COMMON-V5-FINAL",
+  "evidence_id": "pcqm-pretraining-fixed-fusion-retained-comparison-20261001",
+  "track": "B",
+  "scope": "supplemental_saved_prediction_fusion_comparison",
+  "legacy_contract": "molgap-pretraining-family-pair-contract-v1",
+  "outcome": {
+    "execution_status": "complete",
+    "artifact_status": "complete_local_verified",
+    "comparison_status": "paired_development_numerical_comparison_complete_strict_promotion_pending",
+    "scientific_status": "INCONCLUSIVE",
+    "transfer_status": "not_qualified",
+    "budget_decision": "no_scaleup",
+    "full_handoff_status": "not_released"
+  },
+  "authority": {
+    "pointers": [
+      "experiments/pcqm_pretraining_family_pair/fusion_comparison_plan.json",
+      "experiments/pcqm_pretraining_family_pair/fusion_comparison.json",
+      "experiments/pcqm_pretraining_family_pair/fusion_comparison.md",
+      "experiments/pcqm_pretraining_family_pair/compare_fusions.py",
+      "experiments/pcqm_pretraining_family_pair/protocol.md",
+      "experiments/pcqm_pretraining_family_pair/terminal_decision.md"
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "fusion_comparison_plan.json",
+      "locator": "experiments/pcqm_pretraining_family_pair/fusion_comparison_plan.json",
+      "sha256": "d0eb25b227a50aad38905a8ee1ae3daf21303caa9d1760b7befced5f199cd912",
+      "availability": "local_verified"
+    },
+    {
+      "name": "fusion_comparison.json",
+      "locator": "experiments/pcqm_pretraining_family_pair/fusion_comparison.json",
+      "sha256": "c67499aec4ebadd93e4e7f695a75146c344a3a2330c39d6d650eaaf61d853b81",
+      "availability": "local_verified"
+    },
+    {
+      "name": "fusion_comparison.md",
+      "locator": "experiments/pcqm_pretraining_family_pair/fusion_comparison.md",
+      "sha256": "8b10d849fd58b476f95600d605c8e05921fa3ef583fe2ff7a87de0350051203b",
+      "availability": "local_verified"
+    },
+    {
+      "name": "compare_fusions.py",
+      "locator": "experiments/pcqm_pretraining_family_pair/compare_fusions.py",
+      "sha256": "45955c35bdb1b41b350619fe5d5ba5fe81b4893d66ca6c38c30d81638897a8bb",
+      "availability": "local_verified"
+    }
+  ],
+  "role_use": {
+    "internal_development": "consumed",
+    "official_validation": "untouched",
+    "test_dev": "untouched",
+    "test_challenge": "untouched"
+  },
+  "metrics": {
+    "scratch_fusion_vs_k1": {
+      "rows": 50000,
+      "reference_mae_eV": 0.14137364135205746,
+      "candidate_mae_eV": 0.1344801453369856,
+      "paired_gain_eV": 0.006893496015071869,
+      "row_bootstrap_95pct_eV": [
+        0.006301272644996643,
+        0.007512456020712853
+      ],
+      "candidate_better_row_fraction": 0.54036,
+      "material_3mev_point_gain": true
+    },
+    "pretrained_fusion_vs_scratch_fusion": {
+      "rows": 50000,
+      "reference_mae_eV": 0.1344801453369856,
+      "candidate_mae_eV": 0.1340966181343794,
+      "paired_gain_eV": 0.0003835272026062012,
+      "row_bootstrap_95pct_eV": [
+        -0.00031718254989385604,
+        0.0010576423342227935
+      ],
+      "candidate_better_row_fraction": 0.50608,
+      "material_3mev_point_gain": false
+    }
+  },
+  "migration": {
+    "migrated_at": "2026-10-01",
+    "verification_scope": "Supplement existing pretraining trajectories with retained-prediction comparison and immutable payload mapping; original scientific dispositions preserved.",
+    "training_executed": false,
+    "inference_executed": false,
+    "scientific_reinterpretation": false
+  }
+}
