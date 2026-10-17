@@ -1,0 +1,24 @@
+{
+  "format": "molgap-pcqm-gap100k-recurrent-graph-state-acceptance-v1",
+  "accepted": true,
+  "errors": [],
+  "source_commit": "96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8",
+  "cache_aggregate_sha256": "eb7c843e33f430ac755bc575d80153aba87677cea1ad5bb0dcf73cca906e2c21",
+  "completed_candidates": [
+    {
+      "candidate": "ogb_recurrent_graph_state_gps9",
+      "parameter_count": 4818897,
+      "best_epoch": 36,
+      "validation_gap_mae_eV": 0.13861275718212127,
+      "training_elapsed_s": 6666.716925205001,
+      "strictly_improves": false
+    }
+  ],
+  "selected_candidate": "ogb_recurrent_graph_state_gps9",
+  "selected_validation_gap_mae_eV": 0.13861275718212127,
+  "comparator_validation_gap_mae_eV": 0.13798263211250306,
+  "selected_strictly_improves": false,
+  "model_inference_executed": false,
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

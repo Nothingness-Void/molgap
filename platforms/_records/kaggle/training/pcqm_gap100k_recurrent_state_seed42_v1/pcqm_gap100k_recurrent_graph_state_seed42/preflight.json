@@ -1,0 +1,20 @@
+{
+  "format": "molgap-pcqm-gap100k-seed42-preflight-v1",
+  "complete": true,
+  "source_commit": "96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8",
+  "gpu": "Tesla P100-PCIE-16GB",
+  "batch_size": 48,
+  "candidates": [
+    {
+      "candidate": "ogb_recurrent_graph_state_gps9",
+      "parameter_count": 4818897,
+      "finite_prediction": true,
+      "finite_loss": true,
+      "finite_gradients": true,
+      "peak_memory_bytes": 243269632,
+      "elapsed_s": 0.5913195099999484
+    }
+  ],
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}

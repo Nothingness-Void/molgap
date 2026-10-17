@@ -1,0 +1,36 @@
+{
+  "format": "molgap-pcqm-gap100k-candidate-v1",
+  "complete": true,
+  "candidate": "ogb_recurrent_graph_state_gps9",
+  "source_commit": "96ca9ba22a021fcdd8fdf8daecfe60fc0878c5c8",
+  "seed": 42,
+  "parameter_count": 4818897,
+  "parameter_budget": 5200000,
+  "best_epoch": 36,
+  "validation_gap_mae_eV": 0.13861275718212127,
+  "target_mean_eV": 5.695846080780029,
+  "target_std_eV": 1.1622838973999023,
+  "epochs_completed": 40,
+  "training_elapsed_s": 6666.716925205001,
+  "contract": {
+    "batch_size": 48,
+    "learning_rate": 0.00016,
+    "weight_decay": 1e-06,
+    "max_epochs": 40,
+    "patience": 8,
+    "precision": "fp32",
+    "target": "homolumogap"
+  },
+  "artifacts": {
+    "best_model": "results/ogb_recurrent_graph_state_gps9/best_model.pt",
+    "best_model_sha256": "c718dae4a71d80d8c169b764bae60f910c8da119e12a97c9d1927f8a611487b3",
+    "checkpoint": "results/ogb_recurrent_graph_state_gps9/checkpoint.pt",
+    "checkpoint_sha256": "efb0fe5e2120fd4e44672b58e0c78d060e4b30a206942d5eee3c0a0b09115966",
+    "validation_payload": "results/ogb_recurrent_graph_state_gps9/validation_payload.pt",
+    "validation_payload_sha256": "70e2f4ca4ca1e20803b0993999c1c9f104403bd072d158b3f25edefe51718598",
+    "trace": "results/ogb_recurrent_graph_state_gps9/trace.json",
+    "trace_sha256": "b15ee116309b39455b07221d4ccdff6e82682b1926a847266c1064d08c055322"
+  },
+  "official_validation_role_read": false,
+  "test_dev_role_read": false
+}
