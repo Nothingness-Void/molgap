@@ -5,8 +5,9 @@ from .common.spec import (FamilyContract, FamilyExecution, AddonContract, AddonC
 
 FAMILIES = MappingProxyType({
     **{(name, version): FamilyContract(name, version, "molgap." + module,
-        "modern2d_session_preview_v1", schema, ("train", "development"),
+        "modern2d_session_preview_v1", schema, ("train",),
         "frozen-family-pass-order", "frozen-train-mean-sample-std",
+        optional_roles=("development",),
         execution=FamilyExecution("molgap.family_training_runner", "modern2d-session-preview-v1",
             model_factory="molgap." + module + ":make_model",
             profile_adapter="molgap.family_execution_profile",
