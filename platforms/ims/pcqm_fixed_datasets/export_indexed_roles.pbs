@@ -1,0 +1,41 @@
+#!/bin/bash
+#PBS -l select=1:ncpus=16:mpiprocs=1:ompthreads=1
+#PBS -l walltime=02:00:00
+#PBS -j oe
+set -euo pipefail
+umask 077
+BOUNDARY=/lustre/home/users/sm2/chou
+STAGE="${MOLGAP_EXPORT_STAGE:?explicit committed source stage required}"
+REQUEST="$STAGE/request.json"
+OUTPUT="${MOLGAP_EXPORT_OUTPUT:?explicit separate selected export required}"
+test "$(realpath "$BOUNDARY")" = "$BOUNDARY"
+test "$(realpath "$STAGE")" = "$STAGE"
+test "$(realpath "$REQUEST")" = "$REQUEST"
+test "$(realpath -m "$OUTPUT")" = "$OUTPUT"
+case "$STAGE" in "$BOUNDARY"/*) ;; *) exit 2 ;; esac
+case "$OUTPUT" in "$BOUNDARY"/*) ;; *) exit 2 ;; esac
+export PYTHONPATH="$STAGE/code/src"
+# Reuse the registered environment without following its interpreter symlink.
+PYTHONPATH="$("$BOUNDARY/molgap/.venv/bin/python" - "$STAGE" "$BOUNDARY" <<'PY'
+import json, os, sys
+from pathlib import Path
+stage, boundary = map(Path, sys.argv[1:])
+runtime = json.loads((stage/'code/platforms/ims/v4_submit/runtime_registry.json').read_bytes())['runtimes']['ims-a100-torch271-v1']
+assert Path(runtime['python']) == boundary/'molgap/.venv/bin/python'
+paths = [p.format(code_root=str(stage/'code')) for p in runtime['pythonpath']]
+assert all(Path(p).resolve().is_relative_to(boundary) for p in paths)
+print(os.pathsep.join(paths))
+PY
+)"
+export PYTHONPATH PYTHONNOUSERSITE=1
+export CUDA_VISIBLE_DEVICES=-1 HIP_VISIBLE_DEVICES=-1 ROCR_VISIBLE_DEVICES=-1
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+cd "$STAGE"
+printf 'CPU_ONLY_EXPORT job=%s stage=%s output=%s started=%s\n' "${PBS_JOBID:-UNKNOWN}" "$STAGE" "$OUTPUT" "$(date -u +%FT%TZ)"
+PYTHON="$BOUNDARY/molgap/.venv/bin/python"
+ENTRY="$STAGE/code/experiments/modern2d_model_integration/scripts/export_inputs.py"
+"$PYTHON" "$ENTRY" --request "$REQUEST" --boundary "$BOUNDARY" --execute
+PIN="$(sha256sum "$OUTPUT/acceptance.json")"
+PIN="${PIN%% *}"
+"$PYTHON" "$ENTRY" --request "$REQUEST" --boundary "$BOUNDARY" --execute --verify-acceptance-sha256 "$PIN"
+printf 'CPU_EXPORT_VERIFIED acceptance_sha256=%s completed=%s\n' "$PIN" "$(date -u +%FT%TZ)"

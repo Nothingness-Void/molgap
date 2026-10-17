@@ -1,0 +1,18 @@
+{
+  "format": "molgap-modern2d-bounded-qualification-authority-v1",
+  "owner": "server",
+  "user_authorized": true,
+  "authorization": "Human reply: allow the bounded IMS CPU export and Kaggle2 T4x2 qualification; 2026-10-17 JST",
+  "purpose": "EXECUTION_QUALIFICATION_ONLY",
+  "roles": ["train_100k", "common_dev"],
+  "arms": ["ppgt_author_v2", "esa_native_v3"],
+  "interfaces": [["ppgt_small", "2"], ["esa_small", "3"]],
+  "seeds": [42],
+  "physical_batch_size": 128,
+  "cpu": {"platform": "ims", "wall_ceiling_seconds": 7200, "allocated_cpus": 16, "allocated_gpus": 0},
+  "gpu": {"platform": "kaggle2", "owner": "kaseichou", "accelerator": "NvidiaTeslaT4", "allocated_devices": 2, "wall_ceiling_seconds": 1800, "allocated_t4_hours_ceiling": 1},
+  "scientific_training_authorized": false,
+  "protected_role_access_authorized": false,
+  "extra_seed_authorized": false,
+  "automatic_successor_authorized": false
+}

@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 from test_pcqm_indexed_export import _files, _inputs
+from molgap.research_memory.trace import file_digest
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,10 +42,12 @@ def _write_request(boundary, request):
     return path
 
 
-def _argv(request_path, boundary, *, execute=False):
+def _argv(request_path, boundary, *, execute=False, verify=None):
     argv = ["--request", str(request_path), "--boundary", str(boundary)]
     if execute:
         argv.append("--execute")
+    if verify is not None:
+        argv.extend(["--verify-acceptance-sha256", verify])
     return argv
 
 
@@ -53,7 +56,20 @@ def test_export_inputs_help_is_a_thin_explicit_entrypoint(capsys):
         CLI.main(["--help"])
     assert error.value.code == 0
     output = capsys.readouterr().out
-    assert "--request" in output and "--boundary" in output and "--execute" in output
+    assert ("--request" in output and "--boundary" in output and "--execute" in output
+            and "--verify-acceptance-sha256" in output)
+
+
+def test_verify_acceptance_sha256_requires_execute(tmp_path):
+    boundary = tmp_path / "boundary"
+    boundary.mkdir()
+    args = _inputs(boundary)
+    request_path = _write_request(boundary, _request(args, boundary))
+
+    with pytest.raises(SystemExit) as error:
+        CLI.main(_argv(request_path, boundary, verify="a" * 64))
+    assert error.value.code == 2
+    assert not args["output_root"].exists()
 
 
 def test_default_prepare_only_does_not_touch_synthetic_parent_or_output(tmp_path, capsys):
@@ -121,3 +137,51 @@ def test_explicit_execute_exports_only_the_small_synthetic_fixture(tmp_path, cap
     assert acceptance["status"] == "SYNTHETIC_DATA_ROLES_VERIFIED"
     assert acceptance["training_authority"] == "NOT_AUTHORIZED_FOR_SCIENTIFIC_TRAINING"
     assert acceptance["publication_status"] == "NOT_PUBLISHED"
+
+
+def test_verify_acceptance_sha256_is_independent_and_read_only(tmp_path, capsys, monkeypatch):
+    boundary = tmp_path / "boundary"
+    boundary.mkdir()
+    args = _inputs(boundary)
+    request_path = _write_request(boundary, _request(args, boundary))
+
+    assert CLI.main(_argv(request_path, boundary, execute=True)) == 0
+    capsys.readouterr()
+    acceptance_path = args["output_root"] / "acceptance.json"
+    acceptance_sha256 = file_digest(acceptance_path)
+    before_parent = _files(args["parent_root"])
+    before_output = {
+        path.relative_to(args["output_root"]).as_posix():
+        (file_digest(path), path.stat().st_mtime_ns)
+        for path in args["output_root"].rglob("*") if path.is_file()
+    }
+
+    import molgap.pcqm_indexed_export as owner
+
+    verify_calls = []
+    original_verify = owner.verify_indexed_export
+
+    def verify(*positional, **keyword):
+        verify_calls.append(keyword["export_acceptance_sha256"])
+        return original_verify(*positional, **keyword)
+
+    def forbidden_export(*positional, **keyword):
+        raise AssertionError("verify-only mode must not rebuild or export")
+
+    monkeypatch.setattr(owner, "verify_indexed_export", verify)
+    monkeypatch.setattr(owner, "export_indexed_roles", forbidden_export)
+
+    assert CLI.main(_argv(request_path, boundary, execute=True,
+                          verify=acceptance_sha256)) == 0
+    observed = json.loads(capsys.readouterr().out)
+    assert observed["status"] == "SYNTHETIC_DATA_ROLES_VERIFIED"
+    assert observed["acceptance_sha256"] == acceptance_sha256
+    assert observed["independently_verified"] is True
+    assert verify_calls == [acceptance_sha256]
+    assert before_parent == _files(args["parent_root"])
+    after_output = {
+        path.relative_to(args["output_root"]).as_posix():
+        (file_digest(path), path.stat().st_mtime_ns)
+        for path in args["output_root"].rglob("*") if path.is_file()
+    }
+    assert after_output == before_output

@@ -1,0 +1,50 @@
+{
+  "format": "molgap-indexed-private-export-request-v1",
+  "scope": "ACCEPTED_INDEXED_INPUT_V1",
+  "parent_root": "pcqm4mv2-unified-v2-si-two-p-r2",
+  "output_root": "pcqm4mv2-modern2d-100k-commondev-v1",
+  "roles": ["train_100k", "common_dev"],
+  "permits": {
+    "train_100k": {
+      "role": "train_100k", "scope": "ACCEPTED_INDEXED_INPUT_V1",
+      "acceptance_sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65",
+      "manifest_sha256": "c722bea060d2450b9c79430374d817c167d98776c496e01fa9a7020af1fee030",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "authority_sha256": "e0b1fe5370b0381c1ae5d8a437c47035d58c86de79d8100138a314cd64d31cf7",
+      "role_history_sha256": "95efa032b8e2caa1c0edfdb6326b6fff3ad9f1680a4cb342aa33b7780a8ea5a7",
+      "max_chunk_bytes": 536870912
+    },
+    "common_dev": {
+      "role": "common_dev", "scope": "ACCEPTED_INDEXED_INPUT_V1",
+      "acceptance_sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65",
+      "manifest_sha256": "7e5d398a8a2d25558e3a7686268cad81642918d8e9f6a5192bca62205a77a39a",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "authority_sha256": "f881d5b39fa2142d1adbfab927dc04df607f4857116b31d0d5bb65f2543b3d19",
+      "role_history_sha256": "80b4f60735fa70fffefa27be84ed254d137b6109ea50aae2cf57ff226f30f92b",
+      "max_chunk_bytes": 536870912
+    }
+  },
+  "authorities": {
+    "train_100k": {
+      "scope": "ACCEPTED_INDEXED_INPUT_V1", "role": "train_100k",
+      "acceptance_sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65",
+      "manifest_sha256": "c722bea060d2450b9c79430374d817c167d98776c496e01fa9a7020af1fee030",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "operations": ["prediction_input", "labels_read"], "protected": false, "max_chunk_bytes": 536870912
+    },
+    "common_dev": {
+      "scope": "ACCEPTED_INDEXED_INPUT_V1", "role": "common_dev",
+      "acceptance_sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65",
+      "manifest_sha256": "7e5d398a8a2d25558e3a7686268cad81642918d8e9f6a5192bca62205a77a39a",
+      "version_identity": "f1bce8ca0161193341abea04a8920aea425e364348c029b7bd1b219672d1b077",
+      "operations": ["prediction_input", "labels_read"], "protected": false, "max_chunk_bytes": 536870912
+    }
+  },
+  "role_histories": {
+    "train_100k": {"role": "train_100k", "manifest_sha256": "c722bea060d2450b9c79430374d817c167d98776c496e01fa9a7020af1fee030", "usage": "training"},
+    "common_dev": {"role": "common_dev", "manifest_sha256": "7e5d398a8a2d25558e3a7686268cad81642918d8e9f6a5192bca62205a77a39a", "usage": "selection-used"}
+  },
+  "parent_acceptance_sha256": "673bcf10d10cb16d493c01221eac8edaf085918ebcaec77c26bdbdd5072ead65",
+  "max_chunk_bytes": 536870912,
+  "max_rows": {"train_100k": 100000, "common_dev": 50000}
+}

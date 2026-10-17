@@ -13,11 +13,12 @@ def main(argv=None):
     parser.add_argument("--request", type=Path, required=True)
     parser.add_argument("--boundary", type=Path, required=True)
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--verify-acceptance-sha256", help="Read-only independent verification of an already completed export")
     args = parser.parse_args(argv)
     from molgap.common.io import _safe_local
     from molgap.research_memory.paths import repo_local_path
     from molgap.data.indexed_inputs import AcceptedIndexedInputPermit, IndexedInputPermit
-    from molgap.pcqm_indexed_export import export_indexed_roles
+    from molgap.pcqm_indexed_export import export_indexed_roles, verify_indexed_export
     from molgap.research_memory.trace import file_digest
 
     boundary = args.boundary.absolute()
@@ -48,15 +49,19 @@ def main(argv=None):
         _safe_local(boundary / relative)
         options[key] = repo_local_path(boundary, relative)
     options["permits"] = permits
+    if args.verify_acceptance_sha256 and not args.execute:
+        parser.error("Independent payload verification requires --execute")
     if not args.execute:
         print(json.dumps({"status": "PREPARE_ONLY_NOT_EXECUTED", "request_sha256": file_digest(request_path),
             "roles": request["roles"], "remote_submission": False, "training_released": False}))
         return 0
-    result = export_indexed_roles(**options)
+    result = (verify_indexed_export(export_acceptance_sha256=args.verify_acceptance_sha256, **options)
+              if args.verify_acceptance_sha256 else export_indexed_roles(**options))
     receipt = options["output_root"] / "acceptance.json"
     print(json.dumps({"status": result["status"], "acceptance_path": str(receipt),
         "acceptance_sha256": file_digest(receipt), "publication_status": result["publication_status"],
-        "roles": {role: value["rows"] for role, value in result["roles"].items()}, "training_released": False}))
+        "roles": {role: value["rows"] for role, value in result["roles"].items()},
+        "independently_verified": bool(args.verify_acceptance_sha256), "training_released": False}))
     return 0
 
 
