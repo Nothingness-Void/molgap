@@ -29,9 +29,6 @@ class FamilyLoaders:
         if data.indexed and not getattr(recipe, "integration_preview", False):
             raise ValueError("Indexed data requires its explicitly versioned integration interface")
         if getattr(recipe, "integration_preview", False):
-            if (len(data.train) != data.train_rows or
-                    (data.development is not None and len(data.development) != data.development_rows)):
-                raise ValueError("Integration input decoded row count differs from its declaration")
             if recipe.dataset.manifest.startswith("synthetic/"):
                 if data.synthetic is not True:
                     raise ValueError("Integration fixture cannot substitute real data")
@@ -45,6 +42,9 @@ class FamilyLoaders:
                 if (data.train.permit.role != ("train_100k" if recipe.train_rows == 100000 else "train_500k") or
                         (recipe.dataset.development and data.development.permit.role != "common_dev")):
                     raise ValueError("Real integration data role differs from the explicit scale")
+            if (len(data.train) != data.train_rows or
+                    (data.development is not None and len(data.development) != data.development_rows)):
+                raise ValueError("Integration input decoded row count differs from its declaration")
         if data.indexed and (data.train_source_start is not None or data.development_source_start is not None or
                 data.train_source_indices is None or len(data.train_source_indices) != data.train_rows or
                 (data.development is not None and (data.development_source_indices is None or
