@@ -1,0 +1,97 @@
+{
+  "acceptance_requirements": {
+    "completed_passes": 0,
+    "development_rows": 0,
+    "next_batch": 2,
+    "optimizer_steps": 2,
+    "precision": "fp32",
+    "sample_presentations": 256,
+    "source_idx_sha256": null,
+    "target_sha256": null
+  },
+  "batch_size": 128,
+  "checkpoint_every": 1,
+  "dataset": {
+    "development": false,
+    "manifest": "training_input.json",
+    "manifest_sha256": "70da7c30d2c7e3deb4643813b78a074bb751bb2cd2c4ceebd7728be568de8690"
+  },
+  "development_role_identity": null,
+  "development_rows": 0,
+  "drop_last": true,
+  "ema_decay": null,
+  "execution_policy": {
+    "adamw_betas": [
+      0.9,
+      0.999
+    ],
+    "adamw_epsilon": 1e-08,
+    "cpu_layout": false,
+    "device": "cpu_or_admitted_cuda",
+    "ema": null,
+    "family": "ppgt_small",
+    "feature_transform_source_sha256": "866abcb2fb71176ec5b2dd6089ca832ac6c9a37bfae1eb7d0e085c170587dfa5",
+    "name": "modern2d-session-preview-v1",
+    "native_qualification": "NOT_EVALUATED",
+    "optimizer": "foreach-adamw",
+    "precision": "fp32",
+    "scope": "QUALIFICATION_ONLY",
+    "tf32": false,
+    "torch_version": "2.7.1"
+  },
+  "family": "ppgt_small",
+  "family_version": "2",
+  "finite_check_every": 1,
+  "format": "molgap-family-training-recipe-v1",
+  "gradient_clip": 1.0,
+  "initialization_sha256": "dd0b414662721b61e2183cedfd929cd09ddc4b7b3a79164165f2935452ede18e",
+  "learning_rate": 0.001,
+  "logging": {
+    "interval": null,
+    "mode": "epoch"
+  },
+  "mode": "reference",
+  "model_config": {
+    "attention_dropout": 0.0,
+    "blocks": 16,
+    "epsilon": 1e-06,
+    "expansion": 2,
+    "heads": 8,
+    "hidden": 256,
+    "layer_scale": 0.0001,
+    "max_edges": 1024,
+    "max_nodes": 256,
+    "pair_dim": 128,
+    "pe_mlp_hidden": 512,
+    "pooling": "sum",
+    "rrwp_steps": 24,
+    "spe_bases": 10,
+    "stem_blocks": 8,
+    "stem_expansion": 2,
+    "stochastic_depth": 0.0,
+    "sym_norm": true,
+    "use_phi": true
+  },
+  "optimizer_steps": 2,
+  "qualification": {
+    "purpose": "numerical-resume-resources-only",
+    "scratch_updates_per_model": 6,
+    "steps_per_path": 2
+  },
+  "sampler": "torch-pass-randperm",
+  "schedule": {
+    "kind": "cosine_step",
+    "minimum_lr": 1e-06,
+    "reference_epochs": 60,
+    "total_units": 2,
+    "warmup_units": 0
+  },
+  "seed": 42,
+  "selection": "final-live",
+  "target_mean_eV": 5.338300266634226,
+  "target_std_eV": 1.275090206323082,
+  "torch_version": "2.7.1",
+  "train_role_identity": "4923ae0ea2f101f9658bfd212c7af3bfc0c438c32540a242d4c3e7816da04527",
+  "train_rows": 100000,
+  "weight_decay": 0.01
+}

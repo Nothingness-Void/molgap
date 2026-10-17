@@ -81,7 +81,7 @@ def _authority(root, base=BASE):
 
 
 def freeze_qualification_retry(repo_root, *, base, kernel, source_dataset,
-                               authorization, previous_base=BASE):
+                               authorization, previous_base=BASE, previous_decision_ref=None):
     """Declare a versioned retry using frozen recipes/states, without models.
 
     authorization is the new human authorization text. The returned commit_required
@@ -152,8 +152,12 @@ def freeze_qualification_retry(repo_root, *, base, kernel, source_dataset,
     if policy_path.exists():
         raise ValueError("Retry policy already exists; preserve its bytes")
     run = "modern2d-native-100k-s42-" + suffix
-    failed_refs = [previous_base + "/STATUS.md", previous_base + "/experiment_spec.json",
-                   previous_base + "/results/decision_2026-10-18.md"]
+    failed_refs = [previous_base + "/STATUS.md", previous_base + "/experiment_spec.json"]
+    if previous_decision_ref is not None:
+        safe_comparison_base(previous_decision_ref, base=previous_base)
+        if not _under(root, previous_decision_ref).is_file():
+            raise ValueError("Previous attempt decision must be an existing retained record")
+        failed_refs.append(previous_decision_ref)
     authority = deepcopy(prior_authority)
     authority.update(authorization=authorization, owner="server", run_reference=kernel,
         source_dataset=source_dataset, logical_run_id=run, scratch_optimizer_updates_per_model=6,
@@ -240,6 +244,8 @@ def freeze_qualification_retry(repo_root, *, base, kernel, source_dataset,
     records = [rebase_record(record) for record in source_records
                if record != old_policy_ref and not record.endswith("/plan_input.json")]
     records.extend([policy_ref, ENTRY, *new_plan_records, base + "/STATUS.md"])
+    if previous_decision_ref is not None:
+        records.append(previous_decision_ref)
     prep.update(jobs=jobs, spec_identity=spec.identity,
                 source_records=list(dict.fromkeys(records)))
     _write(here / "preparation.json", prep)

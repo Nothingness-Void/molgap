@@ -1,0 +1,74 @@
+{
+  "status": "INFRA_CPU_ACCEPTED",
+  "scope": "DEVICE_AND_REGISTRY_REPAIR_ONLY",
+  "native_execution_qualified": false,
+  "scientific_training_authorized": false,
+  "repairs": [
+    "Validate output against the staged topology tensor's concrete device, not an unindexed transfer request.",
+    "Reject wrong staged device types and explicit non-CPU indices before model forward; retain strict output device/shape/FP32/finite checks.",
+    "Include observed output/input device values in mismatch errors; route CPU synthetic forward through the same guard.",
+    "Align preview registry validation with the unchanged catalog: train required, development optional. No family/data/training contract was changed.",
+    "Bind a retry to an existing confined previous decision record and package its exact bytes rather than fabricate a dated history path."
+  ],
+  "source_normalized_sha256": {
+    "src/molgap/family_training_kernel.py": "503e1df16340e08b22cb2a84b6d0f01473865cf9f0cbcbf25955c26830e076a8",
+    "src/molgap/shared_model_adapter.py": "bfc1a6145c0810dbfc4d8844951eba51186c6a032606eeef9f5270195be6d62f",
+    "src/molgap/modern2d_qualification_prepare.py": "08338bf82f16bf02d93f7198b14b31f74d6c1636ef6f041b580e4ea413dd6a4e",
+    "src/molgap/experiment_execution.py": "45c40ad730191cf47e3f7873b0b01632aeeed0dcfc199d1762ef3fd96a3ef56c"
+  },
+  "delegated_cpu_checks": [
+    {
+      "suite": "tests/test_family_device_validation.py",
+      "passed": 14,
+      "failed": 0,
+      "worker": "01a14b14-e839-7502-8dec-d1353913688a",
+      "coverage": "CPU aliases, N/N1, missing inference y, synthetic forward, bad shape/dtype/nonfinite/non-tensor, meta output mismatch, CUDA request/CPU staging, explicit CUDA 0/1 index rejection without CUDA allocation"
+    },
+    {
+      "suites": [
+        "tests/test_modern2d_qualification.py",
+        "tests/test_family_training_kernel.py",
+        "tests/test_modern2d_integration_session.py"
+      ],
+      "passed": 193,
+      "failed_before_registry_repair": 2,
+      "elapsed_seconds": 94.79,
+      "worker": "01a14b14-e93b-7243-b282-d17ccc6a54c3",
+      "coverage": "Generated tiny PPGT/2 and ESA/3 BS128 six-update repeat/resume, shared kernel and preview Session; two registration failures triggered the additional registry repair"
+    },
+    {
+      "suite": "Focused registry repair: two original failures, two new negatives, all seven modern2d_registration cases",
+      "passed": 11,
+      "failed": 0,
+      "elapsed_seconds": 16.21,
+      "worker": "01a14b14-e93b-7243-b282-d17ccc6a54c3",
+      "original_failures_resolved": true
+    },
+    {
+      "suites": [
+        "tests/test_modern2d_qualification_runtime.py",
+        "tests/test_modern2d_qualification_prepare.py",
+        "tests/test_modern2d_qualification_retry.py"
+      ],
+      "passed": 70,
+      "failed": 0,
+      "elapsed_seconds": 82.44,
+      "worker": "01a14b14-eaa0-71e0-9504-49343ff20331",
+      "coverage": "Launch/authority/role isolation, timeout/retention, immutable packaging, initial state reuse and valid/escaping/missing previous attempt references"
+    }
+  ],
+  "test_log_provenance": "Delegated leaf subprocess outputs retained in the task history; no standalone raw pytest log was configured for the Session/registry batch. Counts include overlapping batches and must not be summed as distinct tests.",
+  "rml_validate_before_package_exit": 0,
+  "user_file_byte_pins_matched_before": 14,
+  "static_review": "No additional deterministic post-forward worker/certificate/repeat-resume/resource/cleanup interface defect identified; real CUDA arithmetic, gradients, exact repeat/resume, memory/throughput and complete allocation cost remain unverified.",
+  "not_changed": [
+    "Model implementations and parameters",
+    "Accepted dataset and membership/labels",
+    "V1 initialization bytes and frozen recipes",
+    "Training loop, optimizer, sampler and resume semantics",
+    "Historical scientific outcomes and user-owned derived files"
+  ],
+  "raw_artifact_root": "E:/MolGap/artifacts/modern2d-native-preflight/retry_v3",
+  "retry_spec_identity": "d9101b7f983bcbf98146418f4218a5597f789e432022bfdee44437f6083e3f06",
+  "authorized_remote_scope": "One Kaggle2 T4x2 qualification attempt, at most1800 seconds/1 allocated T4-hour; six scratch updates per model, BS128 seed42, no protected roles or automatic successor"
+}

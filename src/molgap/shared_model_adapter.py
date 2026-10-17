@@ -257,7 +257,8 @@ def validate_model_output(output, *, rows: int, device=None):
     if output.ndim != 1 or output.shape[0] != rows:
         raise ValueError("Model output must contain one normalized Gap per graph")
     if device is not None and output.device != device:
-        raise ValueError("Model output device differs from its input batch")
+        raise ValueError("Model output device differs from its input batch "
+            f"(output={output.device}, input={device})")
     if output.dtype is not torch.float32 or not bool(torch.isfinite(output).all()):
         raise ValueError("Model output must be finite FP32")
     return output

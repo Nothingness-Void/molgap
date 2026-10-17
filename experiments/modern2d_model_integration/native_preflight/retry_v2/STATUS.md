@@ -5,17 +5,19 @@ Owner: server. Authority: [authority.json](authority.json).
 ## Exact attempt
 
 Kaggle2 `kaseichou/molgap-modern2d-native-100k-v2`, kernel139267796/version1,
-was submitted once and last observed RUNNING at 2026-10-17T17:05:07.126651+00:00.
-The private/T4 request, both dataset references and pulled entry bytes matched
-the frozen package. The bounded startup log request timed out without events;
-that transport uncertainty is not an execution failure or numerical acceptance.
+was submitted once and observed ERROR at 2026-10-17T17:40:28.606718+00:00.
+The [inspection](results/inspection_2026-10-18.md) retained exact-version outputs
+and all13 manifest-bound artifact hashes. Source/data discovery and environment
+setup passed; both workers failed at their first forward-output device check,
+before backward or an optimizer update. Native qualification is NOT_ACCEPTED;
+this is a shared execution-interface failure, not a scientific route negative.
 
 PPGT/2 and ESA/3 use separate devices, RNG, models, optimizers and checkpoints.
 The limit is T4x2,1800 seconds/1 allocated T4-hour, BS128, seed42 and six scratch
 optimizer updates/model. This is numerical/resume/resource qualification only:
 no 60-pass training, scientific ranking, protected roles, extra seeds or automatic
 successor is authorized. Native qualification and full allocation cost are
-unverified until the exact-version artifacts and accounting are accepted.
+unverified. No repair or remote retry was executed during this inspection.
 
 ## Frozen release and retrieval
 
@@ -37,3 +39,5 @@ infrastructure failure, not a scientific negative.
 The delegated RML validator passed. Its frozen-derived check reported the same
 seven stale derived outputs retained from the user's worktree, without new-plan
 errors; no derived rebuild or unrelated edit was performed.
+Those were submission-time checks, not terminal acceptance. Prospective RML
+snapshots remain unfinalized and must not be interpreted as live job state.

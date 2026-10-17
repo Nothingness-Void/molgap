@@ -144,7 +144,10 @@ def test_preview_registry_bindings_and_native_routes_fail_before_io(tmp_path, mo
     try:
         spec = preview_spec(payload, recipe)
         adapter = TRAINING_ADAPTERS[recipe.interface]
+        contract = FAMILIES[recipe.interface]
         assert adapter.integration_preview and adapter.module == "molgap.family_training_runner"
+        assert contract.roles == ("train",)
+        assert contract.optional_roles == ("development",)
         assert artifact_adapter(MODERN2D_PREVIEW_PROFILE, recipe.interface).protocol == "family-session"
         capabilities = workflow_capabilities(spec)
         assert not capabilities["registered_training_arms"]
@@ -167,6 +170,20 @@ def test_preview_registry_bindings_and_native_routes_fail_before_io(tmp_path, mo
                 initial_state_path=None, trajectory_id=None)
     finally:
         session.close()
+
+
+@pytest.mark.parametrize("roles,optional_roles", [
+    (("train", "development"), ()),
+    (("train",), ("development", "audit")),
+])
+def test_preview_registry_rejects_noncanonical_role_contract(monkeypatch, roles, optional_roles):
+    import molgap.experiment_execution as execution
+
+    interface = INTERFACES[0]
+    stale = replace(execution.FAMILIES[interface], roles=roles, optional_roles=optional_roles)
+    monkeypatch.setattr(execution, "FAMILIES", {**execution.FAMILIES, interface: stale})
+    with pytest.raises(ValueError, match="Unreviewed Modern2D integration preview registration"):
+        execution.validate_training_registry()
 
 
 @pytest.mark.parametrize("family,version", INTERFACES)

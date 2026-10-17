@@ -162,7 +162,15 @@ class FamilyKernel:
 
     def _model_forward(self, model, batch):
         from .shared_model_adapter import validate_model_output
-        return validate_model_output(model(batch), rows=int(batch.num_graphs), device=self.device)
+        staged_device = batch.x.device
+        # A transfer request such as cuda is not the concrete cuda:0 descriptor.
+        # Compare output to staged tensors while still rejecting a wrong transfer.
+        if (staged_device.type != self.device.type or
+                (self.device.type != "cpu" and self.device.index is not None and
+                 staged_device.index != self.device.index)):
+            raise ValueError("Model input device differs from its requested device "
+                f"(input={staged_device}, requested={self.device})")
+        return validate_model_output(model(batch), rows=int(batch.num_graphs), device=staged_device)
 
     def step(self, cpu_batch, *, check_finite, observer=None):
         if self._qualification_admission is not None:
@@ -234,8 +242,7 @@ class FamilyKernel:
             raise ValueError("Qualification admission permits scratch updates only, not evaluation")
         model = self.model if model is None else model
         if self.recipe.cpu_synthetic_only:
-            from .shared_model_adapter import validate_model_output
-            return validate_model_output(model(cpu_batch), rows=int(cpu_batch.num_graphs), device=self.device)
+            return self._model_forward(model, cpu_batch)
         if self.recipe.integration_preview:
             return self._model_forward(model, self._model_batch(cpu_batch, training=False))
         if self.recipe.family == "neural_atom_k1":

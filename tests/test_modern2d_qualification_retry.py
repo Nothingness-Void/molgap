@@ -55,7 +55,7 @@ def retained_v1(tmp_path):
     return root
 
 
-def _retry(root, version, *, previous_base=owner.BASE):
+def _retry(root, version, *, previous_base=owner.BASE, previous_decision_ref=None):
     suffix = "v" + str(version)
     return owner.freeze_qualification_retry(
         root,
@@ -64,6 +64,7 @@ def _retry(root, version, *, previous_base=owner.BASE):
         source_dataset=owner.ACCOUNT + "/molgap-modern2d-qualification-source-retry-" + suffix,
         authorization="Human reply: authorize bounded retry " + suffix,
         previous_base=previous_base,
+        previous_decision_ref=previous_decision_ref,
     )
 
 
@@ -122,17 +123,46 @@ def test_retry_reuses_frozen_bytes_and_derives_v2_then_v3(retained_v1):
                         not value.startswith(v2["base"] + "/")) for value in contract_refs)
 
     v2_policy_path = "research_memory/policies/modern2d-native-qualification-retry-v2.v1.json"
+    previous_decision_ref = v2["base"] + "/results/inspection_2026-10-18.md"
+    previous_decision = root / previous_decision_ref
+    previous_decision.parent.mkdir(parents=True)
+    previous_decision.write_bytes(b"retry-v2 actual inspection; infrastructure-only\n")
+    previous_decision_bytes = previous_decision.read_bytes()
     v2_snapshot = {**_snapshot(root, v2["base"]),
                    v2_policy_path: (root / v2_policy_path).read_bytes()}
-    v3 = _retry(root, 3, previous_base=v2["base"])
+    v3 = _retry(root, 3, previous_base=v2["base"],
+                previous_decision_ref=previous_decision_ref)
     v3_spec = ExperimentSpec(_json(root / v3["base"] / "experiment_spec.json"))
+    v3_prep = _json(root / v3["base"] / "preparation.json")
+    v3_authority = _json(root / v3["base"] / "authority.json")
     assert v3_spec.identity not in {v1_spec.identity, v2_spec.identity}
     assert v3_spec.to_dict()["logical_run_id"].endswith("-v3")
     assert v3["kernel"].endswith("-v3") and v3["source_dataset"].endswith("-v3")
+    assert v3_authority["previous_attempt_refs"] == [
+        v2["base"] + "/STATUS.md", v2["base"] + "/experiment_spec.json",
+        previous_decision_ref]
+    assert previous_decision_ref in v3_prep["source_records"]
+    assert (root / previous_decision_ref).read_bytes() == previous_decision_bytes
+    assert previous_decision.is_file()
+    assert previous_decision.read_bytes() == previous_decision_bytes
     assert {**_snapshot(root, v2["base"]),
             v2_policy_path: (root / v2_policy_path).read_bytes()} == v2_snapshot
     for key, value in v1_snapshot.items():
         assert (root / key).read_bytes() == value
+
+
+def test_retry_rejects_previous_decision_escape_and_missing_record(retained_v1):
+    root = retained_v1
+    v2 = _retry(root, 2)
+    decision_ref = v2["base"] + "/results/inspection_2026-10-18.md"
+
+    with pytest.raises(ValueError):
+        _retry(root, 3, previous_base=v2["base"],
+               previous_decision_ref=v2["base"] + "/../escape.md")
+
+    with pytest.raises(ValueError, match="existing retained record"):
+        _retry(root, 4, previous_base=v2["base"],
+               previous_decision_ref=decision_ref)
 
 
 def test_retry_rejects_reuse_overwrite_escape_mismatch_and_wrong_owner(retained_v1):

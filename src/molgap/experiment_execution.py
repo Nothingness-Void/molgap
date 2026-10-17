@@ -210,7 +210,7 @@ def validate_training_registry() -> None:
                     or adapter.addons or adapter.model_factory != factory
                     or contract.source_module != factory.split(":")[0]
                     or contract.feature_schema != schema or contract.recipe != "modern2d_session_preview_v1"
-                    or contract.roles != ("train", "development") or contract.optional_roles
+                    or contract.roles != ("train",) or contract.optional_roles != ("development",)
                     or contract.sampler != "frozen-family-pass-order"
                     or contract.transform != "frozen-train-mean-sample-std"
                     or adapter.profile_adapter != "molgap.family_execution_profile"

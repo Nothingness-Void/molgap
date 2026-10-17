@@ -162,6 +162,9 @@ reconstructing models. Matching kernel/source `vN` suffixes bind fresh run,
 policy and prospective IDs; originals are not overwritten. Commit the returned
 declarations, then call `prepare_package` with the same explicit `base`,
 `kernel` and `source_dataset`, retaining the original initialization root.
+Supply `previous_decision_ref` when freezing a retry to bind the actual retained
+decision/inspection under `previous_base`; absent or escaping references fail
+before declaration publication, and no dated history path is fabricated.
 This is the bounded qualification adapter, not a formal-training release.
 
 ## Remaining native/scientific boundary
