@@ -21,3 +21,8 @@ platforms/_records/local/modern2d_cpu; Git stores compact evidence only.
 The [dated targeted review](review_hardening_2026-10-16.md) appends R1/R2
 observation/history binding, versioned ESA PMA repair, indexed-input preparation
 and newly pinned PPGT author-source evidence without revising that decision.
+
+The [2026-10-17 integration attempt](integration_attempt_2026-10-17.md) adds
+versioned author-code PPGT/2, isolate-safe ESA/3, explicit accepted indexed input
+loading and safe selected-role export. The [API guide](../../docs/operations/MODERN2D_INPUT_INTEGRATION.md)
+owns invocation. CPU evidence does not publish real mirrors or release native training.

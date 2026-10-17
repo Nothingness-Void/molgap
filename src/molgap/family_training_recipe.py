@@ -255,8 +255,10 @@ class FamilyRecipe:
             policy.update(name="modern2d-cpu-v1", scope="CPU_SYNTHETIC_ONLY",
                           cpu_layout=False, optimizer="native-adamw")
         if self.integration_preview:
+            from .modern2d_feature_binding import indexed_transform_identity
             policy.update(name="modern2d-session-preview-v1", scope="INTEGRATION_PREVIEW_ONLY",
-                          cpu_layout=False, device="cpu", native_qualification="INTEGRATION_PENDING")
+                          cpu_layout=False, device="cpu", native_qualification="INTEGRATION_PENDING",
+                          feature_transform_source_sha256=indexed_transform_identity(self.interface))
         return policy
 
     def to_dict(self):

@@ -1,0 +1,81 @@
+{
+  "format": "molgap-modern2d-integration-evidence-v1",
+  "date_jst": "2026-10-17",
+  "implementation_commit": "91bc746a2989759905799ca9b4267626642d8f21",
+  "status": "INSUFFICIENT_EVIDENCE",
+  "scope": "CPU_INTEGRATION_AND_GENERATED_ACCEPTED_ABI_FIXTURES",
+  "runtime_qualification": "NOT_EVALUATED",
+  "scientific_status": "NOT_EVALUATED",
+  "native_training_released": false,
+  "remote_jobs_submitted": 0,
+  "desktop_application": "NOT_APPLIED",
+  "source": {
+    "ppgt_author_commit": "62cafd3abbb8d72e9a8b3146f947a192cf0aacaf",
+    "ppgt_reference_manifest": "tests/vendor/ppgt_reference/manifest.json",
+    "gptrans_raw_sha256": "04edcb6f928617d1142c624d071b7d7accb15c92d2f66e3473ed666ca7e5b2b2",
+    "unrelated_dirty_files_preserved": 14,
+    "old_model_versions_modified": false
+  },
+  "model_evidence": {
+    "ppgt_small_2": {
+      "status": "SCOPED_CPU_FIXED_WEIGHT_AUTHOR_CORE_PARITY",
+      "parameters": 9536769,
+      "author_base_parameters": 86826529,
+      "table_small_dense_structure_parameters": 35235585,
+      "parameter_tensors_checked": 82,
+      "maximum_prediction_absolute_error": 5.960464477539063e-8,
+      "maximum_parameter_gradient_absolute_error": 1.7881393432617188e-7,
+      "scope": "SYNTHETIC_CPU_NORMALIZED_OUTPUTS_NOT_EV_MAE",
+      "limits": ["categorical and dependency-layout adaptations disclosed", "full constructor RNG parity not established", "published small recipe and parameter table unresolved", "no native kernel or benchmark replication"]
+    },
+    "esa_small_3": {
+      "status": "CPU_ADAPTED_MODEL_PROPERTIES_VERIFIED",
+      "parameters": 5015233,
+      "scope": "EXPLICIT_ISOLATED_ATOM_TOKENS_AND_INVARIANT_PMA_NOT_UNCHANGED_AUTHOR_MODEL",
+      "limits": ["no actual dataset census", "no native padding-kernel parity", "whole published benchmark not reproduced"]
+    }
+  },
+  "batches": [
+    {"name": "indexed_topology_and_existing_data_core", "tests": 105, "passed": 105, "failed": 0, "errors": 0, "skipped": 0, "seconds": 16.358,
+     "junit": "E:/MolGap/artifacts/modern2d-integration/indexed-leaf-20261017T064515Z-82366f6f051945ff9ab4d3473eca7461/junit.xml", "sha256": "5dc6a48fb29380a9e774c6628eaca385e907155ae51bf7942d89267c82bfa4b7"},
+    {"name": "esa_native_and_prior_esa_regression", "tests": 92, "passed": 92, "failed": 0, "errors": 0, "skipped": 0, "seconds": 43.269,
+     "junit": "E:/MolGap/artifacts/modern2d-integration/esa-leaf-20261017_154136079_efd1846b41b04b6bb0df189e37f9e598/junit.xml", "sha256": "a4997e3cd1535c255320f83f635c3c7d6fdb785eb92a08932420b27f01e92195"},
+    {"name": "ppgt_author_core_features_model_and_discrepancy", "tests": 33, "passed": 33, "failed": 0, "errors": 0, "skipped": 0, "seconds": 17.119,
+     "junit": "E:/MolGap/artifacts/modern2d-integration/ppgt-leaf-20261017T065331095Z-28168-33344/junit.xml", "sha256": "8ef27ded553df2b6b4edae83353133cbe560480837a1e1a8d9bea109cfde8dce"},
+    {"name": "new_session_integration", "tests": 16, "passed": 16, "failed": 0, "errors": 0, "skipped": 0, "seconds": 81.966,
+     "junit": "E:/MolGap/artifacts/modern2d-integration/session-leaf-20261017-155300518-c20a8bf5/report/01_modern2d_integration_session.xml", "sha256": "d24ec1d7bedf8b0293e7a69c71573797a6630f403f81004ce09c5990b741da97"},
+    {"name": "shared_session_recipe_registration_before_commit", "tests": 204, "passed": 201, "failed": 3, "errors": 0, "skipped": 0, "seconds": 88.545,
+     "classification": "THREE_SOURCE_BUNDLES_REFUSED_UNCOMMITTED_SOURCE_NOT_SCIENTIFIC_FAILURE",
+     "junit": "E:/MolGap/artifacts/modern2d-integration/session-leaf-20261017-155300518-c20a8bf5/report/02_remaining_requested_tests.xml", "sha256": "3e276b3fe3e416953382ce4b5d1f846b8881e25315b1e2a4617fefa165062335"},
+    {"name": "generated_accepted_count_abi_and_indexed_integration", "tests": 39, "passed": 39, "failed": 0, "errors": 0, "skipped": 0, "seconds": 47.203,
+     "classification": "GENERATED_100K_50K_TENSORS_NOT_ACTUAL_PCQM_ACCEPTANCE",
+     "junit": "E:/MolGap/artifacts/modern2d-integration/real-abi-leaf-20261017-155725388-d2563fa7/report/accepted-indexed-junit.xml", "sha256": "26a5896187e82d360ccb7fd27633ac8d8ffb035db6e5fac044dc32d3f678f802"},
+    {"name": "private_export_and_old_indexed_regression", "tests": 59, "passed": 59, "failed": 0, "errors": 0, "skipped": 0, "seconds": 128.187,
+     "junit": "E:/MolGap/artifacts/modern2d-integration/export-leaf-20261017-155807436/report/indexed-export-and-inputs.junit.xml", "sha256": "50db9e81a7c9d076fe7857fada1cc20c8c8eecd54ba02ad4f2351d80eba39e5c"}
+  ],
+  "count_semantics": "Overlapping independent batches; not a distinct-test sum or whole-repository claim",
+  "committed_source_package_recheck": {
+    "source_commit": "91bc746a2989759905799ca9b4267626642d8f21",
+    "new_model_cases_passed": 2,
+    "prior_refused_cases_rechecked_passed": 3,
+    "new_model_junit": "E:/MolGap/artifacts/modern2d-integration/session-leaf-20261017-160830437-4e164929/report/03_modern2d_preview_package.xml",
+    "new_model_junit_sha256": "89b2279356e6fe48c6c3480ce164218720189e79a1ca8652aa6973b98042cd6e",
+    "prior_model_junit": "E:/MolGap/artifacts/modern2d-integration/session-leaf-20261017-160830437-4e164929/report/01_old_source_bundle.xml",
+    "prior_model_junit_sha256": "54349db0432356532d55c552e9cff1bb71cdaddf82d4e50df3aed105322b4091",
+    "ppgt_archive_sha256": "22697ee6babb7316c5300d534a2a2ae486b4c6c85f5682a286c2c002257f811b",
+    "esa_archive_sha256": "e792633428fb13a892dca73ec9be99b6ecd253dd26d4ea63ca9bd5d0e529c949",
+    "isolated_cpu128_subprocess_returncodes": [0, 0],
+    "native_release": false
+  },
+  "missing_real_release": [
+    "actual accepted input filtering/export and label-free size/cap census",
+    "private Kaggle mirror byte verification and owning account binding",
+    "measured real feature preparation and loading cost",
+    "BS128 native forward/backward and optimizer-inclusive resume qualification",
+    "GPU memory/throughput and complete allocation cost",
+    "prospective two-arm recipe, initial tensors, reference orientation, selection/tuning and budget"
+  ],
+  "protected_roles_read": false,
+  "canonical_rml_modified": false,
+  "automatic_100k_veto_or_early_stop": false
+}

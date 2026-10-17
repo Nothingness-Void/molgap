@@ -52,6 +52,14 @@ class FamilyLoaders:
             raise ValueError("Loaded data differs from the frozen recipe selection")
         assert_static_dataset(data.train)
         self.recipe, self.data, self.tuning = recipe, data, tuning
+        self.feature_bindings = None
+        if getattr(recipe, "integration_preview", False) and data.indexed:
+            from .data.indexed_inputs import IndexedRoleDataset
+            if type(data.train) is IndexedRoleDataset:
+                from .modern2d_feature_binding import build_indexed_feature_binding
+                self.feature_bindings = {role: build_indexed_feature_binding(dataset,
+                    family=recipe.interface, configuration=recipe.model_config) for role, dataset in
+                    (("train", data.train), ("development", data.development)) if dataset is not None}
         self.sampler = PassBatchSampler(data.train_rows, recipe.batch_size, recipe.seed,
             algorithm=recipe.sampler, drop_last=recipe.drop_last)
         self.generator = torch.Generator()
